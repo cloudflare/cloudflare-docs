@@ -43,10 +43,10 @@ AI Gateway handles this complexity for you. When you store your AWS credentials 
 
 ### Authentication methods comparison
 
-| Method | `cf-aig-authorization` header | `Authorization` header | Signing |
-| --- | --- | --- | --- |
-| **BYOK (Recommended)** | `Bearer {CF_AIG_TOKEN}` | Not needed | Gateway signs automatically |
-| **Client-side signing** | `Bearer {CF_AIG_TOKEN}` | Pre-signed AWS headers | You sign with `aws4fetch` or AWS SDK |
+| Method                  | `cf-aig-authorization` header | `Authorization` header | Signing                              |
+| ----------------------- | ----------------------------- | ---------------------- | ------------------------------------ |
+| **BYOK (Recommended)**  | `Bearer {CF_AIG_TOKEN}`       | Not needed             | Gateway signs automatically          |
+| **Client-side signing** | `Bearer {CF_AIG_TOKEN}`       | Pre-signed AWS headers | You sign with `aws4fetch` or AWS SDK |
 
 :::caution[Do not confuse the headers]
 `cf-aig-authorization` authenticates your request to AI Gateway. When using BYOK, you do not need to include any AWS authorization headers because AI Gateway signs the request for you.
@@ -227,5 +227,3 @@ const response = await client.chat.completions.create({
 
 console.log(response.choices[0].message.content);
 ```
-
-

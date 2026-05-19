@@ -485,15 +485,15 @@ Now, you will learn how to secure RDP access as a private IP application:
 
 As mentioned before, private IP applications work because Cloudflare proxies the IP range across its network. The nature of this application necessitates the use of the device client, as unless the user is connected to Cloudflare (and more specifically, unless they can take advantage of the Client-to-Tunnel connectivity), they will not be able to reach non-local RFC 1918 addresses.
 
-| Traffic                                  |                                                                 |
-| :--------------------------------------- | :-------------------------------------------------------------- |
-| Destination IP                           | 169.254.255.254                                                 |
-| Destination Port                         | 3389                                                            |
-| **Identity**                             |                                                                 |
-| User Group Names                         | Server Admins                                                   |
-| **Device Posture**                       |                                                                 |
-| Passed Device Posture Checks             | WARP Check (Mac OS) (File) Latest Version of macOS (OS version) |
-| **Action**                               | Allow                                                           |
+| Traffic                                            |                                                                 |
+| :------------------------------------------------- | :-------------------------------------------------------------- |
+| Destination IP                                     | 169.254.255.254                                                 |
+| Destination Port                                   | 3389                                                            |
+| **Identity**                                       |                                                                 |
+| User Group Names                                   | Server Admins                                                   |
+| **Device Posture**                                 |                                                                 |
+| Passed Device Posture Checks                       | WARP Check (Mac OS) (File) Latest Version of macOS (OS version) |
+| **Action**                                         | Allow                                                           |
 | **Enforce Cloudflare One Client session duration** | 60m0s                                                           |
 
 Defining the application here is simple, as Cloudflare automatically fills in the IP range, and you need to limit the detected protocol to RDP. However, the rules for private IP applications are slightly different. You will notice they appear as network policies under the Cloudflare Gateway menu, despite managing them in Access. Certain options, such as checking for MFA and external evaluation, do not appear here. However, these attributes can be verified when the user activates their device client and authenticates to their organization.

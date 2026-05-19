@@ -5,13 +5,14 @@ description: API reference for rtk-file-dropzone component (Web Components (HTML
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `hostEl` | `HTMLElement` | ✅ | - | Host element on which drop events to attach |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property   | Type          | Required | Default           | Description                                 |
+| ---------- | ------------- | -------- | ----------------- | ------------------------------------------- |
+| `hostEl`   | `HTMLElement` | ✅       | -                 | Host element on which drop events to attach |
+| `iconPack` | `IconPack1`   | ❌       | `defaultIconPack` | Icon pack                                   |
+| `t`        | `RtkI18n1`    | ❌       | `useLanguage()`   | Language                                    |
 
 ## Usage Examples
 
@@ -24,14 +25,11 @@ products:
 ### With Properties
 
 ```html
-<rtk-file-dropzone>
-</rtk-file-dropzone>
+<rtk-file-dropzone> </rtk-file-dropzone>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-file-dropzone");
-
+	const el = document.querySelector("rtk-file-dropzone");
 </script>
 ```

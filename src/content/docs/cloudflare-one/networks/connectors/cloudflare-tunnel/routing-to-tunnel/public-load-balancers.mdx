@@ -25,12 +25,14 @@ When you add a [published application route](/cloudflare-one/networks/connectors
 ### Create a load balancer
 
 <Render
-  file="tunnel/availability/load-balancer-create"
-  product="cloudflare-one"
-  params={{
-    publishedAppRouteURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application",
-    tunnelIdLocation: "the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**"
-  }}
+	file="tunnel/availability/load-balancer-create"
+	product="cloudflare-one"
+	params={{
+		publishedAppRouteURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application",
+		tunnelIdLocation:
+			"the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**",
+	}}
 />
 
 Refer to the [Load Balancing documentation](/load-balancing/) for more details on load balancer settings and configurations.
@@ -79,6 +81,7 @@ graph LR
 ```
 
 As shown in the diagram, a typical setup includes:
+
 - A dedicated Cloudflare Tunnel per data center.
 - One load balancer pool per tunnel. The load balancer hostname is set to the user-facing application hostname (`app.example.com`).
 - One load balancer endpoint per pool. The endpoint host header is set to the `cloudflared` published application hostname (`server1.example.com`)
@@ -146,12 +149,12 @@ Here is an example of what your DNS records will look like before and after sett
 | CNAME | app1 | `<UUID_1>.cfargotunnel.com` |
 | CNAME | app2 | `<UUID_1>.cfargotunnel.com` |
 | CNAME | app1 | `<UUID_2>.cfargotunnel.com` |
-| CNAME | app2 | `<UUID_2>.cfargotunnel.com`  |
+| CNAME | app2 | `<UUID_2>.cfargotunnel.com` |
 
 **After**:
 | Type | Name | Content |
 | ---- | ---- | ------- |
-| LB   | `lb.example.com` | n/a |
+| LB | `lb.example.com` | n/a |
 | CNAME | app1 | `lb.example.com` |
 | CNAME | app2 | `lb.example.com` |
 
@@ -160,11 +163,12 @@ Here is an example of what your DNS records will look like before and after sett
 ### Monitors and TCP tunnel origins
 
 <Render
-  file="tunnel/availability/load-balancer-tcp-monitors"
-  product="cloudflare-one"
-  params={{
-    publishedAppRouteURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application"
-  }}
+	file="tunnel/availability/load-balancer-tcp-monitors"
+	product="cloudflare-one"
+	params={{
+		publishedAppRouteURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application",
+	}}
 />
 
 ### Session affinity and replicas
@@ -174,9 +178,10 @@ The load balancer does not distinguish between [replicas](/cloudflare-one/networ
 ### Local connection preference
 
 <Render
-  file="tunnel/availability/load-balancer-local-connection"
-  product="cloudflare-one"
-  params={{
-    replicasURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/"
-  }}
+	file="tunnel/availability/load-balancer-local-connection"
+	product="cloudflare-one"
+	params={{
+		replicasURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/",
+	}}
 />

@@ -43,11 +43,11 @@ Shared dictionaries work when all of the following are true:
 
 The protocol uses two new request and response headers and two new content encodings:
 
-| Header                           | Direction        | Purpose                                                                                            |
-| -------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------- |
+| Header                           | Direction        | Purpose                                                                                             |
+| -------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- |
 | `Use-As-Dictionary`              | Origin → browser | Marks a response as usable as a dictionary for future requests matching the supplied `match` value. |
-| `Available-Dictionary`           | Browser → origin | Advertises the SHA-256 hash of a dictionary the browser already has for the request URL.           |
-| `Content-Encoding: dcb` or `dcz` | Origin → browser | Delta-compressed against the advertised dictionary, using Brotli (`dcb`) or Zstandard (`dcz`).     |
+| `Available-Dictionary`           | Browser → origin | Advertises the SHA-256 hash of a dictionary the browser already has for the request URL.            |
+| `Content-Encoding: dcb` or `dcz` | Origin → browser | Delta-compressed against the advertised dictionary, using Brotli (`dcb`) or Zstandard (`dcz`).      |
 
 The first response for a versioned asset includes `Use-As-Dictionary`, and the browser stores the response. On subsequent requests for assets matching the pattern, the browser sends `Available-Dictionary: :<sha256>:` and adds `dcb, dcz` to `Accept-Encoding`. Your origin compresses the new asset against the dictionary and returns it with `Content-Encoding: dcb` or `dcz`. The browser uses its stored copy to reconstruct the full response.
 

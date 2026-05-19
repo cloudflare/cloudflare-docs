@@ -20,19 +20,19 @@ The Trace response includes the cache key in the `cache` object:
 
 ```json
 {
-  "step_name": "request",
-  "type": "cache",
-  "matched": true,
-  "public_name": "Cache Parameters",
-  "cache": {
-    "key": {
-      "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
-      "scheme": "https",
-      "host": "example.com",
-      "uri": "/images/hero.jpg"
-    },
-    "key_string": "023e105f4ecef8ad9ca31a8372d0c353::::https://example.com/images/hero.jpg:::::"
-  }
+	"step_name": "request",
+	"type": "cache",
+	"matched": true,
+	"public_name": "Cache Parameters",
+	"cache": {
+		"key": {
+			"zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
+			"scheme": "https",
+			"host": "example.com",
+			"uri": "/images/hero.jpg"
+		},
+		"key_string": "023e105f4ecef8ad9ca31a8372d0c353::::https://example.com/images/hero.jpg:::::"
+	}
 }
 ```
 

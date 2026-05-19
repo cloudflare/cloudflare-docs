@@ -8,10 +8,11 @@ products:
   - workers
 ---
 
-import {WranglerConfig} from "~/components";
+import { WranglerConfig } from "~/components";
 
 Axiom is a serverless log analytics platform that helps you store, search, and analyze massive amounts of data. By exporting your Cloudflare Workers application telemetry to Axiom, you can:
-- Store and query logs and traces at scale 
+
+- Store and query logs and traces at scale
 - Create dashboards and alerts to monitor your Workers
 
 ![Trace view with timing information displayed on a timeline](~/assets/images/workers-observability/axiom-example.png)
@@ -29,6 +30,7 @@ Before you begin, ensure you have:
 ## Step 1: Create a dataset
 
 If you don't already have a dataset to send data to:
+
 1. Log in to your [Axiom account](https://app.axiom.co/)
 2. Navigate to **Datasets** in the left sidebar
 3. Click **New Dataset**
@@ -56,6 +58,7 @@ Now you'll create destinations in the Cloudflare dashboard that point to Axiom.
 ### Axiom OTLP endpoints
 
 Axiom provides separate OTLP endpoints for traces and logs:
+
 - **Traces**: `https://api.axiom.co/v1/traces`
 - **Logs**: `https://api.axiom.co/v1/logs`
 
@@ -67,13 +70,13 @@ Axiom provides separate OTLP endpoints for traces and logs:
    - **Destination Name**: `axiom-traces` (or any descriptive name)
    - **Destination Type**: Select **Traces**
    - **OTLP Endpoint**: `https://api.axiom.co/v1/traces` (or `/v1/logs`)
-   - **Custom Headers**: Add two required headers: 
-     -  Authentication header 
-        - Header name: `Authorization`
-        - Header value: `Bearer <your-api-token>` 
-     - Dataset header: 
+   - **Custom Headers**: Add two required headers:
+     - Authentication header
+       - Header name: `Authorization`
+       - Header value: `Bearer <your-api-token>`
+     - Dataset header:
        - Header name: `X-Axiom-Dataset`
-       - Header value: Your dataset name (e.g., `cloudflare-workers-otel`) 
+       - Header value: Your dataset name (e.g., `cloudflare-workers-otel`)
 4. Click **Save**
 
 ## Step 3: Configure your Worker
@@ -104,6 +107,5 @@ With your destinations created in the Cloudflare dashboard, update your Worker's
 After updating your configuration, deploy your Worker for the changes to take effect.
 
 :::note
-It may take a few minutes after deployment for data to appear in Axiom. 
+It may take a few minutes after deployment for data to appear in Axiom.
 :::
-

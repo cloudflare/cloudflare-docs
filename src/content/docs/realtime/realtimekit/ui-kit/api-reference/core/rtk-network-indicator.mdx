@@ -5,15 +5,16 @@ description: API reference for rtk-network-indicator component (Web Components (
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `isScreenShare` | `boolean` | ✅ | - | Is for screenshare |
-| `meeting` | `Meeting` | ✅ | - | Meeting |
-| `participant` | `Peer` | ✅ | - | Participant or Self |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property        | Type        | Required | Default           | Description         |
+| --------------- | ----------- | -------- | ----------------- | ------------------- |
+| `iconPack`      | `IconPack1` | ❌       | `defaultIconPack` | Icon pack           |
+| `isScreenShare` | `boolean`   | ✅       | -                 | Is for screenshare  |
+| `meeting`       | `Meeting`   | ✅       | -                 | Meeting             |
+| `participant`   | `Peer`      | ✅       | -                 | Participant or Self |
+| `t`             | `RtkI18n1`  | ❌       | `useLanguage()`   | Language            |
 
 ## Usage Examples
 
@@ -26,17 +27,15 @@ products:
 ### With Properties
 
 ```html
-<rtk-network-indicator>
-</rtk-network-indicator>
+<rtk-network-indicator> </rtk-network-indicator>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-network-indicator");
+	const el = document.querySelector("rtk-network-indicator");
 
-  el.isScreenShare= true;
-  el.meeting= meeting
-  el.participant= participant
+	el.isScreenShare = true;
+	el.meeting = meeting;
+	el.participant = participant;
 </script>
 ```

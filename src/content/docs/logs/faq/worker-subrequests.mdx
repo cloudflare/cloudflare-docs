@@ -19,10 +19,10 @@ Because the initial log entry only covers the request from the client to the Wor
 
 ### What the two log entries represent
 
-| Log entry         | Typical `ClientRequestSource` value | What it represents                     | Origin fields                    |
-| ----------------- | ----------------------------------- | -------------------------------------- | -------------------------------- |
+| Log entry         | Typical `ClientRequestSource` value | What it represents                     | Origin fields                                      |
+| ----------------- | ----------------------------------- | -------------------------------------- | -------------------------------------------------- |
 | Initial request   | `eyeball`                           | End-user request to the Worker         | `OriginResponseStatus` is `0`, `OriginIP` is empty |
-| Worker subrequest | `edgeWorkerFetch`                   | Worker `fetch()` request to the origin | Set when the origin is contacted                    |
+| Worker subrequest | `edgeWorkerFetch`                   | Worker `fetch()` request to the origin | Set when the origin is contacted                   |
 
 Refer to [ClientRequestSource field](/logs/reference/clientrequestsource/) for the full list of possible `ClientRequestSource` values.
 
@@ -30,10 +30,10 @@ Refer to [ClientRequestSource field](/logs/reference/clientrequestsource/) for t
 
 Each log entry has its own `RayID`. The Worker subrequest also includes `ParentRayID`, which is the `RayID` of the request that triggered it — its immediate parent.
 
-| Field         | Initial request                            | Worker subrequest                          |
-| ------------- | ------------------------------------------ | ------------------------------------------ |
-| `RayID`       | Unique request ID for the end-user request | Unique request ID for the subrequest       |
-| `ParentRayID` | Empty                                      | `RayID` of the request that triggered it   |
+| Field         | Initial request                            | Worker subrequest                        |
+| ------------- | ------------------------------------------ | ---------------------------------------- |
+| `RayID`       | Unique request ID for the end-user request | Unique request ID for the subrequest     |
+| `ParentRayID` | Empty                                      | `RayID` of the request that triggered it |
 
 To correlate the two records:
 

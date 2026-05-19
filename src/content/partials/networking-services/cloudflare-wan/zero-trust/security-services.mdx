@@ -19,7 +19,9 @@ Cloudflare WAN carries three types of traffic, and different security services a
 
 ### Cloudflare Network Firewall
 
-<a href={props.networkFirewallURL}>Cloudflare Network Firewall</a> provides packet-level filtering at layers 3 and 4. You define allow or block rules based on IP addresses, ports, and protocols.
+<a href={props.networkFirewallURL}>Cloudflare Network Firewall</a> provides
+packet-level filtering at layers 3 and 4. You define allow or block rules based
+on IP addresses, ports, and protocols.
 
 - **Applies to**: inbound, outbound, and east-west traffic
 - **Included with**: Cloudflare WAN by default for [standard features](/cloudflare-network-firewall/plans/)
@@ -74,16 +76,16 @@ AI visibility is not a separate inline security service. It is an analytics feat
 
 ## Use-case mapping
 
-| Traffic scenario | Recommended services |
-|---|---|
-| Block traffic between sites by IP, port, or protocol | Network Firewall |
-| Filter DNS queries from branch offices | Gateway DNS policies |
-| Block malware downloads from branch offices | Gateway HTTP policies |
-| Prevent sensitive data uploads to the Internet | DLP (via Gateway HTTP policies) |
-| Isolate risky web browsing from branch users | Browser Isolation (via Gateway HTTP policies) |
-| Detect and block unsanctioned SaaS applications | CASB + Gateway HTTP policies |
-| Monitor employee AI tool usage | AI Security Report (via Gateway) |
-| Protect against DDoS on customer-owned IPs | Network Firewall (inbound) + [Magic Transit](/magic-transit/) |
+| Traffic scenario                                     | Recommended services                                          |
+| ---------------------------------------------------- | ------------------------------------------------------------- |
+| Block traffic between sites by IP, port, or protocol | Network Firewall                                              |
+| Filter DNS queries from branch offices               | Gateway DNS policies                                          |
+| Block malware downloads from branch offices          | Gateway HTTP policies                                         |
+| Prevent sensitive data uploads to the Internet       | DLP (via Gateway HTTP policies)                               |
+| Isolate risky web browsing from branch users         | Browser Isolation (via Gateway HTTP policies)                 |
+| Detect and block unsanctioned SaaS applications      | CASB + Gateway HTTP policies                                  |
+| Monitor employee AI tool usage                       | AI Security Report (via Gateway)                              |
+| Protect against DDoS on customer-owned IPs           | Network Firewall (inbound) + [Magic Transit](/magic-transit/) |
 
 ## How services compose
 
@@ -99,7 +101,12 @@ This means you can layer multiple security services on the same traffic flow wit
 
 ## Next steps
 
-- <a href={props.gatewaySetupURL}>Connect to Cloudflare Gateway with Cloudflare WAN</a>: Detailed setup guide for Gateway integration with WAN traffic.
-- <a href={props.networkFirewallURL}>Cloudflare Network Firewall</a>: Configure packet-level filtering rules.
+- <a href={props.gatewaySetupURL}>
+  	Connect to Cloudflare Gateway with Cloudflare WAN
+  </a>
+  : Detailed setup guide for Gateway integration with WAN traffic.
+- <a href={props.networkFirewallURL}>Cloudflare Network Firewall</a>: Configure
+  packet-level filtering rules.
 - [SASE reference architecture](/reference-architecture/architectures/sase/): Explore the full architecture of Cloudflare One as a SASE platform.
-- <a href={props.wanTransformationURL}>WAN transformation</a>: Plan your migration from traditional WAN to Cloudflare.
+- <a href={props.wanTransformationURL}>WAN transformation</a>: Plan your
+  migration from traditional WAN to Cloudflare.

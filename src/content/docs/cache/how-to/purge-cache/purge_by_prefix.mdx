@@ -6,24 +6,23 @@ products:
   - cache
 sidebar:
   order: 5
-
 ---
 
-import { DashButton } from "~/components"
+import { DashButton } from "~/components";
 
 You can instantly purge their cache by URL prefix or path separators in their URL. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
 
-* `www.example.com`
-* `www.example.com/foo`
-* `www.example.com/foo/bar`
-* `www.example.com/foo/bar/baz`
-* `www.example.com/foo/bar/baz/qux.jpg`
+- `www.example.com`
+- `www.example.com/foo`
+- `www.example.com/foo/bar`
+- `www.example.com/foo/bar/baz`
+- `www.example.com/foo/bar/baz/qux.jpg`
 
 Purging by prefix is useful in different scenarios, such as:
 
-* Purging everything within a directory.
-* Increasing control over cached objects in a path.
-* Simplifying the number of purge calls sent.
+- Purging everything within a directory.
+- Increasing control over cached objects in a path.
+- Simplifying the number of purge calls sent.
 
 1. In the Cloudflare dashboard, go to the **Configuration** page.
 
@@ -32,8 +31,8 @@ Purging by prefix is useful in different scenarios, such as:
 2. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 3. Under **Purge by**, select **Prefix**.
 4. Follow the syntax instructions.
-   * One prefix per line.
-   * Maximum 30 prefixes per API call.
+   - One prefix per line.
+   - Maximum 30 prefixes per API call.
 5. Enter the appropriate value(s) in the text field using the format shown in the example.
 6. Select **Purge**.
 
@@ -41,9 +40,7 @@ For information on rate limits, refer to the [Availability and limits](/cache/ho
 
 :::caution[Warning]
 
-
 If you have a [Transform Rule](/rules/transform/) in place that is modifying part of a URL path, you must use the post-transformed (origin) URL when performing a prefix purge so that purge can take effect.
-
 
 :::
 
@@ -58,20 +55,18 @@ Depending on whether the upper tier has the resource or not, and whether the end
 
 There are several limitations regarding purge by prefix:
 
-* Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
-* Purge requests are limited to 30 prefixes per request.
-* [Purge rate-limits apply](/api/resources/cache/methods/purge/).
-* URI query strings & fragments cannot purge by prefix:
-  * `www.example.com/foo?a=b` (query string)
-  * `www.example.com/foo#bar` (fragment)
+- Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
+- Purge requests are limited to 30 prefixes per request.
+- [Purge rate-limits apply](/api/resources/cache/methods/purge/).
+- URI query strings & fragments cannot purge by prefix:
+  - `www.example.com/foo?a=b` (query string)
+  - `www.example.com/foo#bar` (fragment)
 
 :::caution[Warning]
-
 
 Because purge by prefix purges a directory, any URI for a resource within the purged directory is purged regardless of query string or fragment (though fragments are not generally sent by browsers). Purge by prefix rules do not accept fragments and query strings.
 
 Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` will be purged, for example, `foo.com/bar/baz`, `foo.com/bar?good=bad`, etc. and purging `foo.com/bar?good=bad` itself will not work.
-
 
 :::
 

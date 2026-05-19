@@ -9,14 +9,14 @@ products:
   - workers
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
 Handlers are methods on Workers that can receive and process external inputs, and can be invoked from outside your Worker. For example, the `fetch()` handler receives an HTTP request, and can return a response:
 
 ```js
 export default {
 	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
+		return new Response("Hello World!");
 	},
 };
 ```

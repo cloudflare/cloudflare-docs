@@ -17,7 +17,7 @@ Successful exploitation allows unauthenticated attackers to bypass middleware or
 We strongly recommend upgrading to Next.js 15.5.16 or 16.2.5 (or later) immediately to address the underlying vulnerability. If you cannot upgrade immediately, enforce authorization in the underlying route or page logic instead of relying solely on middleware.
 
 <table style="width: 100%">
-  <thead>
+	<thead>
 		<tr>
 			<th>Ruleset</th>
 			<th>Rule ID</th>
@@ -27,7 +27,7 @@ We strongly recommend upgrading to Next.js 15.5.16 or 16.2.5 (or later) immediat
 			<th>New Action</th>
 			<th>Comments</th>
 		</tr>
-  </thead>
+	</thead>
 	<tbody>
 		<tr>
 			<td>Cloudflare Managed Ruleset</td>
@@ -35,12 +35,12 @@ We strongly recommend upgrading to Next.js 15.5.16 or 16.2.5 (or later) immediat
 				<RuleID id="1de95bf6d6374e1099854278e77e4a53" />
 			</td>
 			<td>N/A</td>
-			<td>Next.js - Middleware Bypass via Invalid RSC Header - CVE:CVE-2026-44575</td>
+			<td>
+				Next.js - Middleware Bypass via Invalid RSC Header - CVE:CVE-2026-44575
+			</td>
 			<td>N/A</td>
 			<td>Disabled</td>
-			<td>
-				This is a new detection.
-			</td>
+			<td>This is a new detection.</td>
 		</tr>
 	</tbody>
 </table>

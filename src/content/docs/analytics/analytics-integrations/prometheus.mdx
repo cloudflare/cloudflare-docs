@@ -59,16 +59,16 @@ Create a Cloudflare API token with the following permissions:
 
 [Create token with pre-filled permissions](https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22analytics%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22account_analytics%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22ssl_and_certificates%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22firewall_services%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22load_balancers%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22account_logs%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22magic_transit%22%2C%22type%22%3A%22read%22%7D%5D&name=Cloudflare%20Prometheus%20Exporter)
 
-| Permission | Access | Required |
-|---|---|---|
-| Zone > Analytics | Read | Yes |
-| Account > Account Analytics | Read | Yes |
-| Account > Workers Scripts | Read | Yes |
-| Zone > SSL and Certificates | Read | Optional |
-| Zone > Firewall Services | Read | Optional |
-| Zone > Load Balancers | Read | Optional |
-| Account > Logs | Read | Optional |
-| Account > Magic Transit | Read | Optional |
+| Permission                  | Access | Required |
+| --------------------------- | ------ | -------- |
+| Zone > Analytics            | Read   | Yes      |
+| Account > Account Analytics | Read   | Yes      |
+| Account > Workers Scripts   | Read   | Yes      |
+| Zone > SSL and Certificates | Read   | Optional |
+| Zone > Firewall Services    | Read   | Optional |
+| Zone > Load Balancers       | Read   | Optional |
+| Account > Logs              | Read   | Optional |
+| Account > Magic Transit     | Read   | Optional |
 
 ## Task 3 - Configure Prometheus
 
@@ -76,11 +76,11 @@ Add the exporter as a scrape target in your Prometheus configuration:
 
 ```yaml
 scrape_configs:
-  - job_name: 'cloudflare'
+  - job_name: "cloudflare"
     scrape_interval: 60s
     scrape_timeout: 30s
     static_configs:
-      - targets: ['your-worker.your-subdomain.workers.dev']
+      - targets: ["your-worker.your-subdomain.workers.dev"]
 ```
 
 ### With Basic Auth
@@ -89,14 +89,14 @@ If you configured Basic Auth on the exporter, update your Prometheus configurati
 
 ```yaml
 scrape_configs:
-  - job_name: 'cloudflare'
+  - job_name: "cloudflare"
     scrape_interval: 60s
     scrape_timeout: 30s
     basic_auth:
-      username: 'your-username'
-      password: 'your-password'
+      username: "your-username"
+      password: "your-password"
     static_configs:
-      - targets: ['your-worker.your-subdomain.workers.dev']
+      - targets: ["your-worker.your-subdomain.workers.dev"]
 ```
 
 ## Configuration
@@ -105,32 +105,32 @@ Configuration is resolved in order: **KV overrides** > **environment variables**
 
 Set environment variables in `wrangler.jsonc` or via `wrangler secret put`:
 
-| Variable | Default | Description |
-|---|---|---|
-| `CLOUDFLARE_API_TOKEN` | - | Cloudflare API token (secret) |
-| `SCRAPE_DELAY_SECONDS` | `300` | Delay before fetching metrics (data propagation) |
-| `TIME_WINDOW_SECONDS` | `60` | Query time window |
-| `METRIC_REFRESH_INTERVAL_SECONDS` | `60` | Background refresh interval |
-| `CF_ACCOUNTS` | - | Comma-separated account IDs to include (default: all) |
-| `CF_ZONES` | - | Comma-separated zone IDs to include (default: all) |
-| `METRICS_DENYLIST` | - | Comma-separated list of metrics to exclude |
-| `EXCLUDE_HOST` | `false` | Exclude host labels from metrics |
-| `METRICS_PATH` | `/metrics` | Custom path for metrics endpoint |
-| `BASIC_AUTH_USER` | - | Username for Basic Auth (secret) |
-| `BASIC_AUTH_PASSWORD` | - | Password for Basic Auth (secret) |
+| Variable                          | Default    | Description                                           |
+| --------------------------------- | ---------- | ----------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`            | -          | Cloudflare API token (secret)                         |
+| `SCRAPE_DELAY_SECONDS`            | `300`      | Delay before fetching metrics (data propagation)      |
+| `TIME_WINDOW_SECONDS`             | `60`       | Query time window                                     |
+| `METRIC_REFRESH_INTERVAL_SECONDS` | `60`       | Background refresh interval                           |
+| `CF_ACCOUNTS`                     | -          | Comma-separated account IDs to include (default: all) |
+| `CF_ZONES`                        | -          | Comma-separated zone IDs to include (default: all)    |
+| `METRICS_DENYLIST`                | -          | Comma-separated list of metrics to exclude            |
+| `EXCLUDE_HOST`                    | `false`    | Exclude host labels from metrics                      |
+| `METRICS_PATH`                    | `/metrics` | Custom path for metrics endpoint                      |
+| `BASIC_AUTH_USER`                 | -          | Username for Basic Auth (secret)                      |
+| `BASIC_AUTH_PASSWORD`             | -          | Password for Basic Auth (secret)                      |
 
 For a full list of configuration options, refer to the [exporter README](https://github.com/cloudflare/cloudflare-prometheus-exporter#configuration).
 
 ## Endpoints
 
-| Path | Method | Description |
-|---|---|---|
-| `/` | GET | Landing page |
-| `/metrics` | GET | Prometheus metrics |
-| `/health` | GET | Health check |
-| `/config` | GET | Get all runtime config |
-| `/config/:key` | PUT | Set a config override (persisted in KV) |
-| `/config/:key` | DELETE | Reset a config key to its default |
+| Path           | Method | Description                             |
+| -------------- | ------ | --------------------------------------- |
+| `/`            | GET    | Landing page                            |
+| `/metrics`     | GET    | Prometheus metrics                      |
+| `/health`      | GET    | Health check                            |
+| `/config`      | GET    | Get all runtime config                  |
+| `/config/:key` | PUT    | Set a config override (persisted in KV) |
+| `/config/:key` | DELETE | Reset a config key to its default       |
 
 ## Available metrics
 
@@ -160,6 +160,7 @@ For a complete list of metrics with types and labels, refer to the [exporter REA
 Zones on Cloudflare's Free plan do not have access to the GraphQL Analytics API. The exporter automatically detects and skips free tier zones for metrics that require this API.
 
 Free tier zones still export:
+
 - `cloudflare_zone_certificate_validation_status` (SSL certificates)
 - `cloudflare_zone_lb_origin_weight` (Load balancer weights, if configured)
 

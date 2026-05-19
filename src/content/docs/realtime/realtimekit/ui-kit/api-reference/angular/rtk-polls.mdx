@@ -5,18 +5,19 @@ description: API reference for rtk-polls component (Angular Library)
 products:
   - realtime
 ---
+
 A component which lists all available plugins a user can access with
- the ability to enable or disable them as per their permissions.
+the ability to enable or disable them as per their permissions.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default                 | Description    |
+| ---------- | ---------- | -------- | ----------------------- | -------------- |
+| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config         |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
+| `size`     | `Size`     | ✅       | -                       | Size           |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
 
 ## Usage Examples
 
@@ -31,9 +32,5 @@ A component which lists all available plugins a user can access with
 
 ```html
 <!-- component.html -->
-<rtk-polls
- [meeting]="meeting"
- size="md">
-</rtk-polls>
+<rtk-polls [meeting]="meeting" size="md"> </rtk-polls>
 ```
-

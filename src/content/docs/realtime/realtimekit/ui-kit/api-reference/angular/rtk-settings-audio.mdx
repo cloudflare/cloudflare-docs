@@ -5,25 +5,27 @@ description: API reference for rtk-settings-audio component (Angular Library)
 products:
   - realtime
 ---
+
 A component which lets to manage your audio devices and audio preferences.
- Emits `rtkStateUpdate` event with data for muting notification sounds:
- ```ts
- {
-  prefs: {
-    muteNotificationSounds: boolean
-  }
- }
- ```
+Emits `rtkStateUpdate` event with data for muting notification sounds:
+
+```ts
+{
+	prefs: {
+		muteNotificationSounds: boolean;
+	}
+}
+```
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description    |
+| ---------- | ---------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
+| `size`     | `Size`     | ✅       | -                 | Size           |
+| `states`   | `States`   | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
 
 ## Usage Examples
 
@@ -38,9 +40,5 @@ A component which lets to manage your audio devices and audio preferences.
 
 ```html
 <!-- component.html -->
-<rtk-settings-audio
- [meeting]="meeting"
- size="md">
-</rtk-settings-audio>
+<rtk-settings-audio [meeting]="meeting" size="md"> </rtk-settings-audio>
 ```
-

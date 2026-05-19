@@ -13,7 +13,7 @@ A transform stream consists of a pair of streams: a writable stream, known as it
 
 Workers currently only implements an identity transform stream, a type of transform stream which forwards all chunks written to its writable side to its readable side, without any changes.
 
-***
+---
 
 ## Constructor
 
@@ -21,26 +21,17 @@ Workers currently only implements an identity transform stream, a type of transf
 let { readable, writable } = new TransformStream();
 ```
 
-
-
-* `TransformStream()` TransformStream
-
-  * Returns a new identity transform stream.
-
-
+- `TransformStream()` TransformStream
+  - Returns a new identity transform stream.
 
 ## Properties
 
+- `readable` ReadableStream
+  - An instance of a `ReadableStream`.
+- `writable` WritableStream
+  - An instance of a `WritableStream`.
 
-
-* `readable` ReadableStream
-  * An instance of a `ReadableStream`.
-* `writable` WritableStream
-  * An instance of a `WritableStream`.
-
-
-
-***
+---
 
 ## `IdentityTransformStream`
 
@@ -54,26 +45,17 @@ The `IdentityTransformStream` readable side supports [bring your own buffer (BYO
 let { readable, writable } = new IdentityTransformStream();
 ```
 
-
-
-* `IdentityTransformStream()` IdentityTransformStream
-
-  * Returns a new identity transform stream.
-
-
+- `IdentityTransformStream()` IdentityTransformStream
+  - Returns a new identity transform stream.
 
 ### Properties
 
+- `readable` ReadableStream
+  - An instance of a `ReadableStream`.
+- `writable` WritableStream
+  - An instance of a `WritableStream`.
 
-
-* `readable` ReadableStream
-  * An instance of a `ReadableStream`.
-* `writable` WritableStream
-  * An instance of a `WritableStream`.
-
-
-
-***
+---
 
 ## `FixedLengthStream`
 
@@ -85,29 +67,20 @@ The `FixedLengthStream` is a specialization of `IdentityTransformStream` that li
 let { readable, writable } = new FixedLengthStream(1000);
 ```
 
-
-
-* `FixedLengthStream(length)` FixedLengthStream
-
-  * Returns a new identity transform stream.
-  * `length` maybe a `number` or `bigint` with a maximum value of `2^53 - 1`.
-
-
+- `FixedLengthStream(length)` FixedLengthStream
+  - Returns a new identity transform stream.
+  - `length` maybe a `number` or `bigint` with a maximum value of `2^53 - 1`.
 
 ### Properties
 
+- `readable` ReadableStream
+  - An instance of a `ReadableStream`.
+- `writable` WritableStream
+  - An instance of a `WritableStream`.
 
-
-* `readable` ReadableStream
-  * An instance of a `ReadableStream`.
-* `writable` WritableStream
-  * An instance of a `WritableStream`.
-
-
-
-***
+---
 
 ## Related resources
 
-* [Streams](/workers/runtime-apis/streams/)
-* [Transform Streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#transform-stream)
+- [Streams](/workers/runtime-apis/streams/)
+- [Transform Streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#transform-stream)

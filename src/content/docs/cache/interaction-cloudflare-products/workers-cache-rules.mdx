@@ -9,7 +9,6 @@ sidebar:
 head:
   - tag: title
     content: How Workers interact with Cache Rules
-
 ---
 
 When you use both [Cache Rules](/cache/how-to/cache-rules/) and [Workers](/workers/) on the same request, the Worker's cache settings take priority — but only when the required [compatibility flags](#compatibility-flags) are enabled.
@@ -39,10 +38,10 @@ These flags must be enabled to allow Workers scripts to override Cache Rules. If
 
 A Worker's [compatibility date](/workers/configuration/compatibility-dates/) determines which flags are active by default. When you set a compatibility date, all flags with an enable date on or before that date are automatically turned on.
 
-| Flag | Enabled by default | Prerequisite |
-| --- | --- | --- |
-| `request_cf_overrides_cache_rules` (Fetch API) | Compatibility dates on or after `2025-04-02` | None |
-| `cache_api_compat_flags` | Compatibility dates on or after `2025-04-19` | None |
+| Flag                                                     | Enabled by default                           | Prerequisite                      |
+| -------------------------------------------------------- | -------------------------------------------- | --------------------------------- |
+| `request_cf_overrides_cache_rules` (Fetch API)           | Compatibility dates on or after `2025-04-02` | None                              |
+| `cache_api_compat_flags`                                 | Compatibility dates on or after `2025-04-19` | None                              |
 | `cache_api_request_cf_overrides_cache_rules` (Cache API) | Compatibility dates on or after `2025-05-19` | Requires `cache_api_compat_flags` |
 
 The Cache API has an extra requirement: `cache_api_compat_flags` must be enabled for any compatibility flags to take effect on the Cache API. Without it, the Cache API ignores all compatibility flags, even ones you explicitly list in your configuration.

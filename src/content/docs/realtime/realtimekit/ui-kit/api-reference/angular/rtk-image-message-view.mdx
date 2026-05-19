@@ -5,15 +5,16 @@ description: API reference for rtk-image-message-view component (Angular Library
 products:
   - realtime
 ---
+
 A component which renders an image message.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
-| `url` | `string` | ✅ | - | Url of the image |
+| Property   | Type        | Required | Default           | Description      |
+| ---------- | ----------- | -------- | ----------------- | ---------------- |
+| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack        |
+| `t`        | `RtkI18n1`  | ❌       | `useLanguage()`   | Language         |
+| `url`      | `string`    | ✅       | -                 | Url of the image |
 
 ## Usage Examples
 
@@ -28,8 +29,5 @@ A component which renders an image message.
 
 ```html
 <!-- component.html -->
-<rtk-image-message-view
- url="example">
-</rtk-image-message-view>
+<rtk-image-message-view url="example"> </rtk-image-message-view>
 ```
-

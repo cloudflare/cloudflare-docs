@@ -13,7 +13,6 @@ products:
 
 import { WranglerConfig, InlineBadge } from "~/components";
 
-
 A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Media Transformations](/stream/transform-videos/), [R2 buckets](/r2/buckets/), or [KV namespaces](/kv/concepts/kv-namespaces/).
 
 You can bind the Media Transformations API to your Worker to transform, resize, and extract content from videos without requiring them to be accessible through a URL.
@@ -155,8 +154,8 @@ export default {
 		const frame = await env.MEDIA.input(video.body)
 			.transform({ width: 720 })
 			.output({
-				mode: 'frame',
-				time: '3s',
+				mode: "frame",
+				time: "3s",
 			})
 			.response();
 
@@ -166,13 +165,10 @@ export default {
 			prompt: "Generate a caption for this image",
 			max_tokens: 512,
 		};
-		const response = await env.AI.run(
-			"@cf/unum/uform-gen2-qwen-500m",
-			payload
-		);
+		const response = await env.AI.run("@cf/unum/uform-gen2-qwen-500m", payload);
 		return new Response(JSON.stringify(response));
-	}
-}
+	},
+};
 ```
 
 ### Extract audio
@@ -214,28 +210,22 @@ export default {
 		const audio = await env.MEDIA.input(video.body)
 			.transform()
 			.output({
-				mode: 'audio',
-				})
+				mode: "audio",
+			})
 			.response();
 
 		// Prepare and run Workers AI inference
 		const payload = {
 			audio: [...new Uint8Array(await audio.arrayBuffer())],
 		};
-		const response = await env.AI.run(
-			"@cf/openai/whisper",
-			payload
-		);
+		const response = await env.AI.run("@cf/openai/whisper", payload);
 
 		// response will have props {text, word_count, vtt, words}
-		return new Response(
-			JSON.stringify(response, null, 2),
-			{
-				headers: {'Content-Type': 'application/json'}
-			}
-		);
-	}
-}
+		return new Response(JSON.stringify(response, null, 2), {
+			headers: { "Content-Type": "application/json" },
+		});
+	},
+};
 ```
 
 ### Store transformed output in R2

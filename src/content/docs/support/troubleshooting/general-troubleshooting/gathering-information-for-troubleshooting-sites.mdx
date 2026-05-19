@@ -23,18 +23,18 @@ customers due to security and liability concerns.
 
 Use this table to quickly identify which troubleshooting method to use based on your issue:
 
-| Issue Type | Recommended Tool | When to Use |
-|------------|------------------|-------------|
-| Page not loading correctly | [HAR file](#generate-a-har-file) | Visual issues, broken elements, slow page loads |
-| JavaScript errors | [Console log](#export-console-log) | CORS errors, scripts failing, browser-side errors |
-| Protocol errors (QUIC/HTTP2) | [NetLog dump](#capture-a-netlog-dump) | `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR` |
-| Slow response times | [curl (performance)](#performance) | Measuring latency, TLS handshake times |
-| HTTP errors (5xx, 4xx) | [curl (HTTP errors)](#http-errors) | Determining if errors originate from Cloudflare or origin |
-| Caching issues | [curl (caching)](#caching) | Cache misses, stale content, cache headers |
-| SSL/TLS certificate issues | [curl (SSL/TLS)](#ssltls-certificates) | Certificate errors, TLS version issues |
-| Connection timeouts/drops | [Traceroute](#perform-a-traceroute) / [MTR](#perform-a-mtr) | Network path issues, latency between hops |
-| Packet loss, connection resets | [Packet capture](#run-packet-captures) | Layer 3/4 issues, SSL handshake failures |
-| Identifying serving location | [Cloudflare data center](#identify-the-cloudflare-data-center-serving-your-request) | Determine which Cloudflare PoP is serving requests |
+| Issue Type                     | Recommended Tool                                                                    | When to Use                                               |
+| ------------------------------ | ----------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Page not loading correctly     | [HAR file](#generate-a-har-file)                                                    | Visual issues, broken elements, slow page loads           |
+| JavaScript errors              | [Console log](#export-console-log)                                                  | CORS errors, scripts failing, browser-side errors         |
+| Protocol errors (QUIC/HTTP2)   | [NetLog dump](#capture-a-netlog-dump)                                               | `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR`     |
+| Slow response times            | [curl (performance)](#performance)                                                  | Measuring latency, TLS handshake times                    |
+| HTTP errors (5xx, 4xx)         | [curl (HTTP errors)](#http-errors)                                                  | Determining if errors originate from Cloudflare or origin |
+| Caching issues                 | [curl (caching)](#caching)                                                          | Cache misses, stale content, cache headers                |
+| SSL/TLS certificate issues     | [curl (SSL/TLS)](#ssltls-certificates)                                              | Certificate errors, TLS version issues                    |
+| Connection timeouts/drops      | [Traceroute](#perform-a-traceroute) / [MTR](#perform-a-mtr)                         | Network path issues, latency between hops                 |
+| Packet loss, connection resets | [Packet capture](#run-packet-captures)                                              | Layer 3/4 issues, SSL handshake failures                  |
+| Identifying serving location   | [Cloudflare data center](#identify-the-cloudflare-data-center-serving-your-request) | Determine which Cloudflare PoP is serving requests        |
 
 ---
 
@@ -53,7 +53,7 @@ A HTTP Archive (HAR) records all web browser requests including the request and 
 :::caution
 
 A HAR file can include sensitive details such as passwords, payment
-information, and private keys. 
+information, and private keys.
 
 Remove sensitive information using a [HAR Sanitizer](https://har-sanitizer.pages.dev/).
 

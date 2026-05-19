@@ -5,15 +5,16 @@ description: API reference for rtk-network-indicator component (Angular Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `isScreenShare` | `boolean` | ✅ | - | Is for screenshare |
-| `meeting` | `Meeting` | ✅ | - | Meeting |
-| `participant` | `Peer` | ✅ | - | Participant or Self |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property        | Type        | Required | Default           | Description         |
+| --------------- | ----------- | -------- | ----------------- | ------------------- |
+| `iconPack`      | `IconPack1` | ❌       | `defaultIconPack` | Icon pack           |
+| `isScreenShare` | `boolean`   | ✅       | -                 | Is for screenshare  |
+| `meeting`       | `Meeting`   | ✅       | -                 | Meeting             |
+| `participant`   | `Peer`      | ✅       | -                 | Participant or Self |
+| `t`             | `RtkI18n1`  | ❌       | `useLanguage()`   | Language            |
 
 ## Usage Examples
 
@@ -29,9 +30,9 @@ products:
 ```html
 <!-- component.html -->
 <rtk-network-indicator
- [isScreenShare]="true"
- [meeting]="meeting"
- [participant]="participant">
+	[isScreenShare]="true"
+	[meeting]="meeting"
+	[participant]="participant"
+>
 </rtk-network-indicator>
 ```
-

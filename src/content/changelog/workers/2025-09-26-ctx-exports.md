@@ -12,17 +12,17 @@ Example:
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class Greeter extends WorkerEntrypoint {
-  greet(name) {
-    return `Hello, ${name}!`;
-  }
+	greet(name) {
+		return `Hello, ${name}!`;
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    let greeting = await ctx.exports.Greeter.greet("World")
-    return new Response(greeting);
-  }
-}
+	async fetch(request, env, ctx) {
+		let greeting = await ctx.exports.Greeter.greet("World");
+		return new Response(greeting);
+	},
+};
 ```
 
 At present, you must use [the `enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags#enable-ctxexports) to enable this API, though it will be on by default in the future.

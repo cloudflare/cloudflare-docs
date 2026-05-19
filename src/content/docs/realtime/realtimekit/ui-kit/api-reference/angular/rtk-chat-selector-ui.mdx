@@ -5,16 +5,17 @@ description: API reference for rtk-chat-selector-ui component (Angular Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `groups` | `ChatGroup[]` | ✅ | - | Participants |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `selectedGroupId` | `string` | ✅ | - | Selected participant |
-| `selfUserId` | `string` | ✅ | - | Self User ID |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `unreadCounts` | `Record<string, number>` | ✅ | - | Unread counts |
+| Property          | Type                     | Required | Default           | Description          |
+| ----------------- | ------------------------ | -------- | ----------------- | -------------------- |
+| `groups`          | `ChatGroup[]`            | ✅       | -                 | Participants         |
+| `iconPack`        | `IconPack1`              | ❌       | `defaultIconPack` | Icon pack            |
+| `selectedGroupId` | `string`                 | ✅       | -                 | Selected participant |
+| `selfUserId`      | `string`                 | ✅       | -                 | Self User ID         |
+| `t`               | `RtkI18n`                | ❌       | `useLanguage()`   | Language             |
+| `unreadCounts`    | `Record<string, number>` | ✅       | -                 | Unread counts        |
 
 ## Usage Examples
 
@@ -30,9 +31,9 @@ products:
 ```html
 <!-- component.html -->
 <rtk-chat-selector-ui
- [groups]="[]"
- selectedGroupId="example"
- selfUserId="example">
+	[groups]="[]"
+	selectedGroupId="example"
+	selfUserId="example"
+>
 </rtk-chat-selector-ui>
 ```
-

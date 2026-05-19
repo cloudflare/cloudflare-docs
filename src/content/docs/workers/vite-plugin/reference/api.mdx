@@ -32,7 +32,6 @@ It accepts an optional `PluginConfig` parameter.
   An optional path to your entry Worker config file.
 
   For the entry Worker, the plugin resolves the config path in this order:
-
   1. `configPath`
   2. `CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH` (typically set by a framework or other external tool)
   3. `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` in the root of your application
@@ -99,7 +98,6 @@ It accepts an optional `PluginConfig` parameter.
 - `remoteBindings` <Type text='boolean' /> <MetaInfo text='optional' />
 
   Whether or not [remote bindings](/workers/development-testing/#remote-bindings) should be enabled. Defaults to `true`.
-
 
 ## `interface AuxiliaryWorkerConfig`
 

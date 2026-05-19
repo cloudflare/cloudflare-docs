@@ -5,7 +5,14 @@ params:
   - cfVsCoreDashNamingMwanCni
 ---
 
-import { APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
+import {
+	APIRequest,
+	Markdown,
+	Render,
+	TabItem,
+	Tabs,
+	DashButton,
+} from "~/components";
 
 DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Cloudflare One Appliance (formerly Magic WAN Connector) forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 

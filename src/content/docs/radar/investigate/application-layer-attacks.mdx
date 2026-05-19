@@ -40,27 +40,27 @@ From the abbreviated response below, we can conclude that distributed denial-of-
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "result": {
-    "attacks": {
-      "timestamps": ["2022-11-05T11:00:00Z", ".."],
-      "ddos": ["53.824302", "54.305823",  ".."],
-      "waf": ["39.760956", "39.31228",  ".."],
-      "ip_reputation": ["5.623487", "5.485468",  ".."],
-      "access_rules": ["0.648368", "0.676456",  ".."],
-      "bot_management": ["0.139733", "0.217155",  ".."],
-      "api_shield": ["0.003154", "0.002819",  ".."],
-      "data_loss_prevention": ["0.0", "0.0",  ".."]
-    },
-    "meta": {
-      "dateRange": {
-        "startTime": "2022-11-05T11:00:00Z",
-        "endTime": "2022-11-06T11:00:00Z"
-      },
+	"success": true,
+	"errors": [],
+	"result": {
+		"attacks": {
+			"timestamps": ["2022-11-05T11:00:00Z", ".."],
+			"ddos": ["53.824302", "54.305823", ".."],
+			"waf": ["39.760956", "39.31228", ".."],
+			"ip_reputation": ["5.623487", "5.485468", ".."],
+			"access_rules": ["0.648368", "0.676456", ".."],
+			"bot_management": ["0.139733", "0.217155", ".."],
+			"api_shield": ["0.003154", "0.002819", ".."],
+			"data_loss_prevention": ["0.0", "0.0", ".."]
+		},
+		"meta": {
+			"dateRange": {
+				"startTime": "2022-11-05T11:00:00Z",
+				"endTime": "2022-11-06T11:00:00Z"
+			}
 			// ...
-    }
-  }
+		}
+	}
 }
 ```
 
@@ -79,9 +79,9 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?location
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "result": {
+	"success": true,
+	"errors": [],
+	"result": {
 		"attacks_gb": {
 			"waf": "75.012138",
 			"ddos": "18.539149",
@@ -90,10 +90,10 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?location
 			"bot_management": "0.131998",
 			"api_shield": "0.003178",
 			"data_loss_prevention": "0.0"
-  	},
+		},
 		"meta": {
 			// ...
-    }
+		}
 	}
 }
 ```
@@ -115,10 +115,10 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/ta
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "result": {
-    "attacks_target": [
+	"success": true,
+	"errors": [],
+	"result": {
+		"attacks_target": [
 			{
 				"targetCountryName": "Belgium",
 				"targetCountryAlpha2": "BE",
@@ -150,14 +150,14 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/ta
 				"rank": 5
 			}
 		],
-    "meta": {
-      "dateRange": {
-        "startTime": "2022-11-05T12:00:00Z",
-        "endTime": "2022-11-06T12:00:00Z"
-      },
+		"meta": {
+			"dateRange": {
+				"startTime": "2022-11-05T12:00:00Z",
+				"endTime": "2022-11-06T12:00:00Z"
+			}
 			// ...
-    }
-  }
+		}
+	}
 }
 ```
 
@@ -178,9 +178,9 @@ A typical response will be similar to the following:
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "result": {
+	"success": true,
+	"errors": [],
+	"result": {
 		"top_0": [
 			{
 				"originCountryName": "United States",
@@ -223,10 +223,10 @@ A typical response will be similar to the following:
 				"rank": 5
 			}
 		],
-    "meta": {
+		"meta": {
 			// ...
-    }
-  }
+		}
+	}
 }
 ```
 

@@ -3,6 +3,7 @@ title: Account-level enforce DNS-only
 description: Bypass Cloudflare's reverse proxy for all zones in your account with a single API call.
 date: 2026-04-28
 ---
+
 import { DashButton } from "~/components";
 
 You can now disable Cloudflare's reverse proxy across all zones in your account simultaneously using the new `enforce_dns_only` setting. When enabled, Cloudflare responds to DNS queries for all proxied records with your origin IP addresses instead of Cloudflare's anycast IPs.

@@ -34,9 +34,9 @@ To use `create-cloudflare` to create a new Vue project with Workers Assets, run 
 	args="my-vue-app --framework=vue"
 />
 
-    		 <Details header="How is this project set up?">
-        			Below is a simplified file tree of the project.
-        			<FileTree>
+		 <Details header="How is this project set up?">
+    			Below is a simplified file tree of the project.
+    			<FileTree>
     						- my-vue-app
     							- src/
     									- App.vue
@@ -47,17 +47,17 @@ To use `create-cloudflare` to create a new Vue project with Workers Assets, run 
     							- wrangler.jsonc
         			</FileTree>
 
-        			`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/).
-        			In this file:
-        					- `main` points to `server/index.ts`. This is your Worker, which is going to act as your backend API.
-        					- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your Vue SPA do not go to the Worker, and are thus free.
-        					- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
+    			`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/).
+    			In this file:
+    					- `main` points to `server/index.ts`. This is your Worker, which is going to act as your backend API.
+    					- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your Vue SPA do not go to the Worker, and are thus free.
+    					- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
 
-    						`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
+						`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
 
-    						`server/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
-    						At `src/App.vue`, your Vue app calls this endpoint to get a message back and displays this.
-        		</Details>
+						`server/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
+						At `src/App.vue`, your Vue app calls this endpoint to get a message back and displays this.
+    		</Details>
 
 ## 2. Develop locally with the [Cloudflare Vite plugin](/workers/vite-plugin/)
 

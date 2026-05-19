@@ -35,105 +35,110 @@ The Grafana cross-site scripting (XSS) flaw can be used to hijack authenticated 
 Meanwhile, the information disclosure flaw in WordPress core provides attackers with valid user emails, fueling targeted phishing campaigns that aim to secure the same account access achievable through the other exploits.
 
 <table style="width: 100%">
-  <thead>
-    <tr>
-      <th>Ruleset</th>
-      <th>Rule ID</th>
-      <th>Legacy Rule ID</th>
-      <th>Description</th>
-      <th>Previous Action</th>
-      <th>New Action</th>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="b8ab4644f8044f3485441ee052f30a13" />
-      </td>
-      <td>100535A</td>
-      <td>Sitecore - Dangerous File Upload - CVE:CVE-2025-34510, CVE:CVE-2025-34511</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="06d1fe0bd6e44d868e6b910b5045a97f" />
-      </td>
-      <td>100535</td>
-      <td>Sitecore - Information Disclosure - CVE:CVE-2025-34509</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="f71ce87ea6e54eab999223df579cd3e0" />
-      </td>
-      <td>100543</td>
-      <td>Grafana - Directory Traversal - CVE:CVE-2025-4123</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="bba3d37891a440fb8bc95b970cbd9abc" />
-      </td>
-      <td>100545</td>
-      <td>WordPress - Information Disclosure - CVE:CVE-2023-5561</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="28108d25f1cf470c8e7648938f634977" />
-      </td>
-      <td>100820</td>
-      <td>CentOS WebPanel - Remote Code Execution - CVE:CVE-2025-48703</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="9d69c796a61444a3aca33dc282ae64c1" />
-      </td>
-      <td>100821</td>
-      <td>LaRecipe - SSTI - CVE:CVE-2025-53833</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="9b5c5e13d2ca4253a89769f2194f7b2d" />
-      </td>
-      <td>100822</td>
-      <td>WordPress:Plugin:WPBookit - Remote Code Execution - CVE:CVE-2025-6058</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="69d43d704b0641898141a4300bf1b661" />
-      </td>
-      <td>100823</td>
-      <td>WordPress:Theme:Motors - Privilege Escalation - CVE:CVE-2025-4322</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="b8ab4644f8044f3485441ee052f30a13" />
+			</td>
+			<td>100535A</td>
+			<td>
+				Sitecore - Dangerous File Upload - CVE:CVE-2025-34510,
+				CVE:CVE-2025-34511
+			</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="06d1fe0bd6e44d868e6b910b5045a97f" />
+			</td>
+			<td>100535</td>
+			<td>Sitecore - Information Disclosure - CVE:CVE-2025-34509</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f71ce87ea6e54eab999223df579cd3e0" />
+			</td>
+			<td>100543</td>
+			<td>Grafana - Directory Traversal - CVE:CVE-2025-4123</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="bba3d37891a440fb8bc95b970cbd9abc" />
+			</td>
+			<td>100545</td>
+			<td>WordPress - Information Disclosure - CVE:CVE-2023-5561</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="28108d25f1cf470c8e7648938f634977" />
+			</td>
+			<td>100820</td>
+			<td>CentOS WebPanel - Remote Code Execution - CVE:CVE-2025-48703</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="9d69c796a61444a3aca33dc282ae64c1" />
+			</td>
+			<td>100821</td>
+			<td>LaRecipe - SSTI - CVE:CVE-2025-53833</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="9b5c5e13d2ca4253a89769f2194f7b2d" />
+			</td>
+			<td>100822</td>
+			<td>
+				WordPress:Plugin:WPBookit - Remote Code Execution - CVE:CVE-2025-6058
+			</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="69d43d704b0641898141a4300bf1b661" />
+			</td>
+			<td>100823</td>
+			<td>WordPress:Theme:Motors - Privilege Escalation - CVE:CVE-2025-4322</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+	</tbody>
 </table>

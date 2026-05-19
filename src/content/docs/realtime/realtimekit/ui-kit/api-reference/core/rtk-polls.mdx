@@ -5,18 +5,19 @@ description: API reference for rtk-polls component (Web Components (HTML) Librar
 products:
   - realtime
 ---
+
 A component which lists all available plugins a user can access with
- the ability to enable or disable them as per their permissions.
+the ability to enable or disable them as per their permissions.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default                 | Description    |
+| ---------- | ---------- | -------- | ----------------------- | -------------- |
+| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config         |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
+| `size`     | `Size`     | ✅       | -                       | Size           |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
 
 ## Usage Examples
 
@@ -29,16 +30,13 @@ A component which lists all available plugins a user can access with
 ### With Properties
 
 ```html
-<rtk-polls
- size="md">
-</rtk-polls>
+<rtk-polls size="md"> </rtk-polls>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-polls");
+	const el = document.querySelector("rtk-polls");
 
-  el.meeting= meeting
+	el.meeting = meeting;
 </script>
 ```

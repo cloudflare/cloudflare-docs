@@ -16,11 +16,11 @@ Review [Namespaces](/artifacts/concepts/namespaces/) first, then use one namespa
 
 ## Compare auth methods
 
-| Interface | Authenticate with | Permissions or scopes | Use for |
-| --- | --- | --- | --- |
-| Workers binding | Configured `artifacts` binding | Wrangler auth is only for local Wrangler commands such as `dev` and `deploy`. | Worker code that calls `env.ARTIFACTS` |
-| REST API | Cloudflare API token in `Authorization: Bearer ...` | **Artifacts** > **Read** for read routes and **Artifacts** > **Edit** for write routes. | Control-plane HTTP requests |
-| Git protocol | Repo-scoped Artifacts token | `read` for clone, fetch, and pull. `write` for push. | Standard Git over HTTPS |
+| Interface       | Authenticate with                                   | Permissions or scopes                                                                   | Use for                                |
+| --------------- | --------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------- |
+| Workers binding | Configured `artifacts` binding                      | Wrangler auth is only for local Wrangler commands such as `dev` and `deploy`.           | Worker code that calls `env.ARTIFACTS` |
+| REST API        | Cloudflare API token in `Authorization: Bearer ...` | **Artifacts** > **Read** for read routes and **Artifacts** > **Edit** for write routes. | Control-plane HTTP requests            |
+| Git protocol    | Repo-scoped Artifacts token                         | `read` for clone, fetch, and pull. `write` for push.                                    | Standard Git over HTTPS                |
 
 Cloudflare API tokens authenticate control-plane access. Repo-scoped Artifacts tokens authenticate Git access.
 
@@ -79,10 +79,10 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 
 Git uses repo-scoped Artifacts tokens, not Cloudflare API tokens. Mint these tokens from the Workers binding or the REST API, then use them with the repo `remote` URL.
 
-| Token scope | Allowed commands |
-| --- | --- |
-| `read` | `git clone`, `git fetch`, `git pull` |
-| `write` | `git clone`, `git fetch`, `git pull`, `git push` |
+| Token scope | Allowed commands                                 |
+| ----------- | ------------------------------------------------ |
+| `read`      | `git clone`, `git fetch`, `git pull`             |
+| `write`     | `git clone`, `git fetch`, `git pull`, `git push` |
 
 Use the exact repo `remote` value returned by the Workers binding or REST API:
 

@@ -78,21 +78,19 @@ Therefore, the above binding is equivalent to:
 
 ```json
 {
-  "production": {
-    "d1_databases": [
-      {
-        "binding": "DB",
-        "database_name": "DATABASE_NAME",
-        "database_id": "DATABASE_ID"
-      }
-    ]
-  }
+	"production": {
+		"d1_databases": [
+			{
+				"binding": "DB",
+				"database_name": "DATABASE_NAME",
+				"database_id": "DATABASE_ID"
+			}
+		]
+	}
 }
 ```
 
 ### Example
-
-
 
 <WranglerConfig>
 
@@ -127,25 +125,25 @@ The above is equivalent to the following structure in JSON:
 
 ```json
 {
-  "env": {
-    "production": {
-      "d1_databases": [
-        {
-          "binding": "BINDING_NAME_2",
-          "database_id": "UUID_2",
-          "database_name": "DATABASE_NAME_2"
-        }
-      ]
-    },
-    "staging": {
-      "d1_databases": [
-        {
-          "binding": "BINDING_NAME_1",
-          "database_id": "UUID_1",
-          "database_name": "DATABASE_NAME_1"
-        }
-      ]
-    }
-  }
+	"env": {
+		"production": {
+			"d1_databases": [
+				{
+					"binding": "BINDING_NAME_2",
+					"database_id": "UUID_2",
+					"database_name": "DATABASE_NAME_2"
+				}
+			]
+		},
+		"staging": {
+			"d1_databases": [
+				{
+					"binding": "BINDING_NAME_1",
+					"database_id": "UUID_1",
+					"database_name": "DATABASE_NAME_1"
+				}
+			]
+		}
+	}
 }
 ```

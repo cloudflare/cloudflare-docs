@@ -85,12 +85,12 @@ If you are not sure whether the DNS content itself is correct, compare it with t
 
 Common examples include:
 
-| Provider | MX records | SPF record |
-| --- | --- | --- |
-| Google Workspace | `ASPMX.L.GOOGLE.COM` (priority `1`), `ALT1.ASPMX.L.GOOGLE.COM` and `ALT2.ASPMX.L.GOOGLE.COM` (priority `5`), `ALT3.ASPMX.L.GOOGLE.COM` and `ALT4.ASPMX.L.GOOGLE.COM` (priority `10`) | `v=spf1 include:_spf.google.com ~all` |
-| Microsoft 365 | `<your-domain>.mail.protection.outlook.com` (priority `0`) | `v=spf1 include:spf.protection.outlook.com -all` |
-| iCloud Mail | `mx01.mail.icloud.com` and `mx02.mail.icloud.com` (priority `10`) | `v=spf1 include:icloud.com ~all` |
-| Mailgun | `mxa.mailgun.org` and `mxb.mailgun.org` (priority `10`) | `v=spf1 include:mailgun.org ~all` |
+| Provider         | MX records                                                                                                                                                                           | SPF record                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| Google Workspace | `ASPMX.L.GOOGLE.COM` (priority `1`), `ALT1.ASPMX.L.GOOGLE.COM` and `ALT2.ASPMX.L.GOOGLE.COM` (priority `5`), `ALT3.ASPMX.L.GOOGLE.COM` and `ALT4.ASPMX.L.GOOGLE.COM` (priority `10`) | `v=spf1 include:_spf.google.com ~all`            |
+| Microsoft 365    | `<your-domain>.mail.protection.outlook.com` (priority `0`)                                                                                                                           | `v=spf1 include:spf.protection.outlook.com -all` |
+| iCloud Mail      | `mx01.mail.icloud.com` and `mx02.mail.icloud.com` (priority `10`)                                                                                                                    | `v=spf1 include:icloud.com ~all`                 |
+| Mailgun          | `mxa.mailgun.org` and `mxb.mailgun.org` (priority `10`)                                                                                                                              | `v=spf1 include:mailgun.org ~all`                |
 
 Always confirm the exact values with your provider before making changes.
 

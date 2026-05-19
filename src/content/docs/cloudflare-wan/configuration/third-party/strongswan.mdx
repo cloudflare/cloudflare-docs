@@ -4,13 +4,15 @@ description: Connect strongSwan to Cloudflare WAN.
 products:
   - cloudflare-wan
 title: strongSwan
-
 ---
 
 import { Render } from "~/components";
 
-<Render file="cloudflare-wan/third-party/strongswan"
-  product="networking-services"
-  params={{
-    bidirectionalHealthChecksUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels"
-  }} />
+<Render
+	file="cloudflare-wan/third-party/strongswan"
+	product="networking-services"
+	params={{
+		bidirectionalHealthChecksUrl:
+			"/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+	}}
+/>

@@ -14,9 +14,9 @@ Use Workers AI with [Chat UI](https://github.com/huggingface/chat-ui?tab=readme-
 
 You will need the following:
 
-* A [Cloudflare account](https://dash.cloudflare.com)
-* Your [Account ID](/fundamentals/account/find-account-and-zone-ids/)
-* An [API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id) for Workers AI
+- A [Cloudflare account](https://dash.cloudflare.com)
+- Your [Account ID](/fundamentals/account/find-account-and-zone-ids/)
+- An [API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id) for Workers AI
 
 ## Setup
 
@@ -28,20 +28,20 @@ When setting up your models, specify the `cloudflare` endpoint.
 
 ```json
 {
-  "name" : "nousresearch/hermes-2-pro-mistral-7b",
-  "tokenizer": "nousresearch/hermes-2-pro-mistral-7b",
-  "parameters": {
-    "stop": ["<|im_end|>"]
-  },
-  "endpoints" : [
-    {
-      "type": "cloudflare",
-      // optionally specify these if not included in .env.local
-      "accountId": "your-account-id",
-      "apiToken": "your-api-token"
-      //
-    }
-  ]
+	"name": "nousresearch/hermes-2-pro-mistral-7b",
+	"tokenizer": "nousresearch/hermes-2-pro-mistral-7b",
+	"parameters": {
+		"stop": ["<|im_end|>"]
+	},
+	"endpoints": [
+		{
+			"type": "cloudflare",
+			// optionally specify these if not included in .env.local
+			"accountId": "your-account-id",
+			"apiToken": "your-api-token"
+			//
+		}
+	]
 }
 ```
 

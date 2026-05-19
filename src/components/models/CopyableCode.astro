@@ -8,12 +8,7 @@ const { text, label = "Copy" } = Astro.props;
 ---
 
 <copyable-code data-text={text}>
-	<button
-		type="button"
-		title={label}
-		aria-label={label}
-		class="copy-button"
-	>
+	<button type="button" title={label} aria-label={label} class="copy-button">
 		<code>{text}</code>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +38,9 @@ const { text, label = "Copy" } = Astro.props;
 		border: 1px solid var(--sl-color-gray-5);
 		background: transparent;
 		cursor: pointer;
-		transition: border-color 0.15s, background-color 0.15s;
+		transition:
+			border-color 0.15s,
+			background-color 0.15s;
 	}
 
 	.copy-button:hover {

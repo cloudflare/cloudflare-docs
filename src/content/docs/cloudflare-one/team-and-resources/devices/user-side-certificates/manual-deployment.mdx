@@ -754,115 +754,115 @@ To install a certificate for use in a Docker container:
 4. Add the certificate to your Docker image:
 
    <Tabs> <TabItem label="During build process">
-
-   To add the certificate to your Dockerfile to install it during the build process:
-   1. Add the certificate install directions to your Dockerfile. For example:
-
-      ```docker title="Red Hat-based images"
-      FROM registry.access.redhat.com/ubi9/ubi:latest
-      # Or FROM centos:7 or FROM fedora:38
-
-      # Install necessary certificates package
-      RUN dnf install -y ca-certificates
-
-      # Copy and add Cloudflare root certificate
-      COPY certs/certificate.pem /etc/pki/ca-trust/source/anchors/certificate.crt
-      RUN update-ca-trust extract
-      ```
-
-      ```docker title="Debian-based images"
-      FROM debian:12
-      # Or FROM ubuntu:22.04
-
-      # Install necessary certificates package
-      RUN apt-get update && apt-get install -y ca-certificates
-
-      # Copy and add Cloudflare root certificate
-      COPY certs/certificate.pem /usr/local/share/ca-certificates/certificate.crt
-      RUN update-ca-certificates
-      ```
-
-      ```docker title="Alpine-based images"
-      FROM alpine:3.18
-
-      # Install necessary certificates package
-      RUN apk add --no-cache ca-certificates
-
-      # Copy and add Cloudflare root certificate
-      COPY certs/certificate.pem /usr/local/share/ca-certificates/certificate.crt
-      RUN update-ca-certificates
-      ```
-
-   2. Build the Docker image:
-
-      ```sh
-      docker build -t <your-container-name> .
-      ```
-
-   3. Verify the certificate was installed:
-
-      ```sh title="Red Hat-based images"
-      docker run --rm your-image-name sh -c "cat /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem | grep Cloudflare"
-      ```
-
-      ```sh title="Debian and Alpine-based images"
-      docker run --rm your-image-name sh -c "cat /etc/ssl/certs/certificate.pem"
-      ```
-
-   </TabItem>
-
-   <TabItem label="During runtime">
-
-   To add the certificate to your Docker Compose file to install it during runtime:
-   1. Add the certificate install directions to your `docker-compose.yml` file. For example:
-
-      ```yaml title="Red Hat-based containers"
-      version: '3'
-      services:
-      	redhat-app:
-      		image: registry.access.redhat.com/ubi9/ubi:latest
-       		volumes:
-       			- certs/certificate.pem:/etc/pki/ca-trust/source/anchors/certificate.pem
-       		entrypoint: /bin/sh -c "dnf install -y ca-certificates && update-ca-trust extract && app start"
-      ```
-
-      ```yaml title="Debian-based containers"
-      version: '3'
-      services:
-      	debian-app:
-      		image: debian:12
-       		volumes:
-       			- certs/certificate.pem:/usr/local/share/ca-certificates/certificate.crt
-       		entrypoint: /bin/sh -c "apt-get update && apt-get install -y ca-certificates && update-ca-certificates && app start"
-      ```
-
-      ```yaml title="Alpine-based containers"
-      version: '3'
-      services:
-      	alpine-app:
-      		image: alpine:3.18
-       		volumes:
-       			- certs/certificate.pem:/usr/local/share/ca-certificates/certificate.pem
-       		entrypoint: /bin/sh -c "apk add --no-cache ca-certificates && update-ca-certificates && app start"
-      ```
-
-   2. Run the container:
-
-      ```sh
-      docker-compose up
-      ```
-
-   3. Verify the certificate was installed:
-
-      ```sh title="Red Hat-based containers"
-      docker exec -it <container-name> sh -c "cat /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem | grep Cloudflare"
-      ```
-
-      ```sh title="Debian and Alpine-based containers"
-      docker exec -it <container-name> sh -c "cat /etc/ssl/certs/ca-certificates.crt | grep Cloudflare"
-      ```
-
-   </TabItem> </Tabs>
+   
+      To add the certificate to your Dockerfile to install it during the build process:
+      1. Add the certificate install directions to your Dockerfile. For example:
+   
+         ```docker title="Red Hat-based images"
+         FROM registry.access.redhat.com/ubi9/ubi:latest
+         # Or FROM centos:7 or FROM fedora:38
+   
+         # Install necessary certificates package
+         RUN dnf install -y ca-certificates
+   
+         # Copy and add Cloudflare root certificate
+         COPY certs/certificate.pem /etc/pki/ca-trust/source/anchors/certificate.crt
+         RUN update-ca-trust extract
+         ```
+   
+         ```docker title="Debian-based images"
+         FROM debian:12
+         # Or FROM ubuntu:22.04
+   
+         # Install necessary certificates package
+         RUN apt-get update && apt-get install -y ca-certificates
+   
+         # Copy and add Cloudflare root certificate
+         COPY certs/certificate.pem /usr/local/share/ca-certificates/certificate.crt
+         RUN update-ca-certificates
+         ```
+   
+         ```docker title="Alpine-based images"
+         FROM alpine:3.18
+   
+         # Install necessary certificates package
+         RUN apk add --no-cache ca-certificates
+   
+         # Copy and add Cloudflare root certificate
+         COPY certs/certificate.pem /usr/local/share/ca-certificates/certificate.crt
+         RUN update-ca-certificates
+         ```
+   
+      2. Build the Docker image:
+   
+         ```sh
+         docker build -t <your-container-name> .
+         ```
+   
+      3. Verify the certificate was installed:
+   
+         ```sh title="Red Hat-based images"
+         docker run --rm your-image-name sh -c "cat /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem | grep Cloudflare"
+         ```
+   
+         ```sh title="Debian and Alpine-based images"
+         docker run --rm your-image-name sh -c "cat /etc/ssl/certs/certificate.pem"
+         ```
+   
+      </TabItem>
+   
+      <TabItem label="During runtime">
+   
+      To add the certificate to your Docker Compose file to install it during runtime:
+      1. Add the certificate install directions to your `docker-compose.yml` file. For example:
+   
+         ```yaml title="Red Hat-based containers"
+         version: '3'
+         services:
+         	redhat-app:
+         		image: registry.access.redhat.com/ubi9/ubi:latest
+          		volumes:
+          			- certs/certificate.pem:/etc/pki/ca-trust/source/anchors/certificate.pem
+          		entrypoint: /bin/sh -c "dnf install -y ca-certificates && update-ca-trust extract && app start"
+         ```
+   
+         ```yaml title="Debian-based containers"
+         version: '3'
+         services:
+         	debian-app:
+         		image: debian:12
+          		volumes:
+          			- certs/certificate.pem:/usr/local/share/ca-certificates/certificate.crt
+          		entrypoint: /bin/sh -c "apt-get update && apt-get install -y ca-certificates && update-ca-certificates && app start"
+         ```
+   
+         ```yaml title="Alpine-based containers"
+         version: '3'
+         services:
+         	alpine-app:
+         		image: alpine:3.18
+          		volumes:
+          			- certs/certificate.pem:/usr/local/share/ca-certificates/certificate.pem
+          		entrypoint: /bin/sh -c "apk add --no-cache ca-certificates && update-ca-certificates && app start"
+         ```
+   
+      2. Run the container:
+   
+         ```sh
+         docker-compose up
+         ```
+   
+      3. Verify the certificate was installed:
+   
+         ```sh title="Red Hat-based containers"
+         docker exec -it <container-name> sh -c "cat /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem | grep Cloudflare"
+         ```
+   
+         ```sh title="Debian and Alpine-based containers"
+         docker exec -it <container-name> sh -c "cat /etc/ssl/certs/ca-certificates.crt | grep Cloudflare"
+         ```
+   
+      </TabItem> </Tabs>
 
 ### Command-line tools
 

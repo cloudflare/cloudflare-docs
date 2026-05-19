@@ -22,10 +22,10 @@ A Cloudflare-side ✅ entry only delivers end-to-end post-quantum protection whe
 
 Inbound TLS 1.3 (including QUIC) from end-user clients to Cloudflare's edge.
 
-| Protection | Status |
-| --- | --- |
-| Key agreement | ✅ X25519MLKEM768 |
-| Signatures | 📝 Planned via [Merkle Tree Certificates](https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/) |
+| Protection    | Status                                                                                                           |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Key agreement | ✅ X25519MLKEM768                                                                                                |
+| Signatures    | 📝 Planned via [Merkle Tree Certificates](https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/) |
 
 Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quantum-for-all/).
 
@@ -35,10 +35,10 @@ Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quan
 
 Service-to-service TLS connections between Cloudflare data centers and internal services.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | 🚧 X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQC generally available](https://blog.cloudflare.com/post-quantum-cryptography-ga/), [Roadmap](https://blog.cloudflare.com/post-quantum-roadmap/).
 
@@ -48,10 +48,10 @@ Most internal connections have been migrated to X25519MLKEM768. A long tail of s
 
 Outbound TLS 1.3 connections from Cloudflare's edge to customer origin servers.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/).
 
@@ -61,10 +61,10 @@ Reference: [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/).
 
 MASQUE tunnel (TLS 1.3) from an end-user device to Cloudflare's global network, established by the Cloudflare One Client (formerly WARP).
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQC and Cloudflare One: Cloudflare One Client](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-one-client).
 
@@ -74,10 +74,10 @@ Reference: [PQC and Cloudflare One: Cloudflare One Client](/ssl/post-quantum-cry
 
 Outbound TLS 1.3 tunnel from `cloudflared` on a customer origin to Cloudflare's global network.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQ Cloudflare Tunnel](https://blog.cloudflare.com/post-quantum-tunnel/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/).
 
@@ -87,10 +87,10 @@ Reference: [PQ Cloudflare Tunnel](https://blog.cloudflare.com/post-quantum-tunne
 
 TLS 1.3 control-plane connection used by the Cloudflare One Appliance to establish keys for its IPsec ESP dataplane tunnels.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/reference/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-ipsec).
 
@@ -98,10 +98,10 @@ Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [Cloudfla
 
 IKEv2 key exchange for IPsec tunnels between third-party branch connectors and Cloudflare's global network.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status                                            |
+| ------------- | ------------------------------------------------- |
 | Key agreement | ✅ ML-KEM-768/1024 + DH Group 20 (P-384) in IKEv2 |
-| Signatures | Not yet |
+| Signatures    | Not yet                                           |
 
 Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [GRE and IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability), [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/).
 

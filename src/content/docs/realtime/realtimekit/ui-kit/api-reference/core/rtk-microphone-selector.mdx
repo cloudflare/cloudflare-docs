@@ -5,25 +5,27 @@ description: API reference for rtk-microphone-selector component (Web Components
 products:
   - realtime
 ---
+
 A component which lets to manage your audio devices and audio preferences.
- Emits `rtkStateUpdate` event with data for muting notification sounds:
- ```ts
- {
-  prefs: {
-    muteNotificationSounds: boolean
-  }
- }
- ```
+Emits `rtkStateUpdate` event with data for muting notification sounds:
+
+```ts
+{
+	prefs: {
+		muteNotificationSounds: boolean;
+	}
+}
+```
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'full' \| 'inline'` | ✅ | - | variant |
+| Property   | Type                 | Required | Default           | Description    |
+| ---------- | -------------------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack`           | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`            | ✅       | -                 | Meeting object |
+| `size`     | `Size`               | ✅       | -                 | Size           |
+| `t`        | `RtkI18n`            | ❌       | `useLanguage()`   | Language       |
+| `variant`  | `'full' \| 'inline'` | ✅       | -                 | variant        |
 
 ## Usage Examples
 
@@ -36,16 +38,13 @@ A component which lets to manage your audio devices and audio preferences.
 ### With Properties
 
 ```html
-<rtk-microphone-selector
- size="md">
-</rtk-microphone-selector>
+<rtk-microphone-selector size="md"> </rtk-microphone-selector>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-microphone-selector");
+	const el = document.querySelector("rtk-microphone-selector");
 
-  el.meeting= meeting
+	el.meeting = meeting;
 </script>
 ```

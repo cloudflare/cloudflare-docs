@@ -125,7 +125,9 @@ export default {
 	async fetch(request, env, ctx) {
 		try {
 			// Fetch a file from the private S3 bucket via VPC endpoint
-			const response = await env.S3_STORAGE.fetch("https://s3.us-west-2.amazonaws.com/my-bucket/data.json");
+			const response = await env.S3_STORAGE.fetch(
+				"https://s3.us-west-2.amazonaws.com/my-bucket/data.json",
+			);
 
 			// Use the response from S3 to perform more logic in Workers, before returning the final response
 			return response;

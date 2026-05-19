@@ -5,17 +5,18 @@ description: API reference for rtk-counter component (Angular Library)
 products:
   - realtime
 ---
+
 A number picker with increment and decrement buttons.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `minValue` | `number` | ✅ | - | Minimum value |
-| `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `value` | `number` | ✅ | - | Initial value |
+| Property   | Type        | Required | Default           | Description   |
+| ---------- | ----------- | -------- | ----------------- | ------------- |
+| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack     |
+| `minValue` | `number`    | ✅       | -                 | Minimum value |
+| `size`     | `Size1`     | ✅       | -                 | Size          |
+| `t`        | `RtkI18n`   | ❌       | `useLanguage()`   | Language      |
+| `value`    | `number`    | ✅       | -                 | Initial value |
 
 ## Usage Examples
 
@@ -30,10 +31,5 @@ A number picker with increment and decrement buttons.
 
 ```html
 <!-- component.html -->
-<rtk-counter
- minValue="42"
- size="md"
- value="42">
-</rtk-counter>
+<rtk-counter minValue="42" size="md" value="42"> </rtk-counter>
 ```
-

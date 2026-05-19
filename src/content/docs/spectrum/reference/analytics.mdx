@@ -9,11 +9,9 @@ tags:
   - Analytics
 ---
 
-import { Render, APIRequest } from "~/components"
+import { Render, APIRequest } from "~/components";
 
 Cloudflare measures the following metrics for every connection.
-
-
 
 | Metric         | Name                                | Example | Unit                 |
 | -------------- | ----------------------------------- | ------- | -------------------- |
@@ -25,13 +23,9 @@ Cloudflare measures the following metrics for every connection.
 | duration90th   | 90th percentile connection duration | `1.0`   | Time in milliseconds |
 | duration99th   | 99th percentile connection duration | `1.0`   | Time in milliseconds |
 
-
-
 ## Additional dimensions
 
 You can divide your analytics further by the following dimensions.
-
-
 
 | Dimension | Name                          | Example                                                              |
 | --------- | ----------------------------- | -------------------------------------------------------------------- |
@@ -40,13 +34,9 @@ You can divide your analytics further by the following dimensions.
 | coloName  | Colo Name                     | `SFO`                                                                |
 | ipVersion | IP version used by the client | `4`, `6`                                                             |
 
-
-
 ## Operators for filtering
 
 Use the operators below to filter data.
-
-
 
 | Operator | Name                     | URL Encoded |
 | -------- | ------------------------ | ----------- |
@@ -57,8 +47,6 @@ Use the operators below to filter data.
 | `>=`     | Greater than or equal to | `%3E%3D`    |
 | `<=`     | Less than or equal to    | `%3C%3D`    |
 
-
-
 <Render file="api-combine-filters" product="fundamentals" />
 
 ## Analytics request structure
@@ -68,26 +56,26 @@ Use the operators below to filter data.
 /api/v4/zones/{zone_id}/spectrum/analytics/events/bytime?metrics=METRICS&dimensions=DIMENSIONS&filters=FILTERS&since=FROM_TS&sort=SORT&until=TO_TS&limit=LIMIT
 ```
 
-* METRICS is one or more metrics (such as count) to compute
-* DIMENSIONS can be used to break down the data by given attributes
-* FILTERS used to filter rows by one or more dimensions (see Filters section below)
-* SORT is the sort order for the result set; sort fields must be included in METRICS or DIMENSIONS
-* TO\_TS is that end of time interval to query, defaults to current time
-* FROM\_TS is that start of time interval to query, defaults to TO\_TS - 6 hours
-* STEP is used to select time series resolution when using endpoint:
-* auto or omitted - selects time step most appropriate to time interval
-  * year
-  * quarter
-  * month
-  * week
-  * day
-  * hour
+- METRICS is one or more metrics (such as count) to compute
+- DIMENSIONS can be used to break down the data by given attributes
+- FILTERS used to filter rows by one or more dimensions (see Filters section below)
+- SORT is the sort order for the result set; sort fields must be included in METRICS or DIMENSIONS
+- TO_TS is that end of time interval to query, defaults to current time
+- FROM_TS is that start of time interval to query, defaults to TO_TS - 6 hours
+- STEP is used to select time series resolution when using endpoint:
+- auto or omitted - selects time step most appropriate to time interval
+  - year
+  - quarter
+  - month
+  - week
+  - day
+  - hour
 
 ## Analytics query example
 
 <APIRequest
-  path="/zones/{zone_id}/spectrum/analytics/events/summary"
-  method="GET"
+	path="/zones/{zone_id}/spectrum/analytics/events/summary"
+	method="GET"
 />
 
 Refer to the [Spectrum API documentation](/api/resources/spectrum/subresources/analytics/subresources/aggregates/subresources/currents/methods/get/) for more examples of API requests.

@@ -5,16 +5,17 @@ description: API reference for rtk-plugin-main component (Web Components (HTML) 
 products:
   - realtime
 ---
+
 A component which loads a plugin.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting |
-| `plugin` | `RTKPlugin` | ✅ | - | Plugin |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type        | Required | Default           | Description |
+| ---------- | ----------- | -------- | ----------------- | ----------- |
+| `iconPack` | `IconPack`  | ❌       | `defaultIconPack` | Icon pack   |
+| `meeting`  | `Meeting`   | ✅       | -                 | Meeting     |
+| `plugin`   | `RTKPlugin` | ✅       | -                 | Plugin      |
+| `t`        | `RtkI18n`   | ❌       | `useLanguage()`   | Language    |
 
 ## Usage Examples
 
@@ -27,15 +28,13 @@ A component which loads a plugin.
 ### With Properties
 
 ```html
-<rtk-plugin-main>
-</rtk-plugin-main>
+<rtk-plugin-main> </rtk-plugin-main>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-plugin-main");
+	const el = document.querySelector("rtk-plugin-main");
 
-  el.meeting= meeting
+	el.meeting = meeting;
 </script>
 ```

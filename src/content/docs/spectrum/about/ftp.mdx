@@ -13,9 +13,7 @@ Enabling Spectrum for FTP is not straightforward due to the implementation of th
 
 :::note
 
-
 This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.
-
 
 :::
 
@@ -23,7 +21,7 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
 FTP leverages two different sockets, one for issuing commands and the other for actual data transfer. The control socket takes care of users logging in and sending commands, and the data socket is where directory listings and files actually get transferred.
 
-There are two ways in which client and server can establish a data socket: active and passive. In active mode, the server connects *back* to the client on a port that they have specified, which can create issues where clients are behind an NAT. The alternative is passive mode, where the server opens an extra port that the client then connects to. For an overview of active versus passive FTP, refer to [Active FTP vs. Passive FTP, a Definitive Explanation](http://slacksite.com/other/ftp.html).
+There are two ways in which client and server can establish a data socket: active and passive. In active mode, the server connects _back_ to the client on a port that they have specified, which can create issues where clients are behind an NAT. The alternative is passive mode, where the server opens an extra port that the client then connects to. For an overview of active versus passive FTP, refer to [Active FTP vs. Passive FTP, a Definitive Explanation](http://slacksite.com/other/ftp.html).
 
 In passive mode, the FTP server communicates a port that the client should connect to, which is done on the control socket via a PASV command. By default, the FTP server responds with the IP address that it is listening on. This scenario is fine for servers running directly on a public-facing IP but creates issues when a server is behind an NAT, firewall, or Cloudflare Spectrum.
 
@@ -31,7 +29,7 @@ Alternatively, more modern FTP server software supports [FTP extensions](https:/
 
 ## What Does and Does Not Work
 
-Spectrum is able to protect servers serving FTP traffic in *passive mode only*. Active mode is not supported due to the fact that the origin server sees the Spectrum IP as being the client instead of the actual client IP. When the client issues a PORT command with their own IP, the FTP server rejects because the two addresses do not match.
+Spectrum is able to protect servers serving FTP traffic in _passive mode only_. Active mode is not supported due to the fact that the origin server sees the Spectrum IP as being the client instead of the actual client IP. When the client issues a PORT command with their own IP, the FTP server rejects because the two addresses do not match.
 
 Passive mode in combination with EPSV works out of the box with no origin-side configuration required. Note that the client must also support EPSV for this to work. Traditional passive mode with PASV is possible with minimal origin-side configuration (see below, Protecting an FTP server with Spectrum)
 
@@ -71,14 +69,14 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 
 To use Spectrum TCP to proxy and protect FTPS, specifically ProFTPD, the following example configuration is recommended:
 
-* **Control Port**: Port 21
-* **Data Ports**: Port ranges 50000-50500
+- **Control Port**: Port 21
+- **Data Ports**: Port ranges 50000-50500
 
 On the ProFTPD server side use the following example configuration:
 
-* `MasqueradeAddress`: `www.example.com`
-* `AllowForeignAddress`: You can use the option `on` to allow all IPs, but it is recommended to only allow [Cloudflare IP](/fundamentals/concepts/cloudflare-ip-addresses/#allow-cloudflare-ip-addresses).
-* `PassivePorts`: `50000-50500`
+- `MasqueradeAddress`: `www.example.com`
+- `AllowForeignAddress`: You can use the option `on` to allow all IPs, but it is recommended to only allow [Cloudflare IP](/fundamentals/concepts/cloudflare-ip-addresses/#allow-cloudflare-ip-addresses).
+- `PassivePorts`: `50000-50500`
 
 For more details, refer to the [ProFTPD documentation](http://www.proftpd.org/docs/modules/mod_core.html).
 

@@ -27,6 +27,7 @@ The dashboard provides an **Empty Bucket** action that handles this for you, reg
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select the bucket you want to empty.
 3. Go to the **Settings** tab.
 4. Scroll to the **Empty Bucket** section.
@@ -86,6 +87,7 @@ You can delete a bucket in various ways.
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select the bucket you want to delete.
 3. Go to the **Settings** tab.
 4. Scroll to the **Delete Bucket** section. If the bucket is not empty, select **Empty Bucket** first to clear all objects.
@@ -129,25 +131,25 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/r2/bu
 ## Related resources
 
 <LinkCard
-  title="Delete objects"
-  href="/r2/objects/delete-objects/"
-  description="Delete individual objects or folders from an R2 bucket."
+	title="Delete objects"
+	href="/r2/objects/delete-objects/"
+	description="Delete individual objects or folders from an R2 bucket."
 />
 
 <LinkCard
-  title="Bucket locks"
-  href="/r2/buckets/bucket-locks/"
-  description="Prevent accidental deletion by setting retention policies on objects."
+	title="Bucket locks"
+	href="/r2/buckets/bucket-locks/"
+	description="Prevent accidental deletion by setting retention policies on objects."
 />
 
 <LinkCard
-  title="Object lifecycles"
-  href="/r2/buckets/object-lifecycles/"
-  description="Automatically expire objects after a specified period instead of emptying manually."
+	title="Object lifecycles"
+	href="/r2/buckets/object-lifecycles/"
+	description="Automatically expire objects after a specified period instead of emptying manually."
 />
 
 <LinkCard
-  title="Create buckets"
-  href="/r2/buckets/create-buckets/"
-  description="Create a new R2 bucket after deleting an existing one."
+	title="Create buckets"
+	href="/r2/buckets/create-buckets/"
+	description="Create a new R2 bucket after deleting an existing one."
 />

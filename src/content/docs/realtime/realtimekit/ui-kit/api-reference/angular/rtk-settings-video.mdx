@@ -5,25 +5,27 @@ description: API reference for rtk-settings-video component (Angular Library)
 products:
   - realtime
 ---
+
 A component which lets to manage your camera devices and your video preferences.
- Emits `rtkStateUpdate` event with data for toggling mirroring of self video:
- ```ts
- {
-  prefs: {
-    mirrorVideo: boolean
-  }
- }
- ```
+Emits `rtkStateUpdate` event with data for toggling mirroring of self video:
+
+```ts
+{
+	prefs: {
+		mirrorVideo: boolean;
+	}
+}
+```
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description    |
+| ---------- | ---------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
+| `size`     | `Size`     | ✅       | -                 | Size           |
+| `states`   | `States`   | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
 
 ## Usage Examples
 
@@ -38,9 +40,5 @@ A component which lets to manage your camera devices and your video preferences.
 
 ```html
 <!-- component.html -->
-<rtk-settings-video
- [meeting]="meeting"
- size="md">
-</rtk-settings-video>
+<rtk-settings-video [meeting]="meeting" size="md"> </rtk-settings-video>
 ```
-

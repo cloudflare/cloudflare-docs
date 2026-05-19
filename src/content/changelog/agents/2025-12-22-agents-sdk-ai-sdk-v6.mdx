@@ -33,13 +33,13 @@ const tools = {
 	getWeather: tool({
 		description: "Get weather for a city",
 		inputSchema: z.object({ city: z.string() }),
-		execute: async ({ city }) => fetchWeather(city)
+		execute: async ({ city }) => fetchWeather(city),
 	}),
 
 	// Client-executed tool (no execute = client handles via onToolCall)
 	getLocation: tool({
 		description: "Get user location from browser",
-		inputSchema: z.object({})
+		inputSchema: z.object({}),
 		// No execute function
 	}),
 
@@ -48,8 +48,8 @@ const tools = {
 		description: "Process a payment",
 		inputSchema: z.object({ amount: z.number() }),
 		needsApproval: async ({ amount }) => amount > 100,
-		execute: async ({ amount }) => charge(amount)
-	})
+		execute: async ({ amount }) => charge(amount),
+	}),
 };
 ```
 
@@ -70,11 +70,11 @@ const { messages, sendMessage, addToolOutput } = useAgentChat({
 				toolCallId: toolCall.toolCallId,
 				output: {
 					lat: position.coords.latitude,
-					lng: position.coords.longitude
-				}
+					lng: position.coords.longitude,
+				},
 			});
 		}
-	}
+	},
 });
 ```
 
@@ -97,9 +97,9 @@ const { messages, sendMessage, addToolOutput } = useAgentChat({
 		// Handle client-side tool execution
 		await addToolOutput({
 			toolCallId: toolCall.toolCallId,
-			output: { result: "success" }
+			output: { result: "success" },
 		});
-	}
+	},
 });
 ```
 
@@ -112,12 +112,12 @@ const paymentTool = tool({
 	description: "Process a payment",
 	inputSchema: z.object({
 		amount: z.number(),
-		recipient: z.string()
+		recipient: z.string(),
 	}),
 	needsApproval: async ({ amount }) => amount > 1000,
 	execute: async ({ amount, recipient }) => {
 		return await processPayment(amount, recipient);
-	}
+	},
 });
 ```
 
@@ -138,7 +138,7 @@ const pendingToolCallConfirmation = messages.some((m) =>
 if (pendingToolCallConfirmation) {
 	await addToolOutput({
 		toolCallId: part.toolCallId,
-		output: "User approved the action"
+		output: "User approved the action",
 	});
 }
 ```
@@ -158,7 +158,7 @@ import { convertToModelMessages } from "ai";
 
 const result = streamText({
 	messages: await convertToModelMessages(this.messages),
-	model: openai("gpt-4o")
+	model: openai("gpt-4o"),
 });
 ```
 
@@ -182,14 +182,14 @@ const result = await generateObject({
 	mode: "json",
 	model,
 	schema,
-	prompt
+	prompt,
 });
 
 // After (v6)
 const result = await generateObject({
 	model,
 	schema,
-	prompt
+	prompt,
 });
 ```
 
@@ -203,10 +203,10 @@ import { generateText, Output, stepCountIs } from "ai";
 const { output } = await generateText({
 	model: openai("gpt-4"),
 	output: Output.object({
-		schema: z.object({ name: z.string() })
+		schema: z.object({ name: z.string() }),
 	}),
 	stopWhen: stepCountIs(2),
-	prompt: "Generate a name"
+	prompt: "Generate a name",
 });
 ```
 
@@ -282,11 +282,11 @@ import { createAIGateway } from "ai-gateway-provider";
 const model = createAIGateway({
 	gatewayUrl: "https://gateway.ai.cloudflare.com/v1/your-account-id/gateway",
 	headers: {
-		"Authorization": `Bearer ${env.AI_GATEWAY_TOKEN}`
-	}
+		Authorization: `Bearer ${env.AI_GATEWAY_TOKEN}`,
+	},
 })({
 	provider: "openai",
-	model: "gpt-4o"
+	model: "gpt-4o",
 });
 ```
 

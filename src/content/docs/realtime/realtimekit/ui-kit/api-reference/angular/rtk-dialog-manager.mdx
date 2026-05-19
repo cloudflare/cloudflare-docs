@@ -5,24 +5,26 @@ description: API reference for rtk-dialog-manager component (Angular Library)
 products:
   - realtime
 ---
+
 A component which handles all dialog elements in a component such as:
- - rtk-settings
- - rtk-leave-meeting
- - rtk-permissions-message
- - rtk-image-viewer
- - rtk-breakout-rooms-manager
- This components depends on the values from `states` object.
+
+- rtk-settings
+- rtk-leave-meeting
+- rtk-permissions-message
+- rtk-image-viewer
+- rtk-breakout-rooms-manager
+  This components depends on the values from `states` object.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default                 | Description    |
+| ---------- | ---------- | -------- | ----------------------- | -------------- |
+| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | UI Config      |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
+| `size`     | `Size`     | ✅       | -                       | Size           |
+| `states`   | `States`   | ✅       | -                       | States object  |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
 
 ## Usage Examples
 
@@ -37,9 +39,5 @@ A component which handles all dialog elements in a component such as:
 
 ```html
 <!-- component.html -->
-<rtk-dialog-manager
- [meeting]="meeting"
- size="md">
-</rtk-dialog-manager>
+<rtk-dialog-manager [meeting]="meeting" size="md"> </rtk-dialog-manager>
 ```
-

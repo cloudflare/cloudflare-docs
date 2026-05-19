@@ -5,13 +5,14 @@ description: API reference for rtk-emoji-picker-button component (Angular Librar
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `isActive` | `boolean` | ✅ | - | Active state indicator |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property   | Type        | Required | Default           | Description            |
+| ---------- | ----------- | -------- | ----------------- | ---------------------- |
+| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack              |
+| `isActive` | `boolean`   | ✅       | -                 | Active state indicator |
+| `t`        | `RtkI18n1`  | ❌       | `useLanguage()`   | Language               |
 
 ## Usage Examples
 
@@ -26,8 +27,5 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-emoji-picker-button
- [isActive]="true">
-</rtk-emoji-picker-button>
+<rtk-emoji-picker-button [isActive]="true"> </rtk-emoji-picker-button>
 ```
-

@@ -5,21 +5,22 @@ description: API reference for rtk-recording-toggle component (Web Components (H
 products:
   - realtime
 ---
+
 A button which toggles recording state of a meeting.
- Only a privileged user can perform this action,
- thus the button will not be visible for participants
- who don't have the permission to record a meeting.
+Only a privileged user can perform this action,
+thus the button will not be visible for participants
+who don't have the permission to record a meeting.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `disabled` | `boolean` | ✅ | - | Disable the button |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default           | Description        |
+| ---------- | ------------------- | -------- | ----------------- | ------------------ |
+| `disabled` | `boolean`           | ✅       | -                 | Disable the button |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Icon pack          |
+| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object     |
+| `size`     | `Size`              | ✅       | -                 | Size               |
+| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language           |
+| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant            |
 
 ## Usage Examples
 
@@ -32,17 +33,14 @@ A button which toggles recording state of a meeting.
 ### With Properties
 
 ```html
-<rtk-recording-toggle
- size="md">
-</rtk-recording-toggle>
+<rtk-recording-toggle size="md"> </rtk-recording-toggle>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-recording-toggle");
+	const el = document.querySelector("rtk-recording-toggle");
 
-  el.disabled= true;
-  el.meeting= meeting
+	el.disabled = true;
+	el.meeting = meeting;
 </script>
 ```

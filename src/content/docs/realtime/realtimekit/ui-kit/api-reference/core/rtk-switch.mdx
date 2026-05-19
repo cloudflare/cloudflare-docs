@@ -5,17 +5,18 @@ description: API reference for rtk-switch component (Web Components (HTML) Libra
 products:
   - realtime
 ---
+
 A switch component which follows RTK Design System.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `checked` | `boolean` | ✅ | - | Whether the switch is enabled/checked |
-| `disabled` | `boolean` | ✅ | - | Whether switch is readonly |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `readonly` | `boolean` | ✅ | - | Whether switch is readonly |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description                           |
+| ---------- | ---------- | -------- | ----------------- | ------------------------------------- |
+| `checked`  | `boolean`  | ✅       | -                 | Whether the switch is enabled/checked |
+| `disabled` | `boolean`  | ✅       | -                 | Whether switch is readonly            |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack                             |
+| `readonly` | `boolean`  | ✅       | -                 | Whether switch is readonly            |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language                              |
 
 ## Usage Examples
 
@@ -28,17 +29,15 @@ A switch component which follows RTK Design System.
 ### With Properties
 
 ```html
-<rtk-switch>
-</rtk-switch>
+<rtk-switch> </rtk-switch>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-switch");
+	const el = document.querySelector("rtk-switch");
 
-  el.checked= true;
-  el.disabled= true;
-  el.readonly= true;
+	el.checked = true;
+	el.disabled = true;
+	el.readonly = true;
 </script>
 ```
