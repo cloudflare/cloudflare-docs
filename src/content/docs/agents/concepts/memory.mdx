@@ -270,6 +270,19 @@ const session = Session.create(this)
 
 The `prefix` option scopes the provider to a subdirectory in the bucket. Skill keys in the metadata listing are shown without the prefix, so `skills/api-ref` becomes `api-ref` in the system prompt.
 
+Use `keys` to allowlist specific prefix-relative skills for `get()` and `load()`:
+
+<TypeScriptExample>
+
+```ts
+new R2SkillProvider(env.SKILLS_BUCKET, {
+	prefix: "skills/",
+	keys: ["deploy-checklist", "api-ref"],
+});
+```
+
+</TypeScriptExample>
+
 Add an R2 bucket binding to your Wrangler configuration:
 
 <WranglerConfig>

@@ -16,6 +16,8 @@ import { Render } from "~/components";
 
 <Render file="dcv-definition" product="ssl" /> <br />
 
+When you [create a custom hostname](/api/resources/custom_hostnames/methods/create/), choose one certificate validation method. The API accepts one `ssl.method` value: `http`, `txt`, or `email`.
+
 ## DCV situations
 
 ### Non-wildcard certificates
@@ -40,6 +42,8 @@ If you want to minimize downtime, explore one of the following methods to issue 
 ### Minimize customer effort
 
 If you value simplicity and your customers can handle a few minutes of downtime, you can rely on Cloudflare [automatic HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic).
+
+Automatic HTTP validation requires the hostname to point to your SaaS target before the CA can fetch the validation token. During that period, the hostname may route to Cloudflare before the certificate reaches `ssl.status: active`.
 
 ## Potential issues
 

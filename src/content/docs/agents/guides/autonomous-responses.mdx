@@ -21,6 +21,7 @@ The key primitives:
 | Primitive           | Role                                                                               |
 | ------------------- | ---------------------------------------------------------------------------------- |
 | `saveMessages`      | Inject a message and trigger the LLM — the server-side equivalent of `sendMessage` |
+| `submitMessages`    | Durably accept a Think turn for async execution and inspect it later               |
 | `persistMessages`   | Store messages without triggering a response — for injecting context silently      |
 | `onChatResponse`    | React when any response completes, including ones you did not initiate             |
 | `isServerStreaming` | Client-side flag: `true` when a server-initiated stream is active                  |
@@ -30,6 +31,41 @@ The key primitives:
 `saveMessages` persists messages to SQLite **and** triggers `onChatMessage` for a new LLM response. It is awaitable — after it returns, the LLM has responded and the message is persisted.
 
 `persistMessages` stores messages and broadcasts them to connected clients, but does **not** trigger a model turn. Use it when you want to inject context (for example, a system message or background data) into the conversation without starting a response.
+
+### `saveMessages` vs `submitMessages`
+
+Use `saveMessages()` when the caller can wait for the model turn to finish.
+
+Use `submitMessages()` with Think when the caller needs a fast durable receipt, idempotent retry, and later status inspection. This is useful for webhook handlers, RPC callers, and parent Workers with strict timeout limits:
+
+<TypeScriptExample>
+
+```ts
+const submission = await this.submitMessages(
+	[
+		{
+			id: crypto.randomUUID(),
+			role: "user",
+			parts: [
+				{ type: "text", text: `Webhook event: ${JSON.stringify(payload)}` },
+			],
+		},
+	],
+	{ idempotencyKey: payload.id },
+);
+
+return Response.json({
+	submissionId: submission.submissionId,
+	status: submission.status,
+	accepted: submission.accepted,
+});
+```
+
+</TypeScriptExample>
+
+`submitMessages()` stores pending work first and appends the messages to the conversation Session only when the submission starts executing. It accepts serializable `UIMessage[]` values, not the function form supported by `saveMessages((messages) => ...)`.
+
+For the full Think API, refer to [`submitMessages()`](/agents/api-reference/think/#submitmessages).
 
 ### When to use `saveMessages` vs `onChatResponse`
 
@@ -212,6 +248,34 @@ async onRequest(request: Request): Promise<Response> {
 	}
 
 	return super.onRequest(request);
+}
+```
+
+If the webhook provider expects a quick response, use `submitMessages()` instead. This gives the provider a durable acknowledgement and lets it safely retry with the same idempotency key:
+
+```ts
+async onRequest(request: Request): Promise<Response> {
+	if (request.method !== "POST") return super.onRequest(request);
+
+	const payload = await request.json<{ id: string }>();
+	const submission = await this.submitMessages(
+		[
+			{
+				id: crypto.randomUUID(),
+				role: "user",
+				parts: [
+					{ type: "text", text: `Webhook event: ${JSON.stringify(payload)}` },
+				],
+			},
+		],
+		{ idempotencyKey: payload.id },
+	);
+
+	return Response.json({
+		submissionId: submission.submissionId,
+		accepted: submission.accepted,
+		status: submission.status,
+	});
 }
 ```
 
@@ -402,14 +466,44 @@ The `messageConcurrency` setting on `AIChatAgent` controls how overlapping user 
 
 ## Combining with other Agent primitives
 
-| Primitive          | How to combine                                                                                |
-| ------------------ | --------------------------------------------------------------------------------------------- |
-| `schedule()`       | Schedule a callback that calls `saveMessages` — see the cron example above                    |
-| `queue()`          | Queue a method that calls `saveMessages` for deferred processing                              |
-| `runWorkflow()`    | Start a Workflow; use `AgentWorkflow.agent` RPC to call a method that triggers `saveMessages` |
-| `onEmail()`        | Convert email content to a chat message and call `saveMessages`                               |
-| `onRequest()`      | Handle webhooks and call `saveMessages`                                                       |
-| `this.broadcast()` | Broadcast custom state from `onChatResponse`                                                  |
+| Primitive          | How to combine                                                                                                    |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `schedule()`       | Schedule a callback that calls `saveMessages` — see the cron example above                                        |
+| `queue()`          | Queue a method that calls `saveMessages` for deferred processing                                                  |
+| `runWorkflow()`    | Start a Workflow; use `AgentWorkflow.agent` RPC to call a method that triggers `saveMessages` or `submitMessages` |
+| `onEmail()`        | Convert email content to a chat message and call `saveMessages`                                                   |
+| `onRequest()`      | Handle webhooks and call `saveMessages` or `submitMessages`                                                       |
+| `this.broadcast()` | Broadcast custom state from `onChatResponse`                                                                      |
+
+## Cancelling a server-driven turn
+
+Pass an `AbortSignal` when the same Durable Object starts and controls the turn:
+
+<TypeScriptExample>
+
+```ts
+const controller = new AbortController();
+const result = await this.saveMessages(
+	[
+		{
+			id: crypto.randomUUID(),
+			role: "user",
+			parts: [{ type: "text", text: "Run the long analysis." }],
+		},
+	],
+	{ signal: controller.signal },
+);
+
+if (result.status === "aborted") {
+	// Partial chunks already streamed are persisted.
+}
+```
+
+</TypeScriptExample>
+
+`continueLastTurn()` accepts the same `options.signal` argument. `AbortSignal` objects cannot cross Durable Object RPC boundaries, and the signal is in memory only. If the Durable Object hibernates mid-turn and chat recovery is enabled, the recovered turn runs without the original signal.
+
+Use `cancelSubmission(submissionId)` for durable cancellation when work was accepted with `submitMessages()` or when cancellation must cross Worker and Durable Object RPC boundaries.
 
 ## Important notes
 

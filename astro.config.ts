@@ -39,10 +39,14 @@ async function autogenSections() {
 	return sections.map((x) => {
 		return {
 			label: x,
-			autogenerate: {
-				directory: x,
-				collapsed: true,
-			},
+			items: [
+				{
+					autogenerate: {
+						directory: x,
+						collapsed: true,
+					},
+				},
+			],
 		};
 	});
 }
@@ -195,7 +199,6 @@ export default defineConfig({
 									"/markdown.zip",
 									"/style-guide/index.md",
 									"/videos/**",
-									"/search/**",
 									"/agent-setup/",
 								],
 							}),

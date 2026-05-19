@@ -3,6 +3,14 @@ link: "/realtime/realtimekit/release-notes/android-ui-kit/"
 productName: RealtimeKit Android UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-05-11"
+    title: RealtimeKit Android UI Kit 1.1.0
+    description: |-
+      **Features**
+
+      - Added chat message pin/unpin support: long-press any message to open an actions sheet with Pin and Unpin options, with an expandable banner showing pinned messages
+      - Added a "Deny All" button to the waiting room participant list and webinar stage access requests so hosts can reject all pending requests at once
+      - Upgraded to [RealtimeKit Core v2.1.0](/realtime/realtimekit/release-notes/android-core/#2026-05-08)
   - publish_date: "2026-04-20"
     title: RealtimeKit Android UI Kit 1.0.0
     description: |-

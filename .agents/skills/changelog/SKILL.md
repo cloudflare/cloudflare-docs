@@ -5,6 +5,8 @@ description: Creates, updates, and reviews product changelog entries for the Clo
 
 Use this skill when creating, editing, or reviewing changelog entries under `src/content/changelog/`.
 
+**Style reference:** `.agents/references/style-guide.md` contains the canonical rules for writing style, formatting, links, code blocks, and frontmatter. The changelog-specific additions below extend those rules — they do not replace them.
+
 ## Prerequisites
 
 You need three things before writing:
@@ -43,25 +45,22 @@ date: <YYYY-MM-DD>
 
 ## Writing style
 
-- Imperative mood, active voice
+Follow the rules in `.agents/references/style-guide.md`. Changelog-specific additions:
+
 - Opening sentence: what the feature/change is and what problem it solves
 - Expand on usage, use cases, and the "why" in subsequent paragraphs
 - Assume a technical developer/cloud audience
-- Keep sentences concise (8-12 words where possible)
-- Do not use contractions
-- Do not use LLM-like phrases ("It's important to note", "leverage", "seamless", etc.)
-- Replace `e.g.` with "for example" and `i.e.` with "that is"
 
 ## Code examples
 
 Include a code example when the changelog describes an API, SDK, or configuration change.
 
-- Include a code block demonstrating usage of the new feature
-- Use plain JavaScript/TypeScript code blocks (`js` or `ts`)
-- Use `jsonc` for wrangler.json config
-- Keep snippets short and focused on the new feature
-- Minimize boilerplate
-- Add imports if using components: `import { Render, TypeScriptExample, WranglerConfig } from "~/components";`
+- Keep snippets short and focused on the new feature — minimize boilerplate
+- Import components after the frontmatter: `import { TypeScriptExample, WranglerConfig } from "~/components";`
+- **Workers JS/TS** → use `TypeScriptExample` (not bare `js`/`ts` fences)
+- **Wrangler config** → use `WranglerConfig` with TOML input and `$today` for `compatibility_date` (not bare `toml`/`jsonc` fences)
+- **Other languages** (Python, Rust, Go, etc.) → use a plain fenced code block with the correct language identifier
+- **Non-Workers config snippets** (JSON, YAML, etc.) → use a plain fenced code block (`json`, `yaml`, etc.)
 
 ## Documentation links
 

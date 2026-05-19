@@ -9,6 +9,30 @@ sidebar:
 
 The descriptions below detail the fields available for `http_requests`.
 
+## AISecurityInjectionScore
+
+Type: `int`
+
+The score indicating the likelihood of a prompt injection attack in the request, as determined by AI Security.
+
+## AISecurityPIICategories
+
+Type: `array[string]`
+
+List of PII categories detected in the request by AI Security.
+
+## AISecurityTokenCount
+
+Type: `int`
+
+The number of tokens in the request, as counted by AI Security.
+
+## AISecurityUnsafeTopicCategories
+
+Type: `array[string]`
+
+List of unsafe topic categories detected in the request by AI Security.
+
 ## BotDetectionIDs
 
 Type: `array[int]`
@@ -345,29 +369,29 @@ Type: `int`
 
 Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time.
 
-## FirewallForAIInjectionScore
+## FirewallForAIInjectionScore (deprecated)
 
 Type: `int`
 
-The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI.
+The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI. Deprecated: Use AISecurityInjectionScore instead.
 
-## FirewallForAIPIICategories
+## FirewallForAIPIICategories (deprecated)
 
 Type: `array[string]`
 
-List of PII categories detected in the request by Firewall for AI.
+List of PII categories detected in the request by Firewall for AI. Deprecated: Use AISecurityPIICategories instead.
 
-## FirewallForAITokenCount
+## FirewallForAITokenCount (deprecated)
 
 Type: `int`
 
-The number of tokens in the request, as counted by Firewall for AI.
+The number of tokens in the request, as counted by Firewall for AI. Deprecated: Use AISecurityTokenCount instead.
 
-## FirewallForAIUnsafeTopicCategories
+## FirewallForAIUnsafeTopicCategories (deprecated)
 
 Type: `array[string]`
 
-List of unsafe topic categories detected in the request by Firewall for AI.
+List of unsafe topic categories detected in the request by Firewall for AI. Deprecated: Use AISecurityUnsafeTopicCategories instead.
 
 ## FraudAttack
 
@@ -451,7 +475,7 @@ Time taken to send request headers to origin after establishing a connection. No
 
 Type: `int`
 
-Number of bytes returned by the origin server. Consider using CacheResponseBytes and filtering out OriginResponseStatus with values 0 and 304, which indicate a revalidated response. Read more [here](/logs/faq/common-calculations/#how-can-i-calculate-bytes-served-by-the-origin-from-cloudflare-logs).
+Number of bytes returned by the origin server.
 
 ## OriginResponseDurationMs
 
@@ -578,6 +602,12 @@ Array of security products that matched the request. The same product can appear
 Type: `int`
 
 The Cloudflare data center used to connect to the origin server if Argo Smart Routing is used.
+
+## Subrequests
+
+Type: `array[object]`
+
+Flattened list of subrequests associated with this request. Each subrequest contains the same fields as the parent request (excluding Subrequests itself).
 
 ## UpperTierColoID
 

@@ -65,6 +65,10 @@ Before you set up Secondary DNS override, make sure that you have:
 
 </TabItem> </Tabs>
 
+:::note[Zone transfers interaction]
+Zone transfers from the primary (including content or TTL changes) do not change the proxy status of records you set to proxied. The override persists until the record is deleted on the primary.
+:::
+
 ## Proxied A and AAAA records
 
 After proxying (orange clouding) a Secondary DNS record, any additional records under that hostname transferred from the primary DNS provider are automatically proxied. This applies to all A and AAAA records under that domain.

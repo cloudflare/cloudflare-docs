@@ -24,6 +24,10 @@
             "value": "https://huggingface.co/defog/sqlcoder-7b-2"
         },
         {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-05-30"
+        },
+        {
             "property_id": "terms",
             "value": "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
         }

@@ -14,6 +14,12 @@ Agent tools let one chat agent dispatch another chat-capable sub-agent as part o
 
 Agent tools support `@cloudflare/think` agents and `AIChatAgent` subclasses. `AIChatAgent` children run headlessly through `saveMessages()`, so they should use server-side tools. Browser-provided client tools are not available during an agent-tool turn unless you model that interaction as server-side state or a separate parent-mediated workflow.
 
+## Agent tools vs sub-agent RPC
+
+Use `subAgent(...).chat()` when parent code needs direct streaming RPC to a specific child and your code owns forwarding, cancellation, and replay policy.
+
+Use `agentTool()` or `runAgentTool()` when a parent model or workflow delegates work to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in. For Think-specific turn choices, refer to [Choose a turn API](/agents/api-reference/think/#choose-a-turn-api).
+
 ## Use an agent as an AI SDK tool
 
 Use `agentTool()` when the parent model should decide when to call the helper.
@@ -98,6 +104,29 @@ export class Assistant extends AIChatAgent<Env> {
 </TypeScriptExample>
 
 The generated tool calls `this.runAgentTool(ChildAgent, ...)`, streams `agent-tool-event` frames on the parent WebSocket, and returns the child summary to the parent model. If the run fails, aborts, or is interrupted, the tool returns a structured failure instead of an empty success value.
+
+For Think children that do workflow-style work without user-facing assistant text, override `getAgentToolOutput()` and, if needed, `getAgentToolSummary()`. Assistant text remains the default summary when present, but a Think agent-tool run can complete successfully without emitting text chunks.
+
+Persist any structured output before the child turn finishes, because `getAgentToolOutput()` is read as soon as `saveMessages()` resolves. Keep `getAgentToolSummary()` concise for display; the full structured value is stored separately as the tool output.
+
+<TypeScriptExample>
+
+```ts
+export class Extractor extends Think<Env> {
+	protected override getAgentToolOutput(runId: string) {
+		const rows = this.sql<{ result_json: string }>`
+			SELECT result_json FROM extraction_runs WHERE id = ${runId}
+		`;
+		return rows[0] ? JSON.parse(rows[0].result_json) : undefined;
+	}
+
+	protected override getAgentToolSummary(_runId: string, output: unknown) {
+		return output ? "Extraction complete" : "";
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Run an agent tool imperatively
 

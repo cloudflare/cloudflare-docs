@@ -144,10 +144,11 @@ const worker = env.LOADER.load({
   mainModule: "worker.py",
   modules: {
     "worker.py": `
-      from workers import Response
+from workers import Response, WorkerEntrypoint
 
-      def on_fetch(request):
-          return Response("Hello from Python!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello from Python!")
     `,
   },
 });

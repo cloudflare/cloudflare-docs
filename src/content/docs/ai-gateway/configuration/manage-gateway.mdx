@@ -16,9 +16,11 @@ You have several different options for managing an AI Gateway.
 
 ### Default gateway
 
-AI Gateway can automatically create a gateway for you. When you use `default` as a gateway ID and no gateway with that ID exists in your account, AI Gateway creates it on the first authenticated request.
+AI Gateway can automatically create a gateway for you. If you omit the gateway ID from your request entirely, AI Gateway defaults to using `default` as the gateway ID. When no gateway named `default` exists in your account, AI Gateway creates it on the first authenticated request.
 
-The request that triggers auto-creation must include a valid `cf-aig-authorization` header. An unauthenticated request to a `default` gateway that does not yet exist does not create the gateway.
+This means you can start sending requests without creating a gateway first — AI Gateway handles gateway creation for you.
+
+The request that triggers auto-creation must be authenticated. When using the [REST API](/ai-gateway/usage/rest-api/), the standard `Authorization` header is sufficient. When using [provider-native endpoints](/ai-gateway/usage/providers/) at `gateway.ai.cloudflare.com`, include a valid `cf-aig-authorization` header. For Workers AI bindings, the account identity from the binding is used instead of a header.
 
 The auto-created default gateway uses the following settings:
 

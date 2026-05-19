@@ -59,6 +59,7 @@ By default, running `wrangler dev` / `vite dev` (when using the [Vite plugin](/w
 
 - Your Worker code runs on your local machine.
 - All resources your Worker is bound to in your [Wrangler configuration](/workers/wrangler/configuration/) are simulated locally.
+- The local `workerd` runtime runs with `TZ=UTC` so that `Date` and `Intl` APIs inside your Worker observe UTC, matching the production Cloudflare runtime regardless of your machine's timezone.
 
 ### Bindings during local development
 

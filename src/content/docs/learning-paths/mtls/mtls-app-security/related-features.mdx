@@ -47,7 +47,7 @@ If you already have mTLS implemented, client certificates are already installed 
 You can associate your uploaded CAs with specific hostnames via the dashboard or the [Replace Hostname Associations API endpoint](/api/resources/certificate_authorities/subresources/hostname_associations/methods/update/).
 
 :::note
-Each Enterprise account can upload up to five CAs, though this can be increased. Contact your account team if you require more.
+Each Enterprise account can upload up to five CAs. This quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/). Contact your account team to request an increase.
 :::
 
 ## Client Certificate Deployment

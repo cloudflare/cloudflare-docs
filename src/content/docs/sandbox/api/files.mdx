@@ -53,29 +53,47 @@ await sandbox.writeFile('/workspace/archive.tar.gz', req.body);
 
 ### `readFile()`
 
-Read a file from the sandbox.
+Read a file from the sandbox. By default returns the content as a string. This is useful for small text files. For larger files and binary data use `encoding: "none"` to get back a `ReadableStream` with the file data.
 
 ```ts
-const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Promise<FileInfo>
+const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Promise<ReadFileResult | ReadFileStreamResult>
 ```
 
 **Parameters**:
 - `path` - Absolute path to the file
 - `options` (optional):
-  - `encoding` - File encoding (`"utf-8"` or `"base64"`, default: auto-detected from MIME type)
+  - `encoding` - File encoding (`"utf-8"`, `"base64"` or `"none"`, default: auto-detected from MIME type)
 
-**Returns**: `Promise<FileInfo>` with `content` and `encoding`
+**Returns**: `Promise<ReadFileResult | ReadFileStreamResult>`.
+
+:::note[Encoding]
+The `"none"` encoding property was added in 0.10.1 and aims to improve support for streaming binary data. When `encoding: "none"` is provided the `content` field will be a `ReadableStream<Uint8Array>`. It is only supported with the [RPC transport](/sandbox/configuration/transport/).
+:::
 
 <TypeScriptExample>
 ```
 const file = await sandbox.readFile('/workspace/package.json');
 const pkg = JSON.parse(file.content);
 
-// Binary data (auto-detected or forced)
-const image = await sandbox.readFile('/tmp/image.png', { encoding: 'base64' });
+// Binary data (since 0.10.1 using `rpc` transport)
+const { content, size, mimeType } = await sandbox.readFile("/workspace/archive.tar.gz", {
+  encoding: "none"
+});
 
-// Force encoding (override MIME detection)
-const textAsBase64 = await sandbox.readFile('/workspace/data.txt', { encoding: 'base64' });
+// Example 1: Store on R2:
+const stream = request.body.pipeThrough(new FixedLengthStream(size));
+await env.MY_BUCKET.put('/bucket/archive.tar.gz', stream, {
+  httpMetadata: { contentType: mimeType }
+});
+
+// Example 2: Stream an HTTP response:
+return new Response(content, { headers: { "Content-Type": mimeType } });
+
+// Older versions/transports used the base64 encoding for binary data:
+const archive = await sandbox.readFile("/workspace/archive.tar.gz", {
+  encoding: "base64"
+});
+console.log(archive.content); // => "<base64 encoded string>";
 ```
 </TypeScriptExample>
 

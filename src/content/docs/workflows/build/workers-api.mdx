@@ -513,9 +513,9 @@ declare abstract class WorkflowInstance {
 	 */
 	public terminate(): Promise<void>;
 	/**
-	 * Restart the instance.
+	 * Restart the instance from the beginning, or from a specific step.
 	 */
-	public restart(): Promise<void>;
+	public restart(options?: WorkflowInstanceRestartOptions): Promise<void>;
 	/**
 	 * Returns the current status of the instance.
 	 */
@@ -549,9 +549,56 @@ Resume a paused Workflow instance.
 
 ### restart
 
-Restart a Workflow instance.
+Restart a Workflow instance from the beginning, or from a specific step.
 
-- <code>restart(): Promise&lt;void&gt;</code>
+- <code>restart(options?: WorkflowInstanceRestartOptions): Promise&lt;void&gt;</code>
+  - `options` - optional properties that control from where the instance restarts.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+
+// Restart the instance from the beginning.
+await instance.restart();
+
+// Restart the instance from the step named "aggregate".
+await instance.restart({ from: { name: "aggregate" } });
+
+// Restart the instance from the third call to a step named "process".
+await instance.restart({ from: { name: "process", count: 3 } });
+```
+
+When restarting from a specific step, the cached results of every earlier step are reused, while the target step and any steps that follow it run again. The call throws an error if no step matching `from` is found in the instance's execution history.
+
+#### WorkflowInstanceRestartOptions
+
+```ts
+interface WorkflowInstanceRestartOptions {
+	/**
+	 * The step to restart the instance from.
+	 * If omitted, the instance restarts from the beginning.
+	 */
+	from?: {
+		/**
+		 * The name of the step.
+		 */
+		name: string;
+		/**
+		 * The 1-based index of the step, used when multiple steps share the same name and type. Defaults to 1 (the first occurrence).
+		 */
+		count?: number;
+		/**
+		 * The step type. Use this to disambiguate when the same name is shared across step types. Defaults to "do".
+		 */
+		type?: "do" | "sleep" | "waitForEvent";
+	};
+}
+```
+
+The `from` object identifies the step to restart from. Only `name` is required; `count` and `type` are only needed when the same step name appears more than once in the run.
+
+- `name` - the name of the step.
+- `count` - the 1-based index of the step, used when multiple steps share the same name and type (for example, inside a loop). Defaults to `1` (the first occurrence). Corresponds to `step.count` in the [step context](/workflows/build/step-context/).
+- `type` - the step type (`"do"`, `"sleep"`, or `"waitForEvent"`). Defaults to `"do"`. Use this when the same name is shared across different step types.
 
 ### terminate
 

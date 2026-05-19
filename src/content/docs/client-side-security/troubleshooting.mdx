@@ -59,6 +59,23 @@ For example, if you add the `adservice.google.com` domain to an allow rule, you 
 
 To try to solve this issue, add the domain of the redirected destination to your allow rule. You may need to add several domains to your rule due to redirects.
 
+## I get scoped alerts for hostnames I do not manage on a SaaS root zone
+
+If you operate an [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) root zone with custom hostnames, and you configured a [scoped alert](/client-side-security/alerts/#scoped-alerts) with a content security rule that uses the `'self'` keyword, you will receive alerts for resources detected across all custom hostnames served under your root zone, not only on your own application surfaces.
+
+This is expected behavior:
+
+- SSL for SaaS applies your root zone's content security rule to every custom hostname served under it.
+- The `'self'` keyword in a CSP directive matches the hostname of the request being served. When a custom hostname loads its own scripts, those scripts match `'self'` and the scoped alert fires.
+
+At SaaS scale, this can produce a high volume of alerts across hostnames you do not manage, and makes it difficult to isolate the scope of your own compliance audits (for example, the specific pages where you collect cardholder data).
+
+There is currently no way to scope a content security rule to the root zone only, excluding custom hostnames. If you only need to monitor your own application surfaces, consider one of the following:
+
+- Use a content security rule expression that matches only the specific page paths you control (for example, the request paths where you collect cardholder data).
+- Replace `'self'` with an explicit list of hostnames you control. Note that this is rarely feasible at SaaS scale because CSP headers have practical size limits.
+- If neither workaround fits, contact your account team to track interest in scoping content security rules to the SaaS root zone only.
+
 ## My rule is not triggering (CSP header not added)
 
 If you have configured a content security rule but the expected CSP header is not being added to responses, [Transform Rules](/rules/transform/) may be rewriting the request path before the content security rule is evaluated.

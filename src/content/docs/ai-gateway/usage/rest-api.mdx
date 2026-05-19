@@ -1,0 +1,237 @@
+---
+title: REST API
+pcx_content_type: how-to
+description: Call third-party and Workers AI models through the Cloudflare API with AI Gateway features like logging, caching, and rate limiting.
+sidebar:
+  order: 1
+tags:
+  - AI
+products:
+  - ai-gateway
+---
+
+The REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with all AI Gateway features — logging, caching, rate limiting, and more — applied automatically.
+
+No provider SDKs or API keys are needed. Authentication and billing are handled through your Cloudflare account. Third-party models are billed via [Unified Billing](/ai-gateway/features/unified-billing/), while Workers AI models follow [Workers AI pricing](/workers-ai/platform/pricing/).
+
+## Endpoints
+
+Three endpoints are available, each suited to different use cases:
+
+| Endpoint | Format | Use case |
+| -------- | ------ | -------- |
+| `POST /ai/run` | Envelope with `model`, `provider`, `input` | All models and modalities (LLM, image, TTS, ASR) |
+| `POST /ai/v1/chat/completions` | OpenAI chat completions | LLMs — OpenAI SDK compatible |
+| `POST /ai/v1/responses` | OpenAI Responses API | Agentic workflows — OpenAI SDK compatible |
+
+## Authentication
+
+Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has `AI Gateway` permission. Pass it in the `Authorization` header.
+
+:::note
+Ensure your Cloudflare account has [sufficient credits loaded](/ai-gateway/features/unified-billing/#load-credits) before calling third-party models.
+:::
+
+## Model naming
+
+Models use the `author/model` format:
+
+- `openai/gpt-4.1` — OpenAI
+- `anthropic/claude-sonnet-4` — Anthropic
+- `google/gemini-3-flash` — Google
+- `moonshotai/kimi-k2.6` — Workers AI (Kimi)
+- `xai/grok-3` — xAI
+
+Browse available models in the [model catalog](/ai/models/).
+
+## Provider
+
+The optional `provider` field lets you specify which provider should serve the request. For third-party models in the catalog today, each model has a single provider, so you can omit this field.
+
+When omitted, Cloudflare routes the request to the preferred provider for that model. Set `provider` to `"cloudflare"` to run a model on Workers AI:
+
+```json
+{
+  "model": "moonshotai/kimi-k2.6",
+  "provider": "cloudflare",
+  "messages": [...]
+}
+```
+
+## `/ai/run` — universal endpoint
+
+Accepts any model with its per-model schema. Model-specific parameters go inside `input`.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "openai/gpt-4.1",
+    "input": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is Cloudflare?"
+        }
+      ],
+      "max_tokens": 512
+    }
+  }'
+```
+
+### Call a Workers AI model
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "moonshotai/kimi-k2.6",
+    "provider": "cloudflare",
+    "input": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is Cloudflare?"
+        }
+      ]
+    }
+  }'
+```
+
+The existing Workers AI endpoint with the model ID in the URL path also continues to work:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/moonshotai/kimi-k2.6" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+## `/ai/v1/chat/completions` — OpenAI compatible
+
+Uses the standard OpenAI chat completions format. The `model` field uses the same `author/model` naming. This endpoint is compatible with the OpenAI SDK and other OpenAI-compatible clients.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "openai/gpt-4.1",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant."
+      },
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ],
+    "max_tokens": 512,
+    "temperature": 0.7,
+    "stream": true
+  }'
+```
+
+### OpenAI SDK
+
+Point the OpenAI SDK `baseURL` at the Cloudflare API:
+
+```javascript
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+});
+
+const response = await openai.chat.completions.create({
+  model: "openai/gpt-4.1",
+  messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+```
+
+## `/ai/v1/responses` — OpenAI Responses API
+
+Uses the OpenAI Responses API format for agentic workflows. Compatible with the OpenAI SDK.
+
+```javascript
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+});
+
+const response = await openai.responses.create({
+  model: "openai/gpt-4.1",
+  input: "What is Cloudflare?",
+});
+```
+
+## Specify a gateway
+
+By default, third-party model requests route through your account's default AI Gateway. To use a specific gateway, include the `cf-aig-gateway-id` header:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "cf-aig-gateway-id: my-gateway" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "anthropic/claude-sonnet-4",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello"
+      }
+    ]
+  }'
+```
+
+With the OpenAI SDK, set the header via `defaultHeaders`:
+
+```javascript
+const openai = new OpenAI({
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+  defaultHeaders: {
+    "cf-aig-gateway-id": "my-gateway",
+  },
+});
+```
+
+All AI Gateway features configured on that gateway — caching, rate limiting, guardrails, and logging — apply to the request.
+
+## Per-request configuration
+
+Use `cf-aig-*` headers to control AI Gateway behavior on a per-request basis:
+
+| Header | Type | Description |
+| ------ | ---- | ----------- |
+| `cf-aig-skip-cache` | boolean | Skip the cache for this request. |
+| `cf-aig-cache-ttl` | number | Cache TTL in seconds. |
+| `cf-aig-cache-key` | string | Custom cache key. |
+| `cf-aig-collect-log` | boolean | Turn logging on or off for this request. |
+| `cf-aig-request-timeout` | number | Request timeout in milliseconds. |
+| `cf-aig-max-attempts` | number | Retry attempts (max 5). |
+| `cf-aig-retry-delay` | number | Retry delay in milliseconds (max 5000). |
+| `cf-aig-backoff` | string | Backoff method: `constant`, `linear`, or `exponential`. |
+| `cf-aig-metadata` | JSON string | Custom metadata to attach to the log entry. |
+
+For more details on these options, refer to [Request handling](/ai-gateway/configuration/request-handling/) and [Caching](/ai-gateway/features/caching/).
+
+## Related resources
+
+- [Unified Billing](/ai-gateway/features/unified-billing/) — load credits and manage spend limits.
+- [Workers AI binding](/ai-gateway/integrations/worker-binding-methods/) — call models from within a Cloudflare Worker using `env.AI.run()`.
+- [Model catalog](/ai/models/) — browse models supported by the REST API.

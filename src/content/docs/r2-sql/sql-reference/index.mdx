@@ -25,6 +25,7 @@ R2 SQL is Cloudflare's serverless, distributed, analytics query engine for query
 ```sql
 SELECT column_list | expression | aggregation_function
 FROM namespace_name.table_name
+[JOIN namespace_name.table_name ON condition]
 [WHERE conditions]
 [GROUP BY column_list]
 [HAVING conditions]
@@ -98,7 +99,7 @@ SELECT region, total_amount * 1.1 AS total_with_tax FROM my_namespace.sales_data
 
 ## Common table expressions (CTEs)
 
-CTEs let you define named temporary result sets using `WITH` that you can reference in the main query. All CTEs must reference the same single table.
+CTEs let you define named temporary result sets using `WITH` that you can reference in the main query. CTEs can reference different tables and can include JOINs. A CTE can also be joined with other CTEs or regular tables in the main query.
 
 ### Syntax
 
@@ -113,7 +114,7 @@ SELECT ... FROM cte_name
 
 ### Chained CTEs
 
-A CTE can reference a previously defined CTE. All CTEs in the chain must derive from the same underlying table.
+A CTE can reference a previously defined CTE.
 
 ```sql
 WITH filtered AS (
@@ -134,9 +135,44 @@ WHERE order_count > 100
 ORDER BY avg_amount DESC
 ```
 
-:::note
-CTEs must reference a single table. Multi-table CTEs, JOINs within CTEs, and cross-table references are not supported.
-:::
+### CTE joined with another table
+
+```sql
+WITH enterprise_zones AS (
+    SELECT zone_id, domain, plan
+    FROM my_namespace.zones
+    WHERE plan = 'enterprise'
+)
+SELECT ez.domain, f.action, COUNT(*) AS cnt
+FROM enterprise_zones ez
+INNER JOIN my_namespace.firewall_events f ON ez.zone_id = f.zone_id
+GROUP BY ez.domain, f.action
+ORDER BY cnt DESC
+LIMIT 20
+```
+
+### Two CTEs joined together
+
+```sql
+WITH top_zones AS (
+    SELECT zone_id, COUNT(*) AS req_count
+    FROM my_namespace.http_requests
+    GROUP BY zone_id
+    ORDER BY req_count DESC
+    LIMIT 50
+),
+zone_threats AS (
+    SELECT zone_id, COUNT(*) AS threat_count
+    FROM my_namespace.firewall_events
+    WHERE risk_score > 0.5
+    GROUP BY zone_id
+)
+SELECT tz.zone_id, tz.req_count, COALESCE(zt.threat_count, 0) AS threat_count
+FROM top_zones tz
+LEFT JOIN zone_threats zt ON tz.zone_id = zt.zone_id
+ORDER BY tz.req_count DESC
+LIMIT 20
+```
 
 ---
 
@@ -148,7 +184,233 @@ CTEs must reference a single table. Multi-table CTEs, JOINs within CTEs, and cro
 SELECT * FROM namespace_name.table_name
 ```
 
-R2 SQL queries reference exactly one table, specified as `namespace_name.table_name`.
+R2 SQL queries can reference one or more tables. Tables are specified as `namespace_name.table_name`. Multiple tables can be combined using JOINs or comma-separated syntax. Refer to the [JOIN clause](#join-clause) section for details.
+
+---
+
+## JOIN clause
+
+R2 SQL supports joining multiple Iceberg tables in a single query. All join types use standard SQL syntax.
+
+### Supported join types
+
+| Join type        | Syntax                              | Description                                                        |
+| :--------------- | :---------------------------------- | :----------------------------------------------------------------- |
+| Inner join       | `INNER JOIN ... ON`                 | Returns rows that match in both tables                             |
+| Left outer join  | `LEFT JOIN ... ON`                  | Returns all rows from the left table, NULLs for non-matching right |
+| Right outer join | `RIGHT JOIN ... ON`                 | Returns all rows from the right table, NULLs for non-matching left |
+| Full outer join  | `FULL OUTER JOIN ... ON`            | Returns all rows from both tables, NULLs where no match            |
+| Cross join       | `CROSS JOIN`                        | Cartesian product of both tables                                   |
+| Implicit join    | `FROM t1, t2 WHERE t1.id = t2.id`  | Comma-separated tables with join condition in `WHERE`              |
+
+### Syntax
+
+```sql
+-- Explicit JOIN
+SELECT columns
+FROM namespace.table1 alias1
+[INNER | LEFT | RIGHT | FULL OUTER | CROSS] JOIN namespace.table2 alias2
+  ON alias1.column = alias2.column
+[WHERE conditions]
+
+-- Implicit join
+SELECT columns
+FROM namespace.table1 alias1, namespace.table2 alias2
+WHERE alias1.column = alias2.column
+```
+
+### Multi-way joins
+
+You can join three or more tables in a single query:
+
+```sql
+SELECT z.domain, h.method, f.action, COUNT(*) AS cnt
+FROM my_namespace.zones z
+INNER JOIN my_namespace.http_requests h ON z.zone_id = h.zone_id
+INNER JOIN my_namespace.firewall_events f ON z.zone_id = f.zone_id
+WHERE h.status_code >= 400
+GROUP BY z.domain, h.method, f.action
+ORDER BY cnt DESC
+LIMIT 20
+```
+
+### Self-joins
+
+A table can be joined with itself using different aliases:
+
+```sql
+SELECT f1.source_ip, f1.zone_id AS zone1, f2.zone_id AS zone2
+FROM my_namespace.firewall_events f1
+INNER JOIN my_namespace.firewall_events f2
+  ON f1.source_ip = f2.source_ip
+  AND f1.zone_id < f2.zone_id
+WHERE f1.action = 'block'
+LIMIT 20
+```
+
+### Join conditions
+
+- Join conditions use the `ON` clause with equality (`=`) or expression-based predicates.
+- Functions are supported in join predicates (for example, `ON LOWER(a.col) = LOWER(b.col)`).
+- Multiple conditions can be combined with `AND`.
+
+:::note
+Nested (parenthesized) joins are not supported. Write multi-way joins as a flat sequence of `JOIN` clauses instead of grouping them with parentheses.
+
+```sql
+-- Not supported
+SELECT * FROM (t1 JOIN t2 ON t1.id = t2.id) JOIN t3 ON t2.id = t3.id
+
+-- Supported
+SELECT * FROM t1 JOIN t2 ON t1.id = t2.id JOIN t3 ON t2.id = t3.id
+```
+:::
+
+### Best practices for joins
+
+- Include `WHERE` filters to reduce intermediate result sizes, especially for multi-way joins.
+- Join large fact tables through a shared dimension table rather than directly cross-joining two large tables.
+- Use `LIMIT` to cap result sizes.
+
+---
+
+## Subqueries
+
+R2 SQL supports subqueries in multiple positions within a query.
+
+### Subqueries in FROM (derived tables)
+
+A subquery in the `FROM` clause creates a derived table that can be referenced in the outer query:
+
+```sql
+SELECT sub.domain, sub.total_requests
+FROM (
+    SELECT z.domain, COUNT(*) AS total_requests
+    FROM my_namespace.zones z
+    INNER JOIN my_namespace.http_requests h ON z.zone_id = h.zone_id
+    GROUP BY z.domain
+) sub
+WHERE sub.total_requests > 1000
+ORDER BY sub.total_requests DESC
+LIMIT 20
+```
+
+:::note
+`LATERAL` derived tables are not supported. Subqueries in `FROM` cannot reference columns from other tables in the same `FROM` clause.
+:::
+
+Derived tables can be joined with other derived tables or regular tables:
+
+```sql
+SELECT req.domain, req.total_reqs, fw.total_events
+FROM (
+    SELECT zone_id, domain, COUNT(*) AS total_reqs
+    FROM my_namespace.zones z
+    INNER JOIN my_namespace.http_requests h ON z.zone_id = h.zone_id
+    GROUP BY zone_id, domain
+) req
+INNER JOIN (
+    SELECT zone_id, COUNT(*) AS total_events
+    FROM my_namespace.firewall_events
+    GROUP BY zone_id
+) fw ON req.zone_id = fw.zone_id
+ORDER BY fw.total_events DESC
+LIMIT 20
+```
+
+### `IN` / `NOT IN` subqueries
+
+Filter rows based on whether a value exists in the result of a subquery:
+
+```sql
+-- Find requests from enterprise zones
+SELECT method, status_code, COUNT(*) AS cnt
+FROM my_namespace.http_requests
+WHERE zone_id IN (
+    SELECT zone_id FROM my_namespace.zones WHERE plan = 'enterprise'
+)
+GROUP BY method, status_code
+ORDER BY cnt DESC
+LIMIT 20
+```
+
+```sql
+-- NOT IN example
+SELECT zone_id, COUNT(*) AS cnt
+FROM my_namespace.http_requests
+WHERE zone_id NOT IN (
+    SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+)
+GROUP BY zone_id
+LIMIT 10
+```
+
+:::caution
+`NOT IN` subqueries are not supported on nullable columns. If the subquery column can contain `NULL` values, use `NOT EXISTS` instead. `SELECT DISTINCT` is also not supported inside subqueries — omit the `DISTINCT` keyword or use `NOT EXISTS`.
+
+```sql
+-- Instead of NOT IN on a nullable column:
+SELECT z.domain
+FROM my_namespace.zones z
+WHERE NOT EXISTS (
+    SELECT 1 FROM my_namespace.firewall_events f
+    WHERE f.zone_id = z.zone_id
+)
+LIMIT 20
+```
+:::
+
+### `EXISTS` / `NOT EXISTS` subqueries
+
+Test for the existence of rows matching a correlated condition:
+
+```sql
+-- Find zones with blocked firewall events (semi-join)
+SELECT z.domain, z.plan
+FROM my_namespace.zones z
+WHERE EXISTS (
+    SELECT 1 FROM my_namespace.firewall_events f
+    WHERE f.zone_id = z.zone_id AND f.action = 'block'
+)
+ORDER BY z.domain
+LIMIT 20
+```
+
+```sql
+-- Find zones with NO firewall events (anti-join)
+SELECT z.domain, z.plan
+FROM my_namespace.zones z
+WHERE NOT EXISTS (
+    SELECT 1 FROM my_namespace.firewall_events f
+    WHERE f.zone_id = z.zone_id
+)
+ORDER BY z.domain
+LIMIT 20
+```
+
+### Scalar subqueries
+
+A subquery that returns a single value can be used in `SELECT`, `WHERE`, or `HAVING`:
+
+```sql
+-- In SELECT (constant value per row)
+SELECT z.domain, z.plan,
+       (SELECT COUNT(*) FROM my_namespace.zones) AS total_zones
+FROM my_namespace.zones z
+WHERE z.plan = 'enterprise'
+LIMIT 10
+```
+
+```sql
+-- In WHERE (comparison)
+SELECT z.domain, z.plan, z.requests_30d
+FROM my_namespace.zones z
+WHERE z.requests_30d > (
+    SELECT AVG(requests_30d) FROM my_namespace.zones
+)
+ORDER BY z.requests_30d DESC
+LIMIT 20
+```
 
 ---
 

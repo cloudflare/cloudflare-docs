@@ -8,6 +8,8 @@ products:
   - ai-gateway
 ---
 
+import { TypeScriptExample } from "~/components";
+
 Custom metadata in AI Gateway allows you to tag requests with user IDs or other identifiers, enabling better tracking and analysis of your requests. Metadata values can be strings, numbers, or booleans, and will appear in your logs, making it easy to search and filter through your data.
 
 ## Key Features
@@ -44,54 +46,58 @@ Objects are not supported as metadata values.
 To include custom metadata in your request using cURL:
 
 ```bash
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer {api_token}' \
-  --header 'Content-Type: application/json' \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
   --header 'cf-aig-metadata: {"team": "AI", "user": 12345, "test":true}' \
-  --data '{"model": "gpt-4o", "messages": [{"role": "user", "content": "What should I eat for lunch?"}]}'
+  --data '{"model": "openai/gpt-4.1", "messages": [{"role": "user", "content": "What should I eat for lunch?"}]}'
 ```
 
 ### Using SDK
 
 To include custom metadata in your request using the OpenAI SDK:
 
-```javascript
+<TypeScriptExample>
+
+```ts
 import OpenAI from "openai";
 
 export default {
- async fetch(request, env, ctx) {
-   const openai = new OpenAI({
-     apiKey: env.OPENAI_API_KEY,
-     baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai",
-   });
+	async fetch(request, env, ctx) {
+		const openai = new OpenAI({
+			apiKey: env.CLOUDFLARE_API_TOKEN,
+			baseURL: `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/v1`,
+		});
 
-   try {
-     const chatCompletion = await openai.chat.completions.create(
-       {
-         model: "gpt-4o",
-         messages: [{ role: "user", content: "What should I eat for lunch?" }],
-         max_tokens: 50,
-       },
-       {
-         headers: {
-           "cf-aig-metadata": JSON.stringify({
-             user: "JaneDoe",
-             team: 12345,
-             test: true
-           }),
-         },
-       }
-     );
+		try {
+			const chatCompletion = await openai.chat.completions.create(
+				{
+					model: "openai/gpt-4.1",
+					messages: [{ role: "user", content: "What should I eat for lunch?" }],
+					max_tokens: 50,
+				},
+				{
+					headers: {
+						"cf-aig-metadata": JSON.stringify({
+							user: "JaneDoe",
+							team: 12345,
+							test: true,
+						}),
+					},
+				},
+			);
 
-     const response = chatCompletion.choices[0].message;
-     return new Response(JSON.stringify(response));
-   } catch (e) {
-     console.log(e);
-     return new Response(e);
-   }
- },
+			const response = chatCompletion.choices[0].message;
+			return new Response(JSON.stringify(response));
+		} catch (e) {
+			console.log(e);
+			return new Response(e);
+		}
+	},
 };
 ```
+
+</TypeScriptExample>
 
 ### Using Binding
 

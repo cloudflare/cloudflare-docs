@@ -12,6 +12,10 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Mount S3-compatible object storage buckets as local filesystem paths. Access object storage using standard file operations.
 
+:::caution[Mounting `/workspace`]
+Mounting a bucket at `/workspace` or a subpath under it can be confusing in app or project setups. In production, the mount overlays that path instead of merging with files already in the image or template. If you want `/workspace` itself to persist over time, [Backup and restore](/sandbox/guides/backup-restore/) is often a better fit.
+:::
+
 :::note[S3-compatible providers]
 The SDK works with any S3-compatible object storage provider. Examples include Cloudflare R2, Amazon S3, Google Cloud Storage, Backblaze B2, MinIO, and [many others](https://github.com/s3fs-fuse/s3fs-fuse/wiki/Non-Amazon-S3). The SDK automatically detects and optimizes for R2, S3, and GCS.
 :::
@@ -229,7 +233,7 @@ During local development, files are synchronized between R2 and the container us
 - **Bidirectional sync** - Changes made in the container are synced to R2, and changes made in R2 are synced to the container. Both directions follow the same periodic sync model.
 
 :::note
-These considerations apply to local development with `wrangler dev` only. In production, bucket mounts use a direct filesystem mount with no synchronization delay.
+These considerations apply to local development with `wrangler dev` only. In production, bucket mounts use a direct filesystem mount with no synchronization delay. Local sync-style behavior may not fully reflect how a production mount overlays the target path.
 :::
 
 ## Unmount buckets
@@ -392,7 +396,7 @@ await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/outp
 - **Secure credentials** - Always use Worker secrets, never hardcode
 - **Read-only when possible** - Protect data with read-only mounts
 - **Use prefixes for isolation** - Mount subdirectories when working with specific datasets
-- **Mount paths** - Use `/data`, `/storage`, or `/mnt/*` (avoid `/workspace`, `/tmp`)
+- **Mount paths** - Prefer `/data`, `/storage`, or `/mnt/*`; if you mount under `/workspace`, account for the mount overlaying that path in production
 - **Handle errors** - Wrap mount operations in `try...catch` blocks
 - **Optimize access** - Copy frequently accessed files locally
 

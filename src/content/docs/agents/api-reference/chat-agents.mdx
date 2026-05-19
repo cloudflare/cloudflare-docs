@@ -759,6 +759,7 @@ function Chat() {
 | `tools`                       | `Record<string, AITool>`                      | —        | Advanced: dynamically register client-executed tools from the browser                                                    |
 | `autoContinueAfterToolResult` | `boolean`                                     | `true`   | Auto-continue conversation after client tool results and approvals                                                       |
 | `resume`                      | `boolean`                                     | `true`   | Enable automatic stream resumption on reconnect                                                                          |
+| `cancelOnClientAbort`         | `boolean`                                     | `false`  | Cancel the server turn when generic client stream abort or cleanup occurs                                                |
 | `body`                        | `object \| () => object`                      | —        | Custom data sent with every request                                                                                      |
 | `prepareSendMessagesRequest`  | `(options) => { body?, headers? }`            | —        | Advanced per-request customization                                                                                       |
 | `getInitialMessages`          | `(options) => Promise<UIMessage[]>` or `null` | —        | Custom initial message loader. Set to `null` to skip the HTTP fetch entirely (useful when providing `messages` directly) |
@@ -1180,6 +1181,20 @@ When streaming is active:
 1. All chunks are buffered in SQLite as they are generated
 2. If the client disconnects, the server continues streaming and buffering
 3. When the client reconnects, it receives all buffered chunks and resumes live streaming
+
+Generic client stream abort or cleanup stays local to the browser by default, so the server turn keeps running and can be resumed later. Calling `stop()` explicitly still cancels the server turn:
+
+<TypeScriptExample>
+
+```tsx
+const { messages, stop } = useAgentChat({ agent });
+
+return <button onClick={stop}>Stop</button>;
+```
+
+</TypeScriptExample>
+
+Set `cancelOnClientAbort: true` when your app intentionally wants the browser lifecycle to own the server lifecycle, such as request-lifetime or token-saving flows. Explicit `stop()` always cancels server work regardless of this option.
 
 Disable with `resume: false`:
 

@@ -3,6 +3,18 @@ link: "/realtime/realtimekit/release-notes/ios-ui-kit/"
 productName: RealtimeKit iOS UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-05-11"
+    title: RealtimeKit iOS UI Kit 1.1.0
+    description: |-
+      **Breaking changes**
+
+      - Minimum deployment target raised to iOS 16.0
+
+      **Features**
+
+      - Added a "Deny All" button to the waiting room participant list so hosts can reject all pending join requests at once, in both group call and webinar meetings
+      - Upgraded to [RealtimeKit Core v2.1.0](/realtime/realtimekit/release-notes/ios-core/#2026-05-08)
+
   - publish_date: "2026-04-20"
     title: RealtimeKit iOS UI Kit 1.0.0
     description: |-

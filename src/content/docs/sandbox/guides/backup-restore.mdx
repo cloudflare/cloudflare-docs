@@ -12,6 +12,8 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Create point-in-time snapshots of sandbox directories and restore them using copy-on-write overlays. Backups are stored in an R2 bucket and use squashfs compression.
 
+Use backup and restore when you want workspace state, such as `/workspace`, to come back later. This is often a better fit for persistent project directories, while bucket mounts are better suited to separate persisted storage paths. If you mount a bucket over `/workspace`, be aware that it can overlay files seeded by your image in production.
+
 ## Prerequisites
 
 1. Create an R2 bucket for storing backups:
@@ -324,7 +326,7 @@ When `localBucket` is `true`, presigned URL credentials are not required and the
 - **Same archive format** - Local backups use the same squashfs archive format as production backups.
 
 :::note
-These considerations apply to local development with `wrangler dev` only. In production, backup and restore use presigned URLs and FUSE overlayfs.
+These considerations apply to local development with `wrangler dev` only. In production, backup and restore use presigned URLs and FUSE overlayfs. Local backup and restore behavior can also differ from local bucket mounting behavior, which uses sync-style updates rather than a production FUSE mount.
 :::
 
 ## Clean up backup objects in R2

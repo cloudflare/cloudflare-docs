@@ -47,8 +47,6 @@ function init() {
 		button.addEventListener("click", handleExplainButtonClick);
 		const instance = tippy(button, {
 			content: "Explain Code",
-			placement: "top",
-			arrow: false,
 			appendTo: () => document.body,
 		});
 		tippyInstances.push(instance);
@@ -60,8 +58,6 @@ function init() {
 	copyButtons.forEach((button) => {
 		const instance = tippy(button, {
 			content: "Copy to clipboard",
-			placement: "top",
-			arrow: false,
 			appendTo: () => document.body,
 		});
 		tippyInstances.push(instance);

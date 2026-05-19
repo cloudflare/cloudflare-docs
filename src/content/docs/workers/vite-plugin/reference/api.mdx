@@ -8,7 +8,7 @@ products:
   - workers
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, TypeScriptExample } from "~/components";
 
 ## `cloudflare()`
 
@@ -76,9 +76,26 @@ It accepts an optional `PluginConfig` parameter.
 
   See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
 
-- `tunnel` <Type text='boolean' /> <MetaInfo text='optional' />
+- `tunnel` <Type text='boolean | { name?: string; autoStart?: boolean }' /> <MetaInfo text='optional' />
 
-  Open a publicly reachable Cloudflare Quick Tunnel for sharing a preview, testing webhooks, or accessing the app from another device.
+  Expose your local dev server over a [Cloudflare Tunnel](/tunnel/).
+
+  Provide an object to configure a named tunnel or control whether the tunnel starts automatically. Press `t + Enter` to start or close the tunnel. Set `tunnel.autoStart` to `true` if you want the tunnel to open when Vite starts.
+
+  <TypeScriptExample filename="vite.config.ts">
+  ```ts
+  import { defineConfig } from "vite";
+  import { cloudflare } from "@cloudflare/vite-plugin";
+
+  export default defineConfig({
+  	plugins: [
+  		cloudflare({
+  			tunnel: { name: "my-tunnel" },
+  		}),
+  	],
+  });
+  ```
+  </TypeScriptExample>
 
   See [Share a local dev server](/workers/development-testing/local-dev-tunnels/) for more information.
 

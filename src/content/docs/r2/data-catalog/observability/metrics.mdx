@@ -1,0 +1,278 @@
+---
+pcx_content_type: concept
+title: Metrics and analytics
+description: Query R2 Data Catalog metrics for Iceberg REST API operations and table maintenance jobs via the GraphQL Analytics API.
+sidebar:
+  order: 1
+products:
+  - r2
+---
+
+R2 Data Catalog exposes metrics that allow you to monitor Iceberg REST API requests and table maintenance jobs (compaction and snapshot expiration) across your warehouses.
+
+The metrics displayed in the Cloudflare dashboard are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or any HTTP client.
+
+## Metrics
+
+### Data operations metrics
+
+R2 Data Catalog exports the below metrics within the `r2CatalogDataOperationsAdaptiveGroups` dataset. These metrics track Iceberg REST API requests made to your catalog, such as loading tables, listing namespaces, and committing updates.
+
+| Metric             | GraphQL Field Name  | Aggregation         | Description                               |
+| ------------------ | ------------------- | ------------------- | ----------------------------------------- |
+| Request count      | `count`             | count               | Total number of Iceberg REST API requests |
+| Request body bytes | `requestBodyBytes`  | sum                 | Total bytes sent in request bodies        |
+| Request duration   | `requestDurationMs` | sum, avg, quantiles | Request duration in milliseconds          |
+
+The `r2CatalogDataOperationsAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+
+- `warehouseName` - The name of the R2 Data Catalog warehouse
+- `operation` - The Iceberg REST API operation name (for example, `load-table`, `list-namespaces`, `commit-table`)
+- `namespaceName` - The Iceberg namespace targeted by the request, if applicable
+- `tableName` - The Iceberg table targeted by the request, if applicable
+- `httpStatus` - HTTP response status code
+- `datetime` - Request timestamp
+- `date` - Request timestamp, truncated to the start of a day
+- `datetimeHour` - Request timestamp, truncated to the start of an hour
+- `datetimeMinute` - Request timestamp, truncated to the start of a minute
+- `datetimeFiveMinutes` - Request timestamp, truncated to the start of five minutes
+- `datetimeFifteenMinutes` - Request timestamp, truncated to the start of fifteen minutes
+
+### Table maintenance metrics
+
+R2 Data Catalog exports the below metrics within the `r2CatalogTableMaintenanceAdaptiveGroups` dataset. These metrics track table maintenance jobs including [compaction and snapshot expiration](/r2/data-catalog/table-maintenance/).
+
+| Metric          | GraphQL Field Name | Aggregation         | Description                                     |
+| --------------- | ------------------ | ------------------- | ----------------------------------------------- |
+| Job count       | `count`            | count               | Total number of maintenance jobs executed       |
+| Files processed | `filesProcessed`   | sum                 | Total input files processed by maintenance jobs |
+| Files output    | `filesOutput`      | sum                 | Total output files created by maintenance jobs  |
+| Input bytes     | `inputBytes`       | sum                 | Total bytes read or scanned by maintenance jobs |
+| Output bytes    | `outputBytes`      | sum                 | Total bytes written by maintenance jobs         |
+| Job duration    | `jobDurationMs`    | sum, avg, quantiles | Job duration in milliseconds                    |
+
+The `r2CatalogTableMaintenanceAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+
+- `warehouseName` - The name of the R2 Data Catalog warehouse
+- `jobType` - The type of maintenance job (`compaction`, `snapshot-expiration`)
+- `namespaceName` - The Iceberg namespace containing the table
+- `tableName` - The Iceberg table that was maintained
+- `success` - Whether the job succeeded (`1`) or failed (`0`)
+- `datetime` - Job timestamp
+- `date` - Job timestamp, truncated to the start of a day
+- `datetimeHour` - Job timestamp, truncated to the start of an hour
+- `datetimeMinute` - Job timestamp, truncated to the start of a minute
+- `datetimeFiveMinutes` - Job timestamp, truncated to the start of five minutes
+- `datetimeFifteenMinutes` - Job timestamp, truncated to the start of fifteen minutes
+
+## Query via the GraphQL API
+
+You can programmatically query analytics for your R2 Data Catalog warehouses via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+
+R2 Data Catalog GraphQL datasets require an `accountTag` filter with your Cloudflare account ID.
+
+### Measure data operations over a time period
+
+This query returns the total number of Iceberg REST API requests and total request duration, grouped by operation, for a specific warehouse.
+
+```graphql
+query CatalogDataOperations(
+	$accountTag: String!
+	$warehouseName: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			r2CatalogDataOperationsAdaptiveGroups(
+				limit: 10000
+				filter: {
+					warehouseName: $warehouseName
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+			) {
+				count
+				dimensions {
+					operation
+				}
+				sum {
+					requestBodyBytes
+					requestDurationMs
+				}
+				avg {
+					requestDurationMs
+				}
+			}
+		}
+	}
+}
+```
+
+### Measure request latency percentiles
+
+This query returns request duration percentiles for a specific warehouse, which is useful for understanding latency distribution.
+
+```graphql
+query CatalogLatencyPercentiles(
+	$accountTag: String!
+	$warehouseName: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			r2CatalogDataOperationsAdaptiveGroups(
+				limit: 10000
+				filter: {
+					warehouseName: $warehouseName
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+			) {
+				count
+				dimensions {
+					operation
+				}
+				quantiles {
+					requestDurationMsP50
+					requestDurationMsP90
+					requestDurationMsP99
+				}
+			}
+		}
+	}
+}
+```
+
+### Query table maintenance job metrics
+
+This query returns a summary of compaction and snapshot expiration jobs for a specific warehouse, including files processed, bytes read and written, and success or failure status.
+
+```graphql
+query CatalogMaintenanceMetrics(
+	$accountTag: String!
+	$warehouseName: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			r2CatalogTableMaintenanceAdaptiveGroups(
+				limit: 10000
+				filter: {
+					warehouseName: $warehouseName
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+			) {
+				count
+				dimensions {
+					jobType
+					tableName
+					success
+				}
+				sum {
+					filesProcessed
+					filesOutput
+					inputBytes
+					outputBytes
+					jobDurationMs
+				}
+			}
+		}
+	}
+}
+```
+
+### Filter by operation or table
+
+You can narrow results to a specific Iceberg operation or table. For example, to query only `load-table` operations for a specific table:
+
+```graphql
+query CatalogFilterByOperation(
+	$accountTag: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			r2CatalogDataOperationsAdaptiveGroups(
+				limit: 10000
+				filter: {
+					warehouseName: "my-warehouse"
+					operation: "load-table"
+					tableName: "my_table"
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+			) {
+				count
+				sum {
+					requestDurationMs
+				}
+			}
+		}
+	}
+}
+```
+
+To query only failed maintenance jobs:
+
+```graphql
+query CatalogFailedMaintenanceJobs(
+	$accountTag: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			r2CatalogTableMaintenanceAdaptiveGroups(
+				limit: 10000
+				filter: {
+					warehouseName: "my-warehouse"
+					success: 0
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+			) {
+				count
+				dimensions {
+					jobType
+					tableName
+				}
+			}
+		}
+	}
+}
+```
+
+### Query across all warehouses
+
+To query metrics across all warehouses on an account, omit the `warehouseName` filter and include `warehouseName` in the dimensions:
+
+```graphql
+query CatalogAllWarehouses(
+	$accountTag: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			r2CatalogDataOperationsAdaptiveGroups(
+				limit: 10000
+				filter: { datetime_geq: $datetimeStart, datetime_leq: $datetimeEnd }
+			) {
+				count
+				dimensions {
+					warehouseName
+					operation
+				}
+				sum {
+					requestDurationMs
+				}
+			}
+		}
+	}
+}
+```

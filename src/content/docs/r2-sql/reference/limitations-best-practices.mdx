@@ -28,9 +28,14 @@ This page summarizes supported features, limitations, and best practices.
 | 33 aggregate functions                                  | Yes       | Basic, approximate, statistical, bitwise, boolean, positional                |
 | Approximate aggregates                                  | Yes       | `approx_distinct`, `approx_median`, `approx_percentile_cont`, `approx_top_k` |
 | Struct / Array / Map column types                       | Yes       | Bracket notation, `get_field()`, array functions, map functions           |
-| CTEs (`WITH ... AS`)                                    | Yes       | Single-table only. No JOINs or cross-table references within CTEs.           |
-| JOINs                                                   | No        | Single-table only                                                            |
-| Subqueries                                              | No        |                                                                              |
+| CTEs (`WITH ... AS`)                                    | Yes       | Can reference different tables and include JOINs                             |
+| JOINs (INNER, LEFT, RIGHT, FULL OUTER, CROSS)           | Yes       | All standard join types                                                      |
+| Implicit joins (comma FROM)                              | Yes       |                                                                              |
+| Subqueries (`IN`, `NOT IN`)                              | Yes       | `NOT IN` not supported on nullable columns — use `NOT EXISTS` instead        |
+| Subqueries (`EXISTS`, `NOT EXISTS`)                      | Yes       | semi-join and anti-join patterns                                             |
+| Scalar subqueries                                        | Yes       | In SELECT, WHERE, HAVING                                                     |
+| Derived tables (FROM subqueries)                         | Yes       | Can be nested and joined. `LATERAL` derived tables not supported.            |
+| Self-joins                                               | Yes       | Same table with different aliases                                            |
 | Window functions (`OVER`)                               | No        |                                                                              |
 | `SELECT DISTINCT`                                       | No        | Use `approx_distinct`                                                        |
 | `OFFSET`                                                | No        |                                                                              |
@@ -46,9 +51,6 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 
 | Feature                                                                       | Error                                                    |
 | :---------------------------------------------------------------------------- | :------------------------------------------------------- |
-| JOINs (any type)                                                              | `unsupported feature: JOIN operations are not supported` |
-| Multi-table CTEs (JOINs or cross-table references within `WITH`)              | Single-table CTEs are supported                          |
-| Subqueries (FROM, WHERE, scalar)                                              | `unsupported feature: subqueries`                        |
 | `SELECT DISTINCT`                                                             | `unsupported feature: SELECT DISTINCT is not supported`  |
 | `OFFSET`                                                                      | `unsupported feature: OFFSET clause is not supported`    |
 | `UNION` / `INTERSECT` / `EXCEPT`                                              | Set operations not supported                             |
@@ -57,6 +59,8 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 | `CREATE` / `DROP` / `ALTER`                                                   | `only read-only queries are allowed`                     |
 | `UNNEST` / `PIVOT` / `UNPIVOT`                                                | Not supported                                            |
 | Wildcard modifiers (`ILIKE`, `EXCLUDE`, `EXCEPT`, `REPLACE`, `RENAME` on `*`) | Not supported                                            |
+| Nested (parenthesized) joins                                                  | Not supported                                            |
+| `LATERAL` derived tables                                                      | Not supported                                            |
 | `LATERAL VIEW` / `QUALIFY`                                                    | Not supported                                            |
 
 ---
@@ -70,9 +74,7 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 | `MEDIAN`                                                | Use [`approx_median`](/r2-sql/sql-reference/aggregate-functions/#approx_median)                   |
 | `ARRAY_AGG`                                             | No alternative (unsupported for memory safety)                                                    |
 | `STRING_AGG`                                            | No alternative (unsupported for memory safety)                                                    |
-| Scalar subqueries (`SELECT ... WHERE x = (SELECT ...)`) | Not supported                                                                                     |
-| `EXISTS (SELECT ...)`                                   | Not supported                                                                                     |
-| `IN (SELECT ...)`                                       | Use `IN (value1, value2, ...)` with a literal list                                                |
+| `NOT IN` subquery on nullable columns                   | Use `NOT EXISTS` with a correlated subquery instead                                               |
 
 ---
 
@@ -80,7 +82,7 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 
 | Constraint                           | Details                                                                                               |
 | :----------------------------------- | :---------------------------------------------------------------------------------------------------- |
-| Single table per query               | Queries must reference exactly one table. No JOINs, no subqueries. CTEs may reference a single table. |
+| Multi-table queries                  | JOINs, subqueries (IN, EXISTS, scalar, derived tables), and multi-table CTEs are supported. Performance depends on intermediate result size; use WHERE filters to manage join selectivity. |
 | Partitioned and unpartitioned tables  | Both partitioned and unpartitioned Iceberg tables are supported.                                       |
 | Parquet format only                  | No CSV, JSON, or other formats.                                                                       |
 | Read-only                            | R2 SQL is a query engine, not a database. No writes.                                                  |
@@ -106,3 +108,7 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 4. Use approximate aggregation functions (`approx_distinct`, `approx_median`, `approx_percentile_cont`) instead of exact alternatives on large datasets.
 5. Enable compaction in R2 Data Catalog to reduce the number of files scanned per query.
 6. Use `EXPLAIN` to inspect the execution plan and verify predicate pushdown.
+7. Use `WHERE` filters with multi-way joins to reduce intermediate result sizes. Joining three or more large tables without filters can exceed resource limits.
+8. Join large fact tables through dimension tables rather than directly joining two large fact tables. For example, join `http_requests` to `firewall_events` through a shared `zones` dimension rather than cross-joining both fact tables.
+9. Be cautious with `COUNT(DISTINCT)` across multi-way joins. This combination can produce very large intermediate results. Consider using `approx_distinct()` or breaking the query into smaller steps.
+10. Use explicit `JOIN` syntax instead of implicit joins (comma-separated `FROM`) for readability and to ensure the optimizer can choose optimal join ordering.

@@ -77,26 +77,29 @@ Refer to the [binding reference](/ai-gateway/integrations/worker-binding-methods
 
 ### HTTP API
 
-Call a supported provider through the AI Gateway REST API without passing a provider API key. Use the `cf-aig-authorization` header to authenticate with your Cloudflare API token.
+Call a supported provider through the AI Gateway REST API without passing a provider API key.
+
+#### REST API
+
+Use the Cloudflare API to call third-party models. Pass your Cloudflare API token in the `Authorization` header:
 
 ```bash
-curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/compat/chat/completions \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header 'Content-Type: application/json' \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
   --data '{
-    "model": "google-ai-studio/gemini-2.5-pro",
-    "messages": [
-      {
-        "role": "user",
-        "content": "What is Cloudflare?"
-      }
-    ]
+    "model": "openai/gpt-4.1-mini",
+    "messages": [{"role": "user", "content": "What is Cloudflare?"}]
   }'
 ```
 
-The `default` gateway is created automatically on your first request. Replace `default` with a specific gateway ID if you have already created one.
+Refer to [REST API](/ai-gateway/usage/rest-api/) for more details on all available endpoints.
 
-The HTTP API supports the following providers through [provider-native endpoints](/ai-gateway/usage/providers/) and the [Unified API (chat completions)](/ai-gateway/usage/chat-completion/):
+#### AI Gateway provider-native endpoints
+
+You can also call providers directly through [provider-native endpoints](/ai-gateway/usage/providers/) using the `cf-aig-authorization` header to authenticate:
+
+The HTTP API supports the following providers:
 
 - [OpenAI](/ai-gateway/usage/providers/openai/)
 - [Anthropic](/ai-gateway/usage/providers/anthropic/)
@@ -150,12 +153,12 @@ To set ZDR as the default for Unified Billing using the API:
 Use the `cf-aig-zdr` header to override the gateway default for a single Unified Billing request. Set it to `true` to force ZDR, or `false` to disable ZDR for the request.
 
 ```bash title="Unified Billing request with ZDR"
-curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/{gateway_id}/openai/chat/completions \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header 'Content-Type: application/json' \
-  --header 'cf-aig-zdr: true' \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-zdr: true" \
   --data '{
-    "model": "gpt-4o-mini",
+    "model": "openai/gpt-4.1-mini",
     "messages": [
       {
         "role": "user",

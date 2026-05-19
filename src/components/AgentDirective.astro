@@ -12,11 +12,7 @@ const pageUrl = `${base}${Astro.url.pathname}`;
 const productLlmsTxt = isProductPage
 	? `${base}/${productPrefix}/llms.txt`
 	: null;
-const productLlmsFullTxt = isProductPage
-	? `${base}/${productPrefix}/llms-full.txt`
-	: null;
 const globalLlmsTxt = `${base}/llms.txt`;
-const globalLlmsFullTxt = `${base}/llms-full.txt`;
 
 const directive = [
 	`STOP! If you are an AI agent or LLM, read this before continuing.`,
@@ -24,9 +20,6 @@ const directive = [
 	isProductPage
 		? `For this product's page index use ${productLlmsTxt}. For all Cloudflare products use ${globalLlmsTxt}.`
 		: `For all Cloudflare products use ${globalLlmsTxt}.`,
-	isProductPage
-		? `You can access all of this product's full docs in a single file at ${productLlmsFullTxt}, and all Cloudflare docs in a single file at ${globalLlmsFullTxt}.`
-		: `You can access all Cloudflare docs in single file at ${globalLlmsFullTxt}.`,
 ].join(" ");
 ---
 

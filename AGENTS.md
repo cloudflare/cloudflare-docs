@@ -68,7 +68,7 @@ All docs pages require frontmatter. Key fields:
 ```yaml
 ---
 title: Page Title # Required
-description: SEO meta description # Recommended
+description: SEO meta description # Required when pcx_content_type is set
 pcx_content_type: how-to # Page type (see below)
 sidebar:
   order: 1 # Sort order in sidebar
@@ -87,159 +87,15 @@ Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `desig
 
 Tags are validated against an allowlist in `src/schemas/tags.ts`. Invalid tags will fail the build.
 
-### MDX gotchas — the #1 cause of build failures
+### Writing and style rules
 
-MDX is parsed as JSX, not plain Markdown. These characters have special meaning and **will break the build** if used unescaped in prose:
-
-| Character | Problem                       | Fix                                    |
-| --------- | ----------------------------- | -------------------------------------- |
-| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`     |
-| `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks |
-
-This is the single most common build failure. Always check prose, tables, and headings for these characters.
-
-### Links
-
-- Use **relative paths**: `/workers/get-started/` not `https://developers.cloudflare.com/workers/get-started/`
-- No file extensions in links: `/workers/get-started/` not `/workers/get-started.mdx/`
-- No relative file links: `./page` is **not supported** — use absolute paths from root
-- Descriptive link text: never use "here", "this page", or "read more"
-- Standard phrasing: "For more information, refer to [Page Title](/path/)."
-
-### Code blocks
-
-Always specify a language after the opening triple backticks. Language names must be **lowercase**.
-
-Supported languages: `bash`, `sh`, `shell`, `c`, `css`, `dart`, `diff`, `go`, `graphql`, `hcl`, `tf`, `html`, `ini`, `java`, `js`, `javascript`, `json`, `kotlin`, `php`, `powershell`, `python`, `py`, `ruby`, `rb`, `rust`, `rs`, `sql`, `swift`, `toml`, `ts`, `typescript`, `txt`, `text`, `plaintext`, `xml`, `yaml`, `yml`.
-
-Unsupported languages (like `promql`, `env`, `output`, `csharp`) cause warnings and fall back to `txt`. Use `txt` for generic output.
-
-Do **not** prefix terminal commands with `$` — the copy button copies the entire block.
-
-### Style guide rules
-
-The full style guide is at `src/content/docs/style-guide/`. Key rules:
-
-- **Active voice, present tense**. One sentence = one idea.
-- **No contractions** (use "do not" instead of "don't").
-- Use **"select"** not "click", **"go to"** not "navigate", **"turn on/off"** not "enable/disable".
-- **Bold** for clickable UI elements: **Save**, **DNS** > **Records**.
-- **Monospace** for code, paths, IPs, ports, HTTP verbs, status codes.
-- Headings must be sequential (H2 then H3 then H4 — never skip levels).
-- Use `<br/>` for line breaks, never two trailing spaces.
-- Placeholder values: use `example.com` for domains, `192.0.2.0/24` for IPs, `<YOUR_DOMAIN>` in URLs.
+For MDX syntax, links, code blocks, formatting, and writing style, see `.agents/references/style-guide.md`. That file is the canonical agent reference — distilled from the full style guide at `src/content/docs/style-guide/`.
 
 ## Components — major APIs
 
-Components are imported from `~/components` in MDX files:
+Components are imported from `~/components` in MDX files. Imports must appear after the frontmatter block — forgetting the import is a common mistake.
 
-```mdx
-import {
-	Render,
-	TypeScriptExample,
-	WranglerConfig,
-	Details,
-} from "~/components";
-
-;
-```
-
-Components **must** be imported after the frontmatter block. Forgetting the import is a common mistake.
-
-### Render (partials)
-
-Renders a reusable partial from `src/content/partials/`. This is the primary content reuse mechanism.
-
-```mdx
-<Render file="partial-name" product="workers" />
-
-<!-- With parameters: -->
-
-<Render file="partial-name" product="workers" params={{ key: "value" }} />
-```
-
-The component looks up `src/content/partials/{product}/{file}.mdx`. If the partial defines `params` in its frontmatter, the caller must provide matching props.
-
-### TypeScriptExample
-
-Auto-transpiles TypeScript to JavaScript and shows both in synced tabs.
-
-```mdx
-<TypeScriptExample filename="src/index.ts">
-
-{/* TypeScript code here — the JS tab is auto-generated */}
-
-</TypeScriptExample>
-```
-
-### WranglerConfig
-
-Shows Wrangler configuration in both TOML and JSON formats with synced tabs. Auto-converts between formats.
-
-````mdx
-<WranglerConfig>
-
-```toml
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "$today"
-```
-````
-
-</WranglerConfig>
-```
-You should generally use `$today` for the compatibility_date value for new projects. This magic string is automatically replaced with the current date at build time, ensuring documentation always suggests the latest date. When `$today` is used, the component also automatically injects a comment above the `compatibility_date` line (e.g., `# Set this to today's date` in TOML, `// Set this to today's date` in JSONC) so readers know to keep it current.
-
-### TabItem (Starlight built-in)
-
-Starlight's `<Tabs>` and `<TabItem>` are re-exported from `~/components`:
-
-```mdx
-import { Tabs, TabItem } from "~/components";
-
-<Tabs>
-	<TabItem label="npm">npm install package</TabItem>
-	<TabItem label="yarn">yarn add package</TabItem>
-</Tabs>
-```
-
-### PackageManagers
-
-Shows a command across npm, yarn, and pnpm:
-
-```mdx
-<PackageManagers type="exec" pkg="wrangler" args="init my-project" />
-```
-
-### Details
-
-Collapsible content block:
-
-```mdx
-<Details header="Click to expand">
-
-Content inside the collapsible section.
-
-</Details>
-```
-
-### Other frequently used components
-
-| Component          | Purpose                                                        |
-| ------------------ | -------------------------------------------------------------- |
-| `Plan`             | Display plan availability (e.g., `<Plan type="enterprise" />`) |
-| `GlossaryTooltip`  | Inline hover tooltip with glossary definition                  |
-| `InlineBadge`      | Status badges: `<InlineBadge preset="beta" />`                 |
-| `LinkTitleCard`    | Navigation card with icon, title, and description              |
-| `DirectoryListing` | Auto-generated listing of child pages                          |
-| `YouTube`          | Embed YouTube video by ID                                      |
-| `Stream`           | Embed Cloudflare Stream video                                  |
-| `APIRequest`       | Generate curl commands from the Cloudflare OpenAPI schema      |
-| `DashButton`       | "Go to Dashboard" button with validated deeplink               |
-| `ListTutorials`    | Auto-generated tutorial listing table                          |
-| `GitHubCode`       | Fetch and display code from a GitHub repository                |
-
-For the full component list and their props, see `src/components/index.ts` (barrel export) and the individual `.astro` / `.tsx` files.
+For full component documentation including props, examples, and mandatory usage rules, see `.agents/references/components.md`.
 
 ## Validation — what to run after making changes
 
@@ -284,10 +140,14 @@ pnpm exec tsm bin/validate-redirects.ts  # Only if public/__redirects was modifi
 
 ### Fixing formatting
 
+After editing any `.ts`, `.tsx`, `.js`, `.mjs`, or `.css` file, run:
+
 ```bash
 pnpm run format             # Auto-fix code + data files
 pnpm run format:content     # Auto-fix MDX/MD/Astro files
 ```
+
+Always format edited files before committing — CI runs `pnpm run format:core:check` and will fail if formatting is off.
 
 ### Syncing types after content collection changes
 
@@ -390,6 +250,27 @@ New web components in this codebase should use the `cfdocs-` prefix for custom e
 ### Existing components
 
 Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `r2-local-uploads-diagram`, `animated-workflow-diagram`, `autoconfig-diagram`) are exempt from the `cfdocs-` prefix requirement and do not need to be renamed.
+
+## Agent skills
+
+Repo-specific skills live in `.agents/skills/`. Each skill provides specialized instructions for a particular task. Load a skill when the task matches its description.
+
+| Skill | When to use |
+| ----- | ----------- |
+| `changelog` | Creating, editing, or reviewing changelog entries |
+| `code-review` | Reviewing Workers/platform code for type correctness and API usage |
+| `dependabot-review` | Analyzing a Dependabot PR for impact on this repo |
+| `docs-review` | Reviewing documentation PRs for style, structure, and correctness |
+| `eli5` | Simplifying technical documentation for broader audiences |
+| `pr` | Creating or updating GitHub pull requests |
+
+Shared reference files in `.agents/references/`:
+
+| File | Contents |
+| ---- | -------- |
+| `style-guide.md` | Canonical writing and formatting rules for all content work |
+| `components.md` | Full MDX component catalog with props and usage examples |
+| `procedures.md` | Rules for writing step-by-step procedural instructions |
 
 ## Commit conventions
 

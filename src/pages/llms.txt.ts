@@ -87,8 +87,6 @@ export const GET: APIRoute = async ({ url }) => {
 		Explore guides and tutorials to start building on Cloudflare's platform.
 
 		> Each product below links to its own llms.txt, which contains a full index of that product's documentation pages and is the recommended way to explore a specific product's content.
-		>
-		> For the complete documentation archive in a single file, use the [Full Documentation Archive](${base}/llms-full.txt). That file is intended for offline indexing, bulk vectorization, or large-context models. Each product's llms.txt also links to a product-scoped llms-full.txt.
 
 		${grouped
 			.map(([group, entries]) => {

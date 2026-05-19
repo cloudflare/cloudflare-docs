@@ -89,6 +89,7 @@ Table maintenance operations such as compaction and snapshot expiration requires
 
 Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) for details on creating a token with the required permissions.
 :::
+
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
 
@@ -202,10 +203,10 @@ To connect your Iceberg engine to R2 Data Catalog, you must provide a Cloudflare
 
 ### Create API token in the dashboard
 
-Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** or **Admin Read only** permissions. These permissions include both:
+Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** permissions. These permissions include both:
 
-- Access to R2 Data Catalog (read-only or read/write, depending on chosen permission)
-- Access to R2 storage (read-only or read/write, depending on chosen permission)
+- Access to R2 Data Catalog (read/write)
+- Access to R2 storage (read/write)
 
 Providing the resulting token value to your Iceberg engine gives it the ability to manage catalog metadata and handle data operations (reads or writes to R2).
 
@@ -241,6 +242,7 @@ To create an API token programmatically for use with R2 Data Catalog, you'll nee
 To learn more about how to create API tokens for R2 Data Catalog using the API, including required permission groups and usage examples, refer to the [Create API tokens via API documentation](/r2/api/tokens/#create-api-tokens-via-api).
 
 ## R2 Local Uploads
+
 [Local Uploads](/r2/buckets/local-uploads) writes object data to a nearby location, then asynchronously copies it to your bucket. Data is queryable immediately and remains strongly consistent. This can significantly improve latency of writes from Apache Iceberg clients outside of the region of the respective R2 Data Catalog bucket.
 
 To enable R2 Local Uploads, you can use the following Wrangler command:
@@ -250,8 +252,8 @@ npx wrangler r2 bucket catalog local-uploads enable <R2_Data_Catalog_BUCKET_NAME
 ```
 
 ## Limitations
-- R2 Data Catalog does not currently support R2 buckets in a non-default jurisdiction.
 
+- R2 Data Catalog does not currently support R2 buckets in a non-default jurisdiction.
 
 ## Learn more
 
