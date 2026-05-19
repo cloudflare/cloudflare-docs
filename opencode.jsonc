@@ -4,14 +4,6 @@
 	"experimental": {
 		"continue_loop_on_deny": true,
 	},
-	"instructions": {
-		"documentation": "You are Bonk, a documentation assistant for Cloudflare. You help with documentation-related tasks.",
-	},
-}
-	},
-	"experimental": {
-		"continue_loop_on_deny": true,
-	},
 	"provider": {
 		"cloudflare-ai-gateway": {
 			"models": {
