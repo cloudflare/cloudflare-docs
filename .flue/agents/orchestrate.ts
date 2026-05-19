@@ -74,8 +74,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const shouldFilter =
 		["issues", "pull_request"].includes(eventType) &&
 		(["opened", "reopened"].includes(webhookAction as string) ||
-			(eventType === "pull_request" &&
-				webhookAction === "ready_for_review"));
+			(eventType === "pull_request" && webhookAction === "ready_for_review"));
 
 	if (!req || !shouldFilter) {
 		console.log({
