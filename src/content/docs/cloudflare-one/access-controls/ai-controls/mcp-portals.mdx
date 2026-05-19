@@ -68,11 +68,12 @@ Cloudflare Access will validate the server connection and fetch a list of tools 
 
 The MCP server status indicates the synchronization status of the MCP server to Cloudflare Access.
 
-| Status  | Description                                                                                                                                                |
-| ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error   | The server's authentication failed due to expired or incorrect credentials. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
-| Waiting | The server's tools, prompts, and resources are being synchronized.                                                                                         |
-| Ready   | The server was successfully synchronized and all tools, prompts, and resources are available.                                                              |
+| Status        | Description                                                                                                                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error         | The server's authentication failed due to expired or incorrect credentials. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                                                             |
+| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                                   |
+| Waiting       | The server's tools, prompts, and resources are being synchronized.                                                                                                                                                     |
+| Ready         | The server was successfully synchronized and all tools, prompts, and resources are available.                                                                                                                          |
 
 ### Reauthenticate the MCP server
 
@@ -440,7 +441,7 @@ To set up a Logpush job for MCP portal logs, refer to [Logpush integration](/clo
 ### After authenticating to the portal, my user receives the error `No allowed servers available, check your Zero Trust Policies`.
 
 1. An MCP portal and server must both have an attached Access policy. Ensure that all MCP servers assigned to the portal have their own associated policy.
-2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows an error, [reauthenticate the server](#reauthenticate-the-mcp-server).
+2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows **Error** or **Sync Required**, [reauthenticate the server](#reauthenticate-the-mcp-server).
 
 ### The portal URL does not prompt for authentication when it is added to an MCP client.
 
