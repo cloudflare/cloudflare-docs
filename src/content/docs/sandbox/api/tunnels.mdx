@@ -18,7 +18,7 @@ Use `sandbox.tunnels` for **quick development** and **deployments on `.workers.d
 
 ## Requirements
 
-- **RPC transport.** Calling `sandbox.tunnels` on a route-based transport throws `"RPC transport required"`. See [Transport configuration](/sandbox/configuration/transport/).
+- **RPC transport.** Calling `sandbox.tunnels` on HTTP/Websocket transports will throw `"RPC transport required"`. See [Transport configuration](/sandbox/configuration/transport/).
 - **glibc image variant.** The default, `python`, `opencode`, and `desktop` images ship `cloudflared`. The `musl`/Alpine variant does not — there is no upstream `cloudflared` build for musl at this time.
 
 ## Methods
