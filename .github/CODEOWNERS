@@ -57,6 +57,10 @@ package.json @cloudflare/content-engineering
 # Browser Run
 
 /src/content/docs/browser-run/ @mchenco @cloudflare/product-owners @celso @kathayl @dcpena @meddulla @simonabadoiu @jonnyparris @ruifigueira
+/src/content/partials/browser-run/ @mchenco @cloudflare/product-owners @celso @kathayl @dcpena @meddulla @simonabadoiu @jonnyparris @ruifigueira
+/src/content/changelog/browser-run/ @mchenco @cloudflare/product-owners @celso @kathayl @dcpena @meddulla @simonabadoiu @jonnyparris @ruifigueira
+/src/content/release-notes/browser-run.yaml @mchenco @cloudflare/product-owners @celso @kathayl @dcpena @meddulla @simonabadoiu @jonnyparris @ruifigueira
+/src/assets/images/browser-run/ @mchenco @cloudflare/product-owners @celso @kathayl @dcpena @meddulla @simonabadoiu @jonnyparris @ruifigueira
 
 # Changelogs
 
