@@ -4,7 +4,7 @@ description: Read the jurisdiction of a jurisdiction-restricted Durable Object f
 products:
   - durable-objects
   - workers
-date: 2026-05-18
+date: 2026-03-26
 ---
 
 `ctx.id.jurisdiction` inside a Durable Object now reports the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) that the object was created in, matching the value seen client-side. If a Worker accesses a Durable Object through a jurisdiction-restricted namespace — for example `env.MY_DURABLE_OBJECT.jurisdiction("eu")` — the same jurisdiction is available on `ctx.id.jurisdiction` inside the object, so you can make region-aware decisions without passing the jurisdiction through method arguments or persisting it in storage.
