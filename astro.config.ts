@@ -197,8 +197,8 @@ export default defineConfig({
 									"/workers-ai/models/**",
 									"/markdown.zip",
 									"/style-guide/index.md",
-									"/videos/**",
 									"/agent-setup/",
+									"/videos/**",
 								],
 							}),
 						]

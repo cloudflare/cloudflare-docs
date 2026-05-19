@@ -851,20 +851,6 @@ Props: `size` (required, `"large"` | `"medium"` | `"small"`), `center` (boolean)
 
 ---
 
-## YouTubeVideos
-
-Renders a grid of YouTube videos associated with one or more products, sourced from `src/content/videos/index.yaml`.
-
-```mdx
-import { YouTubeVideos } from "~/components";
-
-<YouTubeVideos products={["Workers"]} />
-```
-
-Props: `products` (string array — if omitted, uses the current page's product).
-
----
-
 ## AvailableNotifications
 
 Lists available notification types for a product, sourced from `src/content/notifications/index.yaml`.

@@ -240,8 +240,8 @@ package.json @cloudflare/content-engineering
 
 # Radar
 
-/src/content/docs/radar/ @andre-j3sus @cloudflare/product-owners
-/src/content/release-notes/radar.yaml @andre-j3sus @cloudflare/product-owners
+/src/content/docs/radar/ @cloudflare/radar @cloudflare/product-owners
+/src/content/release-notes/radar.yaml @cloudflare/radar @cloudflare/product-owners
 
 # Reference architecture
 
@@ -280,7 +280,9 @@ package.json @cloudflare/content-engineering
 
 # Web Analytics
 
-/src/content/docs/web-analytics/ @angelampcosta @dcpena @cloudflare/product-owners
+/src/content/docs/web-analytics/ @angelampcosta @dcpena @ryantownsend @cloudflare/product-owners
+/src/content/changelog/web-analytics/ @angelampcosta @dcpena @ryantownsend @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/release-notes/beacon-min-js.yaml @angelampcosta @dcpena @ryantownsend @cloudflare/product-owners
 
 # AI Prompts for Cloudflare Workers development
 /public/workers/prompts/ @jahands @Maximo-Guk @cloudflare/product-owners @MattieTK

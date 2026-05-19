@@ -4,6 +4,9 @@
 # ============================================================================
 
 
+# Sandbox (claude-managed-agents moved to tutorials)
+/sandbox/claude-managed-agents/ /sandbox/tutorials/claude-managed-agents/ 301
+
 # Blocked Content (Security center restructuring)
 /security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
 
