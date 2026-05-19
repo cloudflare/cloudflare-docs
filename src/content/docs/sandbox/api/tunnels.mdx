@@ -33,7 +33,7 @@ const tunnel = await sandbox.tunnels.get(port: number): Promise<TunnelInfo>
 
 **Parameters**:
 
-- `port` — Port number inside the sandbox to expose (1024-65535, excluding reserved ports). The service must already be listening on `0.0.0.0:<port>` inside the container.
+- `port` — Port number inside the sandbox to expose (1024-65535, excluding reserved ports). The service to tunnel to must already be listening on `0.0.0.0:<port>` inside the container.
 
 **Returns**: `Promise<TunnelInfo>` — the tunnel record. See [`TunnelInfo`](#tunnelinfo).
 
