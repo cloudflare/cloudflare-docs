@@ -145,7 +145,7 @@ Cloudflare's Real User Monitoring (RUM) operates exclusively on the initial clie
 
 We retain unsampled beacon data for the past 7 days, after this point data is aggregated down to around 10%.
 
-When aggregating metrics in the Cloudflare Dashboard or querying the GraphQL API, a level of sampling (between 0.0001% and 100%) will be dynamically selected based on the filters applied and the volume of matching rows. This ensures a high confidence in the accuracy of figures while maintaining a reasonable response time.
+When aggregating metrics in the Cloudflare Dashboard or querying the GraphQL API, a level of sampling (between 0.0001% and 100%) will be dynamically selected based on the filters applied and the volume of matching rows. This ensures a high confidence in the accuracy of figures while maintaining a reasonable response time. You can [read more about this approach on the Cloudflare blog](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
 
 Note: the GraphQL API exposes a `sampleInterval` field to indicate which level of sampling has been applied to the query.
 
