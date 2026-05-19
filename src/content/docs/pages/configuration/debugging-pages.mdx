@@ -107,7 +107,7 @@ Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. 
 To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 
 ```sh
-curl -IX GET https://example.com/.well-known/acme-challenge/randomstring
+curl -s -o /dev/null -D - https://example.com/.well-known/acme-challenge/randomstring
 ```
 
 ```sh output
