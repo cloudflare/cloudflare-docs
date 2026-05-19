@@ -176,6 +176,13 @@ if (frontmatter.products) {
 	});
 }
 
+if (frontmatter.tags) {
+	metaTags.push({
+		name: "pcx_tags",
+		content: frontmatter.tags.toString(),
+	});
+}
+
 if (lastUpdated) {
 	const daysBetween = differenceInCalendarDays(new Date(), lastUpdated);
 
