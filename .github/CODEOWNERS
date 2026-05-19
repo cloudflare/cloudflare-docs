@@ -223,12 +223,12 @@ package.json @cloudflare/content-engineering
 
 # Performance products
 
-/src/content/docs/argo-smart-routing/ @cloudflare/product-owners
+/src/content/docs/argo-smart-routing/ @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/automatic-platform-optimization/ @cloudflare/product-owners
 /src/content/docs/cache/ @cloudflare/product-owners
-/src/content/docs/health-checks/ @cloudflare/product-owners
-/src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/health-checks/ @cloudflare/product-owners @ncrouch-cflare
+/src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
+/src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu
 /src/content/docs/speed/ @cloudflare/product-owners
 /src/content/docs/web3/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
