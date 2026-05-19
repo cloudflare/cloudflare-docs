@@ -25,7 +25,7 @@ Use `sandbox.tunnels` for **quick development** and **deployments on `.workers.d
 
 ### `tunnels.get()`
 
-Return a tunnel record for `port`. Idempotent: repeated calls for the same port return the same record. On a cache miss, the SDK spawns a fresh `cloudflared` process inside the container and persists the record in Durable Object storage.
+Return a tunnel record for `port`. The SDK spawns a fresh `cloudflared` process inside the container if not already running. The method is idempotent so repeated calls for the same port return the same record.
 
 ```ts
 const tunnel = await sandbox.tunnels.get(port: number): Promise<TunnelInfo>
