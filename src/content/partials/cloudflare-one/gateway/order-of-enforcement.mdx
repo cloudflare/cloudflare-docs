@@ -86,7 +86,7 @@ Connections to Zero Trust will always appear in your [Zero Trust network session
 
 ### Filter TCP SYN packets with Cloudflare Network Firewall
 
-Because Gateway sends a TCP SYN to the destination server before evaluating policies, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-one/traffic-policies/packet-filtering/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#order-of-enforcement), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
+Because Gateway sends a TCP SYN to the destination server before evaluating policies, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-network-firewall/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#_top), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
 
 :::note
 Cloudflare Network Firewall is available to Enterprise users only.
