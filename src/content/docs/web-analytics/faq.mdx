@@ -52,6 +52,16 @@ Since only one JS snippet can be rendered and used per page, you cannot have mul
 
 If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/concepts/cache-control/) for more information.
 
+### Why am I getting a `405 Method Not Allowed` error from `/cdn-cgi/rum`?
+
+The `/cdn-cgi/rum` endpoint only accepts `POST` requests for data ingestion. If you send a request using any other HTTP method (for example, `GET`, `PUT`, or `DELETE`), the endpoint returns a `405 Method Not Allowed` response with an `Allow: POST, OPTIONS` header (`OPTIONS` is allowed for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS) support).
+
+The Web Analytics beacon (`beacon.min.js`) always uses `POST` when reporting metrics. If you see `405` errors in your logs, the requests are not coming from the beacon itself.
+
+They are most likely coming from an automated testing tool making erroneous requests, in which case you should correct it to use `POST` or ignore the errors.
+
+We do not support custom integrations directly with the endpoint: all requests should originate from our beacon JavaScript.
+
 ---
 
 ## Setup
