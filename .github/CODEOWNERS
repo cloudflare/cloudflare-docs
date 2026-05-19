@@ -101,10 +101,10 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/byoip/ @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/china-network/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/dns/ @RebeccaTamachiro @hannes-cf @cloudflare/product-owners
+/src/content/docs/dns/ @RebeccaTamachiro @hannes-cf @cloudflare/product-owners @esomoza-cf
 /src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @hannes-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/dns/internal-dns/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/dns/private-origins/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/dns/internal-dns/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @esomoza-cf
+/src/content/docs/dns/private-origins/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @esomoza-cf
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
