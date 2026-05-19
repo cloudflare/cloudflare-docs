@@ -35,6 +35,8 @@ For production traffic, the hostname should have `status: active`, `ssl.status: 
 
 Custom hostnames using another CDN are not compatible with Cloudflare for SaaS. Since Cloudflare must be able to validate your customer's ownership of the hostname you add, if their usage of another CDN obfuscates their DNS records, hostname validation will fail.
 
+If your customer needs to migrate from another CDN with no downtime, refer to [Zero-downtime migration](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/zero-downtime-migration/), which uses pre-validation to validate the hostname and optionally pre-issue the certificate before DNS cutover.
+
 ## Related resources
 
 <DirectoryListing />

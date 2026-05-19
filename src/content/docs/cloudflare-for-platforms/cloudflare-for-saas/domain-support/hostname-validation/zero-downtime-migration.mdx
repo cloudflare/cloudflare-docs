@@ -13,13 +13,11 @@ head:
 
 When an end customer is already live on another CDN, switching their CNAME to your Cloudflare fallback origin causes a brief window where Cloudflare cannot yet proxy their traffic. Pre-validation lets you verify hostname ownership and optionally pre-issue the TLS certificate _before_ the DNS cutover, so the migration is seamless.
 
-## Overview
-
-The migration sequence is:
+## Migration sequence
 
 1. Create the custom hostname via API.
 2. Pre-validate hostname ownership using an HTTP token or a DNS TXT record.
-3. (Optional) Pre-issue the TLS certificate using Delegated DCV.
+3. Pre-issue the TLS certificate before DNS cutover.
 4. Confirm the hostname is `active`.
 5. Update the end customer's CNAME - traffic cuts over with no downtime.
 
@@ -115,11 +113,11 @@ Use this method when the end customer can add a DNS record at their authoritativ
 
 ---
 
-## Step 3: Pre-issue the TLS certificate (optional)
+## Step 3: Pre-issue the TLS certificate
 
-By default, the TLS certificate issues and deploys after the end customer's CNAME points to your fallback origin. To avoid any TLS errors during cutover, pre-issue the certificate before updating DNS using one of these methods:
+Pre-issuing the certificate ensures there is no TLS error during cutover. Without this step, the certificate cannot issue until after the end customer's CNAME points to Cloudflare, which means `ssl.status` will remain `pending` through the DNS change. Choose one of these methods:
 
-- [**Delegated DCV**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) - Place a one-time CNAME record at your authoritative DNS that allows Cloudflare to validate and auto-renew certificates without any further customer action. Best when you control a shared DNS zone.
+- [**Delegated DCV**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) - A one-time CNAME record delegates `_acme-challenge` to your SaaS zone, letting Cloudflare handle all future renewals automatically. The end customer can place the delegation CNAME at their own authoritative DNS, or if you host DNS for your customers directly, you can place it at your own zone instead.
 - [**TXT validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) - Have the end customer add a `TXT` record to their authoritative DNS. Required for wildcard custom hostnames.
 - [**Manual HTTP validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-manual) - Serve a DCV token file at a `/.well-known/` path on the origin. No action required from the end customer.
 
@@ -152,6 +150,10 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{cust
 ```
 
 Wait until both `result.status` and `result.ssl.status` are `active` before proceeding. If either is still `pending`, wait and poll again.
+
+:::note
+If you skipped Step 3, `ssl.status` will remain `pending` until after DNS cutover. Proceed to Step 5 once `result.status` is `active`. During this window, requests to the hostname will result in a TLS error until the certificate finishes issuing. Pre-issuing the certificate in Step 3 avoids this entirely.
+:::
 
 ---
 
