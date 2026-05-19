@@ -114,8 +114,9 @@ Based on Observatory results, enable relevant [Speed optimizations](/speed/optim
 
 - [Brotli compression](/speed/optimization/content/compression/) - Compress responses for faster transfer
 - [Early Hints](/cache/advanced-configuration/early-hints/) - Preload critical resources
-- [HTTP/2 and HTTP/3](/speed/optimization/protocol/) - Use modern protocols for faster connections
+- [HTTP/2 and HTTP/3](/speed/optimization/protocol/) - Use modern protocols with multiplexing, allowing multiple requests over a single connection instead of opening separate connections for each asset
 - [Image optimization](/images/) - Automatically optimize and resize images
+- [Rocket Loader](/speed/optimization/content/rocket-loader/) - Defer loading of JavaScript to improve paint times
 
 ---
 
@@ -135,6 +136,22 @@ High origin response times indicate your origin server is struggling. Consider:
 - Upgrading your hosting plan
 - Optimizing database queries
 - Implementing server-side caching
+
+### Check for slow Workers
+
+If your zone has [Cloudflare Workers](/workers/) deployed, they execute on every matching request and add to the total response time. A slow Worker is a common cause of high TTFB.
+
+To check if Workers are affecting performance:
+
+1. Go to **Workers & Pages** in the Cloudflare dashboard.
+2. Review which Workers are deployed on your zone.
+3. Check the **Analytics** for each Worker to see execution times.
+4. Temporarily disable Workers to isolate whether they are causing the slowness.
+
+If a Worker is slow, review its code for:
+- Slow external API calls or `fetch()` requests
+- Inefficient loops or data processing
+- Missing `await` statements causing sequential instead of parallel execution
 
 ---
 
