@@ -143,11 +143,17 @@ Cloudflare's Real User Monitoring (RUM) operates exclusively on the initial clie
 
 ### Is the data sampled?
 
-What you see in the dashboard for the past 7 days is unsampled, when filtering beyond this point you will see data aggregated down to 10%.
+We retain unsampled beacon data for the past 7 days, after this point data is aggregated down to around 10%.
+
+When aggregating metrics in the Cloudflare Dashboard or querying the GraphQL API, a level of sampling (between 0.0001% and 100%) will be dynamically selected based on the filters applied and the volume of matching rows. This ensures a high confidence in the accuracy of figures while maintaining a reasonable response time.
+
+Note: the GraphQL API exposes a `sampleInterval` field to indicate which level of sampling has been applied to the query.
 
 * The beacon script will fire on every pageview.
-* The data pipeline does not apply sampling.
-* As we compact data older than 7 days, we aggregate it down so it's 10% of the original volume
+* The data ingestion pipeline does not apply sampling—every received beacon will be recorded.
+* We store the unsampled data for 7 days.
+* We also aggregate it down so it's around 10% of the original volume for long-term storage.
+* Sites with very low traffic volumes are sampled to greater percentages to maintain high confidence in aggregate figures.
 
 ### Can I see server-side analytics by URL?
 
