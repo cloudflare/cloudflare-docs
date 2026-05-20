@@ -185,7 +185,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @MattieTK
 /src/content/docs/workflows/ @elithrar @celso @mia303 @jonesphillip @cloudflare/product-owners
 /src/content/partials/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners
-/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/product-owners @cloudflare/ai-agents
+/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @scuffi @aron-cf @cloudflare/product-owners @cloudflare/ai-agents
 /src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/product-owners
 /src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/product-owners
 /src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/product-owners
@@ -271,7 +271,7 @@ package.json @cloudflare/content-engineering
 # Support
 
 /src/content/docs/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie @krys-cf @stechedo @zeinjaber @shanecloudflare
-/src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie @krys-cf @stechedo @zeinjaber @shanecloudflare 
+/src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie @krys-cf @stechedo @zeinjaber @shanecloudflare
 
 # Turnstile
 
