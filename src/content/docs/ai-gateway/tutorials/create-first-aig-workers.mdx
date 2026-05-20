@@ -39,10 +39,10 @@ Then, create a new AI Gateway.
    ```bash
    curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
      --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+     --header "cf-aig-gateway-id: my-gateway" \
      --header "Content-Type: application/json" \
      --data '{
-       "model": "moonshotai/kimi-k2.6",
-       "provider": "cloudflare",
+       "model": "@cf/moonshotai/kimi-k2.6",
        "messages": [{"role": "user", "content": "What is Cloudflare?"}]
      }'
    ```

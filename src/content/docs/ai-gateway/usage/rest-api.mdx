@@ -20,7 +20,7 @@ Four endpoints are available, each suited to different use cases:
 
 | Endpoint | Format | Use case |
 | -------- | ------ | -------- |
-| `POST /ai/run` | Envelope with `model`, `provider`, `input` | All models and modalities (LLM, image, TTS, ASR) |
+| `POST /ai/run` | Envelope with `model`, `input` | All models and modalities (LLM, image, TTS, ASR) |
 | `POST /ai/v1/chat/completions` | OpenAI chat completions | LLMs — OpenAI SDK compatible |
 | `POST /ai/v1/responses` | OpenAI Responses API | Agentic workflows — OpenAI SDK compatible |
 | `POST /ai/v1/messages` | Anthropic Messages API | LLMs — Anthropic SDK compatible |
@@ -35,29 +35,16 @@ Ensure your Cloudflare account has [sufficient credits loaded](/ai-gateway/featu
 
 ## Model naming
 
-Models use the `author/model` format:
+Third-party models use the `author/model` format:
 
 - `openai/gpt-4.1` — OpenAI
 - `anthropic/claude-sonnet-4` — Anthropic
 - `google/gemini-3-flash` — Google
-- `moonshotai/kimi-k2.6` — Workers AI (Kimi)
 - `xai/grok-3` — xAI
 
+Workers AI models use the `@cf/author/model` format (for example, `@cf/moonshotai/kimi-k2.6`). Workers AI requests also require the `cf-aig-gateway-id` header — refer to [Call a Workers AI model](#call-a-workers-ai-model) for details.
+
 Browse available models in the [model catalog](/ai/models/).
-
-## Provider
-
-The optional `provider` field lets you specify which provider should serve the request. For third-party models in the catalog today, each model has a single provider, so you can omit this field.
-
-When omitted, Cloudflare routes the request to the preferred provider for that model. Set `provider` to `"cloudflare"` to run a model on Workers AI:
-
-```json
-{
-  "model": "moonshotai/kimi-k2.6",
-  "provider": "cloudflare",
-  "messages": [...]
-}
-```
 
 ## `/ai/run` — universal endpoint
 
@@ -83,13 +70,15 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 ### Call a Workers AI model
 
+To call a Workers AI model, use the `@cf/` prefix in the model name and include the `cf-aig-gateway-id` header to specify which gateway to route through.
+
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "cf-aig-gateway-id: my-gateway" \
   --header "Content-Type: application/json" \
   --data '{
-    "model": "moonshotai/kimi-k2.6",
-    "provider": "cloudflare",
+    "model": "@cf/moonshotai/kimi-k2.6",
     "input": {
       "messages": [
         {
@@ -218,7 +207,7 @@ const message = await anthropic.messages.create({
 
 ## Specify a gateway
 
-By default, third-party model requests route through your account's default AI Gateway. To use a specific gateway, include the `cf-aig-gateway-id` header:
+By default, third-party model requests route through your account's default AI Gateway. To use a specific gateway, include the `cf-aig-gateway-id` header. Workers AI requests always require this header.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
