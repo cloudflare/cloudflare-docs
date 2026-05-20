@@ -56,7 +56,7 @@ package.json @cloudflare/content-engineering
 
 # Billing
 
-/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @shanecloudflare
+/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @shanecloudflare @dalexeenko
 
 # Browser Run
 
