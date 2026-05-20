@@ -6,7 +6,6 @@ products:
 title: Block internet access until user authenticates
 sidebar:
   order: 3
-  label: No-auth-no-internet
 tags:
   - Windows
 ---
@@ -30,11 +29,11 @@ import { Details } from "~/components";
 
 </Details>
 
-When **no-auth-no-internet** is enabled, the Cloudflare One Client locks down general internet traffic on the device whenever the device is in an unauthenticated state (i.e. without a valid device registration). During this lockdown, the client allows only the traffic required for the device to remain on the network and for the user to complete IdP authentication. Once the user signs in, normal connectivity resumes and your configured Gateway, Access, RBI, and DLP policies take effect.
+When **no-auth-no-internet** is enabled, the Cloudflare One Client locks down general internet traffic on the device whenever the device is in an unauthenticated state (i.e., without a valid device registration). During this lockdown, the client allows only the traffic required for the device to remain on the network and for the user to complete IdP authentication. Once the user signs in, normal connectivity resumes and your configured Gateway, Access, RBI, and DLP policies take effect.
 
 When this feature is enabled, the authentication is done via in-app WebView2 browser instead of the default browser on the system.
 
-The lockdown re-engages automatically any time the device transitions back to an unauthenticated state — for example, if the registration expires, another OS user that has never authenticated with the Cloudflare One Client logs in while in multi-user mode, or the user switches into a new organization.
+The lockdown re-engages automatically any time the device transitions back to an unauthenticated state — for example, if the registration expires, another OS user that has never authenticated with the Cloudflare One Client logs in while in [multi-user mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-multiuser/), or the user switches into a new organization.
 
 ## Prerequisites
 
@@ -89,6 +88,6 @@ To block RFC 1918 traffic during lockdown, set `no_auth_no_internet_block_rfc_19
 
 ## Limitations
 
-- The lockdown is enforced only when there is an active interactive user session (for example, a user is logged in and the machine is not locked).
+- The lockdown is enforced only when there is an active interactive user session (for example, a user is logged in and the device is not locked).
 - Since authentication now occurs in an embedded WebView2 window, IdP flows that depend on the user's default browser (for example, browser-specific extensions or password managers) may not work.
 - Some Windows applications, including Copilot and Teams (personal), may retain internet access while the Cloudflare One Client authentication window is open.
