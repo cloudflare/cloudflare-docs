@@ -8,7 +8,7 @@ products:
   - billing
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 The billable usage dashboard gives you daily visibility into usage-based costs across your Cloudflare account. The data comes from the same system that generates your monthly invoice, so the figures match your bill.
 
@@ -22,13 +22,16 @@ To access the dashboard, you must have the Billing read permission on your accou
 
 ## Access the dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select your account.
-3. Go to **Manage Account** > **Billing**.
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Manage Account** > **Billing**.
 
    <DashButton url="/?to=/:account/billing" />
 
-4. Select **Billable Usage**.
+3. Select **Billable Usage**.
+
+</Steps>
 
 ## Cost breakdown chart
 
@@ -40,12 +43,12 @@ Hover over any bar to see the per-product cost breakdown for that day.
 
 Below the chart, a sortable table breaks down usage by product for the full billing period.
 
-| Column | Description |
-| --- | --- |
-| **Product** | The Cloudflare product or service generating the usage charge. Products with a free tier show the included allowance (for example, "First 1M included"). |
-| **Total usage** | Total metered usage for the billing period, including any free-tier allowance. |
-| **Billable usage** | Usage that exceeds the free tier and will be charged. |
-| **Usage cost** | Cumulative cost for the product in the selected billing period. |
+| Column             | Description                                                                                                                                              |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Product**        | The Cloudflare product or service generating the usage charge. Products with a free tier show the included allowance (for example, "First 1M included"). |
+| **Total usage**    | Total metered usage for the billing period, including any free-tier allowance.                                                                           |
+| **Billable usage** | Usage that exceeds the free tier and will be charged.                                                                                                    |
+| **Usage cost**     | Cumulative cost for the product in the selected billing period.                                                                                          |
 
 Use the **product filter** at the top of the page to narrow the chart and table to specific products.
 
@@ -62,8 +65,6 @@ The dashboard reads from the same data source that generates your monthly invoic
 - Costs reflect the published rate card for your account.
 - The total usage cost shown at the end of a completed billing period matches the usage overage charges on the corresponding invoice.
 
-
-
 ## Set up budget alerts
 
 To get notified when your spend crosses a dollar threshold, you can create budget alerts directly from the dashboard. For detailed instructions, refer to [Budget alerts](/billing/manage/budget-alerts/).
@@ -73,4 +74,3 @@ To get notified when your spend crosses a dollar threshold, you can create budge
 - [Budget alerts](/billing/manage/budget-alerts/) — Get notified when spend crosses a threshold
 - [Usage-based billing](/billing/understand/usage-based-billing/) — Which products use metered billing
 - [How charges accrue](/billing/understand/how-charges-accrue/) — How a request generates charges across products
-
