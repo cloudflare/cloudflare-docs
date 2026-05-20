@@ -185,9 +185,9 @@ To prevent issues with DNS resolution for a Spectrum application, do not use the
 
 </Details>
 
-## Create a Spectrum application using a virtual network (private origin)
+## Create a Spectrum application using a virtual network origin
 
-To proxy TCP or UDP traffic to an origin on your private network, attach a Cloudflare Tunnel [virtual network](/cloudflare-one/networks/virtual-networks/) to a Spectrum application. Spectrum routes traffic through the connector (Cloudflare Tunnel or Cloudflare WAN connection) associated with that virtual network. This replaces the previous pattern of putting a load balancer in front of a private origin.
+To proxy TCP or UDP traffic to an origin on your private network, attach a Cloudflare Tunnel [virtual network](/cloudflare-one/networks/virtual-networks/) to a Spectrum application. Spectrum routes traffic through the connector (Cloudflare Tunnel or Cloudflare WAN connection) associated with that virtual network. This provides an alternative to the previous pattern of putting a load balancer in front of a private origin.
 
 Virtual network origins are only supported for TCP and UDP applications. The origin must be a single private IP routable within the specified virtual network. Port ranges, hostname origins (`origin_dns`), and multiple addresses in `origin_direct` are not supported. For details on validation errors, refer to [Error codes](/spectrum/reference/error-codes/).
 
@@ -212,7 +212,7 @@ For Cloudflare WAN (formerly Magic WAN) as the connector, refer to [Get started 
 3. Under **Application Type**, select **TCP** or **UDP**.
 4. Under **Domain**, enter the domain that will use Spectrum.
 5. Under **Edge Port**, enter the port Cloudflare should use for your application.
-6. Under **Origin**, select **Virtual Network (private origin)**.
+6. Under **Origin**, select **Virtual Network Origin**.
 7. Under **Virtual Network**, select the virtual network that contains your origin.
 8. Under **IP**, enter the private IP address of your origin.
 9. Under **Port**, enter a single port (port ranges are not supported).
