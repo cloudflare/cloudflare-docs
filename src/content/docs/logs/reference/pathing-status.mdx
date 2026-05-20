@@ -44,7 +44,7 @@ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 
 ### EdgePathingOp
 
-**EdgePathingOp** indicates how the request was handled. `wl` is a request that passed all checks and went to your origin server. Other possible values are:
+**EdgePathingOp** indicates how the request was handled. `wl` is a request that passed all security checks in the cn. Other possible values are:
 
 - `errHost` (host header mismatch, DNS errors, etc.)
 - `ban` (blocked by IP address, range, etc.)
