@@ -157,23 +157,12 @@ class ChatRoom(DurableObject):
 
 ### `jurisdiction`
 
-`jurisdiction` is an optional property of a `DurableObjectId`, which returns the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) the ID is restricted to, such as `"eu"` or `"fedramp"`. This value is `undefined` if the `DurableObjectId` was created from a namespace that is not restricted to a jurisdiction.
+`jurisdiction` is an optional property of a `DurableObjectId`, which returns the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) the ID is restricted to, such as `"eu"` or `"fedramp"`. The same value is available inside the Durable Object via `ctx.id.jurisdiction`, including in [alarm handlers](/durable-objects/api/alarms/) and after restoring an ID via `idFromString()`, so you can make region-aware decisions without passing the jurisdiction as an argument or persisting it in storage.
 
-The `jurisdiction` property is also available on `ctx.id` inside the Durable Object. Unlike `name`, the jurisdiction is preserved across every ID-construction path:
+`ctx.id.jurisdiction` is `undefined` in two cases:
 
-- **Populated** when the ID is created from a jurisdiction-restricted subnamespace returned by `env.MY_DURABLE_OBJECT.jurisdiction("eu")` — for example via `.idFromName("foo")` or `.newUniqueId()`.
-- **Populated** when the ID is created with `env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" })`.
-- **Populated** after a round-trip through `toString()` and `idFromString()`, including when the ID is restored through the non-restricted namespace binding.
-- **Populated** inside [alarm handlers](/durable-objects/api/alarms/) for alarms scheduled on 2026-03-15 or later.
-- **`undefined`** for Durable Objects created in a namespace that is not restricted to a jurisdiction.
-
-:::tip[Useful for region-aware logic]
-Because `ctx.id.jurisdiction` is available inside the Durable Object — including in `alarm()` handlers and after restoring an ID from a string — you can use it to make region-aware decisions without passing the jurisdiction as an argument or persisting it in storage.
-:::
-
-:::note
-Alarms created before 2026-03-15 do not have `jurisdiction` stored. When such an alarm fires, `ctx.id.jurisdiction` will be `undefined`, and any new alarm scheduled from that handler will also lack a `jurisdiction`. To fix this, reschedule the alarm from a `fetch()` or RPC handler where `jurisdiction` is available.
-:::
+- The Durable Object was not created in a jurisdiction-restricted namespace.
+- The Durable Object's alarm was scheduled before 2026-03-15. To backfill the value, reschedule the alarm from a `fetch()` or RPC handler.
 
 <Tabs>
 
@@ -195,38 +184,6 @@ plain_id = env.MY_DURABLE_OBJECT.idFromName("foo")
 eu_id = env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("foo")
 assert plain_id.jurisdiction is None, "no jurisdiction set"
 assert eu_id.jurisdiction == "eu", "jurisdiction matches namespace"
-```
-
-</TabItem>
-
-</Tabs>
-
-The same `jurisdiction` is available inside the Durable Object via `ctx.id.jurisdiction`:
-
-<Tabs>
-
-<TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-import { DurableObject } from "cloudflare:workers";
-
-export class RegionalRoom extends DurableObject {
-	async getRegion() {
-		return this.ctx.id.jurisdiction; // "eu" when created via .jurisdiction("eu")
-	}
-}
-```
-
-</TabItem>
-
-<TabItem label="Python" icon="seti:python">
-
-```python
-from workers import DurableObject
-
-class RegionalRoom(DurableObject):
-    async def get_region(self):
-        return self.ctx.id.jurisdiction  # "eu" when created via .jurisdiction("eu")
 ```
 
 </TabItem>
