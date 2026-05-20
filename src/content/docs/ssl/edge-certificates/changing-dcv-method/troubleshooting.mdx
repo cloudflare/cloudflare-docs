@@ -100,7 +100,13 @@ Resolve-DnsName -Name example.com -Type CAA
 </TabItem>
 </Tabs>
 
-## CA errors
+## Certificate authority (CA) errors
+
+A [certificate authority (CA)](/ssl/reference/certificate-authorities/) is the organization that issues your SSL/TLS certificate. Cloudflare partners with multiple CAs to provide certificates for your domain.
+
+:::note
+Selecting a different CA is only available with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). [Universal SSL](/ssl/edge-certificates/universal-ssl/) customers cannot change the CA.
+:::
 
 ### Rate limiting
 
@@ -108,7 +114,11 @@ Resolve-DnsName -Name example.com -Type CAA
 
 When you see `The authority has rate limited these domains. Please wait for the rate limit to expire or try another authority`, the certificate authority has temporarily blocked certificate issuance for your domain due to too many recent requests.
 
-**Resolution**: Wait for the rate limit to expire (the error message includes the expiration time), or select a different [certificate authority](/ssl/reference/certificate-authorities/).
+Rate limit windows vary by CA:
+- **Let's Encrypt**: 7 days for most rate limits (refer to [Let's Encrypt rate limits](https://letsencrypt.org/docs/rate-limits/))
+- **Google Trust Services**: Varies by limit type (refer to [Google Trust Services documentation](https://pki.goog/faq/))
+
+**Resolution**: Wait for the rate limit window to expire, or select a different CA.
 
 ### CAA records block issuance
 
@@ -137,10 +147,10 @@ The error `the Certificate Authority had trouble performing a DNS lookup` indica
 
 The error `The certificate authority will not issue for this domain. Please check your input or try another authority` means the CA has policies that prevent issuing certificates for your specific domain.
 
-**Resolution**: Verify that your domain name is correctly spelled and does not violate the CA's issuance policies. If the domain is valid, try selecting a different [certificate authority](/ssl/reference/certificate-authorities/).
+**Resolution**: Verify that your domain name is correctly spelled and does not violate the CA's issuance policies. If the domain is valid, try selecting a different CA.
 
 ### Internal errors
 
 When you see `Internal error with Certificate Authority. Please check later`, the certificate authority encountered a temporary issue during validation.
 
-**Resolution**: Wait a few minutes and retry. If the issue persists, try selecting a different [certificate authority](/ssl/reference/certificate-authorities/). Cloudflare will automatically retry validation according to the [validation backoff schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
+**Resolution**: Wait a few minutes and retry. If the issue persists, try selecting a different CA. Cloudflare will automatically retry validation according to the [validation backoff schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
