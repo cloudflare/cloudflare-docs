@@ -276,9 +276,9 @@
 /analytics/dashboards/ /log-explorer/custom-dashboards/ 301
 /analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
 /analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
+
 # web analytics permalink for beacon endpoint error message
 /web-analytics/faq/405-error/ /web-analytics/faq/#why-am-i-getting-a-405-method-not-allowed-error-from-cdn-cgirum 301
-
 
 # api-shield
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
