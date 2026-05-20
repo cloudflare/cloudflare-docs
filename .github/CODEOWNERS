@@ -188,6 +188,10 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @irvinebroque @dinasaur404 @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @cloudflare/product-owners
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @MattieTK
+/src/content/docs/workers-vpc/ @nikitacano @elithrar @thomasgauvin @cloudflare/product-owners
+/src/content/partials/workers-vpc/ @nikitacano @elithrar @thomasgauvin @cloudflare/product-owners
+/src/content/changelog/workers-vpc/ @nikitacano @elithrar @thomasgauvin @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/changelog/workers-vpc/ @nikitacano @elithrar @thomasgauvin @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/docs/workflows/ @elithrar @celso @mia303 @jonesphillip @cloudflare/product-owners
 /src/content/partials/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners
 /src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/product-owners @cloudflare/ai-agents

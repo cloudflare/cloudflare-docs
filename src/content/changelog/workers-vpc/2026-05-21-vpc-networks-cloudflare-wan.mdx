@@ -1,0 +1,38 @@
+---
+title: Reach Cloudflare WAN destinations from Workers VPC
+description: VPC Network bindings using cf1:network now reach destinations connected through Cloudflare WAN on-ramps (GRE, IPsec, CNI), in addition to Cloudflare Mesh nodes and subnet or hostname routes announced through Cloudflare Tunnel or Mesh.
+date: 2026-05-21
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now use [VPC Network](/workers-vpc/configuration/vpc-networks/) bindings with `network_id: "cf1:network"` to reach your full private network from Workers, including:
+
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) nodes and client devices
+- Subnet routes and hostname routes announced through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or Cloudflare Mesh
+- Destinations connected through [Cloudflare WAN](/cloudflare-wan/) on-ramps — GRE, IPsec, and CNI
+
+This means a single VPC Network binding can route Worker requests to private services regardless of how those services are connected to Cloudflare: through a Cloudflare Tunnel from a cloud VPC, a Mesh node on a private subnet, or a Cloudflare WAN on-ramp from your data center or branch site.
+
+<WranglerConfig>
+```jsonc
+{
+	"vpc_networks": [
+		{
+			"binding": "PRIVATE_NETWORK",
+			"network_id": "cf1:network",
+			"remote": true,
+		},
+	],
+}
+```
+</WranglerConfig>
+
+At runtime, the URL you pass to `fetch()` determines the destination:
+
+```js
+// Reach a service behind a Cloudflare WAN IPsec on-ramp
+const response = await env.PRIVATE_NETWORK.fetch("http://10.50.0.100:8080/api");
+```
+
+For configuration options, refer to [VPC Networks](/workers-vpc/configuration/vpc-networks/).
