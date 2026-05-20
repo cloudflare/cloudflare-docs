@@ -741,21 +741,6 @@ To add or update stats, edit `src/components/PublicStats.astro`.
 
 ---
 
-## ExternalResources
-
-Pulls demo apps or videos from the central `src/content/apps/index.yaml` and `src/content/videos/index.yaml` collections, filtered by tags and products.
-
-```mdx
-import { ExternalResources } from "~/components";
-
-<ExternalResources type="apps" tags={["AI"]} products={["Workers"]} />
-<ExternalResources type="videos" tags={["AI"]} />
-```
-
-Props: `type` (required, `"apps"` or `"videos"`), `tags` (string array, filter by tag), `products` (string array, filter by product), `cloudflareOnly` (boolean, default `true`).
-
----
-
 ## ResourcesBySelector
 
 Displays a filterable list of docs pages pulled by `pcx_content_type` and/or `products` frontmatter. Used on example and tutorial index pages.
@@ -866,20 +851,6 @@ Props: `size` (required, `"large"` | `"medium"` | `"small"`), `center` (boolean)
 
 ---
 
-## YouTubeVideos
-
-Renders a grid of YouTube videos associated with one or more products, sourced from `src/content/videos/index.yaml`.
-
-```mdx
-import { YouTubeVideos } from "~/components";
-
-<YouTubeVideos products={["Workers"]} />
-```
-
-Props: `products` (string array — if omitted, uses the current page's product).
-
----
-
 ## AvailableNotifications
 
 Lists available notification types for a product, sourced from `src/content/notifications/index.yaml`.
@@ -888,6 +859,10 @@ Lists available notification types for a product, sourced from `src/content/noti
 import { AvailableNotifications } from "~/components";
 
 <AvailableNotifications product="dns" />
+<AvailableNotifications
+	product="dns"
+	notificationFilter="Secondary DNS all Primaries Failing"
+/>
 <AvailableNotifications
 	product="dns"
 	notificationFilter="Secondary DNS all Primaries Failing"

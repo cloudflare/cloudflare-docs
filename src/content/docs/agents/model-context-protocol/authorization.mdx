@@ -14,7 +14,7 @@ import { LinkCard } from "~/components";
 
 When building a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server, you need both a way to allow users to login (authentication) and allow them to grant the MCP client access to resources on their account (authorization).
 
-The Model Context Protocol uses [a subset of OAuth 2.1 for authorization](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/). OAuth allows your users to grant limited access to resources, without them having to share API keys or other credentials.
+The Model Context Protocol uses [a subset of OAuth 2.1 for authorization](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization). OAuth allows your users to grant limited access to resources, without them having to share API keys or other credentials.
 
 Cloudflare provides an [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) that implements the provider side of the OAuth 2.1 protocol, allowing you to easily add authorization to your MCP server.
 
@@ -56,7 +56,7 @@ export default new OAuthProvider({
 });
 ```
 
-Note that as [defined in the Model Context Protocol specification](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/#292-flow-description) when you use a third-party OAuth provider, the MCP Server (your Worker) generates and issues its own token to the MCP client:
+Note that as [defined in the Model Context Protocol specification](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization#authorization-flow-steps) when you use a third-party OAuth provider, the MCP Server (your Worker) generates and issues its own token to the MCP client:
 
 ```mermaid
 sequenceDiagram

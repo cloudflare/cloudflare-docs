@@ -321,8 +321,7 @@ All components are imported from `~/components`. Imports must appear after the f
 | `GitHubCode`                          | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash)       |
 | `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                            |
 | `ListTutorials`                       | Auto-generated tutorial table for the current product                               |
-| `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type` or products                          |
-| `ExternalResources`                   | Demo apps or videos from central YAML collections, filtered by tags/products        |
+| `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type`, tags, or products                   |
 | `PublicStats`                         | Inline live statistic (data centers, bandwidth, etc.)                               |
 | `YouTube`                             | Embed a YouTube video by ID                                                         |
 | `YouTubeVideos`                       | Grid of YouTube videos for a product from `src/content/videos/`                     |

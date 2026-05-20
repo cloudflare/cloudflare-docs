@@ -1,0 +1,31 @@
+{
+	"$schema": "../node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-docs-flue",
+	"compatibility_date": "2026-04-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": {
+		"binding": "AI",
+	},
+	"worker_loaders": [{ "binding": "LOADER" }],
+	"r2_buckets": [
+		{
+			"binding": "DOCS_FLUE_BUCKET",
+			"bucket_name": "docs-flue-bucket",
+		},
+	],
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"persist": true,
+			"invocation_logs": false,
+		},
+		"traces": {
+			"enabled": false,
+			"persist": true,
+			"head_sampling_rate": 1,
+		},
+	},
+}

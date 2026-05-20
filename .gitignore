@@ -9,6 +9,8 @@ distllms/
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
 !.agents/skills/
+!.flue/.agents/
+!.flue/.agents/**
 
 # dependencies
 node_modules/
@@ -57,3 +59,8 @@ CLAUDE.md
 
 # certain versions of opencode mistakenly commit package-lock.json
 .opencode/package-lock.json
+
+# Flue agents build output and secrets
+.flue/dist/
+.flue/.env*
+.flue/.wrangler/
