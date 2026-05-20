@@ -249,8 +249,8 @@ package.json @cloudflare/content-engineering
 
 # Reference architecture
 
-/src/content/docs/reference-architecture/ @securitypedant @cloudflare/product-owners
-/src/assets/images/reference-architecture/ @securitypedant @cloudflare/product-owners
+/src/content/docs/reference-architecture/ @securitypedant @cloudflare/product-owners @ncrouch-cflare
+/src/assets/images/reference-architecture/ @securitypedant @cloudflare/product-owners @ncrouch-cflare
 
 # Security products
 
