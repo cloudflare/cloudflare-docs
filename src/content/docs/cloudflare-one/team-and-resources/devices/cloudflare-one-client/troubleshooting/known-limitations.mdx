@@ -180,6 +180,26 @@ Name:   connectivity-check.warp-svc
 Address: 127.0.2.3
 ```
 
+## Linux DNS domains with systemd-resolved versions earlier than 252.3
+
+On some Linux systems with `systemd-resolved` versions earlier than `252.3`, DNS domains configured on non-WARP interfaces may not resolve as expected while the Cloudflare One Client is connected. This can affect hostnames that rely on DHCP-provided search domains or interface-specific DNS routing domains.
+
+For example, commands that resolve the device hostname may take several seconds to start, or may print an error similar to:
+
+```txt
+sudo: unable to resolve host <HOSTNAME>: Temporary failure in name resolution
+```
+
+This happens because `systemd-resolved` versions earlier than `252.3` do not support the link-specific DNS configuration that the Cloudflare One Client uses on newer Linux distributions. On these systems, the Cloudflare One Client falls back to a global DNS configuration. As a result, DNS domains configured on other interfaces, such as cloud-provider or corporate network search domains, may not be routed or resolved consistently while WARP is connected.
+
+To work around this issue, upgrade to a Linux distribution with `systemd-resolved` version `252.3` or later when possible. If the issue affects local hostname resolution, add the local hostname to `/etc/hosts` so that Linux resolves it before using DNS:
+
+```sh
+echo "127.0.1.1 $(hostname)" | sudo tee -a /etc/hosts
+```
+
+Before adding the entry, check whether `/etc/hosts` already contains a mapping for the hostname. If your organization manages `/etc/hosts`, contact your administrator before changing it.
+
 ## Windows App connection issue
 
 When the Cloudflare One Client is active on a local machine, users may be unable to connect to a Windows 365 PC using the [Windows App](https://aka.ms/WindowsApp). This issue does not affect browser-based connections to Windows 365.
