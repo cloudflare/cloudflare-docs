@@ -54,6 +54,10 @@ package.json @cloudflare/content-engineering
 /src/content/docs/terraform/ @dcpena @cloudflare/product-owners
 /src/content/docs/version-management/ @dcpena @cloudflare/product-owners
 
+# Billing
+
+/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @shanecloudflare
+
 # Browser Run
 
 /src/content/docs/browser-run/ @mchenco @cloudflare/product-owners @celso @kathayl @dcpena
@@ -266,9 +270,8 @@ package.json @cloudflare/content-engineering
 
 # Support
 
-/src/content/docs/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie
-/src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie
-/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @ngayerie 
+/src/content/docs/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie @krys-cf @stechedo @zeinjaber @shanecloudflare
+/src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie @krys-cf @stechedo @zeinjaber @shanecloudflare 
 
 # Turnstile
 
