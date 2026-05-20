@@ -21,6 +21,7 @@ Do not use Always Online with:
 - API traffic.
 - An [IP Access rule](/waf/tools/ip-access-rules/) or a [WAF custom rule](/waf/custom-rules/) that blocks the United States or
 - Bypass Cache cache rules. Always Online ignores Bypass Cache cache rules and serves Always Online cached assets.
+- Tiered Cache. Refer to limitation 3 for details.
 
 ## Limitations
 
@@ -30,6 +31,7 @@ There are limitations with the Always Online functionality:
    - DNS record propagation, which can take 24-72 hours
    - Always Online has not initially crawled the website
 2. Cloudflare cannot show private content behind logins or handle form submission (POSTs) if your origin web server is offline.
+3. Always Online does not activate when Tiered Cache is enabled on a zone. If your zone uses Tiered Cache, visitors will see the 520–527 error page rather than the archived version.
 
 Always Online does not trigger for HTTP response codes such as [404](/support/troubleshooting/http-status-codes/4xx-client-error/error-404/), [503](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-503/), or [500](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-500/) errors such as database connection errors or internal server errors.
 
