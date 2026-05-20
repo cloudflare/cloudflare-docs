@@ -25,15 +25,10 @@ The SDK works with any S3-compatible object storage provider. Examples include C
 To mount an R2 bucket in production without passing credentials into the container, add an R2 binding and export `ContainerProxy` from your Worker entrypoint.
 
 <WranglerConfig>
-```jsonc
-{
-	"r2_buckets": [
-		{
-			"binding": "MY_BUCKET",
-			"bucket_name": "my-r2-bucket"
-		}
-	]
-}
+```toml
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "my-r2-bucket"
 ```
 </WranglerConfig>
 
@@ -80,7 +75,7 @@ df.describe().to_csv('/data/summary.csv')
 ```
 </TypeScriptExample>
 
-In this example, `MY_BUCKET` is the binding name from `wrangler.jsonc`. It does not have to match the bucket's dashboard name, although many projects use matching names.
+In this example, `MY_BUCKET` is the binding name from `wrangler.toml`. It does not have to match the bucket's dashboard name, although many projects use matching names.
 
 :::note[Mounting affects entire sandbox]
 Mounted buckets are visible across all sessions since they share the filesystem. Mount once per sandbox.
@@ -321,15 +316,10 @@ For provider-specific configuration, see the [s3fs-fuse wiki](https://github.com
 **Solution**: Ensure your Worker has an `r2_buckets` binding and that `mountBucket()` uses the binding name, not the bucket's dashboard name:
 
 <WranglerConfig>
-```jsonc
-{
-	"r2_buckets": [
-		{
-			"binding": "MY_BUCKET",
-			"bucket_name": "my-r2-bucket"
-		}
-	]
-}
+```toml
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "my-r2-bucket"
 ```
 </WranglerConfig>
 
