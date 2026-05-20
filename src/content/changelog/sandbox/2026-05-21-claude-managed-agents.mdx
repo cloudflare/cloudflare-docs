@@ -1,0 +1,22 @@
+---
+title: Run Sandboxes with Claude Managed Agents
+description: Run Anthropic's Claude Managed Agents on self-managed Cloudflare Sandbox environments.
+products:
+  - sandbox
+  - containers
+  - agents
+date: 2026-05-21
+---
+
+Cloudflare now provides a self-managed environment for [Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview). Cloudflare provides the sandboxes, private service connectivity, and integrated tools to agents running on the Claude platform.
+
+The integration ships as an [open-source template](https://github.com/cloudflare/claude-managed-agents), which can be deployed to give you a [Workers](/workers/)-based control plane to your account. Each agent session gets its own sandboxed environment for writing files, executing code, running tools, and developing applications.
+
+What Cloudflare adds to Claude Managed Agents:
+
+- **Flexible sandbox backend** — Run agents on a full MicroVM ([Containers](/containers/)) or a lightweight isolate ([Dynamic Workers](/dynamic-workers/)). Isolates cold-start in milliseconds and cost a fraction of a container session. MicroVMs provide a more fully-featured machine for development.
+- **Egress control** — Route all outbound agent traffic through customizable proxies. Inject credentials into requests without the agent seeing them, and restrict access to specific domains.
+- **Private service connectivity** — Connect agents to private internal services over [Workers VPC](/workers-vpc/) and [Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) without exposing them to the public internet.
+- **Built-in tools** — Browser access with [Browser Run](/browser-run/), per-agent email with [Email Service](/email-service/), image generation with [Workers AI](/workers-ai/), and a single-file interface for adding your own tools.
+
+Refer to the [Claude Managed Agents tutorial](/sandbox/tutorials/claude-managed-agents/) for setup instructions.
