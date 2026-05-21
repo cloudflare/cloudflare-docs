@@ -21,11 +21,20 @@ Before troubleshooting performance, confirm that your traffic is actually going 
 
 ### Check for the cf-ray header
 
-Every response served through Cloudflare includes a `cf-ray` header. Use `curl` to check:
+Every response served through Cloudflare includes a `cf-ray` header. Check for this header:
 
+<Tabs>
+<TabItem label="bash">
 ```bash
 curl -s -D- -o /dev/null https://www.example.com | grep -i cf-ray
 ```
+</TabItem>
+<TabItem label="PowerShell">
+```powershell
+(Invoke-WebRequest -Uri "https://www.example.com" -Method Head).Headers["cf-ray"]
+```
+</TabItem>
+</Tabs>
 
 If you see a `cf-ray` header (for example, `cf-ray: 8a1b2c3d4e5f6g7h-SJC`), your traffic is going through Cloudflare. If not, check your DNS configuration.
 
@@ -33,9 +42,18 @@ If you see a `cf-ray` header (for example, `cf-ray: 8a1b2c3d4e5f6g7h-SJC`), your
 
 Your domain must resolve to Cloudflare IP addresses for traffic to be proxied:
 
+<Tabs>
+<TabItem label="bash">
 ```bash
 dig +short www.example.com
 ```
+</TabItem>
+<TabItem label="PowerShell">
+```powershell
+Resolve-DnsName -Name www.example.com | Select-Object -ExpandProperty IPAddress
+```
+</TabItem>
+</Tabs>
 
 The returned IP addresses should be [Cloudflare IPs](https://www.cloudflare.com/ips/). If they point directly to your origin server, your DNS records are not proxied.
 
@@ -157,17 +175,29 @@ If a Worker is slow, review its code for:
 
 ---
 
-## Step 4: Measure performance with curl
+## Step 4: Measure performance from the command line
 
-For detailed timing metrics on specific requests, use `curl` with the `--write-out` option.
+For detailed timing metrics on specific requests, use command-line tools to measure performance.
 
 ### Basic performance test
 
+<Tabs>
+<TabItem label="bash">
 ```bash
 curl -w "\n\nDNS Lookup: %{time_namelookup}s\nTCP Connect: %{time_connect}s\nTLS Handshake: %{time_appconnect}s\nTime to First Byte: %{time_starttransfer}s\nTotal Time: %{time_total}s\n" -o /dev/null -s https://www.example.com/slow-asset.jpg
 ```
+</TabItem>
+<TabItem label="PowerShell">
+```powershell
+$url = "https://www.example.com/slow-asset.jpg"
+$timing = Measure-Command { $response = Invoke-WebRequest -Uri $url }
+Write-Host "Total Time: $($timing.TotalSeconds)s"
+Write-Host "Status: $($response.StatusCode)"
+```
+</TabItem>
+</Tabs>
 
-This outputs:
+Example output (bash):
 
 ```txt
 DNS Lookup: 0.025s
@@ -206,11 +236,20 @@ Uncached content must travel from the visitor to Cloudflare, then to your origin
 
 ### Check if assets are cached
 
-Use `curl` to check the cache status of a specific asset:
+Check the cache status of a specific asset:
 
+<Tabs>
+<TabItem label="bash">
 ```bash
 curl -s -D- -o /dev/null https://www.example.com/asset.jpg | grep -i "cf-cache-status"
 ```
+</TabItem>
+<TabItem label="PowerShell">
+```powershell
+(Invoke-WebRequest -Uri "https://www.example.com/asset.jpg" -Method Head).Headers["cf-cache-status"]
+```
+</TabItem>
+</Tabs>
 
 Possible values:
 
@@ -328,9 +367,18 @@ How requests are routed to Cloudflare data centers can significantly impact perf
 
 Add `/cdn-cgi/trace` to your domain to see which Cloudflare data center is serving your requests:
 
+<Tabs>
+<TabItem label="bash">
 ```bash
 curl https://www.example.com/cdn-cgi/trace
 ```
+</TabItem>
+<TabItem label="PowerShell">
+```powershell
+Invoke-RestMethod -Uri "https://www.example.com/cdn-cgi/trace"
+```
+</TabItem>
+</Tabs>
 
 The `colo` field shows the three-letter airport code of the serving data center (for example, `colo=SJC` for San Jose). You can find the full list of Cloudflare data centers and their codes on the [Cloudflare status page](https://www.cloudflarestatus.com/).
 
