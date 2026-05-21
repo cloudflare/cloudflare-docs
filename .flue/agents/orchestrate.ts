@@ -2,10 +2,11 @@
  * Orchestrator agent
  *
  * Receives GitHub webhooks (issues, pull_request events), verifies the
- * signature, and dispatches to the appropriate subagent.
+ * signature, and dispatches to the appropriate subagents:
  *
- * Today the only pipeline is `spam-and-off-topic-filter`. Future agents (triage,
- * code-review, …) can be added here by extending the routing logic below.
+ * - spam-and-off-topic-filter: runs on opened/reopened/ready_for_review
+ * - code-review-orchestrator: runs on PR opened/reopened/synchronize/ready_for_review
+ *   (only if spam filter did not close the item)
  *
  * POST /agents/orchestrate/:id
  */
@@ -49,7 +50,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const webhookAction = body.action;
 	const number = getIssueOrPullRequestNumber(eventType, body);
 	const title = getIssueOrPullRequestTitle(eventType, body);
-	const itemUrl = getIssueOrPullRequestUrl(eventType, body, number);
+	const _itemUrl = getIssueOrPullRequestUrl(eventType, body, number);
 	const itemType = getIssueOrPullRequestLabel(eventType);
 	const sender = body.sender as Record<string, unknown> | undefined;
 	const senderLogin = sender?.login;
@@ -71,103 +72,128 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	// });
 
 	// ── 2. Route to the right pipeline ─────────────────────────────────────
-	const shouldFilter =
+	const isSpamFilterEvent =
 		["issues", "pull_request"].includes(eventType) &&
-		(["opened", "reopened"].includes(webhookAction as string) ||
+		(["opened", "reopened", "synchronize"].includes(webhookAction as string) ||
 			(eventType === "pull_request" && webhookAction === "ready_for_review"));
 
-	if (!req || !shouldFilter) {
-		// console.log({
-		// 	message: `GitHub webhook ignored: ${webhookLabel}`,
-		// 	event: "github_webhook_orchestrator",
-		// 	delivery,
-		// 	eventType,
-		// 	webhookAction,
-		// 	number,
-		// 	title,
-		// 	url: itemUrl,
-		// 	sender: senderLogin,
-		// 	action: "ignored",
-		// 	reason:
-		// 		"only issues/pull_request opened, reopened, and pull_request ready_for_review events are filtered",
-		// });
+	const isCodeReviewEvent =
+		eventType === "pull_request" &&
+		["opened", "reopened", "synchronize", "ready_for_review"].includes(
+			webhookAction as string,
+		);
+
+	if (!req || (!isSpamFilterEvent && !isCodeReviewEvent)) {
 		return { acted: false, summary: "No action needed." };
 	}
 
-	// ── 3. Dispatch spam-and-off-topic-filter ───────────────────────────────
 	if (!number) {
-		// console.log({
-		// 	message: `GitHub webhook ignored: missing number for ${webhookLabel}`,
-		// 	event: "github_webhook_orchestrator",
-		// 	delivery,
-		// 	eventType,
-		// 	webhookAction,
-		// 	title,
-		// 	url: itemUrl,
-		// 	sender: senderLogin,
-		// 	action: "ignored",
-		// 	reason: "missing issue or PR number",
-		// });
 		return { acted: false, summary: "No issue or PR number found." };
 	}
 
-	const url = new URL(req.url);
-	url.pathname = `/agents/spam-and-off-topic-filter/${encodeURIComponent(id)}`;
-	const response = await fetch(url, {
-		method: "POST",
-		headers: { "content-type": "application/json" },
-		body: JSON.stringify({ eventType, number }),
-	});
+	const baseUrl = new URL(req.url);
+	const results: Record<string, unknown> = {};
 
-	if (!response.ok) {
+	// ── 3. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
+	if (isSpamFilterEvent) {
+		const filterUrl = new URL(baseUrl);
+		filterUrl.pathname = `/agents/spam-and-off-topic-filter/${encodeURIComponent(id)}`;
+		const filterResponse = await fetch(filterUrl, {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({ eventType, number }),
+		});
+
+		if (!filterResponse.ok) {
+			console.log({
+				message: `Spam filter dispatch failed: ${webhookLabel}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				eventType,
+				webhookAction,
+				number,
+				action: "spam_filter_dispatch_failed",
+				status: filterResponse.status,
+			});
+			throw new Error(
+				`Spam and off-topic filter failed: ${filterResponse.status} ${await filterResponse.text()}`,
+			);
+		}
+
+		const filterResult = (await filterResponse.json()) as {
+			result?: { closed?: boolean; is_spam?: boolean; confidence?: string; reason?: string };
+			_meta?: { runId?: string };
+		};
+		const closed = filterResult.result?.closed ?? false;
 		console.log({
-			message: `Spam and off-topic filter dispatch failed: ${webhookLabel}`,
+			message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
 			event: "github_webhook_orchestrator",
 			delivery,
 			eventType,
 			webhookAction,
 			number,
-			title,
-			url: itemUrl,
-			sender: senderLogin,
-			action: "dispatch_failed",
-			status: response.status,
+			action: "spam_filter_dispatched",
+			filterRunId: filterResult._meta?.runId,
+			closed,
+			is_spam: filterResult.result?.is_spam,
+			confidence: filterResult.result?.confidence,
+			reason: filterResult.result?.reason,
 		});
-		throw new Error(
-			`Spam and off-topic filter failed: ${response.status} ${await response.text()}`,
-		);
+		results.spamFilter = filterResult;
+
+		// If spam filter closed the item, skip code review
+		if (closed) {
+			return results;
+		}
 	}
 
-	const result = (await response.json()) as {
-		result?: unknown;
-		_meta?: { runId?: string };
-	};
-	const filterResult = result.result as {
-		closed?: boolean;
-		is_spam?: boolean;
-		confidence?: string;
-		reason?: string;
-	};
-	const filterOutcome = filterResult.closed ? "Closed" : "Left open";
-	console.log({
-		message: `${itemType} ${filterOutcome}: ${itemLabel}`,
-		event: "github_webhook_orchestrator",
-		delivery,
-		eventType,
-		webhookAction,
-		number,
-		title,
-		url: itemUrl,
-		sender: senderLogin,
-		action: "dispatched",
-		filterRunId: result._meta?.runId,
-		closed: filterResult.closed,
-		is_spam: filterResult.is_spam,
-		confidence: filterResult.confidence,
-		reason: filterResult.reason,
-	});
+	// ── 4. Dispatch code-review-orchestrator (PRs only) ─────────────────────
+	if (isCodeReviewEvent) {
+		// Suppress code review on draft PRs unless the action is ready_for_review
+		const isDraft =
+			(body.pull_request as Record<string, unknown> | undefined)?.draft === true;
+		if (!isDraft || webhookAction === "ready_for_review") {
+			const reviewUrl = new URL(baseUrl);
+			reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
+			const reviewResponse = await fetch(reviewUrl, {
+				method: "POST",
+				headers: { "content-type": "application/json" },
+				body: JSON.stringify({ eventType: "pull_request", number }),
+			});
 
-	return result;
+			if (!reviewResponse.ok) {
+				// Code review failure is non-fatal — log and continue
+				console.log({
+					message: `Code review dispatch failed: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					action: "code_review_dispatch_failed",
+					status: reviewResponse.status,
+				});
+			} else {
+				const reviewResult = (await reviewResponse.json()) as {
+					result?: unknown;
+					_meta?: { runId?: string };
+				};
+				console.log({
+					message: `Code review dispatched: ${itemLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					action: "code_review_dispatched",
+					reviewRunId: reviewResult._meta?.runId,
+				});
+				results.codeReview = reviewResult;
+			}
+		}
+	}
+
+	return results;
 }
 
 function getIssueOrPullRequestNumber(

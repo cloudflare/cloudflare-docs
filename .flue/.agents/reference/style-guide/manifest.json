@@ -1,0 +1,50 @@
+[
+  {
+    "id": "mdx-syntax",
+    "file": "mdx-syntax.md",
+    "description": "Unescaped characters that break MDX builds, component import rules",
+    "triggers": ["any MDX prose change", "component usage", "JSX-like syntax"]
+  },
+  {
+    "id": "links",
+    "file": "links.md",
+    "description": "Root-relative URLs, trailing slashes, no relative links, descriptive link text",
+    "triggers": ["any link added or changed", "href=", "URL in prose"]
+  },
+  {
+    "id": "headings",
+    "file": "headings.md",
+    "description": "No H1 in body, sequential levels, no gerunds, no trailing punctuation, sentence case",
+    "triggers": ["heading added or changed", "# ", "## ", "### "]
+  },
+  {
+    "id": "code-blocks",
+    "file": "code-blocks.md",
+    "description": "Language identifiers, TypeScriptExample, WranglerConfig, PackageManagers, terminal prefixes",
+    "triggers": ["code block added or changed", "```", "TypeScriptExample", "WranglerConfig"]
+  },
+  {
+    "id": "writing",
+    "file": "writing.md",
+    "description": "Contractions, 'please', directional language, click→select, e.g./i.e./etc., LLM-filler phrases",
+    "triggers": ["any prose change"]
+  },
+  {
+    "id": "terminology",
+    "file": "terminology.md",
+    "description": "Product name casing (DDoS, Zero Trust, CAPTCHA, Internet), deprecated jargon (whitelist, enable/disable)",
+    "triggers": ["any prose change", "product names", "security terminology"]
+  },
+  {
+    "id": "components",
+    "file": "components.md",
+    "description": "Mandatory component usage, import rules, component catalog",
+    "triggers": ["component added or changed", "import ", "Steps", "TypeScriptExample", "WranglerConfig", "PackageManagers"]
+  },
+  {
+    "id": "formatting",
+    "file": "formatting.md",
+    "description": "Bold/monospace rules, lists, tables, admonitions, numbers, punctuation",
+    "triggers": ["list added or changed", "table added or changed", ":::note", ":::caution", ":::tip", "bold or monospace usage"]
+  }
+]
