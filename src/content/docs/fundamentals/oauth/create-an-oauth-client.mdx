@@ -2,19 +2,14 @@
 title: Create an OAuth client
 pcx_content_type: how-to
 description: Cloudflare allows developers to register OAuth applications that access resources via the Cloudflare API on behalf of users. This enables the creation of integrations and tools that function without the need for manual API token sharing.
+sidebar:
+  order: 1
 products:
   - fundamentals
   - oauth
 ---
 
-import {
-	DashButton,
-	FeatureTable,
-	APIRequest,
-	GlossaryTooltip,
-	Tabs,
-	TabItem,
-} from "~/components";
+import { DashButton, Tabs, TabItem } from "~/components";
 
 ## Prerequisites
 
@@ -24,7 +19,7 @@ To create a new application, you must have one of the following roles for the as
     <TabItem label="Dashboard">
         1. Log in to the Cloudflare dashboard
         2. Select your account
-        3. Go to **Manage Account** \> **App Registrations**
+        3. <DashButton url="/?to=/:account/app-registrations" />
         4. Select **Create Application**
         5. Enter the required configuration details:
            - App name
@@ -35,7 +30,7 @@ To create a new application, you must have one of the following roles for the as
         6. Optionally, add non-required fields
         7. Select **Continue** and define the specific scopes required for your application
         8. Click **“Register application”**
-        9. Securely save your **Client ID** and **Client Secret** (required for confidential clients).
+        9.  Securely save your **Client ID** and **Client Secret** (required for confidential clients).
     </TabItem>
     <TabItem label="API">
         To get started with creating OAuth clients via the Cloudflare API, make an API token with the “OAuth Clients” write permission.
@@ -45,41 +40,6 @@ To create a new application, you must have one of the following roles for the as
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer ${API_TOKEN}" \
         -d '{"client_name": "Cloudflare OAuth Client", "grant_types": ["authorization_code"], "redirect_uris": ["https://cloudflare.com/oauth/callback"], "scopes": ["workers-platform.read"], "post_logout_redirect_uris": ["https://cloudflare.com/logout"], "response_types": ["code"], "token_endpoint_auth_method": "client_secret_basic", "logo_uri": "https://imagedelivery.net/KDu.../928fc.../public", "policy_uri": "https://cloudflare.com/policy", "tos_uri": "https://cloudflare.com/tos", "client_uri": "https://cloudflare.com", "allowed_cors_origins": ["https://cloudflare.com"]}'
-        ```
-
-        ### Example return value
-
-        ```json
-        {
-            "errors": null,
-            "success": true,
-            "result": {
-                "allowed_cors_origins": ["https://cloudflare.com"],
-                "client_id": "2514b...",
-                "client_name": "Cloudflare OAuth Client",
-                "client_uri": "https://cloudflare.com",
-                "client_uri_verification": {
-                    "status": "pending",
-                    "text": "cloudflare_oauth_client_publisher=6fc02..."
-                },
-                "created_at": "2026-01-01 12:31:20.005301 +0000 UTC",
-                "grant_types": ["authorization_code"],
-                "has_rotated_secret": false,
-                "logo_uri": "https://cloudflare.com/logo.png",
-                "policy_uri": "https://cloudflare.com/policy",
-                "post_logout_redirect_uris": ["https://cloudflare.com/logout"],
-                "redirect_uris": ["https://cloudflare.com/oauth/callback"],
-                "response_types": ["code"],
-                "scopes": ["user-details.read"],
-                "token_endpoint_auth_method": "client_secret_basic",
-                "tos_uri": "https://cloudflare.com/tos",
-                "updated_at": "2026-01-01 12:31:20.005301 +0000 UTC",
-                "visibility": "private",
-                "client_secret": "cfoc_NocEfa346sI..."
-            },
-            "result_info": {},
-            "messages": null
-        }
         ```
     </TabItem>
 </Tabs>
@@ -181,7 +141,9 @@ OAuth clients must complete [domain verification](#client-url-domain-ownership-v
 
 <Tabs syncKey="dashPlusAPI">
     <TabItem label="Dashboard">
-        Navigate to **Manage Account** \> **OAuth Applications** then open the action menu for your application and select **Change Visibility**.
+        Navigate to **Manage Account** \> **App Registrations** then open the action menu for your application and select **Change Visibility**.
+
+        <DashButton url="/?to=/:account/app-registrations" />
     </TabItem>
     <TabItem label="API">
     ```shell
@@ -220,7 +182,10 @@ Every client may have two secrets, allowing for graceful secret rotations. Once 
 
 <Tabs syncKey="dashPlusAPI">
     <TabItem label="Dashboard">
-        From **Manage Account** \> **OAuth Applications** open the action menu for your application and select **Rotate client secret**. If your client only has a single secret, the button to create a new secret will be available. If the application already has two secrets, there will be a button to delete the old secret, which must be done before another new secret can be created.
+        <DashButton url="/?to=/:account/app-registrations" />
+        
+        From **Manage Account** \> **App Registrations** open the action menu for your application and select **Rotate client secret**. If your client only has a single secret, the button to create a new secret will be available. If the application already has two secrets, there will be a button to delete the old secret, which must be done before another new secret can be created.
+
     </TabItem>
     <TabItem label="API">
         To know whether or not a client is in the middle of a secret rotation, look for `"has_rotated_secret”` in the `GET` response. If true, you must delete the old secret before attempting to create a new one.
@@ -245,7 +210,9 @@ Every client may have two secrets, allowing for graceful secret rotations. Once 
 
 ## Manage your application
 
-To manage created applications, open the account the application belongs to, followed by **Manage Account** \> **OAuth Applications.** Open the action menu for your application and select one of the following options:
+To manage created applications, open the account the application belongs to, followed by **Manage Account** \> **App Registrations.** Open the action menu for your application and select one of the following options:
+
+<DashButton url="/?to=/:account/app-registrations" />
 
 - Edit application details
 - Copy Client ID

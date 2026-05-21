@@ -422,6 +422,11 @@
 		"parent": ["Manage account"]
 	},
 	{
+		"name": "App registrations",
+		"deeplink": "/?to=/:account/app-registrations",
+		"parent": ["Manage account"]
+	},
+	{
 		"name": "Audit logs",
 		"deeplink": "/?to=/:account/audit-log",
 		"parent": ["Manage account"]

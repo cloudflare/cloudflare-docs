@@ -15,6 +15,20 @@
 				}
 			}
 		},
+		"self_managed_oauth": {
+			"title": "Self-managed OAuth Apps",
+			"link": "/fundamentals/oauth/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				}
+			}
+		},
 		"version_management": {
 			"title": "Version Management",
 			"link": "/version-management/",
