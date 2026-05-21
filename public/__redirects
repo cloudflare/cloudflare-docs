@@ -247,7 +247,8 @@
 /ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
 /ai-gateway/universal/ /ai-gateway/usage/universal/ 301
 /ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
-/ai-gateway/legacy-models/ /ai-gateway/supported-models/ 301
+/ai-gateway/legacy-models/ /ai/models/ 301
+/ai-gateway/supported-models/ /ai/models/ 301
 /ai-gateway/tutorials/deploy-aig-worker/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 
 # analytics
