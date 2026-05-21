@@ -257,6 +257,15 @@ By default, Cloudflare only caches certain [file extensions](/cache/concepts/def
 Be careful when caching HTML or API responses. These often contain personalized or dynamic content that should not be cached. Only cache content you are certain is static.
 :::
 
+### Use Cloudflare Trace to debug cache rules
+
+If your cache rules are not applying as expected, use [Cloudflare Trace](/rules/trace-request/) to simulate a request and see exactly which rules match. Trace shows you how your Cloudflare configurations (including cache rules, page rules, and other settings) would affect a specific URL.
+
+This is particularly useful when:
+- A cache rule should be caching content but the response shows `DYNAMIC` or `BYPASS`
+- You are unsure which rule is taking precedence
+- You want to test a "what-if" scenario before making changes
+
 ---
 
 ## Step 6: Diagnose network issues
