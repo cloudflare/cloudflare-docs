@@ -11,7 +11,12 @@
  * POST /agents/orchestrate/:id
  */
 import type { FlueContext } from "@flue/runtime";
-import { verifyGitHubSignature } from "../lib/github";
+import {
+	addReactionToComment,
+	getInstallationToken,
+	isCodeOwner,
+	verifyGitHubSignature,
+} from "../lib/github";
 
 export const triggers = { webhook: true };
 
@@ -57,19 +62,17 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const itemLabel = `${itemType}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
 	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")} ${itemLabel}`;
 
-	// console.log({
-	// 	message: `GitHub webhook received: ${webhookLabel}`,
-	// 	event: "github_webhook_orchestrator",
-	// 	delivery,
-	// 	eventType,
-	// 	webhookAction,
-	// 	number,
-	// 	title,
-	// 	url: itemUrl,
-	// 	sender: senderLogin,
-	// 	senderType: sender?.type,
-	// 	action: "received",
-	// });
+	console.log({
+		message: `GitHub webhook received: ${webhookLabel}`,
+		event: "github_webhook_orchestrator",
+		delivery,
+		eventType,
+		webhookAction,
+		number,
+		title,
+		sender: senderLogin,
+		action: "received",
+	});
 
 	// ── 2. Route to the right pipeline ─────────────────────────────────────
 	const isSpamFilterEvent =
@@ -83,12 +86,80 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			webhookAction as string,
 		);
 
-	if (!req || (!isSpamFilterEvent && !isCodeReviewEvent)) {
+	// /full-review command: issue_comment on a PR from a codeowner
+	const commentBody = (
+		body.comment as Record<string, unknown> | undefined
+	)?.body as string | undefined;
+	const isFullReviewCommand =
+		eventType === "issue_comment" &&
+		webhookAction === "created" &&
+		(body.issue as Record<string, unknown> | undefined)?.pull_request !==
+			undefined &&
+		commentBody?.trim() === "/full-review";
+
+	if (!req || (!isSpamFilterEvent && !isCodeReviewEvent && !isFullReviewCommand)) {
 		return { acted: false, summary: "No action needed." };
 	}
 
 	if (!number) {
 		return { acted: false, summary: "No issue or PR number found." };
+	}
+
+	// ── 3. Handle /full-review command ──────────────────────────────────────
+	if (isFullReviewCommand) {
+		const commentId = (
+			body.comment as Record<string, unknown> | undefined
+		)?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `Full review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "full_review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		// Acknowledge immediately with 👀 so the user knows we saw it
+		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+
+		// Dispatch full review, passing comment info so orchestrator can swap reaction
+		const baseUrl = new URL(req.url);
+		const reviewUrl = new URL(baseUrl);
+		reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
+		const reviewResponse = await fetch(reviewUrl, {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({
+				eventType: "pull_request",
+				number,
+				forceFullReview: true,
+				triggerCommentId: commentId,
+				triggerEyesReactionId: eyesReactionId,
+			}),
+		});
+
+		console.log({
+			message: `Full review dispatched by ${senderLogin}: PR #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			number,
+			action: "full_review_dispatched",
+			ok: reviewResponse.ok,
+		});
+
+		return { acted: true, summary: `Full review triggered by @${senderLogin}.` };
 	}
 
 	const baseUrl = new URL(req.url);
@@ -200,7 +271,7 @@ function getIssueOrPullRequestNumber(
 	eventType: string,
 	body: Record<string, unknown>,
 ) {
-	if (eventType === "issues") {
+	if (eventType === "issues" || eventType === "issue_comment") {
 		return (body.issue as Record<string, unknown> | undefined)?.number as
 			| number
 			| undefined;
@@ -240,7 +311,7 @@ function getIssueOrPullRequestUrl(
 
 function getIssueOrPullRequestLabel(eventType: string) {
 	if (eventType === "pull_request") return "PR";
-	if (eventType === "issues") return "Issue";
+	if (eventType === "issues" || eventType === "issue_comment") return "PR";
 	return "GitHub webhook";
 }
 
@@ -248,7 +319,7 @@ function getIssueOrPullRequestTitle(
 	eventType: string,
 	body: Record<string, unknown>,
 ) {
-	if (eventType === "issues") {
+	if (eventType === "issues" || eventType === "issue_comment") {
 		return (body.issue as Record<string, unknown> | undefined)?.title as
 			| string
 			| undefined;

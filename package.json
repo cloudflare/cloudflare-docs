@@ -28,6 +28,7 @@
 		"test:prebuild": "vitest --project Node --project Astro",
 		"test:postbuild": "vitest --project Workers",
 		"flue:dev": "flue dev --env .env.local",
+		"flue:dev:wrangler": "flue build && cp -f .flue/.env.local .flue/dist/.dev.vars && wrangler dev --config .flue/dist/wrangler.jsonc",
 		"flue:build": "flue build",
 		"flue:deploy": "pnpm run flue:build && pnpm run flue:sync-agents && wrangler deploy --config .flue/dist/wrangler.jsonc --secrets-file .flue/.env",
 		"flue:sync-agents": "pnpm run flue:sync-agents:remote",

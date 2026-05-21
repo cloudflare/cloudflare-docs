@@ -20,12 +20,14 @@ import {
 } from "@flue/runtime/cloudflare";
 import * as v from "valibot";
 import {
+	addReactionToComment,
 	comparePullRequestHeads,
 	getInstallationToken,
 	getIssueComments,
 	getPullRequest,
 	getPullRequestFiles,
 	postComment,
+	removeReactionFromComment,
 	updateIssueComment,
 	type GitHubIssueComment,
 } from "../lib/github";
@@ -88,6 +90,12 @@ type ReconcileResult = v.InferOutput<typeof ReconcileResultSchema>;
 interface CodeReviewOrchestratorPayload {
 	eventType: "pull_request";
 	number: number;
+	/** When true, ignore previous review state and run a full diff review. */
+	forceFullReview?: boolean;
+	/** Comment ID that triggered /full-review — used to swap 👀 to 👍 when done. */
+	triggerCommentId?: number;
+	/** Reaction ID of the 👀 reaction to remove when review completes. */
+	triggerEyesReactionId?: number | null;
 }
 
 export default async function ({
@@ -150,18 +158,39 @@ export default async function ({
 	// reconciler to work correctly across retries). In log mode, also scope by
 	// runId so local test runs never share state.
 	const sessionKey =
-		reviewMode === "log"
+		reviewMode === "log" || input.forceFullReview
 			? `code-review-orchestrator:${input.number}:${runId}`
 			: `code-review-orchestrator:${input.number}:${currentHeadSha}`;
 	const session = await harness.session(sessionKey);
-	const previousReviewedSha = extractReviewedHeadSha(botComment?.body ?? null);
+
+	// forceFullReview: wipe all previous review JSONs so reconciler starts fresh
+	if (input.forceFullReview) {
+		const prPrefix = `diffs/pr-${input.number}/`;
+		const existing = await bucket.list({ prefix: prPrefix });
+		await Promise.all(
+			existing.objects
+				.filter((o) => o.key.match(/review-[0-9a-f]+\.json$/))
+				.map((o) => bucket.delete(o.key)),
+		);
+		console.log({
+			message: `Full review forced: cleared previous review JSONs for PR #${input.number}`,
+			event: "code_review_orchestrator",
+			number: input.number,
+			runId,
+			action: "full_review_forced",
+		});
+	}
+
+	const previousReviewedSha = input.forceFullReview
+		? null
+		: extractReviewedHeadSha(botComment?.body ?? null);
 
 	// Determine diff mode: incremental if we have a prior reviewed SHA that
 	// differs from the current head; full otherwise.
 	let diffMode: DiffMode;
 	let allFiles: Awaited<ReturnType<typeof getPullRequestFiles>>;
 
-	if (previousReviewedSha && previousReviewedSha !== currentHeadSha) {
+	if (!input.forceFullReview && previousReviewedSha && previousReviewedSha !== currentHeadSha) {
 		// Attempt incremental diff — commits since last review
 		const compare = await comparePullRequestHeads(
 			token,
@@ -250,7 +279,7 @@ export default async function ({
 					token,
 					input.number,
 					botComment,
-					renderPendingComment(currentHeadSha, botComment !== null),
+					renderPendingComment(currentHeadSha, botComment !== null, input.forceFullReview),
 				)
 			: Promise.resolve(),
 	]);
@@ -291,6 +320,44 @@ export default async function ({
 			runId,
 			action: "style_guide_complete",
 		});
+
+		// If the agent returned a known failure summary (e.g. model timed out
+		// and produced no output), surface a failure comment rather than
+		// falsely claiming no issues were found.
+		const FAILURE_SUMMARIES = [
+			"Style-guide review produced no result.",
+			"Style-guide review failed.",
+		];
+		if (
+			styleGuideResult.findings.length === 0 &&
+			FAILURE_SUMMARIES.includes(styleGuideResult.summary)
+		) {
+			if (reviewMode === "comment") {
+				const failureComment = renderFailureComment(currentHeadSha);
+				let targetComment = botComment;
+				if (targetComment === null) {
+					const freshComments = await getIssueComments(token, input.number);
+					targetComment =
+						freshComments.findLast((c) =>
+							c.body?.includes(BOT_COMMENT_MARKER),
+						) ?? null;
+				}
+				await postOrUpdateComment(
+					token,
+					input.number,
+					targetComment,
+					failureComment,
+				).catch(() => {});
+			}
+			return {
+				mode: reviewMode,
+				active: 0,
+				ignored: 0,
+				resolved: 0,
+				summary: styleGuideResult.summary,
+				commentBody: null,
+			};
+		}
 	} catch (err) {
 		const errMsg = err instanceof Error ? err.message : String(err);
 		console.log({
@@ -425,7 +492,7 @@ export default async function ({
 	await bucket.put(currentReviewKey, JSON.stringify(reconciled.active));
 
 	// ── 6. Render the review comment ───────────────────────────────────────────
-	const commentBody = renderComment(reconciled, currentHeadSha);
+	const commentBody = renderComment(reconciled, currentHeadSha, input.forceFullReview);
 
 	// ── 7. Log or post ─────────────────────────────────────────────────────────
 	if (reviewMode === "log") {
@@ -453,6 +520,21 @@ export default async function ({
 				null;
 		}
 		await postOrUpdateComment(token, input.number, targetComment, commentBody);
+
+		// Swap 👀 → 👍 on the /full-review trigger comment if applicable
+		if (input.triggerCommentId) {
+			if (input.triggerEyesReactionId) {
+				await removeReactionFromComment(
+					token,
+					input.triggerCommentId,
+					input.triggerEyesReactionId,
+				).catch(() => {}); // non-fatal
+			}
+			await addReactionToComment(token, input.triggerCommentId, "+1").catch(
+				() => {},
+			); // non-fatal
+		}
+
 		console.log({
 			message: `Code review comment updated with final review: PR #${input.number}`,
 			event: "code_review_orchestrator",
@@ -485,7 +567,19 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 			'[flue] code-review-orchestrator requires payload { eventType: "pull_request", number: number }.',
 		);
 	}
-	return { eventType: input.eventType, number: input.number };
+	return {
+		eventType: input.eventType,
+		number: input.number,
+		forceFullReview: input.forceFullReview === true,
+		triggerCommentId:
+			typeof input.triggerCommentId === "number"
+				? input.triggerCommentId
+				: undefined,
+		triggerEyesReactionId:
+			typeof input.triggerEyesReactionId === "number"
+				? input.triggerEyesReactionId
+				: null,
+	};
 }
 
 function partitionComments(comments: GitHubIssueComment[]): {
@@ -620,11 +714,13 @@ function renderFailureComment(headSha: string): string {
 	].join("\n");
 }
 
-function renderPendingComment(headSha: string, isUpdate: boolean): string {
+function renderPendingComment(headSha: string, isUpdate: boolean, forceFullReview?: boolean): string {
 	const shortSha = headSha.slice(0, 7);
-	const status = isUpdate
-		? `Reviewing new changes (commit \`${shortSha}\`)…`
-		: `Review in progress for commit \`${shortSha}\`…`;
+	const status = forceFullReview
+		? `Full review in progress for entire PR diff (commit \`${shortSha}\`)…`
+		: isUpdate
+			? `Reviewing new changes (commit \`${shortSha}\`)…`
+			: `Review in progress for commit \`${shortSha}\`…`;
 
 	return [
 		BOT_COMMENT_MARKER,
@@ -641,6 +737,7 @@ function renderPendingComment(headSha: string, isUpdate: boolean): string {
 function renderComment(
 	reconciled: ReconcileResult,
 	reviewedHeadSha: string,
+	forceFullReview?: boolean,
 ): string {
 	const shortSha = reviewedHeadSha.slice(0, 7);
 	const warnings = reconciled.active.filter((f) => f.severity === "warning");
@@ -648,15 +745,16 @@ function renderComment(
 		(f) => f.severity === "suggestion",
 	);
 	const totalActive = reconciled.active.length;
+	const scope = forceFullReview ? "full PR diff" : `commit \`${shortSha}\``;
 
 	// Status line
 	let statusLine: string;
 	if (totalActive === 0 && reconciled.ignored_by_reviewer.length === 0) {
-		statusLine = `✅ No style-guide issues found in commit \`${shortSha}\`.`;
+		statusLine = `✅ No style-guide issues found in ${scope}.`;
 	} else if (warnings.length > 0) {
-		statusLine = `⚠️ ${warnings.length} warning${warnings.length === 1 ? "" : "s"}${suggestions.length > 0 ? ` and ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"}` : ""} found in commit \`${shortSha}\`.`;
+		statusLine = `⚠️ ${warnings.length} warning${warnings.length === 1 ? "" : "s"}${suggestions.length > 0 ? ` and ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"}` : ""} found in ${scope}.`;
 	} else {
-		statusLine = `💡 ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"} found in commit \`${shortSha}\`.`;
+		statusLine = `💡 ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"} found in ${scope}.`;
 	}
 
 	const lines: string[] = [
