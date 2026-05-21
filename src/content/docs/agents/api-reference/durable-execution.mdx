@@ -10,8 +10,6 @@ products:
   - agents
 ---
 
-import { TypeScriptExample } from "~/components";
-
 Run work that survives Durable Object eviction. `runFiber()` registers a task in SQLite, keeps the agent alive during execution, lets you checkpoint intermediate state with `stash()`, and calls `onFiberRecovered()` on the next activation if the agent was evicted mid-task.
 
 Use `startFiber()` when a caller needs to durably accept background work, return quickly, safely dedupe retries, inspect status later, or cancel a running job.
@@ -254,8 +252,6 @@ If the DO is evicted during an inline `await`, the caller is gone. On recovery, 
 
 Use `startFiber()` when a caller needs to durably accept background work, return quickly, and safely dedupe retries. It stores a retained fiber record before the callback runs, then starts the callback in the background using the same keep-alive and recovery machinery as `runFiber()`.
 
-<TypeScriptExample>
-
 ```ts
 const receipt = await this.startFiber(
 	"reply-to-webhook",
@@ -274,11 +270,7 @@ if (!receipt.accepted) {
 }
 ```
 
-</TypeScriptExample>
-
 By default, `startFiber()` returns after the work is durably accepted. Pass `waitForCompletion: true` when the caller should remain open until the accepted fiber reaches a terminal status. Duplicate calls with the same idempotency key join an active in-memory execution when possible, then return the retained status with `accepted: false`.
-
-<TypeScriptExample>
 
 ```ts
 const result = await this.startFiber("reply-to-webhook", reply, {
@@ -291,11 +283,7 @@ if (result.status === "error") {
 }
 ```
 
-</TypeScriptExample>
-
 `startFiber()` is a durable acceptance API, not a value-return API. It returns the managed fiber status, but not the callback's result. Inspect status later with `inspectFiber()` or `inspectFiberByKey()`.
-
-<TypeScriptExample>
 
 ```ts
 const current = await this.inspectFiberByKey(`webhook:${webhookId}`);
@@ -310,8 +298,6 @@ await this.deleteFibers({
 });
 ```
 
-</TypeScriptExample>
-
 By default, `deleteFibers()` deletes settled `completed`, `error`, and `aborted` rows. It does not delete `interrupted` rows unless you pass that status explicitly, because interrupted rows often need inspection or manual resolution.
 
 Cancellation is cooperative. `cancelFiber()` records an aborted terminal state and aborts `ctx.signal` if the fiber is running in the current isolate. Your callback should check `ctx.signal.aborted` around expensive work and before visible side effects. Callers using `waitForCompletion: true` return when the ledger reaches `aborted`, even if a non-cooperative callback keeps running in the current isolate.
@@ -319,8 +305,6 @@ Cancellation is cooperative. `cancelFiber()` records an aborted terminal state a
 If the Durable Object is evicted mid-fiber, the retained record is marked `interrupted` and `onFiberRecovered()` receives the last checkpoint. The original closure cannot be replayed automatically; use `ctx.name`, `ctx.snapshot`, and metadata to decide whether to resume, compensate, or leave the record for inspection.
 
 Return a `FiberRecoveryResult` from `onFiberRecovered()` to record the policy decision:
-
-<TypeScriptExample>
 
 ```ts
 async onFiberRecovered(ctx: FiberRecoveryContext) {
@@ -335,8 +319,6 @@ async onFiberRecovered(ctx: FiberRecoveryContext) {
 	};
 }
 ```
-
-</TypeScriptExample>
 
 Returning `undefined` keeps a managed fiber `interrupted`. Throwing leaves it `interrupted` and records the recovery error for inspection. Terminal managed fibers such as `aborted` are not recovered again if a stale run row remains.
 
