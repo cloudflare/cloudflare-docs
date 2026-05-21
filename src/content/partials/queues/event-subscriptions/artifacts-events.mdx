@@ -230,3 +230,57 @@ Triggered when updates are fetched from a repository.
   }
 }
 ```
+
+#### `token.created`
+
+Triggered when a repo-scoped token is created. Includes the token ID, scope, and expiration time.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.token.created",
+  "source": {
+    "type": "artifacts.repo",
+    "namespace": "default",
+    "repoName": "token-evt-repo"
+  },
+  "payload": {
+    "tokenId": "7ngdf3ww3u84t33x",
+    "scope": "read",
+    "expiresAt": "2026-05-20T16:58:14.548Z"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "0ab4c7b45a39491ba5da2973f3d093a6",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2026-05-20T16:58:14.548Z"
+  }
+}
+```
+
+#### `token.revoked`
+
+Triggered when a repo-scoped token is revoked. Includes the token ID.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.token.revoked",
+  "source": {
+    "type": "artifacts.repo",
+    "namespace": "default",
+    "repoName": "token-evt-repo"
+  },
+  "payload": {
+    "tokenId": "7ngdf3ww3u84t33x"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "0ab4c7b45a39491ba5da2973f3d093a6",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2026-05-20T16:58:14.548Z"
+  }
+}
+```
