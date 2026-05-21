@@ -88,6 +88,8 @@ For a complete record of all requests, [generate a HAR file](/support/troublesho
 
 [Observatory](/speed/observatory/) provides synthetic tests and real user monitoring (RUM) data to assess your website's performance.
 
+RUM is particularly important as these metrics are captured from your actual visitors' browsers so it's an objective view of how they are experiencing your website, rather than lab data, which is typically more detailed (useful for debugging) but doesn't always correlate with the devices or connectivity real people have access to.
+
 ### Run a speed test
 
 1. Go to the Cloudflare dashboard.
@@ -108,6 +110,9 @@ Observatory reports key metrics:
 | **Time to First Byte (TTFB)** | Time until the first byte of response is received | Under 800 ms |
 | **Total Blocking Time (TBT)** | Time the main thread is blocked | Under 200 ms |
 
+Real User Monitoring reports similar metrics but you'll see Interaction to Next Paint (INP) in place of Total Blocking Time (TBT).
+
+TBT only measures during page load but INP measures every interaction real visitors make with your website.
 ### Enable recommended optimizations
 
 Based on Observatory results, enable relevant [Speed optimizations](/speed/optimization/):
