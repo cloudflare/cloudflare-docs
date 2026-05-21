@@ -1,5 +1,5 @@
 ---
-title: Directives
+title: Signals
 pcx_content_type: concept
 sidebar:
   order: 6
@@ -10,7 +10,7 @@ products:
 
 import { Steps, GlossaryTooltip, DashButton } from "~/components";
 
-The **Directives** tab in AI Crawl Control provides insights into how AI crawlers interact with your <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip> files across your hostnames. You can monitor request patterns, verify file availability, identify crawlers that violate your directives, and assess your site's readiness for AI agents.
+The **Signals** tab in AI Crawl Control provides insights into how AI crawlers interact with your <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip> files across your hostnames. You can monitor request patterns, verify file availability, identify crawlers that violate your directives, and assess your site's readiness for AI agents.
 
 To access directives insights:
 
@@ -19,7 +19,7 @@ To access directives insights:
 
    <DashButton url="/?to=/:account/:zone/ai" />
 
-3. Go to the **Directives** tab.
+3. Go to the **Signals** tab.
 
 ## Check managed robots.txt status
 
@@ -76,7 +76,7 @@ For example, if you add a new `Disallow` rule, all past requests to that path wi
 
 When you identify crawlers violating your `robots.txt` directives, you have several options:
 
-- Navigate to the [**Crawlers** tab](/ai-crawl-control/features/manage-ai-crawlers/) to permanently block the non-compliant crawler.
+- Navigate to the [**Security** tab](/ai-crawl-control/features/manage-ai-crawlers/) to permanently block the non-compliant crawler.
 - Use [Cloudflare WAF](/waf/) to create a path-specific security rules for the violating crawler.
 - Use [Redirect Rules](/rules/url-forwarding/) to guide violating crawlers to an appropriate area of your site.
 
