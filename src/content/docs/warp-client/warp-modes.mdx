@@ -30,9 +30,9 @@ The WARP application uses [MASQUE](https://blog.cloudflare.com/zero-trust-warp-w
 
 This mode is available in three flavors:
 
-- **Traffic and DNS (UDP)** — All device traffic is routed through WARP. DNS queries use UDP inside the tunnel.
-- **Traffic and DNS (TLS)** — All device traffic is routed through WARP with DNS queries encrypted via DNS-over-TLS (DoT).
-- **Traffic and DNS (HTTPS)** — All device traffic is routed through WARP with DNS queries encrypted via DNS-over-HTTPS (DoH).
+- **Traffic and DNS (UDP)** — All device traffic is routed through WARP, and DNS queries use UDP inside the tunnel.
+- **Traffic and DNS (TLS)** — All device traffic is routed through WARP, and DNS queries are encrypted via DNS-over-TLS (DoT).
+- **Traffic and DNS (HTTPS)** — All device traffic is routed through WARP, and DNS queries are encrypted via DNS-over-HTTPS (DoH).
 
 If the site you are visiting is already a Cloudflare customer, the content is immediately sent to your device. If not, Cloudflare uses its global network of data centers to devise the shortest path to the site. For more information, refer to our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/).
 
