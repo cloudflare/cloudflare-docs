@@ -157,7 +157,7 @@ class ChatRoom(DurableObject):
 
 ### `jurisdiction`
 
-`jurisdiction` is an optional property of a `DurableObjectId`, which returns the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) the ID is restricted to, such as `"eu"` or `"fedramp"`. The same value is available inside the Durable Object via `ctx.id.jurisdiction`, including in [alarm handlers](/durable-objects/api/alarms/) and after restoring an ID via `idFromString()`, so you can make region-aware decisions without passing the jurisdiction as an argument or persisting it in storage.
+`jurisdiction` is an optional property of a `DurableObjectId`, which returns the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) the ID is restricted to, such as `"eu"` or `"fedramp"`. The same value is available inside the Durable Object via `ctx.id.jurisdiction`, including in [alarm handlers](/durable-objects/api/alarms/) and objects accessed via `idFromString()`, so you can make region-aware decisions without passing the jurisdiction as an argument or persisting it in storage.
 
 `ctx.id.jurisdiction` is `undefined` in two cases:
 
