@@ -254,8 +254,8 @@ package.json @cloudflare/content-engineering
 
 # Radar
 
-/src/content/docs/radar/ @cloudflare/radar @cloudflare/product-owners
-/src/content/release-notes/radar.yaml @cloudflare/radar @cloudflare/product-owners
+/src/content/docs/radar/ @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners
+/src/content/release-notes/radar.yaml @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners
 
 # Reference architecture
 
