@@ -8,7 +8,7 @@ date: 2026-05-22
 
 import { TypeScriptExample } from "~/components";
 
-[Workflows](/workflows/) now supports saga-style rollbacks for `step.do()`. You can register a compensating action for a step, and if the instance later fails, the rollback handlers will execute in reverse completion order.
+[Workflows](/workflows/) now supports saga-style rollbacks for `step.do()`. You can register a compensating action for a step, and if the instance later fails, the rollback handlers will execute in reverse `step-start` order.
 
 This is useful for multi-step operations that touch external systems, such as inventory reservations, payment authorization, ticket creation, or infrastructure provisioning. Instead of writing all cleanup logic in a top-level `catch`, you can keep each compensating action next to the step it undoes.
 

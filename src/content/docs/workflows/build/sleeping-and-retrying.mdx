@@ -132,9 +132,9 @@ If earlier steps registered rollback handlers, those handlers will still run bef
 
 ## Register rollback handlers
 
-You can attach a rollback handler to `step.do()` to implement saga-style compensation. When the Workflow later fails, Workflows runs registered rollback handlers in reverse completion order.
+You can attach a rollback handler to `step.do()` to implement saga-style compensation. When the Workflow later fails, Workflows runs registered rollback handlers in reverse `step-start` order.
 
-Only steps that completed and registered a rollback handler participate in rollback. If a rollback handler fails after exhausting its own retries, the rollback outcome is marked as failed and later rollback handlers are not run.
+A failed step with rollback options can also participate in rollback alongside any completed steps which have a rollback handler registered. For example, if a steps throws a `NonRetryableError` after registering rollback, its rollback handler runs with `output` set to `undefined`.
 
 <TypeScriptExample>
 
@@ -178,7 +178,7 @@ export class OrderWorkflow extends WorkflowEntrypoint<Env> {
 Rollback handlers receive:
 
 - `error` - the error that caused the Workflow to fail.
-- `output` - the value returned by the forward step.
+- `output` - the value returned by the forward step, or `undefined` if the step failed before returning
 - `stepName` - the fully-qualified step name, including its count suffix.
 
 You can use `rollbackConfig` to control retry behavior for the rollback handler. Throw a `NonRetryableError` from the rollback handler to stop retrying it immediately.

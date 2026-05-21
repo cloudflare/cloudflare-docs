@@ -205,7 +205,7 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 ```ts
 type RollbackContext = {
 	error: Error;
-	output: unknown;
+	output: unknown | undefined ;
 	stepName: string;
 };
 
