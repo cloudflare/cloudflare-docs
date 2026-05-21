@@ -388,6 +388,7 @@ export default async function ({
 			args: {
 				pullRequest: { number: input.number },
 				currentFindings: styleGuideResult.findings,
+				reviewedFiles: styleGuideResult.reviewedFiles,
 				previousFindings,
 				humanComments: humanCommentsAfterBot.map((c) => ({
 					author: c.user?.login ?? "unknown",
@@ -588,6 +589,7 @@ async function dispatchStyleGuideReview(
 		result.result ?? {
 			findings: [],
 			summary: "Style-guide review produced no result.",
+			reviewedFiles: [],
 		}
 	);
 }
@@ -614,15 +616,15 @@ function renderFailureComment(headSha: string): string {
 		"",
 		"## Review",
 		"",
-		`> ❌ Review failed for commit \`${shortSha}\`. This is usually a transient error — it will retry on the next push.`,
+		`❌ Review failed for commit \`${shortSha}\`. This is usually a transient error — it will retry on the next push.`,
 	].join("\n");
 }
 
 function renderPendingComment(headSha: string, isUpdate: boolean): string {
 	const shortSha = headSha.slice(0, 7);
 	const status = isUpdate
-		? `> Reviewing new changes (commit \`${shortSha}\`)…`
-		: `> Review in progress for commit \`${shortSha}\`…`;
+		? `Reviewing new changes (commit \`${shortSha}\`)…`
+		: `Review in progress for commit \`${shortSha}\`…`;
 
 	return [
 		BOT_COMMENT_MARKER,
@@ -650,11 +652,11 @@ function renderComment(
 	// Status line
 	let statusLine: string;
 	if (totalActive === 0 && reconciled.ignored_by_reviewer.length === 0) {
-		statusLine = `> ✅ No style-guide issues found in commit \`${shortSha}\`.`;
+		statusLine = `✅ No style-guide issues found in commit \`${shortSha}\`.`;
 	} else if (warnings.length > 0) {
-		statusLine = `> ⚠️ ${warnings.length} warning${warnings.length === 1 ? "" : "s"}${suggestions.length > 0 ? ` and ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"}` : ""} found in commit \`${shortSha}\`.`;
+		statusLine = `⚠️ ${warnings.length} warning${warnings.length === 1 ? "" : "s"}${suggestions.length > 0 ? ` and ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"}` : ""} found in commit \`${shortSha}\`.`;
 	} else {
-		statusLine = `> 💡 ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"} found in commit \`${shortSha}\`.`;
+		statusLine = `💡 ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"} found in commit \`${shortSha}\`.`;
 	}
 
 	const lines: string[] = [
@@ -672,7 +674,7 @@ function renderComment(
 		lines.push("");
 		lines.push("<details open>");
 		lines.push(`<summary><b>Warnings</b> (${warnings.length})</summary>`);
-		lines.push("");
+		lines.push("<br/>");
 		lines.push("");
 		lines.push("| File | Issue |");
 		lines.push("|---|---|");
@@ -687,7 +689,7 @@ function renderComment(
 		lines.push("");
 		lines.push("<details open>");
 		lines.push(`<summary><b>Suggestions</b> (${suggestions.length})</summary>`);
-		lines.push("");
+		lines.push("<br/>");
 		lines.push("");
 		lines.push("| File | Issue |");
 		lines.push("|---|---|");

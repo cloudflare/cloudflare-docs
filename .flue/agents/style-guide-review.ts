@@ -45,6 +45,8 @@ export type StyleGuideFinding = v.InferOutput<typeof StyleGuideFindingFromModelS
 export type StyleGuideResult = {
 	findings: StyleGuideFinding[];
 	summary: string;
+	/** Files the specialist actually reviewed — used by the reconciler to resolve findings. */
+	reviewedFiles: string[];
 };
 
 async function assignFindingIds(
@@ -53,7 +55,9 @@ async function assignFindingIds(
 	const encoder = new TextEncoder();
 	return Promise.all(
 		findings.map(async (f) => {
-			const key = `${f.rule}:${f.path}:${f.line ?? ""}:${f.evidence.trim()}`;
+			// Exclude line number from the hash so IDs remain stable when surrounding
+		// lines shift after partial fixes. Rule + path + evidence is specific enough.
+		const key = `${f.rule}:${f.path}:${f.evidence.trim()}`;
 			const buf = await crypto.subtle.digest("SHA-256", encoder.encode(key));
 			const hex = Array.from(new Uint8Array(buf))
 				.map((b) => b.toString(16).padStart(2, "0"))
@@ -129,16 +133,18 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 		return {
 			findings: [],
 			summary: "No diff files found in R2.",
+			reviewedFiles: [],
 		} satisfies StyleGuideResult;
 	}
 	const manifest = JSON.parse(await manifestObj.text()) as ManifestEntry[];
-	const hasReviewableFiles = manifest.some((f) =>
-		REVIEWABLE_PATH_RE.test(f.filename),
-	);
-	if (!hasReviewableFiles) {
+	const reviewedFiles = manifest
+		.filter((f) => REVIEWABLE_PATH_RE.test(f.filename))
+		.map((f) => f.filename);
+	if (reviewedFiles.length === 0) {
 		return {
 			findings: [],
 			summary: "No reviewable documentation files changed.",
+			reviewedFiles: [],
 		} satisfies StyleGuideResult;
 	}
 
@@ -225,11 +231,12 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 		return {
 			findings: [],
 			summary: "Style-guide review produced no result.",
+			reviewedFiles,
 		} satisfies StyleGuideResult;
 	}
 
 	const findings = await assignFindingIds(rawData.findings);
-	const data: StyleGuideResult = { findings, summary: rawData.summary };
+	const data: StyleGuideResult = { findings, summary: rawData.summary, reviewedFiles };
 
 	console.log({
 		message: `Style-guide review complete: PR #${input.number} — ${data.findings.length} finding(s) (${data.findings.filter((f) => f.severity === "warning").length} warning(s), ${data.findings.filter((f) => f.severity === "suggestion").length} suggestion(s))`,

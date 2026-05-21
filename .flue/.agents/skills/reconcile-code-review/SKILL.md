@@ -15,6 +15,8 @@ Your job is to classify each finding into one of three buckets:
 
 `args.currentFindings` — array of findings from the current specialist run. Each has: `id`, `severity`, `path`, `line` (optional), `rule`, `evidence`, `suggestion`.
 
+`args.reviewedFiles` — array of file paths the specialist actually reviewed in this run (e.g. `["src/content/docs/sandbox/concepts/preview-urls.mdx", ...]`). A file in this list was examined even if no findings were reported for it.
+
 `args.previousFindings` — array of findings from the previous review run, loaded from structured storage. Empty array if this is the first review. Same shape as `args.currentFindings`.
 
 `args.humanComments` — array of human comments on the PR posted after the previous bot review. Each has: `author`, `created_at`, `body`. May be empty.
@@ -41,7 +43,7 @@ The specialist reviewed the entire PR. All current issues in the PR are visible 
 
 **Active**: A finding in `args.currentFindings` where no human comment gives a plausible reason not to fix it.
 
-**Resolved**: A finding ID from `args.previousFindings` that does NOT appear in `args.currentFindings`. Absence from the full diff means the issue was fixed.
+**Resolved**: A finding ID from `args.previousFindings` that does NOT appear in `args.currentFindings` AND whose file appears in `args.reviewedFiles`. Absence from the full diff (when the file was reviewed) means the issue was fixed.
 
 **Ignored**: A finding in `args.currentFindings` where a human comment makes a reasonable case to not fix it.
 
@@ -54,13 +56,13 @@ The specialist reviewed only commits since the last bot review. Not every previo
 **Active**:
 - All findings in `args.currentFindings` (newly found in the incremental diff) that no human comment addresses.
 - All findings from `args.previousFindings` that were previously active and have NOT been addressed by a human comment. They carry forward by default.
-- If a previously active finding is in a file that appears in `args.currentFindings`, and the specialist did NOT flag it, it is likely resolved — classify it as resolved.
+- If a previously active finding is in a file that appears in `args.reviewedFiles`, and the specialist did NOT flag it, it is resolved — classify it as resolved.
 
 **Resolved**:
 - A finding from the previous review is resolved if:
-  - Its file appears in `args.currentFindings` AND the specialist did not re-flag it. (The file was re-reviewed and the issue is gone.)
+  - Its file appears in `args.reviewedFiles` AND the specialist did not re-flag it. (The file was re-reviewed and the issue is gone.)
   - OR a human comment clearly explains it was fixed.
-- Do NOT mark a finding as resolved just because it is absent from `args.currentFindings` when its file was not in the incremental diff. Absence from an incremental diff means "not touched in new commits", not "fixed".
+- Do NOT mark a finding as resolved just because it is absent from `args.currentFindings` when its file was not in `args.reviewedFiles`. Absence from an incremental diff means "not touched in new commits", not "fixed".
 
 **Ignored**: Same as full diff mode — a human comment with a plausible reason.
 
