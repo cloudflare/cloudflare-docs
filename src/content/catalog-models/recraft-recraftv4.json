@@ -23,19 +23,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/simple-generation.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/simple-generation.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A minimalist logo of a mountain range with a sun rising behind it',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  { prompt: 'A minimalist logo of a mountain range with a sun rising behind it' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4\",\n  \"input\": {\n    \"prompt\": \"A minimalist logo of a mountain range with a sun rising behind it\"\n  }\n}'"
 				}
 			]
 		},
@@ -49,19 +54,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/scene-composition.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/scene-composition.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'A cozy cabin in the woods surrounded by tall pine trees, smoke rising from the chimney',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A cozy cabin in the woods surrounded by tall pine trees, smoke rising from the chimney',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4\",\n  \"input\": {\n    \"prompt\": \"A cozy cabin in the woods surrounded by tall pine trees, smoke rising from the chimney\"\n  }\n}'"
 				}
 			]
 		},
@@ -76,19 +86,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/custom-size.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/custom-size.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'A flat illustration of a workspace with a laptop, coffee cup, and potted plant',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A flat illustration of a workspace with a laptop, coffee cup, and potted plant',\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4\",\n  \"input\": {\n    \"prompt\": \"A flat illustration of a workspace with a laptop, coffee cup, and potted plant\",\n    \"size\": \"1024x1024\"\n  }\n}'"
 				}
 			]
 		},
@@ -96,7 +111,6 @@
 			"name": "With Color Controls",
 			"description": "Guide generation with specific brand colors",
 			"input": {
-				"prompt": "An abstract geometric pattern suitable for a tech company brand identity",
 				"controls": {
 					"colors": [
 						{
@@ -114,25 +128,31 @@
 							]
 						}
 					]
-				}
+				},
+				"prompt": "An abstract geometric pattern suitable for a tech company brand identity"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/with-color-controls.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/with-color-controls.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'An abstract geometric pattern suitable for a tech company brand identity',\n    controls: {\n      colors: [\n        {\n          rgb: [255, 107, 53],\n        },\n        {\n          rgb: [0, 43, 91],\n        },\n      ],\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    controls: { colors: [{ rgb: [255, 107, 53] }, { rgb: [0, 43, 91] }] },\n    prompt: 'An abstract geometric pattern suitable for a tech company brand identity',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4\",\n  \"input\": {\n    \"controls\": {\n      \"colors\": [\n        {\n          \"rgb\": [\n            255,\n            107,\n            53\n          ]\n        },\n        {\n          \"rgb\": [\n            0,\n            43,\n            91\n          ]\n        }\n      ]\n    },\n    \"prompt\": \"An abstract geometric pattern suitable for a tech company brand identity\"\n  }\n}'"
 				}
 			]
 		},
@@ -140,8 +160,6 @@
 			"name": "Background Color",
 			"description": "Set a specific background color",
 			"input": {
-				"prompt": "A clean icon of a lightning bolt",
-				"size": "1024x1024",
 				"controls": {
 					"background_color": {
 						"rgb": [
@@ -150,30 +168,41 @@
 							245
 						]
 					}
-				}
+				},
+				"prompt": "A clean icon of a lightning bolt",
+				"size": "1024x1024"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/background-color.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/background-color.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A clean icon of a lightning bolt',\n    size: '1024x1024',\n    controls: {\n      background_color: {\n        rgb: [245, 245, 245],\n      },\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    controls: { background_color: { rgb: [245, 245, 245] } },\n    prompt: 'A clean icon of a lightning bolt',\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4\",\n  \"input\": {\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          245,\n          245,\n          245\n        ]\n      }\n    },\n    \"prompt\": \"A clean icon of a lightning bolt\",\n    \"size\": \"1024x1024\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://www.recraft.ai/",
 	"terms": "https://www.recraft.ai/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/recraft/recraftv4.png",
@@ -181,16 +210,60 @@
 		"Resolution": "1024px",
 		"Text Rendering": "Yes"
 	},
-	"created_at": "2026-04-13 16:46:31",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:50",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
+				"controls": {
+					"additionalProperties": false,
+					"properties": {
+						"background_color": {
+							"additionalProperties": false,
+							"properties": {
+								"rgb": {
+									"items": {
+										"maximum": 255,
+										"minimum": 0,
+										"type": "integer"
+									},
+									"maxItems": 3,
+									"minItems": 3,
+									"type": "array"
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"type": "object"
+						},
+						"colors": {
+							"items": {
+								"additionalProperties": false,
+								"properties": {
+									"rgb": {
+										"items": {
+											"maximum": 255,
+											"minimum": 0,
+											"type": "integer"
+										},
+										"maxItems": 3,
+										"minItems": 3,
+										"type": "array"
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"type": "object"
+							},
+							"maxItems": 5,
+							"type": "array"
+						}
+					},
+					"type": "object"
+				},
 				"prompt": {
 					"type": "string"
 				},
@@ -202,64 +275,16 @@
 				},
 				"substyle": {
 					"type": "string"
-				},
-				"controls": {
-					"type": "object",
-					"properties": {
-						"colors": {
-							"maxItems": 5,
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"rgb": {
-										"minItems": 3,
-										"maxItems": 3,
-										"type": "array",
-										"items": {
-											"type": "integer",
-											"minimum": 0,
-											"maximum": 255
-										}
-									}
-								},
-								"required": [
-									"rgb"
-								],
-								"additionalProperties": false
-							}
-						},
-						"background_color": {
-							"type": "object",
-							"properties": {
-								"rgb": {
-									"minItems": 3,
-									"maxItems": 3,
-									"type": "array",
-									"items": {
-										"type": "integer",
-										"minimum": 0,
-										"maximum": 255
-									}
-								}
-							},
-							"required": [
-								"rgb"
-							],
-							"additionalProperties": false
-						}
-					},
-					"additionalProperties": false
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"image": {
 					"type": "string"
@@ -268,7 +293,7 @@
 			"required": [
 				"image"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

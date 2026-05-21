@@ -17,29 +17,34 @@
 			"name": "Quick Preview",
 			"description": "Fast video generation for previews",
 			"input": {
-				"prompt": "Ocean waves crashing on a rocky shoreline at sunset",
-				"duration": "6s",
 				"aspect_ratio": "16:9",
-				"resolution": "720p",
-				"generate_audio": true
+				"duration": "6s",
+				"generate_audio": true,
+				"prompt": "Ocean waves crashing on a rocky shoreline at sunset",
+				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/quick-preview.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/quick-preview.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'Ocean waves crashing on a rocky shoreline at sunset',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: true,\n    prompt: 'Ocean waves crashing on a rocky shoreline at sunset',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": true,\n    \"prompt\": \"Ocean waves crashing on a rocky shoreline at sunset\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -47,29 +52,34 @@
 			"name": "Social Media Clip",
 			"description": "Quick vertical video for stories",
 			"input": {
-				"prompt": "A coffee cup with steam rising, cozy cafe atmosphere",
-				"duration": "4s",
 				"aspect_ratio": "9:16",
-				"resolution": "720p",
-				"generate_audio": true
+				"duration": "4s",
+				"generate_audio": true,
+				"prompt": "A coffee cup with steam rising, cozy cafe atmosphere",
+				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/social-media-clip.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/social-media-clip.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'A coffee cup with steam rising, cozy cafe atmosphere',\n    duration: '4s',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '9:16',\n    duration: '4s',\n    generate_audio: true,\n    prompt: 'A coffee cup with steam rising, cozy cafe atmosphere',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": \"4s\",\n    \"generate_audio\": true,\n    \"prompt\": \"A coffee cup with steam rising, cozy cafe atmosphere\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -77,29 +87,34 @@
 			"name": "Animated Loop",
 			"description": "Short loopable animation",
 			"input": {
-				"prompt": "A campfire burning with flames dancing and sparks floating upward, seamless loop",
-				"duration": "4s",
 				"aspect_ratio": "16:9",
-				"resolution": "720p",
-				"generate_audio": true
+				"duration": "4s",
+				"generate_audio": true,
+				"prompt": "A campfire burning with flames dancing and sparks floating upward, seamless loop",
+				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/animated-loop.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/animated-loop.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt:\n      'A campfire burning with flames dancing and sparks floating upward, seamless loop',\n    duration: '4s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '4s',\n    generate_audio: true,\n    prompt: 'A campfire burning with flames dancing and sparks floating upward, seamless loop',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"4s\",\n    \"generate_audio\": true,\n    \"prompt\": \"A campfire burning with flames dancing and sparks floating upward, seamless loop\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -107,93 +122,98 @@
 			"name": "Product Shot",
 			"description": "Quick product video preview",
 			"input": {
-				"prompt": "A smartphone rotating on a dark surface with dramatic lighting",
-				"duration": "6s",
 				"aspect_ratio": "16:9",
-				"resolution": "720p",
-				"generate_audio": false
+				"duration": "6s",
+				"generate_audio": false,
+				"prompt": "A smartphone rotating on a dark surface with dramatic lighting",
+				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/product-shot.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3-fast/product-shot.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'A smartphone rotating on a dark surface with dramatic lighting',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: false,\n    prompt: 'A smartphone rotating on a dark surface with dramatic lighting',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": false,\n    \"prompt\": \"A smartphone rotating on a dark surface with dramatic lighting\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://deepmind.google/technologies/veo/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/veo-3-fast.png",
 	"metadata": {
-		"Max Duration": "8 seconds",
 		"Audio Generation": "Yes",
+		"Max Duration": "8 seconds",
 		"Resolutions": "720p, 1080p"
 	},
-	"created_at": "2026-04-08 21:38:24",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:14",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
-				"prompt": {
-					"description": "Text prompt describing the video to generate",
+				"aspect_ratio": {
+					"default": "16:9",
+					"description": "Video aspect ratio",
+					"enum": [
+						"16:9",
+						"9:16",
+						"1:1"
+					],
 					"type": "string"
+				},
+				"duration": {
+					"default": "6s",
+					"description": "Video duration",
+					"enum": [
+						"4s",
+						"6s",
+						"8s"
+					],
+					"type": "string"
+				},
+				"generate_audio": {
+					"default": true,
+					"description": "Whether to generate audio with the video",
+					"type": "boolean"
 				},
 				"image_input": {
 					"description": "Base64-encoded reference image for i2v",
 					"type": "string"
 				},
-				"duration": {
-					"description": "Video duration",
-					"default": "6s",
-					"type": "string",
-					"enum": [
-						"4s",
-						"6s",
-						"8s"
-					]
-				},
-				"aspect_ratio": {
-					"description": "Video aspect ratio",
-					"default": "16:9",
-					"type": "string",
-					"enum": [
-						"16:9",
-						"9:16",
-						"1:1"
-					]
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string"
 				},
 				"resolution": {
-					"description": "Video resolution",
 					"default": "720p",
-					"type": "string",
+					"description": "Video resolution",
 					"enum": [
 						"720p",
 						"1080p"
-					]
-				},
-				"generate_audio": {
-					"description": "Whether to generate audio with the video",
-					"default": true,
-					"type": "boolean"
+					],
+					"type": "string"
 				}
 			},
 			"required": [
@@ -203,22 +223,22 @@
 				"resolution",
 				"generate_audio"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"video": {
 					"description": "URL to the generated video",
-					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"type": "string"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

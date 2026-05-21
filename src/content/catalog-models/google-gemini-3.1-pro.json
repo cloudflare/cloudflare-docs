@@ -20,12 +20,12 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "What are the three laws of thermodynamics?"
 							}
-						]
+						],
+						"role": "user"
 					}
 				]
 			},
@@ -35,50 +35,55 @@
 			"raw_response": {
 				"candidates": [
 					{
+						"avgLogprobs": -0.24408692330364393,
 						"content": {
-							"role": "model",
 							"parts": [
 								{
 									"text": "The laws of thermodynamics are the fundamental principles that describe how energy moves and changes within the universe. While the prompt asks for the \"three\" laws, there are actually four (scientists later added a \"Zeroth\" law). \n\nHere is a breakdown of the three main laws, plus the bonus Zeroth law, explained in both scientific terms and plain English.\n\n### 1. The First Law: The Law of Conservation of Energy\n*   **The Science:** Energy cannot be created or destroyed in an isolated system; it can only change forms. The change in a system's internal energy is equal to the heat added to the system minus the work done by the system.\n*   **Plain English:** You can\u2019t get something for nothing. Energy just trades places or changes its outfit. \n*   **Everyday Example:** When you turn on a lightbulb, electrical energy isn't destroyed; it is transformed into light energy and heat energy. When you eat an apple, your body converts the chemical energy in the food into kinetic energy so you can move.\n\n### 2. The Second Law: The Law of Entropy\n*   **The Science:** The total entropy (a measure of disorder, randomness, or chaotic energy) of an isolated system will always increase over time. Furthermore, heat will always flow spontaneously from a hotter object to a colder one, never the other way around. \n*   **Plain English:** Things naturally degrade and become more disorganized over time. Because some energy is always lost as unusable heat when it changes forms, no process is 100% efficient. \n*   **Everyday Example:** If you leave a hot cup of coffee on a table, it will naturally cool down as its heat spreads into the room. It will never spontaneously gather heat from the room to make itself boiling hot again. Similarly, a tidy room will naturally become messy over time unless you expend energy (do work) to clean it.\n\n### 3. The Third Law: Absolute Zero\n*   **The Science:** As the temperature of a system approaches absolute zero (0 Kelvin, or -273.15\u00b0C / -459.67\u00b0F), the entropy of the system approaches a constant minimum. \n*   **Plain English:** Absolute zero is the coldest possible temperature, where all molecular and atomic movement completely stops. This law states that it is physically impossible to actually reach absolute zero because doing so would require an infinite amount of work.\n*   **Everyday Example:** Imagine a bustling crowd of people (molecules) moving around. As the room gets colder, they slow down. At absolute zero, every single person would be perfectly frozen in place. \n\n---\n\n### *Bonus: The Zeroth Law (Thermal Equilibrium)*\nScientists realized this principle was so fundamental that it needed to precede the First, Second, and Third laws\u2014hence, the \"Zeroth\" law.\n*   **The Science:** If System A is in thermal equilibrium (the same temperature) with System B, and System B is in thermal equilibrium with System C, then System A is in thermal equilibrium with System C.\n*   **Plain English:** If two things are the same temperature as a third thing, they are all the same temperature. \n*   **Everyday Example:** This is why thermometers work. If a thermometer is the same temperature as a room, and you are the same temperature as the room, you are the same temperature as the thermometer.\n\n### The \"Gambling\" Summary\nA famous and humorous way physicists remember the laws of thermodynamics is by comparing the universe to a rigged casino game:\n*   **1st Law:** *You can\u2019t win.* (You cannot create energy out of nothing).\n*   **2nd Law:** *You can\u2019t break even.* (You always lose some energy to heat/entropy).\n*   **3rd Law:** *You can\u2019t quit the game.* (You can never reach absolute zero).",
 									"thoughtSignature": "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"
 								}
-							]
+							],
+							"role": "model"
 						},
-						"finishReason": "STOP",
-						"avgLogprobs": -0.24408692330364393
+						"finishReason": "STOP"
 					}
 				],
+				"createTime": "2026-04-17T00:58:04.691850Z",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"modelVersion": "gemini-3.1-pro-preview",
+				"responseId": "nIXhaYqdKqyA9LsPwLiNqQg",
 				"usageMetadata": {
-					"promptTokenCount": 8,
 					"candidatesTokenCount": 828,
-					"totalTokenCount": 1761,
-					"trafficType": "ON_DEMAND",
-					"promptTokensDetails": [
-						{
-							"modality": "TEXT",
-							"tokenCount": 8
-						}
-					],
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
 							"tokenCount": 828
 						}
 					],
-					"thoughtsTokenCount": 925
-				},
-				"modelVersion": "gemini-3.1-pro-preview",
-				"createTime": "2026-04-17T00:58:04.691850Z",
-				"responseId": "nIXhaYqdKqyA9LsPwLiNqQg",
-				"gatewayMetadata": {
-					"keySource": "Unified"
+					"promptTokenCount": 8,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 8
+						}
+					],
+					"thoughtsTokenCount": 925,
+					"totalTokenCount": 1761,
+					"trafficType": "ON_DEMAND"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'What are the three laws of thermodynamics?',\n          },\n        ],\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the three laws of thermodynamics?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
 				}
 			]
 		},
@@ -88,23 +93,23 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "How do I read a JSON file in Python?"
 							}
-						]
+						],
+						"role": "user"
 					}
 				],
+				"generationConfig": {
+					"temperature": 0.3
+				},
 				"systemInstruction": {
 					"parts": [
 						{
 							"text": "You are a helpful coding assistant specializing in Python."
 						}
 					]
-				},
-				"generationConfig": {
-					"temperature": 0.3
 				}
 			},
 			"output": {
@@ -113,50 +118,55 @@
 			"raw_response": {
 				"candidates": [
 					{
+						"avgLogprobs": -0.13193573454933058,
 						"content": {
-							"role": "model",
 							"parts": [
 								{
 									"text": "To read a JSON file in Python, you can use the built-in `json` module. \n\nHere is the most common and standard way to do it:\n\n### Basic Example\n\nAssuming you have a file named `data.json`, here is how you read it:\n\n```python\nimport json\n\n# Open the file in read mode\nwith open('data.json', 'r', encoding='utf-8') as file:\n    # Load the JSON data into a Python dictionary\n    data = json.load(file)\n\n# Now you can use 'data' like a normal Python dictionary\nprint(data)\n```\n\n### How it works:\n1. **`import json`**: Imports Python's built-in JSON library.\n2. **`with open(...) as file:`**: Opens the file safely. Using `with` ensures that the file is automatically closed after it is read, even if an error occurs. Adding `encoding='utf-8'` is a best practice to prevent errors with special characters.\n3. **`json.load(file)`**: Reads the file and converts the JSON data into the corresponding Python object (usually a dictionary or a list).\n\n---\n\n### Advanced Example (with Error Handling)\n\nIf you want to write robust code, it is a good idea to handle potential errors, such as the file not existing or the JSON being formatted incorrectly:\n\n```python\nimport json\n\nfile_path = 'data.json'\n\ntry:\n    with open(file_path, 'r', encoding='utf-8') as file:\n        data = json.load(file)\n        print(\"Successfully read JSON data!\")\n        \nexcept FileNotFoundError:\n    print(f\"Error: The file {file_path} was not found.\")\nexcept json.JSONDecodeError:\n    print(f\"Error: The file {file_path} does not contain valid JSON.\")\n```\n\n### A Quick Note: `load()` vs `loads()`\n* Use **`json.load()`** (no 's') when reading directly from a **file**.\n* Use **`json.loads()`** (with an 's' for string) if you are reading JSON from a **string variable** in your code.",
 									"thoughtSignature": "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"
 								}
-							]
+							],
+							"role": "model"
 						},
-						"finishReason": "STOP",
-						"avgLogprobs": -0.13193573454933058
+						"finishReason": "STOP"
 					}
 				],
+				"createTime": "2026-04-17T00:58:06.706819Z",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"modelVersion": "gemini-3.1-pro-preview",
+				"responseId": "noXhaYOSK5eDpucP34WHiQw",
 				"usageMetadata": {
-					"promptTokenCount": 20,
 					"candidatesTokenCount": 478,
-					"totalTokenCount": 1088,
-					"trafficType": "ON_DEMAND",
-					"promptTokensDetails": [
-						{
-							"modality": "TEXT",
-							"tokenCount": 20
-						}
-					],
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
 							"tokenCount": 478
 						}
 					],
-					"thoughtsTokenCount": 590
-				},
-				"modelVersion": "gemini-3.1-pro-preview",
-				"createTime": "2026-04-17T00:58:06.706819Z",
-				"responseId": "noXhaYOSK5eDpucP34WHiQw",
-				"gatewayMetadata": {
-					"keySource": "Unified"
+					"promptTokenCount": 20,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 20
+						}
+					],
+					"thoughtsTokenCount": 590,
+					"totalTokenCount": 1088,
+					"trafficType": "ON_DEMAND"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'How do I read a JSON file in Python?',\n          },\n        ],\n      },\n    ],\n    systemInstruction: {\n      parts: [\n        {\n          text: 'You are a helpful coding assistant specializing in Python.',\n        },\n      ],\n    },\n    generationConfig: {\n      temperature: 0.3,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  {\n    contents: [{ parts: [{ text: 'How do I read a JSON file in Python?' }], role: 'user' }],\n    generationConfig: { temperature: 0.3 },\n    systemInstruction: {\n      parts: [{ text: 'You are a helpful coding assistant specializing in Python.' }],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"How do I read a JSON file in Python?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.3\n    },\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are a helpful coding assistant specializing in Python.\"\n        }\n      ]\n    }\n  }\n}'"
 				}
 			]
 		},
@@ -166,32 +176,32 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "I need help planning a road trip from San Francisco to Los Angeles."
 							}
-						]
+						],
+						"role": "user"
 					},
 					{
-						"role": "model",
 						"parts": [
 							{
 								"text": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
 							}
-						]
+						],
+						"role": "model"
 					},
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "Yes, what are some good places to stop?"
 							}
-						]
+						],
+						"role": "user"
 					}
 				],
 				"generationConfig": {
-					"maxOutputTokens": 500
+					"maxOutputTokens": 2048
 				}
 			},
 			"output": {
@@ -200,50 +210,55 @@
 			"raw_response": {
 				"candidates": [
 					{
+						"avgLogprobs": -8.212950519499952,
 						"content": {
-							"role": "model",
 							"parts": [
 								{
 									"text": "The best stops really depend on which route you decide to take! There are three",
 									"thoughtSignature": "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"
 								}
-							]
+							],
+							"role": "model"
 						},
-						"finishReason": "MAX_TOKENS",
-						"avgLogprobs": -8.212950519499952
+						"finishReason": "MAX_TOKENS"
 					}
 				],
+				"createTime": "2026-04-17T00:58:22.165603Z",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"modelVersion": "gemini-3.1-pro-preview",
+				"responseId": "roXhaeONCsmApucP_8_n-Qc",
 				"usageMetadata": {
-					"promptTokenCount": 64,
 					"candidatesTokenCount": 16,
-					"totalTokenCount": 560,
-					"trafficType": "ON_DEMAND",
-					"promptTokensDetails": [
-						{
-							"modality": "TEXT",
-							"tokenCount": 64
-						}
-					],
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
 							"tokenCount": 16
 						}
 					],
-					"thoughtsTokenCount": 480
-				},
-				"modelVersion": "gemini-3.1-pro-preview",
-				"createTime": "2026-04-17T00:58:22.165603Z",
-				"responseId": "roXhaeONCsmApucP_8_n-Qc",
-				"gatewayMetadata": {
-					"keySource": "Unified"
+					"promptTokenCount": 64,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 64
+						}
+					],
+					"thoughtsTokenCount": 480,
+					"totalTokenCount": 560,
+					"trafficType": "ON_DEMAND"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'I need help planning a road trip from San Francisco to Los Angeles.',\n          },\n        ],\n      },\n      {\n        role: 'model',\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n      },\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Yes, what are some good places to stop?',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      maxOutputTokens: 500,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  {\n    contents: [\n      {\n        parts: [{ text: 'I need help planning a road trip from San Francisco to Los Angeles.' }],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Yes, what are some good places to stop?' }], role: 'user' },\n    ],\n    generationConfig: { maxOutputTokens: 2048 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"I need help planning a road trip from San Francisco to Los Angeles.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Yes, what are some good places to stop?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 2048\n    }\n  }\n}'"
 				}
 			]
 		},
@@ -253,17 +268,17 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "Write a short story opening about a detective finding an unusual clue."
 							}
-						]
+						],
+						"role": "user"
 					}
 				],
 				"generationConfig": {
-					"temperature": 0.8,
-					"maxOutputTokens": 300
+					"maxOutputTokens": 1500,
+					"temperature": 0.8
 				}
 			},
 			"output": {
@@ -272,55 +287,64 @@
 			"raw_response": {
 				"candidates": [
 					{
+						"avgLogprobs": -7.339017173991171,
 						"content": {
-							"role": "model",
 							"parts": [
 								{
 									"text": "The air in Elias Vance\u2019s apartment smelled of stale copper",
 									"thoughtSignature": "Cq4JAY89a182dWgWqxl+2ki63AHSyM5ZH2lCKULPaq6FwVzqU8cjzEuUMCW+PtvlWb4o8I43mjINtaopb+0gfW34S3B+T/ho11F45VvPlOtThgRHYzNW380UwBnoDc95tH/lYRrI05dWolDbmYq6VlbJBzyuXa4KSRkQsPdgsaRRylO8j738BXvyGMuiKcPRRtm+5ZL6M1oeqKrGGu1Z9ye9f1ZiO5bX105o2QZwnJ3muHcraACV86Hn11Au6iEnhpoN94OzVxn4b9Gun97TLdAHA4PSI0zmVuo1twzc3Ai9ELnr79qMrHzi1FL/E3WG+zh8pftb5kpQHGpIW4VCvUXr0nPaswhuCCBFMc7sGrTG/9FnreK5QPQKKU+C1F+WojRr3k9ReZ36VAib4CqW8Y23JsUhup3OjwoU++C5g2PeVZF5l38VqzJTvLYHp4RKzKr3fYUsg5l0Rl3o7eHQ+/BXU5mdNbEmlvDHzHbpayGSDhGlxDjBBAAwclf/XM+6kNGIg9p0EcOS8kOmw+PqrRF09uLiuVceXYflgMbUT2g314LC7Gzmfygtd9XCNrl6lnYPoZZirjGax+14OL+/m6+BIZPT/HXyyy6EZn9yHpSRWkIpR8mbmclANJDPB1RmM9M67YzeZ4aenNZV3V0Kh9vSHgimXjuz3FkwINi+wxpErzFHsnbGtuBJv6xjl9jKa0DAq4FU/V1u5hjv1Z6K2uLEUtx67Ol9ojrd5AECXhhw1U1ytmPz1Enly3kNciGIprAHFa3/eWT+maYFNMbCHKCULAwEVzb2m3H6fCnMRyEXMQCFcbZ+QXDN+zUd1Hc7xsRw7u2fZloeR6/KVVlqN//4mefFy4HFGFjqpTCIPuUtpLwDDExWWDQqZHwnJy5xQhgT1MxpugXaCFWMkQIO6mOZbBLd+4LP1VR2ObW4e0kiFcuriJbpg/z2gzd3aQB3bbj2ufBBm2QffRzdu6pqCGHw1UICot926fux2fzFRf8ReF3ZVdcA4QeJzVuQe68wNtsSB+6bjp8O0/G+opcgy5GpjDbtfcqOM3h2dTshksC9LULh8WFxzxUZ9WxNoyjcITHqm5xoU3fZw0vAbyTPDEI9GtqcxNFvuhs266Z5FPlqoCGBFGbjViesqZaP0juB9q4N+WWF34Od8igXBWwYs8My+WM5Zce0eKwWp47UY3wAmpjVKimsNzI5lSES3o+72mW8garA6O0Cv+1lVXyqPKC2QdOim+CLxJyjwY/NZWVYy5b5hMHI+LRwhOIk4HXMZHejry53BQCLCyPhfhg81fVykTiAcwr4cs74aHbXb8C5514wpJwFQ1MeU4z5cCfTp9t/4ot7PeQbC8+HCTpO57m4rRdNpoEwzOGNezElnvf4nNzK/E2dv3uHxevjTyR23OQbB9l9MzZbKWqidlfJfzP5/YwAfy1a+vi7bbqvLSeIVwKHl5Yz6qz7VV2kJEigbG8DNJg8RrAtV8nz8kLg/LZgrtlkqAn4AaeAwwKer0OH33c+rREg8XVSPAoFKZHluqICy7xqzx3mD9rhgg7WUrXJYrcfEdGUGHjOLW4mtyaYOFhkMf1AhtblZpQTrAHb9w=="
 								}
-							]
+							],
+							"role": "model"
 						},
-						"finishReason": "MAX_TOKENS",
-						"avgLogprobs": -7.339017173991171
+						"finishReason": "MAX_TOKENS"
 					}
 				],
+				"createTime": "2026-04-17T00:58:27.814075Z",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"modelVersion": "gemini-3.1-pro-preview",
+				"responseId": "s4XhafvXMemVq8YPzcOY0Qg",
 				"usageMetadata": {
-					"promptTokenCount": 13,
 					"candidatesTokenCount": 12,
-					"totalTokenCount": 309,
-					"trafficType": "ON_DEMAND",
-					"promptTokensDetails": [
-						{
-							"modality": "TEXT",
-							"tokenCount": 13
-						}
-					],
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
 							"tokenCount": 12
 						}
 					],
-					"thoughtsTokenCount": 284
-				},
-				"modelVersion": "gemini-3.1-pro-preview",
-				"createTime": "2026-04-17T00:58:27.814075Z",
-				"responseId": "s4XhafvXMemVq8YPzcOY0Qg",
-				"gatewayMetadata": {
-					"keySource": "Unified"
+					"promptTokenCount": 13,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 13
+						}
+					],
+					"thoughtsTokenCount": 284,
+					"totalTokenCount": 309,
+					"trafficType": "ON_DEMAND"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Write a short story opening about a detective finding an unusual clue.',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      temperature: 0.8,\n      maxOutputTokens: 300,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-pro',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 1500, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 1500,\n      \"temperature\": 0.8\n    }\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://deepmind.google/technologies/gemini/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-3.1-pro.png",
@@ -328,102 +352,76 @@
 		"Architecture": "Transformer (multimodal)",
 		"Thinking": "Yes (medium level)"
 	},
-	"created_at": "2026-04-13 16:46:29",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:11",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": {},
 			"properties": {
 				"contents": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": {},
 						"properties": {
-							"role": {
-								"type": "string",
-								"enum": [
-									"user",
-									"model"
-								]
-							},
 							"parts": {
-								"type": "array",
 								"items": {
-									"type": "object",
+									"additionalProperties": {},
 									"properties": {
 										"text": {
 											"type": "string"
 										}
 									},
-									"additionalProperties": {}
-								}
+									"type": "object"
+								},
+								"type": "array"
+							},
+							"role": {
+								"enum": [
+									"user",
+									"model"
+								],
+								"type": "string"
 							}
 						},
 						"required": [
 							"parts"
 						],
-						"additionalProperties": {}
-					}
-				},
-				"systemInstruction": {
-					"type": "object",
-					"properties": {
-						"parts": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"text": {
-										"type": "string"
-									}
-								},
-								"additionalProperties": {}
-							}
-						}
+						"type": "object"
 					},
-					"required": [
-						"parts"
-					],
-					"additionalProperties": {}
+					"type": "array"
 				},
 				"generationConfig": {
-					"type": "object",
+					"additionalProperties": {},
 					"properties": {
-						"temperature": {
-							"type": "number"
-						},
-						"topP": {
-							"type": "number"
-						},
-						"topK": {
+						"candidateCount": {
 							"type": "number"
 						},
 						"maxOutputTokens": {
 							"type": "number"
 						},
-						"candidateCount": {
-							"type": "number"
-						},
-						"stopSequences": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						},
 						"responseMimeType": {
 							"type": "string"
+						},
+						"stopSequences": {
+							"items": {
+								"type": "string"
+							},
+							"type": "array"
+						},
+						"temperature": {
+							"type": "number"
+						},
+						"topK": {
+							"type": "number"
+						},
+						"topP": {
+							"type": "number"
 						}
 					},
-					"additionalProperties": {}
+					"type": "object"
 				},
 				"safetySettings": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": {},
 						"properties": {
 							"category": {
 								"type": "string"
@@ -436,48 +434,70 @@
 							"category",
 							"threshold"
 						],
-						"additionalProperties": {}
-					}
+						"type": "object"
+					},
+					"type": "array"
 				},
+				"systemInstruction": {
+					"additionalProperties": {},
+					"properties": {
+						"parts": {
+							"items": {
+								"additionalProperties": {},
+								"properties": {
+									"text": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							},
+							"type": "array"
+						}
+					},
+					"required": [
+						"parts"
+					],
+					"type": "object"
+				},
+				"toolConfig": {},
 				"tools": {
-					"type": "array",
-					"items": {}
-				},
-				"toolConfig": {}
+					"items": {},
+					"type": "array"
+				}
 			},
 			"required": [
 				"contents"
 			],
-			"additionalProperties": {}
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": {},
 			"properties": {
 				"candidates": {
-					"type": "array",
-					"items": {}
+					"items": {},
+					"type": "array"
+				},
+				"modelVersion": {
+					"type": "string"
 				},
 				"usageMetadata": {
-					"type": "object",
+					"additionalProperties": {},
 					"properties": {
-						"promptTokenCount": {
+						"candidatesTokenCount": {
 							"type": "number"
 						},
-						"candidatesTokenCount": {
+						"promptTokenCount": {
 							"type": "number"
 						},
 						"totalTokenCount": {
 							"type": "number"
 						}
 					},
-					"additionalProperties": {}
-				},
-				"modelVersion": {
-					"type": "string"
+					"type": "object"
 				}
 			},
-			"additionalProperties": {}
+			"type": "object"
 		}
 	}
 }

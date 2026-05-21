@@ -1,0 +1,236 @@
+{
+	"model_id": "google/gemini-3.1-flash-tts",
+	"provider_id": "google",
+	"name": "Gemini 3.1 Flash TTS",
+	"description": "",
+	"task": "Text-to-Speech",
+	"tags": [],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Text-to-Speech",
+			"description": "Convert text to speech with default voice",
+			"input": {
+				"text": "Hello, welcome to Cloudflare AI Gateway!"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__gemini-3.1-flash-tts/simple-text-to-speech.wav"
+			},
+			"raw_response": {
+				"audio": "data:audio/l16;base64,...",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-tts',\n  { text: 'Hello, welcome to Cloudflare AI Gateway!' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-tts\",\n  \"input\": {\n    \"text\": \"Hello, welcome to Cloudflare AI Gateway!\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Custom Voice",
+			"description": "Generate speech with a specific voice",
+			"input": {
+				"text": "The quick brown fox jumps over the lazy dog.",
+				"voice": "Puck"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__gemini-3.1-flash-tts/custom-voice.wav"
+			},
+			"raw_response": {
+				"audio": "data:audio/l16;base64,...",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-tts',\n  { text: 'The quick brown fox jumps over the lazy dog.', voice: 'Puck' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-tts\",\n  \"input\": {\n    \"text\": \"The quick brown fox jumps over the lazy dog.\",\n    \"voice\": \"Puck\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Longer Text",
+			"description": "Convert longer text to speech",
+			"input": {
+				"text": "Artificial intelligence has transformed the way we interact with technology. From voice assistants to autonomous vehicles, AI is reshaping our daily lives and creating new possibilities for innovation.",
+				"voice": "Charon"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__gemini-3.1-flash-tts/longer-text.wav"
+			},
+			"raw_response": {
+				"audio": "data:audio/l16;base64,...",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-tts',\n  {\n    text: 'Artificial intelligence has transformed the way we interact with technology. From voice assistants to autonomous vehicles, AI is reshaping our daily lives and creating new possibilities for innovation.',\n    voice: 'Charon',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-tts\",\n  \"input\": {\n    \"text\": \"Artificial intelligence has transformed the way we interact with technology. From voice assistants to autonomous vehicles, AI is reshaping our daily lives and creating new possibilities for innovation.\",\n    \"voice\": \"Charon\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Narrative Voice",
+			"description": "Generate speech with a narrative voice style",
+			"input": {
+				"text": "Once upon a time, in a kingdom far away, there lived a brave knight who sought to protect the realm from all dangers.",
+				"voice": "Kore"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__gemini-3.1-flash-tts/narrative-voice.wav"
+			},
+			"raw_response": {
+				"audio": "data:audio/l16;base64,...",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-tts',\n  {\n    text: 'Once upon a time, in a kingdom far away, there lived a brave knight who sought to protect the realm from all dangers.',\n    voice: 'Kore',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-tts\",\n  \"input\": {\n    \"text\": \"Once upon a time, in a kingdom far away, there lived a brave knight who sought to protect the realm from all dangers.\",\n    \"voice\": \"Kore\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": null,
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {},
+	"created_at": "2026-05-22 17:53:10",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"maxOutputTokens": {
+					"description": "Maximum number of tokens to generate",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"type": "integer"
+				},
+				"stopSequences": {
+					"description": "Sequences where the model will stop generating further tokens",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"temperature": {
+					"description": "Controls randomness in generation (0-2)",
+					"maximum": 2,
+					"minimum": 0,
+					"type": "number"
+				},
+				"text": {
+					"description": "The text to convert to speech. Maximum 10,000 characters.",
+					"maxLength": 10000,
+					"type": "string"
+				},
+				"topK": {
+					"description": "Only sample from the top K tokens. Smaller K = more focused, larger K = more diverse",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"type": "integer"
+				},
+				"topP": {
+					"description": "Nucleus sampling threshold (0-1). Tokens with cumulative probability up to topP are considered",
+					"maximum": 1,
+					"minimum": 0,
+					"type": "number"
+				},
+				"voice": {
+					"description": "The voice to use for speech synthesis",
+					"enum": [
+						"Zephyr",
+						"Puck",
+						"Charon",
+						"Kore",
+						"Fenrir",
+						"Leda",
+						"Orus",
+						"Aoede",
+						"Callirrhoe",
+						"Autonoe",
+						"Enceladus",
+						"Iapetus",
+						"Umbriel",
+						"Algieba",
+						"Despina",
+						"Erinome",
+						"Algenib",
+						"Rasalgethi",
+						"Laomedeia",
+						"Achernar",
+						"Alnilam",
+						"Schedar",
+						"Gacrux",
+						"Pulcherrima",
+						"Achird",
+						"Zubenelgenubi",
+						"Vindemiatrix",
+						"Sadachbia",
+						"Sadaltager",
+						"Sulafat"
+					],
+					"type": "string"
+				}
+			},
+			"required": [
+				"text"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"audio": {
+					"description": "Base64-encoded audio data (WAV format)",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"type": "object"
+		}
+	}
+}

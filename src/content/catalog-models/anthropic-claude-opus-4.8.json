@@ -1,0 +1,430 @@
+{
+	"model_id": "anthropic/claude-opus-4.8",
+	"provider_id": "anthropic",
+	"name": "Claude Opus 4.8",
+	"description": "Claude Opus 4.8 is Anthropic's most capable generally available model, with a step-change improvement in agentic coding over Claude Opus 4.7. It uses adaptive thinking to calibrate reasoning per task and supports a one million token context window at standard pricing.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Enterprise",
+		"Agentic",
+		"Financial Analysis",
+		"Legal"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic message request",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "What are the three laws of thermodynamics?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "# The Three Laws of Thermodynamics\n\nThere are actually **four** laws when you include the \"Zeroth Law,\" but here are the three classic laws (I'll mention the zeroth too for completeness):\n\n## Zeroth Law\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of temperature.\n\n## First Law (Conservation of Energy)\nEnergy cannot be created or destroyed, only transformed from one form to another. The change in a system's internal energy equals the heat added to it minus the work it does.\n\n**Equation:** \u0394U = Q \u2212 W\n\n*In simple terms:* You can't get something for nothing\u2014energy is always conserved.\n\n## Second Law (Entropy)\nThe total entropy (disorder) of an isolated system always increases over time. Heat naturally flows from hot to cold, never spontaneously the reverse.\n\n*In simple terms:* Things naturally tend toward disorder, and you can't build a perfectly efficient engine.\n\n## Third Law (Absolute Zero)\nAs a system approaches absolute zero (0 Kelvin, \u2212273.15\u00b0C), its entropy approaches a minimum constant value. It's impossible to reach absolute zero in a finite number of steps.\n\n*In simple terms:* You can't actually reach absolute zero.\n\n---\n\n**A popular humorous summary:**\n1. You can't win (energy is conserved)\n2. You can't break even (entropy always increases)\n3. You can't quit the game (can't reach absolute zero)\n\nLet me know if you'd like a deeper explanation of any of these!"
+			},
+			"raw_response": {
+				"id": "msg_01UJHCa5HEKFSjvGy8y7nNJ8",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "text",
+						"text": "# The Three Laws of Thermodynamics\n\nThere are actually **four** laws when you include the \"Zeroth Law,\" but here are the three classic laws (I'll mention the zeroth too for completeness):\n\n## Zeroth Law\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of temperature.\n\n## First Law (Conservation of Energy)\nEnergy cannot be created or destroyed, only transformed from one form to another. The change in a system's internal energy equals the heat added to it minus the work it does.\n\n**Equation:** \u0394U = Q \u2212 W\n\n*In simple terms:* You can't get something for nothing\u2014energy is always conserved.\n\n## Second Law (Entropy)\nThe total entropy (disorder) of an isolated system always increases over time. Heat naturally flows from hot to cold, never spontaneously the reverse.\n\n*In simple terms:* Things naturally tend toward disorder, and you can't build a perfectly efficient engine.\n\n## Third Law (Absolute Zero)\nAs a system approaches absolute zero (0 Kelvin, \u2212273.15\u00b0C), its entropy approaches a minimum constant value. It's impossible to reach absolute zero in a finite number of steps.\n\n*In simple terms:* You can't actually reach absolute zero.\n\n---\n\n**A popular humorous summary:**\n1. You can't win (energy is conserved)\n2. You can't break even (entropy always increases)\n3. You can't quit the game (can't reach absolute zero)\n\nLet me know if you'd like a deeper explanation of any of these!"
+					}
+				],
+				"model": "claude-queso-eap",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 20,
+					"output_tokens": 520
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.8',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'What are the three laws of thermodynamics?', role: 'user' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.8\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"What are the three laws of thermodynamics?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "How do I read a JSON file in Python?",
+						"role": "user"
+					}
+				],
+				"system": "You are a helpful coding assistant specializing in Python."
+			},
+			"output": {
+				"text": "# Reading a JSON File in Python\n\nPython's built-in `json` module makes this easy. Here's how:\n\n## Basic Method\n\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n- `json.load()` reads from a **file object** and parses the JSON into a Python object (usually a `dict` or `list`).\n- Using `with open(...)` ensures the file is closed automatically.\n\n## Specifying Encoding (Recommended)\n\nIt's good practice to specify the encoding explicitly:\n\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n## Reading from a JSON String\n\nIf you have JSON as a **string** instead of a file, use `json.loads()` (note the `s` for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data['name'])  # Alice\n```\n\n## Handling Errors\n\nIt's wise to handle potential issues:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r', encoding='utf-8') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\n```\n\n## Quick Reference\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read from a file object |\n| `json.loads(string)` | Parse from a string |\n| `json.dump(obj, file)` | Write to a file |\n| `json.dumps(obj)` | Convert to a string |\n\nLet me know if you'd like help **writing** JSON or working with a specific data structure!"
+			},
+			"raw_response": {
+				"id": "msg_01HPeNQZ66acTPaXFtXFGU3D",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "text",
+						"text": "# Reading a JSON File in Python\n\nPython's built-in `json` module makes this easy. Here's how:\n\n## Basic Method\n\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n- `json.load()` reads from a **file object** and parses the JSON into a Python object (usually a `dict` or `list`).\n- Using `with open(...)` ensures the file is closed automatically.\n\n## Specifying Encoding (Recommended)\n\nIt's good practice to specify the encoding explicitly:\n\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n## Reading from a JSON String\n\nIf you have JSON as a **string** instead of a file, use `json.loads()` (note the `s` for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data['name'])  # Alice\n```\n\n## Handling Errors\n\nIt's wise to handle potential issues:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r', encoding='utf-8') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\n```\n\n## Quick Reference\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read from a file object |\n| `json.loads(string)` | Parse from a string |\n| `json.dump(obj, file)` | Write to a file |\n| `json.dumps(obj)` | Convert to a string |\n\nLet me know if you'd like help **writing** JSON or working with a specific data structure!"
+					}
+				],
+				"model": "claude-queso-eap",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 38,
+					"output_tokens": 575
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.8',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'How do I read a JSON file in Python?', role: 'user' }],\n    system: 'You are a helpful coding assistant specializing in Python.',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.8\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"system\": \"You are a helpful coding assistant specializing in Python.\"\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "I need help planning a road trip from San Francisco to Los Angeles.",
+						"role": "user"
+					},
+					{
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?",
+						"role": "assistant"
+					},
+					{
+						"content": "Yes, what are some good places to stop?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Here are some great stops along the way, depending on which route you take:\n\n## If You Take Highway 1 (Pacific Coast Highway) \u2014 Scenic but Slower\nThis route adds time but offers stunning coastal views.\n\n- **Santa Cruz** \u2013 Beach boardwalk, classic seaside vibe\n- **Monterey** \u2013 World-famous aquarium, Cannery Row\n- **Carmel-by-the-Sea** \u2013 Charming village, beautiful beaches\n- **Big Sur** \u2013 Dramatic cliffs, Bixby Bridge, hiking (a must-see!)\n- **Hearst Castle** (San Simeon) \u2013 Opulent historic estate, tours available\n- **Pismo Beach** \u2013 Sand dunes, laid-back beach town\n\n## If You Take Highway 101 \u2014 Balanced Option\nFaster than Highway 1 but still scenic in parts.\n\n- **Gilroy** \u2013 The \"Garlic Capital,\" outlet shopping\n- **Paso Robles** \u2013 Excellent wine country\n- **San Luis Obispo** \u2013 Cute college town, good food\n- **Santa Barbara** \u2013 Beautiful \"American Riviera,\" Spanish architecture, wineries\n\n## If You Take Interstate 5 \u2014 Fastest Route\nThe quickest way (about 5-6 hours) but mostly flat farmland with little scenery.\n\n- **Kettleman City** \u2013 Main rest/fuel stop\n- Not many attractions, but great if you're short on time\n\n---\n\nA few questions to help me refine suggestions:\n1. **How much time** do you have for the trip? (One day or multiple?)\n2. **What interests you most** \u2014 nature, food, beaches, history?\n3. Are you traveling **solo, as a couple, or with family/kids**?\n\nLet me know and I can help build an itinerary!"
+			},
+			"raw_response": {
+				"id": "msg_014YutctbptEfx7RyuVjoFSk",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "text",
+						"text": "Here are some great stops along the way, depending on which route you take:\n\n## If You Take Highway 1 (Pacific Coast Highway) \u2014 Scenic but Slower\nThis route adds time but offers stunning coastal views.\n\n- **Santa Cruz** \u2013 Beach boardwalk, classic seaside vibe\n- **Monterey** \u2013 World-famous aquarium, Cannery Row\n- **Carmel-by-the-Sea** \u2013 Charming village, beautiful beaches\n- **Big Sur** \u2013 Dramatic cliffs, Bixby Bridge, hiking (a must-see!)\n- **Hearst Castle** (San Simeon) \u2013 Opulent historic estate, tours available\n- **Pismo Beach** \u2013 Sand dunes, laid-back beach town\n\n## If You Take Highway 101 \u2014 Balanced Option\nFaster than Highway 1 but still scenic in parts.\n\n- **Gilroy** \u2013 The \"Garlic Capital,\" outlet shopping\n- **Paso Robles** \u2013 Excellent wine country\n- **San Luis Obispo** \u2013 Cute college town, good food\n- **Santa Barbara** \u2013 Beautiful \"American Riviera,\" Spanish architecture, wineries\n\n## If You Take Interstate 5 \u2014 Fastest Route\nThe quickest way (about 5-6 hours) but mostly flat farmland with little scenery.\n\n- **Kettleman City** \u2013 Main rest/fuel stop\n- Not many attractions, but great if you're short on time\n\n---\n\nA few questions to help me refine suggestions:\n1. **How much time** do you have for the trip? (One day or multiple?)\n2. **What interests you most** \u2014 nature, food, beaches, history?\n3. Are you traveling **solo, as a couple, or with family/kids**?\n\nLet me know and I can help build an itinerary!"
+					}
+				],
+				"model": "claude-queso-eap",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 103,
+					"output_tokens": 583
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.8',\n  {\n    max_tokens: 1024,\n    messages: [\n      {\n        content: 'I need help planning a road trip from San Francisco to Los Angeles.',\n        role: 'user',\n      },\n      {\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n        role: 'assistant',\n      },\n      { content: 'Yes, what are some good places to stop?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.8\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"I need help planning a road trip from San Francisco to Los Angeles.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"I'\\''d be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Yes, what are some good places to stop?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing with Adaptive Thinking",
+			"description": "Use adaptive thinking with high effort to steer creative output -- the recommended replacement for the deprecated `temperature` parameter.",
+			"input": {
+				"max_tokens": 2048,
+				"messages": [
+					{
+						"content": "Write a short story opening about a detective finding an unusual clue.",
+						"role": "user"
+					}
+				],
+				"output_config": {
+					"effort": "high"
+				},
+				"thinking": {
+					"type": "adaptive"
+				}
+			},
+			"output": {
+				"text": "Detective Mara Voss had seen blood spatter shaped like everything from constellations to corporate logos, but she'd never seen a crime scene that smelled like oranges.\n\nShe paused in the doorway of the dead man's study, notebook half-raised, and breathed in again. Citrus, bright and unmistakable, layered over the expected copper tang. No fruit bowl. No air freshener. No candle that she could see.\n\n\"You smell that?\" she asked.\n\nBehind her, Officer Reyes shrugged. \"Smell what?\"\n\nMara stepped carefully around the chalk-pale shape on the hardwood\u2014Gerald Finch, sixty-three, retired accountant, found by his housekeeper at seven that morning. The scent grew stronger as she approached the desk, and there, beneath the man's outstretched right hand, she found it.\n\nA single dried orange peel, curled into a tight spiral, placed deliberately atop a blank sheet of paper.\n\nNot dropped. Not discarded. *Placed.* The spiral wound clockwise, perfectly even, the way a person might twist a peel if they had all the time in the world and very steady hands.\n\nMara crouched, knees popping, and studied it without touching. Gerald Finch lived alone. Gerald Finch, according to three separate neighbors, was allergic to citrus.\n\nSo the question wasn't who had killed him.\n\nThe question was who had sat here, calm as a churchgoer, peeling an orange beside a dying man\u2014and why they'd wanted her to know it."
+			},
+			"raw_response": {
+				"id": "msg_017M9L3VVeQg7PVJC4CZgpEq",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "text",
+						"text": "Detective Mara Voss had seen blood spatter shaped like everything from constellations to corporate logos, but she'd never seen a crime scene that smelled like oranges.\n\nShe paused in the doorway of the dead man's study, notebook half-raised, and breathed in again. Citrus, bright and unmistakable, layered over the expected copper tang. No fruit bowl. No air freshener. No candle that she could see.\n\n\"You smell that?\" she asked.\n\nBehind her, Officer Reyes shrugged. \"Smell what?\"\n\nMara stepped carefully around the chalk-pale shape on the hardwood\u2014Gerald Finch, sixty-three, retired accountant, found by his housekeeper at seven that morning. The scent grew stronger as she approached the desk, and there, beneath the man's outstretched right hand, she found it.\n\nA single dried orange peel, curled into a tight spiral, placed deliberately atop a blank sheet of paper.\n\nNot dropped. Not discarded. *Placed.* The spiral wound clockwise, perfectly even, the way a person might twist a peel if they had all the time in the world and very steady hands.\n\nMara crouched, knees popping, and studied it without touching. Gerald Finch lived alone. Gerald Finch, according to three separate neighbors, was allergic to citrus.\n\nSo the question wasn't who had killed him.\n\nThe question was who had sat here, calm as a churchgoer, peeling an orange beside a dying man\u2014and why they'd wanted her to know it."
+					}
+				],
+				"model": "claude-queso-eap",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 26,
+					"output_tokens": 492
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.8',\n  {\n    max_tokens: 2048,\n    messages: [\n      {\n        content: 'Write a short story opening about a detective finding an unusual clue.',\n        role: 'user',\n      },\n    ],\n    output_config: { effort: 'high' },\n    thinking: { type: 'adaptive' },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.8\",\n  \"max_tokens\": 2048,\n  \"messages\": [\n    {\n      \"content\": \"Write a short story opening about a detective finding an unusual clue.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"output_config\": {\n    \"effort\": \"high\"\n  },\n  \"thinking\": {\n    \"type\": \"adaptive\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "Explain the concept of recursion with a simple example.",
+						"role": "user"
+					}
+				],
+				"stream": true
+			},
+			"error": {
+				"kind": "runner-failure",
+				"message": "normalizer returned empty output \u2014 check modality vs response shape, or recapture",
+				"timestamp": "2026-05-28T00:57:31.202Z"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.8',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    stream: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.8\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.anthropic.com/claude/opus",
+	"terms": "https://www.anthropic.com/legal/commercial-terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/anthropic/claude-opus-4.8.png",
+	"metadata": {
+		"Adaptive Thinking": "Yes",
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-05-28 17:14:04",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"max_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"messages": {
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"items": {
+											"additionalProperties": false,
+											"properties": {
+												"source": {},
+												"text": {
+													"type": "string"
+												},
+												"type": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"type"
+											],
+											"type": "object"
+										},
+										"type": "array"
+									}
+								]
+							},
+							"role": {
+								"enum": [
+									"user",
+									"assistant"
+								],
+								"type": "string"
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"metadata": {
+					"additionalProperties": {},
+					"propertyNames": {
+						"type": "string"
+					},
+					"type": "object"
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"system": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"messages",
+				"max_tokens"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"content": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"text": {
+								"type": "string"
+							},
+							"type": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"type"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"id": {
+					"type": "string"
+				},
+				"model": {
+					"type": "string"
+				},
+				"role": {
+					"const": "assistant",
+					"type": "string"
+				},
+				"stop_reason": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"type": {
+					"const": "message",
+					"type": "string"
+				},
+				"usage": {
+					"additionalProperties": false,
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens"
+					],
+					"type": "object"
+				}
+			},
+			"required": [
+				"id",
+				"type",
+				"role",
+				"content",
+				"model",
+				"stop_reason",
+				"usage"
+			],
+			"type": "object"
+		}
+	}
+}

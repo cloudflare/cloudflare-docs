@@ -17,27 +17,32 @@
 			"name": "Simple Text-to-Video",
 			"description": "Basic text-to-video with just a prompt",
 			"input": {
-				"prompt": "A golden retriever running through a sunlit meadow in slow motion",
 				"duration": 5,
+				"prompt": "A golden retriever running through a sunlit meadow in slow motion",
 				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/simple-text-to-video.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://video.cf.vidu.com/infer_64/tasks/26/0417/05/942597991691198464/creation-01/video.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n    duration: 5,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    duration: 5,\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"duration\": 5,\n    \"prompt\": \"A golden retriever running through a sunlit meadow in slow motion\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -45,28 +50,33 @@
 			"name": "Portrait Aspect Ratio",
 			"description": "Vertical video for social media",
 			"input": {
-				"prompt": "A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling",
+				"aspect_ratio": "9:16",
 				"duration": 5,
-				"resolution": "720p",
-				"aspect_ratio": "9:16"
+				"prompt": "A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling",
+				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/portrait-aspect-ratio.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://video.cf.vidu.com/infer_88/tasks/26/0417/05/942598607041753088/creation-01/video.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    duration: 5,\n    resolution: '720p',\n    aspect_ratio: '9:16',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    aspect_ratio: '9:16',\n    duration: 5,\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"prompt\": \"A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -74,28 +84,33 @@
 			"name": "Silent Video",
 			"description": "Generate video without audio",
 			"input": {
-				"prompt": "Abstract paint swirls slowly mixing in water, vivid blues and golds",
+				"audio": false,
 				"duration": 8,
-				"resolution": "720p",
-				"audio": false
+				"prompt": "Abstract paint swirls slowly mixing in water, vivid blues and golds",
+				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/silent-video.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://video.cf.vidu.com/infer_76/tasks/26/0417/05/942599305355595776/creation-01/final_video.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    duration: 8,\n    resolution: '720p',\n    audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    audio: false,\n    duration: 8,\n    prompt: 'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"audio\": false,\n    \"duration\": 8,\n    \"prompt\": \"Abstract paint swirls slowly mixing in water, vivid blues and golds\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -103,119 +118,124 @@
 			"name": "Square Format",
 			"description": "Square video for product demos or social posts",
 			"input": {
-				"prompt": "A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background",
+				"aspect_ratio": "1:1",
 				"duration": 5,
-				"resolution": "720p",
-				"aspect_ratio": "1:1"
+				"prompt": "A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background",
+				"resolution": "720p"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/square-format.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"video": "https://video.cf.vidu.com/infer_40/tasks/26/0417/05/942599364482723840/creation-01/video.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    duration: 5,\n    resolution: '720p',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    aspect_ratio: '1:1',\n    duration: 5,\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"duration\": 5,\n    \"prompt\": \"A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background\",\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://www.vidu.com/",
 	"terms": "https://www.vidu.com/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/vidu/q3-pro.png",
 	"metadata": {
-		"Max Duration": "16 seconds",
-		"Resolutions": "540p, 720p, 1080p",
 		"Aspect Ratios": "16:9, 9:16, 3:4, 4:3, 1:1",
 		"Audio Generation": "Yes",
-		"Image-to-Video": "Yes"
+		"Image-to-Video": "Yes",
+		"Max Duration": "16 seconds",
+		"Resolutions": "540p, 720p, 1080p"
 	},
-	"created_at": "2026-04-15 01:37:32",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:54:00",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
-				"prompt": {
-					"description": "Text prompt describing what should appear in the video",
-					"type": "string",
-					"maxLength": 5000
-				},
-				"start_image": {
-					"description": "Start image for video generation. Use alone for image-to-video, or with end_image for start/end-to-video. Accepts public URL or Base64 data URI (data:image/png;base64,...)",
-					"type": "string"
-				},
-				"end_image": {
-					"description": "End image for start/end-to-video generation. Must be used together with start_image. Accepts public URL or Base64 data URI (data:image/png;base64,...)",
-					"type": "string"
-				},
-				"duration": {
-					"description": "Video duration in seconds (1-16)",
-					"default": 5,
-					"type": "integer",
-					"minimum": 1,
-					"maximum": 16
-				},
-				"resolution": {
-					"description": "Video resolution",
-					"default": "720p",
-					"type": "string",
-					"enum": [
-						"540p",
-						"720p",
-						"1080p"
-					]
-				},
-				"audio": {
-					"description": "Enable audio-video synchronization. Default: true for Q3 models. When false, outputs silent video",
-					"type": "boolean"
-				},
 				"aspect_ratio": {
 					"description": "Video aspect ratio (text-to-video only). Default: 16:9",
-					"type": "string",
 					"enum": [
 						"16:9",
 						"9:16",
 						"3:4",
 						"4:3",
 						"1:1"
-					]
+					],
+					"type": "string"
+				},
+				"audio": {
+					"description": "Enable audio-video synchronization. Default: true for Q3 models. When false, outputs silent video",
+					"type": "boolean"
+				},
+				"duration": {
+					"default": 5,
+					"description": "Video duration in seconds (1-16)",
+					"maximum": 16,
+					"minimum": 1,
+					"type": "integer"
+				},
+				"end_image": {
+					"description": "End image for start/end-to-video generation. Must be used together with start_image. Accepts public URL or Base64 data URI (data:image/png;base64,...)",
+					"type": "string"
+				},
+				"prompt": {
+					"description": "Text prompt describing what should appear in the video",
+					"maxLength": 5000,
+					"type": "string"
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Video resolution",
+					"enum": [
+						"540p",
+						"720p",
+						"1080p"
+					],
+					"type": "string"
+				},
+				"start_image": {
+					"description": "Start image for video generation. Use alone for image-to-video, or with end_image for start/end-to-video. Accepts public URL or Base64 data URI (data:image/png;base64,...)",
+					"type": "string"
 				}
 			},
 			"required": [
 				"duration",
 				"resolution"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"video": {
 					"description": "URL to the generated video",
-					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"type": "string"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

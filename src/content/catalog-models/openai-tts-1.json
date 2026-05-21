@@ -16,28 +16,33 @@
 			"name": "Simple Speech",
 			"description": "Generate speech with default voice and settings",
 			"input": {
-				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
-				"voice": "alloy",
 				"response_format": "mp3",
-				"speed": 1
+				"speed": 1,
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
+				"voice": "alloy"
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/simple-speech.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/simple-speech.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice: 'alloy',\n    response_format: 'mp3',\n    speed: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    response_format: 'mp3',\n    speed: 1,\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice: 'alloy',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/tts-1\",\n  \"input\": {\n    \"response_format\": \"mp3\",\n    \"speed\": 1,\n    \"text\": \"Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.\",\n    \"voice\": \"alloy\"\n  }\n}'"
 				}
 			]
 		},
@@ -45,28 +50,33 @@
 			"name": "Different Voice",
 			"description": "Use the Nova voice for a different tone",
 			"input": {
-				"text": "The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.",
-				"voice": "nova",
 				"response_format": "mp3",
-				"speed": 1
+				"speed": 1,
+				"text": "The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.",
+				"voice": "nova"
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/different-voice.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/different-voice.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    text: 'The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.',\n    voice: 'nova',\n    response_format: 'mp3',\n    speed: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    response_format: 'mp3',\n    speed: 1,\n    text: 'The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.',\n    voice: 'nova',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/tts-1\",\n  \"input\": {\n    \"response_format\": \"mp3\",\n    \"speed\": 1,\n    \"text\": \"The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.\",\n    \"voice\": \"nova\"\n  }\n}'"
 				}
 			]
 		},
@@ -74,28 +84,33 @@
 			"name": "Narration",
 			"description": "Slower narration style with the Onyx voice",
 			"input": {
-				"text": "In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.",
-				"voice": "onyx",
 				"response_format": "mp3",
-				"speed": 0.85
+				"speed": 0.85,
+				"text": "In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.",
+				"voice": "onyx"
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/narration.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/narration.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    text: 'In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.',\n    voice: 'onyx',\n    response_format: 'mp3',\n    speed: 0.85,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    response_format: 'mp3',\n    speed: 0.85,\n    text: 'In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.',\n    voice: 'onyx',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/tts-1\",\n  \"input\": {\n    \"response_format\": \"mp3\",\n    \"speed\": 0.85,\n    \"text\": \"In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.\",\n    \"voice\": \"onyx\"\n  }\n}'"
 				}
 			]
 		},
@@ -103,28 +118,33 @@
 			"name": "Echo Voice",
 			"description": "Use the Echo voice for a deeper tone",
 			"input": {
-				"text": "Welcome back to the podcast. Today we are going to talk about the future of artificial intelligence and its impact on creative work.",
-				"voice": "echo",
 				"response_format": "mp3",
-				"speed": 1
+				"speed": 1,
+				"text": "Welcome back to the podcast. Today we are going to talk about the future of artificial intelligence and its impact on creative work.",
+				"voice": "echo"
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/echo-voice.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/echo-voice.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    text: 'Welcome back to the podcast. Today we are going to talk about the future of artificial intelligence and its impact on creative work.',\n    voice: 'echo',\n    response_format: 'mp3',\n    speed: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    response_format: 'mp3',\n    speed: 1,\n    text: 'Welcome back to the podcast. Today we are going to talk about the future of artificial intelligence and its impact on creative work.',\n    voice: 'echo',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/tts-1\",\n  \"input\": {\n    \"response_format\": \"mp3\",\n    \"speed\": 1,\n    \"text\": \"Welcome back to the podcast. Today we are going to talk about the future of artificial intelligence and its impact on creative work.\",\n    \"voice\": \"echo\"\n  }\n}'"
 				}
 			]
 		},
@@ -132,58 +152,81 @@
 			"name": "Fast Playback",
 			"description": "Speed up speech for quick listening",
 			"input": {
-				"text": "This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent, user growth exceeded expectations, and infrastructure costs remain stable.",
-				"voice": "shimmer",
 				"response_format": "mp3",
-				"speed": 1.5
+				"speed": 1.5,
+				"text": "This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent, user growth exceeded expectations, and infrastructure costs remain stable.",
+				"voice": "shimmer"
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/fast-playback.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1/fast-playback.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    text: 'This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent, user growth exceeded expectations, and infrastructure costs remain stable.',\n    voice: 'shimmer',\n    response_format: 'mp3',\n    speed: 1.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1',\n  {\n    response_format: 'mp3',\n    speed: 1.5,\n    text: 'This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent, user growth exceeded expectations, and infrastructure costs remain stable.',\n    voice: 'shimmer',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/tts-1\",\n  \"input\": {\n    \"response_format\": \"mp3\",\n    \"speed\": 1.5,\n    \"text\": \"This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent, user growth exceeded expectations, and infrastructure costs remain stable.\",\n    \"voice\": \"shimmer\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://platform.openai.com/docs/guides/text-to-speech",
 	"terms": "https://openai.com/policies/",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/tts-1.png",
 	"metadata": {
 		"Voices": "alloy, echo, fable, onyx, nova, shimmer"
 	},
-	"created_at": "2026-04-13 16:45:25",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:43",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
+				"response_format": {
+					"default": "mp3",
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
+					"enum": [
+						"mp3",
+						"opus",
+						"wav",
+						"aac",
+						"flac"
+					],
+					"type": "string"
+				},
+				"speed": {
+					"default": 1,
+					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
+					"maximum": 4,
+					"minimum": 0.25,
+					"type": "number"
+				},
 				"text": {
 					"description": "The text to generate audio for. Maximum length is 4096 characters.",
-					"type": "string",
-					"maxLength": 4096
+					"maxLength": 4096,
+					"type": "string"
 				},
 				"voice": {
-					"description": "The voice to use when generating the audio. Defaults to alloy.",
 					"default": "alloy",
-					"type": "string",
+					"description": "The voice to use when generating the audio. Defaults to alloy.",
 					"enum": [
 						"alloy",
 						"echo",
@@ -191,26 +234,8 @@
 						"onyx",
 						"nova",
 						"shimmer"
-					]
-				},
-				"response_format": {
-					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
-					"default": "mp3",
-					"type": "string",
-					"enum": [
-						"mp3",
-						"opus",
-						"wav",
-						"aac",
-						"flac"
-					]
-				},
-				"speed": {
-					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
-					"default": 1,
-					"type": "number",
-					"minimum": 0.25,
-					"maximum": 4
+					],
+					"type": "string"
 				}
 			},
 			"required": [
@@ -219,11 +244,11 @@
 				"response_format",
 				"speed"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"audio": {
 					"description": "URL to the generated audio file",
@@ -233,7 +258,7 @@
 			"required": [
 				"audio"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

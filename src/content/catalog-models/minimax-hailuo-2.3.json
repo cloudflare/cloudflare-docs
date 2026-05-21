@@ -17,31 +17,36 @@
 			"name": "Simple Video",
 			"description": "Basic text-to-video with default settings",
 			"input": {
+				"duration": 6,
+				"fast_pretreatment": false,
 				"prompt": "A golden retriever playing fetch on a sandy beach at sunset",
 				"prompt_optimizer": true,
-				"fast_pretreatment": false,
-				"duration": 6,
 				"resolution": "768P"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/simple-video.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
-				"result": {
-					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/97d0c2d0-45ab-4ce8-a1f4-177401f43073/output.mp4",
-					"task_id": "388507504709991",
-					"status": "Success"
-				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
-				}
+				},
+				"result": {
+					"status": "Success",
+					"task_id": "388507504709991",
+					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/97d0c2d0-45ab-4ce8-a1f4-177401f43073/output.mp4"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    prompt_optimizer: true,\n    fast_pretreatment: false,\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"prompt\": \"A golden retriever playing fetch on a sandy beach at sunset\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		},
@@ -49,31 +54,36 @@
 			"name": "High Resolution",
 			"description": "1080P video for higher quality output",
 			"input": {
+				"duration": 6,
+				"fast_pretreatment": false,
 				"prompt": "A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots",
 				"prompt_optimizer": true,
-				"fast_pretreatment": false,
-				"duration": 6,
 				"resolution": "1080P"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/high-resolution.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
-				"result": {
-					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/1ee6a770-eb88-4b6a-86ea-61981f01ed65/output.mp4",
-					"task_id": "388510158565457",
-					"status": "Success"
-				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
-				}
+				},
+				"result": {
+					"status": "Success",
+					"task_id": "388510158565457",
+					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/1ee6a770-eb88-4b6a-86ea-61981f01ed65/output.mp4"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    prompt_optimizer: true,\n    fast_pretreatment: false,\n    duration: 6,\n    resolution: '1080P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    prompt_optimizer: true,\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"prompt\": \"A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"1080P\"\n  }\n}'"
 				}
 			]
 		},
@@ -81,32 +91,37 @@
 			"name": "Image to Video",
 			"description": "Animate a still image with I2V",
 			"input": {
-				"prompt": "Slowly zoom in with subtle parallax movement, gentle atmospheric motion",
-				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
-				"prompt_optimizer": true,
-				"fast_pretreatment": false,
 				"duration": 6,
+				"fast_pretreatment": false,
+				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
+				"prompt": "Slowly zoom in with subtle parallax movement, gentle atmospheric motion",
+				"prompt_optimizer": true,
 				"resolution": "768P"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/image-to-video.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
-				"result": {
-					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/a19c7850-6f3b-47dd-b6f1-decb592a11ff/output.mp4",
-					"task_id": "388509844320343",
-					"status": "Success"
-				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
-				}
+				},
+				"result": {
+					"status": "Success",
+					"task_id": "388509844320343",
+					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/a19c7850-6f3b-47dd-b6f1-decb592a11ff/output.mp4"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt_optimizer: true,\n    fast_pretreatment: false,\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt: 'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg\",\n    \"prompt\": \"Slowly zoom in with subtle parallax movement, gentle atmospheric motion\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		},
@@ -114,87 +129,92 @@
 			"name": "Fast Processing",
 			"description": "Enable fast pretreatment for quicker results",
 			"input": {
+				"duration": 6,
+				"fast_pretreatment": true,
 				"prompt": "Fireworks exploding over a city skyline at night, colorful reflections on water",
 				"prompt_optimizer": true,
-				"fast_pretreatment": true,
-				"duration": 6,
 				"resolution": "768P"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/fast-processing.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
-				"result": {
-					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/438b5433-5d32-4760-9564-c86da3d22aee/output.mp4",
-					"task_id": "388509805367378",
-					"status": "Success"
-				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
-				}
+				},
+				"result": {
+					"status": "Success",
+					"task_id": "388509805367378",
+					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/438b5433-5d32-4760-9564-c86da3d22aee/output.mp4"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    prompt_optimizer: true,\n    fast_pretreatment: true,\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: true,\n    prompt: 'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": true,\n    \"prompt\": \"Fireworks exploding over a city skyline at night, colorful reflections on water\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://hailuoai.com/",
 	"terms": "https://hailuoai.com/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/hailuo-2.3.png",
 	"metadata": {
 		"Resolutions": "540p, 720p, 1080p"
 	},
-	"created_at": "2026-04-13 16:46:33",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:17",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
-				"prompt": {
-					"type": "string",
-					"maxLength": 2000
+				"duration": {
+					"anyOf": [
+						{
+							"const": 6,
+							"type": "number"
+						},
+						{
+							"const": 10,
+							"type": "number"
+						}
+					],
+					"default": 6
+				},
+				"fast_pretreatment": {
+					"default": false,
+					"type": "boolean"
 				},
 				"first_frame_image": {
+					"type": "string"
+				},
+				"prompt": {
+					"maxLength": 2000,
 					"type": "string"
 				},
 				"prompt_optimizer": {
 					"default": true,
 					"type": "boolean"
 				},
-				"fast_pretreatment": {
-					"default": false,
-					"type": "boolean"
-				},
-				"duration": {
-					"default": 6,
-					"anyOf": [
-						{
-							"type": "number",
-							"const": 6
-						},
-						{
-							"type": "number",
-							"const": 10
-						}
-					]
-				},
 				"resolution": {
 					"default": "768P",
-					"type": "string",
 					"enum": [
 						"768P",
 						"1080P"
-					]
+					],
+					"type": "string"
 				}
 			},
 			"required": [
@@ -203,34 +223,34 @@
 				"duration",
 				"resolution"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
-				"video": {
-					"type": "string",
-					"format": "uri"
-				},
-				"task_id": {
-					"type": "string"
-				},
 				"status": {
-					"type": "string",
 					"enum": [
 						"Preparing",
 						"Queueing",
 						"Processing",
 						"Success",
 						"Fail"
-					]
+					],
+					"type": "string"
+				},
+				"task_id": {
+					"type": "string"
+				},
+				"video": {
+					"format": "uri",
+					"type": "string"
 				}
 			},
 			"required": [
 				"task_id"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

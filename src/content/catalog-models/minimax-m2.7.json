@@ -16,74 +16,79 @@
 			"name": "Simple Conversation",
 			"description": "Basic chat completion request",
 			"input": {
+				"max_tokens": 2048,
 				"messages": [
 					{
-						"role": "user",
-						"content": "What is the capital of France?"
+						"content": "What is the capital of France?",
+						"role": "user"
 					}
-				],
-				"max_tokens": 2048
+				]
 			},
 			"output": {
 				"text": "The capital of France is Paris."
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
-					"id": "0631ffc9d58c021caa67f029a1b2cfde",
-					"choices": [
-						{
-							"index": 0,
-							"message": {
-								"role": "assistant",
-								"content": "The capital of France is Paris.",
-								"name": "MiniMax AI",
-								"audio_content": "",
-								"reasoning_content": "The user asks: \"What is the capital of France?\" It's a simple factual question. The answer: Paris.\n\nWe should respond succinctly. Probably no need for extra context. Just answer.",
-								"reasoning_details": [
-									{
-										"type": "reasoning.text",
-										"id": "reasoning-text-1",
-										"format": "MiniMax-response-v1",
-										"index": 0,
-										"text": "The user asks: \"What is the capital of France?\" It's a simple factual question. The answer: Paris.\n\nWe should respond succinctly. Probably no need for extra context. Just answer."
-									}
-								]
-							},
-							"finish_reason": "stop"
-						}
-					],
-					"created": 1776471241,
-					"model": "MiniMax-M2.7",
-					"object": "chat.completion",
-					"usage": {
-						"total_tokens": 97,
-						"prompt_tokens": 48,
-						"completion_tokens": 49,
-						"total_characters": 0,
-						"completion_tokens_details": {
-							"reasoning_tokens": 42
-						}
-					},
-					"input_sensitive": false,
-					"output_sensitive": false,
 					"base_resp": {
 						"status_code": 0,
 						"status_msg": ""
 					},
+					"choices": [
+						{
+							"finish_reason": "stop",
+							"index": 0,
+							"message": {
+								"audio_content": "",
+								"content": "The capital of France is Paris.",
+								"name": "MiniMax AI",
+								"reasoning_content": "The user asks: \"What is the capital of France?\" It's a simple factual question. The answer: Paris.\n\nWe should respond succinctly. Probably no need for extra context. Just answer.",
+								"reasoning_details": [
+									{
+										"format": "MiniMax-response-v1",
+										"id": "reasoning-text-1",
+										"index": 0,
+										"text": "The user asks: \"What is the capital of France?\" It's a simple factual question. The answer: Paris.\n\nWe should respond succinctly. Probably no need for extra context. Just answer.",
+										"type": "reasoning.text"
+									}
+								],
+								"role": "assistant"
+							}
+						}
+					],
+					"created": 1776471241,
+					"id": "0631ffc9d58c021caa67f029a1b2cfde",
+					"input_sensitive": false,
 					"input_sensitive_type": 0,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"output_sensitive": false,
+					"output_sensitive_int": 0,
 					"output_sensitive_type": 0,
-					"output_sensitive_int": 0
+					"usage": {
+						"completion_tokens": 49,
+						"completion_tokens_details": {
+							"reasoning_tokens": 42
+						},
+						"prompt_tokens": 48,
+						"total_characters": 0,
+						"total_tokens": 97
+					}
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What is the capital of France?',\n      },\n    ],\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  { max_tokens: 2048, messages: [{ content: 'What is the capital of France?', role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m2.7\",\n  \"max_tokens\": 2048,\n  \"messages\": [\n    {\n      \"content\": \"What is the capital of France?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -91,79 +96,84 @@
 			"name": "With System Prompt",
 			"description": "Using a system prompt to guide behavior",
 			"input": {
+				"max_tokens": 2048,
 				"messages": [
 					{
-						"role": "system",
-						"content": "You are a helpful cooking assistant. Give concise recipes with metric measurements."
+						"content": "You are a helpful cooking assistant. Give concise recipes with metric measurements.",
+						"role": "system"
 					},
 					{
-						"role": "user",
-						"content": "How do I make a simple pasta aglio e olio?"
+						"content": "How do I make a simple pasta aglio e olio?",
+						"role": "user"
 					}
 				],
-				"temperature": 0.7,
-				"max_tokens": 2048
+				"temperature": 0.7
 			},
 			"output": {
 				"text": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key\u2014garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
-					"id": "0631ffc9bee6dd1636ea41aa480eeabc",
-					"choices": [
-						{
-							"index": 0,
-							"message": {
-								"role": "assistant",
-								"content": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key\u2014garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately",
-								"name": "MiniMax AI",
-								"audio_content": "",
-								"reasoning_content": "The user wants a simple pasta aglio e olio recipe. This is a classic Italian dish - pasta with garlic and oil. I'll give a concise recipe with metric measurements.",
-								"reasoning_details": [
-									{
-										"type": "reasoning.text",
-										"id": "reasoning-text-1",
-										"format": "MiniMax-response-v1",
-										"index": 0,
-										"text": "The user wants a simple pasta aglio e olio recipe. This is a classic Italian dish - pasta with garlic and oil. I'll give a concise recipe with metric measurements."
-									}
-								]
-							},
-							"finish_reason": "stop"
-						}
-					],
-					"created": 1776471241,
-					"model": "MiniMax-M2.7",
-					"object": "chat.completion",
-					"usage": {
-						"total_tokens": 259,
-						"prompt_tokens": 41,
-						"completion_tokens": 218,
-						"total_characters": 0,
-						"completion_tokens_details": {
-							"reasoning_tokens": 39
-						}
-					},
-					"input_sensitive": false,
-					"output_sensitive": false,
 					"base_resp": {
 						"status_code": 0,
 						"status_msg": ""
 					},
+					"choices": [
+						{
+							"finish_reason": "stop",
+							"index": 0,
+							"message": {
+								"audio_content": "",
+								"content": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key\u2014garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately",
+								"name": "MiniMax AI",
+								"reasoning_content": "The user wants a simple pasta aglio e olio recipe. This is a classic Italian dish - pasta with garlic and oil. I'll give a concise recipe with metric measurements.",
+								"reasoning_details": [
+									{
+										"format": "MiniMax-response-v1",
+										"id": "reasoning-text-1",
+										"index": 0,
+										"text": "The user wants a simple pasta aglio e olio recipe. This is a classic Italian dish - pasta with garlic and oil. I'll give a concise recipe with metric measurements.",
+										"type": "reasoning.text"
+									}
+								],
+								"role": "assistant"
+							}
+						}
+					],
+					"created": 1776471241,
+					"id": "0631ffc9bee6dd1636ea41aa480eeabc",
+					"input_sensitive": false,
 					"input_sensitive_type": 0,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"output_sensitive": false,
+					"output_sensitive_int": 0,
 					"output_sensitive_type": 0,
-					"output_sensitive_int": 0
+					"usage": {
+						"completion_tokens": 218,
+						"completion_tokens_details": {
+							"reasoning_tokens": 39
+						},
+						"prompt_tokens": 41,
+						"total_characters": 0,
+						"total_tokens": 259
+					}
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a helpful cooking assistant. Give concise recipes with metric measurements.',\n      },\n      {\n        role: 'user',\n        content: 'How do I make a simple pasta aglio e olio?',\n      },\n    ],\n    temperature: 0.7,\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    max_tokens: 2048,\n    messages: [\n      {\n        content:\n          'You are a helpful cooking assistant. Give concise recipes with metric measurements.',\n        role: 'system',\n      },\n      { content: 'How do I make a simple pasta aglio e olio?', role: 'user' },\n    ],\n    temperature: 0.7,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m2.7\",\n  \"max_tokens\": 2048,\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful cooking assistant. Give concise recipes with metric measurements.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"How do I make a simple pasta aglio e olio?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.7\n}'"
 				}
 			]
 		},
@@ -171,83 +181,88 @@
 			"name": "Multi-turn Conversation",
 			"description": "Continuing a conversation with context",
 			"input": {
+				"max_tokens": 2048,
 				"messages": [
 					{
-						"role": "user",
-						"content": "What are the main differences between TCP and UDP?"
+						"content": "What are the main differences between TCP and UDP?",
+						"role": "user"
 					},
 					{
-						"role": "assistant",
-						"content": "TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees."
+						"content": "TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees.",
+						"role": "assistant"
 					},
 					{
-						"role": "user",
-						"content": "When would I choose UDP over TCP?"
+						"content": "When would I choose UDP over TCP?",
+						"role": "user"
 					}
 				],
-				"temperature": 0.5,
-				"max_tokens": 2048
+				"temperature": 0.5
 			},
 			"output": {
 				"text": "Choose UDP over TCP when:\n\n1. **Real-time performance matters more than reliability**\n   - Video/audio streaming\n   - VoIP calls\n   - Online gaming\n\n2. **Broadcasting or multicasting is needed**\n   - UDP supports these natively; TCP doesn't\n\n3. **Low latency is critical**\n   - Live sports streams\n   - Financial market data feeds\n\n4. **The application handles its own reliability**\n   - QUIC protocol (used by HTTP/3)\n   - Custom protocols with built-in error handling\n\n5. **Simple request/response where loss is tolerable**\n   - DNS queries (most use UDP)\n\n6. **Message sizes are small and frequent**\n   - Connection overhead would outweigh benefits\n\n**Bottom line:** If a dropped packet is preferable to a delayed packet, UDP is likely the better choice."
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
-					"id": "0631ffcb908457a58edde3894c3dd42d",
-					"choices": [
-						{
-							"index": 0,
-							"message": {
-								"role": "assistant",
-								"content": "Choose UDP over TCP when:\n\n1. **Real-time performance matters more than reliability**\n   - Video/audio streaming\n   - VoIP calls\n   - Online gaming\n\n2. **Broadcasting or multicasting is needed**\n   - UDP supports these natively; TCP doesn't\n\n3. **Low latency is critical**\n   - Live sports streams\n   - Financial market data feeds\n\n4. **The application handles its own reliability**\n   - QUIC protocol (used by HTTP/3)\n   - Custom protocols with built-in error handling\n\n5. **Simple request/response where loss is tolerable**\n   - DNS queries (most use UDP)\n\n6. **Message sizes are small and frequent**\n   - Connection overhead would outweigh benefits\n\n**Bottom line:** If a dropped packet is preferable to a delayed packet, UDP is likely the better choice.",
-								"name": "MiniMax AI",
-								"audio_content": "",
-								"reasoning_content": "The user is asking about when to choose UDP over TCP. This is a follow-up question about networking protocols. Let me provide a comprehensive answer about use cases where UDP is preferred.\n\nKey scenarios for choosing UDP:\n1. Real-time applications where speed matters more than reliability (VoIP, video conferencing, online gaming)\n2. Broadcasting/multicasting (UDP supports these, TCP doesn't natively)\n3. Simple query-response protocols where occasional loss is acceptable (DNS queries)\n4. When you need low latency more than guaranteed delivery\n5. When the application layer handles its own reliability/ordering\n6. Small, frequent messages where connection overhead is costly\n7. Live streaming where missing a packet is better than waiting for retransmission\n\nLet me provide a clear, helpful answer.",
-								"reasoning_details": [
-									{
-										"type": "reasoning.text",
-										"id": "reasoning-text-1",
-										"format": "MiniMax-response-v1",
-										"index": 0,
-										"text": "The user is asking about when to choose UDP over TCP. This is a follow-up question about networking protocols. Let me provide a comprehensive answer about use cases where UDP is preferred.\n\nKey scenarios for choosing UDP:\n1. Real-time applications where speed matters more than reliability (VoIP, video conferencing, online gaming)\n2. Broadcasting/multicasting (UDP supports these, TCP doesn't natively)\n3. Simple query-response protocols where occasional loss is acceptable (DNS queries)\n4. When you need low latency more than guaranteed delivery\n5. When the application layer handles its own reliability/ordering\n6. Small, frequent messages where connection overhead is costly\n7. Live streaming where missing a packet is better than waiting for retransmission\n\nLet me provide a clear, helpful answer."
-									}
-								]
-							},
-							"finish_reason": "stop"
-						}
-					],
-					"created": 1776471243,
-					"model": "MiniMax-M2.7",
-					"object": "chat.completion",
-					"usage": {
-						"total_tokens": 417,
-						"prompt_tokens": 89,
-						"completion_tokens": 328,
-						"total_characters": 0,
-						"completion_tokens_details": {
-							"reasoning_tokens": 159
-						}
-					},
-					"input_sensitive": false,
-					"output_sensitive": false,
 					"base_resp": {
 						"status_code": 0,
 						"status_msg": ""
 					},
+					"choices": [
+						{
+							"finish_reason": "stop",
+							"index": 0,
+							"message": {
+								"audio_content": "",
+								"content": "Choose UDP over TCP when:\n\n1. **Real-time performance matters more than reliability**\n   - Video/audio streaming\n   - VoIP calls\n   - Online gaming\n\n2. **Broadcasting or multicasting is needed**\n   - UDP supports these natively; TCP doesn't\n\n3. **Low latency is critical**\n   - Live sports streams\n   - Financial market data feeds\n\n4. **The application handles its own reliability**\n   - QUIC protocol (used by HTTP/3)\n   - Custom protocols with built-in error handling\n\n5. **Simple request/response where loss is tolerable**\n   - DNS queries (most use UDP)\n\n6. **Message sizes are small and frequent**\n   - Connection overhead would outweigh benefits\n\n**Bottom line:** If a dropped packet is preferable to a delayed packet, UDP is likely the better choice.",
+								"name": "MiniMax AI",
+								"reasoning_content": "The user is asking about when to choose UDP over TCP. This is a follow-up question about networking protocols. Let me provide a comprehensive answer about use cases where UDP is preferred.\n\nKey scenarios for choosing UDP:\n1. Real-time applications where speed matters more than reliability (VoIP, video conferencing, online gaming)\n2. Broadcasting/multicasting (UDP supports these, TCP doesn't natively)\n3. Simple query-response protocols where occasional loss is acceptable (DNS queries)\n4. When you need low latency more than guaranteed delivery\n5. When the application layer handles its own reliability/ordering\n6. Small, frequent messages where connection overhead is costly\n7. Live streaming where missing a packet is better than waiting for retransmission\n\nLet me provide a clear, helpful answer.",
+								"reasoning_details": [
+									{
+										"format": "MiniMax-response-v1",
+										"id": "reasoning-text-1",
+										"index": 0,
+										"text": "The user is asking about when to choose UDP over TCP. This is a follow-up question about networking protocols. Let me provide a comprehensive answer about use cases where UDP is preferred.\n\nKey scenarios for choosing UDP:\n1. Real-time applications where speed matters more than reliability (VoIP, video conferencing, online gaming)\n2. Broadcasting/multicasting (UDP supports these, TCP doesn't natively)\n3. Simple query-response protocols where occasional loss is acceptable (DNS queries)\n4. When you need low latency more than guaranteed delivery\n5. When the application layer handles its own reliability/ordering\n6. Small, frequent messages where connection overhead is costly\n7. Live streaming where missing a packet is better than waiting for retransmission\n\nLet me provide a clear, helpful answer.",
+										"type": "reasoning.text"
+									}
+								],
+								"role": "assistant"
+							}
+						}
+					],
+					"created": 1776471243,
+					"id": "0631ffcb908457a58edde3894c3dd42d",
+					"input_sensitive": false,
 					"input_sensitive_type": 0,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"output_sensitive": false,
+					"output_sensitive_int": 0,
 					"output_sensitive_type": 0,
-					"output_sensitive_int": 0
+					"usage": {
+						"completion_tokens": 328,
+						"completion_tokens_details": {
+							"reasoning_tokens": 159
+						},
+						"prompt_tokens": 89,
+						"total_characters": 0,
+						"total_tokens": 417
+					}
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the main differences between TCP and UDP?',\n      },\n      {\n        role: 'assistant',\n        content:\n          'TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees.',\n      },\n      {\n        role: 'user',\n        content: 'When would I choose UDP over TCP?',\n      },\n    ],\n    temperature: 0.5,\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    max_tokens: 2048,\n    messages: [\n      { content: 'What are the main differences between TCP and UDP?', role: 'user' },\n      {\n        content:\n          'TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees.',\n        role: 'assistant',\n      },\n      { content: 'When would I choose UDP over TCP?', role: 'user' },\n    ],\n    temperature: 0.5,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m2.7\",\n  \"max_tokens\": 2048,\n  \"messages\": [\n    {\n      \"content\": \"What are the main differences between TCP and UDP?\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees.\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"When would I choose UDP over TCP?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.5\n}'"
 				}
 			]
 		},
@@ -255,130 +270,132 @@
 			"name": "Creative Writing",
 			"description": "Higher temperature for creative output",
 			"input": {
+				"max_tokens": 2048,
 				"messages": [
 					{
-						"role": "user",
-						"content": "Write a haiku about programming."
+						"content": "Write a haiku about programming.",
+						"role": "user"
 					}
 				],
-				"temperature": 0.9,
-				"max_tokens": 2048
+				"temperature": 0.9
 			},
 			"output": {
 				"text": "Code streams like soft rain  \nloops and functions cascade on  \nbugs fade into light"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
-					"id": "0631ffce4998ad3d775b54c22643a39a",
-					"choices": [
-						{
-							"index": 0,
-							"message": {
-								"role": "assistant",
-								"content": "Code streams like soft rain  \nloops and functions cascade on  \nbugs fade into light",
-								"name": "MiniMax AI",
-								"audio_content": "",
-								"reasoning_content": "The user wants a haiku about programming. The request is straightforward. We need to produce a haiku, which is a three-line poem with a 5-7-5 syllable structure. The theme: programming.\n\nWe can produce something like:\n\n\"Code streams like rain, // loops and functions cascade // bugs fade to light.\" Let's count syllables.\n\nFirst line: \"Code streams like rain,\" => \"Code\" (1), \"streams\" (1), \"like\" (1), \"rain\" (1) -> that's 4 syllables? Actually \"Code\" (1) \"streams\" (1) \"like\" (1) \"rain\" (1) = 4. Need 5 syllables. Could be \"Code streams like rain\" (4) add \"soft\"? \"Code streams like soft rain\" => \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 = 5. Good.\n\nSecond line: \"loops and functions cascade\" => loops(1) and(1) func-tions(2?) Actually \"functions\" = 2 syllables (func-tions). So loops(1), and(1), func(1) tions(1) => total 5? Wait let's count: loops (1), and (1), func (1), tions (1) = 4? Actually \"functions\" has two syllables: \"func-tions\". So loops (1) + and (1) + func (1) + tions (1) = 4. Need 7 syllables. Could be \"loops and functions cascade\" count: loops (1) and (1) functions (2) cascade (2) => total 6? Let's count: loops (1) = 1, and (1) = 2, func (1) = 3, tions (1) = 4, cas (1) = 5, cade (1) = 6. Need 7 syllables. Add \"softly\" maybe? \"loops and functions cascade softly\". Count: loops (1), and (1) =2, functions (2)=4, cascade (2)=6, softly (2)=8. That's 8. Remove something. Could be \"loops and functions cascade\" = 6. Need one more. Maybe \"loops and functions cascade on\". Count: loops(1), and(1)=2, functions(2)=4, cascade(2)=6, on(1)=7. Good.\n\nThird line: \"bugs fade to light\". Count: bugs(1) fade(1) to(1) light(1) =4, need 5 syllables. Could be \"bugs fade into light\". Count: bugs(1), fade(1), in(1), to(1), light(1) =5. Good. But \"into\" is two syllables? Actually \"in-to\" =2 syllables. So \"bugs fade into light\": bugs(1), fade(1), in(1), to(1), light(1) =5? Let's count: \"bugs\" (1), \"fade\" (1) ->2, \"in-to\" (2) ->4, \"light\" (1) ->5. That's correct.\n\nSo final haiku:\n\nCode streams like soft rain\nloops and functions cascade on\nbugs fade into light\n\nCheck each line syllable count:\n\nLine1: \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 =>5 correct.\n\nLine2: \"loops\"1 \"and\"1 \"func\"1 \"tions\"1 \"cas\"1 \"cade\"1 \"on\"1 =>7? Let's count: \"loops\" (1) \"and\" (2) \"func\" (3) \"tions\" (4) \"cas\" (5) \"cade\" (6) \"on\" (7). That's 7. Good.\n\nLine3: \"bugs\"1 \"fade\"2? Actually \"fade\" is one syllable, \"in\"1 \"to\"1 \"light\"1 = \"bugs\"(1), \"fade\"(2), \"in\"(3), \"to\"(4), \"light\"(5). Wait we need to count \"in\" and \"to\" each one syllable. So \"bugs fade into light\": bugs(1), fade(1) =2, in(1)=3, to(1)=4, light(1)=5. Actually we have \"bugs fade into light\": but we might need \"in\" and \"to\"? It's \"into\": \"in\"+\"to\"? \"into\" is two syllables: \"in\"+\"to\". So total: bugs(1) fade(2) in(3) to(4) light(5) =>5. Good.\n\nThus haiku meets format.\n\nWe can optionally include a title? The user didn't ask for title. Provide just the haiku. The style might be plain text.\n\nLet's output. Also ensure we comply with no disallowed content. It's fine.\n\nProceed.",
-								"reasoning_details": [
-									{
-										"type": "reasoning.text",
-										"id": "reasoning-text-1",
-										"format": "MiniMax-response-v1",
-										"index": 0,
-										"text": "The user wants a haiku about programming. The request is straightforward. We need to produce a haiku, which is a three-line poem with a 5-7-5 syllable structure. The theme: programming.\n\nWe can produce something like:\n\n\"Code streams like rain, // loops and functions cascade // bugs fade to light.\" Let's count syllables.\n\nFirst line: \"Code streams like rain,\" => \"Code\" (1), \"streams\" (1), \"like\" (1), \"rain\" (1) -> that's 4 syllables? Actually \"Code\" (1) \"streams\" (1) \"like\" (1) \"rain\" (1) = 4. Need 5 syllables. Could be \"Code streams like rain\" (4) add \"soft\"? \"Code streams like soft rain\" => \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 = 5. Good.\n\nSecond line: \"loops and functions cascade\" => loops(1) and(1) func-tions(2?) Actually \"functions\" = 2 syllables (func-tions). So loops(1), and(1), func(1) tions(1) => total 5? Wait let's count: loops (1), and (1), func (1), tions (1) = 4? Actually \"functions\" has two syllables: \"func-tions\". So loops (1) + and (1) + func (1) + tions (1) = 4. Need 7 syllables. Could be \"loops and functions cascade\" count: loops (1) and (1) functions (2) cascade (2) => total 6? Let's count: loops (1) = 1, and (1) = 2, func (1) = 3, tions (1) = 4, cas (1) = 5, cade (1) = 6. Need 7 syllables. Add \"softly\" maybe? \"loops and functions cascade softly\". Count: loops (1), and (1) =2, functions (2)=4, cascade (2)=6, softly (2)=8. That's 8. Remove something. Could be \"loops and functions cascade\" = 6. Need one more. Maybe \"loops and functions cascade on\". Count: loops(1), and(1)=2, functions(2)=4, cascade(2)=6, on(1)=7. Good.\n\nThird line: \"bugs fade to light\". Count: bugs(1) fade(1) to(1) light(1) =4, need 5 syllables. Could be \"bugs fade into light\". Count: bugs(1), fade(1), in(1), to(1), light(1) =5. Good. But \"into\" is two syllables? Actually \"in-to\" =2 syllables. So \"bugs fade into light\": bugs(1), fade(1), in(1), to(1), light(1) =5? Let's count: \"bugs\" (1), \"fade\" (1) ->2, \"in-to\" (2) ->4, \"light\" (1) ->5. That's correct.\n\nSo final haiku:\n\nCode streams like soft rain\nloops and functions cascade on\nbugs fade into light\n\nCheck each line syllable count:\n\nLine1: \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 =>5 correct.\n\nLine2: \"loops\"1 \"and\"1 \"func\"1 \"tions\"1 \"cas\"1 \"cade\"1 \"on\"1 =>7? Let's count: \"loops\" (1) \"and\" (2) \"func\" (3) \"tions\" (4) \"cas\" (5) \"cade\" (6) \"on\" (7). That's 7. Good.\n\nLine3: \"bugs\"1 \"fade\"2? Actually \"fade\" is one syllable, \"in\"1 \"to\"1 \"light\"1 = \"bugs\"(1), \"fade\"(2), \"in\"(3), \"to\"(4), \"light\"(5). Wait we need to count \"in\" and \"to\" each one syllable. So \"bugs fade into light\": bugs(1), fade(1) =2, in(1)=3, to(1)=4, light(1)=5. Actually we have \"bugs fade into light\": but we might need \"in\" and \"to\"? It's \"into\": \"in\"+\"to\"? \"into\" is two syllables: \"in\"+\"to\". So total: bugs(1) fade(2) in(3) to(4) light(5) =>5. Good.\n\nThus haiku meets format.\n\nWe can optionally include a title? The user didn't ask for title. Provide just the haiku. The style might be plain text.\n\nLet's output. Also ensure we comply with no disallowed content. It's fine.\n\nProceed."
-									}
-								]
-							},
-							"finish_reason": "stop"
-						}
-					],
-					"created": 1776471246,
-					"model": "MiniMax-M2.7",
-					"object": "chat.completion",
-					"usage": {
-						"total_tokens": 1124,
-						"prompt_tokens": 48,
-						"completion_tokens": 1076,
-						"total_characters": 0,
-						"completion_tokens_details": {
-							"reasoning_tokens": 1059
-						}
-					},
-					"input_sensitive": false,
-					"output_sensitive": false,
 					"base_resp": {
 						"status_code": 0,
 						"status_msg": ""
 					},
+					"choices": [
+						{
+							"finish_reason": "stop",
+							"index": 0,
+							"message": {
+								"audio_content": "",
+								"content": "Code streams like soft rain  \nloops and functions cascade on  \nbugs fade into light",
+								"name": "MiniMax AI",
+								"reasoning_content": "The user wants a haiku about programming. The request is straightforward. We need to produce a haiku, which is a three-line poem with a 5-7-5 syllable structure. The theme: programming.\n\nWe can produce something like:\n\n\"Code streams like rain, // loops and functions cascade // bugs fade to light.\" Let's count syllables.\n\nFirst line: \"Code streams like rain,\" => \"Code\" (1), \"streams\" (1), \"like\" (1), \"rain\" (1) -> that's 4 syllables? Actually \"Code\" (1) \"streams\" (1) \"like\" (1) \"rain\" (1) = 4. Need 5 syllables. Could be \"Code streams like rain\" (4) add \"soft\"? \"Code streams like soft rain\" => \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 = 5. Good.\n\nSecond line: \"loops and functions cascade\" => loops(1) and(1) func-tions(2?) Actually \"functions\" = 2 syllables (func-tions). So loops(1), and(1), func(1) tions(1) => total 5? Wait let's count: loops (1), and (1), func (1), tions (1) = 4? Actually \"functions\" has two syllables: \"func-tions\". So loops (1) + and (1) + func (1) + tions (1) = 4. Need 7 syllables. Could be \"loops and functions cascade\" count: loops (1) and (1) functions (2) cascade (2) => total 6? Let's count: loops (1) = 1, and (1) = 2, func (1) = 3, tions (1) = 4, cas (1) = 5, cade (1) = 6. Need 7 syllables. Add \"softly\" maybe? \"loops and functions cascade softly\". Count: loops (1), and (1) =2, functions (2)=4, cascade (2)=6, softly (2)=8. That's 8. Remove something. Could be \"loops and functions cascade\" = 6. Need one more. Maybe \"loops and functions cascade on\". Count: loops(1), and(1)=2, functions(2)=4, cascade(2)=6, on(1)=7. Good.\n\nThird line: \"bugs fade to light\". Count: bugs(1) fade(1) to(1) light(1) =4, need 5 syllables. Could be \"bugs fade into light\". Count: bugs(1), fade(1), in(1), to(1), light(1) =5. Good. But \"into\" is two syllables? Actually \"in-to\" =2 syllables. So \"bugs fade into light\": bugs(1), fade(1), in(1), to(1), light(1) =5? Let's count: \"bugs\" (1), \"fade\" (1) ->2, \"in-to\" (2) ->4, \"light\" (1) ->5. That's correct.\n\nSo final haiku:\n\nCode streams like soft rain\nloops and functions cascade on\nbugs fade into light\n\nCheck each line syllable count:\n\nLine1: \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 =>5 correct.\n\nLine2: \"loops\"1 \"and\"1 \"func\"1 \"tions\"1 \"cas\"1 \"cade\"1 \"on\"1 =>7? Let's count: \"loops\" (1) \"and\" (2) \"func\" (3) \"tions\" (4) \"cas\" (5) \"cade\" (6) \"on\" (7). That's 7. Good.\n\nLine3: \"bugs\"1 \"fade\"2? Actually \"fade\" is one syllable, \"in\"1 \"to\"1 \"light\"1 = \"bugs\"(1), \"fade\"(2), \"in\"(3), \"to\"(4), \"light\"(5). Wait we need to count \"in\" and \"to\" each one syllable. So \"bugs fade into light\": bugs(1), fade(1) =2, in(1)=3, to(1)=4, light(1)=5. Actually we have \"bugs fade into light\": but we might need \"in\" and \"to\"? It's \"into\": \"in\"+\"to\"? \"into\" is two syllables: \"in\"+\"to\". So total: bugs(1) fade(2) in(3) to(4) light(5) =>5. Good.\n\nThus haiku meets format.\n\nWe can optionally include a title? The user didn't ask for title. Provide just the haiku. The style might be plain text.\n\nLet's output. Also ensure we comply with no disallowed content. It's fine.\n\nProceed.",
+								"reasoning_details": [
+									{
+										"format": "MiniMax-response-v1",
+										"id": "reasoning-text-1",
+										"index": 0,
+										"text": "The user wants a haiku about programming. The request is straightforward. We need to produce a haiku, which is a three-line poem with a 5-7-5 syllable structure. The theme: programming.\n\nWe can produce something like:\n\n\"Code streams like rain, // loops and functions cascade // bugs fade to light.\" Let's count syllables.\n\nFirst line: \"Code streams like rain,\" => \"Code\" (1), \"streams\" (1), \"like\" (1), \"rain\" (1) -> that's 4 syllables? Actually \"Code\" (1) \"streams\" (1) \"like\" (1) \"rain\" (1) = 4. Need 5 syllables. Could be \"Code streams like rain\" (4) add \"soft\"? \"Code streams like soft rain\" => \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 = 5. Good.\n\nSecond line: \"loops and functions cascade\" => loops(1) and(1) func-tions(2?) Actually \"functions\" = 2 syllables (func-tions). So loops(1), and(1), func(1) tions(1) => total 5? Wait let's count: loops (1), and (1), func (1), tions (1) = 4? Actually \"functions\" has two syllables: \"func-tions\". So loops (1) + and (1) + func (1) + tions (1) = 4. Need 7 syllables. Could be \"loops and functions cascade\" count: loops (1) and (1) functions (2) cascade (2) => total 6? Let's count: loops (1) = 1, and (1) = 2, func (1) = 3, tions (1) = 4, cas (1) = 5, cade (1) = 6. Need 7 syllables. Add \"softly\" maybe? \"loops and functions cascade softly\". Count: loops (1), and (1) =2, functions (2)=4, cascade (2)=6, softly (2)=8. That's 8. Remove something. Could be \"loops and functions cascade\" = 6. Need one more. Maybe \"loops and functions cascade on\". Count: loops(1), and(1)=2, functions(2)=4, cascade(2)=6, on(1)=7. Good.\n\nThird line: \"bugs fade to light\". Count: bugs(1) fade(1) to(1) light(1) =4, need 5 syllables. Could be \"bugs fade into light\". Count: bugs(1), fade(1), in(1), to(1), light(1) =5. Good. But \"into\" is two syllables? Actually \"in-to\" =2 syllables. So \"bugs fade into light\": bugs(1), fade(1), in(1), to(1), light(1) =5? Let's count: \"bugs\" (1), \"fade\" (1) ->2, \"in-to\" (2) ->4, \"light\" (1) ->5. That's correct.\n\nSo final haiku:\n\nCode streams like soft rain\nloops and functions cascade on\nbugs fade into light\n\nCheck each line syllable count:\n\nLine1: \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 =>5 correct.\n\nLine2: \"loops\"1 \"and\"1 \"func\"1 \"tions\"1 \"cas\"1 \"cade\"1 \"on\"1 =>7? Let's count: \"loops\" (1) \"and\" (2) \"func\" (3) \"tions\" (4) \"cas\" (5) \"cade\" (6) \"on\" (7). That's 7. Good.\n\nLine3: \"bugs\"1 \"fade\"2? Actually \"fade\" is one syllable, \"in\"1 \"to\"1 \"light\"1 = \"bugs\"(1), \"fade\"(2), \"in\"(3), \"to\"(4), \"light\"(5). Wait we need to count \"in\" and \"to\" each one syllable. So \"bugs fade into light\": bugs(1), fade(1) =2, in(1)=3, to(1)=4, light(1)=5. Actually we have \"bugs fade into light\": but we might need \"in\" and \"to\"? It's \"into\": \"in\"+\"to\"? \"into\" is two syllables: \"in\"+\"to\". So total: bugs(1) fade(2) in(3) to(4) light(5) =>5. Good.\n\nThus haiku meets format.\n\nWe can optionally include a title? The user didn't ask for title. Provide just the haiku. The style might be plain text.\n\nLet's output. Also ensure we comply with no disallowed content. It's fine.\n\nProceed.",
+										"type": "reasoning.text"
+									}
+								],
+								"role": "assistant"
+							}
+						}
+					],
+					"created": 1776471246,
+					"id": "0631ffce4998ad3d775b54c22643a39a",
+					"input_sensitive": false,
 					"input_sensitive_type": 0,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"output_sensitive": false,
+					"output_sensitive_int": 0,
 					"output_sensitive_type": 0,
-					"output_sensitive_int": 0
+					"usage": {
+						"completion_tokens": 1076,
+						"completion_tokens_details": {
+							"reasoning_tokens": 1059
+						},
+						"prompt_tokens": 48,
+						"total_characters": 0,
+						"total_tokens": 1124
+					}
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Write a haiku about programming.',\n      },\n    ],\n    temperature: 0.9,\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    max_tokens: 2048,\n    messages: [{ content: 'Write a haiku about programming.', role: 'user' }],\n    temperature: 0.9,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m2.7\",\n  \"max_tokens\": 2048,\n  \"messages\": [\n    {\n      \"content\": \"Write a haiku about programming.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.9\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://www.minimaxi.com/",
 	"terms": "https://www.minimaxi.com/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/m2.7.png",
 	"metadata": {
 		"Architecture": "Transformer"
 	},
-	"created_at": "2026-04-13 16:46:35",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:19",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
+				"mask_sensitive_info": {
+					"type": "boolean"
+				},
+				"max_completion_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"max_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
 				"messages": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": {},
 						"properties": {
-							"role": {
-								"type": "string",
-								"enum": [
-									"system",
-									"user",
-									"assistant",
-									"tool"
-								]
-							},
-							"name": {
-								"type": "string"
-							},
 							"content": {
 								"anyOf": [
 									{
 										"type": "string"
 									},
 									{
-										"type": "array",
 										"items": {
 											"anyOf": [
 												{
-													"type": "object",
+													"additionalProperties": false,
 													"properties": {
-														"type": {
-															"type": "string",
-															"const": "text"
-														},
 														"text": {
+															"type": "string"
+														},
+														"type": {
+															"const": "text",
 															"type": "string"
 														}
 													},
@@ -386,17 +403,13 @@
 														"type",
 														"text"
 													],
-													"additionalProperties": false
+													"type": "object"
 												},
 												{
-													"type": "object",
+													"additionalProperties": false,
 													"properties": {
-														"type": {
-															"type": "string",
-															"const": "image_url"
-														},
 														"image_url": {
-															"type": "object",
+															"additionalProperties": false,
 															"properties": {
 																"url": {
 																	"type": "string"
@@ -405,39 +418,48 @@
 															"required": [
 																"url"
 															],
-															"additionalProperties": false
+															"type": "object"
+														},
+														"type": {
+															"const": "image_url",
+															"type": "string"
 														}
 													},
 													"required": [
 														"type",
 														"image_url"
 													],
-													"additionalProperties": false
+													"type": "object"
 												}
 											]
-										}
+										},
+										"type": "array"
 									}
 								]
 							},
+							"name": {
+								"type": "string"
+							},
+							"role": {
+								"enum": [
+									"system",
+									"user",
+									"assistant",
+									"tool"
+								],
+								"type": "string"
+							},
 							"tool_calls": {
-								"type": "array",
 								"items": {
-									"type": "object",
+									"additionalProperties": false,
 									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"type": {
-											"type": "string",
-											"const": "function"
-										},
 										"function": {
-											"type": "object",
+											"additionalProperties": false,
 											"properties": {
-												"name": {
+												"arguments": {
 													"type": "string"
 												},
-												"arguments": {
+												"name": {
 													"type": "string"
 												}
 											},
@@ -445,7 +467,14 @@
 												"name",
 												"arguments"
 											],
-											"additionalProperties": false
+											"type": "object"
+										},
+										"id": {
+											"type": "string"
+										},
+										"type": {
+											"const": "function",
+											"type": "string"
 										}
 									},
 									"required": [
@@ -453,63 +482,100 @@
 										"type",
 										"function"
 									],
-									"additionalProperties": false
-								}
+									"type": "object"
+								},
+								"type": "array"
 							}
 						},
 						"required": [
 							"role",
 							"content"
 						],
-						"additionalProperties": {}
-					}
+						"type": "object"
+					},
+					"type": "array"
 				},
-				"temperature": {
-					"type": "number",
-					"minimum": 0,
-					"maximum": 1
-				},
-				"max_tokens": {
-					"type": "number",
-					"exclusiveMinimum": 0
-				},
-				"max_completion_tokens": {
-					"type": "number",
-					"exclusiveMinimum": 0
-				},
-				"top_p": {
-					"type": "number",
-					"minimum": 0,
-					"maximum": 1
+				"response_format": {
+					"additionalProperties": false,
+					"properties": {
+						"json_schema": {
+							"additionalProperties": false,
+							"properties": {
+								"description": {
+									"type": "string"
+								},
+								"name": {
+									"maxLength": 64,
+									"type": "string"
+								},
+								"schema": {
+									"additionalProperties": false,
+									"properties": {
+										"properties": {},
+										"type": {
+											"const": "object",
+											"type": "string"
+										}
+									},
+									"required": [
+										"type",
+										"properties"
+									],
+									"type": "object"
+								}
+							},
+							"required": [
+								"name",
+								"schema"
+							],
+							"type": "object"
+						},
+						"type": {
+							"const": "json_schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"type",
+						"json_schema"
+					],
+					"type": "object"
 				},
 				"stream": {
 					"type": "boolean"
 				},
 				"stream_options": {
-					"type": "object",
+					"additionalProperties": false,
 					"properties": {
 						"include_usage": {
 							"type": "boolean"
 						}
 					},
-					"additionalProperties": false
+					"type": "object"
+				},
+				"temperature": {
+					"maximum": 1,
+					"minimum": 0,
+					"type": "number"
+				},
+				"tool_choice": {
+					"enum": [
+						"none",
+						"auto"
+					],
+					"type": "string"
 				},
 				"tools": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": false,
 						"properties": {
-							"type": {
-								"type": "string",
-								"const": "function"
-							},
 							"function": {
-								"type": "object",
+								"additionalProperties": false,
 								"properties": {
-									"name": {
+									"description": {
 										"type": "string"
 									},
-									"description": {
+									"name": {
 										"type": "string"
 									},
 									"parameters": {}
@@ -519,205 +585,38 @@
 									"description",
 									"parameters"
 								],
-								"additionalProperties": false
+								"type": "object"
+							},
+							"type": {
+								"const": "function",
+								"type": "string"
 							}
 						},
 						"required": [
 							"type",
 							"function"
 						],
-						"additionalProperties": false
-					}
-				},
-				"tool_choice": {
-					"type": "string",
-					"enum": [
-						"none",
-						"auto"
-					]
-				},
-				"response_format": {
-					"type": "object",
-					"properties": {
-						"type": {
-							"type": "string",
-							"const": "json_schema"
-						},
-						"json_schema": {
-							"type": "object",
-							"properties": {
-								"name": {
-									"type": "string",
-									"maxLength": 64
-								},
-								"description": {
-									"type": "string"
-								},
-								"schema": {
-									"type": "object",
-									"properties": {
-										"type": {
-											"type": "string",
-											"const": "object"
-										},
-										"properties": {}
-									},
-									"required": [
-										"type",
-										"properties"
-									],
-									"additionalProperties": false
-								}
-							},
-							"required": [
-								"name",
-								"schema"
-							],
-							"additionalProperties": false
-						}
+						"type": "object"
 					},
-					"required": [
-						"type",
-						"json_schema"
-					],
-					"additionalProperties": false
+					"type": "array"
 				},
-				"mask_sensitive_info": {
-					"type": "boolean"
+				"top_p": {
+					"maximum": 1,
+					"minimum": 0,
+					"type": "number"
 				}
 			},
 			"required": [
 				"messages"
 			],
-			"additionalProperties": {}
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": {},
 			"properties": {
-				"id": {
-					"type": "string"
-				},
-				"choices": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"index": {
-								"type": "number"
-							},
-							"message": {
-								"type": "object",
-								"properties": {
-									"role": {
-										"type": "string",
-										"const": "assistant"
-									},
-									"content": {
-										"type": "string"
-									},
-									"tool_calls": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"type": {
-													"type": "string",
-													"const": "function"
-												},
-												"function": {
-													"type": "object",
-													"properties": {
-														"name": {
-															"type": "string"
-														},
-														"arguments": {
-															"type": "string"
-														}
-													},
-													"required": [
-														"name",
-														"arguments"
-													],
-													"additionalProperties": false
-												}
-											},
-											"required": [
-												"id",
-												"type",
-												"function"
-											],
-											"additionalProperties": false
-										}
-									}
-								},
-								"required": [
-									"role",
-									"content"
-								],
-								"additionalProperties": {}
-							},
-							"finish_reason": {
-								"type": "string",
-								"enum": [
-									"stop",
-									"length",
-									"tool_calls"
-								]
-							}
-						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
-						"additionalProperties": {}
-					}
-				},
-				"created": {
-					"type": "number"
-				},
-				"model": {
-					"type": "string"
-				},
-				"object": {
-					"type": "string",
-					"enum": [
-						"chat.completion",
-						"chat.completion.chunk"
-					]
-				},
-				"usage": {
-					"type": "object",
-					"properties": {
-						"total_tokens": {
-							"type": "number"
-						},
-						"prompt_tokens": {
-							"type": "number"
-						},
-						"completion_tokens": {
-							"type": "number"
-						}
-					},
-					"required": [
-						"total_tokens",
-						"prompt_tokens",
-						"completion_tokens"
-					],
-					"additionalProperties": {}
-				},
-				"input_sensitive": {
-					"type": "boolean"
-				},
-				"output_sensitive": {
-					"type": "boolean"
-				},
 				"base_resp": {
-					"type": "object",
+					"additionalProperties": false,
 					"properties": {
 						"status_code": {
 							"type": "number"
@@ -730,7 +629,128 @@
 						"status_code",
 						"status_msg"
 					],
-					"additionalProperties": false
+					"type": "object"
+				},
+				"choices": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"finish_reason": {
+								"enum": [
+									"stop",
+									"length",
+									"tool_calls"
+								],
+								"type": "string"
+							},
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"additionalProperties": {},
+								"properties": {
+									"content": {
+										"type": "string"
+									},
+									"role": {
+										"const": "assistant",
+										"type": "string"
+									},
+									"tool_calls": {
+										"items": {
+											"additionalProperties": false,
+											"properties": {
+												"function": {
+													"additionalProperties": false,
+													"properties": {
+														"arguments": {
+															"type": "string"
+														},
+														"name": {
+															"type": "string"
+														}
+													},
+													"required": [
+														"name",
+														"arguments"
+													],
+													"type": "object"
+												},
+												"id": {
+													"type": "string"
+												},
+												"type": {
+													"const": "function",
+													"type": "string"
+												}
+											},
+											"required": [
+												"id",
+												"type",
+												"function"
+											],
+											"type": "object"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"type": "object"
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"created": {
+					"type": "number"
+				},
+				"id": {
+					"type": "string"
+				},
+				"input_sensitive": {
+					"type": "boolean"
+				},
+				"model": {
+					"type": "string"
+				},
+				"object": {
+					"enum": [
+						"chat.completion",
+						"chat.completion.chunk"
+					],
+					"type": "string"
+				},
+				"output_sensitive": {
+					"type": "boolean"
+				},
+				"usage": {
+					"additionalProperties": {},
+					"properties": {
+						"completion_tokens": {
+							"type": "number"
+						},
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"total_tokens",
+						"prompt_tokens",
+						"completion_tokens"
+					],
+					"type": "object"
 				}
 			},
 			"required": [
@@ -740,7 +760,7 @@
 				"model",
 				"object"
 			],
-			"additionalProperties": {}
+			"type": "object"
 		}
 	}
 }

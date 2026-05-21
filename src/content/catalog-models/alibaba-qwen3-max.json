@@ -20,8 +20,8 @@
 			"input": {
 				"messages": [
 					{
-						"role": "user",
-						"content": "What are the three laws of thermodynamics?"
+						"content": "What are the three laws of thermodynamics?",
+						"role": "user"
 					}
 				]
 			},
@@ -29,39 +29,44 @@
 				"text": "The three laws of thermodynamics are fundamental principles that describe the behavior of energy and entropy in physical systems:\n\n1. **Zeroth Law of Thermodynamics**:  \n   *If two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other.*  \n   This law establishes the concept of temperature and justifies the use of thermometers.\n\n2. **First Law of Thermodynamics** (Law of Energy Conservation):  \n   *Energy cannot be created or destroyed in an isolated system; it can only change forms.*  \n   Mathematically, this is often expressed as:  \n   \\[\n   \\Delta U = Q - W\n   \\]  \n   where \\(\\Delta U\\) is the change in internal energy of the system, \\(Q\\) is the heat added to the system, and \\(W\\) is the work done by the system.\n\n3. **Second Law of Thermodynamics**:  \n   *The total entropy of an isolated system can never decrease over time; it either increases or remains constant in ideal reversible processes.*  \n   This law introduces the concept of irreversibility and explains why certain processes occur spontaneously in one direction (e.g., heat flows from hot to cold).\n\nThere is also a **Third Law of Thermodynamics**, which is sometimes included as the fourth in historical contexts but is now standardly recognized as the third:\n\n4. **Third Law of Thermodynamics**:  \n   *As the temperature of a system approaches absolute zero, the entropy of the system approaches a constant minimum value.*  \n   In practical terms, it implies that absolute zero (0 K) cannot be reached in a finite number of steps.\n\nSo, while commonly referred to as \u201cthree laws,\u201d modern physics includes **four**\u2014with the Zeroth Law added later for logical completeness, even though it was formulated after the first three."
 			},
 			"raw_response": {
-				"id": "chatcmpl-1cc68967-fae9-9f2f-aa72-ec0674038c0a",
-				"object": "chat.completion",
-				"created": 1776471062,
-				"model": "qwen3-max",
 				"choices": [
 					{
-						"index": 0,
-						"message": {
-							"role": "assistant",
-							"content": "The three laws of thermodynamics are fundamental principles that describe the behavior of energy and entropy in physical systems:\n\n1. **Zeroth Law of Thermodynamics**:  \n   *If two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other.*  \n   This law establishes the concept of temperature and justifies the use of thermometers.\n\n2. **First Law of Thermodynamics** (Law of Energy Conservation):  \n   *Energy cannot be created or destroyed in an isolated system; it can only change forms.*  \n   Mathematically, this is often expressed as:  \n   \\[\n   \\Delta U = Q - W\n   \\]  \n   where \\(\\Delta U\\) is the change in internal energy of the system, \\(Q\\) is the heat added to the system, and \\(W\\) is the work done by the system.\n\n3. **Second Law of Thermodynamics**:  \n   *The total entropy of an isolated system can never decrease over time; it either increases or remains constant in ideal reversible processes.*  \n   This law introduces the concept of irreversibility and explains why certain processes occur spontaneously in one direction (e.g., heat flows from hot to cold).\n\nThere is also a **Third Law of Thermodynamics**, which is sometimes included as the fourth in historical contexts but is now standardly recognized as the third:\n\n4. **Third Law of Thermodynamics**:  \n   *As the temperature of a system approaches absolute zero, the entropy of the system approaches a constant minimum value.*  \n   In practical terms, it implies that absolute zero (0 K) cannot be reached in a finite number of steps.\n\nSo, while commonly referred to as \u201cthree laws,\u201d modern physics includes **four**\u2014with the Zeroth Law added later for logical completeness, even though it was formulated after the first three."
-						},
 						"finish_reason": "stop",
-						"logprobs": null
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "The three laws of thermodynamics are fundamental principles that describe the behavior of energy and entropy in physical systems:\n\n1. **Zeroth Law of Thermodynamics**:  \n   *If two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other.*  \n   This law establishes the concept of temperature and justifies the use of thermometers.\n\n2. **First Law of Thermodynamics** (Law of Energy Conservation):  \n   *Energy cannot be created or destroyed in an isolated system; it can only change forms.*  \n   Mathematically, this is often expressed as:  \n   \\[\n   \\Delta U = Q - W\n   \\]  \n   where \\(\\Delta U\\) is the change in internal energy of the system, \\(Q\\) is the heat added to the system, and \\(W\\) is the work done by the system.\n\n3. **Second Law of Thermodynamics**:  \n   *The total entropy of an isolated system can never decrease over time; it either increases or remains constant in ideal reversible processes.*  \n   This law introduces the concept of irreversibility and explains why certain processes occur spontaneously in one direction (e.g., heat flows from hot to cold).\n\nThere is also a **Third Law of Thermodynamics**, which is sometimes included as the fourth in historical contexts but is now standardly recognized as the third:\n\n4. **Third Law of Thermodynamics**:  \n   *As the temperature of a system approaches absolute zero, the entropy of the system approaches a constant minimum value.*  \n   In practical terms, it implies that absolute zero (0 K) cannot be reached in a finite number of steps.\n\nSo, while commonly referred to as \u201cthree laws,\u201d modern physics includes **four**\u2014with the Zeroth Law added later for logical completeness, even though it was formulated after the first three.",
+							"role": "assistant"
+						}
 					}
 				],
-				"usage": {
-					"prompt_tokens": 17,
-					"completion_tokens": 375,
-					"total_tokens": 392,
-					"prompt_tokens_details": {
-						"cached_tokens": 0
-					}
-				},
-				"system_fingerprint": null,
+				"created": 1776471062,
 				"gatewayMetadata": {
 					"keySource": "Unified"
+				},
+				"id": "chatcmpl-1cc68967-fae9-9f2f-aa72-ec0674038c0a",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 375,
+					"prompt_tokens": 17,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 392
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  { messages: [{ content: 'What are the three laws of thermodynamics?', role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"What are the three laws of thermodynamics?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -71,12 +76,12 @@
 			"input": {
 				"messages": [
 					{
-						"role": "system",
-						"content": "You are a helpful coding assistant specializing in Python."
+						"content": "You are a helpful coding assistant specializing in Python.",
+						"role": "system"
 					},
 					{
-						"role": "user",
-						"content": "How do I read a JSON file in Python?"
+						"content": "How do I read a JSON file in Python?",
+						"role": "user"
 					}
 				]
 			},
@@ -84,39 +89,44 @@
 				"text": "To read a JSON file in Python, you can use the built-in `json` module. Here's the basic approach:\n\n## Basic Example\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now you can work with your data\nprint(data)\n```\n\n## Step-by-step breakdown:\n\n1. **Import the json module**: `import json`\n2. **Open the file**: Use `open()` with mode `'r'` (read mode)\n3. **Parse the JSON**: Use `json.load()` to parse the file content into Python objects\n4. **Use context manager**: The `with` statement automatically closes the file when done\n\n## Common Data Types After Loading\n\nJSON data gets converted to these Python types:\n- JSON object \u2192 Python dictionary (`dict`)\n- JSON array \u2192 Python list (`list`)\n- JSON string \u2192 Python string (`str`)\n- JSON number \u2192 Python int or float\n- JSON boolean \u2192 Python `True` or `False`\n- JSON null \u2192 Python `None`\n\n## Example with Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(\"Data loaded successfully!\")\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON from a String\n\nIf you have JSON as a string (not a file), use `json.loads()` instead:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\nprint(data)  # {'name': 'Alice', 'age': 30}\n```\n\n## Specifying Encoding (if needed)\n\nFor files with non-UTF-8 encoding:\n\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\nThe `json.load()` function handles UTF-8 by default, so you usually don't need to specify encoding unless you're dealing with a different character encoding."
 			},
 			"raw_response": {
-				"id": "chatcmpl-ba93d05e-b778-9fe4-97f6-a2b16726e379",
-				"object": "chat.completion",
-				"created": 1776471064,
-				"model": "qwen3-max",
 				"choices": [
 					{
-						"index": 0,
-						"message": {
-							"role": "assistant",
-							"content": "To read a JSON file in Python, you can use the built-in `json` module. Here's the basic approach:\n\n## Basic Example\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now you can work with your data\nprint(data)\n```\n\n## Step-by-step breakdown:\n\n1. **Import the json module**: `import json`\n2. **Open the file**: Use `open()` with mode `'r'` (read mode)\n3. **Parse the JSON**: Use `json.load()` to parse the file content into Python objects\n4. **Use context manager**: The `with` statement automatically closes the file when done\n\n## Common Data Types After Loading\n\nJSON data gets converted to these Python types:\n- JSON object \u2192 Python dictionary (`dict`)\n- JSON array \u2192 Python list (`list`)\n- JSON string \u2192 Python string (`str`)\n- JSON number \u2192 Python int or float\n- JSON boolean \u2192 Python `True` or `False`\n- JSON null \u2192 Python `None`\n\n## Example with Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(\"Data loaded successfully!\")\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON from a String\n\nIf you have JSON as a string (not a file), use `json.loads()` instead:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\nprint(data)  # {'name': 'Alice', 'age': 30}\n```\n\n## Specifying Encoding (if needed)\n\nFor files with non-UTF-8 encoding:\n\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\nThe `json.load()` function handles UTF-8 by default, so you usually don't need to specify encoding unless you're dealing with a different character encoding."
-						},
 						"finish_reason": "stop",
-						"logprobs": null
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "To read a JSON file in Python, you can use the built-in `json` module. Here's the basic approach:\n\n## Basic Example\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now you can work with your data\nprint(data)\n```\n\n## Step-by-step breakdown:\n\n1. **Import the json module**: `import json`\n2. **Open the file**: Use `open()` with mode `'r'` (read mode)\n3. **Parse the JSON**: Use `json.load()` to parse the file content into Python objects\n4. **Use context manager**: The `with` statement automatically closes the file when done\n\n## Common Data Types After Loading\n\nJSON data gets converted to these Python types:\n- JSON object \u2192 Python dictionary (`dict`)\n- JSON array \u2192 Python list (`list`)\n- JSON string \u2192 Python string (`str`)\n- JSON number \u2192 Python int or float\n- JSON boolean \u2192 Python `True` or `False`\n- JSON null \u2192 Python `None`\n\n## Example with Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(\"Data loaded successfully!\")\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON from a String\n\nIf you have JSON as a string (not a file), use `json.loads()` instead:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\nprint(data)  # {'name': 'Alice', 'age': 30}\n```\n\n## Specifying Encoding (if needed)\n\nFor files with non-UTF-8 encoding:\n\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\nThe `json.load()` function handles UTF-8 by default, so you usually don't need to specify encoding unless you're dealing with a different character encoding.",
+							"role": "assistant"
+						}
 					}
 				],
-				"usage": {
-					"prompt_tokens": 33,
-					"completion_tokens": 449,
-					"total_tokens": 482,
-					"prompt_tokens_details": {
-						"cached_tokens": 0
-					}
-				},
-				"system_fingerprint": null,
+				"created": 1776471064,
 				"gatewayMetadata": {
 					"keySource": "Unified"
+				},
+				"id": "chatcmpl-ba93d05e-b778-9fe4-97f6-a2b16726e379",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 449,
+					"prompt_tokens": 33,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 482
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [\n      { content: 'You are a helpful coding assistant specializing in Python.', role: 'system' },\n      { content: 'How do I read a JSON file in Python?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful coding assistant specializing in Python.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -124,59 +134,64 @@
 			"name": "Multi-turn Conversation",
 			"description": "Continuing a conversation with context",
 			"input": {
+				"max_completion_tokens": 8192,
 				"messages": [
 					{
-						"role": "user",
-						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+						"content": "I need help planning a road trip from San Francisco to Los Angeles.",
+						"role": "user"
 					},
 					{
-						"role": "assistant",
-						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?",
+						"role": "assistant"
 					},
 					{
-						"role": "user",
-						"content": "Yes, what are some good places to stop?"
+						"content": "Yes, what are some good places to stop?",
+						"role": "user"
 					}
-				],
-				"max_completion_tokens": 2048
+				]
 			},
 			"output": {
 				"text": "Great! The classic route from San Francisco to Los Angeles along the California coast\u2014especially **Highway 1 (Pacific Coast Highway)**\u2014is one of the most scenic drives in the world. While it takes longer than the inland I-5 freeway (about 8\u201310 hours without stops), it\u2019s absolutely worth it for the views and experiences. Here are some top places to stop, roughly ordered from north to south:\n\n### \ud83c\udf09 **Half Moon Bay**  \n- Just 30 miles south of SF  \n- Charming coastal town with beaches, tide pools, and great seafood  \n- Stop at **Pillar Point Harbor** or walk the **Coastal Trail**\n\n### \ud83c\udfde\ufe0f **Santa Cruz**  \n- Famous for its beach boardwalk (oldest in California!), surfing, and laid-back vibe  \n- Visit the **Santa Cruz Beach Boardwalk** or explore **Natural Bridges State Beach**\n\n### \ud83d\udc2c **Monterey & Carmel-by-the-Sea**  \n- **Monterey**: Don\u2019t miss the world-class **Monterey Bay Aquarium** and Cannery Row  \n- **Carmel**: Quaint village with art galleries, fairytale cottages, and **Carmel Beach**  \n- Optional detour: **17-Mile Drive** through Pebble Beach (toll road with stunning ocean views)\n\n### \ud83c\udf32 **Big Sur**  \n- The crown jewel of the PCH! Dramatic cliffs, redwoods, and ocean vistas  \n- Must-stops:  \n  - **Bixby Creek Bridge** (iconic photo spot)  \n  - **McWay Falls** at Julia Pfeiffer Burns State Park (80-ft waterfall onto a beach!)  \n  - **Nepenthe** restaurant for lunch with panoramic views  \n\n> \u26a0\ufe0f Note: Check road conditions before heading through Big Sur\u2014landslides occasionally close Highway 1.\n\n### \ud83c\udf77 **San Simeon**  \n- Home of **Hearst Castle**, the opulent estate of newspaper magnate William Randolph Hearst  \n- Also great for spotting **elephant seals** at the **Piedras Blancas Rookery** just north of town\n\n### \ud83c\udfd6\ufe0f **Cambria & Morro Bay**  \n- **Cambria**: Cozy seaside village with unique shops and forest-meets-ocean scenery  \n- **Morro Bay**: Known for **Morro Rock**, kayaking, and fresh oysters\n\n### \ud83c\udf34 **San Luis Obispo (SLO)**  \n- A relaxed college town with a historic mission, farmers\u2019 market (Thursday nights!), and great food  \n- Nearby: **Bubblegum Alley** and **Madonna Inn** (quirky, Instagrammable hotel)\n\n### \ud83c\udfc4 **Pismo Beach**  \n- Classic Central Coast surf town with dunes and a long pier  \n- Try clam chowder\u2014it\u2019s the \u201cClam Capital of the World\u201d!\n\n### \ud83c\udf3a **Santa Barbara**  \n- \u201cThe American Riviera\u201d with Spanish architecture, palm-lined streets, and wine tasting  \n- Stroll **Stearns Wharf**, visit the **Mission Santa Barbara**, or relax on **East Beach**\n\n### \ud83c\udfd9\ufe0f **Final Stretch to Los Angeles**  \n- From Santa Barbara, you can stay on Highway 1 through **Malibu** (stop at **El Matador Beach** or **Point Dume**)  \n- Or hop on US-101 for a quicker arrival into LA\n\n---\n\n### Tips:\n- **Allow 2\u20133 days** if you want to enjoy the stops without rushing  \n- **Book lodging in advance**, especially in Big Sur, Carmel, or Santa Barbara  \n- **Fill your gas tank**\u2014some stretches (like Big Sur) have limited services  \n- **Pack layers**\u2014coastal weather changes fast, even in summer!\n\nWould you like help planning an itinerary based on how many days you have?"
 			},
 			"raw_response": {
-				"id": "chatcmpl-8ebaff89-c5a7-9010-b5a4-84e5f446841a",
-				"object": "chat.completion",
-				"created": 1776471088,
-				"model": "qwen3-max",
 				"choices": [
 					{
-						"index": 0,
-						"message": {
-							"role": "assistant",
-							"content": "Great! The classic route from San Francisco to Los Angeles along the California coast\u2014especially **Highway 1 (Pacific Coast Highway)**\u2014is one of the most scenic drives in the world. While it takes longer than the inland I-5 freeway (about 8\u201310 hours without stops), it\u2019s absolutely worth it for the views and experiences. Here are some top places to stop, roughly ordered from north to south:\n\n### \ud83c\udf09 **Half Moon Bay**  \n- Just 30 miles south of SF  \n- Charming coastal town with beaches, tide pools, and great seafood  \n- Stop at **Pillar Point Harbor** or walk the **Coastal Trail**\n\n### \ud83c\udfde\ufe0f **Santa Cruz**  \n- Famous for its beach boardwalk (oldest in California!), surfing, and laid-back vibe  \n- Visit the **Santa Cruz Beach Boardwalk** or explore **Natural Bridges State Beach**\n\n### \ud83d\udc2c **Monterey & Carmel-by-the-Sea**  \n- **Monterey**: Don\u2019t miss the world-class **Monterey Bay Aquarium** and Cannery Row  \n- **Carmel**: Quaint village with art galleries, fairytale cottages, and **Carmel Beach**  \n- Optional detour: **17-Mile Drive** through Pebble Beach (toll road with stunning ocean views)\n\n### \ud83c\udf32 **Big Sur**  \n- The crown jewel of the PCH! Dramatic cliffs, redwoods, and ocean vistas  \n- Must-stops:  \n  - **Bixby Creek Bridge** (iconic photo spot)  \n  - **McWay Falls** at Julia Pfeiffer Burns State Park (80-ft waterfall onto a beach!)  \n  - **Nepenthe** restaurant for lunch with panoramic views  \n\n> \u26a0\ufe0f Note: Check road conditions before heading through Big Sur\u2014landslides occasionally close Highway 1.\n\n### \ud83c\udf77 **San Simeon**  \n- Home of **Hearst Castle**, the opulent estate of newspaper magnate William Randolph Hearst  \n- Also great for spotting **elephant seals** at the **Piedras Blancas Rookery** just north of town\n\n### \ud83c\udfd6\ufe0f **Cambria & Morro Bay**  \n- **Cambria**: Cozy seaside village with unique shops and forest-meets-ocean scenery  \n- **Morro Bay**: Known for **Morro Rock**, kayaking, and fresh oysters\n\n### \ud83c\udf34 **San Luis Obispo (SLO)**  \n- A relaxed college town with a historic mission, farmers\u2019 market (Thursday nights!), and great food  \n- Nearby: **Bubblegum Alley** and **Madonna Inn** (quirky, Instagrammable hotel)\n\n### \ud83c\udfc4 **Pismo Beach**  \n- Classic Central Coast surf town with dunes and a long pier  \n- Try clam chowder\u2014it\u2019s the \u201cClam Capital of the World\u201d!\n\n### \ud83c\udf3a **Santa Barbara**  \n- \u201cThe American Riviera\u201d with Spanish architecture, palm-lined streets, and wine tasting  \n- Stroll **Stearns Wharf**, visit the **Mission Santa Barbara**, or relax on **East Beach**\n\n### \ud83c\udfd9\ufe0f **Final Stretch to Los Angeles**  \n- From Santa Barbara, you can stay on Highway 1 through **Malibu** (stop at **El Matador Beach** or **Point Dume**)  \n- Or hop on US-101 for a quicker arrival into LA\n\n---\n\n### Tips:\n- **Allow 2\u20133 days** if you want to enjoy the stops without rushing  \n- **Book lodging in advance**, especially in Big Sur, Carmel, or Santa Barbara  \n- **Fill your gas tank**\u2014some stretches (like Big Sur) have limited services  \n- **Pack layers**\u2014coastal weather changes fast, even in summer!\n\nWould you like help planning an itinerary based on how many days you have?"
-						},
 						"finish_reason": "stop",
-						"logprobs": null
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "Great! The classic route from San Francisco to Los Angeles along the California coast\u2014especially **Highway 1 (Pacific Coast Highway)**\u2014is one of the most scenic drives in the world. While it takes longer than the inland I-5 freeway (about 8\u201310 hours without stops), it\u2019s absolutely worth it for the views and experiences. Here are some top places to stop, roughly ordered from north to south:\n\n### \ud83c\udf09 **Half Moon Bay**  \n- Just 30 miles south of SF  \n- Charming coastal town with beaches, tide pools, and great seafood  \n- Stop at **Pillar Point Harbor** or walk the **Coastal Trail**\n\n### \ud83c\udfde\ufe0f **Santa Cruz**  \n- Famous for its beach boardwalk (oldest in California!), surfing, and laid-back vibe  \n- Visit the **Santa Cruz Beach Boardwalk** or explore **Natural Bridges State Beach**\n\n### \ud83d\udc2c **Monterey & Carmel-by-the-Sea**  \n- **Monterey**: Don\u2019t miss the world-class **Monterey Bay Aquarium** and Cannery Row  \n- **Carmel**: Quaint village with art galleries, fairytale cottages, and **Carmel Beach**  \n- Optional detour: **17-Mile Drive** through Pebble Beach (toll road with stunning ocean views)\n\n### \ud83c\udf32 **Big Sur**  \n- The crown jewel of the PCH! Dramatic cliffs, redwoods, and ocean vistas  \n- Must-stops:  \n  - **Bixby Creek Bridge** (iconic photo spot)  \n  - **McWay Falls** at Julia Pfeiffer Burns State Park (80-ft waterfall onto a beach!)  \n  - **Nepenthe** restaurant for lunch with panoramic views  \n\n> \u26a0\ufe0f Note: Check road conditions before heading through Big Sur\u2014landslides occasionally close Highway 1.\n\n### \ud83c\udf77 **San Simeon**  \n- Home of **Hearst Castle**, the opulent estate of newspaper magnate William Randolph Hearst  \n- Also great for spotting **elephant seals** at the **Piedras Blancas Rookery** just north of town\n\n### \ud83c\udfd6\ufe0f **Cambria & Morro Bay**  \n- **Cambria**: Cozy seaside village with unique shops and forest-meets-ocean scenery  \n- **Morro Bay**: Known for **Morro Rock**, kayaking, and fresh oysters\n\n### \ud83c\udf34 **San Luis Obispo (SLO)**  \n- A relaxed college town with a historic mission, farmers\u2019 market (Thursday nights!), and great food  \n- Nearby: **Bubblegum Alley** and **Madonna Inn** (quirky, Instagrammable hotel)\n\n### \ud83c\udfc4 **Pismo Beach**  \n- Classic Central Coast surf town with dunes and a long pier  \n- Try clam chowder\u2014it\u2019s the \u201cClam Capital of the World\u201d!\n\n### \ud83c\udf3a **Santa Barbara**  \n- \u201cThe American Riviera\u201d with Spanish architecture, palm-lined streets, and wine tasting  \n- Stroll **Stearns Wharf**, visit the **Mission Santa Barbara**, or relax on **East Beach**\n\n### \ud83c\udfd9\ufe0f **Final Stretch to Los Angeles**  \n- From Santa Barbara, you can stay on Highway 1 through **Malibu** (stop at **El Matador Beach** or **Point Dume**)  \n- Or hop on US-101 for a quicker arrival into LA\n\n---\n\n### Tips:\n- **Allow 2\u20133 days** if you want to enjoy the stops without rushing  \n- **Book lodging in advance**, especially in Big Sur, Carmel, or Santa Barbara  \n- **Fill your gas tank**\u2014some stretches (like Big Sur) have limited services  \n- **Pack layers**\u2014coastal weather changes fast, even in summer!\n\nWould you like help planning an itinerary based on how many days you have?",
+							"role": "assistant"
+						}
 					}
 				],
-				"usage": {
-					"prompt_tokens": 81,
-					"completion_tokens": 821,
-					"total_tokens": 902,
-					"prompt_tokens_details": {
-						"cached_tokens": 0
-					}
-				},
-				"system_fingerprint": null,
+				"created": 1776471088,
 				"gatewayMetadata": {
 					"keySource": "Unified"
+				},
+				"id": "chatcmpl-8ebaff89-c5a7-9010-b5a4-84e5f446841a",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 821,
+					"prompt_tokens": 81,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 902
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    max_completion_tokens: 8192,\n    messages: [\n      {\n        content: 'I need help planning a road trip from San Francisco to Los Angeles.',\n        role: 'user',\n      },\n      {\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n        role: 'assistant',\n      },\n      { content: 'Yes, what are some good places to stop?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"max_completion_tokens\": 8192,\n  \"messages\": [\n    {\n      \"content\": \"I need help planning a road trip from San Francisco to Los Angeles.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Yes, what are some good places to stop?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -184,51 +199,56 @@
 			"name": "Creative Writing",
 			"description": "Longer completion for creative output",
 			"input": {
+				"max_completion_tokens": 8192,
 				"messages": [
 					{
-						"role": "user",
-						"content": "Write a short story opening about a detective finding an unusual clue."
+						"content": "Write a short story opening about a detective finding an unusual clue.",
+						"role": "user"
 					}
-				],
-				"max_completion_tokens": 2048
+				]
 			},
 			"output": {
 				"text": "Rain slicked the cobblestones of Blackwater Lane, turning the gaslight into smears of gold on wet stone. Detective Aris Thorne hunched deeper into his trench coat, the damp wool smell a familiar companion to the city\u2019s usual perfume of coal smoke and despair. Another dead end\u2014literally and figuratively\u2014in the case of the vanished heiress, Elara Vance. The alley reeked of stale beer and something sharper, metallic.\n\nThen he saw it.\n\nNestled in a puddle near a overflowing gutter, half-submerged but gleaming with unnatural clarity, was a single playing card. Not just any card. The Queen of Hearts. But this one was wrong. Horribly wrong.\n\nThe queen\u2019s face wasn\u2019t printed ink. It was *stitched*. Delicate, almost surgical sutures traced her features\u2014a crimson thread for lips, fine black silk for eyes, silver wire forming the curve of a regal brow. And where the heart symbol should be, centered on her chest, was a tiny, perfect keyhole, wrought from what looked like tarnished silver. Rainwater pooled around it, but the stitches remained unnervingly dry, as if repelling the downpour.\n\nThorne crouched, ignoring the ache in his knees and the cold seeping through his trousers. He didn\u2019t touch it. Not yet. This wasn\u2019t evidence left by accident; it was a message. A challenge. And the meticulous, chilling craftsmanship whispered of a mind far more dangerous than the common cutpurse or jealous rival he\u2019d been chasing. The rain drummed a frantic rhythm on his hat, but the only sound he truly heard was the sudden, icy thrum of his own pulse. The game, it seemed, had just changed its rules."
 			},
 			"raw_response": {
-				"id": "chatcmpl-7bdc3457-d069-92c5-9ea0-0f1c3987d776",
-				"object": "chat.completion",
-				"created": 1776471079,
-				"model": "qwen3-max",
 				"choices": [
 					{
-						"index": 0,
-						"message": {
-							"role": "assistant",
-							"content": "Rain slicked the cobblestones of Blackwater Lane, turning the gaslight into smears of gold on wet stone. Detective Aris Thorne hunched deeper into his trench coat, the damp wool smell a familiar companion to the city\u2019s usual perfume of coal smoke and despair. Another dead end\u2014literally and figuratively\u2014in the case of the vanished heiress, Elara Vance. The alley reeked of stale beer and something sharper, metallic.\n\nThen he saw it.\n\nNestled in a puddle near a overflowing gutter, half-submerged but gleaming with unnatural clarity, was a single playing card. Not just any card. The Queen of Hearts. But this one was wrong. Horribly wrong.\n\nThe queen\u2019s face wasn\u2019t printed ink. It was *stitched*. Delicate, almost surgical sutures traced her features\u2014a crimson thread for lips, fine black silk for eyes, silver wire forming the curve of a regal brow. And where the heart symbol should be, centered on her chest, was a tiny, perfect keyhole, wrought from what looked like tarnished silver. Rainwater pooled around it, but the stitches remained unnervingly dry, as if repelling the downpour.\n\nThorne crouched, ignoring the ache in his knees and the cold seeping through his trousers. He didn\u2019t touch it. Not yet. This wasn\u2019t evidence left by accident; it was a message. A challenge. And the meticulous, chilling craftsmanship whispered of a mind far more dangerous than the common cutpurse or jealous rival he\u2019d been chasing. The rain drummed a frantic rhythm on his hat, but the only sound he truly heard was the sudden, icy thrum of his own pulse. The game, it seemed, had just changed its rules."
-						},
 						"finish_reason": "stop",
-						"logprobs": null
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "Rain slicked the cobblestones of Blackwater Lane, turning the gaslight into smears of gold on wet stone. Detective Aris Thorne hunched deeper into his trench coat, the damp wool smell a familiar companion to the city\u2019s usual perfume of coal smoke and despair. Another dead end\u2014literally and figuratively\u2014in the case of the vanished heiress, Elara Vance. The alley reeked of stale beer and something sharper, metallic.\n\nThen he saw it.\n\nNestled in a puddle near a overflowing gutter, half-submerged but gleaming with unnatural clarity, was a single playing card. Not just any card. The Queen of Hearts. But this one was wrong. Horribly wrong.\n\nThe queen\u2019s face wasn\u2019t printed ink. It was *stitched*. Delicate, almost surgical sutures traced her features\u2014a crimson thread for lips, fine black silk for eyes, silver wire forming the curve of a regal brow. And where the heart symbol should be, centered on her chest, was a tiny, perfect keyhole, wrought from what looked like tarnished silver. Rainwater pooled around it, but the stitches remained unnervingly dry, as if repelling the downpour.\n\nThorne crouched, ignoring the ache in his knees and the cold seeping through his trousers. He didn\u2019t touch it. Not yet. This wasn\u2019t evidence left by accident; it was a message. A challenge. And the meticulous, chilling craftsmanship whispered of a mind far more dangerous than the common cutpurse or jealous rival he\u2019d been chasing. The rain drummed a frantic rhythm on his hat, but the only sound he truly heard was the sudden, icy thrum of his own pulse. The game, it seemed, had just changed its rules.",
+							"role": "assistant"
+						}
 					}
 				],
-				"usage": {
-					"prompt_tokens": 21,
-					"completion_tokens": 362,
-					"total_tokens": 383,
-					"prompt_tokens_details": {
-						"cached_tokens": 0
-					}
-				},
-				"system_fingerprint": null,
+				"created": 1776471079,
 				"gatewayMetadata": {
 					"keySource": "Unified"
+				},
+				"id": "chatcmpl-7bdc3457-d069-92c5-9ea0-0f1c3987d776",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 362,
+					"prompt_tokens": 21,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 383
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    max_completion_tokens: 8192,\n    messages: [\n      {\n        content: 'Write a short story opening about a detective finding an unusual clue.',\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"max_completion_tokens\": 8192,\n  \"messages\": [\n    {\n      \"content\": \"Write a short story opening about a detective finding an unusual clue.\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -238,8 +258,8 @@
 			"input": {
 				"messages": [
 					{
-						"role": "user",
-						"content": "Explain the concept of recursion with a simple example."
+						"content": "Explain the concept of recursion with a simple example.",
+						"role": "user"
 					}
 				],
 				"stream": true,
@@ -333,35 +353,35 @@
 								"content": "",
 								"role": "assistant"
 							},
+							"finish_reason": null,
 							"index": 0,
-							"logprobs": null,
-							"finish_reason": null
+							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
 						{
-							"finish_reason": null,
-							"logprobs": null,
 							"delta": {
 								"content": "**"
 							},
-							"index": 0
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -374,12 +394,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -392,12 +412,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -410,12 +430,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -428,12 +448,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -446,12 +466,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -464,12 +484,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -482,12 +502,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -500,12 +520,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -518,12 +538,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -536,12 +556,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -554,12 +574,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -572,12 +592,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -590,12 +610,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -608,12 +628,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -626,12 +646,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -644,12 +664,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -662,12 +682,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -680,12 +700,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -698,12 +718,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -716,12 +736,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -734,12 +754,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -752,12 +772,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -770,12 +790,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -788,12 +808,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -806,12 +826,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -824,12 +844,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -842,12 +862,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -860,12 +880,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -878,12 +898,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -896,12 +916,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -914,12 +934,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -932,12 +952,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -950,12 +970,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -968,12 +988,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -986,12 +1006,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1004,12 +1024,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1022,12 +1042,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1040,12 +1060,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1058,12 +1078,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1076,12 +1096,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1094,12 +1114,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1112,12 +1132,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1130,12 +1150,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1148,12 +1168,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1166,12 +1186,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1184,12 +1204,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1202,12 +1222,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1220,12 +1240,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1238,12 +1258,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1256,12 +1276,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1274,12 +1294,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1292,12 +1312,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1310,12 +1330,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1328,12 +1348,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1346,12 +1366,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1364,12 +1384,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1382,12 +1402,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1400,12 +1420,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1418,12 +1438,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1436,12 +1456,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1454,12 +1474,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1472,12 +1492,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1490,12 +1510,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1508,12 +1528,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1526,12 +1546,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1544,12 +1564,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1562,12 +1582,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1580,12 +1600,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1598,12 +1618,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1616,12 +1636,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1634,12 +1654,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1652,12 +1672,12 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
@@ -1670,89 +1690,125 @@
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [
 						{
-							"finish_reason": "stop",
 							"delta": {
 								"content": ""
 							},
+							"finish_reason": "stop",
 							"index": 0,
 							"logprobs": null
 						}
 					],
-					"object": "chat.completion.chunk",
-					"usage": null,
 					"created": 1776471081,
-					"system_fingerprint": null,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
 					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
 				},
 				{
 					"choices": [],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
 					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
 					"usage": {
-						"prompt_tokens": 19,
 						"completion_tokens": 422,
-						"total_tokens": 441,
+						"prompt_tokens": 19,
 						"prompt_tokens_details": {
 							"cached_tokens": 0
-						}
-					},
-					"created": 1776471081,
-					"system_fingerprint": null,
-					"model": "qwen3-max",
-					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade"
+						},
+						"total_tokens": 441
+					}
 				}
 			],
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    stream: true,\n    stream_options: { include_usage: true },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://www.alibabacloud.com/en/solutions/generative-ai/qwen",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/qwen3-max.png",
 	"metadata": {
 		"Architecture": "Transformer"
 	},
-	"created_at": "2026-04-15 22:29:39",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:52:51",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": {},
 			"properties": {
+				"audio": {
+					"additionalProperties": false,
+					"properties": {
+						"format": {
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							],
+							"type": "string"
+						},
+						"voice": {
+							"enum": [
+								"alloy",
+								"ash",
+								"ballad",
+								"coral",
+								"echo",
+								"sage",
+								"shimmer",
+								"verse"
+							],
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"frequency_penalty": {
+					"maximum": 2,
+					"minimum": -2,
+					"type": "number"
+				},
+				"max_completion_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"max_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
 				"messages": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": {},
 						"properties": {
-							"role": {
-								"type": "string",
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								]
-							},
 							"content": {
 								"anyOf": [
 									{
@@ -1762,100 +1818,120 @@
 										"type": "null"
 									},
 									{
-										"type": "array",
-										"items": {}
+										"items": {},
+										"type": "array"
 									}
 								]
+							},
+							"role": {
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								],
+								"type": "string"
 							}
 						},
 						"required": [
 							"role",
 							"content"
 						],
-						"additionalProperties": {}
-					}
+						"type": "object"
+					},
+					"type": "array"
 				},
-				"temperature": {
-					"type": "number",
-					"minimum": 0,
-					"maximum": 2
-				},
-				"max_tokens": {
-					"type": "number",
-					"exclusiveMinimum": 0
-				},
-				"max_completion_tokens": {
-					"type": "number",
-					"exclusiveMinimum": 0
-				},
-				"top_p": {
-					"type": "number",
-					"minimum": 0,
-					"maximum": 1
-				},
-				"frequency_penalty": {
-					"type": "number",
-					"minimum": -2,
-					"maximum": 2
+				"modalities": {
+					"items": {
+						"enum": [
+							"text",
+							"audio"
+						],
+						"type": "string"
+					},
+					"type": "array"
 				},
 				"presence_penalty": {
-					"type": "number",
+					"maximum": 2,
 					"minimum": -2,
-					"maximum": 2
+					"type": "number"
 				},
+				"response_format": {},
 				"stream": {
 					"type": "boolean"
 				},
 				"stream_options": {
-					"type": "object",
+					"additionalProperties": false,
 					"properties": {
 						"include_usage": {
 							"type": "boolean"
 						}
 					},
-					"additionalProperties": false
+					"type": "object"
 				},
-				"tools": {
-					"type": "array",
-					"items": {}
+				"temperature": {
+					"maximum": 2,
+					"minimum": 0,
+					"type": "number"
 				},
 				"tool_choice": {},
-				"response_format": {}
+				"tools": {
+					"items": {},
+					"type": "array"
+				},
+				"top_p": {
+					"maximum": 1,
+					"minimum": 0,
+					"type": "number"
+				}
 			},
 			"required": [
 				"messages"
 			],
-			"additionalProperties": {}
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": {},
 			"properties": {
-				"id": {
-					"type": "string"
-				},
-				"object": {
-					"type": "string"
-				},
-				"created": {
-					"type": "number"
-				},
-				"model": {
-					"type": "string"
-				},
 				"choices": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": {},
 						"properties": {
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							},
 							"index": {
 								"type": "number"
 							},
 							"message": {
-								"type": "object",
+								"additionalProperties": {},
 								"properties": {
-									"role": {
-										"type": "string"
+									"audio": {
+										"additionalProperties": {},
+										"properties": {
+											"data": {
+												"type": "string"
+											},
+											"expires_at": {
+												"type": "number"
+											},
+											"id": {
+												"type": "string"
+											},
+											"transcript": {
+												"type": "string"
+											}
+										},
+										"type": "object"
 									},
 									"content": {
 										"anyOf": [
@@ -1867,25 +1943,25 @@
 											}
 										]
 									},
+									"role": {
+										"type": "string"
+									},
 									"tool_calls": {
-										"type": "array",
-										"items": {}
+										"anyOf": [
+											{
+												"items": {},
+												"type": "array"
+											},
+											{
+												"type": "null"
+											}
+										]
 									}
 								},
 								"required": [
 									"role"
 								],
-								"additionalProperties": {}
-							},
-							"finish_reason": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									}
-								]
+								"type": "object"
 							}
 						},
 						"required": [
@@ -1893,16 +1969,29 @@
 							"message",
 							"finish_reason"
 						],
-						"additionalProperties": {}
-					}
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"created": {
+					"type": "number"
+				},
+				"id": {
+					"type": "string"
+				},
+				"model": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
 				},
 				"usage": {
-					"type": "object",
+					"additionalProperties": {},
 					"properties": {
-						"prompt_tokens": {
+						"completion_tokens": {
 							"type": "number"
 						},
-						"completion_tokens": {
+						"prompt_tokens": {
 							"type": "number"
 						},
 						"total_tokens": {
@@ -1914,7 +2003,7 @@
 						"completion_tokens",
 						"total_tokens"
 					],
-					"additionalProperties": {}
+					"type": "object"
 				}
 			},
 			"required": [
@@ -1924,7 +2013,7 @@
 				"model",
 				"choices"
 			],
-			"additionalProperties": {}
+			"type": "object"
 		}
 	}
 }

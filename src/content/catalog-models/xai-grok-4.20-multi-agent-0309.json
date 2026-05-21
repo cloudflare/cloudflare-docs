@@ -1,0 +1,1278 @@
+{
+	"model_id": "xai/grok-4.20-multi-agent-0309",
+	"provider_id": "xai",
+	"name": "Grok 4.20 Multi-Agent",
+	"description": "xAI's Grok 4.20 multi-agent model with a 2M-token context window. Multiple agents collaborate in parallel to perform deep research tasks, with function calling, structured outputs, and reasoning capabilities.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Agentic",
+		"Reasoning",
+		"Tool Use"
+	],
+	"context_length": 2000000,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic Responses API request with a string input",
+			"input": {
+				"input": "What are the three laws of thermodynamics?"
+			},
+			"output": {
+				"text": "**The three laws of thermodynamics** (often referred to as the first, second, and third) are fundamental principles in physics that govern energy, heat, work, and entropy in physical systems. There is also a foundational \"zeroth law\" that is logically prior but was formalized later, which is why it is numbered zero.\n\nHere is a clear summary of each:\n\n### Zeroth Law of Thermodynamics (Thermal Equilibrium)\nIf two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other. This law establishes the concept of temperature and allows us to use thermometers meaningfully. It is the basis for all temperature measurement but is not always counted among the original \"three laws.\"\n\n### First Law of Thermodynamics (Conservation of Energy)\nEnergy cannot be created or destroyed, only converted from one form to another or transferred as heat or work.  \nMathematically: **\u0394U = Q \u2212 W** (where \u0394U is the change in internal energy of a system, Q is heat added to the system, and W is work done by the system).  \nThis is essentially the law of conservation of energy applied to thermodynamic processes.\n\n### Second Law of Thermodynamics (Entropy and Directionality)\nThe total entropy of an isolated system can never decrease over time. It either stays the same (in reversible processes) or increases (in irreversible processes).  \nThis law explains why heat flows spontaneously from hot objects to cold ones (never the reverse), why some processes are irreversible, and the concept of the arrow of time. It also implies that it is impossible to build a perfectly efficient heat engine or a perpetual motion machine of the second kind.\n\n### Third Law of Thermodynamics (Absolute Zero and Entropy)\nAs the temperature of a system approaches absolute zero (0 Kelvin or -273.15\u00b0C), the entropy of a perfect crystalline substance approaches a minimum value (often taken as zero).  \nThis law implies that absolute zero is theoretically unreachable in a finite number of steps and has important consequences for the behavior of matter at extremely low temperatures.\n\nThese laws form the foundation of classical thermodynamics, with wide applications in physics, chemistry, engineering, and biology. They are empirical laws derived from centuries of observation and experimentation."
+			},
+			"raw_response": {
+				"background": false,
+				"completed_at": 1777679670,
+				"created_at": 0,
+				"error": null,
+				"frequency_penalty": 0,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "0717357c-40f0-91d2-84db-cd601a0759e4",
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"metadata": {
+					"system_fingerprint": ""
+				},
+				"model": "grok-4.20-multi-agent-0309",
+				"object": "response",
+				"output": [
+					{
+						"content": [
+							{
+								"annotations": [],
+								"logprobs": [],
+								"text": "**The three laws of thermodynamics** (often referred to as the first, second, and third) are fundamental principles in physics that govern energy, heat, work, and entropy in physical systems. There is also a foundational \"zeroth law\" that is logically prior but was formalized later, which is why it is numbered zero.\n\nHere is a clear summary of each:\n\n### Zeroth Law of Thermodynamics (Thermal Equilibrium)\nIf two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other. This law establishes the concept of temperature and allows us to use thermometers meaningfully. It is the basis for all temperature measurement but is not always counted among the original \"three laws.\"\n\n### First Law of Thermodynamics (Conservation of Energy)\nEnergy cannot be created or destroyed, only converted from one form to another or transferred as heat or work.  \nMathematically: **\u0394U = Q \u2212 W** (where \u0394U is the change in internal energy of a system, Q is heat added to the system, and W is work done by the system).  \nThis is essentially the law of conservation of energy applied to thermodynamic processes.\n\n### Second Law of Thermodynamics (Entropy and Directionality)\nThe total entropy of an isolated system can never decrease over time. It either stays the same (in reversible processes) or increases (in irreversible processes).  \nThis law explains why heat flows spontaneously from hot objects to cold ones (never the reverse), why some processes are irreversible, and the concept of the arrow of time. It also implies that it is impossible to build a perfectly efficient heat engine or a perpetual motion machine of the second kind.\n\n### Third Law of Thermodynamics (Absolute Zero and Entropy)\nAs the temperature of a system approaches absolute zero (0 Kelvin or -273.15\u00b0C), the entropy of a perfect crystalline substance approaches a minimum value (often taken as zero).  \nThis law implies that absolute zero is theoretically unreachable in a finite number of steps and has important consequences for the behavior of matter at extremely low temperatures.\n\nThese laws form the foundation of classical thermodynamics, with wide applications in physics, chemistry, engineering, and biology. They are empirical laws derived from centuries of observation and experimentation.",
+								"type": "output_text"
+							}
+						],
+						"id": "msg_0717357c-40f0-91d2-84db-cd601a0759e4",
+						"role": "assistant",
+						"status": "completed",
+						"type": "message"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"reasoning": {
+					"effort": "medium",
+					"summary": "detailed"
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"status": "completed",
+				"store": true,
+				"temperature": 0.7,
+				"text": {
+					"format": {
+						"type": "text"
+					}
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.95,
+				"truncation": "disabled",
+				"usage": {
+					"cost_in_usd_ticks": 127946000,
+					"input_tokens": 11014,
+					"input_tokens_details": {
+						"cached_tokens": 8448
+					},
+					"num_server_side_tools_used": 0,
+					"num_sources_used": 0,
+					"output_tokens": 3159,
+					"output_tokens_details": {
+						"reasoning_tokens": 2704
+					},
+					"total_tokens": 14173
+				},
+				"user": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.20-multi-agent-0309',\n  { input: 'What are the three laws of thermodynamics?' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"What are the three laws of thermodynamics?\"\n}'"
+				}
+			]
+		},
+		{
+			"name": "With Instructions",
+			"description": "Using instructions to set the agent persona",
+			"input": {
+				"input": "In two sentences, why does the moon appear larger near the horizon?",
+				"instructions": "You are a careful research assistant. Keep answers short and cite sources when relevant."
+			},
+			"output": {
+				"text": "The Moon appears larger near the horizon because of a perceptual illusion (not an optical one): the brain interprets the horizon as farther away than the zenith due to distance cues from terrain and the flattened-dome appearance of the sky, so it scales up the Moon's perceived size to match its unchanged angular diameter. High in the sky with no such references, the Moon looks comparatively smaller."
+			},
+			"raw_response": {
+				"background": false,
+				"completed_at": 1777679665,
+				"created_at": 0,
+				"error": null,
+				"frequency_penalty": 0,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "86852e2f-b620-e6a1-8b6a-ddcf1c0348bc",
+				"incomplete_details": null,
+				"instructions": "You are a careful research assistant. Keep answers short and cite sources when relevant.",
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"metadata": {
+					"system_fingerprint": ""
+				},
+				"model": "grok-4.20-multi-agent-0309",
+				"object": "response",
+				"output": [
+					{
+						"content": [
+							{
+								"annotations": [],
+								"logprobs": [],
+								"text": "The Moon appears larger near the horizon because of a perceptual illusion (not an optical one): the brain interprets the horizon as farther away than the zenith due to distance cues from terrain and the flattened-dome appearance of the sky, so it scales up the Moon's perceived size to match its unchanged angular diameter. High in the sky with no such references, the Moon looks comparatively smaller.",
+								"type": "output_text"
+							}
+						],
+						"id": "msg_86852e2f-b620-e6a1-8b6a-ddcf1c0348bc",
+						"role": "assistant",
+						"status": "completed",
+						"type": "message"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"reasoning": {
+					"effort": "medium",
+					"summary": "detailed"
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"status": "completed",
+				"store": true,
+				"temperature": 0.7,
+				"text": {
+					"format": {
+						"type": "text"
+					}
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.95,
+				"truncation": "disabled",
+				"usage": {
+					"cost_in_usd_ticks": 69728000,
+					"input_tokens": 3682,
+					"input_tokens_details": {
+						"cached_tokens": 3264
+					},
+					"num_server_side_tools_used": 0,
+					"num_sources_used": 0,
+					"output_tokens": 2319,
+					"output_tokens_details": {
+						"reasoning_tokens": 2230
+					},
+					"total_tokens": 6001
+				},
+				"user": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.20-multi-agent-0309',\n  {\n    input: 'In two sentences, why does the moon appear larger near the horizon?',\n    instructions:\n      'You are a careful research assistant. Keep answers short and cite sources when relevant.',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"In two sentences, why does the moon appear larger near the horizon?\",\n  \"instructions\": \"You are a careful research assistant. Keep answers short and cite sources when relevant.\"\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation by passing typed input items",
+			"input": {
+				"input": [
+					{
+						"content": "I need to plan a 3-day weekend in Tokyo.",
+						"role": "user"
+					},
+					{
+						"content": "Sounds fun. Are you more interested in food, culture, or nightlife? That will steer the recommendations.",
+						"role": "assistant"
+					},
+					{
+						"content": "Food. Suggest one signature dish per day in one sentence each.",
+						"role": "user"
+					}
+				],
+				"max_output_tokens": 8192
+			},
+			"output": {
+				"text": "**Day 1:** Begin your Tokyo food journey by savoring fresh Edomae-style nigiri sushi at Tsukiji Outer Market, where skilled chefs pair perfectly seasoned rice with the day's freshest seafood straight from the market.  \n**Day 2:** Dive into a rich bowl of tonkotsu ramen in a bustling Shinjuku shop, featuring silky pork-bone broth, springy noodles, chashu pork, and a marinated egg for ultimate comfort.  \n**Day 3:** Conclude the weekend by grilling premium A5 Wagyu yakiniku tableside in Roppongi, savoring melt-in-your-mouth slices of marbled Japanese beef alongside vegetables and savory dipping sauces."
+			},
+			"raw_response": {
+				"background": false,
+				"completed_at": 1777679685,
+				"created_at": 0,
+				"error": null,
+				"frequency_penalty": 0,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "eb44cf72-01bc-0674-a7de-b31df024f668",
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 8192,
+				"max_tool_calls": null,
+				"metadata": {
+					"system_fingerprint": ""
+				},
+				"model": "grok-4.20-multi-agent-0309",
+				"object": "response",
+				"output": [
+					{
+						"content": [
+							{
+								"annotations": [],
+								"logprobs": [],
+								"text": "**Day 1:** Begin your Tokyo food journey by savoring fresh Edomae-style nigiri sushi at Tsukiji Outer Market, where skilled chefs pair perfectly seasoned rice with the day's freshest seafood straight from the market.  \n**Day 2:** Dive into a rich bowl of tonkotsu ramen in a bustling Shinjuku shop, featuring silky pork-bone broth, springy noodles, chashu pork, and a marinated egg for ultimate comfort.  \n**Day 3:** Conclude the weekend by grilling premium A5 Wagyu yakiniku tableside in Roppongi, savoring melt-in-your-mouth slices of marbled Japanese beef alongside vegetables and savory dipping sauces.",
+								"type": "output_text"
+							}
+						],
+						"id": "msg_eb44cf72-01bc-0674-a7de-b31df024f668",
+						"role": "assistant",
+						"status": "completed",
+						"type": "message"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"reasoning": {
+					"effort": "medium",
+					"summary": "detailed"
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"status": "completed",
+				"store": true,
+				"temperature": 0.7,
+				"text": {
+					"format": {
+						"type": "text"
+					}
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.95,
+				"truncation": "disabled",
+				"usage": {
+					"cost_in_usd_ticks": 249846000,
+					"input_tokens": 16886,
+					"input_tokens_details": {
+						"cached_tokens": 11648
+					},
+					"num_server_side_tools_used": 0,
+					"num_sources_used": 0,
+					"output_tokens": 6443,
+					"output_tokens_details": {
+						"reasoning_tokens": 6288
+					},
+					"total_tokens": 23329
+				},
+				"user": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.20-multi-agent-0309',\n  {\n    input: [\n      { content: 'I need to plan a 3-day weekend in Tokyo.', role: 'user' },\n      {\n        content:\n          'Sounds fun. Are you more interested in food, culture, or nightlife? That will steer the recommendations.',\n        role: 'assistant',\n      },\n      { content: 'Food. Suggest one signature dish per day in one sentence each.', role: 'user' },\n    ],\n    max_output_tokens: 8192,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": [\n    {\n      \"content\": \"I need to plan a 3-day weekend in Tokyo.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"Sounds fun. Are you more interested in food, culture, or nightlife? That will steer the recommendations.\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Food. Suggest one signature dish per day in one sentence each.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_output_tokens\": 8192\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting the agent use xAI built-in web search to answer with current info",
+			"input": {
+				"input": "What were the top news stories about xAI this week? Summarise in three bullets.",
+				"max_turns": 4,
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				]
+			},
+			"output": {
+				"text": "**Top xAI news stories this week (late April to early May 2026):**[[1]](https://techcrunch.com/2026/04/30/elon-musk-testifies-that-xai-trained-grok-on-openai-models/)[[2]](https://x.ai/news)\n\n- **Elon Musk testified in his lawsuit against OpenAI**, admitting that xAI had \u201cpartly\u201d used OpenAI models (via distillation techniques) to train Grok. The multi-day testimony framed Musk as an AI safety advocate contrasting with OpenAI\u2019s for-profit shift; it occurred as xAI operates under its recent acquisition by SpaceX.[[1]](https://techcrunch.com/2026/04/30/elon-musk-testifies-that-xai-trained-grok-on-openai-models/)[[3]](https://www.theverge.com/ai-artificial-intelligence/921546/elon-musk-xai-openai-trial-model-distillation)\n\n- **xAI released major voice and audio updates**, including Custom Voices/Voice Library (allowing voice cloning from short recordings), Grok Voice Think Fast 1.0 (a capable voice agent for API use), and Speech-to-Text/Text-to-Speech APIs with natural voices, multilingual support, and simple pricing (announced April 23\u201330).[[2]](https://x.ai/news)\n\n- **Grok 4.3 launched with strong benchmarks and aggressive pricing**, scoring 53 on the Artificial Analysis Intelligence Index (improved agentic/tool-use performance, ~4 points ahead of its predecessor), alongside ~40\u201360% price cuts; this ties into broader product momentum and the post-acquisition context, though some reports noted employee departures and prior coding lags.[[4]](https://venturebeat.com/technology/xai-launches-grok-4-3-at-an-aggressively-low-price-and-a-new-fast-powerful-voice-cloning-suite)\n\nThese reflect xAI\u2019s rapid product iteration in voice/agent capabilities and model performance while navigating legal, integration, and operational developments following the SpaceX deal."
+			},
+			"raw_response": {
+				"background": false,
+				"completed_at": 1777680547,
+				"created_at": 0,
+				"error": null,
+				"frequency_penalty": 0,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "ee8dcd35-f5a1-9a07-924c-db90a88da556",
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"metadata": {
+					"system_fingerprint": ""
+				},
+				"model": "grok-4.20-multi-agent-0309",
+				"object": "response",
+				"output": [
+					{
+						"action": {
+							"query": "xAI news April 2026 OR May 2026",
+							"sources": [],
+							"type": "search"
+						},
+						"id": "ws_ee8dcd35-f5a1-9a07-924c-db90a88da556_0",
+						"status": "completed",
+						"type": "web_search_call"
+					},
+					{
+						"action": {
+							"query": "xAI Grok latest news this week",
+							"sources": [],
+							"type": "search"
+						},
+						"id": "ws_ee8dcd35-f5a1-9a07-924c-db90a88da556_1",
+						"status": "completed",
+						"type": "web_search_call"
+					},
+					{
+						"action": {
+							"query": "\"xAI\" (announcement OR launch OR funding OR Grok) after:2026-04-20",
+							"sources": [],
+							"type": "search"
+						},
+						"id": "ws_ee8dcd35-f5a1-9a07-924c-db90a88da556_2",
+						"status": "completed",
+						"type": "web_search_call"
+					},
+					{
+						"id": "tco_ee8dcd35-f5a1-9a07-924c-db90a88da556",
+						"status": "completed",
+						"summary": [],
+						"type": "reasoning"
+					},
+					{
+						"id": "tco_ee8dcd35-f5a1-9a07-924c-db90a88da556",
+						"status": "completed",
+						"summary": [],
+						"type": "reasoning"
+					},
+					{
+						"id": "tco_ee8dcd35-f5a1-9a07-924c-db90a88da556",
+						"status": "completed",
+						"summary": [],
+						"type": "reasoning"
+					},
+					{
+						"action": {
+							"type": "open_page",
+							"url": "https://x.ai/news"
+						},
+						"id": "ws_ee8dcd35-f5a1-9a07-924c-db90a88da556_3",
+						"status": "completed",
+						"type": "web_search_call"
+					},
+					{
+						"action": {
+							"query": "Elon Musk testifies xAI OpenAI Grok April 2026 OR May 2026",
+							"sources": [],
+							"type": "search"
+						},
+						"id": "ws_ee8dcd35-f5a1-9a07-924c-db90a88da556_4",
+						"status": "completed",
+						"type": "web_search_call"
+					},
+					{
+						"id": "tco_ee8dcd35-f5a1-9a07-924c-db90a88da556",
+						"status": "completed",
+						"summary": [],
+						"type": "reasoning"
+					},
+					{
+						"id": "tco_ee8dcd35-f5a1-9a07-924c-db90a88da556",
+						"status": "completed",
+						"summary": [],
+						"type": "reasoning"
+					},
+					{
+						"content": [
+							{
+								"annotations": [
+									{
+										"end_index": 166,
+										"start_index": 66,
+										"title": "1",
+										"type": "url_citation",
+										"url": "https://techcrunch.com/2026/04/30/elon-musk-testifies-that-xai-trained-grok-on-openai-models/"
+									},
+									{
+										"end_index": 190,
+										"start_index": 166,
+										"title": "2",
+										"type": "url_citation",
+										"url": "https://x.ai/news"
+									},
+									{
+										"end_index": 617,
+										"start_index": 517,
+										"title": "1",
+										"type": "url_citation",
+										"url": "https://techcrunch.com/2026/04/30/elon-musk-testifies-that-xai-trained-grok-on-openai-models/"
+									},
+									{
+										"end_index": 728,
+										"start_index": 617,
+										"title": "3",
+										"type": "url_citation",
+										"url": "https://www.theverge.com/ai-artificial-intelligence/921546/elon-musk-xai-openai-trial-model-distillation"
+									},
+									{
+										"end_index": 1078,
+										"start_index": 1054,
+										"title": "2",
+										"type": "url_citation",
+										"url": "https://x.ai/news"
+									},
+									{
+										"end_index": 1593,
+										"start_index": 1457,
+										"title": "4",
+										"type": "url_citation",
+										"url": "https://venturebeat.com/technology/xai-launches-grok-4-3-at-an-aggressively-low-price-and-a-new-fast-powerful-voice-cloning-suite"
+									}
+								],
+								"logprobs": [],
+								"text": "**Top xAI news stories this week (late April to early May 2026):**[[1]](https://techcrunch.com/2026/04/30/elon-musk-testifies-that-xai-trained-grok-on-openai-models/)[[2]](https://x.ai/news)\n\n- **Elon Musk testified in his lawsuit against OpenAI**, admitting that xAI had \u201cpartly\u201d used OpenAI models (via distillation techniques) to train Grok. The multi-day testimony framed Musk as an AI safety advocate contrasting with OpenAI\u2019s for-profit shift; it occurred as xAI operates under its recent acquisition by SpaceX.[[1]](https://techcrunch.com/2026/04/30/elon-musk-testifies-that-xai-trained-grok-on-openai-models/)[[3]](https://www.theverge.com/ai-artificial-intelligence/921546/elon-musk-xai-openai-trial-model-distillation)\n\n- **xAI released major voice and audio updates**, including Custom Voices/Voice Library (allowing voice cloning from short recordings), Grok Voice Think Fast 1.0 (a capable voice agent for API use), and Speech-to-Text/Text-to-Speech APIs with natural voices, multilingual support, and simple pricing (announced April 23\u201330).[[2]](https://x.ai/news)\n\n- **Grok 4.3 launched with strong benchmarks and aggressive pricing**, scoring 53 on the Artificial Analysis Intelligence Index (improved agentic/tool-use performance, ~4 points ahead of its predecessor), alongside ~40\u201360% price cuts; this ties into broader product momentum and the post-acquisition context, though some reports noted employee departures and prior coding lags.[[4]](https://venturebeat.com/technology/xai-launches-grok-4-3-at-an-aggressively-low-price-and-a-new-fast-powerful-voice-cloning-suite)\n\nThese reflect xAI\u2019s rapid product iteration in voice/agent capabilities and model performance while navigating legal, integration, and operational developments following the SpaceX deal.",
+								"type": "output_text"
+							}
+						],
+						"id": "msg_ee8dcd35-f5a1-9a07-924c-db90a88da556",
+						"role": "assistant",
+						"status": "completed",
+						"type": "message"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"reasoning": {
+					"effort": "medium",
+					"summary": "detailed"
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"status": "completed",
+				"store": true,
+				"temperature": 0.7,
+				"text": {
+					"format": {
+						"type": "text"
+					}
+				},
+				"tool_choice": "auto",
+				"tools": [
+					{
+						"search_context_size": "medium",
+						"type": "web_search"
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 0.95,
+				"truncation": "disabled",
+				"usage": {
+					"cost_in_usd_ticks": 2026981500,
+					"input_tokens": 98165,
+					"input_tokens_details": {
+						"cached_tokens": 43072
+					},
+					"num_server_side_tools_used": 21,
+					"num_sources_used": 0,
+					"output_tokens": 8087,
+					"output_tokens_details": {
+						"reasoning_tokens": 7740
+					},
+					"server_side_tool_usage_details": {
+						"code_interpreter_calls": 0,
+						"document_search_calls": 0,
+						"file_search_calls": 0,
+						"mcp_calls": 0,
+						"web_search_calls": 21,
+						"x_search_calls": 0
+					},
+					"total_tokens": 106252
+				},
+				"user": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.20-multi-agent-0309',\n  {\n    input: 'What were the top news stories about xAI this week? Summarise in three bullets.',\n    max_turns: 4,\n    tools: [{ type: 'web_search' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"What were the top news stories about xAI this week? Summarise in three bullets.\",\n  \"max_turns\": 4,\n  \"tools\": [\n    {\n      \"type\": \"web_search\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "With Reasoning",
+			"description": "Asking the agent to think harder before responding",
+			"input": {
+				"input": "Solve this step by step: Two trains 900 miles apart travel toward each other at 60 and 80 mph. When do they meet?",
+				"max_output_tokens": 8192,
+				"reasoning": {
+					"effort": "medium"
+				}
+			},
+			"output": {
+				"text": "The two trains are moving toward each other, so the distance between them closes at a combined rate of 60 + 80 = 140 mph.\n\nTime to meet = total distance / combined speed = 900 / 140.\n\nThis simplifies (by dividing numerator and denominator by 20) to exactly 45/7 hours (or 6 3/7 hours).\n\nTo verify, in that time the first train travels 60 * (45/7) = 2700/7 \u2248 385.71 miles, and the second travels 80 * (45/7) = 3600/7 \u2248 514.29 miles. These add up to exactly 900 miles, confirming they meet after that interval (assuming both start at the same time).\n\n**Final Answer**\n\n45/7 hours"
+			},
+			"raw_response": {
+				"background": false,
+				"completed_at": 1777679680,
+				"created_at": 0,
+				"error": null,
+				"frequency_penalty": 0,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "09617b62-0046-cc3e-6d7d-4231238686fb",
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 8192,
+				"max_tool_calls": null,
+				"metadata": {
+					"system_fingerprint": ""
+				},
+				"model": "grok-4.20-multi-agent-0309",
+				"object": "response",
+				"output": [
+					{
+						"content": [
+							{
+								"annotations": [],
+								"logprobs": [],
+								"text": "The two trains are moving toward each other, so the distance between them closes at a combined rate of 60 + 80 = 140 mph.\n\nTime to meet = total distance / combined speed = 900 / 140.\n\nThis simplifies (by dividing numerator and denominator by 20) to exactly 45/7 hours (or 6 3/7 hours).\n\nTo verify, in that time the first train travels 60 * (45/7) = 2700/7 \u2248 385.71 miles, and the second travels 80 * (45/7) = 3600/7 \u2248 514.29 miles. These add up to exactly 900 miles, confirming they meet after that interval (assuming both start at the same time).\n\n**Final Answer**\n\n45/7 hours",
+								"type": "output_text"
+							}
+						],
+						"id": "msg_09617b62-0046-cc3e-6d7d-4231238686fb",
+						"role": "assistant",
+						"status": "completed",
+						"type": "message"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"reasoning": {
+					"effort": "medium",
+					"summary": "detailed"
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"status": "completed",
+				"store": true,
+				"temperature": 0.7,
+				"text": {
+					"format": {
+						"type": "text"
+					}
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.95,
+				"truncation": "disabled",
+				"usage": {
+					"cost_in_usd_ticks": 119112500,
+					"input_tokens": 12473,
+					"input_tokens_details": {
+						"cached_tokens": 9600
+					},
+					"num_server_side_tools_used": 0,
+					"num_sources_used": 0,
+					"output_tokens": 2560,
+					"output_tokens_details": {
+						"reasoning_tokens": 2384
+					},
+					"total_tokens": 15033
+				},
+				"user": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.20-multi-agent-0309',\n  {\n    input:\n      'Solve this step by step: Two trains 900 miles apart travel toward each other at 60 and 80 mph. When do they meet?',\n    max_output_tokens: 8192,\n    reasoning: { effort: 'medium' },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"Solve this step by step: Two trains 900 miles apart travel toward each other at 60 and 80 mph. When do they meet?\",\n  \"max_output_tokens\": 8192,\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://x.ai/",
+	"terms": "https://x.ai/legal/terms-of-service",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/xai/grok-4.20-multi-agent.png",
+	"metadata": {
+		"API": "Responses",
+		"Architecture": "Transformer",
+		"Tool Use": "Yes"
+	},
+	"created_at": "2026-05-22 17:54:02",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"context_management": {
+					"anyOf": [
+						{
+							"items": {},
+							"type": "array"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"include": {
+					"anyOf": [
+						{
+							"items": {
+								"type": "string"
+							},
+							"type": "array"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"items": {},
+							"minItems": 1,
+							"type": "array"
+						}
+					]
+				},
+				"instructions": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"logprobs": {
+					"anyOf": [
+						{
+							"type": "boolean"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"max_output_tokens": {
+					"anyOf": [
+						{
+							"exclusiveMinimum": 0,
+							"maximum": 9007199254740991,
+							"type": "integer"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"max_turns": {
+					"anyOf": [
+						{
+							"exclusiveMinimum": 0,
+							"maximum": 9007199254740991,
+							"type": "integer"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"parallel_tool_calls": {
+					"anyOf": [
+						{
+							"type": "boolean"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"previous_response_id": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"prompt_cache_key": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"reasoning": {
+					"additionalProperties": {},
+					"properties": {
+						"effort": {
+							"anyOf": [
+								{
+									"enum": [
+										"low",
+										"medium",
+										"high"
+									],
+									"type": "string"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"generate_summary": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"summary": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "null"
+								}
+							]
+						}
+					},
+					"type": "object"
+				},
+				"search_parameters": {
+					"additionalProperties": {},
+					"properties": {
+						"from_date": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"max_search_results": {
+							"anyOf": [
+								{
+									"exclusiveMinimum": 0,
+									"maximum": 9007199254740991,
+									"type": "integer"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"mode": {
+							"anyOf": [
+								{
+									"enum": [
+										"off",
+										"on",
+										"auto"
+									],
+									"type": "string"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"return_citations": {
+							"anyOf": [
+								{
+									"type": "boolean"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"sources": {
+							"anyOf": [
+								{
+									"items": {},
+									"maxItems": 20,
+									"type": "array"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"to_date": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "null"
+								}
+							]
+						}
+					},
+					"type": "object"
+				},
+				"store": {
+					"anyOf": [
+						{
+							"type": "boolean"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"stream": {
+					"anyOf": [
+						{
+							"type": "boolean"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"temperature": {
+					"anyOf": [
+						{
+							"maximum": 2,
+							"minimum": 0,
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"text": {
+					"additionalProperties": {},
+					"properties": {
+						"format": {}
+					},
+					"type": "object"
+				},
+				"tool_choice": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"additionalProperties": false,
+							"properties": {
+								"function": {
+									"additionalProperties": false,
+									"properties": {
+										"name": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"name"
+									],
+									"type": "object"
+								},
+								"type": {
+									"const": "function",
+									"type": "string"
+								}
+							},
+							"required": [
+								"type",
+								"function"
+							],
+							"type": "object"
+						}
+					]
+				},
+				"tools": {
+					"anyOf": [
+						{
+							"items": {
+								"anyOf": [
+									{
+										"additionalProperties": false,
+										"properties": {
+											"description": {
+												"type": "string"
+											},
+											"name": {
+												"minLength": 1,
+												"type": "string"
+											},
+											"parameters": {
+												"additionalProperties": {},
+												"propertyNames": {
+													"type": "string"
+												},
+												"type": "object"
+											},
+											"strict": {
+												"type": "boolean"
+											},
+											"type": {
+												"const": "function",
+												"type": "string"
+											}
+										},
+										"required": [
+											"type",
+											"name",
+											"parameters"
+										],
+										"type": "object"
+									},
+									{
+										"additionalProperties": {},
+										"properties": {
+											"type": {
+												"enum": [
+													"web_search",
+													"x_search",
+													"web_search_preview"
+												],
+												"type": "string"
+											}
+										},
+										"required": [
+											"type"
+										],
+										"type": "object"
+									}
+								]
+							},
+							"maxItems": 128,
+							"type": "array"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"top_logprobs": {
+					"anyOf": [
+						{
+							"maximum": 8,
+							"minimum": 0,
+							"type": "integer"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"top_p": {
+					"anyOf": [
+						{
+							"maximum": 1,
+							"minimum": 0,
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"user": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				}
+			},
+			"required": [
+				"input"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"completed_at": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"error": {
+					"anyOf": [
+						{},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"id": {
+					"type": "string"
+				},
+				"incomplete_details": {
+					"anyOf": [
+						{},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"instructions": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"metadata": {},
+				"model": {
+					"type": "string"
+				},
+				"object": {
+					"const": "response",
+					"type": "string"
+				},
+				"output": {
+					"items": {},
+					"type": "array"
+				},
+				"parallel_tool_calls": {
+					"type": "boolean"
+				},
+				"previous_response_id": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"reasoning": {
+					"anyOf": [
+						{},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"status": {
+					"enum": [
+						"in_progress",
+						"completed",
+						"incomplete",
+						"failed"
+					],
+					"type": "string"
+				},
+				"store": {
+					"type": "boolean"
+				},
+				"temperature": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"text": {},
+				"tool_choice": {},
+				"tools": {
+					"items": {},
+					"type": "array"
+				},
+				"top_p": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"usage": {
+					"additionalProperties": {},
+					"properties": {
+						"cost_in_usd_ticks": {
+							"anyOf": [
+								{
+									"type": "number"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"input_tokens": {
+							"type": "number"
+						},
+						"input_tokens_details": {
+							"additionalProperties": {},
+							"properties": {
+								"cached_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"cached_tokens"
+							],
+							"type": "object"
+						},
+						"num_server_side_tools_used": {
+							"type": "number"
+						},
+						"num_sources_used": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"output_tokens_details": {
+							"additionalProperties": {},
+							"properties": {
+								"reasoning_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"reasoning_tokens"
+							],
+							"type": "object"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"type": "object"
+				},
+				"user": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"status",
+				"output"
+			],
+			"type": "object"
+		}
+	}
+}

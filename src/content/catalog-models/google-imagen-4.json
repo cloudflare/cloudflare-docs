@@ -23,19 +23,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/simple-generation.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/simple-generation.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  { prompt: 'A golden retriever puppy playing in autumn leaves' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"prompt\": \"A golden retriever puppy playing in autumn leaves\"\n  }\n}'"
 				}
 			]
 		},
@@ -43,26 +48,31 @@
 			"name": "Widescreen Landscape",
 			"description": "Generate a widescreen landscape image",
 			"input": {
-				"prompt": "A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones",
-				"aspect_ratio": "16:9"
+				"aspect_ratio": "16:9",
+				"prompt": "A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/widescreen-landscape.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/widescreen-landscape.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt:\n      'A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    aspect_ratio: '16:9',\n    prompt:\n      'A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones\"\n  }\n}'"
 				}
 			]
 		},
@@ -70,26 +80,31 @@
 			"name": "Portrait Format",
 			"description": "Vertical portrait-style image",
 			"input": {
-				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight",
-				"aspect_ratio": "9:16"
+				"aspect_ratio": "9:16",
+				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/portrait-format.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/portrait-format.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt:\n      'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    aspect_ratio: '9:16',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    aspect_ratio: '9:16',\n    prompt: 'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"prompt\": \"An elegant Art Deco poster featuring a jazz singer under a spotlight\"\n  }\n}'"
 				}
 			]
 		},
@@ -97,26 +112,31 @@
 			"name": "With People",
 			"description": "Allow generation of adult people",
 			"input": {
-				"prompt": "A chef preparing sushi in a traditional Japanese kitchen, detailed close-up",
-				"person_generation": "allow_adult"
+				"person_generation": "allow_adult",
+				"prompt": "A chef preparing sushi in a traditional Japanese kitchen, detailed close-up"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/with-people.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/with-people.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt:\n      'A chef preparing sushi in a traditional Japanese kitchen, detailed close-up',\n    person_generation: 'allow_adult',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    person_generation: 'allow_adult',\n    prompt: 'A chef preparing sushi in a traditional Japanese kitchen, detailed close-up',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"person_generation\": \"allow_adult\",\n    \"prompt\": \"A chef preparing sushi in a traditional Japanese kitchen, detailed close-up\"\n  }\n}'"
 				}
 			]
 		},
@@ -124,31 +144,40 @@
 			"name": "Product Photo",
 			"description": "Square product photography",
 			"input": {
-				"prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting",
-				"aspect_ratio": "1:1"
+				"aspect_ratio": "1:1",
+				"prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/product-photo.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/product-photo.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    aspect_ratio: '1:1',\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"prompt\": \"A sleek wireless headphone on a minimalist white marble surface with soft studio lighting\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/imagen-4.png",
@@ -156,60 +185,56 @@
 		"Aspect Ratios": "1:1, 3:4, 4:3, 9:16, 16:9",
 		"Person Generation": "Configurable (dont_allow, allow_adult, allow_all)"
 	},
-	"created_at": "2026-04-14 18:41:41",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:11",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
-				"prompt": {
-					"description": "Text prompt describing the image to generate",
-					"type": "string"
-				},
 				"aspect_ratio": {
 					"description": "Aspect ratio of the generated image",
-					"type": "string",
 					"enum": [
 						"1:1",
 						"3:4",
 						"4:3",
 						"9:16",
 						"16:9"
-					]
+					],
+					"type": "string"
 				},
 				"person_generation": {
 					"description": "Allow the model to generate images of people. dont_allow: block people, allow_adult: adults only, allow_all: adults and children",
-					"type": "string",
 					"enum": [
 						"dont_allow",
 						"allow_adult",
 						"allow_all"
-					]
+					],
+					"type": "string"
+				},
+				"prompt": {
+					"description": "Text prompt describing the image to generate",
+					"type": "string"
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"image": {
 					"description": "URL to the generated image",
-					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"type": "string"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

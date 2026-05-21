@@ -22,19 +22,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/simple-generation.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://dashscope-463f.oss-accelerate.aliyuncs.com/1d/66/20260417/c057796c/32701268-BbftSa6r_189314ac1a36.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  { prompt: 'A golden retriever puppy playing in autumn leaves' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-2.6-image\",\n  \"input\": {\n    \"prompt\": \"A golden retriever puppy playing in autumn leaves\"\n  }\n}'"
 				}
 			]
 		},
@@ -49,19 +54,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/custom-dimensions.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://dashscope-463f.oss-accelerate.aliyuncs.com/1d/35/20260417/c057796c/3257252-vy1GbNI6_bc223e38c5b4.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '1024x768',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '1024x768',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-2.6-image\",\n  \"input\": {\n    \"prompt\": \"A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground\",\n    \"size\": \"1024x768\"\n  }\n}'"
 				}
 			]
 		},
@@ -76,19 +86,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/square-format.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://dashscope-463f.oss-accelerate.aliyuncs.com/1d/84/20260417/c057796c/18355039-RFkWcHgG_0dcb1c1d6d95.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-2.6-image\",\n  \"input\": {\n    \"prompt\": \"A sleek wireless headphone on a minimalist white marble surface with soft studio lighting\",\n    \"size\": \"1024x1024\"\n  }\n}'"
 				}
 			]
 		},
@@ -96,26 +111,31 @@
 			"name": "Negative Prompt",
 			"description": "Guide generation away from unwanted elements",
 			"input": {
-				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
-				"negative_prompt": "modern clothing, photograph, blurry, low quality"
+				"negative_prompt": "modern clothing, photograph, blurry, low quality",
+				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/negative-prompt.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://dashscope-463f.oss-accelerate.aliyuncs.com/1d/53/20260417/c057796c/26097304-eVhNm6uS_edc041cd5e2b.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    negative_prompt: 'modern clothing, photograph, blurry, low quality',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    negative_prompt: 'modern clothing, photograph, blurry, low quality',\n    prompt: 'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-2.6-image\",\n  \"input\": {\n    \"negative_prompt\": \"modern clothing, photograph, blurry, low quality\",\n    \"prompt\": \"A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar\"\n  }\n}'"
 				}
 			]
 		},
@@ -130,70 +150,75 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/portrait-format.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://dashscope-463f.oss-accelerate.aliyuncs.com/1d/5a/20260417/c057796c/79957405-YTXQsRY6_8d8a6631f1d6.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    size: '768x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt: 'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    size: '768x1024',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-2.6-image\",\n  \"input\": {\n    \"prompt\": \"An elegant Art Deco poster featuring a jazz singer under a spotlight\",\n    \"size\": \"768x1024\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://wan.video/",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/wan-2.6-image.png",
 	"metadata": {
-		"Size Format": "WxH (e.g. 1024x1024)",
-		"Negative Prompt": "Yes"
+		"Negative Prompt": "Yes",
+		"Size Format": "WxH (e.g. 1024x1024)"
 	},
-	"created_at": "2026-04-14 18:41:46",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:52:52",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
+				"negative_prompt": {
+					"type": "string"
+				},
 				"prompt": {
 					"type": "string"
 				},
 				"size": {
-					"type": "string",
-					"pattern": "^\\d+x\\d+$"
-				},
-				"negative_prompt": {
+					"pattern": "^\\d+x\\d+$",
 					"type": "string"
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"image": {
-					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"type": "string"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

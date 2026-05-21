@@ -23,19 +23,24 @@
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-i2v/simple-image-to-video.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
 				"result": {
 					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-i2v/simple-image-to-video.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "BYOK"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/hh1-i2v',\n  {\n    image:\n      'https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png',\n    prompt: 'A gentle camera push-in on the scene with soft ambient lighting',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-i2v',\n  {\n    image:\n      'https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png',\n    prompt: 'A gentle camera push-in on the scene with soft ambient lighting',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1-i2v\",\n  \"input\": {\n    \"image\": \"https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png\",\n    \"prompt\": \"A gentle camera push-in on the scene with soft ambient lighting\"\n  }\n}'"
 				}
 			]
 		},
@@ -45,26 +50,31 @@
 			"input": {
 				"image": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png",
 				"prompt": "Subject begins rapping confidently to the beat, head bobbing",
-				"resolution": "1080P",
-				"duration": 10
+				"duration": 10,
+				"resolution": "1080P"
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-i2v/high-resolution.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
 				"result": {
 					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-i2v/high-resolution.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "BYOK"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/hh1-i2v',\n  {\n    image:\n      'https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png',\n    prompt: 'Subject begins rapping confidently to the beat, head bobbing',\n    resolution: '1080P',\n    duration: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-i2v',\n  {\n    image:\n      'https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png',\n    prompt: 'Subject begins rapping confidently to the beat, head bobbing',\n    duration: 10,\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1-i2v\",\n  \"input\": {\n    \"image\": \"https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png\",\n    \"prompt\": \"Subject begins rapping confidently to the beat, head bobbing\",\n    \"duration\": 10,\n    \"resolution\": \"1080P\"\n  }\n}'"
 				}
 			]
 		},
@@ -74,76 +84,81 @@
 			"input": {
 				"image": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png",
 				"prompt": "Camera orbits slowly around the subject under streetlamp light",
-				"resolution": "720P",
 				"duration": 8,
+				"resolution": "720P",
 				"seed": 42
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-i2v/reproducible-output.mp4"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
 				"result": {
 					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-i2v/reproducible-output.mp4"
 				},
-				"gatewayMetadata": {
-					"keySource": "BYOK"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/hh1-i2v',\n  {\n    image:\n      'https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png',\n    prompt: 'Camera orbits slowly around the subject under streetlamp light',\n    resolution: '720P',\n    duration: 8,\n    seed: 42,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-i2v',\n  {\n    image:\n      'https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png',\n    prompt: 'Camera orbits slowly around the subject under streetlamp light',\n    duration: 8,\n    resolution: '720P',\n    seed: 42,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1-i2v\",\n  \"input\": {\n    \"image\": \"https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png\",\n    \"prompt\": \"Camera orbits slowly around the subject under streetlamp light\",\n    \"duration\": 8,\n    \"resolution\": \"720P\",\n    \"seed\": 42\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://modelstudio.console.alibabacloud.com/",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
 	"cover_image_url": null,
 	"metadata": {
-		"Resolutions": "720P, 1080P",
+		"Input": "Image URL (no base64)",
 		"Max Duration": "15 seconds",
-		"Input": "Image URL (no base64)"
+		"Resolutions": "720P, 1080P"
 	},
-	"created_at": "2026-04-27 16:27:53",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:52:49",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
-				"image": {
-					"type": "string",
-					"format": "uri"
+				"duration": {
+					"maximum": 15,
+					"minimum": 3,
+					"type": "integer"
 				},
-				"prompt": {
+				"image": {
+					"format": "uri",
 					"type": "string"
 				},
 				"negative_prompt": {
 					"type": "string"
 				},
+				"prompt": {
+					"type": "string"
+				},
 				"resolution": {
-					"type": "string",
 					"enum": [
 						"720P",
 						"1080P"
-					]
-				},
-				"duration": {
-					"type": "integer",
-					"minimum": 3,
-					"maximum": 15
+					],
+					"type": "string"
 				},
 				"seed": {
-					"type": "integer",
+					"maximum": 2147483647,
 					"minimum": 0,
-					"maximum": 2147483647
+					"type": "integer"
 				},
 				"watermark": {
 					"type": "boolean"
@@ -152,21 +167,21 @@
 			"required": [
 				"image"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"video": {
-					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"type": "string"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

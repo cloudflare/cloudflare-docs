@@ -1,0 +1,498 @@
+{
+	"model_id": "google/gemini-2.5-flash",
+	"provider_id": "google",
+	"name": "Gemini 2.5 Flash",
+	"description": "Google's fast multimodal Gemini 2.5 model with strong reasoning and a 1M token context window.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Fast",
+		"Multimodal"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 8192,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic generateContent request",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "What are the three laws of thermodynamics?"
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The three laws of thermodynamics are fundamental principles that govern how energy is transferred and transformed in physical systems. They are:\n\n1.  **The First Law of Thermodynamics (Law of Conservation of Energy)**\n    *   **Statement:** Energy cannot be created or destroyed in an isolated system; it can only be transformed from one form to another.\n    *   **Explanation:** This law means that the total amount of energy in the universe remains constant. When energy appears to be \"lost,\" it has merely changed into a different form (e.g., chemical energy into heat, electrical energy into light and heat). Mathematically, for a closed system, it's often expressed as: $\\Delta U = Q - W$, where $\\Delta U$ is the change in the internal energy of the system, $Q$ is the heat added to the system, and $W$ is the work done *by* the system.\n\n2.  **The Second Law of Thermodynamics (Law of Entropy Increase)**\n    *   **Statement:** The total entropy of an isolated system can only increase over time, or remain constant in ideal cases; it never decreases.\n    *   **Explanation:** Entropy is a measure of disorder or randomness within a system. This law essentially states that natural processes tend to move towards a state of greater disorder or randomness. For example, a broken glass won't spontaneously reassemble, and heat naturally flows from a hotter object to a colder one, not the other way around. This law also implies that no heat engine can be 100% efficient because some energy will always be lost to increasing the entropy of the surroundings (often as waste heat).\n\n3.  **The Third Law of Thermodynamics**\n    *   **Statement:** As a system approaches absolute zero, its entropy approaches a constant minimum value. For a perfect crystal at absolute zero (0 Kelvin or -273.15 \u00b0C), the entropy is exactly zero.\n    *   **Explanation:** This law provides a fundamental reference point for the measurement of entropy. It means that at absolute zero, all molecular motion would cease, and the system would be in its most ordered possible state (a perfect crystal with no defects). In practice, reaching absolute zero is impossible, as doing so would require an infinite number of steps, each becoming progressively harder.\n\nThese three laws are cornerstones of physics and chemistry, explaining a vast range of phenomena from the operation of engines to the direction of chemical reactions and the very evolution of the universe."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -0.7025290479937804,
+						"content": {
+							"parts": [
+								{
+									"text": "The three laws of thermodynamics are fundamental principles that govern how energy is transferred and transformed in physical systems. They are:\n\n1.  **The First Law of Thermodynamics (Law of Conservation of Energy)**\n    *   **Statement:** Energy cannot be created or destroyed in an isolated system; it can only be transformed from one form to another.\n    *   **Explanation:** This law means that the total amount of energy in the universe remains constant. When energy appears to be \"lost,\" it has merely changed into a different form (e.g., chemical energy into heat, electrical energy into light and heat). Mathematically, for a closed system, it's often expressed as: $\\Delta U = Q - W$, where $\\Delta U$ is the change in the internal energy of the system, $Q$ is the heat added to the system, and $W$ is the work done *by* the system.\n\n2.  **The Second Law of Thermodynamics (Law of Entropy Increase)**\n    *   **Statement:** The total entropy of an isolated system can only increase over time, or remain constant in ideal cases; it never decreases.\n    *   **Explanation:** Entropy is a measure of disorder or randomness within a system. This law essentially states that natural processes tend to move towards a state of greater disorder or randomness. For example, a broken glass won't spontaneously reassemble, and heat naturally flows from a hotter object to a colder one, not the other way around. This law also implies that no heat engine can be 100% efficient because some energy will always be lost to increasing the entropy of the surroundings (often as waste heat).\n\n3.  **The Third Law of Thermodynamics**\n    *   **Statement:** As a system approaches absolute zero, its entropy approaches a constant minimum value. For a perfect crystal at absolute zero (0 Kelvin or -273.15 \u00b0C), the entropy is exactly zero.\n    *   **Explanation:** This law provides a fundamental reference point for the measurement of entropy. It means that at absolute zero, all molecular motion would cease, and the system would be in its most ordered possible state (a perfect crystal with no defects). In practice, reaching absolute zero is impossible, as doing so would require an infinite number of steps, each becoming progressively harder.\n\nThese three laws are cornerstones of physics and chemistry, explaining a vast range of phenomena from the operation of engines to the direction of chemical reactions and the very evolution of the universe."
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"createTime": "2026-04-28T19:34:47.652835Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-flash",
+				"responseId": "1wvxaaPsJ8CG998Pn665-Ag",
+				"usageMetadata": {
+					"candidatesTokenCount": 515,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 515
+						}
+					],
+					"promptTokenCount": 8,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 8
+						}
+					],
+					"thoughtsTokenCount": 1020,
+					"totalTokenCount": 1543,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-flash',\n  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the three laws of thermodynamics?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Instruction",
+			"description": "Using a system instruction to set context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "How do I read a JSON file in Python?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"temperature": 0.3
+				},
+				"systemInstruction": {
+					"parts": [
+						{
+							"text": "You are a helpful coding assistant specializing in Python."
+						}
+					]
+				}
+			},
+			"output": {
+				"text": "Reading a JSON (JavaScript Object Notation) file in Python is straightforward, thanks to the built-in `json` module.\n\nHere's a step-by-step guide with examples:\n\n---\n\n### 1. The `json` Module\n\nPython's `json` module provides methods for working with JSON data. The two primary methods you'll use for reading are:\n\n*   **`json.load()`**: Reads JSON data from a file-like object (e.g., a file opened with `open()`).\n*   **`json.loads()`**: Reads JSON data from a string.\n\n---\n\n### 2. Example: Reading a JSON File (`json.load()`)\n\nThis is the most common way to read a JSON file.\n\n**Step 1: Create a sample JSON file**\n\nLet's create a file named `data.json` with the following content:\n\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 30,\n  \"isStudent\": false,\n  \"courses\": [\n    {\"title\": \"Math\", \"credits\": 3},\n    {\"title\": \"Science\", \"credits\": 4}\n  ],\n  \"address\": null\n}\n```\n\n**Step 2: Python code to read the file**\n\n```python\nimport json\n\nfile_path = 'data.json'\n\ntry:\n    # Open the JSON file in read mode ('r')\n    # The 'with' statement ensures the file is properly closed even if errors occur.\n    with open(file_path, 'r', encoding='utf-8') as file:\n        # Use json.load() to parse the JSON data from the file\n        data = json.load(file)\n\n    print(\"JSON data successfully loaded:\")\n    print(data)\n    print(f\"\\nType of loaded data: {type(data)}\")\n\n    # You can now access the data like a Python dictionary or list\n    print(f\"Name: {data['name']}\")\n    print(f\"Age: {data['age']}\")\n    print(f\"First course title: {data['courses'][0]['title']}\")\n\nexcept FileNotFoundError:\n    print(f\"Error: The file '{file_path}' was not found.\")\nexcept json.JSONDecodeError:\n    print(f\"Error: Could not decode JSON from '{file_path}'. Check its format.\")\nexcept Exception as e:\n    print(f\"An unexpected error occurred: {e}\")\n\n```\n\n**Explanation:**\n\n1.  **`import json`**: Imports the necessary module.\n2.  **`with open(file_path, 'r', encoding='utf-8') as file:`**:\n    *   Opens the file specified by `file_path`.\n    *   `'r'` indicates read mode.\n    *   `encoding='utf-8'` is a good practice, especially if your JSON might contain non-ASCII characters.\n    *   The `with` statement is a context manager that ensures the file is automatically closed when the block is exited, even if errors occur.\n3.  **`data = json.load(file)`**: This is the core line. It reads the entire content of the `file` object, parses it as JSON, and converts it into a corresponding Python object (usually a dictionary or a list).\n4.  **Error Handling**: The `try...except` block is crucial for robust code:\n    *   `FileNotFoundError`: Catches the error if the specified file doesn't exist.\n    *   `json.JSONDecodeError`: Catches errors if the file content is not valid JSON.\n    *   `Exception as e`: Catches any other unexpected errors.\n\n---\n\n### 3. Example: Reading JSON from a String (`json.loads()`)\n\nSometimes, you might receive JSON data as a string (e.g., from a web API response). In such cases, you use `json.loads()`.\n\n```python\nimport json\n\njson_string_data = '''\n{\n  \"product\": \"Laptop\",\n  \"price\": 1200.50,\n  \"inStock\": true,\n  \"features\": [\"lightweight\", \"fast processor\"]\n}\n'''\n\ntry:\n    # Use json.loads() to parse the JSON data from a string\n    data_from_string = json.loads(json_string_data)\n\n    print(\"\\nJSON data from string successfully loaded:\")\n    print(data_from_string)\n    print(f\"Type of loaded data: {type(data_from_string)}\")\n\n    print(f\"Product: {data_from_string['product']}\")\n    print(f\"Price: ${data_from_string['price']}\")\n\nexcept json.JSONDecodeError:\n    print(\"Error: Could not decode JSON from the string. Check its format.\")\nexcept Exception as e:\n    print(f\"An unexpected error occurred: {e}\")\n```\n\n---\n\n### 4. JSON to Python Type Conversion\n\nWhen `json.load()` or `json.loads()` parses JSON, it converts JSON data types to their corresponding Python types:\n\n| JSON Type     | Python Type     |\n| :------------ | :-------------- |\n| object        | `dict`          |\n| array         | `list`          |\n| string        | `str`           |\n| number        | `int` or `float` |\n| boolean       | `bool`          |\n| null          | `None`          |\n\n---\n\n### Best Practices:\n\n*   **Always use `with open(...)`**: It's safer and handles file closing automatically.\n*   **Include `encoding='utf-8'`**: This prevents issues with character encoding, especially for international data.\n*   **Implement Error Handling**: Use `try...except` blocks to gracefully handle `FileNotFoundError` and `json.JSONDecodeError`.\n*   **Understand `load` vs. `loads`**: Use `load` for file objects and `loads` for strings."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -0.20984612667199337,
+						"content": {
+							"parts": [
+								{
+									"text": "Reading a JSON (JavaScript Object Notation) file in Python is straightforward, thanks to the built-in `json` module.\n\nHere's a step-by-step guide with examples:\n\n---\n\n### 1. The `json` Module\n\nPython's `json` module provides methods for working with JSON data. The two primary methods you'll use for reading are:\n\n*   **`json.load()`**: Reads JSON data from a file-like object (e.g., a file opened with `open()`).\n*   **`json.loads()`**: Reads JSON data from a string.\n\n---\n\n### 2. Example: Reading a JSON File (`json.load()`)\n\nThis is the most common way to read a JSON file.\n\n**Step 1: Create a sample JSON file**\n\nLet's create a file named `data.json` with the following content:\n\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 30,\n  \"isStudent\": false,\n  \"courses\": [\n    {\"title\": \"Math\", \"credits\": 3},\n    {\"title\": \"Science\", \"credits\": 4}\n  ],\n  \"address\": null\n}\n```\n\n**Step 2: Python code to read the file**\n\n```python\nimport json\n\nfile_path = 'data.json'\n\ntry:\n    # Open the JSON file in read mode ('r')\n    # The 'with' statement ensures the file is properly closed even if errors occur.\n    with open(file_path, 'r', encoding='utf-8') as file:\n        # Use json.load() to parse the JSON data from the file\n        data = json.load(file)\n\n    print(\"JSON data successfully loaded:\")\n    print(data)\n    print(f\"\\nType of loaded data: {type(data)}\")\n\n    # You can now access the data like a Python dictionary or list\n    print(f\"Name: {data['name']}\")\n    print(f\"Age: {data['age']}\")\n    print(f\"First course title: {data['courses'][0]['title']}\")\n\nexcept FileNotFoundError:\n    print(f\"Error: The file '{file_path}' was not found.\")\nexcept json.JSONDecodeError:\n    print(f\"Error: Could not decode JSON from '{file_path}'. Check its format.\")\nexcept Exception as e:\n    print(f\"An unexpected error occurred: {e}\")\n\n```\n\n**Explanation:**\n\n1.  **`import json`**: Imports the necessary module.\n2.  **`with open(file_path, 'r', encoding='utf-8') as file:`**:\n    *   Opens the file specified by `file_path`.\n    *   `'r'` indicates read mode.\n    *   `encoding='utf-8'` is a good practice, especially if your JSON might contain non-ASCII characters.\n    *   The `with` statement is a context manager that ensures the file is automatically closed when the block is exited, even if errors occur.\n3.  **`data = json.load(file)`**: This is the core line. It reads the entire content of the `file` object, parses it as JSON, and converts it into a corresponding Python object (usually a dictionary or a list).\n4.  **Error Handling**: The `try...except` block is crucial for robust code:\n    *   `FileNotFoundError`: Catches the error if the specified file doesn't exist.\n    *   `json.JSONDecodeError`: Catches errors if the file content is not valid JSON.\n    *   `Exception as e`: Catches any other unexpected errors.\n\n---\n\n### 3. Example: Reading JSON from a String (`json.loads()`)\n\nSometimes, you might receive JSON data as a string (e.g., from a web API response). In such cases, you use `json.loads()`.\n\n```python\nimport json\n\njson_string_data = '''\n{\n  \"product\": \"Laptop\",\n  \"price\": 1200.50,\n  \"inStock\": true,\n  \"features\": [\"lightweight\", \"fast processor\"]\n}\n'''\n\ntry:\n    # Use json.loads() to parse the JSON data from a string\n    data_from_string = json.loads(json_string_data)\n\n    print(\"\\nJSON data from string successfully loaded:\")\n    print(data_from_string)\n    print(f\"Type of loaded data: {type(data_from_string)}\")\n\n    print(f\"Product: {data_from_string['product']}\")\n    print(f\"Price: ${data_from_string['price']}\")\n\nexcept json.JSONDecodeError:\n    print(\"Error: Could not decode JSON from the string. Check its format.\")\nexcept Exception as e:\n    print(f\"An unexpected error occurred: {e}\")\n```\n\n---\n\n### 4. JSON to Python Type Conversion\n\nWhen `json.load()` or `json.loads()` parses JSON, it converts JSON data types to their corresponding Python types:\n\n| JSON Type     | Python Type     |\n| :------------ | :-------------- |\n| object        | `dict`          |\n| array         | `list`          |\n| string        | `str`           |\n| number        | `int` or `float` |\n| boolean       | `bool`          |\n| null          | `None`          |\n\n---\n\n### Best Practices:\n\n*   **Always use `with open(...)`**: It's safer and handles file closing automatically.\n*   **Include `encoding='utf-8'`**: This prevents issues with character encoding, especially for international data.\n*   **Implement Error Handling**: Use `try...except` blocks to gracefully handle `FileNotFoundError` and `json.JSONDecodeError`.\n*   **Understand `load` vs. `loads`**: Use `load` for file objects and `loads` for strings."
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"createTime": "2026-04-28T19:34:48.848405Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-flash",
+				"responseId": "2AvxaZXkM5mA6tkPxraQ6Qg",
+				"usageMetadata": {
+					"candidatesTokenCount": 1320,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 1320
+						}
+					],
+					"promptTokenCount": 20,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 20
+						}
+					],
+					"thoughtsTokenCount": 1357,
+					"totalTokenCount": 2697,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-flash',\n  {\n    contents: [{ parts: [{ text: 'How do I read a JSON file in Python?' }], role: 'user' }],\n    generationConfig: { temperature: 0.3 },\n    systemInstruction: {\n      parts: [{ text: 'You are a helpful coding assistant specializing in Python.' }],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"How do I read a JSON file in Python?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.3\n    },\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are a helpful coding assistant specializing in Python.\"\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "I need help planning a road trip from San Francisco to Los Angeles."
+							}
+						],
+						"role": "user"
+					},
+					{
+						"parts": [
+							{
+								"text": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+							}
+						],
+						"role": "model"
+					},
+					{
+						"parts": [
+							{
+								"text": "Yes, what are some good places to stop?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 2048
+				}
+			},
+			"output": {
+				"text": "Okay, you've got two main routes, each with its own character and fantastic stops"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -10.623407151963976,
+						"content": {
+							"parts": [
+								{
+									"text": "Okay, you've got two main routes, each with its own character and fantastic stops"
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "MAX_TOKENS"
+					}
+				],
+				"createTime": "2026-04-28T19:34:57.011971Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-flash",
+				"responseId": "4QvxacNd9bf33w-WuK35Ag",
+				"usageMetadata": {
+					"candidatesTokenCount": 18,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 18
+						}
+					],
+					"promptTokenCount": 64,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 64
+						}
+					],
+					"thoughtsTokenCount": 478,
+					"totalTokenCount": 560,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-flash',\n  {\n    contents: [\n      {\n        parts: [{ text: 'I need help planning a road trip from San Francisco to Los Angeles.' }],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Yes, what are some good places to stop?' }], role: 'user' },\n    ],\n    generationConfig: { maxOutputTokens: 2048 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"I need help planning a road trip from San Francisco to Los Angeles.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Yes, what are some good places to stop?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 2048\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "Write a short story opening about a detective finding an unusual clue."
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 1500,
+					"temperature": 0.8
+				}
+			},
+			"output": {
+				"text": "The rain had been a relentless drumbeat against"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -13.157335069444445,
+						"content": {
+							"parts": [
+								{
+									"text": "The rain had been a relentless drumbeat against"
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "MAX_TOKENS"
+					}
+				],
+				"createTime": "2026-04-28T19:35:01.318796Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-flash",
+				"responseId": "5Qvxacy6E6CV9LsP2P_v0Ak",
+				"usageMetadata": {
+					"candidatesTokenCount": 9,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 9
+						}
+					],
+					"promptTokenCount": 13,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 13
+						}
+					],
+					"thoughtsTokenCount": 287,
+					"totalTokenCount": 309,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-flash',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 1500, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 1500,\n      \"temperature\": 0.8\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://deepmind.google/technologies/gemini/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-2.5-flash.png",
+	"metadata": {
+		"Architecture": "Transformer (multimodal)",
+		"Thinking": "Yes"
+	},
+	"created_at": "2026-05-22 17:53:07",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"contents": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"parts": {
+								"items": {
+									"additionalProperties": {},
+									"properties": {
+										"text": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								},
+								"type": "array"
+							},
+							"role": {
+								"enum": [
+									"user",
+									"model"
+								],
+								"type": "string"
+							}
+						},
+						"required": [
+							"parts"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"generationConfig": {
+					"additionalProperties": {},
+					"properties": {
+						"candidateCount": {
+							"type": "number"
+						},
+						"maxOutputTokens": {
+							"type": "number"
+						},
+						"responseMimeType": {
+							"type": "string"
+						},
+						"stopSequences": {
+							"items": {
+								"type": "string"
+							},
+							"type": "array"
+						},
+						"temperature": {
+							"type": "number"
+						},
+						"topK": {
+							"type": "number"
+						},
+						"topP": {
+							"type": "number"
+						}
+					},
+					"type": "object"
+				},
+				"safetySettings": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"category": {
+								"type": "string"
+							},
+							"threshold": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"category",
+							"threshold"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"systemInstruction": {
+					"additionalProperties": {},
+					"properties": {
+						"parts": {
+							"items": {
+								"additionalProperties": {},
+								"properties": {
+									"text": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							},
+							"type": "array"
+						}
+					},
+					"required": [
+						"parts"
+					],
+					"type": "object"
+				},
+				"toolConfig": {},
+				"tools": {
+					"items": {},
+					"type": "array"
+				}
+			},
+			"required": [
+				"contents"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"candidates": {
+					"items": {},
+					"type": "array"
+				},
+				"modelVersion": {
+					"type": "string"
+				},
+				"usageMetadata": {
+					"additionalProperties": {},
+					"properties": {
+						"candidatesTokenCount": {
+							"type": "number"
+						},
+						"promptTokenCount": {
+							"type": "number"
+						},
+						"totalTokenCount": {
+							"type": "number"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		}
+	}
+}

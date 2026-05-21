@@ -1,0 +1,215 @@
+{
+	"model_id": "black-forest-labs/flux-2-flex",
+	"provider_id": "black-forest-labs",
+	"name": "FLUX.2 [flex]",
+	"description": "FLUX.2 [flex] is Black Forest Labs' fine-grained control variant of FLUX.2 \u2014 exposes tunable inference steps, guidance, and prompt upsampling for typography-heavy and production workflows.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Typography",
+		"Tunable"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Typography & Design",
+			"description": "Typography-heavy advertising layout \u2014 flex is tuned for crisp text rendering",
+			"input": {
+				"prompt": "Samsung Galaxy S25 Ultra product advertisement, 'Ultra-strong titanium' headline, close-up of phone edge showing titanium frame, dark gradient background, clean minimalist tech aesthetic"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-flex/typography-design.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-flex/typography-design.jpeg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt:\n      \"Samsung Galaxy S25 Ultra product advertisement, 'Ultra-strong titanium' headline, close-up of phone edge showing titanium frame, dark gradient background, clean minimalist tech aesthetic\",\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-flex\",\n  \"input\": {\n    \"prompt\": \"Samsung Galaxy S25 Ultra product advertisement, '\\''Ultra-strong titanium'\\'' headline, close-up of phone edge showing titanium frame, dark gradient background, clean minimalist tech aesthetic\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "High Detail Generation",
+			"description": "Crank steps and guidance for maximum detail when latency is not the priority",
+			"input": {
+				"guidance": 7.5,
+				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+				"steps": 50
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-flex/high-detail-generation.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-flex/high-detail-generation.jpeg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt: 'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    steps: 50,\n    guidance: 7.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-flex\",\n  \"input\": {\n    \"guidance\": 7.5,\n    \"prompt\": \"A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar\",\n    \"steps\": 50\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Fast Draft",
+			"description": "Fast draft with prompt upsampling disabled \u2014 preserves the literal prompt",
+			"input": {
+				"prompt": "A simple line sketch of a mountain landscape",
+				"prompt_upsampling": false,
+				"steps": 10
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-flex/fast-draft.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-flex/fast-draft.jpeg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt: 'A simple line sketch of a mountain landscape',\n    steps: 10,\n    prompt_upsampling: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-flex\",\n  \"input\": {\n    \"prompt\": \"A simple line sketch of a mountain landscape\",\n    \"prompt_upsampling\": false,\n    \"steps\": 10\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://blackforestlabs.ai/",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": null,
+	"metadata": {
+		"Architecture": "Flow matching transformer",
+		"Guidance Range": "1.5 \u2013 10",
+		"Max Reference Images": "8",
+		"Steps Range": "1 \u2013 50"
+	},
+	"created_at": "2026-05-27 23:12:22",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"guidance": {
+					"description": "Classifier-free guidance scale (1.5\u201310). Higher values follow the prompt more strictly at the cost of realism.",
+					"maximum": 10,
+					"minimum": 1.5,
+					"type": "number"
+				},
+				"height": {
+					"description": "Height of the generated image in pixels (minimum 64). Omit to let BFL pick.",
+					"maximum": 9007199254740991,
+					"minimum": 64,
+					"type": "integer"
+				},
+				"input_images": {
+					"description": "Up to 8 reference images for editing or multi-image composition. Each entry is an HTTPS URL or a data:image/...;base64,... URI.",
+					"items": {
+						"type": "string"
+					},
+					"maxItems": 8,
+					"type": "array"
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"enum": [
+						"jpeg",
+						"png",
+						"webp"
+					],
+					"type": "string"
+				},
+				"prompt": {
+					"description": "Text prompt for image generation or editing.",
+					"type": "string"
+				},
+				"prompt_upsampling": {
+					"description": "Whether BFL should expand short prompts before generation. Defaults to true on flex.",
+					"type": "boolean"
+				},
+				"safety_tolerance": {
+					"description": "Tolerance for input/output moderation. 0 is the strictest, 5 the most permissive. Defaults to 2.",
+					"maximum": 5,
+					"minimum": 0,
+					"type": "integer"
+				},
+				"seed": {
+					"description": "Optional seed for reproducible generation.",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
+					"type": "integer"
+				},
+				"steps": {
+					"description": "Number of denoising steps (1\u201350). Higher steps yield more detail at the cost of latency.",
+					"maximum": 50,
+					"minimum": 1,
+					"type": "integer"
+				},
+				"width": {
+					"description": "Width of the generated image in pixels (minimum 64). Omit to let BFL pick.",
+					"maximum": 9007199254740991,
+					"minimum": 64,
+					"type": "integer"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"image": {
+					"description": "URL to the generated image",
+					"format": "uri",
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"type": "object"
+		}
+	}
+}

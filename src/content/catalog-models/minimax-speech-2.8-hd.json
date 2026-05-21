@@ -19,30 +19,35 @@
 			"name": "Simple Speech",
 			"description": "Generate speech with default settings",
 			"input": {
+				"format": "mp3",
+				"pitch": 0,
+				"speed": 1,
 				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
 				"voice_id": "English_expressive_narrator",
-				"speed": 1,
-				"volume": 1,
-				"pitch": 0,
-				"format": "mp3"
+				"volume": 1
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/simple-speech.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/simple-speech.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice_id: 'English_expressive_narrator',\n    speed: 1,\n    volume: 1,\n    pitch: 0,\n    format: 'mp3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    format: 'mp3',\n    pitch: 0,\n    speed: 1,\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-hd\",\n  \"input\": {\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 1,\n    \"text\": \"Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		},
@@ -50,30 +55,35 @@
 			"name": "Custom Voice",
 			"description": "Use a specific voice and adjust speed",
 			"input": {
+				"format": "mp3",
+				"pitch": 0,
+				"speed": 0.9,
 				"text": "The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.",
 				"voice_id": "English_expressive_narrator",
-				"speed": 0.9,
-				"volume": 1,
-				"pitch": 0,
-				"format": "mp3"
+				"volume": 1
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/custom-voice.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/custom-voice.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.',\n    voice_id: 'English_expressive_narrator',\n    speed: 0.9,\n    volume: 1,\n    pitch: 0,\n    format: 'mp3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    format: 'mp3',\n    pitch: 0,\n    speed: 0.9,\n    text: 'The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.',\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-hd\",\n  \"input\": {\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 0.9,\n    \"text\": \"The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		},
@@ -81,31 +91,36 @@
 			"name": "With Emotion",
 			"description": "Apply emotional tone to speech",
 			"input": {
+				"emotion": "happy",
+				"format": "mp3",
+				"pitch": 0,
+				"speed": 1,
 				"text": "Congratulations! You've just won the grand prize! This is absolutely incredible news!",
 				"voice_id": "English_expressive_narrator",
-				"speed": 1,
-				"volume": 1,
-				"pitch": 0,
-				"emotion": "happy",
-				"format": "mp3"
+				"volume": 1
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/with-emotion.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/with-emotion.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: \"Congratulations! You've just won the grand prize! This is absolutely incredible news!\",\n    voice_id: 'English_expressive_narrator',\n    speed: 1,\n    volume: 1,\n    pitch: 0,\n    emotion: 'happy',\n    format: 'mp3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    emotion: 'happy',\n    format: 'mp3',\n    pitch: 0,\n    speed: 1,\n    text: \"Congratulations! You've just won the grand prize! This is absolutely incredible news!\",\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-hd\",\n  \"input\": {\n    \"emotion\": \"happy\",\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 1,\n    \"text\": \"Congratulations! You've just won the grand prize! This is absolutely incredible news!\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		},
@@ -113,88 +128,61 @@
 			"name": "High Sample Rate",
 			"description": "Studio quality at 44.1kHz sample rate",
 			"input": {
+				"format": "mp3",
+				"pitch": 0,
+				"sample_rate": 44100,
+				"speed": 1,
 				"text": "This recording is generated at studio quality sample rate for the highest possible audio fidelity.",
 				"voice_id": "English_expressive_narrator",
-				"speed": 1,
-				"volume": 1,
-				"pitch": 0,
-				"format": "mp3",
-				"sample_rate": 44100
+				"volume": 1
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/high-sample-rate.mp3"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/high-sample-rate.mp3"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'This recording is generated at studio quality sample rate for the highest possible audio fidelity.',\n    voice_id: 'English_expressive_narrator',\n    speed: 1,\n    volume: 1,\n    pitch: 0,\n    format: 'mp3',\n    sample_rate: 44100,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    format: 'mp3',\n    pitch: 0,\n    sample_rate: 44100,\n    speed: 1,\n    text: 'This recording is generated at studio quality sample rate for the highest possible audio fidelity.',\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-hd\",\n  \"input\": {\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"sample_rate\": 44100,\n    \"speed\": 1,\n    \"text\": \"This recording is generated at studio quality sample rate for the highest possible audio fidelity.\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://www.minimaxi.com/",
 	"terms": "https://www.minimaxi.com/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/speech-2.8-hd.png",
 	"metadata": {
+		"Emotion Control": "Yes",
 		"Languages": "40+",
-		"Voice Cloning": "Yes",
-		"Emotion Control": "Yes"
+		"Voice Cloning": "Yes"
 	},
-	"created_at": "2026-04-13 16:46:35",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"created_at": "2026-05-22 17:53:20",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
-				"text": {
-					"description": "The text to convert to speech. Maximum 10,000 characters.",
-					"type": "string",
-					"maxLength": 10000
-				},
-				"voice_id": {
-					"description": "The voice ID to use for synthesis",
-					"default": "English_expressive_narrator",
-					"type": "string"
-				},
-				"speed": {
-					"description": "Speech speed (0.5 to 2)",
-					"default": 1,
-					"type": "number",
-					"minimum": 0.5,
-					"maximum": 2
-				},
-				"volume": {
-					"description": "Speech volume (0 to 10)",
-					"default": 1,
-					"type": "number",
-					"minimum": 0,
-					"maximum": 10
-				},
-				"pitch": {
-					"description": "Pitch adjustment (-12 to 12)",
-					"default": 0,
-					"type": "integer",
-					"minimum": -12,
-					"maximum": 12
-				},
 				"emotion": {
 					"description": "Emotion control for synthesized speech",
-					"type": "string",
 					"enum": [
 						"happy",
 						"sad",
@@ -204,46 +192,78 @@
 						"surprised",
 						"calm",
 						"fluent"
-					]
+					],
+					"type": "string"
 				},
 				"format": {
-					"description": "Output audio format",
 					"default": "mp3",
-					"type": "string",
+					"description": "Output audio format",
 					"enum": [
 						"mp3",
 						"flac",
 						"wav"
-					]
+					],
+					"type": "string"
+				},
+				"pitch": {
+					"default": 0,
+					"description": "Pitch adjustment (-12 to 12)",
+					"maximum": 12,
+					"minimum": -12,
+					"type": "integer"
 				},
 				"sample_rate": {
-					"description": "Audio sample rate",
 					"anyOf": [
 						{
-							"type": "number",
-							"const": 8000
+							"const": 8000,
+							"type": "number"
 						},
 						{
-							"type": "number",
-							"const": 16000
+							"const": 16000,
+							"type": "number"
 						},
 						{
-							"type": "number",
-							"const": 22050
+							"const": 22050,
+							"type": "number"
 						},
 						{
-							"type": "number",
-							"const": 24000
+							"const": 24000,
+							"type": "number"
 						},
 						{
-							"type": "number",
-							"const": 32000
+							"const": 32000,
+							"type": "number"
 						},
 						{
-							"type": "number",
-							"const": 44100
+							"const": 44100,
+							"type": "number"
 						}
-					]
+					],
+					"description": "Audio sample rate"
+				},
+				"speed": {
+					"default": 1,
+					"description": "Speech speed (0.5 to 2)",
+					"maximum": 2,
+					"minimum": 0.5,
+					"type": "number"
+				},
+				"text": {
+					"description": "The text to convert to speech. Maximum 10,000 characters.",
+					"maxLength": 10000,
+					"type": "string"
+				},
+				"voice_id": {
+					"default": "English_expressive_narrator",
+					"description": "The voice ID to use for synthesis",
+					"type": "string"
+				},
+				"volume": {
+					"default": 1,
+					"description": "Speech volume (0 to 10)",
+					"maximum": 10,
+					"minimum": 0,
+					"type": "number"
 				}
 			},
 			"required": [
@@ -254,11 +274,11 @@
 				"pitch",
 				"format"
 			],
-			"additionalProperties": false
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": false,
 			"properties": {
 				"audio": {
 					"description": "URL to the generated audio file",
@@ -268,7 +288,7 @@
 			"required": [
 				"audio"
 			],
-			"additionalProperties": false
+			"type": "object"
 		}
 	}
 }

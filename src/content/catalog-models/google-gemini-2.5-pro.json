@@ -1,0 +1,499 @@
+{
+	"model_id": "google/gemini-2.5-pro",
+	"provider_id": "google",
+	"name": "Gemini 2.5 Pro",
+	"description": "Google's most capable Gemini 2.5 model with strong reasoning, thinking support, and a 1M token context window.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Reasoning",
+		"Multimodal",
+		"Thinking"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 65536,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic generateContent request",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "What are the three laws of thermodynamics?"
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Of course! The three laws of thermodynamics are fundamental principles in physics that describe the relationships between heat, energy, and work.\n\nHere they are, explained from a simple \"catchphrase\" summary to a more detailed breakdown.\n\n***\n\n### A Quick Summary (The \"Gambling\" Analogy)\n\nA popular, easy way to remember the laws is to think of them in terms of a game:\n\n1.  **First Law:** You can't win. (You can't get more energy out than you put in.)\n2.  **Second Law:** You can't break even. (You can't even get back the energy you put in, in a perfectly useful form.)\n3.  **Third Law:** You can't quit the game. (You can't reach absolute zero and stop all energy.)\n\n***\n\n### The Detailed Explanation\n\nBefore the three main laws, it's helpful to understand the **Zeroth Law**, which was formulated after the others but is more fundamental.\n\n#### The Zeroth Law of Thermodynamics: Defines Temperature\n*   **Simple Statement:** Objects in thermal equilibrium are at the same temperature.\n*   **Explanation:** If two systems are each in thermal equilibrium with a third system, then they are also in thermal equilibrium with each other. This law sounds obvious, but it's what makes thermometers work. When you put a thermometer in a cup of coffee, the thermometer and coffee reach thermal equilibrium. If you then use that thermometer on another cup and it gives the same reading, you know both cups are the same temperature without them ever having touched.\n\n---\n\n### 1. The First Law of Thermodynamics: Conservation of Energy\n\n*   **Simple Statement:** Energy cannot be created or destroyed, only converted from one form to another.\n*   **Explanation:** This is the thermodynamic version of the law of conservation of energy. It means that the total energy in a closed system is constant. If you add energy to a system (e.g., by heating it), that energy doesn't disappear. It either increases the system's internal energy (making it hotter) or is used by the system to do work on its surroundings (like a piston moving). You can't get free energy out of nothing.\n*   **Everyday Example:** When you eat food, the chemical energy stored in the food is converted by your body into thermal energy (to keep you warm) and kinetic energy (to move your muscles). The energy isn't created; it's just transformed.\n\n---\n\n### 2. The Second Law of Thermodynamics: The Increase of Entropy\n\n*   **Simple Statement:** The total entropy (disorder) of the universe always increases over time.\n*   **Explanation:** This is arguably the most profound of the laws. It states that natural processes tend to move towards a state of greater disorder or randomness (entropy). Heat will always spontaneously flow from a hotter object to a colder object, never the other way around. This flow increases the overall entropy because the energy becomes more spread out and less \"organized.\" Because of this law, no energy transfer is 100% efficient; some energy is always lost as waste heat, increasing the overall disorder of the universe.\n*   **Everyday Example:** A hot cup of coffee will always cool down to room temperature. The concentrated heat (an ordered state) will spread out into the cooler, larger room (a more disordered state). You will never see a room-temperature cup of coffee spontaneously become hot by drawing heat from the air. Similarly, an ice cube melts in a warm room, moving from an ordered crystal structure to a disordered liquid.\n\n---\n\n### 3. The Third Law of Thermodynamics: Absolute Zero is Unreachable\n\n*   **Simple Statement:** The entropy of a system approaches a minimum value as the temperature approaches absolute zero. It is impossible to reach absolute zero in a finite number of steps.\n*   **Explanation:** Absolute zero (0 Kelvin or -273.15\u00b0C / -459.67\u00b0F) is the theoretical temperature at which all particle motion would completely stop. The Third Law states that as you get colder and closer to this temperature, the entropy of a perfect crystal becomes zero. However, the law also implies that it's physically impossible to ever reach absolute zero. Each step you take to cool a system gets you closer, but the effort required to remove the next bit of heat increases exponentially. You can get incredibly close, but you can never take that final step to get there.\n*   **Everyday Example:** This law is less intuitive in daily life as it deals with extreme cold. But you can think of it like trying to create a perfect vacuum by pumping all the air out of a container. With each pump, you remove a fraction of the remaining air, so you get closer and closer to a perfect vacuum but never fully achieve it because there will always be *some* molecules left. Reaching absolute zero is a similar process of diminishing returns.\n\n| Law | Simple Statement | Key Concept |\n| :--- | :--- | :--- |\n| **Zeroth** | Defines temperature. | Thermal Equilibrium |\n| **First** | Energy is conserved. | Conservation of Energy |\n| **Second**| Disorder (entropy) increases. | Entropy & The Arrow of Time |\n| **Third** | Absolute zero is unreachable. | Absolute Zero & Minimum Entropy |"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -0.3830967711048414,
+						"content": {
+							"parts": [
+								{
+									"text": "Of course! The three laws of thermodynamics are fundamental principles in physics that describe the relationships between heat, energy, and work.\n\nHere they are, explained from a simple \"catchphrase\" summary to a more detailed breakdown.\n\n***\n\n### A Quick Summary (The \"Gambling\" Analogy)\n\nA popular, easy way to remember the laws is to think of them in terms of a game:\n\n1.  **First Law:** You can't win. (You can't get more energy out than you put in.)\n2.  **Second Law:** You can't break even. (You can't even get back the energy you put in, in a perfectly useful form.)\n3.  **Third Law:** You can't quit the game. (You can't reach absolute zero and stop all energy.)\n\n***\n\n### The Detailed Explanation\n\nBefore the three main laws, it's helpful to understand the **Zeroth Law**, which was formulated after the others but is more fundamental.\n\n#### The Zeroth Law of Thermodynamics: Defines Temperature\n*   **Simple Statement:** Objects in thermal equilibrium are at the same temperature.\n*   **Explanation:** If two systems are each in thermal equilibrium with a third system, then they are also in thermal equilibrium with each other. This law sounds obvious, but it's what makes thermometers work. When you put a thermometer in a cup of coffee, the thermometer and coffee reach thermal equilibrium. If you then use that thermometer on another cup and it gives the same reading, you know both cups are the same temperature without them ever having touched.\n\n---\n\n### 1. The First Law of Thermodynamics: Conservation of Energy\n\n*   **Simple Statement:** Energy cannot be created or destroyed, only converted from one form to another.\n*   **Explanation:** This is the thermodynamic version of the law of conservation of energy. It means that the total energy in a closed system is constant. If you add energy to a system (e.g., by heating it), that energy doesn't disappear. It either increases the system's internal energy (making it hotter) or is used by the system to do work on its surroundings (like a piston moving). You can't get free energy out of nothing.\n*   **Everyday Example:** When you eat food, the chemical energy stored in the food is converted by your body into thermal energy (to keep you warm) and kinetic energy (to move your muscles). The energy isn't created; it's just transformed.\n\n---\n\n### 2. The Second Law of Thermodynamics: The Increase of Entropy\n\n*   **Simple Statement:** The total entropy (disorder) of the universe always increases over time.\n*   **Explanation:** This is arguably the most profound of the laws. It states that natural processes tend to move towards a state of greater disorder or randomness (entropy). Heat will always spontaneously flow from a hotter object to a colder object, never the other way around. This flow increases the overall entropy because the energy becomes more spread out and less \"organized.\" Because of this law, no energy transfer is 100% efficient; some energy is always lost as waste heat, increasing the overall disorder of the universe.\n*   **Everyday Example:** A hot cup of coffee will always cool down to room temperature. The concentrated heat (an ordered state) will spread out into the cooler, larger room (a more disordered state). You will never see a room-temperature cup of coffee spontaneously become hot by drawing heat from the air. Similarly, an ice cube melts in a warm room, moving from an ordered crystal structure to a disordered liquid.\n\n---\n\n### 3. The Third Law of Thermodynamics: Absolute Zero is Unreachable\n\n*   **Simple Statement:** The entropy of a system approaches a minimum value as the temperature approaches absolute zero. It is impossible to reach absolute zero in a finite number of steps.\n*   **Explanation:** Absolute zero (0 Kelvin or -273.15\u00b0C / -459.67\u00b0F) is the theoretical temperature at which all particle motion would completely stop. The Third Law states that as you get colder and closer to this temperature, the entropy of a perfect crystal becomes zero. However, the law also implies that it's physically impossible to ever reach absolute zero. Each step you take to cool a system gets you closer, but the effort required to remove the next bit of heat increases exponentially. You can get incredibly close, but you can never take that final step to get there.\n*   **Everyday Example:** This law is less intuitive in daily life as it deals with extreme cold. But you can think of it like trying to create a perfect vacuum by pumping all the air out of a container. With each pump, you remove a fraction of the remaining air, so you get closer and closer to a perfect vacuum but never fully achieve it because there will always be *some* molecules left. Reaching absolute zero is a similar process of diminishing returns.\n\n| Law | Simple Statement | Key Concept |\n| :--- | :--- | :--- |\n| **Zeroth** | Defines temperature. | Thermal Equilibrium |\n| **First** | Energy is conserved. | Conservation of Energy |\n| **Second**| Disorder (entropy) increases. | Entropy & The Arrow of Time |\n| **Third** | Absolute zero is unreachable. | Absolute Zero & Minimum Entropy |"
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"createTime": "2026-04-28T19:34:08.655096Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-pro",
+				"responseId": "sAvxafj9J8aA9LsP4fWlkAs",
+				"usageMetadata": {
+					"candidatesTokenCount": 1127,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 1127
+						}
+					],
+					"promptTokenCount": 8,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 8
+						}
+					],
+					"thoughtsTokenCount": 1631,
+					"totalTokenCount": 2766,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-pro',\n  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the three laws of thermodynamics?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Instruction",
+			"description": "Using a system instruction to set context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "How do I read a JSON file in Python?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"temperature": 0.3
+				},
+				"systemInstruction": {
+					"parts": [
+						{
+							"text": "You are a helpful coding assistant specializing in Python."
+						}
+					]
+				}
+			},
+			"output": {
+				"text": "Of course! Reading a JSON file in Python is a common task, and the built-in `json` module makes it very straightforward.\n\nHere is the most common and recommended way to do it.\n\n### The Short & Sweet Answer\n\nUse the `json.load()` function along with a `with open()` context manager.\n\n```python\nimport json\n\n# The name of your JSON file\nfilename = 'data.json'\n\n# Use a 'with' statement for safe file handling\nwith open(filename, 'r') as file:\n    # Load the JSON data from the file into a Python object\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary (or list) that you can work with\nprint(\"Successfully loaded JSON data!\")\nprint(data)\n\n# Example of accessing data\nprint(\"\\nAccessing specific data:\")\nprint(\"Name:\", data['name'])\nprint(\"First skill:\", data['skills'][0])\n```\n\n---\n\n### Step-by-Step Explanation\n\nLet's break down the code above with a complete, runnable example.\n\n#### 1. Create a Sample JSON File\n\nFirst, let's create a JSON file to read. Save the following content in a file named `data.json` in the same directory as your Python script.\n\n**`data.json`**\n```json\n{\n  \"name\": \"Alex\",\n  \"id\": 12345,\n  \"is_active\": true,\n  \"email\": null,\n  \"skills\": [\n    \"Python\",\n    \"Data Analysis\",\n    \"Machine Learning\"\n  ],\n  \"projects\": {\n    \"project_a\": \"In Progress\",\n    \"project_b\": \"Completed\"\n  }\n}\n```\n> **Note:** JSON requires double quotes `\"` for all keys and string values. Single quotes `'` will cause an error.\n\n#### 2. Write the Python Script\n\nNow, let's look at the Python code in detail.\n\n**`read_file.py`**\n```python\n# Step 1: Import the json module\n# This module is built into Python, so no installation is needed.\nimport json\n\n# Step 2: Open the JSON file for reading\n# The 'with' statement is highly recommended because it automatically\n# handles closing the file, even if errors occur.\n# 'r' stands for \"read mode\".\nwith open('data.json', 'r') as f:\n    \n    # Step 3: Load the data using json.load()\n    # The json.load() function reads from a file-like object (f),\n    # parses the JSON data, and converts it into a Python object.\n    data = json.load(f)\n\n# Step 4: Work with your new Python object\n# The 'data' variable now holds the content of the JSON file.\n# JSON objects are converted to Python dictionaries.\n# JSON arrays are converted to Python lists.\n\nprint(\"The data type is:\", type(data))\nprint(\"---\")\nprint(\"Full data:\", data)\nprint(\"---\")\n\n# You can now access the data just like any other Python dictionary\nprint(\"User's name:\", data['name'])\nprint(\"User's skills:\", data['skills'])\n\n# Loop through the list of skills\nprint(\"\\nSkills:\")\nfor skill in data['skills']:\n    print(\"-\", skill)\n```\n\n#### How JSON Types Map to Python Types\n\nWhen you use `json.load()`, the data is converted as follows:\n\n| JSON | Python |\n| :--- | :--- |\n| object | `dict` |\n| array | `list` |\n| string | `str` |\n| number (int) | `int` |\n| number (real) | `float` |\n| `true` | `True` |\n| `false` | `False` |\n| `null` | `None` |\n\n---\n\n### Common Issues and Solutions\n\n1.  **`FileNotFoundError`**: This happens if Python can't find your file.\n    *   **Solution**: Make sure the file name is spelled correctly and the file is in the same directory as your script. If it's in a different directory, provide the full or relative path (e.g., `'data/my_file.json'`).\n\n2.  **`json.JSONDecodeError`**: This means your file is not valid JSON.\n    *   **Solution**: Check your `.json` file for syntax errors. The most common mistakes are:\n        *   Using single quotes (`'`) instead of double quotes (`\"`).\n        *   Having a trailing comma after the last item in an object or list.\n        *   Missing commas between elements.\n\n3.  **Character Encoding Issues**: If your file contains special characters (like `\u00e9` or `\u00fc`), you might get a `UnicodeDecodeError`.\n    *   **Solution**: Specify the encoding when opening the file. UTF-8 is the most common and is standard for JSON.\n    ```python\n    with open('data.json', 'r', encoding='utf-8') as file:\n        data = json.load(file)\n    ```\n\n### Reading a JSON String vs. a JSON File\n\nIt's important to know the difference between `json.load()` and `json.loads()`.\n\n*   `json.load()`: Reads from a **file object**.\n*   `json.loads()`: Reads from a **string**. (The 's' stands for \"string\").\n\n**Example using `json.loads()`:**\n\n```python\nimport json\n\njson_string = \"\"\"\n{\n  \"name\": \"Brenda\",\n  \"city\": \"New York\"\n}\n\"\"\"\n\n# Load data from the string\ndata = json.loads(json_string)\n\nprint(data['city'])  # Output: New York\n```"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -0.18925412299094185,
+						"content": {
+							"parts": [
+								{
+									"text": "Of course! Reading a JSON file in Python is a common task, and the built-in `json` module makes it very straightforward.\n\nHere is the most common and recommended way to do it.\n\n### The Short & Sweet Answer\n\nUse the `json.load()` function along with a `with open()` context manager.\n\n```python\nimport json\n\n# The name of your JSON file\nfilename = 'data.json'\n\n# Use a 'with' statement for safe file handling\nwith open(filename, 'r') as file:\n    # Load the JSON data from the file into a Python object\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary (or list) that you can work with\nprint(\"Successfully loaded JSON data!\")\nprint(data)\n\n# Example of accessing data\nprint(\"\\nAccessing specific data:\")\nprint(\"Name:\", data['name'])\nprint(\"First skill:\", data['skills'][0])\n```\n\n---\n\n### Step-by-Step Explanation\n\nLet's break down the code above with a complete, runnable example.\n\n#### 1. Create a Sample JSON File\n\nFirst, let's create a JSON file to read. Save the following content in a file named `data.json` in the same directory as your Python script.\n\n**`data.json`**\n```json\n{\n  \"name\": \"Alex\",\n  \"id\": 12345,\n  \"is_active\": true,\n  \"email\": null,\n  \"skills\": [\n    \"Python\",\n    \"Data Analysis\",\n    \"Machine Learning\"\n  ],\n  \"projects\": {\n    \"project_a\": \"In Progress\",\n    \"project_b\": \"Completed\"\n  }\n}\n```\n> **Note:** JSON requires double quotes `\"` for all keys and string values. Single quotes `'` will cause an error.\n\n#### 2. Write the Python Script\n\nNow, let's look at the Python code in detail.\n\n**`read_file.py`**\n```python\n# Step 1: Import the json module\n# This module is built into Python, so no installation is needed.\nimport json\n\n# Step 2: Open the JSON file for reading\n# The 'with' statement is highly recommended because it automatically\n# handles closing the file, even if errors occur.\n# 'r' stands for \"read mode\".\nwith open('data.json', 'r') as f:\n    \n    # Step 3: Load the data using json.load()\n    # The json.load() function reads from a file-like object (f),\n    # parses the JSON data, and converts it into a Python object.\n    data = json.load(f)\n\n# Step 4: Work with your new Python object\n# The 'data' variable now holds the content of the JSON file.\n# JSON objects are converted to Python dictionaries.\n# JSON arrays are converted to Python lists.\n\nprint(\"The data type is:\", type(data))\nprint(\"---\")\nprint(\"Full data:\", data)\nprint(\"---\")\n\n# You can now access the data just like any other Python dictionary\nprint(\"User's name:\", data['name'])\nprint(\"User's skills:\", data['skills'])\n\n# Loop through the list of skills\nprint(\"\\nSkills:\")\nfor skill in data['skills']:\n    print(\"-\", skill)\n```\n\n#### How JSON Types Map to Python Types\n\nWhen you use `json.load()`, the data is converted as follows:\n\n| JSON | Python |\n| :--- | :--- |\n| object | `dict` |\n| array | `list` |\n| string | `str` |\n| number (int) | `int` |\n| number (real) | `float` |\n| `true` | `True` |\n| `false` | `False` |\n| `null` | `None` |\n\n---\n\n### Common Issues and Solutions\n\n1.  **`FileNotFoundError`**: This happens if Python can't find your file.\n    *   **Solution**: Make sure the file name is spelled correctly and the file is in the same directory as your script. If it's in a different directory, provide the full or relative path (e.g., `'data/my_file.json'`).\n\n2.  **`json.JSONDecodeError`**: This means your file is not valid JSON.\n    *   **Solution**: Check your `.json` file for syntax errors. The most common mistakes are:\n        *   Using single quotes (`'`) instead of double quotes (`\"`).\n        *   Having a trailing comma after the last item in an object or list.\n        *   Missing commas between elements.\n\n3.  **Character Encoding Issues**: If your file contains special characters (like `\u00e9` or `\u00fc`), you might get a `UnicodeDecodeError`.\n    *   **Solution**: Specify the encoding when opening the file. UTF-8 is the most common and is standard for JSON.\n    ```python\n    with open('data.json', 'r', encoding='utf-8') as file:\n        data = json.load(file)\n    ```\n\n### Reading a JSON String vs. a JSON File\n\nIt's important to know the difference between `json.load()` and `json.loads()`.\n\n*   `json.load()`: Reads from a **file object**.\n*   `json.loads()`: Reads from a **string**. (The 's' stands for \"string\").\n\n**Example using `json.loads()`:**\n\n```python\nimport json\n\njson_string = \"\"\"\n{\n  \"name\": \"Brenda\",\n  \"city\": \"New York\"\n}\n\"\"\"\n\n# Load data from the string\ndata = json.loads(json_string)\n\nprint(data['city'])  # Output: New York\n```"
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"createTime": "2026-04-28T19:34:08.614146Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-pro",
+				"responseId": "sAvxaYK-JZmA6tkPxraQ6Qg",
+				"usageMetadata": {
+					"candidatesTokenCount": 1292,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 1292
+						}
+					],
+					"promptTokenCount": 20,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 20
+						}
+					],
+					"thoughtsTokenCount": 1582,
+					"totalTokenCount": 2894,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-pro',\n  {\n    contents: [{ parts: [{ text: 'How do I read a JSON file in Python?' }], role: 'user' }],\n    generationConfig: { temperature: 0.3 },\n    systemInstruction: {\n      parts: [{ text: 'You are a helpful coding assistant specializing in Python.' }],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"How do I read a JSON file in Python?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.3\n    },\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are a helpful coding assistant specializing in Python.\"\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "I need help planning a road trip from San Francisco to Los Angeles."
+							}
+						],
+						"role": "user"
+					},
+					{
+						"parts": [
+							{
+								"text": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+							}
+						],
+						"role": "model"
+					},
+					{
+						"parts": [
+							{
+								"text": "Yes, what are some good places to stop?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 2048
+				}
+			},
+			"output": {
+				"text": "Of course! The drive from San Francisco to Los Angeles offers two very different experiences, depending on"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -5.178282888312089,
+						"content": {
+							"parts": [
+								{
+									"text": "Of course! The drive from San Francisco to Los Angeles offers two very different experiences, depending on"
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "MAX_TOKENS"
+					}
+				],
+				"createTime": "2026-04-28T19:34:34.916567Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-pro",
+				"responseId": "ygvxadf4N5TIodAPqsDhyQk",
+				"usageMetadata": {
+					"candidatesTokenCount": 19,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 19
+						}
+					],
+					"promptTokenCount": 64,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 64
+						}
+					],
+					"thoughtsTokenCount": 477,
+					"totalTokenCount": 560,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-pro',\n  {\n    contents: [\n      {\n        parts: [{ text: 'I need help planning a road trip from San Francisco to Los Angeles.' }],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Yes, what are some good places to stop?' }], role: 'user' },\n    ],\n    generationConfig: { maxOutputTokens: 2048 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"I need help planning a road trip from San Francisco to Los Angeles.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Yes, what are some good places to stop?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 2048\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "Write a short story opening about a detective finding an unusual clue."
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 1500,
+					"temperature": 0.8
+				}
+			},
+			"output": {
+				"text": "The stale, metallic tang of blood was the first"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"avgLogprobs": -7.117010498046875,
+						"content": {
+							"parts": [
+								{
+									"text": "The stale, metallic tang of blood was the first"
+								}
+							],
+							"role": "model"
+						},
+						"finishReason": "MAX_TOKENS"
+					}
+				],
+				"createTime": "2026-04-28T19:34:36.902347Z",
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"modelVersion": "gemini-2.5-pro",
+				"responseId": "zAvxacuJN-fHodAP8o2RyQ4",
+				"usageMetadata": {
+					"candidatesTokenCount": 10,
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 10
+						}
+					],
+					"promptTokenCount": 13,
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 13
+						}
+					],
+					"thoughtsTokenCount": 286,
+					"totalTokenCount": 309,
+					"trafficType": "ON_DEMAND"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-2.5-pro',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 1500, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-2.5-pro\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 1500,\n      \"temperature\": 0.8\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://deepmind.google/technologies/gemini/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-2.5-pro.png",
+	"metadata": {
+		"Architecture": "Transformer (multimodal)",
+		"Thinking": "Yes"
+	},
+	"created_at": "2026-05-22 17:53:08",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"contents": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"parts": {
+								"items": {
+									"additionalProperties": {},
+									"properties": {
+										"text": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								},
+								"type": "array"
+							},
+							"role": {
+								"enum": [
+									"user",
+									"model"
+								],
+								"type": "string"
+							}
+						},
+						"required": [
+							"parts"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"generationConfig": {
+					"additionalProperties": {},
+					"properties": {
+						"candidateCount": {
+							"type": "number"
+						},
+						"maxOutputTokens": {
+							"type": "number"
+						},
+						"responseMimeType": {
+							"type": "string"
+						},
+						"stopSequences": {
+							"items": {
+								"type": "string"
+							},
+							"type": "array"
+						},
+						"temperature": {
+							"type": "number"
+						},
+						"topK": {
+							"type": "number"
+						},
+						"topP": {
+							"type": "number"
+						}
+					},
+					"type": "object"
+				},
+				"safetySettings": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"category": {
+								"type": "string"
+							},
+							"threshold": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"category",
+							"threshold"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"systemInstruction": {
+					"additionalProperties": {},
+					"properties": {
+						"parts": {
+							"items": {
+								"additionalProperties": {},
+								"properties": {
+									"text": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							},
+							"type": "array"
+						}
+					},
+					"required": [
+						"parts"
+					],
+					"type": "object"
+				},
+				"toolConfig": {},
+				"tools": {
+					"items": {},
+					"type": "array"
+				}
+			},
+			"required": [
+				"contents"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"candidates": {
+					"items": {},
+					"type": "array"
+				},
+				"modelVersion": {
+					"type": "string"
+				},
+				"usageMetadata": {
+					"additionalProperties": {},
+					"properties": {
+						"candidatesTokenCount": {
+							"type": "number"
+						},
+						"promptTokenCount": {
+							"type": "number"
+						},
+						"totalTokenCount": {
+							"type": "number"
+						}
+					},
+					"type": "object"
+				}
+			},
+			"type": "object"
+		}
+	}
+}
