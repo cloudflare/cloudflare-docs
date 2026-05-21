@@ -7,14 +7,7 @@ products:
 date: 2026-03-26
 ---
 
-`ctx.id.jurisdiction` inside a Durable Object now reports the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) that the object was created in, matching the value seen client-side. If a Worker accesses a Durable Object through a jurisdiction-restricted namespace — for example `env.MY_DURABLE_OBJECT.jurisdiction("eu")` — the same jurisdiction is available on `ctx.id.jurisdiction` inside the object, so you can make region-aware decisions without passing the jurisdiction through method arguments or persisting it in storage.
-
-`jurisdiction` is preserved across every ID-construction path, including:
-
-- IDs created from a jurisdiction-restricted subnamespace, for example `env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("foo")` or `.newUniqueId()`.
-- IDs created via `env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" })`.
-- IDs restored from a string via `idFromString()` — the jurisdiction is encoded in the string itself, so it works on any namespace binding.
-- IDs observed inside [alarm handlers](/durable-objects/api/alarms/) for alarms scheduled on 2026-03-15 or later.
+`ctx.id.jurisdiction` inside a Durable Object now reports the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) the object was created in — for example `"eu"` when accessed through `env.MY_DURABLE_OBJECT.jurisdiction("eu")` — so you can make region-aware decisions without passing the jurisdiction through method arguments or persisting it in storage. For the full list of ID-construction paths that preserve `jurisdiction`, refer to the [Durable Object ID documentation](/durable-objects/api/id/#jurisdiction).
 
 ```js
 export class RegionalRoom extends DurableObject {
@@ -35,5 +28,3 @@ export default {
 ```
 
 `ctx.id.jurisdiction` is `undefined` for Durable Objects that were not created in a jurisdiction-restricted namespace. Alarms scheduled before 2026-03-15 also do not have `jurisdiction` stored; to backfill the value, reschedule the alarm from a `fetch()` or RPC handler.
-
-For more information, refer to the [Durable Object ID documentation](/durable-objects/api/id/#jurisdiction).
