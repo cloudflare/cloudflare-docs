@@ -12,14 +12,14 @@ sidebar:
 
 The WARP client has several modes to better suit different connection needs.
 
-## DNS Only
+## DNS only
 
 Formerly known as **1.1.1.1**.
 
-1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. It also offers a DNS encryption service via the two flavors below for increased security and privacy.
+In **DNS only** mode, WARP routes only DNS queries through Cloudflare's 1.1.1.1 resolver and does not tunnel device traffic. DNS queries are always encrypted, available in two flavors:
 
-- **DNS Only (HTTPS)** — DNS queries are encrypted via DNS-over-HTTPS (DoH).
-- **DNS Only (TLS)** — DNS queries are encrypted via DNS-over-TLS (DoT).
+- **DNS only (HTTPS)** — uses DNS-over-HTTPS (DoH).
+- **DNS only (TLS)** — uses DNS-over-TLS (DoT).
 
 Refer to [1.1.1.1 resolver](/1.1.1.1/encryption/) to learn more about DNS encryption.
 
@@ -33,7 +33,7 @@ The WARP application uses [MASQUE](https://blog.cloudflare.com/zero-trust-warp-w
 
 This mode is available in three flavors:
 
-- **Traffic and DNS (UDP)** — All device traffic is routed through WARP with DNS resolution over UDP.
+- **Traffic and DNS (UDP)** — All device traffic is routed through WARP. DNS queries use UDP inside the tunnel.
 - **Traffic and DNS (TLS)** — All device traffic is routed through WARP with DNS queries encrypted via DNS-over-TLS (DoT).
 - **Traffic and DNS (HTTPS)** — All device traffic is routed through WARP with DNS queries encrypted via DNS-over-HTTPS (DoH).
 
@@ -45,11 +45,11 @@ WARP does not provide anonymity, and it is not designed to prevent servers you c
 
 :::
 
-## Traffic Only
+## Traffic only
 
-Full tunnel without DNS proxying. All device traffic is routed through WARP, but DNS resolution remains managed by the device operating system.
+In **Traffic Only** mode, all device traffic is routed through WARP, but DNS resolution remains managed by the device operating system.
 
-## WARP via Local Proxy
+## Local proxy
 
 Currently, this mode is available on desktop clients only. When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTPS or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for example, your web browser or a specific application. Everything else will not be encrypted and will be sent over a regular Internet connection.
 
@@ -58,7 +58,7 @@ Because this feature restricts WARP to just applications configured to use the l
 1. Navigate to **Preferences** > **Advanced** and select **Configure Proxy**.
 2. On the window that opens, check the box and configure the port you want to listen on.
 
-This will enable the **WARP via Local Proxy** option in the **WARP Settings** menu.
+This will enable the **Local proxy** option in the **WARP Settings** menu.
 
 If you enable [FIPS compliance](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance) for TLS decryption, you must [disable QUIC](/cloudflare-one/traffic-policies/http-policies/http3/#force-http2-traffic) in your users' browsers. Otherwise, HTTP/3 traffic will bypass inspection by the WARP client.
 
