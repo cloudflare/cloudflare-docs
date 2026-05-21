@@ -16,10 +16,7 @@ The WARP client has several modes to better suit different connection needs.
 
 Formerly known as **1.1.1.1**.
 
-In **DNS only** mode, WARP routes only DNS queries through Cloudflare's 1.1.1.1 resolver and does not tunnel device traffic. DNS queries are always encrypted, available in two flavors:
-
-- **DNS only (HTTPS)** — uses DNS-over-HTTPS (DoH).
-- **DNS only (TLS)** — uses DNS-over-TLS (DoT).
+In **DNS only** mode, WARP routes only DNS queries through Cloudflare's 1.1.1.1 resolver and does not tunnel device traffic. DNS queries are always encrypted: **DNS only (HTTPS)** uses DNS-over-HTTPS (DoH), and **DNS only (TLS)** uses DNS-over-TLS (DoT).
 
 Refer to [1.1.1.1 resolver](/1.1.1.1/encryption/) to learn more about DNS encryption.
 
@@ -47,7 +44,7 @@ WARP does not provide anonymity, and it is not designed to prevent servers you c
 
 ## Traffic only
 
-In **Traffic Only** mode, all device traffic is routed through WARP, but DNS resolution remains managed by the device operating system.
+In **Traffic only** mode, all device traffic is routed through WARP, but DNS resolution remains managed by the device operating system.
 
 ## Local proxy
 
