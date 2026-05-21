@@ -66,7 +66,7 @@ Use `cf1:network` when:
 
 Your account must have at least one active [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) node, or [Cloudflare WAN](/cloudflare-wan/) on-ramp that can reach the target services.
 
-For destinations behind Cloudflare WAN on-ramps (GRE, IPsec, or CNI), your network must also route the [Cloudflare Source IP range](/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/) (`100.64.0.0/12` by default) back through the on-ramp so reply traffic returns to Cloudflare. This is part of standard Cloudflare WAN onboarding; if you have already configured this for Gateway, Load Balancing, or other Cloudflare services that reach your private network through Cloudflare WAN, no additional setup is required.
+For destinations behind Cloudflare WAN on-ramps (GRE, IPsec, or CNI), your network must also route the [Cloudflare source IP range](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) (`100.64.0.0/12` by default) back through the on-ramp so reply traffic returns to Cloudflare. This is part of standard Cloudflare WAN onboarding. If you have already configured this for Gateway, Load Balancing, or other Cloudflare services that reach your private network through Cloudflare WAN, no additional setup is required.
 
 :::
 
