@@ -519,6 +519,25 @@ class WebhookAgent extends Agent {
 
 </TypeScriptExample>
 
+If the asynchronous work is a single Think chat turn, use `submitMessages()` instead. It returns a durable submission ID immediately and lets retries use an idempotency key instead of duplicating the message turn:
+
+<TypeScriptExample>
+
+```ts
+const submission = await this.submitMessages(messages, {
+	idempotencyKey: payload.id,
+});
+
+return Response.json(
+	{ submissionId: submission.submissionId },
+	{ status: 202 },
+);
+```
+
+</TypeScriptExample>
+
+If the webhook owns application side effects around a turn, such as restoring a provider thread and posting a visible reply, use [`startFiber()`](/agents/api-reference/durable-execution/#startfiber) around that job. Managed fibers retain status, dedupe provider retries, and let `onFiberRecovered()` or `resolveFiber()` record the app-level recovery outcome.
+
 ### Multi-provider routing
 
 Handle webhooks from multiple services in one Worker:

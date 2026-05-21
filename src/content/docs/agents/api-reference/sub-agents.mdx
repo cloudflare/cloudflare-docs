@@ -43,7 +43,7 @@ export class Researcher extends Agent {
 
 </TypeScriptExample>
 
-Both classes must be exported from the worker entry point. No separate Durable Object bindings are needed — child classes are discovered automatically via `ctx.exports`.
+Both classes must be exported from the worker entry point. No separate Durable Object bindings are needed for child-only classes — child classes are discovered automatically via `ctx.exports`.
 
 <WranglerConfig>
 
@@ -62,7 +62,7 @@ tag = "v1"
 
 </WranglerConfig>
 
-Only the parent agent needs a Durable Object binding and migration. Child agents are created as facets of the parent — they share the same machine but have fully isolated SQLite storage.
+Only the top-level parent agent needs a Durable Object binding and migration. Child agents are created as facets of the parent — they share the same machine but have fully isolated SQLite storage.
 
 ## subAgent
 
@@ -118,8 +118,14 @@ class MyChild extends Agent {
 - The child class must extend `Agent`
 - The child class must be exported from the worker entry point (`export class MyChild extends Agent`)
 - The export name must match the class name — `export { Foo as Bar }` is not supported
-- The parent class must be bound as a Durable Object namespace in `wrangler.jsonc`
+- The top-level parent class must be bound as a Durable Object namespace in `wrangler.jsonc`
+- A facet-only child class does not need to be registered under `new_sqlite_classes` unless the same class is also bound as a top-level Durable Object elsewhere
+- Nested facet parents do not need their own top-level Durable Object bindings; the runtime resolves nested children through the root parent namespace
 - The child class name cannot be `Sub`, because `/sub/` is reserved as the URL separator for nested routes
+
+### Notes for testing
+
+Tests that use `@cloudflare/vitest-pool-workers` may need to list facet classes as test-only Durable Object bindings so `ctx.exports` provides a facet-compatible class value. Keep those facet classes out of `new_sqlite_classes`; the extra binding belongs only in test `wrangler.jsonc` files and is not a production Worker requirement.
 
 ## abortSubAgent
 
@@ -256,6 +262,8 @@ await inbox.recordTurn(this.name, "...");
 ```
 
 </TypeScriptExample>
+
+`parentAgent()` resolves the direct parent even when that parent is itself a facet-only sub-agent, using a root-side RPC bridge under the hood. This gives you typed method calls to the immediate parent without requiring every nested parent class to be bound as a top-level Durable Object.
 
 For grandparents and further ancestors, iterate `this.parentPath` and call `getAgentByName()` directly. If the binding name does not match the class name, call `getAgentByName(env.MY_BINDING, this.parentPath.at(-1)!.name)` instead of `parentAgent()`.
 

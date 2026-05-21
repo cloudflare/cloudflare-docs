@@ -41,7 +41,7 @@ await session.appendMessage({
 });
 
 // Read the full conversation history
-const history = session.getHistory();
+const history = await session.getHistory();
 ```
 
 </TypeScriptExample>
@@ -55,7 +55,7 @@ The Session also provides full-text search across the conversation history:
 <TypeScriptExample>
 
 ```ts
-const results = session.search("deployment Friday", { limit: 10 });
+const results = await session.search("deployment Friday", { limit: 10 });
 ```
 
 </TypeScriptExample>
@@ -394,7 +394,7 @@ const allTools = { ...sessionTools, ...myApplicationTools };
 const result = streamText({
 	model: myModel,
 	system: await session.freezeSystemPrompt(),
-	messages: await convertToModelMessages(session.getHistory()),
+	messages: await convertToModelMessages(await session.getHistory()),
 	tools: allTools,
 });
 ```
@@ -543,7 +543,7 @@ Micro-compaction works at the individual message level rather than across ranges
 ```ts
 import { truncateOlderMessages } from "agents/experimental/memory/utils";
 
-const history = session.getHistory();
+const history = await session.getHistory();
 const truncated = truncateOlderMessages(history);
 // Pass truncated history to the LLM
 ```

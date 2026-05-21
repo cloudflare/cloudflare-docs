@@ -22,6 +22,7 @@ The key primitives:
 | ------------------- | ---------------------------------------------------------------------------------- |
 | `saveMessages`      | Inject a message and trigger the LLM — the server-side equivalent of `sendMessage` |
 | `submitMessages`    | Durably accept a Think turn for async execution and inspect it later               |
+| `startFiber`        | Durably accept application-owned side effects around a turn                        |
 | `persistMessages`   | Store messages without triggering a response — for injecting context silently      |
 | `onChatResponse`    | React when any response completes, including ones you did not initiate             |
 | `isServerStreaming` | Client-side flag: `true` when a server-initiated stream is active                  |
@@ -64,6 +65,8 @@ return Response.json({
 </TypeScriptExample>
 
 `submitMessages()` stores pending work first and appends the messages to the conversation Session only when the submission starts executing. It accepts serializable `UIMessage[]` values, not the function form supported by `saveMessages((messages) => ...)`.
+
+Use [`startFiber()`](/agents/api-reference/durable-execution/#startfiber) outside Think when the durable unit is a surrounding application job, such as accepting a webhook once, restoring provider state, posting a visible reply, and recording recovery policy. `submitMessages()` owns Think's conversation admission; managed fibers own external side effects around that turn.
 
 For the full Think API, refer to [`submitMessages()`](/agents/api-reference/think/#submitmessages).
 
@@ -470,6 +473,7 @@ The `messageConcurrency` setting on `AIChatAgent` controls how overlapping user 
 | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | `schedule()`       | Schedule a callback that calls `saveMessages` — see the cron example above                                        |
 | `queue()`          | Queue a method that calls `saveMessages` for deferred processing                                                  |
+| `startFiber()`     | Durably accept and inspect application-owned work around a message turn                                           |
 | `runWorkflow()`    | Start a Workflow; use `AgentWorkflow.agent` RPC to call a method that triggers `saveMessages` or `submitMessages` |
 | `onEmail()`        | Convert email content to a chat message and call `saveMessages`                                                   |
 | `onRequest()`      | Handle webhooks and call `saveMessages` or `submitMessages`                                                       |
@@ -504,6 +508,8 @@ if (result.status === "aborted") {
 `continueLastTurn()` accepts the same `options.signal` argument. `AbortSignal` objects cannot cross Durable Object RPC boundaries, and the signal is in memory only. If the Durable Object hibernates mid-turn and chat recovery is enabled, the recovered turn runs without the original signal.
 
 Use `cancelSubmission(submissionId)` for durable cancellation when work was accepted with `submitMessages()` or when cancellation must cross Worker and Durable Object RPC boundaries.
+
+Use `cancelFiber(fiberId)` when the durable unit was accepted with `startFiber()` and the cancellation should apply to the surrounding application job rather than a Think turn.
 
 ## Important notes
 

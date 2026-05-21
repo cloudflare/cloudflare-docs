@@ -164,19 +164,23 @@ Both Think and [`AIChatAgent`](/agents/api-reference/chat-agents/) extend `Agent
 
 Think has several ways to start or continue a turn. Choose based on who starts the work and what the caller needs back.
 
-| Use case                                                   | API                                             |
-| ---------------------------------------------------------- | ----------------------------------------------- |
-| A browser user sends chat messages                         | `useAgentChat` over the WebSocket chat protocol |
-| Server code can wait for the model response                | `saveMessages()`                                |
-| Server code needs fast durable acceptance and later status | `submitMessages()`                              |
-| Parent code needs direct streaming RPC to a child          | `subAgent(...).chat()`                          |
-| A parent delegates work to a retained child agent          | `agentTool()` or `runAgentTool()`               |
-| Add context without starting a model turn                  | `persistMessages()`                             |
-| Continue after the latest assistant message                | `continueLastTurn()`                            |
+| Use case                                                       | API                                             |
+| -------------------------------------------------------------- | ----------------------------------------------- |
+| A browser user sends chat messages                             | `useAgentChat` over the WebSocket chat protocol |
+| Server code can wait for the model response                    | `saveMessages()`                                |
+| Server code needs fast durable acceptance and later status     | `submitMessages()`                              |
+| Parent code needs direct streaming RPC to a specific child     | `subAgent(...).chat()`                          |
+| A parent delegates work to a retained child agent              | `agentTool()` or `runAgentTool()`               |
+| Surround a turn with idempotent app-owned side effects         | `startFiber()`                                  |
+| Coordinate multi-step durable orchestration                    | Workflows                                       |
+| Add context or messages without starting a model turn          | `persistMessages()`                             |
+| Advanced subclass or recovery code continues an assistant turn | `continueLastTurn()`                            |
 
 Use `saveMessages()` when the caller owns the trigger and can wait for the turn to finish. Use [`submitMessages()`](#submitmessages) when timeout ambiguity would make retries unsafe.
 
 Use `chat()` for low-level parent-to-child streaming when your code owns forwarding, cancellation, and replay policy. Use [Agent tools](/agents/api-reference/agent-tools/) when a parent model or workflow delegates to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in.
+
+Use [`startFiber()`](/agents/api-reference/durable-execution/#startfiber) outside Think when the durable unit is an application job around a turn: accepting a webhook once, restoring a serialized channel or thread target, posting a visible reply, or recording app-level recovery policy. Think submissions own conversation admission and turn serialization; managed fibers own external job acceptance, idempotent side effects, and application recovery.
 
 ## Configuration overrides
 
@@ -190,7 +194,7 @@ Use `chat()` for low-level parent-to-child streaming when your code owns forward
 | `configureSession()`    | identity                         | Add context blocks, compaction, search, skills — refer to [Sessions](/agents/api-reference/sessions/) |
 | `messageConcurrency`    | `"queue"`                        | How overlapping submits behave — refer to [Message concurrency](#message-concurrency)                 |
 | `waitForMcpConnections` | `false`                          | Wait for MCP servers before inference                                                                 |
-| `chatRecovery`          | `true`                           | Wrap WebSocket, programmatic, and continuation turns in `runFiber` for durable execution              |
+| `chatRecovery`          | `true`                           | Wrap WebSocket, sub-agent, programmatic, and continuation turns in `runFiber` for durable execution   |
 
 ## Dynamic configuration
 
@@ -1127,6 +1131,8 @@ export class SearchAgent extends Think<Env> {
 
 Think broadcasts streaming responses to all connected WebSocket clients. When multiple browser tabs are connected to the same agent, all tabs see the streamed response in real time. Tool call states (pending, result, approval) are broadcast to all tabs.
 
+Programmatic `chat()` turns and `clearMessages()` also broadcast message updates to connected `useAgentChat` clients, so browser clients stay in sync without reconnecting.
+
 ## Agent tools
 
 Use [Agent tools](/agents/api-reference/agent-tools/) when a parent chat agent should run a Think sub-agent as a retained, streaming tool. The parent uses `agentTool()` or `runAgentTool()` from `agents/agent-tools`; the child Think instance keeps its own messages, tools, resumable stream, and storage.
@@ -1149,6 +1155,7 @@ async chat(
 
 | Method             | When it fires                                                   |
 | ------------------ | --------------------------------------------------------------- |
+| `onStart(event)`   | Before work starts; exposes the request ID for cancellation     |
 | `onEvent(json)`    | For each streaming chunk (JSON-serialized `UIMessageChunk`)     |
 | `onDone()`         | After the turn completes and the assistant message is persisted |
 | `onError(message)` | On error during the turn (if not provided, the error is thrown) |
@@ -1159,12 +1166,15 @@ async chat(
 | -------- | ------------------------------------------- |
 | `signal` | `AbortSignal` to cancel the turn mid-stream |
 
+Tools belong to the child agent. Define durable capabilities with the child's `getTools()`, extensions, MCP tools, or client tool schemas. Legacy callers that pass `options.tools` to `chat()` receive a warning and the value is ignored.
+
 #### Example: parent calling a child
 
 <TypeScriptExample>
 
 ```ts
 import { Think } from "@cloudflare/think";
+import type { StreamCallback } from "@cloudflare/think";
 
 export class ParentAgent extends Think<Env> {
 	getModel() {
@@ -1204,9 +1214,41 @@ export class ChildAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-#### Aborting a sub-agent turn
+#### Cancelling a sub-agent turn
 
-Pass an `AbortSignal` to cancel mid-stream. When aborted, the partial assistant message is still persisted.
+Use `onStart` and `cancelChat()` for RPC-safe cancellation across a sub-agent boundary:
+
+<TypeScriptExample>
+
+```ts
+let requestId: string | undefined;
+
+const callback: StreamCallback = {
+	onStart(event) {
+		requestId = event.requestId;
+	},
+	onEvent(json) {
+		// Forward stream chunks.
+	},
+	onDone() {},
+	onError(error) {
+		console.error(error);
+	},
+};
+
+const turn = child.chat("Long analysis task", callback);
+
+// Later, from another RPC call or failure handler:
+if (requestId) {
+	await child.cancelChat(requestId, "client disconnected");
+}
+
+await turn;
+```
+
+</TypeScriptExample>
+
+If the caller and callee are not separated by Workers RPC, you can also pass an `AbortSignal` to cancel mid-stream:
 
 <TypeScriptExample>
 
@@ -1220,6 +1262,8 @@ await child.chat("Long analysis task", callback, {
 ```
 
 </TypeScriptExample>
+
+`cancelChat(requestId, reason?)` is a no-op if the turn already completed or the request ID is unknown. When aborted, the partial assistant message is still persisted.
 
 ### saveMessages
 
