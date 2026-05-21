@@ -35,4 +35,10 @@ At runtime, the URL you pass to `fetch()` determines the destination:
 const response = await env.PRIVATE_NETWORK.fetch("http://10.50.0.100:8080/api");
 ```
 
+:::note
+
+For destinations behind Cloudflare WAN on-ramps (GRE, IPsec, or CNI), the same prerequisite that applies to other Cloudflare services applies here: your network must route the [Cloudflare Source IP range](/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/) back through the on-ramp so reply traffic returns to Cloudflare. Without this route, stateful flows will fail. This is part of standard Cloudflare WAN onboarding.
+
+:::
+
 For configuration options, refer to [VPC Networks](/workers-vpc/configuration/vpc-networks/).
