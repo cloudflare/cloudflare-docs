@@ -13,6 +13,7 @@ products:
 import {
 	InlineBadge,
 	LinkCard,
+	PackageManagers,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
@@ -773,9 +774,7 @@ CREATE INDEX IF NOT EXISTS idx_search_entries_fts
 
 Install `pg`, then create a client from the Hyperdrive connection string and pass it to the Postgres providers:
 
-```sh
-npm install pg
-```
+<PackageManagers pkg="pg" />
 
 <TypeScriptExample>
 

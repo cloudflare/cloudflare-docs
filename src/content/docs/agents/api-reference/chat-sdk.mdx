@@ -8,7 +8,12 @@ products:
   - agents
 ---
 
-import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	LinkCard,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Use `agents/chat-sdk` when you run the [Chat SDK](https://chat-sdk.dev/) inside an Agent. The first integration helper is a Chat SDK `StateAdapter` that stores state in Agents sub-agents.
 
@@ -18,9 +23,7 @@ The adapter stores Chat SDK subscriptions, locks, queues, dedupe keys, thread st
 
 Install both packages in the Worker that hosts your messenger ingress:
 
-```sh
-npm install agents chat
-```
+<PackageManagers pkg="agents chat" />
 
 `agents/chat-sdk` provides durable state for Chat SDK. Use it with any Chat SDK adapter, such as Telegram, Slack, Discord, Teams, or Google Chat.
 
