@@ -1,5 +1,5 @@
 ---
-title: Create an OAuth client
+title: Register your application
 pcx_content_type: how-to
 description: Cloudflare allows developers to register OAuth applications that access resources via the Cloudflare API on behalf of users. This enables the creation of integrations and tools that function without the need for manual API token sharing.
 sidebar:
@@ -183,7 +183,7 @@ Every client may have two secrets, allowing for graceful secret rotations. Once 
 <Tabs syncKey="dashPlusAPI">
     <TabItem label="Dashboard">
         <DashButton url="/?to=/:account/app-registrations" />
-        
+
         From **Manage Account** \> **App Registrations** open the action menu for your application and select **Rotate client secret**. If your client only has a single secret, the button to create a new secret will be available. If the application already has two secrets, there will be a button to delete the old secret, which must be done before another new secret can be created.
 
     </TabItem>
