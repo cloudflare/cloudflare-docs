@@ -60,31 +60,7 @@ Performance issues are easier to solve when you can pinpoint exactly what is slo
 
 ---
 
-## Step 1: Identify slow resources
-
-The first step is to identify which specific resources are causing slowness. A slow website is often caused by one or more slow resources, not necessarily the entire site.
-
-### Use browser developer tools
-
-1. Open your browser's developer tools.
-2. Go to the **Network** tab.
-3. Reload the page and observe which requests take the longest.
-4. Sort by **Time** or **Duration** to identify the slowest assets.
-5. Note the specific URLs of slow resources.
-
-Look for:
-- Large images or videos
-- Slow API calls
-- Third-party scripts
-- Render-blocking resources
-
-### Generate a HAR file
-
-For a complete record of all requests, [generate a HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file). This captures timing information for every request and is useful when working with Cloudflare Support.
-
----
-
-## Step 2: Use Observatory to analyze performance
+## Step 1: Use Observatory to analyze performance
 
 [Observatory](/speed/observatory/) provides synthetic tests and real user monitoring (RUM) data to assess your website's performance.
 
@@ -123,6 +99,26 @@ Based on Observatory results, enable relevant [Speed optimizations](/speed/optim
 - [HTTP/2 and HTTP/3](/speed/optimization/protocol/) - Use modern protocols with multiplexing, allowing multiple requests over a single connection instead of opening separate connections for each asset
 - [Image optimization](/images/) - Automatically optimize and resize images
 - [Rocket Loader](/speed/optimization/content/rocket-loader/) - Defer loading of JavaScript to improve paint times
+
+---
+
+## Step 2: Identify slow resources
+
+If Observatory and RUM data point to specific issues, use browser developer tools to investigate individual resources.
+
+### Use browser developer tools
+
+1. Open your browser's developer tools.
+2. Go to the **Network** tab.
+3. Reload the page and observe which requests take the longest.
+4. Sort by **Time** or **Duration** to identify the slowest assets.
+5. Note the specific URLs of slow resources.
+
+Look for:
+- Large images or videos
+- Slow API calls
+- Third-party scripts
+- Render-blocking resources
 
 ---
 
@@ -392,9 +388,10 @@ For detailed information about how Argo Smart Routing works, refer to the [Argo 
 Use this checklist to systematically troubleshoot slow website performance:
 
 - [ ] Verify traffic is going through Cloudflare (check for `cf-ray` header)
-- [ ] Identify specific slow assets using browser developer tools
 - [ ] Run Observatory tests and review Core Web Vitals
+- [ ] Check RUM data to see if real users are experiencing issues
 - [ ] Enable recommended Speed optimizations
+- [ ] Identify specific slow assets using browser developer tools
 - [ ] Check origin response times in Analytics
 - [ ] Use `curl` to measure detailed timing for slow assets
 - [ ] Verify assets are being cached using Cache Analytics
@@ -403,6 +400,23 @@ Use this checklist to systematically troubleshoot slow website performance:
 - [ ] Run MTR to identify network path issues
 - [ ] Check which Cloudflare data center serves your requests
 - [ ] Consider Argo Smart Routing for improved routing
+
+---
+
+## Contact Support if the problem persists
+
+If you have followed the steps above and the performance issue persists, [contact Cloudflare Support](/support/contacting-cloudflare-support/) for assistance.
+
+When contacting Support, provide as much evidence as possible to help diagnose the issue:
+
+- **HAR file** - [Generate a HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) that captures the slow requests. This provides detailed timing information for every request.
+- **Observatory results** - Share screenshots or links to your Observatory test results.
+- **RUM data** - If you have Web Analytics enabled, share relevant metrics showing the performance issue.
+- **curl output** - Include the timing breakdown from `curl --write-out` for the slow assets.
+- **MTR results** - If you suspect network issues, include MTR output from your location to the affected domain.
+- **Specific URLs** - List the exact URLs that are slow, along with the expected and actual response times.
+
+The more evidence you provide showing the slowness, the faster Support can identify and resolve the issue.
 
 ---
 
