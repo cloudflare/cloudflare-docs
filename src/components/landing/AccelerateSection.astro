@@ -3,14 +3,13 @@ import ProductCard from "./ProductCard.astro";
 import ProductCardGrid from "./ProductCardGrid.astro";
 import SectionHeading from "./SectionHeading.astro";
 import ViewAllLink from "./ViewAllLink.astro";
-import { phases, phaseColor } from "./accelerate-data";
+import { products } from "./accelerate-data";
 ---
 
 <section
-	class="wf-section group/wf pt-10 pb-10"
+	class="pt-10 pb-10"
 	aria-labelledby="accelerate-heading"
 	id="accelerate"
-	data-mode="after"
 >
 	<div class="mb-6 flex items-center justify-between sm:mb-8">
 		<div>
@@ -20,8 +19,8 @@ import { phases, phaseColor } from "./accelerate-data";
 			<p
 				class="text-foreground-muted max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
 			>
-				Cloudflare routes traffic through the most reliable paths and delivers
-				assets as close to end users as possible.
+				Accelerate websites and applications with Cloudflare CDN caching, image
+				optimization, smart routing, load balancing, and web analytics.
 			</p>
 		</div>
 		<ViewAllLink href="/directory/?product-group=Application+performance">
@@ -31,22 +30,16 @@ import { phases, phaseColor } from "./accelerate-data";
 
 	<ProductCardGrid>
 		{
-			phases.map((p) => (
-				<div
-					class="wf-product-card flex"
-					data-phase={p.id}
-					style={`--phase-color: ${phaseColor(p)};`}
-				>
-					<ProductCard
-						icon={p.icon}
-						product={p.product}
-						scenario={p.outcome}
-						detail={p.detail}
-						href={p.href}
-						cta={p.cta}
-						category={p.category}
-					/>
-				</div>
+			products.map((p) => (
+				<ProductCard
+					icon={p.icon}
+					product={p.product}
+					scenario={p.outcome}
+					detail={p.detail}
+					href={p.href}
+					cta={p.cta}
+					category={p.category}
+				/>
 			))
 		}
 	</ProductCardGrid>
