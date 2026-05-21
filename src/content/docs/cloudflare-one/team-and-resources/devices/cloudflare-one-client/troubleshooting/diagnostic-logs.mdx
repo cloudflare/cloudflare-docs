@@ -155,10 +155,10 @@ Extra debug logging times out after 10 minutes unless you manually stop it with 
 
 This enables a few more logging features:
 
-- Pcaps on all interfaces (on Windows, retains the original .ETL file before conversion to pcap)
-- QLOGs for MASQUE tunnel connections
+- Packet captures (PCAPs) on all interfaces (on Windows, retains the original .ETL file before conversion to pcap)
+- QLog files for MASQUE tunnel connections
 - DNS logs for [service modes with DNS filtering](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)
-- One-shot connectivity checks: These contain the same information as `connectivity.txt`, but are collected when extra debug logging is started, rather than when a warp-diag is collected.
+- One-shot connectivity checks (same information as `connectivity.txt`, collected when extra debug logging starts rather than when `warp-diag` runs)
 - One-shot traceroutes to:
 	- DNS resolver IPs
 	- DNS resolver hostname
