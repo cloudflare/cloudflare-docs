@@ -1,0 +1,31 @@
+---
+title: Cloudflare Stream offers event subscriptions
+description: Trigger Workers based on new and updated on-demand videos and state changes in live broadcasts
+products:
+  - stream
+  - queues
+date: 2026-05-28
+---
+
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
+Cloudflare Stream now supports event subscriptions for on-demand videos and live inputs. This allows customers to build programmatic pipelines by triggering Workers based on what's happening with your video library and live broadcasts. For example:
+
+- Update application state or a website when a live broadcast begins or ends
+- Push video status and metadata to an application or other datastore
+- Execute secondary operations like caption generation, download creation, or moderation when a video is successfully uploaded
+
+This is our latest step in bringing Stream and Workers closer, empowering tighter integrations and composable workflows. Our first message types include:
+
+- **On-demand uploads:** `video_state.ready` and `video_state.updated`
+- **Live broadcasts:** `live_input.connected`, `live_input.disconnected`, `live_input.errored`
+
+Each message type includes the same details you may already be receiving from webhooks or API polling. When combined with the [new Stream bindings](/stream/manage-video-library/bindings/) for Workers, acting on messages from a queue consumer is easier, faster, and removes the need for credential management and signature verification.
+
+To get started with Queues and event subscriptions, check out "[Manage event subscriptions](/queues/event-subscriptions/manage-event-subscriptions/)."
+
+## Get started with your Agent
+
+> Create a Cloudflare Queue and subscribe to Stream's video_state.ready event.
+> Then define a consumer that sends me an email when new videos are uploaded to
+> my account.
