@@ -54,7 +54,7 @@ If any of these directives are present alongside `stale-while-revalidate`, Cloud
 If you need `stale-while-revalidate` behavior with a different TTL for Cloudflare than for browsers, do not use `s-maxage`. Instead, configure your origin to send `max-age` with `stale-while-revalidate`, then use [Edge Cache TTL](/cache/how-to/cache-rules/settings/#edge-ttl) in Cache Rules to set a separate TTL for Cloudflare.
 :::
 
-For all available directives, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
+For all available directives or behavior when Origin Cache Control is disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
 ## Smart revalidation towards users
 
