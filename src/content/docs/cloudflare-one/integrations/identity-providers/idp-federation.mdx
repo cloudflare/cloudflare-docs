@@ -10,7 +10,7 @@ tags:
   - REST API
 ---
 
-import { Tabs, TabItem, APIRequest, Details } from "~/components";
+import { Tabs, TabItem, CURL, Details } from "~/components";
 
 IdP federation allows organizations with multiple Cloudflare accounts to share a single identity provider (IdP) configuration across accounts. Instead of configuring the same IdP (for example, Okta or Entra ID) separately in every account, you configure it once in a source account and share it with the other accounts in your organization.
 
@@ -48,9 +48,10 @@ The IdP will be distributed to other accounts in your organization automatically
 
 Make a `POST` request to create a federation grant:
 
-<APIRequest
-	path="/accounts/{account_id}/access/idp_federation_grants"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/idp_federation_grants"
 	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
 		idp_id: "<IDP_UUID>",
 	}}
@@ -60,16 +61,18 @@ The response includes the grant `id`, which you can use to manage or delete the 
 
 To list all federation grants in your account:
 
-<APIRequest
-	path="/accounts/{account_id}/access/idp_federation_grants"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/idp_federation_grants"
 	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 />
 
 To get a specific grant:
 
-<APIRequest
-	path="/accounts/{account_id}/access/idp_federation_grants/{grant_id}"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/idp_federation_grants/{grant_id}"
 	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 />
 
 </TabItem></Tabs>
@@ -87,9 +90,10 @@ Deleting a federation grant removes the shared IdP from all recipient accounts. 
 
 </TabItem> <TabItem label="API">
 
-<APIRequest
-	path="/accounts/{account_id}/access/idp_federation_grants/{grant_id}"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/idp_federation_grants/{grant_id}"
 	method="DELETE"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 />
 
 </TabItem></Tabs>
