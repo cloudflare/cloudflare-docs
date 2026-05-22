@@ -1,4 +1,4 @@
-**On-demand video events** — Subscribe to the `stream.video` source to receive events for on-demand videos in your account.
+**On-demand video events** — Subscribe to the `stream` source to receive events for on-demand videos in your account. The `payload` mirrors the [`StreamVideo`](/stream/manage-video-library/bindings/) object returned by `env.STREAM.video(id).details()`.
 
 #### `video_state.ready`
 
@@ -8,14 +8,15 @@ Triggered when a video finishes processing and is ready to stream.
 
 ```json
 {
-	"type": "cf.stream.video.video_state.ready",
+	"type": "cf.stream.video_state.ready",
 	"source": {
-		"type": "stream.video"
+		"type": "stream"
 	},
 	"payload": {
-		"uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
-		"creator": null,
+		"id": "b368f55e7013904cc2b5e98bd240b00c",
 		"readyToStream": true,
+		"readyToStreamAt": "2026-05-18T20:54:46Z",
+		"requireSignedURLs": false,
 		"status": {
 			"state": "ready",
 			"pctComplete": "100.000000",
@@ -23,47 +24,56 @@ Triggered when a video finishes processing and is ready to stream.
 			"errorReasonText": ""
 		},
 		"meta": {
-			"filename": "small.mp4",
-			"filetype": "video/mp4",
-			"name": "small.mp4"
+			"name": "clock-output-sample.mp4",
 		},
-		"duration": 5.5,
+		"created": "2026-05-18T20:54:36Z",
+		"modified": "2026-05-18T20:54:46Z",
+		"uploaded": "2026-05-18T20:54:36Z",
+		"uploadExpiry": "2026-05-19T20:54:36Z",
+		"duration": 30,
+		"size": 402073,
 		"input": {
-			"width": 560,
-			"height": 320
+			"height": 720,
+			"width": 1280
 		},
-		"playback": {
-			"hls": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8",
-			"dash": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd"
-		},
-		"created": "2026-05-28T17:53:12.512033Z",
-		"modified": "2026-05-28T17:53:21.774299Z"
+		"thumbnail": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/thumbnails/thumbnail.jpg",
+		"thumbnailTimestampPct": 0,
+		"preview": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/watch",
+		"hlsPlaybackUrl": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/manifest/video.m3u8",
+		"dashPlaybackUrl": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/manifest/video.mpd",
+		"publicDetails": {
+			"title": "",
+			"share_link": "",
+			"channel_link": "",
+			"logo": ""
+		}
 	},
 	"metadata": {
-		"accountId": "f9f79265f388666de8122cfb508d7776",
-		"eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+		"accountId": "da131bc3947cc704da2af463750bb126",
+		"eventSubscriptionId": "406da66917224ef3bf09434e1b51aee8",
 		"eventSchemaVersion": 1,
-		"eventTimestamp": "2026-05-28T17:53:21.812Z"
+		"eventTimestamp": "2026-05-18T20:54:46.812Z"
 	}
 }
 ```
 
 #### `video_state.updated`
 
-Triggered when a video's state changes after it is ready, for example when metadata is updated or the video enters an error state.
+Triggered when a video's state or metadata changes after it is ready, for example when the video's name is edited or the video enters an error state.
 
 **Example:**
 
 ```json
 {
-	"type": "cf.stream.video.video_state.updated",
+	"type": "cf.stream.video_state.updated",
 	"source": {
-		"type": "stream.video"
+		"type": "stream"
 	},
 	"payload": {
-		"uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
-		"creator": null,
+		"id": "b368f55e7013904cc2b5e98bd240b00c",
 		"readyToStream": true,
+		"readyToStreamAt": "2026-05-18T20:54:46Z",
+		"requireSignedURLs": false,
 		"status": {
 			"state": "ready",
 			"pctComplete": "100.000000",
@@ -71,19 +81,39 @@ Triggered when a video's state changes after it is ready, for example when metad
 			"errorReasonText": ""
 		},
 		"meta": {
-			"filename": "small.mp4",
+			"filename": "clock-output-sample.mp4",
 			"filetype": "video/mp4",
-			"name": "renamed.mp4"
+			"name": "clock-output-sample edit test",
+			"relativePath": "null",
+			"type": "video/mp4"
 		},
-		"duration": 5.5,
-		"created": "2026-05-28T17:53:12.512033Z",
-		"modified": "2026-05-28T18:14:02.118Z"
+		"created": "2026-05-18T20:54:36Z",
+		"modified": "2026-05-22T03:14:38Z",
+		"uploaded": "2026-05-18T20:54:36Z",
+		"uploadExpiry": "2026-05-19T20:54:36Z",
+		"duration": 30,
+		"size": 402073,
+		"input": {
+			"height": 720,
+			"width": 1280
+		},
+		"thumbnail": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/thumbnails/thumbnail.jpg",
+		"thumbnailTimestampPct": 0,
+		"preview": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/watch",
+		"hlsPlaybackUrl": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/manifest/video.m3u8",
+		"dashPlaybackUrl": "https://cloudflarestream.com/b368f55e7013904cc2b5e98bd240b00c/manifest/video.mpd",
+		"publicDetails": {
+			"title": "",
+			"share_link": "",
+			"channel_link": "",
+			"logo": ""
+		}
 	},
 	"metadata": {
-		"accountId": "f9f79265f388666de8122cfb508d7776",
-		"eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+		"accountId": "da131bc3947cc704da2af463750bb126",
+		"eventSubscriptionId": "406da66917224ef3bf09434e1b51aee8",
 		"eventSchemaVersion": 1,
-		"eventTimestamp": "2026-05-28T18:14:02.184Z"
+		"eventTimestamp": "2026-05-22T03:14:39.434Z"
 	}
 }
 ```
