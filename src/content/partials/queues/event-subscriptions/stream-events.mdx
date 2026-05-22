@@ -24,7 +24,7 @@ Triggered when a video finishes processing and is ready to stream.
 			"errorReasonText": ""
 		},
 		"meta": {
-			"name": "clock-output-sample.mp4",
+			"name": "clock-output-sample.mp4"
 		},
 		"created": "2026-05-18T20:54:36Z",
 		"modified": "2026-05-18T20:54:46Z",
@@ -118,7 +118,7 @@ Triggered when a video's state or metadata changes after it is ready, for exampl
 }
 ```
 
-**Live input events** — Subscribe to the `stream.liveInput` source to receive events for live inputs in your account.
+**Live input events** — Subscribe to the `stream` source to receive live input events for your account. The `payload` mirrors the live input object returned by the [Stream API](/api/resources/stream/subresources/live_inputs/), with a top-level `status` field reflecting the current connection state.
 
 #### `live_input.connected`
 
@@ -128,93 +128,200 @@ Triggered when a broadcaster connects to a live input and begins sending video.
 
 ```json
 {
-	"type": "cf.stream.liveInput.live_input.connected",
+	"type": "cf.stream.live_input.connected",
 	"source": {
-		"type": "stream.liveInput",
-		"liveInputId": "fc0a8dc887b16759bfd87bce36f8f5b1"
+		"type": "stream"
 	},
 	"payload": {
-		"uid": "fc0a8dc887b16759bfd87bce36f8f5b1",
-		"status": {
-			"current": {
-				"state": "connected",
-				"reason": null,
-				"statusEnteredAt": "2026-05-28T18:00:11.000Z",
-				"statusLastSeen": "2026-05-28T18:00:11.000Z"
-			}
+		"id": "168a3653a2f0394437b7c021cb198414",
+		"created": "2025-06-30T17:22:59.481332Z",
+		"modified": "2025-12-03T22:56:30.461436Z",
+		"meta": {
+			"name": "Live-on-Demand v2"
+		},
+		"status": "connected",
+		"enabled": true,
+		"defaultCreator": null,
+		"deleteRecordingAfterDays": 2,
+		"rtmps": {
+			"url": "rtmps://live.cloudflare.com:443/live/",
+			"streamKey": "<RTMPS_STREAM_KEY>"
+		},
+		"rtmpsPlayback": {
+			"url": "rtmps://live.cloudflare.com:443/live/",
+			"streamKey": "<RTMPS_PLAYBACK_STREAM_KEY>"
+		},
+		"srt": {
+			"url": "srt://live.cloudflare.com:778",
+			"streamId": "168a3653a2f0394437b7c021cb198414",
+			"passphrase": "<SRT_PASSPHRASE>"
+		},
+		"srtPlayback": {
+			"url": "srt://live.cloudflare.com:778",
+			"streamId": "play168a3653a2f0394437b7c021cb198414",
+			"passphrase": "<SRT_PLAYBACK_PASSPHRASE>"
+		},
+		"webRTC": {
+			"url": "https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/<WEBRTC_KEY>/webRTC/publish"
+		},
+		"webRTCPlayback": {
+			"url": "https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/168a3653a2f0394437b7c021cb198414/webRTC/play"
+		},
+		"recording": {
+			"mode": "automatic",
+			"requireSignedURLs": false,
+			"allowedOrigins": null,
+			"hideLiveViewerCount": false,
+			"timeoutSeconds": 86400
 		}
 	},
 	"metadata": {
-		"accountId": "f9f79265f388666de8122cfb508d7776",
-		"eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+		"accountId": "da131bc3947cc704da2af463750bb126",
+		"eventSubscriptionId": "1b86a4af9ef549fcb8d6d8d0f57828b3",
 		"eventSchemaVersion": 1,
-		"eventTimestamp": "2026-05-28T18:00:11.084Z"
+		"eventTimestamp": "2026-05-22T04:07:45.611Z"
 	}
 }
 ```
 
+:::caution
+
+The `payload` includes RTMPS, SRT, and WebRTC stream keys and passphrases. Treat the message body as sensitive and restrict who can consume the queue.
+
+:::
+
 #### `live_input.disconnected`
 
-Triggered when a broadcaster disconnects from a live input.
+Triggered when a broadcaster disconnects from a live input. The `status` field indicates the reason for the disconnect, for example `client_disconnect` when the broadcaster ends the stream.
 
 **Example:**
 
 ```json
 {
-	"type": "cf.stream.liveInput.live_input.disconnected",
+	"type": "cf.stream.live_input.disconnected",
 	"source": {
-		"type": "stream.liveInput",
-		"liveInputId": "fc0a8dc887b16759bfd87bce36f8f5b1"
+		"type": "stream"
 	},
 	"payload": {
-		"uid": "fc0a8dc887b16759bfd87bce36f8f5b1",
-		"status": {
-			"current": {
-				"state": "disconnected",
-				"reason": "clientDisconnect",
-				"statusEnteredAt": "2026-05-28T18:42:55.000Z",
-				"statusLastSeen": "2026-05-28T18:42:55.000Z"
-			}
+		"id": "168a3653a2f0394437b7c021cb198414",
+		"created": "2025-06-30T17:22:59.481332Z",
+		"modified": "2025-12-03T22:56:30.461436Z",
+		"meta": {
+			"name": "Live-on-Demand v2"
+		},
+		"status": "client_disconnect",
+		"enabled": true,
+		"defaultCreator": null,
+		"deleteRecordingAfterDays": 2,
+		"rtmps": {
+			"url": "rtmps://live.cloudflare.com:443/live/",
+			"streamKey": "<RTMPS_STREAM_KEY>"
+		},
+		"rtmpsPlayback": {
+			"url": "rtmps://live.cloudflare.com:443/live/",
+			"streamKey": "<RTMPS_PLAYBACK_STREAM_KEY>"
+		},
+		"srt": {
+			"url": "srt://live.cloudflare.com:778",
+			"streamId": "168a3653a2f0394437b7c021cb198414",
+			"passphrase": "<SRT_PASSPHRASE>"
+		},
+		"srtPlayback": {
+			"url": "srt://live.cloudflare.com:778",
+			"streamId": "play168a3653a2f0394437b7c021cb198414",
+			"passphrase": "<SRT_PLAYBACK_PASSPHRASE>"
+		},
+		"webRTC": {
+			"url": "https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/<WEBRTC_KEY>/webRTC/publish"
+		},
+		"webRTCPlayback": {
+			"url": "https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/168a3653a2f0394437b7c021cb198414/webRTC/play"
+		},
+		"recording": {
+			"mode": "automatic",
+			"requireSignedURLs": false,
+			"allowedOrigins": null,
+			"hideLiveViewerCount": false,
+			"timeoutSeconds": 86400
 		}
 	},
 	"metadata": {
-		"accountId": "f9f79265f388666de8122cfb508d7776",
-		"eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+		"accountId": "da131bc3947cc704da2af463750bb126",
+		"eventSubscriptionId": "1b86a4af9ef549fcb8d6d8d0f57828b3",
 		"eventSchemaVersion": 1,
-		"eventTimestamp": "2026-05-28T18:42:55.221Z"
+		"eventTimestamp": "2026-05-22T04:07:21.692Z"
 	}
 }
 ```
 
 #### `live_input.errored`
 
-Triggered when a live input encounters an error during a broadcast.
+Triggered when a live input encounters an error during a broadcast. The payload uses the same envelope as `live_input.connected` and `live_input.disconnected`, with `status` reflecting the error condition. For the list of possible error codes, refer to [Error codes](/stream/stream-live/webhooks/#error-codes).
+
+:::note
+
+The exact `status` value and any additional error fields on this event are still being finalized. The example below shows the expected envelope.
+
+:::
 
 **Example:**
 
 ```json
 {
-	"type": "cf.stream.liveInput.live_input.errored",
+	"type": "cf.stream.live_input.errored",
 	"source": {
-		"type": "stream.liveInput",
-		"liveInputId": "fc0a8dc887b16759bfd87bce36f8f5b1"
+		"type": "stream"
 	},
 	"payload": {
-		"uid": "fc0a8dc887b16759bfd87bce36f8f5b1",
-		"status": {
-			"current": {
-				"state": "errored",
-				"reason": "badRequest",
-				"statusEnteredAt": "2026-05-28T18:05:42.000Z",
-				"statusLastSeen": "2026-05-28T18:05:42.000Z"
-			}
-		}
+		"id": "168a3653a2f0394437b7c021cb198414",
+		"created": "2025-06-30T17:22:59.481332Z",
+		"modified": "2025-12-03T22:56:30.461436Z",
+		"meta": {
+			"name": "Live-on-Demand v2"
+		},
+		"status": "errored",
+		"enabled": true,
+		"defaultCreator": null,
+		"deleteRecordingAfterDays": 2,
+		"rtmps": {
+			"url": "rtmps://live.cloudflare.com:443/live/",
+			"streamKey": "<RTMPS_STREAM_KEY>"
+		},
+		"rtmpsPlayback": {
+			"url": "rtmps://live.cloudflare.com:443/live/",
+			"streamKey": "<RTMPS_PLAYBACK_STREAM_KEY>"
+		},
+		"srt": {
+			"url": "srt://live.cloudflare.com:778",
+			"streamId": "168a3653a2f0394437b7c021cb198414",
+			"passphrase": "<SRT_PASSPHRASE>"
+		},
+		"srtPlayback": {
+			"url": "srt://live.cloudflare.com:778",
+			"streamId": "play168a3653a2f0394437b7c021cb198414",
+			"passphrase": "<SRT_PLAYBACK_PASSPHRASE>"
+		},
+		"webRTC": {
+			"url": "https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/<WEBRTC_KEY>/webRTC/publish"
+		},
+		"webRTCPlayback": {
+			"url": "https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/168a3653a2f0394437b7c021cb198414/webRTC/play"
+		},
+		"recording": {
+			"mode": "automatic",
+			"requireSignedURLs": false,
+			"allowedOrigins": null,
+			"hideLiveViewerCount": false,
+			"timeoutSeconds": 86400
+		},
+		"errorReasonCode": "ERR_GOP_OUT_OF_RANGE",
+		"errorReasonText": "Input GOP size or keyframe interval is out of range."
 	},
 	"metadata": {
-		"accountId": "f9f79265f388666de8122cfb508d7776",
-		"eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+		"accountId": "da131bc3947cc704da2af463750bb126",
+		"eventSubscriptionId": "1b86a4af9ef549fcb8d6d8d0f57828b3",
 		"eventSchemaVersion": 1,
-		"eventTimestamp": "2026-05-28T18:05:42.305Z"
+		"eventTimestamp": "2026-05-22T04:08:02.118Z"
 	}
 }
 ```
