@@ -206,8 +206,10 @@ When Gateway routing is turned on, calls to MCP servers protected by your MCP se
 
 When a user calls a tool through the portal, the portal proxies the request to the upstream MCP server. With Gateway routing turned on, this outbound request passes through Cloudflare Gateway before reaching the upstream server. Gateway inspects the traffic and applies any matching HTTP policies, including DLP scanning.
 
+Because portal traffic routes through Gateway, it also respects [Gateway egress policies](/cloudflare-one/policies/gateway/egress-policies/). This means outbound requests to upstream MCP servers will originate from your dedicated egress IPs or Gateway IP ranges rather than generic Cloudflare IPs. If your upstream MCP servers restrict inbound traffic by source IP (for example, to a VPN or corporate IP range), you can use egress policies to ensure portal traffic comes from a predictable set of IPs.
+
 :::note
-Gateway routing only applies to real-time tool calls made by users through the portal. Background operations such as [admin credential synchronization](#synchronize-the-mcp-server) do not route through Gateway.
+Gateway routing only applies to real-time tool calls made by users through the portal. Background operations such as [admin credential synchronization](#synchronize-the-mcp-server) do not route through Gateway and will not use your egress policy IPs.
 :::
 
 ### Gateway routing scope
