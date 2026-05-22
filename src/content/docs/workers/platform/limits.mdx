@@ -9,7 +9,12 @@ products:
   - workers
 ---
 
-import { Render, WranglerConfig, DashButton, TypeScriptExample } from "~/components";
+import {
+	Render,
+	WranglerConfig,
+	DashButton,
+	TypeScriptExample,
+} from "~/components";
 
 ## Account plan limits
 
@@ -22,7 +27,7 @@ import { Render, WranglerConfig, DashButton, TypeScriptExample } from "~/compone
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6              |
 | [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker     |
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
-| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB          |
+| [Worker size](#worker-size)                                                      | 64 MiB       | 64 MiB         |
 | [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500            |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
@@ -183,9 +188,9 @@ You can configure the fail mode by toggling the corresponding [route](/workers/c
 
 A subrequest is any request a Worker makes using the [Fetch API](/workers/runtime-apis/fetch/) or to Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
-| Limit                            | Workers Free | Workers Paid           |
-| -------------------------------- | ------------ | ---------------------- |
-| Subrequests per invocation       | 50           | 10,000 (up to 10M)    |
+| Limit                            | Workers Free | Workers Paid                              |
+| -------------------------------- | ------------ | ----------------------------------------- |
+| Subrequests per invocation       | 50           | 10,000 (up to 10M)                        |
 | Subrequests to internal services | 1,000        | Matches configured limit (default 10,000) |
 
 Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code. You can change the subrequest limit per Worker using the [`limits` configuration](/workers/wrangler/configuration/#limits) in your Wrangler configuration file.
@@ -253,21 +258,24 @@ The runtime measures simultaneous open connections from the top-level request. W
 
 ## Worker size
 
-| Limit                    | Workers Free | Workers Paid |
-| ------------------------ | ------------ | ------------ |
-| After compression (gzip) | 3 MB         | 10 MB        |
-| Before compression       | 64 MB        | 64 MB        |
+| Limit                          | Workers Free | Workers Paid |
+| ------------------------------ | ------------ | ------------ |
+| Worker size before compression | 64 MiB       | 64 MiB       |
 
-Larger Worker bundles can impact startup time. To check your compressed bundle size:
+Cloudflare enforces Worker size before compression. Workers do not have a separate compressed size limit.
+
+Larger Worker bundles can impact startup time. To check your Worker bundle size:
 
 ```sh
 wrangler deploy --outdir bundled/ --dry-run
 ```
 
-```sh output
-# Output will resemble the below:
+```txt
+# Output resembles:
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
+
+The `Total Upload` value is the uncompressed bundle size. Wrangler also reports gzip size for reference.
 
 To reduce Worker size:
 
