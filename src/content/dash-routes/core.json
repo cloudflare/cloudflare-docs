@@ -422,8 +422,8 @@
 		"parent": ["Manage account"]
 	},
 	{
-		"name": "App registrations",
-		"deeplink": "/?to=/:account/app-registrations",
+		"name": "OAuth clients",
+		"deeplink": "/?to=/:account/oauth-clients",
 		"parent": ["Manage account"]
 	},
 	{
