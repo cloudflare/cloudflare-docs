@@ -200,7 +200,30 @@ To turn off code mode for a portal:
 
 ## Route portal traffic through Gateway
 
-When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from leaving your users' devices and being sent to your upstream MCP servers.
+When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal are routed through [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This makes portal traffic appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss Prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from being sent to your upstream MCP servers.
+
+### How Gateway routing works
+
+When a user calls a tool through the portal, the portal proxies the request to the upstream MCP server. With Gateway routing turned on, this outbound request passes through Cloudflare Gateway before reaching the upstream server. Gateway inspects the traffic and applies any matching HTTP policies, including DLP scanning.
+
+:::note
+Gateway routing only applies to real-time tool calls made by users through the portal. Background operations such as [admin credential synchronization](#synchronize-the-mcp-server) do not route through Gateway.
+:::
+
+### Gateway routing scope
+
+You can turn on Gateway routing at two levels:
+
+| Level | Scope | Use case |
+| ----- | ----- | -------- |
+| **Portal-level** | Routes all outbound MCP server traffic from the portal through Gateway | Apply DLP policies uniformly across all servers in the portal |
+| **Per-server** | Routes traffic to a specific MCP server through Gateway, regardless of the portal-level setting | Apply DLP policies selectively to servers that handle sensitive data |
+
+If either the portal-level or per-server setting is turned on for a given server, traffic to that server will route through Gateway.
+
+### Supported transports
+
+Gateway routing supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) connections only. If an upstream MCP server is configured with an SSE endpoint (a URL ending in `/sse`), the portal will automatically attempt to connect using Streamable HTTP instead. If the upstream server does not support Streamable HTTP, the connection will fail when Gateway routing is turned on.
 
 ### Enable Gateway routing
 
@@ -217,7 +240,7 @@ Portal traffic will now appear in your [Gateway HTTP logs](/cloudflare-one/insig
 
 To scan traffic for sensitive data, [create a Gateway HTTP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) that matches both the MCP server and a predefined or custom [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/).
 
-Gateway HTTP policies for MCP portal traffic must explicitly target the MCP server — this differs from typical Gateway HTTP policies which apply to all inspected traffic. Ensure that your policy matches the upstream MCP server (for example, `https://example-mcp-server.example.workers.dev/mcp`) rather than the portal URL (`https://<subdomain>.<domain>/mcp`).
+Gateway HTTP policies for MCP portal traffic must explicitly target the upstream MCP server. Ensure that your policy matches the upstream MCP server hostname (for example, `example-mcp-server.example.workers.dev`) rather than the portal URL (`<subdomain>.<domain>`).
 
 For example, the following policy blocks traffic that contains [credentials and secrets](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#credentials-and-secrets) or [financial information](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information):
 
@@ -226,9 +249,11 @@ For example, the following policy blocks traffic that contains [credentials and 
 | Host        | in       | `example-mcp-server.example.workers.dev`           | And   | Block  |
 | DLP Profile | in       | _Credentials and Secrets_, _Financial Information_ |       |        |
 
-:::note
-DLP [AI prompt profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) do not apply to MCP server portal traffic.
-:::
+### Limitations
+
+- DLP [AI prompt profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) do not apply to MCP server portal traffic. AI prompt profiles are designed for specific web client API paths and do not match the MCP protocol format. Use standard DLP profiles instead.
+- SSE transport is not supported through Gateway. If your upstream MCP server only supports SSE, Gateway routing will not work for that server.
+- Background synchronization of tools and prompts does not route through Gateway. Only real-time user requests are inspected.
 
 ## Connect to a portal
 
