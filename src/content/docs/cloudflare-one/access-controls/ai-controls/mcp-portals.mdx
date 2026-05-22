@@ -11,7 +11,7 @@ sidebar:
   label: MCP server portals
 ---
 
-import { Render, Tabs, TabItem, APIRequest } from "~/components";
+import { Render, Tabs, TabItem, APIRequest, CURL } from "~/components";
 
 An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint.
 
@@ -209,9 +209,10 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 
 ### Create a portal
 
-<APIRequest
-	path="/accounts/{account_id}/access/ai-controls/mcp/portals"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/portals"
 	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
 		name: "Engineering Portal",
 		hostname: "mcp.example.com",
@@ -323,9 +324,10 @@ To turn off code mode for a portal:
 
 2. Send a `PUT` request to the [Update a MCP Portal](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/portals/methods/update/) endpoint with `allow_code_mode` set to `false`. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request.
 
-   <APIRequest
-   	path="/accounts/{account_id}/access/ai-controls/mcp/portals/{id}"
+   <CURL
+   	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/portals/{id}"
    	method="PUT"
+   	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
    	json={{
    		allow_code_mode: false,
    	}}
