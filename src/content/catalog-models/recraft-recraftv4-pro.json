@@ -4,12 +4,7 @@
 	"name": "Recraft V4 Pro",
 	"description": "Recraft V4 Pro generates high-resolution, art-directed images at 2048px+ with strong composition, text rendering, and design taste. Built for print and production work.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Design",
-		"Text Rendering",
-		"High Resolution"
-	],
+	"tags": ["Image Generation", "Design", "Text Rendering", "High Resolution"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -76,26 +71,14 @@
 				"controls": {
 					"colors": [
 						{
-							"rgb": [
-								46,
-								117,
-								182
-							]
+							"rgb": [46, 117, 182]
 						},
 						{
-							"rgb": [
-								255,
-								255,
-								255
-							]
+							"rgb": [255, 255, 255]
 						}
 					],
 					"background_color": {
-						"rgb": [
-							15,
-							23,
-							42
-						]
+						"rgb": [15, 23, 42]
 					}
 				}
 			},
@@ -196,9 +179,7 @@
 										}
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"additionalProperties": false
 							}
 						},
@@ -216,18 +197,14 @@
 									}
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"additionalProperties": false
 						}
 					},
 					"additionalProperties": false
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -238,9 +215,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"additionalProperties": false
 		}
 	}

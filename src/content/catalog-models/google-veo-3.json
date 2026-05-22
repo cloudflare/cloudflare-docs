@@ -4,10 +4,7 @@
 	"name": "Veo 3",
 	"description": "Google's video generation model capable of producing high-quality videos with optional audio from text prompts.",
 	"task": "Text-to-Video",
-	"tags": [
-		"Video Generation",
-		"Audio"
-	],
+	"tags": ["Video Generation", "Audio"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -194,30 +191,19 @@
 					"description": "Video duration",
 					"default": "6s",
 					"type": "string",
-					"enum": [
-						"4s",
-						"6s",
-						"8s"
-					]
+					"enum": ["4s", "6s", "8s"]
 				},
 				"aspect_ratio": {
 					"description": "Video aspect ratio",
 					"default": "16:9",
 					"type": "string",
-					"enum": [
-						"16:9",
-						"9:16",
-						"1:1"
-					]
+					"enum": ["16:9", "9:16", "1:1"]
 				},
 				"resolution": {
 					"description": "Video resolution",
 					"default": "720p",
 					"type": "string",
-					"enum": [
-						"720p",
-						"1080p"
-					]
+					"enum": ["720p", "1080p"]
 				},
 				"generate_audio": {
 					"description": "Whether to generate audio with the video",
@@ -244,9 +230,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"additionalProperties": false
 		}
 	}

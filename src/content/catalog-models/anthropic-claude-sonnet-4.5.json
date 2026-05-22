@@ -4,12 +4,7 @@
 	"name": "Claude Sonnet 4.5",
 	"description": "Claude Sonnet 4.5 is the best coding model to date, with significant improvements across the entire development lifecycle.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Coding",
-		"Reasoning",
-		"Agentic"
-	],
+	"tags": ["LLM", "Coding", "Reasoning", "Agentic"],
 	"context_length": 200000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
@@ -423,10 +418,7 @@
 						"properties": {
 							"role": {
 								"type": "string",
-								"enum": [
-									"user",
-									"assistant"
-								]
+								"enum": ["user", "assistant"]
 							},
 							"content": {
 								"anyOf": [
@@ -446,19 +438,14 @@
 												},
 												"source": {}
 											},
-											"required": [
-												"type"
-											],
+											"required": ["type"],
 											"additionalProperties": false
 										}
 									}
 								]
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"additionalProperties": false
 					}
 				},
@@ -494,10 +481,7 @@
 					"additionalProperties": {}
 				}
 			},
-			"required": [
-				"messages",
-				"max_tokens"
-			],
+			"required": ["messages", "max_tokens"],
 			"additionalProperties": {}
 		},
 		"output": {
@@ -527,9 +511,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"type"
-						],
+						"required": ["type"],
 						"additionalProperties": {}
 					}
 				},
@@ -556,10 +538,7 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"input_tokens",
-						"output_tokens"
-					],
+					"required": ["input_tokens", "output_tokens"],
 					"additionalProperties": false
 				}
 			},

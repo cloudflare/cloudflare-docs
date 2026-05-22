@@ -4,10 +4,7 @@
 	"name": "MiniMax M2.7",
 	"description": "MiniMax's M2.7 language model with multilingual capabilities.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Multilingual"
-	],
+	"tags": ["LLM", "Multilingual"],
 	"context_length": 128000,
 	"max_output_tokens": 4096,
 	"schema_version": "1.0.0",
@@ -352,12 +349,7 @@
 						"properties": {
 							"role": {
 								"type": "string",
-								"enum": [
-									"system",
-									"user",
-									"assistant",
-									"tool"
-								]
+								"enum": ["system", "user", "assistant", "tool"]
 							},
 							"name": {
 								"type": "string"
@@ -382,10 +374,7 @@
 															"type": "string"
 														}
 													},
-													"required": [
-														"type",
-														"text"
-													],
+													"required": ["type", "text"],
 													"additionalProperties": false
 												},
 												{
@@ -402,16 +391,11 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"url"
-															],
+															"required": ["url"],
 															"additionalProperties": false
 														}
 													},
-													"required": [
-														"type",
-														"image_url"
-													],
+													"required": ["type", "image_url"],
 													"additionalProperties": false
 												}
 											]
@@ -441,26 +425,16 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"name",
-												"arguments"
-											],
+											"required": ["name", "arguments"],
 											"additionalProperties": false
 										}
 									},
-									"required": [
-										"id",
-										"type",
-										"function"
-									],
+									"required": ["id", "type", "function"],
 									"additionalProperties": false
 								}
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"additionalProperties": {}
 					}
 				},
@@ -514,27 +488,17 @@
 									},
 									"parameters": {}
 								},
-								"required": [
-									"name",
-									"description",
-									"parameters"
-								],
+								"required": ["name", "description", "parameters"],
 								"additionalProperties": false
 							}
 						},
-						"required": [
-							"type",
-							"function"
-						],
+						"required": ["type", "function"],
 						"additionalProperties": false
 					}
 				},
 				"tool_choice": {
 					"type": "string",
-					"enum": [
-						"none",
-						"auto"
-					]
+					"enum": ["none", "auto"]
 				},
 				"response_format": {
 					"type": "object",
@@ -562,33 +526,22 @@
 										},
 										"properties": {}
 									},
-									"required": [
-										"type",
-										"properties"
-									],
+									"required": ["type", "properties"],
 									"additionalProperties": false
 								}
 							},
-							"required": [
-								"name",
-								"schema"
-							],
+							"required": ["name", "schema"],
 							"additionalProperties": false
 						}
 					},
-					"required": [
-						"type",
-						"json_schema"
-					],
+					"required": ["type", "json_schema"],
 					"additionalProperties": false
 				},
 				"mask_sensitive_info": {
 					"type": "boolean"
 				}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"additionalProperties": {}
 		},
 		"output": {
@@ -638,42 +591,24 @@
 															"type": "string"
 														}
 													},
-													"required": [
-														"name",
-														"arguments"
-													],
+													"required": ["name", "arguments"],
 													"additionalProperties": false
 												}
 											},
-											"required": [
-												"id",
-												"type",
-												"function"
-											],
+											"required": ["id", "type", "function"],
 											"additionalProperties": false
 										}
 									}
 								},
-								"required": [
-									"role",
-									"content"
-								],
+								"required": ["role", "content"],
 								"additionalProperties": {}
 							},
 							"finish_reason": {
 								"type": "string",
-								"enum": [
-									"stop",
-									"length",
-									"tool_calls"
-								]
+								"enum": ["stop", "length", "tool_calls"]
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
+						"required": ["index", "message", "finish_reason"],
 						"additionalProperties": {}
 					}
 				},
@@ -685,10 +620,7 @@
 				},
 				"object": {
 					"type": "string",
-					"enum": [
-						"chat.completion",
-						"chat.completion.chunk"
-					]
+					"enum": ["chat.completion", "chat.completion.chunk"]
 				},
 				"usage": {
 					"type": "object",
@@ -703,11 +635,7 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"total_tokens",
-						"prompt_tokens",
-						"completion_tokens"
-					],
+					"required": ["total_tokens", "prompt_tokens", "completion_tokens"],
 					"additionalProperties": {}
 				},
 				"input_sensitive": {
@@ -726,20 +654,11 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"status_code",
-						"status_msg"
-					],
+					"required": ["status_code", "status_msg"],
 					"additionalProperties": false
 				}
 			},
-			"required": [
-				"id",
-				"choices",
-				"created",
-				"model",
-				"object"
-			],
+			"required": ["id", "choices", "created", "model", "object"],
 			"additionalProperties": {}
 		}
 	}

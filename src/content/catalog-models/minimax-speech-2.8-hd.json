@@ -210,11 +210,7 @@
 					"description": "Output audio format",
 					"default": "mp3",
 					"type": "string",
-					"enum": [
-						"mp3",
-						"flac",
-						"wav"
-					]
+					"enum": ["mp3", "flac", "wav"]
 				},
 				"sample_rate": {
 					"description": "Audio sample rate",
@@ -246,14 +242,7 @@
 					]
 				}
 			},
-			"required": [
-				"text",
-				"voice_id",
-				"speed",
-				"volume",
-				"pitch",
-				"format"
-			],
+			"required": ["text", "voice_id", "speed", "volume", "pitch", "format"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -265,9 +254,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"additionalProperties": false
 		}
 	}

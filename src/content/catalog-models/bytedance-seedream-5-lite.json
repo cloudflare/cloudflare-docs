@@ -4,12 +4,7 @@
 	"name": "Seedream 5 Lite",
 	"description": "Seedream 5 Lite is a lighter, faster version of the Seedream 5 family with multi-reference and batch generation support.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Multi-Reference",
-		"Batch",
-		"Fast"
-	],
+	"tags": ["Image Generation", "Multi-Reference", "Batch", "Fast"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -211,10 +206,7 @@
 				},
 				"size": {
 					"type": "string",
-					"enum": [
-						"2K",
-						"3K"
-					]
+					"enum": ["2K", "3K"]
 				},
 				"aspect_ratio": {
 					"type": "string",
@@ -232,10 +224,7 @@
 				},
 				"sequential_image_generation": {
 					"type": "string",
-					"enum": [
-						"disabled",
-						"auto"
-					]
+					"enum": ["disabled", "auto"]
 				},
 				"max_images": {
 					"type": "integer",
@@ -244,15 +233,10 @@
 				},
 				"output_format": {
 					"type": "string",
-					"enum": [
-						"png",
-						"jpeg"
-					]
+					"enum": ["png", "jpeg"]
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -268,9 +252,7 @@
 					}
 				}
 			},
-			"required": [
-				"images"
-			],
+			"required": ["images"],
 			"additionalProperties": false
 		}
 	}

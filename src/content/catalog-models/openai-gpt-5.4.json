@@ -4,12 +4,7 @@
 	"name": "GPT-5.4",
 	"description": "GPT-5.4 is OpenAI's flagship model with strong coding, reasoning, and multimodal capabilities.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Coding",
-		"Reasoning",
-		"Multimodal"
-	],
+	"tags": ["LLM", "Coding", "Reasoning", "Multimodal"],
 	"context_length": 1000000,
 	"max_output_tokens": 16384,
 	"schema_version": "1.0.0",
@@ -7805,13 +7800,7 @@
 						"properties": {
 							"role": {
 								"type": "string",
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								]
+								"enum": ["system", "developer", "user", "assistant", "tool"]
 							},
 							"content": {
 								"anyOf": [
@@ -7828,10 +7817,7 @@
 								]
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"additionalProperties": {}
 					}
 				},
@@ -7882,9 +7868,7 @@
 				"tool_choice": {},
 				"response_format": {}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"additionalProperties": {}
 		},
 		"output": {
@@ -7932,9 +7916,7 @@
 										"items": {}
 									}
 								},
-								"required": [
-									"role"
-								],
+								"required": ["role"],
 								"additionalProperties": {}
 							},
 							"finish_reason": {
@@ -7948,11 +7930,7 @@
 								]
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
+						"required": ["index", "message", "finish_reason"],
 						"additionalProperties": {}
 					}
 				},
@@ -7969,21 +7947,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
-					],
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
 					"additionalProperties": {}
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
+			"required": ["id", "object", "created", "model", "choices"],
 			"additionalProperties": {}
 		}
 	}

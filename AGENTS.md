@@ -139,7 +139,7 @@ After editing any `.ts`, `.tsx`, `.js`, `.mjs`, or `.css` file, run:
 
 ```bash
 pnpm run format             # Auto-fix code + data files
-pnpm run format:content     # Auto-fix MDX/MD/Astro files
+pnpm run format:content     # Auto-fix MD and Astro files (MDX deferred)
 ```
 
 Always format edited files before committing — CI runs `pnpm run format:core:check` and will fail if formatting is off.

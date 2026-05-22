@@ -22,8 +22,17 @@ export default {
 			files: "*.mdx",
 			options: {
 				parser: "mdx-cloudflare-docs",
+				embeddedLanguageFormatting: "off",
 				mdxPreserveElements:
-					"code,GlossaryTooltip,Steps,Tabs,TabItem,FileTree,WranglerConfig",
+					"code,GlossaryTooltip,Steps,Tabs,TabItem,FileTree,WranglerConfig,Details,TypeScriptExample,Example,Description,RTKCodeSnippet,CardGrid,Feature,TipsList,Aside,Card",
+			},
+		},
+		// Disable embedded language formatting in plain Markdown too —
+		// code samples in docs are often illustrative, not Prettier-valid.
+		{
+			files: "*.md",
+			options: {
+				embeddedLanguageFormatting: "off",
 			},
 		},
 	],

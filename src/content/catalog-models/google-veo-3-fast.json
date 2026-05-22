@@ -4,11 +4,7 @@
 	"name": "Veo 3 Fast",
 	"description": "A faster version of Veo 3 optimized for lower latency video generation with audio support.",
 	"task": "Text-to-Video",
-	"tags": [
-		"Video Generation",
-		"Audio",
-		"Fast"
-	],
+	"tags": ["Video Generation", "Audio", "Fast"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -165,30 +161,19 @@
 					"description": "Video duration",
 					"default": "6s",
 					"type": "string",
-					"enum": [
-						"4s",
-						"6s",
-						"8s"
-					]
+					"enum": ["4s", "6s", "8s"]
 				},
 				"aspect_ratio": {
 					"description": "Video aspect ratio",
 					"default": "16:9",
 					"type": "string",
-					"enum": [
-						"16:9",
-						"9:16",
-						"1:1"
-					]
+					"enum": ["16:9", "9:16", "1:1"]
 				},
 				"resolution": {
 					"description": "Video resolution",
 					"default": "720p",
 					"type": "string",
-					"enum": [
-						"720p",
-						"1080p"
-					]
+					"enum": ["720p", "1080p"]
 				},
 				"generate_audio": {
 					"description": "Whether to generate audio with the video",
@@ -215,9 +200,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"additionalProperties": false
 		}
 	}

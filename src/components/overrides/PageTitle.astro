@@ -100,8 +100,6 @@ if (!hideBreadcrumbs) {
 			</Breadcrumbs>
 		)
 	}
-
-
 </div>
 
 {!hideTitle && <Default />}
@@ -120,9 +118,9 @@ if (!hideBreadcrumbs) {
 
 {
 	component && (
-			<div class="sl-markdown-content md-ignore component-usage-wrapper">
-				<ComponentUsage component={component} />
-			</div>
+		<div class="sl-markdown-content md-ignore component-usage-wrapper">
+			<ComponentUsage component={component} />
+		</div>
 	)
 }
 
@@ -159,12 +157,15 @@ if (!hideBreadcrumbs) {
 	}
 </style>
 
-{ hideTitle && hideBreadcrumbs &&
-	<style>
-		main {
-			.content-panel:first-of-type {
-				display: none;
-			}
-		}
-	</style>
+{
+	hideTitle && hideBreadcrumbs && (
+		<style
+			is:global
+			set:html={`
+				main .content-panel:first-of-type {
+					display: none;
+				}
+			`}
+		/>
+	)
 }

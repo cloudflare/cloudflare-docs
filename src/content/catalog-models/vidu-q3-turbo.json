@@ -4,12 +4,7 @@
 	"name": "Vidu Q3 Turbo",
 	"description": "Vidu Q3 Turbo is a faster version of Vidu Q3 optimized for lower latency video generation while maintaining audio support and up to 16-second clips.",
 	"task": "Text-to-Video",
-	"tags": [
-		"Video Generation",
-		"Image-to-Video",
-		"Audio",
-		"Fast"
-	],
+	"tags": ["Video Generation", "Image-to-Video", "Audio", "Fast"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -201,11 +196,7 @@
 					"description": "Video resolution",
 					"default": "720p",
 					"type": "string",
-					"enum": [
-						"540p",
-						"720p",
-						"1080p"
-					]
+					"enum": ["540p", "720p", "1080p"]
 				},
 				"audio": {
 					"description": "Enable audio-video synchronization. Default: true for Q3 models. When false, outputs silent video",
@@ -214,19 +205,10 @@
 				"aspect_ratio": {
 					"description": "Video aspect ratio (text-to-video only). Default: 16:9",
 					"type": "string",
-					"enum": [
-						"16:9",
-						"9:16",
-						"3:4",
-						"4:3",
-						"1:1"
-					]
+					"enum": ["16:9", "9:16", "3:4", "4:3", "1:1"]
 				}
 			},
-			"required": [
-				"duration",
-				"resolution"
-			],
+			"required": ["duration", "resolution"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -239,9 +221,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"additionalProperties": false
 		}
 	}

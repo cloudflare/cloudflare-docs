@@ -4,12 +4,7 @@
 	"name": "Recraft V4 SVG",
 	"description": "Generate production-ready SVG vector graphics from text prompts with clean geometry, structured layers, and editable paths.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"SVG",
-		"Vector",
-		"Design"
-	],
+	"tags": ["Image Generation", "SVG", "Vector", "Design"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -102,26 +97,14 @@
 				"controls": {
 					"colors": [
 						{
-							"rgb": [
-								0,
-								119,
-								182
-							]
+							"rgb": [0, 119, 182]
 						},
 						{
-							"rgb": [
-								255,
-								209,
-								102
-							]
+							"rgb": [255, 209, 102]
 						}
 					],
 					"background_color": {
-						"rgb": [
-							255,
-							255,
-							255
-						]
+						"rgb": [255, 255, 255]
 					}
 				}
 			},
@@ -196,9 +179,7 @@
 										}
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"additionalProperties": false
 							}
 						},
@@ -216,18 +197,14 @@
 									}
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"additionalProperties": false
 						}
 					},
 					"additionalProperties": false
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -238,9 +215,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"additionalProperties": false
 		}
 	}

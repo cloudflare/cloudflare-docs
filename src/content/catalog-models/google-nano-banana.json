@@ -4,10 +4,7 @@
 	"name": "Nano Banana",
 	"description": "Google's fast image generation model producing high-quality images from text prompts.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Fast"
-	],
+	"tags": ["Image Generation", "Fast"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -194,24 +191,14 @@
 				},
 				"output_format": {
 					"type": "string",
-					"enum": [
-						"jpg",
-						"png",
-						"webp"
-					]
+					"enum": ["jpg", "png", "webp"]
 				},
 				"image_size": {
 					"type": "string",
-					"enum": [
-						"1K",
-						"2K",
-						"4K"
-					]
+					"enum": ["1K", "2K", "4K"]
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -223,9 +210,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"additionalProperties": false
 		}
 	}

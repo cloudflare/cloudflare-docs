@@ -4,11 +4,7 @@
 	"name": "Seedream 4.5",
 	"description": "Seedream 4.5 builds on 4.0 with multi-reference image support, batch generation, and sequential image generation.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Multi-Reference",
-		"Batch"
-	],
+	"tags": ["Image Generation", "Multi-Reference", "Batch"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -209,10 +205,7 @@
 				},
 				"size": {
 					"type": "string",
-					"enum": [
-						"2K",
-						"4K"
-					]
+					"enum": ["2K", "4K"]
 				},
 				"aspect_ratio": {
 					"type": "string",
@@ -230,10 +223,7 @@
 				},
 				"sequential_image_generation": {
 					"type": "string",
-					"enum": [
-						"disabled",
-						"auto"
-					]
+					"enum": ["disabled", "auto"]
 				},
 				"max_images": {
 					"type": "integer",
@@ -244,9 +234,7 @@
 					"type": "boolean"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -262,9 +250,7 @@
 					}
 				}
 			},
-			"required": [
-				"images"
-			],
+			"required": ["images"],
 			"additionalProperties": false
 		}
 	}

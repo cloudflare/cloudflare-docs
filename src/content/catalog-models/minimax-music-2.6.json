@@ -4,12 +4,7 @@
 	"name": "MiniMax Music 2.6",
 	"description": "MiniMax's music generation model that creates full-length songs with vocals from text prompts and lyrics, or instrumental tracks. Supports BPM/key control and auto-generated lyrics.",
 	"task": "Music Generation",
-	"tags": [
-		"Music",
-		"Audio Generation",
-		"Vocals",
-		"Instrumental"
-	],
+	"tags": ["Music", "Audio Generation", "Vocals", "Instrumental"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -233,10 +228,7 @@
 				"format": {
 					"description": "Audio format",
 					"type": "string",
-					"enum": [
-						"mp3",
-						"wav"
-					]
+					"enum": ["mp3", "wav"]
 				},
 				"lyrics_optimizer": {
 					"description": "Automatically generate lyrics based on the prompt description",
@@ -249,11 +241,7 @@
 					"type": "boolean"
 				}
 			},
-			"required": [
-				"prompt",
-				"lyrics_optimizer",
-				"is_instrumental"
-			],
+			"required": ["prompt", "lyrics_optimizer", "is_instrumental"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -266,9 +254,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"additionalProperties": false
 		}
 	}

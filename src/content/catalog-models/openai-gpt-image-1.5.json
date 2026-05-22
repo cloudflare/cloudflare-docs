@@ -4,11 +4,7 @@
 	"name": "gpt-image-1.5",
 	"description": "OpenAI's image generation model that creates and edits images from text prompts, supporting multiple quality levels and output sizes.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Image Editing",
-		"Multimodal"
-	],
+	"tags": ["Image Generation", "Image Editing", "Multimodal"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -179,36 +175,20 @@
 				"quality": {
 					"description": "Quality of the generated image",
 					"type": "string",
-					"enum": [
-						"low",
-						"medium",
-						"high",
-						"auto"
-					]
+					"enum": ["low", "medium", "high", "auto"]
 				},
 				"size": {
 					"description": "Size of the generated image",
 					"type": "string",
-					"enum": [
-						"256x256",
-						"512x512",
-						"1024x1024",
-						"1792x1024",
-						"1024x1792"
-					]
+					"enum": ["256x256", "512x512", "1024x1024", "1792x1024", "1024x1792"]
 				},
 				"style": {
 					"description": "Style of the generated image",
 					"type": "string",
-					"enum": [
-						"vivid",
-						"natural"
-					]
+					"enum": ["vivid", "natural"]
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -221,9 +201,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"additionalProperties": false
 		}
 	}

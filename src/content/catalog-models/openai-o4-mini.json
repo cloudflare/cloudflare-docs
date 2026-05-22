@@ -4,12 +4,7 @@
 	"name": "o4-mini",
 	"description": "OpenAI's fast, lightweight reasoning model optimized for multi-step problem solving at lower cost.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Reasoning",
-		"Fast",
-		"Cost-Efficient"
-	],
+	"tags": ["LLM", "Reasoning", "Fast", "Cost-Efficient"],
 	"context_length": 200000,
 	"max_output_tokens": 100000,
 	"schema_version": "1.0.0",
@@ -9786,13 +9781,7 @@
 						"properties": {
 							"role": {
 								"type": "string",
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								]
+								"enum": ["system", "developer", "user", "assistant", "tool"]
 							},
 							"content": {
 								"anyOf": [
@@ -9809,10 +9798,7 @@
 								]
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"additionalProperties": {}
 					}
 				},
@@ -9863,9 +9849,7 @@
 				"tool_choice": {},
 				"response_format": {}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"additionalProperties": {}
 		},
 		"output": {
@@ -9913,9 +9897,7 @@
 										"items": {}
 									}
 								},
-								"required": [
-									"role"
-								],
+								"required": ["role"],
 								"additionalProperties": {}
 							},
 							"finish_reason": {
@@ -9929,11 +9911,7 @@
 								]
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
+						"required": ["index", "message", "finish_reason"],
 						"additionalProperties": {}
 					}
 				},
@@ -9950,21 +9928,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
-					],
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
 					"additionalProperties": {}
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
+			"required": ["id", "object", "created", "model", "choices"],
 			"additionalProperties": {}
 		}
 	}

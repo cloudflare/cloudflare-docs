@@ -4,12 +4,7 @@
 	"name": "Gemini 3.1 Flash Lite",
 	"description": "Google's lightest and most cost-efficient Gemini model for high-throughput tasks.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Fast",
-		"Cost-Efficient",
-		"Multimodal"
-	],
+	"tags": ["LLM", "Fast", "Cost-Efficient", "Multimodal"],
 	"context_length": 1000000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
@@ -328,10 +323,7 @@
 						"properties": {
 							"role": {
 								"type": "string",
-								"enum": [
-									"user",
-									"model"
-								]
+								"enum": ["user", "model"]
 							},
 							"parts": {
 								"type": "array",
@@ -346,9 +338,7 @@
 								}
 							}
 						},
-						"required": [
-							"parts"
-						],
+						"required": ["parts"],
 						"additionalProperties": {}
 					}
 				},
@@ -368,9 +358,7 @@
 							}
 						}
 					},
-					"required": [
-						"parts"
-					],
+					"required": ["parts"],
 					"additionalProperties": {}
 				},
 				"generationConfig": {
@@ -415,10 +403,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"category",
-							"threshold"
-						],
+						"required": ["category", "threshold"],
 						"additionalProperties": {}
 					}
 				},
@@ -428,9 +413,7 @@
 				},
 				"toolConfig": {}
 			},
-			"required": [
-				"contents"
-			],
+			"required": ["contents"],
 			"additionalProperties": {}
 		},
 		"output": {

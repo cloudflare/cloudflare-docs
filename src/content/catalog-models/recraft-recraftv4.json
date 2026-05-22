@@ -4,11 +4,7 @@
 	"name": "Recraft V4",
 	"description": "Recraft V4 generates art-directed images with strong composition, accurate text rendering, and design taste built in. Fast and cost-efficient at standard resolution.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Design",
-		"Text Rendering"
-	],
+	"tags": ["Image Generation", "Design", "Text Rendering"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -100,18 +96,10 @@
 				"controls": {
 					"colors": [
 						{
-							"rgb": [
-								255,
-								107,
-								53
-							]
+							"rgb": [255, 107, 53]
 						},
 						{
-							"rgb": [
-								0,
-								43,
-								91
-							]
+							"rgb": [0, 43, 91]
 						}
 					]
 				}
@@ -144,11 +132,7 @@
 				"size": "1024x1024",
 				"controls": {
 					"background_color": {
-						"rgb": [
-							245,
-							245,
-							245
-						]
+						"rgb": [245, 245, 245]
 					}
 				}
 			},
@@ -223,9 +207,7 @@
 										}
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"additionalProperties": false
 							}
 						},
@@ -243,18 +225,14 @@
 									}
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"additionalProperties": false
 						}
 					},
 					"additionalProperties": false
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -265,9 +243,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"additionalProperties": false
 		}
 	}

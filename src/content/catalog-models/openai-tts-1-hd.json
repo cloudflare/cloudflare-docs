@@ -4,11 +4,7 @@
 	"name": "TTS-1-HD",
 	"description": "OpenAI's high-definition text-to-speech model producing higher quality audio output.",
 	"task": "Text-to-Speech",
-	"tags": [
-		"TTS",
-		"Speech Synthesis",
-		"High Quality"
-	],
+	"tags": ["TTS", "Speech Synthesis", "High Quality"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -156,26 +152,13 @@
 					"description": "The voice to use when generating the audio. Defaults to alloy.",
 					"default": "alloy",
 					"type": "string",
-					"enum": [
-						"alloy",
-						"echo",
-						"fable",
-						"onyx",
-						"nova",
-						"shimmer"
-					]
+					"enum": ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
 				},
 				"response_format": {
 					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
 					"default": "mp3",
 					"type": "string",
-					"enum": [
-						"mp3",
-						"opus",
-						"wav",
-						"aac",
-						"flac"
-					]
+					"enum": ["mp3", "opus", "wav", "aac", "flac"]
 				},
 				"speed": {
 					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
@@ -185,12 +168,7 @@
 					"maximum": 4
 				}
 			},
-			"required": [
-				"text",
-				"voice",
-				"response_format",
-				"speed"
-			],
+			"required": ["text", "voice", "response_format", "speed"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -202,9 +180,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"additionalProperties": false
 		}
 	}

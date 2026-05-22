@@ -4,10 +4,7 @@
 	"name": "HappyHorse 1.0 T2V",
 	"description": "Alibaba's HappyHorse 1.0 text-to-video model. Generates videos from a text prompt with configurable resolution, aspect ratio, and duration (3-15s).",
 	"task": "Text-to-Video",
-	"tags": [
-		"Text-to-Video",
-		"Video Generation"
-	],
+	"tags": ["Text-to-Video", "Video Generation"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -124,20 +121,11 @@
 				},
 				"resolution": {
 					"type": "string",
-					"enum": [
-						"720P",
-						"1080P"
-					]
+					"enum": ["720P", "1080P"]
 				},
 				"ratio": {
 					"type": "string",
-					"enum": [
-						"16:9",
-						"9:16",
-						"1:1",
-						"4:3",
-						"3:4"
-					]
+					"enum": ["16:9", "9:16", "1:1", "4:3", "3:4"]
 				},
 				"duration": {
 					"type": "integer",
@@ -153,9 +141,7 @@
 					"type": "boolean"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -167,9 +153,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"additionalProperties": false
 		}
 	}

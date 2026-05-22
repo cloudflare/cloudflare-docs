@@ -516,10 +516,7 @@
 						"properties": {
 							"role": {
 								"type": "string",
-								"enum": [
-									"user",
-									"assistant"
-								]
+								"enum": ["user", "assistant"]
 							},
 							"content": {
 								"anyOf": [
@@ -539,19 +536,14 @@
 												},
 												"source": {}
 											},
-											"required": [
-												"type"
-											],
+											"required": ["type"],
 											"additionalProperties": false
 										}
 									}
 								]
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"additionalProperties": false
 					}
 				},
@@ -587,10 +579,7 @@
 					"additionalProperties": {}
 				}
 			},
-			"required": [
-				"messages",
-				"max_tokens"
-			],
+			"required": ["messages", "max_tokens"],
 			"additionalProperties": {}
 		},
 		"output": {
@@ -620,9 +609,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"type"
-						],
+						"required": ["type"],
 						"additionalProperties": {}
 					}
 				},
@@ -649,10 +636,7 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"input_tokens",
-						"output_tokens"
-					],
+					"required": ["input_tokens", "output_tokens"],
 					"additionalProperties": false
 				}
 			},

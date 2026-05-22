@@ -268,12 +268,7 @@
 					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
 					"default": "mp3",
 					"type": "string",
-					"enum": [
-						"mp3",
-						"opus",
-						"wav",
-						"flac"
-					]
+					"enum": ["mp3", "opus", "wav", "flac"]
 				},
 				"bit_rate": {
 					"description": "Bits per second of the audio. Only for compressed audio formats (mp3, opus). The default is 128,000.",
@@ -304,11 +299,7 @@
 					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
 					"default": "none",
 					"type": "string",
-					"enum": [
-						"none",
-						"word",
-						"character"
-					]
+					"enum": ["none", "word", "character"]
 				},
 				"apply_text_normalization": {
 					"description": "When enabled, text normalization expands numbers, dates, times, and abbreviations before converting to speech. Turning this off may reduce latency.",
@@ -333,9 +324,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"additionalProperties": false
 		}
 	}

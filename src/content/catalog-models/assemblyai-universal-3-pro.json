@@ -4,11 +4,7 @@
 	"name": "AssemblyAI Universal-3 Pro",
 	"description": "AssemblyAI's Universal 3 Pro speech recognition model for high-accuracy transcription.",
 	"task": "Automatic Speech Recognition",
-	"tags": [
-		"Speech-to-Text",
-		"Transcription",
-		"Multilingual"
-	],
+	"tags": ["Speech-to-Text", "Transcription", "Multilingual"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -975,10 +971,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"from",
-							"to"
-						],
+						"required": ["from", "to"],
 						"additionalProperties": false
 					}
 				},
@@ -1021,11 +1014,7 @@
 				"boost_param": {
 					"description": "How much to boost the words in word_boost.",
 					"type": "string",
-					"enum": [
-						"low",
-						"default",
-						"high"
-					]
+					"enum": ["low", "default", "high"]
 				},
 				"filter_profanity": {
 					"description": "Filter profanity from the transcription.",
@@ -1049,10 +1038,7 @@
 				"redact_pii_sub": {
 					"description": "Strategy for substituting redacted PII.",
 					"type": "string",
-					"enum": [
-						"entity_name",
-						"hash"
-					]
+					"enum": ["entity_name", "hash"]
 				},
 				"speech_threshold": {
 					"description": "Confidence threshold for speech detection.",
@@ -1063,14 +1049,10 @@
 				"domain": {
 					"description": "Domain-specific transcription mode. \"medical-v1\" enables medical terminology optimization.",
 					"type": "string",
-					"enum": [
-						"medical-v1"
-					]
+					"enum": ["medical-v1"]
 				}
 			},
-			"required": [
-				"audio_url"
-			],
+			"required": ["audio_url"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -1112,12 +1094,7 @@
 										]
 									}
 								},
-								"required": [
-									"text",
-									"start",
-									"end",
-									"confidence"
-								],
+								"required": ["text", "start", "end", "confidence"],
 								"additionalProperties": false
 							}
 						},
@@ -1150,13 +1127,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"text",
-									"start",
-									"end",
-									"confidence",
-									"speaker"
-								],
+								"required": ["text", "start", "end", "confidence", "speaker"],
 								"additionalProperties": false
 							}
 						},
@@ -1199,9 +1170,7 @@
 					]
 				}
 			},
-			"required": [
-				"text"
-			],
+			"required": ["text"],
 			"additionalProperties": false
 		}
 	}

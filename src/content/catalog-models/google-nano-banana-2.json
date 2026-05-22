@@ -4,11 +4,7 @@
 	"name": "Nano Banana 2",
 	"description": "Google's second-generation image generation model with improved quality and speed.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Fast",
-		"High Quality"
-	],
+	"tags": ["Image Generation", "Fast", "High Quality"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -171,18 +167,11 @@
 				},
 				"output_format": {
 					"type": "string",
-					"enum": [
-						"jpg",
-						"png"
-					]
+					"enum": ["jpg", "png"]
 				},
 				"resolution": {
 					"type": "string",
-					"enum": [
-						"1K",
-						"2K",
-						"4K"
-					]
+					"enum": ["1K", "2K", "4K"]
 				},
 				"google_search": {
 					"type": "boolean"
@@ -191,9 +180,7 @@
 					"type": "boolean"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -205,9 +192,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"additionalProperties": false
 		}
 	}
