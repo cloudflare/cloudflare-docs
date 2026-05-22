@@ -1,0 +1,24 @@
+---
+title: Stablecoin payments
+description: You can now pay for Cloudflare services with USDC stablecoin at the checkout.
+date: 2026-05-22
+---
+
+You can now pay for Cloudflare services with USDC stablecoin at the checkout. Refer to the [stablecoin payments documentation](/billing/payment-methods/stablecoin-payments/).
+
+## What changed
+
+The payment method picker now includes **Crypto** alongside card, Apple Pay, and Google Pay. Stablecoin payments support one-time charges and recurring billing, including usage-based products like Workers, R2, and Stream.
+
+![Stablecoin payments at checkout](~/assets/images/changelog/fundamentals/2026-05-22-stablecoin-payments.png)
+
+## How to use it
+
+1. At the checkout, select **Crypto** from the payment method options.
+2. Connect your wallet (MetaMask, Phantom, Coinbase Wallet, or any WalletConnect-compatible wallet) on the Stripe-hosted page at `crypto.stripe.com`.
+3. Sign a one-time smart contract permit to authorize the initial charge and future automatic charges.
+4. Your subscription activates after on-chain confirmation, typically within seconds.
+
+## Who is eligible
+
+Stablecoin payments are available to self-serve accounts in eligible regions. USDC is supported on Base and Polygon. If you have a card on file, Cloudflare falls back to it when a stablecoin charge fails.
