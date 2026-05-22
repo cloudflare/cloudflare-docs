@@ -10,10 +10,11 @@ products:
 
 import { Details, DashButton, Render } from "~/components";
 
-Cloudflare Stream can notify your service when videos finish processing, enter an error state, or when a live input connects, disconnects, or errors. You have two options for receiving these notifications:
+Cloudflare Stream can notify your service when videos are ready to play, enter an error state, or when a live input connects, disconnects, or errors. You have two options for receiving these notifications:
 
-- **Event subscriptions** publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints, signature verification, or retries.
-- **Webhooks** send an HTTP `POST` request to a URL you control. Use webhooks when you need to deliver notifications to a service outside of Cloudflare.
+**Event subscriptions** publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints, signature verification, or retries. Event subscriptions offer a greater set of events and properties.
+
+**Webhooks** send an HTTP `POST` request to a URL you control. Use webhooks when you need to deliver notifications to a service outside of Cloudflare.
 
 ## Event subscriptions
 
@@ -23,7 +24,7 @@ Stream publishes events for on-demand uploads and live broadcasts. For the full 
 
 To create an event subscription, refer to [Manage event subscriptions](/queues/event-subscriptions/manage-event-subscriptions/). When combined with the [Stream bindings](/stream/manage-video-library/bindings/) for Workers, you can act on events from a queue consumer without managing credentials or signature verification.
 
-## Webhooks
+## Webhooks for uploaded videos
 
 Webhooks notify your service when videos successfully finish processing and are ready to stream or if your video enters an error state.
 
@@ -33,7 +34,7 @@ Webhooks works differently for live broadcasting. For more information, refer to
 
 :::
 
-## Subscribe to webhook notifications
+### Subscribe to webhook notifications
 
 To subscribe to receive webhook notifications on your service or modify an existing subscription, generate an API token on the **Account API tokens** page of the Cloudflare dashboard.
 
