@@ -301,13 +301,13 @@ There are two recommended patterns for this:
 
 ### Important Considerations
 
+- **Cloudflare Access**: If your Worker is protected by [Cloudflare Access](/cloudflare-one/), Wrangler must authenticate with Access when connecting to remote bindings. See [Connecting to Access-protected Workers](#connect-to-access-protected-workers).
+
 - **Data modification**: Operations (writes, deletes, updates) on bindings connected remotely will affect your actual data in the targeted Cloudflare resource (be it preview or production).
 
 - **Billing**: Interactions with remote Cloudflare services through these connections will incur standard operational costs for those services (such as KV operations, R2 storage/operations, AI requests, D1 usage).
 
 - **Network latency**: Expect network latency for operations on these remotely connected bindings, as they involve communication over the internet.
-
-- **Cloudflare Access**: If your Worker is protected by [Cloudflare Access](/cloudflare-one/), Wrangler must authenticate with Access when connecting to remote bindings. See [Connecting to Access-protected Workers](#connecting-to-access-protected-workers).
 
 ### Connect to Access-protected Workers
 
