@@ -313,7 +313,7 @@ There are two recommended patterns for this:
 
 If your Worker is deployed behind a [Cloudflare Access](/cloudflare-one/) application — for example, if the *.workers.dev subdomain on your account is protected by Access, or if you have placed an Access policy on the custom route of the Worker — Wrangler must authenticate with Access when connecting to your remote bindings.
 
-There are two ways Wrangler authenticates against Access:
+There are two ways you can authenticate against Access:
 
 - **Interactive login** (local development): When you run a command that uses remote bindings on your own machine, Wrangler launches the interactive `cloudflared access login` flow in your browser. No additional setup is required beyond being signed in to the correct account.
 
