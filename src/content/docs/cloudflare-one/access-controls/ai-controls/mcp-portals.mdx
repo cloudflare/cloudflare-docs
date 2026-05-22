@@ -212,17 +212,6 @@ Because portal traffic routes through Gateway, it also respects [Gateway egress 
 Gateway routing only applies to real-time tool calls made by users through the portal. Background operations such as [admin credential synchronization](#synchronize-the-mcp-server) do not route through Gateway and will not use your egress policy IPs.
 :::
 
-### Gateway routing scope
-
-You can turn on Gateway routing at two levels:
-
-| Level | Scope | Use case |
-| ----- | ----- | -------- |
-| **Portal-level** | Routes all outbound MCP server traffic from the portal through Gateway | Apply DLP policies uniformly across all servers in the portal |
-| **Per-server** | Routes traffic to a specific MCP server through Gateway, regardless of the portal-level setting | Apply DLP policies selectively to servers that handle sensitive data |
-
-If either the portal-level or per-server setting is turned on for a given server, traffic to that server will route through Gateway.
-
 ### Supported transports
 
 Gateway routing supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) connections only. If an upstream MCP server is configured with an SSE endpoint (a URL ending in `/sse`), the portal will automatically attempt to connect using Streamable HTTP instead. If the upstream server does not support Streamable HTTP, the connection will fail when Gateway routing is turned on.
