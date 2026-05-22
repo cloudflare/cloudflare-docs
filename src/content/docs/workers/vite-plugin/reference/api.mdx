@@ -113,6 +113,16 @@ It accepts an optional `PluginConfig` parameter.
   You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
   :::
 
+- `devOnly` <Type text='boolean | (() => boolean)' /> <MetaInfo text='optional' />
+
+  Whether the Worker is only used during development.
+  When set to `true`, the Worker runs during `vite dev` but is excluded from the production build.
+
+  Accepts a boolean or a function that returns a boolean.
+  The function is evaluated lazily at build time, which allows frameworks to determine the value after initialization.
+
+  When the entry Worker is marked `devOnly`, the plugin writes an assets-only Wrangler config to the client output directory so the build can be deployed as a static application.
+
 - `remoteBindings` <Type text='boolean' /> <MetaInfo text='optional' />
 
   Whether or not [remote bindings](/workers/development-testing/#remote-bindings) should be enabled. Defaults to `true`.
@@ -147,3 +157,11 @@ Auxiliary Workers require a `configPath`, a `config` option, or both.
   This enables embedding additional environments with separate module graphs inside a single Worker.
 
   See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.
+
+- `devOnly` <Type text='boolean | (() => boolean)' /> <MetaInfo text='optional' />
+
+  Whether the auxiliary Worker is only used during development.
+  When set to `true`, the Worker runs during `vite dev` but is excluded from the production build.
+
+  Accepts a boolean or a function that returns a boolean.
+  The function is evaluated lazily at build time, which allows frameworks to determine the value after initialization.
