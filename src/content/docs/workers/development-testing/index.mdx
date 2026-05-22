@@ -325,7 +325,7 @@ To set up service token authentication:
 
 1. **Add a Service Auth policy to the Access application that protects your Worker.**
 
-   Open the _existing_ Access application that already covers the Worker's hostname — typically the wildcard application for `*.<account>.workers.dev`, or the application that protects your custom domain — and attach a new policy with:
+   Open the _existing_ Access application that already covers the hostname of the Worker — typically the wildcard application for `*.<account>.workers.dev`, or the application that protects your custom domain — and attach a new policy with:
    - **Action**: Service Auth
    - **Include**: "Any Access Service Token", or a specific service token
 
