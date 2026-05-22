@@ -82,7 +82,7 @@ OAuth scopes correspond to Cloudflare API token permissions. Refer to the Cloudf
             "success": true,
             "errors": [],
             "messages": []
-            }
+        }
         ```
     </TabItem>
 </Tabs>
@@ -135,9 +135,9 @@ OAuth clients must complete [domain verification](#client-url-domain-ownership-v
 
 ### How to promote a client to public
 
-**API**
-
-**Dashboard**
+:::caution
+Setting a client’s visibility to public is a permanent action. It is not possible to revert the visibility to private.
+:::
 
 <Tabs syncKey="dashPlusAPI">
     <TabItem label="Dashboard">
@@ -155,10 +155,6 @@ OAuth clients must complete [domain verification](#client-url-domain-ownership-v
     </TabItem>
 </Tabs>
 
-:::caution
-Setting a client’s visibility to public is a permanent action. It is not possible to revert the visibility to private.
-:::
-
 ## Client URL Domain Ownership Verification
 
 Part of the process Cloudflare enforces to make an application publicly visible is ownership verification of the Client URL domain for the application. If your application is only for private use (members of the account) verifying domain ownership is not required.
@@ -173,7 +169,8 @@ Cloudflare will automatically poll this DNS record until it is found or a timeou
 
 If the verification process fails due to timeout, you can manually reinitiate the polling by selecting **Restart verification** in the actions menu for that application in the list.
 
-**Note for API users**  
+#### Note for API users
+
 To restart a failed or timed out verification, send an update patch request with the existing `client_uri` unchanged.
 
 ## Rotate client secrets
