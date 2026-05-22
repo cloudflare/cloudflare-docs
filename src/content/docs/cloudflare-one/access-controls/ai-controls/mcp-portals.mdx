@@ -128,6 +128,36 @@ Cloudflare Access automatically creates an Access application for each MCP serve
    2. <Render file="access/access-block-page" product="cloudflare-one" />
 5. Select **Save**.
 
+## Configure via Terraform
+
+You can manage MCP server portals using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). Use the `cloudflare_zero_trust_access_mcp_server_portal` resource to create and configure portals programmatically.
+
+:::caution
+Unlike the dashboard, the Terraform provider does not automatically create DNS records for your portal hostname. You must create a CNAME record that points your portal subdomain to `gateway.agents.cloudflare.com`. Without this record, the portal will return `522` errors.
+:::
+
+The following example creates an MCP server portal with a CNAME record:
+
+```hcl title="MCP server portal with DNS record"
+# Create the MCP server portal
+resource "cloudflare_zero_trust_access_mcp_server_portal" "example" {
+  account_id = var.cloudflare_account_id
+  name       = "Engineering Portal"
+  hostname   = "mcp.example.com"
+}
+
+# Required: Create the CNAME record for the portal hostname
+resource "cloudflare_dns_record" "mcp_portal" {
+  zone_id = var.cloudflare_zone_id
+  name    = "mcp"
+  content = "gateway.agents.cloudflare.com"
+  type    = "CNAME"
+  proxied = true
+}
+```
+
+For the full list of supported resource arguments, refer to the [Terraform provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+
 ## Code mode
 
 [Code mode](/agents/api-reference/codemode/) is turned on by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
