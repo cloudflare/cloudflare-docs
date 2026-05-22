@@ -29,7 +29,7 @@ MCP server portals provide the following capabilities:
 
 - **Context optimization**: Portals support query parameter options that reduce context window usage by minimizing or hiding tool definitions. Refer to [Optimize context](#optimize-context) for details.
 
-- **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect.
+- **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect. You can also connect using [Access service tokens](#connect-with-a-service-token) for machine-to-machine access.
 
 - **Code mode**: Code mode is available by default on all portals. It collapses all upstream tools into a single `code` tool. The AI agent writes JavaScript that calls typed methods for each tool, and the code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This keeps context window usage fixed regardless of how many tools are available. Refer to [code mode](#code-mode) for connection instructions.
 
@@ -289,6 +289,24 @@ To end a portal session, select **Sign out** from the [portal homepage](#portal-
 3. Redirects through Cloudflare Access logout.
 
 After sign-out, the portal displays a confirmation page with a summary of the revoked sessions. To reconnect, visit the portal homepage and authenticate again.
+
+### Connect with a service token
+
+You can connect to an MCP portal using an [Access service token](/cloudflare-one/access-controls/service-auth/service-tokens/) for machine-to-machine access. Service tokens bypass the browser-based OAuth flow and authenticate directly using the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
+
+To connect with a service token:
+
+1. [Create a service token](/cloudflare-one/access-controls/service-auth/service-tokens/#create-a-service-token) in your Zero Trust account.
+2. Add the service token to an Allow policy on your portal's Access application.
+3. Include the service token headers when connecting from your MCP client.
+
+:::note
+Service tokens do not support per-user OAuth with upstream MCP servers. When connected via a service token, the portal uses the [admin credential](#reauthenticate-the-mcp-server) for all upstream server requests. Servers configured with **Require user auth** turned on will not be available to service token sessions.
+:::
+
+### Device authentication
+
+MCP server portals require a browser-based authentication flow. [Device authentication](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/device-posture/) (picking up identity from the WARP client without a browser redirect) is not currently supported for MCP portals. Users must complete the Access login flow in a browser when first connecting.
 
 ## Optimize context
 
