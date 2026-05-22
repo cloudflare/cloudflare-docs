@@ -292,12 +292,12 @@ After sign-out, the portal displays a confirmation page with a summary of the re
 
 ### Connect with a service token
 
-You can connect to an MCP portal using an [Access service token](/cloudflare-one/access-controls/service-auth/service-tokens/) for machine-to-machine access. Service tokens bypass the browser-based OAuth flow and authenticate directly using the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
+You can connect to an MCP portal using an [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) for machine-to-machine access. Service tokens bypass the browser-based OAuth flow and authenticate directly using the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
 
 To connect with a service token:
 
-1. [Create a service token](/cloudflare-one/access-controls/service-auth/service-tokens/#create-a-service-token) in your Zero Trust account.
-2. Add a [Service Auth policy](/cloudflare-one/access-controls/service-auth/#service-auth-policies) to your portal's Access application. The policy action must be **Service Auth**, not Allow. Service Auth policies specifically match requests that include valid `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
+1. [Create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token) in your Zero Trust account.
+2. Add a [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth) to your portal's Access application. The policy action must be **Service Auth**, not Allow. Service Auth policies specifically match requests that include valid `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
 3. Include the service token headers when connecting from your MCP client.
 
 :::note
@@ -306,7 +306,7 @@ Service tokens do not support per-user OAuth with upstream MCP servers. When con
 
 ### Device authentication
 
-MCP server portals require a browser-based authentication flow. [Device authentication](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/device-posture/) (picking up identity from the Cloudflare One Client without a browser redirect) is not currently supported for MCP portals. Users must complete the Access login flow in a browser when first connecting.
+MCP server portals require a browser-based authentication flow. [Device authentication](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (picking up identity from the Cloudflare One Client without a browser redirect) is not currently supported for MCP portals. Users must complete the Access login flow in a browser when first connecting.
 
 ## Optimize context
 
