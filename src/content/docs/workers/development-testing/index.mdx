@@ -323,19 +323,19 @@ To set up service token authentication:
 
 <Steps>
 
-1. **Add a Service Auth policy to the Access application that protects your Worker.**
+1. **Create a service token.**
+
+   In the Cloudflare dashboard, go to **Zero Trust** > **Access** > **Service Auth** > **Service Tokens** and create a new token. See [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) for the full reference. You will be shown a Client ID and a Client Secret — save them somewhere safe, as the secret is not shown again.
+
+2. **Add a Service Auth policy to the Access application that protects your Worker.**
 
    Open the _existing_ Access application that already covers the hostname of the Worker — typically the wildcard application for `*.<account>.workers.dev`, or the application that protects your custom domain — and attach a new policy with:
    - **Action**: Service Auth
-   - **Include**: "Any Access Service Token", or a specific service token
+   - **Include**: The service token generated above, or "Any Access Service Token" if you want to allow any service token to access the Worker.
 
    :::caution
    Do not create a _separate_ Access application scoped only to the Worker's hostname. Doing so has been observed to block requests even when the existing wildcard application is left in place — see [opennextjs-cloudflare#1171](https://github.com/opennextjs/opennextjs-cloudflare/issues/1171). Attach the Service Auth policy to the existing application that already protects the hostname.
    :::
-
-2. **Create a service token.**
-
-   In the Cloudflare dashboard, go to **Zero Trust** > **Access** > **Service Auth** > **Service Tokens** and create a new token. See [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) for the full reference. You will be shown a Client ID and a Client Secret — save them somewhere safe, as the secret is not shown again.
 
 3. **Expose the credentials to Wrangler.**
 
@@ -349,8 +349,6 @@ To set up service token authentication:
    In CI, store the values as secrets and expose them as environment variables to the step that runs Wrangler.
 
 </Steps>
-
-When both environment variables are set, Wrangler uses them to authenticate against Access regardless of the rest of the application's policies — including Access applications configured to only accept Service Auth tokens.
 
 ### API
 
