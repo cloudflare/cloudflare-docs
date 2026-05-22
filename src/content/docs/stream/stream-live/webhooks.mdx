@@ -12,8 +12,9 @@ import { AvailableNotifications, DashButton, Render } from "~/components";
 
 Cloudflare Stream can notify your service when a live input connects, disconnects, or encounters an error during a broadcast. You have two options for receiving these notifications:
 
-- **Event subscriptions** publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints or notification destinations.
-- **Webhooks** send an HTTP `POST` request to a URL you control, configured through the Cloudflare dashboard's **Notifications** page. Use webhooks when you need to deliver notifications to a service outside of Cloudflare.
+**Event subscriptions** _(recommended)_ publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints, signature verification, or retries. Event subscriptions offer a greater set of events and properties and are easier to configure than the legacy Cloudflare Notifications service.
+
+- **Webhooks** send an HTTP `POST` request to a URL you control, configured through the Cloudflare dashboard's **Notifications** page. Use webhooks when you need to deliver notifications to a service outside of Cloudflare. Webhooks are only available for paid Stream plans.
 
 :::note
 
