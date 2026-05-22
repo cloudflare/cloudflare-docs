@@ -200,13 +200,13 @@ To turn off code mode for a portal:
 
 ## Route portal traffic through Gateway
 
-When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal are routed through [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This makes portal traffic appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss Prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from being sent to your upstream MCP servers.
+When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal are routed through [Cloudflare Gateway](/cloudflare-one/traffic-policies/). This makes portal traffic appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss Prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from being sent to your upstream MCP servers.
 
 ### How Gateway routing works
 
 When a user calls a tool through the portal, the portal proxies the request to the upstream MCP server. With Gateway routing turned on, this outbound request passes through Cloudflare Gateway before reaching the upstream server. Gateway inspects the traffic and applies any matching HTTP policies, including DLP scanning.
 
-Because portal traffic routes through Gateway, it also respects [Gateway egress policies](/cloudflare-one/policies/gateway/egress-policies/). This means outbound requests to upstream MCP servers will originate from your dedicated egress IPs or Gateway IP ranges rather than generic Cloudflare IPs. If your upstream MCP servers restrict inbound traffic by source IP (for example, to a VPN or corporate IP range), you can use egress policies to ensure portal traffic comes from a predictable set of IPs.
+Because portal traffic routes through Gateway, it also respects [Gateway egress policies](/cloudflare-one/traffic-policies/egress-policies/). This means outbound requests to upstream MCP servers will originate from your dedicated egress IPs or Gateway IP ranges rather than generic Cloudflare IPs. If your upstream MCP servers restrict inbound traffic by source IP (for example, to a VPN or corporate IP range), you can use egress policies to ensure portal traffic comes from a predictable set of IPs.
 
 :::note
 Gateway routing only applies to real-time tool calls made by users through the portal. Background operations such as [admin credential synchronization](#synchronize-the-mcp-server) do not route through Gateway and will not use your egress policy IPs.
