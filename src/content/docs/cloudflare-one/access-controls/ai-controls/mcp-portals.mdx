@@ -104,7 +104,7 @@ To create an MCP server portal:
 3. Enter any name for the portal.
 4. Under **Custom domain**, select a domain for the portal URL. Domains must belong to an active zone in your Cloudflare account. You can optionally specify a subdomain.
 5. [Add MCP servers](#add-an-mcp-server) to the portal.
-6. (Optional) Under **MCP servers**, configure the tools and prompts available through the portal.
+6. (Optional) Under **MCP servers**, [configure the tools and prompts](#manage-tools-and-prompts) available through the portal.
 7. (Optional) Configure **Require user auth** for servers that support OAuth: - `Enabled`: (default) User will be prompted to utilize their own login credentials to establish a connection with the MCP server. - `Disabled`: Users who are connected to the portal will automatically have access to the MCP server via its [admin credential](#reauthenticate-the-mcp-server).
 
 8. Add [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can connect to the portal URL.
@@ -127,6 +127,70 @@ Cloudflare Access automatically creates an Access application for each MCP serve
    1. Go to **Additional settings**.
    2. <Render file="access/access-block-page" product="cloudflare-one" />
 5. Select **Save**.
+
+## Manage tools and prompts
+
+When you add an MCP server to a portal, all of its tools and prompts are available to portal users by default. You can customize which tools and prompts are exposed, rename them with aliases, and override their descriptions.
+
+### Turn off individual tools or prompts
+
+To hide specific tools or prompts from portal users:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+2. Find the portal you want to configure, then select the three dots > **Edit**.
+3. Under **MCP servers**, find the server whose tools you want to manage.
+4. Turn off the toggle next to any tool or prompt that you want to hide from users.
+5. Select **Save**.
+
+Turned-off tools will not appear in the portal's tool list. Users will not be able to call them.
+
+### Use an allowlist pattern
+
+By default, all tools and prompts from an MCP server are available in the portal. You can invert this behavior so that all tools are hidden by default and only explicitly turned-on tools are exposed. This is useful when an MCP server has many tools but you only want to expose a curated subset.
+
+To configure an allowlist via the API, set `default_disabled` to `true` on the server-to-portal mapping, then explicitly list the tools you want to expose in `updated_tools`:
+
+```json title="API request body (portal update)"
+{
+	"servers": [
+		{
+			"id": "example-server",
+			"default_disabled": true,
+			"updated_tools": [
+				{
+					"name": "search_documents",
+					"enabled": true
+				},
+				{
+					"name": "list_projects",
+					"enabled": true
+				}
+			]
+		}
+	]
+}
+```
+
+With `default_disabled` set to `true`, only `search_documents` and `list_projects` will be available to portal users. All other tools from this server will be hidden.
+
+### Rename tools with aliases
+
+You can assign aliases to tools to give them clearer names in the portal. Aliases are useful when multiple MCP servers expose tools with similar names, or when the original tool name is not descriptive.
+
+Aliases can be set at two levels:
+
+| Level | Field | Scope |
+| ----- | ----- | ----- |
+| **Server-level** | `alias` | Applies to the tool across all portals that include this server |
+| **Portal-level** | `portal_alias` | Applies only within this specific portal and takes priority over the server-level alias |
+
+When a tool has multiple names configured, the portal uses the following priority order: `portal_alias` > `server_alias` > `alias` > original tool name.
+
+Alias values must be 1-40 characters and can only contain letters, numbers, hyphens, and underscores.
+
+### Tool namespacing
+
+All tools exposed through a portal are automatically namespaced with the server ID as a prefix. For example, a tool named `list_issues` on a server with ID `github` will appear as `github_list_issues` in the portal. This prevents name collisions when multiple MCP servers expose tools with the same name.
 
 ## Code mode
 
