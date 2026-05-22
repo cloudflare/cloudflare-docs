@@ -297,7 +297,7 @@ You can connect to an MCP portal using an [Access service token](/cloudflare-one
 To connect with a service token:
 
 1. [Create a service token](/cloudflare-one/access-controls/service-auth/service-tokens/#create-a-service-token) in your Zero Trust account.
-2. Add the service token to an Allow policy on your portal's Access application.
+2. Add a [Service Auth policy](/cloudflare-one/access-controls/service-auth/#service-auth-policies) to your portal's Access application. The policy action must be **Service Auth**, not Allow. Service Auth policies specifically match requests that include valid `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
 3. Include the service token headers when connecting from your MCP client.
 
 :::note
