@@ -315,9 +315,9 @@ If your Worker is deployed behind a [Cloudflare Access](/cloudflare-one/) applic
 
 There are two ways you can authenticate against Access:
 
-- **Interactive login** (local development): When you run a command that uses remote bindings on your own machine, Wrangler launches the interactive `cloudflared access login` flow in your browser. No additional setup is required beyond being signed in to the correct account.
+- **Interactive login** (local development): If you have a policy defined that accepts user login, then Wrangler launches the interactive `cloudflared access login` flow in your browser. No additional setup is required beyond being signed in to the correct account. If the policy only allows service token authentication, Wrangler will skip the interactive flow and throw an error indicating that service token credentials are required.
 
-- **Service token** (CI / non-interactive environments): In CI/CD pipelines and other non-interactive contexts there is no browser available, so Wrangler authenticates with a [Cloudflare Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) instead. If you do not configure a service token in a non-interactive environment, Wrangler will throw an error rather than attempting the interactive flow.
+- **Service token** (CI / non-interactive environments): In CI/CD pipelines and other non-interactive contexts, or where the policy only allows service token authentication, Wrangler cannot trigger the interactive flow via the browser. Authentication must be via a [Cloudflare Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) instead. If you do not configure a service token in a non-interactive environment, Wrangler will throw an error rather than attempting the interactive flow.
 
 To set up service token authentication:
 
