@@ -440,9 +440,57 @@ To set up a Logpush job for MCP portal logs, refer to [Logpush integration](/clo
 ### After authenticating to the portal, my user receives the error `No allowed servers available, check your Zero Trust Policies`.
 
 1. An MCP portal and server must both have an attached Access policy. Ensure that all MCP servers assigned to the portal have their own associated policy.
-2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows an error, [reauthenticate the server](#reauthenticate-the-mcp-server).
+2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows **Error** or **Sync Required**, [reauthenticate the server](#reauthenticate-the-mcp-server).
 
 ### The portal URL does not prompt for authentication when it is added to an MCP client.
 
 1. Verify that the portal has an assigned Access policy.
 2. Verify that the portal URL does not have any applied [Workers](/workers/configuration/routing/custom-domains/), [Page Rules](/rules/page-rules/manage/), [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) definitions, or any other configuration that may interfere with its ability to connect to the MCP client.
+
+### The portal returns a `522` error.
+
+A `522` error indicates that Cloudflare cannot reach the portal's origin. This typically means the DNS record for the portal hostname is missing or misconfigured.
+
+1. Verify that a CNAME record exists for your portal subdomain pointing to `gateway.agents.cloudflare.com`.
+2. Ensure the CNAME record is proxied (orange-clouded) through Cloudflare.
+3. If you created the portal using the [Terraform provider](#configure-via-terraform), you must create the DNS record separately. The Terraform provider does not auto-create DNS records.
+
+### An MCP server is stuck in `Waiting` status.
+
+The `Waiting` status means Cloudflare is attempting to connect to the upstream MCP server and fetch its tools and prompts. If the server stays in this status:
+
+1. Verify that the upstream MCP server URL is correct and the server is reachable.
+2. Check that the upstream server supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) or SSE transport. The portal will attempt multiple connection strategies automatically.
+3. If the server requires authentication, verify that the admin credentials are valid by [reauthenticating the server](#reauthenticate-the-mcp-server).
+4. Select the three dots > **Sync capabilities** to manually retry the connection.
+
+### An MCP server shows `Stale` status.
+
+A `Stale` status means the admin credential for the server could not be refreshed during the last synchronization attempt. The server's tools may still work for users who have their own OAuth tokens (servers with **Require user auth** turned on), but the admin credential needs to be refreshed.
+
+To resolve this, [reauthenticate the server](#reauthenticate-the-mcp-server) with valid admin credentials.
+
+### Tool calls fail with an `unauthorized` error.
+
+1. If the server uses per-user OAuth (**Require user auth** is turned on), the user's OAuth token may have expired. Ask the user to [reauthenticate the server](#reauthenticate-a-server) from their MCP client.
+2. If the server uses admin credentials, check the [server status](#server-status). A status of **Error** or **Sync Required** indicates the admin credential needs to be refreshed.
+3. If the user recently changed permissions on the upstream service (for example, revoked OAuth scopes), they will need to reauthenticate.
+
+### Tool calls fail when Gateway routing is turned on.
+
+1. Verify that the upstream MCP server supports Streamable HTTP transport. SSE transport is not supported through Gateway.
+2. If the upstream server URL ends in `/sse`, the portal automatically attempts to connect using Streamable HTTP on a `/mcp` path instead. If the server does not support this, the connection will fail.
+3. Check [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) for DLP block events. If a DLP policy is blocking the traffic, the portal returns an error to the MCP client with the DLP rule ID.
+
+### Users cannot connect with `mcp-remote` or similar tools.
+
+1. Ensure you are using the latest version of `mcp-remote`. Run `npx -y mcp-remote@latest` to update.
+2. Use the `command` and `args` format in your MCP client configuration, not the `serverURL` parameter. The `serverURL` parameter may cause issues with portal session creation.
+3. If authentication fails repeatedly, clear cached credentials by running `rm -rf ~/.mcp-auth` and reconnecting.
+
+### The portal homepage shows the wrong name or domain.
+
+The portal homepage displays your Access organization name and branding. If the displayed name is incorrect:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Settings** > **General** > **Team name**.
+2. Update your team name. The change will take effect the next time a user visits the portal homepage.
