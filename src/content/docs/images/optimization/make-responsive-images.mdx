@@ -22,11 +22,11 @@ You can use Images to automatically resize images for optimal display on every d
 | [HTML `srcset`](#using-the-srcset-attribute) | List multiple sizes in markup and let the browser pick the best match based on viewport size and display density. | Full control over which sizes are available. Works in all browsers.        |
 | [`width=auto`](#using-widthauto)             | Cloudflare automatically selects the best width from a single URL — no markup changes required.                   | Simplest implementation, especially when you don't have control over HTML. |
 
-## Optimizing for high-DPI displays
+## Optimize for high-DPI displays
 
 A screen displays images using physical pixels (the individual dots that you see), while the browser uses CSS pixels (an abstract unit used for layout).
 
-On a standard display, these map 1:1. On high-density displays (e.g. Retina, 4K), each CSS pixel is rendered using multiple physical pixels — for example, 4 physical pixels on a 2x display, 9 on a 3x display.
+On a standard display, these map 1:1. On high-density displays (for example, Retina, 4K), each CSS pixel is rendered using multiple physical pixels — for example, 4 physical pixels on a 2x display, 9 on a 3x display.
 
 This ratio — the device pixel ratio (DPR) — determines how sharp an image will appear. When you serve a 960px image on a 2x display, the browser stretches it across 1920 physical pixels, making it appear blurry.
 
@@ -59,7 +59,7 @@ To keep images sharp, you can provide a separate, higher-resolution version for 
 	</tr>
 </table>
 
-## Using the `srcset` attribute
+## Use the `srcset` attribute
 
 When you embed an image using an `<img>` element, you can use its [`srcset`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#srcset) attribute to give the browser a list of the same image at different sizes.
 
@@ -76,7 +76,7 @@ The snippet below shows how `srcset` can be used within an `<img>` tag to serve 
 />
 ```
 
-Instead of pre-generating each size, use Images to point every `srcset` entry at the same source image with a different `width` parameter and pixel density descriptor (e.g. `2x`). Once the browser selects the right width for the user's device pixel ratio, Cloudflare dynamically generates the resized version on request:
+Instead of pre-generating each size, use Images to point every `srcset` entry at the same source image with a different `width` parameter and pixel density descriptor (for example, `2x`). Once the browser selects the right width for the user's device pixel ratio, Cloudflare dynamically generates the resized version on request:
 
 ```html
 <img
@@ -85,13 +85,13 @@ Instead of pre-generating each size, use Images to point every `srcset` entry at
 />
 ```
 
-In the example above, the `src` attribute contains the image for 1x displays (e.g. HD/1080p monitors). The `srcset` attribute adds a larger, high-DPI image for 2x displays (e.g. most mobile devices, 4K desktop displays). Use high-resolution source images, as scaling a low-resolution image increases file size without improving quality.
+In the example above, the `src` attribute contains the image for 1x displays (for example, HD/1080p monitors). The `srcset` attribute adds a larger, high-DPI image for 2x displays (for example, most mobile devices, 4K desktop displays). Use high-resolution source images, as scaling a low-resolution image increases file size without improving quality.
 
-### Creating responsive layouts
+### Create responsive layouts
 
 Pixel density descriptors are used when the image has a fixed CSS size (e.g. a 960px product photo) and the viewport width doesn't matter. Here, you know exactly how many CSS pixels the image will be, and you want to provide higher-resolution versions for high-DPI screens.
 
-However, if the image scales with the viewport — that is, its CSS size changes based on the screen width (e.g., `width: 100%`, `width: 50vw`) — then use the width descriptor (`w`) instead to provide a range of widths:
+However, if the image scales with the viewport — that is, its CSS size changes based on the screen width (for example, `width: 100%`, `width: 50vw`) — then use the width descriptor (`w`) instead to provide a range of widths:
 
 ```html
 <img
@@ -109,7 +109,7 @@ However, if the image scales with the viewport — that is, its CSS size changes
 
 The `w` values tell the browser the pixel width of each option. The browser factors in both viewport width and display density to choose the best match.
 
-#### Using the `sizes` attribute
+#### Use the `sizes` attribute
 
 By default, the browser assumes the image fills the full viewport. If the image only occupies part of the screen, then you can use `sizes` to tell the browser how wide it actually is:
 
@@ -118,7 +118,7 @@ By default, the browser assumes the image fills the full viewport. If the image 
 <img style="width: 50vw" srcset="..." sizes="50vw" />
 ```
 
-If the image can have a different size depending on media queries or other CSS properties (e.g. `max-width`), then specify all the conditions in the `sizes` attribute:
+If the image can have a different size depending on media queries or other CSS properties (for example, `max-width`), then specify all the conditions in the `sizes` attribute:
 
 ```html
 <img
@@ -139,7 +139,7 @@ In the example above:
 - If the screen size is above 640px, then the image scales with the viewport and caps at 640px.
 - On a 2x display above 640px, the browser needs 1280 physical pixels to fill the 640px layout width, so it selects the 1280w entry.
 
-## Using `width=auto`
+## Use `width=auto`
 
 With `srcset`, you control exactly which sizes are available, which requires updating your HTML for every image.
 
