@@ -12,3 +12,4 @@ src/content/partials/images/*.mdx
 
 # Lock files
 pnpm-lock.yaml
+.opencode/
