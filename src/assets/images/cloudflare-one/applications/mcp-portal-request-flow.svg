@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 520" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-auto">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#404040"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-auto">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#f6821f"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-auto">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="520" fill="white" rx="4"/>
+
+  <!-- Title -->
+  <text x="550" y="32" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a1a">MCP server portal request flow</text>
+
+  <!-- Cloudflare boundary -->
+  <rect x="220" y="55" width="620" height="400" rx="8" fill="#fff8f3" stroke="#f6821f" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="530" y="78" text-anchor="middle" font-size="11" fill="#f6821f" font-weight="600" letter-spacing="0.5">CLOUDFLARE</text>
+
+  <!-- ===== LEFT: MCP Client ===== -->
+  <rect x="30" y="175" width="150" height="90" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="105" y="210" text-anchor="middle" font-weight="600" fill="#1a1a1a">MCP client</text>
+  <text x="105" y="228" text-anchor="middle" font-size="11" fill="#6b7280">Claude, Cursor,</text>
+  <text x="105" y="243" text-anchor="middle" font-size="11" fill="#6b7280">OpenCode, etc.</text>
+
+  <!-- ===== Identity Provider (top-left) ===== -->
+  <rect x="30" y="65" width="150" height="60" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="105" y="92" text-anchor="middle" font-weight="600" fill="#1a1a1a">Identity provider</text>
+  <text x="105" y="108" text-anchor="middle" font-size="11" fill="#6b7280">Okta, Azure AD, etc.</text>
+
+  <!-- ===== RIGHT: Upstream MCP Servers ===== -->
+  <rect x="900" y="105" width="170" height="70" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="985" y="133" text-anchor="middle" font-weight="600" fill="#1a1a1a">Upstream MCP</text>
+  <text x="985" y="150" text-anchor="middle" font-weight="600" fill="#1a1a1a">server (OAuth)</text>
+
+  <rect x="900" y="205" width="170" height="70" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="985" y="233" text-anchor="middle" font-weight="600" fill="#1a1a1a">Upstream MCP</text>
+  <text x="985" y="250" text-anchor="middle" font-weight="600" fill="#1a1a1a">server (unauth)</text>
+
+  <rect x="900" y="305" width="170" height="70" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="985" y="333" text-anchor="middle" font-weight="600" fill="#1a1a1a">Upstream MCP</text>
+  <text x="985" y="350" text-anchor="middle" font-weight="600" fill="#1a1a1a">server (bearer)</text>
+
+  <!-- ===== Cloudflare Access ===== -->
+  <rect x="248" y="155" width="160" height="130" rx="6" fill="white" stroke="#f6821f" stroke-width="1.5"/>
+  <text x="328" y="185" text-anchor="middle" font-weight="600" fill="#f6821f">Cloudflare Access</text>
+  <text x="328" y="208" text-anchor="middle" font-size="11" fill="#6b7280">JWT validation</text>
+  <text x="328" y="224" text-anchor="middle" font-size="11" fill="#6b7280">Policy evaluation</text>
+  <text x="328" y="240" text-anchor="middle" font-size="11" fill="#6b7280">OAuth 2.0 flow</text>
+  <text x="328" y="256" text-anchor="middle" font-size="11" fill="#6b7280">Managed OAuth</text>
+
+  <!-- ===== MCP Portal (DO) ===== -->
+  <rect x="448" y="120" width="170" height="200" rx="6" fill="white" stroke="#f6821f" stroke-width="1.5"/>
+  <text x="533" y="148" text-anchor="middle" font-weight="600" fill="#f6821f">MCP server portal</text>
+  <line x1="458" y1="158" x2="608" y2="158" stroke="#f0e0d0" stroke-width="1"/>
+  <text x="533" y="178" text-anchor="middle" font-size="11" fill="#6b7280">Session management</text>
+  <text x="533" y="196" text-anchor="middle" font-size="11" fill="#6b7280">Tool namespacing</text>
+  <text x="533" y="214" text-anchor="middle" font-size="11" fill="#6b7280">Credential routing</text>
+  <text x="533" y="232" text-anchor="middle" font-size="11" fill="#6b7280">Server toggling</text>
+  <text x="533" y="250" text-anchor="middle" font-size="11" fill="#6b7280">Context optimization</text>
+  <text x="533" y="268" text-anchor="middle" font-size="11" fill="#6b7280">Built-in tools</text>
+  <text x="533" y="286" text-anchor="middle" font-size="11" fill="#6b7280">Code mode sandbox</text>
+  <text x="533" y="304" text-anchor="middle" font-size="11" fill="#6b7280">Transport detection</text>
+
+  <!-- ===== Gateway (optional) ===== -->
+  <rect x="660" y="155" width="160" height="130" rx="6" fill="white" stroke="#f6821f" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="740" y="183" text-anchor="middle" font-weight="600" fill="#f6821f">Gateway</text>
+  <text x="740" y="198" text-anchor="middle" font-size="10" fill="#9ca3af" font-style="italic">(optional)</text>
+  <text x="740" y="222" text-anchor="middle" font-size="11" fill="#6b7280">HTTP logging</text>
+  <text x="740" y="238" text-anchor="middle" font-size="11" fill="#6b7280">DLP inspection</text>
+  <text x="740" y="254" text-anchor="middle" font-size="11" fill="#6b7280">Policy enforcement</text>
+  <text x="740" y="270" text-anchor="middle" font-size="11" fill="#6b7280">Egress IP</text>
+
+  <!-- ===== Background sync (bottom) ===== -->
+  <rect x="448" y="360" width="170" height="70" rx="6" fill="white" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="533" y="388" text-anchor="middle" font-weight="600" fill="#6b7280">Background sync</text>
+  <text x="533" y="406" text-anchor="middle" font-size="11" fill="#9ca3af">~2h interval</text>
+  <text x="533" y="420" text-anchor="middle" font-size="11" fill="#9ca3af">Admin credentials</text>
+
+  <!-- ===== Arrows ===== -->
+
+  <!-- Client -> Access -->
+  <line x1="180" y1="220" x2="245" y2="220" stroke="#404040" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="212" y="212" text-anchor="middle" font-size="10" fill="#6b7280">1</text>
+
+  <!-- IdP <-> Access -->
+  <line x1="180" y1="95" x2="265" y2="155" stroke="#404040" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="210" y="118" text-anchor="middle" font-size="10" fill="#6b7280">2</text>
+
+  <!-- Access -> Portal -->
+  <line x1="408" y1="220" x2="445" y2="220" stroke="#f6821f" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+  <text x="426" y="212" text-anchor="middle" font-size="10" fill="#f6821f">3</text>
+
+  <!-- Portal -> Gateway -->
+  <line x1="618" y1="220" x2="657" y2="220" stroke="#f6821f" stroke-width="1.5" marker-end="url(#arrow-orange)" stroke-dasharray="5,3"/>
+  <text x="637" y="212" text-anchor="middle" font-size="10" fill="#f6821f">4</text>
+
+  <!-- Gateway -> Upstream servers -->
+  <line x1="820" y1="195" x2="897" y2="155" stroke="#404040" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="820" y1="220" x2="897" y2="240" stroke="#404040" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="820" y1="245" x2="897" y2="325" stroke="#404040" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="862" y="187" text-anchor="middle" font-size="10" fill="#6b7280">5</text>
+
+  <!-- Background sync -> Upstream (direct, bypasses Gateway) -->
+  <path d="M 618 395 Q 760 395 760 340 Q 760 310 897 310" stroke="#9ca3af" stroke-width="1.2" fill="none" marker-end="url(#arrow-gray)" stroke-dasharray="4,3"/>
+  <text x="770" y="370" text-anchor="middle" font-size="10" fill="#9ca3af">direct</text>
+  <text x="770" y="383" text-anchor="middle" font-size="10" fill="#9ca3af">(no Gateway)</text>
+
+  <!-- ===== Legend ===== -->
+  <rect x="248" y="460" width="544" height="40" rx="4" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="268" y1="480" x2="298" y2="480" stroke="#404040" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="306" y="484" font-size="11" fill="#6b7280">Request flow</text>
+  <line x1="410" y1="480" x2="440" y2="480" stroke="#f6821f" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-orange)"/>
+  <text x="448" y="484" font-size="11" fill="#6b7280">Optional (Gateway)</text>
+  <line x1="580" y1="480" x2="610" y2="480" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow-gray)"/>
+  <text x="618" y="484" font-size="11" fill="#6b7280">Background sync</text>
+
+  <!-- Step labels -->
+  <text x="550" y="500" text-anchor="middle" font-size="10" fill="#9ca3af">1 Connect  |  2 Authenticate  |  3 Session created  |  4 Tool call proxied  |  5 Upstream request</text>
+</svg>

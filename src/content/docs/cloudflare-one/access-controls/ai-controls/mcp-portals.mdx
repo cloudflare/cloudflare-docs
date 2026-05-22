@@ -19,6 +19,20 @@ An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers]
 
 This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
 
+## How it works
+
+The following diagram shows how requests flow through an MCP server portal.
+
+![Request flow diagram showing how an MCP client connects through Cloudflare Access and the MCP server portal to reach upstream MCP servers, with an optional Gateway path for DLP inspection.](~/assets/images/cloudflare-one/applications/mcp-portal-request-flow.svg)
+
+1. An MCP client connects to the portal URL and receives a `401` with OAuth discovery metadata.
+2. The user authenticates through Cloudflare Access via their identity provider.
+3. Access validates the JWT and creates a portal session. The portal fetches the tool list from all enabled upstream servers.
+4. When the user calls a tool, the portal identifies the target server from the tool's namespace prefix, attaches the appropriate credentials (user OAuth token or admin credential), and proxies the request. If [Gateway routing](#route-portal-traffic-through-gateway) is turned on, the request passes through Cloudflare Gateway for HTTP logging and DLP inspection.
+5. The upstream server processes the request and returns a response through the same path.
+
+Background synchronization of tools and prompts runs approximately every two hours using admin credentials. This sync connects directly to upstream servers and does not route through Gateway.
+
 ## Key features
 
 MCP server portals provide the following capabilities:
