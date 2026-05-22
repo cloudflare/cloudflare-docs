@@ -450,26 +450,6 @@ For detailed information about how Argo Smart Routing works, refer to the [Argo 
 
 ---
 
-## Summary checklist
-
-Use this checklist to systematically troubleshoot slow website performance:
-
-- [ ] Verify traffic is going through Cloudflare (check for `cf-ray` header)
-- [ ] Run Observatory tests and review Core Web Vitals
-- [ ] Check RUM data to see if real users are experiencing issues
-- [ ] Enable recommended Speed optimizations
-- [ ] Identify specific slow assets using browser developer tools
-- [ ] Check origin response times in Analytics
-- [ ] Use `curl` to measure detailed timing for slow assets
-- [ ] Verify assets are being cached using Cache Analytics
-- [ ] Create cache rules for static content that is not cached
-- [ ] Test network performance with speed.cloudflare.com
-- [ ] Run MTR to identify network path issues
-- [ ] Check which Cloudflare data center serves your requests
-- [ ] Consider Argo Smart Routing for improved routing
-
----
-
 ## Contact Support if the problem persists
 
 If you have followed the steps above and the performance issue persists, [contact Cloudflare Support](/support/contacting-cloudflare-support/) for assistance.
