@@ -192,6 +192,77 @@ Alias values must be 1-40 characters and can only contain letters, numbers, hyph
 
 All tools exposed through a portal are automatically namespaced with the server ID as a prefix. For example, a tool named `list_issues` on a server with ID `github` will appear as `github_list_issues` in the portal. This prevents name collisions when multiple MCP servers expose tools with the same name.
 
+## Manage portals via API
+
+In addition to the dashboard, you can manage MCP server portals programmatically using the Cloudflare API. The following examples show common operations.
+
+:::caution
+Unlike the dashboard, the API does not automatically create a DNS record for your portal hostname. After creating a portal via the API, you must create a proxied CNAME record that points your portal subdomain to `gateway.agents.cloudflare.com`. Without this record, the portal will return `522` errors.
+:::
+
+### List portals
+
+<APIRequest
+	path="/accounts/{account_id}/access/ai-controls/mcp/portals"
+	method="GET"
+/>
+
+### Create a portal
+
+<APIRequest
+	path="/accounts/{account_id}/access/ai-controls/mcp/portals"
+	method="POST"
+	json={{
+		name: "Engineering Portal",
+		hostname: "mcp.example.com",
+		allow_code_mode: true,
+		secure_web_gateway: false,
+	}}
+/>
+
+### List MCP servers
+
+<APIRequest
+	path="/accounts/{account_id}/access/ai-controls/mcp/servers"
+	method="GET"
+/>
+
+### Create an MCP server
+
+<APIRequest
+	path="/accounts/{account_id}/access/ai-controls/mcp/servers"
+	method="POST"
+	json={{
+		name: "GitHub MCP Server",
+		hostname: "https://github-mcp.example.workers.dev/mcp",
+		auth_type: "oauth",
+	}}
+/>
+
+The `auth_type` field accepts the following values:
+
+| Value | Description |
+| ----- | ----------- |
+| `oauth` | The server requires OAuth authentication. After creating the server, you will need to authenticate via the dashboard to establish admin credentials. |
+| `bearer` | The server uses a static bearer token for authentication. Provide the token in `auth_credentials`. |
+| `unauthenticated` | The server does not require authentication. |
+
+### Force sync an MCP server
+
+To manually trigger a synchronization of tools and prompts from an upstream MCP server:
+
+<APIRequest
+	path="/accounts/{account_id}/access/ai-controls/mcp/servers/{server_id}/sync"
+	method="POST"
+/>
+
+### Delete a portal
+
+<APIRequest
+	path="/accounts/{account_id}/access/ai-controls/mcp/portals/{id}"
+	method="DELETE"
+/>
+
 ## Code mode
 
 [Code mode](/agents/api-reference/codemode/) is turned on by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
