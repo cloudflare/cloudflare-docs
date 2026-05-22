@@ -230,9 +230,10 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 
 ### Create an MCP server
 
-<APIRequest
-	path="/accounts/{account_id}/access/ai-controls/mcp/servers"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/servers"
 	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
 		name: "GitHub MCP Server",
 		hostname: "https://github-mcp.example.workers.dev/mcp",
