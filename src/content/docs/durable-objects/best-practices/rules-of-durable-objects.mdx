@@ -967,9 +967,9 @@ export default {
 
 Refer to [Invoke methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for more details on RPC and the legacy `fetch()` handler.
 
-### Initialize Durable Objects explicitly with an `init()` method
+### Store application-defined identifiers explicitly when needed
 
-Durable Objects do not know their own name or ID from within. If your Durable Object needs to know its identity (for example, to store a reference to itself or to communicate with related objects), you must explicitly initialize it.
+A Durable Object can access its runtime identity from `this.ctx.id`; named IDs can also expose their name. You do not need a custom `init()` method just to know the object identity. Use an explicit initializer only when your application needs to store additional metadata, such as a display name, creator, or other domain-specific identifier.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -990,7 +990,7 @@ export class ChatRoom extends DurableObject<Env> {
 			return; // Already initialized
 		}
 
-		// Store the identity
+		// Store application metadata
 		await this.ctx.storage.put("roomId", roomId);
 		await this.ctx.storage.put("createdBy", createdBy);
 		await this.ctx.storage.put("createdAt", Date.now());
