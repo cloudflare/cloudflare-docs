@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>ARIA · FICHE PERSONNAGE</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --parch:#1a1208;--parch2:#221a0d;--parch3:#2d2210;
+  --gold:#c9a84c;--gold2:#e8c96a;--gold3:#f5e09a;
+  --blood:#8b1a1a;--blood2:#c0392b;
+  --green-dark:#1a3a1a;--green:#2d7a2d;--green2:#4a9e4a;
+  --border:#5a4020;--border2:#8a6030;
+  --text:#d4b896;--text2:#a08060;--text3:#6a4a2a;
+  --display:'Cinzel',serif;--body:'Crimson Text',serif;
+}
+html,body{min-height:100%;background:var(--parch);color:var(--text);font-family:var(--body);font-size:14px}
+body{
+  background-color:#100c06;
+  background-image:
+    radial-gradient(ellipse at 20% 20%,rgba(90,60,20,.3) 0%,transparent 60%),
+    radial-gradient(ellipse at 80% 80%,rgba(60,30,10,.4) 0%,transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+.app{max-width:520px;margin:0 auto;padding:16px;position:relative}
+.corner{position:absolute;width:40px;height:40px;opacity:.6}
+.corner-tl{top:16px;left:16px;border-top:2px solid var(--gold);border-left:2px solid var(--gold)}
+.corner-tr{top:16px;right:16px;border-top:2px solid var(--gold);border-right:2px solid var(--gold)}
+.corner-bl{bottom:16px;left:16px;border-bottom:2px solid var(--gold);border-left:2px solid var(--gold)}
+.corner-br{bottom:16px;right:16px;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold)}
+.divider{display:flex;align-items:center;gap:10px;margin:12px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent)}
+.divider-rune{font-size:14px;color:var(--gold);opacity:.6}
+.cfg-panel{background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:12px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end}
+.cfg-group{display:flex;flex-direction:column;gap:3px;flex:1;min-width:110px}
+.cfg-lbl{font-size:9px;letter-spacing:2px;color:var(--text3);font-family:var(--display);text-transform:uppercase}
+.cfg-inp{background:rgba(0,0,0,.5);border:1px solid var(--border);padding:6px 8px;color:var(--gold2);font-family:var(--body);font-size:13px;outline:none;width:100%}
+.cfg-inp:focus{border-color:var(--gold)}
+.cfg-inp option{background:#1a1208}
+.invoke-btn{padding:8px 18px;background:linear-gradient(135deg,#3a2010,#5a3015);border:1px solid var(--gold);color:var(--gold2);font-family:var(--display);font-size:11px;letter-spacing:2px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.invoke-btn:hover{background:linear-gradient(135deg,#5a3015,#7a4020);box-shadow:0 0 12px rgba(201,168,76,.2)}
+.invoke-btn:active{transform:scale(.97)}
+.invoke-btn:disabled{opacity:.4;cursor:not-allowed}
+.prog{text-align:center;font-size:10px;letter-spacing:2px;color:var(--text3);font-family:var(--display);min-height:18px;margin-bottom:8px}
+.char-header{text-align:center;padding:16px 12px 12px;border:1px solid var(--border2);background:linear-gradient(180deg,rgba(201,168,76,.05),transparent);position:relative;margin-bottom:2px}
+.char-class{font-size:9px;letter-spacing:4px;color:var(--gold);font-family:var(--display);margin-bottom:4px;opacity:.8}
+.char-name{font-family:var(--display);font-size:28px;font-weight:700;color:var(--gold2);letter-spacing:3px;text-shadow:0 0 20px rgba(201,168,76,.3);line-height:1.1}
+.char-title{font-size:12px;color:var(--text2);font-style:italic;margin-top:2px}
+.char-price{font-size:22px;font-weight:600;color:var(--gold3);margin-top:8px;font-family:var(--display)}
+.char-change{font-size:13px;margin-left:8px}
+.char-change.up{color:#4a9e4a}.char-change.down{color:var(--blood2)}
+.avatar-zone{display:flex;justify-content:center;align-items:center;padding:16px 0;position:relative}
+.avatar-frame{width:160px;height:200px;border:2px solid var(--border2);background:linear-gradient(180deg,#0d0a04,#1a1208);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.avatar-frame::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,.08) 0%,transparent 70%)}
+
+/* ── HERO LAYOUT (nouveau layout centré image) ── */
+.hero-portrait{width:100%;aspect-ratio:3/4;max-height:520px;position:relative;border:2px solid var(--border2);border-radius:4px;overflow:hidden;margin-bottom:8px;background:#090603;display:block}
+.hero-portrait img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9;transition:opacity .8s ease}
+.hero-portrait img.loaded{opacity:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,.1) 100%);pointer-events:none}
+.hero-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#20150a,#0d0804)}
+.hero-ph-sym{font-family:var(--display);font-size:70px;color:var(--gold);opacity:.15;position:absolute;bottom:-5px;right:-5px;transform:rotate(-15deg)}
+.hero-ph-spinner{font-size:20px;color:var(--gold);opacity:.5;animation:rune-spin 2s linear infinite;z-index:2;margin-bottom:8px}
+@keyframes rune-spin{100%{transform:rotate(360deg)}}
+.hero-ph-txt{font-family:var(--display);font-size:8px;color:var(--text3);letter-spacing:2px;z-index:2}
+.hero-top{position:absolute;top:0;left:0;right:0;padding:12px 14px;z-index:3;display:flex;justify-content:space-between;align-items:flex-start}
+.hero-symbol{font-family:var(--display);font-size:26px;color:var(--gold3);text-shadow:0 2px 8px rgba(0,0,0,.95);font-weight:600}
+.hero-bottom{position:absolute;bottom:0;left:0;right:0;padding:12px 14px;z-index:3}
+.hero-class-lbl{font-family:var(--display);font-size:10px;color:var(--gold2);letter-spacing:1px;margin-bottom:3px;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.hero-name{font-family:var(--display);font-size:18px;color:var(--gold3);font-weight:600;margin-bottom:5px;text-shadow:0 2px 6px rgba(0,0,0,.95)}
+.hero-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px}
+.hbadge{font-family:var(--display);font-size:8px;letter-spacing:1.5px;padding:2px 7px;border-radius:2px;border:1px solid;text-shadow:0 1px 2px rgba(0,0,0,.8)}
+.hbadge-fire{background:rgba(192,57,43,.35);border-color:#c0392b;color:#ff9090}
+.hbadge-spring{background:rgba(122,58,170,.35);border-color:#7a3aaa;color:#d090ff}
+.hbadge-alert{background:rgba(201,168,76,.25);border-color:var(--gold);color:var(--gold3)}
+.hbadge-watch{background:rgba(90,64,32,.25);border-color:var(--border2);color:var(--text2)}
+.hbadge-score{background:rgba(0,0,0,.5);border-color:var(--border2);color:var(--text)}
+.hbadge-chg-up{background:rgba(45,122,45,.3);border-color:#4a9e4a;color:#90d090}
+.hbadge-chg-dn{background:rgba(139,26,26,.3);border-color:var(--blood2);color:#e07070}
+.power-strip{height:3px;background:rgba(0,0,0,.6);margin-bottom:2px;overflow:hidden}
+.power-fill{height:100%;transition:width .6s ease}
+.power-label{display:flex;justify-content:space-between;font-family:var(--display);font-size:9px;color:var(--text3);letter-spacing:.5px;margin-bottom:10px}
+.hero-gen-status{position:absolute;bottom:50%;left:0;right:0;text-align:center;font-family:var(--display);font-size:9px;color:var(--gold);z-index:4;letter-spacing:1px;transform:translateY(50%)}
+.hero-retry{position:absolute;bottom:50%;left:50%;transform:translate(-50%,50%);z-index:5;font-family:var(--display);font-size:9px;letter-spacing:1px;padding:5px 14px;background:rgba(139,26,26,.5);border:1px solid var(--blood2);color:var(--gold2);cursor:pointer;border-radius:2px;display:none;white-space:nowrap}
+.hero-retry:hover{background:rgba(139,26,26,.8)}
+
+/* ── ANOMALIES HERO ── */
+.anom-hero{border-radius:3px;padding:8px 10px;border-left:3px solid;background:rgba(0,0,0,.35);margin-bottom:5px;position:relative;overflow:hidden;animation:fadeIn .4s ease both}
+.anom-hero-leg{border-color:var(--gold)}
+.anom-hero-epi{border-color:#b044ff}
+.anom-hero-rar{border-color:#0088ff}
+.anom-hero-not{border-color:var(--green2,#4a9e4a)}
+.anom-hero-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.anom-hero-name{font-family:var(--display);font-size:10px;color:var(--gold2);letter-spacing:.5px}
+.anom-hero-conf{font-size:9px;color:var(--text3);font-family:var(--display)}
+.anom-hero-msg{font-size:12px;color:var(--text2);font-style:italic;line-height:1.5}
+.anom-hero-action{font-family:var(--display);font-size:8px;color:var(--gold);letter-spacing:1px;margin-top:3px}
+.anom-none-hero{text-align:center;padding:12px;color:var(--text3);font-style:italic;font-size:12px;border:1px solid var(--border);background:rgba(0,0,0,.2);border-radius:3px;margin-bottom:8px}
+
+/* ── MINI STATS ── */
+.mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px}
+.mini-stat{background:var(--parch2);border:1px solid var(--border);border-radius:3px;padding:6px 8px;text-align:center}
+.mini-lbl{font-family:var(--display);font-size:8px;color:var(--text3);letter-spacing:.5px;margin-bottom:2px}
+.mini-val{font-size:15px;font-weight:600}
+.mini-val.good{color:#4a9e4a}
+.mini-val.warn{color:var(--gold2)}
+.mini-val.bad{color:#e07070}
+.mini-val.neu{color:var(--text)}
+
+/* ── DETAILS PLIABLES ── */
+.details-toggle{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:3px;color:var(--text2);font-family:var(--display);font-size:10px;letter-spacing:1px;padding:7px 12px;cursor:pointer;text-align:center;margin-bottom:6px;transition:all .15s}
+.details-toggle:hover{background:rgba(201,168,76,.07);color:var(--gold2)}
+.details-panel{display:none}
+.details-panel.open{display:block}
+.avatar-glyph{font-size:80px;opacity:.15;position:absolute;bottom:-10px;right:-10px;transform:rotate(-15deg)}
+.avatar-symbol{font-size:64px;position:relative;z-index:1;filter:drop-shadow(0 0 12px rgba(201,168,76,.4));transition:opacity .6s ease}
+.avatar-aura{position:absolute;inset:-4px;border:1px solid transparent;animation:aura 3s ease-in-out infinite}
+.avatar-portrait{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity 1s ease}
+.avatar-portrait.loaded{opacity:1}
+.avatar-overlay{position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);z-index:3;pointer-events:none}
+.avatar-gen{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-family:var(--display);font-size:7px;letter-spacing:1px;color:var(--gold);z-index:4;opacity:.8}
+.avatar-retry{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);z-index:5;font-family:var(--display);font-size:8px;letter-spacing:1px;padding:3px 10px;background:rgba(139,26,26,.5);border:1px solid var(--blood2);color:var(--gold2);cursor:pointer;border-radius:2px;display:none;white-space:nowrap}
+.avatar-retry:hover{background:rgba(139,26,26,.8)}
+@keyframes aura{0%,100%{box-shadow:0 0 8px rgba(201,168,76,.1),inset 0 0 8px rgba(201,168,76,.05)}50%{box-shadow:0 0 20px rgba(201,168,76,.25),inset 0 0 15px rgba(201,168,76,.1)}}
+.equip-slots{position:absolute;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0;top:50%;transform:translateY(-50%)}
+.slots-col{display:flex;flex-direction:column;gap:6px}
+.slot{width:68px;border:1px solid var(--border);background:rgba(0,0,0,.5);padding:5px 6px;font-size:8px;position:relative;transition:border-color .2s}
+.slot:hover{border-color:var(--border2)}
+.slot-name{font-family:var(--display);font-size:7px;letter-spacing:1px;color:var(--text3);margin-bottom:2px;display:flex;align-items:center;gap:3px}
+.slot-val{font-size:9px;font-weight:600;color:var(--gold2);line-height:1.2}
+.slot-icon{font-size:14px;margin-bottom:2px;display:block}
+.stats-section{border:1px solid var(--border);background:rgba(0,0,0,.3);padding:10px 12px;margin-bottom:2px}
+.section-title{font-family:var(--display);font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:10px;opacity:.8;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.stat-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.stat-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.stat-name{font-family:var(--display);font-size:9px;letter-spacing:1px;color:var(--text2);width:90px;flex-shrink:0}
+.stat-bar-wrap{flex:1;height:6px;background:rgba(0,0,0,.5);border:1px solid var(--border);position:relative}
+.stat-bar{height:100%;transition:width 1s cubic-bezier(.4,0,.2,1);position:relative}
+.stat-bar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:2px;background:rgba(255,255,255,.3)}
+.stat-val{font-family:var(--display);font-size:10px;font-weight:600;color:var(--gold2);width:34px;text-align:right;flex-shrink:0}
+.bar-score{background:linear-gradient(90deg,#8b5e1a,#c9a84c)}
+.bar-force{background:linear-gradient(90deg,#5a1010,#c0392b)}
+.bar-rsine{background:linear-gradient(90deg,#1a3a8b,#3a7fc0)}
+.bar-whale{background:linear-gradient(90deg,#1a3a3a,#2d7a7a)}
+.bar-atr{background:linear-gradient(90deg,#3a1a5a,#8b44c0)}
+.bar-sqz{background:linear-gradient(90deg,#1a3a1a,#2d7a2d)}
+.traits{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:2px}
+.trait{padding:3px 10px;border:1px solid var(--border);background:rgba(0,0,0,.4);font-size:9px;letter-spacing:1px;color:var(--text2);font-family:var(--display);position:relative}
+.trait.active{border-color:var(--gold);color:var(--gold2);background:rgba(201,168,76,.08)}
+.trait.danger{border-color:var(--blood);color:#e05555;background:rgba(139,26,26,.1)}
+.abilities{display:flex;flex-direction:column;gap:5px;margin-bottom:2px}
+.ability{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);background:rgba(0,0,0,.3);padding:8px 10px}
+.abil-icon{font-size:20px;flex-shrink:0;width:24px;text-align:center}
+.abil-name{font-family:var(--display);font-size:10px;letter-spacing:1px;color:var(--gold2);margin-bottom:2px}
+.abil-desc{font-size:11px;color:var(--text2);font-style:italic;line-height:1.4}
+.objectives{border:1px solid var(--border);background:rgba(0,0,0,.3);padding:10px 12px}
+.obj-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(90,64,32,.3);font-size:12px}
+.obj-row:last-child{border:none}
+.obj-label{color:var(--text2);font-style:italic}
+.obj-val{font-family:var(--display);font-size:11px;color:var(--gold2);letter-spacing:1px}
+.obj-val.up{color:var(--green2)}.obj-val.down{color:var(--blood2)}
+.verdict{text-align:center;padding:12px;border:1px solid var(--border2);background:rgba(0,0,0,.4);position:relative;overflow:hidden;margin-bottom:2px}
+.verdict::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.06),transparent 70%)}
+.verdict-class{font-size:8px;letter-spacing:3px;color:var(--text3);font-family:var(--display);margin-bottom:4px}
+.verdict-sig{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:4px}
+.verdict-sig.fire{color:#e05a1a;text-shadow:0 0 20px rgba(224,90,26,.4)}
+.verdict-sig.spring{color:#b044ff;text-shadow:0 0 20px rgba(139,68,192,.4)}
+.verdict-sig.alert{color:var(--gold);text-shadow:0 0 15px rgba(201,168,76,.3)}
+.verdict-sig.watch{color:var(--text2)}
+.verdict-score{font-size:11px;color:var(--text2);margin-top:3px;font-style:italic}
+.pairs-list{display:flex;flex-wrap:wrap;gap:5px;padding:10px 12px;border:1px solid var(--border);background:rgba(0,0,0,.3);margin-bottom:10px}
+.pair-tag{font-size:9px;letter-spacing:1px;padding:3px 8px;border:1px solid var(--border);background:rgba(0,0,0,.4);color:var(--text2);cursor:pointer;font-family:var(--display);transition:all .15s}
+.pair-tag.on{border-color:var(--gold2);color:var(--gold2);background:rgba(201,168,76,.08)}
+.pair-tag:hover:not(.on){border-color:var(--border2)}
+@keyframes runespin{to{transform:rotate(360deg)}}
+.rune-spin{display:inline-block;animation:runespin 1s linear infinite;color:var(--gold);margin-right:6px}
+.empty{text-align:center;padding:40px 20px;color:var(--text3);font-style:italic;font-size:13px;line-height:2}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.char-sheet{animation:fadeIn .5s ease both}
+.chart-section{border:1px solid var(--border);background:rgba(0,0,0,.4);padding:8px;margin-bottom:2px}
+.chart-canvas{width:100%;height:100px;display:block}
+.chart-row{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);font-family:var(--display);letter-spacing:1px;margin-top:3px}
+.narration{border:1px solid var(--border2);background:linear-gradient(135deg,rgba(201,168,76,.04),rgba(0,0,0,.5));padding:12px 14px;margin-bottom:2px;position:relative}
+.narration::before{content:'\201C';position:absolute;top:-8px;left:10px;font-size:40px;color:var(--gold);opacity:.3;font-family:var(--display);line-height:1}
+.narr-lbl{font-size:8px;letter-spacing:3px;color:var(--gold);font-family:var(--display);margin-bottom:8px;opacity:.7}
+.narr-txt{font-size:13px;color:var(--text);font-style:italic;line-height:1.8;letter-spacing:.3px}
+.narr-loading{display:flex;align-items:center;gap:8px;color:var(--text3);font-style:italic;font-size:12px}
+.btc-ctx{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border);background:rgba(0,0,0,.3);font-size:10px;margin-bottom:2px}
+.btc-icon{font-size:16px}
+.btc-status{font-family:var(--display);font-size:9px;letter-spacing:1px}
+.btc-bull{color:#4a9e4a}.btc-bear{color:#8b1a1a}
+.rarity-badge{display:inline-block;padding:2px 10px;font-size:8px;letter-spacing:3px;font-family:var(--display);border:1px solid;margin-left:8px;vertical-align:middle}
+.rar-leg{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.1)}
+.rar-epi{border-color:#b044ff;color:#b044ff;background:rgba(176,68,255,.1)}
+.rar-rar{border-color:#0088ff;color:#0088ff;background:rgba(0,136,255,.1)}
+.rar-com{border-color:#5a4020;color:#8a6030;background:transparent}
+
+/* ── CODEX FONDAMENTAL ─────────────────────────────────────── */
+.codex{border:1px solid var(--border2);background:linear-gradient(135deg,rgba(201,168,76,.04),rgba(0,0,0,.6));padding:12px 14px;margin-bottom:2px;position:relative;overflow:hidden}
+.codex::before{content:'📜';position:absolute;right:-10px;bottom:-10px;font-size:60px;opacity:.04;pointer-events:none}
+.codex-title{font-family:var(--display);font-size:8px;letter-spacing:3px;color:var(--gold);margin-bottom:10px;opacity:.8;display:flex;align-items:center;gap:8px}
+.codex-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.codex-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.codex-item{background:rgba(0,0,0,.35);border:1px solid var(--border);padding:7px 9px}
+.codex-item.full{grid-column:1/-1}
+.codex-lbl{font-size:8px;letter-spacing:2px;color:var(--text3);font-family:var(--display);margin-bottom:3px}
+.codex-val{font-size:12px;color:var(--gold2);font-family:var(--display);font-weight:600;letter-spacing:.5px}
+.codex-val.green{color:#4a9e4a}
+.codex-val.red{color:var(--blood2)}
+.codex-val.purple{color:#b044ff}
+.codex-sub{font-size:9px;color:var(--text3);font-style:italic;margin-top:1px}
+.codex-rank{font-size:22px;font-weight:700;color:var(--gold3);font-family:var(--display);text-shadow:0 0 12px rgba(201,168,76,.3)}
+.codex-loading{display:flex;align-items:center;gap:8px;color:var(--text3);font-style:italic;font-size:11px;padding:6px 0}
+.dominance-bar{height:5px;background:rgba(0,0,0,.5);border:1px solid var(--border);margin-top:5px;position:relative}
+.dominance-fill{height:100%;background:linear-gradient(90deg,#8b5e1a,#c9a84c);transition:width 1s ease}
+.ath-pct{font-size:10px;margin-top:2px}
+.supply-row{display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin-top:4px}
+.supply-fill-wrap{height:4px;background:rgba(0,0,0,.5);border:1px solid var(--border);margin-top:4px}
+.supply-fill{height:100%;background:linear-gradient(90deg,#1a3a8b,#3a7fc0);transition:width 1s ease}
+
+/* ── DÉTECTEUR D'ANOMALIES ──────────────────────────────────── */
+.anomalies-section{padding:0 0 2px}
+.anomaly-card{border:1px solid var(--border);background:rgba(0,0,0,.35);padding:9px 11px;margin-bottom:5px;position:relative;overflow:hidden;animation:fadeIn .4s ease both}
+.anomaly-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.anomaly-leg::before{background:linear-gradient(180deg,#c9a84c,#8b5e1a)}
+.anomaly-epi::before{background:linear-gradient(180deg,#b044ff,#6a1a9e)}
+.anomaly-rar::before{background:linear-gradient(180deg,#0088ff,#004488)}
+.anomaly-not::before{background:linear-gradient(180deg,#4a9e4a,#1a3a1a)}
+.anomaly-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
+.anomaly-name{font-family:var(--display);font-size:10px;letter-spacing:1px;color:var(--gold2)}
+.anomaly-rarity{font-size:8px;letter-spacing:2px;font-family:var(--display);padding:2px 7px;border:1px solid}
+.anom-rar-leg{border-color:#c9a84c;color:#c9a84c}
+.anom-rar-epi{border-color:#b044ff;color:#b044ff}
+.anom-rar-rar{border-color:#0088ff;color:#0088ff}
+.anom-rar-not{border-color:#4a9e4a;color:#4a9e4a}
+.anomaly-msg{font-size:11px;color:var(--text2);font-style:italic;line-height:1.5;margin-bottom:4px}
+.anomaly-footer{display:flex;justify-content:space-between;align-items:center}
+.anomaly-conf{font-size:9px;color:var(--text3);font-family:var(--display)}
+.anomaly-action{font-size:9px;color:var(--gold);font-family:var(--display);letter-spacing:1px}
+.anomaly-none{text-align:center;padding:14px;color:var(--text3);font-style:italic;font-size:12px;border:1px solid var(--border);background:rgba(0,0,0,.2)}
+
+/* ── WATCHLIST DeFi ──────────────────────────────────────────── */
+.watchlist{border:1px solid var(--border);background:rgba(0,0,0,.3);margin-bottom:10px}
+.wl-tabs{display:flex;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.wl-tabs::-webkit-scrollbar{display:none}
+.wl-tab{font-family:var(--display);font-size:8px;letter-spacing:1px;padding:6px 10px;color:var(--text3);cursor:pointer;white-space:nowrap;border-right:1px solid var(--border);transition:all .15s;flex-shrink:0}
+.wl-tab.active{color:var(--gold2);background:rgba(201,168,76,.06);border-bottom:1px solid var(--gold)}
+.wl-tab:hover:not(.active){color:var(--text2);background:rgba(255,255,255,.02)}
+.wl-tokens{display:flex;flex-wrap:wrap;gap:4px;padding:8px}
+.wl-token{display:flex;align-items:center;gap:5px;padding:4px 9px;border:1px solid var(--border);background:rgba(0,0,0,.4);cursor:pointer;font-family:var(--display);font-size:9px;letter-spacing:1px;color:var(--text2);transition:all .15s;position:relative}
+.wl-token:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,168,76,.06)}
+.wl-token.active{border-color:var(--gold2);color:var(--gold2);background:rgba(201,168,76,.08)}
+.wl-token-sym{font-weight:600;color:var(--gold)}
+.wl-token-del{opacity:0;font-size:10px;color:var(--blood2);margin-left:2px;transition:opacity .15s;line-height:1}
+.wl-token:hover .wl-token-del{opacity:1}
+.wl-add{display:flex;gap:4px;padding:0 8px 8px;align-items:center}
+.wl-add-inp{flex:1;background:rgba(0,0,0,.5);border:1px solid var(--border);padding:4px 7px;color:var(--gold2);font-family:var(--body);font-size:11px;outline:none;min-width:0}
+.wl-add-inp:focus{border-color:var(--gold)}
+.wl-add-inp::placeholder{color:var(--text3);font-size:10px}
+.wl-add-btn{padding:4px 10px;background:rgba(201,168,76,.1);border:1px solid var(--gold-dim,#7a6030);color:var(--gold);font-family:var(--display);font-size:9px;cursor:pointer;white-space:nowrap;letter-spacing:1px;transition:all .15s}
+.wl-add-btn:hover{background:rgba(201,168,76,.2)}
+</style>
+.ext-btn{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);background:rgba(0,0,0,.35);color:var(--text);text-decoration:none;font-family:var(--display);font-size:10px;letter-spacing:1px;transition:all .15s;cursor:pointer}
+.ext-btn:hover{border-color:var(--border2);background:rgba(201,168,76,.06);color:var(--gold2)}
+.ext-tv:hover{border-color:#2196f3;background:rgba(33,150,243,.06)}
+.ext-ark:hover{border-color:#b044ff;background:rgba(176,68,255,.06)}
+.ext-gt:hover{border-color:#4a9e4a;background:rgba(45,122,45,.06)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="cfg-panel">
+    <div class="cfg-group" style="flex:0 0 auto;min-width:90px">
+      <div class="cfg-lbl">Source</div>
+      <select class="cfg-inp" id="cfg-network" onchange="onNetworkChange()">
+        <option value="coinbase">Coinbase</option>
+        <optgroup label="── GeckoTerminal ──">
+          <option value="solana">Solana</option>
+          <option value="eth">Ethereum</option>
+          <option value="base">Base</option>
+          <option value="bsc">BSC</option>
+          <option value="arbitrum">Arbitrum</option>
+          <option value="polygon_pos">Polygon</option>
+          <option value="avax">Avalanche</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cfg-group">
+      <div class="cfg-lbl" id="pair-lbl">Symbole / Paire</div>
+      <input class="cfg-inp" type="text" id="cfg-pair" placeholder="BTC, ETH, POLS…" value="POLS">
+    </div>
+    <div class="cfg-group" style="flex:0 0 auto;min-width:80px">
+      <div class="cfg-lbl">Timeframe</div>
+      <select class="cfg-inp" id="cfg-tf">
+        <option value="3600">H1</option>
+        <option value="21600" selected>H6</option>
+        <option value="86400">D1</option>
+      </select>
+    </div>
+    <div class="cfg-group">
+      <div class="cfg-lbl">Groq Key — Narration (optionnel)</div>
+      <input class="cfg-inp" type="password" id="cfg-groq" placeholder="gsk_…">
+    </div>
+    <div class="cfg-group">
+      <div class="cfg-lbl" style="color:#e8c96a">🎨 OpenRouter Key <span style="color:var(--text3);font-size:9px">(Grok Imagine · payant)</span></div>
+      <input class="cfg-inp" type="password" id="cfg-gemini" placeholder="sk-or-v1-…">
+    </div>
+    <div class="cfg-group">
+      <div class="cfg-lbl" style="color:#7ec87e">☁ Cloudflare Token <span style="color:var(--text3);font-size:9px">(FLUX · 10 000 images/jour gratuit)</span></div>
+      <input class="cfg-inp" type="password" id="cfg-hf" placeholder="CF API Token…">
+    </div>
+    <div class="cfg-group">
+      <div class="cfg-lbl" style="color:var(--text3)">☁ Cloudflare Account ID</div>
+      <input class="cfg-inp" type="text" id="cfg-cf-account" placeholder="a1b2c3d4e5f6…">
+    </div>
+    <button class="invoke-btn" id="invoke-btn" onclick="invoke()">⚔ INVOQUER</button>
+  </div>
+  <div id="cfg-hint" style="display:none"></div>
+
+  <!-- WATCHLIST PAR RÉSEAU -->
+  <div class="watchlist" id="watchlist-panel">
+    <div class="wl-tabs" id="wl-tabs"></div>
+    <div class="wl-tokens" id="wl-tokens"></div>
+    <div class="wl-add">
+      <input class="wl-add-inp" id="wl-inp" placeholder="Nom · Adresse (ou symbole Coinbase)">
+      <button class="wl-add-btn" onclick="wlAdd()">+ AJOUTER</button>
+    </div>
+  </div>
+
+  <div class="prog" id="prog"></div>
+
+  <div id="sheet">
+    <div class="empty">
+      ✦ Entrez une paire et invoquez votre personnage ✦<br>
+      <span style="font-size:11px;opacity:.5">Coinbase : BTC · ETH · SOL · POLS — ou choisir un réseau DeFi et coller une adresse</span>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+const CB = 'https://api.exchange.coinbase.com';
+
+// ── Map symbol → CoinGecko ID ─────────────────────────────────
+const CG_IDS = {
+  BTC:'bitcoin',ETH:'ethereum',SOL:'solana',BNB:'binancecoin',
+  AVAX:'avalanche-2',LINK:'chainlink',DOT:'polkadot',ATOM:'cosmos',
+  ADA:'cardano',XRP:'ripple',DOGE:'dogecoin',MATIC:'matic-network',
+  UNI:'uniswap',POLS:'polkastarter',FET:'fetch-ai',RNDR:'render-token',
+  NEAR:'near',OP:'optimism',ARB:'arbitrum',INJ:'injective-protocol',
+  OCEAN:'ocean-protocol',LTC:'litecoin',TRX:'tron',HBAR:'hedera-hashgraph',
+  APT:'aptos',SUI:'sui',SEI:'sei-network',TIA:'celestia',
+  JUP:'jupiter-exchange-solana',PYTH:'pyth-network',WIF:'dogwifcoin',
+  PEPE:'pepe',BONK:'bonk',FLOKI:'floki',SHIB:'shiba-inu',
+  ALGO:'algorand',FTM:'fantom',SAND:'the-sandbox',MANA:'decentraland',
+  CRV:'curve-dao-token',AAVE:'aave',MKR:'maker',SNX:'synthetix-network-token',
+  LDO:'lido-dao',RUNE:'thorchain',EGLD:'elrond-erd-2',ICP:'internet-computer',
+  STX:'blockstack',IMX:'immutable-x',GRT:'the-graph',FIL:'filecoin'
+};
+
+function fmtMarketCap(v){
+  if(!v||isNaN(v))return'—';
+  if(v>=1e12)return'$'+(v/1e12).toFixed(2)+' T';
+  if(v>=1e9)return'$'+(v/1e9).toFixed(1)+' Md';
+  if(v>=1e6)return'$'+(v/1e6).toFixed(0)+' M';
+  return'$'+v.toLocaleString();
+}
+function fmtNum(v){
+  if(!v||isNaN(v))return'—';
+  if(v>=1e12)return(v/1e12).toFixed(2)+' T';
+  if(v>=1e9)return(v/1e9).toFixed(1)+' Md';
+  if(v>=1e6)return(v/1e6).toFixed(0)+' M';
+  return v.toLocaleString();
+}
+function fmtRank(r){
+  if(!r)return'—';
+  const s=String(r);
+  const sfx=s.endsWith('11')||s.endsWith('12')||s.endsWith('13')?'ᵉ':
+             s.endsWith('1')?'ᵉʳ':s.endsWith('2')?'ᵉ':s.endsWith('3')?'ᵉ':'ᵉ';
+  return'#'+r;
+}
+
+async function fetchCoinGeckoData(base){
+  const id=CG_IDS[base];
+  if(!id)return null;
+  try{
+    const _cgBase=window.location.hostname==='localhost'?'/proxy/coingecko/':'https://api.coingecko.com/api/v3/';
+    const url=`${_cgBase}coins/${id}?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false`;
+    const r=await fetch(url,{headers:{'Accept':'application/json'}});
+    if(!r.ok)return null;
+    const d=await r.json();
+    const md=d.market_data||{};
+    return{
+      rank:d.market_cap_rank,
+      name:d.name,
+      desc:(d.description?.fr||d.description?.en||'').replace(/<[^>]+>/g,' ').split('.').slice(0,2).join('.')+'.'.trim(),
+      marketCap:md.market_cap?.usd,
+      volume24h:md.total_volume?.usd,
+      circulatingSupply:md.circulating_supply,
+      totalSupply:md.total_supply||md.max_supply,
+      maxSupply:md.max_supply,
+      ath:md.ath?.usd,
+      athDate:md.ath_date?.usd?.slice(0,4),
+      athPct:md.ath_change_percentage?.usd,
+      dominance:null, // injected after global call
+      categories:(d.categories||[]).slice(0,3).join(' · ')||null,
+      genesis:d.genesis_date||null,
+      hashing:d.hashing_algorithm||null,
+    };
+  }catch(e){return null;}
+}
+
+async function fetchDominance(base){
+  try{
+    const _cgBase2=window.location.hostname==='localhost'?'/proxy/coingecko/':'https://api.coingecko.com/api/v3/';
+    const r=await fetch(_cgBase2+'global');
+    if(!r.ok)return null;
+    const d=await r.json();
+    const mp=d.data?.market_cap_percentage||{};
+    const key=Object.keys(mp).find(k=>k.toUpperCase()===base.toUpperCase());
+    return key?+mp[key].toFixed(2):null;
+  }catch(e){return null;}
+}
+
+function renderCodex(base,cg){
+  if(!cg){
+    return`<div class="codex">
+      <div class="codex-title">CODEX DE L'ACTIF</div>
+      <div class="codex-loading">⚠ Données fondamentales indisponibles pour ${base}</div>
+    </div>`;
+  }
+
+  const supplyPct=cg.maxSupply&&cg.circulatingSupply?Math.round(cg.circulatingSupply/cg.maxSupply*100):null;
+  const athPctColor=cg.athPct>-20?'green':cg.athPct>-60?'':' red';
+
+  return`<div class="codex">
+    <div class="codex-title">📜 CODEX DE L'ACTIF · DONNÉES FONDAMENTALES</div>
+    <div class="codex-grid">
+
+      <div class="codex-item" style="display:flex;align-items:center;gap:14px">
+        <div>
+          <div class="codex-lbl">CLASSEMENT MONDIAL</div>
+          <div class="codex-rank">${fmtRank(cg.rank)}</div>
+          <div class="codex-sub">sur ~10 000+ actifs</div>
+        </div>
+      </div>
+
+      <div class="codex-item">
+        <div class="codex-lbl">CAPITALISATION</div>
+        <div class="codex-val">${fmtMarketCap(cg.marketCap)}</div>
+        <div class="codex-sub">USD · en temps réel</div>
+      </div>
+
+      <div class="codex-item">
+        <div class="codex-lbl">VOLUME 24H</div>
+        <div class="codex-val">${fmtMarketCap(cg.volume24h)}</div>
+        <div class="codex-sub">Activité journalière</div>
+      </div>
+
+      <div class="codex-item">
+        <div class="codex-lbl">ATH · RECORD ABSOLU</div>
+        <div class="codex-val">$${cg.ath?.toLocaleString('en-US',{maximumFractionDigits:4})||'—'}</div>
+        <div class="codex-sub ath-pct" style="color:${cg.athPct>-20?'#4a9e4a':cg.athPct>-60?'#c9a84c':'#c0392b'}">${cg.athPct!=null?(cg.athPct>0?'+':'')+cg.athPct.toFixed(1)+'% vs aujourd\'hui':'—'}${cg.athDate?' · '+cg.athDate:''}</div>
+      </div>
+
+      ${cg.dominance!=null?`<div class="codex-item full">
+        <div class="codex-lbl">DOMINANCE DU MARCHÉ</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <div class="codex-val">${cg.dominance}%</div>
+          <div class="codex-sub">de la capitalisation totale crypto</div>
+        </div>
+        <div class="dominance-bar"><div class="dominance-fill" style="width:${Math.min(100,cg.dominance*2)}%"></div></div>
+      </div>`:''}
+
+      <div class="codex-item full">
+        <div class="codex-lbl">SUPPLY EN CIRCULATION</div>
+        <div class="supply-row">
+          <span class="codex-val">${fmtNum(cg.circulatingSupply)} ${base}</span>
+          ${supplyPct!=null?`<span style="color:var(--gold);font-family:var(--display);font-size:11px">${supplyPct}% du max</span>`:''}
+        </div>
+        ${cg.maxSupply?`<div class="supply-fill-wrap"><div class="supply-fill" style="width:${supplyPct||0}%"></div></div>
+        <div class="codex-sub" style="margin-top:3px">Max : ${fmtNum(cg.maxSupply)} ${base}${cg.maxSupply?'  ·  Supply plafonnée ✓':''}</div>`
+        :`<div class="codex-sub" style="margin-top:2px">Supply inflationniste — pas de max défini</div>`}
+      </div>
+
+      ${cg.categories?`<div class="codex-item full">
+        <div class="codex-lbl">CATÉGORIES</div>
+        <div class="codex-val" style="font-size:10px;letter-spacing:.5px;color:var(--text)">${cg.categories}</div>
+      </div>`:''}
+
+      ${cg.tvl?`<div class="codex-item full">
+        <div class="codex-lbl">TVL — LIQUIDITÉ DE LA POOL</div>
+        <div class="codex-val green">${fmtMarketCap(cg.tvl)}</div>
+        <div class="codex-sub">${cg.poolName||'Pool principale'} · Valeur totale bloquée</div>
+      </div>`:''}
+
+      ${(cg.genesis||cg.hashing)?`<div class="codex-item full" style="display:flex;gap:20px">
+        ${cg.genesis?`<div><div class="codex-lbl">CRÉATION</div><div class="codex-val" style="font-size:11px">${cg.genesis}</div></div>`:''}
+        ${cg.hashing?`<div><div class="codex-lbl">ALGORITHME</div><div class="codex-val" style="font-size:11px">${cg.hashing}</div></div>`:''}
+      </div>`:''}
+
+    </div>
+  </div>`;
+}
+
+const mean   = a => a.reduce((s,v)=>s+v,0)/a.length;
+const stdDev = a => { const m=mean(a); return Math.sqrt(mean(a.map(v=>(v-m)**2)))||1e-9; };
+const ema_fn = (arr,p) => { const k=2/(p+1); let e=arr[0]; for(let i=1;i<arr.length;i++) e=arr[i]*k+e*(1-k); return e; };
+
+function calcRSI(cl,p=14){
+  if(cl.length<p+1)return 50;
+  let g=0,l=0;
+  for(let i=cl.length-p;i<cl.length;i++){const d=cl[i]-cl[i-1];d>0?g+=d:l-=d;}
+  g/=p;l/=p;return l===0?100:100-100/(1+g/l);
+}
+function calcATR(ca,p=14){
+  if(ca.length<2)return 0;
+  const tr=ca.slice(1).map((c,i)=>Math.max(c.high-c.low,Math.abs(c.high-ca[i].close),Math.abs(c.low-ca[i].close)));
+  return mean(tr.slice(-p));
+}
+function calcOBV(ca){
+  const o=[0];
+  for(let i=1;i<ca.length;i++){
+    const d=ca[i].close>ca[i-1].close?ca[i].volume:ca[i].close<ca[i-1].close?-ca[i].volume:0;
+    o.push(o[o.length-1]+d);
+  }
+  return o;
+}
+function calcSqzDur(ca){
+  const cl=ca.map(c=>c.close);let d=0;
+  for(let i=cl.length-1;i>=20&&d<ca.length;i--){
+    const sl=cl.slice(i-20,i),s=mean(sl),sd=stdDev(sl),atr=calcATR(ca.slice(i-20,i));
+    if((s+2*sd)<(s+1.5*atr)&&(s-2*sd)>(s-1.5*atr))d++;else break;
+  }
+  return d;
+}
+
+async function fetchCandles(pair,gran,limit=200){
+  const r=await fetch(`${CB}/products/${pair}/candles?granularity=${gran}&limit=${limit}`);
+  if(!r.ok)throw new Error('Paire introuvable sur Coinbase');
+  const d=await r.json();
+  if(!Array.isArray(d)||d.length<30)throw new Error('Données insuffisantes');
+  return d.slice(0,limit).reverse().map(x=>({ts:x[0],low:+x[1],high:+x[2],open:+x[3],close:+x[4],volume:+x[5]}));
+}
+
+// ── GeckoTerminal ─────────────────────────────────────────────
+const GT='https://api.geckoterminal.com/api/v2';
+const GT_TF={3600:'hour',21600:'hour',86400:'day'};
+const GT_AGG={3600:1,21600:6,86400:1};
+
+async function resolvePoolAddress(network,tokenAddress){
+  // Récupère la pool avec le plus de liquidité pour ce token
+  const r=await fetch(`${GT}/networks/${network}/tokens/${tokenAddress}/pools?page=1`);
+  if(!r.ok)throw new Error('Token introuvable sur GeckoTerminal');
+  const d=await r.json();
+  const pools=d.data;
+  if(!pools||pools.length===0)throw new Error('Aucune pool trouvée pour ce token');
+  // Trier par reserve_in_usd décroissant
+  pools.sort((a,b)=>(+b.attributes.reserve_in_usd||0)-(+a.attributes.reserve_in_usd||0));
+  const pool=pools[0];
+  return{
+    address:pool.attributes.address,
+    name:pool.attributes.name,
+    tvl:+pool.attributes.reserve_in_usd||0,
+    dex:pool.relationships?.dex?.data?.id||'dex'
+  };
+}
+
+async function fetchCandlesGecko(network,tokenAddress,gran,limit=200){
+  const tf=GT_TF[gran]||'hour';
+  const agg=GT_AGG[gran]||1;
+  // 1. Résoudre la pool
+  const pool=await resolvePoolAddress(network,tokenAddress);
+  // 2. Récupérer les bougies
+  const url=`${GT}/networks/${network}/pools/${pool.address}/ohlcv/${tf}?aggregate=${agg}&limit=${Math.min(limit,1000)}&currency=usd`;
+  const r=await fetch(url,{headers:{'Accept':'application/json'}});
+  if(!r.ok)throw new Error('Bougies GeckoTerminal indisponibles');
+  const d=await r.json();
+  const raw=d.data?.attributes?.ohlcv_list;
+  if(!raw||raw.length<10)throw new Error('Données graphiques insuffisantes');
+  // Format: [timestamp, open, high, low, close, volume]
+  const candles=raw.slice().reverse().map(x=>({
+    ts:x[0],open:+x[1],high:+x[2],low:+x[3],close:+x[4],volume:+x[5]
+  }));
+  return{candles,pool};
+}
+
+async function fetchTokenNameGecko(network,tokenAddress){
+  try{
+    const r=await fetch(`${GT}/networks/${network}/tokens/${tokenAddress}`);
+    if(!r.ok)return null;
+    const d=await r.json();
+    const attr=d.data?.attributes;
+    return attr?{name:attr.name,symbol:attr.symbol,decimals:attr.decimals}:null;
+  }catch(e){return null;}
+}
+
+function isContractAddress(str){
+  // Ethereum/EVM : 0x + 40 hex chars
+  if(/^0x[0-9a-fA-F]{40}$/.test(str))return true;
+  // Solana : base58, 32-44 chars
+  if(/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(str)&&str.length>=32)return true;
+  return false;
+}
+
+// ── WATCHLIST ─────────────────────────────────────────────────
+const WL_DEFAULTS = {
+  coinbase:[
+    {sym:'BTC',addr:'BTC',name:'Bitcoin'},
+    {sym:'ETH',addr:'ETH',name:'Ethereum'},
+    {sym:'SOL',addr:'SOL',name:'Solana'},
+    {sym:'BNB',addr:'BNB',name:'BNB'},
+    {sym:'XRP',addr:'XRP',name:'XRP'},
+    {sym:'DOGE',addr:'DOGE',name:'Dogecoin'},
+    {sym:'ADA',addr:'ADA',name:'Cardano'},
+    {sym:'AVAX',addr:'AVAX',name:'Avalanche'},
+    {sym:'LINK',addr:'LINK',name:'Chainlink'},
+    {sym:'DOT',addr:'DOT',name:'Polkadot'},
+    {sym:'NEAR',addr:'NEAR',name:'NEAR'},
+    {sym:'POLS',addr:'POLS',name:'Polkastarter'},
+    {sym:'FET',addr:'FET',name:'Fetch.ai'},
+    {sym:'INJ',addr:'INJ',name:'Injective'},
+    {sym:'ARB',addr:'ARB',name:'Arbitrum'},
+    {sym:'OP',addr:'OP',name:'Optimism'},
+  ],
+  solana:[
+    {sym:'JUP',addr:'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',name:'Jupiter'},
+    {sym:'WIF',addr:'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm',name:'dogwifhat'},
+    {sym:'BONK',addr:'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',name:'Bonk'},
+    {sym:'PYTH',addr:'HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3',name:'Pyth'},
+    {sym:'RNDR',addr:'rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBof',name:'Render'},
+    {sym:'RAY',addr:'4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R',name:'Raydium'},
+    {sym:'SAMO',addr:'7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU',name:'Samoyedcoin'},
+    {sym:'MNGO',addr:'MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac',name:'Mango'},
+    {sym:'ORCA',addr:'orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE',name:'Orca'},
+    {sym:'MSOL',addr:'mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So',name:'Marinade'},
+  ],
+  eth:[
+    {sym:'PEPE',addr:'0x6982508145454Ce325dDbE47a25d4ec3d2311933',name:'Pepe'},
+    {sym:'UNI',addr:'0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',name:'Uniswap'},
+    {sym:'AAVE',addr:'0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',name:'Aave'},
+    {sym:'LDO',addr:'0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32',name:'Lido DAO'},
+    {sym:'CRV',addr:'0xD533a949740bb3306d119CC777fa900bA034cd52',name:'Curve'},
+    {sym:'MKR',addr:'0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',name:'Maker'},
+    {sym:'SNX',addr:'0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F',name:'Synthetix'},
+    {sym:'SHIB',addr:'0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE',name:'Shiba Inu'},
+  ],
+  base:[
+    {sym:'BRETT',addr:'0x532f27101965dd16442E59d40670FaF5eBB142E4',name:'Brett'},
+    {sym:'DEGEN',addr:'0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed',name:'Degen'},
+    {sym:'TOSHI',addr:'0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4',name:'Toshi'},
+    {sym:'AERO',addr:'0x940181a94A35A4569E4529A3CDfB74e38FD98631',name:'Aerodrome'},
+  ],
+  bsc:[
+    {sym:'CAKE',addr:'0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',name:'PancakeSwap'},
+    {sym:'FLOKI',addr:'0xfb5B838b6cfEEdC2873aB27866079AC55363D37',name:'Floki'},
+    {sym:'TWT',addr:'0x4B0F1812e5Df2A09796481Ff14017e6005508003',name:'Trust Wallet'},
+    {sym:'XVS',addr:'0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63',name:'Venus'},
+  ],
+  arbitrum:[
+    {sym:'GMX',addr:'0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a',name:'GMX'},
+    {sym:'ARB',addr:'0x912CE59144191C1204E64559FE8253a0e49E6548',name:'Arbitrum'},
+    {sym:'MAGIC',addr:'0x539bdE0d7Dbd336b79148AA742883198BBF60342',name:'Magic'},
+    {sym:'RDNT',addr:'0x3082CC23568eA640225c2467653dB90e9250AaA0',name:'Radiant'},
+  ],
+  polygon_pos:[
+    {sym:'MATIC',addr:'0x0000000000000000000000000000000000001010',name:'Polygon'},
+    {sym:'QUICK',addr:'0xB5C064F955D8e7F38fE0460C556a72987494eE17',name:'QuickSwap'},
+    {sym:'GHST',addr:'0x385Eeac5cB85A38A9a07A70c73e0a3271CfB54A7',name:'Aavegotchi'},
+  ],
+  avax:[
+    {sym:'AVAX',addr:'0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',name:'Wrapped AVAX'},
+    {sym:'JOE',addr:'0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',name:'Trader Joe'},
+    {sym:'QI',addr:'0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5',name:'BENQI'},
+  ]
+};
+
+let wlActive={net:'coinbase',addr:'BTC'};
+
+function wlLoad(){
+  try{
+    const saved=localStorage.getItem('aria_watchlist');
+    return saved?JSON.parse(saved):JSON.parse(JSON.stringify(WL_DEFAULTS));
+  }catch(e){return JSON.parse(JSON.stringify(WL_DEFAULTS));}
+}
+function wlSave(data){
+  try{localStorage.setItem('aria_watchlist',JSON.stringify(data));}catch(e){}
+}
+
+function renderWatchlist(){
+  const data=wlLoad();
+  const net=document.getElementById('cfg-network').value;
+  const tabs=document.getElementById('wl-tabs');
+  const tokens=document.getElementById('wl-tokens');
+
+  const netLabels={coinbase:'Coinbase',solana:'Solana',eth:'Ethereum',base:'Base',bsc:'BSC',arbitrum:'Arbitrum',polygon_pos:'Polygon',avax:'Avalanche'};
+
+  // Onglets — afficher seulement les réseaux qui ont des tokens
+  tabs.innerHTML=Object.keys(netLabels).filter(n=>data[n]&&data[n].length>0).map(n=>
+    `<div class="wl-tab${n===net?' active':''}" onclick="wlSelectNet('${n}')">${netLabels[n]}</div>`
+  ).join('');
+
+  // Tokens du réseau actif
+  const list=data[net]||[];
+  if(list.length===0){
+    tokens.innerHTML=`<div style="color:var(--text3);font-size:10px;font-style:italic;padding:4px">Aucun token — ajoutes-en un ci-dessous</div>`;
+  } else {
+    tokens.innerHTML=list.map((t,i)=>`
+      <div class="wl-token${wlActive.net===net&&wlActive.addr===t.addr?' active':''}"
+           onclick="wlInvoke('${net}','${t.addr}','${t.sym}')">
+        <span class="wl-token-sym">${t.sym}</span>
+        <span style="color:var(--text3);font-size:8px">${t.name}</span>
+        <span class="wl-token-del" onclick="event.stopPropagation();wlDelete('${net}',${i})">✕</span>
+      </div>`).join('');
+  }
+}
+
+function wlSelectNet(net){
+  document.getElementById('cfg-network').value=net;
+  onNetworkChange();
+  renderWatchlist();
+}
+
+function wlInvoke(net,addr,sym){
+  wlActive={net,addr};
+  document.getElementById('cfg-network').value=net;
+  document.getElementById('cfg-pair').value=addr;
+  onNetworkChange();
+  renderWatchlist();
+  invoke();
+}
+
+function wlDelete(net,idx){
+  const data=wlLoad();
+  data[net].splice(idx,1);
+  wlSave(data);
+  renderWatchlist();
+}
+
+function wlAdd(){
+  const raw=document.getElementById('wl-inp').value.trim();
+  if(!raw)return;
+  const net=document.getElementById('cfg-network').value;
+  const data=wlLoad();
+  if(!data[net])data[net]=[];
+
+  // Format: "NOM · ADRESSE" ou juste "ADRESSE" ou "SYMBOLE"
+  let sym,addr,name;
+  if(raw.includes('·')){
+    const parts=raw.split('·').map(s=>s.trim());
+    sym=parts[0].toUpperCase();
+    addr=parts[1];
+    name=parts[0];
+  } else if(isContractAddress(raw)){
+    sym=raw.slice(0,6)+'…';
+    addr=raw;
+    name='Token custom';
+  } else {
+    sym=raw.toUpperCase();
+    addr=raw.toUpperCase();
+    name=raw;
+  }
+
+  // Éviter les doublons
+  if(data[net].some(t=>t.addr===addr)){
+    document.getElementById('wl-inp').value='';
+    return;
+  }
+  data[net].push({sym,addr,name});
+  wlSave(data);
+  document.getElementById('wl-inp').value='';
+  renderWatchlist();
+}
+
+function onNetworkChange(){
+  const net=document.getElementById('cfg-network').value;
+  const inp=document.getElementById('cfg-pair');
+  if(net==='coinbase'){
+    inp.placeholder='BTC, ETH, POLS…';
+  } else {
+    inp.placeholder='Adresse du token…';
+    inp.value='';
+  }
+  renderWatchlist();
+}
+
+function buildExternalLinks(network,tokenAddress,symbol,poolAddress){
+  const tvSymbol=(symbol||'TOKEN')+'USDT';
+  const tvNet={solana:'RAYDIUM',eth:'UNISWAP',base:'BASESWAP',bsc:'PANCAKESWAP',arbitrum:'ARBITRUM',polygon_pos:'QUICKSWAP',avax:'TRADERJOE'}[network]||'';
+  const tvUrl=`https://www.tradingview.com/chart/?symbol=${tvNet}:${tvSymbol}`;
+  const arkUrl=`https://intel.arkm.com/explorer/token/${tokenAddress}`;
+  const gtUrl=`https://www.geckoterminal.com/${network}/pools/${poolAddress}`;
+  return{tvUrl,arkUrl,gtUrl};
+}
+
+// ── DÉTECTEUR D'ANOMALIES ─────────────────────────────────────
+function detectCompressionExtreme(pair,ca){
+  const cl=ca.map(c=>c.close);
+  let dur=0;
+  for(let i=cl.length-1;i>=20&&dur<ca.length;i--){
+    const sl=cl.slice(i-20,i),s=mean(sl),sd=stdDev(sl),a=calcATR(ca.slice(i-20,i));
+    if((s+2*sd)<(s+1.5*a)&&(s-2*sd)>(s-1.5*a))dur++;else break;
+  }
+  if(dur<50)return null;
+  const rarity=dur>=150?'LÉGENDAIRE':dur>=100?'ÉPIQUE':dur>=75?'RARE':'NOTABLE';
+  const conf=Math.min(99,Math.round(60+dur/5));
+  return{
+    icon:'🗜️',name:'COMPRESSION EXTRÊME',rarity,conf,
+    msg:`Le marché est comprimé depuis ${dur} bougies consécutives. Une énergie runique colossale s'accumule dans les profondeurs — l'explosion qui suit sera d'une violence proportionnelle à l'attente.`,
+    action:'SURVEILLANCE MAXIMALE · Breakout imminent'
+  };
+}
+
+function detectVolumeAnomaly(pair,ca){
+  const last=ca[ca.length-1];
+  const avgVol=mean(ca.slice(-20,-1).map(c=>c.volume));
+  const ratio=+(last.volume/avgVol).toFixed(1);
+  if(ratio<3)return null;
+  const rarity=ratio>=8?'LÉGENDAIRE':ratio>=5?'ÉPIQUE':ratio>=4?'RARE':'NOTABLE';
+  const conf=Math.min(99,Math.round(50+ratio*5));
+  return{
+    icon:'📊',name:'ANOMALIE DE VOLUME',rarity,conf,
+    msg:`Le volume de la dernière bougie est ${ratio}× supérieur à la normale. Une entité d'une puissance inhabituelle vient d'entrer dans la bataille — institutionnel, baleine ou catalyseur externe.`,
+    action:'IDENTIFIER LA CAUSE · News ou ordre massif'
+  };
+}
+
+function detectWhaleEntry(pair,ca){
+  const obvs=calcOBV(ca);
+  let cons=0;
+  for(let i=obvs.length-1;i>0;i--){if(obvs[i]>obvs[i-1])cons++;else break;}
+  if(cons<4)return null;
+  const cls=ca.slice(-cons);
+  const priceRange=(Math.max(...cls.map(c=>c.high))-Math.min(...cls.map(c=>c.low)))/ca[ca.length-1].close;
+  if(priceRange>0.05)return null;
+  const rarity=cons>=10?'LÉGENDAIRE':cons>=7?'ÉPIQUE':cons>=5?'RARE':'NOTABLE';
+  const conf=Math.min(99,Math.round(50+cons*4));
+  return{
+    icon:'🐋',name:'ENTRÉE DE BALEINE',rarity,conf,
+    msg:`OBV haussier sur ${cons} bougies consécutives pendant que le prix reste flat. Les grandes créatures des abysses accumulent en silence, dissimulant leur appétit derrière une façade de calme trompeur.`,
+    action:'SUIVRE L\'ACCUMULATION · Ne pas vendre'
+  };
+}
+
+function detectFauxBreakout(pair,ca){
+  if(ca.length<30)return null;
+  const recent=ca.slice(-30);
+  const rangeHi=Math.max(...recent.slice(0,20).map(c=>c.high));
+  const rangeLo=Math.min(...recent.slice(0,20).map(c=>c.low));
+  const last10=recent.slice(20);
+  let faux=null;
+  for(const c of last10){
+    if(c.high>rangeHi*1.005&&c.close<rangeHi){faux={dir:'HAUT',c};break;}
+    if(c.low<rangeLo*0.995&&c.close>rangeLo){faux={dir:'BAS',c};break;}
+  }
+  if(!faux)return null;
+  return{
+    icon:'🪤',name:'FAUX BREAKOUT',rarity:'RARE',conf:72,
+    msg:`Cassure du range vers le ${faux.dir} sans clôture de confirmation. Le marché a tendu un piège aux chasseurs de breakout — les stops sont liquidés, la liquidité récoltée. Un renversement violent est possible.`,
+    action:'ATTENDRE CONFIRMATION · Stop chasse détectée'
+  };
+}
+
+function detectLiquidationCascade(pair,ca){
+  if(ca.length<5)return null;
+  const recent=ca.slice(-5);
+  let cascade=null;
+  for(let i=1;i<recent.length-1;i++){
+    const drop=(recent[i].close-recent[i-1].close)/recent[i-1].close;
+    const bounce=(recent[i+1].close-recent[i].close)/recent[i].close;
+    const avgVol=mean(ca.slice(-20,-5).map(c=>c.volume));
+    const volSpike=recent[i].volume>avgVol*2;
+    if(drop<=-0.03&&bounce>=0.015&&volSpike){cascade={drop:+(drop*100).toFixed(1),bounce:+(bounce*100).toFixed(1)};break;}
+  }
+  if(!cascade)return null;
+  return{
+    icon:'⚡',name:'CASCADE DE LIQUIDATION',rarity:'ÉPIQUE',conf:81,
+    msg:`Chute brutale de ${cascade.drop}% suivie d'un rebond de ${cascade.bounce}% avec volume explosif. Les positions longues ont été liquidées en masse — le marché a nettoyé le carnet. Zone de retournement potentielle.`,
+    action:'ZONE DE RETOURNEMENT · Longs liquidés'
+  };
+}
+
+// ── NOUVEAUX DÉTECTEURS ───────────────────────────────────────
+
+function detectRSIDivergence(pair,ca){
+  if(ca.length<30)return null;
+  const cl=ca.map(c=>c.close);
+  const rsis=[];
+  for(let i=14;i<cl.length;i++){
+    let g=0,l=0;
+    for(let j=i-13;j<=i;j++){const d=cl[j]-cl[j-1];d>0?g+=d:l-=d;}
+    rsis.push(l===0?100:100-(100/(1+(g/14)/(l/14))));
+  }
+  const n=rsis.length,p=ca.length;
+  const priceUp=ca[p-1].close>ca[p-10].close;
+  const rsiUp=rsis[n-1]>rsis[n-10];
+  if(priceUp===rsiUp)return null;
+  const typ=priceUp&&!rsiUp?'BAISSIÈRE':'HAUSSIÈRE';
+  const conf=typ==='BAISSIÈRE'?78:74;
+  return{
+    icon:'〰️',name:`DIVERGENCE RSI ${typ}`,rarity:'RARE',conf,
+    msg:typ==='BAISSIÈRE'
+      ?`Le prix monte mais l'élan intérieur s'effondre. La façade est belle, l'édifice se lézarde. Un renversement baissier se prépare dans l'ombre — les forces qui soutiennent la hausse s'épuisent.`
+      :`Le prix chute mais la résistance intérieure grandit. La blessure est superficielle. Les forces haussières couvent sous les décombres et préparent une résurrection.`,
+    action:typ==='BAISSIÈRE'?'PRUDENCE · Momentum divergent':'REBOND PROBABLE · Divergence positive'
+  };
+}
+
+function detectRSIExtreme(pair,ca){
+  const cl=ca.map(c=>c.close);
+  let g=0,l=0;
+  for(let i=cl.length-13;i<cl.length;i++){const d=cl[i]-cl[i-1];d>0?g+=d:l-=d;}
+  const rsi=l===0?100:100-(100/(1+(g/14)/(l/14)));
+  if(rsi>=30&&rsi<=75)return null;
+  const surAchat=rsi>75;
+  const rarity=surAchat?(rsi>90?'LÉGENDAIRE':rsi>85?'ÉPIQUE':'RARE'):(rsi<15?'LÉGENDAIRE':rsi<20?'ÉPIQUE':'RARE');
+  const conf=Math.round(surAchat?50+rsi/4:50+(100-rsi)/3);
+  return{
+    icon:surAchat?'🔥':'🧊',
+    name:surAchat?'SURACHAT EXTRÊME':'SURVENTE EXTRÊME',
+    rarity,conf:Math.min(99,conf),
+    msg:surAchat
+      ?`L'énergie vitale dépasse ${rsi.toFixed(0)} — le guerrier brûle sa propre vie pour combattre. Une telle intensité ne peut durer : soit l'ascension se transforme en chute libre, soit une pause forcée s'impose.`
+      :`Le mana tombe à ${rsi.toFixed(0)} — le guerrier est à genoux, vidé de toute réserve. Mais c'est souvent dans cet abîme de faiblesse absolue que naît la résurrection la plus violente.`,
+    action:surAchat?'PRISE DE PROFIT · Surchauffe détectée':'ACCUMULATION · Zone de rebond'
+  };
+}
+
+function detectGoldenDeathCross(pair,ca){
+  if(ca.length<55)return null;
+  const cl=ca.map(c=>c.close);
+  const ema_f=(arr,n)=>{
+    const k=2/(n+1);let e=arr[0];
+    arr.forEach(v=>{e=v*k+e*(1-k)});return e;
+  };
+  const ema20now=ema_f(cl.slice(-20),20);
+  const ema50now=ema_f(cl.slice(-50),50);
+  const ema20prv=ema_f(cl.slice(-21,-1),20);
+  const ema50prv=ema_f(cl.slice(-51,-1),50);
+  const crossUp=ema20prv<=ema50prv&&ema20now>ema50now;
+  const crossDn=ema20prv>=ema50prv&&ema20now<ema50now;
+  if(!crossUp&&!crossDn)return null;
+  return{
+    icon:crossUp?'☀️':'💀',
+    name:crossUp?'GOLDEN CROSS':'DEATH CROSS',
+    rarity:'ÉPIQUE',conf:88,
+    msg:crossUp
+      ?`La courte mémoire vient de dépasser la longue mémoire. Le soleil se lève sur ce territoire — les grandes entités structurelles commencent à regarder dans cette direction.`
+      :`La courte mémoire vient de plonger sous la longue mémoire. Les ténèbres structurelles s'installent — c'est le signal que les grandes entités ont commencé à fuir ce territoire.`,
+    action:crossUp?'SIGNAL HAUSSIER FORT · Tendance confirmée':'SIGNAL BAISSIER FORT · Éviter les longs'
+  };
+}
+
+function detectMomentumRupture(pair,ca){
+  if(ca.length<20)return null;
+  const recent=ca.slice(-10);
+  const prev=ca.slice(-20,-10);
+  const avgRecent=mean(recent.map(c=>Math.abs(c.close-c.open)/c.open));
+  const avgPrev=mean(prev.map(c=>Math.abs(c.close-c.open)/c.open));
+  const ratio=avgRecent/avgPrev;
+  if(ratio<3)return null;
+  const dir=mean(recent.map(c=>c.close-c.open))>0?'HAUSSIER':'BAISSIER';
+  const rarity=ratio>=6?'ÉPIQUE':'RARE';
+  return{
+    icon:'💨',name:`RUPTURE DE MOMENTUM ${dir}`,rarity,conf:Math.min(99,Math.round(60+ratio*5)),
+    msg:`L'amplitude des bougies récentes est ${ratio.toFixed(1)}× supérieure à la période précédente. Une force nouvelle et violente vient d'entrer dans l'arène — le calme plat qui précédait était trompeur.`,
+    action:dir==='HAUSSIER'?'MOMENTUM POSITIF · Suivre la vague':'PRESSION VENDEUSE · Attention à la chute'
+  };
+}
+
+function detectAbyssRebound(pair,ca){
+  if(ca.length<20)return null;
+  const cl=ca.map(c=>c.close);
+  const low20=Math.min(...ca.slice(-20).map(c=>c.low));
+  const cur=ca[ca.length-1];
+  const prev=ca[ca.length-2];
+  const atLow=prev.low<=low20*1.005;
+  const rebond=(cur.close-prev.low)/prev.low;
+  if(!atLow||rebond<0.02)return null;
+  const rarity=rebond>=0.06?'ÉPIQUE':rebond>=0.04?'RARE':'NOTABLE';
+  return{
+    icon:'⚔️',name:'REBOND DES ABYSSES',rarity,conf:Math.min(99,Math.round(60+rebond*500)),
+    msg:`Le guerrier a touché le fond du gouffre et s'est relevé — rebond de ${(rebond*100).toFixed(1)}% depuis le plus bas des 20 dernières bougies. Le sol a tenu. La résistance des acheteurs désespérés peut inverser le destin.`,
+    action:'SURVEILLER LA CONFIRMATION · Rebond sur support'
+  };
+}
+
+function detectAll(pair,ca){
+  const detectors=[
+    detectCompressionExtreme, detectVolumeAnomaly,
+    detectWhaleEntry,         detectFauxBreakout,
+    detectLiquidationCascade, detectRSIDivergence,
+    detectRSIExtreme,         detectGoldenDeathCross,
+    detectMomentumRupture,    detectAbyssRebound,
+  ];
+  return detectors
+    .map(fn=>{try{return fn(pair,ca);}catch(e){return null;}})
+    .filter(Boolean)
+    .sort((a,b)=>{
+      const r={'LÉGENDAIRE':4,'ÉPIQUE':3,'RARE':2,'NOTABLE':1};
+      return(r[b.rarity]||0)-(r[a.rarity]||0);
+    });
+}
+
+function renderAnomalies(anomalies){
+  if(!anomalies||anomalies.length===0)
+    return`<div class="anomaly-none">✦ Aucune anomalie détectée — marchés dans un état ordinaire ✦</div>`;
+  const rarMap={'LÉGENDAIRE':'leg','ÉPIQUE':'epi','RARE':'rar','NOTABLE':'not'};
+  return anomalies.map(a=>{
+    const r=rarMap[a.rarity]||'not';
+    return`<div class="anomaly-card anomaly-${r}">
+      <div class="anomaly-header">
+        <div class="anomaly-name">${a.icon} ${a.name}</div>
+        <div class="anomaly-rarity anom-rar-${r}">${a.rarity}</div>
+      </div>
+      <div class="anomaly-msg">${a.msg}</div>
+      <div class="anomaly-footer">
+        <div class="anomaly-conf">Confiance : ${a.conf}%</div>
+        <div class="anomaly-action">${a.action}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+function analyze(pair,ca){
+  const cl=ca.map(c=>c.close),price=cl[cl.length-1];
+  const prev=ca[ca.length-2];
+  const chg=+((price-prev.close)/prev.close*100).toFixed(2);
+  const rsi=+calcRSI(cl).toFixed(1);
+  const atr=calcATR(ca,14);
+  const atrPct=+(atr/price*100).toFixed(2);
+  const avgVol=mean(ca.slice(-10).map(c=>c.volume));
+  const rvol=+(ca[ca.length-1].volume/avgVol).toFixed(1);
+  const sqzDur=calcSqzDur(ca);
+  const obvs=calcOBV(ca);let obCon=0;
+  for(let i=obvs.length-1;i>0;i--){if(obvs[i]>obvs[i-1])obCon++;else break;}
+  const obvR=obvs[obvs.length-1]>obvs[0];
+  let score=0;
+  const sl=cl.slice(-20),s=mean(sl),sd=stdDev(sl),a=calcATR(ca.slice(-20));
+  const squeeze=(s+2*sd)<(s+1.5*a)&&(s-2*sd)>(s-1.5*a);
+  if(squeeze)score+=15;
+  if(obvR)score+=15;
+  if(rsi<45)score+=12;
+  if(rvol>1.5)score+=10;
+  const sqzB=sqzDur>=100?24:sqzDur>=50?16:sqzDur>=20?8:sqzDur>=10?4:0;
+  score+=sqzB;
+  const whaleScore=Math.min(100,Math.round(obCon>=8?80:obCon>=5?60:obCon>=3?40:20));
+  score+=Math.round(whaleScore*.12);
+  score=Math.min(100,Math.max(0,score));
+  const sigType=score>=70&&rvol>=2?'FIRE':squeeze&&score>=50?'SPRING':score>=40?'ALERT':'WATCH';
+  const high150=Math.max(...ca.slice(-150).map(c=>c.high));
+  const low150=Math.min(...ca.slice(-150).map(c=>c.low));
+
+  // ── Swing Highs & Lows ────────────────────────────────────────
+  function findSwingHighs(candles, str=5){
+    const out=[];
+    for(let i=str;i<candles.length-str;i++){
+      const h=candles[i].high;
+      if(candles.slice(i-str,i).every(c=>c.high<h)&&candles.slice(i+1,i+str+1).every(c=>c.high<h))
+        out.push({price:h,idx:i});
+    }
+    return out;
+  }
+  function findSwingLows(candles, str=5){
+    const out=[];
+    for(let i=str;i<candles.length-str;i++){
+      const l=candles[i].low;
+      if(candles.slice(i-str,i).every(c=>c.low>l)&&candles.slice(i+1,i+str+1).every(c=>c.low>l))
+        out.push({price:l,idx:i});
+    }
+    return out;
+  }
+
+  const allSwingHighs=findSwingHighs(ca,5);
+  const allSwingLows=findSwingLows(ca,5);
+
+  // Résistances : swing highs au-dessus du prix, triés croissant
+  const resistances=allSwingHighs.map(s=>s.price).filter(h=>h>price*1.002).sort((a,b)=>a-b);
+  // Supports : swing lows en dessous du prix, triés décroissant (le plus proche en premier)
+  const supports=allSwingLows.map(s=>s.price).filter(l=>l<price*0.998).sort((a,b)=>b-a);
+
+  // T1 = première vraie résistance, fallback price+ATR
+  const t1=+(resistances[0]??price+atr).toFixed(8);
+  // T2 = deuxième résistance, fallback Fibo 61.8%
+  const t2=+(resistances[1]??(low150+(high150-low150)*.618)).toFixed(8);
+  // SL = premier support sous le prix, fallback price-1.5×ATR
+  const sl_price=+(supports[0]??(price-atr*1.5)).toFixed(8);
+
+  // Résistances intermédiaires entre prix et T2 (obstacles sur le chemin)
+  const obstacles=resistances.filter(h=>h>price&&h<t2).length;
+  // Qualité du setup : ratio R/R
+  const rr=t2>price&&sl_price<price?+((t2-price)/(price-sl_price)).toFixed(2):null;
+
+  const btcBear=ema_fn(cl.slice(-50),50)>price;
+  const anomalies=detectAll(pair,ca);
+  return{pair,price,chg,score,rsi,rvol,atrPct,sqzDur,whaleScore,obCon,squeeze,obvR,sigType,
+    t1,t2,sl_price,resistances,supports,obstacles,rr,
+    pct1:+((t1-price)/price*100).toFixed(1),pct2:+((t2-price)/price*100).toFixed(1),
+    high150,low150,btcBear,candles:ca,anomalies,
+    t1IsSwing:!!resistances[0],t2IsSwing:!!resistances[1],slIsSwing:!!supports[0]};
+}
+
+function getCharClass(s){
+  const bull=!s.btcBear;
+  const anoms=s.anomalies||[];
+  const hasAnom=n=>anoms.some(a=>a.name.includes(n));
+  const hasGold=hasAnom('GOLDEN');
+  const hasDeath=hasAnom('DEATH');
+  const hasDivBull=hasAnom('HAUSSIÈRE');
+  const hasDivBear=hasAnom('BAISSIÈRE');
+  const hasCascade=hasAnom('LIQUIDATION');
+  const hasFaux=hasAnom('FAUX BREAKOUT');
+  const hasRebond=hasAnom('ABYSSES');
+  const hasSurachat=hasAnom('SURACHAT');
+  const hasSurvente=hasAnom('SURVENTE');
+  const hasMomentum=hasAnom('RUPTURE');
+
+  // ── LÉGENDAIRES ─────────────────────────────────
+  if(s.sigType==='FIRE'&&s.whaleScore>=80&&bull&&hasGold)
+    return{cls:'🌟 SÉRAPHIN DU GRAND CYCLE',rarity:'LÉGENDAIRE',color:'#f5e09a',wings:true,ascend:true};
+  if(s.sigType==='FIRE'&&s.whaleScore>=70&&bull)
+    return{cls:'🐋 PALADIN DES BALEINES',rarity:'LÉGENDAIRE',color:'#c9a84c',wings:false};
+  if(s.sigType==='SPRING'&&s.sqzDur>=100)
+    return{cls:'💎 ORACLE DE LA COMPRESSION',rarity:'LÉGENDAIRE',color:'#b044ff',encased:true};
+  if(hasDeath&&s.score<30&&hasCascade)
+    return{cls:'💀 LICHE DU KRACH',rarity:'LÉGENDAIRE',color:'#4a0a0a',undead:true,fall:true};
+
+  // ── ÉPIQUES ──────────────────────────────────────
+  if(s.sigType==='FIRE'&&s.rvol>=3&&s.sqzDur>=20)
+    return{cls:'💥 TITAN DE L\'EXPLOSION',rarity:'ÉPIQUE',color:'#e05a1a',wings:false,burst:true};
+  if(s.sigType==='FIRE'&&s.rvol>=4&&bull&&hasMomentum)
+    return{cls:'🦅 GRIFFON DU MOMENTUM',rarity:'ÉPIQUE',color:'#e8a020',wings:true,ascend:true};
+  if(s.sigType==='FIRE'&&!bull&&hasDeath)
+    return{cls:'🦇 DÉMON DE L\'EFFONDREMENT',rarity:'ÉPIQUE',color:'#6a0a0a',wings:true,fall:true};
+  if(s.sigType==='FIRE'&&!bull)
+    return{cls:'☠ NÉCROMANCIEN DU REBOND',rarity:'ÉPIQUE',color:'#8b1a1a'};
+  if(s.sigType==='SPRING'&&s.sqzDur>=50)
+    return{cls:'🧊 GOLEM DE CRISTAL',rarity:'ÉPIQUE',color:'#60b0ff',encased:true};
+  if(s.sigType==='SPRING'&&s.whaleScore>=60)
+    return{cls:'🌊 LÉVIATHAN DES PROFONDEURS',rarity:'ÉPIQUE',color:'#0a4a8a',submerged:true};
+
+  // ── RARES ────────────────────────────────────────
+  if(s.sigType==='FIRE'&&hasDivBear)
+    return{cls:'🌪️ FANTÔME DU RETOURNEMENT',rarity:'RARE',color:'#9a9a2a',ghost:true};
+  if(s.sigType==='FIRE')
+    return{cls:'⚔ CHEVALIER DU CHAOS',rarity:'RARE',color:'#c0392b'};
+  if(s.sigType==='SPRING'&&hasDivBull)
+    return{cls:'🐉 DRAGON LATENT',rarity:'RARE',color:'#2a8a2a',wings:true,coiled:true};
+  if(s.sigType==='SPRING')
+    return{cls:'🔮 MAGE DE L\'ACCUMULATION',rarity:'RARE',color:'#6a2d9e'};
+  if(s.sigType==='ALERT'&&hasSurvente&&hasRebond)
+    return{cls:'🦋 PHOENIX DES CENDRES',rarity:'RARE',color:'#e05a00',wings:true,ascend:true};
+  if(s.sigType==='ALERT'&&s.rsi<35)
+    return{cls:'🩸 ASSASSIN DU MOMENTUM',rarity:'RARE',color:'#c0392b'};
+  if(s.sigType==='ALERT'&&hasFaux)
+    return{cls:'🪤 TRICKSTER DES PIÈGES',rarity:'RARE',color:'#8a6a00'};
+
+  // ── COMMUNS ──────────────────────────────────────
+  if(hasSurachat)
+    return{cls:'🔥 BERSERKER ENFLAMMÉ',rarity:'COMMUN',color:'#c05a00',overheated:true};
+  if(s.sigType==='ALERT')
+    return{cls:'🏹 RÔDEUR DES MARCHÉS',rarity:'COMMUN',color:'#c9a84c'};
+  return{cls:'👁 SENTINELLE EN VEILLE',rarity:'COMMUN',color:'#6a4a2a'};
+}
+
+function getTitle(s){
+  if(s.sqzDur>=100)return'le Comprimé Ancien';
+  if(s.sqzDur>=50)return'le Dormeur';
+  if(s.whaleScore>=80)return'le Favori des Baleines';
+  if(s.rvol>=3)return'le Turbulent';
+  if(s.rsi<30)return'le Blessé Profond';
+  if(s.rsi>70)return'le Surexcité';
+  if(s.chg>=10)return'le Conquérant du Jour';
+  if(s.chg<=-10)return'le Tombé';
+  return'le Guerrier Errant';
+}
+
+function getSymbol(pair){
+  const m={BTC:'₿',ETH:'Ξ',SOL:'◎',BNB:'⬡',AVAX:'🔺',LINK:'⬡',DOT:'●',ATOM:'⚛',
+           ADA:'₳',XRP:'✕',DOGE:'Ð',MATIC:'⬡',UNI:'🦄',POLS:'⚡',FET:'🤖',
+           RNDR:'🎨',NEAR:'Ⓝ',OP:'🔴',ARB:'🔵',INJ:'💉',OCEAN:'🌊'};
+  const base=pair.replace('-USD','');
+  return m[base]||base.slice(0,2);
+}
+
+function statBar(icon,name,val,max,type,display){
+  const pct=Math.min(100,Math.round(val/max*100));
+  const colors={score:'bar-score',force:'bar-force',rsine:'bar-rsine',whale:'bar-whale',atr:'bar-atr',sqz:'bar-sqz'};
+  return`<div class="stat-row">
+    <div class="stat-icon">${icon}</div>
+    <div class="stat-name">${name}</div>
+    <div class="stat-bar-wrap"><div class="stat-bar ${colors[type]||'bar-score'}" style="width:${pct}%"></div></div>
+    <div class="stat-val">${display}</div>
+  </div>`;
+}
+
+function drawChart(ca){
+  const canvas=document.getElementById('price-chart');
+  if(!canvas)return;
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.offsetWidth,H=100;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const slice=ca.slice(-60);
+  const highs=slice.map(c=>c.high),lows=slice.map(c=>c.low);
+  const hi=Math.max(...highs),lo=Math.min(...lows),range=hi-lo||1;
+  const bw=W/slice.length,pad=1;
+  slice.forEach((c,i)=>{
+    const x=i*bw+pad;const bww=bw-pad*2;
+    const yH=H-(c.high-lo)/range*H;const yL=H-(c.low-lo)/range*H;
+    const yO=H-(c.open-lo)/range*H;const yC=H-(c.close-lo)/range*H;
+    ctx.strokeStyle='rgba(90,60,20,.6)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x+bww/2,yH);ctx.lineTo(x+bww/2,yL);ctx.stroke();
+    const bull=c.close>=c.open;
+    ctx.fillStyle=bull?'rgba(45,122,45,.8)':'rgba(192,57,43,.8)';
+    ctx.fillRect(x,Math.min(yO,yC),bww,Math.abs(yO-yC)||1);
+  });
+}
+
+// ── Narration : Groq si clé, sinon Anthropic ────────────────────
+// ── Narration : Groq si clé, sinon Anthropic ──────────────────────────────────────────
+async function fetchNarration(s){
+  const base=s.pair.replace('-USD','');
+  const groqKey=document.getElementById('cfg-groq').value.trim();
+
+  // Angles narratifs variés — tiré au sort à chaque invocation
+  const angles=[
+    `Raconte le destin de ${base} comme une PROPHÉTIE gravée sur un mur de pierre par un oracle aveugle.`,
+    `Décris ${base} comme un GLADIATEUR entrant dans l'arène. Que voient les spectateurs ? Que ressent-il ?`,
+    `${base} est un FANTÔME errant entre deux batailles. Quelle guerre a-t-il perdue ? Quelle victoire espère-t-il ?`,
+    `Un BARDE chante la ballade de ${base} dans une taverne sombre. Quelle histoire raconte-t-il en trois vers ?`,
+    `Décris ${base} comme une CRÉATURE MYTHOLOGIQUE qui émerge des profondeurs. Sa nature reflète son état actuel.`,
+    `Un GÉNÉRAL analyse ${base} comme un territoire à conquérir ou défendre. Que voit-il sur la carte ?`,
+    `${base} est une TEMPÊTE. Est-elle en formation, à son apogée, ou en train de se dissiper ?`,
+    `Un ALCHIMISTE tente de transmuter ${base}. Quels ingrédients, quels risques, quelle transmutation possible ?`,
+  ];
+  const angle=angles[Math.floor(Math.random()*angles.length)];
+
+  const ctx=`Puissance vitale : ${s.score}/100
+Réserve de mana : ${s.rsi.toFixed(0)} — ${s.rsi<30?'épuisée':s.rsi>70?'surchargée':'stable'}
+Flux d'essence : ${s.rvol}× la normale
+${s.squeeze?`Compression runique depuis ${s.sqzDur} cycles — explosion imminente`:'Flux libéré, pas de compression'}
+Contexte cosmique : ${s.btcBear?'forces obscures dominantes':'forces lumineuses dominantes'}
+Mouvement récent : ${s.chg>=0?'+':''}${s.chg}%
+Classe de combat : ${s.cls.cls}`;
+
+  const prompt=`ANGLE NARRATIF (OBLIGATOIRE) : ${angle}
+
+DONNÉES (transpose en langage fantasy — INTERDIT : crypto, token, RSI, volume, squeeze, marché) :
+${ctx}
+
+RÈGLES :
+- 3 phrases maximum, denses, viscérales
+- Commence IN MEDIAS RES, sans "Dans les brumes" ni "Tel un"
+- Chaque mot doit être différent des invocations précédentes
+- Aucun préambule — narration pure`;
+
+  try{
+    if(groqKey){
+      const groqUrl=window.location.hostname==='localhost'?'/proxy/groq':'https://api.groq.com/openai/v1/chat/completions';
+      const resp=await fetch(groqUrl,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
+        body:JSON.stringify({
+          model:'llama-3.3-70b-versatile',
+          max_tokens:220,
+          temperature:1.25,
+          top_p:0.9,
+          messages:[
+            {role:'system',content:'Tu es un oracle de dark fantasy médiéval. Tes chroniques sont TOUJOURS différentes — structure, métaphores, images varient à chaque fois. Tu ne répètes jamais les mêmes formules. Interdit absolu : crypto, token, blockchain, RSI, volume, squeeze, marché, bourse, prix.'},
+            {role:'user',content:prompt}
+          ]
+        })
+      });
+      const data=await resp.json();
+      return data.choices?.[0]?.message?.content||'Les étoiles restent muettes ce soir…';
+    } else {
+      // Sans clé Groq : narration de secours générée localement
+      const fallbacks = [
+        `Les runes de ${base} restent gravées dans le silence. Score : ${s.score}/100. Le guerrier attend son heure.`,
+        `${base} observe l'horizon, immobile. Ni victoire ni défaite — juste l'attente et le poids de l'acier.`,
+        `La lame de ${base} n'a pas encore chanté ce soir. Les augures restent ambigus, la destinée suspendue.`,
+        `${base} marche seul dans la plaine grise. Son score de ${s.score} points dit tout sans un mot.`,
+      ];
+      return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    }
+  }catch(e){
+    return "L'oracle est temporairement indisponible. Les vents du destin soufflent en silence…";
+  }
+}
+
+async function renderSheet(s, cgData){
+  s.cls = getCharClass(s);
+  const cls    = s.cls;
+  const title  = getTitle(s);
+  const symbol = getSymbol(s.pair);
+  const base   = s.pair.replace('-USD','').replace('-USDT','');
+  const fp     = s.price < 1 ? 5 : 4;
+  const chgCls = s.chg >= 0 ? 'hbadge-chg-up' : 'hbadge-chg-dn';
+  const chgSign= s.chg >= 0 ? '+' : '';
+  const rarMap = {'LÉGENDAIRE':'rar-leg','ÉPIQUE':'rar-epi','RARE':'rar-rar','COMMUN':'rar-com'};
+  const rarBadge = rarMap[cls.rarity] || 'rar-com';
+  const sigCls = {'FIRE':'hbadge-fire','SPRING':'hbadge-spring','ALERT':'hbadge-alert','WATCH':'hbadge-watch'}[s.sigType] || 'hbadge-watch';
+
+  // ── Anomalies hero (format compact) ──────────────────────────
+  const anomRarMap = {'LÉGENDAIRE':'leg','ÉPIQUE':'epi','RARE':'rar','NOTABLE':'not'};
+  const anomHtml = s.anomalies && s.anomalies.length
+    ? s.anomalies.map(a => {
+        const r = anomRarMap[a.rarity] || 'not';
+        return `<div class="anom-hero anom-hero-${r}">
+          <div class="anom-hero-head">
+            <span class="anom-hero-name">${a.icon} ${a.name}</span>
+            <span class="anom-hero-conf">${a.conf}%</span>
+          </div>
+          <div class="anom-hero-msg">${a.msg}</div>
+          <div class="anom-hero-action">${a.action}</div>
+        </div>`;
+      }).join('')
+    : '<div class="anom-none-hero">✦ Aucune anomalie — marchés en état ordinaire ✦</div>';
+
+  // ── Mini stats ────────────────────────────────────────────────
+  const rsiCls  = s.rsi < 30 ? 'bad' : s.rsi > 70 ? 'warn' : 'good';
+  const rvolCls = s.rvol >= 2 ? 'good' : s.rvol >= 1 ? 'warn' : 'bad';
+  const whaleCls= s.whaleScore >= 60 ? 'good' : s.whaleScore >= 30 ? 'warn' : 'neu';
+  const sqzTxt  = s.squeeze ? s.sqzDur+'b ⚡' : 'NON';
+  const sqzCls  = s.squeeze ? 'warn' : 'neu';
+
+  // ── Objectifs ─────────────────────────────────────────────────
+  const objHtml = `
+    <div class="obj-row">
+      <span class="obj-label">⚔ Objectif I${s.t1IsSwing?' <span style="font-size:8px;opacity:.5">swing</span>':''}</span>
+      <span class="obj-val up">+${s.pct1}% · $${s.t1.toFixed(fp)}</span>
+    </div>
+    <div class="obj-row">
+      <span class="obj-label">🏆 Objectif II${s.t2IsSwing?' <span style="font-size:8px;opacity:.5">swing</span>':''}</span>
+      <span class="obj-val up">+${s.pct2}% · $${s.t2.toFixed(fp)}</span>
+    </div>
+    <div class="obj-row">
+      <span class="obj-label">💀 Stop Loss${s.slIsSwing?' <span style="font-size:8px;opacity:.5">swing</span>':''}</span>
+      <span class="obj-val down">$${s.sl_price.toFixed(fp)}</span>
+    </div>
+    ${s.rr != null ? `<div class="obj-row">
+      <span class="obj-label">⚖ Risque/Récompense</span>
+      <span class="obj-val" style="color:${s.rr>=2?'#4a9e4a':s.rr>=1?'var(--gold2)':'#e07070'}">${s.rr}:1 ${s.rr>=2?'✓ Favorable':s.rr>=1?'~ Neutre':'✗ Défavorable'}</span>
+    </div>` : ''}`;
+
+  // ── Liens externes ────────────────────────────────────────────
+  const links = s.externalLinks ? `
+    <div class="divider"><div class="divider-rune">🔗</div></div>
+    <div style="display:flex;flex-direction:column;gap:5px;padding-bottom:4px">
+      <a href="${s.externalLinks.tvUrl}" target="_blank" class="ext-btn ext-tv">📈 TradingView → Graphique & indicateurs</a>
+      <a href="${s.externalLinks.arkUrl}" target="_blank" class="ext-btn ext-ark">🕵️ Arkham → Tracer les baleines</a>
+      <a href="${s.externalLinks.gtUrl}" target="_blank" class="ext-btn ext-gt">🦎 GeckoTerminal → Pools & liquidité</a>
+    </div>` : '';
+
+  // ── Codex CoinGecko ───────────────────────────────────────────
+  const codexHtml = cgData !== undefined
+    ? renderCodex(base, cgData)
+    : '<div class="codex"><div class="codex-title">📜 CODEX DE L\'ACTIF</div><div class="codex-loading"><span class="rune-spin">⚗</span>Consultation des archives…</div></div>';
+
+  // ── RENDU FINAL ───────────────────────────────────────────────
+  document.getElementById('sheet').innerHTML = `
+  <div class="char-sheet">
+
+    <!-- ════ HERO PORTRAIT — premier plan ════ -->
+    <div class="hero-portrait" id="hero-portrait">
+      <div class="hero-placeholder" id="hero-placeholder">
+        <div class="hero-ph-sym">${symbol}</div>
+        <div class="hero-ph-spinner">⚗</div>
+        <div class="hero-ph-txt">INVOCATION DU PORTRAIT…</div>
+      </div>
+      <img id="avatar-portrait" src="" alt=""
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease;z-index:1">
+      <div class="hero-overlay"></div>
+
+      <!-- Badge rareté en haut à droite -->
+      <div class="hero-top">
+        <div class="hero-symbol">${symbol} ${base}</div>
+        <div class="rarity-badge ${rarBadge}" style="font-size:9px;padding:3px 8px">${cls.rarity}</div>
+      </div>
+
+      <!-- Identité en bas -->
+      <div class="hero-bottom">
+        <div class="hero-class-lbl">${cls.cls}</div>
+        <div class="hero-name">${base} · ${title}</div>
+        <div class="hero-badges">
+          <span class="hbadge ${sigCls}">⚡ ${s.sigType}</span>
+          <span class="hbadge ${chgCls}">${chgSign}${s.chg}% 24H</span>
+          <span class="hbadge hbadge-score">⚔ ${s.score}/100</span>
+          <span class="hbadge hbadge-score">$${s.price.toLocaleString('en-US',{maximumFractionDigits:6})}</span>
+        </div>
+      </div>
+
+      <!-- Status génération -->
+      <div class="hero-gen-status" id="avatar-gen"></div>
+      <button class="hero-retry" id="avatar-retry" onclick="retryPortrait()">↻ Réessayer le portrait</button>
+    </div>
+
+    <!-- Barre de puissance pleine largeur -->
+    <div class="power-strip">
+      <div class="power-fill" style="width:${s.score}%;background:${s.score>=70?'linear-gradient(90deg,#8b1a1a,#c9a84c,#f5e09a)':s.score>=40?'linear-gradient(90deg,#5a3010,#c9a84c)':'linear-gradient(90deg,#3a0a0a,#8b1a1a)'}"></div>
+    </div>
+    <div class="power-label"><span>PUISSANCE VITALE</span><span>${s.score} / 100</span></div>
+
+    <!-- ════ ANOMALIES — ce qu'on lit en 2ème ════ -->
+    <div class="anom-title" style="font-family:var(--display);font-size:9px;color:var(--text3);letter-spacing:2px;margin-bottom:6px;display:flex;align-items:center;gap:6px">
+      ⚠ PRÉSAGES DÉTECTÉS
+      <span style="flex:1;height:1px;background:var(--border);display:inline-block"></span>
+      <span style="font-size:9px;color:var(--text3)">${s.anomalies?s.anomalies.length:0} anomalie${s.anomalies&&s.anomalies.length!==1?'s':''}</span>
+    </div>
+    ${anomHtml}
+
+    <!-- ════ MINI STATS CLÉS ════ -->
+    <div class="mini-stats">
+      <div class="mini-stat">
+        <div class="mini-lbl">MANA RSI</div>
+        <div class="mini-val ${rsiCls}">${s.rsi.toFixed(0)}</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-lbl">VOL. REL.</div>
+        <div class="mini-val ${rvolCls}">${s.rvol}×</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-lbl">BALEINE</div>
+        <div class="mini-val ${whaleCls}">${s.whaleScore}</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-lbl">SQUEEZE</div>
+        <div class="mini-val ${sqzCls}">${sqzTxt}</div>
+      </div>
+    </div>
+
+    <!-- ════ NARRATION ════ -->
+    <div class="narration" style="margin-bottom:10px">
+      <div class="narr-lbl">✦ CHRONIQUES D'ARIA</div>
+      <div class="narr-txt" id="narr-txt">
+        <div class="narr-loading"><span class="rune-spin">⚗</span>L'oracle consulte les étoiles…</div>
+      </div>
+    </div>
+
+    <!-- ════ CONTEXTE BTC ════ -->
+    <div class="btc-ctx" style="margin-bottom:10px">
+      <div class="btc-icon">₿</div>
+      <div>
+        <div class="btc-status ${s.btcBear?'btc-bear':'btc-bull'}">${s.btcBear?'⚠ BTC EN TENDANCE BAISSIÈRE — PRUDENCE':'✓ BTC EN TENDANCE HAUSSIÈRE — FAVORABLE'}</div>
+        <div style="font-size:9px;color:var(--text3);margin-top:1px">Contexte macro · Impact sur les altcoins</div>
+      </div>
+    </div>
+
+    <!-- ════ OBJECTIFS ════ -->
+    <div class="objectives" style="margin-bottom:10px">
+      <div class="section-title">OBJECTIFS DE QUÊTE</div>
+      ${objHtml}
+    </div>
+
+    <!-- ════ DÉTAILS AVANCÉS (pliables) ════ -->
+    <button class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ Masquer les détails avancés':'▼ Voir les détails avancés (stats, graphique, codex)'">
+      ▼ Voir les détails avancés (stats, graphique, codex)
+    </button>
+    <div class="details-panel">
+
+      <!-- Stats complètes -->
+      <div class="divider"><div class="divider-rune">⚔</div></div>
+      <div class="stats-section">
+        <div class="section-title">ATTRIBUTS DE COMBAT</div>
+        ${statBar('⭐','PUISSANCE',s.score,100,'score',s.score+'/100')}
+        ${statBar('💥','FORCE (RVOL)',Math.min(s.rvol,5),5,'force',s.rvol+'×')}
+        ${statBar('🔵','MANA (RSI)',100-s.rsi,100,'rsine',s.rsi)}
+        ${statBar('🐋','PRÉSENCE WHALE',s.whaleScore,100,'whale',s.whaleScore)}
+        ${statBar('🗜','ÉNERGIE LATENTE',s.sqzDur,200,'sqz',s.sqzDur+'b')}
+        ${statBar('🌊','VOLATILITÉ (ATR)',Math.min(s.atrPct,10),10,'atr',s.atrPct+'%')}
+      </div>
+
+      <!-- Graphique -->
+      <div class="divider"><div class="divider-rune">📈</div></div>
+      <div class="chart-section">
+        <div class="section-title" style="margin-bottom:6px">HISTORIQUE DE COMBAT · 60 BOUGIES</div>
+        <canvas class="chart-canvas" id="price-chart"></canvas>
+        <div class="chart-row">
+          <span>BAS : $${s.low150.toFixed(fp)}</span>
+          <span style="color:var(--gold2)">$${s.price.toFixed(fp)}</span>
+          <span>HAUT : $${s.high150.toFixed(fp)}</span>
+        </div>
+      </div>
+
+      <!-- Codex CoinGecko -->
+      ${codexHtml}
+
+      <!-- Capacités spéciales -->
+      <div class="divider"><div class="divider-rune">🔮</div></div>
+      <div class="stats-section">
+        <div class="section-title">CAPACITÉS SPÉCIALES</div>
+        <div class="abilities">
+          ${[
+            s.squeeze&&s.sqzDur>=10?{icon:'⚗️',name:'COMPRESSION RUNIQUE',desc:`${s.sqzDur} bougies accumulées. L'explosion approche.`}:null,
+            s.whaleScore>=60?{icon:'🐋',name:'APPEL DES PROFONDEURS',desc:`${s.obCon} bougies OBV haussières. Les géants accumulent en silence.`}:null,
+            s.rvol>=2?{icon:'⚡',name:'SURGE DE PUISSANCE',desc:`Volume ${s.rvol}× la normale. Force inhabituelle.`}:null,
+            s.rsi<35?{icon:'💉',name:'BLESSURE PROFONDE',desc:`RSI à ${s.rsi} — blessé mais pas vaincu.`}:null,
+          ].filter(Boolean).map(a=>`<div class="ability">
+            <div class="abil-icon">${a.icon}</div>
+            <div class="abil-body"><div class="abil-name">${a.name}</div><div class="abil-desc">${a.desc}</div></div>
+          </div>`).join('') || '<div class="ability"><div class="abil-icon">🗡️</div><div class="abil-body"><div class="abil-name">GUERRIER ORDINAIRE</div><div class="abil-desc">Aucune capacité spéciale active.</div></div></div>'}
+        </div>
+      </div>
+
+      <!-- Liens externes -->
+      ${links}
+    </div>
+
+  </div>`;
+
+  requestAnimationFrame(()=>drawChart(s.candles));
+}
+
+async function invoke(){
+  const network=document.getElementById('cfg-network').value;
+  const raw=document.getElementById('cfg-pair').value.trim();
+  const gran=parseInt(document.getElementById('cfg-tf').value);
+  const btn=document.getElementById('invoke-btn');
+  const prog=document.getElementById('prog');
+
+  if(!raw){prog.textContent='⚠ Entrez un symbole ou une adresse';return;}
+
+  btn.disabled=true;btn.textContent='⟳ INVOCATION…';
+  prog.innerHTML='<span class="rune-spin">⚗</span>Consultation des oracles…';
+  document.getElementById('sheet').innerHTML='';
+
+  try{
+    let ca,cgRaw,dom,label,externalLinks=null;
+
+    if(network==='coinbase'){
+      // ── Mode Coinbase (symboles connus) ───────────────────────
+      const pair=raw.includes('-')?raw.toUpperCase():raw.toUpperCase()+'-USD';
+      const base=pair.replace('-USD','');
+      label=base;
+      const [candles,cg,dominance]=await Promise.all([
+        fetchCandles(pair,gran),
+        fetchCoinGeckoData(base),
+        fetchDominance(base)
+      ]);
+      ca=candles;cgRaw=cg;dom=dominance;
+      if(cgRaw&&dom!=null)cgRaw.dominance=dom;
+
+    } else {
+      // ── Mode GeckoTerminal (adresse contrat) ──────────────────
+      prog.innerHTML='<span class="rune-spin">⚗</span>Recherche de la pool sur '+network+'…';
+      const tokenAddr=raw;
+      const [geckoResult,tokenInfo]=await Promise.all([
+        fetchCandlesGecko(network,tokenAddr,gran),
+        fetchTokenNameGecko(network,tokenAddr)
+      ]);
+      ca=geckoResult.candles;
+      const pool=geckoResult.pool;
+      const symbol=tokenInfo?.symbol||pool.name.split('/')[0]||'TOKEN';
+      label=symbol+(tokenInfo?.name?' · '+tokenInfo.name:'');
+
+      // CoinGecko pour le codex (si token connu)
+      const base=symbol.toUpperCase();
+      const [cg,dominance]=await Promise.all([
+        fetchCoinGeckoData(base),
+        fetchDominance(base)
+      ]);
+      cgRaw=cg;dom=dominance;
+      if(cgRaw&&dom!=null)cgRaw.dominance=dom;
+
+      // TVL dans le codex si pas de CoinGecko
+      if(!cgRaw&&pool.tvl>0){
+        cgRaw={rank:null,name:tokenInfo?.name||symbol,marketCap:null,
+          volume24h:null,circulatingSupply:null,totalSupply:null,maxSupply:null,
+          ath:null,athDate:null,athPct:null,dominance:null,
+          categories:pool.dex+' · '+network,genesis:null,hashing:null,
+          tvl:pool.tvl,poolName:pool.name};
+      }
+
+      externalLinks=buildExternalLinks(network,tokenAddr,symbol,pool.address);
+    }
+
+    prog.innerHTML='<span class="rune-spin">⚔</span>Analyse des augures…';
+    await new Promise(r=>setTimeout(r,300));
+    const s=analyze(label,ca);
+    s.externalLinks=externalLinks;
+    await renderSheet(s,cgRaw);
+    prog.textContent='✦ Personnage invoqué avec succès ✦';
+    setTimeout(()=>prog.textContent='',3000);
+
+  }catch(e){
+    prog.textContent='';
+    document.getElementById('sheet').innerHTML=`<div class="empty">⚠ ${e.message}<br>Vérifie l'adresse ou le réseau sélectionné</div>`;
+  }
+  btn.disabled=false;btn.textContent='⚔ INVOQUER';
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   MOTEUR DE PORTRAIT — Pollinations.ai (100% gratuit, sans clé)
+   ══════════════════════════════════════════════════════════ */
+
+function buildPortraitPrompt(s) {
+  const score  = s.score;
+  const cls    = s.cls;
+  const anoms  = s.anomalies || [];
+
+  // ── Symbole de la crypto sur l'arme/bouclier ─────────────────
+  const base   = (s.pair||'').replace('-USD','').replace('-USDT','').split('/')[0].toUpperCase();
+  const symbolMap = {
+    BTC:'₿',ETH:'Ξ',SOL:'◎',BNB:'⬡',XRP:'✕',DOGE:'Ð',ADA:'₳',
+    AVAX:'△',DOT:'●',MATIC:'⬡',LINK:'⬡',UNI:'🦄',ATOM:'⚛',
+  };
+  const cryptoSymbol = symbolMap[base] || base.slice(0,3);
+  const symbolOnWeapon = score >= 60
+    ? `The weapon or shield bears the glowing rune symbol "${cryptoSymbol}" engraved in gold, pulsing with magical energy.`
+    : `The weapon or shield bears the worn corroded symbol "${cryptoSymbol}", barely visible under rust and grime.`;
+
+  // ── Apparence de base par classe ─────────────────────────────
+  const baseMap = {
+    '🌟 SÉRAPHIN DU GRAND CYCLE':      'a radiant celestial seraph warrior with six massive golden feathered wings fully spread, gleaming divine armor engraved with constellations, eyes glowing like twin suns, ascending into heavenly clouds',
+    '🐋 PALADIN DES BALEINES':         'a towering golden-armored paladin, imposing and massive, long silver-white hair, deeply scarred battle-worn face, emanating divine authority',
+    '💎 ORACLE DE LA COMPRESSION':     'an elven oracle encased inside a giant pulsating crystal cocoon, visible through translucent crystal walls, silver hair floating, glowing violet runes covering the crystal surface, energy building to critical mass',
+    '💀 LICHE DES KRACH':              'a skeletal liche lord in crumbling obsidian armor, hollow glowing red eyes in a bare skull, dark energy tendrils draining life around it, falling through endless void',
+    '💥 TITAN DE L\'EXPLOSION':         'a colossal berserker with volcanic cracks erupting molten orange across bare skin, wild ash-matted black hair, mid-explosion with debris flying outward from the impact',
+    '🦅 GRIFFON DU MOMENTUM':          'a half-human half-eagle warrior with massive tawny eagle wings spread wide in full flight, gold-tipped feathers catching light, diving at speed through storm clouds',
+    '🦇 DÉMON DE L\'EFFONDREMENT':     'a demonic dark warrior with enormous tattered black leathery bat wings spread dramatically, crimson armor cracking to reveal void beneath, diving downward through a collapsing sky',
+    '☠ NÉCROMANCIEN DU REBOND':        'a gaunt hooded necromancer surrounded by rising skeletal hands from the ground, hollow glowing violet eyes, dark bone-adorned robes billowing with dark energy',
+    '🧊 GOLEM DE CRISTAL':             'a massive crystal golem warrior with a humanoid form made entirely of translucent blue ice crystal, fissures of light glowing inside, frozen in a moment of colossal tension before shattering',
+    '🌊 LÉVIATHAN DES PROFONDEURS':    'a dark ocean leviathan warrior with navy bioluminescent skin and gill slits, massive figure submerged at great depth, crushing dark water pressure visible around the form, deep-sea creatures orbiting',
+    '🌪️ FANTÔME DU RETOURNEMENT':     'a translucent ghostly warrior dissolving into a whirlwind, half-visible face expressing shock, the figure simultaneously rising and falling in opposite directions',
+    '⚔ CHEVALIER DU CHAOS':           'a chaos knight in jagged obsidian armor bristling with dark spikes, single crimson glowing eye slit in the full helm, standing on crumbling ground at the center of destruction',
+    '🐉 DRAGON LATENT':               'a dragon-human hybrid warrior with folded enormous emerald dragon wings tight against the body, coiled in a compressed crouch, scales gleaming, enormous contained energy about to explode',
+    '🔮 MAGE DE L\'ACCUMULATION':      'a robed arcane sorcerer with seven orbiting magical orbs of different colors drawing inward toward the center, violet layered robes, eyes fully white, power concentrating',
+    '🦋 PHOENIX DES CENDRES':          'a phoenix warrior rising from smouldering ash and embers, wings made of living flame and ember, transitioning from broken grey ash-covered figure below to vibrant flame-winged being above',
+    '🩸 ASSASSIN DU MOMENTUM':         'a lithe female dark elf assassin in crimson-veined black leather armor, twin obsidian curved daggers, crouching in shadow, ready to strike',
+    '🪤 TRICKSTER DES PIÈGES':         'a jester-masked warrior in patchwork armor, one hand with a golden coin and one with a dagger, standing at a crossroads trap, sly grin barely visible under the mask',
+    '🔥 BERSERKER ENFLAMMÉ':           'a berserker warrior completely engulfed in swirling orange-red flames, eyes white with battle frenzy, armor melting at the edges',
+    '🏹 RÔDEUR DES MARCHÉS':           'a female elven ranger in emerald scale armor, silver flowing hair, drawing a glowing longbow with a luminous arrow nocked, fierce focused amber eyes',
+    '👁 SENTINELLE EN VEILLE':         'a stoic iron sentinel in full ornate grey plate armor, massive tower shield raised, visor down, patient immovable vigilance',
+  };
+  const appearance = baseMap[cls.cls] || 'a lone dark fantasy warrior in ornate armor';
+
+  // ── Arme selon le score ───────────────────────────────────────
+  let weapon;
+  if (score >= 80)      weapon = 'wielding a legendary divine weapon erupting with blinding golden lightning and celestial runes, overwhelming power';
+  else if (score >= 60) weapon = 'holding a masterwork enchanted weapon crackling with electric blue arcane energy and glowing runes';
+  else if (score >= 40) weapon = 'carrying a solid forged iron weapon with faint ancient rune etchings';
+  else if (score >= 20) weapon = 'gripping a noticeably dull rusted blade, chipped and poorly maintained';
+  else                  weapon = 'desperately clutching a crumbling rotted wooden stick barely holding together';
+
+  // ── Métaphore visuelle des anomalies ─────────────────────────
+  const anomalyVisuals = [];
+  for (const a of anoms.slice(0, 3)) {
+    if (a.name.includes('COMPRESSION'))  anomalyVisuals.push('crystalline pressure cracks spreading across the environment');
+    if (a.name.includes('BALEINE'))      anomalyVisuals.push('massive dark whale silhouettes looming in the background depths');
+    if (a.name.includes('VOLUME'))       anomalyVisuals.push('a violent shockwave of energy radiating outward from the figure');
+    if (a.name.includes('FAUX'))         anomalyVisuals.push('shattered mirror shards floating mid-air reflecting false versions');
+    if (a.name.includes('LIQUIDATION')) anomalyVisuals.push('broken chain links and shattered locks scattered across the ground');
+    if (a.name.includes('DIVERGENCE'))  anomalyVisuals.push('two ghostly shadow copies moving in opposite directions');
+    if (a.name.includes('SURACHAT'))    anomalyVisuals.push('heat distortion and flame aura on every surface');
+    if (a.name.includes('SURVENTE'))    anomalyVisuals.push('frost crystals and cold vapour around the extremities');
+    if (a.name.includes('GOLDEN'))      anomalyVisuals.push('two golden lines crossing upward in the sky like a blessing');
+    if (a.name.includes('DEATH'))       anomalyVisuals.push('two dark omen lines crossing downward in the storm clouds');
+    if (a.name.includes('RUPTURE'))     anomalyVisuals.push('violent speed lines and motion blur surrounding the figure');
+    if (a.name.includes('ABYSSES'))     anomalyVisuals.push('the figure emerging from a black void crater, rising from nothing');
+  }
+  const anomalyStr = anomalyVisuals.length
+    ? `Visual metaphors: ${anomalyVisuals.join(', ')}.`
+    : '';
+
+  // ── Atmosphère ────────────────────────────────────────────────
+  const atmoMap = {
+    FIRE:   'apocalyptic battlefield with burning sky, explosive energy radiating outward, epic mythic scale',
+    SPRING: 'eerie silent tension, unnatural calm before the storm, crystalline air about to shatter',
+    ALERT:  'orange torchlight battlefield at dusk, ash falling, tense unresolved combat',
+    WATCH:  'cold grey fog at dawn over an empty plain, quiet patient vigilance',
+  };
+  const atmo = atmoMap[s.sigType] || 'dark fantasy atmosphere';
+  const direction = s.btcBear
+    ? 'Downward falling compositional energy, darkness dominant.'
+    : 'Upward rising compositional energy, light visible above.';
+
+  return [
+    'Epic dark fantasy digital painting.',
+    appearance + ',',
+    weapon + '.',
+    symbolOnWeapon,
+    `Setting: ${atmo}.`,
+    anomalyStr,
+    direction,
+    'Photorealistic ultra-detailed, cinematic composition, upper body portrait, face clearly visible, professional concept art, dramatic lighting, 2K. No text, no watermark, no border.',
+  ].filter(Boolean).join(' ');
+}
+
+async function generatePortrait(s) {
+  const genEl   = document.getElementById('avatar-gen');
+  const imgEl   = document.getElementById('avatar-portrait');
+  const symEl   = document.getElementById('avatar-symbol');
+  const retryEl = document.getElementById('avatar-retry');
+  const orKey   = document.getElementById('cfg-gemini')?.value.trim();
+  const hfKey   = document.getElementById('cfg-hf')?.value.trim();
+
+  if (!imgEl || (!orKey && !hfKey)) { if (genEl) genEl.textContent = ''; return; }
+
+  _lastPortraitState = s;
+  if (retryEl) retryEl.style.display = 'none';
+  const prompt = buildPortraitPrompt(s);
+
+  // ── Stratégie 1 : OpenRouter / Grok Imagine (payant, meilleure qualité) ──
+  if (orKey) {
+    if (genEl) genEl.textContent = '🎨 GROK FORGE LE PORTRAIT…';
+    try {
+      const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': `Bearer ${orKey}`,
+          'HTTP-Referer':  window.location.href,
+          'X-Title':       'ARIA RPG',
+        },
+        body: JSON.stringify({
+          model:      'x-ai/grok-imagine-image-quality',
+          modalities: ['image'],
+          messages:   [{ role: 'user', content: prompt }],
+        })
+      });
+      if (resp.ok) {
+        const data    = await resp.json();
+        const msg     = data?.choices?.[0]?.message;
+        const images  = msg?.images || [];
+        const parts   = Array.isArray(msg?.content) ? msg.content : [];
+        let url = images[0]?.image_url?.url
+               || parts.find(c=>c.type==='image_url')?.image_url?.url
+               || (typeof msg?.content==='string'&&msg.content.startsWith('data:') ? msg.content : null);
+        if (url) { console.log('✓ Grok Imagine'); _showPortrait(imgEl, symEl, genEl, url); return; }
+        console.warn('Grok: réponse OK sans image', JSON.stringify(data).slice(0,300));
+      } else {
+        const err = await resp.json().catch(()=>({}));
+        const msg = err?.error?.message||'';
+        console.warn('Grok:', resp.status, msg.slice(0,100));
+        if (resp.status === 429) {
+          const secs = Math.ceil(parseFloat(msg.match(/retry in ([\d.]+)s/)?.[1]||30));
+          let r = secs;
+          if (genEl) genEl.textContent = `⏳ ${r}s`;
+          const t = setInterval(()=>{ r--; if(genEl) genEl.textContent=r>0?`⏳ ${r}s`:''; if(r<=0){clearInterval(t);if(retryEl)retryEl.style.display='block';}},1000);
+          if (!hfKey) return;
+        }
+        if (resp.status === 402 && !hfKey) {
+          if (genEl) { genEl.textContent='✗ Crédits insuffisants'; setTimeout(()=>{if(genEl)genEl.textContent='';if(retryEl)retryEl.style.display='block';},3000); }
+          return;
+        }
+      }
+    } catch(e) { console.warn('Grok exception:', e.message); }
+  }
+
+  // ── Stratégie 2 : Cloudflare Workers AI — FLUX.1 Schnell (10 000 img/jour gratuit) ──
+  if (hfKey) {
+    const cfAccount = document.getElementById('cfg-cf-account')?.value.trim();
+    if (!cfAccount) {
+      if (genEl) { genEl.textContent = '✗ Account ID Cloudflare manquant'; setTimeout(()=>{if(genEl)genEl.textContent='';},3000); }
+      return;
+    }
+
+    if (genEl) genEl.textContent = '☁ CLOUDFLARE FORGE LE PORTRAIT…';
+
+    // Cloudflare Workers AI — FLUX.1 Schnell (rapide) ou SDXL Lightning
+    // Modèles disponibles : @cf/black-forest-labs/flux-1-schnell ou @cf/stabilityai/stable-diffusion-xl-lightning
+
+    // Cloudflare Workers AI — via proxy local (CORS bloqué côté navigateur)
+    const cfModel = '@cf/black-forest-labs/flux-1-schnell';
+    const cfUrl   = '/proxy/cloudflare'; // Le proxy Python ajoute le bon endpoint CF
+
+    try {
+      const resp = await fetch(cfUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          _cf_token:   hfKey,
+          _cf_account: cfAccount,
+          _cf_model:   cfModel,
+          prompt,
+          num_steps: 4,
+          guidance:  3.5,
+          width:     512,
+          height:    640,
+        }),
+      });
+
+      if (!resp.ok) {
+        const e = await resp.json().catch(()=>({}));
+        const msg = e?.errors?.[0]?.message || JSON.stringify(e).slice(0,150);
+        console.warn('Cloudflare Workers AI:', resp.status, msg);
+        if (genEl) { genEl.textContent = `✗ CF ${resp.status}`; setTimeout(()=>{if(genEl)genEl.textContent='';if(retryEl)retryEl.style.display='block';},3000); }
+        return;
+      }
+
+      // Cloudflare retourne l'image directement en binaire (pas JSON)
+      const contentType = resp.headers.get('content-type') || '';
+      if (contentType.includes('image') || contentType.includes('octet')) {
+        const blob = await resp.blob();
+        if (blob.size > 1000) {
+          console.log('✓ Cloudflare FLUX.1 Schnell');
+          _showPortrait(imgEl, symEl, genEl, URL.createObjectURL(blob));
+          return;
+        }
+      }
+
+      // Parfois Cloudflare retourne un JSON avec l'image en base64
+      const data = await resp.json().catch(()=>({}));
+      const b64  = data?.result?.image || data?.image;
+      if (b64) {
+        console.log('✓ Cloudflare FLUX base64');
+        _showPortrait(imgEl, symEl, genEl, `data:image/png;base64,${b64}`);
+        return;
+      }
+
+      console.warn('Cloudflare: réponse inattendue', JSON.stringify(data).slice(0,300));
+      if (genEl) genEl.textContent = '';
+      if (retryEl) retryEl.style.display = 'block';
+
+    } catch(e) {
+      console.warn('Cloudflare exception:', e.message);
+      if (genEl) genEl.textContent = '';
+      if (retryEl) retryEl.style.display = 'block';
+    }
+  }
+
+  if (genEl) genEl.textContent = '';
+  if (retryEl) retryEl.style.display = 'block';
+}
+
+function _showPortrait(imgEl, symEl, genEl, src) {
+  imgEl.onload = () => {
+    imgEl.style.opacity = '1';
+    const ph = document.getElementById('hero-placeholder');
+    if (ph) ph.style.display = 'none';
+    if (genEl) genEl.textContent = '';
+    const retryEl = document.getElementById('avatar-retry');
+    if (retryEl) retryEl.style.display = 'none';
+  };
+  imgEl.src = src;
+}
+
+// Stock du dernier état pour le retry
+let _lastPortraitState = null;
+function retryPortrait() {
+  const retryEl = document.getElementById('avatar-retry');
+  if (retryEl) retryEl.style.display = 'none';
+  if (_lastPortraitState) generatePortrait(_lastPortraitState);
+}
+</script>
+</body>
+</html>
