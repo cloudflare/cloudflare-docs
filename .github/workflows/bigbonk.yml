@@ -1,4 +1,4 @@
-name: Big Bonk
+name: 749pub.com
 
 on:
   issue_comment:
@@ -40,7 +40,7 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Restore node_modules (cache hit)
+      - name: Run mode_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
