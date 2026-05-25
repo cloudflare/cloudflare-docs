@@ -46,6 +46,10 @@ When you connect, you will be redirected to Cloudflare to authorize via OAuth an
 
 For CI/CD or automation, you can create a [Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the permissions you need and pass it as a bearer token in the `Authorization` header. Both user tokens and account tokens are supported.
 
+:::note
+When using a User API Token, the token must include the **User → User Details → Read** permission. The MCP server calls the `/user` API to verify your identity — without this permission, authentication will fail with `"Failed to verify token: no user or account information"`. For an Account API Token, an equivalent **Account Read** permission is required.
+:::
+
 For more information, refer to the [Cloudflare MCP repository](https://github.com/cloudflare/mcp).
 
 ### Install via agent and IDE plugins
