@@ -32,6 +32,13 @@ For provider-specific authentication issues:
 
 - [Google Vertex AI troubleshooting](/ai-gateway/usage/providers/vertex/#troubleshooting)
 
+#### Telling gateway-level from provider-level 401s
+
+A 401 can come from either AI Gateway or the upstream provider. Use the response body to tell them apart:
+
+- If the body is an AI Gateway error (`name: "AiGatewayError"` with `internalCode: 2009`), the gateway rejected the request before reaching the provider. This means your `cf-aig-authorization` token is missing or invalid — it is not a provider-credential problem.
+- If the body is the provider's own error (for example, an OpenAI error stating an API key was not provided), the request reached the provider but no usable provider credential was applied. Check your stored provider credentials or [BYOK](/ai-gateway/configuration/bring-your-own-keys/) configuration. This is also what you see when a model is not enrolled in [Unified Billing](/ai-gateway/features/unified-billing/): the gateway forwards the request without a wholesale credential and the provider rejects it.
+
 ## DLP issues
 
 For troubleshooting Data Loss Prevention issues such as DLP not triggering or unexpected blocking, refer to [DLP troubleshooting](/ai-gateway/features/dlp/set-up-dlp/#troubleshooting).
