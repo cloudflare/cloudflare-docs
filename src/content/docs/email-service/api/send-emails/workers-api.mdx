@@ -240,6 +240,7 @@ The following error codes may be returned when sending emails:
 | `E_VALIDATION_ERROR`            | Validation error in the payload         | Invalid email format, missing required fields, malformed data |
 | `E_FIELD_MISSING`               | Required field is missing               | Missing `to`, `from`, or `subject` fields                     |
 | `E_TOO_MANY_RECIPIENTS`         | Too many recipients in to/cc/bcc arrays | Combined recipients exceed 50 limit                           |
+| `E_TOO_MANY_ATTACHMENTS`        | Too many attachments in `attachments` array | `attachments` array exceeds 32 entries                    |
 | `E_SENDER_NOT_VERIFIED`         | Sender domain not verified              | Attempting to send from unverified domain                     |
 | `E_RECIPIENT_NOT_ALLOWED`       | Recipient not in allowed list           | Recipient address not in `allowed_destination_addresses`      |
 | `E_RECIPIENT_SUPPRESSED`        | Recipient is on suppression list        | Email address has bounced or reported your emails as spam     |
