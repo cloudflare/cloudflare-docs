@@ -1,6 +1,6 @@
 ---
 title: Sessions
-description: Create isolated execution contexts with independent shell state within a Sandbox SDK container.
+description: Create shell sessions with independent working directories and environment variables within a sandbox.
 pcx_content_type: configuration
 sidebar:
   order: 6
@@ -10,17 +10,17 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Create isolated execution contexts within a sandbox. Each session maintains its own shell state, environment variables, and working directory. See [Session management concept](/sandbox/concepts/sessions/) for details.
+Create shell sessions within a sandbox. Each session maintains its own shell state, environment variables, and working directory, while sharing the sandbox filesystem and process space. For more information, refer to [Session management](/sandbox/concepts/sessions/).
 
 :::note
-Every sandbox has a default session that automatically maintains shell state. Create additional sessions when you need isolated shell contexts for different environments or parallel workflows. For sandbox-level operations like creating containers or destroying the entire sandbox, see the [Lifecycle API](/sandbox/api/lifecycle/).
+Every sandbox has a default session that maintains shell state. Create additional sessions for separate workflows inside the same user workspace, such as development and runtime processes. Use separate sandboxes for separate users. For sandbox-level operations like creating containers or destroying the entire sandbox, refer to the [Lifecycle API](/sandbox/api/lifecycle/).
 :::
 
 ## Methods
 
 ### `createSession()`
 
-Create a new isolated execution session.
+Create a new shell session.
 
 ```ts
 const session = await sandbox.createSession(options?: SessionOptions): Promise<ExecutionSession>
@@ -38,7 +38,7 @@ const session = await sandbox.createSession(options?: SessionOptions): Promise<E
 
 <TypeScriptExample>
 ```ts
-// Multiple isolated environments
+// Separate workflow environments
 const prodSession = await sandbox.createSession({
   id: 'prod',
   env: { NODE_ENV: 'production', API_URL: 'https://api.example.com' },
@@ -89,13 +89,13 @@ const session = await sandbox.getSession(sessionId: string): Promise<ExecutionSe
 
 <TypeScriptExample>
 ```ts
-// First request - create session
-const session = await sandbox.createSession({ id: 'user-123' });
+// First request - create a task-specific session
+const session = await sandbox.createSession({ id: 'build' });
 await session.exec('git clone https://github.com/user/repo.git');
 await session.exec('cd repo && npm install');
 
 // Second request - resume session (environment and cwd preserved)
-const session = await sandbox.getSession('user-123');
+const session = await sandbox.getSession('build');
 const result = await session.exec('cd repo && npm run build');
 ```
 </TypeScriptExample>

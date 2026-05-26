@@ -353,7 +353,7 @@ npx wrangler secret put AWS_SECRET_ACCESS_KEY
 - Incorrect endpoint URL
 - Invalid credentials
 - Missing `ContainerProxy` export, or on older Wrangler versions missing `enable_ctx_exports`
-- Bucket doesn't exist
+- Bucket does not exist
 - Network connectivity issues
 
 Verify your binding or endpoint configuration:
@@ -410,7 +410,7 @@ await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/outp
 - **Choose the right mount mode** - Use R2 binding mounts when you want Worker-managed R2 access, or use `endpoint` for explicit R2, S3, GCS, and other S3-compatible providers
 - **Secure credentials** - Always use Worker secrets, never hardcode
 - **Read-only when possible** - Protect data with read-only mounts
-- **Use prefixes for isolation** - Mount subdirectories when working with specific datasets
+- **Mount the narrowest path** - Use prefixes to expose only the data a sandbox needs
 - **Mount paths** - Prefer `/data`, `/storage`, or `/mnt/*`; if you mount under `/workspace`, account for the mount overlaying that path in production
 - **Handle errors** - Wrap mount operations in `try...catch` blocks
 - **Optimize access** - Copy frequently accessed files locally

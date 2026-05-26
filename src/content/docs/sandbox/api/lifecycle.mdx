@@ -28,7 +28,7 @@ const sandbox = getSandbox(
 
 **Parameters**:
 - `binding` - The Durable Object namespace binding from your Worker environment
-- `sandboxId` - Unique identifier for this sandbox. The same ID always returns the same sandbox instance
+- `sandboxId` - Unique identifier for this sandbox. The same ID always returns the same sandbox instance. In user-facing apps, scope IDs to a single user.
 - `options` (optional) - See [SandboxOptions](/sandbox/configuration/sandbox-options/) for all available options:
   - `sleepAfter` - Duration of inactivity before automatic sleep (default: `"10m"`)
   - `keepAlive` - Prevent automatic sleep entirely. Persists across hibernation (default: `false`)
@@ -137,4 +137,4 @@ Containers automatically sleep after 10 minutes of inactivity but still count to
 
 - [Sandbox lifecycle concept](/sandbox/concepts/sandboxes/) - Understanding container lifecycle and state
 - [Sandbox options configuration](/sandbox/configuration/sandbox-options/) - Configure `keepAlive` and other options
-- [Sessions API](/sandbox/api/sessions/) - Create isolated execution contexts within a sandbox
+- [Sessions API](/sandbox/api/sessions/) - Create execution contexts within a sandbox
