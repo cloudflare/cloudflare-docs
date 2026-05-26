@@ -1,19 +1,14 @@
 ---
-title: Worker size limit increased to 64 MiB for all plans
-description: The compressed Worker size limits (3 MB free / 10 MB paid) have been removed. Workers now support a single 64 MiB uncompressed size limit across all plans.
+title: Deploy larger Workers on all plans
+description: The compressed Worker size limits (3 MB free / 10 MB paid) have been removed. Cloudflare now only checks the uncompressed bundle size, which is 64 MiB across all plans.
 products:
   - workers
 date: 2026-05-22
 ---
 
-You can now deploy Workers up to **64 MiB** on all plans, up from an effective limit of 3 MB on Free and 10 MB on Paid.
+You can now deploy Workers with larger dependencies, heavier frameworks, and more code without hitting size limits.
 
-When you deploy a Worker, Wrangler bundles your code and compresses it before uploading. Previously, Cloudflare checked that compressed size and rejected deploys over 3 MB (Free) or 10 MB (Paid). That compressed limit is now gone. Cloudflare only checks the full, uncompressed size of your bundle against a 64 MiB limit, giving you much more room to work with.
-
-| Limit | Previous | New |
-|---|---|---|
-| Free plan | 3 MB (compressed) | 64 MiB (uncompressed) |
-| Paid plan | 10 MB (compressed) | 64 MiB (uncompressed) |
+When you deploy a Worker, Wrangler bundles your code and compresses it before uploading. Previously, Cloudflare checked that compressed size and rejected deploys over 3 MB (Free) or 10 MB (Paid). That limit has been removed. Cloudflare now only checks the uncompressed size of your bundle, which is 64 MiB across all plans.
 
 To check your Worker's bundle size before deploying:
 
