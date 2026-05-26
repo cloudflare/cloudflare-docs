@@ -6,14 +6,14 @@ products:
 date: 2026-05-22
 ---
 
-You can now deploy Workers up to **64 MiB uncompressed** on all plans, up from 3 MB compressed on the Free plan and 10 MB compressed on the Paid plan.
+You can now deploy Workers up to **64 MiB** on all plans, up from an effective limit of 3 MB on Free and 10 MB on Paid.
 
-Workers are no longer limited by compressed bundle size. Only the uncompressed size counts, giving you ~21x more room on the Free plan and ~6x more on the Paid plan.
+When you deploy a Worker, Wrangler bundles your code and compresses it before uploading. Previously, Cloudflare checked that compressed size and rejected deploys over 3 MB (Free) or 10 MB (Paid). That compressed limit is now gone. Cloudflare only checks the full, uncompressed size of your bundle against a 64 MiB limit, giving you much more room to work with.
 
 | Limit | Previous | New |
 |---|---|---|
-| Free plan | 3 MB compressed | 64 MiB uncompressed |
-| Paid plan | 10 MB compressed | 64 MiB uncompressed |
+| Free plan | 3 MB (compressed) | 64 MiB (uncompressed) |
+| Paid plan | 10 MB (compressed) | 64 MiB (uncompressed) |
 
 To check your Worker's bundle size before deploying:
 
@@ -21,11 +21,10 @@ To check your Worker's bundle size before deploying:
 wrangler deploy --outdir bundled/ --dry-run
 ```
 
-```txt
-# Output resembles:
+```sh output
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
 
-The `Total Upload` value is your uncompressed bundle size — this is what counts against the 64 MiB limit. The `gzip` value is shown for reference but is no longer a limit.
+`Total Upload` is your uncompressed bundle size and is what counts against the 64 MiB limit. `gzip` is shown for reference but is no longer checked.
 
 For more information, refer to the [Worker size limits documentation](/workers/platform/limits/#worker-size).

@@ -258,11 +258,11 @@ The runtime measures simultaneous open connections from the top-level request. W
 
 ## Worker size
 
-| Limit                          | Workers Free | Workers Paid |
-| ------------------------------ | ------------ | ------------ |
-| Worker size before compression | 64 MiB       | 64 MiB       |
+| Limit                    | Workers Free | Workers Paid |
+| ------------------------ | ------------ | ------------ |
+| Worker size (uncompressed) | 64 MiB     | 64 MiB       |
 
-Workers do not have a separate compressed size limit. Only the uncompressed bundle size is checked.
+There is no compressed size limit. Only the uncompressed bundle size counts.
 
 Larger Worker bundles can impact startup time. To check your Worker bundle size:
 
@@ -270,8 +270,7 @@ Larger Worker bundles can impact startup time. To check your Worker bundle size:
 wrangler deploy --outdir bundled/ --dry-run
 ```
 
-```txt
-# Output resembles:
+```sh output
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
 
