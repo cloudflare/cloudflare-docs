@@ -1,17 +1,64 @@
----
-pcx_content_type: navigation
-title: Configuration
-description: Manage Cloudflare Workers project settings, bindings, and deployment options.
-sidebar:
-  order: 8
-products:
-  - workers
----
+// ============================================
+// Cloudflare Worker — Anthropic API Proxy
+// הגדרה: workers.cloudflare.com (חינם)
+// ============================================
 
-import { DirectoryListing } from "~/components";
+export default {
+  async fetch(request, env) {
 
-Worker configuration is managed through a [Wrangler configuration file](/workers/wrangler/configuration/), which defines your project settings, bindings, and deployment options. Wrangler is the command-line tool used to develop, test, and deploy Workers.
+    // CORS preflight
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+        }
+      });
+    }
 
-For more information on Wrangler, refer to [Wrangler](/workers/wrangler/).
+    if (request.method !== 'POST') {
+      return new Response('Method not allowed', { status: 405 });
+    }
 
-<DirectoryListing />
+    try {
+      const body = await request.json();
+
+      // קבל את ה-API key מה-header שנשלח מהדפדפן
+      const apiKey = request.headers.get('x-api-key') || '';
+      if (!apiKey.startsWith('sk-ant-')) {
+        return new Response(JSON.stringify({ error: 'API key חסר או שגוי' }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+
+      // העבר לאנתרופיק
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        }
+      });
+
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+  }
+};
