@@ -11,7 +11,9 @@ products:
 import { WranglerConfig } from "~/components";
 
 :::note[Only required for preview URLs]
-Custom domain setup is ONLY needed if you use `exposePort()` to expose services from sandboxes. If your application does not expose ports, you can deploy to `.workers.dev` without this configuration.
+This guide covers `exposePort()` in production. Custom domain setup is ONLY needed if you use `exposePort()` to expose services from sandboxes. If your application does not use `exposePort()`, you can deploy to `.workers.dev` without this configuration.
+
+For development or `.workers.dev` deployments that need public URLs, [`sandbox.tunnels`](/sandbox/api/tunnels/) is a zero-config alternative — we recommend `exposePort()` for production today; named tunnels for production are planned for a future release.
 :::
 
 Deploy your Sandbox SDK application to production with preview URL support. Preview URLs require wildcard DNS routing because they generate unique subdomains for each exposed port: `https://8080-abc123.yourdomain.com`.
@@ -108,5 +110,6 @@ For detailed troubleshooting, see the [Workers routing documentation](/workers/c
 
 - [Preview URLs](/sandbox/concepts/preview-urls/) - How preview URLs work
 - [Expose Services](/sandbox/guides/expose-services/) - Patterns for exposing ports
+- [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for development (not for production)
 - [Workers Routing](/workers/configuration/routing/) - Advanced routing configuration
 - [Cloudflare DNS](/dns/) - DNS management

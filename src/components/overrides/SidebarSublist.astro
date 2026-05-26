@@ -1,13 +1,15 @@
 ---
 import { Icon, Badge } from "@astrojs/starlight/components";
+import { Icon as AstroIcon } from "astro-icon/components";
 import type { SidebarEntry } from "~/util/sidebar";
 
 interface Props {
 	sublist: SidebarEntry[];
 	nested?: boolean;
+	headingChild?: boolean;
 }
 
-const { sublist, nested } = Astro.props;
+const { sublist, nested, headingChild } = Astro.props;
 
 /** Flatten a sidebar tree into a flat list of link entries. */
 function flattenSidebar(entries: SidebarEntry[]): SidebarEntry[] {
@@ -41,7 +43,9 @@ const restoreIndices = sublist.map((entry) =>
 	class:list={[
 		!nested
 			? "top-level list-none p-0"
-			: "mt-0.5 ml-3 list-none border-l border-[var(--sidebar-border)] p-0 pl-2",
+			: headingChild
+				? "mt-0.5 list-none p-0"
+				: "mt-0.5 ml-3 list-none border-l border-[var(--sidebar-border)] p-0 pl-2",
 	]}
 >
 	{
@@ -55,8 +59,8 @@ const restoreIndices = sublist.map((entry) =>
 							"flex min-h-[2.125rem] items-start rounded-lg px-3 py-1.5 text-sm font-medium no-underline",
 							"outline-2 outline-offset-[-2px] outline-transparent focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400",
 							entry.isCurrent
-								? "!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)]"
-								: "text-[var(--sidebar-text)] transition-colors duration-150 hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
+								? "!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)] transition-colors duration-150 hover:!bg-[color:var(--sidebar-active-bg)]/80"
+								: "text-[var(--sidebar-text)] transition-colors duration-150 hover:bg-[color:var(--sidebar-hover-bg)]/80 hover:text-[var(--sidebar-hover-text)]",
 							!nested && "large",
 							entry.attrs.class,
 						]}
@@ -83,13 +87,20 @@ const restoreIndices = sublist.map((entry) =>
 						<summary
 							class:list={[
 								"group/expander flex min-h-[2.125rem] cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-sm no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 select-none focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 [&::-webkit-details-marker]:hidden [&::marker]:hidden",
-								"hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
+								"hover:bg-[color:var(--sidebar-hover-bg)]/80 hover:text-[var(--sidebar-hover-text)]",
 								entry.hasActivePage
 									? "font-semibold text-[var(--sidebar-text-strong)]"
 									: "font-medium text-[var(--sidebar-text)]",
 							]}
 						>
 							<span class="group-label">
+								{entry.badge?.class?.includes("sidebar-group-icon") && (
+									<AstroIcon
+										name={entry.badge.text}
+										size="16px"
+										class="group-icon shrink-0"
+									/>
+								)}
 								<span class:list={[!nested && "large"]}>{entry.label}</span>
 								{entry.badge && (
 									<Badge
@@ -108,7 +119,11 @@ const restoreIndices = sublist.map((entry) =>
 						<sl-sidebar-restore data-index={restoreIndices[idx]} />
 						<div class="sidebar-accordion grid grid-rows-[0fr] group-open/accordion:grid-rows-[1fr]">
 							<div class="sidebar-accordion-inner min-h-0 overflow-hidden">
-								<Astro.self sublist={entry.entries} nested />
+								<Astro.self
+									sublist={entry.entries}
+									nested
+									headingChild={entry.badge?.class?.includes("sidebar-heading")}
+								/>
 							</div>
 						</div>
 					</details>

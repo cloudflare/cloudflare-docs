@@ -60,6 +60,7 @@ async function autogenStyles() {
 	)
 		.filter((x) => x.isFile())
 		.map((x) => x.parentPath + x.name)
+		.filter((x) => x !== "./src/styles/landing.css")
 		.sort((a) => (a === "./src/styles/tailwind.css" ? -1 : 1));
 
 	return styles;
