@@ -227,6 +227,25 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 
 	// ── 3. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
 	if (isSpamFilterEvent) {
+		// Skip spam filter for codeowners — their issues and PRs are never spam.
+		let skipSpamFilter = false;
+		if (senderLogin) {
+			const typedEnv = env as Record<string, string>;
+			const token = await getInstallationToken(typedEnv);
+			const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+			skipSpamFilter = await isCodeOwner(token, orgToken, senderLogin as string);
+		}
+
+		if (skipSpamFilter) {
+			console.log({
+				message: `Spam filter skipped — ${senderLogin} is a codeowner: ${itemLabel}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "spam_filter_skipped_codeowner",
+			});
+			results.spamFilter = { result: { closed: false }, skipped: true };
+		} else {
 		const filterUrl = new URL(baseUrl);
 		filterUrl.pathname = `/agents/spam-and-off-topic-filter/${encodeURIComponent(id)}`;
 		const filterResponse = await fetch(filterUrl, {
@@ -276,6 +295,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		if (closed) {
 			return results;
 		}
+		} // end else (not skipSpamFilter)
 	}
 
 	// ── 4. Dispatch code-review-orchestrator (PRs only) ─────────────────────
