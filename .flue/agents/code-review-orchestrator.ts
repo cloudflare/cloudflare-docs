@@ -31,8 +31,7 @@ import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-review";
 
 export const triggers = { webhook: true };
 
-// Temporary allowlist for live testing — remove once validated in production.
-const CODE_REVIEW_PR_ALLOWLIST = new Set([30981]);
+
 
 // Only review docs/partials/changelog MDX, capped before specialist fan-out.
 const STYLE_GUIDE_REVIEWABLE_PATH_RE =
@@ -112,11 +111,6 @@ export default async function ({
 }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
-
-	// Only run for allowlisted PRs during live testing — remove once validated.
-	if (!CODE_REVIEW_PR_ALLOWLIST.has(input.number)) {
-		return { acted: false, summary: "PR not in allowlist." };
-	}
 
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
