@@ -5,8 +5,7 @@ description: Rules for the ExtraFlagDetails component used inside WranglerComman
 
 ## Rules
 
-- If `ExtraFlagDetails` is used → import it from `~/components`.
-- If `ExtraFlagDetails` is used → it should be a child of `WranglerCommand`.
+- If `ExtraFlagDetails` is used outside `WranglerCommand` → **warning**: it must be a direct child of `WranglerCommand`.
 - If `ExtraFlagDetails` is missing `key` → **warning**: `key` is required.
 - If replacing generated flag help text → use `mode="replace"`.
 

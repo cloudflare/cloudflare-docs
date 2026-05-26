@@ -981,7 +981,7 @@ function renderComment(
 	lines.push("");
 	lines.push("| Command | Description |");
 	lines.push("|---|---|");
-	lines.push("| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase or when you want a fresh review. |");
+	lines.push("| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase, when you want a fresh review, or if the bot gets out of sync and reports issues that no longer exist. |");
 	lines.push("");
 	lines.push("</details>");
 

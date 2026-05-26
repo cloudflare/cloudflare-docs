@@ -5,7 +5,6 @@ description: Rules for the Details collapsible component.
 
 ## Rules
 
-- If <Details> is used → **warning**: add `import { Details } from "~/components"`.
 - If `<Details>` is missing a `header` prop → **warning**: `header` is required.
 
 ## Example

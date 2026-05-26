@@ -5,9 +5,7 @@ description: Rules for the WranglerCommand component used in Wrangler reference 
 
 ## Rules
 
-- If <WranglerCommand> is used → **warning**: add `import { WranglerCommand } from "~/components"`.
 - If `<WranglerCommand>` is missing the `command` prop → **warning**: `command` is required.
-- If `<ExtraFlagDetails>` is used without importing it → **warning**: add `ExtraFlagDetails` to the import.
 
 ## Example
 

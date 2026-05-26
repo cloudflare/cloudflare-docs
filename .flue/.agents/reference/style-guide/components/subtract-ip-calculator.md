@@ -5,7 +5,7 @@ description: Rules for the SubtractIPCalculator component.
 
 ## Rules
 
-- If <SubtractIPCalculator> is used without the correct import path → **warning**: this component imports from its `.tsx` file path directly, not from `~/components`: `import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx"`.
+- If `<SubtractIPCalculator>` uses `import SubtractIPCalculator from "~/components"` → **warning**: this component must import directly from its file: `import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx"`.
 - If `<SubtractIPCalculator>` is missing the `client:load` directive → **warning**: requires `client:load` for client-side interactivity.
 
 ## Example

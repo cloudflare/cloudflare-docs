@@ -5,7 +5,6 @@ description: Rules for the FileTree Starlight component.
 
 ## Rules
 
-- If <FileTree> is used → **warning**: add `import { FileTree } from "~/components"`.
 - If the current file being highlighted is not shown in bold → **suggestion**: use bold to highlight the current file in a `<FileTree>`.
 
 ## Example

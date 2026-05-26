@@ -44,34 +44,6 @@
 		"when": "Patch contains `<APIRequest` or imports `APIRequest`."
 	},
 	{
-		"id": "component-available-notifications",
-		"file": "components/available-notifications.md",
-		"load": "component",
-		"componentNames": ["AvailableNotifications"],
-		"when": "Patch contains `<AvailableNotifications` or imports `AvailableNotifications`."
-	},
-	{
-		"id": "component-badge",
-		"file": "components/badge.md",
-		"load": "component",
-		"componentNames": ["Badge"],
-		"when": "Patch contains `<Badge` or imports `Badge`."
-	},
-	{
-		"id": "component-card-grid",
-		"file": "components/card-grid.md",
-		"load": "component",
-		"componentNames": ["CardGrid"],
-		"when": "Patch contains `<CardGrid` or imports `CardGrid`."
-	},
-	{
-		"id": "component-card",
-		"file": "components/card.md",
-		"load": "component",
-		"componentNames": ["Card"],
-		"when": "Patch contains `<Card` or imports `Card`."
-	},
-	{
 		"id": "component-curl",
 		"file": "components/curl.md",
 		"load": "component",
@@ -86,13 +58,6 @@
 		"when": "Patch contains `<DashButton` or imports `DashButton`."
 	},
 	{
-		"id": "component-description",
-		"file": "components/description.md",
-		"load": "component",
-		"componentNames": ["Description"],
-		"when": "Patch contains `<Description` or imports `Description`."
-	},
-	{
 		"id": "component-details",
 		"file": "components/details.md",
 		"load": "component",
@@ -100,39 +65,11 @@
 		"when": "Patch contains `<Details` or imports `Details`."
 	},
 	{
-		"id": "component-directory-listing",
-		"file": "components/directory-listing.md",
-		"load": "component",
-		"componentNames": ["DirectoryListing"],
-		"when": "Patch contains `<DirectoryListing` or imports `DirectoryListing`."
-	},
-	{
-		"id": "component-external-resources",
-		"file": "components/external-resources.md",
-		"load": "component",
-		"componentNames": ["ExternalResources"],
-		"when": "Patch contains `<ExternalResources` or imports `ExternalResources`."
-	},
-	{
 		"id": "component-extra-flag-details",
 		"file": "components/extra-flag-details.md",
 		"load": "component",
 		"componentNames": ["ExtraFlagDetails"],
 		"when": "Patch contains `<ExtraFlagDetails` or imports `ExtraFlagDetails`."
-	},
-	{
-		"id": "component-feature-table",
-		"file": "components/feature-table.md",
-		"load": "component",
-		"componentNames": ["FeatureTable"],
-		"when": "Patch contains `<FeatureTable` or imports `FeatureTable`."
-	},
-	{
-		"id": "component-feature",
-		"file": "components/feature.md",
-		"load": "component",
-		"componentNames": ["Feature"],
-		"when": "Patch contains `<Feature` or imports `Feature`."
 	},
 	{
 		"id": "component-file-tree",
@@ -149,69 +86,6 @@
 		"when": "Patch contains `<GitHubCode` or imports `GitHubCode`."
 	},
 	{
-		"id": "component-glossary-definition",
-		"file": "components/glossary-definition.md",
-		"load": "component",
-		"componentNames": ["GlossaryDefinition"],
-		"when": "Patch contains `<GlossaryDefinition` or imports `GlossaryDefinition`."
-	},
-	{
-		"id": "component-glossary-tooltip",
-		"file": "components/glossary-tooltip.md",
-		"load": "component",
-		"componentNames": ["GlossaryTooltip"],
-		"when": "Patch contains `<GlossaryTooltip` or imports `GlossaryTooltip`."
-	},
-	{
-		"id": "component-glossary",
-		"file": "components/glossary.md",
-		"load": "component",
-		"componentNames": ["Glossary"],
-		"when": "Patch contains `<Glossary` or imports `Glossary`."
-	},
-	{
-		"id": "component-inline-badge",
-		"file": "components/inline-badge.md",
-		"load": "component",
-		"componentNames": ["InlineBadge"],
-		"when": "Patch contains `<InlineBadge` or imports `InlineBadge`."
-	},
-	{
-		"id": "component-link-button",
-		"file": "components/link-button.md",
-		"load": "component",
-		"componentNames": ["LinkButton"],
-		"when": "Patch contains `<LinkButton` or imports `LinkButton`."
-	},
-	{
-		"id": "component-link-card",
-		"file": "components/link-card.md",
-		"load": "component",
-		"componentNames": ["LinkCard"],
-		"when": "Patch contains `<LinkCard` or imports `LinkCard`."
-	},
-	{
-		"id": "component-link-title-card",
-		"file": "components/link-title-card.md",
-		"load": "component",
-		"componentNames": ["LinkTitleCard"],
-		"when": "Patch contains `<LinkTitleCard` or imports `LinkTitleCard`."
-	},
-	{
-		"id": "component-list-card",
-		"file": "components/list-card.md",
-		"load": "component",
-		"componentNames": ["ListCard"],
-		"when": "Patch contains `<ListCard` or imports `ListCard`."
-	},
-	{
-		"id": "component-list-tutorials",
-		"file": "components/list-tutorials.md",
-		"load": "component",
-		"componentNames": ["ListTutorials"],
-		"when": "Patch contains `<ListTutorials` or imports `ListTutorials`."
-	},
-	{
 		"id": "component-markdown",
 		"file": "components/markdown.md",
 		"load": "component",
@@ -226,74 +100,11 @@
 		"when": "Patch contains `<PackageManagers` or imports `PackageManagers`."
 	},
 	{
-		"id": "component-pages-build-preset",
-		"file": "components/pages-build-preset.md",
-		"load": "component",
-		"componentNames": ["PagesBuildPreset"],
-		"when": "Patch contains `<PagesBuildPreset` or imports `PagesBuildPreset`."
-	},
-	{
-		"id": "component-plan",
-		"file": "components/plan.md",
-		"load": "component",
-		"componentNames": ["Plan"],
-		"when": "Patch contains `<Plan` or imports `Plan`."
-	},
-	{
-		"id": "component-product-availability-text",
-		"file": "components/product-availability-text.md",
-		"load": "component",
-		"componentNames": ["ProductAvailabilityText"],
-		"when": "Patch contains `<ProductAvailabilityText` or imports `ProductAvailabilityText`."
-	},
-	{
-		"id": "component-product-changelog",
-		"file": "components/product-changelog.md",
-		"load": "component",
-		"componentNames": ["ProductChangelog"],
-		"when": "Patch contains `<ProductChangelog` or imports `ProductChangelog`."
-	},
-	{
-		"id": "component-product-features",
-		"file": "components/product-features.md",
-		"load": "component",
-		"componentNames": ["ProductFeatures"],
-		"when": "Patch contains `<ProductFeatures` or imports `ProductFeatures`."
-	},
-	{
-		"id": "component-public-stats",
-		"file": "components/public-stats.md",
-		"load": "component",
-		"componentNames": ["PublicStats"],
-		"when": "Patch contains `<PublicStats` or imports `PublicStats`."
-	},
-	{
-		"id": "component-related-product",
-		"file": "components/related-product.md",
-		"load": "component",
-		"componentNames": ["RelatedProduct"],
-		"when": "Patch contains `<RelatedProduct` or imports `RelatedProduct`."
-	},
-	{
 		"id": "component-render",
 		"file": "components/render.md",
 		"load": "component",
 		"componentNames": ["Render"],
 		"when": "Patch contains `<Render` or imports `Render`."
-	},
-	{
-		"id": "component-resources-by-selector",
-		"file": "components/resources-by-selector.md",
-		"load": "component",
-		"componentNames": ["ResourcesBySelector"],
-		"when": "Patch contains `<ResourcesBySelector` or imports `ResourcesBySelector`."
-	},
-	{
-		"id": "component-rule-id",
-		"file": "components/rule-id.md",
-		"load": "component",
-		"componentNames": ["RuleID"],
-		"when": "Patch contains `<RuleID` or imports `RuleID`."
 	},
 	{
 		"id": "component-steps",
@@ -317,13 +128,6 @@
 		"when": "Patch contains `<SubtractIPCalculator` or imports `SubtractIPCalculator`."
 	},
 	{
-		"id": "component-tab-item",
-		"file": "components/tab-item.md",
-		"load": "component",
-		"componentNames": ["TabItem"],
-		"when": "Patch contains `<TabItem` or imports `TabItem`."
-	},
-	{
 		"id": "component-tabs",
 		"file": "components/tabs.md",
 		"load": "component",
@@ -338,13 +142,6 @@
 		"when": "Patch contains `<TypeScriptExample` or imports `TypeScriptExample`."
 	},
 	{
-		"id": "component-width",
-		"file": "components/width.md",
-		"load": "component",
-		"componentNames": ["Width"],
-		"when": "Patch contains `<Width` or imports `Width`."
-	},
-	{
 		"id": "component-wrangler-command",
 		"file": "components/wrangler-command.md",
 		"load": "component",
@@ -357,19 +154,5 @@
 		"load": "component",
 		"componentNames": ["WranglerConfig"],
 		"when": "Patch contains `<WranglerConfig` or imports `WranglerConfig`."
-	},
-	{
-		"id": "component-wrangler-namespace",
-		"file": "components/wrangler-namespace.md",
-		"load": "component",
-		"componentNames": ["WranglerNamespace"],
-		"when": "Patch contains `<WranglerNamespace` or imports `WranglerNamespace`."
-	},
-	{
-		"id": "component-youtube",
-		"file": "components/youtube.md",
-		"load": "component",
-		"componentNames": ["YouTube"],
-		"when": "Patch contains `<YouTube` or imports `YouTube`."
 	}
 ]

@@ -5,8 +5,6 @@ description: Rules for the Markdown component used to render Markdown strings in
 
 ## Rules
 
-- If <Markdown> is used → **warning**: add `import { Markdown } from "~/components"`.
-- If `<Markdown>` is missing the `text` prop → **warning**: `text` is required.
 - If `<Markdown>` is used outside a JSX or partial context → **suggestion**: use standard Markdown prose instead; `<Markdown>` is primarily for rendering variables passed into partials.
 
 ## Example

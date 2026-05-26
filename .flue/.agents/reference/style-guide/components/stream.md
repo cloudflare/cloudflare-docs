@@ -5,7 +5,6 @@ description: Rules for the Stream component used to embed Cloudflare Stream vide
 
 ## Rules
 
-- If <Stream> is used → **warning**: add `import { Stream } from "~/components"`.
 - If `<Stream>` uses neither `id` nor `file` prop → **warning**: one is required.
 - If `<Stream>` uses `id` but is missing `title` → **warning**: `title` is required when using `id`.
 - If `<Stream>` uses both `id` and `file` → **warning**: `id`/`title`/`thumbnail`/`chapters` are mutually exclusive with `file`.

@@ -47,6 +47,7 @@ For each selected patch:
 - Read a component reference only when the patch contains that component tag or imports that component name.
 - For component references, use the manifest `componentNames` field to match component names.
 - Do not read all component reference files by default.
+- If a component reference file does not exist in the manifest, skip it — not every component has style-guide rules beyond what the build already validates.
 - Do not rely on any root-level `.agents/references/*` files. The sandbox only has access to files under `.agents/reference/style-guide/`.
 
 ## Patch Parsing
