@@ -100,7 +100,7 @@ Quick tunnels (`sandbox.tunnels.get(port)`) return a `*.trycloudflare.com` URL w
 await sandbox.tunnels.destroy(8080);
 ```
 
-URLs do not survive a container restart, so a restart effectively rotates the hostname. As with preview URLs, add application-level authentication for any sensitive service. See the [Tunnels API](/sandbox/api/tunnels/) for details.
+URLs do not survive a container restart, so a restart effectively rotates the hostname. As with preview URLs, add application-level authentication for any sensitive service. Refer to the [Tunnels API](/sandbox/api/tunnels/) for details.
 
 ```python
 from flask import Flask, request, abort

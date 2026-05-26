@@ -8,9 +8,9 @@ products:
   - sandbox
 ---
 
-# Quick deployment
+## Quick deployment
 
-For quick preview deployments we recommend using [Cloudflare Tunnel](https://developers.cloudflare.com/tunnel/) to generate preview URLs to your web services. These work across local development, workers.dev and production usage.
+For quick preview deployments we recommend using [Cloudflare Tunnel](/tunnel/) to generate preview URLs to your web services. These work across local development, workers.dev, and production usage.
 
 ```ts
 await sandbox.startProcess("python -m http.server 8000");
@@ -29,12 +29,12 @@ Cloudflare Tunnel support currently has the following limitations:
  - Each URL uses an additional `cloudflared` process on the sandbox.
 
 :::note[Production requires custom domain]
-We are working on production deployments, custom hostnames and authentication for Cloudflare Tunnel support. In the mean time we recommend using `exposePort()` and `proxyToSandbox()` documented below under [Production usage, stable URLs and custom domains](#).
+We are working on production deployments, custom hostnames, and authentication for Cloudflare Tunnel support. In the meantime, we recommend using `exposePort()` and `proxyToSandbox()`. Refer to [Production usage, stable URLs and custom domains](#production-usage-stable-urls--custom-domains) for details.
 :::
 
-See the [tunnels API reference](/sandbox/api/tunnels/) for the full API and feature set.
+Refer to the [tunnels API reference](/sandbox/api/tunnels/) for the full API and feature set.
 
-# Production usage, stable URLs & custom domains
+## Production usage, stable URLs & custom domains
 
 For production use we recommend using the `exposePort()` API and routing traffic through your worker.
 
