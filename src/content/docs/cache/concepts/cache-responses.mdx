@@ -32,9 +32,9 @@ The resource was not found in Cloudflare's cache and was served from the origin 
 
 Cloudflare generated a response that denotes the asset is not eligible for caching. This may have happened because:
 
-* A Worker generated a response without sending any subrequests. In this case, the response did not come from cache, so the cache status will be `none/unknown`.
+* A [Worker](/workers/) generated a response without sending any subrequests. In this case, the response did not come from cache, so the cache status will be `none/unknown`.
 
-* A Worker request made a subrequest (`fetch`). In this case, the subrequest will be logged with a cache status, while the main request will be logged with `none/unknown` status (the main request did not hit cache, since Workers sits in front of cache).
+* A [Worker](/workers/) request made a subrequest (`fetch`). In this case, the subrequest will be logged with a cache status, while the main request will be logged with `none/unknown` status (the main request did not hit cache, since Workers sits in front of cache).
 
 * A WAF custom rule was triggered to block a request. The response will come from the Cloudflare global network before it hits cache. Since there is no cache status, Cloudflare will log as `none/unknown`.
 
