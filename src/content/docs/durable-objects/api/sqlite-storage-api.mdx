@@ -153,6 +153,29 @@ class MyDurableObject(DurableObject):
 
 A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `SqlStorageCursor` is a JavaScript [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol), which supports iteration using `for (let row of cursor)`. `SqlStorageCursor` is also a JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol), which supports iteration using `cursor.next()`.
 
+:::caution[Consume cursors synchronously]
+It is not safe to hold a reference to a `SqlStorageCursor` and continue reading from it after an `await`. When you `await` an asynchronous operation, other requests can interleave and modify the underlying database, which can silently invalidate the cursor. This does not produce an error — the cursor may appear to work but return unpredictable results.
+
+Always consume the cursor fully before yielding the event loop. Call `.toArray()`, `.one()`, or iterate with `for...of` synchronously after calling `sql.exec()`:
+
+```ts
+// ✅ Safe: cursor is fully consumed before any await
+const rows = this.ctx.storage.sql.exec("SELECT * FROM users").toArray();
+const result = await fetch("https://example.com", { method: "POST", body: JSON.stringify(rows) });
+```
+
+```ts
+// 🔴 Unsafe: cursor is read after an await
+const cursor = this.ctx.storage.sql.exec("SELECT * FROM users");
+await fetch("https://example.com/notify");
+// Another request may have modified the database during the await above.
+// The cursor is now potentially invalid — it may appear to work but return wrong data.
+const rows = cursor.toArray();
+```
+
+If you need to prevent other requests from interleaving while you hold a cursor, use [`blockConcurrencyWhile()`](/durable-objects/api/state/#blockconcurrencywhile).
+:::
+
 `SqlStorageCursor` supports the following methods:
 
 - `next()`
