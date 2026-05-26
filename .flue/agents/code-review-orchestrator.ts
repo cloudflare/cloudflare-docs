@@ -94,6 +94,8 @@ interface CodeReviewOrchestratorPayload {
 	number: number;
 	/** When true, ignore previous review state and run a full diff review. */
 	forceFullReview?: boolean;
+	/** When true, skip the automatic review count limit check (codeowner commands). */
+	bypassReviewLimit?: boolean;
 	/** Comment ID that triggered /full-review — used to swap 👀 to 👍 when done. */
 	triggerCommentId?: number;
 	/** Reaction ID of the 👀 reaction to remove when review completes. */
@@ -122,6 +124,49 @@ export default async function ({
 	const loader = typedEnv.LOADER as unknown as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
+
+	// ── Auto-review limit check ────────────────────────────────────────────────
+	// Automatic reviews are capped at 2 per PR. Codeowner commands bypass this.
+	if (!input.bypassReviewLimit) {
+		const autoReviewCount = await getAutoReviewCount(bucket, input.number);
+		if (autoReviewCount >= 2) {
+			console.log({
+				message: `Auto-review limit reached: PR #${input.number} — ${autoReviewCount} reviews already run`,
+				event: "code_review_orchestrator",
+				number: input.number,
+				runId,
+				action: "auto_review_limit_reached",
+			});
+
+			if (reviewMode === "comment") {
+				const token = await getInstallationToken(
+					typedEnv as Record<string, string>,
+				);
+				const allComments = await getIssueComments(token, input.number);
+				const botComment =
+					allComments.findLast((c) =>
+						c.body?.includes(BOT_COMMENT_MARKER),
+					) ?? null;
+				await postOrUpdateComment(
+					token,
+					input.number,
+					botComment,
+					renderReviewLimitComment(botComment?.body ?? undefined),
+				);
+			}
+
+			return {
+				mode: reviewMode,
+				active: 0,
+				ignored: 0,
+				resolved: 0,
+				summary: "Auto-review limit reached.",
+				commentBody: null,
+			};
+		}
+		// Increment before running so a mid-run failure counts as a used review
+		await incrementAutoReviewCount(bucket, input.number, autoReviewCount);
+	}
 
 	const workspace = getDefaultWorkspace();
 	const harness = await init({
@@ -612,6 +657,7 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 		eventType: input.eventType,
 		number: input.number,
 		forceFullReview: input.forceFullReview === true,
+		bypassReviewLimit: input.bypassReviewLimit === true,
 		triggerCommentId:
 			typeof input.triggerCommentId === "number"
 				? input.triggerCommentId
@@ -1005,4 +1051,60 @@ function renderFindingRow(f: ReconcileResult["active"][number]): string {
 	const evidence = f.evidence.replace(/\|/g, "\\|");
 	const suggestion = f.suggestion.replace(/\|/g, "\\|");
 	return `| ${file} | **${rule}** — ${evidence} Fix: ${suggestion} |`;
+}
+
+function renderReviewLimitComment(existingBody?: string): string {
+	const wasAlreadyPending = existingBody?.includes("<!-- status: pending -->");
+	const preservedBody =
+		existingBody && !wasAlreadyPending
+			? existingBody
+					.split("\n")
+					.filter(
+						(l) =>
+							!l.startsWith("<!-- ") &&
+							l !== "## Review" &&
+							l !== BOT_COMMENT_MARKER,
+					)
+					.join("\n")
+					.replace(/^\n+/, "")
+			: null;
+
+	const lines = [
+		BOT_COMMENT_MARKER,
+		`<!-- updated-at: ${new Date().toISOString()} -->`,
+		"",
+		"## Review",
+		"",
+		"⏸️ Automatic reviews for this PR are paused.",
+		"",
+		"This PR has already received 2 automatic reviews. To run another review, a codeowner can comment `/review` or `/full-review`.",
+		"",
+		"> **Tip:** Keep PRs in draft mode until they are ready for review — the bot skips draft PRs automatically.",
+	];
+
+	if (preservedBody) {
+		lines.push("", "---", "", preservedBody);
+	}
+
+	return lines.join("\n");
+}
+
+async function getAutoReviewCount(
+	bucket: R2Bucket,
+	prNumber: number,
+): Promise<number> {
+	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
+	const obj = await bucket.get(key);
+	if (!obj) return 0;
+	const data = (await obj.json()) as { count?: number };
+	return data.count ?? 0;
+}
+
+async function incrementAutoReviewCount(
+	bucket: R2Bucket,
+	prNumber: number,
+	current: number,
+): Promise<void> {
+	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
+	await bucket.put(key, JSON.stringify({ count: current + 1 }));
 }

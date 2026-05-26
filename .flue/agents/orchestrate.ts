@@ -147,6 +147,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 				eventType: "pull_request",
 				number,
 				forceFullReview: true,
+				bypassReviewLimit: true,
 				triggerCommentId: commentId,
 				triggerEyesReactionId: eyesReactionId,
 			}),
@@ -203,6 +204,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			body: JSON.stringify({
 				eventType: "pull_request",
 				number,
+				bypassReviewLimit: true,
 				triggerCommentId: commentId,
 				triggerEyesReactionId: eyesReactionId,
 			}),
