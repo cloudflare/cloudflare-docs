@@ -856,21 +856,23 @@ function renderPendingComment(
 			? `Reviewing new changes (commit \`${shortSha}\`)…`
 			: `Review in progress for commit \`${shortSha}\`…`;
 
-	// If there's an existing review body, preserve it below the pending notice.
-	// Strip the old header metadata lines (HTML comments + "## Review" heading)
-	// so we don't duplicate them.
-	const preservedBody = existingBody
-		? existingBody
-				.split("\n")
-				.filter(
-					(l) =>
-						!l.startsWith("<!-- ") &&
-						l !== "## Review" &&
-						l !== BOT_COMMENT_MARKER,
-				)
-				.join("\n")
-				.replace(/^\n+/, "")
-		: null;
+	// If there's an existing *completed* review body, preserve it below the pending notice.
+	// Don't preserve a body that was itself a pending placeholder (to avoid duplication).
+	// Strip the old header metadata lines (HTML comments + "## Review" heading).
+	const wasAlreadyPending = existingBody?.includes("<!-- status: pending -->");
+	const preservedBody =
+		existingBody && !wasAlreadyPending
+			? existingBody
+					.split("\n")
+					.filter(
+						(l) =>
+							!l.startsWith("<!-- ") &&
+							l !== "## Review" &&
+							l !== BOT_COMMENT_MARKER,
+					)
+					.join("\n")
+					.replace(/^\n+/, "")
+			: null;
 
 	const lines = [
 		BOT_COMMENT_MARKER,
