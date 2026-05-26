@@ -1,0 +1,29 @@
+---
+title: BYPASS status now returned for uncacheable responses
+description: Responses that Cloudflare chooses not to cache now return a BYPASS cache status instead of MISS, giving you a clearer signal in logs and more accurate cache hit ratios in analytics.
+products:
+  - cache
+date: 2026-05-26
+---
+
+Cloudflare now returns a `BYPASS` [cache status](/cache/concepts/cache-responses/) when a response is not cacheable, instead of the previous `MISS` status. This applies whether or not [Origin Cache Control](/cache/concepts/cache-control/) is enabled.
+
+Previously, a request for an uncacheable asset returned `MISS` on every request, which made it difficult to distinguish between "the asset is not in cache yet" and "Cloudflare deliberately did not cache this response." `BYPASS` makes that intent explicit: Cloudflare refused to cache the response, typically because the origin sent `Cache-Control: no-cache`, `private`, `max-age=0`, a `Set-Cookie` header, or an `Authorization` request header was present.
+
+## What to expect in your analytics
+
+After this change rolls out, you should see:
+
+- **MISS rate decreases**: Uncacheable responses no longer count as cache misses.
+- **BYPASS rate increases**: These same responses are now reported as bypasses.
+- **Cache hit ratio increases**: Hit ratio calculations no longer include uncacheable traffic that could never have been cached, giving you a more accurate view of cache effectiveness.
+
+Your total request volume and origin traffic are unchanged — only the cache status label is different.
+
+## Browser cache TTL behavior is preserved
+
+Browser cache TTL behavior remains exactly the same as before. The default 4-hour browser cache TTL continues to apply only to cacheable (`HIT`, `MISS`, `EXPIRED`, `REVALIDATED`, `UPDATING`, `STALE`) responses, and continues not to apply to `BYPASS` or `DYNAMIC` responses, even when you have configured a custom browser cache TTL via Cache Rules, Page Rules, or zone settings.
+
+## Get started
+
+No action is required. For a full list of cache statuses and their meanings, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
