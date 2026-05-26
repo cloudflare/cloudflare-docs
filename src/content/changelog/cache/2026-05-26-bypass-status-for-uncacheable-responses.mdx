@@ -8,7 +8,9 @@ date: 2026-05-26
 
 Cloudflare now returns a `BYPASS` [cache status](/cache/concepts/cache-responses/) when a response is not cacheable, instead of the previous `MISS` status. This applies whether or not [Origin Cache Control](/cache/concepts/cache-control/) is enabled.
 
-Previously, a request for an uncacheable asset returned `MISS` on every request, which made it difficult to distinguish between "the asset is not in cache yet" and "Cloudflare deliberately did not cache this response." `BYPASS` makes that intent explicit: Cloudflare refused to cache the response, typically because the origin sent `Cache-Control: no-cache`, `private`, `max-age=0`, a `Set-Cookie` header, or an `Authorization` request header was present.
+Previously, `BYPASS` was only returned for uncacheable responses when Origin Cache Control was enabled. With Origin Cache Control disabled, the same uncacheable responses — those with `Cache-Control: no-cache`, `private`, or `max-age=0`, a `Set-Cookie` response header, or an `Authorization` request header — instead returned `MISS` on every request. Because the response could never be cached, every subsequent request also returned `MISS`, which looked indistinguishable from a broken cache and made it hard to tell whether Cloudflare was trying and failing to cache the asset or had deliberately chosen not to cache it.
+
+`BYPASS` now consistently signals the latter: Cloudflare refused to cache the response. `MISS` is reserved for cacheable responses that simply were not in the local cache at request time.
 
 ## What to expect in your analytics
 
@@ -23,7 +25,3 @@ Your total request volume and origin traffic are unchanged — only the cache st
 ## Browser cache TTL behavior is preserved
 
 Browser cache TTL behavior remains exactly the same as before. The default 4-hour browser cache TTL continues to apply only to cacheable (`HIT`, `MISS`, `EXPIRED`, `REVALIDATED`, `UPDATING`, `STALE`) responses, and continues not to apply to `BYPASS` or `DYNAMIC` responses, even when you have configured a custom browser cache TTL via Cache Rules, Page Rules, or zone settings.
-
-## Get started
-
-No action is required. For a full list of cache statuses and their meanings, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
