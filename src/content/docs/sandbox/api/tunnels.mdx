@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-The `sandbox.tunnels` namespace exposes a service running inside a sandbox on a `*.trycloudflare.com` URL. The SDK runs `cloudflared` inside the container and opens a persistent QUIC connection to Cloudflare's edge; no Cloudflare account, DNS record, or custom domain is required.
+The `sandbox.tunnels` namespace exposes a service running inside a sandbox on a `*.trycloudflare.com` URL. The SDK runs `cloudflared` inside the container and opens a persistent QUIC connection to Cloudflare's edge. No Cloudflare account, DNS record, or custom domain is required.
 
 :::note[When to use tunnels vs. `exposePort()`]
 Use `sandbox.tunnels` for **quick development** and **deployments on `.workers.dev`**, where wildcard DNS is not available. For **production**, use [`exposePort()`](/sandbox/api/ports/) with a custom domain — quick tunnels are positioned by Cloudflare as a debug aid and do not carry an uptime guarantee. Production-grade named tunnels are planned for a future release.
@@ -18,8 +18,7 @@ Use `sandbox.tunnels` for **quick development** and **deployments on `.workers.d
 
 ## Requirements
 
-- **RPC transport.** Calling `sandbox.tunnels` on HTTP/Websocket transports will throw `"RPC transport required"`. Refer to [Transport configuration](/sandbox/configuration/transport/).
-- **glibc image variant.** The default, `python`, `opencode`, and `desktop` images ship `cloudflared`. The `musl`/Alpine variant does not — there is no upstream `cloudflared` build for musl at this time.
+`sandbox.tunnels` requires RPC transport — calling it on HTTP/Websocket transports will throw `"RPC transport required"`. Refer to [Transport configuration](/sandbox/configuration/transport/). It also requires a glibc image variant: the default, `python`, `opencode`, and `desktop` images ship `cloudflared`, but the `musl`/Alpine variant does not — there is no upstream `cloudflared` build for musl at this time.
 
 ## Methods
 
