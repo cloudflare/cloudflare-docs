@@ -86,18 +86,20 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			webhookAction as string,
 		);
 
-	// /full-review command: issue_comment on a PR from a codeowner
+	// Slash commands: issue_comment on a PR from a codeowner
 	const commentBody = (
 		body.comment as Record<string, unknown> | undefined
 	)?.body as string | undefined;
-	const isFullReviewCommand =
+	const trimmedComment = commentBody?.trim();
+	const isOnPullRequest =
 		eventType === "issue_comment" &&
 		webhookAction === "created" &&
 		(body.issue as Record<string, unknown> | undefined)?.pull_request !==
-			undefined &&
-		commentBody?.trim() === "/full-review";
+			undefined;
+	const isFullReviewCommand = isOnPullRequest && trimmedComment === "/full-review";
+	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
 
-	if (!req || (!isSpamFilterEvent && !isCodeReviewEvent && !isFullReviewCommand)) {
+	if (!req || (!isSpamFilterEvent && !isCodeReviewEvent && !isFullReviewCommand && !isReviewCommand)) {
 		return { acted: false, summary: "No action needed." };
 	}
 
@@ -160,6 +162,62 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		});
 
 		return { acted: true, summary: `Full review triggered by @${senderLogin}.` };
+	}
+
+	// ── 4. Handle /review command ────────────────────────────────────────────
+	if (isReviewCommand) {
+		const commentId = (
+			body.comment as Record<string, unknown> | undefined
+		)?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `Review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		// Acknowledge immediately with 👀
+		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+
+		// Dispatch a normal review (incremental if prior review exists, full if not)
+		const baseUrl = new URL(req.url);
+		const reviewUrl = new URL(baseUrl);
+		reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
+		const reviewResponse = await fetch(reviewUrl, {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({
+				eventType: "pull_request",
+				number,
+				triggerCommentId: commentId,
+				triggerEyesReactionId: eyesReactionId,
+			}),
+		});
+
+		console.log({
+			message: `Review dispatched by ${senderLogin}: PR #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			number,
+			action: "review_dispatched",
+			ok: reviewResponse.ok,
+		});
+
+		return { acted: true, summary: `Review triggered by @${senderLogin}.` };
 	}
 
 	const baseUrl = new URL(req.url);

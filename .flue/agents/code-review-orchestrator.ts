@@ -983,6 +983,7 @@ function renderComment(
 	lines.push("");
 	lines.push("| Command | Description |");
 	lines.push("|---|---|");
+	lines.push("| `/review` | Runs a review now. Incremental if a prior review exists, full if not. |");
 	lines.push("| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase, when you want a fresh review, or if the bot gets out of sync and reports issues that no longer exist. |");
 	lines.push("");
 	lines.push("</details>");
