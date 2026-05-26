@@ -27,7 +27,7 @@ import {
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6              |
 | [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker     |
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
-| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB          |
+| [Worker size](#worker-size)                                                      | 64 MiB       | 64 MiB         |
 | [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500            |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
@@ -258,21 +258,24 @@ The runtime measures simultaneous open connections from the top-level request. W
 
 ## Worker size
 
-| Limit                    | Workers Free | Workers Paid |
-| ------------------------ | ------------ | ------------ |
-| After compression (gzip) | 3 MB         | 10 MB        |
-| Before compression       | 64 MB        | 64 MB        |
+| Limit                          | Workers Free | Workers Paid |
+| ------------------------------ | ------------ | ------------ |
+| Worker size before compression | 64 MiB       | 64 MiB       |
 
-Larger Worker bundles can impact startup time. To check your compressed bundle size:
+Workers do not have a separate compressed size limit. Only the uncompressed bundle size is checked.
+
+Larger Worker bundles can impact startup time. To check your Worker bundle size:
 
 ```sh
 wrangler deploy --outdir bundled/ --dry-run
 ```
 
-```sh output
-# Output will resemble the below:
+```txt
+# Output resembles:
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
+
+The `Total Upload` value is your uncompressed bundle size. The `gzip` value is shown for reference but is not a limit.
 
 To reduce Worker size:
 

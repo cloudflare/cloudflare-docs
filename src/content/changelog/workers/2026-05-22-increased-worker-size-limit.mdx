@@ -1,0 +1,31 @@
+---
+title: Worker size limit increased to 64 MiB for all plans
+description: The compressed Worker size limits (3 MB free / 10 MB paid) have been removed. Workers now support a single 64 MiB uncompressed size limit across all plans.
+products:
+  - workers
+date: 2026-05-22
+---
+
+You can now deploy Workers up to **64 MiB uncompressed** on all plans, up from 3 MB compressed on the Free plan and 10 MB compressed on the Paid plan.
+
+Workers are no longer limited by compressed bundle size. Only the uncompressed size counts, giving you ~21x more room on the Free plan and ~6x more on the Paid plan.
+
+| Limit | Previous | New |
+|---|---|---|
+| Free plan | 3 MB compressed | 64 MiB uncompressed |
+| Paid plan | 10 MB compressed | 64 MiB uncompressed |
+
+To check your Worker's bundle size before deploying:
+
+```sh
+wrangler deploy --outdir bundled/ --dry-run
+```
+
+```txt
+# Output resembles:
+Total Upload: 259.61 KiB / gzip: 47.23 KiB
+```
+
+The `Total Upload` value is your uncompressed bundle size — this is what counts against the 64 MiB limit. The `gzip` value is shown for reference but is no longer a limit.
+
+For more information, refer to the [Worker size limits documentation](/workers/platform/limits/#worker-size).
