@@ -971,6 +971,20 @@ function renderComment(
 		lines.push("</details>");
 	}
 
+	// Commands section — always shown at the bottom
+	lines.push("");
+	lines.push("<details>");
+	lines.push("<summary>Commands</summary>");
+	lines.push("<br/>");
+	lines.push("");
+	lines.push("_Only codeowners can run commands. Post a comment with the command to trigger it._");
+	lines.push("");
+	lines.push("| Command | Description |");
+	lines.push("|---|---|");
+	lines.push("| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase or when you want a fresh review. |");
+	lines.push("");
+	lines.push("</details>");
+
 	return lines.join("\n");
 }
 
