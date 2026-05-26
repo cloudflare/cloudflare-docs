@@ -34,6 +34,7 @@
 		"flue:sync-agents": "pnpm run flue:sync-agents:remote",
 		"flue:sync-agents:local": "tsx .flue/bin/sync-agents.ts --local",
 		"flue:sync-agents:remote": "tsx .flue/bin/sync-agents.ts",
+		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
 		"lint": "eslint",
 		"ai-setup:import-from-opencode": "rulesync import --targets opencode --features rules,commands,subagents",
 		"ai-setup:claudecode": "pnpm run ai-setup:import-from-opencode && rulesync generate --targets claudecode --features rules,commands,subagents",

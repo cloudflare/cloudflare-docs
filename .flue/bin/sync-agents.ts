@@ -40,6 +40,31 @@ const localFlag = isLocal
 	? "--local --persist-to .flue/dist/.wrangler/state"
 	: "--remote";
 
+// Old flat style-guide reference files that were replaced by the
+// always/ + conditional/ + components/ subdirectory structure.
+// Delete them so stale files don't accumulate in R2.
+const staleKeys = [
+	".agents/reference/style-guide/code-blocks.md",
+	".agents/reference/style-guide/components.md",
+	".agents/reference/style-guide/formatting.md",
+	".agents/reference/style-guide/headings.md",
+	".agents/reference/style-guide/links.md",
+	".agents/reference/style-guide/mdx-syntax.md",
+	".agents/reference/style-guide/terminology.md",
+	".agents/reference/style-guide/writing.md",
+];
+
+for (const key of staleKeys) {
+	const r2Key = `${bucket}/${key}`;
+	const cmd = `wrangler r2 object delete ${r2Key} ${localFlag}`;
+	try {
+		execSync(cmd, { stdio: "pipe" });
+		console.log(`Deleted stale: ${key}`);
+	} catch {
+		// Non-fatal — object may not exist
+	}
+}
+
 let failed = false;
 for (const filePath of files) {
 	// Key in R2: .agents/...

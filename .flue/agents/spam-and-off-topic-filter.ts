@@ -10,11 +10,7 @@
  * POST /agents/spam-and-off-topic-filter/:id  (also callable via session.task())
  */
 import type { FlueContext } from "@flue/runtime";
-import {
-	getDefaultWorkspace,
-	getShellSandbox,
-	hydrateFromBucket,
-} from "@flue/runtime/cloudflare";
+import { getDefaultWorkspace, getShellSandbox } from "@flue/runtime/cloudflare";
 import * as v from "valibot";
 import {
 	addLabels,
@@ -79,16 +75,22 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 	>[0]["loader"];
 
 	const workspace = getDefaultWorkspace();
-	if (!(await workspace.exists("/.hydrated"))) {
-		await hydrateFromBucket(workspace, bucket);
-		await workspace.writeFile("/.hydrated", new Date().toISOString());
-	}
-
 	const harness = await init({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
 		role: "cloudflare-docs-bot",
 	});
+
+	// Write skill from R2 into workspace at request time
+	const skillObj = await bucket.get(
+		".agents/skills/spam-and-off-topic-filter/SKILL.md",
+	);
+	if (skillObj) {
+		await harness.fs.writeFile(
+			"/.agents/skills/spam-and-off-topic-filter/SKILL.md",
+			await skillObj.text(),
+		);
+	}
 	const session = await harness.session(
 		`filter:${input.eventType}:${input.number}:${runId}`,
 	);

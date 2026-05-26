@@ -36,6 +36,7 @@ export interface GitHubPullRequest {
 	user: GitHubUser | null;
 	author_association: string;
 	draft: boolean;
+	labels: { name: string }[];
 	base: { ref: string; sha: string };
 	head: { ref: string; sha: string };
 }

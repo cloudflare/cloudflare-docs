@@ -24,6 +24,7 @@ Your job is to classify each finding into one of three buckets:
 `args.pullRequest` — basic PR metadata: `number`, `title`, `base`, `head`.
 
 `args.diffMode` — describes what diff the specialist reviewed:
+
 - `{ type: "full" }` — specialist reviewed the entire PR diff.
 - `{ type: "incremental", fromSha: string, toSha: string }` — specialist reviewed only commits since the last bot review.
 
@@ -54,11 +55,13 @@ The specialist reviewed the entire PR. All current issues in the PR are visible 
 The specialist reviewed only commits since the last bot review. Not every previous finding will appear in `args.currentFindings` — the unchanged files were not re-reviewed.
 
 **Active**:
+
 - All findings in `args.currentFindings` (newly found in the incremental diff) that no human comment addresses.
 - All findings from `args.previousFindings` that were previously active and have NOT been addressed by a human comment. They carry forward by default.
 - If a previously active finding is in a file that appears in `args.reviewedFiles`, and the specialist did NOT flag it, it is resolved — classify it as resolved.
 
 **Resolved**:
+
 - A finding from the previous review is resolved if:
   - Its file appears in `args.reviewedFiles` AND the specialist did not re-flag it. (The file was re-reviewed and the issue is gone.)
   - OR a human comment clearly explains it was fixed.
@@ -102,31 +105,31 @@ Return a JSON object only. No prose outside the JSON.
 
 ```json
 {
-  "active": [
-    {
-      "id": "SG-4f2a91",
-      "severity": "warning",
-      "path": "src/content/docs/workers/example.mdx",
-      "line": 42,
-      "rule": "Use root-relative internal links",
-      "evidence": "The changed line uses `https://developers.cloudflare.com/workers/`",
-      "suggestion": "Change to `/workers/`"
-    }
-  ],
-  "ignored_by_reviewer": [
-    {
-      "id": "SG-8bc201",
-      "severity": "suggestion",
-      "path": "src/content/docs/workers/example.mdx",
-      "line": 88,
-      "rule": "Avoid 'enable'",
-      "evidence": "Line uses 'enable' instead of 'turn on'",
-      "suggestion": "Change to 'turn on'",
-      "reviewer_note": "The author says this mirrors the exact dashboard label and must match."
-    }
-  ],
-  "resolved": ["SG-1a2b3c"],
-  "summary": "One sentence describing the overall reconciliation result."
+	"active": [
+		{
+			"id": "SG-4f2a91",
+			"severity": "warning",
+			"path": "src/content/docs/workers/example.mdx",
+			"line": 42,
+			"rule": "Use root-relative internal links",
+			"evidence": "The changed line uses `https://developers.cloudflare.com/workers/`",
+			"suggestion": "Change to `/workers/`"
+		}
+	],
+	"ignored_by_reviewer": [
+		{
+			"id": "SG-8bc201",
+			"severity": "suggestion",
+			"path": "src/content/docs/workers/example.mdx",
+			"line": 88,
+			"rule": "Avoid 'enable'",
+			"evidence": "Line uses 'enable' instead of 'turn on'",
+			"suggestion": "Change to 'turn on'",
+			"reviewer_note": "The author says this mirrors the exact dashboard label and must match."
+		}
+	],
+	"resolved": ["SG-1a2b3c"],
+	"summary": "One sentence describing the overall reconciliation result."
 }
 ```
 

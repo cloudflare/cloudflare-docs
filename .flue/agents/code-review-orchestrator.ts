@@ -13,11 +13,7 @@
  * POST /agents/code-review-orchestrator/:id
  */
 import type { FlueContext } from "@flue/runtime";
-import {
-	getDefaultWorkspace,
-	getShellSandbox,
-	hydrateFromBucket,
-} from "@flue/runtime/cloudflare";
+import { getDefaultWorkspace, getShellSandbox } from "@flue/runtime/cloudflare";
 import * as v from "valibot";
 import {
 	addReactionToComment,
@@ -37,6 +33,12 @@ export const triggers = { webhook: true };
 
 // Temporary allowlist for live testing — remove once validated in production.
 const CODE_REVIEW_PR_ALLOWLIST = new Set([30981]);
+
+// Only review docs/partials/changelog MDX, capped before specialist fan-out.
+const STYLE_GUIDE_REVIEWABLE_PATH_RE =
+	/^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
+const STYLE_GUIDE_MAX_FILES = 20;
+const STYLE_GUIDE_CONCURRENCY = 10;
 
 // Marker embedded in every bot review comment — used to find and update it
 const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
@@ -122,16 +124,22 @@ export default async function ({
 	>[0]["loader"];
 
 	const workspace = getDefaultWorkspace();
-	if (!(await workspace.exists("/.hydrated"))) {
-		await hydrateFromBucket(workspace, bucket);
-		await workspace.writeFile("/.hydrated", new Date().toISOString());
-	}
-
 	const harness = await init({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
 		role: "cloudflare-docs-bot",
 	});
+
+	// Write reconciler skill from R2 into workspace at request time
+	const reconcileSkillObj = await bucket.get(
+		".agents/skills/reconcile-code-review/SKILL.md",
+	);
+	if (reconcileSkillObj) {
+		await harness.fs.writeFile(
+			"/.agents/skills/reconcile-code-review/SKILL.md",
+			await reconcileSkillObj.text(),
+		);
+	}
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
@@ -190,7 +198,11 @@ export default async function ({
 	let diffMode: DiffMode;
 	let allFiles: Awaited<ReturnType<typeof getPullRequestFiles>>;
 
-	if (!input.forceFullReview && previousReviewedSha && previousReviewedSha !== currentHeadSha) {
+	if (
+		!input.forceFullReview &&
+		previousReviewedSha &&
+		previousReviewedSha !== currentHeadSha
+	) {
 		// Attempt incremental diff — commits since last review
 		const compare = await comparePullRequestHeads(
 			token,
@@ -270,7 +282,7 @@ export default async function ({
 
 	// ── 2. Write diff and comments to R2, and post placeholder comment ────────
 	await Promise.all([
-		writeDiffToR2(bucket, diffDir, allFiles),
+		writeDiffToR2(bucket, diffDir, allFiles, pr),
 		bucket.put(commentsPath, JSON.stringify(allComments, null, 2)),
 		// In comment mode, immediately post/update with a "review in progress"
 		// message so the reviewer sees something right away.
@@ -279,7 +291,12 @@ export default async function ({
 					token,
 					input.number,
 					botComment,
-					renderPendingComment(currentHeadSha, botComment !== null, input.forceFullReview),
+					renderPendingComment(
+						currentHeadSha,
+						botComment !== null,
+						input.forceFullReview,
+						botComment?.body ?? undefined,
+					),
 				)
 			: Promise.resolve(),
 	]);
@@ -305,13 +322,32 @@ export default async function ({
 
 	let styleGuideResult: StyleGuideResult;
 	try {
-		styleGuideResult = await dispatchStyleGuideReview(
-			id,
-			input.number,
-			diffDir,
-			commentsPath,
-			req,
+		const styleGuideFiles = selectStyleGuideFiles(allFiles);
+		console.log({
+			message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
+			event: "code_review_orchestrator",
+			number: input.number,
+			files: styleGuideFiles.length,
+			concurrency: STYLE_GUIDE_CONCURRENCY,
+			runId,
+			action: "style_guide_fanout_start",
+		});
+
+		const styleGuideResults = await withConcurrency(
+			styleGuideFiles.map(
+				(file, index) => async () =>
+					dispatchStyleGuideReview(
+						`${id}:style-guide:${index}`,
+						input.number,
+						diffDir,
+						commentsPath,
+						req,
+						file.filename,
+					),
+			),
+			STYLE_GUIDE_CONCURRENCY,
 		);
+		styleGuideResult = mergeStyleGuideResults(styleGuideResults);
 		console.log({
 			message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s)`,
 			event: "code_review_orchestrator",
@@ -452,6 +488,7 @@ export default async function ({
 		});
 	} else {
 		const { data } = await session.skill("reconcile-code-review/SKILL.md", {
+			model: "cloudflare/@cf/zai-org/glm-4.7-flash",
 			args: {
 				pullRequest: { number: input.number },
 				currentFindings: styleGuideResult.findings,
@@ -492,7 +529,11 @@ export default async function ({
 	await bucket.put(currentReviewKey, JSON.stringify(reconciled.active));
 
 	// ── 6. Render the review comment ───────────────────────────────────────────
-	const commentBody = renderComment(reconciled, currentHeadSha, input.forceFullReview);
+	const commentBody = renderComment(
+		reconciled,
+		currentHeadSha,
+		input.forceFullReview,
+	);
 
 	// ── 7. Log or post ─────────────────────────────────────────────────────────
 	if (reviewMode === "log") {
@@ -617,10 +658,75 @@ interface DiffManifestEntry {
 	patch_key: string | null;
 }
 
+function selectStyleGuideFiles(
+	files: Awaited<ReturnType<typeof getPullRequestFiles>>,
+): Awaited<ReturnType<typeof getPullRequestFiles>> {
+	return files
+		.filter(
+			(file) =>
+				STYLE_GUIDE_REVIEWABLE_PATH_RE.test(file.filename) &&
+				file.additions > 0 &&
+				file.patch,
+		)
+		.sort((a, b) => b.additions - a.additions)
+		.slice(0, STYLE_GUIDE_MAX_FILES);
+}
+
+async function withConcurrency<T>(
+	tasks: Array<() => Promise<T>>,
+	limit: number,
+): Promise<T[]> {
+	const results: T[] = new Array(tasks.length);
+	let index = 0;
+
+	async function worker() {
+		while (index < tasks.length) {
+			const current = index++;
+			results[current] = await tasks[current]();
+		}
+	}
+
+	await Promise.all(
+		Array.from({ length: Math.min(limit, tasks.length) }, () => worker()),
+	);
+	return results;
+}
+
+function mergeStyleGuideResults(results: StyleGuideResult[]): StyleGuideResult {
+	const findingsById = new Map<string, StyleGuideFinding>();
+	const reviewedFiles = new Set<string>();
+
+	for (const result of results) {
+		for (const finding of result.findings) {
+			findingsById.set(finding.id, finding);
+		}
+		for (const file of result.reviewedFiles) {
+			reviewedFiles.add(file);
+		}
+	}
+
+	const findings = [...findingsById.values()];
+	const warnings = findings.filter((f) => f.severity === "warning").length;
+	const suggestions = findings.filter(
+		(f) => f.severity === "suggestion",
+	).length;
+	const summary =
+		findings.length === 0
+			? "No style-guide issues found."
+			: `${warnings} warning(s) and ${suggestions} suggestion(s) found across ${reviewedFiles.size} file(s).`;
+
+	return {
+		findings,
+		summary,
+		reviewedFiles: [...reviewedFiles],
+	};
+}
+
 async function writeDiffToR2(
 	bucket: R2Bucket,
 	diffDir: string,
 	files: Awaited<ReturnType<typeof getPullRequestFiles>>,
+	pr: import("../lib/github").GitHubPullRequest,
 ): Promise<void> {
 	const manifest: DiffManifestEntry[] = [];
 
@@ -645,31 +751,54 @@ async function writeDiffToR2(
 		}),
 	);
 
-	await bucket.put(
-		`${diffDir}/manifest.json`,
-		JSON.stringify(manifest, null, 2),
-	);
+	await Promise.all([
+		bucket.put(`${diffDir}/manifest.json`, JSON.stringify(manifest, null, 2)),
+		bucket.put(
+			`${diffDir}/pr.json`,
+			JSON.stringify(
+				{
+					number: pr.number,
+					title: pr.title,
+					description: pr.body ?? "",
+					author: pr.user?.login ?? "",
+					base: pr.base.ref,
+					head: pr.head.ref,
+					labels: pr.labels.map((l) => l.name),
+					files: manifest.map((f) => ({
+						filename: f.filename,
+						status: f.status,
+						additions: f.additions,
+						deletions: f.deletions,
+						changes: f.changes,
+					})),
+				},
+				null,
+				2,
+			),
+		),
+	]);
 }
 
 async function dispatchStyleGuideReview(
-	orchestratorId: string,
+	reviewId: string,
 	prNumber: number,
 	diffDir: string,
 	commentsPath: string,
 	req: Request | undefined,
+	filename?: string,
 ): Promise<StyleGuideResult> {
 	// Derive the base URL from the incoming request so this works on any port
 	// in local dev as well as in production without extra env config.
 	const baseUrl = req ? new URL(req.url).origin : "http://localhost:8787";
 	const url = new URL(
-		`/agents/style-guide-review/${encodeURIComponent(orchestratorId)}`,
+		`/agents/style-guide-review/${encodeURIComponent(reviewId)}`,
 		baseUrl,
 	);
 
 	const response = await fetch(url, {
 		method: "POST",
 		headers: { "content-type": "application/json" },
-		body: JSON.stringify({ number: prNumber, diffDir, commentsPath }),
+		body: JSON.stringify({ number: prNumber, diffDir, commentsPath, filename }),
 	});
 
 	if (!response.ok) {
@@ -714,7 +843,12 @@ function renderFailureComment(headSha: string): string {
 	].join("\n");
 }
 
-function renderPendingComment(headSha: string, isUpdate: boolean, forceFullReview?: boolean): string {
+function renderPendingComment(
+	headSha: string,
+	isUpdate: boolean,
+	forceFullReview?: boolean,
+	existingBody?: string,
+): string {
 	const shortSha = headSha.slice(0, 7);
 	const status = forceFullReview
 		? `Full review in progress for entire PR diff (commit \`${shortSha}\`)…`
@@ -722,7 +856,23 @@ function renderPendingComment(headSha: string, isUpdate: boolean, forceFullRevie
 			? `Reviewing new changes (commit \`${shortSha}\`)…`
 			: `Review in progress for commit \`${shortSha}\`…`;
 
-	return [
+	// If there's an existing review body, preserve it below the pending notice.
+	// Strip the old header metadata lines (HTML comments + "## Review" heading)
+	// so we don't duplicate them.
+	const preservedBody = existingBody
+		? existingBody
+				.split("\n")
+				.filter(
+					(l) =>
+						!l.startsWith("<!-- ") &&
+						l !== "## Review" &&
+						l !== BOT_COMMENT_MARKER,
+				)
+				.join("\n")
+				.replace(/^\n+/, "")
+		: null;
+
+	const lines = [
 		BOT_COMMENT_MARKER,
 		`<!-- reviewed-head-sha: ${headSha} -->`,
 		`<!-- updated-at: ${new Date().toISOString()} -->`,
@@ -731,7 +881,13 @@ function renderPendingComment(headSha: string, isUpdate: boolean, forceFullRevie
 		"## Review",
 		"",
 		status,
-	].join("\n");
+	];
+
+	if (preservedBody) {
+		lines.push("", "---", "", preservedBody);
+	}
+
+	return lines.join("\n");
 }
 
 function renderComment(

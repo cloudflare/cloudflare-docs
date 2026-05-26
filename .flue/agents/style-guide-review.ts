@@ -1,8 +1,9 @@
 /**
  * Style-guide review specialist
  *
- * Hydrates the workspace from R2, then runs the style-guide-review skill
- * which uses the code tool to read the manifest and patch files directly.
+ * Reads skill and reference files from R2 at request time and writes them
+ * directly into the workspace via harness.fs — no bulk hydration or caching.
+ * This ensures the agent always runs with the latest synced content.
  *
  * This agent is a pure analysis component — it never posts to GitHub.
  * All mutations are handled by code-review-orchestrator.
@@ -10,13 +11,8 @@
  * POST /agents/style-guide-review/:id
  */
 import type { FlueContext } from "@flue/runtime";
-import {
-	getDefaultWorkspace,
-	getShellSandbox,
-	hydrateFromBucket,
-} from "@flue/runtime/cloudflare";
+import { getDefaultWorkspace, getShellSandbox } from "@flue/runtime/cloudflare";
 import * as v from "valibot";
-import { getInstallationToken, getPullRequest } from "../lib/github";
 
 export const triggers = { webhook: true };
 
@@ -39,7 +35,9 @@ const StyleGuideResultFromModelSchema = v.object({
 });
 
 // Public types always include the trusted-code-assigned id.
-export type StyleGuideFinding = v.InferOutput<typeof StyleGuideFindingFromModelSchema> & {
+export type StyleGuideFinding = v.InferOutput<
+	typeof StyleGuideFindingFromModelSchema
+> & {
 	id: string;
 };
 export type StyleGuideResult = {
@@ -56,8 +54,8 @@ async function assignFindingIds(
 	return Promise.all(
 		findings.map(async (f) => {
 			// Exclude line number from the hash so IDs remain stable when surrounding
-		// lines shift after partial fixes. Rule + path + evidence is specific enough.
-		const key = `${f.rule}:${f.path}:${f.evidence.trim()}`;
+			// lines shift after partial fixes. Rule + path + evidence is specific enough.
+			const key = `${f.rule}:${f.path}:${f.evidence.trim()}`;
 			const buf = await crypto.subtle.digest("SHA-256", encoder.encode(key));
 			const hex = Array.from(new Uint8Array(buf))
 				.map((b) => b.toString(16).padStart(2, "0"))
@@ -71,6 +69,8 @@ interface StyleGuideReviewPayload {
 	number: number;
 	diffDir: string;
 	commentsPath: string;
+	/** When set, review only this file. Used by orchestrator fan-out. */
+	filename?: string;
 }
 
 interface ManifestEntry {
@@ -80,6 +80,13 @@ interface ManifestEntry {
 	deletions: number;
 	changes: number;
 	patch_key: string | null;
+}
+
+interface PullRequestMetadata {
+	number: number;
+	title: string;
+	base: string;
+	head: string;
 }
 
 export default async function ({ init, payload, env, runId }: FlueContext) {
@@ -99,26 +106,6 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 		action: "started",
 	});
 
-	const workspace = getDefaultWorkspace();
-	if (!(await workspace.exists("/.hydrated"))) {
-		await hydrateFromBucket(workspace, bucket);
-		await workspace.writeFile("/.hydrated", new Date().toISOString());
-	}
-
-	// ── 0. Write diff files to workspace ──────────────────────────────────────
-	// hydrateFromBucket only runs once (cached via /.hydrated), so diff files
-	// written to R2 after the initial hydration won't be in the workspace.
-	// Write the manifest and all patch files for this PR explicitly.
-	const prObjects = await bucket.list({ prefix: `${input.diffDir}/` });
-	await Promise.all(
-		prObjects.objects.map(async (obj) => {
-			const data = await bucket.get(obj.key);
-			if (data) {
-				await workspace.writeFile(`/${obj.key}`, await data.text());
-			}
-		}),
-	);
-
 	// ── 1. Fast-fail if no diff in R2 ─────────────────────────────────────────
 	const manifestObj = await bucket.get(`${input.diffDir}/manifest.json`);
 	if (!manifestObj) {
@@ -137,9 +124,16 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 		} satisfies StyleGuideResult;
 	}
 	const manifest = JSON.parse(await manifestObj.text()) as ManifestEntry[];
-	const reviewedFiles = manifest
-		.filter((f) => REVIEWABLE_PATH_RE.test(f.filename))
-		.map((f) => f.filename);
+	const reviewedFiles = input.filename
+		? manifest.some(
+				(f) =>
+					f.filename === input.filename && REVIEWABLE_PATH_RE.test(f.filename),
+			)
+			? [input.filename]
+			: []
+		: manifest
+				.filter((f) => REVIEWABLE_PATH_RE.test(f.filename))
+				.map((f) => f.filename);
 	if (reviewedFiles.length === 0) {
 		return {
 			findings: [],
@@ -148,83 +142,111 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 		} satisfies StyleGuideResult;
 	}
 
-	// ── 4. Fetch PR metadata ───────────────────────────────────────────────────
-	const token = await getInstallationToken(env as Record<string, string>);
-	const pullRequest = await getPullRequest(token, input.number);
+	// ── 2. Read PR metadata from R2 ────────────────────────────────────────────
+	const prObj = await bucket.get(`${input.diffDir}/pr.json`);
+	const pullRequest = prObj
+		? ((await prObj.json()) as PullRequestMetadata)
+		: {
+				number: input.number,
+				title: "",
+				base: "",
+				head: "",
+			};
 
-	// ── 5. Run the skill ───────────────────────────────────────────────────────
+	// ── 3. Init harness with empty workspace ──────────────────────────────────
+	const workspace = getDefaultWorkspace();
 	const harness = await init({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
 		role: "cloudflare-docs-bot",
-		// kimi-k2.6 uses reasoning tokens that count against the output cap.
-		// The flue default of 20K is too small — raise to 64K to match the
-		// AI CI repo's configuration for kimi.
 		compaction: { reserveTokens: 64_000 },
 	});
+
+	// ── 4. Populate workspace from R2 at request time ─────────────────────────
+	// Discover and load all reference files by prefix — no hardcoded list.
+	// Any new reference file added to R2 under .agents/reference/style-guide/
+	// is automatically picked up without code changes.
+	const [prObjects, referenceObjects, skillObj] = await Promise.all([
+		bucket.list({ prefix: `${input.diffDir}/` }),
+		bucket.list({ prefix: ".agents/reference/style-guide/" }),
+		bucket.get(".agents/skills/style-guide-review/SKILL.md"),
+	]);
+
+	// Read all reference files and diff files in parallel
+	const [referenceResults, ...diffResults] = await Promise.all([
+		Promise.all(
+			referenceObjects.objects.map(async (obj) => ({
+				key: obj.key,
+				text: (await (await bucket.get(obj.key))?.text()) ?? "",
+			})),
+		),
+		...prObjects.objects.map(async (obj) => ({
+			key: obj.key,
+			text: (await (await bucket.get(obj.key))?.text()) ?? "",
+		})),
+	]);
+
+	// Pre-create common parent directories before parallel writes. Otherwise
+	// concurrent writeFile calls can race while creating the same directory rows
+	// in the cf-shell workspace SQLite table.
+	for (const dir of [
+		"/.agents/skills/style-guide-review",
+		"/.agents/reference/style-guide/always",
+		"/.agents/reference/style-guide/conditional",
+		"/.agents/reference/style-guide/components",
+		`/${input.diffDir}`,
+	]) {
+		await workspace.mkdir(dir, { recursive: true });
+	}
+
+	// Write everything to workspace in parallel
+	await Promise.all([
+		// Skill file
+		skillObj
+			? harness.fs.writeFile(
+					"/.agents/skills/style-guide-review/SKILL.md",
+					await skillObj.text(),
+				)
+			: Promise.resolve(),
+		// All reference files (preserving subdirectory structure)
+		...referenceResults.map((r) =>
+			r.text ? harness.fs.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
+		),
+		// Diff files (manifest, pr.json, patches)
+		...diffResults.map((r) =>
+			r.text ? harness.fs.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
+		),
+	]);
+
+	// ── 5. Run the skill ───────────────────────────────────────────────────────
 	const session = await harness.session(
 		`style-guide-review:${input.number}:${runId}`,
 	);
 
+	// Use schema mode so flue injects finish/give_up tools and loops until the
+	// model calls finish — works reliably across models that don't self-terminate.
 	const skillResult = await session.skill("style-guide-review/SKILL.md", {
+		schema: StyleGuideResultFromModelSchema,
 		args: {
 			pullRequest: {
 				number: pullRequest.number,
 				title: pullRequest.title,
-				base: pullRequest.base.ref,
-				head: pullRequest.head.ref,
+				base: pullRequest.base,
+				head: pullRequest.head,
 			},
 			diffDir: input.diffDir,
 			commentsPath: input.commentsPath,
+			filename: input.filename,
 		},
 	});
-	const text = skillResult.text;
 
-	// Parse the JSON block from the model's text response.
-	// Use brace extraction instead of fence regex so backticks inside JSON
-	// string values (e.g. evidence containing ```) don't truncate the match.
-	let rawData: v.InferOutput<typeof StyleGuideResultFromModelSchema> | null =
-		null;
-	try {
-		const braceStart = text.indexOf("{");
-		const braceEnd = text.lastIndexOf("}");
-		const jsonStr =
-			braceStart !== -1 && braceEnd > braceStart
-				? text.slice(braceStart, braceEnd + 1)
-				: text;
-		const parsed = JSON.parse(jsonStr);
-		const result = v.safeParse(StyleGuideResultFromModelSchema, parsed);
-		if (result.success) {
-			rawData = result.output;
-		} else {
-			console.log({
-				message: `Style-guide review: schema validation failed`,
-				event: "style_guide_review",
-				number: input.number,
-				issues: result.issues.map((i) => i.message).join("; "),
-				runId,
-				action: "schema_validation_failed",
-			});
-		}
-	} catch (err) {
-		console.log({
-			message: `Style-guide review: failed to parse model output`,
-			event: "style_guide_review",
-			number: input.number,
-			error: err instanceof Error ? err.message : String(err),
-			text_sample: text?.slice(0, 300),
-			runId,
-			action: "parse_failed",
-		});
-	}
+	const rawData = skillResult.data;
 
 	if (!rawData) {
 		console.log({
 			message: `Style-guide review: no result for PR #${input.number}`,
 			event: "style_guide_review",
 			number: input.number,
-			text_length: text?.length ?? 0,
-			text_sample: text?.slice(0, 500) ?? "(empty)",
 			runId,
 			action: "no_result",
 		});
@@ -236,7 +258,11 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 	}
 
 	const findings = await assignFindingIds(rawData.findings);
-	const data: StyleGuideResult = { findings, summary: rawData.summary, reviewedFiles };
+	const data: StyleGuideResult = {
+		findings,
+		summary: rawData.summary,
+		reviewedFiles,
+	};
 
 	console.log({
 		message: `Style-guide review complete: PR #${input.number} — ${data.findings.length} finding(s) (${data.findings.filter((f) => f.severity === "warning").length} warning(s), ${data.findings.filter((f) => f.severity === "suggestion").length} suggestion(s))`,
@@ -268,5 +294,6 @@ function parsePayload(payload: unknown): StyleGuideReviewPayload {
 		number: input.number,
 		diffDir: input.diffDir,
 		commentsPath: input.commentsPath,
+		filename: typeof input.filename === "string" ? input.filename : undefined,
 	};
 }
