@@ -55,7 +55,9 @@ const browser = await puppeteer.launch(env.MYBROWSER);
 The browser binding's `.quickAction()` method requires a compatibility date of `2026-03-24` or later. Ensure your `wrangler.json` includes:
 
 ```jsonc
-"compatibility_date": "2026-03-24"
+{
+  "compatibility_date": "2026-03-24"
+}
 ```
 
 :::

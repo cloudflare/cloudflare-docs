@@ -46,7 +46,7 @@ And at least one of:
 - Normalize article metadata (title, author, publish date, canonical URL)
 - Convert unstructured pages into typed JSON for downstream pipelines
 
-## Basic Usage
+## Basic usage
 
 ### With a Prompt and JSON schema
 
@@ -161,7 +161,7 @@ const json = await client.browserRendering.json.create({
 console.log(json);
 ```
 
-</TabItem> <TabItem label="Browser binding">
+</TabItem> <TabItem label="Workers binding">
 
 ```typescript
 interface Env {
@@ -334,7 +334,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
-## Advanced Usage
+## Advanced usage
 
 :::note[Looking for more parameters?]
 Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/json/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
