@@ -603,3 +603,49 @@ Unknown adapter CloudflareWARP:
     																		127.0.2.3
     NetBIOS over Tcpip. . . . . . . . : Enabled
 ```
+
+### VNET availability <Badge text="Beta" variant="caution" size="small" />
+
+<Details header="Feature availability">
+
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Traffic and DNS mode</li><li> Traffic only mode </li></ul>                               | All plans                                                     |
+
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2026.5.0               |
+| macOS    | ✅           | 2026.5.0               |
+| Linux    | ✅           | 2026.5.0               |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
+
+</Details>
+
+By default, the Cloudflare One Client shows every [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) (VNET) in your account in the [VNET dropdown](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network). **VNET availability** restricts the dropdown to a subset of VNETs and chooses a default VNET on a per-[device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) basis. The active profile controls which VNETs devices can see and switch between.
+
+For example, if your QA team uses a `staging-vnet` and your sales team should never reach it, you can assign the sales device profile to only include `production-vnet`. Sales users will not see `staging-vnet` in the dropdown.
+
+### DNS search suffixes <Badge text="Beta" variant="caution" size="small" />
+
+<Details header="Feature availability">
+
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Traffic and DNS mode</li><li> DNS only mode </li></ul>                                   | All plans                                                     |
+
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2026.5.0               |
+| macOS    | ✅           | 2026.5.0               |
+| Linux    | ✅           | 2026.5.0               |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
+
+</Details>
+
+A DNS search suffix (also known as a search domain) automatically appends a domain to single-label names so that users can type `jira` into a browser and the operating system resolves `jira.internal.example`. Search suffixes are typically advertised by the local network over DHCP, but devices connected to the Cloudflare One Client use the WARP virtual interface instead, which does not inherit network-advertised suffixes.
+
+Use **DNS search suffixes** to deploy an ordered list of up to 25 suffixes to the Cloudflare One Client on a per-[device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) basis. The client appends each suffix in order to single-label name queries until one resolves successfully. This setting replaces the per-device manual configuration described in [Add a DNS suffix](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/#add-a-dns-suffix).
