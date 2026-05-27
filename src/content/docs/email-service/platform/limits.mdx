@@ -49,14 +49,14 @@ Email Sending requires the [Workers Paid plan](/email-service/platform/pricing/)
 
 The following limits apply to inbound email handled by Email Routing.
 
-| Limit                          | Value  | Notes                                                               |
-| ------------------------------ | ------ | ------------------------------------------------------------------- |
-| **Rules per domain**           | 200    | Each rule maps one custom address to a destination                  |
-| **Addresses per domain**       | 200    | Custom addresses configured on the domain                           |
-| **Inbound message size**       | 25 MiB | Messages larger than this are rejected                              |
-| **Reply `References` entries** | 100    | Limit on incoming emails replied to by Workers; reduces reply loops |
+| Limit                                 | Value  | Notes                                                                       |
+| ------------------------------------- | ------ | --------------------------------------------------------------------------- |
+| **Routing rules per domain**          | 200    | Each rule maps an email pattern to a destination                            |
+| **Destination addresses per account** | 200    | Verified destination addresses are shared across all domains in the account |
+| **Inbound message size**              | 25 MiB | Messages larger than this are rejected                                      |
+| **Reply `References` entries**        | 100    | Limit on incoming emails replied to by Workers; reduces reply loops         |
 
-Each rule maps one custom address to one destination address or one Email Worker. To forward a single custom address to multiple destinations, use an Email Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
+Each routing rule maps one email pattern to one destination address or one Email Worker. To forward a single email pattern to multiple destinations, use an Email Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
 
 ### Email Workers on the Workers Free plan
 
