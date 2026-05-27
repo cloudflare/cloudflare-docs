@@ -1,16 +1,18 @@
 ---
 title: BYPASS status now returned for uncacheable responses
-description: Responses that Cloudflare chooses not to cache now return a BYPASS cache status instead of MISS, giving you a clearer signal in logs and more accurate cache hit ratios in analytics.
+description: Responses that Cloudflare chooses not to cache now consistently return a BYPASS cache status instead of a mix of BYPASS and MISS, giving you a clearer signal in logs and more accurate cache hit ratios in analytics.
 products:
   - cache
 date: 2026-05-26
 ---
 
-Cloudflare now returns a `BYPASS` [cache status](/cache/concepts/cache-responses/) when a response is not cacheable, instead of the previous `MISS` status. This applies whether or not [Origin Cache Control](/cache/concepts/cache-control/#origin-cache-control-behavior) — the setting that determines how strictly Cloudflare follows your origin's `Cache-Control` directives — is enabled.
+Cloudflare now returns a `BYPASS` [cache status](/cache/concepts/cache-responses/) whenever a response is not cacheable, instead of the previous mix of `BYPASS` and `MISS` that depended on why Cloudflare chose not to cache the response.
 
-Previously, `BYPASS` was only returned for uncacheable responses when [Origin Cache Control](/cache/concepts/cache-control/#origin-cache-control-behavior) was enabled. With Origin Cache Control disabled, the same uncacheable responses — those with `Cache-Control: no-cache`, `private`, or `max-age=0`, a `Set-Cookie` response header, or an `Authorization` request header — instead returned `MISS` on every request. Because the response could never be cached, every subsequent request also returned `MISS`, which looked indistinguishable from a broken cache and made it hard to tell whether Cloudflare was trying and failing to cache the asset or had deliberately chosen not to cache it.
+There are multiple reasons Cloudflare may refuse to cache a response — for example, the response exceeds the [maximum cacheable file size](/cache/concepts/default-cache-behavior/#cacheable-size-limits) for your plan, the origin sends `Cache-Control: no-cache`, `private`, or `max-age=0`, the response includes a `Set-Cookie` header, or the request includes an `Authorization` header.
 
-`BYPASS` now consistently signals the latter: Cloudflare refused to cache the response. `MISS` is reserved for cacheable responses that simply were not in the local cache at request time.
+Previously, only some of these conditions returned `BYPASS`. Others — such as responses exceeding the maximum cacheable file size — returned `MISS` on every request, regardless of whether [Origin Cache Control](/cache/concepts/cache-control/#origin-cache-control-behavior) was on or off. Because the response could never be cached, every subsequent request also returned `MISS`, which looked indistinguishable from a broken cache and made it hard to tell whether Cloudflare was trying and failing to cache the asset or had deliberately chosen not to cache it.
+
+`BYPASS` now consistently signals that Cloudflare refused to cache the response, regardless of the reason. `MISS` is reserved for cacheable responses that simply were not in the local cache at request time.
 
 ## What to expect in your analytics
 
@@ -24,4 +26,9 @@ Your total request volume and origin traffic are unchanged — only the cache st
 
 ## Browser cache TTL behavior is preserved
 
-Browser cache TTL behavior remains exactly the same as before. The default 4-hour browser cache TTL continues to apply only to cacheable (`HIT`, `MISS`, `EXPIRED`, `REVALIDATED`, `UPDATING`, `STALE`) responses, and continues not to apply to `BYPASS` or `DYNAMIC` responses, even when you have configured a custom browser cache TTL via Cache Rules, Page Rules, or zone settings.
+The cache status label is the only thing changing — browser cache TTL handling for any given response is identical to what it was before:
+
+- Responses that historically returned `MISS` because Cloudflare refused to cache them (for example, responses over the maximum cacheable file size) now return `BYPASS`, but continue to have browser cache TTL applied — exactly as they did when they were labeled `MISS`.
+- Responses that historically returned `BYPASS` and skipped browser cache TTL continue to skip browser cache TTL.
+
+In both cases, the decision to apply browser cache TTL depends on the underlying reason Cloudflare did not cache the response, not on the new `BYPASS` label.
