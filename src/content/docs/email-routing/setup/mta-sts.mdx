@@ -20,7 +20,7 @@ Suppose that `example.com` is your domain and uses Email Routing. Here is how yo
 
 2. Create a new CNAME record with the name `_mta-sts` that points to Cloudflare’s record `_mta-sts.mx.cloudflare.net`. Make sure to disable the proxy mode.
 
-![MTA-STS CNAME record](~/assets/images/email-routing/mta-sts-record.png)
+![MTA-STS CNAME record](~/assets/images/email-service/mta-sts-record.png)
 
 3. Confirm that the record was created:
 
@@ -55,7 +55,7 @@ This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` 
 
 5. After deploying it, go to the Worker configuration, then **Settings** > **Domains & Routes** > **+Add**. Type the subdomain `mta-sts.example.com`.
 
-![MTA-STS Worker Custom Domain](~/assets/images/email-routing/mta-sts-domain.png)
+![MTA-STS Worker Custom Domain](~/assets/images/email-service/mta-sts-domain.png)
 
 You can then confirm that your policy file is working with the following:
 

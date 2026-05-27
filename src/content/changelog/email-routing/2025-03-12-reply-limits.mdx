@@ -4,9 +4,9 @@ description: You can now use Email Workers to send multiple replies to the same 
 date: 2025-03-12
 ---
 
-We’re removing some of the restrictions in Email Routing so that AI Agents and task automation can better handle email workflows, including how Workers can [reply](/email-routing/email-workers/reply-email-workers/) to incoming emails.
+We’re removing some of the restrictions in Email Routing so that AI Agents and task automation can better handle email workflows, including how Workers can [reply](/email-service/api/route-emails/email-handler/#reply-to-emails) to incoming emails.
 
-It's now possible to keep a threaded email conversation with an [Email Worker](/email-routing/email-workers/) script as long as:
+It's now possible to keep a threaded email conversation with an [Email Worker](/email-service/api/route-emails/email-handler/) script as long as:
 
 - The incoming email has to have valid [DMARC](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/).
 - The email can only be replied to once in the same `EmailMessage` event.
@@ -57,4 +57,4 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-See [Reply to emails from Workers](/email-routing/email-workers/reply-email-workers/) for more information.
+See [Reply to emails from Workers](/email-service/api/route-emails/email-handler/#reply-to-emails) for more information.

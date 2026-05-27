@@ -784,11 +784,42 @@
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
 /durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
-# email-routing
-/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
-/email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
-/email-routing/known-limitations/ /email-routing/postmaster/ 301
-/email-routing/email-workers/demos/ /email-routing/email-workers/ 301
+# Email Routing -> Email Service (product merged)
+# Top-level
+/email-routing/ /email-service/ 301
+/email-routing/api-reference/ /email-service/api/ 301
+/email-routing/graphql-example/ /email-service/observability/metrics-analytics/ 301
+/email-routing/limits/ /email-service/platform/limits/ 301
+/email-routing/postmaster/ /email-service/reference/postmaster/ 301
+
+# Get started
+/email-routing/get-started/ /email-service/get-started/ 301
+/email-routing/get-started/enable-email-routing/ /email-service/get-started/route-emails/ 301
+/email-routing/get-started/test-email-routing/ /email-service/get-started/route-emails/#test-your-forwarding-rule 301
+/email-routing/get-started/audit-logs/ /email-service/observability/audit-logs/ 301
+/email-routing/get-started/email-routing-analytics/ /email-service/observability/metrics-analytics/ 301
+
+# Setup -> Configuration
+/email-routing/setup/ /email-service/configuration/ 301
+/email-routing/setup/email-routing-addresses/ /email-service/configuration/email-routing-addresses/ 301
+/email-routing/setup/email-routing-dns-records/ /email-service/configuration/domains/ 301
+/email-routing/setup/disable-email-routing/ /email-service/configuration/domains/#remove-a-domain-from-email-routing 301
+/email-routing/setup/mta-sts/ /email-service/configuration/mta-sts/ 301
+/email-routing/setup/subdomains/ /email-service/configuration/subdomains/ 301
+
+# Email Workers
+/email-routing/email-workers/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/enable-email-workers/ /email-service/get-started/route-emails/ 301
+/email-routing/email-workers/edit-email-workers/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/reply-email-workers/ /email-service/api/route-emails/email-handler/#reply-to-emails 301
+/email-routing/email-workers/send-email-workers/ /email-service/api/send-emails/workers-api/ 301
+/email-routing/email-workers/runtime-api/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/local-development/ /email-service/local-development/routing/ 301
+
+# Troubleshooting
+/email-routing/troubleshooting/ /email-service/reference/troubleshooting/ 301
+/email-routing/troubleshooting/email-routing-dns-records/ /email-service/configuration/domains/ 301
+/email-routing/troubleshooting/email-routing-spf-records/ /email-service/reference/troubleshooting/#multiple-spf-records 301
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
 /firewall/api/cf-lists/endpoints/ /waf/tools/lists/lists-api/endpoints/ 301
@@ -2695,6 +2726,10 @@
 /cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 # Pub/Sub (removed product)
 /pub-sub/* / 301
+
+# Email Routing (merged into Email Service) — catch-all for any paths not
+# enumerated in the static section above
+/email-routing/* /email-service/ 301
 
 # AI Gateway
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
