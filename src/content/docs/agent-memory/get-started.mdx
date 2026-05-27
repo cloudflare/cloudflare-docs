@@ -161,7 +161,7 @@ export class ChatAgent extends Agent<Env, ChatAgentState> {
 			provider: {
 				get: async () => MEMORY_CONTEXT,
 				search: async (query: string) => {
-					const profile = await this.env.MEMORY.get(MEMORY_PROFILE_NAME);
+					const profile = await this.env.MEMORY.getProfile(MEMORY_PROFILE_NAME);
 					const { answer } = await profile.recall(query, {
 						responseLength: "short",
 					});
@@ -238,7 +238,7 @@ export class ChatAgent extends Agent<Env, ChatAgentState> {
 			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
 			system: await this.session.freezeSystemPrompt(),
 			messages: await convertToModelMessages(
-				this.session.getHistory() as UIMessage[],
+				(await this.session.getHistory()) as UIMessage[],
 			),
 			tools: await this.session.tools(),
 			stopWhen: stepCountIs(5),
@@ -281,7 +281,7 @@ export class ChatAgent extends Agent<Env, ChatAgentState> {
 	}
 
 	private async runIngest(): Promise<{ ingested: number }> {
-		const history = this.session.getHistory() as UIMessage[];
+		const history = (await this.session.getHistory()) as UIMessage[];
 		const messages = history
 			.slice(this.state.cursor)
 			.filter(
@@ -301,7 +301,7 @@ export class ChatAgent extends Agent<Env, ChatAgentState> {
 			return { ingested: 0 };
 		}
 
-		const profile = await this.env.MEMORY.get(MEMORY_PROFILE_NAME);
+		const profile = await this.env.MEMORY.getProfile(MEMORY_PROFILE_NAME);
 		await profile.ingest(messages, { sessionId: this.name });
 
 		this.setState({
@@ -383,15 +383,17 @@ curl -X POST "http://localhost:8787/chat" \
   -d '{"conversationId":"first-chat","message":"I prefer TypeScript examples and concise answers."}'
 ```
 
-Wait for the ingestion delay, then ask a different conversation a question that depends on durable memory. This request uses a different Session history but the same Agent Memory profile.
+Wait at least 30 seconds before sending the next request. The code schedules ingestion to run 10 seconds after the user goes idle, and Agent Memory then needs additional time to extract, classify, and index the memories before they are available for recall.
+
+Ask a different conversation a question that depends on durable memory. This request uses a different Session history but the same Agent Memory profile.
 
 ```bash
 curl -X POST "http://localhost:8787/chat" \
   -H "Content-Type: application/json" \
-  -d '{"conversationId":"second-chat","message":"How should you format code examples for me?"}'
+  -d '{"conversationId":"second-chat","message":"What do you know or remember about me and my preferences?"}'
 ```
 
-The model should call `search_context`, receive recalled memory from Agent Memory, and use that context in its response.
+The model should call `search_context`, receive recalled memory from Agent Memory, and use that context in its response. The second conversation has no shared Session history with the first, so any knowledge of user preferences comes from Agent Memory.
 
 ## Next steps
 

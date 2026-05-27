@@ -54,18 +54,18 @@ interface Env {
 
 Use namespace methods on the binding to access and list memory profiles.
 
-### `get(name)`
+### `getProfile(name)`
 
 Gets a memory profile by name. If the profile does not exist, Agent Memory creates it.
 
 - `name` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to access. Maximum 32 characters.
 - Returns <Type text="Promise<AgentMemoryProfile>" />
 
-The first `get()` call for a new profile may take longer while Agent Memory creates the profile.
+The first `getProfile()` call for a new profile may take longer while Agent Memory creates the profile.
 
 ### `list(options?)`
 
-Lists profiles in the namespace. A profile appears in `list()` after Agent Memory creates it, including when you call `get()` for a new profile.
+Lists profiles in the namespace. A profile appears in `list()` after Agent Memory creates it, including when you call `getProfile()` for a new profile.
 
 - `options.limit` <Type text="number" /> <MetaInfo text="optional" />: Maximum number of profiles to return.
 - `options.cursor` <Type text="string" /> <MetaInfo text="optional" />: Cursor for the next page of results.
