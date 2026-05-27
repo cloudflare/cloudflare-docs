@@ -108,7 +108,7 @@ package.json @cloudflare/content-engineering
 
 # Core platform
 
-/src/content/docs/byoip/ @RebeccaTamachiro @cloudflare/product-owners
+/src/content/docs/byoip/ @RebeccaTamachiro @alpdot @cloudflare/product-owners
 /src/content/docs/china-network/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/dns/ @RebeccaTamachiro @hannes-cf @cloudflare/product-owners @esomoza-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
 /src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @hannes-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
@@ -117,7 +117,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
-/src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @cloudflare/product-owners
+/src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
 /src/content/docs/notifications/ @dcpena @cloudflare/product-owners
 /src/content/docs/registrar/ @dcpena @cloudflare/product-owners
 /src/content/docs/rules/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
@@ -205,10 +205,10 @@ package.json @cloudflare/content-engineering
 
 # DDoS Protection
 
-/src/content/docs/ddos-protection/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/ddos-protection/change-log/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/ddos-protection/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners
+/src/content/docs/ddos-protection/change-log/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners
 /src/content/release-notes/ddos-http.yaml @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/release-notes/ddos-network.yaml @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/release-notes/ddos-network.yaml @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners
 
 # Docs team areas
 
@@ -219,10 +219,10 @@ package.json @cloudflare/content-engineering
 
 # Magic products
 
-/src/content/docs/magic-transit/ @steve-cloudflare @jeffh-cloudflare @cloudflare/product-owners
-/src/content/docs/cloudflare-network-firewall/ @steve-cloudflare @jeffh-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/network-flow/ @steve-cloudflare @jeffh-cloudflare @cloudflare/product-owners
-/src/content/docs/cloudflare-wan/ @steve-cloudflare @jeffh-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/magic-transit/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
+/src/content/docs/cloudflare-network-firewall/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/network-flow/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
+/src/content/docs/cloudflare-wan/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/multi-cloud-networking/ @steve-cloudflare @jeffh-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 
 # Migration guides
