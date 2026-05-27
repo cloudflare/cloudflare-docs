@@ -1050,9 +1050,27 @@ function renderFindingRow(f: ReconcileResult["active"][number]): string {
 
 function renderReviewLimitComment(existingBody?: string): string {
 	const wasAlreadyPending = existingBody?.includes("<!-- status: pending -->");
-	const preservedBody =
-		existingBody && !wasAlreadyPending
-			? existingBody
+	const wasAlreadyLimitComment = existingBody?.includes(
+		"Automatic reviews for this PR are paused",
+	);
+
+	let preservedBody: string | null = null;
+
+	if (existingBody && !wasAlreadyPending) {
+		if (wasAlreadyLimitComment) {
+			// Body already has the paused message — extract only the actual review
+			// findings (the last section after the final "---" divider that doesn't
+			// itself contain the paused message).
+			const sections = existingBody.split("\n---\n");
+			const findingsSection = sections
+				.reverse()
+				.find((s) => !s.includes("Automatic reviews for this PR are paused"));
+			preservedBody = findingsSection
+				? findingsSection.replace(/^\n+/, "").trim() || null
+				: null;
+		} else {
+			preservedBody =
+				existingBody
 					.split("\n")
 					.filter(
 						(l) =>
@@ -1061,8 +1079,9 @@ function renderReviewLimitComment(existingBody?: string): string {
 							l !== BOT_COMMENT_MARKER,
 					)
 					.join("\n")
-					.replace(/^\n+/, "")
-			: null;
+					.replace(/^\n+/, "") || null;
+		}
+	}
 
 	const lines = [
 		BOT_COMMENT_MARKER,
