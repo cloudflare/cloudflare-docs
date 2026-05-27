@@ -156,7 +156,7 @@ The email content (text and HTML) is saved to local files that you can inspect t
 
 Local development simulates the `send_email` binding locally, but `ArrayBuffer` values in attachment `content` cannot be serialized by the local simulator. If you pass an `ArrayBuffer` (for example, for image or PDF attachments), you will see an error like:
 
-```
+```txt
 Cannot serialize value: [object ArrayBuffer]
 ```
 

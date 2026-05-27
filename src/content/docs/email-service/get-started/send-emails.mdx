@@ -77,19 +77,19 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
 2.  Add the email binding to your Wrangler configuration file:
 
     <WranglerConfig>
-        
-            ```jsonc
-            {
-            	"send_email": [
-            		{
-            			"name": "EMAIL",
-            			"remote": true,
-            		},
-            	],
-            }
-            ```
-        
-            </WranglerConfig>
+    
+        ```jsonc
+        {
+        	"send_email": [
+        		{
+        			"name": "EMAIL",
+        			"remote": true,
+        		},
+        	],
+        }
+        ```
+    
+        </WranglerConfig>
 
 3.  Create your Worker code in `src/index.ts`:
 

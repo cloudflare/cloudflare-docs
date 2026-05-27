@@ -19,7 +19,7 @@ Test email routing behavior locally using `wrangler dev` to simulate incoming em
 
 ## Configuration
 
-Configure your Wrangler file with the email binding:
+Configure your Wrangler file:
 
 <WranglerConfig>
 
@@ -27,7 +27,6 @@ Configure your Wrangler file with the email binding:
 {
 	"name": "email-routing-worker",
 	"compatibility_date": "$today",
-	"send_email": [{ "name": "EMAIL" }],
 }
 ```
 
