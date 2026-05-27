@@ -17,15 +17,10 @@ Update your configuration to use `stream` to avoid the deprecation warning.
 
 <WranglerConfig>
 
-```jsonc
-{
-	"pipelines": [
-		{
-			"binding": "MY_PIPELINE",
-			"pipeline": "<STREAM_ID>"
-		}
-	]
-}
+```toml
+[[pipelines]]
+binding = "MY_PIPELINE"
+pipeline = "<STREAM_ID>"
 ```
 
 </WranglerConfig>
@@ -34,15 +29,10 @@ Update your configuration to use `stream` to avoid the deprecation warning.
 
 <WranglerConfig>
 
-```jsonc
-{
-	"pipelines": [
-		{
-			"binding": "MY_PIPELINE",
-			"stream": "<STREAM_ID>"
-		}
-	]
-}
+```toml
+[[pipelines]]
+binding = "MY_PIPELINE"
+stream = "<STREAM_ID>"
 ```
 
 </WranglerConfig>
