@@ -118,4 +118,6 @@ if (failed) {
 	process.exit(1);
 }
 
-console.log(`\nSynced ${files.length} file(s) to R2 (${isLocal ? "local" : "remote"}).`);
+console.log(
+	`\nSynced ${files.length} file(s) to R2 (${isLocal ? "local" : "remote"}).`,
+);

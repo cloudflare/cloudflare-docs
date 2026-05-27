@@ -87,19 +87,25 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		);
 
 	// Slash commands: issue_comment on a PR from a codeowner
-	const commentBody = (
-		body.comment as Record<string, unknown> | undefined
-	)?.body as string | undefined;
+	const commentBody = (body.comment as Record<string, unknown> | undefined)
+		?.body as string | undefined;
 	const trimmedComment = commentBody?.trim();
 	const isOnPullRequest =
 		eventType === "issue_comment" &&
 		webhookAction === "created" &&
 		(body.issue as Record<string, unknown> | undefined)?.pull_request !==
 			undefined;
-	const isFullReviewCommand = isOnPullRequest && trimmedComment === "/full-review";
+	const isFullReviewCommand =
+		isOnPullRequest && trimmedComment === "/full-review";
 	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
 
-	if (!req || (!isSpamFilterEvent && !isCodeReviewEvent && !isFullReviewCommand && !isReviewCommand)) {
+	if (
+		!req ||
+		(!isSpamFilterEvent &&
+			!isCodeReviewEvent &&
+			!isFullReviewCommand &&
+			!isReviewCommand)
+	) {
 		return { acted: false, summary: "No action needed." };
 	}
 
@@ -109,9 +115,8 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 
 	// ── 3. Handle /full-review command ──────────────────────────────────────
 	if (isFullReviewCommand) {
-		const commentId = (
-			body.comment as Record<string, unknown> | undefined
-		)?.id as number | undefined;
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
 
 		if (!commentId || !senderLogin) {
 			return { acted: false, summary: "Missing comment id or sender." };
@@ -162,14 +167,16 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			ok: reviewResponse.ok,
 		});
 
-		return { acted: true, summary: `Full review triggered by @${senderLogin}.` };
+		return {
+			acted: true,
+			summary: `Full review triggered by @${senderLogin}.`,
+		};
 	}
 
 	// ── 4. Handle /review command ────────────────────────────────────────────
 	if (isReviewCommand) {
-		const commentId = (
-			body.comment as Record<string, unknown> | undefined
-		)?.id as number | undefined;
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
 
 		if (!commentId || !senderLogin) {
 			return { acted: false, summary: "Missing comment id or sender." };
@@ -233,7 +240,11 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			const typedEnv = env as Record<string, string>;
 			const token = await getInstallationToken(typedEnv);
 			const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
-			skipSpamFilter = await isCodeOwner(token, orgToken, senderLogin as string);
+			skipSpamFilter = await isCodeOwner(
+				token,
+				orgToken,
+				senderLogin as string,
+			);
 		}
 
 		if (skipSpamFilter) {
@@ -246,55 +257,60 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			});
 			results.spamFilter = { result: { closed: false }, skipped: true };
 		} else {
-		const filterUrl = new URL(baseUrl);
-		filterUrl.pathname = `/agents/spam-and-off-topic-filter/${encodeURIComponent(id)}`;
-		const filterResponse = await fetch(filterUrl, {
-			method: "POST",
-			headers: { "content-type": "application/json" },
-			body: JSON.stringify({ eventType, number }),
-		});
+			const filterUrl = new URL(baseUrl);
+			filterUrl.pathname = `/agents/spam-and-off-topic-filter/${encodeURIComponent(id)}`;
+			const filterResponse = await fetch(filterUrl, {
+				method: "POST",
+				headers: { "content-type": "application/json" },
+				body: JSON.stringify({ eventType, number }),
+			});
 
-		if (!filterResponse.ok) {
+			if (!filterResponse.ok) {
+				console.log({
+					message: `Spam filter dispatch failed: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					action: "spam_filter_dispatch_failed",
+					status: filterResponse.status,
+				});
+				throw new Error(
+					`Spam and off-topic filter failed: ${filterResponse.status} ${await filterResponse.text()}`,
+				);
+			}
+
+			const filterResult = (await filterResponse.json()) as {
+				result?: {
+					closed?: boolean;
+					is_spam?: boolean;
+					confidence?: string;
+					reason?: string;
+				};
+				_meta?: { runId?: string };
+			};
+			const closed = filterResult.result?.closed ?? false;
 			console.log({
-				message: `Spam filter dispatch failed: ${webhookLabel}`,
+				message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				eventType,
 				webhookAction,
 				number,
-				action: "spam_filter_dispatch_failed",
-				status: filterResponse.status,
+				action: "spam_filter_dispatched",
+				filterRunId: filterResult._meta?.runId,
+				closed,
+				is_spam: filterResult.result?.is_spam,
+				confidence: filterResult.result?.confidence,
+				reason: filterResult.result?.reason,
 			});
-			throw new Error(
-				`Spam and off-topic filter failed: ${filterResponse.status} ${await filterResponse.text()}`,
-			);
-		}
+			results.spamFilter = filterResult;
 
-		const filterResult = (await filterResponse.json()) as {
-			result?: { closed?: boolean; is_spam?: boolean; confidence?: string; reason?: string };
-			_meta?: { runId?: string };
-		};
-		const closed = filterResult.result?.closed ?? false;
-		console.log({
-			message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
-			event: "github_webhook_orchestrator",
-			delivery,
-			eventType,
-			webhookAction,
-			number,
-			action: "spam_filter_dispatched",
-			filterRunId: filterResult._meta?.runId,
-			closed,
-			is_spam: filterResult.result?.is_spam,
-			confidence: filterResult.result?.confidence,
-			reason: filterResult.result?.reason,
-		});
-		results.spamFilter = filterResult;
-
-		// If spam filter closed the item, skip code review
-		if (closed) {
-			return results;
-		}
+			// If spam filter closed the item, skip code review
+			if (closed) {
+				return results;
+			}
 		} // end else (not skipSpamFilter)
 	}
 
@@ -302,7 +318,8 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	if (isCodeReviewEvent) {
 		// Suppress code review on draft PRs unless the action is ready_for_review
 		const isDraft =
-			(body.pull_request as Record<string, unknown> | undefined)?.draft === true;
+			(body.pull_request as Record<string, unknown> | undefined)?.draft ===
+			true;
 		if (!isDraft || webhookAction === "ready_for_review") {
 			const reviewUrl = new URL(baseUrl);
 			reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;

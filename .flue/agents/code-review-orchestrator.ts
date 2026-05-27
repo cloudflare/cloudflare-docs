@@ -31,8 +31,6 @@ import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-review";
 
 export const triggers = { webhook: true };
 
-
-
 // Only review docs/partials/changelog MDX, capped before specialist fan-out.
 const STYLE_GUIDE_REVIEWABLE_PATH_RE =
 	/^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
@@ -138,9 +136,8 @@ export default async function ({
 				);
 				const allComments = await getIssueComments(token, input.number);
 				const botComment =
-					allComments.findLast((c) =>
-						c.body?.includes(BOT_COMMENT_MARKER),
-					) ?? null;
+					allComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ??
+					null;
 				await postOrUpdateComment(
 					token,
 					input.number,
@@ -1019,12 +1016,18 @@ function renderComment(
 	lines.push("<summary>Commands</summary>");
 	lines.push("<br/>");
 	lines.push("");
-	lines.push("_Only codeowners can run commands. Post a comment with the command to trigger it._");
+	lines.push(
+		"_Only codeowners can run commands. Post a comment with the command to trigger it._",
+	);
 	lines.push("");
 	lines.push("| Command | Description |");
 	lines.push("|---|---|");
-	lines.push("| `/review` | Runs a review now. Incremental if a prior review exists, full if not. |");
-	lines.push("| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase, when you want a fresh review, or if the bot gets out of sync and reports issues that no longer exist. |");
+	lines.push(
+		"| `/review` | Runs a review now. Incremental if a prior review exists, full if not. |",
+	);
+	lines.push(
+		"| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase, when you want a fresh review, or if the bot gets out of sync and reports issues that no longer exist. |",
+	);
 	lines.push("");
 	lines.push("</details>");
 

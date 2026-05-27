@@ -11,23 +11,35 @@ import { join } from "node:path";
 const isLocal = process.argv.includes("--local");
 
 if (!isLocal) {
-	console.error("Only --local is supported. Use the Cloudflare dashboard to manage remote R2 data.");
+	console.error(
+		"Only --local is supported. Use the Cloudflare dashboard to manage remote R2 data.",
+	);
 	process.exit(1);
 }
 
 // Find the local miniflare R2 sqlite database
-const r2StateDir = new URL("../dist/.wrangler/state/v3/r2/miniflare-R2BucketObject", import.meta.url).pathname;
+const r2StateDir = new URL(
+	"../dist/.wrangler/state/v3/r2/miniflare-R2BucketObject",
+	import.meta.url,
+).pathname;
 
 let dbPath: string | null = null;
 try {
 	for (const entry of readdirSync(r2StateDir)) {
-		if (entry.endsWith(".sqlite") && !entry.includes("metadata") && !entry.includes("shm") && !entry.includes("wal")) {
+		if (
+			entry.endsWith(".sqlite") &&
+			!entry.includes("metadata") &&
+			!entry.includes("shm") &&
+			!entry.includes("wal")
+		) {
 			dbPath = join(r2StateDir, entry);
 			break;
 		}
 	}
 } catch {
-	console.error(`Local R2 state not found at ${r2StateDir}. Run wrangler dev first.`);
+	console.error(
+		`Local R2 state not found at ${r2StateDir}. Run wrangler dev first.`,
+	);
 	process.exit(1);
 }
 
