@@ -138,12 +138,18 @@ export default async function ({
 				const botComment =
 					allComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ??
 					null;
-				await postOrUpdateComment(
-					token,
-					input.number,
-					botComment,
-					renderReviewLimitComment(botComment?.body ?? undefined),
+				// Only post if not already showing the paused message
+				const alreadyPaused = botComment?.body?.includes(
+					"Automatic reviews for this PR are paused",
 				);
+				if (!alreadyPaused) {
+					await postOrUpdateComment(
+						token,
+						input.number,
+						botComment,
+						renderReviewLimitComment(botComment?.body ?? undefined),
+					);
+				}
 			}
 
 			return {
@@ -1050,27 +1056,9 @@ function renderFindingRow(f: ReconcileResult["active"][number]): string {
 
 function renderReviewLimitComment(existingBody?: string): string {
 	const wasAlreadyPending = existingBody?.includes("<!-- status: pending -->");
-	const wasAlreadyLimitComment = existingBody?.includes(
-		"Automatic reviews for this PR are paused",
-	);
-
-	let preservedBody: string | null = null;
-
-	if (existingBody && !wasAlreadyPending) {
-		if (wasAlreadyLimitComment) {
-			// Body already has the paused message — extract only the actual review
-			// findings (the last section after the final "---" divider that doesn't
-			// itself contain the paused message).
-			const sections = existingBody.split("\n---\n");
-			const findingsSection = sections
-				.reverse()
-				.find((s) => !s.includes("Automatic reviews for this PR are paused"));
-			preservedBody = findingsSection
-				? findingsSection.replace(/^\n+/, "").trim() || null
-				: null;
-		} else {
-			preservedBody =
-				existingBody
+	const preservedBody =
+		existingBody && !wasAlreadyPending
+			? existingBody
 					.split("\n")
 					.filter(
 						(l) =>
@@ -1079,9 +1067,8 @@ function renderReviewLimitComment(existingBody?: string): string {
 							l !== BOT_COMMENT_MARKER,
 					)
 					.join("\n")
-					.replace(/^\n+/, "") || null;
-		}
-	}
+					.replace(/^\n+/, "") || null
+			: null;
 
 	const lines = [
 		BOT_COMMENT_MARKER,
