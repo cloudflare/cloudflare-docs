@@ -22,7 +22,6 @@ import {
 	getIssueComments,
 	getPullRequest,
 	getPullRequestFiles,
-	isCodeOwner,
 	postComment,
 	removeReactionFromComment,
 	updateIssueComment,
@@ -161,28 +160,6 @@ export default async function ({
 	}
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
-	const orgToken = (typedEnv as Record<string, string>).GITHUB_ORG_TOKEN ?? "";
-
-	// ── Codeowner-only gate ────────────────────────────────────────────────────
-	// Only run code review for PRs opened by codeowners. This prevents the bot
-	// from running on external contributor PRs until we're ready to enable that.
-	if (!input.bypassReviewLimit) {
-		const pr = await getPullRequest(token, input.number);
-		const prAuthor = pr.user?.login ?? "";
-		const authorIsCodeowner = prAuthor
-			? await isCodeOwner(token, orgToken, prAuthor)
-			: false;
-		if (!authorIsCodeowner) {
-			return {
-				mode: reviewMode,
-				active: 0,
-				ignored: 0,
-				resolved: 0,
-				summary: "PR author is not a codeowner — skipping review.",
-				commentBody: null,
-			};
-		}
-	}
 
 	const workspace = getDefaultWorkspace();
 	const harness = await init({
