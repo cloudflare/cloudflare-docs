@@ -19,14 +19,20 @@ Configure email bindings in your Wrangler configuration file to enable email sen
 
 <WranglerConfig>
 
-```toml
-[[send_email]]
-name = "EMAIL"
-
-# Optional: restrict sender addresses for security
-[[send_email]]
-name = "RESTRICTED_EMAIL"
-allowed_sender_addresses = ["noreply@yourdomain.com", "support@yourdomain.com"]
+```jsonc
+{
+	"send_email": [
+		{ "name": "EMAIL" },
+		// Optional: restrict sender addresses for security
+		{
+			"name": "RESTRICTED_EMAIL",
+			"allowed_sender_addresses": [
+				"noreply@yourdomain.com",
+				"support@yourdomain.com",
+			],
+		},
+	],
+}
 ```
 
 </WranglerConfig>
@@ -42,25 +48,34 @@ Each entry in `send_email` can be configured to restrict what the binding can do
 
 <WranglerConfig>
 
-```toml
-# Send to any verified destination
-[[send_email]]
-name = "EMAIL"
-
-# Send only to a single fixed destination
-[[send_email]]
-name = "NOTIFY_OPS"
-destination_address = "ops@yourdomain.com"
-
-# Send only to addresses on an allowlist
-[[send_email]]
-name = "EMAIL_TEAM"
-allowed_destination_addresses = ["alice@yourdomain.com", "bob@yourdomain.com"]
-
-# Send only from addresses on an allowlist
-[[send_email]]
-name = "RESTRICTED_EMAIL"
-allowed_sender_addresses = ["noreply@yourdomain.com", "support@yourdomain.com"]
+```jsonc
+{
+	"send_email": [
+		// Send to any verified destination
+		{ "name": "EMAIL" },
+		// Send only to a single fixed destination
+		{
+			"name": "NOTIFY_OPS",
+			"destination_address": "ops@yourdomain.com",
+		},
+		// Send only to addresses on an allowlist
+		{
+			"name": "EMAIL_TEAM",
+			"allowed_destination_addresses": [
+				"alice@yourdomain.com",
+				"bob@yourdomain.com",
+			],
+		},
+		// Send only from addresses on an allowlist
+		{
+			"name": "RESTRICTED_EMAIL",
+			"allowed_sender_addresses": [
+				"noreply@yourdomain.com",
+				"support@yourdomain.com",
+			],
+		},
+	],
+}
 ```
 
 </WranglerConfig>

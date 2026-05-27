@@ -22,14 +22,15 @@ Test email routing behavior locally using `wrangler dev` to simulate incoming em
 Configure your Wrangler file with the email binding:
 
 <WranglerConfig>
-```toml
-name = "email-routing-worker"
-compatibility_date = "$today"
 
-[[send_email]]
-name = "EMAIL"
+```jsonc
+{
+	"name": "email-routing-worker",
+	"compatibility_date": "$today",
+	"send_email": [{ "name": "EMAIL" }],
+}
+```
 
-````
 </WranglerConfig>
 
 ## Basic routing worker

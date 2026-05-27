@@ -85,10 +85,15 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
 
     <WranglerConfig>
 
-    ```toml
-    [[send_email]]
-    name = "EMAIL"
-    remote = true
+    ```jsonc
+    {
+    	"send_email": [
+    		{
+    			"name": "EMAIL",
+    			"remote": true,
+    		},
+    	],
+    }
     ```
 
     </WranglerConfig>
