@@ -7,7 +7,7 @@ products:
 date: 2026-05-15
 ---
 
-You can now view the size of your Hyperdrive database connection pools, giving you the ability to self-diagnose connection issues. Using the Cloudflare dashboard or the `hyperdrivePoolSizesAdaptiveGroups` dataset in the [GraphQL Analytics API](/analytics/graphql-api/getting-started/, you can see waiting clients, open connections, and the connection pool size [maximum](https://developers.cloudflare.com/hyperdrive/platform/limits/#connection-limits) set by Hyperdrive  for each of your configurations.
+You can now view the size of your Hyperdrive database connection pools, giving you the ability to self-diagnose connection issues. Using the Cloudflare dashboard or the `hyperdrivePoolSizesAdaptiveGroups` dataset in the [GraphQL Analytics API](/analytics/graphql-api/getting-started/), you can see waiting clients, open connections, and the connection pool size [maximum](https://developers.cloudflare.com/hyperdrive/platform/limits/#connection-limits) set by Hyperdrive  for each of your configurations.
 
 A new **Pool connections** chart has been added to the **Metrics** tab of each Hyperdrive configuration in the [Cloudflare dashboard](https://dash.cloudflare.com). You can use the location selector to drill down into specific locations hosting your connection pool by airport code.
 
@@ -20,5 +20,12 @@ The chart shows:
 - **Pool size maximum**: Your configured origin connection limit.
 
 Connection contention appears as a spike in waiting clients, or when open connections consistently approach the pool size maximum. If your open connections regularly approach this limit, consider contacting Cloudflare to [increase your Hyperdrive connection limit](/hyperdrive/platform/limits/#request-a-limit-increase).
+
+### Pool size metrics
+
+The `hyperdrivePoolSizesAdaptiveGroups` dataset in the [GraphQL Analytics API](/analytics/graphql-api/getting-started/) exposes the following key connection pool metrics for each Hyperdrive configuration:
+
+- **`maxPoolSize`** — The maximum number of connections allowed in the pool.
+- **`currentPoolSize`** — The current number of open connections to your origin database.
 
 For more information, refer to [Metrics and analytics](/hyperdrive/observability/metrics/) and [Connection pooling](/hyperdrive/concepts/connection-pooling/).
