@@ -16,7 +16,10 @@ description: Rules for the WranglerConfig component used in Wrangler config exam
 import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
-	```toml name = "my-worker" main = "src/index.ts" compatibility_date = "$today"
+	```toml
+	name = "my-worker"
+	main = "src/index.ts"
+	compatibility_date = "$today"
 	```
 </WranglerConfig>
 ````

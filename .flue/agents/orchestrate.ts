@@ -391,7 +391,8 @@ function getIssueOrPullRequestUrl(
 
 function getIssueOrPullRequestLabel(eventType: string) {
 	if (eventType === "pull_request") return "PR";
-	if (eventType === "issues" || eventType === "issue_comment") return "PR";
+	if (eventType === "issues") return "Issue";
+	if (eventType === "issue_comment") return "PR";
 	return "GitHub webhook";
 }
 

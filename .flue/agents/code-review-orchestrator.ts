@@ -1039,11 +1039,18 @@ function formatFile(path: string, line?: number): string {
 	return line ? `\`${short}\` line ${line}` : `\`${short}\``;
 }
 
+function sanitizeTableCell(value: string): string {
+	return value
+		.replace(/\|/g, "\\|")
+		.replace(/\*/g, "\\*")
+		.replace(/\r?\n/g, " ");
+}
+
 function renderFindingRow(f: ReconcileResult["active"][number]): string {
 	const file = formatFile(f.path, f.line);
-	const rule = f.rule.replace(/\|/g, "\\|");
-	const evidence = f.evidence.replace(/\|/g, "\\|");
-	const suggestion = f.suggestion.replace(/\|/g, "\\|");
+	const rule = sanitizeTableCell(f.rule);
+	const evidence = sanitizeTableCell(f.evidence);
+	const suggestion = sanitizeTableCell(f.suggestion);
 	return `| ${file} | **${rule}** — ${evidence} Fix: ${suggestion} |`;
 }
 
