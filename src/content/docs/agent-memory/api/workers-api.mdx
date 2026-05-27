@@ -85,6 +85,13 @@ type ProfileInfo = {
 };
 ```
 
+### `deleteProfile(name)`
+
+Soft-deletes a profile and schedules deferred purge. All memories and messages in the profile are marked as deleted and permanently removed after a retention period.
+
+- `name` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to delete. Maximum 32 characters.
+- Returns <Type text="Promise<void>" />
+
 ## Profile methods
 
 Call profile methods after you get a profile from the binding.
@@ -92,8 +99,12 @@ Call profile methods after you get a profile from the binding.
 ```ts
 type Memory = {
 	id: string;
+	type: "fact" | "event" | "instruction" | "task";
 	summary: string;
+	content: string;
 	sessionId: string | null;
+	createdAt: Date;
+	updatedAt: Date;
 };
 ```
 
@@ -122,19 +133,6 @@ Stores a single memory explicitly. Use `remember()` when your application or age
 - `memory.content` <Type text="string" /> <MetaInfo text="required" />: Memory content to store.
 - `memory.sessionId` <Type text="string | null" /> <MetaInfo text="optional" />: Identifier for the related conversation session.
 - Returns <Type text="Promise<Memory>" />
-
-### `forget(query, options?)`
-
-Finds and removes memories that match a natural language query. Use `forget()` when you need semantic deletion rather than exact deletion by memory ID.
-
-- `query` <Type text="string" /> <MetaInfo text="required" />: Natural language description of what to forget.
-- Returns <Type text="Promise<ForgetResult>" />
-
-```ts
-type ForgetResult = {
-	memories: Memory[];
-};
-```
 
 ### `recall(query, options?)`
 
@@ -172,24 +170,46 @@ Lists memories stored in the profile.
 - Returns <Type text="Promise<ListMemoriesResult>" />
 
 ```ts
+type MemoryListEntry = {
+	id: string;
+	type: "fact" | "event" | "instruction" | "task";
+	summary: string;
+	sessionId: string | null;
+	createdAt: Date;
+	updatedAt: Date;
+};
+
 type ListMemoriesResult = {
-	memories: Memory[];
+	memories: MemoryListEntry[];
 	cursor?: string;
 };
 ```
+
+List entries omit `content`. Use `get(id)` to retrieve the full memory.
 
 ### `get(id)`
 
 Retrieves a memory by ID.
 
 - `id` <Type text="string" /> <MetaInfo text="required" />: Memory ID.
-- Returns <Type text="Promise<Memory | null>" />
+- Returns <Type text="Promise<Memory>" />
+
+Throws an error if the memory does not exist.
 
 ### `delete(id)`
 
-Deletes one or more memories by ID.
+Deletes a memory by ID. Returns the deleted memory.
 
-- `id` <Type text="string | string[]" /> <MetaInfo text="required" />: Memory ID or list of memory IDs.
+- `id` <Type text="string" /> <MetaInfo text="required" />: Memory ID.
+- Returns <Type text="Promise<Memory>" />
+
+Throws an error if the memory does not exist.
+
+### `deleteSession(sessionId)`
+
+Soft-deletes all memories and messages in the profile that are tagged with the given session ID. Rows from other sessions in the same profile are untouched. Idempotent: deleting a session ID that has no rows is a no-op.
+
+- `sessionId` <Type text="string" /> <MetaInfo text="required" />: Session ID to delete. Maximum 64 characters.
 - Returns <Type text="Promise<void>" />
 
 ### `getSummary(options?)`
