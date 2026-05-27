@@ -334,24 +334,9 @@ The following is an example of uploading secrets from a JSON file redirected to 
 ```json
 {
 	"secret-name-1": "secret-value-1",
-	"secret-name-2": "secret-value-2"
+	"secret-name-2": "secret-value-2",
+	"secret-name-3": null
 }
-```
-
-```sh
-npx wrangler secret bulk < secrets.json
-```
-
-```sh output
-🌀 Creating the secrets for the Worker "script-name"
-✨ Successfully created secret for key: secret-name-1
-...
-🚨 Error uploading secret for key: secret-name-1
-✨ Successfully created secret for key: secret-name-2
-
-Finished processing secrets JSON file:
-✨ 1 secrets successfully uploaded
-🚨 1 secrets failed to upload
 ```
 
 ---
