@@ -62,17 +62,17 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const itemLabel = `${itemType}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
 	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")} ${itemLabel}`;
 
-	console.log({
-		message: `GitHub webhook received: ${webhookLabel}`,
-		event: "github_webhook_orchestrator",
-		delivery,
-		eventType,
-		webhookAction,
-		number,
-		title,
-		sender: senderLogin,
-		action: "received",
-	});
+	// console.log({
+	// 	message: `GitHub webhook received: ${webhookLabel}`,
+	// 	event: "github_webhook_orchestrator",
+	// 	delivery,
+	// 	eventType,
+	// 	webhookAction,
+	// 	number,
+	// 	title,
+	// 	sender: senderLogin,
+	// 	action: "received",
+	// });
 
 	// ── 2. Route to the right pipeline ─────────────────────────────────────
 	const isSpamFilterEvent =
@@ -158,14 +158,14 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			}),
 		});
 
-		console.log({
-			message: `Full review dispatched by ${senderLogin}: PR #${number}`,
-			event: "github_webhook_orchestrator",
-			delivery,
-			number,
-			action: "full_review_dispatched",
-			ok: reviewResponse.ok,
-		});
+		// console.log({
+		// 	message: `Full review dispatched by ${senderLogin}: PR #${number}`,
+		// 	event: "github_webhook_orchestrator",
+		// 	delivery,
+		// 	number,
+		// 	action: "full_review_dispatched",
+		// 	ok: reviewResponse.ok,
+		// });
 
 		return {
 			acted: true,
@@ -217,14 +217,14 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			}),
 		});
 
-		console.log({
-			message: `Review dispatched by ${senderLogin}: PR #${number}`,
-			event: "github_webhook_orchestrator",
-			delivery,
-			number,
-			action: "review_dispatched",
-			ok: reviewResponse.ok,
-		});
+		// console.log({
+		// 	message: `Review dispatched by ${senderLogin}: PR #${number}`,
+		// 	event: "github_webhook_orchestrator",
+		// 	delivery,
+		// 	number,
+		// 	action: "review_dispatched",
+		// 	ok: reviewResponse.ok,
+		// });
 
 		return { acted: true, summary: `Review triggered by @${senderLogin}.` };
 	}
@@ -248,13 +248,13 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		}
 
 		if (skipSpamFilter) {
-			console.log({
-				message: `Spam filter skipped — ${senderLogin} is a codeowner: ${itemLabel}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				action: "spam_filter_skipped_codeowner",
-			});
+			// console.log({
+			// 	message: `Spam filter skipped — ${senderLogin} is a codeowner: ${itemLabel}`,
+			// 	event: "github_webhook_orchestrator",
+			// 	delivery,
+			// 	number,
+			// 	action: "spam_filter_skipped_codeowner",
+			// });
 			results.spamFilter = { result: { closed: false }, skipped: true };
 		} else {
 			const filterUrl = new URL(baseUrl);
@@ -291,20 +291,20 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 				_meta?: { runId?: string };
 			};
 			const closed = filterResult.result?.closed ?? false;
-			console.log({
-				message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				eventType,
-				webhookAction,
-				number,
-				action: "spam_filter_dispatched",
-				filterRunId: filterResult._meta?.runId,
-				closed,
-				is_spam: filterResult.result?.is_spam,
-				confidence: filterResult.result?.confidence,
-				reason: filterResult.result?.reason,
-			});
+			// console.log({
+			// 	message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
+			// 	event: "github_webhook_orchestrator",
+			// 	delivery,
+			// 	eventType,
+			// 	webhookAction,
+			// 	number,
+			// 	action: "spam_filter_dispatched",
+			// 	filterRunId: filterResult._meta?.runId,
+			// 	closed,
+			// 	is_spam: filterResult.result?.is_spam,
+			// 	confidence: filterResult.result?.confidence,
+			// 	reason: filterResult.result?.reason,
+			// });
 			results.spamFilter = filterResult;
 
 			// If spam filter closed the item, skip code review
@@ -346,16 +346,16 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 					result?: unknown;
 					_meta?: { runId?: string };
 				};
-				console.log({
-					message: `Code review dispatched: ${itemLabel}`,
-					event: "github_webhook_orchestrator",
-					delivery,
-					eventType,
-					webhookAction,
-					number,
-					action: "code_review_dispatched",
-					reviewRunId: reviewResult._meta?.runId,
-				});
+				// console.log({
+				// 	message: `Code review dispatched: ${itemLabel}`,
+				// 	event: "github_webhook_orchestrator",
+				// 	delivery,
+				// 	eventType,
+				// 	webhookAction,
+				// 	number,
+				// 	action: "code_review_dispatched",
+				// 	reviewRunId: reviewResult._meta?.runId,
+				// });
 				results.codeReview = reviewResult;
 			}
 		}

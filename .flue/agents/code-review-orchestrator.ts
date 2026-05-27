@@ -22,6 +22,7 @@ import {
 	getIssueComments,
 	getPullRequest,
 	getPullRequestFiles,
+	isCodeOwner,
 	postComment,
 	removeReactionFromComment,
 	updateIssueComment,
@@ -159,6 +160,30 @@ export default async function ({
 		await incrementAutoReviewCount(bucket, input.number, autoReviewCount);
 	}
 
+	const token = await getInstallationToken(typedEnv as Record<string, string>);
+	const orgToken = (typedEnv as Record<string, string>).GITHUB_ORG_TOKEN ?? "";
+
+	// ── Codeowner-only gate ────────────────────────────────────────────────────
+	// Only run code review for PRs opened by codeowners. This prevents the bot
+	// from running on external contributor PRs until we're ready to enable that.
+	if (!input.bypassReviewLimit) {
+		const pr = await getPullRequest(token, input.number);
+		const prAuthor = pr.user?.login ?? "";
+		const authorIsCodeowner = prAuthor
+			? await isCodeOwner(token, orgToken, prAuthor)
+			: false;
+		if (!authorIsCodeowner) {
+			return {
+				mode: reviewMode,
+				active: 0,
+				ignored: 0,
+				resolved: 0,
+				summary: "PR author is not a codeowner — skipping review.",
+				commentBody: null,
+			};
+		}
+	}
+
 	const workspace = getDefaultWorkspace();
 	const harness = await init({
 		sandbox: getShellSandbox({ workspace, loader }),
@@ -177,16 +202,14 @@ export default async function ({
 		);
 	}
 
-	const token = await getInstallationToken(typedEnv as Record<string, string>);
-
-	console.log({
-		message: `Code review started: PR #${input.number}`,
-		event: "code_review_orchestrator",
-		number: input.number,
-		mode: reviewMode,
-		runId,
-		action: "started",
-	});
+	// console.log({
+	// 	message: `Code review started: PR #${input.number}`,
+	// 	event: "code_review_orchestrator",
+	// 	number: input.number,
+	// 	mode: reviewMode,
+	// 	runId,
+	// 	action: "started",
+	// });
 
 	// ── 1. Gather PR review context ────────────────────────────────────────────
 	const [allComments, pr] = await Promise.all([
@@ -216,13 +239,13 @@ export default async function ({
 				.filter((o) => o.key.match(/review-[0-9a-f]+\.json$/))
 				.map((o) => bucket.delete(o.key)),
 		);
-		console.log({
-			message: `Full review forced: cleared previous review JSONs for PR #${input.number}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			runId,
-			action: "full_review_forced",
-		});
+		// console.log({
+		// 	message: `Full review forced: cleared previous review JSONs for PR #${input.number}`,
+		// 	event: "code_review_orchestrator",
+		// 	number: input.number,
+		// 	runId,
+		// 	action: "full_review_forced",
+		// });
 	}
 
 	const previousReviewedSha = input.forceFullReview
@@ -253,61 +276,61 @@ export default async function ({
 				toSha: currentHeadSha,
 			};
 			allFiles = compare.files;
-			console.log({
-				message: `Code review using incremental diff: PR #${input.number} — ${previousReviewedSha.slice(0, 7)}...${currentHeadSha.slice(0, 7)}, ${allFiles.length} file(s) changed`,
-				event: "code_review_orchestrator",
-				number: input.number,
-				diff_mode: "incremental",
-				from_sha: previousReviewedSha,
-				to_sha: currentHeadSha,
-				files: allFiles.length,
-				runId,
-				action: "diff_mode_resolved",
-			});
+			// console.log({
+			// 	message: `Code review using incremental diff: PR #${input.number} — ${previousReviewedSha.slice(0, 7)}...${currentHeadSha.slice(0, 7)}, ${allFiles.length} file(s) changed`,
+			// 	event: "code_review_orchestrator",
+			// 	number: input.number,
+			// 	diff_mode: "incremental",
+			// 	from_sha: previousReviewedSha,
+			// 	to_sha: currentHeadSha,
+			// 	files: allFiles.length,
+			// 	runId,
+			// 	action: "diff_mode_resolved",
+			// });
 		} else {
 			// Base SHA gone (force-push) — fall back to full PR diff
 			diffMode = { type: "full" };
 			allFiles = await getPullRequestFiles(token, input.number);
-			console.log({
-				message: `Code review falling back to full diff (base SHA not found): PR #${input.number}`,
-				event: "code_review_orchestrator",
-				number: input.number,
-				diff_mode: "full",
-				fallback_reason: "base_sha_not_found",
-				to_sha: currentHeadSha,
-				files: allFiles.length,
-				runId,
-				action: "diff_mode_resolved",
-			});
+			// console.log({
+			// 	message: `Code review falling back to full diff (base SHA not found): PR #${input.number}`,
+			// 	event: "code_review_orchestrator",
+			// 	number: input.number,
+			// 	diff_mode: "full",
+			// 	fallback_reason: "base_sha_not_found",
+			// 	to_sha: currentHeadSha,
+			// 	files: allFiles.length,
+			// 	runId,
+			// 	action: "diff_mode_resolved",
+			// });
 		}
 	} else {
 		// No previous review or SHA unchanged — full PR diff
 		diffMode = { type: "full" };
 		allFiles = await getPullRequestFiles(token, input.number);
-		console.log({
-			message: `Code review using full diff: PR #${input.number} — ${allFiles.length} file(s)`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			diff_mode: "full",
-			to_sha: currentHeadSha,
-			had_previous_review: previousReviewedSha !== null,
-			files: allFiles.length,
-			runId,
-			action: "diff_mode_resolved",
-		});
+		// console.log({
+		// 	message: `Code review using full diff: PR #${input.number} — ${allFiles.length} file(s)`,
+		// 	event: "code_review_orchestrator",
+		// 	number: input.number,
+		// 	diff_mode: "full",
+		// 	to_sha: currentHeadSha,
+		// 	had_previous_review: previousReviewedSha !== null,
+		// 	files: allFiles.length,
+		// 	runId,
+		// 	action: "diff_mode_resolved",
+		// });
 	}
 
-	console.log({
-		message: `Code review context fetched: PR #${input.number} — ${allFiles.length} file(s) in diff, ${allComments.length} comment(s), prior bot review: ${botComment ? "yes" : "no"}, human replies: ${humanCommentsAfterBot.length}`,
-		event: "code_review_orchestrator",
-		number: input.number,
-		files: allFiles.length,
-		comments: allComments.length,
-		has_prior_bot_review: botComment !== null,
-		human_replies: humanCommentsAfterBot.length,
-		runId,
-		action: "context_fetched",
-	});
+	// console.log({
+	// 	message: `Code review context fetched: PR #${input.number} — ${allFiles.length} file(s) in diff, ${allComments.length} comment(s), prior bot review: ${botComment ? "yes" : "no"}, human replies: ${humanCommentsAfterBot.length}`,
+	// 	event: "code_review_orchestrator",
+	// 	number: input.number,
+	// 	files: allFiles.length,
+	// 	comments: allComments.length,
+	// 	has_prior_bot_review: botComment !== null,
+	// 	human_replies: humanCommentsAfterBot.length,
+	// 	runId,
+	// 	action: "context_fetched",
+	// });
 
 	// PR-scoped context directory in R2 — keyed by PR number so each new commit
 	// overwrites the previous state rather than accumulating stale data.
@@ -337,37 +360,28 @@ export default async function ({
 			: Promise.resolve(),
 	]);
 
-	console.log({
-		message: `Code review context written to R2: PR #${input.number}`,
-		event: "code_review_orchestrator",
-		number: input.number,
-		diffDir,
-		commentsPath,
-		runId,
-		action: "r2_written",
-	});
-
-	// ── 3. Run specialist agents ───────────────────────────────────────────────
-	console.log({
-		message: `Style-guide review dispatched: PR #${input.number}`,
-		event: "code_review_orchestrator",
-		number: input.number,
-		runId,
-		action: "style_guide_dispatched",
-	});
+	// console.log({
+	// 	message: `Code review context written to R2: PR #${input.number}`,
+	// 	event: "code_review_orchestrator",
+	// 	number: input.number,
+	// 	diffDir,
+	// 	commentsPath,
+	// 	runId,
+	// 	action: "r2_written",
+	// });
 
 	let styleGuideResult: StyleGuideResult;
 	try {
 		const styleGuideFiles = selectStyleGuideFiles(allFiles);
-		console.log({
-			message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			files: styleGuideFiles.length,
-			concurrency: STYLE_GUIDE_CONCURRENCY,
-			runId,
-			action: "style_guide_fanout_start",
-		});
+		// console.log({
+		// 	message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
+		// 	event: "code_review_orchestrator",
+		// 	number: input.number,
+		// 	files: styleGuideFiles.length,
+		// 	concurrency: STYLE_GUIDE_CONCURRENCY,
+		// 	runId,
+		// 	action: "style_guide_fanout_start",
+		// });
 
 		const styleGuideResults = await withConcurrency(
 			styleGuideFiles.map(
@@ -384,14 +398,14 @@ export default async function ({
 			STYLE_GUIDE_CONCURRENCY,
 		);
 		styleGuideResult = mergeStyleGuideResults(styleGuideResults);
-		console.log({
-			message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s)`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			findings: styleGuideResult.findings.length,
-			runId,
-			action: "style_guide_complete",
-		});
+		// console.log({
+		// 	message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s)`,
+		// 	event: "code_review_orchestrator",
+		// 	number: input.number,
+		// 	findings: styleGuideResult.findings.length,
+		// 	runId,
+		// 	action: "style_guide_complete",
+		// });
 
 		// If the agent returned a known failure summary (e.g. model timed out
 		// and produced no output), surface a failure comment rather than
@@ -514,14 +528,14 @@ export default async function ({
 					? "No style-guide issues found."
 					: `${styleGuideResult.findings.length} finding(s); no prior review to reconcile against.`,
 		};
-		console.log({
-			message: `Reconciliation skipped (deterministic): PR #${input.number} — no prior findings and no human comments`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			active: reconciled.active.length,
-			runId,
-			action: "reconciliation_skipped",
-		});
+		// console.log({
+		// 	message: `Reconciliation skipped (deterministic): PR #${input.number} — no prior findings and no human comments`,
+		// 	event: "code_review_orchestrator",
+		// 	number: input.number,
+		// 	active: reconciled.active.length,
+		// 	runId,
+		// 	action: "reconciliation_skipped",
+		// });
 	} else {
 		const { data } = await session.skill("reconcile-code-review/SKILL.md", {
 			model: "cloudflare/@cf/zai-org/glm-4.7-flash",
