@@ -34,7 +34,7 @@ You must be using Cloudflare DNS to use Email Service.
 
 ## Route your first email
 
-You can route your first email by setting up forwarding rules in the dashboard, or by processing emails with Workers.
+You can route your first email by setting up routing rules in the dashboard, or by processing emails with Workers.
 
 <Tabs>
 <TabItem label="Route to email">
@@ -54,9 +54,9 @@ Before you can create a routing rule, add and verify the destination address tha
 
 For full details, refer to [Add a destination address](/email-service/configuration/email-routing-addresses/#add-a-destination-address).
 
-### Create a forwarding rule
+### Create a routing rule
 
-1. In the Cloudflare dashboard, go to **Email Routing**.
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing**.
 
    <DashButton url="/?to=/:account/email-service/routing" />
 
@@ -73,7 +73,7 @@ For full details, refer to [Add a destination address](/email-service/configurat
 
 6. Select **Save**.
 
-### Test your forwarding rule
+### Test your routing rule
 
 Verify that your routing rule is working:
 
@@ -201,7 +201,7 @@ Use Workers to process emails with custom logic before forwarding or responding.
 
 ### Configure routing to Worker
 
-1. In the Cloudflare dashboard, go to **Email Routing**.
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing**.
 
    <DashButton url="/?to=/:account/email-service/routing" />
 

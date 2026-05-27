@@ -795,7 +795,7 @@
 # Get started
 /email-routing/get-started/ /email-service/get-started/ 301
 /email-routing/get-started/enable-email-routing/ /email-service/get-started/route-emails/ 301
-/email-routing/get-started/test-email-routing/ /email-service/get-started/route-emails/#test-your-forwarding-rule 301
+/email-routing/get-started/test-email-routing/ /email-service/get-started/route-emails/#test-your-routing-rule 301
 /email-routing/get-started/audit-logs/ /email-service/observability/audit-logs/ 301
 /email-routing/get-started/email-routing-analytics/ /email-service/observability/metrics-analytics/ 301
 

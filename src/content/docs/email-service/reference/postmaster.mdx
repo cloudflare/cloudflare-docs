@@ -226,8 +226,8 @@ Due to the nature of email forwarding, restrictive DMARC policies might make for
 
 ### Sending or replying to an email from your Cloudflare domain
 
-Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not your custom address (like `info@my-company.com`).
+Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not from the email pattern of the routing rule that delivered the message (like `info@my-company.com`).
 
-### "." is treated as normal characters for custom addresses
+### "." is treated as a normal character in email patterns
 
-The `.` character, which perform special actions in email providers like Gmail, is treated as a normal character on custom addresses.
+The `.` character, which performs special actions in email providers like Gmail, is treated as a normal character in routing rule email patterns.
