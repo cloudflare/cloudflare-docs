@@ -99,7 +99,7 @@ The decision should be driven by topology, not performance:
 
 ### If only one peer connects through TURN, will latency be the same as when both peers relay through TURN?
 
-Not necessarily. When both peers relay through Cloudflare Realtime TURN, the traffic between the two Cloudflare edges can use the Cloudflare backbone, which means Cloudflare controls the path end to end. When only one peer uses TURN, the other leg traverses the public internet, and latency and packet loss depend on the interconnect between that peer and the nearest Cloudflare data center.
+Not necessarily. When both peers relay through Cloudflare Realtime TURN, the traffic between the two Cloudflare edges can use the Cloudflare backbone, which means Cloudflare controls the path end to end. When only one peer uses TURN, the other leg traverses the public Internet, and latency and packet loss depend on the interconnect between that peer and the nearest Cloudflare data center.
 
 The more consistent improvement from using TURN on both ends is reliability and packet loss behavior, not raw latency. Backbone latency is typically better than the public internet, but the size of the latency improvement varies by geography. The reduction in packet loss is generally more predictable.
 
