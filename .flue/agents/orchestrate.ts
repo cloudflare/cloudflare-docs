@@ -145,7 +145,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
 		reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
-		const reviewResponse = await fetch(reviewUrl, {
+		const _reviewResponse = await fetch(reviewUrl, {
 			method: "POST",
 			headers: { "content-type": "application/json" },
 			body: JSON.stringify({
@@ -205,7 +205,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
 		reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
-		const reviewResponse = await fetch(reviewUrl, {
+		const _reviewResponse = await fetch(reviewUrl, {
 			method: "POST",
 			headers: { "content-type": "application/json" },
 			body: JSON.stringify({
