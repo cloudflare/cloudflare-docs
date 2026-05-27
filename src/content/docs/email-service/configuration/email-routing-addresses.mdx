@@ -59,6 +59,10 @@ To prevent spamming unintended recipients, all email rules are automatically dis
 
 Your email rule is now disabled. It will not forward emails to a destination address or Worker. To forward emails again, toggle the email rule status button to **Active**.
 
+:::caution[Renaming an Email Worker]
+Renaming an Email Worker removes the binding between that Worker and any routes that point to it. After renaming, edit the affected rules to point at the renamed Worker.
+:::
+
 ### Edit custom addresses
 
 1. In the Cloudflare dashboard, go to **Email Routing**.

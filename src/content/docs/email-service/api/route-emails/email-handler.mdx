@@ -241,7 +241,7 @@ export default {
 
 ### Forward with custom headers
 
-Add custom headers when forwarding:
+Add custom headers when forwarding. Only headers with an `X-` prefix can be added through `forward()`. Other headers are rejected.
 
 ```ts
 export default {
@@ -261,7 +261,13 @@ export default {
 
 ### Reply to emails
 
-Send automatic replies using the Email Service binding:
+Send automatic replies using the Email Service binding. Replies through the Workers API must satisfy the following requirements, otherwise `reply()` throws an exception:
+
+- The incoming email must have a valid DMARC result.
+- An email can only be replied to once per `EmailMessage` event.
+- The recipient in the reply must match the sender of the incoming email.
+- The outgoing sender domain must match the domain that received the email.
+- The reply is rejected if the incoming email has more than 100 entries in its `References` header, to prevent reply loops and abuse.
 
 <Tabs>
 <TabItem label="Simple auto-reply">

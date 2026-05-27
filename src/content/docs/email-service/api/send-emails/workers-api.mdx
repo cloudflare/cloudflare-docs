@@ -31,6 +31,40 @@ allowed_sender_addresses = ["noreply@yourdomain.com", "support@yourdomain.com"]
 
 </WranglerConfig>
 
+### Binding types
+
+Each entry in `send_email` can be configured to restrict what the binding can do. The sender address must always belong to a domain you have onboarded to Email Service.
+
+- **No restriction attribute**: The binding can send to any verified destination address in your account.
+- **`destination_address`**: The binding can only send to the single destination address configured here. If you call `send()` with `to` set to `null` or `undefined`, the configured address is used.
+- **`allowed_destination_addresses`**: The binding can only send to addresses listed in this allowlist.
+- **`allowed_sender_addresses`**: The binding can only send from the addresses listed in this allowlist.
+
+<WranglerConfig>
+
+```toml
+# Send to any verified destination
+[[send_email]]
+name = "EMAIL"
+
+# Send only to a single fixed destination
+[[send_email]]
+name = "NOTIFY_OPS"
+destination_address = "ops@yourdomain.com"
+
+# Send only to addresses on an allowlist
+[[send_email]]
+name = "EMAIL_TEAM"
+allowed_destination_addresses = ["alice@yourdomain.com", "bob@yourdomain.com"]
+
+# Send only from addresses on an allowlist
+[[send_email]]
+name = "RESTRICTED_EMAIL"
+allowed_sender_addresses = ["noreply@yourdomain.com", "support@yourdomain.com"]
+```
+
+</WranglerConfig>
+
 ## `send()` method
 
 Send a single email using the `send()` method on your email binding.

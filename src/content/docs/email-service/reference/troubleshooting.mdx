@@ -31,6 +31,11 @@ Having multiple SPF records on your domain is not allowed and will prevent Email
    - For **Email Routing** (root domain): `v=spf1 include:_spf.mx.cloudflare.net ~all`
    - For **Email Sending** (`cf-bounce` subdomain): `v=spf1 include:_spf.mx.cloudflare.net ~all`
 
+If you are unsure which SPF record is the correct one to keep, you can remove all of them and let Cloudflare regenerate the required records:
+
+1. In **DNS** > **Records**, delete every TXT record starting with `v=spf1` on the affected name.
+2. Go to **Compute** > **Email Service** and re-onboard or re-enable the affected service. Cloudflare adds the correct SPF record back automatically.
+
 ### Missing SPF record
 
 If emails are being rejected due to SPF failures:

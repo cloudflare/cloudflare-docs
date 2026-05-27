@@ -43,6 +43,27 @@ The following limits apply only when sending emails via the [Workers binding](/e
 | **Subrequests** | 50 per request   | Includes email send operations |
 | **Memory**      | 128MB            | Standard Workers memory limit  |
 
+## Email Routing limits
+
+The following limits apply to inbound email handled by Email Routing.
+
+| Limit                          | Value  | Notes                                                                |
+| ------------------------------ | ------ | -------------------------------------------------------------------- |
+| **Rules per domain**           | 200    | Each rule maps one custom address to a destination                   |
+| **Addresses per domain**       | 200    | Custom addresses configured on the domain                            |
+| **Inbound message size**       | 25 MiB | Messages larger than this are rejected                               |
+| **Reply `References` entries** | 100    | Limit on incoming emails replied to by Workers; reduces reply loops  |
+
+Each rule maps one custom address to one destination address or one Email Worker. To forward a single custom address to multiple destinations, use an Email Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
+
+### Email Workers on the Workers Free plan
+
+Email Workers count toward the standard Workers CPU and memory limits. On the Workers Free plan, complex handlers may exceed these limits and fail to process a message. Failed invocations appear in [Workers logs](/workers/observability/logs/) with the `EXCEEDED_CPU` error. Upgrade to the [Workers Paid plan](/workers/platform/pricing/) for higher CPU and memory limits.
+
+### Emails sent through Email Workers
+
+Emails sent through Email Workers using the `send_email` binding appear in the Email Routing summary as **dropped**, even when they were delivered successfully. To track outbound send success, use [Email sending metrics and logs](/email-service/observability/) instead.
+
 ## Compliance
 
 All email sending must follow applicable anti-spam laws and regulations to maintain good standing and deliverability.
