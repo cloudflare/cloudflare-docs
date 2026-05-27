@@ -36,13 +36,16 @@ The `volatile` cache status indicates the query contains a PostgreSQL function c
 
 The `hyperdrivePoolSizesAdaptiveGroups` dataset contains the following connection pool metrics:
 
-| Metric              | GraphQL Field Name   | Description                                          |
-| ------------------- | -------------------- | ---------------------------------------------------- |
-| Waiting connections | `waitingConnections` | Client requests waiting for an available connection. |
-| Open connections    | `openConnections`    | Active connections to your database.                 |
-| Pool size maximum   | `poolSizeMaximum`    | Your configured origin connection limit.             |
+| Metric                 | GraphQL Field Name      | Description                                                               |
+| ---------------------- | ----------------------- | ------------------------------------------------------------------------- |
+| Avg. open connections  | `avg.currentPoolSize`   | Average number of connections currently open in the pool.                 |
+| Avg. available slots   | `avg.availablePoolSlots`| Average number of pool connections available for checkout.                |
+| Avg. waiting clients   | `avg.waitingClients`    | Average number of clients waiting for a connection from the pool.         |
+| Pool size maximum      | `max.maxPoolSize`       | Configured maximum size of the connection pool.                           |
+| Peak open connections  | `max.currentPoolSize`   | Peak number of connections open in the pool.                              |
+| Peak waiting clients   | `max.waitingClients`    | Peak number of clients waiting for a connection from the pool.            |
 
-Connection contention appears as a spike in waiting connections, or when open connections consistently approach the pool size maximum. If your open connections regularly approach this limit, consider [increasing your Hyperdrive connection limit](/hyperdrive/platform/limits/#request-a-limit-increase).
+Connection contention appears as a spike in waiting clients, or when open connections consistently approach the pool size maximum. If your open connections regularly approach this limit, consider [increasing your Hyperdrive connection limit](/hyperdrive/platform/limits/#request-a-limit-increase).
 
 Metrics can be queried (and are retained) for the past 31 days.
 
@@ -179,12 +182,17 @@ query HyperdrivePoolSizes(
 				}
 			) {
 				avg {
-					waitingConnections
-					openConnections
-					poolSizeMaximum
+					currentPoolSize
+					availablePoolSlots
+					waitingClients
+				}
+				max {
+					maxPoolSize
+					currentPoolSize
+					waitingClients
 				}
 				dimensions {
-					coloId
+					coloCode
 				}
 			}
 		}

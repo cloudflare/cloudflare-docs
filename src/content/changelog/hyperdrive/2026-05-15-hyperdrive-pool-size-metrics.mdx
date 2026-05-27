@@ -7,7 +7,7 @@ products:
 date: 2026-05-15
 ---
 
-You can now view the size of your Hyperdrive database connection pools, giving you the ability to self-diagnose connection issues. Using the Cloudflare dashboard or the `hyperdrivePoolSizesAdaptiveGroups` dataset in the [GraphQL Analytics API](/analytics/graphql-api/getting-started/), you can see waiting clients, open connections, and the connection pool size [maximum](https://developers.cloudflare.com/hyperdrive/platform/limits/#connection-limits) set by Hyperdrive  for each of your configurations.
+You can now view the size of your Hyperdrive database connection pools, giving you the ability to self-diagnose connection issues. Using the Cloudflare dashboard or the `hyperdrivePoolSizesAdaptiveGroups` dataset in the [GraphQL Analytics API](/analytics/graphql-api/getting-started/), you can see `waitingClients`, `currentPoolSize`, `availablePoolSlots`, and `maxPoolSize` for each of your configurations.
 
 A new **Pool connections** chart has been added to the **Metrics** tab of each Hyperdrive configuration in the [Cloudflare dashboard](https://dash.cloudflare.com). You can use the location selector to drill down into specific locations hosting your connection pool by airport code.
 
@@ -25,7 +25,16 @@ Connection contention appears as a spike in waiting clients, or when open connec
 
 The `hyperdrivePoolSizesAdaptiveGroups` dataset in the [GraphQL Analytics API](/analytics/graphql-api/getting-started/) exposes the following key connection pool metrics for each Hyperdrive configuration:
 
-- **`maxPoolSize`** — The maximum number of connections allowed in the pool.
-- **`currentPoolSize`** — The current number of open connections to your origin database.
+Under `avg`:
+
+- **`currentPoolSize`** — Average number of connections currently open in the pool.
+- **`availablePoolSlots`** — Average number of pool connections available for checkout.
+- **`waitingClients`** — Average number of clients waiting for a connection from the pool.
+
+Under `max`:
+
+- **`maxPoolSize`** — Configured maximum size of the connection pool.
+- **`currentPoolSize`** — Peak number of connections open in the pool.
+- **`waitingClients`** — Peak number of clients waiting for a connection from the pool.
 
 For more information, refer to [Metrics and analytics](/hyperdrive/observability/metrics/) and [Connection pooling](/hyperdrive/concepts/connection-pooling/).
