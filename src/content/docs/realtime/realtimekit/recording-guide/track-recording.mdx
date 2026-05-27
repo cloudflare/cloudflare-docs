@@ -1,0 +1,146 @@
+---
+title: Track recording
+description: Record separate audio tracks for selected RealtimeKit participants and download per-participant WebM files.
+pcx_content_type: how-to
+sidebar:
+  order: 9
+products:
+  - realtime
+---
+
+Track recording records each participant's audio as a separate WebM file in RealtimeKit's Cloudflare R2 bucket. Use track recording when you need isolated speaker tracks for post-processing, transcription, compliance workflows, or audio analysis.
+
+Composite recording creates one mixed meeting recording. Track recording creates one file per recorded participant peer.
+
+:::note
+
+Track recording currently supports audio tracks only. Video track recording is in development.
+
+:::
+
+## Availability and limits
+
+Track recording has the following requirements and limits:
+
+| Limit                 | Description                                           |
+| --------------------- | ----------------------------------------------------- |
+| Active meeting        | The meeting must have an active live session.         |
+| Media kind            | Only `audio` layers are recorded.                     |
+| Participant selection | Pass up to `100` values in `user_ids`.                |
+| Storage               | Files are uploaded to the RealtimeKit bucket.         |
+| File retention        | RealtimeKit bucket download URLs expire after 7 days. |
+
+## Start track recording
+
+To start track recording, call `POST /recordings/track` with the meeting ID.
+
+If you omit `layers`, RealtimeKit records all participant audio. You can pass an audio layer to set a file name prefix for generated files.
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/recordings/track \
+  --header 'Authorization: Bearer <api_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a"
+}'
+```
+
+The response includes a recording ID. Use this ID to stop or fetch the recording.
+
+```json
+{
+	"success": true,
+	"data": {
+		"recording": {
+			"id": "fff40c6a-140b-40a9-9499-b23fd7a3868a",
+			"meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
+			"status": "INVOKED",
+			"type": "TRACK",
+			"output_file_name": "{{file_name_prefix}}_{{user_id}}_{{peer_id}}_{{stream_kind}}_{{media_kind}}_{{date_time}}.webm"
+		}
+	}
+}
+```
+
+## Record selected participants
+
+Pass `user_ids` to record only specific participants. RealtimeKit records current and future participant peers whose `user_id` matches the allowlist.
+
+:::caution
+
+To use selective track recording with `user_ids`, contact your Cloudflare account team or RealtimeKit support.
+
+:::
+
+```json
+{
+	"meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
+	"user_ids": ["user-123", "user-456"]
+}
+```
+
+## Set file name prefix
+
+Use `file_name_prefix` to prefix every generated track recording file.
+
+```json
+{
+	"meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
+	"layers": {
+		"default": {
+			"media_kind": "audio",
+			"file_name_prefix": "speaker"
+		}
+	}
+}
+```
+
+If you omit `layers`, RealtimeKit uses `default` as the file name prefix.
+
+## Stop track recording
+
+Use the recording update endpoint to stop a track recording.
+
+```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/recordings/<recording_id> \
+  --header 'Authorization: Bearer <api_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "action": "stop"
+}'
+```
+
+Track recording also stops when the meeting session ends.
+
+After track recording stops, RealtimeKit uploads the per-participant WebM files and moves the recording to `UPLOADED`.
+
+## Download track files
+
+Track recording uses the same recording status lifecycle as composite recording. To monitor status, refer to [Monitor Recording Status](/realtime/realtimekit/recording-guide/monitor-status/).
+
+When the recording reaches `UPLOADED`, fetch the recording details or listen for the `recording.statusUpdate` webhook. The `download_url` field contains the recorded WebM files for participant peers.
+
+```json
+{
+	"download_url": [
+		{
+			"layer_name": "default",
+			"download_urls": {
+				"speaker_user-123_peer-456_peer_audio_1760000000000.webm": {
+					"download_url": "https://example.com/presigned-url"
+				}
+			}
+		}
+	]
+}
+```
+
+File names use this format:
+
+```txt
+{{file_name_prefix}}_{{user_id}}_{{peer_id}}_{{stream_kind}}_{{media_kind}}_{{date_time}}.webm
+```
+
+The `date_time` value is the Unix timestamp in milliseconds when the file was generated.
