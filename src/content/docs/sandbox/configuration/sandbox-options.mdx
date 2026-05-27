@@ -38,7 +38,9 @@ Use `enableDefaultSession: true` for interactive or stateful workflows where com
 const statefulSandbox = getSandbox(env.Sandbox, 'user-123');
 
 await statefulSandbox.exec('cd /workspace/app');
-await statefulSandbox.exec('pwd');
+const statefulResult = await statefulSandbox.exec('pwd');
+// statefulResult.stdout: "/workspace/app"
+// The second exec inherited the working directory from the first.
 
 // Sessionless behavior: implicit operations do not share shell state
 const statelessSandbox = getSandbox(env.Sandbox, 'api-worker', {
@@ -46,7 +48,9 @@ const statelessSandbox = getSandbox(env.Sandbox, 'api-worker', {
 });
 
 await statelessSandbox.exec('cd /workspace/app');
-await statelessSandbox.exec('pwd');
+const statelessResult = await statelessSandbox.exec('pwd');
+// statelessResult.stdout: "/workspace"
+// The second exec did not inherit shell state from the first.
 ```
 </TypeScriptExample>
 

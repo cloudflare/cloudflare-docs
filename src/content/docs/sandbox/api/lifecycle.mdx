@@ -60,19 +60,6 @@ export default {
 ```
 </TypeScriptExample>
 
-<TypeScriptExample>
-```
-const sandbox = getSandbox(env.Sandbox, 'stateless-worker', {
-  enableDefaultSession: false
-});
-
-await sandbox.exec('cd /workspace/app');
-await sandbox.exec('pwd');
-```
-</TypeScriptExample>
-
-When `enableDefaultSession` is `false`, the second command does not inherit shell state from the first command. Create or retrieve an explicit session when you want stateful execution.
-
 :::caution
 When using `keepAlive: true`, you **must** call `destroy()` when finished to prevent containers running indefinitely.
 :::

@@ -40,7 +40,7 @@ const sandbox = getSandbox(env.Sandbox, 'my-sandbox', {
 });
 
 await sandbox.exec("cd /app");
-await sandbox.exec("pwd");
+await sandbox.exec("pwd");  // Output: /workspace (cd was not inherited)
 ```
 
 In sessionless mode, the second command does not inherit shell state from the first command. Use this mode for stateless request handling. Create or retrieve an explicit session when you want commands to share shell state.
