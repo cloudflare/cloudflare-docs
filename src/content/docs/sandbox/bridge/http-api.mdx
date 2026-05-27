@@ -151,7 +151,7 @@ When `endpoint` is provided, `bucket` means the remote bucket name. Credentials 
 
 Sessions isolate working directory, environment variables, and command execution state within a sandbox. Pass the `Session-Id` header on `/exec`, `/file/*`, and `/pty` requests to scope them to a session.
 
-When no `Session-Id` header is provided, requests use the sandbox default session.
+When no `Session-Id` header is provided, requests use the sandbox's implicit execution mode. By default this is the default session, but SDKs configured with `enableDefaultSession: false` run those implicit operations sessionless instead.
 
 ## Terminal (PTY)
 

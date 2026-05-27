@@ -30,6 +30,7 @@ const sandbox = getSandbox(
 - `binding` - The Durable Object namespace binding from your Worker environment
 - `sandboxId` - Unique identifier for this sandbox. The same ID always returns the same sandbox instance. In user-facing apps, scope IDs to a single user.
 - `options` (optional) - See [SandboxOptions](/sandbox/configuration/sandbox-options/) for all available options:
+  - `enableDefaultSession` - Use the default session for operations without an explicit `sessionId` (default: `true`)
   - `sleepAfter` - Duration of inactivity before automatic sleep (default: `"10m"`)
   - `keepAlive` - Prevent automatic sleep entirely. Persists across hibernation (default: `false`)
   - `containerTimeouts` - Configure container startup timeouts
@@ -39,6 +40,10 @@ const sandbox = getSandbox(
 
 :::note
 The container starts lazily on first operation. Calling `getSandbox()` returns immediately—the container only spins up when you execute a command, write a file, or perform other operations. See [Sandbox lifecycle](/sandbox/concepts/sandboxes/) for details.
+:::
+
+:::note[Implicit execution mode]
+By default, sandbox methods that do not specify a `sessionId` run in the sandbox's default session and preserve shell state between calls. Set `enableDefaultSession: false` to make those same implicit operations run sessionless instead. This is useful for stateless request handling where one call should not inherit shell state such as a previous `cd` or exported variable.
 :::
 
 <TypeScriptExample>
@@ -54,6 +59,19 @@ export default {
 };
 ```
 </TypeScriptExample>
+
+<TypeScriptExample>
+```
+const sandbox = getSandbox(env.Sandbox, 'stateless-worker', {
+  enableDefaultSession: false
+});
+
+await sandbox.exec('cd /workspace/app');
+await sandbox.exec('pwd');
+```
+</TypeScriptExample>
+
+When `enableDefaultSession` is `false`, the second command does not inherit shell state from the first command. Create or retrieve an explicit session when you want stateful execution.
 
 :::caution
 When using `keepAlive: true`, you **must** call `destroy()` when finished to prevent containers running indefinitely.

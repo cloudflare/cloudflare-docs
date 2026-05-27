@@ -17,7 +17,7 @@ Sessions are useful for organizing work inside one sandbox. They are not a secur
 
 ## Default session
 
-Every sandbox has a default session that maintains shell state between commands while the container is active:
+By default, every sandbox has a default session that maintains shell state between commands while the container is active:
 
 ```typescript
 const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
@@ -31,6 +31,19 @@ await sandbox.exec("echo $MY_VAR");  // Output: hello
 ```
 
 Working directory, environment variables, and exported variables carry over between commands. This state resets if the container restarts due to inactivity.
+
+If you set `enableDefaultSession: false` when calling `getSandbox()`, operations without an explicit `sessionId` run sessionless instead of using the default session:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox', {
+  enableDefaultSession: false
+});
+
+await sandbox.exec("cd /app");
+await sandbox.exec("pwd");
+```
+
+In sessionless mode, the second command does not inherit shell state from the first command. Use this mode for stateless request handling. Create or retrieve an explicit session when you want commands to share shell state.
 
 ### Automatic session creation
 
