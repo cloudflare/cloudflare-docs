@@ -820,6 +820,9 @@
 /email-routing/troubleshooting/ /email-service/reference/troubleshooting/ 301
 /email-routing/troubleshooting/email-routing-dns-records/ /email-service/configuration/domains/ 301
 /email-routing/troubleshooting/email-routing-spf-records/ /email-service/reference/troubleshooting/#multiple-spf-records 301
+
+# Changelog (entries moved to email-service product folder)
+/changelog/product/email-routing/ /changelog/product/email-service/ 301
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
 /firewall/api/cf-lists/endpoints/ /waf/tools/lists/lists-api/endpoints/ 301
@@ -2730,6 +2733,7 @@
 # Email Routing (merged into Email Service) — catch-all for any paths not
 # enumerated in the static section above
 /email-routing/* /email-service/ 301
+/changelog/product/email-routing/* /changelog/product/email-service/ 301
 
 # AI Gateway
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
