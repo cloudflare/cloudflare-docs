@@ -25,9 +25,9 @@ const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
 **Type**: `boolean`
 **Default**: `true`
 
-Controls what happens when you call sandbox methods without an explicit `sessionId`. When `true`, implicit operations use the sandbox's default session and preserve shell state between calls. When `false`, implicit operations run sessionless and do not inherit shell state from prior calls unless you explicitly target a session.
+Controls what happens when you call sandbox methods without an explicit `sessionId`. When `true`, implicit operations use the sandbox's default session and preserve shell state between calls. When `false`, implicit operations run in isolation and do not inherit shell state from prior calls unless you explicitly target a session.
 
-Use `enableDefaultSession: true` for interactive or stateful workflows where commands should share working directory and exported variables. Use `enableDefaultSession: false` for stateless request handling where one call should not affect the next one.
+Use `enableDefaultSession: true` for interactive or stateful workflows where commands should share working directory and exported variables. Use `enableDefaultSession: false` for stateless request handling where one call should not affect the next one. It is recommended to set this to `false` — default session support will be removed in a future version of the Sandbox SDK, and using `createSession()` explicitly is the preferred pattern going forward.
 
 <TypeScriptExample>
 ```ts

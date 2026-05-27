@@ -13,7 +13,7 @@ import { TypeScriptExample } from "~/components";
 Create shell sessions within a sandbox. Each session maintains its own shell state, environment variables, and working directory, while sharing the sandbox filesystem and process space. For more information, refer to [Session management](/sandbox/concepts/sessions/).
 
 :::note
-By default, every sandbox has a default session that maintains shell state. Set `enableDefaultSession: false` on `getSandbox()` if you want operations without an explicit `sessionId` to run sessionless instead. Create additional sessions for separate workflows inside the same user workspace, such as development and runtime processes. Use separate sandboxes for separate users. For sandbox-level operations like creating containers or destroying the entire sandbox, refer to the [Lifecycle API](/sandbox/api/lifecycle/).
+By default, for backwards compatibility, every sandbox has a default session that maintains shell state. It is recommended to set `enableDefaultSession` to `false` on `getSandbox()` so operations without an explicit `sessionId` run in isolation. Create additional sessions for separate workflows inside the same user workspace, such as development and runtime processes using the `createSession()` method. Use separate sandboxes for separate users. For sandbox-level operations like creating containers or destroying the entire sandbox, refer to the [Lifecycle API](/sandbox/api/lifecycle/).
 :::
 
 ## Methods

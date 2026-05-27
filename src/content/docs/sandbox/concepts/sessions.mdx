@@ -32,7 +32,7 @@ await sandbox.exec("echo $MY_VAR");  // Output: hello
 
 Working directory, environment variables, and exported variables carry over between commands. This state resets if the container restarts due to inactivity.
 
-If you set `enableDefaultSession: false` when calling `getSandbox()`, operations without an explicit `sessionId` run sessionless instead of using the default session:
+If you set `enableDefaultSession: false` when calling `getSandbox()`, operations without an explicit `sessionId` run in isolation instead of using the default session:
 
 ```typescript
 const sandbox = getSandbox(env.Sandbox, 'my-sandbox', {
@@ -43,7 +43,7 @@ await sandbox.exec("cd /app");
 await sandbox.exec("pwd");  // Output: /workspace (cd was not inherited)
 ```
 
-In sessionless mode, the second command does not inherit shell state from the first command. Use this mode for stateless request handling. Create or retrieve an explicit session when you want commands to share shell state.
+Without the default session, the second command does not inherit shell state from the first command. It is recommended that you always apply this setting as it will become the default in a future Sandbox SDK release. Create or retrieve an explicit session when you want commands to share shell state.
 
 ### Automatic session creation
 

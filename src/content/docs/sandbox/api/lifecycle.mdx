@@ -30,7 +30,7 @@ const sandbox = getSandbox(
 - `binding` - The Durable Object namespace binding from your Worker environment
 - `sandboxId` - Unique identifier for this sandbox. The same ID always returns the same sandbox instance. In user-facing apps, scope IDs to a single user.
 - `options` (optional) - See [SandboxOptions](/sandbox/configuration/sandbox-options/) for all available options:
-  - `enableDefaultSession` - Use the default session for operations without an explicit `sessionId` (default: `true`)
+  - `enableDefaultSession` - Use the default session for operations without an explicit `sessionId`. Set to `false` to evaluate each call in isolation (default: `true`)
   - `sleepAfter` - Duration of inactivity before automatic sleep (default: `"10m"`)
   - `keepAlive` - Prevent automatic sleep entirely. Persists across hibernation (default: `false`)
   - `containerTimeouts` - Configure container startup timeouts
@@ -43,7 +43,7 @@ The container starts lazily on first operation. Calling `getSandbox()` returns i
 :::
 
 :::note[Implicit execution mode]
-By default, sandbox methods that do not specify a `sessionId` run in the sandbox's default session and preserve shell state between calls. Set `enableDefaultSession: false` to make those same implicit operations run sessionless instead. This is useful for stateless request handling where one call should not inherit shell state such as a previous `cd` or exported variable.
+By default, sandbox methods that do not specify a `sessionId` run in the sandbox's default session and preserve shell state between calls. It is recommended to set `enableDefaultSession` to `false` to ensure operations run in isolation. The `createSession()` API exists when sessions are required. Default sessions will be removed in a future version of the Sandbox SDK.
 :::
 
 <TypeScriptExample>
