@@ -37,22 +37,24 @@ Accounts on a paid plan can send emails to any recipient, subject to daily sendi
 
 The following limits apply only when sending emails via the [Workers binding](/email-service/api/send-emails/workers-api/). They do not apply to the REST API.
 
-| Limit           | Value            | Notes                          |
-| --------------- | ---------------- | ------------------------------ |
-| **CPU time**    | 50ms per request | Standard Workers CPU limit     |
-| **Subrequests** | 50 per request   | Includes email send operations |
-| **Memory**      | 128MB            | Standard Workers memory limit  |
+| Limit           | Workers Free | Workers Paid                      |
+| --------------- | ------------ | --------------------------------- |
+| **CPU time**    | 10 ms        | 30 seconds default, up to 5 min   |
+| **Subrequests** | 50           | 10,000 (up to 10M with overrides) |
+| **Memory**      | 128 MB       | 128 MB                            |
+
+Email Sending requires the [Workers Paid plan](/email-service/platform/pricing/). For full details and how to raise per-Worker CPU and subrequest limits, refer to [Workers platform limits](/workers/platform/limits/).
 
 ## Email Routing limits
 
 The following limits apply to inbound email handled by Email Routing.
 
-| Limit                          | Value  | Notes                                                                |
-| ------------------------------ | ------ | -------------------------------------------------------------------- |
-| **Rules per domain**           | 200    | Each rule maps one custom address to a destination                   |
-| **Addresses per domain**       | 200    | Custom addresses configured on the domain                            |
-| **Inbound message size**       | 25 MiB | Messages larger than this are rejected                               |
-| **Reply `References` entries** | 100    | Limit on incoming emails replied to by Workers; reduces reply loops  |
+| Limit                          | Value  | Notes                                                               |
+| ------------------------------ | ------ | ------------------------------------------------------------------- |
+| **Rules per domain**           | 200    | Each rule maps one custom address to a destination                  |
+| **Addresses per domain**       | 200    | Custom addresses configured on the domain                           |
+| **Inbound message size**       | 25 MiB | Messages larger than this are rejected                              |
+| **Reply `References` entries** | 100    | Limit on incoming emails replied to by Workers; reduces reply loops |
 
 Each rule maps one custom address to one destination address or one Email Worker. To forward a single custom address to multiple destinations, use an Email Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
 

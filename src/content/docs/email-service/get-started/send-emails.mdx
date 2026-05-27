@@ -10,14 +10,7 @@ products:
   - email-service
 ---
 
-import {
-	Render,
-	PackageManagers,
-	Steps,
-	Tabs,
-	TabItem,
-	WranglerConfig,
-} from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 Send emails from your applications using Cloudflare Email Service. You can use the **REST API** from any platform or the **Workers binding** for applications built on Cloudflare Workers.
 
@@ -54,14 +47,14 @@ A successful response includes the delivery status for each recipient:
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": {
-    "delivered": ["recipient@example.com"],
-    "permanent_bounces": [],
-    "queued": []
-  }
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"delivered": ["recipient@example.com"],
+		"permanent_bounces": [],
+		"queued": []
+	}
 }
 ```
 
@@ -84,19 +77,19 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
 2.  Add the email binding to your Wrangler configuration file:
 
     <WranglerConfig>
-
-    ```jsonc
-    {
-    	"send_email": [
-    		{
-    			"name": "EMAIL",
-    			"remote": true,
-    		},
-    	],
-    }
-    ```
-
-    </WranglerConfig>
+        
+            ```jsonc
+            {
+            	"send_email": [
+            		{
+            			"name": "EMAIL",
+            			"remote": true,
+            		},
+            	],
+            }
+            ```
+        
+            </WranglerConfig>
 
 3.  Create your Worker code in `src/index.ts`:
 

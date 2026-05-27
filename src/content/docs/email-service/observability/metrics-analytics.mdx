@@ -8,6 +8,8 @@ products:
   - email-service
 ---
 
+import { DashButton } from "~/components";
+
 Email Service exposes analytics that allow you to inspect email sending performance and delivery rates across all your domains.
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
@@ -16,10 +18,12 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 
 Email Service currently exposes the below metrics:
 
-| Dataset              | GraphQL Dataset Name         | Description                                                                                                               |
-| -------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Sending (aggregated) | `emailSendingAdaptiveGroups` | Aggregated email sending counts grouped by dimensions such as status, date, sending domain, and authentication results.   |
-| Sending (events)     | `emailSendingAdaptive`       | Individual email sending events with full detail including sender, recipient, subject, message ID, and error information. |
+| Dataset              | GraphQL Dataset Name         | Description                                                                                                                  |
+| -------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Sending (aggregated) | `emailSendingAdaptiveGroups` | Aggregated email sending counts grouped by dimensions such as status, date, sending domain, and authentication results.      |
+| Sending (events)     | `emailSendingAdaptive`       | Individual email sending events with full detail including sender, recipient, subject, message ID, and error information.    |
+| Routing (aggregated) | `emailRoutingAdaptiveGroups` | Aggregated email routing counts grouped by dimensions such as status, date, recipient domain, and authentication results.    |
+| Routing (events)     | `emailRoutingAdaptive`       | Individual email routing events with full detail including sender, recipient, subject, message ID, and processing decisions. |
 
 Metrics can be queried (and are retained) for the past 31 days.
 
@@ -27,8 +31,11 @@ Metrics can be queried (and are retained) for the past 31 days.
 
 Per-domain analytics for Email Service are available in the Cloudflare dashboard. To view current and historical metrics:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Compute** > **Email Service**](https://dash.cloudflare.com/?to=/:account/email-service/sending).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Compute** > **Email Service**.
+
+   <DashButton url="/?to=/:account/email-service" />
+
 3. Select an existing domain or view account-wide metrics.
 4. Select the **Analytics** tab.
 
@@ -42,8 +49,10 @@ To get started using the [GraphQL Analytics API](/analytics/graphql-api/), follo
 
 These are **zone-level** datasets. To query them, provide your zone ID (not account ID) as the `zoneTag` filter. The GraphQL datasets for Email Service include:
 
-- `emailSendingAdaptiveGroups` — aggregated counts with groupable dimensions
-- `emailSendingAdaptive` — individual email events
+- `emailSendingAdaptiveGroups` — aggregated email sending counts with groupable dimensions
+- `emailSendingAdaptive` — individual email sending events
+- `emailRoutingAdaptiveGroups` — aggregated email routing counts with groupable dimensions
+- `emailRoutingAdaptive` — individual email routing events
 
 ### Available dimensions
 

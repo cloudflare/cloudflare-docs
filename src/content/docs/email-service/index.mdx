@@ -19,7 +19,6 @@ import {
 	Tabs,
 	TabItem,
 	LinkButton,
-	Badge,
 } from "~/components";
 
 <Description>
@@ -27,8 +26,6 @@ import {
 Send transactional emails and route incoming emails to Workers or email addresses
 
 </Description>
-
-<Plan type="workers-paid" />
 
 :::note
 
@@ -39,7 +36,9 @@ Cloudflare Email Service is currently in beta. Features and APIs may change befo
 Cloudflare Email Service provides powerful email capabilities:
 
 - **Email Sending** for outbound transactional emails
+  <Plan type="workers-paid" />
 - **Email Routing** for handling incoming emails with Workers or routing to email addresses
+  <Plan type="workers-all" />
 
 Together, these two features make it possible for you to send and receive emails from your applications. For example, you can use Email Service for:
 
@@ -79,31 +78,29 @@ export default {
 			from: "welcome@yourdomain.com",
 			subject: "Welcome to our service!",
 			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-			text: "Welcome! Thanks for signing up."
+			text: "Welcome! Thanks for signing up.",
 		});
 
-    	return new Response("Email sent successfully");
-    },
+		return new Response("Email sent successfully");
+	},
 
-    // Handle incoming emails (Email Routing)
-    async email(message, env, ctx): Promise<void> {
-    	// Forward to support team
-    	if (message.to.includes("support@yourdomain.com")) {
-    		await message.forward("team@yourdomain.com");
-    	}
+	// Handle incoming emails (Email Routing)
+	async email(message, env, ctx): Promise<void> {
+		// Forward to support team
+		if (message.to.includes("support@yourdomain.com")) {
+			await message.forward("team@yourdomain.com");
+		}
 
-    	// Send auto-reply
-    	await env.EMAIL.send({
-    		to: message.from,
-    		from: "noreply@yourdomain.com",
-    		subject: "We received your message",
-    		html: "<h1>Thank you!</h1><p>We'll get back to you soon.</p>"
-    	});
-    }
-
+		// Send auto-reply
+		await env.EMAIL.send({
+			to: message.from,
+			from: "noreply@yourdomain.com",
+			subject: "We received your message",
+			html: "<h1>Thank you!</h1><p>We'll get back to you soon.</p>",
+		});
+	},
 } satisfies ExportedHandler<{ EMAIL: SendEmail }>;
-
-````
+```
 </TabItem>
 <TabItem label="wrangler.jsonc">
 ```jsonc
@@ -111,7 +108,7 @@ export default {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
-	"compatibility_date": "2024-01-01",
+	"compatibility_date": "$today",
 
 	// Email sending
 	"send_email": [
@@ -213,7 +210,7 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API a
 
 <LinkTitleCard
 	title="Discord"
-	href="https://discord.com/channels/595317990191398933/893253103695065128"
+	href="https://discord.cloudflare.com"
 	icon="discord"
 >
 	Ask questions and discuss Email Service with other developers.

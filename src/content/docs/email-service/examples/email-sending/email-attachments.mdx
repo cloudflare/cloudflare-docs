@@ -1,5 +1,4 @@
 ---
-type: example
 summary: Send emails with various types of attachments including PDFs, images, and file uploads with proper validation.
 pcx_content_type: example
 title: Email attachments
@@ -79,7 +78,7 @@ async function sendInvoiceWithPDF(
 			{
 				filename: `invoice-${invoiceData.number}.pdf`,
 				content: pdfBase64,
-				contentType: "application/pdf",
+				type: "application/pdf",
 				disposition: "attachment",
 			},
 		],
@@ -179,14 +178,14 @@ async function sendReportWithImages(
 			{
 				filename: "company-logo.png",
 				content: logoImage,
-				contentType: "image/png",
+				type: "image/png",
 				disposition: "inline",
 				contentId: "company-logo",
 			},
 			{
 				filename: "performance-chart.png",
 				content: chartImage,
-				contentType: "image/png",
+				type: "image/png",
 				disposition: "inline",
 				contentId: "performance-chart",
 			},
@@ -300,7 +299,7 @@ async function sendEmailWithUpload(
 			{
 				filename: file.name,
 				content: fileBase64,
-				contentType: file.type,
+				type: file.type,
 				disposition: "attachment",
 			},
 		],
@@ -315,7 +314,10 @@ async function sendEmailWithUpload(
 }
 
 function validateFile(file: File): { valid: boolean; error?: string } {
-	const maxSize = 25 * 1024 * 1024; // 25MB limit
+	// 5 MiB matches the general outbound message size limit. Messages up to
+	// 25 MiB are accepted only when sent to verified destination addresses.
+	// Refer to /email-service/platform/limits/ for details.
+	const maxSize = 5 * 1024 * 1024;
 	const allowedTypes = [
 		"image/jpeg",
 		"image/png",

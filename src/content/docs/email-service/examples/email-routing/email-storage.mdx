@@ -13,9 +13,12 @@ Store and process incoming emails with comprehensive storage, queue processing, 
 
 ## Store emails in KV
 
-Store emails in KV namespace for later processing:
+Store emails in a KV namespace for later processing. This example uses [`mimetext`](https://www.npmjs.com/package/mimetext) to build replies, which requires the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag.
 
 ```typescript
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage } from "mimetext";
+
 interface Env {
 	EMAIL: SendEmail;
 	EMAILS: KVNamespace;
@@ -85,12 +88,19 @@ async function handleSupportEmail(message, env, emailId) {
 
 	await env.SUPPORT_TICKETS.put(ticketId, JSON.stringify(ticketData));
 
-	// Send auto-reply with ticket number
-	await env.EMAIL.send({
-		to: message.from,
-		from: "support@company.com",
-		subject: `Support Ticket Created: ${ticketId}`,
-		html: `
+	// Send threaded auto-reply with ticket number
+	const messageId = message.headers.get("Message-ID");
+	const reply = createMimeMessage();
+	if (messageId) {
+		reply.setHeader("In-Reply-To", messageId);
+		reply.setHeader("References", messageId);
+	}
+	reply.setSender(message.to);
+	reply.setRecipient(message.from);
+	reply.setSubject(`Support Ticket Created: ${ticketId}`);
+	reply.addMessage({
+		contentType: "text/html",
+		data: `
             <h1>Support Ticket Created</h1>
             <p>Your support request has been received and assigned ticket number: <strong>${ticketId}</strong></p>
             <p>We will respond within 2-4 hours during business hours.</p>
@@ -99,6 +109,10 @@ async function handleSupportEmail(message, env, emailId) {
         `,
 	});
 
+	await message.reply(
+		new EmailMessage(message.to, message.from, reply.asRaw()),
+	);
+
 	// Forward to support team
 	await message.forward("support-team@company.com");
 }
@@ -106,9 +120,12 @@ async function handleSupportEmail(message, env, emailId) {
 
 ## Queue-based processing
 
-Process emails asynchronously using Cloudflare Queues:
+Process emails asynchronously using Cloudflare Queues. The `email()` handler sends a threaded acknowledgement with `message.reply()` and enqueues the message for later processing. The queue consumer runs in a separate invocation where the original `EmailMessage` is no longer available, so any follow-up emails it sends use `env.EMAIL.send()` instead.
 
 ```typescript
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage } from "mimetext";
+
 interface Env {
 	EMAIL: SendEmail;
 	EMAIL_QUEUE: Queue;
@@ -181,13 +198,24 @@ export default {
 				delaySeconds: priority === "urgent" ? 0 : priority === "high" ? 5 : 30,
 			});
 
-			// Send immediate auto-reply
-			await env.EMAIL.send({
-				to: message.from,
-				from: message.to,
-				subject: `Re: ${message.headers.get("subject")}`,
-				text: "Thank you for your message. It has been queued for processing.",
+			// Send threaded immediate auto-reply
+			const messageId = message.headers.get("Message-ID");
+			const reply = createMimeMessage();
+			if (messageId) {
+				reply.setHeader("In-Reply-To", messageId);
+				reply.setHeader("References", messageId);
+			}
+			reply.setSender(message.to);
+			reply.setRecipient(message.from);
+			reply.setSubject(`Re: ${message.headers.get("subject")}`);
+			reply.addMessage({
+				contentType: "text/plain",
+				data: "Thank you for your message. It has been queued for processing.",
 			});
+
+			await message.reply(
+				new EmailMessage(message.to, message.from, reply.asRaw()),
+			);
 		} finally {
 			reader.releaseLock();
 		}

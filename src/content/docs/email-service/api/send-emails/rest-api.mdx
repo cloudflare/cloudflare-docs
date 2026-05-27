@@ -12,7 +12,7 @@ import { Tabs, TabItem } from "~/components";
 
 The REST API allows you to send emails from any application using standard HTTP requests. Use it from any backend, serverless function, or CI/CD pipeline — no Cloudflare Workers binding is required.
 
-For the full OpenAPI specification, refer to the [Email Sending API reference](https://developers.cloudflare.com/api/resources/email_sending/methods/send).
+For the full OpenAPI specification, refer to the [Email Sending API reference](/api/resources/email_sending/methods/send/).
 
 ## Endpoint
 
@@ -170,14 +170,14 @@ A successful response returns the delivery status for each recipient:
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": {
-    "delivered": ["recipient@example.com"],
-    "permanent_bounces": [],
-    "queued": []
-  }
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"delivered": ["recipient@example.com"],
+		"permanent_bounces": [],
+		"queued": []
+	}
 }
 ```
 
@@ -191,29 +191,29 @@ The REST API returns standard Cloudflare API error responses. A failed request r
 
 ```json
 {
-  "success": false,
-  "errors": [
-    {
-      "code": 10001,
-      "message": "email.sending.error.invalid_request_schema"
-    }
-  ],
-  "messages": [],
-  "result": null
+	"success": false,
+	"errors": [
+		{
+			"code": 10001,
+			"message": "email.sending.error.invalid_request_schema"
+		}
+	],
+	"messages": [],
+	"result": null
 }
 ```
 
 Common REST API error codes:
 
-| HTTP Status | Code | Message | Description |
-| ----------- | ---- | ------- | ----------- |
-| 400 | 10001 | `email.sending.error.invalid_request_schema` | Invalid request format |
-| 400 | 10200 | `email.sending.error.email.invalid` | Invalid email content |
-| 400 | 10201 | `email.sending.error.email.no_content_length` | Missing content length |
-| 400 | 10202 | `email.sending.error.email.too_big` | Email exceeds size limit |
-| 403 | 10203 | `email.sending.error.email.sending_disabled` | Sending disabled for this zone/account |
-| 429 | 10004 | `email.sending.error.throttled` | Rate limit exceeded |
-| 500 | 10002 | `email.sending.error.internal_server` | Internal server error |
+| HTTP Status | Code  | Message                                       | Description                            |
+| ----------- | ----- | --------------------------------------------- | -------------------------------------- |
+| 400         | 10001 | `email.sending.error.invalid_request_schema`  | Invalid request format                 |
+| 400         | 10200 | `email.sending.error.email.invalid`           | Invalid email content                  |
+| 400         | 10201 | `email.sending.error.email.no_content_length` | Missing content length                 |
+| 400         | 10202 | `email.sending.error.email.too_big`           | Email exceeds size limit               |
+| 403         | 10203 | `email.sending.error.email.sending_disabled`  | Sending disabled for this zone/account |
+| 429         | 10004 | `email.sending.error.throttled`               | Rate limit exceeded                    |
+| 500         | 10002 | `email.sending.error.internal_server`         | Internal server error                  |
 
 :::note[Workers binding vs REST API errors]
 The REST API returns standard Cloudflare API numeric error codes, while the [Workers binding](/email-service/api/send-emails/workers-api/) throws errors with string codes (for example, `E_SENDER_NOT_VERIFIED`). Refer to the [Workers API error codes table](/email-service/api/send-emails/workers-api/#error-codes) for the string error codes.
@@ -221,6 +221,6 @@ The REST API returns standard Cloudflare API numeric error codes, while the [Wor
 
 ## Next steps
 
-- Refer to the [Email Sending API reference](https://developers.cloudflare.com/api/resources/email_sending/methods/send) for the full request and response schemas.
+- Refer to the [Email Sending API reference](/api/resources/email_sending/methods/send/) for the full request and response schemas.
 - See the [Workers API](/email-service/api/send-emails/workers-api/) for sending emails directly from Cloudflare Workers using bindings.
 - Review [email headers](/email-service/reference/headers/) for threading, list management, and custom tracking headers.

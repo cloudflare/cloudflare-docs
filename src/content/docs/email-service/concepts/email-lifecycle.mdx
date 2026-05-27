@@ -10,8 +10,6 @@ products:
   - email-service
 ---
 
-import { Tabs, TabItem } from "~/components";
-
 The email lifecycle describes the complete journey of an email from the initial send request through final delivery status. Understanding this process helps you optimize your email implementation and troubleshoot delivery issues.
 
 ## Email processing flow
@@ -33,7 +31,7 @@ flowchart LR
 
 1. **Request received:** The system validates the email format, sender authorization, and message structure. Invalid requests are rejected immediately and do not proceed to the next stage.
 
-2. **Rate limit check:** The system checks sending [limits](/email-service/platform/limits) per account, domain, and recipient to prevent abuse. Requests that exceed these limits are temporarily rejected and must be retried later.
+2. **Rate limit check:** The system checks sending [limits](/email-service/platform/limits/) per account, domain, and recipient to prevent abuse. Requests that exceed these limits are temporarily rejected and must be retried later.
 
 3. **Authentication and reputation**: The system performs email authentication checks and evaluates sender reputation:
    - **SPF (Sender Policy Framework)**: Verifies that the sending IP address is authorized to send emails for the domain by checking DNS TXT records. This prevents domain spoofing and improves deliverability.
