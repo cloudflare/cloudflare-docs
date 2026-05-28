@@ -12,7 +12,7 @@ Cloudflare measures Magic Transit usage based on the 95th percentile of clean ba
 
 To measure 95th percentile bandwidth, Cloudflare records clean bandwidth leaving our global network at five-minute intervals, sorts these measurements in descending order, and discards the top 5% of measurements it recorded. The highest remaining value constitutes the 95th percentile bandwidth measurement for that time period.
 
-#### Cloudflare-originated traffic
+## Cloudflare-originated traffic
 
 Clean bandwidth includes all egress traffic Cloudflare routes to your network through Magic Transit tunnels and interconnects. This includes traffic that originated from the public Internet, as well as response traffic from services within the Cloudflare network (such as Cloudflare CDN) destined to your servers.
 
