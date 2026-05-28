@@ -176,6 +176,7 @@ Named tunnels bind a user-controlled hostname — `<name>.<your-zone>` — backe
 | Cloudflare-side resources | None                                        | Managed [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) + proxied DNS `CNAME` |
 | Uptime guarantee        | None (debug aid)                              | Backed by your zone's standard Cloudflare SLA                         |
 | TLS certificate         | Cloudflare-owned wildcard                     | Universal SSL on `<name>.<your-zone>` (single DNS label only)         |
+| Server-Sent Events      | Not supported (edge buffers `text/event-stream`) | Supported                                                          |
 
 ### Prerequisites
 
@@ -350,7 +351,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<account-id>/cfd_tunnel?name
 
 - **URLs do not survive container restart.** Cloudflare assigns the hostname during `cloudflared`'s startup handshake, so every restart yields a new URL. The SDK clears its tunnel cache when the container starts, so the next `tunnels.get(port)` returns a fresh record. Use a [named tunnel](#named-tunnels) for a stable hostname.
 - **No uptime guarantee.** Cloudflare positions `trycloudflare.com` as a debug aid, not a production target.
-- **No Server-Sent Events.** The `trycloudflare.com` edge buffers `text/event-stream` responses, so SSE does not reach the client. WebSockets work normally.
+- **No Server-Sent Events.** The `trycloudflare.com` edge buffers `text/event-stream` responses, so SSE events never reach the client. WebSockets work normally. Use a [named tunnel](#named-tunnels) if your service streams SSE.
 
 **Named tunnels only:**
 
