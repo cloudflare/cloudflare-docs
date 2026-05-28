@@ -26,13 +26,13 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags/keys
 
 ### Interpreting the response
 
-| Response                                             | Meaning                                                            | Action                                                                                                                                                        |
-| ---------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **200 OK** with `{"success": true, "result": [...]}` | Tagging is enabled. An empty array is normal if no tags exist yet. | Proceed to the next step.                                                                                                                                     |
-| **403** mentioning "permission" or "role"            | The caller lacks required permissions.                             | Verify the caller has a Super Admin, Workers Admin, or Tag Admin role, or that the token has `#com.cloudflare.api.account.tag.list` scope.                    |
-| **403** mentioning "feature" or "gate"               | Tagging is not enabled for this account.                           | Contact [Cloudflare support](/support/contacting-cloudflare-support/) for assistance.                                                                         |
-| **401 Unauthorized**                                 | Authentication failed.                                             | Verify the token is valid, not expired, and formatted correctly in the `Authorization: Bearer` header.                                                        |
-| Any other response                                   | Unexpected error.                                                  | Capture the full response body and contact [Cloudflare support](/support/contacting-cloudflare-support/) with the Account ID, request details, and timestamp. |
+| Response | Meaning | Action |
+| --- | --- | --- |
+| **200 OK** with `{"success": true, "result": [...]}` | Tagging is enabled. An empty array is normal if no tags exist yet. | Proceed to the next step. |
+| **403** mentioning "permission" or "role" | The caller lacks required permissions. | Verify the caller has a Super Admin, Workers Admin, or Tag Admin role, or that the token has `#com.cloudflare.api.account.tag.list` scope. |
+| **403** mentioning "feature" or "gate" | Tagging is not enabled for this account. | Contact [Cloudflare support](/support/contacting-cloudflare-support/) for assistance. |
+| **401 Unauthorized** | Authentication failed. | Verify the token is valid, not expired, and formatted correctly in the `Authorization: Bearer` header. |
+| Any other response | Unexpected error. | Capture the full response body and contact [Cloudflare support](/support/contacting-cloudflare-support/) with the Account ID, request details, and timestamp. |
 
 ## 2. Create your first tags
 

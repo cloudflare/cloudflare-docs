@@ -5,17 +5,16 @@ description: API reference for rtk-participant-count component (Angular Library)
 products:
   - realtime
 ---
-
 A component which shows count of total joined participants in a meeting.
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `size`     | `Size`     | ✅       | -                 | Size           |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -30,5 +29,9 @@ A component which shows count of total joined participants in a meeting.
 
 ```html
 <!-- component.html -->
-<rtk-participant-count [meeting]="meeting" size="md"> </rtk-participant-count>
+<rtk-participant-count
+ [meeting]="meeting"
+ size="md">
+</rtk-participant-count>
 ```
+

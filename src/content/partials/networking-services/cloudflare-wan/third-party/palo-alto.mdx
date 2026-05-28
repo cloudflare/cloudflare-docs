@@ -11,32 +11,32 @@ This guide provides step-by-step instructions for configuring Palo Alto Networks
 
 ## Test Environment
 
-| **Field**   | **Value**          |
-| ----------- | ------------------ |
-| Vendor      | Palo Alto Networks |
-| Model       | PA-440             |
-| Release     | PAN-OS 11.2.8      |
-| Date Tested | March 2026         |
+| **Field**                          | **Value**                                  |
+| ---------------------------------- | ------------------------------------------ |
+| Vendor                             | Palo Alto Networks                         |
+| Model                              | PA-440                                     |
+| Release                            | PAN-OS 11.2.8                              |
+| Date Tested                        | March 2026                                 |
 
 ## IKE/IPsec Crypto & Relevant Settings
 
-| **Field**                          | **Value**       |
-| ---------------------------------- | --------------- |
-| Traffic Selection Criteria         | Route-Based VPN |
-| Routing                            | Static          |
-| Redundant Tunnels                  | Yes             |
-| Tunnel Load Balancing              | Active/Active   |
-| IKE Version                        | IKEv2           |
-| Authentication                     | Pre-Shared Key  |
-| Anti-Replay Protection             | Disabled        |
-| NAT Traversal (NAT-T)              | Not Tested      |
-| NAT-T Port                         | Not Applicable  |
-| Phase 1 - DH-Group                 | Group 20        |
-| Phase 1 - Encryption               | AES-256-CBC     |
-| Phase 1 - Authentication/Integrity | SHA-256         |
-| Phase 2 - DH-Group                 | Group 20        |
-| Phase 2 - Transport                | ESP             |
-| Phase 2 - Encryption               | AES-256-CBC     |
+| **Field**                          | **Value**                                  |
+| ---------------------------------- | ------------------------------------------ |
+| Traffic Selection Criteria         | Route-Based VPN                            |
+| Routing                            | Static                                     |
+| Redundant Tunnels                  | Yes                                        |
+| Tunnel Load Balancing              | Active/Active                              |
+| IKE Version                        | IKEv2                                      |
+| Authentication                     | Pre-Shared Key                             |
+| Anti-Replay Protection             | Disabled                                   |
+| NAT Traversal (NAT-T)              | Not Tested                                 |
+| NAT-T Port                         | Not Applicable                             |
+| Phase 1 - DH-Group                 | Group 20                                   |
+| Phase 1 - Encryption               | AES-256-CBC                                |
+| Phase 1 - Authentication/Integrity | SHA-256                                    |
+| Phase 2 - DH-Group                 | Group 20                                   |
+| Phase 2 - Transport                | ESP                                        |
+| Phase 2 - Encryption               | AES-256-CBC                                |
 
 ## Cloudflare WAN and Palo Alto Networks NGFW - Configuration Settings
 
@@ -46,85 +46,85 @@ This guide provides step-by-step instructions for configuring Palo Alto Networks
 
 ### Cloudflare WAN - Tunnel 01 of 02
 
-| **Attribute**                     | **Value/Address** |
-| --------------------------------- | ----------------- |
-| Name (required)                   | CF_WAN_TUN_01     |
-| Description                       | ---               |
-| IPv4 Interface Address (required) | 169.254.250.0/31  |
-| IPv6 Interface Address            | ---               |
-| Customer Endpoint                 | 203.0.113.100     |
-| Cloudflare Endpoint               | 162.159.135.1     |
-| Tunnel health checks              | True              |
-| Rate                              | Medium            |
-| **Type**                          | **Request**       |
-| **Direction**                     | **Bidirectional** |
-| Target                            | Default           |
-| ---                               | ---               |
-| Turn on replay protection         | False             |
-| **Automatic return routing**      | **True**          |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_01                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.0/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 162.159.135.1                                  |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
 
 - IKE Identity and Pre-shared Key (obtained after tunnel creation):
 
-| **Attribute**  | **Value/Address**                           |
-| -------------- | ------------------------------------------- |
-| FQDN ID        | `bf6c493d03<REDACTED>.ipsec.cloudflare.com` |
-| Pre-shared key | Cloudflare-WAN-T1-PSK-1234!                 |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `bf6c493d03<REDACTED>.ipsec.cloudflare.com`    |
+| Pre-shared key                       | Cloudflare-WAN-T1-PSK-1234!                    |
 
 ### Cloudflare WAN - Tunnel 02 of 02
 
-| **Attribute**                     | **Value/Address** |
-| --------------------------------- | ----------------- |
-| Name (required)                   | CF_WAN_TUN_02     |
-| Description                       | ---               |
-| IPv4 Interface Address (required) | 169.254.250.2/31  |
-| IPv6 Interface Address            | ---               |
-| Customer Endpoint                 | 203.0.113.100     |
-| Cloudflare Endpoint               | 172.64.135.1      |
-| Tunnel health checks              | True              |
-| Rate                              | Medium            |
-| **Type**                          | **Request**       |
-| **Direction**                     | **Bidirectional** |
-| Target                            | Default           |
-| ---                               | ---               |
-| Turn on replay protection         | False             |
-| **Automatic return routing**      | **True**          |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_02                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.2/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 172.64.135.1                                   |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
 
 - IKE Identity and Pre-shared Key (obtained after tunnel creation):
 
-| **Attribute**  | **Value/Address**                           |
-| -------------- | ------------------------------------------- |
-| FQDN ID        | `0287844e9d<REDACTED>.ipsec.cloudflare.com` |
-| Pre-shared key | Cloudflare-WAN-T2-PSK-1234!                 |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `0287844e9d<REDACTED>.ipsec.cloudflare.com`    |
+| Pre-shared key                       | Cloudflare-WAN-T2-PSK-1234!                    |
 
 ## Customer Premise Equipment - Palo Alto Networks
 
-| **WAN Interface** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
-| ----------------- | ------------------- | ------------------- |
-| WAN Interface     | ethernet1/1         | ethernet1/1         |
-| IP Address        | 203.0.113.100/24    | 203.0.113.100/24    |
-| Security Zone     | untrust             | untrust             |
+| **WAN Interface**                  | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ---------------------------------- | --------------------- | --------------------- |
+| WAN Interface                      | ethernet1/1           | ethernet1/1           |
+| IP Address                         | 203.0.113.100/24      | 203.0.113.100/24      |
+| Security Zone                      | untrust               | untrust               |
 
-| **Virtual Tunnel Interface (VTI)** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
-| ---------------------------------- | ------------------- | ------------------- |
-| Tunnel interface                   | tunnel.1            | tunnel.2            |
-| IP Address                         | 169.254.250.1/31    | 169.254.250.3/31    |
-| Security Zone                      | cloudflare          | cloudflare          |
+| **Virtual Tunnel Interface (VTI)** | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ---------------------------------- | --------------------- | --------------------- |
+| Tunnel interface                   | tunnel.1              | tunnel.2              |
+| IP Address                         | 169.254.250.1/31      | 169.254.250.3/31      |
+| Security Zone                      | cloudflare            | cloudflare            |
 
-| **LAN Interface** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
-| ----------------- | ------------------- | ------------------- |
-| LAN Interface     | ethernet1/2         | ethernet1/2         |
-| IP Address        | 192.168.125.1/24    | 192.168.125.1/24    |
-| Security Zone     | trust               | trust               |
+| **LAN Interface**                  | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ---------------------------------- | --------------------- | --------------------- |
+| LAN Interface                      | ethernet1/2           | ethernet1/2           |
+| IP Address                         | 192.168.125.1/24      | 192.168.125.1/24      |
+| Security Zone                      | trust                 | trust                 |
 
 ### Palo Alto Networks NGFW Object Names
 
-| **Role**                           | **Label/Name**       | **Address**                 |
-| ---------------------------------- | -------------------- | --------------------------- |
-| CPE Security Zone - Trust          | Zone                 | trust                       |
-| CPE Security Zone - Untrust        | Zone                 | untrust                     |
-| CPE Security Zone - Cloudflare WAN | Zone                 | cloudflare                  |
-| CPE IKE Crypto Profile Name        | IKE Crypto Profile   | ike-aes256cbc-sha256-dh20   |
-| CPE IPsec Crypto Profile Name      | IPsec Crypto Profile | ipsec-aes256cbc-sha256-dh20 |
+| **Role**                           | **Label/Name**            | **Address**                 |
+| ---------------------------------- | ------------------------- | --------------------------- |
+| CPE Security Zone - Trust          | Zone                      | trust                       |
+| CPE Security Zone - Untrust        | Zone                      | untrust                     |
+| CPE Security Zone - Cloudflare WAN | Zone                      | cloudflare                  |
+| CPE IKE Crypto Profile Name        | IKE Crypto Profile        | ike-aes256cbc-sha256-dh20   |
+| CPE IPsec Crypto Profile Name      | IPsec Crypto Profile      | ipsec-aes256cbc-sha256-dh20 |
 
 ## Assumptions
 
@@ -271,12 +271,12 @@ Repeat steps for tunnel 2
 
 Define an IKE Crypto Profile with the following settings:
 
-| **Attribute**  | **Value**   |
-| -------------- | ----------- |
-| hash           | sha256      |
-| dh-group       | group20     |
-| encryption     | aes-256-cbc |
-| lifetime hours | 8           |
+| **Attribute**   | **Value**   |
+| --------------- | ----------- |
+| hash            | sha256      |
+| dh-group        | group20     |
+| encryption      | aes-256-cbc |
+| lifetime hours  | 8           |
 
 ###### CLI
 
@@ -639,10 +639,10 @@ Gateway ID      Peer-Address       Gateway Name       Role SN    Algorithm      
 
 ```txt
 IKEv2 IPSec Child SAs
-Gateway Name                   TnID     Tunnel                     ID       Parent   Role SPI(in)  SPI(out) MsgID    ST
-------------                   ----     ------                     --       ------   ---- -------  -------- -----    --
-cf-wan-ike-gw-01               1        cf-wan-ipsec-tun-01        452741   97       Init B7D055D3 4CB26B43 00000001 Mature
-cf-wan-ike-gw-02               2        cf-wan-ipsec-tun-02        452742   98       Init B4629A07 165D416C 00000001 Mature
+Gateway Name                   TnID     Tunnel                     ID       Parent   Role SPI(in)  SPI(out) MsgID    ST              
+------------                   ----     ------                     --       ------   ---- -------  -------- -----    --              
+cf-wan-ike-gw-01               1        cf-wan-ipsec-tun-01        452741   97       Init B7D055D3 4CB26B43 00000001 Mature           
+cf-wan-ike-gw-02               2        cf-wan-ipsec-tun-02        452742   98       Init B4629A07 165D416C 00000001 Mature           
 
 Show IKEv2 SA: Total 2 gateways found. 2 ike sa found.
 ```
@@ -652,7 +652,7 @@ Show IKEv2 SA: Total 2 gateways found. 2 ike sa found.
 Use [test](https://docs.paloaltonetworks.com/network-security/ipsec-vpn/administration/troubleshooting/troubleshooting-site-to-site-vpn-issues-using-cli) commands to force Phase 1 and Phase 2 security associations:
 
 ```txt
-admin@panfw01> test vpn ike-sa gateway cf-wan-ike-gw-01
+admin@panfw01> test vpn ike-sa gateway cf-wan-ike-gw-01 
 
 Start time: Mar.30 21:23:23
 Initiate 1 IKE SA.
@@ -664,7 +664,7 @@ Initiate 1 IKE SA.
 ```
 
 ```txt
-admin@panfw01> test vpn ipsec-sa tunnel cf-wan-ipsec-tun-01
+admin@panfw01> test vpn ipsec-sa tunnel cf-wan-ipsec-tun-01 
 
 Start time: Mar.30 21:26:50
 Initiate 1 IPSec SA for tunnel cf-wan-ipsec-tun-01.

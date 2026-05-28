@@ -5,24 +5,20 @@ description: API reference for rtk-more-toggle component (Web Components (HTML) 
 products:
   - realtime
 ---
-
 A button which toggles visibility of a more menu.
-When clicked it emits a `rtkStateUpdate` event with the data:
-
-```ts
-{
-	activeMoreMenu: boolean;
-}
-```
+ When clicked it emits a `rtkStateUpdate` event with the data:
+ ```ts
+ { activeMoreMenu: boolean; }
+ ```
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description   |
-| ---------- | ---------- | -------- | ----------------- | ------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack     |
-| `size`     | `Size`     | ✅       | -                 | Size          |
-| `states`   | `States`   | ✅       | -                 | States object |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language      |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -35,11 +31,15 @@ When clicked it emits a `rtkStateUpdate` event with the data:
 ### With Properties
 
 ```html
-<rtk-more-toggle size="md"> </rtk-more-toggle>
+<rtk-more-toggle
+ size="md">
+</rtk-more-toggle>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-more-toggle");
+  const el = document.querySelector("rtk-more-toggle");
+
 </script>
 ```

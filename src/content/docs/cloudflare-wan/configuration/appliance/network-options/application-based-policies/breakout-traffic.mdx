@@ -9,18 +9,15 @@ description: Breakout traffic allows you to define which applications should
 
 import { Render } from "~/components";
 
-<Render
-	file="mconn/network-options/app-aware-policies/breakout-prioritized"
+<Render file="mconn/network-options/app-aware-policies/breakout-prioritized"
 	product="networking-services"
 	params={{
-		magicWord: "breakout",
-		featureName: "Breakout traffic",
-		trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
-		whatHappensApp:
-			"will now go directly to the Internet and bypass Cloudflare's filtering",
-		dashName: "Cloudflare WAN",
-	}}
-/>
+	magicWord: "breakout",
+	featureName: "Breakout traffic",
+	trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
+	whatHappensApp: "will now go directly to the Internet and bypass Cloudflare's filtering",
+	dashName: "Cloudflare WAN",
+	}} />
 
 ## Breakout by source
 
@@ -30,10 +27,10 @@ Source-based breakout is configured via the API and Terraform.
 
 ### Match criteria
 
-| Criterion              | Behavior                                                                                                            |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Source LAN interface   | All traffic originating on the selected LAN is broken out. Any VLAN attached to that LAN is included automatically. |
-| Source CIDR / IP range | All traffic with a source IP in the specified range is broken out. Accepts a single IP, a range, or a CIDR block.   |
+| Criterion             | Behavior                                                                                          |
+| --------------------- | ------------------------------------------------------------------------------------------------- |
+| Source LAN interface  | All traffic originating on the selected LAN is broken out. Any VLAN attached to that LAN is included automatically. |
+| Source CIDR / IP range| All traffic with a source IP in the specified range is broken out. Accepts a single IP, a range, or a CIDR block.   |
 
 The same criteria can be used to mark traffic as **prioritized** instead of broken out. Refer to [Prioritized traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) for details.
 

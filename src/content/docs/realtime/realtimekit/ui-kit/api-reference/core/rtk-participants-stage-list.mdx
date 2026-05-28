@@ -5,23 +5,22 @@ description: API reference for rtk-participants-stage-list component (Web Compon
 products:
   - realtime
 ---
-
 A component which lists all participants, with ability to
-run privileged actions on each participant according to your permissions.
+ run privileged actions on each participant according to your permissions.
 
 ## Properties
 
-| Property     | Type                   | Required | Default                 | Description                          |
-| ------------ | ---------------------- | -------- | ----------------------- | ------------------------------------ |
-| `config`     | `UIConfig`             | ❌       | `createDefaultConfig()` | Config                               |
-| `hideHeader` | `boolean`              | ✅       | -                       | Hide Stage Participants Count Header |
-| `iconPack`   | `IconPack`             | ❌       | `defaultIconPack`       | Icon pack                            |
-| `meeting`    | `Meeting`              | ✅       | -                       | Meeting object                       |
-| `search`     | `string`               | ✅       | -                       | Search                               |
-| `size`       | `Size`                 | ✅       | -                       | Size                                 |
-| `states`     | `States1`              | ✅       | -                       | Meeting object                       |
-| `t`          | `RtkI18n`              | ❌       | `useLanguage()`         | Language                             |
-| `view`       | `ParticipantsViewMode` | ✅       | -                       | View mode for participants list      |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `hideHeader` | `boolean` | ✅ | - | Hide Stage Participants Count Header |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `search` | `string` | ✅ | - | Search |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
 
 ## Usage Examples
 
@@ -34,14 +33,17 @@ run privileged actions on each participant according to your permissions.
 ### With Properties
 
 ```html
-<rtk-participants-stage-list search="example"> </rtk-participants-stage-list>
+<rtk-participants-stage-list
+ search="example">
+</rtk-participants-stage-list>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-participants-stage-list");
+  const el = document.querySelector("rtk-participants-stage-list");
 
-	el.hideHeader = true;
-	el.meeting = meeting;
+  el.hideHeader= true;
+  el.meeting= meeting
 </script>
 ```

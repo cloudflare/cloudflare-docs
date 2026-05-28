@@ -5,17 +5,16 @@ description: API reference for rtk-participants-stage-queue component (Web Compo
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type                   | Required | Default                 | Description                     |
-| ---------- | ---------------------- | -------- | ----------------------- | ------------------------------- |
-| `config`   | `UIConfig1`            | ❌       | `createDefaultConfig()` | Config                          |
-| `iconPack` | `IconPack1`            | ❌       | `defaultIconPack`       | Icon pack                       |
-| `meeting`  | `Meeting`              | ✅       | -                       | Meeting object                  |
-| `size`     | `Size1`                | ✅       | -                       | Size                            |
-| `t`        | `RtkI18n1`             | ❌       | `useLanguage()`         | Language                        |
-| `view`     | `ParticipantsViewMode` | ✅       | -                       | View mode for participants list |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
 
 ## Usage Examples
 
@@ -28,13 +27,16 @@ products:
 ### With Properties
 
 ```html
-<rtk-participants-stage-queue size="md"> </rtk-participants-stage-queue>
+<rtk-participants-stage-queue
+ size="md">
+</rtk-participants-stage-queue>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-participants-stage-queue");
+  const el = document.querySelector("rtk-participants-stage-queue");
 
-	el.meeting = meeting;
+  el.meeting= meeting
 </script>
 ```

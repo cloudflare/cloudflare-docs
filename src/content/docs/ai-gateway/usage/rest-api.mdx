@@ -18,12 +18,12 @@ No provider SDKs or API keys are needed. Authentication and billing are handled 
 
 Four endpoints are available, each suited to different use cases:
 
-| Endpoint                       | Format                         | Use case                                         |
-| ------------------------------ | ------------------------------ | ------------------------------------------------ |
-| `POST /ai/run`                 | Envelope with `model`, `input` | All models and modalities (LLM, image, TTS, ASR) |
-| `POST /ai/v1/chat/completions` | OpenAI chat completions        | LLMs — OpenAI SDK compatible                     |
-| `POST /ai/v1/responses`        | OpenAI Responses API           | Agentic workflows — OpenAI SDK compatible        |
-| `POST /ai/v1/messages`         | Anthropic Messages API         | LLMs — Anthropic SDK compatible                  |
+| Endpoint | Format | Use case |
+| -------- | ------ | -------- |
+| `POST /ai/run` | Envelope with `model`, `input` | All models and modalities (LLM, image, TTS, ASR) |
+| `POST /ai/v1/chat/completions` | OpenAI chat completions | LLMs — OpenAI SDK compatible |
+| `POST /ai/v1/responses` | OpenAI Responses API | Agentic workflows — OpenAI SDK compatible |
+| `POST /ai/v1/messages` | Anthropic Messages API | LLMs — Anthropic SDK compatible |
 
 ## Authentication
 
@@ -140,13 +140,13 @@ Point the OpenAI SDK `baseURL` at the Cloudflare API:
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-	apiKey: CLOUDFLARE_API_TOKEN,
-	baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
 });
 
 const response = await openai.chat.completions.create({
-	model: "openai/gpt-4.1",
-	messages: [{ role: "user", content: "What is Cloudflare?" }],
+  model: "openai/gpt-4.1",
+  messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
 ```
 
@@ -158,13 +158,13 @@ Uses the OpenAI Responses API format for agentic workflows. Compatible with the 
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-	apiKey: CLOUDFLARE_API_TOKEN,
-	baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
 });
 
 const response = await openai.responses.create({
-	model: "openai/gpt-4.1",
-	input: "What is Cloudflare?",
+  model: "openai/gpt-4.1",
+  input: "What is Cloudflare?",
 });
 ```
 
@@ -194,14 +194,14 @@ Point the Anthropic SDK `baseURL` at the Cloudflare API:
 import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({
-	apiKey: CLOUDFLARE_API_TOKEN,
-	baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
 });
 
 const message = await anthropic.messages.create({
-	model: "anthropic/claude-sonnet-4-5",
-	max_tokens: 512,
-	messages: [{ role: "user", content: "What is Cloudflare?" }],
+  model: "anthropic/claude-sonnet-4-5",
+  max_tokens: 512,
+  messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
 ```
 
@@ -229,11 +229,11 @@ With the OpenAI SDK, set the header via `defaultHeaders`:
 
 ```javascript
 const openai = new OpenAI({
-	apiKey: CLOUDFLARE_API_TOKEN,
-	baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
-	defaultHeaders: {
-		"cf-aig-gateway-id": "my-gateway",
-	},
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+  defaultHeaders: {
+    "cf-aig-gateway-id": "my-gateway",
+  },
 });
 ```
 
@@ -243,17 +243,17 @@ All AI Gateway features configured on that gateway — caching, rate limiting, g
 
 Use `cf-aig-*` headers to control AI Gateway behavior on a per-request basis:
 
-| Header                   | Type        | Description                                             |
-| ------------------------ | ----------- | ------------------------------------------------------- |
-| `cf-aig-skip-cache`      | boolean     | Skip the cache for this request.                        |
-| `cf-aig-cache-ttl`       | number      | Cache TTL in seconds.                                   |
-| `cf-aig-cache-key`       | string      | Custom cache key.                                       |
-| `cf-aig-collect-log`     | boolean     | Turn logging on or off for this request.                |
-| `cf-aig-request-timeout` | number      | Request timeout in milliseconds.                        |
-| `cf-aig-max-attempts`    | number      | Retry attempts (max 5).                                 |
-| `cf-aig-retry-delay`     | number      | Retry delay in milliseconds (max 5000).                 |
-| `cf-aig-backoff`         | string      | Backoff method: `constant`, `linear`, or `exponential`. |
-| `cf-aig-metadata`        | JSON string | Custom metadata to attach to the log entry.             |
+| Header | Type | Description |
+| ------ | ---- | ----------- |
+| `cf-aig-skip-cache` | boolean | Skip the cache for this request. |
+| `cf-aig-cache-ttl` | number | Cache TTL in seconds. |
+| `cf-aig-cache-key` | string | Custom cache key. |
+| `cf-aig-collect-log` | boolean | Turn logging on or off for this request. |
+| `cf-aig-request-timeout` | number | Request timeout in milliseconds. |
+| `cf-aig-max-attempts` | number | Retry attempts (max 5). |
+| `cf-aig-retry-delay` | number | Retry delay in milliseconds (max 5000). |
+| `cf-aig-backoff` | string | Backoff method: `constant`, `linear`, or `exponential`. |
+| `cf-aig-metadata` | JSON string | Custom metadata to attach to the log entry. |
 
 For more details on these options, refer to [Request handling](/ai-gateway/configuration/request-handling/) and [Caching](/ai-gateway/features/caching/).
 

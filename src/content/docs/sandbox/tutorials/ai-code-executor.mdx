@@ -25,7 +25,6 @@ An API that accepts questions like "What's the 100th Fibonacci number?", uses Cl
 <Render file="prereqs" product="workers" />
 
 You'll also need:
-
 - An [Anthropic API key](https://console.anthropic.com/) for Claude
 - [Docker](https://www.docker.com/) running locally
 
@@ -53,11 +52,11 @@ Install the Anthropic SDK:
 
 Replace the contents of `src/index.ts`:
 
-````typescript
-import { getSandbox, type Sandbox } from "@cloudflare/sandbox";
-import Anthropic from "@anthropic-ai/sdk";
+```typescript
+import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
+import Anthropic from '@anthropic-ai/sdk';
 
-export { Sandbox } from "@cloudflare/sandbox";
+export { Sandbox } from '@cloudflare/sandbox';
 
 interface Env {
 	Sandbox: DurableObjectNamespace<Sandbox>;
@@ -66,10 +65,7 @@ interface Env {
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		if (
-			request.method !== "POST" ||
-			new URL(request.url).pathname !== "/execute"
-		) {
+		if (request.method !== 'POST' || new URL(request.url).pathname !== '/execute') {
 			return new Response('POST /execute with { "question": "your question" }');
 		}
 
@@ -77,74 +73,65 @@ export default {
 			const { question } = await request.json();
 
 			if (!question) {
-				return Response.json(
-					{ error: "Question is required" },
-					{ status: 400 },
-				);
+				return Response.json({ error: 'Question is required' }, { status: 400 });
 			}
 
 			// Use Claude to generate Python code
 			const anthropic = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
 			const codeGeneration = await anthropic.messages.create({
-				model: "claude-sonnet-4-5",
+				model: 'claude-sonnet-4-5',
 				max_tokens: 1024,
-				messages: [
-					{
-						role: "user",
-						content: `Generate Python code to answer: "${question}"
+				messages: [{
+					role: 'user',
+					content: `Generate Python code to answer: "${question}"
 
 Requirements:
 - Use only Python standard library
 - Print the result using print()
 - Keep code simple and safe
 
-Return ONLY the code, no explanations.`,
-					},
-				],
+Return ONLY the code, no explanations.`
+				}],
 			});
 
-			const generatedCode =
-				codeGeneration.content[0]?.type === "text"
-					? codeGeneration.content[0].text
-					: "";
+			const generatedCode = codeGeneration.content[0]?.type === 'text'
+				? codeGeneration.content[0].text
+				: '';
 
 			if (!generatedCode) {
-				return Response.json(
-					{ error: "Failed to generate code" },
-					{ status: 500 },
-				);
+				return Response.json({ error: 'Failed to generate code' }, { status: 500 });
 			}
 
 			// Strip markdown code fences if present
 			const cleanCode = generatedCode
-				.replace(/^```python?\n?/, "")
-				.replace(/\n?```\s*$/, "")
+				.replace(/^```python?\n?/, '')
+				.replace(/\n?```\s*$/, '')
 				.trim();
 
 			// Execute the code in a sandbox
-			const sandbox = getSandbox(env.Sandbox, "demo-user");
-			await sandbox.writeFile("/tmp/code.py", cleanCode);
-			const result = await sandbox.exec("python /tmp/code.py");
+			const sandbox = getSandbox(env.Sandbox, 'demo-user');
+			await sandbox.writeFile('/tmp/code.py', cleanCode);
+			const result = await sandbox.exec('python /tmp/code.py');
 
 			return Response.json({
 				success: result.success,
 				question,
 				code: generatedCode,
 				output: result.stdout,
-				error: result.stderr,
+				error: result.stderr
 			});
+
 		} catch (error: any) {
 			return Response.json(
-				{ error: "Internal server error", message: error.message },
-				{ status: 500 },
+				{ error: 'Internal server error', message: error.message },
+				{ status: 500 }
 			);
 		}
 	},
 };
-````
+```
 
 **How it works:**
-
 1. Receives a question via POST to `/execute`
 2. Uses Claude to generate Python code
 3. Writes code to `/tmp/code.py` in the sandbox
@@ -189,11 +176,11 @@ Response:
 
 ```json
 {
-	"success": true,
-	"question": "What is the 10th Fibonacci number?",
-	"code": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)\n\nprint(fibonacci(10))",
-	"output": "55\n",
-	"error": ""
+  "success": true,
+  "question": "What is the 10th Fibonacci number?",
+  "code": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)\n\nprint(fibonacci(10))",
+  "output": "55\n",
+  "error": ""
 }
 ```
 
@@ -241,7 +228,6 @@ curl -X POST https://ai-code-executor.YOUR_SUBDOMAIN.workers.dev/execute \
 ## What you built
 
 You created an AI code execution system that:
-
 - Accepts natural language questions
 - Generates Python code with Claude
 - Executes code securely in isolated sandboxes

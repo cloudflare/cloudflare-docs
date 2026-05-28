@@ -30,18 +30,16 @@ apt-get update && apt-get install -y redis-server
 The container provides a standard Linux filesystem. You can read and write anywhere you have permissions.
 
 **Standard directories**:
-
 - `/workspace` - Default working directory for user code
 - `/tmp` - Temporary files
 - `/home` - User home directory
 - `/usr/bin`, `/usr/local/bin` - Executable binaries
 
 **Example**:
-
 ```typescript
-await sandbox.writeFile("/workspace/app.py", 'print("Hello")');
-await sandbox.writeFile("/tmp/cache.json", "{}");
-await sandbox.exec("ls -la /workspace");
+await sandbox.writeFile('/workspace/app.py', 'print("Hello")');
+await sandbox.writeFile('/tmp/cache.json', '{}');
+await sandbox.exec('ls -la /workspace');
 ```
 
 ## Process management
@@ -49,23 +47,20 @@ await sandbox.exec("ls -la /workspace");
 Processes run as you'd expect in a regular Linux environment.
 
 **Foreground processes** (`exec()`):
-
 ```typescript
-const result = await sandbox.exec("npm test");
+const result = await sandbox.exec('npm test');
 // Waits for completion, returns output
 ```
 
 **Background processes** (`startProcess()`):
-
 ```typescript
-const process = await sandbox.startProcess("node server.js");
+const process = await sandbox.startProcess('node server.js');
 // Returns immediately, process runs in background
 ```
 
 ## Network capabilities
 
 **Outbound connections** work:
-
 ```bash
 curl https://api.example.com/data
 pip install requests
@@ -73,10 +68,9 @@ npm install express
 ```
 
 **Inbound connections** require port exposure:
-
 ```typescript
 const { hostname } = new URL(request.url);
-await sandbox.startProcess("python -m http.server 8000");
+await sandbox.startProcess('python -m http.server 8000');
 const exposed = await sandbox.exposePort(8000, { hostname });
 console.log(exposed.url); // Public URL
 ```
@@ -86,7 +80,6 @@ When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile f
 :::
 
 **Localhost** works within sandbox:
-
 ```bash
 redis-server &      # Start server
 redis-cli ping      # Connect locally
@@ -95,18 +88,15 @@ redis-cli ping      # Connect locally
 ## Security
 
 **Between sandboxes** (isolated):
-
 - Each sandbox is a separate container
 - Filesystem, memory and network are all isolated
 
 **Within sandbox** (shared):
-
 - All processes see the same files
 - Processes can communicate with each other
 - Environment variables are session-scoped
 
 To run untrusted code, use separate sandboxes per user:
-
 ```typescript
 const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
 ```
@@ -114,7 +104,6 @@ const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
 ## Limitations
 
 **Cannot**:
-
 - Load kernel modules or access host hardware
 
 ## Related resources

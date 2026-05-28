@@ -5,17 +5,16 @@ description: API reference for rtk-file-message-view component (Angular Library)
 products:
   - realtime
 ---
-
 A component which renders a file message.
 
 ## Properties
 
-| Property   | Type        | Required | Default           | Description      |
-| ---------- | ----------- | -------- | ----------------- | ---------------- |
-| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack        |
-| `name`     | `string`    | ✅       | -                 | Name of the file |
-| `size`     | `number`    | ✅       | -                 | Size of the file |
-| `url`      | `string`    | ✅       | -                 | Url of the file  |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `name` | `string` | ✅ | - | Name of the file |
+| `size` | `number` | ✅ | - | Size of the file |
+| `url` | `string` | ✅ | - | Url of the file |
 
 ## Usage Examples
 
@@ -30,6 +29,10 @@ A component which renders a file message.
 
 ```html
 <!-- component.html -->
-<rtk-file-message-view name="example" size="42" url="example">
+<rtk-file-message-view
+ name="example"
+ size="42"
+ url="example">
 </rtk-file-message-view>
 ```
+

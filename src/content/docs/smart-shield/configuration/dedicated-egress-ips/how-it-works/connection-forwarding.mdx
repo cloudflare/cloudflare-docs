@@ -38,7 +38,7 @@ flowchart LR
 
 If the server does not have access to an applicable IP, the following options are checked and the first that is possible will take place:
 
-- Another server in the same data center has access to an applicable IP and the connection is forwarded to that server.
+* Another server in the same data center has access to an applicable IP and the connection is forwarded to that server.
 
 ```mermaid
 flowchart LR
@@ -55,7 +55,7 @@ flowchart LR
         Y --egress--> C
 ```
 
-- Another data center in the same location has access to an applicable IP and the connection is forwarded to that data center.
+* Another data center in the same location has access to an applicable IP and the connection is forwarded to that data center.
 
 ```mermaid
 flowchart LR
@@ -77,7 +77,7 @@ flowchart LR
         Y --egress--> C
 ```
 
-- Another data center in a different location has access to an applicable IP. The closest location is selected and connection is forwarded to that location.
+* Another data center in a different location has access to an applicable IP. The closest location is selected and connection is forwarded to that location.
 
 ```mermaid
 flowchart LR

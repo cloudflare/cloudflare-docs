@@ -11,32 +11,32 @@ This guide provides step-by-step instructions for configuring HPE Juniper Networ
 
 ## Test Environment
 
-| **Field**   | **Value**              |
-| ----------- | ---------------------- |
-| Vendor      | HPE Juniper Networking |
-| Model       | SRX 320                |
-| Release     | JUNOS 23.4R2-S3.9      |
-| Date Tested | March 2026             |
+| **Field**                          | **Value**                                      |
+| ---------------------------------- | ---------------------------------------------- |
+| Vendor                             | HPE Juniper Networking                         |
+| Model                              | SRX 320                                        |
+| Release                            | JUNOS 23.4R2-S3.9                              |
+| Date Tested                        | March 2026                                     |
 
 ## IKE/IPsec Crypto & Relevant Settings
 
-| **Field**                          | **Value**       |
-| ---------------------------------- | --------------- |
-| Traffic Selection Criteria         | Route-Based VPN |
-| Routing                            | Static          |
-| Redundant Tunnels                  | Yes             |
-| Tunnel Load Balancing              | Active/Active   |
-| IKE Version                        | IKEv2           |
-| Authentication                     | Pre-Shared Key  |
-| Anti-Replay Protection             | Disabled        |
-| NAT Traversal (NAT-T)              | Not Tested      |
-| NAT-T Port                         | Not Applicable  |
-| Phase 1 - DH-Group                 | Group 20        |
-| Phase 1 - Encryption               | AES-256-CBC     |
-| Phase 1 - Authentication/Integrity | SHA-256         |
-| Phase 2 - DH-Group                 | Group 20        |
-| Phase 2 - Transport                | ESP             |
-| Phase 2 - Encryption               | AES-256-CBC     |
+| **Field**                          | **Value**                                      |
+| ---------------------------------- | ---------------------------------------------- |
+| Traffic Selection Criteria         | Route-Based VPN                                |
+| Routing                            | Static                                         |
+| Redundant Tunnels                  | Yes                                            |
+| Tunnel Load Balancing              | Active/Active                                  |
+| IKE Version                        | IKEv2                                          |
+| Authentication                     | Pre-Shared Key                                 |
+| Anti-Replay Protection             | Disabled                                       |
+| NAT Traversal (NAT-T)              | Not Tested                                     |
+| NAT-T Port                         | Not Applicable                                 |
+| Phase 1 - DH-Group                 | Group 20                                       |
+| Phase 1 - Encryption               | AES-256-CBC                                    |
+| Phase 1 - Authentication/Integrity | SHA-256                                        |
+| Phase 2 - DH-Group                 | Group 20                                       |
+| Phase 2 - Transport                | ESP                                            |
+| Phase 2 - Encryption               | AES-256-CBC                                    |
 
 ## Cloudflare WAN and HPE Juniper Networking SRX Series Firewalls - Configuration Settings
 
@@ -46,92 +46,92 @@ This guide provides step-by-step instructions for configuring HPE Juniper Networ
 
 ### Cloudflare WAN - Tunnel 01 of 02
 
-| **Attribute**                     | **Value/Address** |
-| --------------------------------- | ----------------- |
-| Name (required)                   | CF_WAN_TUN_01     |
-| Description                       | ---               |
-| IPv4 Interface Address (required) | 169.254.250.0/31  |
-| IPv6 Interface Address            | ---               |
-| Customer Endpoint                 | 203.0.113.100     |
-| Cloudflare Endpoint               | 162.159.135.1     |
-| Tunnel health checks              | True              |
-| Rate                              | Medium            |
-| **Type**                          | **Request**       |
-| **Direction**                     | **Bidirectional** |
-| Target                            | Default           |
-| ---                               | ---               |
-| Turn on replay protection         | False             |
-| **Automatic return routing**      | **True**          |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_01                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.0/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 162.159.135.1                                  |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
 
 - IKE Identity and Pre-shared Key (obtained after tunnel creation):
 
-| **Attribute**  | **Value/Address**                           |
-| -------------- | ------------------------------------------- |
-| FQDN ID        | `bf6c493d03<REDACTED>.ipsec.cloudflare.com` |
-| Pre-shared key | Cloudflare-WAN-T1-PSK-1234!                 |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `bf6c493d03<REDACTED>.ipsec.cloudflare.com`      |
+| Pre-shared key                       | Cloudflare-WAN-T1-PSK-1234!                    |
 
 ### Cloudflare WAN - Tunnel 02 of 02
 
-| **Attribute**                     | **Value/Address** |
-| --------------------------------- | ----------------- |
-| Name (required)                   | CF_WAN_TUN_02     |
-| Description                       | ---               |
-| IPv4 Interface Address (required) | 169.254.250.2/31  |
-| IPv6 Interface Address            | ---               |
-| Customer Endpoint                 | 203.0.113.100     |
-| Cloudflare Endpoint               | 172.64.135.1      |
-| Tunnel health checks              | True              |
-| Rate                              | Medium            |
-| **Type**                          | **Request**       |
-| **Direction**                     | **Bidirectional** |
-| Target                            | Default           |
-| ---                               | ---               |
-| Turn on replay protection         | False             |
-| **Automatic return routing**      | **True**          |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_02                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.2/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 172.64.135.1                                   |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
 
 - IKE Identity and Pre-shared Key (obtained after tunnel creation):
 
-| **Attribute**  | **Value/Address**                           |
-| -------------- | ------------------------------------------- |
-| FQDN ID        | `0287844e9d<REDACTED>.ipsec.cloudflare.com` |
-| Pre-shared key | Cloudflare-WAN-T2-PSK-1234!                 |
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `0287844e9d<REDACTED>.ipsec.cloudflare.com`      |
+| Pre-shared key                       | Cloudflare-WAN-T2-PSK-1234!                    |
 
 ## Customer Premise Equipment - HPE Juniper Networking
 
-| **WAN Interface** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
-| ----------------- | ------------------- | ------------------- |
-| WAN Interface     | ge-0/0/0.0          | ge-0/0/0.0          |
-| IP Address        | 203.0.113.100/24    | 203.0.113.100/24    |
-| Security Zone     | untrust             | untrust             |
+| **WAN Interface**                   | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ----------------------------------- | --------------------- | --------------------- |
+| WAN Interface                       | ge-0/0/0.0            | ge-0/0/0.0            |
+| IP Address                          | 203.0.113.100/24      | 203.0.113.100/24      |
+| Security Zone                       | untrust               | untrust               |
 
-| **Virtual Tunnel Interface (VTI)** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
-| ---------------------------------- | ------------------- | ------------------- |
-| Tunnel interface                   | st0.1               | st0.2               |
-| IP Address                         | 169.254.250.1/31    | 169.254.250.3/31    |
-| Security Zone                      | cloudflare          | cloudflare          |
+| **Virtual Tunnel Interface (VTI)**  | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ----------------------------------- | --------------------- | --------------------- |
+| Tunnel interface                    | st0.1                 | st0.2                 |
+| IP Address                          | 169.254.250.1/31      | 169.254.250.3/31      |
+| Security Zone                       | cloudflare            | cloudflare            |
 
-| **LAN Interface** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
-| ----------------- | ------------------- | ------------------- |
-| LAN Interface     | ge-0/0/1.0          | ge-0/0/1.0          |
-| IP Address        | 192.168.125.1/24    | 192.168.125.1/24    |
-| Security Zone     | trust               | trust               |
+| **LAN Interface**                   | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ----------------------------------- | --------------------- | --------------------- |
+| LAN Interface                       | ge-0/0/1.0            | ge-0/0/1.0            |
+| IP Address                          | 192.168.125.1/24      | 192.168.125.1/24      |
+| Security Zone                       | trust                 | trust                 |
 
 ### HPE Juniper Networking SRX Object Names
 
-| **Element**                        | **Object Hierarchy**             | **Name**                        |
-| ---------------------------------- | -------------------------------- | ------------------------------- |
-| Security Zone - Trust              | [ security zones security-zone ] | trust                           |
-| Security Zone - Untrust            | [ security zones security-zone ] | untrust                         |
-| Security Zone - Cloudflare WAN     | [ security zones security-zone ] | cloudflare                      |
-| IKE Proposal (only one required)   | [ security ike proposal ]        | ike-aes256cbc-sha256-dh20       |
-| IKE Policy - Tunnel 1              | [ security ike policy ]          | cf-wan-ike-pol-01               |
-| IKE Policy - Tunnel 2              | [ security ike policy ]          | cf-wan-ike-pol-02               |
-| IKE Gateway - Tunnel 1             | [ security ike gateway ]         | cf-wan-ike-gw-01                |
-| IKE Gateway - Tunnel 2             | [ security ike gateway ]         | cf-wan-ike-gw-02                |
-| IPsec Proposal (only one required) | [ security ipsec proposal ]      | esp-aes256cbc-sha256-128        |
-| IPsec Policy (only one required)   | [ security ipsec policy ]        | ipsec-aes256cbc-sha256-128-dh20 |
-| IPsec Tunnel - Tunnel 1            | [ security ipsec vpn ]           | cf-wan-ipsec-vpn-01             |
-| IPsec Tunnel - Tunnel 2            | [ security ipsec vpn ]           | cf-wan-ipsec-vpn-02             |
+| **Element**                          | **Object Hierarchy**             | **Name**                        |
+| ------------------------------------ | -------------------------------- | ------------------------------- |
+| Security Zone - Trust                | [ security zones security-zone ] | trust                           |
+| Security Zone - Untrust              | [ security zones security-zone ] | untrust                         |
+| Security Zone - Cloudflare WAN       | [ security zones security-zone ] | cloudflare                      |
+| IKE Proposal (only one required)     | [ security ike proposal ]        | ike-aes256cbc-sha256-dh20       |
+| IKE Policy - Tunnel 1                | [ security ike policy ]          | cf-wan-ike-pol-01               |
+| IKE Policy - Tunnel 2                | [ security ike policy ]          | cf-wan-ike-pol-02               |
+| IKE Gateway - Tunnel 1               | [ security ike gateway ]         | cf-wan-ike-gw-01                |
+| IKE Gateway - Tunnel 2               | [ security ike gateway ]         | cf-wan-ike-gw-02                |
+| IPsec Proposal (only one required)   | [ security ipsec proposal ]      | esp-aes256cbc-sha256-128        |
+| IPsec Policy (only one required)     | [ security ipsec policy ]        | ipsec-aes256cbc-sha256-128-dh20 |
+| IPsec Tunnel - Tunnel 1              | [ security ipsec vpn ]           | cf-wan-ipsec-vpn-01             |
+| IPsec Tunnel - Tunnel 2              | [ security ipsec vpn ]           | cf-wan-ipsec-vpn-02             |
 
 ## Assumptions
 
@@ -216,7 +216,7 @@ Configure the following:
 Define an IKE Proposal with the following settings:
 
 | **Attribute**            | **Value**       |
-| ------------------------ | --------------- |
+| ------------------------ | ----------------|
 | authentication-method    | pre-shared-keys |
 | dh-group                 | group20         |
 | authentication-algorithm | sha256          |
@@ -356,13 +356,13 @@ _Perform in Configuration Mode_
 
 The following example allows all source & destination IPs, ports, and protocols/services between `cloudflare` and `trust` as well as between `trust` and `cloudflare`.
 
-| **Attribute**       | **Value**     |
-| ------------------- | ------------- |
-| source-address      | any           |
-| destination-address | any           |
-| application         | any           |
-| action              | permit        |
-| log                 | session-close |
+| **Attribute**            | **Value**     |
+| ------------------------ | ------------- |
+| source-address           | any           |
+| destination-address      | any           |
+| application              | any           |
+| action                   | permit        |
+| log                      | session-close |
 
 ```txt
 set security policies from-zone cloudflare to-zone trust policy cloudflare-to-trust-permit match source-address any
@@ -389,18 +389,18 @@ This example assumes traffic originating from 192.168.125.0/24 (ingress interfac
 Implementing Filter-Based Forwarding (FBF) requires four steps:
 
 1. Create a Forwarding Routing Instance
-   - Think of the Routing Instance as a "bucket" containing an alternate routing table
-   - The Routing Instance contains the destination prefix(es) and next hop addresses (VTI on Cloudflare side of the tunnels)
+    - Think of the Routing Instance as a "bucket" containing an alternate routing table
+    - The Routing Instance contains the destination prefix(es) and next hop addresses (VTI on Cloudflare side of the tunnels)
 2. Create a Firewall Filter
-   - Think of a Firewall Filter as the "brain" that determines which packets to send to the "bucket"
-   - The Firewall Filter acts as a "classifier" that identifies the traffic you want to divert to the Routing Instance
+    - Think of a Firewall Filter as the "brain" that determines which packets to send to the "bucket"
+    - The Firewall Filter acts as a "classifier" that identifies the traffic you want to divert to the Routing Instance
 3. Configure the RIB Group and Bind Routes
-   - Think of this as the "bridge" that copies interface routes to the "bucket"
-   - The Routing Instance is not part of the default routing table.
-   - This step instructs the SRX how to reach directly connected networks and resolve next-hops found in the main table (`inet.0`) and the Cloudflare WAN Routing Instance's routing table `CF_WAN_RI.inet.0`
+    - Think of this as the "bridge" that copies interface routes to the "bucket"
+    - The Routing Instance is not part of the default routing table.
+    - This step instructs the SRX how to reach directly connected networks and resolve next-hops found in the main table (`inet.0`) and the Cloudflare WAN Routing Instance's routing table `CF_WAN_RI.inet.0`
 4. Apply the Firewall Filter to the ingress traffic interface(s)
-   - Think of this as the "trigger" that starts processing packets as they enter the ingress interface
-   - As traffic ingresses the interface(s) to which it is applied, traffic is processed in a top-down fashion
+    - Think of this as the "trigger" that starts processing packets as they enter the ingress interface
+    - As traffic ingresses the interface(s) to which it is applied, traffic is processed in a top-down fashion
 
 #### Define a Routing Instance
 

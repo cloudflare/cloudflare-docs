@@ -15,24 +15,24 @@ import { Markdown } from "~/components";
 
 Before you start the onboarding process, you will have to:
 
-1. Choose a deployment path: Email security provides two deployment modes, [post-delivery](/cloudflare-one/email-security/setup/post-delivery-deployment/) for API and BCC/Journaling and [pre-delivery](/cloudflare-one/email-security/setup/pre-delivery-deployment/) for MX/Inline.
+1. Choose a deployment path: Email security provides two deployment modes, [post-delivery](/cloudflare-one/email-security/setup/post-delivery-deployment/) for API and BCC/Journaling and [pre-delivery](/cloudflare-one/email-security/setup/pre-delivery-deployment/) for MX/Inline. 
 2. Learn about dispositions, impersonation registry, and submissions.
 3. Know the steps to configure your email environment correctly.
 
 The following table compares features available across API, BCC/Journaling and MX/Inline:
 
-| Feature             | Microsoft 365                                       | Google Workspace                  | Others (On-prem/Cloud)                                   |
-| ------------------- | --------------------------------------------------- | --------------------------------- | -------------------------------------------------------- |
-| Deployment type     | API and MX                                          | BCC and MX                        | MX only                                                  |
-| API integration     | Microsoft Graph API                                 | BCC only                          | None                                                     |
-| BCC/Journaling      | Uses a Journal Rule in the Microsoft Purview portal | Uses BCC rules                    | Uses journaling                                          |
-| Inline/MX Mode      | MX records point to Cloudflare                      | MX records point to Cloudflare    | MX records point to Cloudflare                           |
-| Message remediation | Auto-moves through Read/Write API                   | Auto-moves through Read/Write API | Messages can be blocked, quarantined, or modified inline |
+| Feature             	| Microsoft 365                                       	| Google Workspace                  	| Others (On-prem/Cloud)                                   	|
+|---------------------	|-----------------------------------------------------	|-----------------------------------	|----------------------------------------------------------	|
+| Deployment type     	| API and MX                                          	| BCC and MX                        	| MX only                                                  	|
+| API integration     	| Microsoft Graph API                                 	| BCC only                          	| None                                                     	|
+| BCC/Journaling      	| Uses a Journal Rule in the Microsoft Purview portal 	| Uses BCC rules                    	| Uses journaling                                          	|
+| Inline/MX Mode      	| MX records point to Cloudflare                      	| MX records point to Cloudflare    	| MX records point to Cloudflare                           	|
+| Message remediation 	| Auto-moves through Read/Write API                   	| Auto-moves through Read/Write API 	| Messages can be blocked, quarantined, or modified inline 	|
 
 Note that:
 
 - All email providers support MX/Inline deployment.
-- Microsoft 365 or Google Workspace users who integrate Email security via API, BCC/Journaling can modify emails primarily through deletion or post-delivery [move](/cloudflare-one/email-security/settings/auto-moves/).
+- Microsoft 365 or Google Workspace users who integrate Email security via API, BCC/Journaling can modify emails primarily through deletion or  post-delivery [move](/cloudflare-one/email-security/settings/auto-moves/).
 - Microsoft 365 or Google Workspace users who integrate Email security via MX/Inline can modify emails via post-delivery [move](/cloudflare-one/email-security/settings/auto-moves/), [link actions](/cloudflare-one/email-security/settings/detection-settings/configure-link-actions/) and [text add-ons](/cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/).
 
 ## 1. Choose a deployment

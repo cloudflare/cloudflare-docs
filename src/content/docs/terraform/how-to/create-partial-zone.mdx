@@ -39,7 +39,6 @@ resource "cloudflare_zone" "subdomain_example_com" {
 ```
 
 Then, in a new Terraform plan and apply cycle, upgrade the zone to a Business plan or higher:
-
 ```hcl
 resource "cloudflare_zone_subscription" "example_zone_subscription" {
   zone_id = cloudflare_zone.subdomain_example_com.id

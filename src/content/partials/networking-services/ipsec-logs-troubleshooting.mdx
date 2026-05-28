@@ -40,7 +40,7 @@ Authentication failures in Phase 1 indicate a PSK mismatch. To resolve:
 
 1. Go to **Connectors** and select your tunnel.
 
-   <DashButton url="/?to=/:account/magic-networks/connections" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select **Generate new PSK**.
 3. Copy the new PSK exactly — do not add extra spaces or characters.
@@ -72,9 +72,9 @@ Disable anti-replay protection on your tunnel endpoint, or set the replay window
 
 #### Health check type incompatible with stateful firewall
 
-Stateful firewalls (such as Palo Alto Networks, Check Point, Cisco, and Fortinet) drop the default _Reply_ health check packets because no matching ICMP request exists in their session table.
+Stateful firewalls (such as Palo Alto Networks, Check Point, Cisco, and Fortinet) drop the default *Reply* health check packets because no matching ICMP request exists in their session table.
 
-Change the health check type from _Reply_ to _Request_. For detailed steps, refer to <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a>.
+Change the health check type from *Reply* to *Request*. For detailed steps, refer to <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a>.
 
 #### ISP blocking health check return path
 
@@ -128,7 +128,7 @@ Use IPsec logs to monitor tunnel activity during the key-exchange phase of the I
 
 1. Go to the **Logpush** page.
 
-   <DashButton url="/?to=/:account/logs" />
+	<DashButton url="/?to=/:account/logs" />
 
 2. Select **Create a Logpush job**.
 3. Select **IPsec logs** as your dataset.

@@ -28,53 +28,44 @@ The steps for getting diagnostic logs depend on your `cloudflared` deployment en
 These instructions apply to remotely-managed and locally-managed tunnels running directly on the host machine.
 
 <Render
-	file="tunnel/diagnostics/host-environment"
-	product="cloudflare-one"
-	params={{
-		metricsURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#configure-the-metrics-server-address",
-	}}
+  file="tunnel/diagnostics/host-environment"
+  product="cloudflare-one"
+  params={{
+    metricsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#configure-the-metrics-server-address"
+  }}
 />
 
 ### Docker
 
 <Render
-	file="tunnel/diagnostics/docker"
-	product="cloudflare-one"
-	params={{
-		metricsURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/",
-		defaultMetricsURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#default-metrics-server-address",
-	}}
+  file="tunnel/diagnostics/docker"
+  product="cloudflare-one"
+  params={{
+    metricsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/",
+    defaultMetricsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#default-metrics-server-address"
+  }}
 />
 
 ### Kubernetes
 
 <Render
-	file="tunnel/diagnostics/kubernetes"
-	product="cloudflare-one"
-	params={{
-		metricsURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/",
-		defaultMetricsURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#default-metrics-server-address",
-	}}
+  file="tunnel/diagnostics/kubernetes"
+  product="cloudflare-one"
+  params={{
+    metricsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/",
+    defaultMetricsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#default-metrics-server-address"
+  }}
 />
 
 ## cloudflared-diag files
 
 <Render
-	file="tunnel/diagnostics/tunnel-diag-file"
-	product="cloudflare-one"
-	params={{
-		runParametersURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/",
-		logsURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/",
-		metricsURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#available-metrics",
-		loglevelURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/#view-logs-on-the-server",
-	}}
+  file="tunnel/diagnostics/tunnel-diag-file"
+  product="cloudflare-one"
+  params={{
+    runParametersURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/",
+    logsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/",
+    metricsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#available-metrics",
+    loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/#view-logs-on-the-server"
+  }}
 />

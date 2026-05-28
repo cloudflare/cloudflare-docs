@@ -6,12 +6,10 @@ sidebar:
   products:
     - images
 ---
-
 import { Description, Render } from "~/components";
 
 <Description>
-	Define automated rules to optimize remote images without writing any code or
-	changing your existing URLs.
+	Define automated rules to optimize remote images without writing any code or changing your existing URLs.
 </Description>
 
 Flows let you automatically apply image optimization to requests on your zone.
@@ -34,7 +32,6 @@ Currently, Cloudflare supports flows for Fastly Image Optimizer. When enabled, C
 A **custom flow** lets you define your own conditions and actions for image optimization.
 
 This is well-suited for situations where you want to optimize your images broadly and consistently, such as:
-
 - **Automatic format conversion** — Transcode all images to modern formats like AVIF or WebP across your entire site.
 - **Responsive sizing** — Automatically resize images based on each user's device.
 - **Directory-based optimization** — Enforce a consistent size for all images in a particular path, such as 100x100 for images where the path contains `/thumbnail`.
@@ -44,19 +41,16 @@ This is well-suited for situations where you want to optimize your images broadl
 Before setting up a flow, make sure that transformations are turned on for your zone under **Images** > **Transformations** in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/images/transformations).
 
 When an image is requested on your zone, Cloudflare checks to see whether the request matches the conditions for any of your configured flows:
-
 - Flows are evaluated from top to bottom in the order that they appear in the dashboard.
 - If a request matches more than one flow, only the first matching flow will run.
 - If no flow matches, then the request passes through to your origin unmodified.
 - To control priority, you can reorder flows in the dashboard.
 
 If the request matches a flow's conditions, then Cloudflare rewrites the URL to pass through the Images service with the specified parameters:
-
 - A custom flow triggers only on requests for [supported image extensions](/images/get-started/limits/). HTML pages, CSS files, and other non-images are never affected.
 - A provider flow evaluates requests based on provider-specific optimization parameters. For example, a Fastly provider flow triggers only when the request contains parameters like `?width`, `?height`, or `?fit`. Cloudflare will ignore any unrecognized parameters.
 
 In your request lifecycle, flows are evaluated after standard HTTP [redirect rules](/rules/url-forwarding/):
-
 - Any existing URL rewrites or redirect rules will be applied before Images evaluates the request, which may affect matching behavior.
 - Flows include built-in loop prevention. If the request is already coming from the Images service, then the flow will not re-trigger on that subrequest.
 
@@ -65,7 +59,6 @@ In your request lifecycle, flows are evaluated after standard HTTP [redirect rul
 Currently, Cloudflare supports flows to handle migrations from Fastly Image Optimizer.
 
 To add a provider flow:
-
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Images** > **Transformations** and select your zone.
 3. Select the **Automation** tab, then select **Add provider flow**.
@@ -129,11 +122,11 @@ Cloudflare determines the optimal width using either [client hints](/images/opti
 
 You can fine-tune the `width=auto` behavior with the following sub-parameters:
 
-| Sub-parameter  | Description                                                                   | Default            |
-| -------------- | ----------------------------------------------------------------------------- | ------------------ |
-| `wbreakpoints` | Override default breakpoint widths, in pixels (client hints)                  | `320;768;960;1200` |
-| `wmobile`      | Override default width, in pixels, for mobile devices (user-agent detection)  | `768`              |
-| `wdesktop`     | Override default width, in pixels, for desktop devices (user-agent detection) | `1200`             |
+| Sub-parameter | Description | Default |
+| --- | --- | --- |
+| `wbreakpoints` | Override default breakpoint widths, in pixels (client hints) | `320;768;960;1200` |
+| `wmobile` | Override default width, in pixels, for mobile devices (user-agent detection) | `768` |
+| `wdesktop` | Override default width, in pixels, for desktop devices (user-agent detection) | `1200` |
 
 To learn how `width=auto` works, refer to our guide on [serving responsive images](/images/optimization/make-responsive-images/).
 

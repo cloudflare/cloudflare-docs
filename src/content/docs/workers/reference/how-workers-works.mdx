@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { Render, WorkersIsolateDiagram } from "~/components";
+import { Render, WorkersIsolateDiagram } from "~/components"
 
 Though Cloudflare Workers behave similarly to [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/) in the browser or in Node.js, there are a few differences in how you have to think about your code. Under the hood, the Workers runtime uses the [V8 engine](https://www.cloudflare.com/learning/serverless/glossary/what-is-chrome-v8/) — the same engine used by Chromium and Node.js. The Workers runtime also implements many of the standard [APIs](/workers/runtime-apis/) available in most modern browsers.
 
@@ -27,13 +27,13 @@ The three largest differences are: Isolates, Compute per Request, and Distribute
 
 <Render file="isolate-description" product="workers" />
 
-<WorkersIsolateDiagram />
+<WorkersIsolateDiagram/>
 
 A given isolate has its own scope, but isolates are not necessarily long-lived. An isolate may be spun down and evicted for a number of reasons:
 
-- Resource limitations on the machine.
-- A suspicious script - anything seen as trying to break out of the isolate sandbox.
-- Individual [resource limits](/workers/platform/limits/).
+* Resource limitations on the machine.
+* A suspicious script - anything seen as trying to break out of the isolate sandbox.
+* Individual [resource limits](/workers/platform/limits/).
 
 Because of this, it is generally advised that you not store mutable state in your global scope unless you have accounted for this contingency.
 
@@ -52,6 +52,6 @@ Because there is no guarantee that any two user requests will be routed to the s
 
 ## Related resources
 
-- [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) - Review how incoming HTTP requests to a Worker are passed to the `fetch()` handler.
-- [Request](/workers/runtime-apis/request/) - Learn how incoming HTTP requests are passed to the `fetch()` handler.
-- [Workers limits](/workers/platform/limits/) - Learn about Workers limits including Worker size, startup time, and more.
+* [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) - Review how incoming HTTP requests to a Worker are passed to the `fetch()` handler.
+* [Request](/workers/runtime-apis/request/) - Learn how incoming HTTP requests are passed to the `fetch()` handler.
+* [Workers limits](/workers/platform/limits/) - Learn about Workers limits including Worker size, startup time, and more.

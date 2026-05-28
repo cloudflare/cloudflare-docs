@@ -176,21 +176,27 @@ The tus protocol allows you to add optional parameters in the [`Upload-Metadata`
 Setting arbitrary metadata values in the `Upload-Metadata` header sets values in the [meta key in Stream API](/api/resources/stream/methods/list/).
 
 - `name`
+
   - Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
 
 - `requiresignedurls`
+
   - If this key is present, the video playback for this video will be required to use signed URLs after upload.
 
 - `scheduleddeletion`
+
   - Specifies a date and time when a video will be deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. The specified date and time cannot be earlier than 30 days or later than 1,096 days from the video's created timestamp.
 
 - `allowedorigins`
+
   - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/viewing-videos/securing-your-stream/#security-considerations) for the video.
 
 - `thumbnailtimestamppct`
+
   - Specify the default thumbnail [timestamp percentage](/stream/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
 
 - `watermark`
+
   - The watermark profile UID.
 
 ## Set creator property

@@ -5,14 +5,13 @@ description: API reference for rtk-file-dropzone component (Angular Library)
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type          | Required | Default           | Description                                 |
-| ---------- | ------------- | -------- | ----------------- | ------------------------------------------- |
-| `hostEl`   | `HTMLElement` | ✅       | -                 | Host element on which drop events to attach |
-| `iconPack` | `IconPack1`   | ❌       | `defaultIconPack` | Icon pack                                   |
-| `t`        | `RtkI18n1`    | ❌       | `useLanguage()`   | Language                                    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hostEl` | `HTMLElement` | ✅ | - | Host element on which drop events to attach |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -27,5 +26,8 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-file-dropzone [hostEl]="htmlelement"> </rtk-file-dropzone>
+<rtk-file-dropzone
+ [hostEl]="htmlelement">
+</rtk-file-dropzone>
 ```
+

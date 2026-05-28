@@ -30,11 +30,11 @@ Each repository is isolated from other repositories. Tokens, lifecycle, refs, an
 
 Artifacts exposes the same repository through three interfaces:
 
-| Interface       | What you use it for                                                                | What it returns                                                        |
-| --------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Workers binding | Create, list, import, inspect, fork, delete, and mint tokens from a Worker         | Repository metadata, repository handles, and repo-scoped token results |
-| REST API        | Create, list, import, inspect, fork, delete, and mint tokens from external systems | Cloudflare API responses with repository metadata and token results    |
-| Git protocol    | Clone, fetch, pull, and push repository contents                                   | Standard Git behavior over HTTPS                                       |
+| Interface | What you use it for | What it returns |
+| --- | --- | --- |
+| Workers binding | Create, list, import, inspect, fork, delete, and mint tokens from a Worker | Repository metadata, repository handles, and repo-scoped token results |
+| REST API | Create, list, import, inspect, fork, delete, and mint tokens from external systems | Cloudflare API responses with repository metadata and token results |
+| Git protocol | Clone, fetch, pull, and push repository contents | Standard Git behavior over HTTPS |
 
 These interfaces point to the same repository.
 

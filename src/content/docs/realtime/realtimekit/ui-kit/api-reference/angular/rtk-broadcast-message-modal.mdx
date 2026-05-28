@@ -5,15 +5,14 @@ description: API reference for rtk-broadcast-message-modal component (Angular Li
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `states`   | `States1`  | ✅       | -                 | States object  |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -28,5 +27,8 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-broadcast-message-modal [meeting]="meeting"> </rtk-broadcast-message-modal>
+<rtk-broadcast-message-modal
+ [meeting]="meeting">
+</rtk-broadcast-message-modal>
 ```
+

@@ -5,17 +5,16 @@ description: API reference for rtk-menu-item component (Angular Library)
 products:
   - realtime
 ---
-
 A menu item component.
 
 ## Properties
 
-| Property      | Type                       | Required | Default           | Description |
-| ------------- | -------------------------- | -------- | ----------------- | ----------- |
-| `iconPack`    | `IconPack`                 | ❌       | `defaultIconPack` | Icon pack   |
-| `menuVariant` | `'primary' \| 'secondary'` | ✅       | -                 | Variant     |
-| `size`        | `Size`                     | ✅       | -                 | Size        |
-| `t`           | `RtkI18n`                  | ❌       | `useLanguage()`   | Language    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -30,6 +29,9 @@ A menu item component.
 
 ```html
 <!-- component.html -->
-<rtk-menu-item [menuVariant]="'primary' | 'secondary'" size="md">
+<rtk-menu-item
+ [menuVariant]="'primary' | 'secondary'"
+ size="md">
 </rtk-menu-item>
 ```
+

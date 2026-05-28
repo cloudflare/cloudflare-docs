@@ -5,17 +5,16 @@ description: API reference for rtk-transcript component (Angular Library)
 products:
   - realtime
 ---
-
 A component which shows a transcript.
-You need to remove the element after you receive the
-`rtkTranscriptDismiss` event.
+ You need to remove the element after you receive the
+ `rtkTranscriptDismiss` event.
 
 ## Properties
 
-| Property     | Type                                   | Required | Default         | Description |
-| ------------ | -------------------------------------- | -------- | --------------- | ----------- |
-| `t`          | `RtkI18n`                              | ❌       | `useLanguage()` | Language    |
-| `transcript` | `Transcript & { renderedId?: string }` | ❌       | -               | Message     |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `transcript` | `Transcript & { renderedId?: string }` | ❌ | - | Message |
 
 ## Usage Examples
 
@@ -30,5 +29,9 @@ You need to remove the element after you receive the
 
 ```html
 <!-- component.html -->
-<rtk-transcript [t]="rtki18n" transcript="example"> </rtk-transcript>
+<rtk-transcript
+ [t]="rtki18n"
+ transcript="example">
+</rtk-transcript>
 ```
+

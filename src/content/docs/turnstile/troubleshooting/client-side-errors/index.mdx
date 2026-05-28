@@ -9,21 +9,22 @@ tags:
   - JavaScript
 sidebar:
   order: 3
+
 ---
 
 import { Tabs, TabItem } from "~/components";
 
-There are instances where Turnstile may encounter problems, invoking the `error-callback`.
+There are instances where Turnstile may encounter problems, invoking the `error-callback`. 
 
-These problems can range from network connectivity issues and browser compatibility problems to configuration errors and challenge failures.
+These problems can range from network connectivity issues and browser compatibility problems to configuration errors and challenge failures. 
 
-When errors occur, implementing proper error handling ensures your visitors receive helpful feedback and your application can recover from temporary issues.
+When errors occur, implementing proper error handling ensures your visitors receive helpful feedback and your application can recover from temporary issues. 
 
 Refer to the [Error codes](/turnstile/troubleshooting/client-side-errors/error-codes/) for troubleshooting guidance to address specific error conditions.
 
 ## Error handling
 
-The `error-callback` option for explicitly rendering widgets and the `data-error-callback` attribute for implicit rendering provides a JavaScript callback to handle potential errors that occur.
+The `error-callback` option for explicitly rendering widgets and the `data-error-callback` attribute for implicit rendering provides a JavaScript callback to handle potential errors that occur. 
 
 This callback mechanism gives you complete control over how errors are presented to visitors and allows you to implement custom recovery strategies tailored to your application's needs.
 
@@ -57,30 +58,28 @@ An error callback will retrieve an error code as its first parameter. This error
 
 ```js wrap
 function handleTurnstileError(errorCode) {
-	const errorFamily = Math.floor(errorCode / 1000);
-
-	switch (errorFamily) {
-		case 100:
-			showMessage("Please refresh the page and try again.");
-			break;
-		case 110:
-			showMessage("Configuration error. Please contact support.");
-			break;
-		case 300:
-		case 600:
-			showMessage(
-				"Security check failed. Please try refreshing or using a different browser.",
-			);
-			break;
-		default:
-			showMessage("An unexpected error occurred. Please try again.");
-	}
+  const errorFamily = Math.floor(errorCode / 1000);
+  
+  switch(errorFamily) {
+    case 100:
+      showMessage('Please refresh the page and try again.');
+      break;
+    case 110:
+      showMessage('Configuration error. Please contact support.');
+      break;
+    case 300:
+    case 600:
+      showMessage('Security check failed. Please try refreshing or using a different browser.');
+      break;
+    default:
+      showMessage('An unexpected error occurred. Please try again.');
+  }
 }
 ```
 
 ## Retry
 
-By default, Turnstile will automatically retry upon encountering a problem, which helps handle transient network issues or temporary service disruptions without requiring user intervention.
+By default, Turnstile will automatically retry upon encountering a problem, which helps handle transient network issues or temporary service disruptions without requiring user intervention. 
 
 This automatic retry mechanism is useful for [mobile visitors](/turnstile/get-started/mobile-implementation/) who may experience intermittent connectivity or visitors on networks with occasional stability issues.
 
@@ -89,34 +88,34 @@ When subsequent failures due to retries are observed, the error callback can be 
 ```js wrap
 let retryCount = 0;
 
-turnstile.render("#my-widget", {
-	sitekey: "your-sitekey",
-	"error-callback": function (errorCode) {
-		retryCount++;
-
-		if (retryCount <= 2) {
-			console.log(`Turnstile retry attempt ${retryCount}`);
-			return false; // Let Turnstile handle the retry
-		} else {
-			showPersistentErrorMessage(errorCode);
-			return true; // We'll handle it from here
-		}
-	},
+turnstile.render('#my-widget', {
+  sitekey: 'your-sitekey',
+  'error-callback': function(errorCode) {
+    retryCount++;
+    
+    if (retryCount <= 2) {
+      console.log(`Turnstile retry attempt ${retryCount}`);
+      return false; // Let Turnstile handle the retry
+    } else {
+      showPersistentErrorMessage(errorCode);
+      return true; // We'll handle it from here
+    }
+  }
 });
 ```
 
 You can adjust the retry behavior by setting the retry value to `never` instead of the default `auto`. This will result in Turnstile not automatically retrying, giving you control over when and how recovery attempts are made. If there is any issue or error verifying the visitor, the widget will not retry and will remain in the respective failure state until you take manual action.
 
 ```js wrap
-turnstile.render("#my-widget", {
-	sitekey: "your-sitekey",
-	retry: "never",
-	"error-callback": function (errorCode) {
-		// You control all retry logic
-		setTimeout(() => {
-			turnstile.reset("#my-widget");
-		}, 3000);
-	},
+turnstile.render('#my-widget', {
+  sitekey: 'your-sitekey',
+  retry: 'never',
+  'error-callback': function(errorCode) {
+    // You control all retry logic
+    setTimeout(() => {
+      turnstile.reset('#my-widget');
+    }, 3000);
+  }
 });
 ```
 
@@ -125,11 +124,11 @@ You may call `turnstile.reset()` in the corresponding `error-callback` to manual
 The interval between retries for Turnstile can be configured by the `retry-interval` option, allowing you to optimize retry timing for your visitors’ typical network conditions. A longer interval may be more appropriate for visitors on slower or less reliable connections, while shorter intervals work well in environments with typically stable connectivity.
 
 ```js wrap
-turnstile.render("#my-widget", {
-	sitekey: "your-sitekey",
-	retry: "auto",
-	"retry-interval": 8000, // Wait 8 seconds between retries
-	"error-callback": handleError,
+turnstile.render('#my-widget', {
+  sitekey: 'your-sitekey',
+  retry: 'auto',
+  'retry-interval': 8000, // Wait 8 seconds between retries
+  'error-callback': handleError
 });
 ```
 
@@ -142,23 +141,23 @@ For instance, in a scenario where the Turnstile widget is implemented within a f
 In such instances, the `timeout-callback` of the widget is activated, enabling the widget to reset itself as needed and provide appropriate guidance. This callback allows you to implement user-friendly timeout handling, such as highlighting the Turnstile widget, displaying a notification, or automatically refreshing the challenge.
 
 ```js wrap
-turnstile.render("#my-widget", {
-	sitekey: "your-sitekey",
-	callback: function (token) {
-		console.log("Challenge completed successfully");
-	},
-	"timeout-callback": function () {
-		console.log("Challenge timed out - user action required");
-		document.getElementById("challenge-notice").textContent =
-			"Please complete the security check above to continue.";
-
-		// Optionally highlight the widget
-		document.getElementById("my-widget").style.border = "2px solid orange";
-	},
-	"expired-callback": function () {
-		console.log("Token expired - challenge needs refresh");
-		document.getElementById("challenge-notice").textContent =
-			"Security check expired. Please try again.";
-	},
+turnstile.render('#my-widget', {
+  sitekey: 'your-sitekey',
+  callback: function(token) {
+    console.log('Challenge completed successfully');
+  },
+  'timeout-callback': function() {
+    console.log('Challenge timed out - user action required');
+    document.getElementById('challenge-notice').textContent = 
+      'Please complete the security check above to continue.';
+    
+    // Optionally highlight the widget
+    document.getElementById('my-widget').style.border = '2px solid orange';
+  },
+  'expired-callback': function() {
+    console.log('Token expired - challenge needs refresh');
+    document.getElementById('challenge-notice').textContent = 
+      'Security check expired. Please try again.';
+  }
 });
 ```

@@ -89,3 +89,4 @@ Cloudflare will close a WebSocket connection when no data is transmitted in eith
 ### Session affinity for load-balanced WebSocket origins
 
 If your WebSocket origin is behind a Cloudflare Load Balancer, turn on **Session affinity** to ensure all requests from the same client are routed to the same origin server. Without session affinity, a WebSocket reconnect may land on a different origin that does not have the session state.
+

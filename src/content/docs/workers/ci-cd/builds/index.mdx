@@ -7,7 +7,6 @@ sidebar:
 products:
   - workers
 ---
-
 import { DashButton } from "~/components";
 
 The Cloudflare [Git integration](/workers/ci-cd/builds/git-integration/) lets you connect a new or existing Worker to a GitHub or GitLab repository, enabling automated builds and deployments for your Worker on push.
@@ -17,7 +16,6 @@ The Cloudflare [Git integration](/workers/ci-cd/builds/git-integration/) lets yo
 ### Connect a new Worker
 
 To create a new Worker and connect it to a GitHub or GitLab repository:
-
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -32,7 +30,6 @@ To create a new Worker and connect it to a GitHub or GitLab repository:
 ### Connect an existing Worker
 
 To connect an existing Worker to a GitHub or GitLab repository:
-
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -74,14 +71,13 @@ If a build succeeds, it is uploaded as a version. If the build is configured to 
 ## Disconnecting builds
 
 To disconnect a Worker from a GitHub or GitLab repository:
-
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select the Worker you want to disconnect from a repository.
-3. Select **Settings** and then **Builds**.
-4. Select **Disconnect**.
+4. Select **Settings** and then **Builds**.
+5. Select **Disconnect**.
 
 If you want to switch to a different repository for your Worker, you must first disable builds, then reconnect to select the new repository.
 

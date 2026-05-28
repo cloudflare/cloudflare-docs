@@ -4,6 +4,7 @@ description: API commands for managing waiting rooms.
 products:
   - waiting-room
 title: API commands
+
 ---
 
 Cloudflare Waiting Room redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
@@ -24,17 +25,17 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 ## Manage your waiting room
 
-| Operation                                                           | Method + URL stub                                             | Notes                              |
-| ------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------- |
-| [List waiting rooms](/api/resources/waiting_rooms/methods/list/)    | `GET zones/{:zone_identifier}/waiting_rooms`                  | List all waiting rooms for a zone. |
-| [Create waiting room](/api/resources/waiting_rooms/methods/create/) | `POST zones/{:zone_identifier}/waiting_rooms`                 | Create a waiting room.             |
-| [Waiting room details](/api/resources/waiting_rooms/methods/get/)   | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Fetch a waiting room.              |
-| [Update waiting room](/api/resources/waiting_rooms/methods/update/) | `PUT zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Update a waiting room.             |
-| [Delete waiting room](/api/resources/waiting_rooms/methods/delete/) | `DELETE zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Delete a waiting room.             |
-| [Patch waiting room](/api/resources/waiting_rooms/methods/edit/)    | `PATCH zones/{:zone_identifier}/waiting_rooms/{:identifier}`  | Patch a configured waiting room.   |
+| Operation                                                                 | Method + URL stub                                             | Notes                              |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------- |
+| [List waiting rooms](/api/resources/waiting_rooms/methods/list/)     | `GET zones/{:zone_identifier}/waiting_rooms`                  | List all waiting rooms for a zone. |
+| [Create waiting room](/api/resources/waiting_rooms/methods/create/)   | `POST zones/{:zone_identifier}/waiting_rooms`                 | Create a waiting room.             |
+| [Waiting room details](/api/resources/waiting_rooms/methods/get/) | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Fetch a waiting room.              |
+| [Update waiting room](/api/resources/waiting_rooms/methods/update/)   | `PUT zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Update a waiting room.             |
+| [Delete waiting room](/api/resources/waiting_rooms/methods/delete/)   | `DELETE zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Delete a waiting room.             |
+| [Patch waiting room](/api/resources/waiting_rooms/methods/edit/)     | `PATCH zones/{:zone_identifier}/waiting_rooms/{:identifier}`  | Patch a configured waiting room.   |
 
 ## Fetch the current status of a waiting room
 
-| Operation                                                                                                   | Method + URL stub                                                 | Notes                                                                                                                                                                                                                          |
-| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Operation                                                                                        | Method + URL stub                                                 | Notes                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [Get the current status of a waiting room](/api/resources/waiting_rooms/subresources/statuses/methods/get/) | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}/status` | <ul><li>Returns <code>queueing</code> if the queue is activated (clients are put in the waiting room).</li><li>Returns <code>not\_queueing</code> if the queue is not activated or if the waiting room is suspended.</li></ul> |

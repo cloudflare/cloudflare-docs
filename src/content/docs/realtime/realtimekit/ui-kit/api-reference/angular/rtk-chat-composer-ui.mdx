@@ -5,19 +5,18 @@ description: API reference for rtk-chat-composer-ui component (Angular Library)
 products:
   - realtime
 ---
-
 @deprecated . This component is deprecated, please use rtk-chat-composer-view instead.
 
 ## Properties
 
-| Property             | Type                                                                                                    | Required | Default           | Description                         |
-| -------------------- | ------------------------------------------------------------------------------------------------------- | -------- | ----------------- | ----------------------------------- |
-| `canSendFiles`       | `boolean`                                                                                               | ✅       | -                 | Whether user can send file messages |
-| `canSendTextMessage` | `boolean`                                                                                               | ✅       | -                 | Whether user can send text messages |
-| `iconPack`           | `IconPack1`                                                                                             | ❌       | `defaultIconPack` | Icon pack                           |
-| `prefill`            | `{     suggestedReplies?: string[];     editMessage?: TextMessage;     replyMessage?: TextMessage;   }` | ❌       | -                 | prefill the composer                |
-| `size`               | `Size1`                                                                                                 | ✅       | -                 | Size                                |
-| `t`                  | `RtkI18n`                                                                                               | ❌       | `useLanguage()`   | Language                            |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `canSendFiles` | `boolean` | ✅ | - | Whether user can send file messages |
+| `canSendTextMessage` | `boolean` | ✅ | - | Whether user can send text messages |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `prefill` | `{     suggestedReplies?: string[];     editMessage?: TextMessage;     replyMessage?: TextMessage;   }` | ❌ | - | prefill the composer |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -33,9 +32,9 @@ products:
 ```html
 <!-- component.html -->
 <rtk-chat-composer-ui
-	[canSendFiles]="true"
-	[canSendTextMessage]="true"
-	size="md"
->
+ [canSendFiles]="true"
+ [canSendTextMessage]="true"
+ size="md">
 </rtk-chat-composer-ui>
 ```
+

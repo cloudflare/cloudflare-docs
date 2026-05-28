@@ -21,12 +21,15 @@ Wrangler runs [esbuild](https://esbuild.github.io/) by default as part of the `d
 Custom builds are configured by adding a `[build]` section in your [Wrangler configuration file](/workers/wrangler/configuration/), and using the following options for configuring your custom build.
 
 - `command` <Type text="string" /> <MetaInfo text="optional" />
+
   - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used. This command will be run as part of `wrangler dev` and `npx wrangler deploy`.
 
 - `cwd` <Type text="string" /> <MetaInfo text="optional" />
+
   - The directory in which the command is executed.
 
 - `watch_dir` <Type text="string | string\[]" /> <MetaInfo text="optional" />
+
   - The directory to watch for changes while using `wrangler dev`. Defaults to the current working directory.
 
 Example:
@@ -51,12 +54,12 @@ When Wrangler runs your custom build command, it sets the `WRANGLER_COMMAND` env
 
 The possible values are:
 
-| Value             | Wrangler command triggered |
-| ----------------- | -------------------------- |
-| `dev`             | `wrangler dev`             |
-| `deploy`          | `wrangler deploy`          |
-| `versions upload` | `wrangler versions upload` |
-| `types`           | `wrangler types`           |
+| Value              | Wrangler command triggered               |
+| ------------------ | ---------------------------------------- |
+| `dev`              | `wrangler dev`                           |
+| `deploy`           | `wrangler deploy`                        |
+| `versions upload`  | `wrangler versions upload`               |
+| `types`            | `wrangler types`                         |
 
 For example, you can use this to apply different build settings for development and production:
 

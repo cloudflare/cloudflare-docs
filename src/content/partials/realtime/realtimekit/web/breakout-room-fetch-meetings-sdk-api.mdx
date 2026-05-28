@@ -1,10 +1,10 @@
 ---
 {}
+
 ---
 
 ```js
-const breakoutRoomsInfo =
-	await meeting.connectedMeetings.getConnectedMeetings();
+const breakoutRoomsInfo = await meeting.connectedMeetings.getConnectedMeetings();
 ```
 
 `breakoutRoomsInfo` is an object containing the list of breakout rooms and their participants, along with details of the parent meeting.
@@ -14,11 +14,11 @@ This data can be used to display the list of breakout rooms & participants in th
 You can also listen to `stateUpdate` event to get the latest list of breakout rooms & participants, as they are updated in real-time.
 
 ```js
-meeting.connectedMeetings.on("stateUpdate", ({ meetings, parentMeeting }) => {
-	console.log("stateUpdate", { meetings, parentMeeting });
+meeting.connectedMeetings.on("stateUpdate", ({meetings, parentMeeting}) => {
+  console.log("stateUpdate", {meetings, parentMeeting});
 
-	// Alternatively, you can access the meetings and parentMeeting from the connectedMeetings object
-	console.log("Meetings List", meeting.connectedMeetings.meetings);
-	console.log("Parent Meeting", meeting.connectedMeetings.parentMeeting);
+  // Alternatively, you can access the meetings and parentMeeting from the connectedMeetings object
+  console.log("Meetings List", meeting.connectedMeetings.meetings);
+  console.log("Parent Meeting", meeting.connectedMeetings.parentMeeting);
 });
 ```

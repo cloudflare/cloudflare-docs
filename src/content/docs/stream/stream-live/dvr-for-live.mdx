@@ -13,14 +13,14 @@ manifest URL.
 
 ## Stream Player
 
-```html title="Stream Player embed format"
+``` html title="Stream Player embed format"
 <div style="position: relative; padding-top: 56.25%;">
-	<iframe
-		src="https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/iframe?dvrEnabled=true"
-		style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-		allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-		allowfullscreen="true"
-	></iframe>
+  <iframe
+    src="https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/iframe?dvrEnabled=true"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
 </div>
 ```
 
@@ -37,7 +37,7 @@ When DVR mode is enabled the Stream Player will:
 
 ## HLS manifest for custom players
 
-```text title="HLS manifest URL format"
+``` text title="HLS manifest URL format"
 https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/manifest/video.m3u8?dvrEnabled=true
 ```
 

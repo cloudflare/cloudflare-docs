@@ -95,6 +95,8 @@ Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `z
 
 To add multiple routes:
 
+
+
 <WranglerConfig>
 
 ```jsonc
@@ -192,12 +194,12 @@ Because `*` matches zero or more of **any character** (not just subdomains), `*e
 
 The following examples illustrate the difference between `*example.com/*` and `*.example.com/*`:
 
-| Request URL                    | `*example.com/*` | `*.example.com/*` |
-| ------------------------------ | ---------------- | ----------------- |
-| `https://example.com/`         | Matches          | Does not match    |
-| `https://www.example.com/path` | Matches          | Matches           |
-| `https://myexample.com/`       | Matches          | Does not match    |
-| `https://not-example.com/`     | Does not match   | Does not match    |
+| Request URL | `*example.com/*` | `*.example.com/*` |
+|---|---|---|
+| `https://example.com/` | Matches | Does not match |
+| `https://www.example.com/path` | Matches | Matches |
+| `https://myexample.com/` | Matches | Does not match |
+| `https://not-example.com/` | Does not match | Does not match |
 
 #### Paths may optionally end with `*`
 

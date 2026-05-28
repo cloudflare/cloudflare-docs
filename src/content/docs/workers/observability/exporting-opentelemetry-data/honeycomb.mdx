@@ -8,10 +8,9 @@ products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import {WranglerConfig} from "~/components";
 
 Honeycomb is an observability platform built for high-cardinality data that helps you understand and debug your applications. By exporting your Cloudflare Workers application telemetry to Honeycomb, you can:
-
 - Visualize traces to understand request flows and identify performance bottlenecks
 - Query and analyze logs with unlimited dimensionality across any attribute
 - Create custom queries and dashboards to monitor your Workers
@@ -45,12 +44,11 @@ The API key will look something like: `hcaik_01hq...`
 
 ## Step 2: Configure Cloudflare destinations
 
-Now you'll create destinations in the Cloudflare dashboard that point to Honeycomb.
+Now you'll create destinations in the Cloudflare dashboard that point to Honeycomb. 
 
 ### Honeycomb OTLP endpoints
 
 Honeycomb provides separate OTLP endpoints for traces and logs:
-
 - **Traces**: `https://api.honeycomb.io/v1/traces`
 - **Logs**: `https://api.honeycomb.io/v1/logs`
 
@@ -109,5 +107,5 @@ With your destinations created in the Cloudflare dashboard, update your Worker's
 After updating your configuration, deploy your Worker for the changes to take effect.
 
 :::note
-It may take a few minutes after deployment for data to appear in Honeycomb.
+It may take a few minutes after deployment for data to appear in Honeycomb. 
 :::

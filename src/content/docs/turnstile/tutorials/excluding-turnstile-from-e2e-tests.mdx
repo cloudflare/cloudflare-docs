@@ -28,11 +28,10 @@ For more details, refer to the [testing documentation](/turnstile/troubleshootin
 :::caution
 
 Never use test credentials in production. Always ensure:
-
 - Test credentials are only used in test environments.
 - Production credentials are properly protected.
 - Your deployment process prevents test credentials from reaching production.
-  :::
+:::
 
 ## Implementation
 
@@ -41,27 +40,26 @@ The key to implementing test-environment detection is identifying test requests 
 ```typescript
 // Detect test environments using IP addresses or headers
 function isTestEnvironment(request) {
-	const testIPs = ["127.0.0.1", "::1"];
-	const isTestIP = testIPs.includes(request.ip);
-	const hasTestHeader =
-		request.headers["x-test-environment"] === "secret-token";
+  const testIPs = ['127.0.0.1', '::1'];
+  const isTestIP = testIPs.includes(request.ip);
+  const hasTestHeader = request.headers['x-test-environment'] === 'secret-token';
 
-	return isTestIP || hasTestHeader;
+  return isTestIP || hasTestHeader;
 }
 
 // Use the appropriate credentials based on the environment
 function getTurnstileCredentials(request) {
-	if (isTestEnvironment(request)) {
-		return {
-			sitekey: "1x00000000000000000000AA",
-			secretKey: "1x0000000000000000000000000000000AA",
-		};
-	}
+  if (isTestEnvironment(request)) {
+    return {
+      sitekey: '1x00000000000000000000AA',
+      secretKey: '1x0000000000000000000000000000000AA'
+    };
+  }
 
-	return {
-		sitekey: process.env.TURNSTILE_SITE_KEY,
-		secretKey: process.env.TURNSTILE_SECRET_KEY,
-	};
+  return {
+    sitekey: process.env.TURNSTILE_SITE_KEY,
+    secretKey: process.env.TURNSTILE_SECRET_KEY
+  };
 }
 ```
 
@@ -70,9 +68,9 @@ function getTurnstileCredentials(request) {
 When rendering your page, inject the appropriate sitekey based on the environment:
 
 ```typescript
-app.get("/your-form", (req, res) => {
-	const { sitekey } = getTurnstileCredentials(req);
-	res.render("form", { sitekey });
+app.get('/your-form', (req, res) => {
+  const { sitekey } = getTurnstileCredentials(req);
+  res.render('form', { sitekey });
 });
 ```
 
@@ -114,16 +112,16 @@ For Cypress or similar E2E testing frameworks:
 ```typescript
 // Set test header for all test requests
 beforeEach(() => {
-	cy.intercept("*", (req) => {
-		req.headers["x-test-environment"] = "secret-token";
-	});
+  cy.intercept('*', (req) => {
+    req.headers['x-test-environment'] = 'secret-token';
+  });
 });
 
 // Your test can now interact with the form normally
-it("submits form successfully", () => {
-	cy.visit("/your-form");
-	cy.get("form").submit();
-	// Turnstile will automatically pass verification
+it('submits form successfully', () => {
+  cy.visit('/your-form');
+  cy.get('form').submit();
+  // Turnstile will automatically pass verification
 });
 ```
 

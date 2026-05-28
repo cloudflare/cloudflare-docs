@@ -188,13 +188,13 @@ The authorization flow proceeds as follows:
 
 Both managed OAuth and [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) allow non-browser clients to authenticate with Access-protected applications, but they serve different use cases:
 
-|                           | Managed OAuth                                                                    | Service tokens                                                                                  |
-| ------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| **Authentication model**  | User-based — the end user logs in through their identity provider                | Machine-based — a shared secret authenticates the service itself                                |
-| **Best for**              | Interactive CLI tools, AI agents, SDKs where a human initiates the request       | Fully automated systems, cron jobs, CI/CD pipelines, server-to-server communication             |
-| **User identity**         | Access knows which user made the request                                         | No user identity — requests are attributed to the service token                                 |
-| **Policy enforcement**    | Can use identity-based policies (for example, require specific groups or emails) | Requires a [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) policy action |
-| **Credential management** | No shared secrets to distribute — users authenticate with their own credentials  | Requires distributing and rotating Client ID and Client Secret                                  |
+| | Managed OAuth | Service tokens |
+| --- | --- | --- |
+| **Authentication model** | User-based — the end user logs in through their identity provider | Machine-based — a shared secret authenticates the service itself |
+| **Best for** | Interactive CLI tools, AI agents, SDKs where a human initiates the request | Fully automated systems, cron jobs, CI/CD pipelines, server-to-server communication |
+| **User identity** | Access knows which user made the request | No user identity — requests are attributed to the service token |
+| **Policy enforcement** | Can use identity-based policies (for example, require specific groups or emails) | Requires a [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) policy action |
+| **Credential management** | No shared secrets to distribute — users authenticate with their own credentials | Requires distributing and rotating Client ID and Client Secret |
 
 Use managed OAuth when you want non-browser clients to authenticate users the same way a browser would — the user logs in once, and the client receives an OAuth token to make requests on their behalf.
 

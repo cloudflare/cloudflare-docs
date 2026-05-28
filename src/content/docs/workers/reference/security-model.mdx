@@ -7,7 +7,7 @@ products:
   - workers
 ---
 
-import { WorkersArchitectureDiagram } from "~/components";
+import { WorkersArchitectureDiagram } from "~/components"
 
 This article includes an overview of Cloudflare security architecture, and then addresses two frequently asked about issues: V8 bugs and Spectre.
 
@@ -25,7 +25,7 @@ For more details, refer to [this talk](https://www.infoq.com/presentations/cloud
 
 Beginning with a quick overview of the Workers runtime architecture:
 
-<WorkersArchitectureDiagram />
+<WorkersArchitectureDiagram/>
 
 There are two fundamental parts of designing a code sandbox: secure isolation and API design.
 
@@ -172,7 +172,7 @@ In Workers, you can get the current time using the JavaScript Date API by callin
 ```js
 let start = Date.now();
 for (let i = 0; i < 1e6; i++) {
-	doSpectreAttack();
+  doSpectreAttack();
 }
 let end = Date.now();
 ```

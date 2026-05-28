@@ -5,17 +5,16 @@ description: API reference for rtk-menu-item component (Web Components (HTML) Li
 products:
   - realtime
 ---
-
 A menu item component.
 
 ## Properties
 
-| Property      | Type                       | Required | Default           | Description |
-| ------------- | -------------------------- | -------- | ----------------- | ----------- |
-| `iconPack`    | `IconPack`                 | ❌       | `defaultIconPack` | Icon pack   |
-| `menuVariant` | `'primary' \| 'secondary'` | ✅       | -                 | Variant     |
-| `size`        | `Size`                     | ✅       | -                 | Size        |
-| `t`           | `RtkI18n`                  | ❌       | `useLanguage()`   | Language    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -28,11 +27,15 @@ A menu item component.
 ### With Properties
 
 ```html
-<rtk-menu-item size="md"> </rtk-menu-item>
+<rtk-menu-item
+ size="md">
+</rtk-menu-item>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-menu-item");
+  const el = document.querySelector("rtk-menu-item");
+
 </script>
 ```

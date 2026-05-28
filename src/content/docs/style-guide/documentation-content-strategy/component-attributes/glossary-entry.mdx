@@ -56,16 +56,21 @@ entries:
 Relevant values include the following:
 
 - `productName` string required
+
   - Core product associated with this file. Should always match the same formatting / styling used in `associated_products`.
 
 - `entries` object required
+
   - `term` string required
+
     - The glossary term itself.
 
   - `general_definition` string required
+
     - Definition of the term. Should be general enough to apply to multiple products. Should also start with a lowercase letter unless starting with a proper noun.
 
   - `associated_products` array optional
+
     - If the term is associated with other products. Any names used should correspond to the `productName` of that associated file.
 
 ### Usage
@@ -104,9 +109,11 @@ Is a quoted definition that comes from:
 Properties are:
 
 - `term` string required
+
   - Should match a term within an existing glossary YAML file.
 
 - `prepend` string optional
+
   - Text to add before a definition.
 
 #### Glossary tooltip
@@ -122,12 +129,15 @@ Here's a <GlossaryTooltip term="active zone">tooltip</GlossaryTooltip> example.
 Properties are:
 
 - `term` string required
+
   - Should match a term within an existing glossary YAML file.
 
 - `prepend` string optional
+
   - Text to add before a definition.
 
 - `link` string optional
+
   - Wraps the inner text in a markdown link, similar to normal markdown formatting.
 
 Because of space limitations, the tooltip will always default to the short definition of a term, meaning the definition text before the first line break.

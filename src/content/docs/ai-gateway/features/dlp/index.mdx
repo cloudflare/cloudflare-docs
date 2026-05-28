@@ -59,11 +59,11 @@ Because of this buffering:
 
 DLP scanning runs after a cache miss, when AI Gateway forwards the request to the provider and receives a response. The following table describes how each DLP outcome affects caching:
 
-| DLP outcome        | Response cached | Behavior                                                                                                                                                                  |
-| ------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Pass (no findings) | Yes             | The response is cached normally according to your gateway cache settings.                                                                                                 |
-| Flag               | Yes             | The response is cached normally. DLP findings are attached to the `cf-aig-dlp` response header and recorded in logs, but the original response is returned to the client. |
-| Block              | No              | The provider response is discarded and replaced with a DLP error response (status `400`).                                                                                 |
+| DLP outcome | Response cached | Behavior |
+| --- | --- | --- |
+| Pass (no findings) | Yes | The response is cached normally according to your gateway cache settings. |
+| Flag | Yes | The response is cached normally. DLP findings are attached to the `cf-aig-dlp` response header and recorded in logs, but the original response is returned to the client. |
+| Block | No | The provider response is discarded and replaced with a DLP error response (status `400`). |
 
 **Cache hits skip DLP scanning.** When a subsequent identical request matches a cached response, AI Gateway serves it directly from cache without re-running DLP. This is safe because only responses that already passed DLP (or were flagged, not blocked) are cached. However, if you update your DLP policies after a response has been cached, the cached response is not re-evaluated. It continues to be served until the cache TTL expires.
 

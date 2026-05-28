@@ -22,7 +22,6 @@ For example:
 ```js
 const response = await fetch("https://example.com:8000");
 ```
-
 With allow_custom_ports the above example would fetch `https://example.com:8000` rather than
 `https://example.com:443`.
 

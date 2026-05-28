@@ -5,36 +5,41 @@ description: API reference for RtkMenuItem component (React Library)
 products:
   - realtime
 ---
-
 A menu item component.
 
 ## Properties
 
-| Property      | Type                       | Required | Default           | Description |
-| ------------- | -------------------------- | -------- | ----------------- | ----------- |
-| `iconPack`    | `IconPack`                 | ❌       | `defaultIconPack` | Icon pack   |
-| `menuVariant` | `'primary' \| 'secondary'` | ✅       | -                 | Variant     |
-| `size`        | `Size`                     | ✅       | -                 | Size        |
-| `t`           | `RtkI18n`                  | ❌       | `useLanguage()`   | Language    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkMenuItem } from "@cloudflare/realtimekit-react-ui";
+import { RtkMenuItem } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkMenuItem />;
+  return <RtkMenuItem />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkMenuItem } from "@cloudflare/realtimekit-react-ui";
+import { RtkMenuItem } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkMenuItem menuVariant={"primary" | "secondary"} size="md" />;
+  return (
+    <RtkMenuItem
+      menuVariant={'primary' | 'secondary'}
+      size="md"
+    />
+  );
 }
 ```
+

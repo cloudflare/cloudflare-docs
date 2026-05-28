@@ -72,19 +72,15 @@ export default {
 		const url = new URL(request.url);
 
 		// Route to internal services
-		if (url.pathname.startsWith("/api/users")) {
-			const response = await env.USER_SERVICE.fetch(
-				"https://user-api.internal.example.com" + url.pathname,
-			);
+		if (url.pathname.startsWith('/api/users')) {
+			const response = await env.USER_SERVICE.fetch("https://user-api.internal.example.com" + url.pathname);
 			return response;
-		} else if (url.pathname.startsWith("/api/orders")) {
-			const response = await env.ORDER_SERVICE.fetch(
-				"https://orders-api.internal.example.com" + url.pathname,
-			);
+		} else if (url.pathname.startsWith('/api/orders')) {
+			const response = await env.ORDER_SERVICE.fetch("https://orders-api.internal.example.com" + url.pathname);
 			return response;
 		}
 
-		return new Response("Not Found", { status: 404 });
+		return new Response('Not Found', { status: 404 });
 	},
 };
 ```
@@ -111,3 +107,4 @@ curl https://api-gateway.workers.dev/api/orders
 - Implement [rate limiting](/durable-objects/api/)
 - Set up [monitoring and alerting](/analytics/analytics-engine/)
 - Explore [other examples](/workers-vpc/examples/)
+

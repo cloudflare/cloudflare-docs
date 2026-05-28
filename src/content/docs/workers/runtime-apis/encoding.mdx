@@ -24,15 +24,24 @@ let encoder = new TextEncoder();
 
 ### Properties
 
-- `encoder.encoding` DOMString read-only
-  - The name of the encoder as a string describing the method the `TextEncoder` uses (always `utf-8`).
+
+
+* `encoder.encoding` DOMString read-only
+  * The name of the encoder as a string describing the method the `TextEncoder` uses (always `utf-8`).
+
+
 
 ### Methods
 
-- <code>encode(inputUSVString)</code> : Uint8Array
-  - Encodes a string input.
 
----
+
+* <code>encode(inputUSVString)</code> : Uint8Array
+
+  * Encodes a string input.
+
+
+
+***
 
 ## TextDecoder
 
@@ -50,16 +59,25 @@ let decoder = new TextDecoder();
 
 ### Properties
 
-- `decoder.encoding` DOMString read-only
-  - The name of the decoder that describes the method the `TextDecoder` uses.
 
-- `decoder.fatal` boolean read-only
-  - Indicates if the error mode is fatal.
 
-- `decoder.ignoreBOM` boolean read-only
-  - Indicates if the byte-order marker is ignored.
+* `decoder.encoding` DOMString read-only
+
+  * The name of the decoder that describes the method the `TextDecoder` uses.
+
+* `decoder.fatal` boolean read-only
+
+  * Indicates if the error mode is fatal.
+
+* `decoder.ignoreBOM` boolean read-only
+  * Indicates if the byte-order marker is ignored.
+
+
 
 ### Methods
 
-- `decode()` : DOMString
-  - Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s `TextDecoder` documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
+
+
+* `decode()` : DOMString
+  * Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s `TextDecoder` documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
+

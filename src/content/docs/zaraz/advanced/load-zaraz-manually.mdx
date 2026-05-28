@@ -6,6 +6,7 @@ products:
 title: Load Zaraz manually
 sidebar:
   order: 5
+
 ---
 
 By default, if your domain is proxied by Cloudflare, Zaraz will automatically inject itself to HTML pages in your site. This makes it easier to get up and running quickly. However, you might want to load Zaraz manually, for example to test Zaraz on specific pages first.
@@ -20,13 +21,13 @@ With the script, your page HTML should be similar to the following:
 
 ```html
 <html>
-	<head>
-		….
-		<script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
-	</head>
-	<body>
-		…
-	</body>
+  <head>
+    ….
+    <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
+  </head>
+  <body>
+    …
+  </body>
 </html>
 ```
 

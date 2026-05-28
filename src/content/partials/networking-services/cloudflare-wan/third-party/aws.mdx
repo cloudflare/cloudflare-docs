@@ -37,7 +37,7 @@ Additionally, you also need to configure the necessary route table entries for t
 
 5. Take note of the **IP address** you chose, as this corresponds to the customer endpoint IP that you will need to configure on the Cloudflare side of the IPsec tunnel.
 
-6. The number of options for the VPN connection will expand. Take note of the **Pre-shared key**. You will need it to create the IPsec tunnel on Cloudflare's side.
+6. The number of options for the VPN connection will expand. Take note of the **Pre-shared key**.  You will need it to create the IPsec tunnel on Cloudflare's side.
 
 7. In **Inside IPv4 CIDR**, AWS enforces that only a `/30` block within the `169.254.0.0/16` range can be used. To accommodate this, Cloudflare supports a subset of this IP block. Namely, Cloudflare supports `169.254.240.0/20` to be assigned as the IPsec tunnel's (internal) interface IPs. This example will use `169.254.244.0/30` as the CIDR block for the IPsec tunnel: `169.254.244.1` for the AWS side of the tunnel, and `169.254.244.2` for the Cloudflare side of the tunnel.
 
@@ -84,7 +84,7 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 
 ### Static routes
 
-The static route in Cloudflare WAN should point to the appropriate virtual machine (VM) subnet you created inside your AWS virtual private cloud. For example, if your VM has a subnet of `192.168.192.0/26`, you should use it as the prefix for your static route.
+The static route in Cloudflare WAN should point to the appropriate virtual machine (VM) subnet you created inside your AWS virtual private cloud. For example, if your VM has a subnet of  `192.168.192.0/26`, you should use it as the prefix for your static route.
 
 To create a static route:
 

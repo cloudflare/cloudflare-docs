@@ -179,9 +179,9 @@ You can assign aliases to tools to give them clearer names in the portal. Aliase
 
 Aliases can be set at two levels:
 
-| Level            | Field          | Scope                                                                                   |
-| ---------------- | -------------- | --------------------------------------------------------------------------------------- |
-| **Server-level** | `alias`        | Applies to the tool across all portals that include this server                         |
+| Level | Field | Scope |
+| ----- | ----- | ----- |
+| **Server-level** | `alias` | Applies to the tool across all portals that include this server |
 | **Portal-level** | `portal_alias` | Applies only within this specific portal and takes priority over the server-level alias |
 
 When a tool has multiple names configured, the portal uses the following priority order: `portal_alias` > `server_alias` > `alias` > original tool name.
@@ -245,11 +245,11 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 
 The `auth_type` field accepts the following values:
 
-| Value             | Description                                                                                                                                          |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `oauth`           | The server requires OAuth authentication. After creating the server, you will need to authenticate via the dashboard to establish admin credentials. |
-| `bearer`          | The server uses a static bearer token for authentication. Provide the token in `auth_credentials`.                                                   |
-| `unauthenticated` | The server does not require authentication.                                                                                                          |
+| Value | Description |
+| ----- | ----------- |
+| `oauth` | The server requires OAuth authentication. After creating the server, you will need to authenticate via the dashboard to establish admin credentials. |
+| `bearer` | The server uses a static bearer token for authentication. Provide the token in `auth_credentials`. |
+| `unauthenticated` | The server does not require authentication. |
 
 ### Force sync an MCP server
 

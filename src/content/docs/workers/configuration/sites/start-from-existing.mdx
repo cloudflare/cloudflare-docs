@@ -40,16 +40,16 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 2. Add your site's build/output directory to the Wrangler file:
 
    <WranglerConfig>
-   
-      ```jsonc
-      {
-        "site": {
-          "bucket": "./public" // <-- Add your build directory name here.
-        }
-      }
-      ```
-   
-      </WranglerConfig>
+
+   ```jsonc
+   {
+     "site": {
+       "bucket": "./public" // <-- Add your build directory name here.
+     }
+   }
+   ```
+
+   </WranglerConfig>
 
    The default directories for the most popular static site generators are listed below:
    - Hugo: `public`
@@ -138,14 +138,14 @@ async function handleEvent(event) {
 6. Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the Wrangler file.
 
    <WranglerConfig>
-   
-      ```jsonc
-      {
-        "route": "https://example.com/*"
-      }
-      ```
-   
-      </WranglerConfig>
+
+   ```jsonc
+   {
+     "route": "https://example.com/*"
+   }
+   ```
+
+   </WranglerConfig>
 
    :::note
 

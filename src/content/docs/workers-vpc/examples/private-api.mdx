@@ -87,9 +87,7 @@ export default {
 	async fetch(request, env, ctx) {
 		try {
 			// Fetch data from internal API and process it before returning
-			const response = await env.INTERNAL_API.fetch(
-				"http://10.0.1.50:8080/api/data",
-			);
+			const response = await env.INTERNAL_API.fetch("http://10.0.1.50:8080/api/data");
 
 			// Use the response of the private API to perform more logic in Workers, before returning the final response
 			return response;

@@ -11,18 +11,16 @@ sidebar:
   label: Stop account takeover
 ---
 
-import { Steps, DashButton, GlossaryTooltip, Render } from "~/components";
+import {
+  Steps,
+  DashButton,
+  GlossaryTooltip,
+  Render,
+} from "~/components";
 
 When your site has login pages, you need to decide how to verify that visitors are human, how aggressively to limit failed attempts, and which request patterns to block. This guide covers five stages: enforce HTTPS, turn on bot protection, add [Turnstile](/turnstile/) to your login form, create Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/) for suspicious patterns, and monitor for ongoing attacks using [SSL/TLS](/ssl/) transport security and [Cloudflare bot solutions](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
 
-<Render
-	file="domain-scope-note"
-	product="use-cases"
-	params={{
-		exception:
-			"Turnstile is the exception: widgets are configured at the account level.",
-	}}
-/>
+<Render file="domain-scope-note" product="use-cases" params={{ exception: "Turnstile is the exception: widgets are configured at the account level." }} />
 
 ## Enforce HTTPS to protect credentials in transit
 
@@ -100,17 +98,10 @@ You need both the sitekey and secret key in the following steps.
 #### 2. Add the client-side snippet
 
 Add the Turnstile script and widget container to your login form. Replace `<YOUR-SITE-KEY>` with the sitekey from the previous step.
-
 ```html
 <form id="login-form">
 	<input type="text" id="username" placeholder="Username" required />
-	<input
-		type="password"
-		id="password"
-		placeholder="Password"
-		autocomplete="off"
-		required
-	/>
+	<input type="password" id="password" placeholder="Password" autocomplete="off" required />
 	<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
 	<button type="submit">Log in</button>
 </form>
@@ -127,7 +118,6 @@ The widget renders inside the `div` and produces a token when the visitor passes
 #### 3. Validate the token on your server
 
 Before processing the form submission, send the token to the Turnstile siteverify endpoint to confirm the visitor passed the challenge.
-
 ```js title="server.js"
 const SECRET_KEY = "<YOUR-SECRET-KEY>";
 
@@ -166,7 +156,6 @@ For the complete response format, error codes, and examples in other languages, 
 #### Test your implementation
 
 Turnstile provides test site keys that return predictable results without contacting the Siteverify API.
-
 - **Always passes**: Use site key `1x00000000000000000000AA` and secret key `1x0000000000000000000000000000000AA` to simulate a successful challenge.
 - **Always blocks**: Use site key `2x00000000000000000000AB` and secret key `2x0000000000000000000000000000000AA` to simulate a failed challenge.
 - **Forces interactive challenge**: Use site key `3x00000000000000000000FF` to test the interactive challenge flow.
@@ -183,18 +172,7 @@ The following example creates a rate limiting rule that issues a Managed Challen
 Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-types/challenge-pages/) require an HTML response to render. They do not work for non-HTML responses such as AJAX/XHR requests, which are common on login endpoints that use single-page applications (SPAs) or API-based authentication. If your login flow uses AJAX, consider using [Turnstile Pre-Clearance](/turnstile/additional-configuration/pre-clearance-support/) instead.
 :::
 
-<Render
-	file="create-rate-limiting-rule"
-	product="waf"
-	params={{
-		ruleName: "Rate limit login endpoint",
-		expression:
-			'http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"',
-		expressionHelp:
-			"Replace `example.com` with your domain and `/login` with your login endpoint path.",
-		threshold: "5",
-	}}
-/>
+<Render file="create-rate-limiting-rule" product="waf" params={{ ruleName: "Rate limit login endpoint", expression: 'http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"', expressionHelp: 'Replace `example.com` with your domain and `/login` with your login endpoint path.', threshold: "5" }} />
 
 :::note
 (Optional) To count only failed login attempts instead of all matching requests, Business plan and above users can add a separate counting expression under **Increment counter when**:
@@ -342,7 +320,7 @@ Enterprise customers with Bot Management get additional tools for login protecti
 - **Custom rules with bot scores**: combine `cf.bot_management.score` with login path matching for precise control. Refer to [Custom rules for bot protection](/bots/additional-configurations/custom-rules/).
 - **Account takeover detections**: monitor suspicious login volume and failure rates using detection IDs in custom rules and rate limiting rules. Refer to [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/).
 - **Account Abuse Protection** (Early Access): detect account fraud patterns beyond credential stuffing. Refer to [Account Abuse Protection](/bots/account-abuse-protection/).
-  :::
+:::
 
 ## Monitor for ongoing compromise attempts
 

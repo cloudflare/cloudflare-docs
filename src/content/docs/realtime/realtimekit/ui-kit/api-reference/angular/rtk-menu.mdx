@@ -5,18 +5,17 @@ description: API reference for rtk-menu component (Angular Library)
 products:
   - realtime
 ---
-
 A menu component.
 
 ## Properties
 
-| Property    | Type        | Required | Default           | Description       |
-| ----------- | ----------- | -------- | ----------------- | ----------------- |
-| `iconPack`  | `IconPack`  | ❌       | `defaultIconPack` | Icon pack         |
-| `offset`    | `number`    | ✅       | -                 | Offset in px      |
-| `placement` | `Placement` | ✅       | -                 | Placement of menu |
-| `size`      | `Size`      | ✅       | -                 | Size              |
-| `t`         | `RtkI18n`   | ❌       | `useLanguage()`   | Language          |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `offset` | `number` | ✅ | - | Offset in px |
+| `placement` | `Placement` | ✅ | - | Placement of menu |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -31,5 +30,10 @@ A menu component.
 
 ```html
 <!-- component.html -->
-<rtk-menu offset="42" [placement]="placement" size="md"> </rtk-menu>
+<rtk-menu
+ offset="42"
+ [placement]="placement"
+ size="md">
+</rtk-menu>
 ```
+

@@ -10,24 +10,24 @@ products:
 
 import { Render } from "~/components";
 
-| Feature                                                                                         | Limit                                             |
-| ----------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Databases per account                                                                           | 50,000 (Workers Paid) [^1] / 10 (Free)            |
-| Maximum database size                                                                           | 10 GB (Workers Paid) / 500 MB (Free)              |
-| Maximum storage per account                                                                     | 1 TB (Workers Paid) [^2] / 5 GB (Free)            |
-| [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                     | 30 days (Workers Paid) / 7 days (Free)            |
-| Maximum Time Travel restore operations                                                          | 10 restores per 10 minutes (per database)         |
+| Feature                                                                                                             | Limit                                             |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Databases per account                                                                                               | 50,000 (Workers Paid) [^1] / 10 (Free)            |
+| Maximum database size                                                                                               | 10 GB (Workers Paid) / 500 MB (Free)              |
+| Maximum storage per account                                                                                         | 1 TB (Workers Paid) [^2] / 5 GB (Free)             |
+| [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                                         | 30 days (Workers Paid) / 7 days (Free)            |
+| Maximum Time Travel restore operations                                                                              | 10 restores per 10 minutes (per database)          |
 | Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#subrequests)) | 1000 (Workers Paid) / 50 (Free)                   |
-| Maximum number of columns per table                                                             | 100                                               |
-| Maximum number of rows per table                                                                | Unlimited (excluding per-database storage limits) |
-| Maximum string, `BLOB` or table row size                                                        | 2,000,000 bytes (2 MB)                            |
-| Maximum SQL statement length                                                                    | 100,000 bytes (100 KB)                            |
-| Maximum bound parameters per query                                                              | 100                                               |
-| Maximum arguments per SQL function                                                              | 32                                                |
-| Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                        | 50 bytes                                          |
-| Maximum bindings per Workers script                                                             | Approximately 5,000 [^3]                          |
-| Maximum SQL query duration                                                                      | 30 seconds [^4]                                   |
-| Maximum file import (`d1 execute`) size                                                         | 5 GB [^5]                                         |
+| Maximum number of columns per table                                                                                 | 100                                               |
+| Maximum number of rows per table                                                                                    | Unlimited (excluding per-database storage limits) |
+| Maximum string, `BLOB` or table row size                                                                            | 2,000,000 bytes (2 MB)                            |
+| Maximum SQL statement length                                                                                        | 100,000 bytes (100 KB)                            |
+| Maximum bound parameters per query                                                                                  | 100                                               |
+| Maximum arguments per SQL function                                                                                  | 32                                                |
+| Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                                            | 50 bytes                                          |
+| Maximum bindings per Workers script                                                                                 | Approximately 5,000 [^3]                          |
+| Maximum SQL query duration                                                                                          | 30 seconds [^4]                                   |
+| Maximum file import (`d1 execute`) size                                                                             | 5 GB [^5]                                         |
 
 :::note[Batch limits]
 Limits for individual queries (listed above) apply to each individual statement contained within a batch statement. For example, the maximum SQL statement length of 100 KB applies to each statement inside a `db.batch()`.

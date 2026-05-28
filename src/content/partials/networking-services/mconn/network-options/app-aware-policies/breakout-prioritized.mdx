@@ -7,64 +7,53 @@ params:
   - dashName
 ---
 
-import {
-	APIRequest,
-	Aside,
-	AnchorHeading,
-	CURL,
-	DashButton,
-	Markdown,
-	Render,
-	TabItem,
-	Tabs,
-} from "~/components";
+import { APIRequest, Aside, AnchorHeading, CURL, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
 { props.magicWord === "breakout" && (
-<>
-<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that Cloudflare One Appliance (formerly Magic WAN Connector) can detect. This can take several minutes.</p>
-<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
-</>
-)
+	<>
+		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that Cloudflare One Appliance (formerly Magic WAN Connector) can detect. This can take several minutes.</p>
+		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
+	</>
+	)
 }
 
 { props.magicWord === "prioritized" && (
-<>
-<p>Prioritized traffic allows you to define which applications Cloudflare One Appliance (formerly Magic WAN Connector) should process first. Applications not in the list will be queued behind prioritized traffic.</p>
-<p>Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.</p>
-<Aside type="caution">Prioritized traffic will not work for applications that use DNS-over-HTTPS.</Aside>
-</>
-)
+	<>
+		<p>Prioritized traffic allows you to define which applications Cloudflare One Appliance (formerly Magic WAN Connector) should process first. Applications not in the list will be queued behind prioritized traffic.</p>
+		<p>Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.</p>
+		<Aside type="caution">Prioritized traffic will not work for applications that use DNS-over-HTTPS.</Aside>
+	</>
+	)
 }
 
 { props.magicWord === "breakout" && (
-<>
-<pre class="mermaid">
-{`
-flowchart LR
-accTitle: Breakout traffic flow
-accDescr: Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet.
-a(Cloudflare One Appliance) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
+	<>
+		<pre class="mermaid">
+			{`
+			flowchart LR
+			accTitle: Breakout traffic flow
+			accDescr: Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet.
+			a(Cloudflare One Appliance) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
 
-    		a-- Breakout traffic ---d(Application1) & e(Application2) --> c
+			a-- Breakout traffic ---d(Application1) & e(Application2) --> c
 
-    		classDef orange fill:#f48120,color: black
-    		class a,b orange
-    		`}
-    	</pre>
-    	<p><em>In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet.</em></p>
-    	<Aside type="note" title="A note on security">
-    	<Markdown
-    	text={`
-    	We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
+			classDef orange fill:#f48120,color: black
+			class a,b orange
+			`}
+		</pre>
+		<p><em>In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet.</em></p>
+		<Aside type="note" title="A note on security">
+		<Markdown
+		text={`
+		We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
     For details on how Cloudflare routes traffic, refer to <a href="${props.trafficSteeringURL}">Traffic steering</a>.
-    	`}
-    	inline={false}
-    	/>
-    	</Aside>
-    </>
-    )
-
+		`}
+		inline={false}
+		/>
+		</Aside>
+	</>
+	)
 }
 
 ## Add an application to your account
@@ -75,28 +64,28 @@ To add applications to your account:
 
 Send a `POST` request to add new apps to your account.
 
-    <APIRequest
-    path="/accounts/{account_id}/magic/apps"
-    method="POST"
-    json={{
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="POST"
+	json={{
     "managed_app_id": "<APP_ID>",
     "name": "<APP_NAME>",
     "type": "<APP_TYPE>",
-    }}
-    />
+	}}
+	/>
 
-    ```json output
-    {
-    	"result": {
-    		"account_app_id": "eb09v665c0784618a3e4ba9809258fd4",
-    		"name": "<APP_NAME>",
-    		"type": "<APP_TYPE>",
-    	},
-    	"success": true,
-    	"errors": [],
-    	"messages": []
-    }
-    ```
+	```json output
+	{
+		"result": {
+			"account_app_id": "eb09v665c0784618a3e4ba9809258fd4",
+			"name": "<APP_NAME>",
+			"type": "<APP_TYPE>",
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
 
 You can now add this new app to the {props.featureName} list in your Cloudflare One Appliance.
 
@@ -326,88 +315,87 @@ You need to delete {props.featureName} applications for each of your existing si
 </TabItem> </Tabs>
 
 { props.magicWord === "breakout" && (
-<>
-<AnchorHeading title="Designate WAN ports for breakout apps" depth={2} />
+	<>
+		<AnchorHeading title="Designate WAN ports for breakout apps" depth={2} />
 
-    	<Markdown
-    	text={`
-
+		<Markdown
+		text={`
 You can pin applications to a specific WAN port in Cloudflare One Appliance when you need control over which WAN port your applications egress from the device. In case your preferred WAN port goes down, Cloudflare One Appliance automatically fails over to a standard configured WAN port priority.
 
 With this preferred breakout port, customers have direct control over their local Internet breakout traffic. You can designate a specific WAN uplink as the primary path for your critical applications configured to bypass the Cloudflare network. This provides the predictability and control needed for performance-sensitive applications, ensuring your critical traffic always takes the path you choose.
 
 To pin applications to a WAN port:
-`}
-inline={false}
-/>
+		`}
+		inline={false}
+		/>
 
-    	{ props.dashName === "CF1 Cloudflare WAN" ? (
-    		<>
-    			<Markdown
-    		text={`
-    			1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
-    			2. Go to **Connectors** > **Appliances** > **Profiles**.
-    			3. Select the Cloudflare One Appliance you want to configure > **Edit**.
-    		`}
-    		inline={false}
-    		/>
-    		</>
-    	) : (
-    		<>
-    		<Markdown
-    			text={`
-    				1. Go to the **Connectors** page.
-    				`}
-    			inline={false}
-    			/>
-    				<DashButton url="/?to=/:account/magic-networks/connections" />
+		{ props.dashName === "CF1 Cloudflare WAN" ? (
+			<>
+				<Markdown
+			text={`
+				1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+				2. Go to **Connectors** > **Appliances** > **Profiles**.
+				3. Select the Cloudflare One Appliance you want to configure > **Edit**.
+			`}
+			inline={false}
+			/>
+			</>
+		) : (
+			<>
+			<Markdown
+				text={`
+					1. Go to the **Connectors** page.
+					`}
+				inline={false}
+				/>
+					<DashButton url="/?to=/:account/magic-networks/connections" />
 
-    				<Markdown
-    			text={`
-    				2. Go to the **Appliances** tab > **Profiles**.
-    				`}
-    			inline={false}
-    			/>
-    			<Markdown
-    		text={`
-    			3. Select your Appliance > **Edit**.
-    		`}
-    		inline={false}
-    		/>
-    		</>
-    	)
-    	}
-    	<Markdown
-    	text={`
-    	4. In **Traffic steering** > **Breakout Traffic** find the application you want to pin to a WAN port.
-    	5. Select the three dots next to it > **Edit application traffic**.
-    	6. From the **Preferred breakout port** drop-down menu, select the WAN port you want to assign to the applications.
-    	7. Select **Save**.
-    	`}
-    	inline={false}
-    	/>
-    </>
-
+					<Markdown
+				text={`
+					2. Go to the **Appliances** tab > **Profiles**.
+					`}
+				inline={false}
+				/>
+				<Markdown
+			text={`
+				3. Select your Appliance > **Edit**.
+			`}
+			inline={false}
+			/>
+			</>
+		)
+		}
+		<Markdown
+		text={`
+		4. In **Traffic steering** > **Breakout Traffic** find the application you want to pin to a WAN port.
+		5. Select the three dots next to it > **Edit application traffic**.
+		6. From the **Preferred breakout port** drop-down menu, select the WAN port you want to assign to the applications.
+		7. Select **Save**.
+		`}
+		inline={false}
+		/>
+	</>
 )
 }
 
+
 {props.magicWord === "breakout" && (
-<>
-<Render	file="mconn/network-options/app-aware-policies/netflow" product="networking-services" />
-</>
-)
+	<>
+		<Render	file="mconn/network-options/app-aware-policies/netflow" product="networking-services" />
+	</>
+	)
 }
 
 { props.magicWord === "breakout" && (
-<>
-<AnchorHeading title="Cloudflare One Client traffic" depth={2} />
-<Render
-file="mconn/network-options/app-aware-policies/warp-traffic"
-product="networking-services"
-params={{
+	<>
+	<AnchorHeading title="Cloudflare One Client traffic" depth={2} />
+		<Render
+			file="mconn/network-options/app-aware-policies/warp-traffic"
+			product="networking-services"
+			params={{
 				warpFirewallURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/"
 			}}
-/>
-</>
-)
+			/>
+	</>
+	)
 }

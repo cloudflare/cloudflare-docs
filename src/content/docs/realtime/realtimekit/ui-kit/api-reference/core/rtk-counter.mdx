@@ -5,18 +5,17 @@ description: API reference for rtk-counter component (Web Components (HTML) Libr
 products:
   - realtime
 ---
-
 A number picker with increment and decrement buttons.
 
 ## Properties
 
-| Property   | Type        | Required | Default           | Description   |
-| ---------- | ----------- | -------- | ----------------- | ------------- |
-| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack     |
-| `minValue` | `number`    | ✅       | -                 | Minimum value |
-| `size`     | `Size1`     | ✅       | -                 | Size          |
-| `t`        | `RtkI18n`   | ❌       | `useLanguage()`   | Language      |
-| `value`    | `number`    | ✅       | -                 | Initial value |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `minValue` | `number` | ✅ | - | Minimum value |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `value` | `number` | ✅ | - | Initial value |
 
 ## Usage Examples
 
@@ -29,14 +28,17 @@ A number picker with increment and decrement buttons.
 ### With Properties
 
 ```html
-<rtk-counter size="md"> </rtk-counter>
+<rtk-counter
+ size="md">
+</rtk-counter>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-counter");
+  const el = document.querySelector("rtk-counter");
 
-	el.minValue = 42;
-	el.value = 42;
+  el.minValue= 42;
+  el.value= 42;
 </script>
 ```

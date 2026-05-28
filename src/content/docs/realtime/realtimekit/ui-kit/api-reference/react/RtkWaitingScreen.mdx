@@ -5,34 +5,38 @@ description: API reference for RtkWaitingScreen component (React Library)
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type       | Required | Default                 | Description    |
-| ---------- | ---------- | -------- | ----------------------- | -------------- |
-| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config         |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkWaitingScreen } from "@cloudflare/realtimekit-react-ui";
+import { RtkWaitingScreen } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkWaitingScreen />;
+  return <RtkWaitingScreen />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkWaitingScreen } from "@cloudflare/realtimekit-react-ui";
+import { RtkWaitingScreen } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkWaitingScreen meeting={meeting} />;
+  return (
+    <RtkWaitingScreen
+      meeting={meeting}
+    />
+  );
 }
 ```
+

@@ -10,13 +10,7 @@ sidebar:
 description: Learn how Speed Brain enhances web performance by prefetching likely next pages, improving metrics like LCP and TTFB.
 ---
 
-import {
-	FeatureTable,
-	TabItem,
-	Tabs,
-	APIRequest,
-	DashButton,
-} from "~/components";
+import { FeatureTable, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 Speed Brain is a tool for improving web page performance by prefetching the most likely next navigation.
 
@@ -117,6 +111,7 @@ You can also configure Speed Brain using Terraform. For more details, refer to t
 ## Caveats
 
 - Since prefetch responses are not guaranteed to be rendered by the browser, Speed Brain includes two safeguards to minimize the risk of [unsafe prefetching](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#unsafe_prefetching):
+
   - Speed Brain will not prefetch on routes that run Workers. Without this safeguard, prefetch requests could inadvertently run Worker logic that assumes the incoming request is a normal (that is, not a prefetch) request. An example of this could be an incrementing page view counter running in a Worker. A page view counter should not increment if the page is not actually rendered in the browser.
 
   - Prefetch requests will never reach origin servers. Prefetch requests only serve content that is stored in Cloudflare’s Cache. If the content is not in Cache, the prefetch request will not continue to origin servers. Without this safeguard, origin server state could be modified despite the prefetch response not being rendered in the browser. An example of this could be a prefetch `GET` request to a sign-out URL inadvertently triggering a sign-out action on the server.

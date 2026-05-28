@@ -41,7 +41,7 @@ You can now test receiving, replying, and sending emails in your local environme
 Consider this example Email Worker script that uses the open source [`postal-mime`](https://www.npmjs.com/package/postal-mime) email parser:
 
 ```ts
-import * as PostalMime from "postal-mime";
+import * as PostalMime from 'postal-mime';
 
 export default {
 	async email(message, env, ctx) {
@@ -79,31 +79,31 @@ This is what you get in the console:
 
 ```json
 {
-	"headers": [
-		{
-			"key": "received",
-			"value": "from smtp.example.com (127.0.0.1) by cloudflare-email.com (unknown) id 4fwwffRXOpyR for <recipient@example.com>; Tue, 27 Aug 2024 15:50:20 +0000"
-		},
-		{ "key": "from", "value": "\"John\" <sender@example.com>" },
-		{ "key": "reply-to", "value": "sender@example.com" },
-		{ "key": "to", "value": "recipient@example.com" },
-		{ "key": "subject", "value": "Testing Email Workers Local Dev" },
-		{ "key": "content-type", "value": "text/html; charset=\"windows-1252\"" },
-		{ "key": "x-mailer", "value": "Curl" },
-		{ "key": "date", "value": "Tue, 27 Aug 2024 08:49:44 -0700" },
-		{
-			"key": "message-id",
-			"value": "<6114391943504294873000@ZSH-GHOSTTY>"
-		}
-	],
-	"from": { "address": "sender@example.com", "name": "John" },
-	"to": [{ "address": "recipient@example.com", "name": "" }],
-	"replyTo": [{ "address": "sender@example.com", "name": "" }],
-	"subject": "Testing Email Workers Local Dev",
-	"messageId": "<6114391943504294873000@ZSH-GHOSTTY>",
-	"date": "2024-08-27T15:49:44.000Z",
-	"html": "Hi there\n",
-	"attachments": []
+  headers: [
+    {
+      key: 'received',
+      value: 'from smtp.example.com (127.0.0.1) by cloudflare-email.com (unknown) id 4fwwffRXOpyR for <recipient@example.com>; Tue, 27 Aug 2024 15:50:20 +0000'
+    },
+    { key: 'from', value: '"John" <sender@example.com>' },
+    { key: 'reply-to', value: 'sender@example.com' },
+    { key: 'to', value: 'recipient@example.com' },
+    { key: 'subject', value: 'Testing Email Workers Local Dev' },
+    { key: 'content-type', value: 'text/html; charset="windows-1252"' },
+    { key: 'x-mailer', value: 'Curl' },
+    { key: 'date', value: 'Tue, 27 Aug 2024 08:49:44 -0700' },
+    {
+      key: 'message-id',
+      value: '<6114391943504294873000@ZSH-GHOSTTY>'
+    }
+  ],
+  from: { address: 'sender@example.com', name: 'John' },
+  to: [ { address: 'recipient@example.com', name: '' } ],
+  replyTo: [ { address: 'sender@example.com', name: '' } ],
+  subject: 'Testing Email Workers Local Dev',
+  messageId: '<6114391943504294873000@ZSH-GHOSTTY>',
+  date: '2024-08-27T15:49:44.000Z',
+  html: 'Hi there\n',
+  attachments: []
 }
 ```
 
@@ -113,27 +113,23 @@ Wrangler can also simulate sending emails locally. Consider this example Email W
 
 ```ts
 import { EmailMessage } from "cloudflare:email";
-import { createMimeMessage } from "mimetext";
+import { createMimeMessage } from 'mimetext';
 
 export default {
 	async fetch(request, env, ctx) {
 		const msg = createMimeMessage();
-		msg.setSender({ name: "Sending email test", addr: "sender@example.com" });
-		msg.setRecipient("recipient@example.com");
-		msg.setSubject("An email generated in a worker");
+		msg.setSender({ name: 'Sending email test', addr: 'sender@example.com' });
+		msg.setRecipient('recipient@example.com');
+		msg.setSubject('An email generated in a worker');
 		msg.addMessage({
-			contentType: "text/plain",
+			contentType: 'text/plain',
 			data: `Congratulations, you just sent an email from a worker.`,
 		});
 
-		var message = new EmailMessage(
-			"sender@example.com",
-			"recipient@example.com",
-			msg.asRaw(),
-		);
+		var message = new EmailMessage('sender@example.com', 'recipient@example.com', msg.asRaw());
 		await env.EMAIL.send(message);
 		return Response.json({ ok: true });
-	},
+	}
 };
 ```
 
@@ -167,9 +163,9 @@ Congratulations, you just sent an email from a worker.
 Likewise, [`EmailMessage`](/email-routing/email-workers/runtime-api/#emailmessage-definition)'s `forward()` and `reply()` methods are also simulated locally. Consider this Worker that receives an email, parses it, replies to the sender, and forwards the original message to one your verified recipient addresses:
 
 ```ts
-import * as PostalMime from "postal-mime";
-import { createMimeMessage } from "mimetext";
-import { EmailMessage } from "cloudflare:email";
+import * as PostalMime from 'postal-mime';
+import { createMimeMessage } from 'mimetext';
+import { EmailMessage } from 'cloudflare:email';
 
 export default {
 	async email(message, env: any, ctx: any) {
@@ -183,23 +179,16 @@ export default {
 
 		// creates reply message
 		const msg = createMimeMessage();
-		msg.setSender({
-			name: "Thank you for your contact",
-			addr: "sender@example.com",
-		});
+		msg.setSender({ name: 'Thank you for your contact', addr: 'sender@example.com' });
 		msg.setRecipient(message.from);
-		msg.setHeader("In-Reply-To", message.headers.get("Message-ID"));
-		msg.setSubject("An email generated in a worker");
+		msg.setHeader('In-Reply-To', message.headers.get('Message-ID'));
+		msg.setSubject('An email generated in a worker');
 		msg.addMessage({
-			contentType: "text/plain",
+			contentType: 'text/plain',
 			data: `This is an automated reply. We received you email with the subject "${email.subject}", and will handle it as soon as possible.`,
 		});
 
-		const replyMessage = new EmailMessage(
-			"sender@example.com",
-			message.from,
-			msg.asRaw(),
-		);
+		const replyMessage = new EmailMessage('sender@example.com', message.from, msg.asRaw());
 
 		await message.reply(replyMessage);
 		await message.forward("recipient@example.com");

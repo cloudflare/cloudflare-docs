@@ -5,36 +5,41 @@ description: API reference for RtkPluginMain component (React Library)
 products:
   - realtime
 ---
-
 A component which loads a plugin.
 
 ## Properties
 
-| Property   | Type        | Required | Default           | Description |
-| ---------- | ----------- | -------- | ----------------- | ----------- |
-| `iconPack` | `IconPack`  | ❌       | `defaultIconPack` | Icon pack   |
-| `meeting`  | `Meeting`   | ✅       | -                 | Meeting     |
-| `plugin`   | `RTKPlugin` | ✅       | -                 | Plugin      |
-| `t`        | `RtkI18n`   | ❌       | `useLanguage()`   | Language    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `plugin` | `RTKPlugin` | ✅ | - | Plugin |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkPluginMain } from "@cloudflare/realtimekit-react-ui";
+import { RtkPluginMain } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkPluginMain />;
+  return <RtkPluginMain />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkPluginMain } from "@cloudflare/realtimekit-react-ui";
+import { RtkPluginMain } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkPluginMain meeting={meeting} plugin={rtkplugin} />;
+  return (
+    <RtkPluginMain
+      meeting={meeting}
+      plugin={rtkplugin}
+    />
+  );
 }
 ```
+

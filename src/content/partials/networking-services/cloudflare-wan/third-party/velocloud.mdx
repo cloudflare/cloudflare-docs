@@ -195,7 +195,7 @@ Once the Edge device is added, you should land on the **Device** tab.
 
 #### User Defined WAN Link
 
-Note the indicator next to **GE3**. The steps in the Profile section disabled **Auto WAN Link Detection**. As a result, the WAN Link must be specified.
+Note the indicator next to **GE3**. The steps in the Profile section disabled **Auto WAN Link Detection**. As a result,  the WAN Link must be specified.
 
 ![Note the indicator next to GE3.](~/assets/images/cloudflare-wan/third-party/velocloud/image2.png)
 
@@ -215,7 +215,7 @@ Note the indicator next to **GE3**. The steps in the Profile section disabled **
 5. Select the **Network Service** defined earlier. For example, `Magic_WAN_vc-edge-03`.
 6. In the **Action** column, select the **+** button, and configure the following options:
    1. **Public WAN Link**: Choose the Public WAN Link (refer to User-Defined WAN Link)
-   2. **Local Identification Type**: _FQDN_
+   2. **Local Identification Type**: *FQDN*
    3. **Local Identification**: Enter the FQDN specified when configuring Cloudflare WAN IPsec tunnels through the Custom FQDN IKE ID API endpoint.
    4. **PSK**: Enter the Pre-Shared Key. Ensure you use the same PSK for both Cloudflare WAN IPsec tunnels.
    5. **Destination Primary Public IP**: Pre-populated from the Network Service defined earlier.
@@ -227,8 +227,8 @@ Note the indicator next to **GE3**. The steps in the Profile section disabled **
 
 Configure the **Site Subnets** to facilitate:
 
-- Routing traffic from one Cloudflare WAN site to other Cloudflare WAN sites.
-- Ensure Cloudflare WAN IPsec tunnel health checks perform optimally.
+* Routing traffic from one Cloudflare WAN site to other Cloudflare WAN sites.
+* Ensure Cloudflare WAN IPsec tunnel health checks perform optimally.
 
 1. Go to **Configure** > **Network Services**.
 2. Expand the **Non SD-WAN Destinations through Edge** section.

@@ -5,21 +5,20 @@ description: API reference for rtk-audio-visualizer component (Angular Library)
 products:
   - realtime
 ---
-
 An audio visualizer component which visualizes a participants audio.
-Commonly used inside `rtk-name-tag`.
+ Commonly used inside `rtk-name-tag`.
 
 ## Properties
 
-| Property        | Type                     | Required | Default           | Description                                                                                   |
-| --------------- | ------------------------ | -------- | ----------------- | --------------------------------------------------------------------------------------------- |
-| `hideMuted`     | `boolean`                | ✅       | -                 | Hide the visualizer if audio is muted                                                         |
-| `iconPack`      | `IconPack`               | ❌       | `defaultIconPack` | Icon pack                                                                                     |
-| `isScreenShare` | `boolean`                | ✅       | -                 | Audio visualizer for screensharing, it will use screenShareTracks.audio instead of audioTrack |
-| `participant`   | `Peer`                   | ✅       | -                 | Participant object                                                                            |
-| `size`          | `Size`                   | ✅       | -                 | Size                                                                                          |
-| `t`             | `RtkI18n`                | ❌       | `useLanguage()`   | Language                                                                                      |
-| `variant`       | `AudioVisualizerVariant` | ✅       | -                 | Variant                                                                                       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hideMuted` | `boolean` | ✅ | - | Hide the visualizer if audio is muted |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Audio visualizer for screensharing, it will use screenShareTracks.audio instead of audioTrack |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `AudioVisualizerVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -35,9 +34,9 @@ Commonly used inside `rtk-name-tag`.
 ```html
 <!-- component.html -->
 <rtk-audio-visualizer
-	[hideMuted]="true"
-	[isScreenShare]="true"
-	[participant]="participant"
->
+ [hideMuted]="true"
+ [isScreenShare]="true"
+ [participant]="participant">
 </rtk-audio-visualizer>
 ```
+

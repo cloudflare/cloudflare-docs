@@ -15,7 +15,9 @@ if (!page) {
 	);
 }
 
-if (!page.data.release_notes_file_name) {
+if (
+	!page.data.release_notes_file_name
+) {
 	throw new Error(
 		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' frontmatter property.`,
 	);
@@ -30,7 +32,8 @@ if (
 	);
 }
 
-const name = page.data.release_notes_file_name?.[0];
+const name =
+	page.data.release_notes_file_name?.[0];
 
 let releaseNotes;
 

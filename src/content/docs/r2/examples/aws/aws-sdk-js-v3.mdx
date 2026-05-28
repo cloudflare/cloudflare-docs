@@ -58,7 +58,9 @@ console.log(await S3.send(new ListBucketsCommand({})));
 //     }
 // }
 
-console.log(await S3.send(new ListObjectsV2Command({ Bucket: "my-bucket" })));
+console.log(
+	await S3.send(new ListObjectsV2Command({ Bucket: "my-bucket" })),
+);
 // {
 //     '$metadata': {
 //       httpStatusCode: 200,
@@ -155,13 +157,13 @@ When generating presigned URLs for uploads, you can limit abuse and misuse by:
 
 ```json
 [
-	{
-		"AllowedOrigins": ["https://example.com"],
-		"AllowedMethods": ["PUT"],
-		"AllowedHeaders": ["Content-Type"],
-		"ExposeHeaders": ["ETag"],
-		"MaxAgeSeconds": 3600
-	}
+  {
+    "AllowedOrigins": ["https://example.com"],
+    "AllowedMethods": ["PUT"],
+    "AllowedHeaders": ["Content-Type"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  }
 ]
 ```
 
@@ -180,6 +182,5 @@ const putUrl = await getSignedUrl(
 ```
 
 When a client uses this presigned URL, they must:
-
 - Make the request from an allowed origin (enforced by CORS)
 - Include the `Content-Type: image/png` header (enforced by the signature)

@@ -5,18 +5,17 @@ description: API reference for rtk-switch component (Angular Library)
 products:
   - realtime
 ---
-
 A switch component which follows RTK Design System.
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description                           |
-| ---------- | ---------- | -------- | ----------------- | ------------------------------------- |
-| `checked`  | `boolean`  | ✅       | -                 | Whether the switch is enabled/checked |
-| `disabled` | `boolean`  | ✅       | -                 | Whether switch is readonly            |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack                             |
-| `readonly` | `boolean`  | ✅       | -                 | Whether switch is readonly            |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language                              |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `checked` | `boolean` | ✅ | - | Whether the switch is enabled/checked |
+| `disabled` | `boolean` | ✅ | - | Whether switch is readonly |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `readonly` | `boolean` | ✅ | - | Whether switch is readonly |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -31,5 +30,10 @@ A switch component which follows RTK Design System.
 
 ```html
 <!-- component.html -->
-<rtk-switch [checked]="true" [disabled]="true" [readonly]="true"> </rtk-switch>
+<rtk-switch
+ [checked]="true"
+ [disabled]="true"
+ [readonly]="true">
+</rtk-switch>
 ```
+

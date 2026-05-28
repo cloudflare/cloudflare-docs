@@ -18,8 +18,8 @@ The following steps outline the recommended multi-step draining process to achie
 2. **Wait for global BGP convergence**: Allow a period of time (typically five to ten minutes) for the new native advertisement to propagate fully across the global routing table, and for routes to converge. This passive waiting period ensures that the majority of traffic has shifted to your local network before the next step.
 3. **Signal BGP withdrawal from the Cloudflare edge**: Once you have verified that traffic has successfully drained, use one of the BGP control methods to stop the advertisement of the prefix from the Cloudflare edge.
 
-   :::caution[ISP route refresh delays may impact traffic]
-   Cloudflare's action to withdraw the route is near-instantaneous across our global network. However, Cloudflare has no control over how quickly external ISPs refresh their BGP tables after the withdrawal.
-   :::
+	:::caution[ISP route refresh delays may impact traffic]
+	Cloudflare's action to withdraw the route is near-instantaneous across our global network. However, Cloudflare has no control over how quickly external ISPs refresh their BGP tables after the withdrawal.
+	:::
 
 4. The draining process is complete.

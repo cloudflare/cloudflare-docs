@@ -5,15 +5,14 @@ description: API reference for rtk-livestream-player component (Web Components (
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type        | Required | Default           | Description    |
-| ---------- | ----------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`   | ✅       | -                 | Meeting object |
-| `size`     | `Size1`     | ✅       | -                 | Size           |
-| `t`        | `RtkI18n1`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -26,13 +25,16 @@ products:
 ### With Properties
 
 ```html
-<rtk-livestream-player size="md"> </rtk-livestream-player>
+<rtk-livestream-player
+ size="md">
+</rtk-livestream-player>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-livestream-player");
+  const el = document.querySelector("rtk-livestream-player");
 
-	el.meeting = meeting;
+  el.meeting= meeting
 </script>
 ```

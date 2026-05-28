@@ -13,6 +13,8 @@ The Security fields contain rules to block requests that contain specific types 
 
 ## SecurityActions
 
+
+
 | Value                                  | Action         | Description                                                                                                                                                |
 | -------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `unknown`                              | Unknown        | Take no other action.                                                                                                                                      |
@@ -25,14 +27,18 @@ The Security fields contain rules to block requests that contain specific types 
 | `challengeSolved`                      | Allow          | Allow once interactive challenge solved.                                                                                                                   |
 | `challengeBypassed`                    | Allow          | Interactive challenge is not issued again because the visitor had previously passed an interactive challenge and a valid `cf_clearance` cookie is present. |
 | `jschallengeSolved`                    | Allow          | Allow once non-interactive challenge solved.                                                                                                               |
-| `jschallengeBypassed`                  | Allow          | Non-interactive challenge not issued because the visitor had previously passed a non-interactive or interactive challenge.                                 |
+| `jschallengeBypassed`                  | Allow          | Non-interactive challenge not issued because the visitor had previously passed a non-interactive or interactive challenge.                                  |
 | `bypass`                               | Allow          | Bypass all subsequent firewall rules.                                                                                                                      |
 | `managedChallenge`                     | Challenge Drop | Issue managed challenge.                                                                                                                                   |
 | `managedChallengeNonInteractiveSolved` | Allow          | Allow once the managed challenge is solved via non-interactive interstitial page.                                                                          |
 | `managedChallengeInteractiveSolved`    | Allow          | Allow once the managed challenged is solved via interactive interstitial page.                                                                             |
 | `managedChallengeBypassed`             | Allow          | Challenge was not presented because visitor had clearance from previous challenge.                                                                         |
 
+
+
 ## SecuritySources
+
+
 
 | Value             | Description                                                                                                      |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------- |

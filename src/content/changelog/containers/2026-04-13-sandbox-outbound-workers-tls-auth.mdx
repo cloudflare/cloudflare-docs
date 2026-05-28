@@ -74,7 +74,7 @@ Define named outbound handlers then apply or remove them at runtime using `setOu
 export class MySandbox extends Sandbox {}
 
 MySandbox.outboundHandlers = {
-	allowHosts: async (req: Request, env: Env, ctx: OutboundHandlerContext) => {
+	allowHosts: async (req: Request, env: Env, ctx: OutboundHandlerContext ) => {
 		const url = new URL(req.url);
 		if (ctx.params.allowedHostnames.includes(url.hostname)) {
 			return fetch(req);

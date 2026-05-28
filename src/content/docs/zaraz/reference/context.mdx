@@ -6,6 +6,7 @@ products:
 title: Zaraz Context
 sidebar:
   order: 10
+
 ---
 
 The Zaraz Context is a versatile object that provides a set of configurable properties for Zaraz, a web analytics tool for tracking user behavior on websites. These properties can be accessed and utilized across various components, including [Worker Variables](/zaraz/variables/worker-variables/) and [JSONata expressions](/zaraz/advanced/using-jsonata/).
@@ -15,6 +16,8 @@ System properties, which are automatically collected by Zaraz, provide insights 
 ## System properties
 
 ### Page information
+
+
 
 | Property               | Type   | Description                                                                                                     |
 | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------- |
@@ -34,6 +37,8 @@ System properties, which are automatically collected by Zaraz, provide insights 
 The keys inside the `system.cookies` are the cookies name. The property `system.cookies.foo` will return the value of the a cookie named `foo`.
 
 ### Device information
+
+
 
 | Property                                   | Type   | Description                                                                                                              |
 | ------------------------------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------ |
@@ -71,6 +76,8 @@ The keys inside the `system.clientKV` object are formatted as Tool ID, underscor
 
 ### Miscellaneous
 
+
+
 | Property                            | Type   | Description                           |
 | ----------------------------------- | ------ | ------------------------------------- |
 | `system.misc.random`                | Number | Random number unique to each request. |
@@ -79,6 +86,8 @@ The keys inside the `system.clientKV` object are formatted as Tool ID, underscor
 |                                     |        |                                       |
 
 ## Event properties
+
+
 
 | Property              | Type   | Description                                                                                                                                                                                                                                                          |
 | --------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -6,6 +6,7 @@ products:
 title: Embeds
 sidebar:
   order: 6
+
 ---
 
 import { DashButton } from "~/components";
@@ -18,8 +19,7 @@ To add an Embed to Your Website:
 
 1. In the Cloudflare dashboard, go to the **Tag Setup** page.
 
-   <DashButton url="/?to=/:account/tag-management/zaraz" />
-
+	<DashButton url="/?to=/:account/tag-management/zaraz" />
 2. Go to **Tools Configuration**.
 3. Click "add new tool" and activate the desired tools on your Cloudflare Zaraz dashboard.
 4. Add a placeholder in your HTML, specifying the necessary attributes. For a generic embed, the snippet looks like this:
@@ -43,10 +43,7 @@ Replace `tweet-id` with the actual tweet ID for the content you wish to embed.
 ### Instagram embed
 
 ```html
-<instagram-post
-	post-url="https://www.instagram.com/p/ABC/"
-	captions="true"
-></instagram-post>
+<instagram-post post-url="https://www.instagram.com/p/ABC/" captions="true"></instagram-post>
 ```
 
 Replace `post-url` with the actual URL for the content you wish to embed. To include posts captions set captions attribute to `true`.

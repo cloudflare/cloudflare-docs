@@ -13,7 +13,7 @@ products:
   - workers-ai
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing } from "~/components"
 
 Cloudflare has a unique [embedded function calling](https://blog.cloudflare.com/embedded-function-calling) feature that allows you to execute function code alongside your tool call inference. Our npm package [`@cloudflare/ai-utils`](https://www.npmjs.com/package/@cloudflare/ai-utils) is the developer toolkit to get started.
 
@@ -21,7 +21,9 @@ Embedded function calling can be used to easily make complex agents that interac
 
 :::caution[REST API support]
 
+
 Embedded function calling depends on features native to the Workers platform. This means that embedded function calling is only supported via [Cloudflare Workers](/workers-ai/get-started/workers-wrangler/), not via the [REST API](/workers-ai/get-started/rest-api/).
+
 
 :::
 

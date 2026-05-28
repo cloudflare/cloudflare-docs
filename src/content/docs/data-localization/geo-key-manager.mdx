@@ -9,6 +9,7 @@ tags:
   - Compliance
 sidebar:
   order: 4
+
 ---
 
 Geo Key Manager offers enhanced control over the storage location of your private SSL/TLS keys — the cryptographic keys that Cloudflare uses to decrypt your HTTPS traffic. By restricting where these keys are stored, you can ensure compliance with regional data regulations and security requirements.
@@ -23,7 +24,7 @@ Geo Key Manager was restricted to the US, EU, and high-security data centers, bu
 
 The following diagram shows what happens when an end user connects to a Cloudflare data center that does not hold your private key. Because TLS termination requires the private key, the local data center must request a temporary session key (a short-lived symmetric encryption key) from a data center in an authorized region. Once the session key is established, the local data center can decrypt traffic for the remainder of the connection without contacting the key-holding data center again. This extra step adds latency on the first request, which can be as much as a second if the key-holding data center is geographically distant.
 
-<br />
+<br/>
 
 ```mermaid
 sequenceDiagram
@@ -40,6 +41,6 @@ sequenceDiagram
     User-->>CloudflarePoP: Subsequent requests use the Session Key
 ```
 
-<br />
+<br/>
 
 For detailed information on setup and supported options, refer to [Geo Key Manager documentation](/ssl/edge-certificates/geokey-manager/).

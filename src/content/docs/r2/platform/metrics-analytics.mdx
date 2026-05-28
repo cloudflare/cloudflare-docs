@@ -6,7 +6,7 @@ products:
   - r2
 ---
 
-import { DashButton } from "~/components";
+import { DashButton } from "~/components"
 
 R2 exposes analytics that allow you to inspect the requests and storage of the buckets in your account.
 
@@ -16,8 +16,8 @@ The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cl
 
 R2 currently has two datasets:
 
-| <div style="width:100px">Dataset </div> | <div style="width:235px">GraphQL Dataset Name </div> | Description                                                                  |
-| --------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
+| <div style="width:100px">Dataset </div> | <div style="width:235px">GraphQL Dataset Name </div> | Description                                                          |
+| --------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
 | Operations                              | `r2OperationsAdaptiveGroups`                         | This dataset consists of the operations taken on a bucket within an account. |
 | Storage                                 | `r2StorageAdaptiveGroups`                            | This dataset consists of the storage of a bucket within an account.          |
 
@@ -58,7 +58,6 @@ Per-bucket analytics for R2 are available in the Cloudflare dashboard. To view c
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
-
 2. Select your bucket.
 3. Select the **Metrics** tab.
 

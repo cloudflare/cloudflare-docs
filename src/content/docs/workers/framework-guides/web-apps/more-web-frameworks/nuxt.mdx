@@ -29,21 +29,9 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 <AutoconfigDiagram
 	framework="Nuxt"
 	configs={[
-		{
-			label: "main",
-			file: "wrangler.jsonc",
-			value: ".output/server/index.mjs",
-		},
-		{
-			label: "assets",
-			file: "wrangler.jsonc",
-			value: "directory: .output/public",
-		},
-		{
-			label: "compatibility_flags",
-			file: "wrangler.jsonc",
-			value: "nodejs_compat",
-		},
+		{ label: "main", file: "wrangler.jsonc", value: ".output/server/index.mjs" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: .output/public" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 		{ label: "preset", file: "nuxt.config.ts", value: "cloudflare" },
 	]}

@@ -5,22 +5,21 @@ description: API reference for rtk-dialog component (Web Components (HTML) Libra
 products:
   - realtime
 ---
-
 A dialog component.
 
 ## Properties
 
-| Property           | Type       | Required | Default                 | Description                            |
-| ------------------ | ---------- | -------- | ----------------------- | -------------------------------------- |
-| `config`           | `UIConfig` | ❌       | `createDefaultConfig()` | UI Config                              |
-| `disableEscapeKey` | `boolean`  | ✅       | -                       | Whether Escape key can close the modal |
-| `hideCloseButton`  | `boolean`  | ✅       | -                       | Whether to show the close button       |
-| `iconPack`         | `IconPack` | ❌       | `defaultIconPack`       | Icon pack                              |
-| `meeting`          | `Meeting`  | ✅       | -                       | Meeting object                         |
-| `open`             | `boolean`  | ✅       | -                       | Whether a dialog is open or not        |
-| `size`             | `Size`     | ✅       | -                       | Size                                   |
-| `states`           | `States`   | ✅       | -                       | States object                          |
-| `t`                | `RtkI18n`  | ❌       | `useLanguage()`         | Language                               |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `disableEscapeKey` | `boolean` | ✅ | - | Whether Escape key can close the modal |
+| `hideCloseButton` | `boolean` | ✅ | - | Whether to show the close button |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `open` | `boolean` | ✅ | - | Whether a dialog is open or not |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -33,15 +32,17 @@ A dialog component.
 ### With Properties
 
 ```html
-<rtk-dialog> </rtk-dialog>
+<rtk-dialog>
+</rtk-dialog>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-dialog");
+  const el = document.querySelector("rtk-dialog");
 
-	el.disableEscapeKey = true;
-	el.hideCloseButton = true;
-	el.meeting = meeting;
+  el.disableEscapeKey= true;
+  el.hideCloseButton= true;
+  el.meeting= meeting
 </script>
 ```

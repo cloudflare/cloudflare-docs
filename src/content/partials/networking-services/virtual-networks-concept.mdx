@@ -84,21 +84,18 @@ The same CIDR (`10.0.0.0/8`) can exist in each virtual network because they are 
 
 Each virtual network maintains its own routing table. Routes added to one virtual network do not appear in another virtual network routing table. However, if traffic does not match a route in the selected virtual network, Cloudflare may fall back to the default virtual network routing table for WAN routes.
 
-<Markdown
-	text={`You can add entries to a virtual network routing table through static route configuration or routes learned from BGP peering (beta). Static routes are available for all connection types. BGP peering is currently available over CNI and IPsec/GRE tunnels (beta). For more information on how routes are prioritized within a virtual network, refer to [Traffic steering](${props.trafficSteeringURL}).`}
-	inline={false}
-/>
+<Markdown text={`You can add entries to a virtual network routing table through static route configuration or routes learned from BGP peering (beta). Static routes are available for all connection types. BGP peering is currently available over CNI and IPsec/GRE tunnels (beta). For more information on how routes are prioritized within a virtual network, refer to [Traffic steering](${props.trafficSteeringURL}).`} inline={false} />
 
 ## Virtual networks across Cloudflare
 
 Virtual network support varies by product:
 
-| Product               | Virtual network support   | Details                                                              |
-| --------------------- | ------------------------- | -------------------------------------------------------------------- |
-| Cloudflare Tunnel     | Multiple virtual networks | Assign CIDR routes to a virtual network when configuring your tunnel |
-| Cloudflare One Client | Multiple virtual networks | Users land in a virtual network based on policy or client selection  |
-| Cloudflare Mesh       | Not currently supported   | —                                                                    |
-| Cloudflare WAN        | Default only              | All IPsec, GRE, and CNI connections use the default virtual network  |
+| Product | Virtual network support | Details |
+| --- | --- | --- |
+| Cloudflare Tunnel | Multiple virtual networks | Assign CIDR routes to a virtual network when configuring your tunnel |
+| Cloudflare One Client | Multiple virtual networks | Users land in a virtual network based on policy or client selection |
+| Cloudflare Mesh | Not currently supported | — |
+| Cloudflare WAN | Default only | All IPsec, GRE, and CNI connections use the default virtual network |
 
 ## The default virtual network
 
@@ -123,26 +120,14 @@ If you are familiar with cloud networking concepts, a virtual network is analogo
 
 ## Create and manage virtual networks
 
-<Markdown
-	text={`To create and configure virtual networks, refer to [Virtual networks (Tunnel configuration)](${props.tunnelConfigURL}).`}
-	inline={false}
-/>
+<Markdown text={`To create and configure virtual networks, refer to [Virtual networks (Tunnel configuration)](${props.tunnelConfigURL}).`} inline={false} />
 
-<Markdown
-	text={`To configure which routes belong to which virtual network, refer to [Add routes](${props.addRoutesURL}).`}
-	inline={false}
-/>
+<Markdown text={`To configure which routes belong to which virtual network, refer to [Add routes](${props.addRoutesURL}).`} inline={false} />
 
-<Markdown
-	text={`To add static routes or configure BGP peering within the Cloudflare Virtual Network routing table, refer to [Configure routes](${props.configureRoutesURL}).`}
-	inline={false}
-/>
+<Markdown text={`To add static routes or configure BGP peering within the Cloudflare Virtual Network routing table, refer to [Configure routes](${props.configureRoutesURL}).`} inline={false} />
 
 ## Related resources
 
-<Markdown
-	text={`- [Private networks](${props.privateNetworksURL}) — Connect your infrastructure to Cloudflare
+<Markdown text={`- [Private networks](${props.privateNetworksURL}) — Connect your infrastructure to Cloudflare
 - [Routes](${props.routesURL}) — Define IP and hostname routes through your connectors
-- [Traffic steering](${props.trafficSteeringURL}) — Route prioritization, ECMP, and BGP within the Cloudflare Virtual Network`}
-	inline={false}
-/>
+- [Traffic steering](${props.trafficSteeringURL}) — Route prioritization, ECMP, and BGP within the Cloudflare Virtual Network`} inline={false} />
