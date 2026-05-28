@@ -110,7 +110,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/agent-memory/na
 
 ### Delete a namespace
 
-Soft-deletes a namespace. The namespace name becomes available for reuse after deletion.
+Marks a namespace for deletion. The namespace name becomes available for reuse after deletion.
 
 ```bash
 curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/agent-memory/namespaces/<NAMESPACE_NAME>" \
@@ -132,7 +132,7 @@ Use profile endpoints to manage profiles and operate on memory stored in a named
 
 ### Delete a profile
 
-Soft-deletes a profile and all its memories and messages. The data is permanently removed after a retention period.
+Marks a profile and all its memories and messages for deletion.
 
 ```bash
 curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/agent-memory/namespaces/<NAMESPACE_NAME>/profiles/<PROFILE_NAME>" \
@@ -150,7 +150,7 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/agent
 
 ### Delete a session
 
-Soft-deletes all memories and messages in a profile that are tagged with the given session ID. Rows from other sessions in the same profile are untouched. Idempotent: deleting a session ID that has no rows is a no-op.
+Marks all memories and messages in a profile that are tagged with the given session ID for deletion. Rows from other sessions in the same profile are untouched. Idempotent: deleting a session ID that has no rows is a no-op.
 
 ```bash
 curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/agent-memory/namespaces/<NAMESPACE_NAME>/profiles/<PROFILE_NAME>/sessions/<SESSION_ID>" \
@@ -329,7 +329,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/agent-memory/na
 
 ### Delete a memory
 
-Deletes a memory by ID. Returns the deleted memory.
+Deletes a memory by ID. Removes the memory and any source messages linked to it. Returns the deleted memory.
 
 ```bash
 curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/agent-memory/namespaces/<NAMESPACE_NAME>/profiles/<PROFILE_NAME>/memories/<MEMORY_ID>" \

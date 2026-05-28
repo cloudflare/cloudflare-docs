@@ -56,17 +56,13 @@ cd memory-agent
 
 Install the dependencies used by this guide:
 
-```sh
-npm install agents ai workers-ai-provider
-```
+<PackageManagers pkg="agents ai workers-ai-provider" />
 
 ## 2. Create a namespace
 
 A [namespace](/agent-memory/concepts/namespaces-profiles/) scopes the memory profiles for your application. Create one with Wrangler:
 
-```sh
-npx wrangler agent-memory namespace create my-agent
-```
+<PackageManagers type="exec" pkg="wrangler" args="agent-memory namespace create my-agent" />
 
 You will use the namespace name, `my-agent`, in your Worker binding.
 
@@ -76,45 +72,33 @@ Add an `agent_memory` binding to your Wrangler configuration. If you use the Age
 
 <WranglerConfig>
 
-```jsonc
-{
-	"name": "memory-agent",
-	"main": "src/server.ts",
-	"compatibility_date": "$today",
-	"compatibility_flags": ["nodejs_compat"],
-	"ai": {
-		"binding": "AI"
-	},
-	"agent_memory": [
-		{
-			"binding": "MEMORY",
-			"namespace": "my-agent"
-		}
-	],
-	"durable_objects": {
-		"bindings": [
-			{
-				"name": "ChatAgent",
-				"class_name": "ChatAgent"
-			}
-		]
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["ChatAgent"]
-		}
-	]
-}
+```toml
+name = "memory-agent"
+main = "src/server.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[[agent_memory]]
+binding = "MEMORY"
+namespace = "my-agent"
+
+[[durable_objects.bindings]]
+name = "ChatAgent"
+class_name = "ChatAgent"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ChatAgent"]
 ```
 
 </WranglerConfig>
 
 Generate local TypeScript types for your bindings:
 
-```sh
-npx wrangler types
-```
+<PackageManagers type="exec" pkg="wrangler" args="types" />
 
 ## 4. Add memory recall as a tool
 
@@ -139,6 +123,7 @@ MEMORY POLICY
 - Search memory when the request depends on prior sessions, preferences, project state, conventions, decisions, or long-running tasks.
 - Phrase memory searches as concise topics, not questions.
 - Do not search memory to repeat something the user just said in the current conversation.
+- When search_context returns results, always incorporate them into your response. The results are real memories from previous conversations.
 - Treat recalled memories as helpful context, not guaranteed truth. If a memory is important for an irreversible action, confirm with the user.`;
 
 const MEMORY_PROFILE_NAME = "demo-user";
@@ -235,7 +220,7 @@ export class ChatAgent extends Agent<Env, ChatAgentState> {
 
 		const workersai = createWorkersAI({ binding: this.env.AI });
 		const result = await generateText({
-			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
 			system: await this.session.freezeSystemPrompt(),
 			messages: await convertToModelMessages(
 				(await this.session.getHistory()) as UIMessage[],
@@ -371,9 +356,7 @@ If the model can call a memory-write tool, add system prompt instructions that d
 
 Start local development:
 
-```sh
-npx wrangler dev
-```
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
 
 Ask the first conversation to remember a durable preference:
 

@@ -8,13 +8,7 @@ sidebar:
   order: 1
 ---
 
-import {
-	LinkCard,
-	MetaInfo,
-	Type,
-	TypeScriptExample,
-	WranglerConfig,
-} from "~/components";
+import { LinkCard, MetaInfo, Type, WranglerConfig } from "~/components";
 
 Use the Workers API to access Agent Memory from your [Worker](/workers/). The binding connects your Worker to a [namespace](/agent-memory/concepts/namespaces-profiles/) containing profiles, which are isolated memory stores for your agent.
 
@@ -24,16 +18,10 @@ Add an `agent_memory` entry to your Wrangler configuration. The `binding` field 
 
 <WranglerConfig>
 
-```jsonc
-{
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"agent_memory": [
-		{
-			"binding": "MEMORY",
-			"namespace": "<NAMESPACE_NAME>"
-		}
-	]
-}
+```toml
+[[agent_memory]]
+binding = "MEMORY"
+namespace = "<NAMESPACE_NAME>"
 ```
 
 </WranglerConfig>
@@ -52,44 +40,22 @@ interface Env {
 
 ## Namespace methods
 
-Use namespace methods on the binding to access and list memory profiles.
+Use namespace methods on the binding to access and manage memory profiles.
 
-### `getProfile(name)`
+### `getProfile(profileName)`
 
 Gets a memory profile by name. If the profile does not exist, Agent Memory creates it.
 
-- `name` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to access. Maximum 32 characters.
+- `profileName` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to access. Maximum 32 characters.
 - Returns <Type text="Promise<AgentMemoryProfile>" />
 
 The first `getProfile()` call for a new profile may take longer while Agent Memory creates the profile.
 
-### `list(options?)`
+### `deleteProfile(profileName)`
 
-Lists profiles in the namespace. A profile appears in `list()` after Agent Memory creates it, including when you call `getProfile()` for a new profile.
+Marks a profile and all its memories and messages for deletion.
 
-- `options.limit` <Type text="number" /> <MetaInfo text="optional" />: Maximum number of profiles to return.
-- `options.cursor` <Type text="string" /> <MetaInfo text="optional" />: Cursor for the next page of results.
-- `options.prefix` <Type text="string" /> <MetaInfo text="optional" />: Filter profiles by name prefix.
-- Returns <Type text="Promise<ListProfilesResult>" />
-
-```ts
-type ListProfilesResult = {
-	profiles: ProfileInfo[];
-	cursor?: string;
-};
-
-type ProfileInfo = {
-	name: string;
-	createdAt: Date;
-	updatedAt: Date;
-};
-```
-
-### `deleteProfile(name)`
-
-Soft-deletes a profile and schedules deferred purge. All memories and messages in the profile are marked as deleted and permanently removed after a retention period.
-
-- `name` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to delete. Maximum 32 characters.
+- `profileName` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to delete. Maximum 32 characters.
 - Returns <Type text="Promise<void>" />
 
 ## Profile methods
@@ -97,7 +63,7 @@ Soft-deletes a profile and schedules deferred purge. All memories and messages i
 Call profile methods after you get a profile from the binding.
 
 ```ts
-type Memory = {
+type AgentMemoryMemory = {
 	id: string;
 	type: "fact" | "event" | "instruction" | "task";
 	summary: string;
@@ -112,15 +78,15 @@ type Memory = {
 
 Processes a conversation and extracts structured memories from it. Agent Memory identifies facts, events, instructions, and tasks automatically, so you do not need to specify what to remember.
 
-- `messages` <Type text="Iterable<Message>" /> <MetaInfo text="required" />: Conversation messages to process.
+- `messages` <Type text="Iterable<AgentMemoryMessage>" /> <MetaInfo text="required" />: Conversation messages to process.
 - `options.sessionId` <Type text="string | null" /> <MetaInfo text="optional" />: Identifier for the conversation session. Maximum 64 characters. If omitted, Agent Memory derives one from the message content.
 - Returns <Type text="Promise<void>" />
 
 ```ts
-type Message = {
+type AgentMemoryMessage = {
 	role: "system" | "user" | "assistant";
 	content: string; // Max 32 KB
-	timestamp?: Date | string;
+	timestamp?: Date;
 };
 ```
 
@@ -130,9 +96,9 @@ type Message = {
 
 Stores a single memory explicitly. Use `remember()` when your application or agent already knows what should be stored, instead of passing a conversation to `ingest()` for extraction.
 
-- `memory.content` <Type text="string" /> <MetaInfo text="required" />: Memory content to store.
+- `memory.content` <Type text="string" /> <MetaInfo text="required" />: Memory content to store. The service classifies and summarizes automatically.
 - `memory.sessionId` <Type text="string | null" /> <MetaInfo text="optional" />: Identifier for the related conversation session.
-- Returns <Type text="Promise<Memory>" />
+- Returns <Type text="Promise<AgentMemoryMemory>" />
 
 ### `recall(query, options?)`
 
@@ -142,18 +108,20 @@ Searches stored memories in the profile and returns a synthesized answer grounde
 - `options.thinkingLevel` <Type text='"low" | "medium" | "high"' /> <MetaInfo text='optional (default: "low")' />: Controls retrieval breadth. Higher levels search more candidates but take longer.
 - `options.responseLength` <Type text='"short" | "medium" | "long"' /> <MetaInfo text='optional (default: "medium")' />: Controls the verbosity of the synthesized answer.
 - `options.referenceDate` <Type text="Date | string" /> <MetaInfo text="optional" />: Temporal anchor for date-relative queries.
-- Returns <Type text="Promise<RecallResult>" />
+- Returns <Type text="Promise<AgentMemoryRecallResult>" />
 
 ```ts
-type RecallResult = {
-	answer: string;
+type AgentMemoryRecallResult = {
 	count: number;
-	candidates: Array<{
-		id: string;
-		summary: string;
-		sessionId: string | null;
-		score: number;
-	}>;
+	answer: string;
+	candidates: AgentMemoryScoredCandidate[];
+};
+
+type AgentMemoryScoredCandidate = {
+	id: string;
+	summary: string;
+	sessionId: string | null;
+	score: number;
 };
 ```
 
@@ -161,53 +129,46 @@ If no memories match the query, `recall()` returns an empty answer.
 
 ### `list(options?)`
 
-Lists memories stored in the profile.
+Lists memories stored in the profile. Returns a paginated, filterable view of stored memories. Use the returned `cursor` (when present) to fetch the next page.
 
-- `options.limit` <Type text="number" /> <MetaInfo text="optional" />: Maximum number of memories to return.
-- `options.cursor` <Type text="string" /> <MetaInfo text="optional" />: Cursor for the next page of results.
-- `options.sessionId` <Type text="string" /> <MetaInfo text="optional" />: Filter memories by session ID.
-- `options.type` <Type text='"fact" | "event" | "instruction" | "task"' /> <MetaInfo text="optional" />: Filter memories by type.
-- Returns <Type text="Promise<ListMemoriesResult>" />
+- `options.limit` <Type text="number" /> <MetaInfo text="optional (default: 20, max: 500)" />: Maximum number of memories to return.
+- `options.cursor` <Type text="string" /> <MetaInfo text="optional" />: Opaque cursor from a previous page.
+- `options.sessionId` <Type text="string" /> <MetaInfo text="optional" />: Exact-match session filter.
+- `options.type` <Type text='"fact" | "event" | "instruction" | "task"' /> <MetaInfo text="optional" />: Exact-match memory-type filter.
+- Returns <Type text="Promise<AgentMemoryListMemoriesResult>" />
 
 ```ts
-type MemoryListEntry = {
-	id: string;
-	type: "fact" | "event" | "instruction" | "task";
-	summary: string;
-	sessionId: string | null;
-	createdAt: Date;
-	updatedAt: Date;
-};
+type AgentMemoryMemoryListEntry = Omit<AgentMemoryMemory, "content">;
 
-type ListMemoriesResult = {
-	memories: MemoryListEntry[];
+type AgentMemoryListMemoriesResult = {
+	memories: AgentMemoryMemoryListEntry[];
 	cursor?: string;
 };
 ```
 
-List entries omit `content`. Use `get(id)` to retrieve the full memory.
+List entries omit `content`. Use `get(memoryId)` to retrieve the full memory.
 
-### `get(id)`
+### `get(memoryId)`
 
 Retrieves a memory by ID.
 
-- `id` <Type text="string" /> <MetaInfo text="required" />: Memory ID.
-- Returns <Type text="Promise<Memory>" />
+- `memoryId` <Type text="string" /> <MetaInfo text="required" />: Memory ID.
+- Returns <Type text="Promise<AgentMemoryMemory>" />
 
 Throws an error if the memory does not exist.
 
-### `delete(id)`
+### `delete(memoryId)`
 
-Deletes a memory by ID. Returns the deleted memory.
+Deletes a memory by ID. Removes the memory and any source messages linked to it. Returns the deleted memory.
 
-- `id` <Type text="string" /> <MetaInfo text="required" />: Memory ID.
-- Returns <Type text="Promise<Memory>" />
+- `memoryId` <Type text="string" /> <MetaInfo text="required" />: Memory ID.
+- Returns <Type text="Promise<AgentMemoryMemory>" />
 
 Throws an error if the memory does not exist.
 
 ### `deleteSession(sessionId)`
 
-Soft-deletes all memories and messages in the profile that are tagged with the given session ID. Rows from other sessions in the same profile are untouched. Idempotent: deleting a session ID that has no rows is a no-op.
+Marks all memories and messages in the profile that are tagged with the given session ID for deletion. Rows from other sessions in the same profile are untouched. Idempotent: deleting a session ID that has no rows is a no-op.
 
 - `sessionId` <Type text="string" /> <MetaInfo text="required" />: Session ID to delete. Maximum 64 characters.
 - Returns <Type text="Promise<void>" />
@@ -217,10 +178,10 @@ Soft-deletes all memories and messages in the profile that are tagged with the g
 Generates a structured Markdown summary of everything stored in a memory profile. Use it to inspect what Agent Memory remembers about a profile.
 
 - `options.sessionId` <Type text="string | null" /> <MetaInfo text="optional" />: Session ID to scope the "Last Session" section of the summary. If omitted, Agent Memory uses the most recent session.
-- Returns <Type text="Promise<GetSummaryResponse>" />
+- Returns <Type text="Promise<AgentMemoryGetSummaryResponse>" />
 
 ```ts
-type GetSummaryResponse = {
+type AgentMemoryGetSummaryResponse = {
 	summary: string;
 };
 ```
