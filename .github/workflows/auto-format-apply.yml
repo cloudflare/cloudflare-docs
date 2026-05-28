@@ -25,8 +25,8 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_ID }}
+          private-key: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_PRIVATE_KEY }}
 
       - name: Download patch artifact
         id: download
@@ -200,6 +200,41 @@ jobs:
             core.setOutput('full_name', pr.head.repo.full_name);
             core.setOutput('number', prNumber.toString());
 
+      # ------------------------------------------------------------------
+      # SECURITY NOTE — Both checkout steps below place PR-controlled code
+      # in the workspace of a privileged workflow (workflow_run has the App
+      # token in scope). CodeQL flags this as the "Checkout of untrusted
+      # code in privileged context" pattern (the GitHub Security Lab "pwn
+      # request" anti-pattern). The alert is dismissed deliberately for
+      # this workflow. Justification:
+      #
+      #   1. No PR-controlled code is executed. The only operations
+      #      performed against the checked-out tree are `git apply` (a
+      #      textual patch operation), `git commit --no-verify` (hooks
+      #      explicitly bypassed), and `git push`. No `pnpm install`,
+      #      no `pnpm run`, no `node`, no `uses:` referencing PR paths.
+      #
+      #   2. The patch contents are validated against a path allowlist
+      #      BEFORE checkout (see "Validate patch paths" step) and the
+      #      resulting staged diff is re-validated AFTER `git apply` but
+      #      BEFORE push (see "Apply patch" step). The bot cannot push
+      #      changes to `.github/`, `package.json`, lockfiles, `.npmrc`,
+      #      `patches/`, or `.husky/` regardless of what prettier did.
+      #
+      #   3. The PR head SHA is verified to match the build artifact's
+      #      SHA before we proceed; a stale-head PR is skipped (see
+      #      "Look up PR" step).
+      #
+      #   4. Fork checkouts use `persist-credentials: false` so no token
+      #      lands in the local .git/config of an untrusted tree.
+      #
+      # ANY FUTURE CHANGE to this workflow that adds `pnpm install`,
+      # `npm install`, `pnpm run`, `npm run`, `node <pr-path>`, or any
+      # action whose `uses:` references a path inside the PR tree
+      # INVALIDATES this dismissal and must re-evaluate the threat model
+      # before merging.
+      # ------------------------------------------------------------------
+
       # --- Same-repo: checkout with the App token for direct push ---
 
       - name: Checkout (same-repo)
@@ -212,7 +247,7 @@ jobs:
           ref: ${{ steps.pr.outputs.ref }}
           token: ${{ steps.app-token.outputs.token }}
           # Intentional: the push step below pushes back to the PR branch
-          # using this credential.
+          # using this credential. See SECURITY NOTE above.
           persist-credentials: true
 
       # --- Fork: checkout the fork at the pinned SHA, no creds persisted ---
@@ -226,6 +261,9 @@ jobs:
         with:
           repository: ${{ steps.pr.outputs.full_name }}
           ref: ${{ steps.pr.outputs.sha }}
+          # Intentional: no token persisted into the fork's tree. The
+          # subsequent push uses GIT_ASKPASS to supply the App token only
+          # to the push process. See SECURITY NOTE above.
           persist-credentials: false
 
       - name: Apply patch
@@ -271,7 +309,7 @@ jobs:
           set -euo pipefail
           git config user.name "cloudflare-docs-bot[bot]"
           git config user.email "cloudflare-docs-bot[bot]@users.noreply.github.com"
-          git commit -m "style: format"
+          git commit --no-verify -m "style: format"
           git push
 
       # --- Fork: push via GIT_ASKPASS to avoid leaking the token ---
@@ -288,7 +326,7 @@ jobs:
           set -euo pipefail
           git config user.name "cloudflare-docs-bot[bot]"
           git config user.email "cloudflare-docs-bot[bot]@users.noreply.github.com"
-          git commit -m "style: format"
+          git commit --no-verify -m "style: format"
 
           export GIT_ASKPASS="$RUNNER_TEMP/git-askpass.sh"
           printf '#!/bin/sh\necho "%s"\n' "$APP_TOKEN" > "$GIT_ASKPASS"

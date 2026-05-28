@@ -59,11 +59,17 @@ jobs:
       - name: Run prettier (changed files only)
         run: |
           set -euo pipefail
-          BASE_REF="${{ github.event.pull_request.base.ref }}"
-          git fetch --depth=1 origin "$BASE_REF"
+          # Use the PR's specific base commit SHA (not the moving base ref
+          # tip) for a stable, reproducible diff. Fetching by SHA + two-dot
+          # diff avoids merge-base computation, which would otherwise need
+          # ancestry that a shallow clone (`fetch-depth: 1`) doesn't have.
+          # If we used `origin/<ref>...HEAD` (three-dot) with a shallow
+          # clone, merge-base may resolve incorrectly when the base ref
+          # has advanced past the PR's actual base commit.
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          git fetch --depth=1 origin "$BASE_SHA"
           mapfile -t files < <(
-            git diff --name-only --diff-filter=ACMR \
-              "origin/${BASE_REF}...HEAD" \
+            git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
             | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$' \
             || true
           )

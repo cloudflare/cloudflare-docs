@@ -99,11 +99,15 @@ jobs:
         # safety net that catches anything the bot didn't.
         run: |
           set -euo pipefail
-          BASE_REF="${{ github.event.pull_request.base.ref }}"
-          git fetch --depth=1 origin "$BASE_REF"
+          # Use the PR's specific base commit SHA (not the moving base ref
+          # tip). Fetching by SHA + two-dot diff avoids merge-base
+          # computation, which would otherwise need ancestry that a shallow
+          # clone doesn't have. Three-dot diff against a moved base ref can
+          # silently miscount changed files in that case.
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          git fetch --depth=1 origin "$BASE_SHA"
           mapfile -t files < <(
-            git diff --name-only --diff-filter=ACMR \
-              "origin/${BASE_REF}...HEAD" \
+            git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
             | grep -E '\.(js|jsx|ts|tsx|mjs|css)$' || true
           )
           if [ "${#files[@]}" -eq 0 ]; then
