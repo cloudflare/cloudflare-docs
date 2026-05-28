@@ -27,7 +27,7 @@ Both tunnel flavors require:
 
 - **RPC transport.** Calling `sandbox.tunnels` on HTTP/Websocket transports throws `"RPC transport required"`. See [Transport configuration](/sandbox/configuration/transport/).
 
-Named tunnels additionally require a Cloudflare API token, account, and zone — see [Named tunnels: prerequisites](#prerequisites).
+Named tunnels additionally require a Cloudflare API token, account, and zone — refer to [Named tunnels: prerequisites](#prerequisites).
 
 ## Methods
 
@@ -203,11 +203,11 @@ Both [User API Tokens](/fundamentals/api/get-started/create-token/) and [Account
 
 #### Create the token with the REST API
 
-You can create the token without using the dashboard. The permission group IDs are stable; the snippet below uses placeholders — fetch the current IDs from [`GET /user/tokens/permission_groups`](/api/operations/permission-groups-list-permission-groups).
+You can create the token without using the dashboard. The permission group IDs are stable; the snippet below uses placeholders — fetch the current IDs from [`GET /user/tokens/permission_groups`](/api/operations/permission-groups-list-permission-groups/).
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/user/tokens" \
-  -H "Authorization: Bearer <YOUR_GLOBAL_API_KEY_OR_EXISTING_TOKEN>" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "sandbox-named-tunnels",
@@ -258,6 +258,7 @@ When inference fails, the SDK throws a clear error naming the variable to set.
 
 ### Example
 
+<TypeScriptExample>
 ```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
@@ -286,6 +287,7 @@ export default {
   },
 };
 ```
+</TypeScriptExample>
 
 :::caution[`name` must be a single DNS label]
 `name` must match `^[a-z0-9]([a-z0-9-]*[a-z0-9])?$` and be 1–63 characters — no dots, no uppercase, no leading/trailing hyphens. This restriction exists because Cloudflare Universal SSL only issues certificates for `<label>.<zone>`. Multi-label hostnames need [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or a delegated subdomain zone, which are out of scope for `sandbox.tunnels`.
@@ -334,7 +336,7 @@ On non-Enterprise plans, Cloudflare rejects resource tags; the SDK detects this 
 To list every tunnel created by the SDK for a given account:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<account-id>/cfd_tunnel?name=sandbox-" \
+curl "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/cfd_tunnel?name=sandbox-" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
