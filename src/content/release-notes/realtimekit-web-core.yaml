@@ -23,7 +23,8 @@ entries:
       - Fixed an issue where `ClientError` objects were wrapped inside each other when the SDK retried failed API requests. This caused nested error messages, duplicate `onError` callbacks, and redundant `window` error events.
 
       **Removed APIs**
-      - Removed the third party flag service. `meeting.__internals__.features` is now deprecated and will be removed in a future release.
+
+      - Removed the third-party flag service. `meeting.__internals__.features` is now deprecated and will be removed in a future release.
 
   - publish_date: "2026-04-20"
     title: RealtimeKit Web Core 1.4.0
