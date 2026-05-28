@@ -5,23 +5,28 @@ description: API reference for rtk-chat-toggle component (Angular Library)
 products:
   - realtime
 ---
+
 A button which toggles visibility of chat.
- You need to pass the `meeting` object to it to see the unread messages count badge.
- When clicked it emits a `rtkStateUpdate` event with the data:
- ```ts
- { activeSidebar: boolean; sidebar: 'chat' }
- ```
+You need to pass the `meeting` object to it to see the unread messages count badge.
+When clicked it emits a `rtkStateUpdate` event with the data:
+
+```ts
+{
+	activeSidebar: boolean;
+	sidebar: "chat";
+}
+```
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default           | Description    |
+| ---------- | ------------------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object |
+| `size`     | `Size`              | ✅       | -                 | Size           |
+| `states`   | `States`            | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language       |
+| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant        |
 
 ## Usage Examples
 
@@ -36,10 +41,6 @@ A button which toggles visibility of chat.
 
 ```html
 <!-- component.html -->
-<rtk-chat-toggle
- [meeting]="meeting"
- size="md"
- variant="button">
+<rtk-chat-toggle [meeting]="meeting" size="md" variant="button">
 </rtk-chat-toggle>
 ```
-

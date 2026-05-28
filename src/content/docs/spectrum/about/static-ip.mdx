@@ -5,10 +5,9 @@ description: Assign persistent IP addresses to your Spectrum applications.
 products:
   - spectrum
 weight: 0
-
 ---
 
-import { APIRequest, Render } from "~/components"
+import { APIRequest, Render } from "~/components";
 
 When you create a Spectrum application, you are assigned an IP. These IPs are normally dynamic, meaning that they will change over time. But, for instance, if you want to set up WAF custom rules for specific IPs, you may want to use static IPs.
 
@@ -29,35 +28,30 @@ Once you get your static IP from Cloudflare, you can use it via API, just like [
 When creating a Spectrum application through the API, specify the static IPs that you have been provided. See, for instance, the API example below that creates an application routing traffic through Cloudflare’s HTTP pipeline.
 
 <APIRequest
-  path="/zones/{zone_id}/spectrum/apps"
-  method="POST"
-  json={{
-    protocol: "tcp/80",
-    dns: {
-      type: "ADDRESS",
-      name: "www.example.com"
-    },
-    origin_direct: [
-      "tcp://192.0.2.1:80"
-    ],
-    tls: "off",
-    traffic_type: "http",
-    edge_ips: {
-      type: "static",
-      ips: [
-        "198.51.100.10",
-        "2001:DB8::1"
-      ]
-    }
-  }}
+	path="/zones/{zone_id}/spectrum/apps"
+	method="POST"
+	json={{
+		protocol: "tcp/80",
+		dns: {
+			type: "ADDRESS",
+			name: "www.example.com",
+		},
+		origin_direct: ["tcp://192.0.2.1:80"],
+		tls: "off",
+		traffic_type: "http",
+		edge_ips: {
+			type: "static",
+			ips: ["198.51.100.10", "2001:DB8::1"],
+		},
+	}}
 />
 
 ## Check your static IPs
 
 <Render
-  file="check-leased-ips"
+	file="check-leased-ips"
 	product="byoip"
 	params={{
-		product: "static IPs for Spectrum"
+		product: "static IPs for Spectrum",
 	}}
 />

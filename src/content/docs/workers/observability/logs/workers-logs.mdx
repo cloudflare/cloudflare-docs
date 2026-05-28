@@ -53,7 +53,7 @@ You must add the observability setting for your Worker to write logs to Workers 
 
 [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for an environment named `staging`: 1. Add the following configuration below `[env.staging]`
 
-    <WranglerConfig>
+<WranglerConfig>
 
     ```jsonc
     {
@@ -70,8 +70,8 @@ You must add the observability setting for your Worker to write logs to Workers 
 
     </WranglerConfig>
 
-    2. Deploy your Worker with `npx wrangler deploy -e staging`
-    3. Repeat step 1 and 2 for each environment.
+2. Deploy your Worker with `npx wrangler deploy -e staging`
+3. Repeat step 1 and 2 for each environment.
 
 ## View logs from the dashboard
 

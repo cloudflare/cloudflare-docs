@@ -6,7 +6,6 @@ products:
 title: Using JSONata
 sidebar:
   order: 10
-
 ---
 
 import { DashButton } from "~/components";
@@ -19,7 +18,8 @@ To use JSONata inside Zaraz, follow these steps:
 
 1. In the Cloudflare dashboard, go to the **Tag setup** page.
 
-	<DashButton url="/?to=/:account/tag-management/settings" />
+   <DashButton url="/?to=/:account/tag-management/settings" />
+
 2. Go to **Tools configuration** > **Tools**.
 3. Select **Edit** next to a tool that you have already configured.
 4. Select an action or add a new one.
@@ -38,23 +38,22 @@ Converting a string to lowercase is useful if you want to compare it to somethin
 Assuming you are using `zaraz.ecommerce()` to send the cart content like this:
 
 ```js
-zaraz.track('Product List Viewed',
-  {  products:
-    [
-    {
-      sku: '2671033',
-      name: 'V-neck T-shirt',
-      price: 14.99,
-      quantity: 3
-    },{
-      sku: '2671034',
-      name: 'T-shirt',
-      price: 10.99,
-      quantity: 2
-    },
-    ],
-  }
-);
+zaraz.track("Product List Viewed", {
+	products: [
+		{
+			sku: "2671033",
+			name: "V-neck T-shirt",
+			price: 14.99,
+			quantity: 3,
+		},
+		{
+			sku: "2671034",
+			name: "T-shirt",
+			price: 10.99,
+			quantity: 2,
+		},
+	],
+});
 ```
 
 If the field in which you want to show the sum, you will enter `{{ $sum(client.products.(price * quantity)) }}`. This will multiply the price of each product by its quantity, and then sum up the total.

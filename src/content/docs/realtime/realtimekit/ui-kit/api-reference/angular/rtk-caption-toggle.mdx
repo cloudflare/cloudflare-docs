@@ -5,17 +5,18 @@ description: API reference for rtk-caption-toggle component (Angular Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size1` | ✅ | - | Size |
-| `states` | `States1` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default                 | Description    |
+| ---------- | ------------------- | -------- | ----------------------- | -------------- |
+| `config`   | `UIConfig1`         | ❌       | `createDefaultConfig()` | Config         |
+| `iconPack` | `IconPack1`         | ❌       | `defaultIconPack`       | Icon pack      |
+| `meeting`  | `Meeting`           | ✅       | -                       | Meeting object |
+| `size`     | `Size1`             | ✅       | -                       | Size           |
+| `states`   | `States1`           | ✅       | -                       | States object  |
+| `t`        | `RtkI18n`           | ❌       | `useLanguage()`         | Language       |
+| `variant`  | `ControlBarVariant` | ✅       | -                       | Variant        |
 
 ## Usage Examples
 
@@ -30,10 +31,6 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-caption-toggle
- [meeting]="meeting"
- size="md"
- variant="button">
+<rtk-caption-toggle [meeting]="meeting" size="md" variant="button">
 </rtk-caption-toggle>
 ```
-

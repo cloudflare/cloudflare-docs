@@ -24,9 +24,9 @@ const req = await fetch(`${tunnel.url}/api/users`); // => GET http://localhost:8
 
 Cloudflare Tunnel support currently has the following limitations:
 
- - No control over generated URL.
- - No authentication mechanism beyond randomly generated URL.
- - Each URL uses an additional `cloudflared` process on the sandbox.
+- No control over generated URL.
+- No authentication mechanism beyond randomly generated URL.
+- Each URL uses an additional `cloudflared` process on the sandbox.
 
 :::note[Production requires custom domain]
 We are working on production deployments, custom hostnames and authentication for Cloudflare Tunnel support. In the mean time we recommend using `exposePort()` and `proxyToSandbox()` documented below under [Production usage, stable URLs and custom domains](#).

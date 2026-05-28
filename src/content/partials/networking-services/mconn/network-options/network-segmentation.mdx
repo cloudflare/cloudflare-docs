@@ -5,7 +5,14 @@ params:
   - virtualConnectorURL
 ---
 
-import { APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
+import {
+	APIRequest,
+	DashButton,
+	Markdown,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 You can define policies in your Cloudflare One Appliance (formerly Magic WAN Connector) to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 

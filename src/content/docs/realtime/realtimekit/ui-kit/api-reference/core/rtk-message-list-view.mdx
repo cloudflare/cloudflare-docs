@@ -5,18 +5,19 @@ description: API reference for rtk-message-list-view component (Web Components (
 products:
   - realtime
 ---
+
 A component which renders list of messages.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `estimateItemSize` | `number` | ✅ | - | Estimated height of an item |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `loadMore` | `(lastMessage: Message)` | ✅ | - | Function to load more messages. Messages returned from this will be prepended |
-| `messages` | `Message[]` | ✅ | - | Messages to render |
-| `renderer` | `(message: Message, index: number)` | ✅ | - | Render function of the message |
-| `visibleItemsCount` | `number` | ✅ | - | Maximum visible messages |
+| Property            | Type                                | Required | Default           | Description                                                                   |
+| ------------------- | ----------------------------------- | -------- | ----------------- | ----------------------------------------------------------------------------- |
+| `estimateItemSize`  | `number`                            | ✅       | -                 | Estimated height of an item                                                   |
+| `iconPack`          | `IconPack1`                         | ❌       | `defaultIconPack` | Icon pack                                                                     |
+| `loadMore`          | `(lastMessage: Message)`            | ✅       | -                 | Function to load more messages. Messages returned from this will be prepended |
+| `messages`          | `Message[]`                         | ✅       | -                 | Messages to render                                                            |
+| `renderer`          | `(message: Message, index: number)` | ✅       | -                 | Render function of the message                                                |
+| `visibleItemsCount` | `number`                            | ✅       | -                 | Maximum visible messages                                                      |
 
 ## Usage Examples
 
@@ -29,16 +30,14 @@ A component which renders list of messages.
 ### With Properties
 
 ```html
-<rtk-message-list-view>
-</rtk-message-list-view>
+<rtk-message-list-view> </rtk-message-list-view>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-message-list-view");
+	const el = document.querySelector("rtk-message-list-view");
 
-  el.estimateItemSize= 42;
-  el.messages= [];
+	el.estimateItemSize = 42;
+	el.messages = [];
 </script>
 ```

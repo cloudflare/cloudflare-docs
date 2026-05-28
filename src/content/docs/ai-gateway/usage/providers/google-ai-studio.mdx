@@ -17,6 +17,7 @@ import { Render, Details, Tabs, TabItem } from "~/components";
 ```txt
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio
 ```
+
 Then you can append the endpoint you want to hit, for example: `v1/models/{model}:{generative_ai_rest_resource}`
 
 So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1/models/{model}:{generative_ai_rest_resource}`.
@@ -136,18 +137,19 @@ console.log(response.text);
 import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({
-  apiKey: "{cf_aig_token}",
-  httpOptions: {
-	  baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
-  }
+apiKey: "{cf_aig_token}",
+httpOptions: {
+baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
+}
 });
 
 const response = await ai.models.generateContent({
-  model: "gemini-2.5-flash",
-  contents: "What is Cloudflare?",
+model: "gemini-2.5-flash",
+contents: "What is Cloudflare?",
 });
 
 console.log(response.text);
+
 ```
 </Details>
 
@@ -164,3 +166,4 @@ console.log(response.text);
     }}
 
 />
+```

@@ -7,11 +7,11 @@ products:
 tags:
   - Terraform
 sidebar:
-    order: 3
-    label: Terraform
+  order: 3
+  label: Terraform
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Manage Turnstile widgets as code using Terraform for version control and automated deployments.
 
@@ -153,7 +153,7 @@ locals {
 
 resource "cloudflare_turnstile_widget" "app_widget" {
   for_each = local.environments
-  
+
   account_id = var.account_id
   name       = "App Widget - ${each.key}"
   domains    = each.value.domains

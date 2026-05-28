@@ -121,38 +121,37 @@ Bindings are located on the `env` object, which can be accessed in several ways:
   [DurableObject](/durable-objects/), and [Workflow](/workflows/):
 
   <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-  ```js
-  export class MyDurableObject extends DurableObject {
-  	async sayHello() {
-  		return `Hi, ${this.env.NAME}!`;
-  	}
-  }
-  ```
-  </TabItem> <TabItem label="Python" icon="seti:python">
-  ```python
-  from workers import WorkerEntrypoint, Response
-
-  class Default(WorkerEntrypoint):
-  	async def fetch(self, request):
-  		return Response(f"Hi {self.env.NAME}")
-  ```
-  </TabItem></Tabs>
-
+    ```js
+    export class MyDurableObject extends DurableObject {
+    	async sayHello() {
+    		return `Hi, ${this.env.NAME}!`;
+    	}
+    }
+    ```
+    </TabItem> <TabItem label="Python" icon="seti:python">
+    ```python
+    from workers import WorkerEntrypoint, Response
+  
+    class Default(WorkerEntrypoint):
+    	async def fetch(self, request):
+    		return Response(f"Hi {self.env.NAME}")
+    ```
+    </TabItem></Tabs>
 
 * It can be imported from `cloudflare:workers`:
 
   <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-  ```js
-  import { env } from "cloudflare:workers";
-  console.log(`Hi, ${env.Name}`);
-  ```
-  </TabItem> <TabItem label="Python" icon="seti:python">
-  ```python
-  from workers import import_from_javascript
-  env = import_from_javascript("cloudflare:workers").env
-  print(f"Hi, {env.NAME}")
-  ```
-  </TabItem></Tabs>
+    ```js
+    import { env } from "cloudflare:workers";
+    console.log(`Hi, ${env.Name}`);
+    ```
+    </TabItem> <TabItem label="Python" icon="seti:python">
+    ```python
+    from workers import import_from_javascript
+    env = import_from_javascript("cloudflare:workers").env
+    print(f"Hi, {env.NAME}")
+    ```
+    </TabItem></Tabs>
 
 ### Importing `env` as a global
 

@@ -5,13 +5,14 @@ description: API reference for rtk-emoji-picker-button component (Web Components
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `isActive` | `boolean` | ✅ | - | Active state indicator |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property   | Type        | Required | Default           | Description            |
+| ---------- | ----------- | -------- | ----------------- | ---------------------- |
+| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack              |
+| `isActive` | `boolean`   | ✅       | -                 | Active state indicator |
+| `t`        | `RtkI18n1`  | ❌       | `useLanguage()`   | Language               |
 
 ## Usage Examples
 
@@ -24,15 +25,13 @@ products:
 ### With Properties
 
 ```html
-<rtk-emoji-picker-button>
-</rtk-emoji-picker-button>
+<rtk-emoji-picker-button> </rtk-emoji-picker-button>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-emoji-picker-button");
+	const el = document.querySelector("rtk-emoji-picker-button");
 
-  el.isActive= true;
+	el.isActive = true;
 </script>
 ```

@@ -5,19 +5,20 @@ description: API reference for rtk-participant-setup component (Web Components (
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `isPreview` | `boolean` | ✅ | - | Whether tile is used for preview |
-| `nameTagPosition` | `\| 'bottom-left'     \| 'bottom-right'     \| 'bottom-center'     \| 'top-left'     \| 'top-right'     \| 'top-center'` | ✅ | - | Position of name tag |
-| `participant` | `Peer` | ✅ | - | Participant object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'solid' \| 'gradient'` | ✅ | - | Variant |
+| Property          | Type                                                                                                                     | Required | Default                 | Description                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------ | -------- | ----------------------- | -------------------------------- |
+| `config`          | `UIConfig`                                                                                                               | ❌       | `createDefaultConfig()` | Config object                    |
+| `iconPack`        | `IconPack`                                                                                                               | ❌       | `defaultIconPack`       | Icon pack                        |
+| `isPreview`       | `boolean`                                                                                                                | ✅       | -                       | Whether tile is used for preview |
+| `nameTagPosition` | `\| 'bottom-left'     \| 'bottom-right'     \| 'bottom-center'     \| 'top-left'     \| 'top-right'     \| 'top-center'` | ✅       | -                       | Position of name tag             |
+| `participant`     | `Peer`                                                                                                                   | ✅       | -                       | Participant object               |
+| `size`            | `Size`                                                                                                                   | ✅       | -                       | Size                             |
+| `states`          | `States`                                                                                                                 | ✅       | -                       | States object                    |
+| `t`               | `RtkI18n`                                                                                                                | ❌       | `useLanguage()`         | Language                         |
+| `variant`         | `'solid' \| 'gradient'`                                                                                                  | ✅       | -                       | Variant                          |
 
 ## Usage Examples
 
@@ -30,16 +31,14 @@ products:
 ### With Properties
 
 ```html
-<rtk-participant-setup>
-</rtk-participant-setup>
+<rtk-participant-setup> </rtk-participant-setup>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-participant-setup");
+	const el = document.querySelector("rtk-participant-setup");
 
-  el.isPreview= true;
-  el.participant= participant
+	el.isPreview = true;
+	el.participant = participant;
 </script>
 ```

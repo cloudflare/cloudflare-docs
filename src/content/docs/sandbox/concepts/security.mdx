@@ -36,7 +36,7 @@ For complete isolation, use separate sandboxes per user:
 const userSandbox = getSandbox(env.Sandbox, `user-${userId}`);
 
 // Bad - Users sharing one sandbox
-const shared = getSandbox(env.Sandbox, 'shared');
+const shared = getSandbox(env.Sandbox, "shared");
 // Users can read each other's files!
 ```
 
@@ -53,12 +53,12 @@ await sandbox.exec(`cat ${filename}`);
 // User could input: "file.txt; rm -rf /"
 
 // Safe - validate input
-const filename = userInput.replace(/[^a-zA-Z0-9._-]/g, '');
+const filename = userInput.replace(/[^a-zA-Z0-9._-]/g, "");
 await sandbox.exec(`cat ${filename}`);
 
 // Better - use file API
-await sandbox.writeFile('/tmp/input', userInput);
-await sandbox.exec('cat /tmp/input');
+await sandbox.writeFile("/tmp/input", userInput);
+await sandbox.exec("cat /tmp/input");
 ```
 
 ## Authentication
@@ -69,16 +69,16 @@ Sandbox IDs provide basic access control but aren't cryptographically secure. Ad
 
 ```typescript
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const userId = await authenticate(request);
-    if (!userId) {
-      return new Response('Unauthorized', { status: 401 });
-    }
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const userId = await authenticate(request);
+		if (!userId) {
+			return new Response("Unauthorized", { status: 401 });
+		}
 
-    // User can only access their sandbox
-    const sandbox = getSandbox(env.Sandbox, userId);
-    return Response.json({ authorized: true });
-  }
+		// User can only access their sandbox
+		const sandbox = getSandbox(env.Sandbox, userId);
+		return Response.json({ authorized: true });
+	},
 };
 ```
 
@@ -125,15 +125,18 @@ Use environment variables, not hardcoded secrets:
 
 ```typescript
 // Bad - hardcoded in file
-await sandbox.writeFile('/workspace/config.js', `
+await sandbox.writeFile(
+	"/workspace/config.js",
+	`
   const API_KEY = 'sk_live_abc123';
-`);
+`,
+);
 
 // Good - use environment variables
-await sandbox.startProcess('node app.js', {
-  env: {
-    API_KEY: env.API_KEY,  // From Worker environment binding
-  }
+await sandbox.startProcess("node app.js", {
+	env: {
+		API_KEY: env.API_KEY, // From Worker environment binding
+	},
 });
 ```
 
@@ -141,10 +144,10 @@ Clean up temporary sensitive data:
 
 ```typescript
 try {
-  await sandbox.writeFile('/tmp/sensitive.txt', secretData);
-  await sandbox.exec('python process.py /tmp/sensitive.txt');
+	await sandbox.writeFile("/tmp/sensitive.txt", secretData);
+	await sandbox.exec("python process.py /tmp/sensitive.txt");
 } finally {
-  await sandbox.deleteFile('/tmp/sensitive.txt');
+	await sandbox.deleteFile("/tmp/sensitive.txt");
 }
 ```
 
@@ -178,30 +181,34 @@ This pattern is useful when accessing GitHub for private repository operations, 
 ## Best practices
 
 **Use separate sandboxes for isolation**:
+
 ```typescript
 const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
 ```
 
 **Validate all inputs**:
+
 ```typescript
-const safe = input.replace(/[^a-zA-Z0-9._-]/g, '');
+const safe = input.replace(/[^a-zA-Z0-9._-]/g, "");
 await sandbox.exec(`command ${safe}`);
 ```
 
 **Use environment variables for secrets**:
+
 ```typescript
-await sandbox.startProcess('node app.js', {
-  env: { API_KEY: env.API_KEY }
+await sandbox.startProcess("node app.js", {
+	env: { API_KEY: env.API_KEY },
 });
 ```
 
 **Clean up temporary resources**:
+
 ```typescript
 try {
-  const sandbox = getSandbox(env.Sandbox, sessionId);
-  await sandbox.exec('npm test');
+	const sandbox = getSandbox(env.Sandbox, sessionId);
+	await sandbox.exec("npm test");
 } finally {
-  await sandbox.destroy();
+	await sandbox.destroy();
 }
 ```
 

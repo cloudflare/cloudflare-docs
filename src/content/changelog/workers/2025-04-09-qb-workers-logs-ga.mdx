@@ -7,7 +7,7 @@ date: 2025-04-09
 hidden: false
 ---
 
-import { WranglerConfig } from "~/components"
+import { WranglerConfig } from "~/components";
 
 The [Workers Observability dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/) offers a single place to investigate and explore your [Workers Logs](/workers/observability/logs/workers-logs).
 
@@ -16,6 +16,7 @@ The **Overview** tab shows logs from all your Workers in one place. The **Invoca
 ![Workers Observability Overview Tab](src/assets/images/changelog/workers/observability/2025-04-09-workers-observability-overview.png)
 
 The **Investigate** tab presents a Query Builder, which helps you write structured queries to investigate and visualize your logs. The Query Builder can help answer questions such as:
+
 - Which paths are experiencing the most 5XX errors?
 - What is the wall time distribution by status code for my Worker?
 - What are the slowest requests, and where are they coming from?
@@ -30,6 +31,7 @@ The Query Builder can use any field that you store in your logs as a key to visu
 [Workers Logs](/workers/observability/logs/workers-logs) is now Generally Available. With a [small change](/workers/observability/logs/workers-logs/#enable-workers-logs) to your Wrangler configuration, Workers Logs ingests, indexes, and stores all logs emitted from your Workers for up to 7 days.
 
 We've introduced a number of changes during our beta period, including:
+
 - Dashboard enhancements with customizable fields as columns in the Logs view and support for invocation-based grouping
 - Performance improvements to ensure no adverse impact
 - Public [API endpoints](https://developers.cloudflare.com/api/resources/workers/subresources/observability/) for broader consumption

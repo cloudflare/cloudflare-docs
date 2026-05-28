@@ -10,10 +10,9 @@ tags:
 sidebar:
   order: 2
   label: Google Firebase
-
 ---
 
-import { Steps, DashButton } from "~/components"
+import { Steps, DashButton } from "~/components";
 
 Turnstile is [available as an extension](https://extensions.dev/extensions/cloudflare/cloudflare-turnstile-app-check-provider) with [Google's Firebase](https://firebase.google.com/) platform as an [App Check](https://firebase.google.com/docs/app-check) provider. You can leverage Cloudflare Turnstile's bot detection and challenge capabilities to ensure that requests to your Firebase backend services are verified and only authentic human visitors can interact with your application.
 
@@ -119,25 +118,25 @@ const expressApp = express();
 const firebaseApp = initializeApp();
 
 const appCheckVerification = async (req, res, next) => {
-    const appCheckToken = req.header("X-Firebase-AppCheck");
+	const appCheckToken = req.header("X-Firebase-AppCheck");
 
-    if (!appCheckToken) {
-        res.status(401);
-        return next("Unauthorized");
-    }
+	if (!appCheckToken) {
+		res.status(401);
+		return next("Unauthorized");
+	}
 
-    try {
-        const appCheckClaims = await getAppCheck().verifyToken(appCheckToken);
+	try {
+		const appCheckClaims = await getAppCheck().verifyToken(appCheckToken);
 
-        // If verifyToken() succeeds, continue with the next middleware function in the stack.
-        return next();
-    } catch (err) {
-        res.status(401);
-        return next("Unauthorized");
-    }
-}
+		// If verifyToken() succeeds, continue with the next middleware function in the stack.
+		return next();
+	} catch (err) {
+		res.status(401);
+		return next("Unauthorized");
+	}
+};
 
 expressApp.get("/yourApiEndpoint", [appCheckVerification], (req, res) => {
-    // Handle request.
+	// Handle request.
 });
 ```

@@ -12,13 +12,13 @@ products:
 
 The recording of a meeting can have the following states:
 
-| Name      | Description                                                                                                                                                                                                                                         |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| INVOKED   | Our backend servers have received the recording request, and the master is looking for a ready worker to assign the recording job.                                                                                                                  |
-| RECORDING | The meeting is currently being recorded by a worker; note that this will also hold true if the meeting is being live streamed.                                                                                                                      |
+| Name      | Description                                                                                                                                                                                                                                                |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| INVOKED   | Our backend servers have received the recording request, and the master is looking for a ready worker to assign the recording job.                                                                                                                         |
+| RECORDING | The meeting is currently being recorded by a worker; note that this will also hold true if the meeting is being live streamed.                                                                                                                             |
 | UPLOADING | The recording has been stopped and the file is being uploaded to the cloud storage. If you have not specified storage details, then the files will be uploaded only to RealtimeKit's server. Any RTMP and livestreaming link will also stop at this stage. |
-| UPLOADED  | The recording file upload is complete and the status webhook is also triggered.                                                                                                                                                                     |
-| ERRORED   | There was an irrecoverable error while recording the meeting and the file will not be available.                                                                                                                                                    |
+| UPLOADED  | The recording file upload is complete and the status webhook is also triggered.                                                                                                                                                                            |
+| ERRORED   | There was an irrecoverable error while recording the meeting and the file will not be available.                                                                                                                                                           |
 
 ## Fetching the state
 

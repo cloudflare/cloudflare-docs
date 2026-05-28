@@ -12,7 +12,7 @@ Introducing enhanced archiving capabilities for security action items within the
 
 ### Why this matters
 
-Managing a high volume of security insights can be overwhelming. Previously, users lacked a structured way to dismiss items without losing the context of why they were ignored. 
+Managing a high volume of security insights can be overwhelming. Previously, users lacked a structured way to dismiss items without losing the context of why they were ignored.
 
 With these new archiving options—**False Positive**, **Accept Risk**, and **Other**—you can now suppress items indefinitely with required rationale text for risk-based decisions. This ensures that your team remains focused on critical, actionable vulnerabilities while preserving institutional knowledge for audits.
 
@@ -37,3 +37,4 @@ To review the history and rationale of a specific archived issue at the account 
 curl "[https://api.cloudflare.com/client/v4/accounts/](https://api.cloudflare.com/client/v4/accounts/){account_id}/insights/{insight_id}/audit-log" \
      -H "Authorization: Bearer <API_TOKEN>" \
      -H "Content-Type: application/json"
+```

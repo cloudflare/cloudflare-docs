@@ -17,7 +17,11 @@ import { Render, TunnelCalculator } from "~/components";
 Run a `cloudflared` [replica](/tunnel/configuration/#replicas-and-high-availability) on two dedicated hosts per location with a minimum of 4 GB RAM and 4 CPU cores. Allocate 50,000 ports per host.
 
 ## Port configuration
-<Render file="tunnel/availability/port-configuration" product="cloudflare-one" />
+
+<Render
+	file="tunnel/availability/port-configuration"
+	product="cloudflare-one"
+/>
 
 ## ulimits (Linux and macOS)
 
@@ -26,6 +30,7 @@ Run a `cloudflared` [replica](/tunnel/configuration/#replicas-and-high-availabil
 ## Capacity calculator
 
 To estimate tunnel capacity requirements for your deployment:
+
 1. Use the [metrics endpoint](/tunnel/monitoring/#cloudflared-metrics) to measure `cloudflared_tcp_total_sessions` and `cloudflared_udp_total_sessions`.
 2. Compute the average **TCP requests per second** by dividing `cloudflared_tcp_total_sessions` by total time.
 3. Compute the average **Non-DNS UDP requests per second** by dividing `cloudflared_udp_total_sessions` by total time.

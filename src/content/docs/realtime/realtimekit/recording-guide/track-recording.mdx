@@ -8,9 +8,16 @@ products:
   - realtime
 ---
 
-Track recording records each participant's audio as a separate WebM file in RealtimeKit's Cloudflare R2 bucket. Use track recording when you need isolated speaker tracks for post-processing, transcription, compliance workflows, or audio analysis.
+Track recording lets you record participant audio as separate WebM files instead of one composite meeting recording. Use it when you need speaker-level control over what you store, process, or review.
 
-Composite recording creates one mixed meeting recording. Track recording creates one file per recorded participant peer.
+With track recording, you can record specific participant tracks by passing `user_ids`, which is useful for content-sensitive or regulated workflows where recording every participant is unnecessary. If you do not provide `user_ids`, RealtimeKit will record all participant audio tracks as separate WebM files by default.
+
+To pass `user_ids` for specific participant track recording, use the following minimum SDK versions:
+
+- Web Core: `@cloudflare/realtimekit` version `1.4.0` or later
+- Web UI Kit: `@cloudflare/realtimekit-ui`, `@cloudflare/realtimekit-react-ui`, or `@cloudflare/realtimekit-angular-ui` version `1.1.2` or later
+- Android Core or iOS Core: version `2.0.0` or later
+- Android UI Kit or iOS UI Kit: version `1.1.0` or later
 
 :::note
 
@@ -22,19 +29,36 @@ Track recording currently supports audio tracks only. Video track recording is i
 
 Track recording has the following requirements and limits:
 
-| Limit                 | Description                                           |
-| --------------------- | ----------------------------------------------------- |
-| Active meeting        | The meeting must have an active live session.         |
-| Media kind            | Only `audio` layers are recorded.                     |
-| Participant selection | Pass up to `100` values in `user_ids`.                |
-| Storage               | Files are uploaded to the RealtimeKit bucket.         |
-| File retention        | RealtimeKit bucket download URLs expire after seven days. |
+| Limit                 | Description                                                                  |
+| --------------------- | ---------------------------------------------------------------------------- |
+| Active meeting        | The meeting must have an active live session.                                |
+| Media kind            | Only `audio` layers are recorded.                                            |
+| Participant selection | Pass up to 100 values in `user_ids`.                                         |
+| Storage               | Files are uploaded to RealtimeKit's managed R2 bucket with zero-egress fees. |
+| File retention        | RealtimeKit bucket download URLs expire after seven days.                    |
 
 ## Start track recording
 
-To start track recording, call `POST /recordings/track` with the meeting ID.
+### Record specific participants
 
-If you omit `layers`, RealtimeKit records all participant audio. You can pass an audio layer to set a file name prefix for generated files.
+To record separate audio tracks for specific participants, call `POST /recordings/track` with the meeting ID and the participant `user_ids`.
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/recordings/track \
+  --header 'Authorization: Bearer <api_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
+  "user_ids": ["user-123", "user-456"]
+}'
+```
+
+RealtimeKit records current and future participant peers whose `user_id` matches the allowlist. Participants whose `user_id` is not listed are not recorded.
+
+### Record all participants as separate tracks
+
+Omit `user_ids` to record separate audio tracks for all participants in the live meeting. RealtimeKit creates one WebM file for each recorded participant peer.
 
 ```bash
 curl --request POST \
@@ -63,26 +87,9 @@ The response includes a recording ID. Use this ID to stop or fetch the recording
 }
 ```
 
-## Record selected participants
+## Customize file names with prefixes
 
-Pass `user_ids` to record only specific participants. RealtimeKit records current and future participant peers whose `user_id` matches the allowlist.
-
-:::caution
-
-To use selective track recording with `user_ids`, contact your Cloudflare account team or RealtimeKit support.
-
-:::
-
-```json
-{
-	"meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
-	"user_ids": ["user-123", "user-456"]
-}
-```
-
-## Set file name prefix
-
-Use `file_name_prefix` to prefix every generated track recording file.
+Use `layers.default.file_name_prefix` to prefix every generated track recording file.
 
 ```json
 {
@@ -120,7 +127,7 @@ After track recording stops, RealtimeKit uploads the per-participant WebM files 
 
 Track recording uses the same recording status lifecycle as composite recording. To monitor status, refer to [Monitor Recording Status](/realtime/realtimekit/recording-guide/monitor-status/).
 
-When the recording reaches `UPLOADED`, fetch the recording details or listen for the `recording.statusUpdate` webhook. The `download_url` field contains the recorded WebM files for participant peers.
+When the recording reaches `UPLOADED`, fetch the recording details or listen for the `recording.statusUpdate` webhook. For track recordings, `download_url` contains per-participant WebM file URLs grouped by layer.
 
 ```json
 {

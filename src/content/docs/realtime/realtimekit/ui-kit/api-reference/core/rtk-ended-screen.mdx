@@ -5,18 +5,19 @@ description: API reference for rtk-ended-screen component (Web Components (HTML)
 products:
   - realtime
 ---
+
 A screen which shows a meeting has ended.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Global states |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | Global states |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default                 | Description   |
+| ---------- | ---------- | -------- | ----------------------- | ------------- |
+| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack     |
+| `meeting`  | `Meeting`  | ✅       | -                       | Global states |
+| `size`     | `Size`     | ✅       | -                       | Size          |
+| `states`   | `States`   | ✅       | -                       | Global states |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language      |
 
 ## Usage Examples
 
@@ -29,16 +30,13 @@ A screen which shows a meeting has ended.
 ### With Properties
 
 ```html
-<rtk-ended-screen
- size="md">
-</rtk-ended-screen>
+<rtk-ended-screen size="md"> </rtk-ended-screen>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-ended-screen");
+	const el = document.querySelector("rtk-ended-screen");
 
-  el.meeting= meeting
+	el.meeting = meeting;
 </script>
 ```

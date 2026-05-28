@@ -17,7 +17,7 @@ Successful exploitation allows remote attackers to trigger a heap buffer overflo
 We strongly recommend upgrading to nginx 1.30.1 (or later) immediately to address the underlying vulnerability. If you cannot upgrade immediately, avoid `rewrite` directives with `?` in the replacement string followed by `set` or `if` referencing capture groups.
 
 <table style="width: 100%">
-  <thead>
+	<thead>
 		<tr>
 			<th>Ruleset</th>
 			<th>Rule ID</th>
@@ -27,7 +27,7 @@ We strongly recommend upgrading to nginx 1.30.1 (or later) immediately to addres
 			<th>New Action</th>
 			<th>Comments</th>
 		</tr>
-  </thead>
+	</thead>
 	<tbody>
 		<tr>
 			<td>Cloudflare Managed Ruleset</td>
@@ -35,12 +35,12 @@ We strongly recommend upgrading to nginx 1.30.1 (or later) immediately to addres
 				<RuleID id="2013e3e58efe4b79a26e214f7e52be73" />
 			</td>
 			<td>N/A</td>
-			<td>nginx - Remote Code Execution - Buffer Overread - CVE:CVE-2026-42945</td>
+			<td>
+				nginx - Remote Code Execution - Buffer Overread - CVE:CVE-2026-42945
+			</td>
 			<td>N/A</td>
 			<td>Block</td>
-			<td>
-				This is a new detection.
-			</td>
+			<td>This is a new detection.</td>
 		</tr>
 		<tr>
 			<td>Cloudflare Managed Ruleset</td>
@@ -51,9 +51,7 @@ We strongly recommend upgrading to nginx 1.30.1 (or later) immediately to addres
 			<td>nginx - Remote Code Execution - Heap Spray - CVE:CVE-2026-42945</td>
 			<td>N/A</td>
 			<td>Block</td>
-			<td>
-				This is a new detection.
-			</td>
+			<td>This is a new detection.</td>
 		</tr>
 	</tbody>
 </table>

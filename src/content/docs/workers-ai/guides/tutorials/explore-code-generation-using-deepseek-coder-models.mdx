@@ -14,9 +14,7 @@ products:
   - workers-ai
 ---
 
-
-
-import { YouTube } from "~/components"
+import { YouTube } from "~/components";
 
 A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
@@ -26,7 +24,7 @@ You can [download the DeepSeek Coder notebook](/workers-ai/static/documentation/
 
 [comment]: <> "The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai"
 
-***
+---
 
 ## Exploring Code Generation Using DeepSeek Coder
 
@@ -229,8 +227,8 @@ if __name__ == '__main__':
 
 In this test case, we have two tests:
 
-* `test_full_name` tests the `full_name` method when the user has both a first name and a last name.
-* `test_default_last_name` tests the `full_name` method when the user only has a first name and the last name is set to "Mc" + first name.
+- `test_full_name` tests the `full_name` method when the user has both a first name and a last name.
+- `test_default_last_name` tests the `full_name` method when the user only has a first name and the last name is set to "Mc" + first name.
 
 If all these tests pass, it means that the `full_name` method is working as expected. If any of these tests fail, it
 
@@ -346,9 +344,9 @@ display(Markdown(f"""
 
 ```json
 {
-  "firstName": "Craig",
-  "lastName": "Dennis",
-  "numKids": 2,
-  "interests": ["AI", "Cloudflare", "Tacos", "Burritos"]
+	"firstName": "Craig",
+	"lastName": "Dennis",
+	"numKids": 2,
+	"interests": ["AI", "Cloudflare", "Tacos", "Burritos"]
 }
 ```

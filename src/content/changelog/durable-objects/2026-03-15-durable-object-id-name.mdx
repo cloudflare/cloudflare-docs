@@ -15,19 +15,19 @@ This is especially useful for [alarms](/durable-objects/api/alarms/), where ther
 import { DurableObject } from "cloudflare:workers";
 
 export class ChatRoom extends DurableObject {
-  async getRoomName() {
-    // ctx.id.name returns the name passed to getByName() or idFromName()
-    return this.ctx.id.name;
-  }
+	async getRoomName() {
+		// ctx.id.name returns the name passed to getByName() or idFromName()
+		return this.ctx.id.name;
+	}
 }
 
 // Worker
 export default {
-  async fetch(request, env) {
-    const stub = env.CHAT_ROOM.getByName("general");
-    const roomName = await stub.getRoomName();
-    return new Response(`Welcome to ${roomName}!`);
-  },
+	async fetch(request, env) {
+		const stub = env.CHAT_ROOM.getByName("general");
+		const roomName = await stub.getRoomName();
+		return new Response(`Welcome to ${roomName}!`);
+	},
 };
 ```
 

@@ -16,7 +16,7 @@ import { ProductChangelog } from "~/components";
 
 ## 2024-10-18
 
-**New cloudflare\_branding flag allows hostnames with over 64 characters for all CAs**
+**New cloudflare_branding flag allows hostnames with over 64 characters for all CAs**
 
 To order certificates for hostnames longer than 64 characters, customers can now use the `cloudflare_branding` flag when ordering a certificate via [API](https://developers.cloudflare.com/api/resources/ssl/subresources/certificate_packs/methods/create/). Setting `cloudflare_branding` to `true` will cause `sni.cloudflaressl.com` to be used as the common name, while the long hostname is added as part of the subject alternative name (SAN).
 

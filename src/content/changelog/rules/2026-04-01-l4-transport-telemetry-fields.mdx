@@ -10,10 +10,10 @@ Previously, QUIC RTT and delivery rate data was only available via the `Server-T
 
 ### New fields
 
-| Field | Type | Description |
-| --- | --- | --- |
+| Field                             | Type    | Description                                                                                                                                                               |
+| --------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cf.timings.client_quic_rtt_msec` | Integer | The smoothed QUIC round-trip time (RTT) between Cloudflare and the client in milliseconds. Only populated for QUIC (HTTP/3) connections. Returns `0` for TCP connections. |
-| `cf.edge.l4.delivery_rate` | Integer | The most recent data delivery rate estimate for the client connection, in bytes per second. Returns `0` when L4 statistics are not available for the request. |
+| `cf.edge.l4.delivery_rate`        | Integer | The most recent data delivery rate estimate for the client connection, in bytes per second. Returns `0` when L4 statistics are not available for the request.             |
 
 ### Example: Route slow connections to a lightweight origin
 
@@ -27,9 +27,9 @@ cf.timings.client_tcp_rtt_msec > 200 or cf.timings.client_quic_rtt_msec > 200
 
 **Header modifications:**
 
-| Operation | Header name | Value |
-| --- | --- | --- |
-| Set | `X-High-Latency` | `true` |
+| Operation | Header name      | Value  |
+| --------- | ---------------- | ------ |
+| Set       | `X-High-Latency` | `true` |
 
 ### Example: Match low-bandwidth connections
 

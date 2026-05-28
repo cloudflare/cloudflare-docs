@@ -17,7 +17,9 @@ export default {
 		// Perform application logic in Workers here
 
 		// Sample call to an internal API running on ECS in AWS using the binding
-		const response = await env.AWS_VPC_ECS_API.fetch("https://internal-host.example.com");
+		const response = await env.AWS_VPC_ECS_API.fetch(
+			"https://internal-host.example.com",
+		);
 
 		// Additional application logic in Workers
 		return new Response();

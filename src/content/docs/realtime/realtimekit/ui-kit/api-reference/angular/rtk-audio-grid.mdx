@@ -5,17 +5,18 @@ description: API reference for rtk-audio-grid component (Angular Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig1` | ✅ | - | Config |
-| `hideSelf` | `boolean` | ✅ | - | Whether to hide self in the grid |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon Pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting |
-| `size` | `Size1` | ✅ | - | Size |
-| `states` | `States1` | ✅ | - | States |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property   | Type        | Required | Default           | Description                      |
+| ---------- | ----------- | -------- | ----------------- | -------------------------------- |
+| `config`   | `UIConfig1` | ✅       | -                 | Config                           |
+| `hideSelf` | `boolean`   | ✅       | -                 | Whether to hide self in the grid |
+| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon Pack                        |
+| `meeting`  | `Meeting`   | ✅       | -                 | Meeting                          |
+| `size`     | `Size1`     | ✅       | -                 | Size                             |
+| `states`   | `States1`   | ✅       | -                 | States                           |
+| `t`        | `RtkI18n1`  | ❌       | `useLanguage()`   | Language                         |
 
 ## Usage Examples
 
@@ -31,9 +32,9 @@ products:
 ```html
 <!-- component.html -->
 <rtk-audio-grid
- [config]="defaultUiConfig"
- [hideSelf]="true"
- [meeting]="meeting">
+	[config]="defaultUiConfig"
+	[hideSelf]="true"
+	[meeting]="meeting"
+>
 </rtk-audio-grid>
 ```
-

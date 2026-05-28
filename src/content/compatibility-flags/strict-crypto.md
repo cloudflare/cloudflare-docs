@@ -14,6 +14,7 @@ disable_flag: "no_strict_crypto_checks"
 ---
 
 Perform additional error checking in the Web Crypto API to conform with the specification and reject possibly unsafe key parameters:
+
 - For RSA key generation, key sizes are required to be multiples of 128 bits as boringssl may otherwise truncate the key.
 - The size of imported RSA keys must be at least 256 bits and at most 16384 bits, as with newly generated keys.
 - The public exponent for imported RSA keys is restricted to the commonly used values `[3, 17, 37, 65537]`.

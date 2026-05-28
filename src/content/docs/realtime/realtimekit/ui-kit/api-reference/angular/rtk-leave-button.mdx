@@ -5,16 +5,17 @@ description: API reference for rtk-leave-button component (Angular Library)
 products:
   - realtime
 ---
+
 A button which toggles visilibility of the leave confirmation dialog.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default           | Description |
+| ---------- | ------------------- | -------- | ----------------- | ----------- |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Icon pack   |
+| `size`     | `Size`              | ✅       | -                 | Size        |
+| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language    |
+| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant     |
 
 ## Usage Examples
 
@@ -29,9 +30,5 @@ A button which toggles visilibility of the leave confirmation dialog.
 
 ```html
 <!-- component.html -->
-<rtk-leave-button
- size="md"
- variant="button">
-</rtk-leave-button>
+<rtk-leave-button size="md" variant="button"> </rtk-leave-button>
 ```
-

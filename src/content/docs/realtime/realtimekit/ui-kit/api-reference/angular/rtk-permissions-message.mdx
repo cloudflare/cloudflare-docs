@@ -5,17 +5,18 @@ description: API reference for rtk-permissions-message component (Angular Librar
 products:
   - realtime
 ---
+
 A component which shows permission related troubleshooting
- information.
+information.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description    |
+| ---------- | ---------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon Pack      |
+| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
+| `states`   | `States`   | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
 
 ## Usage Examples
 
@@ -30,8 +31,5 @@ A component which shows permission related troubleshooting
 
 ```html
 <!-- component.html -->
-<rtk-permissions-message
- [meeting]="meeting">
-</rtk-permissions-message>
+<rtk-permissions-message [meeting]="meeting"> </rtk-permissions-message>
 ```
-

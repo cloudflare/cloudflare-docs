@@ -9,7 +9,6 @@ sidebar:
 head:
   - tag: title
     content: Enable cache in an R2 bucket
-
 ---
 
 By default, R2 buckets are private. To serve R2 objects through Cloudflare's cache, you need to attach a domain name you control — called a [Custom Domain](/r2/buckets/public-buckets/#custom-domains) — to the bucket. This creates a public URL backed by Cloudflare's network, so requests for your stored files go through Cloudflare's cache instead of hitting R2 directly every time.

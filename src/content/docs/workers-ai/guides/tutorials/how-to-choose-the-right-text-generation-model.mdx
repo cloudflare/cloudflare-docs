@@ -17,9 +17,7 @@ products:
   - workers-ai
 ---
 
-
-
-import { YouTube } from "~/components"
+import { YouTube } from "~/components";
 
 A great way to explore the models that are available to you on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
@@ -29,7 +27,7 @@ You can [download the Workers AI Text Generation Exploration notebook](/workers-
 
 [comment]: <> "The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai"
 
-***
+---
 
 ## How to Choose The Right Text Generation Model
 
@@ -148,7 +146,7 @@ questions = [
 speed_date(models, questions)
 ```
 
-***
+---
 
 #### @hf/thebloke/zephyr-7b-beta-awq
 
@@ -172,9 +170,9 @@ speed_date(models, questions)
 
 *Generated in *3.63* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/mistral-7b-instruct-v0.1-awq
 
@@ -194,9 +192,9 @@ speed_date(models, questions)
 
 *Generated in *4.33* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/openhermes-2.5-mistral-7b-awq
 
@@ -216,9 +214,9 @@ speed_date(models, questions)
 
 *Generated in *3.15* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/neural-chat-7b-v3-1-awq
 
@@ -242,9 +240,9 @@ Remember, these are just a few examples, and your use cases may vary depending o
 
 *Generated in *2.92* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/llama-2-13b-chat-awq
 
@@ -272,7 +270,7 @@ That's me in a nutshell! I'm ready to help with a wide range of tasks, so feel f
 
 *Generated in *10.28* seconds*
 
-***
+---
 
 ### Language Translation
 
@@ -299,7 +297,7 @@ questions = [f"""Translate "{phrase}" from "English" to "{language}" """
 speed_date(proud_translator_models, questions)
 ```
 
-***
+---
 
 #### @hf/thebloke/neural-chat-7b-v3-1-awq
 
@@ -389,9 +387,9 @@ Please note that this translation is not perfect, as it still retains the origin
 
 *Generated in *3.44* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/mistral-7b-instruct-v0.1-awq
 
@@ -467,7 +465,7 @@ Please note that this translation is not perfect, as it still retains the origin
 
 *Generated in *1.51* seconds*
 
-***
+---
 
 ### Information Retrieval and Summarization
 
@@ -493,7 +491,7 @@ questions = [f"""Summarize the book "{book}" into a few sentences. Ensure to inc
 speed_date(proud_summarizers, questions)
 ```
 
-***
+---
 
 #### @hf/thebloke/llama-2-13b-chat-awq
 
@@ -521,9 +519,9 @@ Of course! I'd be happy to help you with that. Here's my summary of "Goodnight M
 
 *Generated in *8.34* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/neural-chat-7b-v3-1-awq
 
@@ -545,9 +543,9 @@ Of course! I'd be happy to help you with that. Here's my summary of "Goodnight M
 
 *Generated in *4.04* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/openhermes-2.5-mistral-7b-awq
 
@@ -569,7 +567,7 @@ Of course! I'd be happy to help you with that. Here's my summary of "Goodnight M
 
 *Generated in *4.66* seconds*
 
-***
+---
 
 ### Content Creation
 
@@ -591,7 +589,7 @@ questions = [
 speed_date(proud_content_creator_models, questions)
 ```
 
-***
+---
 
 #### @hf/thebloke/mistral-7b-instruct-v0.1-awq
 
@@ -627,9 +625,9 @@ I hope these suggestions help! Let me know if you have any other questions or if
 
 *Generated in *1.13* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/zephyr-7b-beta-awq
 
@@ -659,9 +657,9 @@ Tagline: "Say goodbye to cable chaos and hello to a clutter-free workspace with 
 
 *Generated in *1.33* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/llama-2-13b-chat-awq
 
@@ -702,15 +700,15 @@ Sure, here's a headline for a blog on why you should use me specifically over ot
 
 Here's a brief summary of why I stand out from other models:
 
-* Honesty and Directness: I am programmed to provide honest and direct responses to your questions, without beating around the bush or sugarcoating the truth.
-* Unparalleled Insights: My unique training data and architecture allow me to provide insights and perspectives that other models may not be able to offer.
-* Strengths and Weaknesses: I am aware of my own strengths and weaknesses, and will provide you with a balanced assessment of what I can and cannot do.
+- Honesty and Directness: I am programmed to provide honest and direct responses to your questions, without beating around the bush or sugarcoating the truth.
+- Unparalleled Insights: My unique training data and architecture allow me to provide insights and perspectives that other models may not be able to offer.
+- Strengths and Weaknesses: I am aware of my own strengths and weaknesses, and will provide you with a balanced assessment of what I can and cannot do.
 
 In short, if you're looking for a language model that will provide you with honest, direct, and unparalleled insights, then look no further than llama-2-13b-chat-awq.
 
 *Generated in *10.24* seconds*
 
-***
+---
 
 ### Text Classification
 
@@ -741,7 +739,7 @@ sentiment_questions = [sentiment_prompt_template.format(text=comment) for commen
 speed_date(proud_classifiers, sentiment_questions)
 ```
 
-***
+---
 
 #### @hf/thebloke/openhermes-2.5-mistral-7b-awq
 
@@ -787,9 +785,9 @@ The sentiment of the text is positive.
 
 *Generated in *0.89* seconds*
 
-***
+---
 
-***
+---
 
 #### @hf/thebloke/mistral-7b-instruct-v0.1-awq
 
@@ -833,4 +831,4 @@ The sentiment of the text is positive.
 
 *Generated in *1.93* seconds*
 
-***
+---

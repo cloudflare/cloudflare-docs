@@ -20,35 +20,35 @@ DHCP options are configured via the API and Terraform.
 
 Each option is defined by three fields:
 
-| Field           | Description                                         | Example                |
-| --------------- | --------------------------------------------------- | ---------------------- |
-| `option_number` | The DHCP option code (1–254).                       | `67`                   |
-| `type`          | The value encoding: `text`, `integer`, `hex`, `ip`. | `text`                 |
-| `value`         | The option value, encoded per `type`.               | `boot/x64/pxelinux.0`  |
+| Field           | Description                                         | Example               |
+| --------------- | --------------------------------------------------- | --------------------- |
+| `option_number` | The DHCP option code (1–254).                       | `67`                  |
+| `type`          | The value encoding: `text`, `integer`, `hex`, `ip`. | `text`                |
+| `value`         | The option value, encoded per `type`.               | `boot/x64/pxelinux.0` |
 
 ### Value type encoding
 
-| Type      | Format                                                      | Example value                 |
-| --------- | ----------------------------------------------------------- | ----------------------------- |
-| `ip`      | A dotted-quad IPv4 address.                                 | `10.20.30.40`                 |
-| `integer` | A decimal integer.                                          | `0`                           |
-| `text`    | A UTF-8 string.                                             | `boot/x64/pxelinux.0`         |
-| `hex`     | A colon-separated sequence of bytes, used for sub-options.  | `01:04:aa:bb:cc`              |
+| Type      | Format                                                     | Example value         |
+| --------- | ---------------------------------------------------------- | --------------------- |
+| `ip`      | A dotted-quad IPv4 address.                                | `10.20.30.40`         |
+| `integer` | A decimal integer.                                         | `0`                   |
+| `text`    | A UTF-8 string.                                            | `boot/x64/pxelinux.0` |
+| `hex`     | A colon-separated sequence of bytes, used for sub-options. | `01:04:aa:bb:cc`      |
 
 ## Common PXE / iPXE options
 
 The most frequently used options for PXE / iPXE boot are:
 
-| Option | Type    | Purpose                                                                              |
-| ------ | ------- | ------------------------------------------------------------------------------------ |
-| 60     | `text`  | Vendor class identifier (typically `PXEClient`).                                     |
-| 66     | `ip` or `text` | TFTP server name or IP address (boot server).                                |
-| 67     | `text`  | Bootfile name to load (for example `ipxe.pxe` or `undionly.kpxe`).                   |
-| 43     | `hex`   | Vendor-specific information; sub-option layout is vendor-defined.                    |
-| 175    | `hex`   | iPXE-specific encapsulated options (HTTP/HTTPS boot, iSCSI, DNS, and more).          |
-| 209    | `text`  | iPXE configuration file URI.                                                         |
-| 210    | `text`  | iPXE configuration file path prefix.                                                 |
-| 211    | `text`  | iPXE configuration file path.                                                        |
+| Option | Type           | Purpose                                                                     |
+| ------ | -------------- | --------------------------------------------------------------------------- |
+| 60     | `text`         | Vendor class identifier (typically `PXEClient`).                            |
+| 66     | `ip` or `text` | TFTP server name or IP address (boot server).                               |
+| 67     | `text`         | Bootfile name to load (for example `ipxe.pxe` or `undionly.kpxe`).          |
+| 43     | `hex`          | Vendor-specific information; sub-option layout is vendor-defined.           |
+| 175    | `hex`          | iPXE-specific encapsulated options (HTTP/HTTPS boot, iSCSI, DNS, and more). |
+| 209    | `text`         | iPXE configuration file URI.                                                |
+| 210    | `text`         | iPXE configuration file path prefix.                                        |
+| 211    | `text`         | iPXE configuration file path.                                               |
 
 For a complete list of standard DHCP option codes, refer to the [IANA BOOTP/DHCP parameters registry](https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml).
 

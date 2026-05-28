@@ -4,10 +4,9 @@ description: Signal search engine crawlers when content changes with IndexNow.
 products:
   - cache
 title: Crawler Hints
-
 ---
 
-import { FeatureTable, DashButton } from "~/components"
+import { FeatureTable, DashButton } from "~/components";
 
 Crawler Hints uses Cloudflare cache signals to tell search engines when your content has likely changed, so they crawl your site at the right time instead of guessing.
 
@@ -41,6 +40,6 @@ After enabling Crawler Hints, Cloudflare will begin sending hints to search engi
 
 When enabled, Crawler Hints is a global setting for your entire website. You can stop a specific page from being indexed by either:
 
-* Having the origin server send through the header `X-Robots-Tag: noindex` on any pages that should not be indexed.
-* Including `<meta name="robots" content="noindex, nofollow" />` in the HTML of any pages that should not be indexed.
-* Creating a [Response header Transform Rule](/rules/transform/response-header-modification/) in Cloudflare to add the `X-Robots-Tag: noindex` header instead of doing it from the origin server.
+- Having the origin server send through the header `X-Robots-Tag: noindex` on any pages that should not be indexed.
+- Including `<meta name="robots" content="noindex, nofollow" />` in the HTML of any pages that should not be indexed.
+- Creating a [Response header Transform Rule](/rules/transform/response-header-modification/) in Cloudflare to add the `X-Robots-Tag: noindex` header instead of doing it from the origin server.

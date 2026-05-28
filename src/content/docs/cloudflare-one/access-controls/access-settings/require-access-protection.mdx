@@ -7,7 +7,7 @@ title: Require Access protection
 sidebar:
   order: 3
 tags:
-- Security
+  - Security
 ---
 
 Cloudflare Access allows you to require Access protection for all hostnames in your account. When this setting is turned on, traffic to any hostname without a matching [Access application](/cloudflare-one/access-controls/applications/) is automatically blocked.
@@ -23,13 +23,13 @@ Turning on Access protection blocks traffic to any hostname that does not have a
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and go to **Zero Trust** > **Access controls** > **Access settings**.
 2. Turn on **Block traffic to all domains in this account**. You will see a dialog confirming you understand the scope of this change. Select **Confirm**.
 
-	Traffic to all hostnames in the account is now blocked unless an Access application exists for the hostname.
+   Traffic to all hostnames in the account is now blocked unless an Access application exists for the hostname.
 
 3. (Optional) Under **Hostnames to Exempt**, select specific domains to exempt from the **Block traffic to all domains in this account** setting. Traffic to exempted hostnames is allowed even if no Access application exists.
 
-	:::note
-	Cloudflare recommends limiting exemptions to hostnames that host only public-facing content. Internal applications should have an Access application configured.
-	:::
+   :::note
+   Cloudflare recommends limiting exemptions to hostnames that host only public-facing content. Internal applications should have an Access application configured.
+   :::
 
 ## Allow traffic to a hostname
 

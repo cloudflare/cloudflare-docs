@@ -6,7 +6,6 @@ products:
 title: Revoke a client certificate
 sidebar:
   order: 8
-
 ---
 
 import { DashButton } from "~/components";
@@ -26,10 +25,8 @@ It is not possible to permanently delete client certificates generated with the 
 
 :::caution[Important]
 
-
 After revoking a certificate, you must update any mTLS rules that check for the presence of a client certificate so that they block all requests that include a revoked certificate.
 
 For more information, refer to [Check for revoked certificates](/api-shield/security/mtls/configure/#check-for-revoked-certificates).
-
 
 :::

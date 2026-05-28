@@ -19,13 +19,13 @@ Previously, throwing a `NonRetryableError` with a custom message would result in
 import { WorkflowEntrypoint, NonRetryableError } from "cloudflare:workers";
 
 export class MyWorkflow extends WorkflowEntrypoint {
-  async run(event, step) {
-    await step.do("my-step", async () => {
-      throw new NonRetryableError("custom error message");
-      // Without this flag: error.message === "The execution of the Workflow instance was terminated, as a step threw an NonRetryableError and it was not handled"
-      // With this flag: error.message === "custom error message"
-    });
-  }
+	async run(event, step) {
+		await step.do("my-step", async () => {
+			throw new NonRetryableError("custom error message");
+			// Without this flag: error.message === "The execution of the Workflow instance was terminated, as a step threw an NonRetryableError and it was not handled"
+			// With this flag: error.message === "custom error message"
+		});
+	}
 }
 ```
 

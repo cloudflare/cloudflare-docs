@@ -21,7 +21,7 @@ When Workers are deployed to Cloudflare, as a security measure to [mitigate agai
 ```typescript title="Time is frozen — start will have the exact same value as end."
 const start = performance.now();
 for (let i = 0; i < 1e6; i++) {
-  // do expensive work
+	// do expensive work
 }
 const end = performance.now();
 const timing = end - start; // 0

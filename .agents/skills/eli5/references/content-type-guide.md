@@ -7,6 +7,7 @@ Operational guide for detecting and simplifying different documentation types.
 ## Purpose
 
 This guide provides:
+
 - **Detection criteria** for identifying content types
 - **Required elements** checklist for each type
 - **Simplification patterns** specific to each type
@@ -21,6 +22,7 @@ This guide provides:
 For each content type below, the enhancement patterns are designed to ADD MINIMAL CONTEXT AND EXAMPLES, not restructure or massively expand.
 
 **Universal constraints:**
+
 - Maximum 1-2 examples per major concept
 - Each example: 5-15 lines
 - Inline "why" explanations: 1-2 sentences
@@ -31,6 +33,7 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 - Minimal testing guidance (3-5 commands for tutorials)
 
 **When patterns below suggest "Add [section]":**
+
 - Interpret as "enhance inline" not "create separate major section"
 - Keep additions brief and integrated
 - Target 1.5-2x expansion, not 5-10x
@@ -39,13 +42,13 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 
 ## Content Type Overview
 
-| Type | Purpose | Key Pattern | Example |
-|------|---------|-------------|---------|
-| **Overview** | Help users decide if they need this | Problem → Solution → Benefit | Product landing pages |
-| **Concept** | Build understanding of "why" | Analogy → Plain → Technical | "What is rate limiting?" |
-| **How To** | Enable task completion | Context → Multi-path steps | "Enable HTTPS" |
-| **Reference** | Provide comprehensive specs | Use-case organization | API parameters, headers |
-| **Tutorial** | Teach through application | Build → Enhance → Polish | "Build a URL shortener" |
+| Type          | Purpose                             | Key Pattern                  | Example                  |
+| ------------- | ----------------------------------- | ---------------------------- | ------------------------ |
+| **Overview**  | Help users decide if they need this | Problem → Solution → Benefit | Product landing pages    |
+| **Concept**   | Build understanding of "why"        | Analogy → Plain → Technical  | "What is rate limiting?" |
+| **How To**    | Enable task completion              | Context → Multi-path steps   | "Enable HTTPS"           |
+| **Reference** | Provide comprehensive specs         | Use-case organization        | API parameters, headers  |
+| **Tutorial**  | Teach through application           | Build → Enhance → Polish     | "Build a URL shortener"  |
 
 ---
 
@@ -54,6 +57,7 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 ### Detection Criteria
 
 **Look for:**
+
 - Product/feature name in title or H1
 - Feature lists or capability descriptions
 - "What is [Product]" sections
@@ -62,6 +66,7 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 - Lack of step-by-step instructions
 
 **Confidence signals:**
+
 - Multiple features described briefly
 - High-level product description
 - Links to detailed documentation
@@ -69,6 +74,7 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 - Pricing or plan information
 
 **Example titles:**
+
 - "Cloudflare Workers"
 - "Introduction to Gateway"
 - "What is Workers KV?"
@@ -77,7 +83,7 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 
 - [ ] Opening benefit statement (what problem solved)
 - [ ] Problem/Solution/Benefit structure
-- [ ] "Perfect for" self-identification section  
+- [ ] "Perfect for" self-identification section
 - [ ] Clear call-to-action ("Get started" link)
 - [ ] Feature descriptions with benefits (not just specs)
 - [ ] Technical architecture separated/collapsed
@@ -87,12 +93,14 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 **Target: 1.5-2x original length**
 
 **Minimal additions:**
+
 1. **Add 2-4 sentence problem statement** (if completely missing) at document start
 2. **Add 1-2 use case examples inline** (5-10 lines each) showing who benefits
 3. **Add inline "why"** (1 sentence) when introducing features
 4. **Define jargon on first use** (brief inline definition)
 
 **Structure to preserve:**
+
 - Keep original opening and headings
 - Don't reorganize sections
 - Don't move architecture (just add brief intro if it leads)
@@ -100,41 +108,46 @@ For each content type below, the enhancement patterns are designed to ADD MINIMA
 **Example enhancement:**
 
 Original (8 lines):
+
 ```markdown
 # Internal DNS
 
 Manage DNS records for your private network.
 
-Internal DNS zones pair with Gateway resolver policies to control 
+Internal DNS zones pair with Gateway resolver policies to control
 DNS query responses.
 
 ## Features
+
 - Create internal zones
 - Configure views
 - Link to Gateway
 ```
 
 Enhanced (15 lines - 1.9x):
+
 ```markdown
 # Internal DNS
 
-Manage DNS records for your private network without running your own DNS 
+Manage DNS records for your private network without running your own DNS
 servers. This simplifies operations and integrates with Cloudflare Gateway.
 
-Internal DNS zones pair with Gateway resolver policies to control DNS query 
+Internal DNS zones pair with Gateway resolver policies to control DNS query
 responses based on context (source IP, user identity, domain).
 
-**Example use case:** A multi-region company creates separate views for London 
-and SF offices. Users query the same hostname (api.company.internal) but get 
+**Example use case:** A multi-region company creates separate views for London
+and SF offices. Users query the same hostname (api.company.internal) but get
 different IP addresses based on location.
 
 ## Features
+
 - Create internal zones - Private namespaces accessible only via Gateway
 - Configure views - Logical groupings that route different users to different resources
 - Link to Gateway - Resolver policies determine which view to use
 ```
 
 What was added:
+
 - 1 sentence "why" (without running own servers)
 - Brief context for zones (source IP, user identity)
 - 1 example (3 lines)
@@ -156,6 +169,7 @@ What was added:
 ### Detection Criteria
 
 **Look for:**
+
 - "What is..." or "Understanding..." titles
 - Explanatory content (not procedural)
 - "How it works" sections
@@ -164,6 +178,7 @@ What was added:
 - Analogies or metaphors (sometimes)
 
 **Confidence signals:**
+
 - Explains mechanisms, not steps
 - Educational tone
 - Links to related concepts
@@ -171,6 +186,7 @@ What was added:
 - Multiple explanation approaches
 
 **Example titles:**
+
 - "Understanding Rate Limiting"
 - "How Caching Works"
 - "What is Edge Computing?"
@@ -188,6 +204,7 @@ What was added:
 ### Simplification Pattern
 
 **Structure:**
+
 ```markdown
 # [Concept Name]
 
@@ -196,6 +213,7 @@ What was added:
 **What it is:** [Plain English definition without jargon]
 
 **Why you need it:**
+
 - [Benefit 1]
 - [Benefit 2]
 - [Benefit 3]
@@ -203,6 +221,7 @@ What was added:
 **How it works:** [Simplified technical explanation]
 
 **Real scenarios:**
+
 - [Use case 1 with context]
 - [Use case 2 with context]
 - [Use case 3 with context]
@@ -228,6 +247,7 @@ What was added:
 ### Detection Criteria
 
 **Look for:**
+
 - Action verbs in titles (Configure, Enable, Create, Set up)
 - Numbered steps or procedures
 - "Prerequisites" sections
@@ -236,6 +256,7 @@ What was added:
 - Command examples or code blocks
 
 **Confidence signals:**
+
 - Clear sequential structure
 - Specific actionable steps
 - Tool/UI references
@@ -243,6 +264,7 @@ What was added:
 - Troubleshooting sections
 
 **Example titles:**
+
 - "Enable Always Use HTTPS"
 - "Configure DNS Settings"
 - "Create a Worker"
@@ -265,6 +287,7 @@ What was added:
 **For how-to guides, preserve existing steps and add minimal context:**
 
 **Minimal additions:**
+
 1. **Add 1-2 sentence "what this accomplishes"** at top (if missing)
 2. **Add inline "why"** (1 sentence) for non-obvious steps
 3. **Add 1 example** showing when you'd use this (3-5 lines)
@@ -272,6 +295,7 @@ What was added:
 5. **Add 1-2 troubleshooting notes** for critical failures only
 
 **Preserve:**
+
 - Original step numbering and flow
 - Existing Dashboard/API paths (don't create new ones)
 - All screenshots and UI elements
@@ -280,6 +304,7 @@ What was added:
 **Example enhancement:**
 
 Original (12 lines):
+
 ```markdown
 # Create a DNS View
 
@@ -297,10 +322,11 @@ Use the create view endpoint with zone IDs.
 ```
 
 Enhanced (20 lines - 1.67x):
+
 ```markdown
 # Create a DNS View
 
-Create a logical grouping of zones that determines which DNS records users see. 
+Create a logical grouping of zones that determines which DNS records users see.
 Useful for multi-region setups or environment separation.
 
 **Example:** Create "London View" and "SF View" to route users to nearest datacenter.
@@ -327,6 +353,7 @@ curl -X POST /api/views -d '{"name": "London View", "zone_ids": ["id1", "id2"]}'
 ```
 
 What was added:
+
 - 2-sentence purpose statement (2 lines)
 - 1 example (1 line)
 - Inline context for 2 steps (2 lines)
@@ -336,11 +363,13 @@ What was added:
 - Total: 8 lines added to 12 original = 20 lines (1.67x) ✅
 
 **What was NOT added:**
+
 - Comprehensive troubleshooting section
 - Multiple examples
 - Separate "Understanding Views" section
 - Extensive testing procedures
-```
+
+````
 
 ### Common Issues to Fix
 
@@ -414,7 +443,7 @@ What was added:
 **Example:**
 ```[language]
 [Realistic usage example]
-```
+````
 
 **Result:** [What happens when this is used]
 
@@ -423,7 +452,8 @@ What was added:
 ### [Next Option]
 
 [Same structure...]
-```
+
+````
 
 ### Common Issues to Fix
 
@@ -513,24 +543,25 @@ Add records to the zone.
 curl -X POST https://api.cloudflare.com/zones/ID/dns_records \\
   -d '{"type": "A", "name": "app", "content": "192.168.1.100"}'
 \`\`\`
-```
+````
 
 Enhanced (35 lines - 1.75x):
+
 ```markdown
 ## Step 1: Create the zone
 
-Create an internal zone that will contain your DNS records. This zone is only 
+Create an internal zone that will contain your DNS records. This zone is only
 accessible via Gateway (not public DNS).
 
 \`\`\`bash
 curl -X POST https://api.cloudflare.com/zones \\
-  -d '{
-    "name": "company.internal",  # Your internal domain
-    "type": "internal"             # Marks as internal-only
-  }'
+-d '{
+"name": "company.internal", # Your internal domain
+"type": "internal" # Marks as internal-only
+}'
 \`\`\`
 
-**Example use:** A company creates company.internal for all internal apps 
+**Example use:** A company creates company.internal for all internal apps
 (app.company.internal, api.company.internal, db.company.internal).
 
 ## Step 2: Add DNS records
@@ -539,24 +570,27 @@ Add records mapping hostnames to private IPs.
 
 \`\`\`bash
 curl -X POST https://api.cloudflare.com/zones/ZONE_ID/dns_records \\
-  -d '{
-    "type": "A",                           # Address record
-    "name": "app.company.internal",        # Full hostname
-    "content": "192.168.1.100"             # Private IP
-  }'
+-d '{
+"type": "A", # Address record
+"name": "app.company.internal", # Full hostname
+"content": "192.168.1.100" # Private IP
+}'
 \`\`\`
 
-**Test:** 
+**Test:**
 \`\`\`bash
 nslookup app.company.internal
+
 # Expected: Returns 192.168.1.100
+
 \`\`\`
 
-**If it doesn't resolve:** Device must use Gateway as DNS resolver. Check WARP 
+**If it doesn't resolve:** Device must use Gateway as DNS resolver. Check WARP
 connection or DNS settings.
 ```
 
 What was added:
+
 - Brief "why" for each step (1 sentence)
 - Inline code comments (3-4 comments)
 - 1 example showing usage (2 lines)
@@ -565,6 +599,7 @@ What was added:
 - Total: 15 lines added to 20 original = 35 lines (1.75x) ✅
 
 **What was NOT added:**
+
 - Separate "What you'll build" section
 - Multiple examples
 - Comprehensive troubleshooting section
@@ -614,16 +649,19 @@ What was added:
 Sometimes documentation combines types:
 
 ### Overview + How To
+
 **Pattern:** Product intro followed by quick start steps  
 **Approach:** Treat first section as Overview, steps as How To  
 **Example:** "Workers Overview" with "Deploy Your First Worker" steps
 
 ### Concept + Reference
+
 **Pattern:** Conceptual explanation followed by parameter reference  
 **Approach:** Layer explanation first, reference at bottom  
 **Example:** "Understanding Caching" + "Cache Headers Reference"
 
 ### Tutorial + Reference
+
 **Pattern:** Build project + API reference at end  
 **Approach:** Keep tutorial progressive, move reference to appendix  
 **Example:** "Build URL Shortener" + "Workers API Reference"
@@ -635,6 +673,7 @@ Sometimes documentation combines types:
 ## Quick Reference Cards
 
 ### Overview Page Card
+
 ```
 ✓ Opens with benefit statement
 ✓ Problem/Solution structure
@@ -644,6 +683,7 @@ Sometimes documentation combines types:
 ```
 
 ### Concept Page Card
+
 ```
 ✓ Analogy in first paragraph
 ✓ Plain definition
@@ -653,6 +693,7 @@ Sometimes documentation combines types:
 ```
 
 ### How To Page Card
+
 ```
 ✓ Context before steps
 ✓ Prerequisites listed
@@ -662,6 +703,7 @@ Sometimes documentation combines types:
 ```
 
 ### Reference Page Card
+
 ```
 ✓ Opening context
 ✓ Use-case organized
@@ -671,6 +713,7 @@ Sometimes documentation combines types:
 ```
 
 ### Tutorial Page Card
+
 ```
 ✓ "What you'll build"
 ✓ Prerequisites + time

@@ -14,11 +14,11 @@ Privacy Proxy requires clients to authenticate before proxying traffic. This pag
 
 Privacy Proxy supports three authentication methods:
 
-| Method | Use case | Privacy level |
-| -------- | ---------- | --------------- |
-| Pre-shared key (PSK) | Proof of concept, testing | Lower |
-| Privacy Pass tokens | Client to server | High |
-| mTLS | Server to server | Higher |
+| Method               | Use case                  | Privacy level |
+| -------------------- | ------------------------- | ------------- |
+| Pre-shared key (PSK) | Proof of concept, testing | Lower         |
+| Privacy Pass tokens  | Client to server          | High          |
+| mTLS                 | Server to server          | Higher        |
 
 ---
 
@@ -166,7 +166,7 @@ Proxy A (which you operate) authenticates users. Common methods include:
 - Privacy Pass tokens issued by your infrastructure
 - Client certificates (mTLS)
 
-### Proxy A to Proxy B 
+### Proxy A to Proxy B
 
 Proxy B authenticates itself to Proxy A using TLS. Depending on your configuration, this can use:
 

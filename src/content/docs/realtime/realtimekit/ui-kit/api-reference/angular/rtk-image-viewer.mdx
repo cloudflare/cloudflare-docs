@@ -5,16 +5,17 @@ description: API reference for rtk-image-viewer component (Angular Library)
 products:
   - realtime
 ---
+
 A component which shows an image sent via chat.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `image` | `ImageMessage` | ✅ | - | Image message |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type           | Required | Default           | Description   |
+| ---------- | -------------- | -------- | ----------------- | ------------- |
+| `iconPack` | `IconPack`     | ❌       | `defaultIconPack` | Icon pack     |
+| `image`    | `ImageMessage` | ✅       | -                 | Image message |
+| `size`     | `Size`         | ✅       | -                 | Size          |
+| `t`        | `RtkI18n`      | ❌       | `useLanguage()`   | Language      |
 
 ## Usage Examples
 
@@ -29,9 +30,5 @@ A component which shows an image sent via chat.
 
 ```html
 <!-- component.html -->
-<rtk-image-viewer
- [image]="imagemessage"
- size="md">
-</rtk-image-viewer>
+<rtk-image-viewer [image]="imagemessage" size="md"> </rtk-image-viewer>
 ```
-
