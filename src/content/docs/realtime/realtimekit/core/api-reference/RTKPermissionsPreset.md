@@ -1,7 +1,7 @@
 ---
 title: RTKPermissionsPreset
 sidebar_position: 9
-web_core_version: 1.2.4
+web_core_version: 1.5.1-staging.1
 ---
 
 <!-- Auto Generated Below -->
@@ -64,7 +64,7 @@ If `true`, stage management is available for the participant.
 
 ### meeting.self.permissions.stageAccess
 The `stageAccess` property dictates how a user interacts with the stage.
-There possible values are `ALLOWED`, `NOT_ALLOWED`, `CAN_REQUEST`;
+The possible values are `ALLOWED`, `NOT_ALLOWED`, `CAN_REQUEST`;
 
 **Kind**: instance property of [<code>PermissionPreset</code>](#module_PermissionPreset)  
 <a name="module_PermissionPreset+acceptWaitingRequests"></a>
