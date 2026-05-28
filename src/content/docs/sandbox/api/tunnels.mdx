@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-The `sandbox.tunnels` namespace exposes a service running inside a sandbox on the public internet through a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). The SDK runs `cloudflared` inside the container and opens a persistent QUIC connection to Cloudflare's edge.
+The `sandbox.tunnels` namespace exposes a service running inside a sandbox on the public internet through a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). The SDK runs `cloudflared` inside the container and opens a persistent QUIC connection to Cloudflare's edge.
 
 Two flavors are available:
 
@@ -164,7 +164,7 @@ interface NamedTunnelInfo {
 
 ## Named tunnels
 
-Named tunnels bind a user-controlled hostname — `<name>.<your-zone>` — backed by a managed [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and a proxied `CNAME` record on your zone. Unlike quick tunnels, the URL is **stable across container restarts** and **shared across sandboxes** that call `get(port, { name })` with the same `name`.
+Named tunnels bind a user-controlled hostname — `<name>.<your-zone>` — backed by a managed [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and a proxied `CNAME` record on your zone. Unlike quick tunnels, the URL is **stable across container restarts** and **shared across sandboxes** that call `get(port, { name })` with the same `name`.
 
 ### How they differ from quick tunnels
 
@@ -173,7 +173,7 @@ Named tunnels bind a user-controlled hostname — `<name>.<your-zone>` — backe
 | Hostname                | Random `*.trycloudflare.com`, assigned by Cloudflare | `<name>.<your-zone>`, chosen by you                            |
 | Stability               | Changes on every container restart            | Stable; persists across restarts and sandbox lifecycles               |
 | Cloudflare account      | Not required                                  | Required (API token + zone)                                           |
-| Cloudflare-side resources | None                                        | Managed [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) + proxied DNS `CNAME` |
+| Cloudflare-side resources | None                                        | Managed [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) + proxied DNS `CNAME` |
 | Uptime guarantee        | None (debug aid)                              | Backed by your zone's standard Cloudflare SLA                         |
 | TLS certificate         | Cloudflare-owned wildcard                     | Universal SSL on `<name>.<your-zone>` (single DNS label only)         |
 | Server-Sent Events      | Not supported (edge buffers `text/event-stream`) | Supported                                                          |
@@ -299,7 +299,7 @@ Named tunnels are designed to outlive the container that provisioned them:
 
 1. **First call** to `sandbox.tunnels.get(port, { name })`:
    - Resolves `<name>.<your-zone>` from the configured zone ID.
-   - Creates a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) resource named `sandbox-<sandbox-id>-<name>` tagged with the sandbox ID.
+   - Creates a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) resource named `sandbox-<sandbox-id>-<name>` tagged with the sandbox ID.
    - Upserts a proxied `CNAME` from `<name>.<your-zone>` to `<tunnel-id>.cfargotunnel.com`.
    - Spawns `cloudflared` inside the container with the tunnel's token.
 2. **Subsequent calls** with the same `(port, name)` return the cached record without contacting Cloudflare.
@@ -358,7 +358,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/cfd_t
 **Named tunnels only:**
 
 - **Single DNS label.** `name` must not contain dots. Universal SSL only covers `<name>.<your-zone>`.
-- **Counts against your zone's quotas.** Each named tunnel creates a Cloudflare Tunnel and a DNS record on your account. See [Cloudflare Tunnel limits](/cloudflare-one/connections/connect-networks/configure-tunnels/).
+- **Counts against your zone's quotas.** Each named tunnel creates a Cloudflare Tunnel and a DNS record on your account. See [Cloudflare Tunnel limits](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/).
 - **Cleanup requires the API token.** If `destroy()` runs after the token has been revoked, the Cloudflare-side resources are orphaned. The SDK logs the orphan IDs so you can remove them manually.
 
 ## Related resources
