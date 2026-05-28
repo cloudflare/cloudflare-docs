@@ -34,7 +34,7 @@ npm i -D drizzle-kit tsx @types/node
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
 
-<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive"/>
 
 ## 2. Configure Drizzle
 
@@ -75,7 +75,7 @@ import { users } from "./db/schema";
 
 export interface Env {
 	HYPERDRIVE: Hyperdrive;
-}
+  }
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {

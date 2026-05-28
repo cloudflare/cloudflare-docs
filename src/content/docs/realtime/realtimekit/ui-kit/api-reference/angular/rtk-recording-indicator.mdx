@@ -5,18 +5,17 @@ description: API reference for rtk-recording-indicator component (Angular Librar
 products:
   - realtime
 ---
-
 A component which indicates the recording status of a meeting.
-It will not render anything if no recording is taking place.
+ It will not render anything if no recording is taking place.
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `size`     | `Size`     | ✅       | -                 | Size           |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -31,6 +30,9 @@ It will not render anything if no recording is taking place.
 
 ```html
 <!-- component.html -->
-<rtk-recording-indicator [meeting]="meeting" size="md">
+<rtk-recording-indicator
+ [meeting]="meeting"
+ size="md">
 </rtk-recording-indicator>
 ```
+

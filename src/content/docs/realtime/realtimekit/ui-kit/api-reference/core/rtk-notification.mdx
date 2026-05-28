@@ -5,20 +5,19 @@ description: API reference for rtk-notification component (Web Components (HTML)
 products:
   - realtime
 ---
-
 A component which shows a notification.
-You need to remove the element after you receive the
-`rtkNotificationDismiss` event.
+ You need to remove the element after you receive the
+ `rtkNotificationDismiss` event.
 
 ## Properties
 
-| Property       | Type           | Required | Default           | Description             |
-| -------------- | -------------- | -------- | ----------------- | ----------------------- |
-| `iconPack`     | `IconPack`     | ❌       | `defaultIconPack` | Icon pack               |
-| `notification` | `Notification` | ✅       | -                 | Message                 |
-| `paused`       | `boolean`      | ✅       | -                 | Stops timeout when true |
-| `size`         | `Size`         | ✅       | -                 | Size                    |
-| `t`            | `RtkI18n`      | ❌       | `useLanguage()`   | Language                |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `notification` | `Notification` | ✅ | - | Message |
+| `paused` | `boolean` | ✅ | - | Stops timeout when true |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -31,13 +30,16 @@ You need to remove the element after you receive the
 ### With Properties
 
 ```html
-<rtk-notification size="md"> </rtk-notification>
+<rtk-notification
+ size="md">
+</rtk-notification>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-notification");
+  const el = document.querySelector("rtk-notification");
 
-	el.paused = true;
+  el.paused= true;
 </script>
 ```

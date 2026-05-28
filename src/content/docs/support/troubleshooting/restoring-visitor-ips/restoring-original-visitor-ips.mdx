@@ -216,7 +216,7 @@ Use the [`ngx_http_realip_module` Nginx module](http://nginx.org/en/docs/http/ng
 
 ```
 #example IP address
-set_real_ip_from 192.0.2.1;
+set_real_ip_from 192.0.2.1; 
 
 #use any of the following two
 
@@ -463,7 +463,6 @@ For more details, refer to [Custom header original IP detection extension](https
 If you are running an application behind [Caddy](https://caddyserver.com/) that relies on the `X-Forwarded-For` header, you can configure Caddy to override the header with Cloudflare's [CF-Connecting-IP header](/fundamentals/reference/http-headers/#cf-connecting-ip).
 
 It is advised that you also only accept traffic from [Cloudflare's IP addresses](https://www.cloudflare.com/ips/); otherwise, the header could be spoofed. That's why, in the second example, we handle this as part of the Caddy configuration. Alternatively, you can handle this at the firewall level, which is usually easier to automate. If you already have a firewall or other measure in place to ensure this, your Caddyfile could look like this:
-
 ```txt title="Caddyfile"
 https://example.com {
     reverse_proxy localhost:8080 {
@@ -474,7 +473,6 @@ https://example.com {
 ```
 
 If you want Caddy to handle only accepting traffic from [Cloudflare's IP addresses](https://www.cloudflare.com/ips/), you can use a configuration like this one:
-
 ```txt title="Caddyfile"
 https://example.com {
     # Restrict access to Cloudflare IPs (https://www.cloudflare.com/ips/)
@@ -496,7 +494,6 @@ https://example.com {
     }
 }
 ```
-
 ---
 
 ## Related Resources

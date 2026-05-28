@@ -5,17 +5,16 @@ description: API reference for rtk-plugin-main component (Angular Library)
 products:
   - realtime
 ---
-
 A component which loads a plugin.
 
 ## Properties
 
-| Property   | Type        | Required | Default           | Description |
-| ---------- | ----------- | -------- | ----------------- | ----------- |
-| `iconPack` | `IconPack`  | ❌       | `defaultIconPack` | Icon pack   |
-| `meeting`  | `Meeting`   | ✅       | -                 | Meeting     |
-| `plugin`   | `RTKPlugin` | ✅       | -                 | Plugin      |
-| `t`        | `RtkI18n`   | ❌       | `useLanguage()`   | Language    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `plugin` | `RTKPlugin` | ✅ | - | Plugin |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -30,5 +29,9 @@ A component which loads a plugin.
 
 ```html
 <!-- component.html -->
-<rtk-plugin-main [meeting]="meeting" [plugin]="rtkplugin"> </rtk-plugin-main>
+<rtk-plugin-main
+ [meeting]="meeting"
+ [plugin]="rtkplugin">
+</rtk-plugin-main>
 ```
+

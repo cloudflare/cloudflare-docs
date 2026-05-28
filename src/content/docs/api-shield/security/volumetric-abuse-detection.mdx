@@ -6,9 +6,10 @@ products:
 title: Volumetric Abuse Detection
 sidebar:
   order: 2
+
 ---
 
-import { GlossaryTooltip, Steps, Render, APIRequest } from "~/components";
+import { GlossaryTooltip, Steps, Render, APIRequest } from "~/components"
 
 Cloudflare Volumetric Abuse Detection generates per-endpoint, per-session rate limit recommendations that adjust automatically as your traffic patterns change.
 
@@ -26,7 +27,7 @@ Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric a
 
 Volumetric Abuse Detection analyzes your API's individual session traffic statistics to recommend per-endpoint, per-session rate limits.
 
-To access your endpoints:
+To access your endpoints: 
 
 Old dashboard: **Security** > **API Shield** > **Endpoint Management**
 
@@ -46,7 +47,7 @@ Thresholds are suggested only for endpoints that satisfy all of the following re
 
 After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in the Cloudflare dashboard.
 
-### Rate limiting recommendation calculation
+### Rate limiting recommendation calculation 
 
 Select an endpoint row in **Endpoints** to view its rate limit recommendation. The detail view shows the overall recommended value and percentile-based values (p50, p90, p99).
 
@@ -72,8 +73,8 @@ Refer to the [Rules documentation](/waf/rate-limiting-rules/create-zone-dashboar
 [Rate limit recommendations are available via the API](/api/resources/api_gateway/subresources/operations/methods/get/) if you would like to dynamically update rate limits over time.
 
 <APIRequest
-	path="/zones/{zone_id}/api_gateway/operations/{operation_id}"
-	method="GET"
+  path="/zones/{zone_id}/api_gateway/operations/{operation_id}"
+  method="GET"
 />
 
 ## Special cases

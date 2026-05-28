@@ -6,6 +6,7 @@ products:
 title: Edit and delete waiting rooms
 sidebar:
   order: 5
+
 ---
 
 import { APIRequest } from "~/components";
@@ -40,36 +41,36 @@ For details about updating an active waiting room, refer to [Best practices](/wa
 [Replace](https://api.cloudflare.com#waiting-room-update-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
 
 <APIRequest
-	path="/zones/{zone_id}/waiting_rooms/{waiting_room_id}"
-	method="PUT"
-	json={{
-		name: "webshop-waiting-room",
-		host: "example.com",
-		new_users_per_minute: 200,
-		total_active_users: 300,
-	}}
+  path="/zones/{zone_id}/waiting_rooms/{waiting_room_id}"
+  method="PUT"
+  json={{
+    name: "webshop-waiting-room",
+    host: "example.com",
+    new_users_per_minute: 200,
+    total_active_users: 300
+  }}
 />
 
 [Update](https://api.cloudflare.com#waiting-room-patch-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
 
 <APIRequest
-	path="/zones/{zone_id}/waiting_rooms/{waiting_room_id}"
-	method="PATCH"
-	json={{
-		name: "webshop-waiting-room",
-		host: "example.com",
-		new_users_per_minute: 200,
-		total_active_users: 300,
-	}}
+  path="/zones/{zone_id}/waiting_rooms/{waiting_room_id}"
+  method="PATCH"
+  json={{
+    name: "webshop-waiting-room",
+    host: "example.com",
+    new_users_per_minute: 200,
+    total_active_users: 300
+  }}
 />
 
-You only need to include the fields you want to update in the payload of the PATCH request.
 
+You only need to include the fields you want to update in the payload of the PATCH request.
 ### Delete a waiting room
 
 Delete a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com#waiting-room-delete-waiting-room) to the Cloudflare API base URL.
 
 <APIRequest
-	path="/zones/{zone_id}/waiting_rooms/{waiting_room_id}"
-	method="DELETE"
+  path="/zones/{zone_id}/waiting_rooms/{waiting_room_id}"
+  method="DELETE"
 />

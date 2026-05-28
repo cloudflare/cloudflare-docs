@@ -5,16 +5,15 @@ description: API reference for rtk-menu-list component (Angular Library)
 products:
   - realtime
 ---
-
 A menu list component.
 
 ## Properties
 
-| Property      | Type                       | Required | Default           | Description |
-| ------------- | -------------------------- | -------- | ----------------- | ----------- |
-| `iconPack`    | `IconPack`                 | ❌       | `defaultIconPack` | Icon pack   |
-| `menuVariant` | `'primary' \| 'secondary'` | ✅       | -                 | Variant     |
-| `t`           | `RtkI18n`                  | ❌       | `useLanguage()`   | Language    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -29,5 +28,8 @@ A menu list component.
 
 ```html
 <!-- component.html -->
-<rtk-menu-list [menuVariant]="'primary' | 'secondary'"> </rtk-menu-list>
+<rtk-menu-list
+ [menuVariant]="'primary' | 'secondary'">
+</rtk-menu-list>
 ```
+

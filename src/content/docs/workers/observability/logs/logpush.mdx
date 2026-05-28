@@ -17,7 +17,9 @@ import { WranglerConfig, DashButton } from "~/components";
 
 :::caution
 
+
 Workers Trace Events Logpush is not available for zones on the [Cloudflare China Network](/china-network/).
+
 
 :::
 
@@ -28,7 +30,6 @@ Minimum required Wrangler version: 2.2.0. Check your version by running `wrangle
 :::
 
 To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
-
 1. In the Cloudflare dashboard, go to the **Members** page.
 
    <DashButton url="/?to=/:account/members" />
@@ -42,7 +43,6 @@ Alternatively, create a new [API token](/fundamentals/api/get-started/create-tok
 ### Via the Cloudflare dashboard
 
 To create a Logpush job in the Cloudflare dashboard:
-
 1. In the Cloudflare dashboard, go to the **Logpush** page.
 
    <DashButton url="/?to=/:account/logs" />
@@ -117,7 +117,6 @@ curl --request PUT \
 ### Dashboard
 
 To enable Logpush logging via the dashboard:
-
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -148,30 +147,30 @@ To illustrate this, suppose our Logpush event looks like the JSON below and the 
 
 ```json
 {
-	"Exceptions": [
-		{
-			"Name": "SampleError",
-			"Message": "something went wrong",
-			"TimestampMs": 0
-		},
-		{
-			"Name": "AuthError",
-			"Message": "unable to process request authentication from client",
-			"TimestampMs": 1
-		}
-	],
-	"Logs": [
-		{
-			"Level": "log",
-			"Message": ["Hello "],
-			"TimestampMs": 0
-		},
-		{
-			"Level": "log",
-			"Message": ["World!"],
-			"TimestampMs": 0
-		}
-	]
+  "Exceptions": [
+    {
+      "Name": "SampleError",
+      "Message": "something went wrong",
+      "TimestampMs": 0
+    },
+    {
+      "Name": "AuthError",
+      "Message": "unable to process request authentication from client",
+      "TimestampMs": 1
+    },
+  ],
+  "Logs": [
+    {
+      "Level": "log",
+      "Message": ["Hello "],
+      "TimestampMs": 0
+    },
+    {
+      "Level": "log",
+      "Message": ["World!"],
+      "TimestampMs": 0
+    }
+  ]
 }
 ```
 
@@ -179,24 +178,24 @@ To illustrate this, suppose our Logpush event looks like the JSON below and the 
 
 ```json
 {
-	"Exceptions": [
-		{
-			"name": "SampleError",
-			"message": "something went wrong",
-			"TimestampMs": 0
-		},
-		{
-			"name": "AuthError",
-			"message": "unable to <<<Logpush: exception messages truncated>>>",
-			"TimestampMs": 1
-		}
-	],
-	"Logs": [
-		{
-			"Level": "log",
-			"Message": ["<<<Logpush: messages truncated>>>"],
-			"TimestampMs": 0
-		}
-	]
+  "Exceptions": [
+    {
+      "name": "SampleError",
+      "message": "something went wrong",
+      "TimestampMs": 0
+    },
+    {
+      "name": "AuthError",
+      "message": "unable to <<<Logpush: exception messages truncated>>>",
+      "TimestampMs": 1
+    },
+  ],
+  "Logs": [
+    {
+      "Level": "log",
+      "Message": ["<<<Logpush: messages truncated>>>"],
+      "TimestampMs": 0
+    }
+  ]
 }
 ```

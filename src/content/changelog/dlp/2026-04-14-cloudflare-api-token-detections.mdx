@@ -7,11 +7,11 @@ products: [dlp]
 
 The **Credentials and Secrets** DLP profile now includes three new predefined entries for detecting Cloudflare API credentials:
 
-| Entry name                         | Token prefix | Detects                   |
-| ---------------------------------- | ------------ | ------------------------- |
-| Cloudflare User API Key            | `cfk_`       | User-scoped API keys      |
-| Cloudflare User API Token          | `cfut_`      | User-scoped API tokens    |
-| Cloudflare Account Owned API Token | `cfat_`      | Account-scoped API tokens |
+| Entry name | Token prefix | Detects |
+| --- | --- | --- |
+| Cloudflare User API Key | `cfk_` | User-scoped API keys |
+| Cloudflare User API Token | `cfut_` | User-scoped API tokens |
+| Cloudflare Account Owned API Token | `cfat_` | Account-scoped API tokens |
 
 These detections target the new [Cloudflare API credential format](/fundamentals/api/get-started/token-formats/), which uses a structured prefix and a CRC32 checksum suffix. The identifiable prefix makes it possible to detect leaked credentials with high confidence and low false positive rates — no surrounding context such as `Authorization: Bearer` headers is required.
 
@@ -26,9 +26,9 @@ Credentials generated before this format change will not be matched by these ent
 
 Example policy:
 
-| Selector    | Operator | Value                     | Action |
-| ----------- | -------- | ------------------------- | ------ |
-| DLP Profile | in       | _Credentials and Secrets_ | Block  |
+| Selector | Operator | Value | Action |
+| --- | --- | --- | --- |
+| DLP Profile | in | _Credentials and Secrets_ | Block |
 
 You can also enable individual entries to scope detection to specific credential types — for example, enabling **Account Owned API Token** detection without enabling **User API Key** detection.
 

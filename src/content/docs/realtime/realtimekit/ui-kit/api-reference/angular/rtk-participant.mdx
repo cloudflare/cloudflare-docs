@@ -5,22 +5,21 @@ description: API reference for rtk-participant component (Angular Library)
 products:
   - realtime
 ---
-
 A participant entry component used inside `rtk-participants` which shows data like:
-name, picture and media device status.
-You can perform privileged actions on the participant too.
+ name, picture and media device status.
+ You can perform privileged actions on the participant too.
 
 ## Properties
 
-| Property      | Type                  | Required | Default                 | Description              |
-| ------------- | --------------------- | -------- | ----------------------- | ------------------------ |
-| `config`      | `UIConfig1`           | ❌       | `createDefaultConfig()` | Config object            |
-| `iconPack`    | `IconPack`            | ❌       | `defaultIconPack`       | Icon pack                |
-| `meeting`     | `Meeting`             | ✅       | -                       | Meeting object           |
-| `participant` | `Peer`                | ✅       | -                       | Participant object       |
-| `states`      | `States1`             | ✅       | -                       | States                   |
-| `t`           | `RtkI18n`             | ❌       | `useLanguage()`         | Language                 |
-| `view`        | `ParticipantViewMode` | ✅       | -                       | Show participant summary |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `states` | `States1` | ✅ | - | States |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantViewMode` | ✅ | - | Show participant summary |
 
 ## Usage Examples
 
@@ -36,9 +35,9 @@ You can perform privileged actions on the participant too.
 ```html
 <!-- component.html -->
 <rtk-participant
-	[meeting]="meeting"
-	[participant]="participant"
-	[view]="participantviewmode"
->
+ [meeting]="meeting"
+ [participant]="participant"
+ [view]="participantviewmode">
 </rtk-participant>
 ```
+

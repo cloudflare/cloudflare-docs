@@ -9,14 +9,7 @@ products:
   - ai-crawl-control
 ---
 
-import {
-	GlossaryTooltip,
-	Example,
-	Steps,
-	Tabs,
-	TabItem,
-	DashButton,
-} from "~/components";
+import { GlossaryTooltip, Example, Steps, Tabs, TabItem, DashButton } from "~/components";
 
 AI Crawl Control works alongside other Cloudflare products, such as Cloudflare [Web Application Firewall (WAF)](/waf/). WAF checks incoming web and API requests, and filters undesired traffic based on rules. [WAF custom rules](/waf/custom-rules/) allow you to perform certain actions such as enforcing <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip>.
 
@@ -139,3 +132,4 @@ Any additions you make are preserved when you subsequently update crawler action
 :::caution
 Changes made directly to the WAF rule are not reflected back in the AI Crawl Control dashboard. Use the **Crawlers** tab as your primary interface, and reserve direct WAF edits for cases where the dashboard does not cover your requirements.
 :::
+

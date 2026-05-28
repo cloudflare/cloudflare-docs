@@ -19,7 +19,6 @@ Always transition from Monitoring mode to Mitigation (Enabled) mode. Do not swit
 When you switch directly from Disabled to Mitigation (Enabled), Advanced TCP Protection begins a learning period to observe existing connection state. Long-lived connections that pre-date this learning period may be dropped because they have no state in the tracker.
 
 **Recommended procedure:**
-
 1. Set to **Monitoring** mode for at least 4 hours (longer if your network has long-lived connections).
 2. Review the Monitoring mode logs in [Network Analytics](/analytics/network-analytics/) to confirm legitimate traffic patterns.
 3. Switch to **Mitigation (Enabled)** mode.
@@ -28,12 +27,12 @@ When you switch directly from Disabled to Mitigation (Enabled), Advanced TCP Pro
 
 Check the **Mitigation reason** field in the **Advanced TCP Protection** tab of [Network Analytics](/analytics/network-analytics/) and use the reason to identify the cause:
 
-| Mitigation reason                | Likely cause                                                                              | Action                                                                                                  |
-| -------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| **Not found**                    | Learning period was incomplete, or long-lived connections pre-date ATP activation         | Set to Monitoring mode for 4+ hours, then switch to Mitigation (Enabled)                                |
-| **Unexpected**                   | ECMP rehashing — packets from the same flow arriving at different Cloudflare data centers | Set to Monitoring mode; increase burst sensitivity threshold for affected colos; escalate if persistent |
-| **Out of sequence**              | Packet reordering or packet loss in the network path                                      | Increase burst sensitivity threshold for the affected colo                                              |
-| Drops during traffic spikes only | Burst sensitivity threshold too low                                                       | Increase burst sensitivity (keep rate sensitivity the same)                                             |
+| Mitigation reason | Likely cause | Action |
+|---|---|---|
+| **Not found** | Learning period was incomplete, or long-lived connections pre-date ATP activation | Set to Monitoring mode for 4+ hours, then switch to Mitigation (Enabled) |
+| **Unexpected** | ECMP rehashing — packets from the same flow arriving at different Cloudflare data centers | Set to Monitoring mode; increase burst sensitivity threshold for affected colos; escalate if persistent |
+| **Out of sequence** | Packet reordering or packet loss in the network path | Increase burst sensitivity threshold for the affected colo |
+| Drops during traffic spikes only | Burst sensitivity threshold too low | Increase burst sensitivity (keep rate sensitivity the same) |
 
 **Threshold tuning:** Adjust burst sensitivity before rate sensitivity. Burst sensitivity handles momentary spikes; rate sensitivity controls sustained packet rates.
 

@@ -28,8 +28,9 @@ Reproduce the error and inspect response headers using one of:
 
 ## Using cf-error-type for diagnosis
 
-| `cf-error-type` prefix | Origin              | Next step                                              |
-| ---------------------- | ------------------- | ------------------------------------------------------ |
-| `1xxx`                 | DNS / routing layer | Check DNS records; verify no Cloudflare IP in A record |
-| `1101` / `1102`        | Workers runtime     | Check `wrangler tail` for the exception                |
-| `52x`                  | Origin connectivity | Check origin server is up and reachable                |
+| `cf-error-type` prefix | Origin | Next step |
+|---|---|---|
+| `1xxx` | DNS / routing layer | Check DNS records; verify no Cloudflare IP in A record |
+| `1101` / `1102` | Workers runtime | Check `wrangler tail` for the exception |
+| `52x` | Origin connectivity | Check origin server is up and reachable |
+

@@ -5,19 +5,18 @@ description: API reference for rtk-screen-share-toggle component (Angular Librar
 products:
   - realtime
 ---
-
 A button which toggles your screenshare.
 
 ## Properties
 
-| Property   | Type                | Required | Default           | Description    |
-| ---------- | ------------------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object |
-| `size`     | `Size`              | ✅       | -                 | Size           |
-| `states`   | `States`            | ✅       | -                 | States object  |
-| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language       |
-| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant        |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -32,6 +31,10 @@ A button which toggles your screenshare.
 
 ```html
 <!-- component.html -->
-<rtk-screen-share-toggle [meeting]="meeting" size="md" variant="button">
+<rtk-screen-share-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
 </rtk-screen-share-toggle>
 ```
+

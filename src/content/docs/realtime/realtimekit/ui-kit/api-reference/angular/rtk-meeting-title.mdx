@@ -5,16 +5,15 @@ description: API reference for rtk-meeting-title component (Angular Library)
 products:
   - realtime
 ---
-
 Displays the title of the meeting.
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -29,5 +28,8 @@ Displays the title of the meeting.
 
 ```html
 <!-- component.html -->
-<rtk-meeting-title [meeting]="meeting"> </rtk-meeting-title>
+<rtk-meeting-title
+ [meeting]="meeting">
+</rtk-meeting-title>
 ```
+

@@ -108,7 +108,9 @@ export default {
 			) {
 				console.log(`Starting review for PR #${payload.pull_request.number}`);
 				// Use waitUntil to ensure the review completes even after response is sent
-				ctx.waitUntil(reviewPullRequest(payload, env).catch(console.error));
+				ctx.waitUntil(
+					reviewPullRequest(payload, env).catch(console.error),
+				);
 				return Response.json({ message: "Review started" });
 			}
 

@@ -206,11 +206,11 @@ POST /v1/apps/{appId}/adapters/websocket/close
 
 ```json
 {
-	"tracks": [
-		{
-			"adapterId": "string"
-		}
-	]
+  "tracks": [
+    {
+      "adapterId": "string"
+    }
+  ]
 }
 ```
 
@@ -242,7 +242,6 @@ message Packet {
 **Ingest mode (buffer)**: Only the `payload` field is used, containing chunks of audio data.
 
 **Stream mode (egress)**:
-
 - For audio frames:
   - `sequenceNumber`: Incremental packet counter
   - `timestamp`: Timestamp for synchronization
@@ -268,14 +267,12 @@ Connects to your WebSocket endpoint:
 ### Message format
 
 #### Buffer mode (ingest)
-
 - **Binary messages**: PCM audio data in chunks
 - **Maximum message size**: 32 KB per WebSocket message
 - **Important**: Account for serialization overhead when chunking audio buffers
 - Send audio in small, frequent chunks rather than large batches
 
-#### Stream mode (egress)
-
+#### Stream mode (egress)  
 - **Binary messages**: Individual frames with metadata (audio or video)
 - Audio frames include:
   - Timestamp information
@@ -333,11 +330,11 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 
 ## Error handling
 
-| Error Code | Description                              |
-| ---------- | ---------------------------------------- |
-| `400`      | Invalid request parameters               |
-| `404`      | Session or track not found               |
-| `503`      | Adapter not found (for close operations) |
+| Error Code | Description |
+|------------|-------------|
+| `400` | Invalid request parameters |
+| `404` | Session or track not found |
+| `503` | Adapter not found (for close operations) |
 
 ## Reference implementations
 

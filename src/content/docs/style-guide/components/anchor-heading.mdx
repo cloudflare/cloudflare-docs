@@ -17,11 +17,7 @@ The `AnchorHeading` component defines headings. Specifically, `AnchorHeading` pe
 ```mdx live
 import { AnchorHeading } from "~/components";
 
-<AnchorHeading
-	title="How to use AnchorHeading"
-	slug="use-anchorheading"
-	depth={2}
-/>
+<AnchorHeading title="How to use AnchorHeading" slug="use-anchorheading" depth={2} />
 ```
 
 Markdown files (including partials) have this behavior by default, applied via rehype plugins. Therefore, the `AnchorHeading` component is usually only required when writing headings yourself inside components, or when working on non-markdown files.
@@ -29,8 +25,7 @@ Markdown files (including partials) have this behavior by default, applied via r
 To override the ID given to a heading within Markdown, add an MDX comment at the end of the line:
 
 ```mdx live
-## foo {/* bar */}
-
+## foo {/*bar*/}
 {/* HTML: <h2 id="bar">foo</h2> */}
 ```
 

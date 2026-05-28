@@ -11,16 +11,15 @@ This tutorial shows how to configure IPsec (Internet Protocol Security) between 
 You need a pre-shared key to establish the IPsec tunnel. You can use the following code to create a random key:
 
 ```js
-const a = new Uint8Array(48);
-crypto.getRandomValues(a);
-let base64String = btoa(String.fromCharCode.apply(null, a));
+		const a = new Uint8Array(48);
+		crypto.getRandomValues(a);
+		let base64String = btoa(String.fromCharCode.apply(null, a));
 
-base64String = base64String
-	.replace(/\+/g, "")
-	.replace(/\//g, "")
-	.replace(/=/g, "");
+		base64String = base64String.replace(/\+/g, '')
+								   .replace(/\//g, '')
+								   .replace(/=/g, '');
 
-console.log(base64String.substring(0, 32));
+		console.log(base64String.substring(0, 32));
 ```
 
 :::caution
@@ -59,28 +58,28 @@ You can try this code in the [Workers playground](https://workers.cloudflare.com
    - **Dynamic routing gateways (DRG)**: Select the DRG you created in step 2.
    - **Routes to your on-premises network**: Enter a CIDR (Classless Inter-Domain Routing) range you want to route to Cloudflare WAN.
    - **Tunnel 1**
-     - **Name**: Enter a name.
-     - Select **Provide custom shared secret**.
-     - Enter the **pre-shared key** you created in the Prerequisites section.
-     - **IKE (Internet Key Exchange) version**: **IKEv2**
-     - **Routing type**: **Static routing**
-     - **IPv4 inside tunnel interface - CPE**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
-     - **IPv4 inside tunnel interface - Oracle**: Enter the internal tunnel IP on the Oracle side of the IPsec tunnel. In this example, it is `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel.
-       1. Select **Show advanced options**
-       2. Select **Phase one (ISAKMP) configuration**
-          - Select **Set custom configurations**
-          - **Custom encryption algorithm**: **AES_256_CBC**
-          - **Custom authentication algorithm**: **SHA2_256**
-          - **Custom Diffie-Hellman group**: **GROUP20**
-          - **IKE session key lifetime in seconds**: **86400**
-       3. Select **Phase two (IPsec) configuration**
-          - Select **Set custom configurations**
-          - **Custom encryption algorithm**: **AES_256_CBC**
-          - **HMAC (Hash-based Message Authentication Code)\_SHA2_256_128**: **HMAC_SHA2_256_128**
-          - **IPsec session key lifetime in seconds**: **28800**
-          - **Perfect forward secrecy Diffie-Hellman group**: **GROUP20**
-   - **Tunnel 2**
-     - Repeat these steps for Tunnel 2. Select the right IP for **IPv4 inside tunnel interface - CPE (Customer-Premises Equipment)**: `10.200.2.0/31` and **IPv4 inside tunnel interface - Oracle**: `10.200.2.1/31`
+      - **Name**: Enter a name.
+      - Select **Provide custom shared secret**.
+      - Enter the **pre-shared key** you created in the Prerequisites section.
+      - **IKE (Internet Key Exchange) version**: **IKEv2**
+      - **Routing type**: **Static routing**
+      - **IPv4 inside tunnel interface - CPE**:  Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
+      - **IPv4 inside tunnel interface - Oracle**: Enter the internal tunnel IP on the Oracle side of the IPsec tunnel. In this example, it is `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel.
+         1. Select **Show advanced options**
+         2. Select **Phase one (ISAKMP) configuration**
+            - Select **Set custom configurations**
+            - **Custom encryption algorithm**: **AES_256_CBC**
+            - **Custom authentication algorithm**: **SHA2_256**
+            - **Custom Diffie-Hellman group**: **GROUP20**
+            - **IKE session key lifetime in seconds**: **86400**
+         3. Select **Phase two (IPsec) configuration**
+            - Select **Set custom configurations**
+            - **Custom encryption algorithm**: **AES_256_CBC**
+            - **HMAC (Hash-based Message Authentication Code)_SHA2_256_128**: **HMAC_SHA2_256_128**
+            - **IPsec session key lifetime in seconds**: **28800**
+            - **Perfect forward secrecy Diffie-Hellman group**: **GROUP20**
+    - **Tunnel 2**
+      - Repeat these steps for Tunnel 2. Select the right IP for **IPv4 inside tunnel interface - CPE (Customer-Premises Equipment)**: `10.200.2.0/31` and **IPv4 inside tunnel interface - Oracle**: `10.200.2.1/31`
 4. Select **Create IPsec connection**
 
 ## Cloudflare WAN

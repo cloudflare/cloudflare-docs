@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Render, DashButton } from "~/components";
+import { Render, DashButton } from "~/components"
 
 Network Flow (formerly Magic Network Monitoring) can notify you by email, webhook, or PagerDuty when a rule is triggered. When a rule detects a traffic anomaly, notifications alert your team so you can respond — or, if you use Magic Transit with auto-advertisement, Cloudflare can begin mitigating the attack automatically.
 
@@ -16,19 +16,16 @@ For more information on the notification platform, refer to [Notifications docum
 
 ## Notification configuration fields
 
-| Field                      | Description                                                       |
-| :------------------------- | :---------------------------------------------------------------- |
-| **Notification name**      | A label to identify this notification in your notifications list. |
-| **Description (optional)** | The description of the notification.                              |
-| **Webhooks**               | One or more webhooks to deliver the notification to.              |
-| **Notification email**     | One or more email addresses to deliver the notification to.       |
+| Field | Description |
+| :---- | :---- |
+| **Notification name** | A label to identify this notification in your notifications list. |
+| **Description (optional)** | The description of the notification. |
+| **Webhooks** | One or more webhooks to deliver the notification to. |
+| **Notification email** | One or more email addresses to deliver the notification to. |
 
 ## Rule Auto-Advertisement notifications
 
-<Render
-	file="mnm-auto-advertisement-notifications"
-	product="networking-services"
-/>
+<Render file="mnm-auto-advertisement-notifications" product="networking-services" />
 
 ## Configure rule notifications
 

@@ -1,5 +1,6 @@
 ---
 {}
+
 ---
 
 import { APIRequest } from "~/components";
@@ -9,11 +10,13 @@ In the following example, internal zone A (ID `8a904aeb565c42cfa207d98f6edea2f3`
 <APIRequest
 	path="/zones/{zone_id}/dns_settings"
 	method="PATCH"
-	json={{
-		internal_dns: {
-			reference_zone_id: "8e64c6fb4b514f3faf64de81efc11e51",
-		},
-	}}
+	json={
+		{
+    "internal_dns": {
+        "reference_zone_id": "8e64c6fb4b514f3faf64de81efc11e51"
+    }
+		}
+	}
 	parameters={{
 		zone_id: "8a904aeb565c42cfa207d98f6edea2f3",
 	}}

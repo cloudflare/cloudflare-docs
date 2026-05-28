@@ -3,11 +3,9 @@ This guide helps you troubleshoot common issues with Cloudflare Gateway policies
 ## Blocked websites and connectivity
 
 ### A website is blocked incorrectly
-
 If you believe a domain has been incorrectly blocked by Gateway's security categories or threat intelligence, you can use the [Cloudflare Radar categorization feedback form](https://radar.cloudflare.com/categorization-feedback/) to request a review.
 
 ### Error 526: Invalid SSL certificate
-
 Gateway presents a **526** error page when it cannot establish a secure connection to the origin. This typically occurs in two cases:
 
 - **Untrusted origin certificate**: The certificate presented by the origin server is expired, revoked, or issued by an unknown authority.
@@ -16,17 +14,14 @@ Gateway presents a **526** error page when it cannot establish a secure connecti
 For more information, refer to [Error 526](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/).
 
 ### Error 502: Bad Gateway
-
 This issue can occur when communicating with an origin that partially supports HTTP/2. If the origin requests a downgrade to HTTP/1.1 (for example, via a `RST_STREAM` frame with `HTTP_1_1_REQUIRED`), Gateway will not automatically reissue the request over HTTP/1.1 and will instead return a `502 Bad Gateway`. To resolve this, disable HTTP/2 at the origin server.
 
 ### Untrusted certificate warnings
-
 If users see certificate warnings for every page, ensure that the [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) is installed and trusted on their devices. This is required for Gateway to inspect HTTPS traffic.
 
 ## Dashboard and analytics
 
 ### Gateway analytics not displayed
-
 If you do not see analytics on the Gateway Overview page:
 
 - **Verify DNS traffic**: Ensure your devices are actually sending queries to Gateway. Check your [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) and verify the source IPv4 address.
@@ -131,8 +126,8 @@ To resolve this issue:
 
 You have configured Gateway to resolve internal hostnames, but users are unable to access them. For example, a user connected to the Cloudflare One Client tries to access an internal service like `jira.mycompany.local`, but the DNS query fails.
 
-| Common causes                              | Solution                                                                                                                                                                                                                                       |
-| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Missing or incorrect resolver policy       | Go to **Traffic policies** &gt; **Resolver policies**. Create a policy that matches your internal domain suffix and forwards queries to your internal DNS servers' IP addresses.                                                               |
+| Common causes                              | Solution                                                                                                                                                                                                                  |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Missing or incorrect resolver policy       | Go to **Traffic policies** &gt; **Resolver policies**. Create a policy that matches your internal domain suffix and forwards queries to your internal DNS servers' IP addresses.                                             |
 | Split Tunnel excludes the private IP range | If your internal resources are in a private IP range (such as `10.0.0.0/8`), that range must be included in the tunnel. If it is in the Exclude list of your Split Tunnel configuration, the Cloudflare One Client will not proxy the traffic. |
-| Local Domain Fallback misconfiguration     | Use resolver policies for corporate DNS. Only use Local Domain Fallback for domains specific to a user's immediate physical network.                                                                                                           |
+| Local Domain Fallback misconfiguration     | Use resolver policies for corporate DNS. Only use Local Domain Fallback for domains specific to a user's immediate physical network.                                                                                      |

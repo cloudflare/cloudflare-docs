@@ -35,14 +35,15 @@ Privacy Proxy uses the MASQUE protocol suite to create encrypted tunnels between
 
 Throughout this process, the proxy learns the destination but not the content. The destination learns the egress IP address but not the client's real IP.
 
+
 ## MASQUE protocols
 
 [MASQUE](https://datatracker.ietf.org/wg/masque/about/) (Multiplexed Application Substrate over QUIC Encryption) defines methods for proxying traffic over HTTP. Privacy Proxy supports two MASQUE methods:
 
-| Method       | Transport | Use case                                   |
-| ------------ | --------- | ------------------------------------------ |
-| HTTP CONNECT | TCP       | Traditional HTTPS traffic                  |
-| CONNECT-UDP  | UDP       | QUIC-based traffic, real-time applications |
+| Method | Transport | Use case |
+| -------- | ----------- | ---------- |
+| HTTP CONNECT | TCP | Traditional HTTPS traffic |
+| CONNECT-UDP | UDP | QUIC-based traffic, real-time applications |
 
 Both methods create encrypted tunnels where the proxy forwards traffic without inspecting the content. The proxy sees only the destination hostname and port, not the actual requests, paths, or data exchanged.
 
@@ -54,11 +55,11 @@ For a technical deep dive into how these protocols work, refer to our [blog post
 
 Privacy Proxy creates a privacy boundary between user identity and user activity:
 
-| Information                         | Who knows it                                                  |
-| ----------------------------------- | ------------------------------------------------------------- |
+| Information | Who knows it |
+| ------------- | -------------- |
 | User identity (IP address, account) | Authentication service, first-hop proxy (if using double-hop) |
-| Destination server                  | Privacy Proxy, destination server                             |
-| Request content                     | Client, destination server only                               |
+| Destination server | Privacy Proxy, destination server |
+| Request content | Client, destination server only |
 
 The proxy authenticates users to verify they have permission to use the service, but authentication happens separately from proxying. Once authenticated, the proxy forwards traffic without linking individual requests to specific users.
 

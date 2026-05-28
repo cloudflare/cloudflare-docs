@@ -5,19 +5,18 @@ description: API reference for rtk-poll component (Web Components (HTML) Library
 products:
   - realtime
 ---
-
 A poll component.
-Shows a poll where a user can vote.
+ Shows a poll where a user can vote.
 
 ## Properties
 
-| Property      | Type                   | Required | Default           | Description        |
-| ------------- | ---------------------- | -------- | ----------------- | ------------------ |
-| `iconPack`    | `IconPack`             | ❌       | `defaultIconPack` | Icon pack          |
-| `permissions` | `RTKPermissionsPreset` | ✅       | -                 | Permissions Object |
-| `poll`        | `Poll`                 | ✅       | -                 | Poll               |
-| `self`        | `string`               | ✅       | -                 | Self ID            |
-| `t`           | `RtkI18n`              | ❌       | `useLanguage()`   | Language           |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `permissions` | `RTKPermissionsPreset` | ✅ | - | Permissions Object |
+| `poll` | `Poll` | ✅ | - | Poll |
+| `self` | `string` | ✅ | - | Self ID |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -30,11 +29,15 @@ Shows a poll where a user can vote.
 ### With Properties
 
 ```html
-<rtk-poll self="example"> </rtk-poll>
+<rtk-poll
+ self="example">
+</rtk-poll>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-poll");
+  const el = document.querySelector("rtk-poll");
+
 </script>
 ```

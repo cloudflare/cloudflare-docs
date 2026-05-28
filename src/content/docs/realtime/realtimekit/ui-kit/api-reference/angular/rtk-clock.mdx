@@ -5,16 +5,15 @@ description: API reference for rtk-clock component (Angular Library)
 products:
   - realtime
 ---
-
 Shows the time elapsed in a meeting.
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `size`     | `Size`     | ✅       | -                 | Size           |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
 
 ## Usage Examples
 
@@ -29,5 +28,9 @@ Shows the time elapsed in a meeting.
 
 ```html
 <!-- component.html -->
-<rtk-clock [meeting]="meeting" size="md"> </rtk-clock>
+<rtk-clock
+ [meeting]="meeting"
+ size="md">
+</rtk-clock>
 ```
+

@@ -1,32 +1,32 @@
 ---
 inputParameters: WARPsuccess
+
 ---
 
-import { Details, Markdown, Render } from "~/components";
+import { Details, Markdown, Render } from "~/components"
 
 Most admins test by manually downloading the Cloudflare One Client and enrolling in your organization's Cloudflare Zero Trust instance.
 
 ## Install the Cloudflare One Client
 
-1.  First, uninstall any existing third-party VPN software if possible. Sometimes products placed in a disconnected or disabled state will still interfere with the Cloudflare One Client.
-2.  If you are running third-party firewall or TLS decryption software, verify that it does not inspect or block traffic to the following destinations:
+1. First, uninstall any existing third-party VPN software if possible. Sometimes products placed in a disconnected or disabled state will still interfere with the Cloudflare One Client.
+2. If you are running third-party firewall or TLS decryption software, verify that it does not inspect or block traffic to the following destinations:
+  	<Render file="warp/client-orchestration-ips" product="cloudflare-one" />
 
-    <Render file="warp/client-orchestration-ips" product="cloudflare-one" />
+	For more information, refer to [WARP with firewall](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
 
-    For more information, refer to [WARP with firewall](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
+3. Manually install the Cloudflare One Client on the device.
 
-3.  Manually install the Cloudflare One Client on the device.
+		<Details header="Window, macOS, and Linux">
 
-        <Details header="Window, macOS, and Linux">
+		<Render file="warp/enroll-desktop" product="cloudflare-one" />
 
-        <Render file="warp/enroll-desktop" product="cloudflare-one" />
+		</Details>
 
-        </Details>
+		<Details header="iOS, Android, and ChromeOS">
 
-        <Details header="iOS, Android, and ChromeOS">
+		<Render file="warp/enroll-ios-android" product="cloudflare-one" />
 
-        <Render file="warp/enroll-ios-android" product="cloudflare-one" />
-
-        </Details>
+		</Details>
 
 The Cloudflare One Client should show as **Connected**. {props.one}

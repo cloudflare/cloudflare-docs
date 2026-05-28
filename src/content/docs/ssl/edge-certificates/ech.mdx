@@ -35,7 +35,7 @@ In practice, this means that any intermediary that is looking at your traffic wi
 
 In the example below, a user is visiting `example.com`. Without ECH, any intermediate networks will be able to detect the website being accessed by the user. With ECH, the visible information will be limited to `cloudflare-ech.com` instead.
 
-<br />
+<br/>
 
 ```mermaid
 flowchart LR
@@ -46,7 +46,7 @@ A(User visits <code>example.com</code>)
     A -- Without ECH  --> D(intermediaries see <code>example.com</code>)-->B(Cloudflare)
 ```
 
-<br />
+<br/>
 
 For more details about ECH protocol technology, refer to our [introductory blog](https://blog.cloudflare.com/encrypted-client-hello/).
 

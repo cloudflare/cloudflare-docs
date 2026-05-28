@@ -119,27 +119,24 @@ export default {
 			}
 
 			async function streamToBase64(stream) {
-				const blob = await new Response(stream).blob();
-				const buffer = await blob.arrayBuffer();
-				const bytes = new Uint8Array(buffer);
+			  const blob = await new Response(stream).blob();
+			  const buffer = await blob.arrayBuffer();
+			  const bytes = new Uint8Array(buffer);
 
-				// Convert to base64
-				let binary = "";
-				for (let i = 0; i < bytes.length; i++) {
-					binary += String.fromCharCode(bytes[i]);
-				}
-				return btoa(binary);
+			  // Convert to base64
+			  let binary = '';
+			  for (let i = 0; i < bytes.length; i++) {
+			    binary += String.fromCharCode(bytes[i]);
+			  }
+			  return btoa(binary);
 			}
 
 			// Check for generated chart
 			let chart = null;
 			try {
-				const { content, mimeType } = await sandbox.readFile(
-					"/workspace/chart.png",
-					{
-						encoding: "none",
-					},
-				);
+				const { content, mimeType } = await sandbox.readFile("/workspace/chart.png", {
+					encoding: "none"
+				});
 				chart = `data:${mimeType};base64,${await streamToBase64(content)}`;
 			} catch {
 				// No chart generated

@@ -5,19 +5,15 @@ products:
   - cloudflare-wan
 title: pfSense
 reviewed: 2024-06-20
+
 ---
 
 import { Render } from "~/components";
 
-<Render
-	file="cloudflare-wan/third-party/pfsense"
-	product="networking-services"
-	params={{
-		configureTwoIpsecTunnelsUrl:
-			"/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
-		addTunnelsUrl:
-			"/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
-		staticRouteUrl:
-			"/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route",
-	}}
-/>
+<Render file="cloudflare-wan/third-party/pfsense"
+  product="networking-services"
+  params={{
+    configureTwoIpsecTunnelsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    addTunnelsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    staticRouteUrl: "/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route"
+  }} />

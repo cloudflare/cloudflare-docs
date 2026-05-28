@@ -3,7 +3,7 @@ params:
   - dashName
 ---
 
-import { DashButton, Markdown } from "~/components";
+import { DashButton, Markdown } from '~/components';
 
 Cloudflare One Appliance (formerly Magic WAN Connector) communicates periodically with Cloudflare via HTTPS. This is also known as a heartbeat, and lets Cloudflare know that the Cloudflare One Appliance in question is connected to the Internet and reachable.
 
@@ -18,34 +18,33 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 ### Access Cloudflare One Appliance's heartbeat
 
 { props.dashName === "CF1 Cloudflare WAN" ? (
-<>
-<Markdown
-text={`
+	<>
+		<Markdown
+	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
 		2. Go to **Connectors** > **Appliances** > **Appliances**.
 		3. Find your Cloudflare One Appliance, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp displays the last time Cloudflare One Appliance successfully contacted Cloudflare.
 	`}
-inline={false}
-/>
-</>
+	inline={false}
+	/>
+	</>
 ) : (
-<>
-<Markdown
-text={`
+	<>
+		<Markdown
+	text={`
 		1. Go to the **Connectors** page.
 		`}
-inline={false}
-/>
-<DashButton url="/?to=/:account/magic-networks/connections" />
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-networks/connections" />
 
-    	<Markdown
-    text={`
-    	2. Go to the **Appliances** tab > **Appliances**.
-    	3. From the list, find your Cloudflare One Appliance, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp displays the last time Cloudflare One Appliance successfully contacted Cloudflare.
-    `}
-    inline={false}
-    />
-    </>
-
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Appliances**.
+		3. From the list, find your Cloudflare One Appliance, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp displays the last time Cloudflare One Appliance successfully contacted Cloudflare.
+	`}
+	inline={false}
+	/>
+	</>
 )
 }

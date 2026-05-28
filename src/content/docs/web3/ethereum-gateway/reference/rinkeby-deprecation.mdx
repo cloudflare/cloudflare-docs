@@ -8,6 +8,7 @@ tags:
   - Migration
 sidebar:
   order: 5
+
 ---
 
 Though Cloudflare's Ethereum Gateway launched with support for the Rinkeby testnet, Rinkeby did not run through [The Merge](https://ethereum.org/en/upgrades/merge/) and - as a result - will no longer be a reliable staging environment for mainnet.
@@ -35,20 +36,20 @@ curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
 
 ```js title="Previous JS Fetch API" {2}
 await fetch(
-	new Request("https://web3-trial.cloudflare-eth.com/v1/rinkeby", {
-		method: "POST",
-		body: JSON.stringify({
-			jsonrpc: "2.0",
-			method: "eth_getBlockByNumber",
-			params: ["0x2244", true],
-			id: 1,
-		}),
-		headers: {
-			"Content-Type": "application/json",
-		},
-	}),
-).then((resp) => {
-	return resp.json();
+  new Request('https://web3-trial.cloudflare-eth.com/v1/rinkeby', {
+    method: 'POST',
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'eth_getBlockByNumber',
+      params: ['0x2244', true],
+      id: 1,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+).then(resp => {
+  return resp.json();
 });
 ```
 
@@ -67,19 +68,19 @@ curl https://web3-trial.cloudflare-eth.com/v1/sepolia \
 
 ```js title="New JS Fetch API" {2}
 await fetch(
-	new Request("https://web3-trial.cloudflare-eth.com/v1/sepolia", {
-		method: "POST",
-		body: JSON.stringify({
-			jsonrpc: "2.0",
-			method: "eth_getBlockByNumber",
-			params: ["0x2244", true],
-			id: 1,
-		}),
-		headers: {
-			"Content-Type": "application/json",
-		},
-	}),
-).then((resp) => {
-	return resp.json();
+  new Request('https://web3-trial.cloudflare-eth.com/v1/sepolia', {
+    method: 'POST',
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'eth_getBlockByNumber',
+      params: ['0x2244', true],
+      id: 1,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+).then(resp => {
+  return resp.json();
 });
 ```

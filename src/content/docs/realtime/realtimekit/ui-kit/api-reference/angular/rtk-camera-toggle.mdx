@@ -5,18 +5,17 @@ description: API reference for rtk-camera-toggle component (Angular Library)
 products:
   - realtime
 ---
-
 A button which toggles your camera.
 
 ## Properties
 
-| Property   | Type                | Required | Default           | Description    |
-| ---------- | ------------------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object |
-| `size`     | `Size`              | ✅       | -                 | Size           |
-| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language       |
-| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant        |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -31,6 +30,10 @@ A button which toggles your camera.
 
 ```html
 <!-- component.html -->
-<rtk-camera-toggle [meeting]="meeting" size="md" variant="button">
+<rtk-camera-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
 </rtk-camera-toggle>
 ```
+

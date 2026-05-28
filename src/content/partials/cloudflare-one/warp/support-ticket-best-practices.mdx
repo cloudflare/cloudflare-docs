@@ -115,9 +115,9 @@ Avoid vague descriptions and include scenario, timestamps, and steps taken to tr
   <>
     <p>On October 30, 2025, at approximately 3:45 PM UTC, Alice attempted to SSH into 10.116.0.3 (target hostname: prod-db-01) using Access for Infrastructure. The SSH client returned <code>Permission denied (none)</code> despite her email being included in the Access policy.</p>
 
-<p>The <code>sshd</code> logs (captured with LogLevel DEBUG3) are attached and show the connection reaching the server but failing at the certificate validation step. The user exists on the server (<code>id alice</code> verified).</p>
+    <p>The <code>sshd</code> logs (captured with LogLevel DEBUG3) are attached and show the connection reaching the server but failing at the certificate validation step. The user exists on the server (<code>id alice</code> verified).</p>
 
-<p>The <code>sshd_config</code> file and <code>ssh -vvv alice@10.116.0.3</code> output are attached. The tunnel status is Healthy in the Cloudflare dashboard, and Access authentication logs show a successful <code>Access granted</code> decision.</p>
+    <p>The <code>sshd_config</code> file and <code>ssh -vvv alice@10.116.0.3</code> output are attached. The tunnel status is Healthy in the Cloudflare dashboard, and Access authentication logs show a successful <code>Access granted</code> decision.</p>
 
   </>
 ) : props.tunnelMode ? (

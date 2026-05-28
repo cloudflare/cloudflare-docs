@@ -8,7 +8,7 @@ products:
   - stream
 ---
 
-import { AvailableNotifications, DashButton } from "~/components";
+import { AvailableNotifications,DashButton } from "~/components"
 
 Stream Live offers webhooks to notify your service when an Input connects, disconnects, or encounters an error with Stream Live.
 
@@ -40,15 +40,15 @@ Webhooks works differently for uploaded / on-demand videos. For more information
 
 ```json title="Example webhook payload"
 {
-	"name": "Live Webhook Test",
-	"text": "Notification type: Stream Live Input\nInput ID: eb222fcca08eeb1ae84c981ebe8aeeb6\nEvent type: live_input.disconnected\nUpdated at: 2022-01-13T11:43:41.855717910Z",
-	"data": {
-		"notification_name": "Stream Live Input",
-		"input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
-		"event_type": "live_input.disconnected",
-		"updated_at": "2022-01-13T11:43:41.855717910Z"
-	},
-	"ts": 1642074233
+  "name": "Live Webhook Test",
+  "text": "Notification type: Stream Live Input\nInput ID: eb222fcca08eeb1ae84c981ebe8aeeb6\nEvent type: live_input.disconnected\nUpdated at: 2022-01-13T11:43:41.855717910Z",
+  "data": {
+    "notification_name": "Stream Live Input",
+    "input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
+    "event_type": "live_input.disconnected",
+    "updated_at": "2022-01-13T11:43:41.855717910Z"
+  },
+  "ts": 1642074233
 }
 ```
 
@@ -58,30 +58,30 @@ If there are issues detected with the input, the `event_type` will be `live_inpu
 
 ## Error codes
 
-- `ERR_GOP_OUT_OF_RANGE` – The input GOP size or keyframe interval is out of range.
-- `ERR_UNSUPPORTED_VIDEO_CODEC` – The input video codec is unsupported for the protocol used.
-- `ERR_UNSUPPORTED_AUDIO_CODEC` – The input audio codec is unsupported for the protocol used.
-- `ERR_STORAGE_QUOTA_EXHAUSTED` – The account storage quota has been exceeded. Delete older content or purchase additional storage.
-- `ERR_MISSING_SUBSCRIPTION` – Unauthorized to start a live stream. Check subscription or log into Dash for details.
+* `ERR_GOP_OUT_OF_RANGE` – The input GOP size or keyframe interval is out of range.
+* `ERR_UNSUPPORTED_VIDEO_CODEC` – The input video codec is unsupported for the protocol used.
+* `ERR_UNSUPPORTED_AUDIO_CODEC` – The input audio codec is unsupported for the protocol used.
+* `ERR_STORAGE_QUOTA_EXHAUSTED` – The account storage quota has been exceeded. Delete older content or purchase additional storage.
+* `ERR_MISSING_SUBSCRIPTION` – Unauthorized to start a live stream. Check subscription or log into Dash for details.
 
 ```json title="Example live_input.errored webhook payload"
 {
-	"name": "Live Webhook Test",
-	"text": "Notification type: Stream Live Input\nInput ID: 2c28dd2cc444cb77578c4840b51e43a8\nEvent type: live_input.errored\nUpdated at: 2024-07-09T18:07:51.077371662Z\nError Code: ERR_GOP_OUT_OF_RANGE\nError Message: Input GOP size or keyframe interval is out of range.\nVideo Codec: \nAudio Codec: ",
-	"data": {
-		"notification_name": "Stream Live Input",
-		"input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
-		"event_type": "live_input.errored",
-		"updated_at": "2024-07-09T18:07:51.077371662Z",
-		"live_input_errored": {
-			"error": {
-				"code": "ERR_GOP_OUT_OF_RANGE",
-				"message": "Input GOP size or keyframe interval is out of range."
-			},
-			"video_codec": "",
-			"audio_codec": ""
-		}
-	},
-	"ts": 1720548474
+  "name": "Live Webhook Test",
+  "text": "Notification type: Stream Live Input\nInput ID: 2c28dd2cc444cb77578c4840b51e43a8\nEvent type: live_input.errored\nUpdated at: 2024-07-09T18:07:51.077371662Z\nError Code: ERR_GOP_OUT_OF_RANGE\nError Message: Input GOP size or keyframe interval is out of range.\nVideo Codec: \nAudio Codec: ",
+  "data": {
+    "notification_name": "Stream Live Input",
+    "input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
+    "event_type": "live_input.errored",
+    "updated_at": "2024-07-09T18:07:51.077371662Z",
+    "live_input_errored": {
+      "error": {
+        "code": "ERR_GOP_OUT_OF_RANGE",
+        "message": "Input GOP size or keyframe interval is out of range."
+      },
+      "video_codec": "",
+      "audio_codec": ""
+    }
+  },
+  "ts": 1720548474,
 }
 ```

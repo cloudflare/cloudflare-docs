@@ -5,22 +5,21 @@ description: API reference for rtk-simple-grid component (Web Components (HTML) 
 products:
   - realtime
 ---
-
 A grid component which renders only the participants in a simple grid.
 
 ## Properties
 
-| Property       | Type       | Required | Default                 | Description                                             |
-| -------------- | ---------- | -------- | ----------------------- | ------------------------------------------------------- |
-| `aspectRatio`  | `string`   | ✅       | -                       | Aspect Ratio of participant tile Format: `width:height` |
-| `config`       | `UIConfig` | ❌       | `createDefaultConfig()` | UI Config                                               |
-| `gap`          | `number`   | ✅       | -                       | Gap between participant tiles                           |
-| `iconPack`     | `IconPack` | ❌       | `defaultIconPack`       | Icon Pack                                               |
-| `meeting`      | `Meeting`  | ✅       | -                       | Meeting object                                          |
-| `participants` | `Peer[]`   | ✅       | -                       | Participants                                            |
-| `size`         | `Size`     | ✅       | -                       | Size                                                    |
-| `states`       | `States`   | ✅       | -                       | States object                                           |
-| `t`            | `RtkI18n`  | ❌       | `useLanguage()`         | Language                                                |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `gap` | `number` | ✅ | - | Gap between participant tiles |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participants` | `Peer[]` | ✅ | - | Participants |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -33,14 +32,17 @@ A grid component which renders only the participants in a simple grid.
 ### With Properties
 
 ```html
-<rtk-simple-grid aspectRatio="example"> </rtk-simple-grid>
+<rtk-simple-grid
+ aspectRatio="example">
+</rtk-simple-grid>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-simple-grid");
+  const el = document.querySelector("rtk-simple-grid");
 
-	el.gap = 42;
-	el.meeting = meeting;
+  el.gap= 42;
+  el.meeting= meeting
 </script>
 ```

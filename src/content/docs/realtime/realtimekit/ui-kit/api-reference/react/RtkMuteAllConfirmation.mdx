@@ -5,34 +5,38 @@ description: API reference for RtkMuteAllConfirmation component (React Library)
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `states`   | `States`   | ✅       | -                 | States object  |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkMuteAllConfirmation } from "@cloudflare/realtimekit-react-ui";
+import { RtkMuteAllConfirmation } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkMuteAllConfirmation />;
+  return <RtkMuteAllConfirmation />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkMuteAllConfirmation } from "@cloudflare/realtimekit-react-ui";
+import { RtkMuteAllConfirmation } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkMuteAllConfirmation meeting={meeting} />;
+  return (
+    <RtkMuteAllConfirmation
+      meeting={meeting}
+    />
+  );
 }
 ```
+

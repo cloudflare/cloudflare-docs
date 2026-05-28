@@ -5,44 +5,44 @@ description: API reference for RtkBreakoutRoomParticipants component (React Libr
 products:
   - realtime
 ---
-
 A component which lists all participants, with ability to
-run privileged actions on each participant according to your permissions.
+ run privileged actions on each participant according to your permissions.
 
 ## Properties
 
-| Property                 | Type       | Required | Default           | Description           |
-| ------------------------ | ---------- | -------- | ----------------- | --------------------- |
-| `iconPack`               | `IconPack` | ❌       | `defaultIconPack` | Icon pack             |
-| `meeting`                | `Meeting`  | ✅       | -                 | Meeting object        |
-| `participantIds`         | `string[]` | ✅       | -                 | Participant ids       |
-| `selectedParticipantIds` | `string[]` | ✅       | -                 | selected participants |
-| `t`                      | `RtkI18n`  | ❌       | `useLanguage()`   | Language              |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participantIds` | `string[]` | ✅ | - | Participant ids |
+| `selectedParticipantIds` | `string[]` | ✅ | - | selected participants |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkBreakoutRoomParticipants } from "@cloudflare/realtimekit-react-ui";
+import { RtkBreakoutRoomParticipants } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkBreakoutRoomParticipants />;
+  return <RtkBreakoutRoomParticipants />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkBreakoutRoomParticipants } from "@cloudflare/realtimekit-react-ui";
+import { RtkBreakoutRoomParticipants } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return (
-		<RtkBreakoutRoomParticipants
-			meeting={meeting}
-			participantIds="example"
-			selectedParticipantIds="example"
-		/>
-	);
+  return (
+    <RtkBreakoutRoomParticipants
+      meeting={meeting}
+      participantIds="example"
+      selectedParticipantIds="example"
+    />
+  );
 }
 ```
+

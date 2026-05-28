@@ -13,59 +13,59 @@ For example:
 
 ```graphql graphql-api-explorer
 query telemetry(
-	$accountTag: string
-	$snapshotsFilter: AccountMconnTelemetrySnapshotsAdaptiveGroupsFilter_InputObject!
-	$snapshotMountsFilter: AccountMconnTelemetrySnapshotMountsAdaptiveGroupsFilter_InputObject!
-	$snapshotThermalsFilter: AccountMconnTelemetrySnapshotThermalsAdaptiveGroupsFilter_InputObject!
-	$limit: int64!
+  $accountTag: string
+  $snapshotsFilter: AccountMconnTelemetrySnapshotsAdaptiveGroupsFilter_InputObject!
+  $snapshotMountsFilter: AccountMconnTelemetrySnapshotMountsAdaptiveGroupsFilter_InputObject!
+  $snapshotThermalsFilter: AccountMconnTelemetrySnapshotThermalsAdaptiveGroupsFilter_InputObject!
+  $limit: int64!
 ) {
-	viewer {
-		accounts(filter: { accountTag: $accountTag }) {
-			snapshots: mconnTelemetrySnapshots(
-				filter: $snapshotsFilter
-				limit: $limit
-				orderBy: [datetimeFiveMinutes_DESC]
-			) {
-				max {
-					cpuCount
-					loadAverage1m
-					memoryFreeBytes
-					memoryTotalBytes
-				}
-				dimensions {
-					connectorId
-					datetimeFiveMinutes
-				}
-			}
-			snapshotMounts: mconnTelemetrySnapshotMounts(
-				filter: $snapshotMountsFilter
-				limit: $limit
-				orderBy: [datetimeFiveMinutes_DESC]
-			) {
-				max {
-					availableBytes
-					totalBytes
-				}
-				dimensions {
-					connectorId
-					datetimeFiveMinutes
-				}
-			}
-			snapshotThermals: mconnTelemetrySnapshotThermals(
-				filter: $snapshotThermalsFilter
-				limit: $limit
-				orderBy: [datetimeFiveMinutes_DESC, connectorId_DESC]
-			) {
-				max {
-					currentCelsius
-				}
-				dimensions {
-					connectorId
-					datetimeFiveMinutes
-				}
-			}
-		}
-	}
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      snapshots: mconnTelemetrySnapshots(
+        filter: $snapshotsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC]
+      ) {
+        max {
+          cpuCount
+          loadAverage1m
+          memoryFreeBytes
+          memoryTotalBytes
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+      snapshotMounts: mconnTelemetrySnapshotMounts(
+        filter: $snapshotMountsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC]
+      ) {
+        max {
+          availableBytes
+          totalBytes
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+      snapshotThermals: mconnTelemetrySnapshotThermals(
+        filter: $snapshotThermalsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC, connectorId_DESC]
+      ) {
+        max {
+          currentCelsius
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+    }
+  }
 }
 ```
 

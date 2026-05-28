@@ -5,18 +5,17 @@ description: API reference for rtk-ai component (Angular Library)
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type       | Required | Default                 | Description    |
-| ---------- | ---------- | -------- | ----------------------- | -------------- |
-| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config         |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
-| `size`     | `Size`     | ✅       | -                       | Size           |
-| `states`   | `States`   | ✅       | -                       | States object  |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
-| `view`     | `AIView`   | ✅       | -                       | View type      |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `view` | `AIView` | ✅ | - | View type |
 
 ## Usage Examples
 
@@ -31,5 +30,10 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-ai [meeting]="meeting" size="md" [view]="aiview"> </rtk-ai>
+<rtk-ai
+ [meeting]="meeting"
+ size="md"
+ [view]="aiview">
+</rtk-ai>
 ```
+

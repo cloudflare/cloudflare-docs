@@ -5,37 +5,41 @@ description: API reference for RtkPermissionsMessage component (React Library)
 products:
   - realtime
 ---
-
 A component which shows permission related troubleshooting
-information.
+ information.
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon Pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `states`   | `States`   | ✅       | -                 | States object  |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkPermissionsMessage } from "@cloudflare/realtimekit-react-ui";
+import { RtkPermissionsMessage } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkPermissionsMessage />;
+  return <RtkPermissionsMessage />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkPermissionsMessage } from "@cloudflare/realtimekit-react-ui";
+import { RtkPermissionsMessage } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkPermissionsMessage meeting={meeting} />;
+  return (
+    <RtkPermissionsMessage
+      meeting={meeting}
+    />
+  );
 }
 ```
+

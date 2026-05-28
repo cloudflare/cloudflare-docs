@@ -8,10 +8,10 @@ products:
   - radar
 ---
 
-Cloudflare regularly generates a domain ranking based on DNS queries to [1.1.1.1](/1.1.1.1/), Cloudflare's public DNS resolver. Refer to the [blog post](https://blog.cloudflare.com/radar-domain-rankings/) for a deep dive. In short, Cloudflare generates two types of listings:
+Cloudflare regularly generates a domain ranking based on DNS queries to [1.1.1.1](/1.1.1.1/),  Cloudflare's public DNS resolver.  Refer to the [blog post](https://blog.cloudflare.com/radar-domain-rankings/) for a deep dive. In short, Cloudflare generates two types of listings:
 
-- An ordered list of the top 100 most popular domains globally and per country. This includes the last 24 hours and is updated daily.
-- An unordered global most popular domains dataset, divided into buckets of the following number of domains: 200, 500, 1,000, 2,000, 5,000, 10,000, 20,000, 50,000, 100,000, 200,000, 500,000, 1,000,000. It includes the last seven days and is updated weekly.
+* An ordered list of the top 100 most popular domains globally and per country. This includes the last 24 hours and is updated daily.
+* An unordered global most popular domains dataset, divided into buckets of the following number of domains: 200, 500, 1,000, 2,000, 5,000, 10,000, 20,000, 50,000, 100,000, 200,000, 500,000, 1,000,000. It includes the last seven days and is updated weekly.
 
 ## List of endpoints
 
@@ -26,10 +26,10 @@ curl "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&limit=5" \
 
 ```json
 {
-	"success": true,
-	"errors": [],
-	"result": {
-		"top_0": [
+  "success": true,
+  "errors": [],
+  "result": {
+    "top_0": [
 			{
 				"rank": 1,
 				"domain": "google.com"
@@ -50,8 +50,8 @@ curl "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&limit=5" \
 				"rank": 5,
 				"domain": "apple.com"
 			}
-		]
-	},
+    ]
+  },
 	"meta": {
 		// ...
 	}
@@ -75,21 +75,24 @@ curl "https://api.cloudflare.com/client/v4/radar/datasets?limit=10&datasetType=R
 
 ```json
 {
-	"success": true,
-	"errors": [],
-	"result": {
+  "success": true,
+  "errors": [],
+  "result": {
 		"datasets": [
 			{
 				"id": 213,
 				"title": "Top 1000000 ranking domains",
 				"description": "Unordered top 1000000 from 2023-01-02 to 2023-01-09",
 				"type": "RANKING_BUCKET",
-				"tags": ["GLOBAL", "top_1000000"],
+				"tags": [
+					"GLOBAL",
+					"top_1000000"
+				],
 				"meta": {
 					"top": 1000000
 				},
 				"alias": "ranking_top_1000000"
-			}
+			},
 			// ...
 		]
 	}
@@ -111,9 +114,9 @@ curl "https://api.cloudflare.com/client/v4/radar/datasets/download" \
 
 ```json
 {
-	"success": true,
-	"errors": [],
-	"result": {
+  "success": true,
+  "errors": [],
+  "result": {
 		"dataset": {
 			"url": "https://example.com/download"
 		}

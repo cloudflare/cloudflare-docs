@@ -171,9 +171,9 @@ Specifies the path to a <a href={props.configurationFileURL}>configuration file<
 Requires `cloudflared` version 2025.7.0 or later.
 :::
 
-| Syntax                                                                 | Environment Variable        |
-| ---------------------------------------------------------------------- | --------------------------- |
-| `cloudflared tunnel run --dns-resolver-addrs <IP:PORT> <UUID or NAME>` | `TUNNEL_DNS_RESOLVER_ADDRS` |
+| Syntax                                                                    | Environment Variable        |
+| ------------------------------------------------------------------------- | --------------------------- |
+| `cloudflared tunnel run --dns-resolver-addrs <IP:PORT> <UUID or NAME>`    | `TUNNEL_DNS_RESOLVER_ADDRS` |
 
 Specifies custom DNS resolver addresses for `cloudflared` to use instead of the host machine's default resolvers. Each address must be in `ip:port` format — providing an IP address without a port will cause `cloudflared` to fail to start. You can specify multiple resolvers by repeating the flag. For example,
 

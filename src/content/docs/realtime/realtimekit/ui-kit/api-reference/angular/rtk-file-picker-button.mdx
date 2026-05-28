@@ -5,16 +5,15 @@ description: API reference for rtk-file-picker-button component (Angular Library
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type              | Required | Default           | Description                               |
-| ---------- | ----------------- | -------- | ----------------- | ----------------------------------------- |
-| `filter`   | `string`          | ✅       | -                 | File type filter to open file picker with |
-| `icon`     | `keyof IconPack1` | ✅       | -                 | Icon                                      |
-| `iconPack` | `IconPack1`       | ❌       | `defaultIconPack` | Icon pack                                 |
-| `label`    | `string`          | ✅       | -                 | Label for tooltip                         |
-| `t`        | `RtkI18n1`        | ❌       | `useLanguage()`   | Language                                  |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `filter` | `string` | ✅ | - | File type filter to open file picker with |
+| `icon` | `keyof IconPack1` | ✅ | - | Icon |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `label` | `string` | ✅ | - | Label for tooltip |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -30,9 +29,9 @@ products:
 ```html
 <!-- component.html -->
 <rtk-file-picker-button
-	filter="example"
-	[icon]="defaultIconPack"
-	label="example"
->
+ filter="example"
+ [icon]="defaultIconPack"
+ label="example">
 </rtk-file-picker-button>
 ```
+

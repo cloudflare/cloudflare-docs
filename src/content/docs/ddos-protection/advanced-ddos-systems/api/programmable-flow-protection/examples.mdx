@@ -8,6 +8,7 @@ tags:
   - REST API
 sidebar:
   order: 2
+
 ---
 
 The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/#endpoints).
@@ -23,18 +24,18 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 
 ```json title="Response"
 {
-	"result": [
-		{
-			"id": "<PROGRAM_ID>",
-			"name": "rate-limiter",
-			"status": "success",
-			"created_on": "<TIMESTAMP>",
-			"modified_on": "<TIMESTAMP>"
-		}
-	],
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": [
+    {
+      "id": "<PROGRAM_ID>",
+      "name": "rate-limiter",
+      "status": "success",
+      "created_on": "<TIMESTAMP>",
+      "modified_on": "<TIMESTAMP>"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -51,16 +52,16 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 
 ```json title="Response"
 {
-	"result": {
-		"id": "<PROGRAM_ID>",
-		"name": "program",
-		"status": "success",
-		"created_on": "<TIMESTAMP>",
-		"modified_on": "<TIMESTAMP>"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": {
+    "id": "<PROGRAM_ID>",
+    "name": "program",
+    "status": "success",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -68,15 +69,15 @@ If the program fails compilation or verification, the API returns a detailed err
 
 ```json title="Example error response"
 {
-	"result": null,
-	"success": false,
-	"errors": [
-		{
-			"code": 1001,
-			"message": "Program verification failed: invalid memory access at line 42"
-		}
-	],
-	"messages": []
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 1001,
+      "message": "Program verification failed: invalid memory access at line 42"
+    }
+  ],
+  "messages": []
 }
 ```
 
@@ -94,16 +95,16 @@ curl --request PATCH \
 
 ```json title="Response"
 {
-	"result": {
-		"id": "<PROGRAM_ID>",
-		"name": "program",
-		"status": "success",
-		"created_on": "<TIMESTAMP>",
-		"modified_on": "<TIMESTAMP>"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": {
+    "id": "<PROGRAM_ID>",
+    "name": "program",
+    "status": "success",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -119,10 +120,10 @@ curl --request DELETE \
 
 ```json title="Response"
 {
-	"result": null,
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": null,
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -137,21 +138,21 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 
 ```json title="Response"
 {
-	"result": [
-		{
-			"id": "<RULE_ID>",
-			"program_id": "<PROGRAM_ID>",
-			"scope": "global",
-			"name": "global",
-			"mode": "enabled",
-			"expression": "",
-			"created_on": "<TIMESTAMP>",
-			"modified_on": "<TIMESTAMP>"
-		}
-	],
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": [
+    {
+      "id": "<RULE_ID>",
+      "program_id": "<PROGRAM_ID>",
+      "scope": "global",
+      "name": "global",
+      "mode": "enabled",
+      "expression": "",
+      "created_on": "<TIMESTAMP>",
+      "modified_on": "<TIMESTAMP>"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -173,19 +174,19 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 
 ```json title="Response"
 {
-	"result": {
-		"id": "<RULE_ID>",
-		"program_id": "<PROGRAM_ID>",
-		"scope": "global",
-		"name": "global",
-		"mode": "monitoring",
-		"expression": "",
-		"created_on": "<TIMESTAMP>",
-		"modified_on": "<TIMESTAMP>"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": {
+    "id": "<RULE_ID>",
+    "program_id": "<PROGRAM_ID>",
+    "scope": "global",
+    "name": "global",
+    "mode": "monitoring",
+    "expression": "",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -210,19 +211,19 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 
 ```json title="Response"
 {
-	"result": {
-		"id": "<RULE_ID>",
-		"program_id": "<PROGRAM_ID>",
-		"scope": "region",
-		"name": "WEUR",
-		"mode": "enabled",
-		"expression": "ip.dst in { 192.0.2.0/24 }",
-		"created_on": "<TIMESTAMP>",
-		"modified_on": "<TIMESTAMP>"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": {
+    "id": "<RULE_ID>",
+    "program_id": "<PROGRAM_ID>",
+    "scope": "region",
+    "name": "WEUR",
+    "mode": "enabled",
+    "expression": "ip.dst in { 192.0.2.0/24 }",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -244,19 +245,19 @@ curl --request PATCH \
 
 ```json title="Response"
 {
-	"result": {
-		"id": "<RULE_ID>",
-		"program_id": "<PROGRAM_ID>",
-		"scope": "global",
-		"name": "global",
-		"mode": "enabled",
-		"expression": "",
-		"created_on": "<TIMESTAMP>",
-		"modified_on": "<TIMESTAMP>"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": {
+    "id": "<RULE_ID>",
+    "program_id": "<PROGRAM_ID>",
+    "scope": "global",
+    "name": "global",
+    "mode": "enabled",
+    "expression": "",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -274,10 +275,10 @@ curl --request DELETE \
 
 ```json title="Response"
 {
-	"result": null,
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": null,
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -298,7 +299,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 The output PCAP file contains the same packets as the input file, but with annotations on each packet.
 The Packet Comment annotation may contain:
 
-- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`
+- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`  
 - `Ignored`: if the incoming packet is not UDP
 - `Analytics tag`: the custom network analytics tag set by the program on this packet, if any
 - `Challenge packet`: the challenge packet emitted from the program back to the client, if any

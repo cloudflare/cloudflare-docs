@@ -5,14 +5,13 @@ description: API reference for rtk-pinned-message-selector component (Angular Li
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -27,5 +26,8 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-pinned-message-selector [meeting]="meeting"> </rtk-pinned-message-selector>
+<rtk-pinned-message-selector
+ [meeting]="meeting">
+</rtk-pinned-message-selector>
 ```
+

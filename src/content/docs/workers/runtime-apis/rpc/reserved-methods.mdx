@@ -16,7 +16,7 @@ Some method names are reserved or have special semantics.
 
 ## Special Methods
 
-For backwards compatibility, when extending `WorkerEntrypoint` or `DurableObject`, the following method names have special semantics. Note that this does _not_ apply to `RpcTarget`. On `RpcTarget`, these methods work like any other RPC method.
+For backwards compatibility, when extending `WorkerEntrypoint` or `DurableObject`, the following method names have special semantics. Note that this does *not* apply to `RpcTarget`. On `RpcTarget`, these methods work like any other RPC method.
 
 ### `fetch()`
 
@@ -36,12 +36,12 @@ The `connect()` method of the `WorkerEntrypoint` class is reserved for opening a
 
 The following method (or property) names may not be used as RPC methods on any RPC type (including `WorkerEntrypoint`, `DurableObject`, and `RpcTarget`):
 
-- `dup`: This is reserved for duplicating a stub. Refer to the [RPC Lifecycle](/workers/runtime-apis/rpc/lifecycle) docs to learn more about `dup()`.
-- `constructor`: This name has special meaning for JavaScript classes. It is not intended to be called as a method, so it is not allowed over RPC.
+* `dup`: This is reserved for duplicating a stub. Refer to the [RPC Lifecycle](/workers/runtime-apis/rpc/lifecycle) docs to learn more about `dup()`.
+* `constructor`: This name has special meaning for JavaScript classes. It is not intended to be called as a method, so it is not allowed over RPC.
 
 The following methods are disallowed only on `WorkerEntrypoint` and `DurableObject`, but allowed on `RpcTarget`. These methods have historically had special meaning to Durable Objects, where they are used to handle certain system-generated events.
 
-- `alarm`
-- `webSocketMessage`
-- `webSocketClose`
-- `webSocketError`
+* `alarm`
+* `webSocketMessage`
+* `webSocketClose`
+* `webSocketError`

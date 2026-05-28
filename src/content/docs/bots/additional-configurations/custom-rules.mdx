@@ -16,17 +16,17 @@ Bot protection on Cloudflare works through two complementary mechanisms: built-i
 
 The following features are configured through toggles and dropdowns in [Security Settings](/security/settings/). They do not require you to write any rule expressions.
 
-| Feature                                                                                | What it does                                                                                       | Availability                  |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------------- |
-| [Block AI bots](/bots/additional-configurations/block-ai-bots/)                        | Blocks AI crawlers (GPTBot, ClaudeBot, Bytespider, and others) using an auto-updating managed rule | All plans                     |
-| [AI Labyrinth](/bots/additional-configurations/ai-labyrinth/)                          | Feeds non-compliant AI crawlers into a maze of generated content                                   | All plans                     |
-| [Managed robots.txt](/bots/additional-configurations/managed-robots-txt/)              | Prepends AI crawler disallow directives to your `robots.txt`                                       | All plans                     |
-| Super Bot Fight Mode > **Definitely automated**                                        | Blocks or challenges traffic with a [bot score](/bots/concepts/bot-score/) of 1                    | Pro, Business, Enterprise     |
-| Super Bot Fight Mode > **Likely automated**                                            | Blocks or challenges traffic with a bot score of 2-29                                              | Business, Enterprise          |
-| [Verified bots](/bots/concepts/bot/verified-bots/)                                     | Managed category of high-trust bots (Googlebot, Bingbot, and others)                               | Pro, Business, Enterprise     |
-| [Static resource protection](/bots/additional-configurations/static-resources/)        | Extends bot actions to cover static file types                                                     | Pro, Business, Enterprise     |
-| [Optimize for WordPress](/bots/troubleshooting/wordpress-loopback-issue/)              | Allows WordPress loopback requests through bot protection                                          | Pro, Business, Enterprise     |
-| [JavaScript detections](/cloudflare-challenges/challenge-types/javascript-detections/) | Injects a lightweight script to identify clients that cannot execute JavaScript                    | All plans (automatic on Free) |
+| Feature | What it does | Availability |
+| --- | --- | --- |
+| [Block AI bots](/bots/additional-configurations/block-ai-bots/) | Blocks AI crawlers (GPTBot, ClaudeBot, Bytespider, and others) using an auto-updating managed rule | All plans |
+| [AI Labyrinth](/bots/additional-configurations/ai-labyrinth/) | Feeds non-compliant AI crawlers into a maze of generated content | All plans |
+| [Managed robots.txt](/bots/additional-configurations/managed-robots-txt/) | Prepends AI crawler disallow directives to your `robots.txt` | All plans |
+| Super Bot Fight Mode > **Definitely automated** | Blocks or challenges traffic with a [bot score](/bots/concepts/bot-score/) of 1 | Pro, Business, Enterprise |
+| Super Bot Fight Mode > **Likely automated** | Blocks or challenges traffic with a bot score of 2-29 | Business, Enterprise |
+| [Verified bots](/bots/concepts/bot/verified-bots/) | Managed category of high-trust bots (Googlebot, Bingbot, and others) | Pro, Business, Enterprise |
+| [Static resource protection](/bots/additional-configurations/static-resources/) | Extends bot actions to cover static file types | Pro, Business, Enterprise |
+| [Optimize for WordPress](/bots/troubleshooting/wordpress-loopback-issue/) | Allows WordPress loopback requests through bot protection | Pro, Business, Enterprise |
+| [JavaScript detections](/cloudflare-challenges/challenge-types/javascript-detections/) | Injects a lightweight script to identify clients that cannot execute JavaScript | All plans (automatic on Free) |
 
 Bot settings update automatically as Cloudflare identifies new bot signatures and AI crawlers, while custom rules require manual updates. They do not count toward your [custom rule limits](/waf/custom-rules/#availability), and apply uniformly across your domain without the risk of expression errors.
 

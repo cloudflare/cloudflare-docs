@@ -14,13 +14,7 @@ products:
   - durable-objects
 ---
 
-import {
-	Render,
-	TabItem,
-	Tabs,
-	WranglerConfig,
-	DashButton,
-} from "~/components";
+import { Render, TabItem, Tabs, WranglerConfig, DashButton } from "~/components";
 
 A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/concepts/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
@@ -43,7 +37,6 @@ To configure a KV namespace binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add** > **KV namespace**.
 4. Give your binding a name under **Variable name**.
@@ -104,7 +97,6 @@ To configure a Durable Object binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add** > **Durable Object**.
 4. Give your binding a name under **Variable name**.
@@ -169,7 +161,6 @@ To configure a R2 bucket binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add** > **R2 bucket**.
 4. Give your binding a name under **Variable name**.
@@ -242,7 +233,6 @@ To configure a D1 database binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add**> **D1 database bindings**.
 4. Give your binding a name under **Variable name**.
@@ -319,13 +309,12 @@ To configure a Vectorize index binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
 3. Select your Pages project > **Settings**.
 4. Go to **Bindings** > **Add** > **Vectorize index**.
 5. Give your binding a name under **Variable name**.
 6. Under **Vectorize index**, select your desired Vectorize index.
-7. Redeploy your project for the binding to take effect.
+8. Redeploy your project for the binding to take effect.
 
 ### Use Vectorize index bindings
 
@@ -460,7 +449,6 @@ To configure a Workers AI binding via the Cloudflare dashboard:
 1. Go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project > **Settings**.
 3. Select your Pages environment > **Bindings** > **Add** > **Workers AI**.
 4. Give your binding a name under **Variable name**.
@@ -534,7 +522,6 @@ To configure a Service binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add** > **Service binding**.
 4. Give your binding a name under **Variable name**.
@@ -599,7 +586,6 @@ To configure a queue producer binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add** > **Queue**.
 4. Give your binding a name under **Variable name**.
@@ -676,7 +662,6 @@ To configure a Hyperdrive binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add** > **Hyperdrive**.
 4. Give your binding a name under **Variable name**.
@@ -750,7 +735,6 @@ To configure an Analytics Engine binding via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Bindings** > **Add** > **Analytics engine**.
 4. Give your binding a name under **Variable name**.
@@ -812,7 +796,6 @@ To configure an environment variable via the Cloudflare dashboard:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Variables and Secrets** > **Add** .
 4. After setting a variable name and value, select **Save**.
@@ -871,7 +854,6 @@ To add secrets to your Pages project:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-
 2. Select your Pages project.
 3. Go to **Settings** > **Variables and Secrets** > **Add**.
 4. Set a variable name and value.

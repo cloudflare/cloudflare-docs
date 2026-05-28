@@ -5,17 +5,16 @@ description: API reference for rtk-overlay-modal component (Web Components (HTML
 products:
   - realtime
 ---
-
 A confirmation modal.
 
 ## Properties
 
-| Property   | Type       | Required | Default           | Description    |
-| ---------- | ---------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
-| `states`   | `States`   | ✅       | -                 | States object  |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -28,13 +27,15 @@ A confirmation modal.
 ### With Properties
 
 ```html
-<rtk-overlay-modal> </rtk-overlay-modal>
+<rtk-overlay-modal>
+</rtk-overlay-modal>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-overlay-modal");
+  const el = document.querySelector("rtk-overlay-modal");
 
-	el.meeting = meeting;
+  el.meeting= meeting
 </script>
 ```

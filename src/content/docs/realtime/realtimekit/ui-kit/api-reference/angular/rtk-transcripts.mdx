@@ -5,19 +5,18 @@ description: API reference for rtk-transcripts component (Angular Library)
 products:
   - realtime
 ---
-
 A component which handles transcripts.
-You can configure which transcripts you want to see and which ones you want to hear.
-There are also certain limits which you can set as well.
+ You can configure which transcripts you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
 
 ## Properties
 
-| Property  | Type       | Required | Default                 | Description    |
-| --------- | ---------- | -------- | ----------------------- | -------------- |
-| `config`  | `UIConfig` | ❌       | `createDefaultConfig()` | Config object  |
-| `meeting` | `Meeting`  | ✅       | -                       | Meeting object |
-| `states`  | `States`   | ✅       | -                       | States object  |
-| `t`       | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -32,5 +31,8 @@ There are also certain limits which you can set as well.
 
 ```html
 <!-- component.html -->
-<rtk-transcripts [meeting]="meeting"> </rtk-transcripts>
+<rtk-transcripts
+ [meeting]="meeting">
+</rtk-transcripts>
 ```
+

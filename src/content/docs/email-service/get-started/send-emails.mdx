@@ -54,14 +54,14 @@ A successful response includes the delivery status for each recipient:
 
 ```json
 {
-	"success": true,
-	"errors": [],
-	"messages": [],
-	"result": {
-		"delivered": ["recipient@example.com"],
-		"permanent_bounces": [],
-		"queued": []
-	}
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "delivered": ["recipient@example.com"],
+    "permanent_bounces": [],
+    "queued": []
+  }
 }
 ```
 
@@ -84,14 +84,14 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
 2.  Add the email binding to your Wrangler configuration file:
 
     <WranglerConfig>
-    
-        ```toml
-        [[send_email]]
-        name = "EMAIL"
-        remote = true
-        ```
-    
-        </WranglerConfig>
+
+    ```toml
+    [[send_email]]
+    name = "EMAIL"
+    remote = true
+    ```
+
+    </WranglerConfig>
 
 3.  Create your Worker code in `src/index.ts`:
 

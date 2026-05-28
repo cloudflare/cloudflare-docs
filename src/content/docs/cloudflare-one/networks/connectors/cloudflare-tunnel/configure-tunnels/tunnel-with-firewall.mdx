@@ -35,29 +35,22 @@ Ensure port `7844` is allowed for both TCP and UDP protocols (for `http2` and `q
 <Render file="tunnel/firewall/required-ports" product="cloudflare-one" />
 
 #### SNI-enforcing firewalls
-
 <Render file="tunnel/firewall/sni-hostnames" product="cloudflare-one" />
 
 ### Region US
 
 <Render
-	file="tunnel/firewall/us-region-ports"
-	product="cloudflare-one"
-	params={{
-		regionURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region",
-	}}
+  file="tunnel/firewall/us-region-ports"
+  product="cloudflare-one"
+  params={{ regionURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region" }}
 />
 
 ### Region FedRAMP High
 
 <Render
-	file="tunnel/firewall/fedramp-high-ports"
-	product="cloudflare-one"
-	params={{
-		tunnelTokenURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/",
-	}}
+  file="tunnel/firewall/fedramp-high-ports"
+  product="cloudflare-one"
+  params={{ tunnelTokenURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/" }}
 />
 
 ### Optional

@@ -5,17 +5,16 @@ description: API reference for rtk-transcript component (Web Components (HTML) L
 products:
   - realtime
 ---
-
 A component which shows a transcript.
-You need to remove the element after you receive the
-`rtkTranscriptDismiss` event.
+ You need to remove the element after you receive the
+ `rtkTranscriptDismiss` event.
 
 ## Properties
 
-| Property     | Type                                   | Required | Default         | Description |
-| ------------ | -------------------------------------- | -------- | --------------- | ----------- |
-| `t`          | `RtkI18n`                              | ❌       | `useLanguage()` | Language    |
-| `transcript` | `Transcript & { renderedId?: string }` | ❌       | -               | Message     |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `transcript` | `Transcript & { renderedId?: string }` | ❌ | - | Message |
 
 ## Usage Examples
 
@@ -28,13 +27,16 @@ You need to remove the element after you receive the
 ### With Properties
 
 ```html
-<rtk-transcript transcript="example"> </rtk-transcript>
+<rtk-transcript
+ transcript="example">
+</rtk-transcript>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-transcript");
+  const el = document.querySelector("rtk-transcript");
 
-	el.transcript = {};
+  el.transcript= {};
 </script>
 ```

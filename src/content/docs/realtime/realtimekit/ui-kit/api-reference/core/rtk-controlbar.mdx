@@ -5,21 +5,20 @@ description: API reference for rtk-controlbar component (Web Components (HTML) L
 products:
   - realtime
 ---
-
 Controlbar component provides you with various designs as variants.
 
 ## Properties
 
-| Property        | Type                 | Required | Default                 | Description                      |
-| --------------- | -------------------- | -------- | ----------------------- | -------------------------------- |
-| `config`        | `UIConfig1`          | ❌       | `createDefaultConfig()` | Config                           |
-| `disableRender` | `boolean`            | ✅       | -                       | Whether to render the default UI |
-| `iconPack`      | `IconPack1`          | ❌       | `defaultIconPack`       | Icon Pack                        |
-| `meeting`       | `Meeting`            | ✅       | -                       | Meeting                          |
-| `size`          | `Size`               | ✅       | -                       | Size                             |
-| `states`        | `States`             | ✅       | -                       | States                           |
-| `t`             | `RtkI18n`            | ❌       | `useLanguage()`         | Language                         |
-| `variant`       | `'solid' \| 'boxed'` | ✅       | -                       | Variant                          |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `disableRender` | `boolean` | ✅ | - | Whether to render the default UI |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `'solid' \| 'boxed'` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -32,14 +31,17 @@ Controlbar component provides you with various designs as variants.
 ### With Properties
 
 ```html
-<rtk-controlbar size="md"> </rtk-controlbar>
+<rtk-controlbar
+ size="md">
+</rtk-controlbar>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-controlbar");
+  const el = document.querySelector("rtk-controlbar");
 
-	el.disableRender = true;
-	el.meeting = meeting;
+  el.disableRender= true;
+  el.meeting= meeting
 </script>
 ```

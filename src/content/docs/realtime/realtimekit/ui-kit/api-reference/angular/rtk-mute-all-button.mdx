@@ -5,16 +5,15 @@ description: API reference for rtk-mute-all-button component (Angular Library)
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property   | Type                | Required | Default           | Description    |
-| ---------- | ------------------- | -------- | ----------------- | -------------- |
-| `iconPack` | `IconPack1`         | ❌       | `defaultIconPack` | Icon pack      |
-| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object |
-| `size`     | `Size1`             | ✅       | -                 | Size           |
-| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language       |
-| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant        |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -29,6 +28,10 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-mute-all-button [meeting]="meeting" size="md" variant="button">
+<rtk-mute-all-button
+ [meeting]="meeting"
+ size="md"
+ variant="button">
 </rtk-mute-all-button>
 ```
+

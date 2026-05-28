@@ -5,32 +5,37 @@ description: API reference for RtkMarkdownView component (React Library)
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property    | Type     | Required | Default | Description                              |
-| ----------- | -------- | -------- | ------- | ---------------------------------------- |
-| `maxLength` | `number` | ✅       | -       | max length of text to render as markdown |
-| `text`      | `string` | ✅       | -       | raw text to render as markdown           |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `maxLength` | `number` | ✅ | - | max length of text to render as markdown |
+| `text` | `string` | ✅ | - | raw text to render as markdown |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkMarkdownView } from "@cloudflare/realtimekit-react-ui";
+import { RtkMarkdownView } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkMarkdownView />;
+  return <RtkMarkdownView />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkMarkdownView } from "@cloudflare/realtimekit-react-ui";
+import { RtkMarkdownView } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkMarkdownView maxLength={42} text="example" />;
+  return (
+    <RtkMarkdownView
+      maxLength={42}
+      text="example"
+    />
+  );
 }
 ```
+

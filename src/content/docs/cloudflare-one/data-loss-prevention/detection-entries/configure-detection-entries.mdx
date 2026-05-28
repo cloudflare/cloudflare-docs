@@ -182,16 +182,16 @@ Your new document entry will replace the original document entry. If your file u
 
 DLP uses [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
 
-| Detection entry                       | Description                                                                                       |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Content: PII                          | Prompt contains personal information such as names, SSNs, or email addresses.                     |
-| Content: Credentials and Secrets      | Prompt contains API keys, passwords, or other sensitive credentials.                              |
-| Content: Source Code                  | Prompt contains actual source code, code snippets, or proprietary algorithms.                     |
-| Content: Customer Data                | Prompt contains customer names, projects, business activities, or confidential customer contexts. |
-| Content: Financial Information        | Prompt contains financial numbers or confidential business data.                                  |
-| Intent: PII                           | Prompt requests specific personal information about individuals.                                  |
-| Intent: Code Abuse and Malicious Code | Prompt requests malicious code for attacks, exploits, or harmful activities.                      |
-| Intent: Jailbreak                     | Prompt attempts to circumvent AI security policies.                                               |
+| Detection entry | Description |
+| --- | --- |
+| Content: PII | Prompt contains personal information such as names, SSNs, or email addresses. |
+| Content: Credentials and Secrets | Prompt contains API keys, passwords, or other sensitive credentials. |
+| Content: Source Code | Prompt contains actual source code, code snippets, or proprietary algorithms. |
+| Content: Customer Data | Prompt contains customer names, projects, business activities, or confidential customer contexts. |
+| Content: Financial Information | Prompt contains financial numbers or confidential business data. |
+| Intent: PII | Prompt requests specific personal information about individuals. |
+| Intent: Code Abuse and Malicious Code | Prompt requests malicious code for attacks, exploits, or harmful activities. |
+| Intent: Jailbreak | Prompt attempts to circumvent AI security policies. |
 
 Each detection entry is categorized as either **Content** or **Intent**:
 

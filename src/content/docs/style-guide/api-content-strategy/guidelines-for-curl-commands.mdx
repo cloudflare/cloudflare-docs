@@ -21,9 +21,9 @@ To automatically incorporate our conventions into your examples, use:
 
 Use long parameter names for clarity:
 
-- `--header` (instead of `-H`)
-- `--request` (when needed, instead of `-X`)
-- `--data` (instead of `-d`)
+* `--header` (instead of `-H`)
+* `--request` (when needed, instead of `-X`)
+* `--data` (instead of `-d`)
 
 You do not need to use the `--url` parameter since it is the main cURL parameter. Also, the URL does not need to be enclosed in double quotes (`""`), except if it contains a `?` character (that is, when it includes a query string).
 
@@ -45,9 +45,9 @@ If you must suggest the use of this tool, you can add a link to the [Make API ca
 
 ### Preliminary notes
 
-- Make sure not to use typographical or smart quotes in a cURL command, or the command will fail.
-- Placeholders in the URL should follow the same format as in the API documentation: `$ZONE_ID`
-- Placeholders in the request body (that is, the data included in a `POST`/`PUT`/`PATCH` request) should use [angle brackets](/style-guide/formatting/code-conventions-and-format/#angle-brackets---and--): `<RULE_ID>`
+* Make sure not to use typographical or smart quotes in a cURL command, or the command will fail.
+* Placeholders in the URL should follow the same format as in the API documentation: `$ZONE_ID`
+* Placeholders in the request body (that is, the data included in a `POST`/`PUT`/`PATCH` request) should use [angle brackets](/style-guide/formatting/code-conventions-and-format/#angle-brackets---and--): `<RULE_ID>`
 
 The same placeholder name should correspond to the same value – use different placeholder names for different ID values. You can use the same request placeholders in the response, if they should match the values in the request.
 
@@ -149,7 +149,7 @@ Enclose the JSON payload ( the `--data` command-line argument) in single quotes 
 
 The recommended way of escaping a single quote inside the body is the following (assuming the user will run the command in a bash-like terminal):
 
-- Replace the single quote `'` with `'\''`
+* Replace the single quote `'` with `'\''`
 
 Which means "close string, add escaped single quote, begin string again".
 
@@ -203,28 +203,28 @@ A response starts either with an object (`{ ... }`) or a list (`[ ... ]`). The i
 (}|])
 ```
 
-- If there are IDs that were obtained using a previous command, or if their exact value is not relevant in the current context, use a placeholder (for example, `<RULE_ID>`) instead of the ID. The same placeholder name should correspond to the same value. Use different placeholder names for different ID values.
-- Response excerpts or snippets containing the most relevant parts of the response body should mention that they do not correspond to the entire response.
+* If there are IDs that were obtained using a previous command, or if their exact value is not relevant in the current context, use a placeholder (for example, `<RULE_ID>`) instead of the ID. The same placeholder name should correspond to the same value. Use different placeholder names for different ID values.
+* Response excerpts or snippets containing the most relevant parts of the response body should mention that they do not correspond to the entire response.
 
 ### Full response example
 
 ```json
 {
-	"result": {
-		"id": "<RULE_ID>",
-		"paused": false,
-		"description": "do not challenge login from office",
-		"action": "allow",
-		"priority": null,
-		"filter": {
-			"id": "<FILTER_ID>",
-			"expression": "ip.src in {2400:cb00::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
-			"paused": false,
-			"description": "Login from office"
-		}
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": {
+    "id": "<RULE_ID>",
+    "paused": false,
+    "description": "do not challenge login from office",
+    "action": "allow",
+    "priority": null,
+    "filter": {
+      "id": "<FILTER_ID>",
+      "expression": "ip.src in {2400:cb00::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
+      "paused": false,
+      "description": "Login from office"
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```

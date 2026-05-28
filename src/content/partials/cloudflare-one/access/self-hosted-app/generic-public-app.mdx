@@ -1,8 +1,9 @@
 ---
 {}
+
 ---
 
-import { Render } from "~/components";
+import { Render } from "~/components"
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
@@ -12,29 +13,21 @@ import { Render } from "~/components";
 
 4. Select **Add public hostname**.
 
-5. <Render
-   	file="access/self-hosted-app/choose-domain"
-   	product="cloudflare-one"
-   />
+5. <Render file="access/self-hosted-app/choose-domain" product="cloudflare-one" />
 
 6. <Render file="access/add-access-policies" product="cloudflare-one" />
 
-7. <Render
-   	file="access/access-choose-idps"
-   	product="cloudflare-one"
-   	params={{ appType: "public" }}
-   />
+7. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "public" }}/>
 
 8. <Render file="access/configure-independent-mfa" product="cloudflare-one" />
 
 9. <Render file="access/session-duration" product="cloudflare-one" />
 
 10. (Optional) Go to the **Additional settings** tab to customize the application experience:
-    - **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/).
-    - <Render file="access/access-block-page" product="cloudflare-one" />
-      <Render
-      	file="access/self-hosted-app/advanced-settings"
-      	product="cloudflare-one"
-      />
+
+	- **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/).
+	- <Render file="access/access-block-page" product="cloudflare-one" />
+	<Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
 
 11. Select **Create**.
+

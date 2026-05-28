@@ -8,7 +8,7 @@ params:
   - arrURL
 ---
 
-import { Render } from "~/components";
+import { Render } from "~/components"
 
 Cloudflare WAN (formerly Magic WAN) can work together with <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a> to provide easy access between your networks and applications.
 
@@ -30,12 +30,12 @@ To route the same prefix to different destinations, use separate [virtual networ
 
 Cloudflare reserves the following IP ranges for Zero Trust services:
 
-| IP range         | Purpose                                                                                              |
-| ---------------- | ---------------------------------------------------------------------------------------------------- |
-| `100.64.0.0/12`  | [Cloudflare Source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/)       |
-| `100.96.0.0/12`  | [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) |
-| `100.80.0.0/16`  | [Initial resolved IPs](/cloudflare-one/traffic-policies/egress-policies/host-selectors/)             |
-| `100.112.0.0/16` | [Private Load Balancers](/load-balancing/private-network/)                                           |
+| IP range | Purpose |
+| --- | --- |
+| `100.64.0.0/12` | [Cloudflare Source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) |
+| `100.96.0.0/12` | [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) |
+| `100.80.0.0/16` | [Initial resolved IPs](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) |
+| `100.112.0.0/16` | [Private Load Balancers](/load-balancing/private-network/) |
 
 Do not configure routes that overlap with these reserved ranges.
 
@@ -51,8 +51,7 @@ Longest-prefix-match routing is the default route selection method. Other mechan
 
 ### Automatic Return Routing (ARR)
 
-<a href={props.arrURL}>Automatic Return Routing</a> bypasses route lookup for
-return traffic.
+<a href={props.arrURL}>Automatic Return Routing</a> bypasses route lookup for return traffic.
 
 When ARR is enabled:
 
@@ -89,6 +88,7 @@ To verify that a `cloudflared` tunnel works correctly with your Cloudflare WAN c
 	params={{
 		greIpsecURL: props.greIpsecURL,
 		warpURL: props.warpURL,
-		tracerouteURL: props.tracerouteURL,
-	}}
-/>
+		tracerouteURL: props.tracerouteURL
+		}}
+	/>
+

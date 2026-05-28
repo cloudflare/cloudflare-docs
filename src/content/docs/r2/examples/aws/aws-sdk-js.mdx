@@ -74,11 +74,11 @@ You can also generate presigned links that can be used to share public read or w
 ```ts
 // Use the expires property to determine how long the presigned link is valid.
 console.log(
-	await s3.getSignedUrlPromise("getObject", {
-		Bucket: "my-bucket",
-		Key: "dog.png",
-		Expires: 3600,
-	}),
+await s3.getSignedUrlPromise("getObject", {
+	Bucket: "my-bucket",
+	Key: "dog.png",
+	Expires: 3600,
+}),
 );
 // You can also create links for operations such as putObject to allow temporary write access to a specific key.
 // Specify ContentType to restrict uploads to a specific file type.
@@ -115,13 +115,13 @@ When generating presigned URLs for uploads, you can limit abuse and misuse by:
 
 ```json
 [
-	{
-		"AllowedOrigins": ["https://example.com"],
-		"AllowedMethods": ["PUT"],
-		"AllowedHeaders": ["Content-Type"],
-		"ExposeHeaders": ["ETag"],
-		"MaxAgeSeconds": 3600
-	}
+  {
+    "AllowedOrigins": ["https://example.com"],
+    "AllowedMethods": ["PUT"],
+    "AllowedHeaders": ["Content-Type"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  }
 ]
 ```
 
@@ -137,6 +137,5 @@ const putUrl = await s3.getSignedUrlPromise("putObject", {
 ```
 
 When a client uses this presigned URL, they must:
-
 - Make the request from an allowed origin (enforced by CORS)
 - Include the `Content-Type: image/png` header (enforced by the signature)

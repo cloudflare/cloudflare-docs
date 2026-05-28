@@ -12,9 +12,9 @@ Cloudflare Realtime TURN service supports using custom domains for UDP, and TCP 
 
 | Protocol      | Custom domains | Primary port | Alternate port |
 | ------------- | -------------- | ------------ | -------------- |
-| STUN over UDP | ✅             | 3478/udp     | 53/udp         |
-| TURN over UDP | ✅             | 3478/udp     | 53 udp         |
-| TURN over TCP | ✅             | 3478/tcp     | 80/tcp         |
+| STUN over UDP | ✅              | 3478/udp     | 53/udp         |
+| TURN over UDP | ✅              | 3478/udp     | 53 udp         |
+| TURN over TCP | ✅              | 3478/tcp     | 80/tcp         |
 | TURN over TLS | No             | 5349/tcp     | 443/tcp        |
 
 ## Setting up a CNAME record
@@ -23,7 +23,9 @@ To use custom domains for TURN, you must create a CNAME DNS record pointing to `
 
 :::caution
 
+
 Do not resolve the address of `turn.cloudflare.com` or `stun.cloudflare.com` or use an IP address as the value you input to your DNS record. Only CNAME records are supported.
+
 
 :::
 
@@ -31,7 +33,9 @@ Any DNS provider, including Cloudflare DNS can be used to set up a CNAME for cus
 
 :::note
 
+
 If Cloudflare's authoritative DNS service is used, the record must be set to [DNS-only or "grey cloud" mode](/dns/proxy-status/#dns-only-records).\`
+
 
 :::
 

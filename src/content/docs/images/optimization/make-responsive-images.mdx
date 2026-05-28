@@ -68,7 +68,12 @@ The browser evaluates screen size, pixel density, and network conditions, then s
 The snippet below shows how `srcset` can be used within an `<img>` tag to serve one of two possible sizes, depending on the user's device pixel ratio:
 
 ```html
-<img src="portrait-800w.jpg" srcset="portrait-1600.jpg 2x" />
+<img
+	src="portrait-800w.jpg"
+	srcset="
+		portrait-1600.jpg 2x,
+	"
+/>
 ```
 
 Instead of pre-generating each size, use Images to point every `srcset` entry at the same source image with a different `width` parameter and pixel density descriptor (for example, `2x`). Once the browser selects the right width for the user's device pixel ratio, Cloudflare dynamically generates the resized version on request:
@@ -159,11 +164,11 @@ The default breakpoints for client hints are: `320`, `768`, `960`, and `1200` pi
 The following table shows the widths that Cloudflare will pick based on the default breakpoints. If the detected viewport width exceeds the largest breakpoint, the image is served at that largest breakpoint.
 
 | Detected viewport width | Served image width |
-| ----------------------- | ------------------ |
-| 280px                   | 320px              |
-| 500px                   | 768px              |
-| 960px                   | 960px              |
-| 1500px                  | 1200px             |
+| ---------- | ------------- |
+| 280px          | 320px         |
+| 500px          | 768px         |
+| 960px          | 960px         |
+| 1500px          | 1200px        |
 
 You can override the default breakpoints using the [`wbreakpoints`](/images/optimization/features/#width) sub-parameter, which accepts positive integers separated by semicolons.
 

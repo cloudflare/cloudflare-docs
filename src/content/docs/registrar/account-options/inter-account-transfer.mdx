@@ -15,29 +15,28 @@ This process only applies to domains which are registered with Cloudflare Regist
 
 Before proceeding, please be aware of the following:
 
-- WHOIS contact information will be moved as is.
-- No other configuration will be moved.
-- After successful move, the registration will be transfer-locked for 30 days.
-- The target account will become responsible for domain renewals going forward.
+* WHOIS contact information will be moved as is.
+* No other configuration will be moved.
+* After successful move, the registration will be transfer-locked for 30 days.
+* The target account will become responsible for domain renewals going forward.
 
 ## 1. Prepare for the move
 
 Before you request the move, you will need to do the following:
 
-- Obtain the [account ID](/fundamentals/account/find-account-and-zone-ids/) of the new account.
-- Add the domain as a website to the new account and select a plan.
-- [Disable DNSSEC](/dns/dnssec/#disable-dnssec) for the domain and ensure it is set up and ready in the new dashboard account you intend to move it to.
+* Obtain the [account ID](/fundamentals/account/find-account-and-zone-ids/) of the new account.
+* Add the domain as a website to the new account and select a plan.
+* [Disable DNSSEC](/dns/dnssec/#disable-dnssec) for the domain and ensure it is set up and ready in the new dashboard account you intend to move it to.
 
 The following pre-conditions must be met before the domain can be moved:
-
-- The domain must have been registered more than 10 days ago.
-- The domain must be added to the new account as a website and a plan must be selected.
-- The domain must not be administratively locked, such as being locked due to a dispute or court order.
-- The domain must not have any of the following registry statuses: `pendingDelete`, `redemptionPeriod`, or `pendingTransfer`.
-- The registrant email address must be verified.
-- A pending Change of Registrant request cannot be present. If there is a pending request, it should be completed before initiating the move request.
-- DNSSEC must be turned off. It can be re-enabled on the new zone once the move completes.
-- If the current zone is locked, the lock must be released.
+* The domain must have been registered more than 10 days ago.
+* The domain must be added to the new account as a website and a plan must be selected.
+* The domain must not be administratively locked, such as being locked due to a dispute or court order.
+* The domain must not have any of the following registry statuses: `pendingDelete`, `redemptionPeriod`, or `pendingTransfer`.
+* The registrant email address must be verified.
+* A pending Change of Registrant request cannot be present. If there is a pending request, it should be completed before initiating the move request.
+* DNSSEC must be turned off. It can be re-enabled on the new zone once the move completes.
+* If the current zone is locked, the lock must be released.
 
 ## 2. Submit the move request
 

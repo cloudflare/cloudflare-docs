@@ -24,6 +24,7 @@ Depending on the [cache status](/cache/concepts/cache-responses/) you receive, y
 Use [Cache Analytics](/cache/performance-review/cache-analytics/) to identify cache performance issues. The following examples show how to filter for common problems and resolve them.
 
 - Not caching HTML.
+
   - Identify the issue: Select **Add filter** and select **Cache status equals Dynamic**.
   - Resolution: Set a Cloudflare Cache Rule to [cache dynamic content](/cache/how-to/cache-rules/examples/cache-everything/).
 
@@ -34,12 +35,14 @@ This option caches all HTML regardless of the presence of dynamic content (conte
 - Checking for the presence of a cookie.
 - Excluding requests that match known dynamic content file paths.
 - Excluding requests with dynamic content extensions (or no extension).
-  :::
+:::
 
 - Short cache expiration TTL.
+
   - Identify the issue: Select **Add filter** and select **Cache status equals Revalidated**.
   - Resolution: [Increase Cloudflare's Edge Cache TTL via a Cache Rule](/cache/how-to/cache-rules/examples/edge-ttl/).
 
 - Need to enable Tiered Cache or custom cache key.
+
   - Identify the issue: Select **Add filter** and select **Cache status equals Miss**.
   - Resolution: [Enable Tiered Cache](/cache/how-to/tiered-cache/#enable-tiered-cache) or [create a custom cache key](/cache/how-to/cache-rules/examples/custom-cache-key/).

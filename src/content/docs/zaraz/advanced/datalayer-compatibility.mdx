@@ -6,6 +6,7 @@ products:
 title: Data layer compatibility mode
 sidebar:
   order: 3
+
 ---
 
 Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function found in tag management software, used to track events and other parameters. This way you can keep your current implementation and Cloudflare Zaraz will automatically collect your events.
@@ -27,10 +28,10 @@ Events will only be sent to Zaraz if your pushed object includes an `event` key.
 
 ```js
 dataLayer.push({
-	event: "purchase",
-	price: "24",
-	currency: "USD",
-	transactionID: "12345678",
+  event: 'purchase',
+  price: '24',
+  currency: 'USD',
+  transactionID: '12345678',
 });
 ```
 
@@ -40,6 +41,6 @@ Because Zaraz converts the `dataLayer.push()` call to `zaraz.track()`, creating 
 
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
-| _Match rule_ | _Event Name_  | _Equals_        | `purchase`   |
+| *Match rule* | *Event Name*  | *Equals*        | `purchase`   |
 
 We do not recommend using `dataLayer`. However, as many websites employ it, Cloudflare Zaraz has this automatic translation layer that converts it to `zaraz.track()`.

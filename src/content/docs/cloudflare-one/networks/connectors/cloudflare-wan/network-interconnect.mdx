@@ -13,21 +13,14 @@ head:
 
 import { Render } from "~/components";
 
-<Render
-	file="magic-cni"
-	product="networking-services"
-	params={{ magicWord: "Cloudflare WAN" }}
-/>
+<Render file="magic-cni" product="networking-services" params={{ magicWord: "Cloudflare WAN" }} />
 
 <Render
 	file="traceroute"
 	product="networking-services"
 	params={{
-		greIpsecURL:
-			"/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
-		warpURL:
-			"/cloudflare-one/team-and-resources/devices/cloudflare-one-client/",
-		tracerouteURL:
-			"/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/traceroute/",
+		greIpsecURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+		warpURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/",
+		tracerouteURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/traceroute/"
 	}}
-/>
+	/>

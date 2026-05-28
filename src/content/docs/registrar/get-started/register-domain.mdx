@@ -10,14 +10,15 @@ description: Register a new domain with Cloudflare.
 
 import { DashButton, Render } from "~/components";
 
+
 ## Prerequisites and restrictions
 
 :::note[Cloudflare nameservers]
 All domains acquired via Cloudflare Registrar use Cloudflare nameservers, automatically [protecting and speeding up](/fundamentals/concepts/how-cloudflare-works/) your content or services. You will not be able to change to another DNS provider's nameservers while using Cloudflare Registrar.
 :::
 
-- Cloudflare Registrar does not currently support internationalized domain names (IDNs), also known as Unicode.
-- You must have a [verified account email address](/fundamentals/user-profiles/verify-email-address/), to transfer or register domains.
+* Cloudflare Registrar does not currently support internationalized domain names (IDNs), also known as Unicode.
+* You must have a [verified account email address](/fundamentals/user-profiles/verify-email-address/), to transfer or register domains.
 
 <Render file="icann-unverified-email" product="registrar" />
 
@@ -29,13 +30,15 @@ If you are registering a `.us` domain, refer to the [Additional requirements for
 
 1. In the Cloudflare dashboard, go to the **Register domains** page.
 
-   <DashButton url="/?to=/:account/registrar/register" />
+    <DashButton url="/?to=/:account/registrar/register" />
 
 2. In the search box, enter the domain name you wish to register, and select **Search**. You may also enter one or more keywords. The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration.
 
 :::caution[Important]
 
+
 Cloudflare Registrar currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
+
 
 :::
 
@@ -49,9 +52,11 @@ Cloudflare Registrar currently does not support internationalized domain names (
 
 :::note
 
+
 If you have previously registered or transferred a domain name, the form will be filled in advance with the information from your default contact. If not, you will need to fill out the form.
 
 It is important that you provide complete and accurate contact information. If you do not follow this recommendation, the domain registration may be suspended and/or canceled.
+
 
 :::
 
@@ -67,6 +72,8 @@ The registration process may take up to 30 seconds to complete. Once the registr
 
 At this time, you can only use ASCII characters for contact data. If the default contact has non-ASCII characters, you will need to update the domain contact details before proceeding. Cloudflare recommends that you update your default contact information to include ASCII characters only.
 
+
+
 | Field        | Required? | Restrictions                                                                                                                   |
 | ------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | First Name   | Yes       | Minimum of two letters.                                                                                                        |
@@ -81,6 +88,8 @@ At this time, you can only use ASCII characters for contact data. If the default
 | State        | Yes       | -                                                                                                                              |
 | Country      | Yes       | You must select one from the drop-down options.                                                                                |
 | Postal Code  | Yes       | Must be a properly formatted postal code.                                                                                      |
+
+
 
 When you register a domain with Cloudflare, your personal information is redacted when permitted by the registry. Refer to [WHOIS redaction](/registrar/account-options/whois-redaction/) for more information.
 

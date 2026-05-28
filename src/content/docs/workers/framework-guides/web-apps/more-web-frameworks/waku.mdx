@@ -30,16 +30,8 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 	framework="Waku"
 	configs={[
 		{ label: "main", file: "wrangler.jsonc", value: "dist/worker.js" },
-		{
-			label: "assets",
-			file: "wrangler.jsonc",
-			value: "directory: dist/public",
-		},
-		{
-			label: "compatibility_flags",
-			file: "wrangler.jsonc",
-			value: "nodejs_compat",
-		},
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: dist/public" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 	]}
 />

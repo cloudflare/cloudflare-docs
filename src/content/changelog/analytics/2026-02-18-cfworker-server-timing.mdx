@@ -8,10 +8,10 @@ The Server-Timing header now includes a new `cfWorker` metric that measures time
 
 Previously, Worker execution time was included in the `edge` metric, making it harder to identify true edge performance. The new `cfWorker` metric provides this visibility:
 
-| Metric     | Description                                                                           |
-| ---------- | ------------------------------------------------------------------------------------- |
-| `edge`     | Total time spent on the Cloudflare edge, including Worker execution                   |
-| `origin`   | Time spent fetching from the origin server                                            |
+| Metric | Description |
+| --- | --- |
+| `edge` | Total time spent on the Cloudflare edge, including Worker execution |
+| `origin` | Time spent fetching from the origin server |
 | `cfWorker` | Time spent in Worker execution, including subrequests but excluding origin fetch time |
 
 ### Example response

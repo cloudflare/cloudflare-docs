@@ -34,10 +34,10 @@ Limited capacity regions (ME, OC, AFR) cannot be used exclusively. Include at le
 
 Use the `jurisdiction` constraint to restrict containers to compliance boundaries:
 
-| Jurisdiction | Regions    | Use case          |
-| ------------ | ---------- | ----------------- |
-| `eu`         | EEUR, WEUR | EU data residency |
-| `fedramp`    | ENAM, WNAM | FedRAMP regions   |
+| Jurisdiction | Regions    | Use case           |
+| ------------ | ---------- | ------------------ |
+| `eu`         | EEUR, WEUR | EU data residency  |
+| `fedramp`    | ENAM, WNAM | FedRAMP regions    |
 
 When you specify both `jurisdiction` and `regions`, the regions must be valid for that jurisdiction. For example, specifying `jurisdiction: "eu"` with `regions: ["ENAM"]` is invalid.
 

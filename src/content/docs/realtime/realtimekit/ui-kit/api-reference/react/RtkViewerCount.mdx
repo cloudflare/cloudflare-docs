@@ -5,36 +5,41 @@ description: API reference for RtkViewerCount component (React Library)
 products:
   - realtime
 ---
-
 A component which shows count of total joined participants in a meeting.
 
 ## Properties
 
-| Property   | Type                 | Required | Default           | Description          |
-| ---------- | -------------------- | -------- | ----------------- | -------------------- |
-| `iconPack` | `IconPack`           | ❌       | `defaultIconPack` | Icon pack            |
-| `meeting`  | `Meeting`            | ✅       | -                 | Meeting object       |
-| `t`        | `RtkI18n`            | ❌       | `useLanguage()`   | Language             |
-| `variant`  | `ViewerCountVariant` | ✅       | -                 | Viewer count variant |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ViewerCountVariant` | ✅ | - | Viewer count variant |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkViewerCount } from "@cloudflare/realtimekit-react-ui";
+import { RtkViewerCount } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkViewerCount />;
+  return <RtkViewerCount />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkViewerCount } from "@cloudflare/realtimekit-react-ui";
+import { RtkViewerCount } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkViewerCount meeting={meeting} variant="primary" />;
+  return (
+    <RtkViewerCount
+      meeting={meeting}
+      variant="primary"
+    />
+  );
 }
 ```
+

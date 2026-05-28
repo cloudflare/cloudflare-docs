@@ -65,9 +65,9 @@ If you forward the original request object, the override header carries through 
 ```js
 // The override header from the inbound request is forwarded to the downstream Worker.
 export default {
-	async fetch(request, env) {
-		return env.MY_SERVICE.fetch(request);
-	},
+  async fetch(request, env) {
+    return env.MY_SERVICE.fetch(request);
+  },
 };
 ```
 
@@ -76,15 +76,15 @@ Alternatively, you can set an override header explicitly:
 ```js
 // Replace the version ID with the target version from `wrangler versions list`.
 export default {
-	async fetch(request, env) {
-		const response = await env.MY_SERVICE.fetch("https://example.com/", {
-			headers: {
-				"Cloudflare-Workers-Version-Overrides":
-					'my-downstream-worker="dc8dcd28-271b-4367-9840-6c244f84cb40"',
-			},
-		});
-		return response;
-	},
+  async fetch(request, env) {
+    const response = await env.MY_SERVICE.fetch("https://example.com/", {
+      headers: {
+        "Cloudflare-Workers-Version-Overrides":
+          'my-downstream-worker="dc8dcd28-271b-4367-9840-6c244f84cb40"',
+      },
+    });
+    return response;
+  },
 };
 ```
 

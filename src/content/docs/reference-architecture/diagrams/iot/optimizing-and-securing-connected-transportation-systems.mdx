@@ -1,20 +1,7 @@
 ---
 title: Optimizing and securing connected transportation systems
 pcx_content_type: reference-architecture-diagram
-products:
-  [
-    argo-smart-routing,
-    api-shield,
-    cache,
-    ddos-protection,
-    dns-firewall,
-    load-balancing,
-    r2,
-    workers,
-    ssl,
-    waf,
-    workers-ai,
-  ]
+products: [argo-smart-routing, api-shield, cache, ddos-protection, dns-firewall, load-balancing, r2, workers, ssl, waf, workers-ai]
 sidebar:
   order: 1
   label: Connected transportation systems
@@ -42,6 +29,7 @@ Devices connect to Cloudflare's anycast network, which inspects and filters inco
 2. **Cloudflare anycast network**: Cloudflare uses [anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) networking and is one of the world's most connected and geographically distributed networks. Traffic is routed to the nearest Cloudflare data center, which reduces the number of network hops, dynamically adapts to changing network conditions, and ensures data takes the shortest path to its destination, minimizing latency and maximizing reliability.
 
 3. **Security services**:
+
    1. **API Shield**: Cloudflare's [API Shield](/api-shield/get-started/) protects critical APIs from unauthorized access and abuse, ensuring secure data exchange between connected systems.
    2. **Web Application Firewall (WAF)**: Cloudflare's [WAF](/waf/) helps block malicious traffic and prevent application or API vulnerabilities from being exploited, safeguarding your network, devices and applications.
    3. **DDoS Protection**: Cloudflare's [DDoS protection](/ddos-protection/about/attack-coverage/), covering the network, transport and application layer, prevents volumetric attacks that could compromise the availability of connected systems. By providing multi-layered protection, Cloudflare is able to mitigate a wide variety of DDoS threats. At lower layers, Cloudflare defends against high-volume attacks such as SYN floods, UDP floods, and other types of protocol-based disruptions that can overwhelm network resources. At the application layer, more sophisticated attacks targeting the application itself, such as HTTP floods \- which aim to exhaust server resources and disrupt user-facing services \- are blocked even in the face of [large-scale DDoS attempts](https://blog.cloudflare.com/tag/ddos-reports/).
@@ -49,6 +37,7 @@ Devices connect to Cloudflare's anycast network, which inspects and filters inco
    5. **TLS encryption**: [TLS encryption](/ssl/edge-certificates/) ensures that data exchanged across the network is protected from interception, maintaining data integrity and privacy.
 
 4. **Performance and reliability services**:
+
    1. **Content Delivery Network (CDN)**: [Distribute content](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) efficiently across the network, reducing latency for end users by caching data closer to them.
    2. **Load balancing**: [Distribute incoming traffic](/load-balancing/get-started/quickstart/) across multiple servers or data centers, ensuring optimal resource utilization, preventing single points of failure, and improving the performance of connected systems.
    3. **Cloudflare Workers**: Our serverless compute platform, [Cloudflare Workers](/workers/), allows data processing at the edge, reducing the need for data to travel long distances and significantly reducing latency. Combined with related services like [Workers KV](/kv/get-started/) and [D1](https://www.cloudflare.com/en-gb/developer-platform/products/d1/), Cloudflare's edge-based storage solutions enable efficient data management close to the user. Workers KV allows for quick, read-heavy data access, perfect for caching configurations and frequently used data, while D1 provides a serverless SQL database for more robust storage needs. Additionally, Cloudflare's [Durable Objects](https://blog.cloudflare.com/sqlite-in-durable-objects/) help manage stateful interactions at the edge, facilitating real-time data consistency. These tools together allow for seamless data processing, storage and lazy updates to core services, minimizing back-and-forth to centralized servers and ensuring faster, more efficient performance.

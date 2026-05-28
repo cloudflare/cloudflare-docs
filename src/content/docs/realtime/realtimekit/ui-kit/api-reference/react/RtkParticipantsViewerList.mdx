@@ -5,44 +5,44 @@ description: API reference for RtkParticipantsViewerList component (React Librar
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property     | Type                   | Required | Default                 | Description                     |
-| ------------ | ---------------------- | -------- | ----------------------- | ------------------------------- |
-| `config`     | `UIConfig1`            | ❌       | `createDefaultConfig()` | Config                          |
-| `hideHeader` | `boolean`              | ✅       | -                       | Hide Viewer Count Header        |
-| `iconPack`   | `IconPack1`            | ❌       | `defaultIconPack`       | Icon pack                       |
-| `meeting`    | `Meeting`              | ✅       | -                       | Meeting object                  |
-| `search`     | `string`               | ✅       | -                       | Search                          |
-| `size`       | `Size1`                | ✅       | -                       | Size                            |
-| `t`          | `RtkI18n1`             | ❌       | `useLanguage()`         | Language                        |
-| `view`       | `ParticipantsViewMode` | ✅       | -                       | View mode for participants list |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `hideHeader` | `boolean` | ✅ | - | Hide Viewer Count Header |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `search` | `string` | ✅ | - | Search |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkParticipantsViewerList } from "@cloudflare/realtimekit-react-ui";
+import { RtkParticipantsViewerList } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkParticipantsViewerList />;
+  return <RtkParticipantsViewerList />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkParticipantsViewerList } from "@cloudflare/realtimekit-react-ui";
+import { RtkParticipantsViewerList } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return (
-		<RtkParticipantsViewerList
-			hideHeader={true}
-			meeting={meeting}
-			search="example"
-		/>
-	);
+  return (
+    <RtkParticipantsViewerList
+      hideHeader={true}
+      meeting={meeting}
+      search="example"
+    />
+  );
 }
 ```
+

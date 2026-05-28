@@ -5,21 +5,20 @@ description: API reference for rtk-notifications component (Angular Library)
 products:
   - realtime
 ---
-
 A component which handles notifications.
-You can configure which notifications you want to see and which ones you want to hear.
-There are also certain limits which you can set as well.
+ You can configure which notifications you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
 
 ## Properties
 
-| Property   | Type       | Required | Default                 | Description    |
-| ---------- | ---------- | -------- | ----------------------- | -------------- |
-| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config object  |
-| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
-| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
-| `size`     | `Size`     | ✅       | -                       | Size           |
-| `states`   | `States`   | ✅       | -                       | States object  |
-| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -34,5 +33,9 @@ There are also certain limits which you can set as well.
 
 ```html
 <!-- component.html -->
-<rtk-notifications [meeting]="meeting" size="md"> </rtk-notifications>
+<rtk-notifications
+ [meeting]="meeting"
+ size="md">
+</rtk-notifications>
 ```
+

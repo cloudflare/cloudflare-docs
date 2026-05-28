@@ -5,18 +5,17 @@ description: API reference for rtk-join-stage component (Web Components (HTML) L
 products:
   - realtime
 ---
-
 ## Properties
 
-| Property     | Type              | Required | Default                 | Description    |
-| ------------ | ----------------- | -------- | ----------------------- | -------------- |
-| `config`     | `UIConfig`        | ❌       | `createDefaultConfig()` | UI Config      |
-| `dataConfig` | `ModalDataConfig` | ✅       | -                       | Content Config |
-| `iconPack`   | `IconPack`        | ❌       | `defaultIconPack`       | Icon pack      |
-| `meeting`    | `Meeting`         | ✅       | -                       | Meeting object |
-| `size`       | `Size`            | ✅       | -                       | Size           |
-| `states`     | `States`          | ✅       | -                       | States object  |
-| `t`          | `RtkI18n`         | ❌       | `useLanguage()`         | Language       |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `dataConfig` | `ModalDataConfig` | ✅ | - | Content Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -29,13 +28,16 @@ products:
 ### With Properties
 
 ```html
-<rtk-join-stage size="md"> </rtk-join-stage>
+<rtk-join-stage
+ size="md">
+</rtk-join-stage>
 ```
+
 
 ```html
 <script>
-	const el = document.querySelector("rtk-join-stage");
+  const el = document.querySelector("rtk-join-stage");
 
-	el.meeting = meeting;
+  el.meeting= meeting
 </script>
 ```

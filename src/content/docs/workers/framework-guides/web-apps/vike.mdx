@@ -10,11 +10,12 @@ products:
 ---
 
 import { AutoconfigDiagram, Steps, PackageManagers } from "~/components";
-import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 You can deploy your [Vike](https://vike.dev) app to Cloudflare using the Vike extension [`vike-photon`](https://vike.dev/vike-photon).
 
 All app types (SSR/SPA/SSG) are supported.
+
 
 :::tip[Already have a Vike project?]
 Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Vike, generate the necessary configuration, and deploy your project.
@@ -28,16 +29,8 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 	framework="Vike"
 	configs={[
 		{ label: "main", file: "wrangler.jsonc", value: "dist/server/index.js" },
-		{
-			label: "assets",
-			file: "wrangler.jsonc",
-			value: "directory: dist/client",
-		},
-		{
-			label: "compatibility_flags",
-			file: "wrangler.jsonc",
-			value: "nodejs_compat",
-		},
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: dist/client" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 	]}
 />
@@ -49,6 +42,7 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 ## New app
 
 Use [vike.dev/new](https://vike.dev/new) to scaffold a new Vike app that uses `vike-photon` with `@photonjs/cloudflare`.
+
 
 ## Add to existing app
 
@@ -98,29 +92,31 @@ Use [vike.dev/new](https://vike.dev/new) to scaffold a new Vike app that uses `v
 To access Cloudflare APIs (such as [D1](/d1/) and [KV](/kv/)), use [bindings](/workers/runtime-apis/bindings/) which are available via the `env` object [imported from `cloudflare:workers`](/workers/runtime-apis/bindings/#importing-env-as-a-global).
 
 ```ts
-import { env } from "cloudflare:workers";
+import { env } from 'cloudflare:workers'
 // Key-value store
-env.KV.get("my-key");
+env.KV.get('my-key')
 // Environment variable
-env.LOG_LEVEL;
+env.LOG_LEVEL
 // ...
 ```
 
 > Example of using Cloudflare D1:
->
 > <PackageManagers
 > 	type="create"
 > 	pkg="vike@latest"
 > 	args="--react --hono --drizzle --cloudflare"
 > />
-> Or go to [vike.dev/new](https://vike.dev/new) and select `Cloudflare` with an
-> ORM.
+> Or go to [vike.dev/new](https://vike.dev/new) and select `Cloudflare` with an ORM.
 
 ## TypeScript
 
 If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/general/#types) whenever you change your Cloudflare configuration to update the `worker-configuration.d.ts` file.
 
-<PackageManagers type="exec" pkg="wrangler" args="types" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="types"
+/>
 
 Then commit:
 

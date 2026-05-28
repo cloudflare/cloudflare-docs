@@ -63,33 +63,33 @@ interface Env {
 }
 
 export default {
-	async fetch(req, env, ctx): Promise<Response> {
-		try {
-			return doRequest(req);
-		} catch (e) {
-			const error: ErrorMessage = {
-				message: e instanceof Error ? e.message : String(e),
-				stack: e instanceof Error ? e.stack : undefined,
-			};
-			await env.ERROR_QUEUE.send(error);
-			return new Response(error.message, { status: 500 });
-		}
-	},
-	async queue(batch, env, ctx): Promise<void> {
-		let file = "";
-		for (const message of batch.messages) {
-			const error = message.body;
-			file += error.stack ?? error.message;
-			file += "\r\n";
-		}
-		await env.ERROR_BUCKET.put(`errors/${Date.now()}.log`, file);
-	},
+  async fetch(req, env, ctx): Promise<Response> {
+    try {
+      return doRequest(req);
+    } catch (e) {
+      const error: ErrorMessage = {
+        message: e instanceof Error ? e.message : String(e),
+        stack: e instanceof Error ? e.stack : undefined,
+      };
+      await env.ERROR_QUEUE.send(error);
+      return new Response(error.message, { status: 500 });
+    }
+  },
+  async queue(batch, env, ctx): Promise<void> {
+    let file = "";
+    for (const message of batch.messages) {
+      const error = message.body;
+      file += error.stack ?? error.message;
+      file += "\r\n";
+    }
+    await env.ERROR_BUCKET.put(`errors/${Date.now()}.log`, file);
+  },
 } satisfies ExportedHandler<Env, ErrorMessage>;
 
 function doRequest(request: Request): Response {
-	if (Math.random() > 0.5) {
-		return new Response("Success!");
-	}
-	throw new Error("Failed!");
+  if (Math.random() > 0.5) {
+    return new Response("Success!");
+  }
+  throw new Error("Failed!");
 }
 ```

@@ -11,29 +11,21 @@ sidebar:
 
 import { DashButton, Render, Steps, TabItem, Tabs } from "~/components";
 
-HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, and Cloudflare to your origin server. Both must be encrypted for end-to-end security. This guide walks through five stages:
+HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, and Cloudflare to your origin server. Both must be encrypted for end-to-end security. This guide walks through five stages: 
 
 1. Configure your SSL/TLS encryption mode.
 2. Redirect all HTTP requests to HTTPS.
 3. Harden your HTTPS setup with minimum TLS versions and HSTS.
 4. Monitor third-party scripts on your pages.
-5. Verify your configuration.
+5. Verify your configuration. 
 
 The core workflow is available on Free, Pro, and Business plans.
 
-<Render
-	file="domain-scope-note"
-	product="use-cases"
-	params={{
-		exception:
-			"Client-Side Security is the exception: it is configured at the account level.",
-	}}
-/>
+<Render file="domain-scope-note" product="use-cases" params={{ exception: "Client-Side Security is the exception: it is configured at the account level." }} />
 
 ## Configure your SSL/TLS encryption mode
 
 Your SSL/TLS encryption mode controls how Cloudflare connects to your origin server. For end-to-end encryption, use **Full (strict)** — it encrypts both connections and verifies your origin certificate. For a detailed comparison of all available modes, refer to [Encryption modes](/ssl/origin-configuration/ssl-modes/).
-
 ### Check your current mode
 
 <Steps>
@@ -83,7 +75,6 @@ If your origin already has a valid certificate from a publicly trusted certifica
 9. Select **OK**.
 
 </Steps>
-
 :::note
 For details about working with certificates programmatically, refer to [API calls](/ssl/origin-configuration/origin-ca/#api-calls).
 :::
@@ -101,7 +92,6 @@ For details about working with certificates programmatically, refer to [API call
 4. Enable SSL and port `443` at your origin web server.
 
 </Steps>
-
 :::note
 If you do not see your server listed, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider.
 :::
@@ -119,15 +109,13 @@ After installing a valid certificate on your origin server, set the encryption m
 <Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
-
 :::caution
 If your site shows a [526 error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/) after changing the encryption mode, your origin certificate may not meet the requirements for Full (strict). The certificate must be unexpired, issued by a trusted CA or Cloudflare Origin CA, and contain a Common Name (CN) or Subject Alternative Name (SAN) that matches your hostname. For redirect loop issues, refer to [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/).
 :::
 
 ## Redirect all HTTP requests to HTTPS
 
-Even with an active edge certificate, visitors can still access resources over unsecured HTTP connections. Two settings work together to fix this:
-
+Even with an active edge certificate, visitors can still access resources over unsecured HTTP connections. Two settings work together to fix this: 
 1. Always Use HTTPS redirects HTTP requests to HTTPS
 2. Automatic HTTPS Rewrites fixes mixed content references in your page HTML
 
@@ -166,7 +154,6 @@ If only some parts of your application can support HTTPS traffic, do not turn on
 </Steps>
 
 </TabItem> </Tabs>
-
 ### Turn on Automatic HTTPS Rewrites
 
 Automatic HTTPS Rewrites prevents mixed content errors by rewriting HTTP resource URLs in your page HTML to HTTPS. This is useful for sites where you do not control all asset URLs, such as CMS-hosted content or embedded third-party resources.
@@ -188,7 +175,6 @@ Automatic HTTPS Rewrites prevents mixed content errors by rewriting HTTP resourc
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `automatic_https_rewrites` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 </TabItem> </Tabs>
-
 :::note
 Automatic HTTPS Rewrites does not rewrite all HTTP URLs. Some passive content (such as images) may not be rewritten, which can still cause mixed content warnings. For details on how rewrites work and troubleshooting, refer to [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) and [Mixed content errors](/ssl/troubleshooting/mixed-content-errors/).
 :::
@@ -218,7 +204,6 @@ TLS 1.0 and 1.1 have known vulnerabilities and are no longer considered secure. 
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `min_tls_version` as the setting name in the URI path, and the `value` parameter set to `"1.2"`.
 
 </TabItem> </Tabs>
-
 :::note[Per-hostname minimum TLS version requires Advanced Certificate Manager]
 To set minimum TLS versions for individual hostnames instead of the entire zone, refer to [Per-hostname setup](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname). This requires an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) subscription.
 :::
@@ -244,7 +229,6 @@ TLS 1.3 provides faster handshakes and improved security over TLS 1.2.
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `tls_1_3` as the setting name in the URI path, and the `value` parameter set to `"on"`. To also turn on 0-RTT (Zero Round Trip Time Resumption), set the value to `"zrt"`.
 
 </TabItem> </Tabs>
-
 ### Turn on HSTS
 
 HTTP Strict Transport Security (HSTS) adds a response header that tells browsers to connect to your site over HTTPS only, even if a link or redirect tries to send them over HTTP. HSTS protects against protocol downgrade attacks.
@@ -288,7 +272,6 @@ Before turning on HSTS, confirm these prerequisites:
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `security_header` as the setting name in the URI path, and specify the `value` object that includes your HSTS settings.
 
 </TabItem> </Tabs>
-
 ### Review your cipher suites
 
 Cloudflare's default cipher suites provide strong encryption for most sites. You do not need to change them unless a security audit or compliance requirement specifies particular cipher configurations.
@@ -316,7 +299,6 @@ HTTPS encrypts data in transit, but third-party scripts loaded by your pages can
 3. Turn on **Continuous script monitoring**.
 
 </Steps>
-
 ### Review detected resources
 
 After turning on monitoring, it may take some time for Cloudflare to generate a list of detected scripts on your domain.
@@ -332,7 +314,6 @@ After turning on monitoring, it may take some time for Cloudflare to generate a 
 3. Review the list of detected scripts. Check for unknown or unexpected scripts from domains you do not recognize.
 
 </Steps>
-
 Depending on your Cloudflare plan, you may also be able to review connections made by scripts and check them for malicious activity. For setup details, refer to [Get started with client-side security](/client-side-security/get-started/).
 
 :::note[Content security rules require Client-Side Security Advanced]
