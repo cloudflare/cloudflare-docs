@@ -30,32 +30,30 @@ Open a terminal window and run:
 
 <Render file="c3-run-command-no-directory" product="pages" />
 
-Running this command will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and then ask you questions about the type of application you wish to create.
+Running this command will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and then ask you to choose a framework for your project.
 
 :::note
-To create a Pages project you must now specify the `--platform=pages` arg, otherwise C3 will always create a Workers project.
+To create a Pages project you must specify `--platform=pages`, otherwise C3 will create a Workers project. When `--platform=pages` is specified, C3 only shows frameworks that support the Pages platform.
+
+If you want to create a Pages project without using a framework, use [Direct Upload](/pages/get-started/direct-upload/) or [Git integration](/pages/get-started/git-integration/) instead.
 :::
 
 ## Web frameworks
 
-If you choose the "Framework Starter" option, you will be prompted to choose a framework to use. The following frameworks are currently supported:
+The following frameworks support Pages deployment via C3:
 
 - [Angular](/pages/framework-guides/deploy-an-angular-site/)
 - [Astro](/pages/framework-guides/deploy-an-astro-site/)
 - [Docusaurus](/pages/framework-guides/deploy-a-docusaurus-site/)
 - [Gatsby](/pages/framework-guides/deploy-a-gatsby-site/)
 - [Hono](/pages/framework-guides/deploy-a-hono-site/)
-- [Next.js](/pages/framework-guides/nextjs/)
 - [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/)
 - [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
 - [React](/pages/framework-guides/deploy-a-react-site/)
-- [Redwood](/workers/framework-guides/web-apps/redwoodsdk/)
-- [Remix](/pages/framework-guides/deploy-a-remix-site/)
-- [SolidStart](/pages/framework-guides/deploy-a-solid-start-site/)
 - [SvelteKit](/pages/framework-guides/deploy-a-svelte-kit-site/)
 - [Vue](/pages/framework-guides/deploy-a-vue-site/)
 
-When you use a framework, `npm create cloudflare` directly uses the framework's own command for generating a new projects, which may prompt additional questions. This ensures that the project you create is up-to-date with the latest version of the framework, and you have all the same options when creating you project via `npm create cloudflare` that you would if you created your project using the framework's tooling directly.
+When you use a framework, `npm create cloudflare` directly uses the framework's own command for generating new projects, which may prompt additional questions. This ensures that the project you create is up-to-date with the latest version of the framework, and you have all the same options when creating your project via `npm create cloudflare` that you would if you created your project using the framework's tooling directly.
 
 ## Deploy
 
@@ -94,13 +92,13 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 
 - `--category` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The kind of templates that should be created.
+  - The kind of templates that should be created. When `--platform=pages` is specified, only `web-framework` and `remote-template` are available since other categories only produce Workers projects.
 
   - The possible values for this option are:
 
-    - `hello-world`: Hello World example
+    - `hello-world`: Hello World example (Workers only)
     - `web-framework`: Framework Starter
-    - `demo`: Application Starter
+    - `demo`: Application Starter (Workers only)
     - `remote-template`: Template from a GitHub repo
 
 - `--type` <Type text="string" /> <MetaInfo text="optional" />
@@ -119,7 +117,7 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 
 - `--framework` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The type of framework to use to create a web application (when using this option, `--type` is ignored).
+  - The type of framework to use to create a web application (when using this option, `--type` is ignored). When `--platform=pages` is specified, only frameworks that support Pages are shown.
 
   - The possible values for this option are:
 
@@ -128,13 +126,13 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
     - `docusaurus`
     - `gatsby`
     - `hono`
-    - `next`
+    - `next` (Workers only)
     - `nuxt`
     - `qwik`
     - `react`
-    - `redwood`
-    - `remix`
-    - `solid`
+    - `redwood` (Workers only)
+    - `remix` (Workers only)
+    - `solid` (Workers only)
     - `svelte`
     - `vue`
 
