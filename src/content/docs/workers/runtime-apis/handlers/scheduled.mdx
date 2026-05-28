@@ -14,16 +14,10 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 :::note[Testing scheduled() handlers in local development]
 
-You can test the behavior of your `scheduled()` handler in local development using Wrangler.
-
-Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/general/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+You can test the behavior of your `scheduled()` handler in local development by sending an HTTP request to `/cdn-cgi/handler/scheduled` to trigger the handler. Pass `?format=json` to return the structured scheduled handler result.
 
 ```sh
-npx wrangler dev --test-scheduled
-
-curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
-
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*" # Python Workers
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?format=json"
 ```
 
 :::

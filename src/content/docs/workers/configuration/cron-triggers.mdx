@@ -192,11 +192,28 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers locally
 
-Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/general/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This will expose a `/cdn-cgi/handler/scheduled` route which can be used to test using a HTTP request.
+Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/general/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This exposes a `/cdn-cgi/handler/scheduled` route, which can be used to test using an HTTP request.
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/handler/scheduled"
 ```
+
+By default, the endpoint returns the scheduled handler outcome as text. To return the
+structured scheduled handler result as JSON, pass `?format=json`.
+
+```sh
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?format=json"
+```
+
+```json
+{
+  "outcome": "ok",
+  "noRetry": false
+}
+```
+
+The `noRetry` field is `true` when the scheduled handler calls
+`controller.noRetry()`.
 
 To simulate different cron patterns, a `cron` query parameter can be passed in.
 
@@ -207,7 +224,7 @@ curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
 Optionally, you can also pass a `time` query parameter to override `controller.scheduledTime` in your scheduled event listener.
 
 ```sh
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*&time=1745856238"
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*&time=1745856238000"
 ```
 
 ## View past events
