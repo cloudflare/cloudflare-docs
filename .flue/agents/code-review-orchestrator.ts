@@ -482,7 +482,7 @@ export default async function ({
 	// ── 4. Reconcile findings with review history and human comments ───────────
 	// Load previous findings from R2 (structured) rather than parsing the comment.
 	const previousReviewKey = previousReviewedSha
-		? `${diffDir.replace(/\/diff$/, "")}/review-${previousReviewedSha}.json`
+		? `${diffDir}/review-${previousReviewedSha}.json`
 		: null;
 	let previousFindings: StyleGuideFinding[] = [];
 	if (previousReviewKey) {
@@ -558,7 +558,7 @@ export default async function ({
 	}
 
 	// ── 5. Persist findings to R2 for future reconciliation ───────────────────
-	const currentReviewKey = `${diffDir.replace(/\/diff$/, "")}/review-${currentHeadSha}.json`;
+	const currentReviewKey = `${diffDir}/review-${currentHeadSha}.json`;
 	await bucket.put(currentReviewKey, JSON.stringify(reconciled.active));
 
 	// ── 6. Render the review comment ───────────────────────────────────────────
@@ -1001,7 +1001,9 @@ function renderComment(
 		lines.push("|---|---|---|");
 		for (const f of reconciled.ignored_by_reviewer) {
 			const file = formatFile(f.path, f.line);
-			lines.push(`| ${file} | ${f.rule} | ${f.reviewer_note} |`);
+			lines.push(
+				`| ${file} | ${sanitizeTableCell(f.rule)} | ${sanitizeTableCell(f.reviewer_note)} |`,
+			);
 		}
 		lines.push("");
 		lines.push("</details>");

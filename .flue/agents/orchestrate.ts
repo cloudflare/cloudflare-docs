@@ -4,7 +4,7 @@
  * Receives GitHub webhooks (issues, pull_request events), verifies the
  * signature, and dispatches to the appropriate subagents:
  *
- * - spam-and-off-topic-filter: runs on opened/reopened/ready_for_review
+ * - spam-and-off-topic-filter: runs on opened/reopened/synchronize/ready_for_review
  * - code-review-orchestrator: runs on PR opened/reopened/synchronize/ready_for_review
  *   (only if spam filter did not close the item)
  *
@@ -232,7 +232,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const baseUrl = new URL(req.url);
 	const results: Record<string, unknown> = {};
 
-	// ── 3. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
+	// ── 5. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
 	if (isSpamFilterEvent) {
 		// Skip spam filter for codeowners — their issues and PRs are never spam.
 		let skipSpamFilter = false;
@@ -314,7 +314,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		} // end else (not skipSpamFilter)
 	}
 
-	// ── 4. Dispatch code-review-orchestrator (PRs only) ─────────────────────
+	// ── 6. Dispatch code-review-orchestrator (PRs only) ─────────────────────
 	if (isCodeReviewEvent) {
 		// Suppress code review on draft PRs unless the action is ready_for_review
 		const isDraft =
