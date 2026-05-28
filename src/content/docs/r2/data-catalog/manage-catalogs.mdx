@@ -177,12 +177,6 @@ Snapshot expiration automatically removes old table snapshots and any unreferenc
 - **Max snapshot age** - Snapshots older than this duration are expired. Specify a value followed by a unit (`d` for days, `h` for hours, `m` for minutes, `s` for seconds). For example, `7d` expires snapshots older than 7 days.
 - **Min snapshots to keep** - The minimum number of snapshots to retain, regardless of age.
 
-:::note[API token permission requirements]
-Table maintenance operations such as compaction and snapshot expiration require a Cloudflare API token with both R2 storage and R2 Data Catalog read/write permissions to act as a service credential.
-
-Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) for details on creating a token with the required permissions.
-:::
-
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
 
@@ -197,10 +191,6 @@ Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) f
 6. Set the **Max snapshot age** and **Min snapshots to keep** values.
 7. Select **Save**.
 </Steps>
-
-:::caution
-If no service credential has been generated for this catalog, the dashboard will prompt you to generate one. Snapshot expiration requires a credential to access and clean up files in your bucket.
-:::
 
 </TabItem>
 <TabItem label='Wrangler CLI'>
