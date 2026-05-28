@@ -135,14 +135,22 @@ pnpm exec tsm bin/validate-redirects.ts  # Only if public/__redirects was modifi
 
 ### Fixing formatting
 
-After editing any `.ts`, `.tsx`, `.js`, `.mjs`, or `.css` file, run:
+After editing any prettier-scoped file (`.ts`, `.tsx`, `.js`, `.mjs`, `.css`, `.json`, `.yaml`, `.yml`, `.md`, `.astro`), run:
 
 ```bash
-pnpm run format             # Auto-fix code + data files
-pnpm run format:content     # Auto-fix MDX/MD/Astro files
+pnpm run format             # Auto-fix everything (core + data + content)
+pnpm run format:check       # Check without writing
 ```
 
-Always format edited files before committing — CI runs `pnpm run format:core:check` and will fail if formatting is off.
+The matrix has paired `:check` and `:fix` variants per category:
+
+- `format:core:check` / `format:core:fix` — `js, jsx, ts, tsx, mjs, css`
+- `format:data:check` / `format:data:fix` — `json, yaml, yml`
+- `format:content:check` / `format:content:fix` — `md, astro`
+
+MDX is deliberately excluded — prettier's MDX support is too fragile for this repo's scale (5,400+ pages).
+
+Local formatting is no longer strictly required: the `cloudflare-docs-bot` auto-formatter runs on every PR and pushes any prettier fixes back to the PR branch. CI's scoped format check (`Check formatting (changed files)`) catches regressions on the files a PR touches.
 
 ### Syncing types after content collection changes
 
