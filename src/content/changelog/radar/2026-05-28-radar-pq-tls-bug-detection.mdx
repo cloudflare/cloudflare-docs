@@ -14,7 +14,7 @@ The following TLS bugs are detected:
 - **HRR Failure** — The server sends a `HelloRetryRequest` but fails to complete the handshake afterward.
 - **Unknown Keyshare** — The server cannot handle unknown key exchange algorithms and fails instead of responding with a `HelloRetryRequest` as required by the TLS 1.3 specification.
 
-![Screenshot of TLS bug detection results in the Radar post-quantum checker](~/assets/images/radar/pq-tls-bug-detection.png)
+![TLS bug detection results in the Radar post-quantum checker](~/assets/images/radar/pq-tls-bug-detection.png)
 
 Bug detection data is available through the existing [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) endpoint.
 
