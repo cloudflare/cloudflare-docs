@@ -15,7 +15,9 @@ Cloudflare Email Service has the following limits to ensure optimal performance 
 
 ## Daily sending limits
 
-Your account may have daily sending limits based on Cloudflare's assessment of your account standing. These limits are applied on a per-account basis, may vary, and may be adjusted over time based on your sending behavior. If you need higher sending limits, see "Need a higher limit?" at the bottom of this page to request an increase.
+New accounts start with a conservative daily quota and scale up over time based on your sending behavior, deliverability rates, and account standing. Limits are applied per account and may be adjusted automatically as your reputation improves.
+
+If you need higher sending limits sooner than automatic adjustment provides, refer to "Need a higher limit?" at the bottom of this page to request an increase.
 
 ## Verified emails
 
@@ -35,7 +37,7 @@ Accounts on a paid plan can send emails to any recipient, subject to daily sendi
 
 ## Workers binding limits
 
-The following limits apply only when sending emails via the [Workers binding](/email-service/api/send-emails/workers-api/). They do not apply to the REST API.
+Sending via the [Workers binding](/email-service/api/send-emails/workers-api/) runs inside your Worker's invocation, so it inherits the standard Workers platform limits below. These limits do not apply to the REST API.
 
 | Limit           | Workers Free | Workers Paid                      |
 | --------------- | ------------ | --------------------------------- |
@@ -45,16 +47,22 @@ The following limits apply only when sending emails via the [Workers binding](/e
 
 Email Sending requires the [Workers Paid plan](/email-service/platform/pricing/). For full details and how to raise per-Worker CPU and subrequest limits, refer to [Workers platform limits](/workers/platform/limits/).
 
+## Zone limits
+
+| Limit                   | Value | Notes                                                                                                                  |
+| ----------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Subdomains per zone** | 50    | Maximum number of subdomains that can be configured for Email Service in a single zone, in addition to the apex domain |
+
 ## Email Routing limits
 
 The following limits apply to inbound email handled by Email Routing.
 
-| Limit                                 | Value  | Notes                                                                       |
-| ------------------------------------- | ------ | --------------------------------------------------------------------------- |
-| **Routing rules per domain**          | 200    | Each rule maps an email pattern to a destination                            |
-| **Destination addresses per account** | 200    | Verified destination addresses are shared across all domains in the account |
-| **Inbound message size**              | 25 MiB | Messages larger than this are rejected                                      |
-| **Reply `References` entries**        | 100    | Limit on incoming emails replied to by Workers; reduces reply loops         |
+| Limit                                 | Value  | Notes                                                                                                        |
+| ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------ |
+| **Routing rules per domain**          | 200    | Each rule maps an email pattern to a destination                                                             |
+| **Destination addresses per account** | 200    | Verified destination addresses are shared across all domains in the account                                  |
+| **Inbound message size**              | 25 MiB | Messages larger than this are rejected                                                                       |
+| **Reply `References` entries**        | 100    | If the incoming email has more than 100 `References` entries, `message.reply()` throws. Reduces reply loops. |
 
 Each routing rule maps one email pattern to one destination address or one Email Worker. To forward a single email pattern to multiple destinations, use an Email Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
 

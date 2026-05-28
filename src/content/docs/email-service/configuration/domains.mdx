@@ -10,26 +10,26 @@ products:
   - email-service
 ---
 
-import { DashButton, Tabs, TabItem } from "~/components";
+import { DashButton, Render, Tabs, TabItem } from "~/components";
 
 Configure your domains to work with Cloudflare Email Service. This includes DNS record management, domain verification, and advanced domain settings.
 
 ## Automatic DNS configuration
 
-You can quickly get your DNS configured by following the automatic DNS configuration flow as part of the onboarding onto Email Service.
+Cloudflare can configure all required DNS records for you when you onboard a domain onto Email Sending or Email Routing.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+<Tabs>
+<TabItem label="Email Sending">
 
-2. Navigate to **Compute** > **Email Service** > **Email Sending** or **Email Routing**.
+<Render file="domain-setup-sending" product="email-service" />
 
-3. Select **Onboard Domain**.
+</TabItem>
+<TabItem label="Email Routing">
 
-4. Choose a domain from your Cloudflare account. Optionally review the DNS records that Cloudflare will add to your domain:
-   - TXT records for SPF to authorize sending emails and routing forwarded emails.
-   - TXT records for DKIM to provide authentication for emails sent and forwarded from your domain.
-   - MX records to route incoming emails to Email Service.
+<Render file="domain-setup-routing" product="email-service" />
 
-5. Select **Done**.
+</TabItem>
+</Tabs>
 
 ## DNS record configuration details
 
@@ -154,7 +154,9 @@ TXT yourdomain.com "v=spf1 include:_spf.mx.cloudflare.net ~all"
 - **TTL**: Auto
 
 :::note[Existing SPF records]
-If you have existing SPF records, merge them: `v=spf1 include:_spf.mx.cloudflare.net include:_spf.google.com ~all`
+If you have existing SPF records, merge them: `v=spf1 include:_spf.mx.cloudflare.net include:_spf.google.com ~all`.
+
+SPF records are limited to 10 DNS lookups total. If merging pushes you over the limit, consider flattening the record or removing non-essential `include:` entries.
 :::
 
 </TabItem>
@@ -225,13 +227,11 @@ If you want to migrate to a different email provider without immediately interru
 
 ### `_dc-mx` DNS responses
 
+This section applies only if your MX records point to hostnames that are proxied through Cloudflare.
+
 When an MX record on your domain points to a hostname that is proxied through Cloudflare, mail delivery to that hostname would normally fail because the Cloudflare proxy does not handle SMTP. To avoid this, Cloudflare automatically inserts a `_dc-mx.<hash>.example.com` record that resolves directly to the origin IP. Sending mail servers follow this record to bypass the proxy and reach the origin.
 
 For more information, refer to [DNS troubleshooting: `_dc-` and `_dc-mx` subdomains](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#dc--and-_dc-mx-subdomains).
-
-### Clean up leftover DKIM records
-
-If you have stopped using Email Service but still see leftover records such as a DKIM TXT record at `cf2024-1._domainkey.<hostname>`, use the [Disable Email Routing API](/api/resources/email_routing/subresources/dns/methods/delete/) to remove them.
 
 ### Verification troubleshooting
 

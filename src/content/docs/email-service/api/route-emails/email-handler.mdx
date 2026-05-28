@@ -1,5 +1,5 @@
 ---
-title: Workers API
+title: Email handler
 description: Process incoming emails with the email() handler in Cloudflare Workers to forward, reply, or reject messages.
 pcx_content_type: reference
 summary: |
@@ -20,10 +20,6 @@ Process incoming emails using the `email()` handler in your Cloudflare Workers. 
 Add the `email` handler function to your Worker's exported handlers:
 
 ```ts
-interface Env {
-	EMAIL: SendEmail;
-}
-
 export default {
 	async email(message, env, ctx): Promise<void> {
 		// Process incoming email
@@ -55,8 +51,8 @@ interface ForwardableEmailMessage {
 
 	// Actions
 	setReject(reason: string): void;
-	forward(rcptTo: string, headers?: Headers): Promise<void>;
-	reply(message: EmailMessage): Promise<void>;
+	forward(rcptTo: string, headers?: Headers): Promise<EmailSendResult>;
+	reply(message: EmailMessage): Promise<EmailSendResult>;
 }
 ```
 
@@ -91,27 +87,11 @@ export default {
 ```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
-		// Read raw email content
-		const reader = message.raw.getReader();
-		const chunks = [];
+		// Read raw email content as an ArrayBuffer, then decode to a string
+		const rawBuffer = await new Response(message.raw).arrayBuffer();
+		const rawContent = new TextDecoder().decode(rawBuffer);
 
-		try {
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
-				chunks.push(value);
-			}
-
-			// Convert to string
-			const decoder = new TextDecoder();
-			const rawContent = decoder.decode(
-				new Uint8Array(chunks.reduce((acc, chunk) => [...acc, ...chunk], [])),
-			);
-
-			console.log("Raw email content:", rawContent);
-		} finally {
-			reader.releaseLock();
-		}
+		console.log("Raw email content:", rawContent);
 	},
 };
 ```
@@ -119,52 +99,18 @@ export default {
 </TabItem>
 <TabItem label="Parse email content">
 
+Use [`postal-mime`](https://www.npmjs.com/package/postal-mime) to parse the MIME structure of an incoming email. The parser handles multipart boundaries, transfer encodings, and character sets correctly.
+
 ```ts
-// Helper function to parse email content
-async function parseEmailContent(
-	message,
-): Promise<{ subject: string; textBody: string; htmlBody: string }> {
-	const reader = message.raw.getReader();
-	const chunks = [];
-
-	try {
-		while (true) {
-			const { done, value } = await reader.read();
-			if (done) break;
-			chunks.push(value);
-		}
-
-		const decoder = new TextDecoder();
-		const rawContent = decoder.decode(
-			new Uint8Array(chunks.reduce((acc, chunk) => [...acc, ...chunk], [])),
-		);
-
-		// Parse MIME content (simplified)
-		const subject = message.headers.get("subject") || "";
-		const textMatch = rawContent.match(
-			/Content-Type: text\/plain[\s\S]*?\n\n([\s\S]*?)(?=\n--|\nContent-Type|\n$)/,
-		);
-		const htmlMatch = rawContent.match(
-			/Content-Type: text\/html[\s\S]*?\n\n([\s\S]*?)(?=\n--|\nContent-Type|\n$)/,
-		);
-
-		return {
-			subject,
-			textBody: textMatch ? textMatch[1].trim() : "",
-			htmlBody: htmlMatch ? htmlMatch[1].trim() : "",
-		};
-	} finally {
-		reader.releaseLock();
-	}
-}
+import PostalMime from "postal-mime";
 
 export default {
 	async email(message, env, ctx): Promise<void> {
-		const { subject, textBody, htmlBody } = await parseEmailContent(message);
+		const email = await PostalMime.parse(message.raw);
 
-		console.log(`Subject: ${subject}`);
-		console.log(`Text: ${textBody}`);
-		console.log(`HTML: ${htmlBody}`);
+		console.log(`Subject: ${email.subject}`);
+		console.log(`Text: ${email.text}`);
+		console.log(`HTML: ${email.html}`);
 	},
 };
 ```
@@ -185,7 +131,7 @@ Forward incoming emails to verified destination addresses:
 export default {
 	async email(message, env, ctx): Promise<void> {
 		// Forward to a single address
-		await message.forward("team@company.com");
+		await message.forward("team@example.com");
 	},
 };
 ```
@@ -201,14 +147,14 @@ export default {
 
 		// Route based on recipient
 		if (recipient.includes("support@")) {
-			await message.forward("support-team@company.com");
+			await message.forward("support-team@example.com");
 		} else if (recipient.includes("sales@")) {
-			await message.forward("sales-team@company.com");
+			await message.forward("sales-team@example.com");
 		} else if (subject.toLowerCase().includes("urgent")) {
-			await message.forward("urgent@company.com");
+			await message.forward("urgent@example.com");
 		} else {
 			// Default routing
-			await message.forward("general@company.com");
+			await message.forward("general@example.com");
 		}
 	},
 };
@@ -225,12 +171,12 @@ export default {
 		if (subject.toLowerCase().includes("security")) {
 			// Forward to multiple addresses for security issues
 			await Promise.all([
-				message.forward("security@company.com"),
-				message.forward("admin@company.com"),
-				message.forward("ciso@company.com"),
+				message.forward("security@example.com"),
+				message.forward("admin@example.com"),
+				message.forward("ciso@example.com"),
 			]);
 		} else {
-			await message.forward("general@company.com");
+			await message.forward("general@example.com");
 		}
 	},
 };
@@ -254,7 +200,7 @@ export default {
 		customHeaders.set("X-Spam-Score", "0.1"); // Example spam score
 
 		// Forward with custom headers
-		await message.forward("processed@company.com", customHeaders);
+		await message.forward("processed@example.com", customHeaders);
 	},
 };
 ```
@@ -307,7 +253,7 @@ export default {
 		);
 
 		// Also forward to human team
-		await message.forward("team@company.com");
+		await message.forward("team@example.com");
 	},
 };
 ```
@@ -332,7 +278,7 @@ export default {
 			sender.includes("no-reply") ||
 			subject.toLowerCase().includes("automated")
 		) {
-			await message.forward("team@company.com");
+			await message.forward("team@example.com");
 			return;
 		}
 
@@ -375,7 +321,7 @@ export default {
 		await message.reply(new EmailMessage(recipient, sender, reply.asRaw()));
 
 		// Forward to appropriate team
-		await message.forward("team@company.com");
+		await message.forward("team@example.com");
 	},
 };
 ```
@@ -405,7 +351,7 @@ export default {
 		}
 
 		// Continue processing
-		await message.forward("inbox@company.com");
+		await message.forward("inbox@example.com");
 	},
 };
 ```
@@ -437,7 +383,7 @@ export default {
 		}
 
 		// Continue processing
-		await message.forward("inbox@company.com");
+		await message.forward("inbox@example.com");
 	},
 };
 ```
@@ -474,7 +420,7 @@ export default {
 
 			// Fallback: forward to admin
 			try {
-				await message.forward("admin@company.com");
+				await message.forward("admin@example.com");
 			} catch (fallbackError) {
 				console.error("Fallback forwarding failed:", fallbackError);
 				// Last resort: reject the email
@@ -489,11 +435,11 @@ async function processEmail(message, env) {
 	const recipient = message.to;
 
 	if (recipient.includes("support@")) {
-		await message.forward("support@company.com");
+		await message.forward("support@example.com");
 	} else if (recipient.includes("sales@")) {
-		await message.forward("sales@company.com");
+		await message.forward("sales@example.com");
 	} else {
-		await message.forward("general@company.com");
+		await message.forward("general@example.com");
 	}
 }
 ```
@@ -501,6 +447,7 @@ async function processEmail(message, env) {
 ## Next steps
 
 - Test locally: [Email routing development](/email-service/local-development/routing/)
+- Manage rules and addresses programmatically with the [REST API](/email-service/api/route-emails/rest-api/)
 - Set up [email routing configuration](/email-service/configuration/email-routing-addresses/)
 - See [email routing examples](/email-service/examples/email-routing/) for advanced email processing
 - Learn about [spam filtering](/email-service/examples/email-routing/spam-filtering/) with Workers

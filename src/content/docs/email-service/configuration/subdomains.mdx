@@ -10,7 +10,9 @@ products:
 
 import { DashButton } from "~/components";
 
-Email Service is a zone-level feature. By default, Email Sending and Email Routing apply to the apex domain (for example, `example.com`). You can extend either service to subdomains of the same zone, such as `mail.example.com` or `corp.example.com`.
+Email Routing is a zone-level feature that applies to the apex domain (for example, `example.com`) by default. Email Sending treats each domain separately and is onboarded per domain. You can extend either service to subdomains of the same zone, such as `mail.example.com` or `corp.example.com`, but the onboarding flow differs between the two.
+
+A zone can have up to 50 subdomains configured for Email Service. Refer to [Limits](/email-service/platform/limits/) for the full list of platform limits.
 
 ## Add a subdomain to Email Routing
 
@@ -37,3 +39,9 @@ Email Sending treats a subdomain as a separate sending domain. Onboard the subdo
 4. Select **Done**.
 
 Once verified, you can send emails from addresses on the subdomain (for example, `notifications@mail.example.com`) using either the [REST API](/email-service/api/send-emails/rest-api/) or the [Workers binding](/email-service/api/send-emails/workers-api/).
+
+## Next steps
+
+- [Domain configuration](/email-service/configuration/domains/) — manage DNS records for sending and routing.
+- [Routing rules and addresses](/email-service/configuration/email-routing-addresses/) — create routing rules on subdomains.
+- [Deliverability](/email-service/concepts/deliverability/) — separate subdomains for different email types.

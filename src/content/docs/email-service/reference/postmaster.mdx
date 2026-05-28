@@ -24,7 +24,7 @@ To report email abuse, contact us at [mailabuse@cloudflare.com](mailto:mailabuse
 
 ### Authenticated Received Chain (ARC)
 
-Email Service supports [Authenticated Received Chain (ARC)](http://arc-spec.org/). ARC allows intermediate email servers, such as forwarders, to attach a record of the original authentication results to a message. The destination server can then verify the authenticity of forwarded messages even when SPF or DKIM would otherwise fail due to forwarding. Major providers, including Google, also support ARC.
+Email Service supports [Authenticated Received Chain (ARC)](https://arc-spec.org/). ARC allows intermediate email servers, such as forwarders, to attach a record of the original authentication results to a message. The destination server can then verify the authenticity of forwarded messages even when SPF or DKIM would otherwise fail due to forwarding. Major providers, including Google, also support ARC.
 
 ### DKIM signature
 
@@ -105,7 +105,11 @@ If you are a postmaster and are having trouble receiving Email Service emails, a
 
 `2405:8100:c000::/38`
 
-_Ranges last updated: December 13th, 2023_
+To verify the current authoritative ranges, query the SPF record directly:
+
+```sh
+dig TXT _spf.mx.cloudflare.net +short
+```
 
 ### Outbound hostnames
 
@@ -171,35 +175,14 @@ The `~all` mechanism is a SoftFail. Receiving servers should treat mail from IPs
 
 ---
 
-## Configuration details
+## Related configuration
 
-### Sending domains
+For full configuration details, refer to:
 
-To send emails through Email Service, domains must be verified and configured properly. This includes:
-
-- DNS verification of domain ownership
-- Proper SPF record configuration
-- DKIM key setup (handled automatically)
-- Optional DMARC policy configuration
-
-### Rate limiting
-
-Email Service implements rate limiting to prevent abuse and maintain service quality. Rate limits vary based on your Cloudflare plan and sending patterns.
-
-### Content filtering
-
-Email Service includes content filtering to prevent spam and abuse. Emails that don't meet content guidelines may be rejected or delayed.
-
-### Bounce handling
-
-Email Service automatically handles bounces and provides detailed bounce information through:
-
-- Dashboard analytics
-- API responses
-
-### Suppression lists
-
-Email Service maintains suppression lists to prevent sending to addresses that have bounced or complained. This helps maintain sender reputation and compliance with anti-spam regulations.
+- [Domain configuration](/email-service/configuration/domains/) — DNS records, sending and routing setup
+- [Limits](/email-service/platform/limits/) — rate limits, sending quotas, and message size limits
+- [Deliverability](/email-service/concepts/deliverability/) — bounce handling and reputation management
+- [Suppression lists](/email-service/concepts/suppressions/) — automatic and manual suppression management
 
 ---
 
@@ -226,7 +209,7 @@ Due to the nature of email forwarding, restrictive DMARC policies might make for
 
 ### Sending or replying to an email from your Cloudflare domain
 
-Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not from the email pattern of the routing rule that delivered the message (like `info@my-company.com`).
+Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not from the email pattern of the routing rule that delivered the message (like `info@yourdomain.com`).
 
 ### "." is treated as a normal character in email patterns
 

@@ -69,6 +69,10 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
 </TabItem>
 <TabItem label="index.ts (Workers)">
 ```ts
+interface Env {
+	EMAIL: SendEmail;
+}
+
 export default {
 	// Handle HTTP requests (Email Sending)
 	async fetch(request, env, ctx): Promise<Response> {
@@ -99,7 +103,7 @@ export default {
 			html: "<h1>Thank you!</h1><p>We'll get back to you soon.</p>",
 		});
 	},
-} satisfies ExportedHandler<{ EMAIL: SendEmail }>;
+} satisfies ExportedHandler<Env>;
 ```
 </TabItem>
 <TabItem label="wrangler.jsonc">

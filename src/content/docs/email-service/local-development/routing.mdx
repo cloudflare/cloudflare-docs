@@ -54,9 +54,9 @@ export default {
 
 		// Route based on recipient
 		if (message.to.includes("support@")) {
-			await message.forward("support-team@company.com");
+			await message.forward("support-team@example.com");
 		} else {
-			await message.forward("general@company.com");
+			await message.forward("general@example.com");
 		}
 	},
 };

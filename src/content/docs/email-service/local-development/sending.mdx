@@ -82,7 +82,7 @@ export default {
 		try {
 			const emailData = await request.json();
 
-			console.log("📤 Sending email:", {
+			console.log("Sending email:", {
 				to: emailData.to,
 				from: emailData.from,
 				subject: emailData.subject,

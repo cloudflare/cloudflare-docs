@@ -43,7 +43,7 @@ class SimpleSpamFilter implements SpamFilter {
 		"lottery",
 	];
 
-	private trustedDomains = ["company.com", "trusted-partner.com", "vendor.net"];
+	private trustedDomains = ["example.com", "trusted-partner.com", "vendor.net"];
 
 	async checkSpam(
 		message,
@@ -129,7 +129,7 @@ export default {
 
 		if (spamCheck.isSpam) {
 			console.log(
-				`🚫 Rejected spam email from ${message.from}: ${spamCheck.reasons.join(", ")}`,
+				`Rejected spam email from ${message.from}: ${spamCheck.reasons.join(", ")}`,
 			);
 			message.setReject(`Message rejected: ${spamCheck.reasons[0]}`);
 			return;
@@ -141,7 +141,7 @@ export default {
 		headers.set("X-Spam-Reasons", spamCheck.reasons.join(", "));
 		headers.set("X-Spam-Check-Time", (Date.now() - startTime).toString());
 
-		await message.forward("inbox@company.com", headers);
+		await message.forward("inbox@example.com", headers);
 	},
 };
 
@@ -156,3 +156,9 @@ function getScoreRange(score: number): string {
 ## Advanced spam detection with AI
 
 For more sophisticated spam detection, you can enhance the basic filter using [Workers AI](/workers-ai/) to analyze email content with machine learning models. This approach can identify subtle spam patterns that keyword-based filters might miss.
+
+## Next steps
+
+- [Email handler](/email-service/api/route-emails/email-handler/) — reference for `setReject()` and `forward()` actions used here.
+- [Hard bounce handling](/email-service/examples/email-routing/hard-bounce-handling/) — detect bounce notifications that often originate from spam infrastructure.
+- [Email storage and processing](/email-service/examples/email-routing/email-storage/) — log filtered emails to KV for later review.

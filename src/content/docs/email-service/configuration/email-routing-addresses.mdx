@@ -59,7 +59,7 @@ Deleting a destination address automatically disables all routing rules that use
 
 :::note
 
-If you have more than one destination address linked to the same email pattern, Email Routing will only process the most recent rule. This means only the most recent rule will receive your forwarded emails. To avoid this, do not link more than one destination address to the same email pattern.
+If you create more than one rule with the same email pattern, only the rule shown first in the dashboard list processes incoming emails. To avoid this, do not create multiple rules with the same email pattern.
 :::
 
 ### Routing rule actions
@@ -112,7 +112,7 @@ Renaming an Email Worker removes the binding between that Worker and any routes 
 Deleting a routing rule permanently removes it. Emails matching its pattern will no longer be routed. If you want to temporarily stop routing without deleting the rule, refer to [Disable a routing rule](#disable-a-routing-rule).
 :::
 
-## Catch-all rule
+### Catch-all rule
 
 When you enable this feature, Email Routing forwards every email sent to your domain, including misspelled local parts, to a single destination. For example, if you created a rule for `info@example.com` and a sender accidentally types `ifno@example.com`, the email will still be handled if you have the **Catch-all rule** enabled.
 
@@ -127,12 +127,19 @@ To enable the catch-all rule:
 4. In the **Action** drop-down menu, select what to do with these emails. Refer to [Routing rule actions](#routing-rule-actions) for more information.
 5. Select **Save**.
 
-## Subaddressing
+### Subaddressing
 
 Email Routing supports subaddressing, also known as plus addressing, as defined in [RFC 5233](https://www.rfc-editor.org/rfc/rfc5233). This enables using the "+" separator to augment your routing rules with arbitrary detail information.
 
 You can enable subaddressing at **Compute** > **Email Service** > **Email Routing** > **Settings**.
 
-Once enabled, you can use subaddressing with any of your routing rules. For example, if you send an email to `user+detail@example.com` it will be captured by the `user@example.com` routing rule. The `+detail` part is ignored by Email Routing, but it can be captured next in the processing chain in the logs, a [Worker](/email-service/api/route-emails/email-handler/) or an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent).
+Once enabled, you can use subaddressing with any of your routing rules. For example, if you send an email to `user+detail@example.com` it will be matched by the `user@example.com` routing rule. The `+detail` part does not affect rule matching, but it is preserved in `message.to` and can be inspected by a [Worker](/email-service/api/route-emails/email-handler/), an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent), or via the activity log.
 
 If a routing rule for `user+detail@example.com` already exists, it takes precedence over the rule for `user@example.com`. This prevents breaking existing routing rules and allows certain sub-addresses to be captured by a specific rule.
+
+## Next steps
+
+- [Email handler](/email-service/api/route-emails/email-handler/) — process emails programmatically with the `email()` handler.
+- [REST API](/email-service/api/route-emails/rest-api/) — manage routing rules and destination addresses programmatically.
+- [Domain configuration](/email-service/configuration/domains/) — manage DNS records for Email Routing.
+- [Email routing examples](/email-service/examples/email-routing/) — advanced patterns including spam filtering and email storage.

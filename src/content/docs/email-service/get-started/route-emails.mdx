@@ -130,7 +130,7 @@ Use Workers to process emails with custom logic before forwarding or responding.
    // Configuration - Update these values
    // ============================================
    const YOUR_DOMAIN = "yourdomain.com"; // Replace with your verified domain
-   const FORWARD_TO_EMAIL = "your-team@company.com"; // Replace with where you want emails forwarded
+   const FORWARD_TO_EMAIL = "your-team@example.com"; // Replace with where you want emails forwarded
 
    export default {
    	async email(message, env, ctx): Promise<void> {
@@ -149,13 +149,14 @@ Use Workers to process emails with custom logic before forwarding or responding.
    			const messageId = message.headers.get("Message-ID");
    			if (messageId) {
    				msg.setHeader("In-Reply-To", messageId);
+   				msg.setHeader("References", messageId);
    			}
    			msg.setSender({
    				name: "Support Team",
    				addr: `support@${YOUR_DOMAIN}`,
    			});
    			msg.setRecipient(message.from);
-   			msg.setSubject("We received your message");
+   			msg.setSubject(`Re: ${subject}`);
 
    			// Add plain text version
    			msg.addMessage({

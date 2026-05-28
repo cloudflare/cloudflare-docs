@@ -9,7 +9,24 @@ products:
   - email-service
 ---
 
+import { WranglerConfig } from "~/components";
+
 This example demonstrates how to send a magic link email for passwordless authentication using Cloudflare Email Service.
+
+Configure the email binding in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"send_email": [{ "name": "EMAIL" }],
+	"vars": {
+		"DOMAIN": "yourdomain.com",
+	},
+}
+```
+
+</WranglerConfig>
 
 ```typescript
 interface Env {
@@ -77,3 +94,9 @@ function isValidEmail(email: string): boolean {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 ```
+
+## Next steps
+
+- [User signup flow](/email-service/examples/email-sending/signup-flow/) — combine magic links with account verification.
+- [Send method](/email-service/api/send-emails/workers-api/) — full reference for the `send()` method.
+- [Email headers](/email-service/reference/headers/) — add tracking or list-management headers.

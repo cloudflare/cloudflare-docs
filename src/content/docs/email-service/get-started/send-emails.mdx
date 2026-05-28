@@ -28,10 +28,10 @@ You must be using Cloudflare DNS to use Email Service.
 
 ## Send your first email with the REST API
 
-Send an email with a single `curl` command. Replace `<ACCOUNT_ID>` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/) and `<API_TOKEN>` with an [API token](/fundamentals/api/get-started/create-token/).
+Send an email with a single `curl` command. Replace `{account_id}` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/) and `<API_TOKEN>` with an [API token](/fundamentals/api/get-started/create-token/).
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/email/sending/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{

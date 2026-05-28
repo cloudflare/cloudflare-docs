@@ -1,5 +1,5 @@
 ---
-title: Workers API
+title: Send method
 description: Send emails directly from Cloudflare Workers using the Email Service binding and send() method.
 pcx_content_type: concept
 sidebar:
@@ -114,7 +114,7 @@ interface EmailMessageBuilder {
 }
 
 interface Attachment {
-	content: string | ArrayBuffer; // Base64 string or binary content
+	content: string | ArrayBuffer | ArrayBufferView; // Base64 string or binary content
 	filename: string;
 	type: string; // MIME type
 	disposition: "attachment" | "inline";
@@ -128,6 +128,14 @@ interface EmailSendResult {
 // Errors are thrown as standard Error objects with a `code` property
 // try { await env.EMAIL.send(...) } catch (e) { console.log(e.code, e.message) }
 ```
+
+:::note[Local development with binary attachments]
+When using `wrangler dev` without [remote bindings](/workers/development-testing/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations) for the workaround.
+:::
+
+:::note[Workers binding vs REST API responses]
+The Workers binding returns a single `messageId` per `send()` call. The [REST API](/email-service/api/send-emails/rest-api/) returns recipient-grouped delivery status instead.
+:::
 
 ### Basic usage
 
@@ -164,8 +172,8 @@ const response = await env.EMAIL.send({
 ```ts
 const response = await env.EMAIL.send({
 	to: "customer@example.com",
-	cc: ["manager@company.com"],
-	bcc: ["archive@company.com"],
+	cc: ["manager@example.com"],
+	bcc: ["archive@example.com"],
 	from: "orders@yourdomain.com",
 	replyTo: "support@yourdomain.com",
 	subject: "Order Confirmation #12345",
@@ -260,9 +268,6 @@ const response = await env.EMAIL.send({
 
 Handle email sending errors gracefully:
 
-<Tabs>
-<TabItem label="Single send errors">
-
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
@@ -318,9 +323,6 @@ export default {
 };
 ```
 
-</TabItem>
-</Tabs>
-
 ## Error codes
 
 The following error codes may be returned when sending emails:
@@ -340,17 +342,17 @@ The following error codes may be returned when sending emails:
 | `E_RATE_LIMIT_EXCEEDED`         | Rate limit exceeded                         | Sending rate limit reached                                                                 |
 | `E_DAILY_LIMIT_EXCEEDED`        | Daily limit exceeded                        | Daily sending quota reached                                                                |
 | `E_INTERNAL_SERVER_ERROR`       | Internal service error                      | Email Service temporarily unavailable                                                      |
-| `E_HEADER_NOT_ALLOWED`          | Header not allowed                      | Header is platform-controlled or not on the [whitelist](/email-service/reference/headers/) |
-| `E_HEADER_USE_API_FIELD`        | Must use API field                      | Header like `From` must be set via the dedicated API field                                 |
-| `E_HEADER_VALUE_INVALID`        | Header value invalid                    | Malformed value, empty, or incorrect format                                                |
-| `E_HEADER_VALUE_TOO_LONG`       | Header value too long                   | Value exceeds 2,048 byte limit                                                             |
-| `E_HEADER_NAME_INVALID`         | Header name invalid                     | Invalid characters or exceeds 100 byte limit                                               |
-| `E_HEADERS_TOO_LARGE`           | Headers payload too large               | Total custom headers exceed 16 KB limit                                                    |
-| `E_HEADERS_TOO_MANY`            | Too many headers                        | More than 20 whitelisted (non-X) custom headers                                            |
+| `E_HEADER_NOT_ALLOWED`          | Header not allowed                          | Header is platform-controlled or not on the [allowlist](/email-service/reference/headers/) |
+| `E_HEADER_USE_API_FIELD`        | Must use API field                          | Header like `From` must be set via the dedicated API field                                 |
+| `E_HEADER_VALUE_INVALID`        | Header value invalid                        | Malformed value, empty, or incorrect format                                                |
+| `E_HEADER_VALUE_TOO_LONG`       | Header value too long                       | Value exceeds 2,048 byte limit                                                             |
+| `E_HEADER_NAME_INVALID`         | Header name invalid                         | Invalid characters or exceeds 100 byte limit                                               |
+| `E_HEADERS_TOO_LARGE`           | Headers payload too large                   | Total custom headers exceed 16 KB limit                                                    |
+| `E_HEADERS_TOO_MANY`            | Too many headers                            | More than 20 allowlisted (non-X) custom headers                                            |
 
 ## Legacy `EmailMessage` API
 
-The existing `EmailMessage` API remains supported for backward compatibility:
+The `EmailMessage` API remains supported for backward compatibility. Use it when you already have a raw [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) MIME message to send. For new code, prefer the structured [`send()` method](#send-method) above.
 
 ```ts
 import { EmailMessage } from "cloudflare:email";

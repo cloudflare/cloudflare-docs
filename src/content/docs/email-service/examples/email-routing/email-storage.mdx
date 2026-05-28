@@ -29,44 +29,29 @@ export default {
 	async email(message, env, ctx): Promise<void> {
 		const emailId = `email-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-		// Read email content
-		const reader = message.raw.getReader();
-		const chunks = [];
+		// Read email content as an ArrayBuffer, then decode to a string
+		const rawBuffer = await new Response(message.raw).arrayBuffer();
+		const rawContent = new TextDecoder().decode(rawBuffer);
 
-		try {
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
-				chunks.push(value);
-			}
+		// Store email metadata and content
+		const emailData = {
+			id: emailId,
+			from: message.from,
+			to: message.to,
+			subject: message.headers.get("subject"),
+			timestamp: new Date().toISOString(),
+			size: message.rawSize,
+			rawContent: rawContent,
+			processed: false,
+		};
 
-			const decoder = new TextDecoder();
-			const rawContent = decoder.decode(
-				new Uint8Array(chunks.reduce((acc, chunk) => [...acc, ...chunk], [])),
-			);
+		await env.EMAILS.put(emailId, JSON.stringify(emailData));
 
-			// Store email metadata and content
-			const emailData = {
-				id: emailId,
-				from: message.from,
-				to: message.to,
-				subject: message.headers.get("subject"),
-				timestamp: new Date().toISOString(),
-				size: message.rawSize,
-				rawContent: rawContent,
-				processed: false,
-			};
-
-			await env.EMAILS.put(emailId, JSON.stringify(emailData));
-
-			// Process based on recipient
-			if (message.to.includes("support@")) {
-				await handleSupportEmail(message, env, emailId);
-			} else {
-				await message.forward("general@company.com");
-			}
-		} finally {
-			reader.releaseLock();
+		// Process based on recipient
+		if (message.to.includes("support@")) {
+			await handleSupportEmail(message, env, emailId);
+		} else {
+			await message.forward("general@example.com");
 		}
 	},
 };
@@ -114,7 +99,7 @@ async function handleSupportEmail(message, env, emailId) {
 	);
 
 	// Forward to support team
-	await message.forward("support-team@company.com");
+	await message.forward("support-team@example.com");
 }
 ```
 
@@ -131,6 +116,8 @@ interface Env {
 	EMAIL_QUEUE: Queue;
 	EMAIL_STORAGE: KVNamespace;
 	EMAIL_ANALYTICS: AnalyticsEngine;
+	SUPPORT_TICKETS?: KVNamespace;
+	SALES_LEADS?: KVNamespace;
 }
 
 interface EmailQueueMessage {
@@ -148,89 +135,74 @@ export default {
 	async email(message, env, ctx): Promise<void> {
 		const emailId = `email-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-		// Store raw email content
-		const reader = message.raw.getReader();
-		const chunks = [];
+		// Read raw email content as an ArrayBuffer, then decode to a string
+		const rawBuffer = await new Response(message.raw).arrayBuffer();
+		const rawContent = new TextDecoder().decode(rawBuffer);
 
-		try {
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
-				chunks.push(value);
-			}
+		// Store email with metadata
+		const emailData = {
+			id: emailId,
+			from: message.from,
+			to: message.to,
+			subject: message.headers.get("subject"),
+			timestamp: new Date().toISOString(),
+			size: message.rawSize,
+			rawContent: rawContent,
+			processed: false,
+			status: "queued",
+		};
 
-			const decoder = new TextDecoder();
-			const rawContent = decoder.decode(
-				new Uint8Array(chunks.reduce((acc, chunk) => [...acc, ...chunk], [])),
-			);
+		await env.EMAIL_STORAGE.put(emailId, JSON.stringify(emailData));
 
-			// Store email with metadata
-			const emailData = {
-				id: emailId,
-				from: message.from,
-				to: message.to,
-				subject: message.headers.get("subject"),
-				timestamp: new Date().toISOString(),
-				size: message.rawSize,
-				rawContent: rawContent,
-				processed: false,
-				status: "queued",
-			};
+		// Determine priority and category
+		const priority = determinePriority(message);
+		const category = determineCategory(message);
 
-			await env.EMAIL_STORAGE.put(emailId, JSON.stringify(emailData));
+		// Queue email for processing
+		const queueMessage: EmailQueueMessage = {
+			emailId,
+			from: message.from,
+			to: message.to,
+			subject: message.headers.get("subject") || "",
+			timestamp: new Date().toISOString(),
+			priority,
+			category,
+		};
 
-			// Determine priority and category
-			const priority = determinePriority(message);
-			const category = determineCategory(message);
+		await env.EMAIL_QUEUE.send(queueMessage, {
+			delaySeconds: priority === "urgent" ? 0 : priority === "high" ? 5 : 30,
+		});
 
-			// Queue email for processing
-			const queueMessage: EmailQueueMessage = {
-				emailId,
-				from: message.from,
-				to: message.to,
-				subject: message.headers.get("subject") || "",
-				timestamp: new Date().toISOString(),
-				priority,
-				category,
-			};
-
-			await env.EMAIL_QUEUE.send(queueMessage, {
-				delaySeconds: priority === "urgent" ? 0 : priority === "high" ? 5 : 30,
-			});
-
-			// Send threaded immediate auto-reply
-			const messageId = message.headers.get("Message-ID");
-			const reply = createMimeMessage();
-			if (messageId) {
-				reply.setHeader("In-Reply-To", messageId);
-				reply.setHeader("References", messageId);
-			}
-			reply.setSender(message.to);
-			reply.setRecipient(message.from);
-			reply.setSubject(`Re: ${message.headers.get("subject")}`);
-			reply.addMessage({
-				contentType: "text/plain",
-				data: "Thank you for your message. It has been queued for processing.",
-			});
-
-			await message.reply(
-				new EmailMessage(message.to, message.from, reply.asRaw()),
-			);
-		} finally {
-			reader.releaseLock();
+		// Send threaded immediate auto-reply
+		const messageId = message.headers.get("Message-ID");
+		const reply = createMimeMessage();
+		if (messageId) {
+			reply.setHeader("In-Reply-To", messageId);
+			reply.setHeader("References", messageId);
 		}
+		reply.setSender(message.to);
+		reply.setRecipient(message.from);
+		reply.setSubject(`Re: ${message.headers.get("subject")}`);
+		reply.addMessage({
+			contentType: "text/plain",
+			data: "Thank you for your message. It has been queued for processing.",
+		});
+
+		await message.reply(
+			new EmailMessage(message.to, message.from, reply.asRaw()),
+		);
 	},
 
 	// Process queued emails
 	async queue(batch, env, ctx): Promise<void> {
-		console.log(`📥 Processing ${batch.messages.length} queued emails`);
+		console.log(`Processing ${batch.messages.length} queued emails`);
 
 		for (const message of batch.messages) {
 			try {
 				const emailData = message.body as EmailQueueMessage;
 
 				console.log(
-					`📧 Processing ${emailData.category} email from ${emailData.from}`,
+					`Processing ${emailData.category} email from ${emailData.from}`,
 				);
 
 				// Get stored email content
@@ -374,7 +346,7 @@ async function processSupport(
 	// Send confirmation email
 	await env.EMAIL.send({
 		to: emailData.from,
-		from: "support@company.com",
+		from: "support@yourdomain.com",
 		subject: `Support Ticket Created: ${ticketId}`,
 		html: `
 			<h2>Support Ticket Created</h2>
@@ -418,7 +390,7 @@ async function processSales(
 	// Send sales response
 	await env.EMAIL.send({
 		to: emailData.from,
-		from: "sales@company.com",
+		from: "sales@yourdomain.com",
 		subject: `Re: ${emailData.subject}`,
 		html: `
 			<h2>Thank you for your interest!</h2>
@@ -439,7 +411,7 @@ async function processBilling(
 	// Handle billing inquiries
 	await env.EMAIL.send({
 		to: emailData.from,
-		from: "billing@company.com",
+		from: "billing@yourdomain.com",
 		subject: `Re: ${emailData.subject}`,
 		html: `
 			<h2>Billing Inquiry Received</h2>
@@ -460,14 +432,14 @@ async function processGeneral(
 	// Handle general inquiries
 	await env.EMAIL.send({
 		to: emailData.from,
-		from: "info@company.com",
+		from: "info@yourdomain.com",
 		subject: `Re: ${emailData.subject}`,
 		text: `
 			Thank you for contacting us.
 			
 			We have received your message and will respond within 48 hours.
 			
-			For urgent matters, please contact our support team at support@company.com.
+			For urgent matters, please contact our support team at support@yourdomain.com.
 			
 			Best regards,
 			Customer Service Team
@@ -478,6 +450,8 @@ async function processGeneral(
 }
 ```
 
----
+## Next steps
 
-This email storage system provides comprehensive email processing with KV storage, queue-based processing, and automated responses for different email categories.
+- [Email handler](/email-service/api/route-emails/email-handler/) — reference for the `email()` handler and its actions.
+- [Spam filtering](/email-service/examples/email-routing/spam-filtering/) — block spam before storing or processing.
+- [Hard bounce handling](/email-service/examples/email-routing/hard-bounce-handling/) — detect and process bounce notifications.
