@@ -2495,6 +2495,7 @@
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /warp-client/teams/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/ 301
 /cloudflare-one/integrations/identity-providers/azuread/ /cloudflare-one/integrations/identity-providers/entra-id/ 301
+/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect 301
 
 # Cloudflare One nav revamp (statics)
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
