@@ -5,35 +5,31 @@ description: API reference for RtkInformationTooltip component (React Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| Property   | Type        | Required | Default           | Description |
+| ---------- | ----------- | -------- | ----------------- | ----------- |
+| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack   |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkInformationTooltip } from '@cloudflare/realtimekit-react-ui';
+import { RtkInformationTooltip } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return <RtkInformationTooltip />;
+	return <RtkInformationTooltip />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkInformationTooltip } from '@cloudflare/realtimekit-react-ui';
+import { RtkInformationTooltip } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return (
-    <RtkInformationTooltip
-      iconPack={defaultIconPack}
-    />
-  );
+	return <RtkInformationTooltip iconPack={defaultIconPack} />;
 }
 ```
-

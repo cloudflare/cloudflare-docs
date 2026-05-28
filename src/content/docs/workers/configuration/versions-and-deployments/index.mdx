@@ -6,6 +6,7 @@ description: Upload versions of Workers and create deployments to release new ve
 products:
   - workers
 ---
+
 import { DashButton } from "~/components";
 
 Versions track changes to your Worker. Deployments configure how those changes are deployed to your traffic.
@@ -107,4 +108,3 @@ Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate
 ### Durable Object migrations
 
 Uploading a version with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
-

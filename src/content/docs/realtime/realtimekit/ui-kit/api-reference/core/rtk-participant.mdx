@@ -5,21 +5,22 @@ description: API reference for rtk-participant component (Web Components (HTML) 
 products:
   - realtime
 ---
+
 A participant entry component used inside `rtk-participants` which shows data like:
- name, picture and media device status.
- You can perform privileged actions on the participant too.
+name, picture and media device status.
+You can perform privileged actions on the participant too.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config object |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `participant` | `Peer` | ✅ | - | Participant object |
-| `states` | `States1` | ✅ | - | States |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `view` | `ParticipantViewMode` | ✅ | - | Show participant summary |
+| Property      | Type                  | Required | Default                 | Description              |
+| ------------- | --------------------- | -------- | ----------------------- | ------------------------ |
+| `config`      | `UIConfig1`           | ❌       | `createDefaultConfig()` | Config object            |
+| `iconPack`    | `IconPack`            | ❌       | `defaultIconPack`       | Icon pack                |
+| `meeting`     | `Meeting`             | ✅       | -                       | Meeting object           |
+| `participant` | `Peer`                | ✅       | -                       | Participant object       |
+| `states`      | `States1`             | ✅       | -                       | States                   |
+| `t`           | `RtkI18n`             | ❌       | `useLanguage()`         | Language                 |
+| `view`        | `ParticipantViewMode` | ✅       | -                       | Show participant summary |
 
 ## Usage Examples
 
@@ -32,16 +33,14 @@ A participant entry component used inside `rtk-participants` which shows data li
 ### With Properties
 
 ```html
-<rtk-participant>
-</rtk-participant>
+<rtk-participant> </rtk-participant>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-participant");
+	const el = document.querySelector("rtk-participant");
 
-  el.meeting= meeting
-  el.participant= participant
+	el.meeting = meeting;
+	el.participant = participant;
 </script>
 ```

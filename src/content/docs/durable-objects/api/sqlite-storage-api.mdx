@@ -8,7 +8,16 @@ products:
   - durable-objects
 ---
 
-import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample, Details, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	Type,
+	MetaInfo,
+	GlossaryTooltip,
+	TypeScriptExample,
+	Details,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 :::note
 This page documents the storage API for the newer SQLite-backed Durable Objects.
@@ -136,7 +145,11 @@ class MyDurableObject(DurableObject):
 - When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#indexes-in-sqlite).
 - Writing data to [SQLite virtual tables](https://www.sqlite.org/vtab.html) also counts towards rows written.
 
-<Render file="d1-do-supported-sqlite-extensions" product="d1" params={{ product: "Durable Objects support" }}/>
+<Render
+	file="d1-do-supported-sqlite-extensions"
+	product="d1"
+	params={{ product: "Durable Objects support" }}
+/>
 
 ### `exec`
 
@@ -161,7 +174,10 @@ Always consume the cursor fully before yielding the event loop. Call `.toArray()
 ```ts
 // ✅ Safe: cursor is fully consumed before any await
 const rows = this.ctx.storage.sql.exec("SELECT * FROM users").toArray();
-const result = await fetch("https://example.com", { method: "POST", body: JSON.stringify(rows) });
+const result = await fetch("https://example.com", {
+	method: "POST",
+	body: JSON.stringify(rows),
+});
 ```
 
 ```ts
@@ -351,6 +367,6 @@ ctx.storage.onNextSessionRestoreBookmark(bookmark)
 
 ## Related resources
 
-- [Durable Objects: Easy, Fast, Correct  Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Durable Objects: Easy, Fast, Correct Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
 - [Zero-latency SQLite storage in every Durable Object blog](https://blog.cloudflare.com/sqlite-in-durable-objects/)
 - [WebSockets API](/durable-objects/best-practices/websockets/)

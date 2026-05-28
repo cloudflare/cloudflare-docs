@@ -5,16 +5,17 @@ description: API reference for rtk-confirmation-modal component (Angular Library
 products:
   - realtime
 ---
+
 A confirmation modal.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description    |
+| ---------- | ---------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
+| `states`   | `States`   | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
 
 ## Usage Examples
 
@@ -29,8 +30,5 @@ A confirmation modal.
 
 ```html
 <!-- component.html -->
-<rtk-confirmation-modal
- [meeting]="meeting">
-</rtk-confirmation-modal>
+<rtk-confirmation-modal [meeting]="meeting"> </rtk-confirmation-modal>
 ```
-

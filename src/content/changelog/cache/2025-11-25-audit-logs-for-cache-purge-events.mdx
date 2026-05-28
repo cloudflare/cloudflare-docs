@@ -20,28 +20,28 @@ The detailed audit payload is visible within the Cloudflare Dashboard (under **M
 
 ```json
 {
-  "action": {
-    "result": "success",
-    "type": "create"
-  },
-  "actor": {
-    "id": "1234567890abcdef",
-    "email": "user@example.com",
-    "type": "user"
-  },
-  "resource": {
-    "product": "purge_cache",
-    "request": {
-      "files": [
-        "https://example.com/images/logo.png",
-        "https://example.com/css/styles.css"
-      ]
-    }
-  },
-  "zone": {
-    "id": "023e105f4ecef8ad9ca31a8372d0c353",
-    "name": "example.com"
-  }
+	"action": {
+		"result": "success",
+		"type": "create"
+	},
+	"actor": {
+		"id": "1234567890abcdef",
+		"email": "user@example.com",
+		"type": "user"
+	},
+	"resource": {
+		"product": "purge_cache",
+		"request": {
+			"files": [
+				"https://example.com/images/logo.png",
+				"https://example.com/css/styles.css"
+			]
+		}
+	},
+	"zone": {
+		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+		"name": "example.com"
+	}
 }
 ```
 

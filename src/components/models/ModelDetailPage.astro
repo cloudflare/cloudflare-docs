@@ -188,7 +188,9 @@ const starlightPageProps = {
 			? { depth: 2, slug: "Examples", text: "Examples" }
 			: false,
 		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
-		hasSchema ? { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" } : false,
+		hasSchema
+			? { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" }
+			: false,
 	].filter((v) => Boolean(v)) as MarkdownHeading[],
 	hideTitle: true,
 } as StarlightPageProps;
@@ -424,22 +426,114 @@ const starlightPageProps = {
 					{model.apiModes.flatMap((mode) => [
 						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
 							<span class="text-sm">
-								<span class="font-medium text-gray-900 dark:text-gray-100">{mode.name}</span>
+								<span class="font-medium text-gray-900 dark:text-gray-100">
+									{mode.name}
+								</span>
 								<span class="ml-2 text-gray-500 dark:text-gray-400">Input</span>
 							</span>
 							<span class="flex items-center gap-1">
-								<a href={`${schemaBasePath}/${mode.id}-input.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-								<a href={`${schemaBasePath}/${mode.id}-input.json`} download={`${mode.id}-input.json`} title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+								<a
+									href={`${schemaBasePath}/${mode.id}-input.json`}
+									target="_blank"
+									rel="noopener noreferrer"
+									title="Open"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+										<polyline points="15 3 21 3 21 9" />
+										<line x1="10" y1="14" x2="21" y2="3" />
+									</svg>
+								</a>
+								<a
+									href={`${schemaBasePath}/${mode.id}-input.json`}
+									download={`${mode.id}-input.json`}
+									title="Download"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+										<polyline points="7 10 12 15 17 10" />
+										<line x1="12" y1="15" x2="12" y2="3" />
+									</svg>
+								</a>
 							</span>
 						</div>,
 						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
 							<span class="text-sm">
-								<span class="font-medium text-gray-900 dark:text-gray-100">{mode.name}</span>
-								<span class="ml-2 text-gray-500 dark:text-gray-400">Output</span>
+								<span class="font-medium text-gray-900 dark:text-gray-100">
+									{mode.name}
+								</span>
+								<span class="ml-2 text-gray-500 dark:text-gray-400">
+									Output
+								</span>
 							</span>
 							<span class="flex items-center gap-1">
-								<a href={`${schemaBasePath}/${mode.id}-output.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-								<a href={`${schemaBasePath}/${mode.id}-output.json`} download={`${mode.id}-output.json`} title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+								<a
+									href={`${schemaBasePath}/${mode.id}-output.json`}
+									target="_blank"
+									rel="noopener noreferrer"
+									title="Open"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+										<polyline points="15 3 21 3 21 9" />
+										<line x1="10" y1="14" x2="21" y2="3" />
+									</svg>
+								</a>
+								<a
+									href={`${schemaBasePath}/${mode.id}-output.json`}
+									download={`${mode.id}-output.json`}
+									title="Download"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+										<polyline points="7 10 12 15 17 10" />
+										<line x1="12" y1="15" x2="12" y2="3" />
+									</svg>
+								</a>
 							</span>
 						</div>,
 					])}
@@ -483,17 +577,115 @@ const starlightPageProps = {
 					<h2 id="API-Schemas">API Schemas (Raw)</h2>
 					<div class="not-content grid grid-cols-1 gap-2 sm:grid-cols-2">
 						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
-							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Input</span>
+							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">
+								Input
+							</span>
 							<span class="flex items-center gap-1">
-								<a href={`${schemaBasePath}/schema-input.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-								<a href={`${schemaBasePath}/schema-input.json`} download="schema-input.json" title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+								<a
+									href={`${schemaBasePath}/schema-input.json`}
+									target="_blank"
+									rel="noopener noreferrer"
+									title="Open"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<>
+											<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+											<polyline points="15 3 21 3 21 9" />
+											<line x1="10" y1="14" x2="21" y2="3" />
+										</>
+									</svg>
+								</a>
+								<a
+									href={`${schemaBasePath}/schema-input.json`}
+									download="schema-input.json"
+									title="Download"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<>
+											<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+											<polyline points="7 10 12 15 17 10" />
+											<line x1="12" y1="15" x2="12" y2="3" />
+										</>
+									</svg>
+								</a>
 							</span>
 						</div>
 						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
-							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Output</span>
+							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">
+								Output
+							</span>
 							<span class="flex items-center gap-1">
-								<a href={`${schemaBasePath}/schema-output.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-								<a href={`${schemaBasePath}/schema-output.json`} download="schema-output.json" title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+								<a
+									href={`${schemaBasePath}/schema-output.json`}
+									target="_blank"
+									rel="noopener noreferrer"
+									title="Open"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<>
+											<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+											<polyline points="15 3 21 3 21 9" />
+											<line x1="10" y1="14" x2="21" y2="3" />
+										</>
+									</svg>
+								</a>
+								<a
+									href={`${schemaBasePath}/schema-output.json`}
+									download="schema-output.json"
+									title="Download"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<>
+											<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+											<polyline points="7 10 12 15 17 10" />
+											<line x1="12" y1="15" x2="12" y2="3" />
+										</>
+									</svg>
+								</a>
 							</span>
 						</div>
 					</div>

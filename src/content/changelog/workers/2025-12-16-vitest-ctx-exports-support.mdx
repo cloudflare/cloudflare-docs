@@ -15,9 +15,9 @@ import { createExecutionContext } from "cloudflare:test";
 import { it, expect } from "vitest";
 
 it("can access ctx.exports", async () => {
-  const ctx = createExecutionContext();
-  const result = await ctx.exports.MyEntryPoint.myMethod();
-  expect(result).toBe("expected value");
+	const ctx = createExecutionContext();
+	const result = await ctx.exports.MyEntryPoint.myMethod();
+	expect(result).toBe("expected value");
 });
 ```
 
@@ -28,8 +28,8 @@ import { exports } from "cloudflare:workers";
 import { it, expect } from "vitest";
 
 it("can access imported exports", async () => {
-  const result = await exports.MyEntryPoint.myMethod();
-  expect(result).toBe("expected value");
+	const result = await exports.MyEntryPoint.myMethod();
+	expect(result).toBe("expected value");
 });
 ```
 

@@ -11,13 +11,16 @@ date: 2025-04-17 12:00:00 UTC
 Pull consumers allow you to consume messages over HTTP from any environment—including outside of [Cloudflare Workers](/workers). They’re also useful when you need fine-grained control over how quickly messages are consumed.
 
 To setup a new queue with a pull based consumer using [Wrangler](/workers/wrangler/), run:
+
 ```sh title="Create a queue with a pull based consumer"
 npx wrangler queues create my-queue
 npx wrangler queues consumer http add my-queue
 ```
+
 You can also configure a pull consumer using the [REST API](/api/resources/queues/subresources/consumers/methods/create/) or the Queues dashboard.
 
 Once configured, you can pull messages from the queue using any HTTP client. You'll need a [Cloudflare API Token](/fundamentals/api/get-started/create-token/) with `queues_read` and `queues_write` permissions. For example:
+
 ```bash title="Pull messages from a queue"
 curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" \
 --header "Authorization: Bearer ${API_TOKEN}" \

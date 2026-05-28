@@ -8,21 +8,21 @@ products:
 ---
 
 ```mdx live wrap
-import { CardGrid, LinkCard } from "~/components"
+import { CardGrid, LinkCard } from "~/components";
 
 <LinkCard
-    title="foo"
-    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum nulla et accumsan sodales."
-    href="/style-guide/components/link-cards/"
+	title="foo"
+	description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum nulla et accumsan sodales."
+	href="/style-guide/components/link-cards/"
 />
 
 <CardGrid>
-{[...Array(4).keys()].map(() => (
-    <LinkCard
-        title="foo"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum nulla et accumsan sodales."
-        href="/style-guide/components/link-cards/"
-    />
-))}
+	{[...Array(4).keys()].map(() => (
+		<LinkCard
+			title="foo"
+			description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum nulla et accumsan sodales."
+			href="/style-guide/components/link-cards/"
+		/>
+	))}
 </CardGrid>
 ```

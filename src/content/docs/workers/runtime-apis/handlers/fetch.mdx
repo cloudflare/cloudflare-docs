@@ -13,36 +13,27 @@ Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [`Re
 ```js
 export default {
 	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
+		return new Response("Hello World!");
 	},
 };
 ```
 
 :::note
 
-
 The Workers runtime does not support `XMLHttpRequest` (XHR). Learn the difference between `XMLHttpRequest` and `fetch()` in the [MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) documentation.
-
 
 :::
 
 ### Parameters
 
+- `request` Request
+  - The incoming HTTP request.
 
+- `env` object
+  - The [bindings](/workers/runtime-apis/bindings/) available to the Worker. As long as the [environment](/workers/wrangler/environments/) has not changed, the same object (equal by identity) may be passed to multiple requests. You can also [import `env` from `cloudflare:workers`](/workers/runtime-apis/bindings/#importing-env-as-a-global) to access bindings from anywhere in your code.
 
-* `request` Request
+- <code>ctx.waitUntil(promisePromise)</code> : void
+  - Refer to [`waitUntil`](/workers/runtime-apis/context/#waituntil).
 
-  * The incoming HTTP request.
-
-* `env` object
-
-  * The [bindings](/workers/runtime-apis/bindings/) available to the Worker. As long as the [environment](/workers/wrangler/environments/) has not changed, the same object (equal by identity) may be passed to multiple requests. You can also [import `env` from `cloudflare:workers`](/workers/runtime-apis/bindings/#importing-env-as-a-global) to access bindings from anywhere in your code.
-
-* <code>ctx.waitUntil(promisePromise)</code> : void
-
-  * Refer to [`waitUntil`](/workers/runtime-apis/context/#waituntil).
-
-* <code>ctx.passThroughOnException()</code> : void
-
-  * Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception).
-
+- <code>ctx.passThroughOnException()</code> : void
+  - Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception).

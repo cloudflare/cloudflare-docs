@@ -14,7 +14,11 @@ The Cloudflare One Appliance uses NetFlow v9 to export flow data for breakout tr
 
 ### Enable NetFlow exports
 
-<Render file="account-id-api-key" product="networking-services" params={{ showSiteId: true }} />
+<Render
+	file="account-id-api-key"
+	product="networking-services"
+	params={{ showSiteId: true }}
+/>
 
 1. Send a `PUT` request to the Netflow configuration endpoint for your site.
 2. In the JSON body request, you must include the `collector_ip` parameter. To export traffic statistics to Network Flow, use the IP address `162.159.65.1`. This is the only field required to enable the feature.
@@ -25,11 +29,12 @@ Minimal configuration example:
 	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/sites/$SITE_ID/netflow_config"
 	method="PUT"
 	json={{
-		"collector_ip": "162.159.65.1"
+		collector_ip: "162.159.65.1",
 	}}
 />
 
 3. You can customize the configuration by adding optional fields to the JSON payload. These fields include:
+
 - `collector_port`: The UDP port for the collector. The default is `2055`.
 - `sampling_rate`: The rate at which packets are sampled.
 - `active_timeout`: The timeout for active flows in seconds.
@@ -41,11 +46,11 @@ Full configuration example:
 	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/sites/$SITE_ID/netflow_config"
 	method="PUT"
 	json={{
-		"collector_ip": "162.159.65.1",
-		"collector_port": 2055,
-		"sampling_rate": 100,
-		"active_timeout": 60,
-		"inactive_timeout": 30
+		collector_ip: "162.159.65.1",
+		collector_port: 2055,
+		sampling_rate: 100,
+		active_timeout: 60,
+		inactive_timeout: 30,
 	}}
 />
 

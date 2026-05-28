@@ -5,19 +5,20 @@ description: API reference for rtk-breakout-rooms-toggle component (Angular Libr
 products:
   - realtime
 ---
+
 A button which toggles visibility of breakout rooms.
- You need to pass the `meeting` object to it.
+You need to pass the `meeting` object to it.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ✅ | - | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ✅ | - | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default | Description    |
+| ---------- | ------------------- | -------- | ------- | -------------- |
+| `iconPack` | `IconPack`          | ✅       | -       | Icon pack      |
+| `meeting`  | `Meeting`           | ✅       | -       | Meeting object |
+| `size`     | `Size`              | ✅       | -       | Size           |
+| `states`   | `States`            | ✅       | -       | States object  |
+| `t`        | `RtkI18n`           | ✅       | -       | Language       |
+| `variant`  | `ControlBarVariant` | ✅       | -       | Variant        |
 
 ## Usage Examples
 
@@ -33,9 +34,9 @@ A button which toggles visibility of breakout rooms.
 ```html
 <!-- component.html -->
 <rtk-breakout-rooms-toggle
- [iconPack]="defaultIconPack"
- [meeting]="meeting"
- size="md">
+	[iconPack]="defaultIconPack"
+	[meeting]="meeting"
+	size="md"
+>
 </rtk-breakout-rooms-toggle>
 ```
-

@@ -25,18 +25,18 @@ For a Cache Key based on device type, purge the asset by passing the `CF-Device-
 Refer to the example API request below to instantly purge all mobile assets on the root webpage.
 
 <APIRequest
-  path="/zones/{zone_id}/purge_cache"
-  method="POST"
-  json={{
-    files: [
-      {
-        url: "http://my.website.com/",
-        headers: {
-          "CF-Device-Type": "mobile"
-        }
-      }
-    ]
-  }}
+	path="/zones/{zone_id}/purge_cache"
+	method="POST"
+	json={{
+		files: [
+			{
+				url: "http://my.website.com/",
+				headers: {
+					"CF-Device-Type": "mobile",
+				},
+			},
+		],
+	}}
 />
 
 ## Purge by geo
@@ -44,18 +44,18 @@ Refer to the example API request below to instantly purge all mobile assets on t
 Instantly purge resources for a location-based Cache Key by specifying the two-letter country code. Spain is used in the example below.
 
 <APIRequest
-  path="/zones/{zone_id}/purge_cache"
-  method="POST"
-  json={{
-    files: [
-      {
-        url: "http://my.website.com/",
-        headers: {
-          "CF-IPCountry": "ES"
-        }
-      }
-    ]
-  }}
+	path="/zones/{zone_id}/purge_cache"
+	method="POST"
+	json={{
+		files: [
+			{
+				url: "http://my.website.com/",
+				headers: {
+					"CF-IPCountry": "ES",
+				},
+			},
+		],
+	}}
 />
 
 ## Purge by language
@@ -63,16 +63,16 @@ Instantly purge resources for a location-based Cache Key by specifying the two-l
 For a Cache Key based on language, purge the asset by passing the `accept-language` header. Refer to the example API request below to instantly purge all assets in Chinese (PRC).
 
 <APIRequest
-  path="/zones/{zone_id}/purge_cache"
-  method="POST"
-  json={{
-    files: [
-      {
-        url: "http://my.website.com/",
-        headers: {
-          "accept-language": "zh-CN"
-        }
-      }
-    ]
-  }}
+	path="/zones/{zone_id}/purge_cache"
+	method="POST"
+	json={{
+		files: [
+			{
+				url: "http://my.website.com/",
+				headers: {
+					"accept-language": "zh-CN",
+				},
+			},
+		],
+	}}
 />

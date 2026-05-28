@@ -30,10 +30,10 @@ Privacy Pass token format:
 Proxy-Authorization: PrivateToken token=<base64-encoded-token>
 ```
 
-| Parameter | Description |
-| ----------- | ------------- |
-| `<key>` | The pre-shared key provided by Cloudflare |
-| `<base64-encoded-token>` | A base64-encoded Privacy Pass token |
+| Parameter                | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `<key>`                  | The pre-shared key provided by Cloudflare |
+| `<base64-encoded-token>` | A base64-encoded Privacy Pass token       |
 
 ### GraphQL Analytics API request headers
 
@@ -47,10 +47,10 @@ Specifies the client's geographic location for egress IP selection. Optional but
 sec-ch-geohash: <geohash>-<country_code>
 ```
 
-| Parameter | Description |
-| ----------- | ------------- |
-| `<geohash>` | A [geohash](https://en.wikipedia.org/wiki/Geohash) string (typically 4-8 characters) |
-| `<country_code>` | ISO 3166-1 alpha-2 country code |
+| Parameter        | Description                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| `<geohash>`      | A [geohash](https://en.wikipedia.org/wiki/Geohash) string (typically 4-8 characters) |
+| `<country_code>` | ISO 3166-1 alpha-2 country code                                                      |
 
 ```http title="Example"
 sec-ch-geohash: u4pruydqqvj-GB
@@ -72,8 +72,8 @@ Provides timing information about proxy processing. This is part of the [OpenTel
 Server-Timing: proxy;dur=<milliseconds>
 ```
 
-| Parameter | Description |
-| ----------- | ------------- |
+| Parameter        | Description                                             |
+| ---------------- | ------------------------------------------------------- |
 | `<milliseconds>` | Processing time in milliseconds introduced by the proxy |
 
 ```http title="Example"
@@ -99,9 +99,9 @@ sec-ch-geohash: 9q8yy-US
 
 The proxy responds with a status code indicating success or failure:
 
-| Status | Meaning |
-| -------- | --------- |
-| `200 OK` | Tunnel established successfully |
-| `403 Forbidden` | Authentication failed |
-| `502 Bad Gateway` | Could not connect to destination |
-| `503 Service Unavailable` | Proxy temporarily unavailable |
+| Status                    | Meaning                          |
+| ------------------------- | -------------------------------- |
+| `200 OK`                  | Tunnel established successfully  |
+| `403 Forbidden`           | Authentication failed            |
+| `502 Bad Gateway`         | Could not connect to destination |
+| `503 Service Unavailable` | Proxy temporarily unavailable    |

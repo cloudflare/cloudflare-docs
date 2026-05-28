@@ -318,13 +318,13 @@ Organizations may also connect their network locations directly to the Cloudflar
 
 The following table summarizes the different methods of connecting networks to Cloudflare:
 
-| **Use case**                                                                                                                                           | **Recommended**                             | **Alternative solution**                                                                                      |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Remote users connecting to applications on private networks in a Zero Trust model (e.g. most VPN replacement scenarios)                                | **Cloudflare Tunnel (with `cloudflared`)**  | **Cloudflare WAN** Alternative option if `cloudflared` not suitable for environment                           |
-| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Cloudflare WAN**                          | **Cloudflare Mesh** Alternative option if routing changes cannot be made at perimeter |
-| Egress traffic from physical sites or cloud environments to cloud security inspection (e.g. most common SWG and branch firewall replacement scenarios) | **Cloudflare WAN**                          | **N/A**                                                                                                       |
-| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Mesh** | **Cloudflare WAN** Alternative option if inbound source IP fidelity not required                              |
-| Mesh networking and device-to-device connectivity                                                                                                      | **Cloudflare Mesh** | **N/A**                                                                                                       |
+| **Use case**                                                                                                                                           | **Recommended**                            | **Alternative solution**                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------- |
+| Remote users connecting to applications on private networks in a Zero Trust model (e.g. most VPN replacement scenarios)                                | **Cloudflare Tunnel (with `cloudflared`)** | **Cloudflare WAN** Alternative option if `cloudflared` not suitable for environment   |
+| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Cloudflare WAN**                         | **Cloudflare Mesh** Alternative option if routing changes cannot be made at perimeter |
+| Egress traffic from physical sites or cloud environments to cloud security inspection (e.g. most common SWG and branch firewall replacement scenarios) | **Cloudflare WAN**                         | **N/A**                                                                               |
+| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Mesh**                        | **Cloudflare WAN** Alternative option if inbound source IP fidelity not required      |
+| Mesh networking and device-to-device connectivity                                                                                                      | **Cloudflare Mesh**                        | **N/A**                                                                               |
 
 Each of these methods of connecting and routing traffic can be deployed concurrently from any location. The following diagram highlights how different connectivity methods can be used in a single architecture.
 
@@ -343,8 +343,8 @@ Note the following traffic flows:
 _Note: Labels in this image may reflect a previous product name._
 
 <sub>
-	*Note: All of the endpoints connected via Cloudflare Mesh or device agent
-	are automatically assigned IP addresses from the 100.96.0.0/12 address range,
+	*Note: All of the endpoints connected via Cloudflare Mesh or device agent are
+	automatically assigned IP addresses from the 100.96.0.0/12 address range,
 	while endpoints connected to Cloudflare WAN retain their assigned RFC1918
 	private IP addresses. `cloudflared` can be deployed in any of the locations by
 	an application owner to provide hostname-based connectivity to the

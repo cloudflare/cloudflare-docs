@@ -8,7 +8,6 @@ import { RuleID } from "~/components";
 
 This week's release introduces new detections for vulnerabilities in SmarterTools SmarterMail (CVE-2025-52691 and CVE-2026-23760), alongside improvements to an existing Command Injection (nslookup) detection to enhance coverage.
 
-
 **Key Findings**
 
 - CVE-2025-52691: SmarterTools SmarterMail mail server is vulnerable to Arbitrary File Upload, allowing an unauthenticated attacker to upload files to any location on the mail server, potentially enabling remote code execution.
@@ -62,8 +61,10 @@ Successful exploitation of these SmarterMail vulnerabilities could lead to full 
 			<td>Command Injection - Nslookup - Beta</td>
 			<td>Log</td>
 			<td>Block</td>
-			<td>This rule is merged into the original rule "Command Injection - Nslookup" (ID: <RuleID id="f4a310393c564d50bd585601b090ba9a" />)</td>
+			<td>
+				This rule is merged into the original rule "Command Injection -
+				Nslookup" (ID: <RuleID id="f4a310393c564d50bd585601b090ba9a" />)
+			</td>
 		</tr>
-          
 	</tbody>
 </table>

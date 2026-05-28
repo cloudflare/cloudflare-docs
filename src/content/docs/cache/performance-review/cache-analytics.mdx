@@ -4,10 +4,9 @@ pcx_content_type: concept
 description: View cache hit rates and bandwidth savings in Cache Analytics.
 products:
   - cache
-
 ---
 
-import { FeatureTable, DashButton } from "~/components"
+import { FeatureTable, DashButton } from "~/components";
 
 Cache Analytics shows how much of your site's traffic is served from Cloudflare's cache versus your origin server. When content is served from cache, visitors get faster page loads and your origin web server handles less traffic. Use Cache Analytics to identify resources that are [missing from cache](/cache/concepts/cache-responses/#miss), [expired](/cache/concepts/cache-responses/#expired) (cached copy is outdated), or [ineligible for caching](/cache/concepts/cache-responses/#noneunknown) (not eligible for caching). You can filter by hostname, review the top URLs that miss cache, and query up to three days of data.
 
@@ -19,7 +18,7 @@ Cache Analytics shows how much of your site's traffic is served from Cloudflare'
 
 In the Cloudflare dashboard, go to the **Caching** page.
 
-   <DashButton url="/?to=/:account/:zone/caching" />
+<DashButton url="/?to=/:account/:zone/caching" />
 
 ## Requests vs Data Transfer
 

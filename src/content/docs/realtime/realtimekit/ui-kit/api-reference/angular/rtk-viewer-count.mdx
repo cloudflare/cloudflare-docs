@@ -5,16 +5,17 @@ description: API reference for rtk-viewer-count component (Angular Library)
 products:
   - realtime
 ---
+
 A component which shows count of total joined participants in a meeting.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ViewerCountVariant` | ✅ | - | Viewer count variant |
+| Property   | Type                 | Required | Default           | Description          |
+| ---------- | -------------------- | -------- | ----------------- | -------------------- |
+| `iconPack` | `IconPack`           | ❌       | `defaultIconPack` | Icon pack            |
+| `meeting`  | `Meeting`            | ✅       | -                 | Meeting object       |
+| `t`        | `RtkI18n`            | ❌       | `useLanguage()`   | Language             |
+| `variant`  | `ViewerCountVariant` | ✅       | -                 | Viewer count variant |
 
 ## Usage Examples
 
@@ -29,9 +30,5 @@ A component which shows count of total joined participants in a meeting.
 
 ```html
 <!-- component.html -->
-<rtk-viewer-count
- [meeting]="meeting"
- variant="primary">
-</rtk-viewer-count>
+<rtk-viewer-count [meeting]="meeting" variant="primary"> </rtk-viewer-count>
 ```
-

@@ -30,15 +30,13 @@ For example, consider the following Worker that implements a [`fetch()` handler]
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  }
-}
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
+};
 ```
 
 The following Worker declares a binding to the Worker above:
-
-
 
 <WranglerConfig>
 
@@ -74,12 +72,12 @@ If you construct a new request manually, rather than forwarding an existing one,
 
 ```js
 export default {
-  async fetch(request, env) {
-    // provide a valid URL
-    let newRequest = new Request("https://valid-url.com", { method: "GET" });
-    let response = await env.WORKER_B.fetch(newRequest);
-    return response;
-  }
+	async fetch(request, env) {
+		// provide a valid URL
+		let newRequest = new Request("https://valid-url.com", { method: "GET" });
+		let response = await env.WORKER_B.fetch(newRequest);
+		return response;
+	},
 };
 ```
 

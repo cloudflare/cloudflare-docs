@@ -5,16 +5,17 @@ description: API reference for rtk-participants-waiting-list component (Angular 
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
-| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
+| Property   | Type                   | Required | Default                 | Description                     |
+| ---------- | ---------------------- | -------- | ----------------------- | ------------------------------- |
+| `config`   | `UIConfig1`            | ❌       | `createDefaultConfig()` | Config                          |
+| `iconPack` | `IconPack1`            | ❌       | `defaultIconPack`       | Icon pack                       |
+| `meeting`  | `Meeting`              | ✅       | -                       | Meeting object                  |
+| `size`     | `Size1`                | ✅       | -                       | Size                            |
+| `t`        | `RtkI18n1`             | ❌       | `useLanguage()`         | Language                        |
+| `view`     | `ParticipantsViewMode` | ✅       | -                       | View mode for participants list |
 
 ## Usage Examples
 
@@ -30,9 +31,9 @@ products:
 ```html
 <!-- component.html -->
 <rtk-participants-waiting-list
- [meeting]="meeting"
- size="md"
- [view]="participantsviewmode">
+	[meeting]="meeting"
+	size="md"
+	[view]="participantsviewmode"
+>
 </rtk-participants-waiting-list>
 ```
-

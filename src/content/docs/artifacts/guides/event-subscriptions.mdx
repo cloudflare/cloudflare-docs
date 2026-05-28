@@ -13,6 +13,7 @@ import { Render } from "~/components";
 Artifacts emits structured events for repository lifecycle changes — creates, deletes, forks, imports, pushes, clones, fetches, and token changes. By subscribing to these events through [event subscriptions](/queues/event-subscriptions/), you can consume them from a Worker to build commit-driven automation.
 
 For example:
+
 - Run custom workflows when a repository is created or imported
 - Kick off a build and deploy a change when an agent pushes to a repo
 - Trigger a review agent on every push

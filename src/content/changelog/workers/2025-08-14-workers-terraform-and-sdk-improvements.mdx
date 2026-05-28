@@ -90,20 +90,16 @@ const scriptContent = `
   };
 `;
 
-client.workers.scripts.versions.create('my-worker', {
-  account_id: '123456789',
-  metadata: {
-    main_module: 'my-worker.mjs',
-  },
-  files: [
-    await toFile(
-      Buffer.from(scriptContent),
-      'my-worker.mjs',
-      {
-        type: "application/javascript+module",
-      }
-    )
-  ]
+client.workers.scripts.versions.create("my-worker", {
+	account_id: "123456789",
+	metadata: {
+		main_module: "my-worker.mjs",
+	},
+	files: [
+		await toFile(Buffer.from(scriptContent), "my-worker.mjs", {
+			type: "application/javascript+module",
+		}),
+	],
 });
 ```
 
@@ -115,19 +111,20 @@ Previously when creating a KV value like this:
 
 ```js
 await cf.kv.namespaces.values.update("my-kv-namespace", "key1", {
-  account_id: "123456789",
-  metadata: "my metadata",
-  value: JSON.stringify({
-    hello: "world"
-  })
+	account_id: "123456789",
+	metadata: "my metadata",
+	value: JSON.stringify({
+		hello: "world",
+	}),
 });
 ```
 
 ...and recalling it in your Worker like this:
+
 ```ts
-const value = await c.env.KV.get<{hello: string}>("key1", "json");
+const value = await c.env.KV.get<{ hello: string }>("key1", "json");
 ```
 
-You'd get back this: `{metadata:'my metadata', value:"{'hello':'world'}"}` instead of the correct value of `{hello: 'world'}` 
+You'd get back this: `{metadata:'my metadata', value:"{'hello':'world'}"}` instead of the correct value of `{hello: 'world'}`
 
 This is fixed in cloudflare-typescript 4.5.0 and will be fixed in cloudflare-python 4.4.0.

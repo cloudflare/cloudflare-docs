@@ -26,6 +26,7 @@ Before getting started, you will need:
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select the bucket you'd like to add an event notification rule to.
 3. Switch to the **Settings** tab, then scroll down to the **Event notifications** card.
 4. Select **Add notification** and choose the queue you'd like to receive notifications and the [type of events](/r2/buckets/event-notifications/#event-types) that will trigger them.
@@ -66,10 +67,10 @@ Event notification rules determine the [event types](/r2/buckets/event-notificat
 
 ## Event types
 
-| Event type | Description | Trigger actions |
-|------------|-------------|----------------|
+| Event type      | Description                                                                 | Trigger actions                                                                      |
+| --------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | `object-create` | Triggered when new objects are created or existing objects are overwritten. | <ul><li>`PutObject`</li><li>`CopyObject`</li><li>`CompleteMultipartUpload`</li></ul> |
-| `object-delete` | Triggered when an object is explicitly removed from the bucket. | <ul><li>`DeleteObject`</li><li>`LifecycleDeletion`</li></ul> |
+| `object-delete` | Triggered when an object is explicitly removed from the bucket.             | <ul><li>`DeleteObject`</li><li>`LifecycleDeletion`</li></ul>                         |
 
 ## Message format
 
@@ -95,19 +96,19 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 
 ### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `account` | String | The Cloudflare account ID that the event is associated with. |
-| `action` | String | The type of action that triggered the event notification. Example actions include: `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `DeleteObject`. |
-| `bucket` | String | The name of the bucket where the event occurred. |
-| `object` | Object | A nested object containing details about the object involved in the event. |
-| `object.key` | String | The key (or name) of the object within the bucket. |
-| `object.size` | Number | The size of the object in bytes. Note: not present for object-delete events. |
-| `object.eTag` | String | The entity tag (eTag) of the object. Note: not present for object-delete events. |
-| `eventTime` | String | The time when the action that triggered the event occurred. |
-| `copySource` | Object | A nested object containing details about the source of a copied object. Note: only present for events triggered by `CopyObject`. |
-| `copySource.bucket` | String | The bucket that contained the source object. |
-| `copySource.object` | String | The name of the source object. |
+| Property            | Type   | Description                                                                                                                                              |
+| ------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account`           | String | The Cloudflare account ID that the event is associated with.                                                                                             |
+| `action`            | String | The type of action that triggered the event notification. Example actions include: `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `DeleteObject`. |
+| `bucket`            | String | The name of the bucket where the event occurred.                                                                                                         |
+| `object`            | Object | A nested object containing details about the object involved in the event.                                                                               |
+| `object.key`        | String | The key (or name) of the object within the bucket.                                                                                                       |
+| `object.size`       | Number | The size of the object in bytes. Note: not present for object-delete events.                                                                             |
+| `object.eTag`       | String | The entity tag (eTag) of the object. Note: not present for object-delete events.                                                                         |
+| `eventTime`         | String | The time when the action that triggered the event occurred.                                                                                              |
+| `copySource`        | Object | A nested object containing details about the source of a copied object. Note: only present for events triggered by `CopyObject`.                         |
+| `copySource.bucket` | String | The bucket that contained the source object.                                                                                                             |
+| `copySource.object` | String | The name of the source object.                                                                                                                           |
 
 ## Notes
 

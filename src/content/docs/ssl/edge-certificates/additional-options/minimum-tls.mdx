@@ -8,7 +8,14 @@ sidebar:
   order: 13
 ---
 
-import { FeatureTable, TabItem, Tabs, APIRequest, Render, DashButton } from "~/components";
+import {
+	FeatureTable,
+	TabItem,
+	Tabs,
+	APIRequest,
+	Render,
+	DashButton,
+} from "~/components";
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
@@ -86,20 +93,19 @@ Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hos
 In the following example, the minimum TLS version for a specific hostname will be set to `1.2`. Replace the zone ID, hostname, and authentication placeholders with your information, and adjust the `value` field with your chosen TLS version.
 
 <APIRequest
-  path="/zones/{zone_id}/hostnames/settings/{setting_id}/{hostname}"
-  method="PUT"
-  json={{
-		"value": "1.2"
+	path="/zones/{zone_id}/hostnames/settings/{setting_id}/{hostname}"
+	method="PUT"
+	json={{
+		value: "1.2",
 	}}
 	parameters={{
-		setting_id: "min_tls_version"
+		setting_id: "min_tls_version",
 	}}
 />
 
 ### Cloudflare for SaaS
 
 If you are a SaaS provider looking to configure minimum TLS version for your custom hostnames, refer to the Cloudflare for SaaS [TLS management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#minimum-tls-version).
-
 
 ## Test supported TLS versions
 

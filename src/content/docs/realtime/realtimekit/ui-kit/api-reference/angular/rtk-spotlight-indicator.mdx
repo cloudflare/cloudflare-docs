@@ -5,14 +5,15 @@ description: API reference for rtk-spotlight-indicator component (Angular Librar
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description    |
+| ---------- | ---------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
+| `size`     | `Size1`    | ✅       | -                 | Size           |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
 
 ## Usage Examples
 
@@ -27,9 +28,6 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-spotlight-indicator
- [meeting]="meeting"
- size="md">
+<rtk-spotlight-indicator [meeting]="meeting" size="md">
 </rtk-spotlight-indicator>
 ```
-

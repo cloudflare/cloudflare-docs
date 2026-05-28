@@ -5,14 +5,15 @@ description: API reference for rtk-livestream-player component (Angular Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property   | Type        | Required | Default           | Description    |
+| ---------- | ----------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack1` | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`   | ✅       | -                 | Meeting object |
+| `size`     | `Size1`     | ✅       | -                 | Size           |
+| `t`        | `RtkI18n1`  | ❌       | `useLanguage()`   | Language       |
 
 ## Usage Examples
 
@@ -27,9 +28,5 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-livestream-player
- [meeting]="meeting"
- size="md">
-</rtk-livestream-player>
+<rtk-livestream-player [meeting]="meeting" size="md"> </rtk-livestream-player>
 ```
-

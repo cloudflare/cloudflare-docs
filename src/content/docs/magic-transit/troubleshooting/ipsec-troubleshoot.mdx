@@ -12,15 +12,17 @@ tags:
   - Logging
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="ipsec-logs-troubleshooting"
+<Render
+	file="ipsec-logs-troubleshooting"
 	product="networking-services"
 	params={{
-		supportedIpsecConfigLink: "/magic-transit/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		supportedIpsecConfigLink:
+			"/magic-transit/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
 		antiReplayLink: "/magic-transit/reference/anti-replay-protection/",
 		tunnelHealthLink: "/magic-transit/troubleshooting/tunnel-health/",
-		mtuMssLink: "/magic-transit/reference/mtu-mss/"
+		mtuMssLink: "/magic-transit/reference/mtu-mss/",
 	}}
 />
 
@@ -29,6 +31,7 @@ import { Render } from "~/components"
 Some customer routers cannot fully disable IPsec anti-replay protection, which is required for optimal Magic Transit operation (packet reordering at the Cloudflare edge can otherwise trigger false drops).
 
 **If your router does not support disabling anti-replay:**
+
 1. Check whether your router supports configuring a **replay window size**. Setting this to `0` is equivalent to disabling anti-replay protection.
 2. If neither disabling anti-replay nor setting the window size to `0` is supported, **the router cannot be used as a Magic Transit IPsec on-ramp**. Consider using a GRE tunnel or Cloudflare Network Interconnect (CNI) instead.
 
@@ -41,4 +44,3 @@ If your ISP is blocking these response packets, health checks will fail even whe
 **Symptom:** Health checks fail but application traffic flows normally through the tunnel.
 
 **Resolution:** Switch to bidirectional health checks, which send both the probe and the response through the tunnel. Bidirectional health checks require egress traffic to be turned on for your Magic Transit configuration. For more information, refer to [Tunnel health checks](/magic-transit/reference/tunnel-health-checks/).
-

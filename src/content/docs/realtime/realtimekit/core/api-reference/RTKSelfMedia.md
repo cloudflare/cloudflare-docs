@@ -147,16 +147,16 @@ Returns true if screen share is enabled.
 **Kind**: global variable  
 <a name="init"></a>
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type | Default |
-| --- | --- | --- |
-| options | <code>Object</code> |  | 
-| [options.video] | <code>boolean</code> |  | 
-| [options.audio] | <code>boolean</code> |  | 
-| [options.constraints] | <code>MediaConstraints</code> |  | 
-| [skipAwaits] | <code>boolean</code> | <code>false</code> | 
-| [context] | <code>Context</code> | <code></code> | 
+| Param                 | Type                          | Default            |
+| --------------------- | ----------------------------- | ------------------ |
+| options               | <code>Object</code>           |                    |
+| [options.video]       | <code>boolean</code>          |                    |
+| [options.audio]       | <code>boolean</code>          |                    |
+| [options.constraints] | <code>MediaConstraints</code> |                    |
+| [skipAwaits]          | <code>boolean</code>          | <code>false</code> |
+| [context]             | <code>Context</code>          | <code></code>      |
 
 <a name="addAudioMiddleware"></a>
 
@@ -165,21 +165,21 @@ If there are more than 1 audio middlewares,
 they will be executed in the sequence they were added in.
 If you want the sequence to be altered, please remove all previous middlewares and re-add.
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| audioMiddleware | <code>AudioMiddleware</code> | 
+| Param           | Type                         |
+| --------------- | ---------------------------- |
+| audioMiddleware | <code>AudioMiddleware</code> |
 
 <a name="removeAudioMiddleware"></a>
 
 Removes the audio middleware, if it is there.
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| audioMiddleware | <code>AudioMiddleware</code> | 
+| Param           | Type                         |
+| --------------- | ---------------------------- |
+| audioMiddleware | <code>AudioMiddleware</code> |
 
 <a name="removeAllAudioMiddlewares"></a>
 
@@ -193,32 +193,32 @@ If there are more than 1 video middlewares,
 they will be executed in the sequence they were added in.
 If you want the sequence to be altered, please remove all previous middlewares and re-add.
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| videoMiddleware | <code>VideoMiddleware</code> | 
+| Param           | Type                         |
+| --------------- | ---------------------------- |
+| videoMiddleware | <code>VideoMiddleware</code> |
 
 <a name="setVideoMiddlewareGlobalConfig"></a>
 
 Sets global config to be used by video middlewares.
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type | Description |
-| --- | --- | --- |
-| config | <code>VideoMiddlewareGlobalConfig</code> | config |
-| config.disablePerFrameCanvasRendering | <code>boolean</code> | If set to true, Instead of calling Middleware for every frame, Middleware will only be called once that too with empty canvas,  it is the responsibility of the middleware author to keep updating this canvas. `meeting.self.rawVideoTrack` can be used to retrieve video track for the periodic updates. |
+| Param                                 | Type                                     | Description                                                                                                                                                                                                                                                                                               |
+| ------------------------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| config                                | <code>VideoMiddlewareGlobalConfig</code> | config                                                                                                                                                                                                                                                                                                    |
+| config.disablePerFrameCanvasRendering | <code>boolean</code>                     | If set to true, Instead of calling Middleware for every frame, Middleware will only be called once that too with empty canvas, it is the responsibility of the middleware author to keep updating this canvas. `meeting.self.rawVideoTrack` can be used to retrieve video track for the periodic updates. |
 
 <a name="removeVideoMiddleware"></a>
 
 Removes the video middleware, if it is there.
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| videoMiddleware | <code>VideoMiddleware</code> | 
+| Param           | Type                         |
+| --------------- | ---------------------------- |
+| videoMiddleware | <code>VideoMiddleware</code> |
 
 <a name="removeAllVideoMiddlewares"></a>
 
@@ -249,20 +249,19 @@ Returns the local participant's speaker devices.
 
 Returns the local participant's device, indexed by ID and kind.
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type | Description |
-| --- | --- | --- |
-| deviceId | <code>string</code> | The ID of the device. |
-| kind | <code>&#x27;audio&#x27;</code> \| <code>&#x27;video&#x27;</code> \| <code>&#x27;speaker&#x27;</code> | The kind of the device: audio, video, or speaker. |
+| Param    | Type                                                                                                 | Description                                       |
+| -------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| deviceId | <code>string</code>                                                                                  | The ID of the device.                             |
+| kind     | <code>&#x27;audio&#x27;</code> \| <code>&#x27;video&#x27;</code> \| <code>&#x27;speaker&#x27;</code> | The kind of the device: audio, video, or speaker. |
 
 <a name="setDevice"></a>
 
 Change the current media device that is being used by the local participant.
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type | Description |
-| --- | --- | --- |
+| Param  | Type                         | Description                                                                                      |
+| ------ | ---------------------------- | ------------------------------------------------------------------------------------------------ |
 | device | <code>MediaDeviceInfo</code> | The device that is to be used. A device of the same `kind` will be replaced. the primary stream. |
-

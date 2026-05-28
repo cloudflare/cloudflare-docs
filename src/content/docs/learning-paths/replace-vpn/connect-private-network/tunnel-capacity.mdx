@@ -11,7 +11,7 @@ products:
   - gateway
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Now that you have a Cloudflare Tunnel up and running, evaluate whether `cloudflared` has enough system resources to handle the expected volume of requests from end users. <Render file="tunnel/availability/tunnel-capacity-intro" product="cloudflare-one" />
 If you have exhausted the ports on a single machine, you will need to add additional servers running `cloudflared`.

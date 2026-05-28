@@ -8,7 +8,15 @@ sidebar:
   order: 5
 ---
 
-import { APIRequest, DashButton, Details, GlossaryTooltip, Render, Tabs, TabItem } from "~/components"
+import {
+	APIRequest,
+	DashButton,
+	Details,
+	GlossaryTooltip,
+	Render,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 ## Onboard prefixes
 
@@ -67,11 +75,11 @@ You should only use one control method per prefix at any given time. Mixing mult
 Create a [POST request](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/create/) to add a BGP prefix. For example:
 
 <APIRequest
-  path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes"
-  method="POST"
-  json={{
-    "cidr": "192.0.2.0/24"
-  }}
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes"
+	method="POST"
+	json={{
+		cidr: "192.0.2.0/24",
+	}}
 />
 
 ### Advertise or withdraw a BGP prefix
@@ -117,7 +125,7 @@ Refer to [Safely withdraw a BYOIP prefix](#safely-withdraw-a-byoip-prefix) for m
 
 ### Delete an IP prefix
 
-You can only delete a prefix with an *Unapproved* status. To delete prefixes with a different status, contact your administrator or account manager.
+You can only delete a prefix with an _Unapproved_ status. To delete prefixes with a different status, contact your administrator or account manager.
 
 1. Go to the **Routes** page.
 
@@ -137,11 +145,11 @@ BGP has different mechanisms to control route priorities which are set by the pe
 Refer to the following example for how to prepend AS13335 three times to a BGP prefix:
 
 <APIRequest
-path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
-method="PATCH"
-json={{
-	"asn_prepend_count": 3
-}}
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
+	method="PATCH"
+	json={{
+		asn_prepend_count: 3,
+	}}
 />
 
 AS prepending helps you gracefully transition traffic between network providers. By adding prepends to Cloudflare's advertisement, you make the route through Cloudflare less preferred for some Internet network providers. This allows you to simultaneously advertise the same prefix from an alternate provider with a shorter, more desirable `AS_PATH`. Advertising from both providers at once provides a smoother traffic migration and minimizes packet loss during a change of provider.
@@ -155,8 +163,6 @@ When you use AS prepending to migrate traffic away from Magic Transit, the typic
 - **Introduce new provider**: You begin advertising the same prefix from your alternate provider with a standard (shorter) `AS_PATH`.
 - **Final state**: External networks now receive two advertisements: the prepended route through Cloudflare and the non-prepended route through your new provider. The external network will select a path based on its BGP policy rules.
 
-
-
 :::caution
 Cloudflare's internal network enforces local preference for traffic delivery to Magic Transit, even if a more specific or shorter path route is available on the public Internet. Withdraw the prefix from Cloudflare to avoid delivery of Cloudflare-sourced traffic over Magic Transit. This preference is local to our internal network and does not impact the route decision process of other networks.
 
@@ -165,27 +171,32 @@ For example, if you have a CDN zone with a Magic Transit-protected origin that i
 
 ## Safely withdraw a BYOIP prefix
 
-<Render file="magic-transit/safely-withdraw-byoip-prefix" product="networking-services" />
+<Render
+	file="magic-transit/safely-withdraw-byoip-prefix"
+	product="networking-services"
+/>
 
 ## BGP control to Magic Transit Virtual Network routing table
 
 ### Automatically announce and withdraw anycast-based Magic BGP routes
 
 If you use CNI with Dataplane v2, GRE or IPsec tunnels, you can:
+
 - Automatically withdraw your prefixes from Cloudflare's global edge infrastructure when you withdraw all matching BGP learned prefixes from the Magic Transit Virtual Network routing table.
 - Automatically advertise your prefixes through Cloudflare's global edge infrastructure when you have at least one matching BGP learned prefix in the Magic Transit Virtual Network routing table.
 
 To enable automatic global announcement and withdrawal, enable this feature on the BGP prefix using the [Addressing API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/). For example:
 
 <APIRequest
-  path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
-  method="PATCH"
-  json={{
-    "auto_advertise_withdraw": true
-  }}
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
+	method="PATCH"
+	json={{
+		auto_advertise_withdraw: true,
+	}}
 />
 
 Once you configure this for a BGP prefix, Cloudflare applies the following logic:
+
 - If there are no BGP routes in the Magic Transit Virtual Network routing table exactly matching the BGP prefix, Cloudflare withdraws the BGP prefix.
 - If there is at least one BGP route in the Magic Transit Virtual Network routing table exactly matching the BGP prefix, Cloudflare announces the BGP prefix.
 
@@ -316,7 +327,10 @@ If you use CNI with Dataplane v2, GRE or IPsec tunnels to on-ramp your network t
 
 Magic Transit supports both static routing and BGP to steer traffic from Cloudflare's network to your configured off-ramps (GRE tunnels, IPsec tunnels, or CNI). Cloudflare does not currently support advertisement of routes for traffic engineering purposes. As a best practice to reduce last-hop latency, consider scoping your routes regionally.
 
-<Render file="reference/traffic-steering-region-codes" product="networking-services" />
+<Render
+	file="reference/traffic-steering-region-codes"
+	product="networking-services"
+/>
 
 The default setting for static route regions is **All Regions**. Configure scoping for your traffic in the **Region code** section when [adding](/magic-transit/how-to/configure-routes/#create-a-static-route) or [editing](/magic-transit/how-to/configure-routes/#edit-a-static-route) a static route.
 

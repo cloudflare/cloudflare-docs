@@ -11,7 +11,7 @@ Content Management Systems make it easy to create, update, and manage content. H
 
 There are many Cloudflare features that can be used for preventing such attacks, but they can also disrupt normal administrative processes such as logging in or uploading images. With proper configuration, you can protect your site from attacks without losing important functionality.
 
-***
+---
 
 ## Stage One: Improve Site Security
 
@@ -29,13 +29,13 @@ The [WAF Managed Rulesets](/waf/managed-rules/) are pre-configured rulesets that
 
 While the feature to customize these managed rulesets required a paid plan, the [Free Cloudflare Managed Ruleset](https://blog.cloudflare.com/waf-for-everyone/#the-free-cloudflare-managed-ruleset) is automatically deployed on any new Cloudflare zone. This ruleset is specially designed to reduce false positives to a minimum across a very broad range of traffic types. As of today, the ruleset contains the following rules:
 
-* Log4J rules matching payloads in the URI and HTTP headers;
-* Shellshock rules;
-* Rules matching very common WordPress exploits;
+- Log4J rules matching payloads in the URI and HTTP headers;
+- Shellshock rules;
+- Rules matching very common WordPress exploits;
 
 Additionally, you can configure many aspects of the [OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/), including the anomaly threshold, paranoia level, and individual rules. One good practice is to ensure any rules related to XSS and SQL injection are enabled.
 
-***
+---
 
 ## Stage Two: Restore Administrative Functions
 
@@ -56,12 +56,12 @@ Next, you can use this information to create a Skip Rule that excludes only the 
 
 It is recommended to make this rule as tightly defined as possible, particularly without the additional protections listed below. While the exact content will be site-specific, some possible fields to use are:
 
-* IP Source Address
-* AS Num
-* Cookie
-* User Agent
+- IP Source Address
+- AS Num
+- Cookie
+- User Agent
 
-Make sure to apply the rule *only* to the admin portion of your CMS. With WordPress for example, you can set a condition like '*URI Path contains /wp-admin/*'.
+Make sure to apply the rule _only_ to the admin portion of your CMS. With WordPress for example, you can set a condition like '_URI Path contains /wp-admin/_'.
 
 Any of these fields can be spoofed, so this is not a security measure on its own. The purpose is to restore administrative functions only to conditions that may need them, while using other tools and features (including strong passwords on your CMS logins!) to secure access.
 
@@ -77,7 +77,7 @@ After this is complete, you will want to create a similar rule for any rulesets 
 
 Make sure to set your Skip rules to be at a higher priority than the Execute rules.
 
-***
+---
 
 ## Stage Three: Restrict Access
 
@@ -102,7 +102,7 @@ Do the following:
 3. [Enable mTLS](/ssl/client-certificates/enable-mtls/) by adding the correct host.
 4. In **SSL/TLS** > **Client Certificates**, select **Create mTLS Rule**.
 5. Under **When incoming requests match**, enter a value for the **URI Path** field to narrow the rule scope to the admin section, otherwise you will block your visitors from accessing the public content.
-6. Set the rule to *Block* any requests made to your admin panel if the client certificate is not verified.
+6. Set the rule to _Block_ any requests made to your admin panel if the client certificate is not verified.
 7. Select **Deploy**. This creates a WAF custom rule that checks all requests to the admin section for a valid client certificate.
 
 **Note:** If you have issues getting your certificate to verify, try accessing the page in a private window. If it works, the previous successful TLS state may be cached in your browser.
@@ -113,13 +113,13 @@ Rate limiting rules can help protect your login page from an attacker trying to 
 
 Rate Limiting Rules are now available unmetered, on all plans. For more information, refer to the [developer documentation](/waf/rate-limiting-rules/).
 
-***
+---
 
 ## Resources
 
-* [WAF Managed Rules](/waf/managed-rules/)
-* [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/)
-* [Configure a custom rule with the Skip action](/waf/custom-rules/skip/)
-* [Zero Trust Services](https://www.cloudflare.com/plans/zero-trust-services/)
-* [Client certificates](/ssl/client-certificates/)
-* [Rate limiting rules](/waf/rate-limiting-rules/)
+- [WAF Managed Rules](/waf/managed-rules/)
+- [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/)
+- [Configure a custom rule with the Skip action](/waf/custom-rules/skip/)
+- [Zero Trust Services](https://www.cloudflare.com/plans/zero-trust-services/)
+- [Client certificates](/ssl/client-certificates/)
+- [Rate limiting rules](/waf/rate-limiting-rules/)

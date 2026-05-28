@@ -5,18 +5,11 @@ description: Spectrum API fields and settings available by Cloudflare plan.
 products:
   - spectrum
 weight: 0
-
 ---
-
-
 
 Certain fields in Spectrum request and response bodies require an Enterprise plan. To upgrade your plan, contact your account team.
 
 Spectrum properties requiring an Enterprise plan:
-
-
-
-
 
 | Name                 | Type    | Description                                                                                                                                                                                                                                                                                                              | Example                                                    |
 | -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
@@ -25,11 +18,6 @@ Spectrum properties requiring an Enterprise plan:
 | `proxy_protocol`     | string  | Enables Proxy Protocol to the origin. Spectrum supports `v1`, `v2`, and `simple` proxy protocols. Refer to [Proxy Protocol](/spectrum/how-to/enable-proxy-protocol/) for more details.                                                                                                                                   | `off`                                                      |
 | `ip_firewall`        | boolean | Enables IP Access rules for this application.                                                                                                                                                                                                                                                                            | `true`                                                     |
 | `tls`                | string  | Type of TLS termination for the application. Options are `off` (default, also known as Passthrough), `flexible`, `full`, and `strict`. Refer to [Configuration Options](/spectrum/reference/configuration-options/) for descriptions of each.                                                                            | `full`                                                     |
-| `argo_smart_routing` | boolean | Enables Argo Smart Routing for the application. Note that it is only available for TCP applications with traffic\_type set to `direct`.                                                                                                                                                                                  | `true`                                                     |
-
-
-
-
+| `argo_smart_routing` | boolean | Enables Argo Smart Routing for the application. Note that it is only available for TCP applications with traffic_type set to `direct`.                                                                                                                                                                                   | `true`                                                     |
 
 Review the [Spectrum API documentation](/api/resources/spectrum/subresources/apps/methods/list/) for example API requests.
-

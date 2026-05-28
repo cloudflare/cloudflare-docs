@@ -14,31 +14,31 @@ The Metro Development Server exposes an HTTP endpoint that is vulnerable to OS c
 
 **Impact**
 
-Successful exploitation of CVE-2025-11953 may result in remote command execution on developer workstations or CI/build agents, leading to credential and secret exposure, source tampering, and potential lateral movement into internal networks. Administrators and developers are strongly advised to apply the vendor's patches and restrict Metro’s network exposure to reduce this risk. 
+Successful exploitation of CVE-2025-11953 may result in remote command execution on developer workstations or CI/build agents, leading to credential and secret exposure, source tampering, and potential lateral movement into internal networks. Administrators and developers are strongly advised to apply the vendor's patches and restrict Metro’s network exposure to reduce this risk.
 
 <table style="width: 100%">
-  <thead>
-    <tr>
-      <th>Ruleset</th>
-      <th>Rule ID</th>
-      <th>Legacy Rule ID</th>
-      <th>Description</th>
-      <th>Previous Action</th>
-      <th>New Action</th>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="db6b9e1ac1494971ae8c70aac8e30c5b" />
-      </td>
-      <td>N/A</td>
-      <td>React Native Metro - Command Injection - CVE:CVE-2025-11953</td>
-      <td>N/A</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="db6b9e1ac1494971ae8c70aac8e30c5b" />
+			</td>
+			<td>N/A</td>
+			<td>React Native Metro - Command Injection - CVE:CVE-2025-11953</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+	</tbody>
 </table>

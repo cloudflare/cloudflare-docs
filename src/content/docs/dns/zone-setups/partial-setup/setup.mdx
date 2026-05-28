@@ -13,7 +13,15 @@ description: >-
   A CNAME setup (also known as partial) allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
 ---
 
-import { Details, Render, GlossaryTooltip, Steps, Tabs, TabItem, APIRequest } from "~/components";
+import {
+	Details,
+	Render,
+	GlossaryTooltip,
+	Steps,
+	Tabs,
+	TabItem,
+	APIRequest,
+} from "~/components";
 
 <Render file="partial-setup-definition" product="dns" />
 
@@ -39,7 +47,6 @@ A CNAME setup (partial) is only available to customers on a Business or Enterpri
 </Steps>
 
 ## 1. Convert your zone and review DNS records
-
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

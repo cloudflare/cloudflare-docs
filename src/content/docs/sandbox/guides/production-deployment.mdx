@@ -24,10 +24,11 @@ The `.workers.dev` domain does not support wildcard subdomains, so production de
 If your worker runs on a subdomain (for example, `sandbox.yourdomain.com`), preview URLs become second-level wildcards like `*.sandbox.yourdomain.com`. Cloudflare's Universal SSL only covers first-level wildcards (`*.yourdomain.com`), so you need a certificate covering `*.sandbox.yourdomain.com`. Without it, preview URLs will fail with TLS handshake errors.
 
 You have three options:
+
 - **Deploy on the apex domain** (`yourdomain.com`) so preview URLs stay at the first level (`*.yourdomain.com`), which Universal SSL covers automatically. This is the simplest option.
 - **Use [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)** ($10/month) to provision a certificate for `*.sandbox.yourdomain.com` through the Cloudflare dashboard.
 - **Upload a custom certificate** from a provider like [Let's Encrypt](https://letsencrypt.org/) (free). Generate a wildcard certificate for `*.sandbox.yourdomain.com` using the DNS-01 challenge, then upload it via the Cloudflare dashboard under **SSL/TLS > Edge Certificates > [Custom Certificates](/ssl/edge-certificates/custom-certificates/)**. You will need to renew it before expiry.
-:::
+  :::
 
 ## Prerequisites
 
@@ -42,7 +43,7 @@ You have three options:
 In the Cloudflare dashboard, go to your domain and create an A record:
 
 - **Type**: A
-- **Name**: * (wildcard)
+- **Name**: \* (wildcard)
 - **IPv4 address**: 192.0.2.0
 - **Proxy status**: Proxied (orange cloud)
 
@@ -87,8 +88,8 @@ Test that preview URLs work:
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
-const sandbox = getSandbox(env.Sandbox, 'test-sandbox');
-await sandbox.startProcess('python -m http.server 8080');
+const sandbox = getSandbox(env.Sandbox, "test-sandbox");
+await sandbox.startProcess("python -m http.server 8080");
 const exposed = await sandbox.exposePort(8080, { hostname });
 
 console.log(exposed.url);

@@ -1,6 +1,5 @@
 ---
 {}
-
 ---
 
 import { DashButton } from "~/components";
@@ -11,16 +10,15 @@ To set up those notifications:
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
 
-      <DashButton url="/?to=/:account/notifications" />
+   <DashButton url="/?to=/:account/notifications" />
 
 2. On **Alert Type** of **Usage Based Billing**, click **Select**.
 
 3. Fill out the following information:
-
-   * **Name**
-   * **Product**
-   * **Notification limit** (exact metric will vary based on product)
-   * **Notification email**
+   - **Name**
+   - **Product**
+   - **Notification limit** (exact metric will vary based on product)
+   - **Notification email**
 
    :::note
    Some plans also have access to alerts through [PagerDuty](/notifications/get-started/configure-pagerduty/) and [Webhooks](/notifications/get-started/configure-webhooks/).

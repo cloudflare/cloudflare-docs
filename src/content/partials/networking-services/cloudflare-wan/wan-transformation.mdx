@@ -36,13 +36,13 @@ On-premises network and security appliances require manual firmware updates, pat
 
 ## Compare WAN approaches
 
-| | Traditional WAN (MPLS) | SD-WAN | Cloudflare One |
-|---|---|---|---|
-| **Performance** | Predictable but limited to circuit capacity. High latency for cloud-bound traffic due to backhauling. | Improved path selection across multiple links. Still relies on branch appliances for processing. | Traffic routed to the nearest Cloudflare data center. Cloud-bound traffic egresses locally without backhauling. |
-| **Cost model** | High fixed costs. Multi-year contracts for private circuits. Per-site hardware investment. | Lower circuit costs (uses Internet links). Per-site appliance licensing and hardware costs remain. | Internet circuit costs only. No per-site hardware required (optional). Pay-as-you-grow model. |
-| **Agility** | Weeks to months to provision new circuits. Rigid topology changes. | Faster site deployment over Internet circuits. Still requires appliance staging and configuration. | Connect a new site in minutes. Tunnels auto-establish from any Internet connection. |
-| **Security** | Security applied at central data center or per-site firewalls. | Varies by vendor. Some offer integrated security, others require separate appliances. | Integrated security at every data center — firewall, secure web gateway, and Zero Trust policies applied inline. |
-| **Management** | Separate management for WAN circuits, routers, and security appliances. | Single console for WAN, but security often managed separately. | Single dashboard for network connectivity, routing, firewall rules, and security policies. |
+|                 | Traditional WAN (MPLS)                                                                                | SD-WAN                                                                                             | Cloudflare One                                                                                                   |
+| --------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Performance** | Predictable but limited to circuit capacity. High latency for cloud-bound traffic due to backhauling. | Improved path selection across multiple links. Still relies on branch appliances for processing.   | Traffic routed to the nearest Cloudflare data center. Cloud-bound traffic egresses locally without backhauling.  |
+| **Cost model**  | High fixed costs. Multi-year contracts for private circuits. Per-site hardware investment.            | Lower circuit costs (uses Internet links). Per-site appliance licensing and hardware costs remain. | Internet circuit costs only. No per-site hardware required (optional). Pay-as-you-grow model.                    |
+| **Agility**     | Weeks to months to provision new circuits. Rigid topology changes.                                    | Faster site deployment over Internet circuits. Still requires appliance staging and configuration. | Connect a new site in minutes. Tunnels auto-establish from any Internet connection.                              |
+| **Security**    | Security applied at central data center or per-site firewalls.                                        | Varies by vendor. Some offer integrated security, others require separate appliances.              | Integrated security at every data center — firewall, secure web gateway, and Zero Trust policies applied inline. |
+| **Management**  | Separate management for WAN circuits, routers, and security appliances.                               | Single console for WAN, but security often managed separately.                                     | Single dashboard for network connectivity, routing, firewall rules, and security policies.                       |
 
 ## Plan your migration
 
@@ -78,7 +78,11 @@ Organizations that start with Cloudflare WAN for site-to-site connectivity and p
 
 ## Next steps
 
-- <a href={props.getStartedUrl}>Get started</a>: Set up Cloudflare WAN with the Cloudflare One Appliance or a third-party device.
-- <a href={props.connectivityOptionsUrl}>Connectivity options</a>: Compare all Cloudflare One connectivity options and choose the right combination for your deployment.
-- <a href={props.onRampsUrl}>On-ramps</a>: Review the full list of supported on-ramps for connecting your networks.
+- <a href={props.getStartedUrl}>Get started</a>: Set up Cloudflare WAN with the
+  Cloudflare One Appliance or a third-party device.
+- <a href={props.connectivityOptionsUrl}>Connectivity options</a>: Compare all
+  Cloudflare One connectivity options and choose the right combination for your
+  deployment.
+- <a href={props.onRampsUrl}>On-ramps</a>: Review the full list of supported
+  on-ramps for connecting your networks.
 - [SASE reference architecture](/reference-architecture/architectures/sase/): Explore the architecture of Cloudflare One as a SASE platform.

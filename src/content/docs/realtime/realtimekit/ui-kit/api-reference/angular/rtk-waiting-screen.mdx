@@ -5,14 +5,15 @@ description: API reference for rtk-waiting-screen component (Angular Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default                 | Description    |
+| ---------- | ---------- | -------- | ----------------------- | -------------- |
+| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config         |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
 
 ## Usage Examples
 
@@ -27,8 +28,5 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-waiting-screen
- [meeting]="meeting">
-</rtk-waiting-screen>
+<rtk-waiting-screen [meeting]="meeting"> </rtk-waiting-screen>
 ```
-

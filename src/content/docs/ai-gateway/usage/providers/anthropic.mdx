@@ -11,6 +11,7 @@ import { Render, Details, Tabs, TabItem } from "~/components";
 [Anthropic](https://www.anthropic.com/) helps build reliable, interpretable, and steerable AI systems.
 
 ## Endpoint
+
 **Base URL**
 
 ```txt
@@ -124,17 +125,18 @@ import Anthropic from "@anthropic-ai/sdk";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
 
 const anthropic = new Anthropic({
-	baseURL,
-	defaultHeaders: {
-		Authorization: `Bearer {cf_api_token}`,
-	},
+baseURL,
+defaultHeaders: {
+Authorization: `Bearer {cf_api_token}`,
+},
 });
 
 const message = await anthropic.messages.create({
-	model: "claude-sonnet-4-5",
-	messages: [{ role: "user", content: "What is Cloudflare?" }],
-	max_tokens: 1024,
+model: "claude-sonnet-4-5",
+messages: [{ role: "user", content: "What is Cloudflare?" }],
+max_tokens: 1024,
 });
+
 ```
 </Details>
 
@@ -151,3 +153,4 @@ const message = await anthropic.messages.create({
     }}
 
 />
+```

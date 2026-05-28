@@ -23,39 +23,42 @@ Adobe AEM’s remote code execution vulnerability enables attackers to run arbit
 These findings reinforce the urgency of updating to the patched versions — Squid 6.4 and Adobe AEM 6.5.24 or later — and reviewing configurations to prevent exploitation.
 
 <table style="width: 100%">
-  <thead>
-    <tr>
-      <th>Ruleset</th>
-      <th>Rule ID</th>
-      <th>Legacy Rule ID</th>
-      <th>Description</th>
-      <th>Previous Action</th>
-      <th>New Action</th>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="f61ed7c1e7e24c3380289e41ef7e015b" />
-      </td>
-      <td>100844</td>
-      <td>Adobe Experience Manager Forms - Remote Code Execution - CVE:CVE-2025-54253</td>
-      <td>N/A</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="e76e65f5a3aa43f49e0684a6baec057a" />
-      </td>
-      <td>100840</td>
-      <td>Squid - Buffer Overflow - CVE:CVE-2025-54574</td>
-      <td>N/A</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f61ed7c1e7e24c3380289e41ef7e015b" />
+			</td>
+			<td>100844</td>
+			<td>
+				Adobe Experience Manager Forms - Remote Code Execution -
+				CVE:CVE-2025-54253
+			</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="e76e65f5a3aa43f49e0684a6baec057a" />
+			</td>
+			<td>100840</td>
+			<td>Squid - Buffer Overflow - CVE:CVE-2025-54574</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+	</tbody>
 </table>

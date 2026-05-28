@@ -10,7 +10,6 @@ sidebar:
 learning_center:
   title: What is mixed content?
   link: https://www.cloudflare.com/learning/ssl/what-is-mixed-content/
-
 ---
 
 Domains added to Cloudflare receive SSL certificates and can serve traffic over HTTPS. However, after starting to use Cloudflare, some customers notice missing content or page rendering issues when they first serve HTTPS traffic.
@@ -21,7 +20,7 @@ Normally, if your website loads all resources securely over HTTPS, visitors obse
 
 This indicates your site has a working SSL certificate and all resources loaded by the site are loaded over HTTPS. The green lock assures visitors that their connection is safe. One of the [symptoms of mixed content](#symptoms-of-mixed-content-occurrence) is that different icons appear instead of the green lock icon.
 
-***
+---
 
 ## Symptoms of mixed content occurrence
 
@@ -31,8 +30,8 @@ Most modern browsers block HTTP requests on secure HTTPS pages. Blocked content 
 
 Each web browser uses different methods to warn visitors about mixed content on a website, potentially including:
 
-* A yellow triangle or information symbol beside the URL bar
-* Messages mentioning "secure content"
+- A yellow triangle or information symbol beside the URL bar
+- Messages mentioning "secure content"
 
 ### **Console logs**
 
@@ -46,7 +45,7 @@ For mixed content errors, the browser refuses to load the resources over an inse
 
 Information on using the browser’s debug tools to locate these issues are found in the documentation for [Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content) and [Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content). Alternatively, you can view your page source and find specific references of *http\://* for paths to other resources.
 
-***
+---
 
 ## Resolution
 
@@ -60,12 +59,12 @@ There are two methods to resolve mixed content errors.
 
 ### WordPress users
 
-Cloudflare recommends WordPress users to install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) and enable the *Automatic HTTPS rewrites* option within the plugin.
+Cloudflare recommends WordPress users to install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) and enable the _Automatic HTTPS rewrites_ option within the plugin.
 
-***
+---
 
 ## Related resources
 
-* [Debugging mixed content in Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content)
-* [Debugging mixed content in Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content)
-* [Community Tip - Fixing mixed content errors](https://community.cloudflare.com/t/community-tip-fixing-mixed-content-errors/42476)
+- [Debugging mixed content in Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content)
+- [Debugging mixed content in Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content)
+- [Community Tip - Fixing mixed content errors](https://community.cloudflare.com/t/community-tip-fixing-mixed-content-errors/42476)

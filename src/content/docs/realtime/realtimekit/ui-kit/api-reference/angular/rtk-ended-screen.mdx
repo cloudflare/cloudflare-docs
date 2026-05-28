@@ -5,18 +5,19 @@ description: API reference for rtk-ended-screen component (Angular Library)
 products:
   - realtime
 ---
+
 A screen which shows a meeting has ended.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Global states |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | Global states |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default                 | Description   |
+| ---------- | ---------- | -------- | ----------------------- | ------------- |
+| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack     |
+| `meeting`  | `Meeting`  | ✅       | -                       | Global states |
+| `size`     | `Size`     | ✅       | -                       | Size          |
+| `states`   | `States`   | ✅       | -                       | Global states |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language      |
 
 ## Usage Examples
 
@@ -31,9 +32,5 @@ A screen which shows a meeting has ended.
 
 ```html
 <!-- component.html -->
-<rtk-ended-screen
- [meeting]="meeting"
- size="md">
-</rtk-ended-screen>
+<rtk-ended-screen [meeting]="meeting" size="md"> </rtk-ended-screen>
 ```
-
