@@ -31,13 +31,13 @@ Track recording currently supports audio tracks only. Video track recording is i
 
 Track recording has the following requirements and limits:
 
-| Limit | Description |
-| --- | --- |
-| Active meeting | The meeting must have an active live session. |
-| Media kind | Only `audio` layers are recorded. |
-| Participant selection | Pass up to 100 values in `user_ids`. |
-| Storage | Files are uploaded to RealtimeKit's managed R2 bucket with zero-egress fees. |
-| File retention | RealtimeKit bucket download URLs expire after seven days. |
+| Limit                 | Description                                                                  |
+| --------------------- | ---------------------------------------------------------------------------- |
+| Active meeting        | The meeting must have an active live session.                                |
+| Media kind            | Only `audio` layers are recorded.                                            |
+| Participant selection | Pass up to 100 values in `user_ids`.                                         |
+| Storage               | Files are uploaded to RealtimeKit's managed R2 bucket with zero-egress fees. |
+| File retention        | RealtimeKit bucket download URLs expire after seven days.                    |
 
 ## Start track recording
 
@@ -56,11 +56,11 @@ curl --request POST \
 }'
 ```
 
-RealtimeKit records current and future participant peers whose user_id matches the allowlist. Participants whose user_id is not listed are not recorded.
+RealtimeKit records current and future participants whose `user_id` matches the allowlist. Participants whose `user_id` is not listed are not recorded.
 
 ### Record all participants as separate tracks
 
-Omit `user_ids` to record separate audio tracks for all participants in the live meeting. RealtimeKit creates one WebM file for each recorded participant peer.
+Omit `user_ids` to record separate audio tracks for all participants in the live meeting. RealtimeKit creates one WebM file for each recorded participant.
 
 ```bash
 curl --request POST \
@@ -109,7 +109,7 @@ If you omit `layers`, RealtimeKit uses `default` as the file name prefix.
 
 ## Stop track recording
 
-Use the recording update endpoint to stop a track recording.
+Use the [recording update endpoint](/api/resources/realtime_kit/subresources/recordings/methods/pause_resume_stop_recording/) to stop a track recording.
 
 ```bash
 curl --request PUT \
