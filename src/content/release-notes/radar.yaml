@@ -3,7 +3,7 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
-  - publish_date: "2026-05-28"
+  - publish_date: "2026-05-29"
     title: Add TLS bug detection to the Radar post-quantum TLS support checker
     description: |-
       * The [post-quantum TLS support checker](https://radar.cloudflare.com/post-quantum) now reports TLS bugs detected during the handshake test (Split ClientHello, HRR Failure, Unknown Keyshare) with user-facing descriptions and remediation guidance. The bugs section only appears for hosts where issues are detected.
