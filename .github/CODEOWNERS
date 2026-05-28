@@ -270,8 +270,9 @@ package.json @cloudflare/content-engineering
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/client-side-security/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
 /src/content/docs/secrets-store/ @baubuchon-cf @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/security/ @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
-/src/content/docs/security-center/ @alexmoraru7 @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/security/ @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners @davejbax @zrkn @hemanthk1099
+/src/content/docs/security-center/ @alexmoraru7 @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @davejbax @zrkn @hemanthk1099
+/src/content/partials/security-center/ @cloudflare/appsec-reviewers @cloudflare/product-owners @davejbax @zrkn @hemanthk1099
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
