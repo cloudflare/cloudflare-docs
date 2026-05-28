@@ -179,6 +179,15 @@ jobs:
               return;
             }
 
+            if (!pr.head.repo) {
+              core.info(
+                `PR #${prNumber} source repository no longer exists ` +
+                  `(fork deleted?); skipping.`,
+              );
+              core.setOutput('stale', 'true');
+              return;
+            }
+
             const isFork =
               pr.head.repo.fork ||
               pr.head.repo.full_name !==
