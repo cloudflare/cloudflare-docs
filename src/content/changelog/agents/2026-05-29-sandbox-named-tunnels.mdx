@@ -1,6 +1,6 @@
 ---
 title: Named tunnels for stable Sandbox URLs
-description: sandbox.tunnels.get() now supports named tunnels that bind a user-controlled hostname to a stable URL backed by a Cloudflare Tunnel, surviving container restarts and shared sandboxes.
+description: sandbox.tunnels.get() now supports named tunnels that bind a user-controlled hostname to a persistent URL backed by a Cloudflare Tunnel, surviving container restarts and shared sandboxes.
 products:
   - agents
 date: 2026-05-29
@@ -10,7 +10,7 @@ import { TypeScriptExample } from "~/components";
 
 [Sandboxes](/sandbox/) now support **named tunnels** through `sandbox.tunnels.get(port, { name })`. A named tunnel binds a user-controlled hostname (`<name>.<your-zone>`) backed by a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and a proxied CNAME record on your zone.
 
-Unlike quick tunnels, which generate a new random URL each time, a named tunnel produces a **stable URL** that survives container restarts and is shared across any sandboxes that use the same name. This makes named tunnels suitable for use cases that need a predictable, long-lived address — such as webhooks, OAuth callbacks, or sharing a running service with collaborators.
+Unlike quick tunnels, which generate a new random URL each time, a named tunnel produces a **persistent URL** that survives container restarts and is shared across any sandboxes that use the same name. This makes named tunnels suitable for use cases that need a predictable, long-lived address — such as webhooks, OAuth callbacks, or sharing a running service with collaborators.
 
 <TypeScriptExample>
 
