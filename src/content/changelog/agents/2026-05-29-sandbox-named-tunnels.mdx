@@ -8,9 +8,9 @@ date: 2026-05-29
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-[Sandboxes](/sandbox/) can expose a service running inside the container on a public preview URL through the `sandbox.tunnels` namespace. The SDK runs `cloudflared` inside the sandbox and opens a persistent QUIC connection to Cloudflare's edge, so you can share a running service without configuring `exposePort()` or a custom domain.
+[Sandboxes](/sandbox/) can expose a service running inside the container on a public preview URL through the `sandbox.tunnels` namespace. The SDK uses `cloudflared` inside the sandbox so you can share a running service without configuring `exposePort()` or a custom domain.
 
-By default, `sandbox.tunnels.get(port)` creates a **quick tunnel** on a zero-config `*.trycloudflare.com` URL — no Cloudflare account, DNS record, or custom domain required. This is ideal for quick development and for `.workers.dev` deployments, where wildcard DNS is not available.
+By default, `sandbox.tunnels.get(port)` creates a [quick tunnel](https://try.cloudflare.com/) on a zero-config `*.trycloudflare.com` URL — no Cloudflare account, DNS record, or custom domain required. This is perfect for quick development and for `.workers.dev` deployments.
 
 <TypeScriptExample>
 
@@ -28,26 +28,20 @@ console.log(tunnel.url); // → https://random-words-here.trycloudflare.com
 
 ## Named tunnels
 
-This release adds **named tunnels** through `sandbox.tunnels.get(port, { name })`. A named tunnel binds a user-controlled hostname (`<name>.<your-zone>`) backed by a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and a proxied CNAME record on your zone.
+For more control you can create a named tunnel through `sandbox.tunnels.get(port, { name })`. A named tunnel binds a hostname (`<name>.<your-zone>`) backed by a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and a CNAME record on your zone resulting in something like https://my-app-preview.example.com.
 
-Unlike quick tunnels, which generate a new random URL each time, a named tunnel produces a **persistent URL** that survives container restarts and is shared across any sandboxes that use the same name. This makes named tunnels suitable for use cases that need a predictable, long-lived address — such as webhooks, OAuth callbacks, or sharing a running service with collaborators.
+Unlike quick tunnels, which generate a new random URL each time, a named tunnel produces a persistent URL that survives container restarts. This makes named tunnels suitable for production use cases where you want control over the tunnel and it's origin.
 
 <TypeScriptExample>
 
 ```ts
-const tunnel = await sandbox.tunnels.get(8080, { name: "app" });
-console.log(tunnel.url); // → https://app.example.com
+const tunnel = await sandbox.tunnels.get(8080, { name: "my-app-preview" });
+console.log(tunnel.url); // → https://my-app-preview.example.com
 ```
 
 </TypeScriptExample>
 
 Calling `sandbox.destroy()` tears down the Cloudflare Tunnel and the associated DNS record alongside the container, so you do not leave dangling tunnels or records behind.
-
-## Other changes in this release
-
-This release of `@cloudflare/sandbox` also includes stale preview URL protection. Invalid, revoked, or destroyed preview URLs now return `404 INVALID_TOKEN`, and authorized URLs that are not activated for the current runtime return `410 STALE_PREVIEW_URL` until the port is exposed again. `getExposedPorts()` and `isPortExposed()` report only ports that are currently preview-forwardable in the active runtime, and `unexposePort()` is now idempotent.
-
-Files such as `.xlsx` and `.docx` are now classified as binary when read, so they are returned with base64 encoding instead of being text-decoded.
 
 ## Upgrade
 
