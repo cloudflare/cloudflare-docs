@@ -314,7 +314,7 @@ Each account has a maximum number of proxy endpoints:
 
 ### 3a. Install Cloudflare certificate
 
-You must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. For [authorization endpoints](#authorization-endpoint), TLS inspection is always performed to read the authorization cookie, so the certificate is required for the endpoint to function. For [source IP endpoints](#source-ip-endpoint), the certificate is required to apply Gateway HTTP policies such as blocking specific domains or displaying the Gateway block page.
+You must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. For [authorization endpoints](#authorization-endpoint), Gateway always performs TLS inspection to read the authorization cookie, so the certificate is required for the endpoint to function. For [source IP endpoints](#source-ip-endpoint), the certificate is required to apply Gateway HTTP policies such as blocking specific domains or displaying the Gateway block page.
 
 ### 3b. Configure browser to use PAC file
 
@@ -500,7 +500,7 @@ When using [authorization endpoints](#authorization-endpoint), be aware of the f
 
 #### TLS inspection required
 
-Authorization endpoints require [TLS inspection](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) on all proxied traffic. Gateway must decrypt HTTPS requests to read the authorization cookie that identifies each user session. This means TLS decryption is always performed for traffic routed through an authorization endpoint, even if TLS decryption is turned off at the account level. You cannot selectively bypass TLS inspection for specific destinations when using an authorization endpoint.
+Authorization endpoints require [TLS inspection](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) on all proxied traffic. Gateway must decrypt HTTPS requests to read the authorization cookie that identifies each user session. Gateway always performs TLS decryption for traffic routed through an authorization endpoint, even if you turn off TLS decryption at the account level. You cannot selectively bypass TLS inspection for specific destinations when using an authorization endpoint.
 
 #### Plaintext HTTP traffic
 
