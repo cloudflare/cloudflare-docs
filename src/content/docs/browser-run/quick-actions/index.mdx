@@ -56,6 +56,26 @@ Using the `.quickAction()` method requires setting your Worker's compatibility d
 
 :::
 
+:::caution[Local development requires remote mode]
+
+The `.quickAction()` method is not yet supported in local development mode. When developing locally with `wrangler dev`, you must use remote mode by either:
+
+- Running `npx wrangler dev --remote`, or
+- Setting `"remote": true` in your browser binding configuration:
+
+```jsonc
+{
+  "browser": {
+    "binding": "BROWSER",
+    "remote": true
+  }
+}
+```
+
+Without remote mode, you will receive the error: `The RPC receiver does not implement the method "quickAction"`.
+
+:::
+
 :::note[Note]
 
 You can monitor Browser Run (formerly Browser Rendering) usage in two ways:
