@@ -43,6 +43,7 @@ export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_ACCOUNT_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts"
 ```
 
 All responses use the standard Cloudflare v4 envelope.
@@ -122,6 +123,28 @@ export interface TokenInfo {
 	created_at: string;
 	expires_at: string;
 }
+```
+
+## Namespaces
+
+### List namespaces
+
+Route: `GET /artifacts/namespaces?limit=&cursor=`
+
+Use the account-level base URL.
+
+```sh
+curl "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces?limit=20" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Get a namespace
+
+Route: `GET /artifacts/namespaces/:namespace`
+
+```sh
+curl "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ## Repos
@@ -426,6 +449,70 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 
 If a repo exists but is still importing or forking, this route can return `409 Conflict` with a retriable error message.
 
+## Repo content
+
+These routes read Git objects and files from an existing repo. Object routes use immutable Git SHA-1 hashes. File routes resolve a path at a branch, tag, or commit hash.
+
+### Read commit history
+
+Route: `GET /repos/:name/log?ref=&limit=&offset=`
+
+```sh
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/log?ref=main&limit=10" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Read a commit
+
+Route: `GET /repos/:name/commit/:hash`
+
+```sh
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/commit/$COMMIT_HASH" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Read a tree
+
+Route: `GET /repos/:name/tree/:hash`
+
+```sh
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tree/$TREE_HASH" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Read a blob
+
+Route: `GET /repos/:name/blob/:hash`
+
+Returns raw blob bytes.
+
+```sh
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/blob/$BLOB_HASH" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Read a file
+
+Route: `GET /repos/:name/file?ref=&path=`
+
+Returns raw file bytes as `application/octet-stream`.
+
+```sh
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/file?ref=main&path=README.md" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Read a raw file
+
+Route: `GET /repos/:name/raw/:ref/:path`
+
+Returns file bytes with a sniffed `Content-Type`.
+
+```sh
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/raw/main/README.md" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
 ## Tokens
 
 These tokens are for Git routes. They do not authenticate REST API requests.
@@ -461,7 +548,7 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&pag
 {
 	"result": [
 		{
-			"id": "tok_123",
+			"id": "0123456789abcdef",
 			"scope": "read",
 			"state": "active",
 			"created_at": "<ISO_TIMESTAMP>",
@@ -524,7 +611,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
 ```json
 {
 	"result": {
-		"id": "tok_123",
+		"id": "0123456789abcdef",
 		"plaintext": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 		"scope": "read",
 		"expires_at": "<ISO_TIMESTAMP>"
@@ -550,14 +637,14 @@ export type DeleteTokenResponse = ApiEnvelope<DeleteTokenResult>;
 ```
 
 ```bash
-curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
+curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/0123456789abcdef" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
 {
 	"result": {
-		"id": "tok_123"
+		"id": "0123456789abcdef"
 	},
 	"success": true,
 	"errors": [],
