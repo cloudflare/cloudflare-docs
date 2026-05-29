@@ -1,6 +1,6 @@
 ---
 title: Named tunnels for Sandbox preview URLs
-description: sandbox.tunnels.get() now supports named tunnels that bind a user-controlled hostname to a persistent URL backed by a Cloudflare Tunnel, surviving container restarts and shared sandboxes.
+description: Expose Sandbox services on public preview URLs with sandbox.tunnels — zero-config quick tunnels on *.trycloudflare.com, plus named tunnels that bind a persistent custom hostname backed by a Cloudflare Tunnel.
 products:
   - agents
 date: 2026-05-29
@@ -8,7 +8,27 @@ date: 2026-05-29
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-[Sandboxes](/sandbox/) now support **named tunnels** through `sandbox.tunnels.get(port, { name })`. A named tunnel binds a user-controlled hostname (`<name>.<your-zone>`) backed by a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and a proxied CNAME record on your zone.
+[Sandboxes](/sandbox/) can expose a service running inside the container on a public preview URL through the `sandbox.tunnels` namespace. The SDK runs `cloudflared` inside the sandbox and opens a persistent QUIC connection to Cloudflare's edge, so you can share a running service without configuring `exposePort()` or a custom domain.
+
+By default, `sandbox.tunnels.get(port)` creates a **quick tunnel** on a zero-config `*.trycloudflare.com` URL — no Cloudflare account, DNS record, or custom domain required. This is ideal for quick development and for `.workers.dev` deployments, where wildcard DNS is not available.
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+await sandbox.startProcess("python -m http.server 8080");
+
+const tunnel = await sandbox.tunnels.get(8080);
+console.log(tunnel.url); // → https://random-words-here.trycloudflare.com
+```
+
+</TypeScriptExample>
+
+## Named tunnels
+
+This release adds **named tunnels** through `sandbox.tunnels.get(port, { name })`. A named tunnel binds a user-controlled hostname (`<name>.<your-zone>`) backed by a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and a proxied CNAME record on your zone.
 
 Unlike quick tunnels, which generate a new random URL each time, a named tunnel produces a **persistent URL** that survives container restarts and is shared across any sandboxes that use the same name. This makes named tunnels suitable for use cases that need a predictable, long-lived address — such as webhooks, OAuth callbacks, or sharing a running service with collaborators.
 
