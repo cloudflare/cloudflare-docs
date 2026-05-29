@@ -19,21 +19,21 @@ New accounts start with a conservative daily quota and scale up over time based 
 
 If you need higher sending limits sooner than automatic adjustment provides, refer to "Need a higher limit?" at the bottom of this page to request an increase.
 
-## Verified emails
+## Verified destination addresses
 
-When you first start using Email Service, you can send emails to [verified email addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. This allows you to test and develop your application before sending to arbitrary recipients.
+Before you onboard a sending domain, you can send emails only to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. After you onboard a sending domain, you can send to any recipient immediately.
 
-Accounts on a paid plan can send emails to any recipient, subject to daily sending limits.
+Sends to verified destination addresses are always free: they do not count toward your monthly [quota](/email-service/platform/pricing/) or your daily sending limits, on any plan, including when only Email Routing is configured. You can only send from your routing domains.
 
 ## Email content limits
 
-| Component                    | Limit          | Notes                                                                                |
-| ---------------------------- | -------------- | ------------------------------------------------------------------------------------ |
-| **Recipients (to, cc, bcc)** | 50 per email   | Combined across all recipient fields                                                 |
-| **Subject line**             | 998 characters | RFC 5322 compliant                                                                   |
-| **Total message size**       | 5 MiB          | Including attachments                                                                |
-| **Total message size**       | 25 MiB         | For [verified addresses](/email-service/configuration/email-routing-addresses/) only |
-| **Header size**              | 16 KB          | All custom headers combined                                                          |
+| Component                    | Limit          | Notes                                                                                                                  |
+| ---------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Recipients (to, cc, bcc)** | 50 per email   | Combined across all recipient fields                                                                                   |
+| **Subject line**             | 998 characters | RFC 5322 compliant                                                                                                     |
+| **Total message size**       | 5 MiB          | Including attachments                                                                                                  |
+| **Total message size**       | 25 MiB         | For [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) only |
+| **Header size**              | 16 KB          | All custom headers combined                                                                                            |
 
 ## Workers binding limits
 
