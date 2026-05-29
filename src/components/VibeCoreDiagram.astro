@@ -1,0 +1,181 @@
+---
+const planes = [
+	{
+		icon: "🛠",
+		title: "Development plane",
+		href: "#development-plane",
+		items: [
+			{ label: "Access", href: "/cloudflare-one/policies/access/" },
+			{ label: "AI Gateway", href: "/ai-gateway/" },
+			{ label: "Sandbox / Containers", href: "/sandbox/" },
+			{ label: "Outbound Worker", href: "/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/" },
+		],
+	},
+	{
+		icon: "🔀",
+		title: "Deployment pipeline",
+		href: "#deployment-pipeline",
+		items: [
+			{ label: "Artifacts", href: "/artifacts/" },
+			{ label: "Code review", href: "#deployment-pipeline" },
+			{ label: "CI/CD integration", href: "#deployment-pipeline" },
+		],
+	},
+	{
+		icon: "🚀",
+		title: "Production plane",
+		href: "#production-plane",
+		items: [
+			{ label: "Workers for Platforms", href: "/cloudflare-for-platforms/workers-for-platforms/" },
+			{ label: "Access + Dispatch", href: "/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/" },
+			{ label: "Outbound Worker", href: "/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/" },
+		],
+	},
+];
+
+const crossCutting = [
+	{ label: "Observability", href: "/analytics/" },
+	{ label: "Cost attribution", href: "/ai-gateway/observability/costs/" },
+	{ label: "Resource tagging", href: "/resource-tagging/" },
+	{ label: "DLP", href: "/cloudflare-one/policies/data-loss-prevention/" },
+];
+---
+
+<figure class="vibe-diagram" aria-label="Enterprise vibe coding platform core architecture">
+	<div class="vibe-map">
+		<svg class="conn-layer" viewBox="0 0 980 300" preserveAspectRatio="none" aria-hidden="true">
+			<path class="conn" d="M 327 130 C 370 130 370 130 413 130" />
+			<path class="conn" d="M 567 130 C 610 130 610 130 653 130" />
+		</svg>
+
+		{planes.map((plane) => (
+			<section class="plane-card" aria-label={plane.title}>
+				<a class="plane-header" href={plane.href}>
+					<span class="plane-icon" aria-hidden="true">{plane.icon}</span>
+					<div class="plane-title">{plane.title}</div>
+				</a>
+				<div class="pill-stack">
+					{plane.items.map((item) => (
+						<a class="pill" href={item.href}>
+							<span class="pill-label">{item.label}</span>
+						</a>
+					))}
+				</div>
+			</section>
+		))}
+
+		<div class="cross-bar">
+			{crossCutting.map((item) => (
+				<a class="cross-pill" href={item.href}>{item.label}</a>
+			))}
+		</div>
+	</div>
+</figure>
+
+<style>
+	.vibe-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-overlay: light-dark(#f5f5f5, #222226);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-subtle: light-dark(#737373, #d4d4d4);
+		--map-brand: #f6821f;
+		margin: 1rem 0;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.vibe-diagram a { color: inherit; text-decoration: none; }
+
+	.vibe-map {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-rows: auto auto;
+		gap: 14px 20px;
+		padding: 16px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: radial-gradient(circle, var(--map-line) 1px, transparent 1px), var(--map-bg);
+		background-size: 12px 12px;
+		overflow: hidden;
+	}
+
+	.conn-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+	.conn { fill: none; stroke: var(--map-line); stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+	.plane-card {
+		position: relative; z-index: 1;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+		padding: 4px;
+	}
+
+	.plane-header {
+		display: flex; align-items: center; gap: 8px;
+		height: 40px; padding: 0 10px;
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		transition: border-color 150ms ease;
+	}
+	.plane-header:hover { border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line)); }
+
+	.plane-icon { font-size: 16px; }
+	.plane-title {
+		margin: 0; color: var(--map-strong);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 11px; font-weight: 500; text-transform: uppercase;
+	}
+
+	.pill-stack { display: grid; gap: 6px; padding: 8px 4px 4px; }
+
+	.pill {
+		display: flex; align-items: center; height: 28px; padding: 0 10px;
+		border: 1px solid var(--map-line); border-radius: 9999px;
+		background: var(--map-card); box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+		transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+	}
+	.pill:hover {
+		background: var(--map-overlay);
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+		transform: translateY(-1px);
+	}
+	.pill-label {
+		color: var(--map-text);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 11px; font-weight: 500;
+		overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+	}
+
+	.cross-bar {
+		grid-column: 1 / -1;
+		display: flex; align-items: center; justify-content: center;
+		flex-wrap: wrap; gap: 8px;
+		padding: 10px 14px;
+		border: 1px solid var(--map-line); border-radius: 9999px;
+		background: var(--map-card); box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	}
+
+	.cross-pill {
+		display: inline-flex; align-items: center; height: 24px; padding: 0 10px;
+		border: 1px solid var(--map-line); border-radius: 9999px;
+		background: var(--map-elevated);
+		color: var(--map-subtle); font-size: 11px; font-weight: 500;
+		transition: background-color 150ms ease, border-color 150ms ease;
+	}
+	.cross-pill:hover {
+		background: var(--map-overlay);
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+	}
+
+	@media (max-width: 58rem) {
+		.vibe-map { grid-template-columns: 1fr; }
+		.conn-layer { display: none; }
+	}
+</style>

@@ -1,0 +1,188 @@
+---
+const ingress = { label: "Cloudflare Access", desc: "Corporate IdP", href: "/cloudflare-one/policies/access/" };
+
+const devPaths = [
+	{ type: "Agent flow", name: "Multi-agent orchestration + Sandbox", href: "/sandbox/" },
+	{ type: "Direct flow", name: "Frontend + Container harness", href: "/containers/" },
+];
+
+const governance = [
+	{ type: "AI Gateway", name: "Provider routing, cost caps, prompt logging", href: "/ai-gateway/" },
+	{ type: "DLP", name: "Sensitive data inspection on prompts", href: "/cloudflare-one/policies/data-loss-prevention/" },
+	{ type: "MCP Portals", name: "Tool usage tracking", href: "/cloudflare-one/access-controls/ai-controls/mcp-portals/" },
+];
+
+const egress = [
+	{ type: "Outbound Worker", name: "Secret injection, egress control", href: "/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/" },
+	{ type: "Bindings", name: "Allowlist-based resource access", href: "/workers/runtime-apis/bindings/" },
+	{ type: "Hyperdrive", name: "Non-Cloudflare databases", href: "/hyperdrive/" },
+	{ type: "Tunnel", name: "Private connectivity to on-premises", href: "/cloudflare-one/connections/connect-networks/" },
+];
+
+const platform = [
+	{ label: "D1", desc: "Users, sessions, cost, permissions", href: "/d1/" },
+];
+---
+
+<figure class="vibe-diagram" aria-label="Development plane architecture">
+	<div class="vibe-map">
+		<svg class="conn-layer" viewBox="0 0 980 340" preserveAspectRatio="none" aria-hidden="true">
+			<path class="conn" d="M 165 140 C 210 140 210 140 255 140" />
+			<path class="conn" d="M 480 140 C 520 140 520 140 560 140" />
+			<path class="conn" d="M 720 140 C 760 140 760 140 800 140" />
+		</svg>
+
+		<section class="col-card ingress-card" aria-label="Ingress">
+			<header class="card-hdr">
+				<div class="card-title">Ingress</div>
+			</header>
+			<a class="type-pill" href={ingress.href}>
+				<span class="type-badge">Access</span>
+				<span class="type-name">{ingress.desc}</span>
+			</a>
+			{platform.map((p) => (
+				<a class="type-pill" href={p.href}>
+					<span class="type-badge">{p.label}</span>
+					<span class="type-name">{p.desc}</span>
+				</a>
+			))}
+		</section>
+
+		<section class="col-card dev-card" aria-label="Development">
+			<header class="card-hdr">
+				<div class="card-title">Execution</div>
+			</header>
+			<div class="pill-stack">
+				{devPaths.map((item) => (
+					<a class="type-pill" href={item.href}>
+						<span class="type-badge">{item.type}</span>
+						<span class="type-name">{item.name}</span>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<section class="col-card gov-card" aria-label="Governance">
+			<header class="card-hdr">
+				<div class="card-title">AI governance</div>
+			</header>
+			<div class="pill-stack">
+				{governance.map((item) => (
+					<a class="type-pill" href={item.href}>
+						<span class="type-badge">{item.type}</span>
+						<span class="type-name">{item.name}</span>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<section class="col-card egress-card" aria-label="Egress">
+			<header class="card-hdr">
+				<div class="card-title">Egress</div>
+			</header>
+			<div class="pill-stack">
+				{egress.map((item) => (
+					<a class="type-pill" href={item.href}>
+						<span class="type-badge">{item.type}</span>
+						<span class="type-name">{item.name}</span>
+					</a>
+				))}
+			</div>
+		</section>
+	</div>
+</figure>
+
+<style>
+	.vibe-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-overlay: light-dark(#f5f5f5, #222226);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-subtle: light-dark(#737373, #d4d4d4);
+		--map-brand: #f6821f;
+		--map-blue-bg: light-dark(#eff6ff, #172554);
+		--map-blue-ring: light-dark(#93c5fd, #3b82f6);
+		--map-blue-text: light-dark(#1d4ed8, #bfdbfe);
+		margin: 1rem 0;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.vibe-diagram a { color: inherit; text-decoration: none; }
+
+	.vibe-map {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 14px 20px;
+		padding: 16px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: radial-gradient(circle, var(--map-line) 1px, transparent 1px), var(--map-bg);
+		background-size: 12px 12px;
+		overflow: hidden;
+	}
+
+	.conn-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+	.conn { fill: none; stroke: var(--map-line); stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+	.col-card {
+		position: relative; z-index: 1;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+		padding: 4px;
+		align-self: start;
+	}
+
+	.card-hdr {
+		display: flex; align-items: center; justify-content: space-between;
+		height: 36px; padding: 0 10px;
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	}
+
+	.card-title {
+		margin: 0; color: var(--map-strong);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 11px; font-weight: 500; text-transform: uppercase;
+	}
+
+	.pill-stack { display: grid; gap: 6px; padding: 8px 4px 4px; }
+
+	.type-pill {
+		display: flex; align-items: center; gap: 6px;
+		height: 30px; padding-right: 10px; margin: 4px 4px 0;
+		border: 1px solid var(--map-line); border-radius: 9999px;
+		background: var(--map-card); box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+		transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+	}
+	.type-pill:hover {
+		background: var(--map-overlay);
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+		transform: translateY(-1px);
+	}
+
+	.type-badge {
+		display: inline-flex; align-items: center; height: 30px; padding: 0 8px;
+		border: 1px solid var(--map-blue-ring); border-radius: 9999px;
+		background: var(--map-blue-bg); color: var(--map-blue-text);
+		font-size: 11px; font-weight: 500; white-space: nowrap;
+	}
+
+	.type-name {
+		overflow: hidden; color: var(--map-text);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 11px; text-overflow: ellipsis; white-space: nowrap;
+	}
+
+	@media (max-width: 58rem) {
+		.vibe-map { grid-template-columns: 1fr; }
+		.conn-layer { display: none; }
+	}
+</style>
