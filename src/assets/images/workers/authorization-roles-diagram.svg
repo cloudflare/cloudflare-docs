@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="320" viewBox="0 0 900 320">
   <defs>
     <style>
+      .bg {
+        fill: #ffffff;
+      }
       .box {
         fill: #fff3e6;
         stroke: #f6821f;
@@ -47,6 +50,9 @@
       <polygon points="0 0, 8 3, 0 6" fill="#f6821f"/>
     </marker>
   </defs>
+
+  <!-- White background -->
+  <rect width="900" height="320" class="bg"/>
 
   <!-- Top row boxes -->
   <rect x="20" y="30" width="160" height="60" class="box" rx="8"/>
