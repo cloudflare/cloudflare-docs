@@ -9,6 +9,8 @@ updated: 2025-08-28
 description: Cloudflare's low-latency, fully serverless compute platform, Workers offers powerful capabilities to enable A/B testing using a server-side implementation.
 ---
 
+import { VibePlatformOverview } from "~/components";
+
 ## Introduction
 
 An AI-powered coding platform (sometimes referred to as a [“vibe coding”](https://www.cloudflare.com/learning/ai/ai-vibe-coding/) platform) enables users to build applications by describing what they want in natural language. These platforms allow anyone to build applications by handling everything from code generation, testing and debugging, to project deployment.
@@ -17,7 +19,7 @@ Building the infrastructure for such a platform introduces a unique set of chall
 
 Cloudflare has all the components required to build one of these platforms — from middleware that connects to AI models, to secure sandboxes for code execution, and a serverless deployment platform that scales to millions of applications.
 
-![Figure 1: AI Vibe Coding Platform on Cloudflare](~/assets/images/reference-architecture/ai-vibe-coding/cf-vibe-plat.svg)
+<VibePlatformOverview />
 
 To get started with a reference implementation of an AI vibe coding platform immediately, deploy this [starter template](https://github.com/cloudflare/vibesdk) to your Cloudflare account:
 

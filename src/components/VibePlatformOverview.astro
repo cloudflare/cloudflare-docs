@@ -1,0 +1,402 @@
+---
+const aiLayer = [
+	{ type: "AI Gateway", name: "Routing · Caching · Cost tracking", href: "/ai-gateway/" },
+	{ type: "Workers AI", name: "Hosted models", href: "/workers-ai/" },
+	{ type: "External LLMs", name: "OpenAI · Anthropic · Google", href: "/ai-gateway/providers/" },
+];
+
+const devEnvironment = [
+	{ type: "Sandbox", name: "Managed execution", href: "/sandbox/" },
+	{ type: "Containers", name: "Custom Docker runtimes", href: "/containers/" },
+];
+
+const deployment = [
+	{ type: "Workers for Platforms", name: "Scalable multi-tenant hosting", href: "/cloudflare-for-platforms/workers-for-platforms/" },
+	{ type: "KV", name: "Key-value storage", href: "/kv/" },
+	{ type: "D1", name: "SQL database", href: "/d1/" },
+	{ type: "R2", name: "Object storage", href: "/r2/" },
+];
+
+const knowledge = [
+	{ label: "Workers Prompt", href: "/workers/get-started/prompting/" },
+	{ label: "MCP Server", href: "/agents/mcp/" },
+];
+---
+
+<figure class="vibe-platform-diagram" aria-label="AI Vibe Coding Platform architecture map">
+	<div class="architecture-map">
+		<svg class="connection-layer" viewBox="0 0 980 520" preserveAspectRatio="none" aria-hidden="true">
+			<path class="connection" d="M 170 120 C 230 120 230 120 290 120" />
+			<path class="connection" d="M 490 120 C 550 120 550 120 610 120" />
+			<path class="connection" d="M 810 120 C 850 120 850 120 850 200" />
+			<path class="connection" d="M 850 200 C 850 240 490 240 490 280" />
+			<path class="connection" d="M 490 400 C 490 440 490 450 490 470" />
+		</svg>
+
+		<section class="platform-card user-card" aria-label="User">
+			<header class="card-header">
+				<span class="card-icon" aria-hidden="true">👤</span>
+				<div class="card-title">User prompt</div>
+			</header>
+			<div class="card-body">
+				<p>Natural language describes the desired application</p>
+			</div>
+		</section>
+
+		<section class="platform-card ai-card" aria-label="AI Integration">
+			<header class="card-header">
+				<div class="card-title">AI code generation</div>
+				<span class="count-badge">{aiLayer.length}</span>
+			</header>
+			<div class="pill-stack">
+				{aiLayer.map((item) => (
+					<a class="binding-pill" href={item.href}>
+						<span class="type-badge">{item.type}</span>
+						<span class="binding-name">{item.name}</span>
+					</a>
+				))}
+			</div>
+			<div class="knowledge-row">
+				<div class="section-title">Knowledge</div>
+				<div class="knowledge-list">
+					{knowledge.map((item) => <a href={item.href}>{item.label}</a>)}
+				</div>
+			</div>
+		</section>
+
+		<section class="platform-card dev-card" aria-label="Development Environment">
+			<header class="card-header">
+				<div class="card-title">Secure execution</div>
+				<span class="count-badge">{devEnvironment.length}</span>
+			</header>
+			<div class="pill-stack">
+				{devEnvironment.map((item) => (
+					<a class="binding-pill" href={item.href}>
+						<span class="type-badge">{item.type}</span>
+						<span class="binding-name">{item.name}</span>
+					</a>
+				))}
+			</div>
+			<div class="dev-features">
+				<span>Isolation</span>
+				<span>Fast startup</span>
+				<span>Preview URLs</span>
+				<span>Streaming</span>
+			</div>
+		</section>
+
+		<section class="platform-card deploy-card" aria-label="Deployment">
+			<header class="card-header">
+				<div class="card-title">Production deployment</div>
+				<span class="count-badge">{deployment.length}</span>
+			</header>
+			<div class="pill-stack">
+				{deployment.map((item) => (
+					<a class="binding-pill" href={item.href}>
+						<span class="type-badge">{item.type}</span>
+						<span class="binding-name">{item.name}</span>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<a class="observability-card" href="/analytics/">
+			<span class="observability-title">Analytics & Observability</span>
+			<span class="observability-copy">Logs · Metrics · Cost tracking · Usage limits</span>
+		</a>
+	</div>
+</figure>
+
+<style>
+	.vibe-platform-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-overlay: light-dark(#f5f5f5, #222226);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-subtle: light-dark(#737373, #d4d4d4);
+		--map-brand: #f6821f;
+		--map-blue-bg: light-dark(#eff6ff, #172554);
+		--map-blue-ring: light-dark(#93c5fd, #3b82f6);
+		--map-blue-text: light-dark(#1d4ed8, #bfdbfe);
+		--map-green-bg: light-dark(#f0fdf4, #14532d);
+		--map-green-ring: light-dark(#86efac, #22c55e);
+		--map-green-text: light-dark(#15803d, #bbf7d0);
+		margin: 1rem 0;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.vibe-platform-diagram a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.architecture-map {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+		grid-template-areas:
+			"user ai dev deploy"
+			"observability observability observability observability";
+		align-items: start;
+		gap: 14px 20px;
+		min-height: 320px;
+		width: 100%;
+		max-width: 100%;
+		padding: 16px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 12px 12px;
+		overflow: hidden;
+	}
+
+	.connection-layer {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+	}
+
+	.connection {
+		fill: none;
+		stroke: var(--map-line);
+		stroke-width: 2;
+		stroke-linecap: round;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.platform-card,
+	.observability-card {
+		position: relative;
+		z-index: 1;
+		min-width: 0;
+	}
+
+	.platform-card {
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+		padding: 4px;
+	}
+
+	.user-card { grid-area: user; }
+	.ai-card { grid-area: ai; }
+	.dev-card { grid-area: dev; }
+	.deploy-card { grid-area: deploy; }
+
+	.card-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 40px;
+		padding: 0 10px;
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	}
+
+	.card-icon {
+		margin-right: 6px;
+		font-size: 16px;
+	}
+
+	.card-title,
+	.section-title,
+	.observability-title {
+		margin: 0;
+		color: var(--map-strong);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		text-transform: uppercase;
+	}
+
+	.card-body {
+		padding: 8px 8px 4px;
+	}
+
+	.card-body p {
+		margin: 0;
+		color: var(--map-subtle);
+		font-size: 11px;
+		line-height: 1.35;
+	}
+
+	.count-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 18px;
+		height: 18px;
+		border-radius: 4px;
+		background: var(--map-subtle);
+		color: var(--map-card);
+		font-size: 12px;
+		font-weight: 500;
+	}
+
+	.pill-stack {
+		display: grid;
+		gap: 6px;
+		padding: 8px 4px 4px;
+	}
+
+	.binding-pill {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		height: 30px;
+		padding-right: 10px;
+		border: 1px solid var(--map-line);
+		border-radius: 9999px;
+		background: var(--map-card);
+		box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+		transition:
+			background-color 150ms ease,
+			border-color 150ms ease,
+			transform 150ms ease;
+	}
+
+	.binding-pill:hover {
+		background: var(--map-overlay);
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+		transform: translateY(-1px);
+	}
+
+	.type-badge {
+		display: inline-flex;
+		align-items: center;
+		height: 30px;
+		padding: 0 8px;
+		border: 1px solid var(--map-blue-ring);
+		border-radius: 9999px;
+		background: var(--map-blue-bg);
+		color: var(--map-blue-text);
+		font-size: 11px;
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	.binding-name {
+		overflow: hidden;
+		color: var(--map-text);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 11px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.knowledge-row {
+		padding: 6px 8px 4px;
+		border-top: 1px solid var(--map-line);
+		margin-top: 4px;
+	}
+
+	.knowledge-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 4px;
+		margin-top: 4px;
+	}
+
+	.knowledge-list a {
+		display: grid;
+		place-items: center;
+		min-height: 26px;
+		border: 1px solid var(--map-line);
+		border-radius: 9999px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-size: 11px;
+		font-weight: 500;
+		transition:
+			background-color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.knowledge-list a:hover {
+		background: var(--map-overlay);
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+	}
+
+	.dev-features {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		padding: 6px 4px 4px;
+		border-top: 1px solid var(--map-line);
+		margin-top: 4px;
+	}
+
+	.dev-features span {
+		display: inline-flex;
+		align-items: center;
+		height: 22px;
+		padding: 0 8px;
+		border: 1px solid var(--map-green-ring);
+		border-radius: 9999px;
+		background: var(--map-green-bg);
+		color: var(--map-green-text);
+		font-size: 10px;
+		font-weight: 500;
+	}
+
+	.deploy-card .type-badge {
+		border-color: var(--map-green-ring);
+		background: var(--map-green-bg);
+		color: var(--map-green-text);
+	}
+
+	.observability-card {
+		grid-area: observability;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		margin-bottom: 8px;
+		padding: 10px 14px;
+		border: 1px solid var(--map-line);
+		border-radius: 9999px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		transition:
+			background-color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.observability-card:hover {
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+	}
+
+	.observability-copy {
+		color: var(--map-subtle);
+		font-size: 13px;
+	}
+
+	@media (max-width: 58rem) {
+		.architecture-map {
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				"user"
+				"ai"
+				"dev"
+				"deploy"
+				"observability";
+			min-height: 0;
+			gap: 12px;
+		}
+
+		.connection-layer {
+			display: none;
+		}
+	}
+</style>

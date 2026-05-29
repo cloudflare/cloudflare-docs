@@ -1,0 +1,181 @@
+---
+title: Enterprise AI Vibe Coding Platform
+pcx_content_type: reference-architecture-diagram
+products: [ai-gateway, workers-for-platforms]
+sidebar:
+  order: 1
+  label: Enterprise AI Vibe Coding Platform
+updated: 2025-08-28
+description: Reference architecture for building a governed, enterprise-grade AI vibe coding platform on Cloudflare, enabling employees to create applications from natural language while maintaining full control over security, compliance, and governance.
+---
+
+## Introduction
+
+[Vibe coding](https://www.cloudflare.com/learning/ai/ai-vibe-coding/) is a method of software development that heavily incorporates the use of large language models (LLMs) for generating code. An enterprise AI vibe coding platform is an internal self-hosted platform where employees describe what they want to build in natural language, and the platform generates working code, shows a live preview, and deploys it, all within an enterprise controlled environment.
+
+An enterprise AI vibe coding platform allows all employees with and without technical backgrounds to build funtional internal tools, dashboards, and automations. Without governance, each AI-built applications risks uncontrolled data exposure, unapproved LLM provider usage, and code with an unknown security posture.
+
+The objective is to give organization controls over the environment they vibe-code it in, the models they use, the data they expose, and the code that gets deployed.
+
+This reference architecture extends the [AI Vibe Coding Platform](/reference-architecture/diagrams/ai/ai-vibe-coding-platform/) with an enterprise-angle focusing on identity, data protection, cost controls, discoverability, and audit capabilities. 
+
+## Core architecture
+
+An enterprise vibe coding platform consists of three core components where existing enterprise-enforced controls can be layered or integrated as required:
+
+- **Development plane:** Where vibe coders create and iterate on applications through AI, following a governed process with controlled access to LLMs and enterprise data.
+- **Deployment pipeline:** The approval and validation workflow that promotes an application from development to production, including security checks, dependency scans, and human-in-the-loop reviews where required.
+- **Production plane:** Where approved applications run in isolated, multi-tenant environments with full observability, egress controls, and access policies.
+
+Observability, discoverability, and cost controls are embedded across all three components.
+
+### What makes this different from the base architecture
+
+The [AI Vibe Coding Platform](/reference-architecture/diagrams/ai/ai-vibe-coding-platform/) covers the core building blocks: AI Gateway for controlling and observing LLM code generation, sandboxes for execution, and Workers for Platforms for deployment. This enterprise architecture addresses:
+
+- **Identity and access** where the platform is secured behind [Cloudflare Access](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/). Platform administrators can enforce policies to determine who can build, what they can connect to, and who can access deployed applications.
+- **Data protection and cost attribution** through [AI Gateway](/ai-gateway/) and [DLP](/cloudflare-one/policies/data-loss-prevention/), where AI prompts are inspected for sensitive data before they leave the organization. Token tracking and per-tenant metering provide cost visibility and can be attributed to teams,departments, and individual users for charge-back. 
+- **Private connectivity** established with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), allowing vibe-coded applications to connect to internal databases, APIs, and on-premises services without exposing them to the internet.
+- **Credential isolation** via [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [Egress Control](/dynamic-workers/usage/egress-control/) to prevent exposing secrets to LLMs or AI-generated code. Configure the platform to inspects all egress traffic and injects credentials where downstream connectivity is require.
+- **Audit trail** across the full lifecycle: prompt, generated code, deployment, and runtime access.
+- **Discoverability and audit trail** enforced through [Resource Tagging](/resource-tagging/) applied across the development lifecycle to provide visibility. Allow platform administrators to find all applications, users, and resources in one place.
+
+## Development plane
+
+The development plane is where employees interact with AI to create applications. It enforces the organization best practices and guardrails while giving builders a fast, iterative experience.
+
+### Identity and authentication
+
+The platform frontend sits behind [Cloudflare Access](/cloudflare-one/policies/access/), enforcing authentication through the organization's identity provider (Okta, Azure AD, Google Workspace). Access policies determine:
+
+- Who can create applications (by team, role, or department)
+- What resources each builder can connect to
+- Whether an application requires approval before others can access it
+
+### Platform data layer
+
+A [D1](/d1/) database stores platform metadata: user profiles, session history, project state, department and team assignments, and cost attribution tags. This is the platform's own data, separate from the data that vibe-coded applications access.
+
+### AI code generation with governance
+
+When an employee starts building, their prompts flow through [AI Gateway](/ai-gateway/), which acts as the governance layer for all LLM interactions:
+
+- **Provider routing:** A single endpoint routes to approved LLM providers (OpenAI, Anthropic, Google, Workers AI), making it straightforward to swap models without changing application code.
+- **Cost controls:** Per-team and per-department budget caps prevent unexpected bills. AI Gateway tracks token-level costs across all providers in one place.
+- **Prompt logging:** Every prompt and response is logged for compliance and audit.
+- **DLP integration:** [Data loss prevention policies](/cloudflare-one/policies/data-loss-prevention/) inspect prompts before they reach LLM providers, blocking sensitive data like PII, credentials, or intellectual property from leaving the organization.
+
+To improve the quality of generated code, the platform can include the [Cloudflare Workers Prompt](/workers/get-started/prompting/), a structured prompt that teaches AI models about Cloudflare APIs, configuration patterns, and best practices.
+
+### Agent orchestration
+
+A project agent orchestrates the code generation flow. The agent can run as a UI-based chat experience (for non-technical builders) or as a coding harness inside a container (for developers using IDE-based workflows).
+
+If the flow uses a harness, [MCP portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) track tool usage, providing visibility into which MCP tools the agent invokes and what data they access.
+
+### Secure execution environment
+
+AI-generated code runs in an isolated environment, never on production infrastructure:
+
+- [Sandboxes](/sandbox/) provide a fully managed execution environment with pre-built APIs for code execution, output formatting, and preview URLs. Ideal for most use cases.
+- [Containers](/containers/) offer full runtime control through custom Docker images for workloads that need specific languages, frameworks, or more resources (up to 4GB RAM, dedicated vCPU).
+
+Both options provide strong isolation, fast startup times, real-time output streaming, and preview URLs for testing.
+
+### Controlled connectivity
+
+Vibe-coded applications do not get raw internet access. Instead, they connect to approved resources through the Workers [binding model](/workers/runtime-apis/bindings/), an allowlist enforced at the platform level, not the code level.
+
+An [outbound worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) controls all egress from the development environment:
+
+- **Credential injection:** The AI-generated code uses a placeholder API key. The outbound worker replaces it with the real secret at the platform layer. The vibe-coded application never sees actual credentials.
+- **Downstream binding:** The outbound worker connects the application to approved internal APIs, databases, and services.
+- **External API access:** Connections to external services pass through the outbound worker, which enforces allow/deny lists and logs all requests.
+
+For connectivity to internal systems, [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) provides a secure path from the platform to on-premises databases, APIs, and services without exposing them to the public internet.
+
+## Deployment pipeline
+
+Not every vibe-coded application needs to reach production. Many are one-off prototypes or personal tools that live and die in the sandbox. But when an application is valuable enough to be shared with a team or department, it moves through a deployment pipeline to ensure organizationaldevelopment best practices are followed.
+
+### Approval and review
+
+The pipeline enforces organizational policies before an application can be promoted:
+
+- **Approval workflows:** Applications that access sensitive data or connect to production systems require human approval from a team lead or security reviewer.
+- **Dependency checks:** The pipeline scans generated code for known vulnerable dependencies and blocks deployment until they are resolved.
+- **Security review:** For applications that access regulated data (HIPAA, ITAR, SOC 2), the pipeline routes to a security review queue. This review can be AI-assisted, using AI models to check generated code against OWASP Top 10 patterns, access control misconfigurations, and data handling violations.
+
+### Graduation path
+
+Applications follow a continuum from prototype to production:
+
+| Stage         | Connectivity             | Access                               | Monitoring                             |
+| ------------- | ------------------------ | ------------------------------------ | -------------------------------------- |
+| Prototype     | Sandboxed, limited       | Creator only, auto-expires if unused | Basic logging                          |
+| Team tool     | Approved bindings only   | Restricted to team via Access policy | Standard metrics and logs              |
+| Production    | Full CI/CD, code ownership | SLA, incident response             | Full observability and change management |
+
+At any stage, a developer can eject the application, exporting the source code to a git repository and converting it from a platform-managed application to a standard Workers project with wrangler deployment, staging environments, and CI/CD.
+
+## Production plane
+
+Applications that are deployed to production run on [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/), which provides multi-tenant hosting with complete isolation and security controls enforced.
+
+### Isolation and multi-tenancy
+
+Every application runs in its own isolated Worker instance. Workers use V8 isolate-based execution: thousands of tenants on a single machine, microsecond cold starts, no container or VM overhead. Per-tenant isolation guarantees include isolated memory, separate resource limits (CPU, subrequests, storage), and no cross-tenant data access.
+
+Applications that are not active consume zero resources, which is critical when hosting thousands of applications where most are rarely used.
+
+### Ingress controls
+
+[Cloudflare Access](/cloudflare-one/policies/access/) policies control who can reach each deployed application. A finance team's dashboard is automatically accessible only to the finance team. An HR automation is restricted to HR. Policies are managed centrally by IT, not embedded in application code.
+
+### Egress controls
+
+Production applications connect to resources exclusively through bindings and outbound workers:
+
+- **Binding model:** Each application is explicitly bound to the resources it needs: [KV](/kv/) for key-value storage, [D1](/d1/) for SQL, [R2](/r2/) for objects, [Durable Objects](/durable-objects/) for coordination. An application cannot access resources it is not bound to.
+- **Outbound worker:** All external requests pass through a platform-managed outbound worker that enforces allowlists, injects credentials, and logs every request.
+- **Policy Workers:** Custom Workers that intercept application-to-resource communication and enforce domain-specific rules. For example, finance team applications are locked to finance data only, and applications accessing regulated data are restricted to compliant endpoints.
+
+### Observability
+
+Production applications are monitored across four dimensions:
+
+- **Audit logs:** Every deployment, configuration change, and data access is logged with the identity of the actor.
+- **Usage metrics:** Per-application and per-user metrics for requests, CPU time, storage, and AI token consumption.
+- **Cost tracking:** Usage attributed to teams and departments for charge-back, with alerts on runaway consumption.
+- **Alerting:** Automated alerts on error rate spikes, unusual access patterns, and budget threshold breaches.
+
+## Security model
+
+Enterprise vibe coding platforms must assume that AI-generated code is untrusted. The security model enforces protection at the platform level, not the code level.
+
+### Threat model
+
+- **Untrusted code execution:** AI-generated code may contain bugs, vulnerabilities, or unintended behavior. Isolate it.
+- **Data exfiltration via prompts:** Employees may inadvertently include sensitive data in prompts. Inspect and block with DLP.
+- **Prompt injection:** Malicious prompts may attempt to manipulate the AI into generating harmful code. Log and audit all interactions.
+- **Credential exposure:** AI-generated code should never handle real secrets. Inject credentials at the platform layer.
+- **Privilege escalation:** Misconfigured bindings could give an application access to resources it should not reach. Use the allowlist model.
+
+### Defense in depth
+
+The platform applies security at every layer:
+
+1. **Identity:** Cloudflare Access authenticates every user and enforces role-based policies.
+2. **Prompts:** AI Gateway and DLP inspect every prompt before it reaches an LLM provider.
+3. **Execution:** Sandboxes and containers isolate untrusted code with no raw internet access.
+4. **Connectivity:** The binding model and outbound workers enforce allowlist-based access to resources.
+5. **Deployment:** Approval workflows and security scans gate promotion to production.
+6. **Runtime:** Access policies, egress controls, and observability protect production applications.
+
+## Getting started
+
+To get started with a reference implementation, deploy the [placeholder]
+
+VibeSDK is an open-source scaffold that demonstrates the patterns described in this architecture. It is designed to be taken apart and customized, not used as a production platform out of the box.
+
+For a live example, visit [placeholder].
