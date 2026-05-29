@@ -1,94 +1,62 @@
 ---
-const ingress = { label: "Cloudflare Access", desc: "Corporate IdP", href: "/cloudflare-one/policies/access/" };
-
-const devPaths = [
-	{ type: "Agent flow", name: "Multi-agent orchestration + Sandbox", href: "/sandbox/" },
-	{ type: "Direct flow", name: "Frontend + Container harness", href: "/containers/" },
-];
-
-const governance = [
-	{ type: "AI Gateway", name: "Provider routing, cost caps, prompt logging", href: "/ai-gateway/" },
-	{ type: "DLP", name: "Sensitive data inspection on prompts", href: "/cloudflare-one/policies/data-loss-prevention/" },
-	{ type: "MCP Portals", name: "Tool usage tracking", href: "/cloudflare-one/access-controls/ai-controls/mcp-portals/" },
-];
-
-const egress = [
-	{ type: "Outbound Worker", name: "Secret injection, egress control", href: "/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/" },
-	{ type: "Bindings", name: "Allowlist-based resource access", href: "/workers/runtime-apis/bindings/" },
-	{ type: "Hyperdrive", name: "Non-Cloudflare databases", href: "/hyperdrive/" },
-	{ type: "Tunnel", name: "Private connectivity to on-premises", href: "/cloudflare-one/connections/connect-networks/" },
-];
-
-const platform = [
-	{ label: "D1", desc: "Users, sessions, cost, permissions", href: "/d1/" },
-];
 ---
 
 <figure class="vibe-diagram" aria-label="Development plane architecture">
-	<div class="vibe-map">
-		<svg class="conn-layer" viewBox="0 0 980 340" preserveAspectRatio="none" aria-hidden="true">
-			<path class="conn" d="M 165 140 C 210 140 210 140 255 140" />
-			<path class="conn" d="M 480 140 C 520 140 520 140 560 140" />
-			<path class="conn" d="M 720 140 C 760 140 760 140 800 140" />
-		</svg>
+	<div class="dev-map">
+		<!-- Ingress -->
+		<a class="tile ingress-tile" href="/cloudflare-one/policies/access/" title="Authenticates employees via corporate IdP and enforces who can build and what they can connect to" style="grid-area: access;">
+			Access
+		</a>
 
-		<section class="col-card ingress-card" aria-label="Ingress">
-			<header class="card-hdr">
-				<div class="card-title">Ingress</div>
-			</header>
-			<a class="type-pill" href={ingress.href}>
-				<span class="type-badge">Access</span>
-				<span class="type-name">{ingress.desc}</span>
-			</a>
-			{platform.map((p) => (
-				<a class="type-pill" href={p.href}>
-					<span class="type-badge">{p.label}</span>
-					<span class="type-name">{p.desc}</span>
+		<svg class="flow-arrow" style="grid-area: arrow1;" viewBox="0 0 40 20" aria-hidden="true"><path d="M 0 10 L 30 10 M 24 4 L 32 10 L 24 16" class="arrow"/></svg>
+
+		<!-- Development container -->
+		<div class="container-box" style="grid-area: container;">
+			<div class="container-label">Development container</div>
+
+			<div class="container-inner">
+				<div class="dev-paths">
+					<a class="tile" href="/sandbox/" title="Web-based chat UI with multi-agent orchestration that spins up a container with preview URLs">
+						Frontend
+					</a>
+					<span class="path-or">or</span>
+					<a class="tile" href="/containers/" title="CLI-based coding harness running inside a sandboxed container for IDE-based workflows">
+						Agent flow
+					</a>
+				</div>
+
+				<svg class="inner-arrow" viewBox="0 0 20 40" aria-hidden="true"><path d="M 10 0 L 10 30 M 4 24 L 10 32 L 16 24" class="arrow"/></svg>
+
+				<a class="tile execution-tile" href="/sandbox/" title="Sandboxed container running AI-generated code with preview URLs, real-time streaming, and fast startup" style="width: 100%;">
+					Container (Sandbox SDK)
 				</a>
-			))}
-		</section>
 
-		<section class="col-card dev-card" aria-label="Development">
-			<header class="card-hdr">
-				<div class="card-title">Execution</div>
-			</header>
-			<div class="pill-stack">
-				{devPaths.map((item) => (
-					<a class="type-pill" href={item.href}>
-						<span class="type-badge">{item.type}</span>
-						<span class="type-name">{item.name}</span>
+				<div class="query-line">
+					<svg class="inner-arrow-down" viewBox="0 0 20 30" aria-hidden="true"><path d="M 10 0 L 10 22 M 4 16 L 10 24 L 16 16" class="arrow"/></svg>
+					<a class="tile meta-tile" href="/d1/" title="Stores platform metadata: user profiles, sessions, cost tags, department and team permissions">
+						D1 (metadata)
 					</a>
-				))}
+				</div>
 			</div>
-		</section>
 
-		<section class="col-card gov-card" aria-label="Governance">
-			<header class="card-hdr">
-				<div class="card-title">AI governance</div>
-			</header>
-			<div class="pill-stack">
-				{governance.map((item) => (
-					<a class="type-pill" href={item.href}>
-						<span class="type-badge">{item.type}</span>
-						<span class="type-name">{item.name}</span>
-					</a>
-				))}
+			<div class="governance-bar">
+				<div class="gov-label">LLM calls ↓</div>
+				<a class="tile gov-tile" href="/ai-gateway/" title="Routes to approved LLM providers, enforces budget caps, logs every prompt and response, integrates DLP">
+					AI Gateway
+				</a>
+				<div class="gov-label">Tool calls ↓</div>
+				<a class="tile gov-tile" href="/cloudflare-one/access-controls/ai-controls/mcp-portals/" title="Tracks MCP tool usage across agent interactions for visibility and audit">
+					MCP Portal
+				</a>
 			</div>
-		</section>
+		</div>
 
-		<section class="col-card egress-card" aria-label="Egress">
-			<header class="card-hdr">
-				<div class="card-title">Egress</div>
-			</header>
-			<div class="pill-stack">
-				{egress.map((item) => (
-					<a class="type-pill" href={item.href}>
-						<span class="type-badge">{item.type}</span>
-						<span class="type-name">{item.name}</span>
-					</a>
-				))}
-			</div>
-		</section>
+		<svg class="flow-arrow" style="grid-area: arrow2;" viewBox="0 0 40 20" aria-hidden="true"><path d="M 0 10 L 30 10 M 24 4 L 32 10 L 24 16" class="arrow"/></svg>
+
+		<!-- Egress -->
+		<a class="tile egress-tile" href="/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/" title="Controls all egress, injects credentials so generated code never sees real secrets, enforces binding allowlists, connects to external APIs, Hyperdrive, and Tunnel" style="grid-area: egress;">
+			Outbound Worker
+		</a>
 	</div>
 </figure>
 
@@ -111,78 +79,108 @@ const platform = [
 		-webkit-font-smoothing: antialiased;
 		letter-spacing: -0.01em;
 	}
-
 	.vibe-diagram a { color: inherit; text-decoration: none; }
 
-	.vibe-map {
-		position: relative;
+	.dev-map {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 14px 20px;
-		padding: 16px;
+		grid-template-columns: auto auto 1fr auto auto;
+		grid-template-areas: "access arrow1 container arrow2 egress";
+		align-items: center;
+		gap: 12px;
+		padding: 20px;
 		border: 1px solid var(--map-line);
 		border-radius: 12px;
 		background: radial-gradient(circle, var(--map-line) 1px, transparent 1px), var(--map-bg);
 		background-size: 12px 12px;
-		overflow: hidden;
 	}
 
-	.conn-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-	.conn { fill: none; stroke: var(--map-line); stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-
-	.col-card {
-		position: relative; z-index: 1;
-		border: 1px solid var(--map-line);
-		border-radius: 12px;
-		background: var(--map-elevated);
-		padding: 4px;
-		align-self: start;
-	}
-
-	.card-hdr {
-		display: flex; align-items: center; justify-content: space-between;
-		height: 36px; padding: 0 10px;
-		border-radius: 8px;
-		background: var(--map-card);
-		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
-	}
-
-	.card-title {
-		margin: 0; color: var(--map-strong);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-		font-size: 11px; font-weight: 500; text-transform: uppercase;
-	}
-
-	.pill-stack { display: grid; gap: 6px; padding: 8px 4px 4px; }
-
-	.type-pill {
-		display: flex; align-items: center; gap: 6px;
-		height: 30px; padding-right: 10px; margin: 4px 4px 0;
+	.tile {
+		display: flex; align-items: center; justify-content: center;
+		padding: 8px 14px;
 		border: 1px solid var(--map-line); border-radius: 9999px;
 		background: var(--map-card); box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+		color: var(--map-text);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 12px; font-weight: 500; white-space: nowrap;
 		transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
 	}
-	.type-pill:hover {
+	.tile:hover {
 		background: var(--map-overlay);
 		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
 		transform: translateY(-1px);
 	}
 
-	.type-badge {
-		display: inline-flex; align-items: center; height: 30px; padding: 0 8px;
-		border: 1px solid var(--map-blue-ring); border-radius: 9999px;
-		background: var(--map-blue-bg); color: var(--map-blue-text);
-		font-size: 11px; font-weight: 500; white-space: nowrap;
+	.ingress-tile, .egress-tile {
+		padding: 14px 18px;
+		border-color: var(--map-blue-ring);
+		background: var(--map-blue-bg);
+		color: var(--map-blue-text);
 	}
 
-	.type-name {
-		overflow: hidden; color: var(--map-text);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-		font-size: 11px; text-overflow: ellipsis; white-space: nowrap;
+	.container-box {
+		grid-area: container;
+		border: 2px dashed var(--map-line);
+		border-radius: 12px;
+		padding: 12px;
+		background: var(--map-elevated);
 	}
+	.container-label {
+		color: var(--map-strong);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 10px; font-weight: 500; text-transform: uppercase;
+		margin-bottom: 10px;
+	}
+
+	.container-inner {
+		display: flex; flex-direction: column; align-items: center; gap: 6px;
+	}
+
+	.dev-paths {
+		display: flex; align-items: center; gap: 8px; width: 100%;
+		justify-content: center;
+	}
+	.path-or {
+		color: var(--map-subtle); font-size: 11px; font-style: italic;
+	}
+
+	.query-line {
+		display: flex; flex-direction: column; align-items: center; gap: 2px;
+	}
+
+	.meta-tile {
+		font-size: 11px; padding: 6px 12px;
+		border-style: dashed;
+	}
+
+	.governance-bar {
+		display: grid;
+		grid-template-columns: auto 1fr auto 1fr;
+		align-items: center;
+		gap: 6px;
+		margin-top: 10px;
+		padding-top: 10px;
+		border-top: 1px solid var(--map-line);
+	}
+	.gov-label {
+		color: var(--map-subtle); font-size: 10px; text-align: center;
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	}
+	.gov-tile { font-size: 11px; justify-self: stretch; }
+
+	.flow-arrow { width: 32px; height: 16px; flex-shrink: 0; }
+	.inner-arrow { width: 16px; height: 24px; }
+	.inner-arrow-down { width: 16px; height: 20px; }
+	.arrow { fill: none; stroke: var(--map-subtle); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+	.execution-tile { justify-content: center; }
 
 	@media (max-width: 58rem) {
-		.vibe-map { grid-template-columns: 1fr; }
-		.conn-layer { display: none; }
+		.dev-map {
+			grid-template-columns: 1fr;
+			grid-template-areas: "access" "arrow1" "container" "arrow2" "egress";
+			gap: 8px;
+		}
+		.flow-arrow { transform: rotate(90deg); justify-self: center; }
+		.ingress-tile, .egress-tile { justify-self: center; }
 	}
 </style>

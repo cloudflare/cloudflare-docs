@@ -1,68 +1,39 @@
 ---
 const stages = [
-	{
-		title: "Development output",
-		items: [
-			{ label: "Generated code", href: "#deployment-pipeline" },
-			{ label: "Static assets", href: "#deployment-pipeline" },
-			{ label: "Configuration", href: "#deployment-pipeline" },
-		],
-	},
-	{
-		title: "Storage",
-		items: [
-			{ type: "Artifacts", name: "Git-compatible storage", href: "/artifacts/" },
-			{ type: "Git repo", name: "Existing enterprise repos", href: "#deployment-pipeline" },
-		],
-	},
-	{
-		title: "Review and validation",
-		items: [
-			{ label: "Code review", href: "#deployment-pipeline" },
-			{ label: "Security scan", href: "#deployment-pipeline" },
-			{ label: "CI/CD pipeline", href: "#deployment-pipeline" },
-		],
-	},
-	{
-		title: "Deploy",
-		items: [
-			{ type: "Workers for Platforms", name: "Production hosting", href: "/cloudflare-for-platforms/workers-for-platforms/" },
-		],
-	},
+	{ label: "Dev output", href: "#deployment-pipeline", title: "Code, assets, and configuration produced by the development plane" },
+	{ label: "Storage", items: [
+		{ label: "Artifacts", href: "/artifacts/", title: "Cloudflare's git-compatible storage for development output" },
+		{ label: "Git repo", href: "#deployment-pipeline", title: "Existing enterprise code repositories" },
+	]},
+	{ label: "Review", items: [
+		{ label: "Code review", href: "#deployment-pipeline", title: "Embed into existing code review flows for best practices" },
+		{ label: "Security scan", href: "#deployment-pipeline", title: "AI-assisted checks against OWASP Top 10 and dependency vulnerabilities" },
+		{ label: "CI/CD", href: "#deployment-pipeline", title: "Existing CI/CD pipelines run alongside Cloudflare-native services" },
+	]},
+	{ label: "Deploy", href: "/cloudflare-for-platforms/workers-for-platforms/", title: "Applications deploy to Workers for Platforms for production hosting" },
 ];
 ---
 
 <figure class="vibe-diagram" aria-label="Deployment pipeline architecture">
-	<div class="vibe-map">
-		<svg class="conn-layer" viewBox="0 0 980 220" preserveAspectRatio="none" aria-hidden="true">
-			<path class="conn" d="M 245 100 C 280 100 280 100 315 100" />
-			<path class="conn" d="M 490 100 C 525 100 525 100 560 100" />
-			<path class="conn" d="M 735 100 C 770 100 770 100 805 100" />
-		</svg>
-
-		{stages.map((stage) => (
-			<section class="stage-card" aria-label={stage.title}>
-				<header class="card-hdr">
-					<div class="card-title">{stage.title}</div>
-				</header>
-				<div class="pill-stack">
-					{stage.items.map((item) => {
-						const hasType = 'type' in item;
-						return (
-							<a class="pill" href={item.href}>
-								{hasType ? (
-									<>
-										<span class="pill-type">{item.type}</span>
-										<span class="pill-name">{item.name}</span>
-									</>
-								) : (
-									<span class="pill-label">{item.label}</span>
-								)}
-							</a>
-						);
-					})}
-				</div>
-			</section>
+	<div class="pipeline-map">
+		{stages.map((stage, i) => (
+			<>
+				{i > 0 && (
+					<svg class="flow-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M 0 10 L 30 10 M 24 4 L 32 10 L 24 16" class="arrow"/></svg>
+				)}
+				{'items' in stage ? (
+					<div class="stage-box">
+						<div class="stage-label">{stage.label}</div>
+						<div class="stage-items">
+							{stage.items.map((item) => (
+								<a class="tile" href={item.href} title={item.title}>{item.label}</a>
+							))}
+						</div>
+					</div>
+				) : (
+					<a class="tile stage-tile" href={stage.href} title={stage.title}>{stage.label}</a>
+				)}
+			</>
 		))}
 	</div>
 </figure>
@@ -78,87 +49,68 @@ const stages = [
 		--map-strong: light-dark(#525252, #a3a3a3);
 		--map-subtle: light-dark(#737373, #d4d4d4);
 		--map-brand: #f6821f;
-		--map-blue-bg: light-dark(#eff6ff, #172554);
-		--map-blue-ring: light-dark(#93c5fd, #3b82f6);
-		--map-blue-text: light-dark(#1d4ed8, #bfdbfe);
 		margin: 1rem 0;
 		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		letter-spacing: -0.01em;
 	}
-
 	.vibe-diagram a { color: inherit; text-decoration: none; }
 
-	.vibe-map {
-		position: relative;
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 14px 20px;
-		padding: 16px;
+	.pipeline-map {
+		display: flex; align-items: center;
+		gap: 12px;
+		padding: 20px;
 		border: 1px solid var(--map-line);
 		border-radius: 12px;
 		background: radial-gradient(circle, var(--map-line) 1px, transparent 1px), var(--map-bg);
 		background-size: 12px 12px;
-		overflow: hidden;
+		overflow-x: auto;
 	}
 
-	.conn-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-	.conn { fill: none; stroke: var(--map-line); stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-
-	.stage-card {
-		position: relative; z-index: 1;
-		border: 1px solid var(--map-line);
-		border-radius: 12px;
-		background: var(--map-elevated);
-		padding: 4px;
-		align-self: start;
-	}
-
-	.card-hdr {
-		display: flex; align-items: center;
-		height: 36px; padding: 0 10px;
-		border-radius: 8px;
-		background: var(--map-card);
-		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
-	}
-
-	.card-title {
-		margin: 0; color: var(--map-strong);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-		font-size: 11px; font-weight: 500; text-transform: uppercase;
-	}
-
-	.pill-stack { display: grid; gap: 6px; padding: 8px 4px 4px; }
-
-	.pill {
-		display: flex; align-items: center; gap: 6px;
-		height: 28px; padding: 0 10px;
+	.tile {
+		display: flex; align-items: center; justify-content: center;
+		padding: 8px 14px;
 		border: 1px solid var(--map-line); border-radius: 9999px;
 		background: var(--map-card); box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+		color: var(--map-text);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 12px; font-weight: 500; white-space: nowrap;
 		transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
 	}
-	.pill:hover {
+	.tile:hover {
 		background: var(--map-overlay);
 		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
 		transform: translateY(-1px);
 	}
 
-	.pill-label, .pill-name {
-		color: var(--map-text);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-		font-size: 11px; font-weight: 500;
-		overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+	.stage-tile {
+		padding: 14px 20px;
+		min-height: 60px;
 	}
 
-	.pill-type {
-		display: inline-flex; align-items: center; height: 28px; padding: 0 8px;
-		border: 1px solid var(--map-blue-ring); border-radius: 9999px;
-		background: var(--map-blue-bg); color: var(--map-blue-text);
-		font-size: 11px; font-weight: 500; white-space: nowrap;
+	.stage-box {
+		display: flex; flex-direction: column; gap: 6px;
+		padding: 10px;
+		border: 2px dashed var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+		flex-shrink: 0;
 	}
+	.stage-label {
+		color: var(--map-strong);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 10px; font-weight: 500; text-transform: uppercase;
+		margin-bottom: 2px;
+	}
+	.stage-items { display: flex; flex-direction: column; gap: 6px; }
+
+	.flow-arrow { width: 32px; height: 16px; flex-shrink: 0; }
+	.arrow { fill: none; stroke: var(--map-subtle); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 	@media (max-width: 58rem) {
-		.vibe-map { grid-template-columns: 1fr; }
-		.conn-layer { display: none; }
+		.pipeline-map {
+			flex-direction: column; align-items: stretch;
+		}
+		.flow-arrow { transform: rotate(90deg); align-self: center; }
 	}
 </style>
