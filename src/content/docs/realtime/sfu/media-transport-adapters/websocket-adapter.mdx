@@ -79,7 +79,7 @@ graph LR
 - Requires existing session ID with track
 - Audio: Sends individual PCM frames as they are produced; each includes timestamp and sequence number
 - Video: Sends individual JPEG frames at approximately 1 FPS; each includes timestamp (sequence number may be unset)
-- Automatically retries the same WebSocket endpoint for up to 5 seconds after brief disconnects or endpoint restarts
+- Automatically retries the same WebSocket endpoint for up to 5 seconds after brief disconnects or endpoint restarts. Refer to [Automatic reconnection for streaming](#automatic-reconnection-for-streaming).
 
 </TabItem>
 </Tabs>
@@ -300,7 +300,7 @@ Connects to your WebSocket endpoint:
 
 ## Automatic reconnection for streaming
 
-When you use the WebSocket adapter to stream live audio or video from the SFU to your own WebSocket endpoint (`WebRTC → WebSocket`), the SFU automatically reconnects after brief endpoint disconnects or restarts.
+When you use the WebSocket adapter in [Stream mode (egress)](#stream-mode-egress) to send live audio or video from the SFU to your own WebSocket endpoint (`WebRTC → WebSocket`), the SFU automatically reconnects after brief endpoint disconnects or restarts.
 
 The SFU retries the same WebSocket endpoint for up to 5 seconds. No API changes are required.
 
@@ -312,7 +312,7 @@ During the automatic reconnect window:
 
 If the WebSocket endpoint remains unavailable after the 5-second automatic reconnect window, the adapter closes and your application must create a new adapter to resume streaming.
 
-Automatic reconnection applies only when streaming from WebRTC to WebSocket. It retries the same endpoint only and does not provide multi-endpoint failover.
+Automatic reconnection applies only when using [Stream mode (egress)](#stream-mode-egress). It retries the same endpoint only and does not provide multi-endpoint failover.
 
 ## Pricing
 
@@ -328,7 +328,7 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 
 - Closing an already-closed instance returns success
 - Close when sessions end
-- When streaming from WebRTC to WebSocket, handle adapter closure after the 5-second [automatic reconnect window](#automatic-reconnection-for-streaming) is exhausted.
+- When using [Stream mode (egress)](#stream-mode-egress), handle adapter closure after the 5-second [automatic reconnect window](#automatic-reconnection-for-streaming) is exhausted.
 - When ingesting from WebSocket to WebRTC, implement reconnection logic in your WebSocket client if the connection drops.
 - Make your WebSocket endpoint restart-safe so it can accept reconnects to the same URL during brief restarts.
 
@@ -350,7 +350,7 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 - **Beta status**: API may change in future releases
 - **Video support**: Egress only (JPEG)
 - **Video frame rate**: Approximately 1 FPS (beta; not configurable)
-- **Streaming reconnects**: When streaming from WebRTC to WebSocket, the SFU automatically retries the same WebSocket endpoint for short disconnects only. It does not fail over to alternate endpoints.
+- **Streaming reconnects**: When using [Stream mode (egress)](#stream-mode-egress), the SFU automatically retries the same WebSocket endpoint for short disconnects only. It does not fail over to alternate endpoints.
 - **Best-effort recovery**: Brief reconnects reduce media loss, but do not guarantee gapless or exactly-once delivery.
 - **Video reconnect behavior**: Video resumes from the latest available JPEG frame rather than replaying older frames.
 - **Unidirectional flow**: Each instance handles one direction
@@ -382,7 +382,7 @@ A: No, each instance is unidirectional. Create separate adapters for send and re
 
 **Q: What happens if the WebSocket connection drops?**
 
-A: When streaming from WebRTC to WebSocket, the SFU automatically retries the same WebSocket endpoint for up to 5 seconds. If the endpoint comes back within that window, streaming resumes automatically.
+A: When using [Stream mode (egress)](#stream-mode-egress), the SFU automatically retries the same WebSocket endpoint for up to 5 seconds. If the endpoint comes back within that window, streaming resumes automatically.
 
 Audio uses a short bounded backlog to reduce audible loss during brief interruptions. Video resumes from the latest available JPEG frame instead of replaying older frames.
 
