@@ -6,9 +6,18 @@ date: 2026-05-28
 
 Cloudflare has updated [Logpush datasets](/logs/logpush/logpush-job/datasets/):
 
-### Updated fields in existing datasets
+### New fields
 
 - **DEX Device State Events** (added): `DeviceRegistrationProfileID`.
 - **HTTP requests** (added): `MatchedRules`.
+
+### Updated field descriptions
+
+- **HTTP requests**: `OriginResponseBytes` description now includes guidance on using `CacheResponseBytes` with `OriginResponseStatus` filtering to calculate origin-served bytes.
+- **Magic Network Monitoring Flow Logs**: Updated descriptions for `DeviceID`, `FlowTimestamp`, `RuleIDs`, and `Timestamp`.
+
+### Deprecations
+
+- **Firewall Events**: `FirewallForAIInjectionScore`, `FirewallForAIPIICategories`, `FirewallForAITokenCount`, and `FirewallForAIUnsafeTopicCategories` are now marked as deprecated.
 
 For the complete field definitions for each dataset, refer to [Logpush datasets](/logs/logpush/logpush-job/datasets/).
