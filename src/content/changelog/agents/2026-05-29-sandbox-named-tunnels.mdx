@@ -25,10 +25,9 @@ Calling `sandbox.destroy()` tears down the Cloudflare Tunnel and the associated 
 
 ## Other changes in this release
 
-This release of `@cloudflare/sandbox` also includes:
+This release of `@cloudflare/sandbox` also includes stale preview URL protection. Invalid, revoked, or destroyed preview URLs now return `404 INVALID_TOKEN`, and authorized URLs that are not activated for the current runtime return `410 STALE_PREVIEW_URL` until the port is exposed again. `getExposedPorts()` and `isPortExposed()` report only ports that are currently preview-forwardable in the active runtime, and `unexposePort()` is now idempotent.
 
-- **Stale preview URL protection** — Invalid, revoked, or destroyed preview URLs now return `404 INVALID_TOKEN`, and authorized URLs that are not activated for the current runtime return `410 STALE_PREVIEW_URL` until the port is exposed again. `getExposedPorts()` and `isPortExposed()` report only ports that are currently preview-forwardable in the active runtime, and `unexposePort()` is now idempotent.
-- **Binary handling for Office Open XML files** — Files such as `.xlsx` and `.docx` are now classified as binary when read, so they are returned with base64 encoding instead of being text-decoded.
+Files such as `.xlsx` and `.docx` are now classified as binary when read, so they are returned with base64 encoding instead of being text-decoded.
 
 ## Upgrade
 
