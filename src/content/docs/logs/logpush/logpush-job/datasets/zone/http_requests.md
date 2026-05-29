@@ -453,6 +453,12 @@ Type: `string`
 
 Result of the check for [leaked credentials](/waf/detections/leaked-credentials/). <br />Possible results are: <em>password_leaked</em> \| <em>username_and_password_leaked</em> \| <em>username_password_similar</em> \| <em>username_leaked</em> \| <em>clean</em>.
 
+## MatchedRules
+
+Type: `array[object]`
+
+Array of matched Cloudflare Rules product rules grouped by product. Each object contains: <em>product</em> (string, e.g. snippets, transform, redirects), <em>rulesetId</em> (string), <em>rulesetVersion</em> (int), and <em>rules</em> (array of objects, each with <em>id</em> (string) and optional <em>metadata</em> (object with string key-value pairs)).
+
 ## OriginDNSResponseTimeMs
 
 Type: `int`
@@ -475,7 +481,7 @@ Time taken to send request headers to origin after establishing a connection. No
 
 Type: `int`
 
-Number of bytes returned by the origin server.
+Number of bytes returned by the origin server. Consider using CacheResponseBytes and filtering out OriginResponseStatus with values 0 and 304, which indicate a revalidated response. Refer to [Calculating origin-served bytes](/logs/faq/common-calculations/#how-can-i-calculate-bytes-served-by-the-origin-from-cloudflare-logs).
 
 ## OriginResponseDurationMs
 

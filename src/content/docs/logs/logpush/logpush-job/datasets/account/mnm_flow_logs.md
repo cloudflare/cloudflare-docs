@@ -43,7 +43,7 @@ The destination port number.
 
 Type: `string`
 
-If the flow is routed through a WARP device, the device ID.
+The ID of the network device (such as a router or switch) that originated the flow.
 
 ## EgressBits
 
@@ -73,7 +73,7 @@ The flow protocol (e.g., 'AWS_VPC', 'IPFIX', 'SFLOW_5', 'NETFLOW_V9', etc.).
 
 Type: `int or string`
 
-The timestamp of the flow.
+The timestamp of the flow. To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).
 
 ## NumFlows
 
@@ -103,7 +103,7 @@ The protocol number (e.g., 6 for TCP, 17 for UDP).
 
 Type: `string`
 
-Comma-separated list of rule IDs associated with the flow if any.
+Comma-separated list of Magic Network Monitoring rule IDs associated with the flow, if any.
 
 ## SampleRate
 
@@ -151,4 +151,4 @@ The TCP flags.
 
 Type: `int or string`
 
-The date and time of the event.
+The date and time of the event. To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).

@@ -177,25 +177,25 @@ Type: `int`
 
 HTTP response status code returned to browser.
 
-## FirewallForAIInjectionScore
+## FirewallForAIInjectionScore (deprecated)
 
 Type: `int`
 
 The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI. Deprecated: Use AISecurityInjectionScore instead.
 
-## FirewallForAIPIICategories
+## FirewallForAIPIICategories (deprecated)
 
 Type: `array[string]`
 
 List of PII categories detected in the request by Firewall for AI. Deprecated: Use AISecurityPIICategories instead.
 
-## FirewallForAITokenCount
+## FirewallForAITokenCount (deprecated)
 
 Type: `int`
 
 The number of tokens in the request, as counted by Firewall for AI. Deprecated: Use AISecurityTokenCount instead.
 
-## FirewallForAIUnsafeTopicCategories
+## FirewallForAIUnsafeTopicCategories (deprecated)
 
 Type: `array[string]`
 
