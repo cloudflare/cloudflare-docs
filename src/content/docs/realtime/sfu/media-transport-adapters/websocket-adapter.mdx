@@ -302,15 +302,15 @@ Connects to your WebSocket endpoint:
 
 When you use the WebSocket adapter in [Stream mode (egress)](#stream-mode-egress) to send live audio or video from the SFU to your own WebSocket endpoint (`WebRTC → WebSocket`), the SFU automatically reconnects after brief endpoint disconnects or restarts.
 
-The SFU retries the same WebSocket endpoint for up to 5 seconds. No API changes are required.
+The SFU retries the same WebSocket endpoint for up to 5 seconds. No API changes are required. If the endpoint remains unavailable after the reconnect window, the adapter closes and your application must create a new adapter to resume streaming.
 
-During the automatic reconnect window:
+### Media buffering during reconnect
 
-- Audio uses a short bounded backlog to reduce audible loss during brief interruptions.
-- Video keeps only the latest available JPEG frame, so streaming resumes near-live instead of replaying stale frames.
-- Media delivery near the reconnect boundary is best effort and is not exactly-once.
+Automatic reconnection uses live-first buffering while the WebSocket endpoint is temporarily unavailable:
 
-If the WebSocket endpoint remains unavailable after the 5-second automatic reconnect window, the adapter closes and your application must create a new adapter to resume streaming.
+- **Audio buffering**: The SFU keeps a short, bounded backlog of audio frames. If the interruption lasts longer than the backlog can cover, older audio may be dropped so reconnect recovery stays bounded.
+- **Video buffering**: The SFU keeps only the latest available JPEG frame. Newer frames replace older frames while reconnecting, so video resumes near-live instead of replaying stale frames.
+- **Delivery behavior**: Buffering reduces media loss during brief interruptions, but it is not a replay mechanism and does not guarantee gapless or exactly-once delivery.
 
 Automatic reconnection applies only when using [Stream mode (egress)](#stream-mode-egress). It retries the same endpoint only and does not provide multi-endpoint failover.
 
