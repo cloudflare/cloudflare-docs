@@ -49,11 +49,3 @@ const screenshot = await env.BROWSER.quickAction("screenshot", {
 </TypeScriptExample>
 
 The `quickAction()` method requires a compatibility date of `2026-03-24` or later.
-
-:::note[Local development]
-
-The `.quickAction()` method is not yet supported in local development mode. Use `npx wrangler dev --remote` or set `"remote": true` in your browser binding configuration when developing locally.
-
-:::
-
-For setup instructions and the full list of available actions, refer to [Browser Run Quick Actions](/browser-run/quick-actions/).
