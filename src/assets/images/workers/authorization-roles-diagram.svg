@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="320" viewBox="0 0 900 320">
+  <defs>
+    <style>
+      .box {
+        fill: #fff3e6;
+        stroke: #f6821f;
+        stroke-width: 1.5;
+      }
+      .text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        fill: #1a1a1a;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .subtext {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        fill: #555;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .arrow {
+        stroke: #f6821f;
+        stroke-width: 1.5;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+      .dotted {
+        stroke: #f6821f;
+        stroke-width: 1.5;
+        stroke-dasharray: 4 3;
+        fill: none;
+      }
+      .label-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        fill: #555;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f6821f"/>
+    </marker>
+  </defs>
+
+  <!-- Top row boxes -->
+  <rect x="20" y="30" width="160" height="60" class="box" rx="8"/>
+  <rect x="230" y="30" width="160" height="60" class="box" rx="8"/>
+  <rect x="440" y="30" width="160" height="60" class="box" rx="8"/>
+  <rect x="650" y="30" width="160" height="60" class="box" rx="8"/>
+
+  <!-- Top row text -->
+  <text x="100" y="52" class="text">Metadata Read-Only</text>
+  <text x="100" y="72" class="subtext">(least privileged)</text>
+
+  <text x="310" y="62" class="text">Content Read-Only</text>
+
+  <text x="520" y="62" class="text">Editor</text>
+
+  <text x="730" y="52" class="text">Admin</text>
+  <text x="730" y="72" class="subtext">(most privileged)</text>
+
+  <!-- Top row arrows -->
+  <line x1="180" y1="60" x2="222" y2="60" class="arrow"/>
+  <line x1="390" y1="60" x2="432" y2="60" class="arrow"/>
+  <line x1="600" y1="60" x2="642" y2="60" class="arrow"/>
+
+  <!-- Bottom row boxes -->
+  <rect x="20" y="140" width="160" height="50" class="box" rx="8"/>
+  <rect x="20" y="230" width="160" height="50" class="box" rx="8"/>
+
+  <!-- Bottom row text -->
+  <text x="100" y="165" class="text">Bind</text>
+  <text x="100" y="255" class="text">Create</text>
+
+  <!-- Dotted connector: Create to Admin -->
+  <line x1="180" y1="255" x2="730" y2="255" class="dotted"/>
+  <line x1="730" y1="255" x2="730" y2="100" class="dotted"/>
+  
+  <!-- Upward arrowhead at Admin bottom -->
+  <polygon points="724,100 730,88 736,100" fill="#f6821f"/>
+
+  <!-- Label above the horizontal dotted line -->
+  <text x="455" y="240" class="label-text">grants user Admin role to their created resource</text>
+</svg>

@@ -16,10 +16,10 @@ For information about managing account members, refer to [Manage members](/funda
 For every product within the [Developer Platform](/products/?product-group=Developer+platform), you can assign one or more of the following role types to users or API tokens on your Cloudflare account:
 
 - **Metadata Read-Only**: Allows viewing resource lists, settings, and observability data (metrics, logs, traces) without access to product content.
-- **Bind**: Can [bind a Worker](https://developers.cloudflare.com/workers/runtime-apis/bindings/) to product resources. 
 - **Content Read-Only**: Allows reading product content (such as D1 database content or Worker code) without the ability to modify it.
 - **Editor**: Allows reading and writing product content, and updating settings. Cannot create, delete, or rename resources.
 - **Admin**: Full control over resources, including the ability to create, rename, delete, and grant access to other users.
+- **Bind**: Can [bind a Worker](https://developers.cloudflare.com/workers/runtime-apis/bindings/) to product resources.
 - **Create**: Allows creating new resources. The user who creates a resource automatically becomes the Admin for that resource. Does not grant access to existing resources.
 
 As a best practice, developers building with the Developer Platform should have **Developer Platform Metadata Read-Only** combined with a product-specific **Create** role. This approach allows developers to view resources and observability data across the platform while creating and managing their own resources.
@@ -32,13 +32,7 @@ Metadata Read-Only, Content Read-Only, Editor, and Admin roles are ordered from 
 Page below describes roles for Workers and D1. The same pattern would be followed for all products within Developer Platform.
 :::
 
-```mermaid
-flowchart TD
-    classDef default text-align:center;
-    A["Metadata Read-Only<br/>(least privileged)"] --> B["Content Read-Only"]
-    B --> C["Editor"]
-    C --> D["Admin<br/>(most privileged)"]
-```
+![Authorization roles diagram](~/assets/images/workers/authorization-roles-diagram.svg)
 
 ## Developer Platform roles
 
@@ -61,10 +55,10 @@ Product roles can apply to all resources for that product or to individual resou
 | Role                       | Description                                                                                                                                                                                                                                                                                        |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Workers Metadata Read-Only | Can see Worker exists (list). <br/> Can see settings (limits, compatibility flags). <br/> Can see bindings configuration, routes, custom domains, cron triggers, and deployment history. <br/> Can see observability (metrics, logs, traces, tail). <br/> Cannot see script code or secret values. |
-| Workers Bind               | Can bind to a Worker via service bindings. <br/> Cannot deploy changes, read script code, or modify other settings.                                                                                                                                                                                        |
 | Workers Content Read-Only  | Can view Worker script source code. <br/> Cannot deploy changes or modify settings.                                                                                                                                                                                                                |
-| Workers Editor             | Can deploy Worker changes to production. <br/> Can create versions and deployments. <br/> Can update Worker settings and bindings. <br/> Can manage routes, custom domains, cron triggers, and secrets. <br/> Cannot create or delete Workers.                                                     |
-| Workers Admin              | Can create, rename, and delete Workers. <br/> Can manage subdomain (\*.workers.dev) settings and account-level Workers settings. <br/> Can grant resource access to other users.                                                                                                                   |
+| Workers Editor             | Can deploy Worker changes to production. <br/> Can create versions and deployments. <br/> Can update Worker settings and bindings. <br/> Can manage routes, custom domains, cron triggers, and secrets. <br/> Can bind Worker via service bindings. <br/> Cannot create or delete Workers.                                                     |
+| Workers Admin              | Can create, rename, and delete Workers. <br/> Can manage subdomain (\*.workers.dev) settings and account-level Workers settings. <br/> Can grant resource access to other users. <br/> Can bind Worker via service bindings.                                                                                                                   |
+| Workers Bind               | Can bind to a Worker via service bindings. <br/> Cannot deploy changes, read script code, or modify other settings.                                                                                                                                                                                        |
 | Workers Create             | Can create a new Worker and become Worker Admin for your Worker. <br/> Does not grant access to existing Workers.                                                                                                                                                                                  |
 
 ### D1 product roles
@@ -76,10 +70,10 @@ When deploying a Worker with a D1 binding, user must have **D1 Bind** role or hi
 | Role                  | Description                                                                                                                                                 |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | D1 Metadata Read-Only | Can list databases and read database metadata. <br/> Cannot read or write database content.                                                                 |
-| D1 Bind               | Can bind D1 database to Workers. <br/> Cannot read or write database content or manage database.                                                         |
-| D1 Content Read-Only  | Can bind D1 database to Workers. <br/> Can read database content with read-only queries. <br/> Can read all metadata. <br/> Cannot write to database or update settings.                          |
+| D1 Content Read-Only  | Can read database content with read-only queries. <br/> Can read all metadata. <br/> Cannot write to database or update settings.                          |
 | D1 Editor             | Can bind D1 database to Workers. <br/> Can read and write database content. <br/> Can read all metadata. <br/> Cannot manage databases or update settings.                                         |
 | D1 Admin              | Can bind D1 database to Workers. <br/> Can create, list, read, update, and delete database. <br/> Can grant access to other users.                |
+| D1 Bind               | Can bind D1 database to Workers. <br/> Cannot read or write database content or manage database.                                                         |
 | D1 Create             | Can create new databases. <br/> User who creates a database becomes D1 Admin for that specific database. <br/> Does not grant access to existing databases. |
 
 ## FAQ
