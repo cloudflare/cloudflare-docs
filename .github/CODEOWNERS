@@ -194,7 +194,7 @@ package.json @cloudflare/content-engineering
 /src/assets/images/changelog/workers-vpc/ @nikitacano @elithrar @thomasgauvin @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/docs/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @celso @deloreyj @mia303 @jonesphillip @cloudflare/product-owners
 /src/content/partials/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @celso @deloreyj @mia303 @jonesphillip @cloudflare/product-owners
-/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @scuffi @aron-cf @cloudflare/product-owners @cloudflare/ai-agents
+/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @scuffi @aron-cf @thomasgauvin @cloudflare/product-owners @cloudflare/ai-agents
 /src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/product-owners
 /src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/product-owners
 /src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/product-owners
