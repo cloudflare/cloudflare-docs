@@ -47,11 +47,11 @@ The rest of this page uses `ctx.cache.purge(...)` in most examples because those
 
 `purge()` accepts one or more of the following fields:
 
-| Field             | Purges                                                                                         | Scope          |
-| ----------------- | ---------------------------------------------------------------------------------------------- | -------------- |
-| `tags`            | Every cached response tagged with one of the given values via `Cache-Tag`.                     | Per entrypoint |
-| `pathPrefixes`    | Every cached response whose request path starts with one of the given prefixes.                | Per entrypoint |
-| `purgeEverything` | Every cached response for the entrypoint that called `purge()`.                                | Per entrypoint |
+| Field             | Purges                                                                          | Scope          |
+| ----------------- | ------------------------------------------------------------------------------- | -------------- |
+| `tags`            | Every cached response tagged with one of the given values via `Cache-Tag`.      | Per entrypoint |
+| `pathPrefixes`    | Every cached response whose request path starts with one of the given prefixes. | Per entrypoint |
+| `purgeEverything` | Every cached response for the entrypoint that called `purge()`.                 | Per entrypoint |
 
 All three modes are scoped to the [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) that called `purge()`. A purge from `PublicAPI` does not affect cached responses stored by `AdminAPI`, even if they share tag names or path prefixes. To invalidate across every entrypoint of a Worker, call `purge()` from each entrypoint.
 
@@ -86,7 +86,26 @@ export default {
 
 </TypeScriptExample>
 
-{/* TODO(zaidoon): Confirm whether multiple fields can be combined in a single call (e.g., `{ tags: [...], pathPrefixes: [...] }`) or whether each call must use a single field. */}
+You can combine fields in a single call. For example, `purge({ tags: ["blog-posts"], pathPrefixes: ["/blog/"] })` purges everything that matches **either** tag or path-prefix — the fields are unioned, not intersected. Use this when one logical invalidation affects responses tagged by multiple schemes.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Combined call: invalidates everything tagged "blog-posts" AND
+		// everything under /blog/ in a single round-trip.
+		await ctx.cache.purge({
+			tags: ["blog-posts"],
+			pathPrefixes: ["/blog/"],
+		});
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
 
 ## Purge by tag
 
@@ -117,6 +136,8 @@ export default {
 </TypeScriptExample>
 
 The `Cache-Tag` header value is a comma-separated list of tags. Cloudflare strips this header before returning the response to clients.
+
+Tag values must be **printable ASCII** (no spaces, no Unicode), each tag is at most **1024 characters** long, and a response can carry up to **1000 tags**. Tag matching at purge time is **case-insensitive**, so `Foo` and `foo` purge the same set of responses. Invalid tags are silently dropped at storage time — the response is still cached with the remaining valid tags. Refer to [Cache tag limits](/cache/how-to/purge-cache/purge-by-tags/#a-few-things-to-remember) for the full list.
 
 ### Trigger the purge
 

@@ -14,7 +14,26 @@ This page lists the scenarios where Workers Caching does not apply, followed by 
 
 Only `GET` and `HEAD` requests are cached. `POST`, `PUT`, `PATCH`, `DELETE`, and other methods always invoke your Worker.
 
+`GET` and `HEAD` for the same URL share a single cache entry. A `HEAD` request that arrives on a cold cache is converted to a `GET` internally so the cache is populated with the full asset. See [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key).
+
 If you need to cache responses to non-idempotent requests, do so explicitly in your Worker — for example, by hashing the request body into a synthetic URL and making an internal `GET` subrequest.
+
+### WebSocket upgrades
+
+WebSocket upgrade requests (`GET` with `Upgrade: websocket`) bypass the cache and always invoke your Worker. WebSocket sessions are stateful by definition and are not a meaningful unit of caching.
+
+### Custom RPC methods
+
+Only `fetch()` invocations on a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) go through Workers Caching. Custom RPC methods like `ctx.exports.Backend.getUser(id)` bypass the cache and always run the callee, regardless of the entrypoint's `cache.enabled` setting.
+
+To cache a piece of work that is currently exposed as an RPC method, refactor it to a `fetch` handler on its own entrypoint and call it with `fetch()`.
+
+### Status codes that are never cached
+
+Workers Caching never stores the following responses, even with explicit `Cache-Control` directives:
+
+- **`520`–`526`** (Cloudflare failsafe responses) are treated as transient errors and always re-run the Worker.
+- **`206 Partial Content`** is not cached. Workers Caching does not split responses into byte-range slices, so a `Range` request that produces a `206` will always result in `MISS`. Return a full `200` response and let the cache satisfy subsequent `Range` requests from the cached entry.
 
 ### Other invocation types
 
@@ -76,7 +95,7 @@ The [Cache API](/workers/runtime-apis/cache/) is a separate programmatic cache s
 For new Workers, prefer Workers Caching. The Cache API, by design, is a lower-level primitive:
 
 - It does not read through — responses are only cached when your Worker explicitly calls `put()`, and every request still executes your Worker on the way in.
-- It does not coalesce concurrent requests for the same resource.
+- It does not [collapse concurrent requests](/workers/cache/#request-collapsing) for the same resource. A burst of traffic to a fresh URL invokes your Worker once per request.
 - It does not participate in [tiered caching](/cache/how-to/tiered-cache/).
 
 Workers Caching provides all three automatically. The Cache API remains useful when you need fine-grained programmatic control.

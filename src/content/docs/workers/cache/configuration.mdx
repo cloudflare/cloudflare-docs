@@ -8,7 +8,7 @@ sidebar:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Workers Caching is configured per Worker, in your Wrangler configuration file. When enabled, caching applies to every HTTP invocation — eyeball requests, service binding calls, and loopback calls via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/).
+Workers Caching is configured per Worker, in your Wrangler configuration file. When enabled, caching applies to every `fetch()` invocation — eyeball requests, service binding `fetch()` calls, and loopback `fetch()` calls between entrypoints via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/). Custom RPC methods bypass the cache.
 
 This is **your Worker's cache** — configured through your Worker's code and Wrangler file. Your Worker controls its cache entirely through:
 
@@ -40,6 +40,8 @@ Add a `cache` block to your Wrangler configuration:
 </WranglerConfig>
 
 Setting `cache.enabled` to `true` causes Cloudflare to check the cache before invoking your Worker on every HTTP request.
+
+At launch, `enabled` is the only field accepted inside the `cache` block. Any other fields are reserved for future use and may cause validation errors in future versions of Wrangler.
 
 ## Disable caching
 
@@ -100,6 +102,43 @@ The `cache` block can be set at the top level and overridden per [environment](/
 
 With caching enabled, your Worker is the origin for Cloudflare's cache. Standard HTTP `Cache-Control` directives on the response your Worker returns determine whether and for how long Cloudflare caches it. For the full list of directives and how they interact, refer to [Cache-Control](/cache/concepts/cache-control/).
 
+:::caution[Responses with no `Cache-Control` header are still cached]
+
+If your Worker returns a response with **no** `Cache-Control` header (and no `Expires` header), Cloudflare applies [RFC 9111 heuristic freshness](https://www.rfc-editor.org/rfc/rfc9111#name-calculating-heuristic-fresh) using the table below. Responses whose status is not in the table are not cached by default.
+
+| Status code | Description                   | Default TTL               |
+| ----------- | ----------------------------- | ------------------------- |
+| `200`       | OK                            | 7200 seconds (2 hours)    |
+| `203`       | Non-Authoritative Information | 7200 seconds (2 hours)    |
+| `204`       | No Content                    | 7200 seconds (2 hours)    |
+| `300`       | Multiple Choices              | 1200 seconds (20 minutes) |
+| `301`       | Moved Permanently             | 1200 seconds (20 minutes) |
+| `404`       | Not Found                     | 180 seconds (3 minutes)   |
+| `405`       | Method Not Allowed            | 60 seconds (1 minute)     |
+| `410`       | Gone                          | 180 seconds (3 minutes)   |
+| `414`       | URI Too Long                  | 60 seconds (1 minute)     |
+| `501`       | Not Implemented               | 60 seconds (1 minute)     |
+
+For example, a `200` response that does not set `Cache-Control` is cached for 2 hours; a `404` is cached for 3 minutes.
+
+If you want a response not to be cached, return `Cache-Control: no-store` (or `private`) explicitly. Omitting `Cache-Control` is not the same as opting out of the cache.
+
+If you set `Cache-Control` (or `Expires`) on the response, these defaults do not apply — your directives are honored instead.
+
+:::
+
+:::note[Cache Deception Armor]
+
+When a response falls back to heuristic freshness (no `Cache-Control` set), Workers Caching also runs [Cache Deception Armor](/cache/cache-security/cache-deception-armor/) to defend against [cache deception attacks](https://owasp.org/www-community/attacks/Cache_Poisoning).
+
+Cache Deception Armor only inspects responses whose `Content-Type` starts with `text/` or `application/` — the high-risk types for accidentally caching generated, user-specific content under a static-looking URL. For those responses, if the request URI has a file extension that maps to a known MIME type (for example, `.css` → `text/css`) and the actual `Content-Type` does not match, the response is not cached and `Cf-Cache-Status` is `BYPASS`. For example, a Worker that serves `/style.css` with `Content-Type: text/html` will hit this.
+
+Responses with `Content-Type` outside `text/*` and `application/*` (for example, `image/png`, `video/mp4`) are not subject to the check — those types are rarely used to deliver private data, so the trade-off of a stricter check is not worth the false positives. A request URI with no file extension (for example, `/api/users/42`) also does not trigger the check.
+
+Setting any explicit `Cache-Control` directive skips the check entirely — Cache Deception Armor only activates when freshness is being inferred heuristically.
+
+:::
+
 ### Set the freshness window with `max-age`
 
 Use `max-age` to control how long the response is treated as fresh:
@@ -156,9 +195,11 @@ export default {
 
 </TypeScriptExample>
 
-:::caution[`s-maxage` disables `stale-while-revalidate`]
+:::caution[`s-maxage`, `must-revalidate`, and `proxy-revalidate` disable `stale-while-revalidate`]
 
-If your response includes **both** `s-maxage` and `stale-while-revalidate`, the stale-serving behavior is disabled and Cloudflare will block on a fresh revalidation when the response expires. When you want `stale-while-revalidate` to take effect at the edge, use `max-age` for the freshness window — not `s-maxage`. If you need a longer edge TTL than browsers should honor while still using `stale-while-revalidate`, use [`cdn-cache-control`](#header-precedence) for the edge directive.
+If your response includes any of `s-maxage`, `must-revalidate`, or `proxy-revalidate`, the stale-serving behavior is disabled and Cloudflare will block on a fresh revalidation when the response expires. The same is true for `stale-if-error`. This follows [RFC 9111 §4.2.4](https://www.rfc-editor.org/rfc/rfc9111#section-4.2.4): those three directives forbid serving stale content.
+
+When you want `stale-while-revalidate` to take effect at the edge, use `max-age` for the freshness window — not `s-maxage`. If you need a longer edge TTL than browsers should honor while still using `stale-while-revalidate`, use [`cdn-cache-control`](#header-precedence) for the edge directive.
 
 :::
 
@@ -170,6 +211,22 @@ Two common patterns:
 
 - **Mostly static content with a small tolerance for staleness.** Use a short `max-age` (for example, 60 seconds) and a longer `stale-while-revalidate` window (for example, 3600 seconds). Most requests are `HIT`s; occasional requests trigger a background refresh.
 - **"Always serve from cache" for high-traffic endpoints.** Use `max-age=0, stale-while-revalidate=<large>`. Every request returns the previously cached response immediately and triggers a background refresh. Your Worker runs once per request to revalidate, so CPU costs are close to running the Worker every time. Freshness drops as request volume drops — if no request arrives for a long time, the next request will see stale content.
+
+### Serve stale on error with `stale-if-error`
+
+`stale-if-error` lets Cloudflare return a previously cached response when the Worker fails while refreshing an expired cache entry — for example, when it throws, times out, or returns a `5xx` response. This insulates clients from transient Worker failures.
+
+```ts
+"Cache-Control": "public, max-age=600, stale-if-error=86400",
+```
+
+When the Worker is producing a fresh response, `stale-if-error` has no effect. When the Worker fails while refreshing an expired entry, Cloudflare serves the last successful cached response (with `Cf-Cache-Status: STALE`) for up to the `stale-if-error` window. A true cache miss (no prior entry) cannot benefit from `stale-if-error` because there is nothing stale to serve — Worker errors flow through to clients in that case.
+
+:::note
+If you do not set `stale-if-error` explicitly, **and your response does not carry `s-maxage`, `must-revalidate`, or `proxy-revalidate`**, Cloudflare's default behavior is to serve stale responses on Worker error indefinitely (as long as the cached entry has not been purged). This is helpful for resilience but can mask real failures from your monitoring. If you want Worker errors to surface to clients quickly, set `stale-if-error=0`.
+
+If your response **does** carry `s-maxage`, `must-revalidate`, or `proxy-revalidate`, `stale-if-error` is disabled regardless of the directive's value or the default. Worker errors flow through to clients immediately. This follows [RFC 9111 §4.2.4](https://www.rfc-editor.org/rfc/rfc9111#section-4.2.4) and applies to `stale-while-revalidate` as well.
+:::
 
 ### Header precedence
 
@@ -185,7 +242,7 @@ Use `cloudflare-cdn-cache-control` when you want a longer edge TTL than you expo
 
 ### `Cf-Cache-Status`
 
-Every response carries a `Cf-Cache-Status` header indicating what happened for that request. The most common values are `HIT`, `MISS`, `UPDATING`, and `BYPASS`. For the full set of values and their meanings, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
+Every response carries a `Cf-Cache-Status` header indicating what happened for that request. The values you will see most often are `HIT`, `MISS`, `EXPIRED`, `REVALIDATED`, `UPDATING`, `STALE`, and `BYPASS`. For the full set of values and their meanings, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
 
 ### `Cache-Tag`
 
@@ -211,17 +268,44 @@ export default {
 
 </TypeScriptExample>
 
-The `Cache-Tag` header value is a comma-separated list of tags. For limits on the number, length, and character set of tags, refer to [Cache tag limits](/cache/how-to/purge-cache/purge-by-tags/#a-few-things-to-remember).
+The `Cache-Tag` header value is a comma-separated list of tags. The same limits as the zone cache apply — refer to [Cache tag limits](/cache/how-to/purge-cache/purge-by-tags/#a-few-things-to-remember) for the full list. The most common constraints to keep in mind:
+
+- Tag values must be **printable ASCII** (`0x21`–`0x7E`) — no spaces, no Unicode, no control characters.
+- Each tag is at most **1024 characters** long.
+- A response can carry up to **1000 tags** for purge purposes.
+- Tag matching at purge time is **case-insensitive**. `Foo` and `foo` purge the same set of responses.
+
+Invalid tags (over-length, containing spaces, or containing non-ASCII characters) are silently dropped during cache storage — the response is still cached with the remaining valid tags, but you have no way to detect which tags were dropped. Validate tags in your Worker before returning them if this matters.
 
 ### Automatic bypass conditions
 
 Workers Caching inherits Cloudflare's standard [cache bypass rules](/cache/concepts/cache-responses/#bypass). The most common triggers:
 
-- The response includes a `Set-Cookie` header.
-- The request includes an `Authorization` header (the response is treated as private unless `Cache-Control: public` explicitly overrides it).
-- The response `Cache-Control` header includes `private`, `no-store`, or `no-cache`.
+- The response includes a `Set-Cookie` header (unless `Cache-Control` includes `private="set-cookie"` or `no-cache="set-cookie"`, in which case the `Set-Cookie` is stripped from the cached copy).
+- The request includes an `Authorization` header. The response is only stored if `Cache-Control` includes `public`, `must-revalidate`, or `s-maxage`, per [RFC 9111 §3.5](https://www.rfc-editor.org/rfc/rfc9111#name-storing-responses-to-authen).
+- The response `Cache-Control` header includes `private` or `no-store`.
 
 When any of these apply, `Cf-Cache-Status` is `BYPASS` and your Worker runs on every request.
+
+:::note[`no-cache` is not a bypass]
+
+`Cache-Control: no-cache` does not bypass the cache. The response is stored, but the cached entry is treated as stale immediately — so the next request always needs to consult your Worker before serving. The exact behavior depends on what other directives accompany `no-cache`:
+
+- **`no-cache` alone** — every subsequent request is revalidated **inline** with your Worker before any bytes are served. If your Worker returns `304 Not Modified` for a conditional request, `Cf-Cache-Status` is `REVALIDATED` and the cached body is served. If your Worker returns a fresh `200`, `Cf-Cache-Status` is `EXPIRED` and the cached body is replaced. Either way, the Worker runs and CPU time is billed.
+- **`no-cache, stale-while-revalidate=N`** — Cloudflare serves the cached body immediately and refreshes it in the background by invoking your Worker. `Cf-Cache-Status` is `UPDATING` for the duration of `N` seconds after the entry was last refreshed. After the SWR window elapses, behavior reverts to inline revalidation.
+
+In both cases, your Worker is invoked on every request, so CPU time is billed each time. The cached body is preserved across revalidations.
+
+Refer to [Understand `no-store` and `no-cache` directives](/cache/concepts/cache-control/#understand-no-store-and-no-cache-directives) for the full distinction between these directives.
+
+:::
+
+### Status codes that are never cached
+
+A few status codes are never stored, even with explicit `Cache-Control` directives:
+
+- **`520`–`526`** (Cloudflare failsafe responses) are treated as transient errors and never cached.
+- **`206 Partial Content`** is not cached. Workers Caching does not split responses into byte-range slices, so a `Range` request that produces a `206` will always result in `MISS`. Return a full `200` response and let the cache satisfy subsequent `Range` requests from the cached entry.
 
 ### `Vary`
 

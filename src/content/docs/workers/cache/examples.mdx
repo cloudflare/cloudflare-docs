@@ -8,9 +8,13 @@ sidebar:
 
 import { TypeScriptExample } from "~/components";
 
-Workers Caching is **a cache that is itself a Worker primitive**. It sits in front of every Worker entrypoint — the default export and every named [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) — and it also sits in front of [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/) calls between entrypoints in the same Worker. That second fact is the one that makes the rest of this page possible.
+Workers Caching is **a cache that is itself a Worker primitive**. It sits in front of every Worker entrypoint — the default export and every named [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) — and it also sits in front of `fetch()` calls between entrypoints in the same Worker via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/). That second fact is the one that makes the rest of this page possible.
 
-When one entrypoint invokes another via `ctx.exports`, the cache evaluates that call the same way it would evaluate a request from a browser. A hit returns the cached response without the callee running. A miss runs the callee and stores the response under its own cache key, keyed by the callee's entrypoint, path, query string, and [`ctx.props`](/workers/cache/cache-keys/#multi-tenant-safety-with-ctxprops). The caller still runs on every request — but anything the caller hands off to the callee is cacheable independently.
+When one entrypoint invokes another's `fetch()` via `ctx.exports`, the cache evaluates that call the same way it would evaluate a request from a browser. A hit returns the cached response without the callee running. A miss runs the callee and stores the response under its own cache key, keyed by the callee's entrypoint, path, query string, and [`ctx.props`](/workers/cache/cache-keys/#multi-tenant-safety-with-ctxprops). The caller still runs on every request — but anything the caller hands off to the callee is cacheable independently.
+
+:::note
+Only `fetch()` invocations go through the cache. Calling a custom RPC method on an entrypoint (for example `ctx.exports.Backend.getUser(id)`) bypasses the cache entirely. To cache a piece of work, expose it as a `fetch` handler.
+:::
 
 That gives you a primitive you can compose. You can author a Worker as a chain of small entrypoints — auth, normalization, routing, the expensive read, the data layer — and let Workers Caching slot in wherever you want it. Each cached entrypoint is a unit of memoization with its own key, its own TTL, and its own tag namespace for purging. Anything you would want to configure about caching — when it runs, what it keys on, when it invalidates — is expressed as ordinary Worker code: which entrypoint you call, what request you forward, what `ctx.props` you pass, what `Cache-Control` you set.
 

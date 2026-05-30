@@ -34,18 +34,32 @@ wrangler.toml or wrangler.jsonc has `cache.enabled = true` for that worker.
 
 - `public, max-age=N` — cached in Cloudflare and browsers for `N` seconds.
 
-A response with no `Cache-Control` header, or with `Cache-Control: private`, `no-store`, or `no-cache`, is not cached. Refer to [Cache-Control](/cache/concepts/cache-control/) for the full directive reference.
+A response with `Cache-Control: private` or `no-store` is not stored, and `Cf-Cache-Status` is `BYPASS`.
 
-**Check the request method.** Only `GET` and `HEAD` requests are cached. Everything else is `BYPASS`.
+A response with `Cache-Control: no-cache` _is_ stored, but Cloudflare treats every subsequent request as stale and consults your Worker before serving. The exact `Cf-Cache-Status` depends on whether `stale-while-revalidate` is also set:
+
+- With just `Cache-Control: no-cache`, every subsequent request triggers an inline revalidation. `Cf-Cache-Status` is `REVALIDATED` if your Worker returns `304 Not Modified` (body served from cache), or `EXPIRED` if your Worker returns a fresh `200` (body replaced).
+- With `Cache-Control: no-cache, stale-while-revalidate=N`, the cached body is served immediately and the Worker runs in the background. `Cf-Cache-Status` is `UPDATING` for the SWR window.
+
+If you wanted long-lived cache hits, use `max-age` instead. Refer to [`no-cache` is not a bypass](/workers/cache/configuration/#automatic-bypass-conditions).
+
+If the response carries **no** `Cache-Control` header at all, behavior depends on the status code: Workers Caching applies [RFC 9111 heuristic freshness](https://www.rfc-editor.org/rfc/rfc9111#name-calculating-heuristic-fresh) and caches default-cacheable status codes for a heuristic TTL — for example, `200` is cached for 2 hours and `404` for 3 minutes. For the full table of default TTLs, refer to [Responses with no `Cache-Control` header are still cached](/workers/cache/configuration/#cache-control-semantics) in the configuration reference. If you do not want any of these defaults to apply, set `Cache-Control` explicitly on the response.
+
+**Check the request method.** Only `GET` and `HEAD` requests are cached. Everything else is `BYPASS`. Note that `GET` and `HEAD` requests for the same URL share the same cache entry — see [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key) for how Cloudflare handles populating the cache from either method.
 
 **Check for automatic bypass conditions.** Cloudflare bypasses the cache when:
 
 - The response includes a `Set-Cookie` header.
-- The request includes an `Authorization` header, unless the response explicitly sets `Cache-Control: public`.
+- The request includes an `Authorization` header, unless the response explicitly sets `Cache-Control: public`, `must-revalidate`, or `s-maxage`.
 
 If your Worker unconditionally sets `Set-Cookie` (for example, a session cookie on every response), the response is never cached. Either remove the cookie from cacheable responses, or separate cookie-setting and cacheable responses into different routes.
 
-**Check the status code.** Workers Caching follows [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111). Responses with status codes that are not cacheable by default (for example, `401`, `403`, `500`) are not stored.
+**Check the status code.** Workers Caching follows [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111). Responses with status codes that are not cacheable by default (for example, `401`, `403`, `500`) are not stored unless you explicitly mark them with cacheable directives.
+
+A few status codes are never cached, even with explicit `Cache-Control`:
+
+- **`520`–`526`** are treated as Cloudflare failsafe responses and are never stored.
+- **`206 Partial Content`** is not cached. Workers Caching does not split responses into byte-range slices, so a Worker that responds to a `Range` request with `206` will see `MISS` on every request. Return a full `200` response and let the cache handle range requests on subsequent hits.
 
 ## My Worker runs even after the first request
 
@@ -91,6 +105,34 @@ If you see `UPDATING` more often than you expect:
 
 - Your `max-age` is shorter than your request arrival rate. Every request that arrives after `max-age` elapses triggers a revalidation.
 - With `max-age=0, stale-while-revalidate=<large>`, **every** request triggers a revalidation. This is "always serve from cache" behavior, not "don't run the Worker." Refer to [Choose TTL and stale-while-revalidate values](/workers/cache/configuration/#choose-ttl-and-stale-while-revalidate-values).
+
+## `Cf-Cache-Status: UPDATING` never appears
+
+`UPDATING` is emitted only when **all** of the following are true:
+
+- A cached entry exists and is past its freshness window (stale).
+- The response carries `stale-while-revalidate=N`, and the request arrives within `N` seconds of the entry going stale.
+- The response does **not** also carry `s-maxage`, `must-revalidate`, or `proxy-revalidate`.
+
+If any of those is false, requests for stale entries fall through to inline revalidation instead, producing `EXPIRED` (Worker returned a fresh body) or `REVALIDATED` (Worker returned `304 Not Modified`).
+
+Common reasons `UPDATING` does not appear:
+
+- **No `stale-while-revalidate` directive on the response.** The default SWR window is `0`, so without an explicit directive every stale request is foreground-revalidated.
+- **`s-maxage`, `must-revalidate`, or `proxy-revalidate` is present.** Per [RFC 9111 §4.2.4](https://www.rfc-editor.org/rfc/rfc9111#section-4.2.4), these directives forbid serving stale content, so Cloudflare disables `stale-while-revalidate` (and `stale-if-error`) when any of them is present. Use `max-age` for the edge freshness window if you want stale-serving to work.
+- **The SWR window has elapsed.** If your response uses `max-age=60, stale-while-revalidate=120`, you will see `UPDATING` for requests arriving in the 120 seconds after the entry goes stale. Requests arriving after that revert to inline revalidation.
+
+## `Cf-Cache-Status: STALE` appears unexpectedly
+
+`STALE` means Cloudflare served a previously cached response because your Worker errored on the request that would have refreshed it — for example, the Worker threw, timed out, or returned a `5xx` response. This is `stale-if-error` behavior. Refer to [Serve stale on error with `stale-if-error`](/workers/cache/configuration/#serve-stale-on-error-with-stale-if-error).
+
+If you see `STALE` and did not expect it:
+
+- **Your Worker is failing on cache fills or revalidations.** Check the [Workers observability dashboard](/workers/observability/) for errors on the requests that should have produced a fresh response. The fact that clients see a stale response instead of a `5xx` is masking a real failure.
+- **You did not set `stale-if-error` explicitly, and your response does not include `s-maxage`/`must-revalidate`/`proxy-revalidate`.** In that case, Cloudflare's default behavior is to serve stale responses on Worker error indefinitely, as long as the cached entry has not been purged. If you want errors to surface to clients quickly, set `stale-if-error=0` in `Cache-Control`. For details, refer to [Serve stale on error with `stale-if-error`](/workers/cache/configuration/#serve-stale-on-error-with-stale-if-error).
+- **A previously deployed version is being served.** If you deployed a fix but `STALE` keeps appearing, the cached entry from the broken version is still being served on every error. [Purge](/workers/cache/purge/) the affected entries to force a fresh fill from the current version.
+
+To distinguish a `STALE` from a normal `HIT` in client-side observability, log `Cf-Cache-Status` alongside the response — `STALE` is the only signal that the Worker is failing and clients are not seeing it.
 
 ## My response is larger than the size limit
 

@@ -8,14 +8,14 @@ sidebar:
 ---
 
 import {
- DirectoryListing,
- TypeScriptExample,
- WranglerConfig,
+	DirectoryListing,
+	TypeScriptExample,
+	WranglerConfig,
 } from "~/components";
 
 Workers Caching lets Cloudflare return cached HTTP responses from your Worker without executing your Worker code. When an incoming request matches a cached response, Cloudflare serves the response directly from its edge cache — reducing latency and Workers CPU usage.
 
-Caching works for eyeball requests (requests from browsers and API clients), requests sent through [service bindings](/workers/runtime-apis/bindings/service-bindings/), and loopback calls via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/). You control caching with standard HTTP `Cache-Control` directives on your responses.
+Caching works for any `fetch()` invocation of the Worker — eyeball requests (requests from browsers and API clients), requests sent through [service bindings](/workers/runtime-apis/bindings/service-bindings/), and loopback `fetch()` calls between entrypoints via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/). You control caching with standard HTTP `Cache-Control` directives on your responses.
 
 ## Your Worker's cache
 
@@ -92,6 +92,34 @@ This is the same topology that powers [Tiered Cache](/cache/how-to/tiered-cache/
 
 **Why this matters:** the first request for a given cache key anywhere on Earth populates the upper tier. Every later request, from any Cloudflare data center, can be served from the upper tier without running your Worker — even if the lower tier at that location has never seen the request before. Cache hit ratios are substantially higher than a single flat cache layer.
 
+## Request collapsing
+
+When many requests for the same cache key arrive simultaneously at a Cloudflare data center and the response is not yet cached, Cloudflare runs your Worker **once** and serves the resulting response to every waiting request. This is the same [request collapsing](/cache/concepts/default-cache-behavior/#request-collapsing) mechanism the zone cache uses, applied automatically to Workers Caching. The waiting requests block on a per-cache-key [cache lock](/cache/concepts/default-cache-behavior/#request-collapsing) until the first request produces a response.
+
+```mermaid
+flowchart LR
+    accTitle: Cache request collapsing for Workers
+    accDescr: Many simultaneous requests for the same cache key produce one Worker invocation; all requests receive the same response.
+
+    R1["Request 1"] --> Lock
+    R2["Request 2"] --> Lock
+    R3["Request 3"] --> Lock
+    Rn["..."] --> Lock
+    Lock{"Cache lock<br/>(per cache key, per data center)"}
+    Lock -- "first request" --> Worker["Worker runs once"]
+    Worker --> Response["Response<br/>streamed to all<br/>waiting requests"]
+```
+
+**Why this matters:** without request collapsing, a sudden burst of traffic to a fresh URL would invoke your Worker once per request, multiplying CPU billing and load on any backend the Worker calls. With request collapsing, that burst still produces one Worker invocation.
+
+A few details to keep in mind:
+
+- **Collapsing is per cache key, per data center.** Requests that produce different cache keys do not collapse with each other. Two data centers that both miss simultaneously each run your Worker once (the upper tier consolidates further; see [Tiered cache](#tiered-cache)).
+- **Streaming responses are collapsed too.** Waiting requests are joined to the in-flight response stream so they receive the body as it is produced — they do not have to wait for the full response before any bytes are returned.
+- **Collapsing does not apply to uncacheable responses.** If the Worker's response is uncacheable (`BYPASS`, `DYNAMIC`), each request gets its own invocation. The cache only collapses requests that produce a response the cache is allowed to store.
+
+This is one of the most significant differences between Workers Caching and the [Cache API](/workers/runtime-apis/cache/) — the Cache API does not collapse concurrent requests, so a burst of traffic to a fresh URL invokes your Worker once per request.
+
 ## Quickstart
 
 This quickstart walks you through enabling caching, deploying, and observing the cache in action.
@@ -121,20 +149,20 @@ Use `max-age` to control how long Cloudflare caches each response:
 
 ```ts
 export default {
- async fetch(request): Promise<Response> {
-  const body = JSON.stringify({
-   timestamp: new Date().toISOString(),
-   random: Math.random(),
-  });
+	async fetch(request): Promise<Response> {
+		const body = JSON.stringify({
+			timestamp: new Date().toISOString(),
+			random: Math.random(),
+		});
 
-  return new Response(body, {
-   headers: {
-    "Content-Type": "application/json",
-    // Cache for 1 hour; serve stale for up to 5 minutes while revalidating.
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=300",
-   },
-  });
- },
+		return new Response(body, {
+			headers: {
+				"Content-Type": "application/json",
+				// Cache for 1 hour; serve stale for up to 5 minutes while revalidating.
+				"Cache-Control": "public, max-age=3600, stale-while-revalidate=300",
+			},
+		});
+	},
 } satisfies ExportedHandler;
 ```
 
@@ -174,14 +202,20 @@ The second request receives the cached response. The `timestamp` and `random` va
 
 ## What gets cached
 
-- All HTTP invocations of the Worker are eligible for caching, including eyeball requests, service binding calls, and loopback calls via `ctx.exports`.
-- Only `GET` and `HEAD` requests are cached. Other methods always invoke your Worker.
-- Cacheability is determined by the response headers your Worker returns. Workers Caching follows the semantics defined in [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111). Refer to [Cache-Control](/cache/concepts/cache-control/) for the full list of directives Cloudflare respects.
+- HTTP invocations of the Worker's [`fetch`](/workers/runtime-apis/fetch/) handler are eligible for caching, including eyeball requests, service binding `fetch()` calls, and loopback `fetch()` calls via `ctx.exports`.
+- Only `GET` and `HEAD` requests are cached. Other methods always invoke your Worker. `GET` and `HEAD` for the same URL share a single cache entry — see [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key).
+- **Only `fetch()` invocations go through the cache.** Custom RPC methods on a `WorkerEntrypoint` (for example `ctx.exports.Backend.getUser(id)`) bypass the cache entirely and always run the callee. To cache a piece of work, expose it as a `fetch` handler on its own entrypoint.
+- **WebSocket upgrade requests bypass the cache.** A `GET` request carrying `Upgrade: websocket` always invokes your Worker.
+- Other invocation types — [`scheduled`](/workers/configuration/cron-triggers/) (Cron Triggers), [`queue`](/queues/configuration/javascript-apis/#consumer) consumers, [Workflows](/workflows/), [Tail Workers](/workers/observability/logs/tail-workers/), [Durable Object](/durable-objects/) invocations, [Email Workers](/email-routing/email-workers/) — always run without cache involvement.
+- Cacheability is determined by the response headers your Worker returns. Workers Caching follows the semantics defined in [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111), including [heuristic freshness](https://www.rfc-editor.org/rfc/rfc9111#name-calculating-heuristic-fresh) for responses that do not carry `Cache-Control`. Refer to [Cache-Control](/cache/concepts/cache-control/) for the full list of directives Cloudflare respects.
 - Cloudflare's standard [cache bypass conditions](/cache/concepts/cache-responses/#bypass) apply. In particular, responses with a `Set-Cookie` header and requests with an `Authorization` header trigger automatic bypass.
 - [Preview URLs](/workers/configuration/previews/) are supported. Each preview caches independently of your production deployment, so testing a cache-affecting change in a preview never touches production's cached responses.
 - [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) is supported. Each user Worker has its own cache, isolated from the dispatcher and from other user Workers in the namespace.
 
-The `Cf-Cache-Status` response header tells you what happened for each request (`HIT`, `MISS`, `UPDATING`, `BYPASS`). Refer to [Cloudflare cache responses](/cache/concepts/cache-responses/) for the full set of values.
+The `Cf-Cache-Status` response header tells you what happened for each request.
+The values you will see most often are `HIT`, `MISS`, `EXPIRED`, `REVALIDATED`,
+`UPDATING`, `STALE`, and `BYPASS`. Refer to [Cloudflare cache
+responses](/cache/concepts/cache-responses/) for the full set of values.
 
 ## Content negotiation with `Vary`
 
@@ -193,23 +227,21 @@ This lets a single URL cache multiple representations — for example, different
 
 ```ts
 export default {
- async fetch(request): Promise<Response> {
-  const accept = request.headers.get("Accept") ?? "";
-  const wantsWebp = accept.includes("image/webp");
+	async fetch(request): Promise<Response> {
+		const accept = request.headers.get("Accept") ?? "";
+		const wantsWebp = accept.includes("image/webp");
 
-  const body = wantsWebp
-   ? await fetchWebpImage()
-   : await fetchJpegImage();
+		const body = wantsWebp ? await fetchWebpImage() : await fetchJpegImage();
 
-  return new Response(body, {
-   headers: {
-    "Content-Type": wantsWebp ? "image/webp" : "image/jpeg",
-    "Cache-Control": "public, max-age=3600",
-    // Cache a separate variant per distinct Accept header value.
-    Vary: "Accept",
-   },
-  });
- },
+		return new Response(body, {
+			headers: {
+				"Content-Type": wantsWebp ? "image/webp" : "image/jpeg",
+				"Cache-Control": "public, max-age=3600",
+				// Cache a separate variant per distinct Accept header value.
+				Vary: "Accept",
+			},
+		});
+	},
 } satisfies ExportedHandler;
 ```
 
@@ -252,36 +284,36 @@ The wrapper entrypoint forwards the request into the Durable Object and sets `Ca
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 interface Env {
- COUNTER: DurableObjectNamespace;
+	COUNTER: DurableObjectNamespace;
 }
 
 // Cached entrypoint. Requests to this entrypoint are served from cache
 // when possible; on a miss, the Durable Object is invoked and its
 // response is stored.
 export class CachedCounter extends WorkerEntrypoint<Env> {
- async fetch(request: Request): Promise<Response> {
-  const id = this.env.COUNTER.idFromName("global");
-  const stub = this.env.COUNTER.get(id);
-  const response = await stub.fetch(request);
+	async fetch(request: Request): Promise<Response> {
+		const id = this.env.COUNTER.idFromName("global");
+		const stub = this.env.COUNTER.get(id);
+		const response = await stub.fetch(request);
 
-  // Attach cache headers. Clone into a new Response so the headers
-  // are mutable.
-  return new Response(response.body, {
-   status: response.status,
-   headers: {
-    ...Object.fromEntries(response.headers),
-    "Cache-Control": "public, max-age=30",
-   },
-  });
- }
+		// Attach cache headers. Clone into a new Response so the headers
+		// are mutable.
+		return new Response(response.body, {
+			status: response.status,
+			headers: {
+				...Object.fromEntries(response.headers),
+				"Cache-Control": "public, max-age=30",
+			},
+		});
+	}
 }
 
 // Default entrypoint. Delegates to the cached entrypoint via ctx.exports,
 // which routes through the cache.
 export default {
- async fetch(request, env, ctx): Promise<Response> {
-  return ctx.exports.CachedCounter.fetch(request);
- },
+	async fetch(request, env, ctx): Promise<Response> {
+		return ctx.exports.CachedCounter.fetch(request);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -341,10 +373,10 @@ Your Worker can invalidate its own cache at any time using `ctx.cache.purge()`. 
 
 ```ts
 export default {
- async fetch(request, env, ctx): Promise<Response> {
-  await ctx.cache.purge({ tags: ["blog-posts"] });
-  return new Response("Purged", { status: 200 });
- },
+	async fetch(request, env, ctx): Promise<Response> {
+		await ctx.cache.purge({ tags: ["blog-posts"] });
+		return new Response("Purged", { status: 200 });
+	},
 } satisfies ExportedHandler;
 ```
 
