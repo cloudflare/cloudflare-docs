@@ -237,14 +237,20 @@ package.json @cloudflare/content-engineering
 # Performance products
 
 /src/content/docs/argo-smart-routing/ @cloudflare/product-owners @ncrouch-cflare
-/src/content/docs/automatic-platform-optimization/ @cloudflare/product-owners
-/src/content/docs/cache/ @cloudflare/product-owners
+/src/content/docs/automatic-platform-optimization/ @cloudflare/product-owners @ack-cf
+/src/content/docs/cache/ @cloudflare/product-owners @ack-cf
+/src/content/partials/cache/ @cloudflare/product-owners @ack-cf
+/src/content/changelog/cache/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf
+/src/assets/images/cache/ @cloudflare/product-owners @ack-cf
 /src/content/docs/health-checks/ @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/partials/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu
-/src/content/docs/speed/ @cloudflare/product-owners
+/src/content/docs/speed/ @cloudflare/product-owners @ack-cf
+/src/content/partials/speed/ @cloudflare/product-owners @ack-cf
+/src/content/changelog/speed/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf
+/src/assets/images/speed/ @cloudflare/product-owners @ack-cf
 /src/content/docs/web3/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 
 # Privacy
