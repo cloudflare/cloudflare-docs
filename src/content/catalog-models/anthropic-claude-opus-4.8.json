@@ -1,5 +1,5 @@
 {
-	"model_id": "anthropic/claude-opus-4.8",
+	"model_id": "anthropic/claude-opus-4-8",
 	"provider_id": "anthropic",
 	"name": "Claude Opus 4.8",
 	"description": "Claude Opus 4.8 is Anthropic's most capable generally available model, with a step-change improvement in agentic coding over Claude Opus 4.7. It uses adaptive thinking to calibrate reasoning per task and supports a one million token context window at standard pricing.",
