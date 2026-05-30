@@ -283,7 +283,6 @@
 /agents/agentic-payments/x402/ /agents/tools/payments/x402/ 301
 /agents/agentic-payments/mpp/ /agents/tools/payments/mpp/ 301
 /agents/concepts/agent-class/ /agents/runtime/lifecycle/agent-class/ 301
-/agents/concepts/workflows/ /agents/runtime/execution/run-workflows/ 301
 /agents/concepts/memory/ /agents/concepts/conversation-state-and-memory/ 301
 /agents/getting-started/prompting/ /workers/get-started/prompting/ 301
 /agents/platform/prompting/ /workers/get-started/prompting/ 301

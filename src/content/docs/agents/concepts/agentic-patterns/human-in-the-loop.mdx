@@ -29,19 +29,31 @@ Human-in-the-loop (HITL) patterns allow agents to pause execution and wait for h
 | AI tool execution   | Confirming tool calls before running |
 | Access control      | Granting permissions, role changes   |
 
-## Choosing a pattern
+## Choosing an approach
 
-Cloudflare provides two main patterns for human-in-the-loop:
+The Agents SDK provides several patterns for human-in-the-loop. Choose based on your architecture:
 
-| Pattern               | Best for                                     | Key API             |
-| --------------------- | -------------------------------------------- | ------------------- |
-| **Workflow approval** | Multi-step processes, durable approval gates | `waitForApproval()` |
-| **MCP elicitation**   | MCP servers requesting structured user input | `elicitInput()`     |
+| Use case               | Pattern             | Best for                                                                   |
+| ---------------------- | ------------------- | -------------------------------------------------------------------------- |
+| Long-running workflows | Workflow approval   | Multi-step processes, durable approval gates that can wait hours or weeks  |
+| AIChatAgent tools      | `needsApproval`     | Chat-based tool calls with server-side approval before execution           |
+| Client-side tools      | `onToolCall`        | Tools that need browser APIs or user interaction before execution          |
+| MCP servers            | Elicitation         | MCP tools requesting structured user input during execution                |
+| Simple confirmations   | State + WebSocket   | Lightweight approval flows without AI chat or workflows                    |
 
-Decision guide:
+### Decision tree
 
-- Use **Workflow approval** when you need durable, multi-step processes with approval gates that can wait hours, days, or weeks
-- Use **MCP elicitation** when building MCP servers that need to request additional structured input from users during tool execution
+```
+Is this part of a multi-step workflow?
+├── Yes → Use Workflow Approval (waitForApproval)
+└── No → Are you building an MCP server?
+         ├── Yes → Use MCP Elicitation (elicitInput)
+         └── No → Is this an AI chat interaction?
+                  ├── Yes → Does the tool need browser APIs?
+                  │        ├── Yes → Use onToolCall (client-side execution)
+                  │        └── No → Use needsApproval (server-side with approval)
+                  └── No → Use State + WebSocket for simple confirmations
+```
 
 ## Workflow-based approval
 
