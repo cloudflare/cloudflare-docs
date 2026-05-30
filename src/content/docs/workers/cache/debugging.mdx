@@ -45,7 +45,7 @@ If you wanted long-lived cache hits, use `max-age` instead. Refer to [`no-cache`
 
 If the response carries **no** `Cache-Control` header at all, behavior depends on the status code: Workers Caching applies [RFC 9111 heuristic freshness](https://www.rfc-editor.org/rfc/rfc9111#name-calculating-heuristic-fresh) and caches default-cacheable status codes for a heuristic TTL — for example, `200` is cached for 2 hours and `404` for 3 minutes. For the full table of default TTLs, refer to [Responses with no `Cache-Control` header are still cached](/workers/cache/configuration/#cache-control-semantics) in the configuration reference. If you do not want any of these defaults to apply, set `Cache-Control` explicitly on the response.
 
-**Check the request method.** Only `GET` and `HEAD` requests are cached. Everything else is `BYPASS`. Note that `GET` and `HEAD` requests for the same URL share the same cache entry — see [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key) for how Cloudflare handles populating the cache from either method.
+**Check the request method.** Only `GET` and `HEAD` requests are cached. Everything else is `BYPASS`. `GET` and `HEAD` requests for the same URL share the same cache entry — refer to [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key) for how Cloudflare handles populating the cache from either method.
 
 **Check for automatic bypass conditions.** Cloudflare bypasses the cache when:
 

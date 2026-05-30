@@ -14,7 +14,7 @@ This page lists the scenarios where Workers Caching does not apply, followed by 
 
 Only `GET` and `HEAD` requests are cached. `POST`, `PUT`, `PATCH`, `DELETE`, and other methods always invoke your Worker.
 
-`GET` and `HEAD` for the same URL share a single cache entry. A `HEAD` request that arrives on a cold cache is converted to a `GET` internally so the cache is populated with the full asset. See [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key).
+`GET` and `HEAD` for the same URL share a single cache entry. A `HEAD` request that arrives on a cold cache is converted to a `GET` internally so the cache is populated with the full asset. Refer to [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key).
 
 If you need to cache responses to non-idempotent requests, do so explicitly in your Worker — for example, by hashing the request body into a synthetic URL and making an internal `GET` subrequest.
 

@@ -114,7 +114,7 @@ flowchart LR
 
 A few details to keep in mind:
 
-- **Collapsing is per cache key, per data center.** Requests that produce different cache keys do not collapse with each other. Two data centers that both miss simultaneously each run your Worker once (the upper tier consolidates further; see [Tiered cache](#tiered-cache)).
+- **Collapsing is per cache key, per data center.** Requests that produce different cache keys do not collapse with each other. Two data centers that both miss simultaneously each run your Worker once (the upper tier consolidates further; refer to [Tiered cache](#tiered-cache)).
 - **Streaming responses are collapsed too.** Waiting requests are joined to the in-flight response stream so they receive the body as it is produced — they do not have to wait for the full response before any bytes are returned.
 - **Collapsing does not apply to uncacheable responses.** If the Worker's response is uncacheable (`BYPASS`, `DYNAMIC`), each request gets its own invocation. The cache only collapses requests that produce a response the cache is allowed to store.
 

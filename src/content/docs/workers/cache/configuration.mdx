@@ -104,7 +104,7 @@ With caching enabled, your Worker is the origin for Cloudflare's cache. Standard
 
 :::caution[Responses with no `Cache-Control` header are still cached]
 
-If your Worker returns a response with **no** `Cache-Control` header (and no `Expires` header), Cloudflare applies [RFC 9111 heuristic freshness](https://www.rfc-editor.org/rfc/rfc9111#name-calculating-heuristic-fresh) using the table below. Responses whose status is not in the table are not cached by default.
+If your Worker returns a response with **no** `Cache-Control` header (and no `Expires` header), Cloudflare applies [RFC 9111 heuristic freshness](https://www.rfc-editor.org/rfc/rfc9111#name-calculating-heuristic-fresh) with the per-status default TTLs in the following table. Responses whose status is not in the table are not cached by default.
 
 | Status code | Description                   | Default TTL               |
 | ----------- | ----------------------------- | ------------------------- |
@@ -119,7 +119,7 @@ If your Worker returns a response with **no** `Cache-Control` header (and no `Ex
 | `414`       | URI Too Long                  | 60 seconds (1 minute)     |
 | `501`       | Not Implemented               | 60 seconds (1 minute)     |
 
-For example, a `200` response that does not set `Cache-Control` is cached for 2 hours; a `404` is cached for 3 minutes.
+For example, a `200` response that does not set `Cache-Control` is cached for 2 hours. A `404` is cached for 3 minutes.
 
 If you want a response not to be cached, return `Cache-Control: no-store` (or `private`) explicitly. Omitting `Cache-Control` is not the same as opting out of the cache.
 
