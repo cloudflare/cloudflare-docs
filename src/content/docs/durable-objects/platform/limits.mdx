@@ -25,6 +25,7 @@ Durable Objects are a special kind of Worker, so [Workers Limits](/workers/platf
 | Value size                                   | Key and value combined cannot exceed 2 MB                                                                      |
 | WebSocket message size                       | 32 MiB (only for received messages)                                                                            |
 | CPU per request                              | 30 seconds (default) / configurable to 5 minutes of [active CPU time](/workers/platform/limits/#cpu-time) [^4] |
+| Simultaneous outgoing connections/request    | 6 (same as [Workers](/workers/platform/limits/#simultaneous-open-connections)) |
 
 [^1]: Identical to the Workers [script limit](/workers/platform/limits/).
 
@@ -63,6 +64,7 @@ For Durable Object classes with [SQLite storage](/durable-objects/api/sqlite-sto
 | Value size                                   | 128 KiB (131072 bytes)                              |
 | WebSocket message size                       | 32 MiB (only for received messages)                 |
 | CPU per request                              | 30s (including WebSocket messages) [^7]             |
+| Simultaneous outgoing connections/request    | 6 (same as [Workers](/workers/platform/limits/#simultaneous-open-connections)) |
 
 [^5]: Identical to the Workers [script limit](/workers/platform/limits/).
 
