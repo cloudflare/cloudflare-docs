@@ -69,7 +69,8 @@ package.json @cloudflare/content-engineering
 
 /src/content/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/dns/ @cloudflare/pm-changelogs @cloudflare/product-owners @hannes-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
-/src/content/changelog/waf/ @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/changelog/waf/ @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF
+/src/content/changelog/waiting-room/ @angelampcosta @dcpena @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @hsaxenaCF @cloudflare/product-owners
 /src/assets/images/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/changelog/dns/ @cloudflare/pm-changelogs @cloudflare/product-owners @hannes-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
 /src/assets/images/ @cloudflare/pm-changelogs @cloudflare/product-owners
@@ -273,7 +274,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/api-shield/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
 /src/content/docs/bots/ @jinhee-c-lee @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF
 /src/content/docs/client-side-security/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
 /src/content/docs/secrets-store/ @baubuchon-cf @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/security/ @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners @davejbax @zrkn @hemanthk1099
@@ -281,8 +282,10 @@ package.json @cloudflare/content-engineering
 /src/content/partials/security-center/ @cloudflare/appsec-reviewers @cloudflare/product-owners @davejbax @zrkn @hemanthk1099
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF
+/src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF
+/src/assets/images/waf/ @cloudflare/firewall @cloudflare/appsec-reviewers @hsaxenaCF @cloudflare/product-owners
+/src/assets/images/changelog/waf/ @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @hsaxenaCF @cloudflare/product-owners
 /src/content/docs/cloudflare-challenges/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 
 # Support
@@ -296,7 +299,9 @@ package.json @cloudflare/content-engineering
 
 # Waiting Room
 
-/src/content/docs/waiting-room/ @angelampcosta @dcpena @cloudflare/product-owners
+/src/content/docs/waiting-room/ @angelampcosta @dcpena @cloudflare/product-owners @hsaxenaCF
+/src/assets/images/waiting-room/ @angelampcosta @dcpena @cloudflare/firewall @cloudflare/appsec-reviewers @hsaxenaCF @cloudflare/product-owners
+/src/assets/images/changelog/waiting-room/ @angelampcosta @dcpena @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @hsaxenaCF @cloudflare/product-owners
 
 # Web Analytics
 
