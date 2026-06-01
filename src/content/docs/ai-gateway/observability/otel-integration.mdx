@@ -20,22 +20,23 @@ The OpenTelemetry (OTEL) integration automatically exports trace spans for AI re
 - Cost estimates
 - Custom metadata
 
-This integration follows the [OpenTelemetry specification](https://opentelemetry.io/docs/specs/otel/) for distributed tracing and uses the OTLP (OpenTelemetry Protocol) JSON format.
+This integration follows the [OpenTelemetry specification](https://opentelemetry.io/docs/specs/otel/) for distributed tracing and uses the OTLP (OpenTelemetry Protocol) format, supporting both JSON and protobuf encoding.
 
 ## Configuration
 
-To enable OpenTelemetry tracing for your gateway, configure one or more OTEL exporters in your gateway settings. Each exporter requires:
+To enable OpenTelemetry tracing for your gateway, configure one or more OTEL exporters in your gateway settings. Each exporter accepts:
 
-- **URL**: The endpoint URL of your OTEL collector (must accept OTLP/JSON format)
-- **Authorization** (optional): A reference to a secret containing your authorization header value
-- **Headers** (optional): Additional custom headers to include in export requests
+- **URL** (required): The endpoint URL of your OTEL collector
+- **Headers** (optional): Additional custom headers to include in export requests. If your collector requires authentication, pass it here (for example, `Authorization: Bearer <token>`).
+- **Authorization** (optional): A reference to a secret in [Secrets Store](/secrets-store/) containing your collector's authorization header value. When set, AI Gateway resolves the secret at runtime and sends it as the `Authorization` header on export requests. For most use cases, passing authentication via **Headers** is simpler.
+- **Content type** (optional): The export format — `json` (default) or `protobuf`.
 
 ### Configuration via Dashboard
 
-1. Navigate to your AI Gateway in the Cloudflare dashboard
-2. Go to **Settings** tab
-3. Add an OTEL exporter with your collector endpoint URL
-4. If authentication is required, configure a secret for the authorization header
+1. Navigate to your AI Gateway in the Cloudflare dashboard.
+2. Go to **Settings** tab.
+3. Add an OTEL exporter with your collector endpoint URL.
+4. If your collector requires authentication, add an `Authorization` header in the **Headers** field with your token value.
 
 ## Exported Span Attributes
 
@@ -99,7 +100,7 @@ When these headers are provided, the AI Gateway span will use them to link with 
 
 ## Common OTEL Backends
 
-AI Gateway's OTEL integration works with any OpenTelemetry-compatible backend that accepts OTLP/JSON format, including:
+AI Gateway's OTEL integration works with any OpenTelemetry-compatible backend, including:
 
 - [Honeycomb](https://www.honeycomb.io/)
 - [Braintrust](https://www.braintrust.dev/docs/integrations/sdk-integrations/opentelemetry)
@@ -107,7 +108,7 @@ AI Gateway's OTEL integration works with any OpenTelemetry-compatible backend th
 
 :::note
 
-We do not support OTLP protobuf format, so providers that use it (e.g., Datadog) will not work with AI Gateway's OTEL integration.
+AI Gateway supports both OTLP/JSON and OTLP/protobuf export formats. Use the **Content type** setting to choose the format your collector expects.
 
 :::
 
