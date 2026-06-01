@@ -22,8 +22,6 @@ Use Sandbox for agents that need to:
 - Run tests, linters, build tools, or data analysis scripts.
 - Maintain a workspace across multiple agent turns.
 
-For lightweight JavaScript orchestration of MCP tools, use [Codemode](/agents/model-context-protocol/protocol/codemode/). Codemode runs generated JavaScript in an isolated Worker sandbox and is optimized for typed tool composition. Sandbox is for full Linux execution environments.
-
 ## Basic pattern
 
 Bind the Sandbox Durable Object to your Worker, then access a sandbox from your agent methods with `getSandbox()`.
