@@ -17,10 +17,10 @@
 			"name": "Quick Demo",
 			"description": "Fast video generation for testing",
 			"input": {
+				"prompt": "A butterfly landing on a colorful flower in a garden",
 				"aspect_ratio": "16:9",
 				"duration": "6s",
 				"generate_audio": true,
-				"prompt": "A butterfly landing on a colorful flower in a garden",
 				"resolution": "720p"
 			},
 			"output": {
@@ -39,12 +39,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: true,\n    prompt: 'A butterfly landing on a colorful flower in a garden',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt: 'A butterfly landing on a colorful flower in a garden',\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": true,\n    \"prompt\": \"A butterfly landing on a colorful flower in a garden\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"prompt\": \"A butterfly landing on a colorful flower in a garden\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -52,10 +52,10 @@
 			"name": "Social Content",
 			"description": "Quick vertical video for social media",
 			"input": {
+				"prompt": "Aesthetic morning routine: sun rays through curtains, coffee being poured",
 				"aspect_ratio": "9:16",
 				"duration": "6s",
 				"generate_audio": true,
-				"prompt": "Aesthetic morning routine: sun rays through curtains, coffee being poured",
 				"resolution": "720p"
 			},
 			"output": {
@@ -74,12 +74,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    aspect_ratio: '9:16',\n    duration: '6s',\n    generate_audio: true,\n    prompt: 'Aesthetic morning routine: sun rays through curtains, coffee being poured',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt: 'Aesthetic morning routine: sun rays through curtains, coffee being poured',\n    aspect_ratio: '9:16',\n    duration: '6s',\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": \"6s\",\n    \"generate_audio\": true,\n    \"prompt\": \"Aesthetic morning routine: sun rays through curtains, coffee being poured\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"prompt\": \"Aesthetic morning routine: sun rays through curtains, coffee being poured\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": \"6s\",\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -87,10 +87,10 @@
 			"name": "Motion Graphics",
 			"description": "Quick animated graphics",
 			"input": {
+				"prompt": "Glowing neon lines forming geometric patterns on a dark background",
 				"aspect_ratio": "16:9",
 				"duration": "4s",
 				"generate_audio": false,
-				"prompt": "Glowing neon lines forming geometric patterns on a dark background",
 				"resolution": "720p"
 			},
 			"output": {
@@ -109,12 +109,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '4s',\n    generate_audio: false,\n    prompt: 'Glowing neon lines forming geometric patterns on a dark background',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt: 'Glowing neon lines forming geometric patterns on a dark background',\n    aspect_ratio: '16:9',\n    duration: '4s',\n    generate_audio: false,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"4s\",\n    \"generate_audio\": false,\n    \"prompt\": \"Glowing neon lines forming geometric patterns on a dark background\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"prompt\": \"Glowing neon lines forming geometric patterns on a dark background\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"4s\",\n    \"generate_audio\": false,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -122,10 +122,10 @@
 			"name": "Ambient Scene",
 			"description": "Relaxing background video",
 			"input": {
+				"prompt": "Rain falling on a window with a blurred city skyline in the background at night",
 				"aspect_ratio": "16:9",
 				"duration": "8s",
 				"generate_audio": true,
-				"prompt": "Rain falling on a window with a blurred city skyline in the background at night",
 				"resolution": "720p"
 			},
 			"output": {
@@ -144,12 +144,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '8s',\n    generate_audio: true,\n    prompt: 'Rain falling on a window with a blurred city skyline in the background at night',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt: 'Rain falling on a window with a blurred city skyline in the background at night',\n    aspect_ratio: '16:9',\n    duration: '8s',\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"8s\",\n    \"generate_audio\": true,\n    \"prompt\": \"Rain falling on a window with a blurred city skyline in the background at night\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"prompt\": \"Rain falling on a window with a blurred city skyline in the background at night\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"8s\",\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		}

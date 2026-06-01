@@ -114,6 +114,7 @@
 			"name": "Brand Illustration",
 			"description": "Vector illustration with brand colors",
 			"input": {
+				"prompt": "A vector illustration of a cityscape skyline at sunset with clean lines and flat colors",
 				"controls": {
 					"colors": [
 						{
@@ -138,8 +139,7 @@
 							]
 						}
 					]
-				},
-				"prompt": "A vector illustration of a cityscape skyline at sunset with clean lines and flat colors"
+				}
 			},
 			"output": {
 				"image": "https://examples.aig.cloudflare.com/recraft/recraftv4-pro-vector/brand-illustration.svg"
@@ -157,12 +157,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    controls: { colors: [{ rgb: [255, 87, 51] }, { rgb: [41, 50, 65] }, { rgb: [239, 239, 239] }] },\n    prompt: 'A vector illustration of a cityscape skyline at sunset with clean lines and flat colors',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt: 'A vector illustration of a cityscape skyline at sunset with clean lines and flat colors',\n    controls: { colors: [{ rgb: [255, 87, 51] }, { rgb: [41, 50, 65] }, { rgb: [239, 239, 239] }] },\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-pro-vector\",\n  \"input\": {\n    \"controls\": {\n      \"colors\": [\n        {\n          \"rgb\": [\n            255,\n            87,\n            51\n          ]\n        },\n        {\n          \"rgb\": [\n            41,\n            50,\n            65\n          ]\n        },\n        {\n          \"rgb\": [\n            239,\n            239,\n            239\n          ]\n        }\n      ]\n    },\n    \"prompt\": \"A vector illustration of a cityscape skyline at sunset with clean lines and flat colors\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-pro-vector\",\n  \"input\": {\n    \"prompt\": \"A vector illustration of a cityscape skyline at sunset with clean lines and flat colors\",\n    \"controls\": {\n      \"colors\": [\n        {\n          \"rgb\": [\n            255,\n            87,\n            51\n          ]\n        },\n        {\n          \"rgb\": [\n            41,\n            50,\n            65\n          ]\n        },\n        {\n          \"rgb\": [\n            239,\n            239,\n            239\n          ]\n        }\n      ]\n    }\n  }\n}'"
 				}
 			]
 		}

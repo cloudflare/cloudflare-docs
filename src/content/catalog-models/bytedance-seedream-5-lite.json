@@ -53,9 +53,9 @@
 			"name": "High Resolution PNG",
 			"description": "3K quality with PNG output",
 			"input": {
+				"prompt": "A detailed technical blueprint of a futuristic spacecraft with annotations and measurements",
 				"aspect_ratio": "16:9",
 				"output_format": "png",
-				"prompt": "A detailed technical blueprint of a futuristic spacecraft with annotations and measurements",
 				"size": "3K"
 			},
 			"output": {
@@ -78,12 +78,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    aspect_ratio: '16:9',\n    output_format: 'png',\n    prompt:\n      'A detailed technical blueprint of a futuristic spacecraft with annotations and measurements',\n    size: '3K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A detailed technical blueprint of a futuristic spacecraft with annotations and measurements',\n    aspect_ratio: '16:9',\n    output_format: 'png',\n    size: '3K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"output_format\": \"png\",\n    \"prompt\": \"A detailed technical blueprint of a futuristic spacecraft with annotations and measurements\",\n    \"size\": \"3K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"prompt\": \"A detailed technical blueprint of a futuristic spacecraft with annotations and measurements\",\n    \"aspect_ratio\": \"16:9\",\n    \"output_format\": \"png\",\n    \"size\": \"3K\"\n  }\n}'"
 				}
 			]
 		},
@@ -91,9 +91,9 @@
 			"name": "Portrait Photo",
 			"description": "JPEG output for photographs",
 			"input": {
+				"prompt": "A professional headshot portrait with soft studio lighting and a neutral gray background",
 				"aspect_ratio": "3:4",
 				"output_format": "jpeg",
-				"prompt": "A professional headshot portrait with soft studio lighting and a neutral gray background",
 				"size": "2K"
 			},
 			"output": {
@@ -116,12 +116,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    aspect_ratio: '3:4',\n    output_format: 'jpeg',\n    prompt:\n      'A professional headshot portrait with soft studio lighting and a neutral gray background',\n    size: '2K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A professional headshot portrait with soft studio lighting and a neutral gray background',\n    aspect_ratio: '3:4',\n    output_format: 'jpeg',\n    size: '2K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"aspect_ratio\": \"3:4\",\n    \"output_format\": \"jpeg\",\n    \"prompt\": \"A professional headshot portrait with soft studio lighting and a neutral gray background\",\n    \"size\": \"2K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"prompt\": \"A professional headshot portrait with soft studio lighting and a neutral gray background\",\n    \"aspect_ratio\": \"3:4\",\n    \"output_format\": \"jpeg\",\n    \"size\": \"2K\"\n  }\n}'"
 				}
 			]
 		},
@@ -129,9 +129,9 @@
 			"name": "Sequential Comic",
 			"description": "Generate sequential comic panels",
 			"input": {
+				"prompt": "A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it",
 				"aspect_ratio": "4:3",
 				"max_images": 4,
-				"prompt": "A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it",
 				"sequential_image_generation": "auto"
 			},
 			"output": {
@@ -154,12 +154,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    aspect_ratio: '4:3',\n    max_images: 4,\n    prompt:\n      'A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it',\n    sequential_image_generation: 'auto',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it',\n    aspect_ratio: '4:3',\n    max_images: 4,\n    sequential_image_generation: 'auto',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"aspect_ratio\": \"4:3\",\n    \"max_images\": 4,\n    \"prompt\": \"A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it\",\n    \"sequential_image_generation\": \"auto\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"prompt\": \"A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it\",\n    \"aspect_ratio\": \"4:3\",\n    \"max_images\": 4,\n    \"sequential_image_generation\": \"auto\"\n  }\n}'"
 				}
 			]
 		},
@@ -167,11 +167,11 @@
 			"name": "Image Variation",
 			"description": "Create variation from reference",
 			"input": {
+				"prompt": "Create a variation of this image in a watercolor painting style",
 				"aspect_ratio": "match_input_image",
 				"image_input": [
 					"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg"
 				],
-				"prompt": "Create a variation of this image in a watercolor painting style",
 				"size": "2K"
 			},
 			"output": {
@@ -194,12 +194,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    aspect_ratio: 'match_input_image',\n    image_input: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n    prompt: 'Create a variation of this image in a watercolor painting style',\n    size: '2K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'Create a variation of this image in a watercolor painting style',\n    aspect_ratio: 'match_input_image',\n    image_input: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n    size: '2K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"aspect_ratio\": \"match_input_image\",\n    \"image_input\": [\n      \"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg\"\n    ],\n    \"prompt\": \"Create a variation of this image in a watercolor painting style\",\n    \"size\": \"2K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-lite\",\n  \"input\": {\n    \"prompt\": \"Create a variation of this image in a watercolor painting style\",\n    \"aspect_ratio\": \"match_input_image\",\n    \"image_input\": [\n      \"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg\"\n    ],\n    \"size\": \"2K\"\n  }\n}'"
 				}
 			]
 		}

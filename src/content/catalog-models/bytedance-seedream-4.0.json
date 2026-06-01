@@ -48,8 +48,8 @@
 			"name": "High Resolution",
 			"description": "4K quality image generation",
 			"input": {
-				"aspect_ratio": "1:1",
 				"prompt": "A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible",
+				"aspect_ratio": "1:1",
 				"size": "4K"
 			},
 			"output": {
@@ -68,12 +68,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    aspect_ratio: '1:1',\n    prompt:\n      'A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible',\n    size: '4K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible',\n    aspect_ratio: '1:1',\n    size: '4K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"prompt\": \"A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible\",\n    \"size\": \"4K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"prompt\": \"A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible\",\n    \"aspect_ratio\": \"1:1\",\n    \"size\": \"4K\"\n  }\n}'"
 				}
 			]
 		},
@@ -81,8 +81,8 @@
 			"name": "Widescreen Landscape",
 			"description": "Cinematic aspect ratio image",
 			"input": {
-				"aspect_ratio": "21:9",
 				"prompt": "A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground",
+				"aspect_ratio": "21:9",
 				"size": "2K"
 			},
 			"output": {
@@ -101,12 +101,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    aspect_ratio: '21:9',\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '2K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    aspect_ratio: '21:9',\n    size: '2K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"aspect_ratio\": \"21:9\",\n    \"prompt\": \"A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground\",\n    \"size\": \"2K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"prompt\": \"A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground\",\n    \"aspect_ratio\": \"21:9\",\n    \"size\": \"2K\"\n  }\n}'"
 				}
 			]
 		},
@@ -114,9 +114,9 @@
 			"name": "Portrait Format",
 			"description": "Vertical image for portraits",
 			"input": {
+				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight",
 				"aspect_ratio": "9:16",
-				"enhance_prompt": true,
-				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight"
+				"enhance_prompt": true
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/portrait-format.jpeg"
@@ -134,12 +134,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    aspect_ratio: '9:16',\n    enhance_prompt: true,\n    prompt: 'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    aspect_ratio: '9:16',\n    enhance_prompt: true,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"enhance_prompt\": true,\n    \"prompt\": \"An elegant Art Deco poster featuring a jazz singer under a spotlight\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"prompt\": \"An elegant Art Deco poster featuring a jazz singer under a spotlight\",\n    \"aspect_ratio\": \"9:16\",\n    \"enhance_prompt\": true\n  }\n}'"
 				}
 			]
 		},
@@ -147,8 +147,8 @@
 			"name": "Detailed 4K",
 			"description": "High-resolution detailed botanical illustration",
 			"input": {
-				"aspect_ratio": "3:4",
 				"prompt": "A detailed botanical illustration of exotic tropical flowers",
+				"aspect_ratio": "3:4",
 				"size": "4K"
 			},
 			"output": {
@@ -167,12 +167,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    aspect_ratio: '3:4',\n    prompt: 'A detailed botanical illustration of exotic tropical flowers',\n    size: '4K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A detailed botanical illustration of exotic tropical flowers',\n    aspect_ratio: '3:4',\n    size: '4K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"aspect_ratio\": \"3:4\",\n    \"prompt\": \"A detailed botanical illustration of exotic tropical flowers\",\n    \"size\": \"4K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.0\",\n  \"input\": {\n    \"prompt\": \"A detailed botanical illustration of exotic tropical flowers\",\n    \"aspect_ratio\": \"3:4\",\n    \"size\": \"4K\"\n  }\n}'"
 				}
 			]
 		}

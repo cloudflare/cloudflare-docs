@@ -16,9 +16,9 @@
 			"name": "Product Photography",
 			"description": "Professional product shot",
 			"input": {
+				"prompt": "A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows",
 				"aspect_ratio": "1:1",
-				"output_format": "png",
-				"prompt": "A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows"
+				"output_format": "png"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/product-photography.png"
@@ -36,12 +36,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    aspect_ratio: '1:1',\n    output_format: 'png',\n    prompt:\n      'A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"output_format\": \"png\",\n    \"prompt\": \"A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows\",\n    \"aspect_ratio\": \"1:1\",\n    \"output_format\": \"png\"\n  }\n}'"
 				}
 			]
 		},
@@ -49,9 +49,9 @@
 			"name": "Fantasy Illustration",
 			"description": "Epic fantasy scene",
 			"input": {
+				"prompt": "An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows",
 				"aspect_ratio": "16:9",
-				"image_size": "2K",
-				"prompt": "An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows"
+				"image_size": "2K"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/fantasy-illustration.png"
@@ -69,12 +69,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    aspect_ratio: '16:9',\n    image_size: '2K',\n    prompt:\n      'An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows',\n    aspect_ratio: '16:9',\n    image_size: '2K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"2K\",\n    \"prompt\": \"An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows\",\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"2K\"\n  }\n}'"
 				}
 			]
 		},
@@ -82,10 +82,10 @@
 			"name": "Architectural Visualization",
 			"description": "Modern architecture render",
 			"input": {
+				"prompt": "A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset",
 				"aspect_ratio": "16:9",
 				"image_size": "4K",
-				"output_format": "jpg",
-				"prompt": "A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset"
+				"output_format": "jpg"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/architectural-visualization.jpg"
@@ -103,12 +103,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'jpg',\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'jpg',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"4K\",\n    \"output_format\": \"jpg\",\n    \"prompt\": \"A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset\",\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"4K\",\n    \"output_format\": \"jpg\"\n  }\n}'"
 				}
 			]
 		},
@@ -116,8 +116,8 @@
 			"name": "Character Design",
 			"description": "Game character concept art",
 			"input": {
-				"aspect_ratio": "3:2",
-				"prompt": "A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles"
+				"prompt": "A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles",
+				"aspect_ratio": "3:2"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/character-design.png"
@@ -135,12 +135,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    aspect_ratio: '3:2',\n    prompt:\n      'A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles',\n    aspect_ratio: '3:2',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"3:2\",\n    \"prompt\": \"A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles\",\n    \"aspect_ratio\": \"3:2\"\n  }\n}'"
 				}
 			]
 		}

@@ -17,9 +17,9 @@
 			"name": "Simple Video",
 			"description": "Basic text-to-video with default settings",
 			"input": {
+				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
 				"aspect_ratio": "16:9",
 				"duration": 5,
-				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
 				"resolution": "720p"
 			},
 			"output": {
@@ -38,12 +38,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-video',\n  {\n    aspect_ratio: '16:9',\n    duration: 5,\n    prompt: 'A golden retriever running through a field of sunflowers on a sunny day',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-video',\n  {\n    prompt: 'A golden retriever running through a field of sunflowers on a sunny day',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-video\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"prompt\": \"A golden retriever running through a field of sunflowers on a sunny day\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-video\",\n  \"input\": {\n    \"prompt\": \"A golden retriever running through a field of sunflowers on a sunny day\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -51,9 +51,9 @@
 			"name": "Portrait Video",
 			"description": "Vertical video for social media",
 			"input": {
+				"prompt": "Slow-motion close-up of ink drops blooming through water against a black background",
 				"aspect_ratio": "9:16",
 				"duration": 5,
-				"prompt": "Slow-motion close-up of ink drops blooming through water against a black background",
 				"resolution": "720p"
 			},
 			"output": {
@@ -72,12 +72,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-video',\n  {\n    aspect_ratio: '9:16',\n    duration: 5,\n    prompt: 'Slow-motion close-up of ink drops blooming through water against a black background',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-video',\n  {\n    prompt: 'Slow-motion close-up of ink drops blooming through water against a black background',\n    aspect_ratio: '9:16',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-video\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"prompt\": \"Slow-motion close-up of ink drops blooming through water against a black background\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-video\",\n  \"input\": {\n    \"prompt\": \"Slow-motion close-up of ink drops blooming through water against a black background\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -85,9 +85,9 @@
 			"name": "Cinematic Landscape",
 			"description": "Widescreen cinematic shot at extended duration",
 			"input": {
+				"prompt": "A wide drone shot over snow-covered mountain peaks at sunrise, dramatic lighting with low clouds",
 				"aspect_ratio": "16:9",
 				"duration": 10,
-				"prompt": "A wide drone shot over snow-covered mountain peaks at sunrise, dramatic lighting with low clouds",
 				"resolution": "720p"
 			},
 			"output": {
@@ -106,12 +106,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-video',\n  {\n    aspect_ratio: '16:9',\n    duration: 10,\n    prompt:\n      'A wide drone shot over snow-covered mountain peaks at sunrise, dramatic lighting with low clouds',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-video',\n  {\n    prompt:\n      'A wide drone shot over snow-covered mountain peaks at sunrise, dramatic lighting with low clouds',\n    aspect_ratio: '16:9',\n    duration: 10,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-video\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 10,\n    \"prompt\": \"A wide drone shot over snow-covered mountain peaks at sunrise, dramatic lighting with low clouds\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-video\",\n  \"input\": {\n    \"prompt\": \"A wide drone shot over snow-covered mountain peaks at sunrise, dramatic lighting with low clouds\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 10,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		}

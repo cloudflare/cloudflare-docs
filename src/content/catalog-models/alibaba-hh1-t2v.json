@@ -47,8 +47,8 @@
 			"name": "Vertical 1080P",
 			"description": "Vertical 9:16 output at 1080P for social media",
 			"input": {
-				"duration": 6,
 				"prompt": "A dog running through a field of tall grass, slow motion, golden hour",
+				"duration": 6,
 				"ratio": "9:16",
 				"resolution": "1080P"
 			},
@@ -68,12 +68,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/hh1-t2v',\n  {\n    duration: 6,\n    prompt: 'A dog running through a field of tall grass, slow motion, golden hour',\n    ratio: '9:16',\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-t2v',\n  {\n    prompt: 'A dog running through a field of tall grass, slow motion, golden hour',\n    duration: 6,\n    ratio: '9:16',\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1-t2v\",\n  \"input\": {\n    \"duration\": 6,\n    \"prompt\": \"A dog running through a field of tall grass, slow motion, golden hour\",\n    \"ratio\": \"9:16\",\n    \"resolution\": \"1080P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1-t2v\",\n  \"input\": {\n    \"prompt\": \"A dog running through a field of tall grass, slow motion, golden hour\",\n    \"duration\": 6,\n    \"ratio\": \"9:16\",\n    \"resolution\": \"1080P\"\n  }\n}'"
 				}
 			]
 		},
@@ -81,8 +81,8 @@
 			"name": "Reproducible Output",
 			"description": "Use a fixed seed for reproducibility",
 			"input": {
-				"duration": 5,
 				"prompt": "Clouds drifting across a mountain range, time-lapse style",
+				"duration": 5,
 				"ratio": "16:9",
 				"resolution": "720P",
 				"seed": 42
@@ -103,12 +103,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/hh1-t2v',\n  {\n    duration: 5,\n    prompt: 'Clouds drifting across a mountain range, time-lapse style',\n    ratio: '16:9',\n    resolution: '720P',\n    seed: 42,\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-t2v',\n  {\n    prompt: 'Clouds drifting across a mountain range, time-lapse style',\n    duration: 5,\n    ratio: '16:9',\n    resolution: '720P',\n    seed: 42,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1-t2v\",\n  \"input\": {\n    \"duration\": 5,\n    \"prompt\": \"Clouds drifting across a mountain range, time-lapse style\",\n    \"ratio\": \"16:9\",\n    \"resolution\": \"720P\",\n    \"seed\": 42\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1-t2v\",\n  \"input\": {\n    \"prompt\": \"Clouds drifting across a mountain range, time-lapse style\",\n    \"duration\": 5,\n    \"ratio\": \"16:9\",\n    \"resolution\": \"720P\",\n    \"seed\": 42\n  }\n}'"
 				}
 			]
 		}

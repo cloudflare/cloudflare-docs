@@ -113,6 +113,7 @@
 			"name": "With Brand Colors",
 			"description": "Vector with specific color palette",
 			"input": {
+				"prompt": "A badge or seal design with a star in the center, suitable for a certification mark",
 				"controls": {
 					"background_color": {
 						"rgb": [
@@ -137,8 +138,7 @@
 							]
 						}
 					]
-				},
-				"prompt": "A badge or seal design with a star in the center, suitable for a certification mark"
+				}
 			},
 			"output": {
 				"image": "https://examples.aig.cloudflare.com/recraft/recraftv4-vector/with-brand-colors.svg"
@@ -156,12 +156,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-vector',\n  {\n    controls: {\n      background_color: { rgb: [255, 255, 255] },\n      colors: [{ rgb: [0, 119, 182] }, { rgb: [255, 209, 102] }],\n    },\n    prompt: 'A badge or seal design with a star in the center, suitable for a certification mark',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-vector',\n  {\n    prompt: 'A badge or seal design with a star in the center, suitable for a certification mark',\n    controls: {\n      background_color: { rgb: [255, 255, 255] },\n      colors: [{ rgb: [0, 119, 182] }, { rgb: [255, 209, 102] }],\n    },\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-vector\",\n  \"input\": {\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          255,\n          255,\n          255\n        ]\n      },\n      \"colors\": [\n        {\n          \"rgb\": [\n            0,\n            119,\n            182\n          ]\n        },\n        {\n          \"rgb\": [\n            255,\n            209,\n            102\n          ]\n        }\n      ]\n    },\n    \"prompt\": \"A badge or seal design with a star in the center, suitable for a certification mark\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-vector\",\n  \"input\": {\n    \"prompt\": \"A badge or seal design with a star in the center, suitable for a certification mark\",\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          255,\n          255,\n          255\n        ]\n      },\n      \"colors\": [\n        {\n          \"rgb\": [\n            0,\n            119,\n            182\n          ]\n        },\n        {\n          \"rgb\": [\n            255,\n            209,\n            102\n          ]\n        }\n      ]\n    }\n  }\n}'"
 				}
 			]
 		}

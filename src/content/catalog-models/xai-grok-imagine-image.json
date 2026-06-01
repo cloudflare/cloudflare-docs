@@ -48,8 +48,8 @@
 			"name": "Custom Aspect Ratio",
 			"description": "Portrait orientation render at 2K resolution",
 			"input": {
-				"aspect_ratio": "3:4",
 				"prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+				"aspect_ratio": "3:4",
 				"resolution": "2k"
 			},
 			"output": {
@@ -68,12 +68,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image',\n  {\n    aspect_ratio: '3:4',\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image',\n  {\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    aspect_ratio: '3:4',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image\",\n  \"input\": {\n    \"aspect_ratio\": \"3:4\",\n    \"prompt\": \"A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures\",\n    \"resolution\": \"2k\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image\",\n  \"input\": {\n    \"prompt\": \"A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures\",\n    \"aspect_ratio\": \"3:4\",\n    \"resolution\": \"2k\"\n  }\n}'"
 				}
 			]
 		},
@@ -81,8 +81,8 @@
 			"name": "Cinematic Landscape",
 			"description": "Widescreen landscape at 2K resolution",
 			"input": {
-				"aspect_ratio": "16:9",
 				"prompt": "A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting",
+				"aspect_ratio": "16:9",
 				"resolution": "2k"
 			},
 			"output": {
@@ -101,12 +101,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image',\n  {\n    aspect_ratio: '16:9',\n    prompt:\n      'A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image',\n  {\n    prompt:\n      'A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting',\n    aspect_ratio: '16:9',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting\",\n    \"resolution\": \"2k\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image\",\n  \"input\": {\n    \"prompt\": \"A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"2k\"\n  }\n}'"
 				}
 			]
 		}

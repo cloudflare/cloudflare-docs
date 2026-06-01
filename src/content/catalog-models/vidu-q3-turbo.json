@@ -18,8 +18,8 @@
 			"name": "Simple Text-to-Video",
 			"description": "Basic text-to-video with just a prompt",
 			"input": {
-				"duration": 5,
 				"prompt": "A cat lazily stretching on a sunlit windowsill",
+				"duration": 5,
 				"resolution": "720p"
 			},
 			"output": {
@@ -38,12 +38,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  { duration: 5, prompt: 'A cat lazily stretching on a sunlit windowsill', resolution: '720p' },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  { prompt: 'A cat lazily stretching on a sunlit windowsill', duration: 5, resolution: '720p' },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"duration\": 5,\n    \"prompt\": \"A cat lazily stretching on a sunlit windowsill\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"prompt\": \"A cat lazily stretching on a sunlit windowsill\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -51,8 +51,8 @@
 			"name": "High Resolution",
 			"description": "Generate at 1080p",
 			"input": {
-				"duration": 5,
 				"prompt": "Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background",
+				"duration": 5,
 				"resolution": "1080p"
 			},
 			"output": {
@@ -71,12 +71,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    duration: 5,\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    duration: 5,\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"duration\": 5,\n    \"prompt\": \"Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background\",\n    \"resolution\": \"1080p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"prompt\": \"Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background\",\n    \"duration\": 5,\n    \"resolution\": \"1080p\"\n  }\n}'"
 				}
 			]
 		},
@@ -84,9 +84,9 @@
 			"name": "Portrait Video",
 			"description": "Vertical video for mobile viewing",
 			"input": {
+				"prompt": "A waterfall cascading down mossy rocks in a tropical jungle, mist rising",
 				"aspect_ratio": "9:16",
 				"duration": 5,
-				"prompt": "A waterfall cascading down mossy rocks in a tropical jungle, mist rising",
 				"resolution": "720p"
 			},
 			"output": {
@@ -105,12 +105,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    aspect_ratio: '9:16',\n    duration: 5,\n    prompt: 'A waterfall cascading down mossy rocks in a tropical jungle, mist rising',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A waterfall cascading down mossy rocks in a tropical jungle, mist rising',\n    aspect_ratio: '9:16',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"prompt\": \"A waterfall cascading down mossy rocks in a tropical jungle, mist rising\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"prompt\": \"A waterfall cascading down mossy rocks in a tropical jungle, mist rising\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -118,8 +118,8 @@
 			"name": "Extended Duration",
 			"description": "Longer video clip",
 			"input": {
-				"duration": 16,
 				"prompt": "Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting",
+				"duration": 16,
 				"resolution": "720p"
 			},
 			"output": {
@@ -138,12 +138,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    duration: 16,\n    prompt:\n      'Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting',\n    duration: 16,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"duration\": 16,\n    \"prompt\": \"Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"prompt\": \"Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting\",\n    \"duration\": 16,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -151,8 +151,8 @@
 			"name": "Low Resolution Fast Preview",
 			"description": "Quick preview at 540p",
 			"input": {
-				"duration": 3,
 				"prompt": "A sailboat gliding across calm ocean waters at sunset",
+				"duration": 3,
 				"resolution": "540p"
 			},
 			"output": {
@@ -171,12 +171,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    duration: 3,\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    resolution: '540p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    duration: 3,\n    resolution: '540p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"duration\": 3,\n    \"prompt\": \"A sailboat gliding across calm ocean waters at sunset\",\n    \"resolution\": \"540p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-turbo\",\n  \"input\": {\n    \"prompt\": \"A sailboat gliding across calm ocean waters at sunset\",\n    \"duration\": 3,\n    \"resolution\": \"540p\"\n  }\n}'"
 				}
 			]
 		}

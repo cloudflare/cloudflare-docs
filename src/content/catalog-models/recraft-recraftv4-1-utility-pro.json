@@ -1,0 +1,267 @@
+{
+	"model_id": "recraft/recraftv4-1-utility-pro",
+	"provider_id": "recraft",
+	"name": "Recraft V4.1 Utility Pro",
+	"description": "Recraft V4.1 Utility Pro is a general-purpose text-to-image model producing high-resolution 2048px+ output for a wide range of production and print use cases.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Design",
+		"Text Rendering",
+		"High Resolution"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Print-Ready Illustration",
+			"description": "High-resolution illustration for print",
+			"input": {
+				"prompt": "A detailed illustrated map of an imaginary fantasy island with labeled landmarks, mountains, and forests"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/print-ready-illustration.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/print-ready-illustration.png"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro',\n  {\n    prompt:\n      'A detailed illustrated map of an imaginary fantasy island with labeled landmarks, mountains, and forests',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro\",\n  \"input\": {\n    \"prompt\": \"A detailed illustrated map of an imaginary fantasy island with labeled landmarks, mountains, and forests\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Large Format Art",
+			"description": "Large canvas general-purpose image",
+			"input": {
+				"prompt": "A wide panoramic landscape of rolling green hills with a river winding through the valley under a bright blue sky",
+				"size": "2048x2048"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/large-format-art.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/large-format-art.png"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro',\n  {\n    prompt:\n      'A wide panoramic landscape of rolling green hills with a river winding through the valley under a bright blue sky',\n    size: '2048x2048',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro\",\n  \"input\": {\n    \"prompt\": \"A wide panoramic landscape of rolling green hills with a river winding through the valley under a bright blue sky\",\n    \"size\": \"2048x2048\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Marketing Asset",
+			"description": "High-resolution marketing visual with controlled colors",
+			"input": {
+				"prompt": "A clean, modern banner illustration of a smartphone displaying a productivity app",
+				"controls": {
+					"background_color": {
+						"rgb": [
+							250,
+							250,
+							255
+						]
+					},
+					"colors": [
+						{
+							"rgb": [
+								100,
+								200,
+								150
+							]
+						},
+						{
+							"rgb": [
+								20,
+								20,
+								60
+							]
+						}
+					]
+				},
+				"size": "2048x2048"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/marketing-asset.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/marketing-asset.png"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro',\n  {\n    prompt: 'A clean, modern banner illustration of a smartphone displaying a productivity app',\n    controls: {\n      background_color: { rgb: [250, 250, 255] },\n      colors: [{ rgb: [100, 200, 150] }, { rgb: [20, 20, 60] }],\n    },\n    size: '2048x2048',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro\",\n  \"input\": {\n    \"prompt\": \"A clean, modern banner illustration of a smartphone displaying a productivity app\",\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          250,\n          250,\n          255\n        ]\n      },\n      \"colors\": [\n        {\n          \"rgb\": [\n            100,\n            200,\n            150\n          ]\n        },\n        {\n          \"rgb\": [\n            20,\n            20,\n            60\n          ]\n        }\n      ]\n    },\n    \"size\": \"2048x2048\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Technical Diagram",
+			"description": "High-resolution technical or infographic illustration",
+			"input": {
+				"prompt": "A clean technical diagram showing the layers of a cloud computing architecture with labeled tiers"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/technical-diagram.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/technical-diagram.png"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro',\n  {\n    prompt:\n      'A clean technical diagram showing the layers of a cloud computing architecture with labeled tiers',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro\",\n  \"input\": {\n    \"prompt\": \"A clean technical diagram showing the layers of a cloud computing architecture with labeled tiers\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.recraft.ai/",
+	"terms": "https://www.recraft.ai/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Resolution": "2048px+",
+		"Text Rendering": "Yes"
+	},
+	"created_at": "2026-05-22 17:53:53",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"controls": {
+					"additionalProperties": false,
+					"properties": {
+						"background_color": {
+							"additionalProperties": false,
+							"properties": {
+								"rgb": {
+									"items": {
+										"maximum": 255,
+										"minimum": 0,
+										"type": "integer"
+									},
+									"maxItems": 3,
+									"minItems": 3,
+									"type": "array"
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"type": "object"
+						},
+						"colors": {
+							"items": {
+								"additionalProperties": false,
+								"properties": {
+									"rgb": {
+										"items": {
+											"maximum": 255,
+											"minimum": 0,
+											"type": "integer"
+										},
+										"maxItems": 3,
+										"minItems": 3,
+										"type": "array"
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"type": "object"
+							},
+							"maxItems": 5,
+							"type": "array"
+						}
+					},
+					"type": "object"
+				},
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string"
+				},
+				"style": {
+					"type": "string"
+				},
+				"substyle": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"type": "object"
+		}
+	}
+}

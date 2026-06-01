@@ -48,8 +48,8 @@
 			"name": "Widescreen Landscape",
 			"description": "Generate a widescreen landscape image",
 			"input": {
-				"aspect_ratio": "16:9",
-				"prompt": "A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones"
+				"prompt": "A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones",
+				"aspect_ratio": "16:9"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/widescreen-landscape.png"
@@ -67,12 +67,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    aspect_ratio: '16:9',\n    prompt:\n      'A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt:\n      'A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones',\n    aspect_ratio: '16:9',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"prompt\": \"A dramatic drone shot of a winding river through an autumn forest, warm golden and red tones\",\n    \"aspect_ratio\": \"16:9\"\n  }\n}'"
 				}
 			]
 		},
@@ -80,8 +80,8 @@
 			"name": "Portrait Format",
 			"description": "Vertical portrait-style image",
 			"input": {
-				"aspect_ratio": "9:16",
-				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight"
+				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight",
+				"aspect_ratio": "9:16"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/portrait-format.png"
@@ -99,12 +99,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    aspect_ratio: '9:16',\n    prompt: 'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt: 'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    aspect_ratio: '9:16',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"prompt\": \"An elegant Art Deco poster featuring a jazz singer under a spotlight\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"prompt\": \"An elegant Art Deco poster featuring a jazz singer under a spotlight\",\n    \"aspect_ratio\": \"9:16\"\n  }\n}'"
 				}
 			]
 		},
@@ -112,8 +112,8 @@
 			"name": "With People",
 			"description": "Allow generation of adult people",
 			"input": {
-				"person_generation": "allow_adult",
-				"prompt": "A chef preparing sushi in a traditional Japanese kitchen, detailed close-up"
+				"prompt": "A chef preparing sushi in a traditional Japanese kitchen, detailed close-up",
+				"person_generation": "allow_adult"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/with-people.png"
@@ -131,12 +131,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    person_generation: 'allow_adult',\n    prompt: 'A chef preparing sushi in a traditional Japanese kitchen, detailed close-up',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt: 'A chef preparing sushi in a traditional Japanese kitchen, detailed close-up',\n    person_generation: 'allow_adult',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"person_generation\": \"allow_adult\",\n    \"prompt\": \"A chef preparing sushi in a traditional Japanese kitchen, detailed close-up\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"prompt\": \"A chef preparing sushi in a traditional Japanese kitchen, detailed close-up\",\n    \"person_generation\": \"allow_adult\"\n  }\n}'"
 				}
 			]
 		},
@@ -144,8 +144,8 @@
 			"name": "Product Photo",
 			"description": "Square product photography",
 			"input": {
-				"aspect_ratio": "1:1",
-				"prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting"
+				"prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting",
+				"aspect_ratio": "1:1"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__imagen-4/product-photo.png"
@@ -163,12 +163,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    aspect_ratio: '1:1',\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/imagen-4',\n  {\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n    aspect_ratio: '1:1',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"prompt\": \"A sleek wireless headphone on a minimalist white marble surface with soft studio lighting\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/imagen-4\",\n  \"input\": {\n    \"prompt\": \"A sleek wireless headphone on a minimalist white marble surface with soft studio lighting\",\n    \"aspect_ratio\": \"1:1\"\n  }\n}'"
 				}
 			]
 		}

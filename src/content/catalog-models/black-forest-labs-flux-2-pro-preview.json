@@ -17,8 +17,8 @@
 			"name": "Simple Prompt",
 			"description": "Standard text-to-image generation with the recommended FLUX.2 [pro] preview endpoint",
 			"input": {
-				"height": 1024,
 				"prompt": "A serene mountain landscape at golden hour, soft diffused light filtering through clouds",
+				"height": 1024,
 				"width": 1024
 			},
 			"output": {
@@ -36,12 +36,13 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-pro-preview',\n  {\n    prompt:\n      'A serene mountain landscape at golden hour, soft diffused light filtering through clouds',\n    width: 1024,\n    height: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-pro-preview',\n  {\n    prompt:\n      'A serene mountain landscape at golden hour, soft diffused light filtering through clouds',\n    height: 1024,\n    width: 1024,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-pro-preview\",\n  \"input\": {\n    \"height\": 1024,\n    \"prompt\": \"A serene mountain landscape at golden hour, soft diffused light filtering through clouds\",\n    \"width\": 1024\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-pro-preview\",\n  \"input\": {\n    \"prompt\": \"A serene mountain landscape at golden hour, soft diffused light filtering through clouds\",\n    \"height\": 1024,\n    \"width\": 1024\n  }\n}'"
 				}
 			]
 		},
@@ -49,11 +50,11 @@
 			"name": "Multi-Reference Editing",
 			"description": "Multi-reference editing \u2014 combine two reference images in a single composition",
 			"input": {
+				"prompt": "Combine the subjects of these images into a single editorial fashion scene",
 				"input_images": [
 					"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg",
 					"https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg"
-				],
-				"prompt": "Combine the subjects of these images into a single editorial fashion scene"
+				]
 			},
 			"output": {
 				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-pro-preview/multi-reference-editing.jpeg"
@@ -70,12 +71,13 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-pro-preview',\n  {\n    prompt: 'Combine the subjects of these images into a single editorial fashion scene',\n    input_images: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n      'https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg',\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-pro-preview',\n  {\n    prompt: 'Combine the subjects of these images into a single editorial fashion scene',\n    input_images: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n      'https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg',\n    ],\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-pro-preview\",\n  \"input\": {\n    \"input_images\": [\n      \"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg\",\n      \"https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg\"\n    ],\n    \"prompt\": \"Combine the subjects of these images into a single editorial fashion scene\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-pro-preview\",\n  \"input\": {\n    \"prompt\": \"Combine the subjects of these images into a single editorial fashion scene\",\n    \"input_images\": [\n      \"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg\",\n      \"https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg\"\n    ]\n  }\n}'"
 				}
 			]
 		},
@@ -83,8 +85,8 @@
 			"name": "Reproducible PNG Output",
 			"description": "Seeded generation with PNG output for downstream editing pipelines",
 			"input": {
-				"output_format": "png",
 				"prompt": "A pastel watercolor of a koi pond at sunrise",
+				"output_format": "png",
 				"seed": 1337
 			},
 			"output": {
@@ -102,12 +104,13 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-pro-preview',\n  {\n    prompt: 'A pastel watercolor of a koi pond at sunrise',\n    seed: 1337,\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-pro-preview',\n  { prompt: 'A pastel watercolor of a koi pond at sunrise', output_format: 'png', seed: 1337 },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-pro-preview\",\n  \"input\": {\n    \"output_format\": \"png\",\n    \"prompt\": \"A pastel watercolor of a koi pond at sunrise\",\n    \"seed\": 1337\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-pro-preview\",\n  \"input\": {\n    \"prompt\": \"A pastel watercolor of a koi pond at sunrise\",\n    \"output_format\": \"png\",\n    \"seed\": 1337\n  }\n}'"
 				}
 			]
 		}

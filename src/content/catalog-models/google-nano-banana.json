@@ -16,8 +16,8 @@
 			"name": "Cozy Coffee Shop",
 			"description": "Interior scene with warm lighting and a cat",
 			"input": {
-				"aspect_ratio": "16:9",
-				"prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window"
+				"prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
+				"aspect_ratio": "16:9"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png"
@@ -35,12 +35,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    aspect_ratio: '16:9',\n    prompt:\n      'A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window',\n    aspect_ratio: '16:9',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n    \"aspect_ratio\": \"16:9\"\n  }\n}'"
 				}
 			]
 		},
@@ -48,8 +48,8 @@
 			"name": "Vintage Tokyo Poster",
 			"description": "Retro travel poster style illustration",
 			"input": {
-				"aspect_ratio": "9:16",
-				"prompt": "A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene"
+				"prompt": "A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene",
+				"aspect_ratio": "9:16"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/vintage-tokyo-poster.png"
@@ -67,12 +67,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    aspect_ratio: '9:16',\n    prompt:\n      'A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene',\n    aspect_ratio: '9:16',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\",\n    \"aspect_ratio\": \"9:16\"\n  }\n}'"
 				}
 			]
 		},
@@ -80,8 +80,8 @@
 			"name": "Dewdrops Macro",
 			"description": "Photorealistic macro photography",
 			"input": {
-				"aspect_ratio": "1:1",
-				"prompt": "A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet"
+				"prompt": "A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet",
+				"aspect_ratio": "1:1"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/dewdrops-macro.png"
@@ -99,12 +99,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    aspect_ratio: '1:1',\n    prompt:\n      'A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet',\n    aspect_ratio: '1:1',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\",\n    \"aspect_ratio\": \"1:1\"\n  }\n}'"
 				}
 			]
 		},
@@ -112,8 +112,8 @@
 			"name": "Pixel Art Marketplace",
 			"description": "Isometric pixel art scene",
 			"input": {
-				"aspect_ratio": "1:1",
-				"prompt": "An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof"
+				"prompt": "An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof",
+				"aspect_ratio": "1:1"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/pixel-art-marketplace.png"
@@ -131,12 +131,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    aspect_ratio: '1:1',\n    prompt:\n      'An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof',\n    aspect_ratio: '1:1',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\",\n    \"aspect_ratio\": \"1:1\"\n  }\n}'"
 				}
 			]
 		},
@@ -144,10 +144,10 @@
 			"name": "High Resolution Landscape",
 			"description": "Generate a high-resolution 4K landscape image",
 			"input": {
+				"prompt": "A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake",
 				"aspect_ratio": "16:9",
 				"image_size": "4K",
-				"output_format": "png",
-				"prompt": "A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake"
+				"output_format": "png"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/high-resolution-landscape.png"
@@ -165,12 +165,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'png',\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"4K\",\n    \"output_format\": \"png\",\n    \"prompt\": \"A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake\",\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"4K\",\n    \"output_format\": \"png\"\n  }\n}'"
 				}
 			]
 		}

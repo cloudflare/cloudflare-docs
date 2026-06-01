@@ -1,0 +1,268 @@
+{
+	"model_id": "recraft/recraftv4-1-utility-pro-vector",
+	"provider_id": "recraft",
+	"name": "Recraft V4.1 Utility Pro SVG",
+	"description": "Generate detailed, high-resolution SVG vector graphics from text prompts with a general-purpose model, scalable to any size for print and large-scale design work.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"SVG",
+		"Vector",
+		"Design",
+		"High Resolution"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Logo Design",
+			"description": "Generate a scalable vector logo",
+			"input": {
+				"prompt": "A clean, versatile logo for a software company with abstract geometric shapes"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/logo-design.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/logo-design.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro-vector',\n  { prompt: 'A clean, versatile logo for a software company with abstract geometric shapes' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro-vector\",\n  \"input\": {\n    \"prompt\": \"A clean, versatile logo for a software company with abstract geometric shapes\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Detailed Illustration",
+			"description": "High-resolution vector illustration",
+			"input": {
+				"prompt": "A detailed flat vector illustration of a city map with labeled streets, parks, and landmarks",
+				"size": "2048x2048"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/detailed-illustration.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/detailed-illustration.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro-vector',\n  {\n    prompt:\n      'A detailed flat vector illustration of a city map with labeled streets, parks, and landmarks',\n    size: '2048x2048',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro-vector\",\n  \"input\": {\n    \"prompt\": \"A detailed flat vector illustration of a city map with labeled streets, parks, and landmarks\",\n    \"size\": \"2048x2048\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Print-Ready Vector",
+			"description": "High-resolution vector for large-format print",
+			"input": {
+				"prompt": "A decorative border pattern with repeating floral and leaf motifs, suitable for certificate or diploma design",
+				"size": "2048x2048"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/print-ready-vector.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/print-ready-vector.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro-vector',\n  {\n    prompt:\n      'A decorative border pattern with repeating floral and leaf motifs, suitable for certificate or diploma design',\n    size: '2048x2048',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro-vector\",\n  \"input\": {\n    \"prompt\": \"A decorative border pattern with repeating floral and leaf motifs, suitable for certificate or diploma design\",\n    \"size\": \"2048x2048\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Brand Illustration",
+			"description": "Vector illustration with brand colors",
+			"input": {
+				"prompt": "A flat vector illustration of interconnected nodes representing a network or data flow",
+				"controls": {
+					"colors": [
+						{
+							"rgb": [
+								0,
+								122,
+								204
+							]
+						},
+						{
+							"rgb": [
+								255,
+								165,
+								0
+							]
+						},
+						{
+							"rgb": [
+								240,
+								240,
+								240
+							]
+						}
+					]
+				}
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/brand-illustration.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro-vector/brand-illustration.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-pro-vector',\n  {\n    prompt: 'A flat vector illustration of interconnected nodes representing a network or data flow',\n    controls: { colors: [{ rgb: [0, 122, 204] }, { rgb: [255, 165, 0] }, { rgb: [240, 240, 240] }] },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-pro-vector\",\n  \"input\": {\n    \"prompt\": \"A flat vector illustration of interconnected nodes representing a network or data flow\",\n    \"controls\": {\n      \"colors\": [\n        {\n          \"rgb\": [\n            0,\n            122,\n            204\n          ]\n        },\n        {\n          \"rgb\": [\n            255,\n            165,\n            0\n          ]\n        },\n        {\n          \"rgb\": [\n            240,\n            240,\n            240\n          ]\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.recraft.ai/",
+	"terms": "https://www.recraft.ai/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Output Format": "SVG",
+		"Resolution": "2048px+"
+	},
+	"created_at": "2026-05-22 17:53:53",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"controls": {
+					"additionalProperties": false,
+					"properties": {
+						"background_color": {
+							"additionalProperties": false,
+							"properties": {
+								"rgb": {
+									"items": {
+										"maximum": 255,
+										"minimum": 0,
+										"type": "integer"
+									},
+									"maxItems": 3,
+									"minItems": 3,
+									"type": "array"
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"type": "object"
+						},
+						"colors": {
+							"items": {
+								"additionalProperties": false,
+								"properties": {
+									"rgb": {
+										"items": {
+											"maximum": 255,
+											"minimum": 0,
+											"type": "integer"
+										},
+										"maxItems": 3,
+										"minItems": 3,
+										"type": "array"
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"type": "object"
+							},
+							"maxItems": 5,
+							"type": "array"
+						}
+					},
+					"type": "object"
+				},
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string"
+				},
+				"style": {
+					"type": "string"
+				},
+				"substyle": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"type": "object"
+		}
+	}
+}

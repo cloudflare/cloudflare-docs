@@ -1,0 +1,267 @@
+{
+	"model_id": "recraft/recraftv4-1-utility-vector",
+	"provider_id": "recraft",
+	"name": "Recraft V4.1 Utility SVG",
+	"description": "Generate production-ready SVG vector graphics from text prompts with a general-purpose model suited for a wide range of design and illustration tasks.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"SVG",
+		"Vector",
+		"Design"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Icon",
+			"description": "Generate a basic vector icon",
+			"input": {
+				"prompt": "A simple flat icon of a calendar with a date marked"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/simple-icon.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/simple-icon.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-vector',\n  { prompt: 'A simple flat icon of a calendar with a date marked' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-vector\",\n  \"input\": {\n    \"prompt\": \"A simple flat icon of a calendar with a date marked\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "App Icon",
+			"description": "Mobile app icon in vector format",
+			"input": {
+				"prompt": "A clean app icon featuring a magnifying glass over a document",
+				"size": "1024x1024"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/app-icon.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/app-icon.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-vector',\n  { prompt: 'A clean app icon featuring a magnifying glass over a document', size: '1024x1024' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-vector\",\n  \"input\": {\n    \"prompt\": \"A clean app icon featuring a magnifying glass over a document\",\n    \"size\": \"1024x1024\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Illustration",
+			"description": "Vector illustration for general use",
+			"input": {
+				"prompt": "A flat vector illustration of a team of people collaborating around a table with laptops",
+				"size": "1024x1024"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/illustration.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/illustration.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-vector',\n  {\n    prompt:\n      'A flat vector illustration of a team of people collaborating around a table with laptops',\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-vector\",\n  \"input\": {\n    \"prompt\": \"A flat vector illustration of a team of people collaborating around a table with laptops\",\n    \"size\": \"1024x1024\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "With Brand Colors",
+			"description": "Vector with specific color palette",
+			"input": {
+				"prompt": "A simple shield icon representing protection and security",
+				"controls": {
+					"background_color": {
+						"rgb": [
+							245,
+							245,
+							245
+						]
+					},
+					"colors": [
+						{
+							"rgb": [
+								34,
+								139,
+								87
+							]
+						},
+						{
+							"rgb": [
+								255,
+								255,
+								255
+							]
+						}
+					]
+				}
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/with-brand-colors.jpg"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-vector/with-brand-colors.jpg"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-1-utility-vector',\n  {\n    prompt: 'A simple shield icon representing protection and security',\n    controls: {\n      background_color: { rgb: [245, 245, 245] },\n      colors: [{ rgb: [34, 139, 87] }, { rgb: [255, 255, 255] }],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-1-utility-vector\",\n  \"input\": {\n    \"prompt\": \"A simple shield icon representing protection and security\",\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          245,\n          245,\n          245\n        ]\n      },\n      \"colors\": [\n        {\n          \"rgb\": [\n            34,\n            139,\n            87\n          ]\n        },\n        {\n          \"rgb\": [\n            255,\n            255,\n            255\n          ]\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.recraft.ai/",
+	"terms": "https://www.recraft.ai/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Output Format": "SVG",
+		"Resolution": "1024px"
+	},
+	"created_at": "2026-05-22 17:53:54",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"controls": {
+					"additionalProperties": false,
+					"properties": {
+						"background_color": {
+							"additionalProperties": false,
+							"properties": {
+								"rgb": {
+									"items": {
+										"maximum": 255,
+										"minimum": 0,
+										"type": "integer"
+									},
+									"maxItems": 3,
+									"minItems": 3,
+									"type": "array"
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"type": "object"
+						},
+						"colors": {
+							"items": {
+								"additionalProperties": false,
+								"properties": {
+									"rgb": {
+										"items": {
+											"maximum": 255,
+											"minimum": 0,
+											"type": "integer"
+										},
+										"maxItems": 3,
+										"minItems": 3,
+										"type": "array"
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"type": "object"
+							},
+							"maxItems": 5,
+							"type": "array"
+						}
+					},
+					"type": "object"
+				},
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string"
+				},
+				"style": {
+					"type": "string"
+				},
+				"substyle": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"type": "object"
+		}
+	}
+}

@@ -111,6 +111,7 @@
 			"name": "With Color Controls",
 			"description": "Guide generation with specific brand colors",
 			"input": {
+				"prompt": "An abstract geometric pattern suitable for a tech company brand identity",
 				"controls": {
 					"colors": [
 						{
@@ -128,8 +129,7 @@
 							]
 						}
 					]
-				},
-				"prompt": "An abstract geometric pattern suitable for a tech company brand identity"
+				}
 			},
 			"output": {
 				"image": "https://examples.aig.cloudflare.com/recraft/recraftv3/with-color-controls.png"
@@ -147,12 +147,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv3',\n  {\n    controls: { colors: [{ rgb: [255, 107, 53] }, { rgb: [0, 43, 91] }] },\n    prompt: 'An abstract geometric pattern suitable for a tech company brand identity',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv3',\n  {\n    prompt: 'An abstract geometric pattern suitable for a tech company brand identity',\n    controls: { colors: [{ rgb: [255, 107, 53] }, { rgb: [0, 43, 91] }] },\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv3\",\n  \"input\": {\n    \"controls\": {\n      \"colors\": [\n        {\n          \"rgb\": [\n            255,\n            107,\n            53\n          ]\n        },\n        {\n          \"rgb\": [\n            0,\n            43,\n            91\n          ]\n        }\n      ]\n    },\n    \"prompt\": \"An abstract geometric pattern suitable for a tech company brand identity\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv3\",\n  \"input\": {\n    \"prompt\": \"An abstract geometric pattern suitable for a tech company brand identity\",\n    \"controls\": {\n      \"colors\": [\n        {\n          \"rgb\": [\n            255,\n            107,\n            53\n          ]\n        },\n        {\n          \"rgb\": [\n            0,\n            43,\n            91\n          ]\n        }\n      ]\n    }\n  }\n}'"
 				}
 			]
 		},
@@ -160,6 +160,7 @@
 			"name": "Background Color",
 			"description": "Set a specific background color",
 			"input": {
+				"prompt": "A clean icon of a lightning bolt",
 				"controls": {
 					"background_color": {
 						"rgb": [
@@ -169,7 +170,6 @@
 						]
 					}
 				},
-				"prompt": "A clean icon of a lightning bolt",
 				"size": "1024x1024"
 			},
 			"output": {
@@ -188,12 +188,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv3',\n  {\n    controls: { background_color: { rgb: [245, 245, 245] } },\n    prompt: 'A clean icon of a lightning bolt',\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv3',\n  {\n    prompt: 'A clean icon of a lightning bolt',\n    controls: { background_color: { rgb: [245, 245, 245] } },\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv3\",\n  \"input\": {\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          245,\n          245,\n          245\n        ]\n      }\n    },\n    \"prompt\": \"A clean icon of a lightning bolt\",\n    \"size\": \"1024x1024\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv3\",\n  \"input\": {\n    \"prompt\": \"A clean icon of a lightning bolt\",\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          245,\n          245,\n          245\n        ]\n      }\n    },\n    \"size\": \"1024x1024\"\n  }\n}'"
 				}
 			]
 		}

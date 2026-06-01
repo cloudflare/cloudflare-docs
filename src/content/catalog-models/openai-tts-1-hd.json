@@ -111,7 +111,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/tts-1-hd\",\n  \"input\": {\n    \"response_format\": \"mp3\",\n    \"speed\": 1,\n    \"text\": \"So here's the thing about large language models \u2014 they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.\",\n    \"voice\": \"echo\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/tts-1-hd\",\n  \"input\": {\n    \"response_format\": \"mp3\",\n    \"speed\": 1,\n    \"text\": \"So here'\\''s the thing about large language models \u2014 they'\\''re not actually thinking. They'\\''re predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.\",\n    \"voice\": \"echo\"\n  }\n}'"
 				}
 			]
 		},

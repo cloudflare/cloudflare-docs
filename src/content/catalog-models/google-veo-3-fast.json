@@ -17,10 +17,10 @@
 			"name": "Quick Preview",
 			"description": "Fast video generation for previews",
 			"input": {
+				"prompt": "Ocean waves crashing on a rocky shoreline at sunset",
 				"aspect_ratio": "16:9",
 				"duration": "6s",
 				"generate_audio": true,
-				"prompt": "Ocean waves crashing on a rocky shoreline at sunset",
 				"resolution": "720p"
 			},
 			"output": {
@@ -39,12 +39,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: true,\n    prompt: 'Ocean waves crashing on a rocky shoreline at sunset',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'Ocean waves crashing on a rocky shoreline at sunset',\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": true,\n    \"prompt\": \"Ocean waves crashing on a rocky shoreline at sunset\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"prompt\": \"Ocean waves crashing on a rocky shoreline at sunset\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -52,10 +52,10 @@
 			"name": "Social Media Clip",
 			"description": "Quick vertical video for stories",
 			"input": {
+				"prompt": "A coffee cup with steam rising, cozy cafe atmosphere",
 				"aspect_ratio": "9:16",
 				"duration": "4s",
 				"generate_audio": true,
-				"prompt": "A coffee cup with steam rising, cozy cafe atmosphere",
 				"resolution": "720p"
 			},
 			"output": {
@@ -74,12 +74,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '9:16',\n    duration: '4s',\n    generate_audio: true,\n    prompt: 'A coffee cup with steam rising, cozy cafe atmosphere',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'A coffee cup with steam rising, cozy cafe atmosphere',\n    aspect_ratio: '9:16',\n    duration: '4s',\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": \"4s\",\n    \"generate_audio\": true,\n    \"prompt\": \"A coffee cup with steam rising, cozy cafe atmosphere\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"prompt\": \"A coffee cup with steam rising, cozy cafe atmosphere\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": \"4s\",\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -87,10 +87,10 @@
 			"name": "Animated Loop",
 			"description": "Short loopable animation",
 			"input": {
+				"prompt": "A campfire burning with flames dancing and sparks floating upward, seamless loop",
 				"aspect_ratio": "16:9",
 				"duration": "4s",
 				"generate_audio": true,
-				"prompt": "A campfire burning with flames dancing and sparks floating upward, seamless loop",
 				"resolution": "720p"
 			},
 			"output": {
@@ -109,12 +109,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '4s',\n    generate_audio: true,\n    prompt: 'A campfire burning with flames dancing and sparks floating upward, seamless loop',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'A campfire burning with flames dancing and sparks floating upward, seamless loop',\n    aspect_ratio: '16:9',\n    duration: '4s',\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"4s\",\n    \"generate_audio\": true,\n    \"prompt\": \"A campfire burning with flames dancing and sparks floating upward, seamless loop\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"prompt\": \"A campfire burning with flames dancing and sparks floating upward, seamless loop\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"4s\",\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -122,10 +122,10 @@
 			"name": "Product Shot",
 			"description": "Quick product video preview",
 			"input": {
+				"prompt": "A smartphone rotating on a dark surface with dramatic lighting",
 				"aspect_ratio": "16:9",
 				"duration": "6s",
 				"generate_audio": false,
-				"prompt": "A smartphone rotating on a dark surface with dramatic lighting",
 				"resolution": "720p"
 			},
 			"output": {
@@ -144,12 +144,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: false,\n    prompt: 'A smartphone rotating on a dark surface with dramatic lighting',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'A smartphone rotating on a dark surface with dramatic lighting',\n    aspect_ratio: '16:9',\n    duration: '6s',\n    generate_audio: false,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": false,\n    \"prompt\": \"A smartphone rotating on a dark surface with dramatic lighting\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/veo-3-fast\",\n  \"input\": {\n    \"prompt\": \"A smartphone rotating on a dark surface with dramatic lighting\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"6s\",\n    \"generate_audio\": false,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		}

@@ -17,10 +17,10 @@
 			"name": "Basic I2V",
 			"description": "Animate a photo with default settings",
 			"input": {
+				"prompt": "Gentle movement and subtle animation, natural-looking motion",
 				"duration": 6,
 				"fast_pretreatment": false,
 				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
-				"prompt": "Gentle movement and subtle animation, natural-looking motion",
 				"prompt_optimizer": true,
 				"resolution": "768P"
 			},
@@ -42,12 +42,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt: 'Gentle movement and subtle animation, natural-looking motion',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    prompt: 'Gentle movement and subtle animation, natural-looking motion',\n    duration: 6,\n    fast_pretreatment: false,\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3-fast\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg\",\n    \"prompt\": \"Gentle movement and subtle animation, natural-looking motion\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3-fast\",\n  \"input\": {\n    \"prompt\": \"Gentle movement and subtle animation, natural-looking motion\",\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		},
@@ -55,10 +55,10 @@
 			"name": "High Resolution I2V",
 			"description": "Animate a photo in 1080P",
 			"input": {
+				"prompt": "Camera slowly pans across the scene with cinematic depth of field",
 				"duration": 6,
 				"fast_pretreatment": false,
 				"first_frame_image": "https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg",
-				"prompt": "Camera slowly pans across the scene with cinematic depth of field",
 				"prompt_optimizer": true,
 				"resolution": "1080P"
 			},
@@ -80,12 +80,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    first_frame_image:\n      'https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg',\n    prompt: 'Camera slowly pans across the scene with cinematic depth of field',\n    prompt_optimizer: true,\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    prompt: 'Camera slowly pans across the scene with cinematic depth of field',\n    duration: 6,\n    fast_pretreatment: false,\n    first_frame_image:\n      'https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg',\n    prompt_optimizer: true,\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3-fast\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg\",\n    \"prompt\": \"Camera slowly pans across the scene with cinematic depth of field\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"1080P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3-fast\",\n  \"input\": {\n    \"prompt\": \"Camera slowly pans across the scene with cinematic depth of field\",\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"1080P\"\n  }\n}'"
 				}
 			]
 		},
@@ -93,10 +93,10 @@
 			"name": "Fast Processing",
 			"description": "Quick I2V with fast pretreatment enabled",
 			"input": {
+				"prompt": "Hair blowing in the wind, eyes blinking naturally",
 				"duration": 6,
 				"fast_pretreatment": true,
 				"first_frame_image": "https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg",
-				"prompt": "Hair blowing in the wind, eyes blinking naturally",
 				"prompt_optimizer": true,
 				"resolution": "768P"
 			},
@@ -118,12 +118,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    duration: 6,\n    fast_pretreatment: true,\n    first_frame_image:\n      'https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg',\n    prompt: 'Hair blowing in the wind, eyes blinking naturally',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    prompt: 'Hair blowing in the wind, eyes blinking naturally',\n    duration: 6,\n    fast_pretreatment: true,\n    first_frame_image:\n      'https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3-fast\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": true,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg\",\n    \"prompt\": \"Hair blowing in the wind, eyes blinking naturally\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3-fast\",\n  \"input\": {\n    \"prompt\": \"Hair blowing in the wind, eyes blinking naturally\",\n    \"duration\": 6,\n    \"fast_pretreatment\": true,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		}
