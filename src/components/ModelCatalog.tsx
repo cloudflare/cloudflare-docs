@@ -18,6 +18,7 @@ type Filters = {
 	authors: string[];
 	tasks: string[];
 	capabilities: string[];
+	hosting: string[];
 };
 
 type SortOrder = "newest" | "oldest";
@@ -195,6 +196,14 @@ function CheckIcon() {
 	);
 }
 
+// Two-option facet that surfaces the existing ModelCardData.hosting field.
+// Labels match the "Hosted" / "Proxied" text already rendered by ModelInfo.tsx
+// so the filter chip vocabulary lines up with each card's subtitle.
+const hostingItems: FilterItem[] = [
+	{ value: "hosted", label: "Hosted" },
+	{ value: "proxied", label: "Proxied" },
+];
+
 // List of model names to pin at the top
 const pinnedModelNames = [
 	"@cf/moonshotai/kimi-k2.6",
@@ -215,6 +224,7 @@ const ModelCatalog = ({
 		authors: [],
 		tasks: [],
 		capabilities: [],
+		hosting: [],
 	});
 	const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
 	const initializedRef = useRef(false);
@@ -253,12 +263,14 @@ const ModelCatalog = ({
 		const authors = params.getAll("authors");
 		const tasks = params.getAll("tasks");
 		const capabilities = params.getAll("capabilities");
+		const hosting = params.getAll("hosting");
 
 		setFilters({
 			search,
 			authors,
 			tasks,
 			capabilities,
+			hosting,
 		});
 		initializedRef.current = true;
 	}, []);
@@ -284,6 +296,10 @@ const ModelCatalog = ({
 			filters.capabilities.forEach((capability) =>
 				params.append("capabilities", capability),
 			);
+		}
+
+		if (filters.hosting.length > 0) {
+			filters.hosting.forEach((hosting) => params.append("hosting", hosting));
 		}
 
 		setSearchParams(params);
@@ -332,6 +348,14 @@ const ModelCatalog = ({
 		[models],
 	);
 
+	// Hide the Hosting facet when the incoming list is uniform on that axis
+	// (e.g. /workers-ai/models/ is 100% hosted). Future-proofs for when the
+	// hosting field moves to the Deus CMS and may diverge from data source.
+	const showHostingFilter = useMemo(
+		() => new Set(models.map((m) => m.hosting)).size > 1,
+		[models],
+	);
+
 	const modelList = mapped.filter(({ model }) => {
 		if (filters.authors.length > 0) {
 			const selectedAuthorNames = new Set(
@@ -355,6 +379,12 @@ const ModelCatalog = ({
 			}
 		}
 
+		if (filters.hosting.length > 0) {
+			if (!filters.hosting.includes(model.hosting)) {
+				return false;
+			}
+		}
+
 		if (filters.search) {
 			if (!model.name.toLowerCase().includes(filters.search.toLowerCase())) {
 				return false;
@@ -367,7 +397,8 @@ const ModelCatalog = ({
 	const hasActiveFilters =
 		filters.authors.length > 0 ||
 		filters.tasks.length > 0 ||
-		filters.capabilities.length > 0;
+		filters.capabilities.length > 0 ||
+		filters.hosting.length > 0;
 
 	return (
 		<div className="not-content">
@@ -413,6 +444,14 @@ const ModelCatalog = ({
 							setFilters({ ...filters, capabilities })
 						}
 					/>
+					{showHostingFilter && (
+						<FilterDropdown
+							label="Hosting"
+							items={hostingItems}
+							selected={filters.hosting}
+							onChange={(hosting) => setFilters({ ...filters, hosting })}
+						/>
+					)}
 					<FilterDropdown
 						label="Authors"
 						items={authorItems}
@@ -441,6 +480,7 @@ const ModelCatalog = ({
 								authors: [],
 								tasks: [],
 								capabilities: [],
+								hosting: [],
 							})
 						}
 						className="cursor-pointer text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
