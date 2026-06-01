@@ -281,7 +281,12 @@
 /agents/model-context-protocol/transport/ /agents/model-context-protocol/protocol/transport/ 301
 /agents/agentic-payments/ /agents/tools/payments/ 301
 /agents/agentic-payments/x402/ /agents/tools/payments/x402/ 301
+/agents/agentic-payments/x402/charge-for-http-content/ /agents/tools/payments/x402/charge-for-http-content/ 301
+/agents/agentic-payments/x402/charge-for-mcp-tools/ /agents/tools/payments/x402/charge-for-mcp-tools/ 301
+/agents/agentic-payments/x402/pay-from-agents-sdk/ /agents/tools/payments/x402/pay-from-agents-sdk/ 301
+/agents/agentic-payments/x402/pay-with-tool-plugins/ /agents/tools/payments/x402/pay-with-tool-plugins/ 301
 /agents/agentic-payments/mpp/ /agents/tools/payments/mpp/ 301
+/agents/guides/ /agents/model-context-protocol/guides/ 301
 /agents/concepts/agent-class/ /agents/runtime/lifecycle/agent-class/ 301
 /agents/concepts/memory/ /agents/concepts/conversation-state-and-memory/ 301
 /agents/getting-started/prompting/ /workers/get-started/prompting/ 301
