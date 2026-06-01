@@ -46,6 +46,7 @@ const r = await fetch(
 	},
 );
 const tokenCount = r.headers.get("x-markdown-tokens");
+const originalTokenCount = r.headers.get("x-original-tokens");
 const markdown = await r.text();
 ```
 
@@ -60,6 +61,7 @@ content-type: text/markdown; charset=utf-8
 content-length: 2899
 vary: accept
 x-markdown-tokens: 725
+x-original-tokens: 12345
 content-signal: ai-train=yes, search=yes, ai-input=yes
 
 ---
@@ -74,9 +76,9 @@ ultimately resulting in better results while minimizing token waste.
 ...
 ```
 
-### x-markdown-tokens
+### Token count headers
 
-Note that we include an `x-markdown-tokens` header with the converted response that indicates the estimated number of tokens in the markdown document. You can use this value in your flow, for example to calculate the size of a context window or to decide on your chunking strategy.
+Note that we include token count headers with the converted response. `x-markdown-tokens` indicates the estimated number of tokens in the Markdown document, and `x-original-tokens` indicates the estimated number of tokens in the original HTML document before conversion. You can use these values in your flow, for example to calculate the size of a context window, estimate the token savings from Markdown conversion, or decide on your chunking strategy.
 
 ### Content Signals Policy
 
