@@ -173,7 +173,7 @@ async function handleOrder(env: Env, orderId: string) {
 
 </TypeScriptExample>
 
-{/* TODO: Add screenshot of trace waterfall showing nested spans (root fetch handler → handleOrder → kv_get, calculateTotal, fetch) */}
+![Trace waterfall showing custom spans nested alongside automatic KV and fetch instrumentation](~/assets/images/workers-observability/wobs_custom_spans_screenshot.png)
 
 ## Logging within spans
 
