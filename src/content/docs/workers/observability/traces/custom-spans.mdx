@@ -44,19 +44,19 @@ Both resolve to the same underlying object.
 import { tracing } from "cloudflare:workers";
 
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    // Using the import
-    return tracing.enterSpan("handleRequest", async (span) => {
-      span.setAttribute("url.path", new URL(request.url).pathname);
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		// Using the import
+		return tracing.enterSpan("handleRequest", async (span) => {
+			span.setAttribute("url.path", new URL(request.url).pathname);
 
-      const user = await ctx.tracing.enterSpan("auth", async () => {
-        // Using ctx.tracing
-        return authenticate(request, env);
-      });
+			const user = await ctx.tracing.enterSpan("auth", async () => {
+				// Using ctx.tracing
+				return authenticate(request, env);
+			});
 
-      return buildResponse(user);
-    });
-  },
+			return buildResponse(user);
+		});
+	},
 };
 ```
 
@@ -70,11 +70,11 @@ Creates a new span and runs `callback` inside it. The span is automatically ende
 
 **Parameters:**
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `name` | `string` | The name of the span. This appears in trace visualizations. |
+| Parameter  | Type                            | Description                                                                                                                                            |
+| ---------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`     | `string`                        | The name of the span. This appears in trace visualizations.                                                                                            |
 | `callback` | `(span: Span, ...args: A) => T` | The function to execute within the span. Receives the `Span` object as its first argument, followed by any additional arguments passed to `enterSpan`. |
-| `...args` | `A` | Optional additional arguments forwarded to the callback after the `span` parameter. |
+| `...args`  | `A`                             | Optional additional arguments forwarded to the callback after the `span` parameter.                                                                    |
 
 **Returns:** The return value of `callback`.
 
@@ -87,15 +87,15 @@ Creates a new span and runs `callback` inside it. The span is automatically ende
 ```ts
 // Synchronous callback — span ends when the function returns
 const result = tracing.enterSpan("parse", (span) => {
-  span.setAttribute("format", "json");
-  return JSON.parse(body);
+	span.setAttribute("format", "json");
+	return JSON.parse(body);
 });
 
 // Async callback — span ends when the promise settles
 const data = await tracing.enterSpan("fetchData", async (span) => {
-  const res = await fetch("https://api.example.com/data");
-  span.setAttribute("http.response.status_code", res.status);
-  return res.json();
+	const res = await fetch("https://api.example.com/data");
+	span.setAttribute("http.response.status_code", res.status);
+	return res.json();
 });
 
 // Forwarding arguments
@@ -110,10 +110,10 @@ The `Span` object is passed into the `enterSpan` callback. It provides methods t
 
 Sets an attribute on the span.
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The attribute name. |
-| `value` | `string \| number \| boolean \| undefined` | The attribute value. Passing `undefined` is a no-op. |
+| Parameter | Type                                       | Description                                          |
+| --------- | ------------------------------------------ | ---------------------------------------------------- |
+| `key`     | `string`                                   | The attribute name.                                  |
+| `value`   | `string \| number \| boolean \| undefined` | The attribute value. Passing `undefined` is a no-op. |
 
 Attributes appear alongside the span in your traces and OpenTelemetry exports.
 
@@ -131,10 +131,13 @@ You can use this to skip expensive attribute computation when the request is not
 
 ```ts
 tracing.enterSpan("process", (span) => {
-  if (span.isTraced) {
-    span.setAttribute("request.body.preview", JSON.stringify(body).slice(0, 200));
-  }
-  return processBody(body);
+	if (span.isTraced) {
+		span.setAttribute(
+			"request.body.preview",
+			JSON.stringify(body).slice(0, 200),
+		);
+	}
+	return processBody(body);
 });
 ```
 
@@ -148,26 +151,29 @@ Spans nest automatically based on the JavaScript async context. Any `enterSpan` 
 import { tracing } from "cloudflare:workers";
 
 async function handleOrder(env: Env, orderId: string) {
-  return tracing.enterSpan("handleOrder", async (span) => {
-    span.setAttribute("order.id", orderId);
+	return tracing.enterSpan("handleOrder", async (span) => {
+		span.setAttribute("order.id", orderId);
 
-    // This KV read is automatically a child of "handleOrder"
-    const order = await env.ORDERS_KV.get(orderId, "json");
+		// This KV read is automatically a child of "handleOrder"
+		const order = await env.ORDERS_KV.get(orderId, "json");
 
-    // This nested span is also a child of "handleOrder"
-    const total = tracing.enterSpan("calculateTotal", (innerSpan) => {
-      innerSpan.setAttribute("item.count", order.items.length);
-      return order.items.reduce((sum: number, item: any) => sum + item.price, 0);
-    });
+		// This nested span is also a child of "handleOrder"
+		const total = tracing.enterSpan("calculateTotal", (innerSpan) => {
+			innerSpan.setAttribute("item.count", order.items.length);
+			return order.items.reduce(
+				(sum: number, item: any) => sum + item.price,
+				0,
+			);
+		});
 
-    // This fetch is a child of "handleOrder"
-    await fetch("https://api.example.com/notify", {
-      method: "POST",
-      body: JSON.stringify({ orderId, total }),
-    });
+		// This fetch is a child of "handleOrder"
+		await fetch("https://api.example.com/notify", {
+			method: "POST",
+			body: JSON.stringify({ orderId, total }),
+		});
 
-    return new Response(JSON.stringify({ orderId, total }));
-  });
+		return new Response(JSON.stringify({ orderId, total }));
+	});
 }
 ```
 
@@ -181,9 +187,9 @@ async function handleOrder(env: Env, orderId: string) {
 
 ```ts
 tracing.enterSpan("processPayment", async (span) => {
-  console.log("Starting payment processing"); // attributed to "processPayment"
-  const result = await chargeCard(token, amount);
-  console.log("Payment complete", result.id); // also attributed to "processPayment"
+	console.log("Starting payment processing"); // attributed to "processPayment"
+	const result = await chargeCard(token, amount);
+	console.log("Payment complete", result.id); // also attributed to "processPayment"
 });
 ```
 
@@ -193,25 +199,31 @@ The full type declarations for the custom spans API:
 
 ```ts
 declare module "cloudflare:workers" {
-  namespace tracing {
-    function enterSpan<T, A extends unknown[]>(
-      name: string,
-      callback: (span: Span, ...args: A) => T,
-      ...args: A
-    ): T;
-  }
+	namespace tracing {
+		function enterSpan<T, A extends unknown[]>(
+			name: string,
+			callback: (span: Span, ...args: A) => T,
+			...args: A
+		): T;
+	}
 
-  class Span {
-    readonly isTraced: boolean;
-    setAttribute(
-      key: string,
-      value: string | number | boolean | undefined,
-    ): void;
-  }
+	class Span {
+		readonly isTraced: boolean;
+		setAttribute(
+			key: string,
+			value: string | number | boolean | undefined,
+		): void;
+	}
 }
 ```
 
 The same API is available on the handler context as `ctx.tracing`, with the same types.
+
+## OpenTelemetry JS SDK integration
+
+If you already use the [OpenTelemetry JS API](https://opentelemetry.io/docs/languages/js/instrumentation/) (`@opentelemetry/api`) in your application, you can bridge it to the Workers runtime with a small shim instead of rewriting your instrumentation.
+
+For more information, refer to [OpenTelemetry JS SDK integration](/workers/observability/traces/opentelemetry-js/).
 
 ## Limitations
 

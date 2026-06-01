@@ -1,0 +1,142 @@
+---
+pcx_content_type: concept
+title: OpenTelemetry JS SDK integration
+sidebar:
+  order: 3
+description: Bridge the OpenTelemetry JS API to the Workers runtime custom spans API.
+---
+
+import { TypeScriptExample } from "~/components";
+
+You can use the [OpenTelemetry JS API](https://opentelemetry.io/docs/languages/js/instrumentation/) (`@opentelemetry/api`) inside a Worker by writing a small shim that bridges standard OTel calls to the Workers runtime [`tracing.enterSpan()`](/workers/observability/traces/custom-spans/) API.
+
+## Shim implementation
+
+The shim below implements a minimal `TracerProvider` and `Tracer`. It maps `startActiveSpan(name, fn)` directly to `tracing.enterSpan(name, fn)` so the runtime manages async context, parent-child nesting, and span ending automatically.
+
+`startSpan()` is not fully supported by the Workers runtime because spans cannot be created and ended manually outside of a callback. The shim returns a no-op stand-in for compatibility.
+
+`span.setAttribute()` and `setAttributes()` are forwarded to the underlying runtime span.
+
+<TypeScriptExample filename="src/otel-shim.ts">
+
+```ts
+import type {
+	TracerProvider,
+	Tracer,
+	Span,
+	Attributes,
+} from "@opentelemetry/api";
+import { tracing } from "cloudflare:workers";
+
+class WorkersSpan implements Span {
+	#span: import("cloudflare:workers").Span;
+
+	constructor(span: import("cloudflare:workers").Span) {
+		this.#span = span;
+	}
+
+	setAttribute(key: string, value: string | number | boolean): this {
+		this.#span.setAttribute(key, value);
+		return this;
+	}
+
+	setAttributes(attributes: Attributes): this {
+		for (const [key, value] of Object.entries(attributes)) {
+			if (value !== undefined) {
+				this.#span.setAttribute(key, value as string | number | boolean);
+			}
+		}
+		return this;
+	}
+
+	// No-op methods required by the Span interface
+	addEvent(): this {
+		return this;
+	}
+	end(): void {}
+	recordException(): void {}
+	setStatus(): this {
+		return this;
+	}
+	updateName(): this {
+		return this;
+	}
+	isRecording(): boolean {
+		return false;
+	}
+}
+
+class WorkersTracer implements Tracer {
+	startActiveSpan<T>(name: string, fn: (span: Span) => T): T {
+		return tracing.enterSpan(name, (runtimeSpan) => {
+			const span = new WorkersSpan(runtimeSpan);
+			return fn(span);
+		});
+	}
+
+	startSpan(): Span {
+		// The Workers runtime does not support manual span creation.
+		// Return a no-op span for compatibility.
+		return new WorkersSpan({ setAttribute: () => {}, isTraced: false } as any);
+	}
+}
+
+export class WorkersTracerProvider implements TracerProvider {
+	getTracer(): Tracer {
+		return new WorkersTracer();
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Usage
+
+Register the provider once and instrument your handler with standard OTel patterns:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { trace } from "@opentelemetry/api";
+import { WorkersTracerProvider } from "./otel-shim";
+
+const provider = new WorkersTracerProvider();
+trace.setGlobalTracerProvider(provider);
+const tracer = trace.getTracer("my-worker");
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		return tracer.startActiveSpan("fetchHandler", (span) => {
+			span.setAttribute("http.method", request.method);
+			span.setAttribute("http.url", request.url);
+
+			return handleRequest(request, env, ctx);
+		});
+	},
+};
+
+async function handleRequest(
+	request: Request,
+	env: Env,
+	ctx: ExecutionContext,
+) {
+	return tracer.startActiveSpan("processRequest", (span) => {
+		span.setAttributes({
+			"user.agent": request.headers.get("User-Agent") ?? "unknown",
+		});
+
+		return new Response("OK");
+	});
+}
+```
+
+</TypeScriptExample>
+
+## Limitations
+
+Because the shim delegates to the Workers runtime tracing API, it inherits the same restrictions documented on the [custom spans](/workers/observability/traces/custom-spans/) page:
+
+- No manual span lifetime management (spans are always scoped to a callback).
+- No manual parent-child wiring.
+- The no-op `startSpan()` cannot be used for real telemetry.
