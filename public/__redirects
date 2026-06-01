@@ -202,7 +202,8 @@
 /agents/getting-started/build-a-chat-agent/ /agents/examples/chat-agent/ 301
 /agents/examples/browse-the-web/ /agents/tools/browser/ 301
 /agents/examples/manage-and-sync-state/ /agents/runtime/lifecycle/state/ 301
-/agents/examples/rag/ /agents/tools/rag/ 301
+/agents/examples/rag/ /agents/tools/ai-search/ 301
+/agents/tools/rag/ /agents/tools/ai-search/ 301
 /agents/examples/run-workflows/ /agents/runtime/execution/run-workflows/ 301
 /agents/examples/schedule-tasks/ /agents/runtime/execution/schedule-tasks/ 301
 /agents/examples/using-ai-models/ /agents/runtime/operations/using-ai-models/ 301
@@ -243,7 +244,7 @@
 /agents/api-reference/observability/ /agents/runtime/operations/observability/ 301
 /agents/api-reference/protocol-messages/ /agents/runtime/communication/protocol-messages/ 301
 /agents/api-reference/queue-tasks/ /agents/runtime/execution/queue-tasks/ 301
-/agents/api-reference/rag/ /agents/tools/rag/ 301
+/agents/api-reference/rag/ /agents/tools/ai-search/ 301
 /agents/api-reference/readonly-connections/ /agents/runtime/communication/readonly-connections/ 301
 /agents/api-reference/retries/ /agents/runtime/execution/retries/ 301
 /agents/api-reference/routing/ /agents/runtime/communication/routing/ 301
