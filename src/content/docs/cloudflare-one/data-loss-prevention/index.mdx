@@ -39,17 +39,17 @@ To get started, refer to [Scan HTTP traffic with DLP](/cloudflare-one/data-loss-
 
 ## Data at rest
 
-Data Loss Prevention complements [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/) (Cloud Access Security Broker) to detect sensitive data stored in your SaaS applications. CASB connects directly to SaaS application APIs to retrieve and scan files, rather than reading files as they pass through Cloudflare Gateway. Because of this, [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies do not affect data at rest scans.
+Data Loss Prevention complements [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/) (Cloud Access Security Broker) to detect sensitive data stored in your SaaS applications. CASB connects directly to SaaS application APIs to retrieve and scan files, rather than reading files as they pass through Cloudflare Gateway. Because of this, Gateway and Cloudflare One Client settings (such as [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies and [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configurations) do not affect data at rest scans.
 
 To get started, refer to [Scan SaaS applications with DLP](/cloudflare-one/cloud-and-saas-findings/casb-dlp/).
 
 ## AI applications and controls
 
-Data Loss Prevention integrates with [Cloudflare AI Gateway](/ai-gateway/) to scan AI prompts and responses for sensitive data. When DLP is enabled on an AI Gateway, it inspects the text content of requests sent to AI providers and responses returned from AI models, without requiring Gateway HTTP filtering or TLS decryption.
+- **AI Gateway** — Data Loss Prevention integrates with [Cloudflare AI Gateway](/ai-gateway/) to scan AI prompts and responses for sensitive data, and you can enable this by referring to [Set up DLP for AI Gateway](/ai-gateway/features/dlp/set-up-dlp/). When enabled, DLP inspects the text content of requests sent to AI providers and responses returned from AI models, without requiring Gateway HTTP filtering or TLS decryption.
 
-DLP also works with [Gateway Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#granular-controls) to enforce policies on AI applications, and complements [AI Security for Apps](/waf/detections/ai-security-for-apps/) for detecting sensitive data and prompt injection in AI-powered endpoints.
+- **Gateway Application Granular Controls** — DLP works with [Gateway Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#granular-controls) to enforce policies on specific actions within AI applications without blocking the entire application, using the [DLP Profile selector](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) in an HTTP policy. For example, you can block file uploads to ChatGPT without blocking all ChatGPT traffic by combining a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) with application-level controls.
 
-To get started, refer to [Set up DLP for AI Gateway](/ai-gateway/features/dlp/set-up-dlp/).
+- **AI Security for Apps** — DLP complements [AI Security for Apps](/waf/detections/ai-security-for-apps/) by providing profile-based detection of sensitive data in AI traffic, while AI Security for Apps handles LLM-specific threats such as prompt injection and unsafe topics. To detect sensitive data alongside AI Security for Apps, configure [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) and apply them to your AI traffic policies.
 
 ## Email security
 
