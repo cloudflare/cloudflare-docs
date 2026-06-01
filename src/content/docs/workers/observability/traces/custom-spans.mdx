@@ -10,7 +10,12 @@ description: Create custom spans to trace your own application logic alongside C
 
 import { TypeScriptExample, WranglerConfig, Render } from "~/components";
 
-Cloudflare Workers [automatically instruments](/workers/observability/traces/spans-and-attributes/) platform operations like fetch calls, KV reads, and D1 queries. Custom spans let you extend this visibility into your own application logic, so you can trace business-critical code paths alongside the built-in instrumentation.
+Cloudflare Workers [automatically instruments](/workers/observability/traces/spans-and-attributes/) platform operations like fetch calls, KV reads, and D1 queries. Custom spans let you extend this visibility into your own application logic, so you can trace custom code paths alongside the built-in instrumentation.
+
+The custom spans API is available in two ways — both provide the same `enterSpan()` method and behave identically:
+
+- **`import { tracing } from "cloudflare:workers"`** — works anywhere in your codebase, including utility functions, libraries, and modules that do not have access to the handler context.
+- **`ctx.tracing`** — available on the [`ExecutionContext`](/workers/runtime-apis/context/) passed to your handler, convenient when you are already working within a handler.
 
 ## Enable tracing
 
@@ -31,12 +36,7 @@ enabled = true
 
 Use `tracing.enterSpan()` to wrap a section of code in a named span. The span automatically becomes a child of whichever span is currently active, and ends when the callback returns or its returned promise settles.
 
-You can access the `tracing` object in two ways:
-
-- **Import from `cloudflare:workers`** — use this when you do not have the handler context in scope (for example, in utility functions or library code).
-- **`ctx.tracing`** — use this when you already have the handler context available.
-
-Both resolve to the same underlying object.
+The following example uses both access methods — the `cloudflare:workers` import and `ctx.tracing` — to show that they are interchangeable:
 
 <TypeScriptExample filename="src/index.ts">
 
