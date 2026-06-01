@@ -6,7 +6,7 @@ products:
 date: 2026-06-02
 ---
 
-You can now create custom trace spans in your Workers code using `tracing.enterSpan()`. Custom spans appear alongside the automatic platform instrumentation (fetch calls, KV reads, D1 queries, and so on) in your traces and OpenTelemetry exports, with correct parent-child nesting.
+You can now create custom trace spans in your Workers code using `tracing.enterSpan()`. Custom spans appear alongside the automatic platform instrumentation (fetch calls, KV reads, D1 queries, and other platform operations) in your traces and OpenTelemetry exports, with correct parent-child nesting.
 
 The API is available via `import { tracing } from "cloudflare:workers"` or through the handler context as `ctx.tracing`:
 
