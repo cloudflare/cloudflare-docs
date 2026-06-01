@@ -34,6 +34,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @G4brym @mchenco @digizeph @cloudflare/product-owners
 /src/content/catalog-models/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners
 /bin/fetch-catalog-models.ts @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners @kodster28
+/src/content/docs/agent-memory/ @lambrospetrou @rts-rob @pmesgari @cloudflare/product-owners
 
 # AI Crawl Control
 /src/content/docs/ai-crawl-control/ @cloudflare/product-owners @CameronWhiteside
