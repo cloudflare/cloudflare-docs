@@ -205,10 +205,10 @@ package.json @cloudflare/content-engineering
 
 # DDoS Protection
 
-/src/content/docs/ddos-protection/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners
-/src/content/docs/ddos-protection/change-log/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners
-/src/content/release-notes/ddos-http.yaml @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/release-notes/ddos-network.yaml @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners
+/src/content/docs/ddos-protection/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners @anita-tenjarla @cjdoucette @vcfxb
+/src/content/docs/ddos-protection/change-log/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners @anita-tenjarla @cjdoucette @vcfxb
+/src/content/release-notes/ddos-http.yaml @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @anita-tenjarla @cjdoucette @vcfxb
+/src/content/release-notes/ddos-network.yaml @patriciasantaana @cloudflare/appsec-reviewers @elithrar @alpdot @cloudflare/product-owners @anita-tenjarla @cjdoucette @vcfxb
 
 # Docs team areas
 
