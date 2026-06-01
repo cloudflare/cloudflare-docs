@@ -38,6 +38,11 @@ Cloudflare provides two main patterns for human-in-the-loop:
 | **Workflow approval** | Multi-step processes, durable approval gates | `waitForApproval()` |
 | **MCP elicitation**   | MCP servers requesting structured user input | `elicitInput()`     |
 
+Decision guide:
+
+- Use **Workflow approval** when you need durable, multi-step processes with approval gates that can wait hours, days, or weeks
+- Use **MCP elicitation** when building MCP servers that need to request additional structured input from users during tool execution
+
 ## Workflow-based approval
 
 For durable, multi-step processes, use [Cloudflare Workflows](/workflows/) with the `waitForApproval()` method. The workflow pauses until a human approves or rejects.
