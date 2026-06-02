@@ -53,7 +53,7 @@ These are some examples of API requests.
 <Details header="List all the available regions">
 
 <APIRequest
-	path="/accounts/{account_id}/addressing/regional_hostnames/regions"
+	path="/accounts/{account_id}/dls/regions"
 	method="GET"
 />
 
@@ -63,14 +63,29 @@ These are some examples of API requests.
 	"errors": [],
 	"result": [
 		{
-			"key": "ca",
-			"label": "Canada"
+			"id": "id",
+			"created_on": "2023-01-13T23:59:45.276558Z",
+			"modified_on": "2023-01-13T23:59:45.276558Z",
+			"name": "Canada",
+			"region_key": "ca",
+			"version": 1,
+			"version_created_on": "2023-01-13T23:59:45.276558Z"
 		},
 		{
-			"key": "eu",
-			"label": "Europe"
+			"id": "id",
+			"created_on": "2023-01-13T23:59:45.276558Z",
+			"modified_on": "2023-01-13T23:59:45.276558Z",
+			"name": "Europe",
+			"region_key": "eu",
+			"version": 1,
+			"version_created_on": "2023-01-13T23:59:45.276558Z"
 		}
 	],
+	"result_info": {
+		"count": 2,
+		"cursor": "",
+		"per_page": 20
+	},
 	"messages": []
 }
 ```
