@@ -20,11 +20,11 @@ On every turn, Think merges tools from multiple sources. Later sources override 
 2. **`getTools()`** — your custom server-side tools
 3. **Extension tools** — tools from loaded extensions (prefixed by extension name)
 4. **Session tools** — `set_context`, `load_context`, `search_context` (from `configureSession`)
-5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Agent Skills](/agents/api-reference/agent-skills/))
+5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Agent Skills](/agents/runtime/execution/agent-skills/))
 6. **MCP tools** — from connected MCP servers
 7. **Client tools** — from the browser (refer to [Client tools](/agents/think/client-tools/))
 
-Tools belong to the agent running the turn. For parent-child orchestration, use [Agent tools](/agents/api-reference/agent-tools/) instead of passing one-off tools through `chat()`.
+Tools belong to the agent running the turn. For parent-child orchestration, use [Agent tools](/agents/runtime/execution/agent-tools/) instead of passing one-off tools through `chat()`.
 
 ## Built-in workspace tools
 
@@ -340,7 +340,7 @@ createBrowserTools({
 
 </TypeScriptExample>
 
-For the full CDP helper API, refer to [Browse the web](/agents/api-reference/browse-the-web/).
+For the full CDP helper API, refer to [Browse the web](/agents/tools/browser/).
 
 ## Extensions
 

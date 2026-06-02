@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Think wraps chat turns in recoverable [fibers](/agents/api-reference/durable-execution/) by default (`chatRecovery = true`). If the Durable Object is evicted mid-stream, Think reconstructs any buffered chunks, persists partial output, and schedules either a continuation of the assistant turn or a retry of the unanswered user turn.
+Think wraps chat turns in recoverable [fibers](/agents/runtime/execution/durable-execution/) by default (`chatRecovery = true`). If the Durable Object is evicted mid-stream, Think reconstructs any buffered chunks, persists partial output, and schedules either a continuation of the assistant turn or a retry of the unanswered user turn.
 
 :::note
 This is on by default and works without configuration — most apps never touch this page. Read it when you want provider-specific recovery, a stall watchdog, or to tune the terminal experience after recovery gives up.
@@ -45,7 +45,7 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-The same recovery events are available through `agents/observability` on the `chat` channel; transcript repairs are emitted on the `transcript` channel. Refer to [Observability](/agents/api-reference/observability/#chat-recovery-events).
+The same recovery events are available through `agents/observability` on the `chat` channel; transcript repairs are emitted on the `transcript` channel. Refer to [Observability](/agents/runtime/operations/observability/#chat-recovery-events).
 
 ## onChatRecovery
 

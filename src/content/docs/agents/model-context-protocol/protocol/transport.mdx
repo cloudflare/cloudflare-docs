@@ -105,7 +105,7 @@ If your MCP server needs to maintain state across requests, use `createMcpHandle
 
 See [Stateful MCP Servers](/agents/model-context-protocol/apis/handler-api/#stateful-mcp-servers) for implementation details.
 
-Streamable HTTP streams are resumable: configure an `EventStore` so clients can reconnect with a `Last-Event-ID` header and replay missed events, keeping in-flight tool calls alive across the edge idle-stream watchdog. `DurableObjectEventStore` is exported from `agents/mcp` for stateful `WorkerTransport` callers. Refer to [`McpAgent`: Stream resumability](/agents/api-reference/mcp-agent-api/#stream-resumability).
+Streamable HTTP streams are resumable: configure an `EventStore` so clients can reconnect with a `Last-Event-ID` header and replay missed events, keeping in-flight tool calls alive across the edge idle-stream watchdog. `DurableObjectEventStore` is exported from `agents/mcp` for stateful `WorkerTransport` callers. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability).
 
 ## RPC transport
 

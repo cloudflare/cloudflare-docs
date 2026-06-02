@@ -18,7 +18,7 @@ import {
 
 Add Agent Memory to an agent so it can recall durable context across conversations.
 
-This guide uses the [Agents SDK](/agents/) and its [Session API](/agents/api-reference/sessions/) to expose memory recall as a model-callable tool. The same pattern applies if you use another agent framework: store memories with `ingest()` or `remember()`, expose `recall()` through one of your agent's tools, and use the system prompt to tell the model when to search memory.
+This guide uses the [Agents SDK](/agents/) and its [Session API](/agents/runtime/lifecycle/sessions/) to expose memory recall as a model-callable tool. The same pattern applies if you use another agent framework: store memories with `ingest()` or `remember()`, expose `recall()` through one of your agent's tools, and use the system prompt to tell the model when to search memory.
 
 ## Prerequisites
 
@@ -104,7 +104,7 @@ Generate local TypeScript types for your bindings:
 
 The model cannot use memory just because your application has a memory binding. You need to expose recall through a tool and instruct the model when to call it.
 
-With the Agents SDK [Session API](/agents/api-reference/sessions/), add a searchable context provider. Session turns the provider's `search()` method into a `search_context` tool for the model.
+With the Agents SDK [Session API](/agents/runtime/lifecycle/sessions/), add a searchable context provider. Session turns the provider's `search()` method into a `search_context` tool for the model.
 
 Create `src/server.ts` and add the recall setup:
 
