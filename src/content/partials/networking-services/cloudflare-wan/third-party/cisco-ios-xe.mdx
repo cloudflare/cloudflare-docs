@@ -166,7 +166,7 @@ interface Tunnel2
 
 ### IKE - Phase 1
 
-Configure the following to facilitate IKEv2 Phase 1 negotiation with PQC (ML-KEM 768):
+Configure the following to facilitate IKEv2 Phase 1 negotiation:
 
 - IKEv2 Proposal
 - IKEv2 Policy
@@ -186,6 +186,10 @@ crypto ikev2 proposal CF_WAN_IKEV2_PROP
  exit
 ```
 
+:::note
+Simply add/remove `pqc mlkem768` from the proposal to enable/disable Post-Quantum Cryptography.
+:::
+
 #### IKEv2 Policy
 
 Configure one IKEv2 Policy per tunnel:
@@ -199,7 +203,7 @@ crypto ikev2 policy CF_WAN_IKEV2_POL
 
 #### IKEv2 Keyrings
 
-Add one keyring per tunnel.
+Add one keyring per tunnel:
 
 ##### `CF_WAN_TUN_01_IKEV2_PEER`
 
@@ -227,7 +231,7 @@ Specifying `0` before the pre-shared-key lets IOS XE know the string is unencryp
 
 #### IKEv2 Profiles
 
-Configure one IKEv2 Profile per tunnel.
+Configure one IKEv2 Profile per tunnel:
 
 ##### `CF_WAN_TUN_01_IKEV2_PROF`
 
@@ -257,7 +261,9 @@ crypto ikev2 profile CF_WAN_TUN_02_IKEV2_PROF
 
 #### IKEv2 Profiles with NAT-T support (optional)
 
-If the WAN interface on the Cisco IOS XE device is behind a device performing Network Address Translation (NAT), you can add `nat force-encap` under the `crypto ikev2 profile` to force IKE Phase 1 to use UDP port `4500`. This is only needed when you want to force encapsulation instead of using the standard NAT-T flow, which starts on UDP port `500` and switches to UDP port `4500` after NAT is detected.
+If the WAN interface on the Cisco IOS XE device is behind a device performing Network Address Translation (NAT), you can add `nat force-encap` under `crypto ikev2 profile` to force IKE Phase 1 to use UDP port `4500`.
+
+This is only needed when you want to force encapsulation instead of using the standard NAT-T flow, which starts on UDP port `500` and switches to UDP port `4500` after NAT is detected.
 
 ##### `CF_WAN_TUN_01_IKEV2_PROF` with NAT-T
 
@@ -291,7 +297,7 @@ crypto ikev2 profile CF_WAN_TUN_02_IKEV2_PROF
 
 #### IPsec Profile
 
-Add one IPsec Profile per tunnel.
+Add one IPsec Profile per tunnel:
 
 ##### `CF_WAN_TUN_01_IPSEC_PROF`
 
@@ -317,7 +323,7 @@ crypto ipsec profile CF_WAN_TUN_02_IPSEC_PROF
 
 ### Bind IPsec Profiles to tunnel interfaces
 
-Bind the IPsec profiles to the corresponding Virtual Tunnel Interfaces to instantiate the IPsec tunnels.
+Bind the IPsec profiles to the corresponding Virtual Tunnel Interfaces to instantiate the IPsec tunnels:
 
 #### Tunnel1
 
@@ -390,6 +396,8 @@ interface GigabitEthernet1
 
 #### Configure Cisco Express Forwarding (CEF) for load sharing (universal algorithm)
 
+Set the load-sharing algorithm to universal:
+
 ```txt
 ip cef load-sharing algorithm universal
 ```
@@ -418,7 +426,7 @@ This tracking is separate from Cloudflare tunnel health checks. Cloudflare uses 
 
 #### Define IP SLA probes
 
-Instantiate an IP SLA probe (type `icmp-echo`) with `Tunnel1` source IP `169.254.250.1` and destination IP `169.254.250.0`. Send a probe every five seconds.
+Instantiate an IP SLA probe (type `icmp-echo`) with `Tunnel1` source IP `169.254.250.1` and destination IP `169.254.250.0` - send a probe every five seconds:
 
 ```txt
 ip sla 1
@@ -427,7 +435,7 @@ ip sla 1
 ip sla schedule 1 life forever start-time now
 ```
 
-Instantiate an IP SLA probe (type `icmp-echo`) with `Tunnel2` source IP `169.254.250.3` and destination IP `169.254.250.2`. Send a probe every five seconds.
+Instantiate an IP SLA probe (type `icmp-echo`) with `Tunnel2` source IP `169.254.250.3` and destination IP `169.254.250.2` - send a probe every five seconds:
 
 ```txt
 ip sla 2
@@ -454,7 +462,7 @@ track 2 ip sla 2 reachability
 
 ### IKEv2/IPsec diagnostics
 
-Display IKE (Phase 1) Security Associations detail:
+- Display IKE (Phase 1) Security Associations detail:
 
 ```txt
 show crypto ikev2 sa detailed
@@ -487,7 +495,7 @@ Tunnel-id Local                 Remote                fvrf/ivrf            Statu
       PEER TYPE: Other
 ```
 
-Clear security associations:
+- Clear security associations:
 
 ```txt
 clear crypto session remote <peer-ip-address>
@@ -497,21 +505,21 @@ Another option to restart the IPsec tunnels is to administratively disable and r
 
 ```txt
 int Tunnel1
-shut
+shutdown
 
-no shut
+no shutdown
 ```
 
 ```txt
 int Tunnel2
-shut
+shutdown
 
-no shut
+no shutdown
 ```
 
 ### Policy-Based Routing
 
-Display Route Map details. Ensure the counters increment to confirm whether traffic matches the policy (`CF_WAN_PBR_ALL`):
+- Display Route Map details. Ensure the counters increment to confirm whether traffic matches the policy (`CF_WAN_PBR_ALL`):
 
 ```txt
 show route-map CF_WAN_PBR_RM
@@ -524,7 +532,7 @@ route-map CF_WAN_PBR_RM, permit, sequence 10
   Policy routing matches: 12077 packets, 4639582 bytes
 ```
 
-List routes in the VRF (`CF_WAN_PBR_VRF`):
+- List routes in the VRF (`CF_WAN_PBR_VRF`):
 
 ```txt
 show ip route vrf CF_WAN_PBR_VRF
@@ -549,7 +557,7 @@ S*    0.0.0.0/0 [1/0] via 169.254.250.0
                 [1/0] via 169.254.250.2
 ```
 
-List routes matching `0.0.0.0/0` in the CEF table:
+- List routes matching `0.0.0.0/0` in the CEF table:
 
 ```txt
 show ip cef vrf CF_WAN_PBR_VRF 0.0.0.0/0
@@ -560,7 +568,7 @@ show ip cef vrf CF_WAN_PBR_VRF 0.0.0.0/0
 
 #### Health Tracking - IP SLA
 
-Display `track` object state:
+- Display `track` object state:
 
 ```txt
 show track brief
@@ -569,7 +577,7 @@ Track Type        Instance                   Parameter        State Last Change
 2     ip sla      2                          reachability     Up    01:16:08
 ```
 
-Display IP SLA statistics:
+- Display IP SLA statistics:
 
 ```txt
 show ip sla statistics
