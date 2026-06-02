@@ -156,6 +156,27 @@ Available jurisdictions include `"eu"` (European Union) and `"fedramp"` (FedRAMP
 
 Hibernation is enabled by default and requires no additional configuration.
 
+## Stream resumability
+
+`McpAgent`'s Streamable HTTP transport survives the roughly 5-minute Cloudflare edge idle-stream watchdog so in-flight tool calls are not lost on a flaky connection:
+
+- **GET (standalone listen stream)** — when an `EventStore` is configured, idle drops are recovered by clients reconnecting with a `Last-Event-ID` header (no keepalive needed). Without an `EventStore`, a comment-frame keepalive (`: keepalive`, every 25 seconds) keeps long-lived listeners alive.
+- **POST (tool response stream)** — always keepalive, so in-flight tool calls survive the idle watchdog. POST streams can additionally be resumed via `Last-Event-ID` when an `EventStore` is configured; a reconnecting client replays any events it missed up to and including the final response. Each POST stream's events are cleared when its close frame is written.
+
+`DurableObjectEventStore` is exported from `agents/mcp` for stateful `WorkerTransport` callers that embed the transport inside an Agent or Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObjectEventStore } from "agents/mcp";
+
+const eventStore = new DurableObjectEventStore(this.ctx.storage);
+```
+
+</TypeScriptExample>
+
+Refer to [MCP Transport](/agents/model-context-protocol/transport/) for transport configuration.
+
 ## Authentication and authorization
 
 The McpAgent class provides seamless integration with the [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) for [authentication and authorization](/agents/model-context-protocol/authorization/).

@@ -535,7 +535,7 @@ Sub-agents have their own state, schedules, durable fibers, and lifecycle. They 
 
 Because facets do not have independent alarm slots, the top-level parent owns the physical Durable Object alarm. The Agents SDK records which sub-agent owns each schedule or fiber recovery lease, wakes the parent, and routes the callback back into the child. The parent does not need to stay active while the sub-agent works — it can start the work, hibernate, and be woken by the child-owned schedule or recovery check.
 
-For the full `subAgent()` API — typed RPC stubs, client routing, access control, storage isolation, and alarm-backed APIs — refer to [Sub-agents](/agents/api-reference/sub-agents/). For AI-specific sub-agent streaming (running full LLM turns through a child agent), refer to [Think: Sub-agent RPC](/agents/api-reference/think/#sub-agent-rpc-and-programmatic-turns).
+For the full `subAgent()` API — typed RPC stubs, client routing, access control, storage isolation, and alarm-backed APIs — refer to [Sub-agents](/agents/api-reference/sub-agents/). For AI-specific sub-agent streaming (running full LLM turns through a child agent), refer to [Think: Sub-agent RPC](/agents/think/sub-agents/).
 
 ## Recovering interrupted LLM streams
 
@@ -575,6 +575,10 @@ The right recovery strategy depends on the LLM provider:
 | Other                  | Try prefill, fall back to synthetic | `continueLastTurn()` if the provider supports it, synthetic message otherwise | Varies     |
 
 Use `ctx.createdAt` to suppress stale recoveries. For example, if a recovered chat turn is older than a few minutes, you may persist the partial answer but skip automatic continuation to avoid surprising the user with an old response.
+
+[`Think`](/agents/think/) enables `chatRecovery` by default. The default path persists partial output and auto-continues or retries the turn when safe, so many apps do not need a custom hook. Override `onChatRecovery` when a provider has a better recovery strategy, or configure `chatRecovery = { maxAttempts, terminalMessage, onExhausted }` to tune the terminal user experience.
+
+If the agent is interrupted before any assistant stream chunks are written, there is no partial assistant message to continue. When the latest persisted message is still the unanswered user message from that turn, chat recovery retries the turn automatically unless `onChatRecovery` returns `{ continue: false }`.
 
 ## Managing state over time
 

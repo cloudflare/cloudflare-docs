@@ -81,6 +81,26 @@ await this.addMcpServer("github", "https://mcp.github.com/mcp", {
 
 </TypeScriptExample>
 
+### Stable server IDs
+
+By default, each connection is assigned a generated `nanoid(8)` ID. Pass `id` for connector-style integrations so tools surface as readable keys instead of opaque connection IDs.
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("GitHub", env.MCP_SESSION, {
+	id: "github",
+	props: { token: "..." },
+});
+// tools surface as `tool_github_<name>`
+```
+
+</TypeScriptExample>
+
+When provided, this `id` replaces the generated value as the server's ID in storage, restore, `listServers()`, `listTools()`, `getAITools()`, and OAuth state. The supplied ID is normalized via the exported `normalizeServerId` helper, so values like `"GitHub MCP!"` become `"github-mcp"` — guaranteeing the ID is safe to embed in AI SDK tool names and storage keys.
+
+Stable IDs are fully additive — no existing code breaks. If you add `{ id: "github" }` to an `addMcpServer` call for a server already registered under an auto-generated ID, the SDK transparently migrates the existing storage row, in-memory connection, and OAuth-related storage keys to the new stable ID. No `removeMcpServer` step is required. `addMcpServer` only throws on a genuinely ambiguous collision: the same stable ID already belongs to a _different_ `(name, url)` server.
+
 ### Transport options
 
 MCP supports multiple transport types:
@@ -479,6 +499,7 @@ async addMcpServer(
   serverName: string,
   url: string,
   options?: {
+    id?: string;
     callbackHost?: string;
     callbackPath?: string;
     agentsPrefix?: string;
@@ -499,6 +520,7 @@ async addMcpServer(
   serverName: string,
   binding: DurableObjectNamespace,
   options?: {
+    id?: string;
     props?: Record<string, unknown>;
     client?: ClientOptions;
     retry?: RetryOptions;
@@ -511,6 +533,7 @@ async addMcpServer(
 - `serverName` (string, required) — Display name for the MCP server
 - `url` (string, required) — URL of the MCP server endpoint
 - `options` (object, optional) — Connection configuration:
+  - `id` — Optional stable, caller-supplied server ID for connector-style integrations. When provided, it replaces the generated `nanoid(8)` across storage, `listServers()`, `listTools()`, `getAITools()` (so tool keys become readable, for example `tool_github_create_pull_request`), and OAuth state. Refer to [Stable server IDs](#stable-server-ids)
   - `callbackHost` — Host for OAuth callback URL. Only needed for OAuth-authenticated servers. If omitted, automatically derived from the incoming request or WebSocket connection URI — you typically do not need to set this unless you are using a custom domain that differs from the Worker's hostname
   - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. You must route this path to the agent instance via `getAgentByName`
   - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`. Ignored when `callbackPath` is provided
@@ -525,6 +548,7 @@ async addMcpServer(
 - `serverName` (string, required) — Display name for the MCP server
 - `binding` (`DurableObjectNamespace`, required) — The Durable Object binding for the `McpAgent` class
 - `options` (object, optional) — Connection configuration:
+  - `id` — Optional stable, caller-supplied server ID. Refer to [Stable server IDs](#stable-server-ids)
   - `props` — Initialization data passed to the `McpAgent`'s `onStart(props)`. Use this to pass user context, configuration, or other data to the MCP server instance
   - `client` — MCP client configuration options
   - `retry` — Retry options for the connection
