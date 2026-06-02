@@ -5,18 +5,25 @@ sidebar:
   order: 3
 tableOfContents: false
 description: |
-  Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using cron triggers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
+  Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using scheduled handlers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
 products:
   - workflows
   - workers
 ---
 
-import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
+import {
+	Render,
+	Tabs,
+	TabItem,
+	Card,
+	WranglerConfig,
+	YouTube,
+} from "~/components";
 
 <Tabs>
   <TabItem label="Watch this episode">
 
-Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using cron triggers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
+Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using scheduled handlers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
 
     <Card>
          <YouTube id="L6gR4Yr3UW8" />
@@ -59,18 +66,27 @@ Cloudflare Workflows provide a powerful way to manage asynchronous, durable proc
 
       ### Wrangler Configuration
 
-      The Wrangler configuration file is used to configure your Worker and Workflows. This includes defining bindings to resources like KV namespaces and setting up triggers for workflows.
+      The Wrangler configuration file is used to configure your Worker and Workflows. This includes defining bindings to resources like KV namespaces and setting up schedules for workflows.
 
-      Open the Wrangler configuration file and find the `[triggers]` section.
+      The episode repository uses the older pattern of a top-level `[triggers]` section plus a `scheduled` handler in the main Worker to create a `LEADERBOARD_WORKFLOW` instance on a timer.
+
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/wrangler.toml#L68)
 
-      The `crons` array allows you to define scheduled triggers for your main Worker. The example shows a cron job configured to run every 30 minutes.
+      In current Workflows projects, you can usually schedule the Workflow directly on its binding instead:
 
-      Locate the `scheduled` handler in your main Worker code (`src/index.tsx`). This handler is executed when a cron trigger fires.
+      <WranglerConfig>
 
-      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/index.tsx#L315)
+      ```toml
+      [[workflows]]
+      name = "leaderboard-workflow"
+      binding = "LEADERBOARD_WORKFLOW"
+      class_name = "LeaderboardWorkflow"
+      schedules = ["*/30 * * * *"]
+      ```
 
-      This handler creates an instance of the `LEADERBOARD_WORKFLOW`, initiating the leaderboard update process on a schedule.
+      </WranglerConfig>
+
+      Use a separate Cron Trigger and `scheduled` handler only when you need custom logic before deciding whether to create a Workflow instance. Use the latest Wrangler release when configuring Workflow schedules.
 
       ### Puntificator: Using AI to Develop More Puns Automatically
 

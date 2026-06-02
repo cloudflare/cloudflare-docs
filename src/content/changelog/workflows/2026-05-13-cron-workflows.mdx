@@ -1,0 +1,29 @@
+---
+title: Schedule Workflow instances directly from your Workflow binding
+description: Add cron schedules to a Workflow binding in wrangler.jsonc to create Workflow instances automatically on a recurring interval.
+products:
+  - workflows
+  - workers
+date: 2026-06-02 15:00:00 UTC
+---
+
+You can now attach cron schedules directly to a Workflow binding in `wrangler.jsonc`. Each scheduled run creates a new Workflow instance automatically, so you do not need to define a separate Worker with a `scheduled` handler just to trigger your Workflow on an interval.
+
+For example, you can configure hourly, every-15-minute, or weekday schedules on the same Workflow:
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-scheduled-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyScheduledWorkflow",
+			"schedules": ["0 * * * *", "*/15 * * * *", "0 9 * * MON-FRI"],
+		},
+	],
+}
+```
+
+This makes it easier to build recurring jobs such as database backups, invoice generation, report aggregation, and cleanup tasks without wiring up a separate Cron Trigger entrypoint.
+
+For more information, refer to [Trigger Workflows](/workflows/build/trigger-workflows/).
