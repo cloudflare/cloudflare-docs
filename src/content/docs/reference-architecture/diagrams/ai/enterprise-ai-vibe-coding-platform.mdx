@@ -35,7 +35,7 @@ Observability, discoverability, and cost controls are embedded across all three 
 
 <VibeDevPlaneDiagram />
 
-[Cloudflare Access](/cloudflare-one/policies/access/) protects the entrypoint to the platform, whether that is a web-based user interface or authenticated access to a coding harness through the CLI. A [D1](/d1/) database stores platform metadata, tracking cost, usage, and permissions at the department, team, and user level.
+[Cloudflare Access](/cloudflare-one/policies/access/) protects the entrypoint to the platform, whether that is a web-based user interface or authenticated access to a coding harness through the CLI. The platform stores metadata (user profiles, sessions, cost tags, department and team permissions) in a data store such as [D1](/d1/) for structured queries, [KV](/kv/) for fast key-value lookups, or [Durable Objects](/durable-objects/) for real-time coordination. The frontend or agent flow queries this metadata to determine permissions and track usage.
 
 The development flow supports two paths. A multi-agent orchestration flow can spin up a [Sandbox](/sandbox/) with preview URLs, accelerating the feedback loop during iteration. Alternatively, developers can work directly from the frontend to a coding harness running entirely inside a sandboxed [Container](/containers/).
 
@@ -60,6 +60,12 @@ The platform integrates with existing enterprise tooling. Git repositories, secr
 Deployed applications run on [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). [Cloudflare Access](/cloudflare-one/policies/access/) sits in front of the entire custom domain, controlling access to deployed applications through the [dispatch worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/). Granular access controls can be applied at the dispatch worker level to ensure user access matches the data permissions and scope they were assigned.
 
 Workers for Platforms user workers host the vibe-coded application, with the [outbound worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) controlling all egress and injecting secrets as required. The outbound worker also controls downstream access: [bindings](/workers/runtime-apis/bindings/), external APIs, [Hyperdrive](/hyperdrive/) for non-Cloudflare databases, or [Workers VPC](/workers/configuration/vpc/) with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to establish connectivity to on-premises or existing internal systems.
+
+Each user worker gets its own set of [bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) attached via the upload API. For complete isolation, the platform creates and attaches a unique D1 database, KV namespace, or R2 bucket per application. No user worker can access resources that are not explicitly bound to it.
+
+The dispatch worker sets [custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) per invocation, capping `cpuMs` and `subRequests` to prevent compute abuse. The platform can assign different limits by user tier, team, or application classification. If a limit is exceeded, the user worker throws an exception that the dispatch worker can handle.
+
+Observability operates at two levels. At the platform level, [Workers Trace Events Logpush](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/) enabled on the dispatch worker covers all current and future user workers in the namespace, forwarding logs to external destinations like S3, R2, Datadog, or Splunk. The [GraphQL Analytics API](/analytics/graphql-api/) queries by `dispatchNamespaceName` for aggregate metrics across the platform. At the app level, [Tail Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/) can be attached to individual user workers for granular logging. [Workers Analytics Engine](/analytics/analytics-engine/) lets the platform write and query events by script tag, surfacing per-app usage metrics to individual users.
 
 ## Security model
 
