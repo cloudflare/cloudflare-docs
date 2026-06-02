@@ -7,7 +7,7 @@ products:
 date: 2026-06-02
 ---
 
-import { TypeScriptExample } from "~/components";
+import { PackageManagers, TypeScriptExample } from "~/components";
 
 The latest release of the [Agents SDK](https://github.com/cloudflare/agents) adds four new ways to build with `@cloudflare/think`: on-demand Agent Skills, chat messengers (starting with Telegram), declarative scheduled tasks, and durable reasoning steps inside Workflows. This release also significantly hardens durable chat recovery, so turns reliably ride through deploys, evictions, and stalled model streams in production.
 
@@ -137,7 +137,7 @@ export class TriageWorkflow extends ThinkWorkflow<TriageAgent, Params> {
 
 Durable chat turns have always been designed to survive a mid-turn deploy or Durable Object eviction. This release is a major hardening pass on that machinery, closing the edge cases that could still abandon a turn or re-run completed work under sustained churn.
 
-- **Survives sustained deploy churn.** Recovery is now bounded by a progress-aware wall clock (a 5-minute no-progress window, reset on every advancing attempt, under a 15-minute incident ceiling) instead of a raw attempt count. A turn that keeps producing content rides through continuous deploys; previously a rollout's reconnect storm could exhaust the budget and seal a healthy turn.
+- **Survives sustained deploy churn.** Recovery is now bounded by a progress-aware wall clock (a 5-minute no-progress window, reset on every advancing attempt, under a 15-minute incident ceiling) instead of a raw attempt count. A turn that keeps producing content rides through continuous deploys. Previously, a rollout's reconnect storm could exhaust the budget and seal a healthy turn.
 - **Settled work is never lost or re-run.** Completed (often non-idempotent) tool results are flushed to durable storage immediately, and an interrupted tool call is preserved as an errored result instead of silently disappearing and re-executing.
 - **A live "recovering…" signal.** `useAgentChat` exposes a new `isRecovering` flag, so a recovering turn shows progress instead of looking frozen. Most UIs render `isStreaming || isRecovering` as "busy".
 - **Stall watchdog.** Set `chatStreamStallTimeoutMs` to route a hung provider stream into the same bounded recovery path instead of leaving an infinite spinner.
@@ -159,8 +159,6 @@ Durable chat turns have always been designed to survive a mid-turn deploy or Dur
 
 To update to the latest version:
 
-```sh
-npm i agents@latest @cloudflare/think@latest @cloudflare/ai-chat@latest
-```
+<PackageManagers pkg="agents@latest @cloudflare/think@latest @cloudflare/ai-chat@latest" />
 
 Refer to the [Agents API reference](/agents/api-reference/) and [Chat agents documentation](/agents/api-reference/chat-agents/) for more information.
