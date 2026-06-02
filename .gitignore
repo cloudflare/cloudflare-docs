@@ -6,6 +6,9 @@ distllms/
 # generated types
 .astro/
 
+# Astro build cache
+.astro-cache/
+
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
 !.agents/skills/

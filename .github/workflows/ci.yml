@@ -169,7 +169,7 @@ jobs:
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
-            node_modules/.astro/assets
+            .astro-cache/assets
           key: astro-assets-${{ hashFiles('src/assets/**') }}
           restore-keys: |
             astro-assets-
