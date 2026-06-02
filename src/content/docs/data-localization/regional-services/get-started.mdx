@@ -73,7 +73,49 @@ These are some examples of API requests.
 	],
 	"messages": []
 }
-```
+` ``
+
+</Details>
+Replace with:
+<Details header="List all the available regions">
+
+<APIRequest
+	path="/accounts/{account_id}/dls/regions"
+	method="GET"
+/>
+
+```json title="Response"
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"id": "5a7c9f3e-1b2d-4c8a-9e6f-0a1b2c3d4e5f",
+			"name": "Canada",
+			"region_key": "ca",
+			"version": 1,
+			"created_on": "2023-01-13T23:59:45.276558Z",
+			"modified_on": "2023-01-13T23:59:45.276558Z",
+			"version_created_on": "2023-01-13T23:59:45.276558Z"
+		},
+		{
+			"id": "6b8daf4f-2c3e-4d9b-8f7a-1b2c3d4e5f6a",
+			"name": "Europe",
+			"region_key": "eu",
+			"version": 1,
+			"created_on": "2023-01-13T23:59:45.276558Z",
+			"modified_on": "2023-01-13T23:59:45.276558Z",
+			"version_created_on": "2023-01-13T23:59:45.276558Z"
+		}
+	],
+	"result_info": {
+		"count": 2,
+		"cursor": "",
+		"per_page": 25
+	}
+}
+` ``
 
 </Details>
 
