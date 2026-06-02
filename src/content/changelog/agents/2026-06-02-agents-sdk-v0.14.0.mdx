@@ -72,7 +72,7 @@ Each Chat SDK thread maps to its own Think sub-agent by default, so group chats 
 
 ## Scheduled tasks
 
-Declare recurring, timezone-aware prompts and handlers with a typed DSL. Think reconciles the declarations on startup and re-arms the next occurrence after each run, backed by durable idempotent submissions.
+Declare recurring, timezone-aware prompts and handlers with a typed domain-specific language (DSL). Think reconciles the declarations on startup and re-arms the next occurrence after each run, backed by durable idempotent submissions.
 
 <TypeScriptExample>
 
@@ -144,8 +144,8 @@ Durable chat turns have always been designed to survive a mid-turn deploy or Dur
 
 ## MCP transport improvements
 
-- **Resumable SSE streams** — In-flight tool calls survive a dropped connection. Clients reconnect with `Last-Event-ID` and replay anything they missed.
-- **Readable server ids** — `addMcpServer` accepts an optional `id`, so tools surface as readable keys (for example `tool_github_create_pull_request`) instead of opaque connection ids.
+- **Resumable streams** — In-flight tool calls over Server-Sent Events (SSE) survive a dropped connection. Clients reconnect with `Last-Event-ID` and replay anything they missed.
+- **Readable server IDs** — `addMcpServer` accepts an optional `id`, so tools surface as readable keys (for example `tool_github_create_pull_request`) instead of opaque connection IDs.
 - **Better handling of concurrent requests** — Overlapping JSON-RPC requests are now correctly correlated to their responses across the HTTP and RPC transports.
 
 ## Other improvements
