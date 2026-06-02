@@ -81,6 +81,7 @@
 			"name": "Brand Asset",
 			"description": "Professional brand asset with controlled colors",
 			"input": {
+				"prompt": "A modern, clean illustration of a shield with a checkmark inside, representing security and trust",
 				"controls": {
 					"background_color": {
 						"rgb": [
@@ -106,7 +107,6 @@
 						}
 					]
 				},
-				"prompt": "A modern, clean illustration of a shield with a checkmark inside, representing security and trust",
 				"size": "2048x2048"
 			},
 			"output": {
@@ -125,12 +125,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    controls: {\n      background_color: { rgb: [15, 23, 42] },\n      colors: [{ rgb: [46, 117, 182] }, { rgb: [255, 255, 255] }],\n    },\n    prompt:\n      'A modern, clean illustration of a shield with a checkmark inside, representing security and trust',\n    size: '2048x2048',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A modern, clean illustration of a shield with a checkmark inside, representing security and trust',\n    controls: {\n      background_color: { rgb: [15, 23, 42] },\n      colors: [{ rgb: [46, 117, 182] }, { rgb: [255, 255, 255] }],\n    },\n    size: '2048x2048',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-pro\",\n  \"input\": {\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          15,\n          23,\n          42\n        ]\n      },\n      \"colors\": [\n        {\n          \"rgb\": [\n            46,\n            117,\n            182\n          ]\n        },\n        {\n          \"rgb\": [\n            255,\n            255,\n            255\n          ]\n        }\n      ]\n    },\n    \"prompt\": \"A modern, clean illustration of a shield with a checkmark inside, representing security and trust\",\n    \"size\": \"2048x2048\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/recraftv4-pro\",\n  \"input\": {\n    \"prompt\": \"A modern, clean illustration of a shield with a checkmark inside, representing security and trust\",\n    \"controls\": {\n      \"background_color\": {\n        \"rgb\": [\n          15,\n          23,\n          42\n        ]\n      },\n      \"colors\": [\n        {\n          \"rgb\": [\n            46,\n            117,\n            182\n          ]\n        },\n        {\n          \"rgb\": [\n            255,\n            255,\n            255\n          ]\n        }\n      ]\n    },\n    \"size\": \"2048x2048\"\n  }\n}'"
 				}
 			]
 		},

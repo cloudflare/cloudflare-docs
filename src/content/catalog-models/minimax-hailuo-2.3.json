@@ -17,9 +17,9 @@
 			"name": "Simple Video",
 			"description": "Basic text-to-video with default settings",
 			"input": {
+				"prompt": "A golden retriever playing fetch on a sandy beach at sunset",
 				"duration": 6,
 				"fast_pretreatment": false,
-				"prompt": "A golden retriever playing fetch on a sandy beach at sunset",
 				"prompt_optimizer": true,
 				"resolution": "768P"
 			},
@@ -41,12 +41,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    duration: 6,\n    fast_pretreatment: false,\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"prompt\": \"A golden retriever playing fetch on a sandy beach at sunset\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"prompt\": \"A golden retriever playing fetch on a sandy beach at sunset\",\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		},
@@ -54,9 +54,9 @@
 			"name": "High Resolution",
 			"description": "1080P video for higher quality output",
 			"input": {
+				"prompt": "A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots",
 				"duration": 6,
 				"fast_pretreatment": false,
-				"prompt": "A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots",
 				"prompt_optimizer": true,
 				"resolution": "1080P"
 			},
@@ -78,12 +78,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    prompt_optimizer: true,\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    duration: 6,\n    fast_pretreatment: false,\n    prompt_optimizer: true,\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"prompt\": \"A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"1080P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"prompt\": \"A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots\",\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"prompt_optimizer\": true,\n    \"resolution\": \"1080P\"\n  }\n}'"
 				}
 			]
 		},
@@ -91,10 +91,10 @@
 			"name": "Image to Video",
 			"description": "Animate a still image with I2V",
 			"input": {
+				"prompt": "Slowly zoom in with subtle parallax movement, gentle atmospheric motion",
 				"duration": 6,
 				"fast_pretreatment": false,
 				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
-				"prompt": "Slowly zoom in with subtle parallax movement, gentle atmospheric motion",
 				"prompt_optimizer": true,
 				"resolution": "768P"
 			},
@@ -116,12 +116,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: false,\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt: 'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    duration: 6,\n    fast_pretreatment: false,\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg\",\n    \"prompt\": \"Slowly zoom in with subtle parallax movement, gentle atmospheric motion\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"prompt\": \"Slowly zoom in with subtle parallax movement, gentle atmospheric motion\",\n    \"duration\": 6,\n    \"fast_pretreatment\": false,\n    \"first_frame_image\": \"https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		},
@@ -129,9 +129,9 @@
 			"name": "Fast Processing",
 			"description": "Enable fast pretreatment for quicker results",
 			"input": {
+				"prompt": "Fireworks exploding over a city skyline at night, colorful reflections on water",
 				"duration": 6,
 				"fast_pretreatment": true,
-				"prompt": "Fireworks exploding over a city skyline at night, colorful reflections on water",
 				"prompt_optimizer": true,
 				"resolution": "768P"
 			},
@@ -153,12 +153,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    duration: 6,\n    fast_pretreatment: true,\n    prompt: 'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    duration: 6,\n    fast_pretreatment: true,\n    prompt_optimizer: true,\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"duration\": 6,\n    \"fast_pretreatment\": true,\n    \"prompt\": \"Fireworks exploding over a city skyline at night, colorful reflections on water\",\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/hailuo-2.3\",\n  \"input\": {\n    \"prompt\": \"Fireworks exploding over a city skyline at night, colorful reflections on water\",\n    \"duration\": 6,\n    \"fast_pretreatment\": true,\n    \"prompt_optimizer\": true,\n    \"resolution\": \"768P\"\n  }\n}'"
 				}
 			]
 		}

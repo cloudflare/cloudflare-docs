@@ -106,7 +106,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"What are the three laws of thermodynamics?\"\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"What are the three laws of thermodynamics?\"\n}'"
 				}
 			]
 		},
@@ -203,7 +203,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"In two sentences, why does the moon appear larger near the horizon?\",\n  \"instructions\": \"You are a careful research assistant. Keep answers short and cite sources when relevant.\"\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"In two sentences, why does the moon appear larger near the horizon?\",\n  \"instructions\": \"You are a careful research assistant. Keep answers short and cite sources when relevant.\"\n}'"
 				}
 			]
 		},
@@ -313,7 +313,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": [\n    {\n      \"content\": \"I need to plan a 3-day weekend in Tokyo.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"Sounds fun. Are you more interested in food, culture, or nightlife? That will steer the recommendations.\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Food. Suggest one signature dish per day in one sentence each.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_output_tokens\": 8192\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": [\n    {\n      \"content\": \"I need to plan a 3-day weekend in Tokyo.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"Sounds fun. Are you more interested in food, culture, or nightlife? That will steer the recommendations.\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Food. Suggest one signature dish per day in one sentence each.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_output_tokens\": 8192\n}'"
 				}
 			]
 		},
@@ -550,7 +550,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"What were the top news stories about xAI this week? Summarise in three bullets.\",\n  \"max_turns\": 4,\n  \"tools\": [\n    {\n      \"type\": \"web_search\"\n    }\n  ]\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"What were the top news stories about xAI this week? Summarise in three bullets.\",\n  \"max_turns\": 4,\n  \"tools\": [\n    {\n      \"type\": \"web_search\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -650,7 +650,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"Solve this step by step: Two trains 900 miles apart travel toward each other at 60 and 80 mph. When do they meet?\",\n  \"max_output_tokens\": 8192,\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.20-multi-agent-0309\",\n  \"input\": \"Solve this step by step: Two trains 900 miles apart travel toward each other at 60 and 80 mph. When do they meet?\",\n  \"max_output_tokens\": 8192,\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  }\n}'"
 				}
 			]
 		}

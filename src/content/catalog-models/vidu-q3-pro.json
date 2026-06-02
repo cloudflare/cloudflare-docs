@@ -17,8 +17,8 @@
 			"name": "Simple Text-to-Video",
 			"description": "Basic text-to-video with just a prompt",
 			"input": {
-				"duration": 5,
 				"prompt": "A golden retriever running through a sunlit meadow in slow motion",
+				"duration": 5,
 				"resolution": "720p"
 			},
 			"output": {
@@ -37,12 +37,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    duration: 5,\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"duration\": 5,\n    \"prompt\": \"A golden retriever running through a sunlit meadow in slow motion\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"prompt\": \"A golden retriever running through a sunlit meadow in slow motion\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -50,9 +50,9 @@
 			"name": "Portrait Aspect Ratio",
 			"description": "Vertical video for social media",
 			"input": {
+				"prompt": "A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling",
 				"aspect_ratio": "9:16",
 				"duration": 5,
-				"prompt": "A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling",
 				"resolution": "720p"
 			},
 			"output": {
@@ -71,12 +71,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    aspect_ratio: '9:16',\n    duration: 5,\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    aspect_ratio: '9:16',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"prompt\": \"A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"prompt\": \"A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -85,8 +85,8 @@
 			"description": "Generate video without audio",
 			"input": {
 				"audio": false,
-				"duration": 8,
 				"prompt": "Abstract paint swirls slowly mixing in water, vivid blues and golds",
+				"duration": 8,
 				"resolution": "720p"
 			},
 			"output": {
@@ -105,12 +105,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    audio: false,\n    duration: 8,\n    prompt: 'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    audio: false,\n    prompt: 'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    duration: 8,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"audio\": false,\n    \"duration\": 8,\n    \"prompt\": \"Abstract paint swirls slowly mixing in water, vivid blues and golds\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"audio\": false,\n    \"prompt\": \"Abstract paint swirls slowly mixing in water, vivid blues and golds\",\n    \"duration\": 8,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -118,9 +118,9 @@
 			"name": "Square Format",
 			"description": "Square video for product demos or social posts",
 			"input": {
+				"prompt": "A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background",
 				"aspect_ratio": "1:1",
 				"duration": 5,
-				"prompt": "A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background",
 				"resolution": "720p"
 			},
 			"output": {
@@ -139,12 +139,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    aspect_ratio: '1:1',\n    duration: 5,\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    aspect_ratio: '1:1',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"duration\": 5,\n    \"prompt\": \"A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background\",\n    \"resolution\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"vidu/q3-pro\",\n  \"input\": {\n    \"prompt\": \"A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background\",\n    \"aspect_ratio\": \"1:1\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
 		}

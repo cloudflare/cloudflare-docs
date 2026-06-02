@@ -18,10 +18,10 @@
 			"name": "Simple Video",
 			"description": "Basic text-to-video with default settings",
 			"input": {
+				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
 				"aspect_ratio": "16:9",
 				"duration": 5,
 				"generate_audio": true,
-				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
 				"quality": "720p"
 			},
 			"output": {
@@ -40,12 +40,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    aspect_ratio: '16:9',\n    duration: 5,\n    generate_audio: true,\n    prompt: 'A golden retriever running through a field of sunflowers on a sunny day',\n    quality: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt: 'A golden retriever running through a field of sunflowers on a sunny day',\n    aspect_ratio: '16:9',\n    duration: 5,\n    generate_audio: true,\n    quality: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"generate_audio\": true,\n    \"prompt\": \"A golden retriever running through a field of sunflowers on a sunny day\",\n    \"quality\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"prompt\": \"A golden retriever running through a field of sunflowers on a sunny day\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"generate_audio\": true,\n    \"quality\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -53,10 +53,10 @@
 			"name": "Long Duration Video",
 			"description": "Extended 15-second video with audio (v6 supports 1-15 seconds)",
 			"input": {
+				"prompt": "A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles",
 				"aspect_ratio": "16:9",
 				"duration": 15,
 				"generate_audio": true,
-				"prompt": "A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles",
 				"quality": "720p"
 			},
 			"output": {
@@ -75,12 +75,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    aspect_ratio: '16:9',\n    duration: 15,\n    generate_audio: true,\n    prompt:\n      'A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles',\n    quality: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt:\n      'A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles',\n    aspect_ratio: '16:9',\n    duration: 15,\n    generate_audio: true,\n    quality: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 15,\n    \"generate_audio\": true,\n    \"prompt\": \"A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles\",\n    \"quality\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"prompt\": \"A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 15,\n    \"generate_audio\": true,\n    \"quality\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -88,10 +88,10 @@
 			"name": "Ultra-wide Cinematic",
 			"description": "Cinematic 21:9 aspect ratio video",
 			"input": {
+				"prompt": "A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog",
 				"aspect_ratio": "21:9",
 				"duration": 10,
 				"generate_audio": true,
-				"prompt": "A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog",
 				"quality": "720p"
 			},
 			"output": {
@@ -110,12 +110,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    aspect_ratio: '21:9',\n    duration: 10,\n    generate_audio: true,\n    prompt:\n      'A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog',\n    quality: '720p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt:\n      'A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog',\n    aspect_ratio: '21:9',\n    duration: 10,\n    generate_audio: true,\n    quality: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"aspect_ratio\": \"21:9\",\n    \"duration\": 10,\n    \"generate_audio\": true,\n    \"prompt\": \"A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog\",\n    \"quality\": \"720p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"prompt\": \"A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog\",\n    \"aspect_ratio\": \"21:9\",\n    \"duration\": 10,\n    \"generate_audio\": true,\n    \"quality\": \"720p\"\n  }\n}'"
 				}
 			]
 		},
@@ -123,11 +123,11 @@
 			"name": "Silent Video",
 			"description": "Video without audio generation",
 			"input": {
+				"prompt": "Abstract ink drops spreading through water, vivid colors mixing in slow motion",
 				"aspect_ratio": "1:1",
 				"duration": 3,
 				"generate_audio": false,
 				"negative_prompt": "blurry, low quality",
-				"prompt": "Abstract ink drops spreading through water, vivid colors mixing in slow motion",
 				"quality": "540p"
 			},
 			"output": {
@@ -146,12 +146,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    aspect_ratio: '1:1',\n    duration: 3,\n    generate_audio: false,\n    negative_prompt: 'blurry, low quality',\n    prompt: 'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    quality: '540p',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt: 'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    aspect_ratio: '1:1',\n    duration: 3,\n    generate_audio: false,\n    negative_prompt: 'blurry, low quality',\n    quality: '540p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"duration\": 3,\n    \"generate_audio\": false,\n    \"negative_prompt\": \"blurry, low quality\",\n    \"prompt\": \"Abstract ink drops spreading through water, vivid colors mixing in slow motion\",\n    \"quality\": \"540p\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pixverse/v6\",\n  \"input\": {\n    \"prompt\": \"Abstract ink drops spreading through water, vivid colors mixing in slow motion\",\n    \"aspect_ratio\": \"1:1\",\n    \"duration\": 3,\n    \"generate_audio\": false,\n    \"negative_prompt\": \"blurry, low quality\",\n    \"quality\": \"540p\"\n  }\n}'"
 				}
 			]
 		}

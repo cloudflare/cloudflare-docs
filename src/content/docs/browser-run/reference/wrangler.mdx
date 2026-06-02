@@ -62,7 +62,24 @@ The browser binding's `.quickAction()` method requires a compatibility date of `
 
 :::
 
-Run `npx wrangler dev` to test your Worker locally.
+:::caution[Quick Actions require remote mode for local development]
+
+The `.quickAction()` method is not yet supported in local development mode. When using `wrangler dev`, you must run with `--remote` or set `"remote": true` in your browser binding configuration:
+
+```jsonc
+{
+  "browser": {
+    "binding": "MYBROWSER",
+    "remote": true
+  }
+}
+```
+
+Without remote mode, calls to `.quickAction()` will fail with: `The RPC receiver does not implement the method "quickAction"`.
+
+:::
+
+For Puppeteer, Playwright, or CDP-based Workers, run `npx wrangler dev` to test locally. For Quick Actions via `.quickAction()`, use `npx wrangler dev --remote` as noted above.
 
 ### Headful mode (experimental)
 

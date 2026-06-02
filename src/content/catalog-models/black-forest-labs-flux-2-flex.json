@@ -35,7 +35,8 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt:\n      \"Samsung Galaxy S25 Ultra product advertisement, 'Ultra-strong titanium' headline, close-up of phone edge showing titanium frame, dark gradient background, clean minimalist tech aesthetic\",\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt:\n      \"Samsung Galaxy S25 Ultra product advertisement, 'Ultra-strong titanium' headline, close-up of phone edge showing titanium frame, dark gradient background, clean minimalist tech aesthetic\",\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
@@ -48,8 +49,8 @@
 			"name": "High Detail Generation",
 			"description": "Crank steps and guidance for maximum detail when latency is not the priority",
 			"input": {
-				"guidance": 7.5,
 				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+				"guidance": 7.5,
 				"steps": 50
 			},
 			"output": {
@@ -67,12 +68,13 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt: 'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    steps: 50,\n    guidance: 7.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt: 'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    guidance: 7.5,\n    steps: 50,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-flex\",\n  \"input\": {\n    \"guidance\": 7.5,\n    \"prompt\": \"A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar\",\n    \"steps\": 50\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-flex\",\n  \"input\": {\n    \"prompt\": \"A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar\",\n    \"guidance\": 7.5,\n    \"steps\": 50\n  }\n}'"
 				}
 			]
 		},
@@ -99,7 +101,8 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  {\n    prompt: 'A simple line sketch of a mountain landscape',\n    steps: 10,\n    prompt_upsampling: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-flex',\n  { prompt: 'A simple line sketch of a mountain landscape', prompt_upsampling: false, steps: 10 },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",

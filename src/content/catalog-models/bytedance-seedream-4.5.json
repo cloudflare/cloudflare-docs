@@ -52,8 +52,8 @@
 			"name": "High Resolution",
 			"description": "4K quality image generation",
 			"input": {
-				"aspect_ratio": "4:3",
 				"prompt": "A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting",
+				"aspect_ratio": "4:3",
 				"size": "4K"
 			},
 			"output": {
@@ -76,12 +76,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    aspect_ratio: '4:3',\n    prompt:\n      'A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting',\n    size: '4K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting',\n    aspect_ratio: '4:3',\n    size: '4K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"aspect_ratio\": \"4:3\",\n    \"prompt\": \"A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting\",\n    \"size\": \"4K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"prompt\": \"A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting\",\n    \"aspect_ratio\": \"4:3\",\n    \"size\": \"4K\"\n  }\n}'"
 				}
 			]
 		},
@@ -89,11 +89,11 @@
 			"name": "Image-to-Image",
 			"description": "Edit using reference images",
 			"input": {
+				"prompt": "Transform this scene into a winter wonderland with snow covering everything",
 				"aspect_ratio": "match_input_image",
 				"image_input": [
 					"https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg"
-				],
-				"prompt": "Transform this scene into a winter wonderland with snow covering everything"
+				]
 			},
 			"output": {
 				"images": [
@@ -115,12 +115,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    aspect_ratio: 'match_input_image',\n    image_input: [\n      'https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg',\n    ],\n    prompt: 'Transform this scene into a winter wonderland with snow covering everything',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt: 'Transform this scene into a winter wonderland with snow covering everything',\n    aspect_ratio: 'match_input_image',\n    image_input: [\n      'https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg',\n    ],\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"aspect_ratio\": \"match_input_image\",\n    \"image_input\": [\n      \"https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg\"\n    ],\n    \"prompt\": \"Transform this scene into a winter wonderland with snow covering everything\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"prompt\": \"Transform this scene into a winter wonderland with snow covering everything\",\n    \"aspect_ratio\": \"match_input_image\",\n    \"image_input\": [\n      \"https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg\"\n    ]\n  }\n}'"
 				}
 			]
 		},
@@ -128,9 +128,9 @@
 			"name": "Sequential Generation",
 			"description": "Generate multiple related images",
 			"input": {
+				"prompt": "A character design sheet for a fantasy warrior: front view, side view, and back view",
 				"aspect_ratio": "16:9",
 				"max_images": 3,
-				"prompt": "A character design sheet for a fantasy warrior: front view, side view, and back view",
 				"sequential_image_generation": "auto"
 			},
 			"output": {
@@ -153,12 +153,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    aspect_ratio: '16:9',\n    max_images: 3,\n    prompt: 'A character design sheet for a fantasy warrior: front view, side view, and back view',\n    sequential_image_generation: 'auto',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt: 'A character design sheet for a fantasy warrior: front view, side view, and back view',\n    aspect_ratio: '16:9',\n    max_images: 3,\n    sequential_image_generation: 'auto',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"max_images\": 3,\n    \"prompt\": \"A character design sheet for a fantasy warrior: front view, side view, and back view\",\n    \"sequential_image_generation\": \"auto\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"prompt\": \"A character design sheet for a fantasy warrior: front view, side view, and back view\",\n    \"aspect_ratio\": \"16:9\",\n    \"max_images\": 3,\n    \"sequential_image_generation\": \"auto\"\n  }\n}'"
 				}
 			]
 		},
@@ -166,11 +166,11 @@
 			"name": "Multi-Image Edit",
 			"description": "Combine multiple reference images",
 			"input": {
+				"prompt": "Combine the style of the first image with the subject from the second image",
 				"image_input": [
 					"https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg",
 					"https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg"
 				],
-				"prompt": "Combine the style of the first image with the subject from the second image",
 				"size": "2K"
 			},
 			"output": {
@@ -193,12 +193,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    image_input: [\n      'https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg',\n      'https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg',\n    ],\n    prompt: 'Combine the style of the first image with the subject from the second image',\n    size: '2K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt: 'Combine the style of the first image with the subject from the second image',\n    image_input: [\n      'https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg',\n      'https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg',\n    ],\n    size: '2K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"image_input\": [\n      \"https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg\",\n      \"https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg\"\n    ],\n    \"prompt\": \"Combine the style of the first image with the subject from the second image\",\n    \"size\": \"2K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-4.5\",\n  \"input\": {\n    \"prompt\": \"Combine the style of the first image with the subject from the second image\",\n    \"image_input\": [\n      \"https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg\",\n      \"https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg\"\n    ],\n    \"size\": \"2K\"\n  }\n}'"
 				}
 			]
 		}

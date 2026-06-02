@@ -18,8 +18,8 @@
 			"name": "High Resolution Scene",
 			"description": "Text-to-image generation at near-4MP resolution using FLUX.2's highest-quality endpoint",
 			"input": {
-				"height": 2048,
 				"prompt": "A cat on its back legs running like a human is holding a big silver fish with its arms. The cat is running away from the shop owner and has a panicked look on his face. The scene is situated in a crowded market.",
+				"height": 2048,
 				"width": 1440
 			},
 			"output": {
@@ -37,12 +37,13 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-max',\n  {\n    prompt:\n      'A cat on its back legs running like a human is holding a big silver fish with its arms. The cat is running away from the shop owner and has a panicked look on his face. The scene is situated in a crowded market.',\n    width: 1440,\n    height: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-max',\n  {\n    prompt:\n      'A cat on its back legs running like a human is holding a big silver fish with its arms. The cat is running away from the shop owner and has a panicked look on his face. The scene is situated in a crowded market.',\n    height: 2048,\n    width: 1440,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-max\",\n  \"input\": {\n    \"height\": 2048,\n    \"prompt\": \"A cat on its back legs running like a human is holding a big silver fish with its arms. The cat is running away from the shop owner and has a panicked look on his face. The scene is situated in a crowded market.\",\n    \"width\": 1440\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-max\",\n  \"input\": {\n    \"prompt\": \"A cat on its back legs running like a human is holding a big silver fish with its arms. The cat is running away from the shop owner and has a panicked look on his face. The scene is situated in a crowded market.\",\n    \"height\": 2048,\n    \"width\": 1440\n  }\n}'"
 				}
 			]
 		},
@@ -67,7 +68,8 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-max',\n  {\n    prompt:\n      'A vase on a table in living room, the color of the vase is a gradient of color, starting with color #02eb3c and finishing with color #edfa3c. The flowers inside the vase have the color #ff0088',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-max',\n  {\n    prompt:\n      'A vase on a table in living room, the color of the vase is a gradient of color, starting with color #02eb3c and finishing with color #edfa3c. The flowers inside the vase have the color #ff0088',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
@@ -80,10 +82,10 @@
 			"name": "Image Editing",
 			"description": "Single-reference image editing \u2014 relight or restage a product photo",
 			"input": {
+				"prompt": "Place this product onto a minimalist marble countertop with soft window light",
 				"input_images": [
 					"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg"
-				],
-				"prompt": "Place this product onto a minimalist marble countertop with soft window light"
+				]
 			},
 			"output": {
 				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-max/image-editing.jpeg"
@@ -100,12 +102,13 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-max',\n  {\n    prompt: 'Place this product onto a minimalist marble countertop with soft window light',\n    input_images: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-max',\n  {\n    prompt: 'Place this product onto a minimalist marble countertop with soft window light',\n    input_images: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-max\",\n  \"input\": {\n    \"input_images\": [\n      \"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg\"\n    ],\n    \"prompt\": \"Place this product onto a minimalist marble countertop with soft window light\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-2-max\",\n  \"input\": {\n    \"prompt\": \"Place this product onto a minimalist marble countertop with soft window light\",\n    \"input_images\": [\n      \"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg\"\n    ]\n  }\n}'"
 				}
 			]
 		}

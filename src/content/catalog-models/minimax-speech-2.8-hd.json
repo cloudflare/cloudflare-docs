@@ -120,7 +120,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-hd\",\n  \"input\": {\n    \"emotion\": \"happy\",\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 1,\n    \"text\": \"Congratulations! You've just won the grand prize! This is absolutely incredible news!\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-hd\",\n  \"input\": {\n    \"emotion\": \"happy\",\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 1,\n    \"text\": \"Congratulations! You'\\''ve just won the grand prize! This is absolutely incredible news!\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		},

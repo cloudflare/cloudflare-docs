@@ -170,6 +170,7 @@ type FiberRecoveryContext = {
 	metadata?: Record<string, unknown> | null;
 	snapshot: unknown | null;
 	createdAt: number;
+	recoveryReason: "interrupted";
 };
 ```
 
@@ -205,7 +206,7 @@ runFiber("work", fn)
   ├─ For each interrupted fiber:
   │    ├─ Parse snapshot from JSON
   │    ├─ Call onFiberRecovered(ctx)
-  │    └─ Delete recovery metadata
+  │    └─ Delete recovery metadata after successful recovery
   └─ If onFiberRecovered calls runFiber() again → new fiber, normal execution
 ```
 
@@ -393,10 +394,10 @@ class ResearchAgent extends Agent {
 Key points:
 
 - **The original lambda is gone.** On recovery, you only have the `name` and `snapshot`. The lambda cannot be serialized — recovery logic must be in the hook.
-- **Unmanaged `runFiber()` rows are deleted after the hook runs.** If you want to continue unmanaged work, call `runFiber()` again inside the hook — this creates a new row.
+- **Unmanaged `runFiber()` rows are deleted after the hook returns successfully.** If you want to continue unmanaged work, call `runFiber()` again inside the hook — this creates a new row.
 - **Managed `startFiber()` rows are retained.** Return a `FiberRecoveryResult` to mark an interrupted managed fiber as `completed`, `error`, `aborted`, or still `interrupted`.
 - **You control what recovery means.** Retry from the beginning, resume from a checkpoint, skip and notify the user, or do nothing. The framework does not impose a strategy.
-- **If the hook throws for unmanaged work, the row is still deleted.** If your recovery logic can fail, catch errors and handle them (for example, schedule a retry, log, or re-create the fiber). For managed work, the retained row stays `interrupted` and records the recovery error for inspection.
+- **If the hook throws, the row is kept (up to a bound).** A later startup or alarm scan retries recovery, which protects against transient storage or scheduling failures. Catch application-level errors yourself when you want to mark the work terminal instead of retrying — a hook that always throws is retried on every scan until the row exceeds `fiberRecoveryMaxAgeMs` (default 24h), after which it is discarded with a `fiber:recovery:skipped` (`reason: "max_age_exceeded"`) event. For managed work, the retained row stays `interrupted` and records the recovery error for inspection.
 
 ### Chat recovery
 
@@ -472,7 +473,7 @@ Checkpoint the current fiber's state. Writes synchronously to SQLite. Each call 
 
 ### onFiberRecovered(ctx)
 
-Called once per orphaned fiber row on agent restart. Override to implement recovery. Unmanaged `runFiber()` rows are deleted after this hook returns. Managed `startFiber()` rows stay retained and can be resolved by returning a `FiberRecoveryResult`.
+Called once per orphaned fiber row on agent restart. Override to implement recovery. Unmanaged `runFiber()` rows are deleted after this hook returns successfully; if recovery throws, the row is left for a later scan so transient failures do not lose the recovery handle. Managed `startFiber()` rows stay retained and can be resolved by returning a `FiberRecoveryResult`.
 
 - **`ctx.id`** — unique fiber ID
 - **`ctx.name`** — the name passed to `runFiber()`
@@ -481,6 +482,7 @@ Called once per orphaned fiber row on agent restart. Override to implement recov
 - **`ctx.metadata`** — metadata for managed fibers, if supplied
 - **`ctx.snapshot`** — the last `stash()` data, or `null` if `stash()` was never called
 - **`ctx.createdAt`** — epoch milliseconds when `runFiber()` started. Compare against `Date.now()` to skip recoveries that are too old to replay safely.
+- **`ctx.recoveryReason`** — why recovery is running. Currently always `"interrupted"` for eviction or restart recovery.
 
 ### keepAlive()
 

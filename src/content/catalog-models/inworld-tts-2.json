@@ -82,7 +82,7 @@
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"inworld/tts-2\",\n  \"input\": {\n    \"output_format\": \"mp3\",\n    \"temperature\": 1,\n    \"text\": \"[speak with excitement] I'm really excited about Inworld's new model. Have you tried out the steering capabilities? It's pretty cool!\",\n    \"timestamp_type\": \"none\",\n    \"voice_id\": \"Dennis\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"inworld/tts-2\",\n  \"input\": {\n    \"output_format\": \"mp3\",\n    \"temperature\": 1,\n    \"text\": \"[speak with excitement] I'\\''m really excited about Inworld'\\''s new model. Have you tried out the steering capabilities? It'\\''s pretty cool!\",\n    \"timestamp_type\": \"none\",\n    \"voice_id\": \"Dennis\"\n  }\n}'"
 				}
 			]
 		},

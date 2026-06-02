@@ -18,9 +18,9 @@
 			"name": "Simple Prompt",
 			"description": "Generate music from a style description with auto-generated lyrics",
 			"input": {
+				"prompt": "An upbeat electronic dance track with a catchy synth melody and driving beat",
 				"is_instrumental": false,
-				"lyrics_optimizer": true,
-				"prompt": "An upbeat electronic dance track with a catchy synth melody and driving beat"
+				"lyrics_optimizer": true
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/simple-prompt.mp3"
@@ -38,12 +38,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    is_instrumental: false,\n    lyrics_optimizer: true,\n    prompt: 'An upbeat electronic dance track with a catchy synth melody and driving beat',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt: 'An upbeat electronic dance track with a catchy synth melody and driving beat',\n    is_instrumental: false,\n    lyrics_optimizer: true,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"is_instrumental\": false,\n    \"lyrics_optimizer\": true,\n    \"prompt\": \"An upbeat electronic dance track with a catchy synth melody and driving beat\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"prompt\": \"An upbeat electronic dance track with a catchy synth melody and driving beat\",\n    \"is_instrumental\": false,\n    \"lyrics_optimizer\": true\n  }\n}'"
 				}
 			]
 		},
@@ -51,10 +51,10 @@
 			"name": "With Lyrics",
 			"description": "Generate a song with custom lyrics",
 			"input": {
+				"prompt": "A warm acoustic folk ballad with fingerpicked guitar and gentle vocals",
 				"is_instrumental": false,
 				"lyrics": "Walking down a dusty road\nWith the sunset painting gold\nEvery step a story told\nOf the places I call home",
-				"lyrics_optimizer": false,
-				"prompt": "A warm acoustic folk ballad with fingerpicked guitar and gentle vocals"
+				"lyrics_optimizer": false
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/with-lyrics.mp3"
@@ -72,12 +72,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    is_instrumental: false,\n    lyrics:\n      'Walking down a dusty road\\nWith the sunset painting gold\\nEvery step a story told\\nOf the places I call home',\n    lyrics_optimizer: false,\n    prompt: 'A warm acoustic folk ballad with fingerpicked guitar and gentle vocals',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt: 'A warm acoustic folk ballad with fingerpicked guitar and gentle vocals',\n    is_instrumental: false,\n    lyrics:\n      'Walking down a dusty road\\nWith the sunset painting gold\\nEvery step a story told\\nOf the places I call home',\n    lyrics_optimizer: false,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"is_instrumental\": false,\n    \"lyrics\": \"Walking down a dusty road\\nWith the sunset painting gold\\nEvery step a story told\\nOf the places I call home\",\n    \"lyrics_optimizer\": false,\n    \"prompt\": \"A warm acoustic folk ballad with fingerpicked guitar and gentle vocals\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"prompt\": \"A warm acoustic folk ballad with fingerpicked guitar and gentle vocals\",\n    \"is_instrumental\": false,\n    \"lyrics\": \"Walking down a dusty road\\nWith the sunset painting gold\\nEvery step a story told\\nOf the places I call home\",\n    \"lyrics_optimizer\": false\n  }\n}'"
 				}
 			]
 		},
@@ -85,9 +85,9 @@
 			"name": "Instrumental",
 			"description": "Generate instrumental music without vocals",
 			"input": {
+				"prompt": "A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords",
 				"is_instrumental": true,
-				"lyrics_optimizer": false,
-				"prompt": "A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords"
+				"lyrics_optimizer": false
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/instrumental.mp3"
@@ -105,12 +105,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    is_instrumental: true,\n    lyrics_optimizer: false,\n    prompt: 'A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt: 'A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords',\n    is_instrumental: true,\n    lyrics_optimizer: false,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"is_instrumental\": true,\n    \"lyrics_optimizer\": false,\n    \"prompt\": \"A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"prompt\": \"A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords\",\n    \"is_instrumental\": true,\n    \"lyrics_optimizer\": false\n  }\n}'"
 				}
 			]
 		},
@@ -118,10 +118,10 @@
 			"name": "High Quality Audio",
 			"description": "Specify audio format and sample rate",
 			"input": {
+				"prompt": "An orchestral cinematic score building to an epic crescendo with full symphony",
 				"format": "wav",
 				"is_instrumental": false,
 				"lyrics_optimizer": true,
-				"prompt": "An orchestral cinematic score building to an epic crescendo with full symphony",
 				"sample_rate": 44100
 			},
 			"output": {
@@ -140,12 +140,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    format: 'wav',\n    is_instrumental: false,\n    lyrics_optimizer: true,\n    prompt: 'An orchestral cinematic score building to an epic crescendo with full symphony',\n    sample_rate: 44100,\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt: 'An orchestral cinematic score building to an epic crescendo with full symphony',\n    format: 'wav',\n    is_instrumental: false,\n    lyrics_optimizer: true,\n    sample_rate: 44100,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"format\": \"wav\",\n    \"is_instrumental\": false,\n    \"lyrics_optimizer\": true,\n    \"prompt\": \"An orchestral cinematic score building to an epic crescendo with full symphony\",\n    \"sample_rate\": 44100\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"prompt\": \"An orchestral cinematic score building to an epic crescendo with full symphony\",\n    \"format\": \"wav\",\n    \"is_instrumental\": false,\n    \"lyrics_optimizer\": true,\n    \"sample_rate\": 44100\n  }\n}'"
 				}
 			]
 		},
@@ -153,9 +153,9 @@
 			"name": "Auto-Generated Lyrics",
 			"description": "Let the model generate lyrics from the prompt",
 			"input": {
+				"prompt": "A cheerful pop song about a summer road trip with friends",
 				"is_instrumental": false,
-				"lyrics_optimizer": true,
-				"prompt": "A cheerful pop song about a summer road trip with friends"
+				"lyrics_optimizer": true
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/auto-generated-lyrics.mp3"
@@ -173,12 +173,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    is_instrumental: false,\n    lyrics_optimizer: true,\n    prompt: 'A cheerful pop song about a summer road trip with friends',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt: 'A cheerful pop song about a summer road trip with friends',\n    is_instrumental: false,\n    lyrics_optimizer: true,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"is_instrumental\": false,\n    \"lyrics_optimizer\": true,\n    \"prompt\": \"A cheerful pop song about a summer road trip with friends\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/music-2.6\",\n  \"input\": {\n    \"prompt\": \"A cheerful pop song about a summer road trip with friends\",\n    \"is_instrumental\": false,\n    \"lyrics_optimizer\": true\n  }\n}'"
 				}
 			]
 		}

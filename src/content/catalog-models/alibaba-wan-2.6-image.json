@@ -111,8 +111,8 @@
 			"name": "Negative Prompt",
 			"description": "Guide generation away from unwanted elements",
 			"input": {
-				"negative_prompt": "modern clothing, photograph, blurry, low quality",
-				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar"
+				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+				"negative_prompt": "modern clothing, photograph, blurry, low quality"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/negative-prompt.png"
@@ -130,12 +130,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    negative_prompt: 'modern clothing, photograph, blurry, low quality',\n    prompt: 'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt: 'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    negative_prompt: 'modern clothing, photograph, blurry, low quality',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-2.6-image\",\n  \"input\": {\n    \"negative_prompt\": \"modern clothing, photograph, blurry, low quality\",\n    \"prompt\": \"A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-2.6-image\",\n  \"input\": {\n    \"prompt\": \"A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar\",\n    \"negative_prompt\": \"modern clothing, photograph, blurry, low quality\"\n  }\n}'"
 				}
 			]
 		},

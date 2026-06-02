@@ -50,8 +50,8 @@
 			"name": "High Quality Portrait",
 			"description": "High-quality portrait-orientation render at 2K resolution",
 			"input": {
-				"aspect_ratio": "3:4",
 				"prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+				"aspect_ratio": "3:4",
 				"quality": "high",
 				"resolution": "2k"
 			},
@@ -71,12 +71,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    aspect_ratio: '3:4',\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    quality: 'high',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    aspect_ratio: '3:4',\n    quality: 'high',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"aspect_ratio\": \"3:4\",\n    \"prompt\": \"A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures\",\n    \"quality\": \"high\",\n    \"resolution\": \"2k\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"prompt\": \"A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures\",\n    \"aspect_ratio\": \"3:4\",\n    \"quality\": \"high\",\n    \"resolution\": \"2k\"\n  }\n}'"
 				}
 			]
 		},
@@ -84,8 +84,8 @@
 			"name": "Cinematic Widescreen",
 			"description": "Widescreen cinematic composition",
 			"input": {
-				"aspect_ratio": "16:9",
 				"prompt": "A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting",
+				"aspect_ratio": "16:9",
 				"quality": "high",
 				"resolution": "2k"
 			},
@@ -105,12 +105,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    aspect_ratio: '16:9',\n    prompt:\n      'A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting',\n    quality: 'high',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    prompt:\n      'A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting',\n    aspect_ratio: '16:9',\n    quality: 'high',\n    resolution: '2k',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting\",\n    \"quality\": \"high\",\n    \"resolution\": \"2k\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"prompt\": \"A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting\",\n    \"aspect_ratio\": \"16:9\",\n    \"quality\": \"high\",\n    \"resolution\": \"2k\"\n  }\n}'"
 				}
 			]
 		},
@@ -118,8 +118,8 @@
 			"name": "Medium Quality Landscape",
 			"description": "Balanced quality landscape render",
 			"input": {
-				"aspect_ratio": "16:9",
 				"prompt": "A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky",
+				"aspect_ratio": "16:9",
 				"quality": "medium",
 				"resolution": "1k"
 			},
@@ -139,12 +139,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    aspect_ratio: '16:9',\n    prompt:\n      'A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky',\n    quality: 'medium',\n    resolution: '1k',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    prompt:\n      'A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky',\n    aspect_ratio: '16:9',\n    quality: 'medium',\n    resolution: '1k',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky\",\n    \"quality\": \"medium\",\n    \"resolution\": \"1k\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"prompt\": \"A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky\",\n    \"aspect_ratio\": \"16:9\",\n    \"quality\": \"medium\",\n    \"resolution\": \"1k\"\n  }\n}'"
 				}
 			]
 		},
@@ -152,8 +152,8 @@
 			"name": "Square Low Quality Draft",
 			"description": "Fast, rough draft for iteration",
 			"input": {
-				"aspect_ratio": "1:1",
 				"prompt": "A quiet Japanese garden in morning mist with a stone lantern and koi pond",
+				"aspect_ratio": "1:1",
 				"quality": "low",
 				"resolution": "1k"
 			},
@@ -173,12 +173,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    aspect_ratio: '1:1',\n    prompt: 'A quiet Japanese garden in morning mist with a stone lantern and koi pond',\n    quality: 'low',\n    resolution: '1k',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'xai/grok-imagine-image-quality',\n  {\n    prompt: 'A quiet Japanese garden in morning mist with a stone lantern and koi pond',\n    aspect_ratio: '1:1',\n    quality: 'low',\n    resolution: '1k',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"prompt\": \"A quiet Japanese garden in morning mist with a stone lantern and koi pond\",\n    \"quality\": \"low\",\n    \"resolution\": \"1k\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-imagine-image-quality\",\n  \"input\": {\n    \"prompt\": \"A quiet Japanese garden in morning mist with a stone lantern and koi pond\",\n    \"aspect_ratio\": \"1:1\",\n    \"quality\": \"low\",\n    \"resolution\": \"1k\"\n  }\n}'"
 				}
 			]
 		}

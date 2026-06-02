@@ -92,8 +92,31 @@ jobs:
           pnpm run lint --format eslint-formatter-checkstyle | \
             reviewdog -f=checkstyle -name=eslint -reporter=github-pr-review -fail-level=error -filter-mode=nofilter
 
-      - name: Check formatting (js,jsx,ts,tsx,mjs,css)
-        run: pnpm run format:core:check
+      - name: Check formatting (changed files)
+        # Scoped to files changed in the PR. The auto-format bot
+        # (.github/workflows/auto-format-build.yml + auto-format-apply.yml)
+        # fixes formatting issues automatically; this step is the
+        # safety net that catches anything the bot didn't.
+        run: |
+          set -euo pipefail
+          # Use the PR's specific base commit SHA (not the moving base ref
+          # tip). Fetching by SHA + two-dot diff avoids merge-base
+          # computation, which would otherwise need ancestry that a shallow
+          # clone doesn't have. Three-dot diff against a moved base ref can
+          # silently miscount changed files in that case.
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          git fetch --depth=1 origin "$BASE_SHA"
+          mapfile -t files < <(
+            git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
+            | grep -E '\.(js|jsx|ts|tsx|mjs|css)$' || true
+          )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No prettier-scoped files changed."
+            exit 0
+          fi
+          printf 'Checking %d file(s):\n' "${#files[@]}"
+          printf '  %s\n' "${files[@]}"
+          pnpm exec prettier --check "${files[@]}"
 
       - name: Validate redirects
         run: pnpm exec tsm bin/validate-redirects.ts

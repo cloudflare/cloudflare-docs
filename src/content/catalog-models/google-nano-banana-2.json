@@ -17,8 +17,8 @@
 			"name": "Futuristic City",
 			"description": "Sci-fi cityscape with neon lights",
 			"input": {
-				"aspect_ratio": "16:9",
-				"prompt": "A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights"
+				"prompt": "A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights",
+				"aspect_ratio": "16:9"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/futuristic-city.png"
@@ -36,12 +36,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    aspect_ratio: '16:9',\n    prompt:\n      'A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights',\n    aspect_ratio: '16:9',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"prompt\": \"A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights\",\n    \"aspect_ratio\": \"16:9\"\n  }\n}'"
 				}
 			]
 		},
@@ -49,9 +49,9 @@
 			"name": "Abstract Art",
 			"description": "Modern abstract expressionist painting",
 			"input": {
+				"prompt": "An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas",
 				"aspect_ratio": "1:1",
-				"output_format": "png",
-				"prompt": "An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas"
+				"output_format": "png"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/abstract-art.png"
@@ -69,12 +69,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    aspect_ratio: '1:1',\n    output_format: 'png',\n    prompt:\n      'An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"aspect_ratio\": \"1:1\",\n    \"output_format\": \"png\",\n    \"prompt\": \"An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"prompt\": \"An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas\",\n    \"aspect_ratio\": \"1:1\",\n    \"output_format\": \"png\"\n  }\n}'"
 				}
 			]
 		},
@@ -82,9 +82,9 @@
 			"name": "With Google Search",
 			"description": "Use web search grounding for current events",
 			"input": {
+				"prompt": "An illustration of the latest Mars rover exploring the Martian surface",
 				"aspect_ratio": "16:9",
-				"google_search": true,
-				"prompt": "An illustration of the latest Mars rover exploring the Martian surface"
+				"google_search": true
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/with-google-search.png"
@@ -102,12 +102,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    aspect_ratio: '16:9',\n    google_search: true,\n    prompt: 'An illustration of the latest Mars rover exploring the Martian surface',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt: 'An illustration of the latest Mars rover exploring the Martian surface',\n    aspect_ratio: '16:9',\n    google_search: true,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"google_search\": true,\n    \"prompt\": \"An illustration of the latest Mars rover exploring the Martian surface\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"prompt\": \"An illustration of the latest Mars rover exploring the Martian surface\",\n    \"aspect_ratio\": \"16:9\",\n    \"google_search\": true\n  }\n}'"
 				}
 			]
 		},
@@ -115,9 +115,9 @@
 			"name": "High Resolution Portrait",
 			"description": "4K portrait with specific aspect ratio",
 			"input": {
+				"prompt": "A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry",
 				"aspect_ratio": "3:4",
 				"output_format": "jpg",
-				"prompt": "A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry",
 				"resolution": "4K"
 			},
 			"output": {
@@ -136,12 +136,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    aspect_ratio: '3:4',\n    output_format: 'jpg',\n    prompt:\n      'A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry',\n    resolution: '4K',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry',\n    aspect_ratio: '3:4',\n    output_format: 'jpg',\n    resolution: '4K',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"aspect_ratio\": \"3:4\",\n    \"output_format\": \"jpg\",\n    \"prompt\": \"A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry\",\n    \"resolution\": \"4K\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2\",\n  \"input\": {\n    \"prompt\": \"A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry\",\n    \"aspect_ratio\": \"3:4\",\n    \"output_format\": \"jpg\",\n    \"resolution\": \"4K\"\n  }\n}'"
 				}
 			]
 		}
