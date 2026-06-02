@@ -376,7 +376,7 @@ await this.saveMessages((messages) => [
 
 </TypeScriptExample>
 
-`saveMessages` returns `{ requestId, status }` where `status` is `"completed"` if the turn ran, `"skipped"` if the chat was cleared before it started, or `"aborted"` if an external `AbortSignal` cancelled it before completion.
+`saveMessages` returns `{ requestId, status, error? }` where `status` is `"completed"` if the turn ran, `"error"` if the stream reported an error, `"skipped"` if the chat was cleared before it started, or `"aborted"` if an external `AbortSignal` cancelled it before completion. When `status` is `"error"`, `error` contains the stream error message when available.
 
 Pass `options.signal` to cancel a programmatic turn from outside the chat agent. This is useful when a parent tool call needs to cancel a child agent turn without knowing the internally generated request ID:
 
@@ -575,6 +575,8 @@ Use `abortRequest()` when you know the request ID. Use `abortAllRequests()` for 
 
 ### Stream recovery
 
+Automatic stream resumption (the `resume` option on `useAgentChat`) is **client reconnect recovery** — it resumes an active stream when a client disconnects and reconnects. It does not cover Durable Object eviction: if the Worker process or Durable Object is evicted while the model call is in flight, the stream itself is gone. `chatRecovery` handles that case.
+
 When a Durable Object is evicted mid-stream (code update, inactivity timeout, resource limit), the LLM connection is severed permanently and the in-memory streaming state is lost. `chatRecovery` wraps each chat turn in a [`runFiber()`](/agents/api-reference/durable-execution/), providing automatic `keepAlive` during streaming and a recovery hook on restart.
 
 <TypeScriptExample>
@@ -587,7 +589,44 @@ export class ChatAgent extends AIChatAgent {
 
 </TypeScriptExample>
 
+`AIChatAgent` defaults `chatRecovery` to `false`, so existing chat agents only get client reconnect and resumable-stream behavior unless they opt in. [`Think`](/agents/think/) defaults it to `true`.
+
 When enabled, every `onChatMessage` call runs inside a fiber. If the agent is evicted mid-stream, the fiber row survives in SQLite. On the next activation, the framework detects the interrupted fiber, reconstructs the partial response from buffered stream chunks, and calls `onChatRecovery`.
+
+`chatRecovery` can also be set to a configuration object to bound recovery and customize the terminal experience when recovery cannot succeed:
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends AIChatAgent {
+	override chatRecovery = {
+		maxAttempts: 6,
+		stableTimeoutMs: 10_000,
+		terminalMessage: "The assistant was interrupted and could not recover.",
+		async onExhausted(ctx) {
+			console.warn("Chat recovery exhausted", ctx.incidentId);
+		},
+	};
+}
+```
+
+</TypeScriptExample>
+
+Monitor terminal exhaustion through observability:
+
+<TypeScriptExample>
+
+```ts
+import { subscribe } from "agents/observability";
+
+const unsubscribe = subscribe("chat", (event) => {
+	if (event.type === "chat:recovery:exhausted") {
+		console.error("Chat recovery exhausted", event.payload);
+	}
+});
+```
+
+</TypeScriptExample>
 
 #### `onChatRecovery`
 
@@ -619,17 +658,21 @@ export class ChatAgent extends AIChatAgent {
 
 **`ChatRecoveryContext`:**
 
-| Field             | Type                                   | Description                                                           |
-| ----------------- | -------------------------------------- | --------------------------------------------------------------------- |
-| `streamId`        | `string`                               | ID of the interrupted stream                                          |
-| `requestId`       | `string`                               | ID of the original chat request                                       |
-| `partialText`     | `string`                               | Text generated before eviction                                        |
-| `partialParts`    | `MessagePart[]`                        | Message parts (text, reasoning, tool calls) generated before eviction |
-| `recoveryData`    | `unknown \| null`                      | Data from `this.stash()` — entirely user-controlled                   |
-| `messages`        | `ChatMessage[]`                        | Full conversation history                                             |
-| `lastBody`        | `Record<string, unknown> \| undefined` | The original request body                                             |
-| `lastClientTools` | `ClientToolSchema[] \| undefined`      | Client tool schemas from the original request                         |
-| `createdAt`       | `number`                               | Epoch milliseconds when the interrupted turn started                  |
+| Field             | Type                                   | Description                                                                              |
+| ----------------- | -------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `incidentId`      | `string`                               | Stable ID for this recovery incident                                                     |
+| `attempt`         | `number`                               | Current attempt number for this incident, starting at 1                                  |
+| `maxAttempts`     | `number`                               | Configured attempt cap before terminal exhaustion                                        |
+| `recoveryKind`    | `"retry" \| "continue"`                | Whether recovery will retry an unanswered user turn or continue a partial assistant turn |
+| `streamId`        | `string`                               | ID of the interrupted stream                                                             |
+| `requestId`       | `string`                               | ID of the original chat request                                                          |
+| `partialText`     | `string`                               | Text generated before eviction                                                           |
+| `partialParts`    | `MessagePart[]`                        | Message parts (text, reasoning, tool calls) generated before eviction                    |
+| `recoveryData`    | `unknown \| null`                      | Data from `this.stash()` — entirely user-controlled                                      |
+| `messages`        | `ChatMessage[]`                        | Full conversation history                                                                |
+| `lastBody`        | `Record<string, unknown> \| undefined` | The original request body                                                                |
+| `lastClientTools` | `ClientToolSchema[] \| undefined`      | Client tool schemas from the original request                                            |
+| `createdAt`       | `number`                               | Epoch milliseconds when the interrupted turn started                                     |
 
 **`ChatRecoveryOptions`:**
 
@@ -642,7 +685,11 @@ Common return values:
 
 - `{}` — persist partial + auto-continue (default, works with providers that support assistant prefill)
 - `{ continue: false }` — persist partial but do not auto-continue (handle continuation yourself)
-- `{ persist: false, continue: false }` — handle everything yourself (for example, retrieve a completed response from the provider)
+- `{ persist: false, continue: false }` — do not persist the unsettled remainder and handle everything yourself (for example, retrieve a completed response from the provider)
+
+Settled work is never dropped: `persist: false` only suppresses persistence of a partial that has nothing settled to lose. A partial that already carries settled tool results (completed, often non-idempotent work) is persisted regardless, so an app cannot accidentally discard completed tool calls — and never needs `{ persist: true }` just to stay safe.
+
+When recovery happens before any stream chunks were written, there is no partial assistant message to continue. If the latest persisted message is still the unanswered user message from the interrupted turn, the framework retries that turn automatically unless `continue` is `false`.
 
 Use `ctx.createdAt` to skip stale recoveries:
 
@@ -715,6 +762,16 @@ The right strategy depends on whether the provider supports assistant prefill an
 | OpenAI (Responses API) | Retrieve completed response by ID — zero wasted tokens       | Zero       |
 | Anthropic              | Persist partial, send a synthetic user message to continue   | Medium     |
 
+#### Recovering status on the client
+
+While a turn is being recovered, the agent broadcasts a `cf_agent_chat_recovering` status frame so clients can show a "recovering…" indicator instead of looking frozen. It is set when a recovery continuation is scheduled and cleared on every terminal outcome, so the indicator never spins forever. Consume it through `useAgentChat`'s `isRecovering` flag (see [Return values](#return-values)). The signal is advisory and backward-compatible — clients that do not understand it ignore it.
+
+:::note
+`@cloudflare/ai-chat` broadcasts the live signal but does not yet replay it on connect, so a client connecting mid-recovery is not re-told until it reconnects to an active stream. [`Think`](/agents/think/) replays it on connect.
+:::
+
+Transcript repairs — healing orphaned tool calls (preserved as errored results rather than deleted, so the record survives and the model does not silently re-run the tool) and normalizing malformed or missing tool inputs before a provider call — are emitted on the `transcript` observability channel.
+
 For how chat recovery fits into the broader long-running agents story, refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/long-running-agents/#recovering-interrupted-llm-streams). For the underlying fiber API, refer to [Durable Execution](/agents/api-reference/durable-execution/).
 
 ## Client API
@@ -742,6 +799,7 @@ function Chat() {
 		isStreaming,
 		isServerStreaming,
 		isToolContinuation,
+		isRecovering,
 	} = useAgentChat({ agent });
 
 	// ...
@@ -778,6 +836,7 @@ function Chat() {
 | `isStreaming`             | `boolean`                          | `true` while the agent is streaming or waiting on an active client tool           |
 | `isServerStreaming`       | `boolean`                          | `true` while a server-initiated stream or active client-tool phase is in progress |
 | `isToolContinuation`      | `boolean`                          | `true` while an automatic continuation after a tool result or approval is running |
+| `isRecovering`            | `boolean`                          | `true` while a durable turn is being recovered (interrupted and resuming). Distinct from `isStreaming` — a recovering turn is not producing tokens yet. Render a "recovering…" hint; most UIs treat `isStreaming \|\| isRecovering` as "busy" |
 
 Use `isToolContinuation` when your UI should distinguish a fresh user submit from a continuation after a tool result. For example, show a typing indicator only for `status === "submitted" && !isToolContinuation`, while keeping loading controls disabled whenever `isStreaming` is true.
 
@@ -1583,7 +1642,7 @@ The originating client receives the streaming response. All other clients receiv
 
 | Import path                 | Exports                                                                                                                                           |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@cloudflare/ai-chat`       | `AIChatAgent`, `createToolsFromClientSchemas`, `ClientToolSchema`, `ChatRecoveryContext`, `ChatRecoveryOptions`, lifecycle types                  |
+| `@cloudflare/ai-chat`       | `AIChatAgent`, `createToolsFromClientSchemas`, `ClientToolSchema`, `ChatRecoveryContext`, `ChatRecoveryOptions`, `ChatRecoveryConfig`, `ChatRecoveryExhaustedContext`, `ResolvedChatRecoveryConfig`, lifecycle types |
 | `@cloudflare/ai-chat/react` | `useAgentChat`, `extractClientToolSchemas`, `getToolPartState`, `getToolCallId`, `getToolInput`, `getToolOutput`, `getToolApproval`               |
 | `@cloudflare/ai-chat/types` | `MessageType`, `OutgoingMessage`, `IncomingMessage`                                                                                               |
 | `agents/chat`               | Shared advanced chat primitives such as `SaveMessagesResult`, `SaveMessagesOptions`, `CHAT_MESSAGE_TYPES`, `ROW_MAX_BYTES`, and `isReplayChunk()` |

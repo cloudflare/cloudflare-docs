@@ -1194,6 +1194,11 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
 - `script_name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the Worker script where the Workflow class is defined. Only required if the Workflow is defined in a different Worker than the one the binding is configured on.
 
+- `schedules` <Type text="string[]" /> <MetaInfo text="optional" />
+  - A list of cron schedules that create new instances of this Workflow automatically.
+  - Use this when you want to run a Workflow on a recurring interval without defining top-level `triggers.crons` and a separate `scheduled` handler.
+  - Use a Wrangler release that supports Workflow schedules. If your local schema does not recognize `schedules`, update Wrangler first.
+
 Example:
 
 <WranglerConfig>

@@ -198,6 +198,7 @@
 /aegis/analytics/ /smart-shield/configuration/dedicated-egress-ips/ips-utilization/ 301
 
 # agents
+/agents/api-reference/think/ /agents/think/ 301
 /agents/build/prompts/ /workers/get-started/prompting/ 301
 /agents/examples/browse-the-web/ /agents/api-reference/browse-the-web/ 301
 /agents/examples/manage-and-sync-state/ /agents/api-reference/store-and-sync-state/ 301

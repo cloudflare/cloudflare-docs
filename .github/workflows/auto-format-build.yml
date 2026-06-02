@@ -1,0 +1,111 @@
+name: Auto Format (Build)
+
+# Part 1 of 2 of the auto-formatter (companion: auto-format-apply.yml).
+
+on:
+  pull_request:
+    branches: [auto-format-canary]
+    types: [opened, synchronize]
+    paths:
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.mjs"
+      - "**/*.css"
+      - "**/*.json"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/*.md"
+      - "**/*.astro"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auto-format-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build-patch:
+    name: Build format patch
+    # Skip bot-authored commits to avoid loops. (Defense in depth; the apply
+    # step won't push if there's nothing to push, but skipping here saves CI.)
+    if: github.actor != 'cloudflare-docs-bot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Run prettier (changed files only)
+        run: |
+          set -euo pipefail
+          # Use the PR's specific base commit SHA (not the moving base ref
+          # tip) for a stable, reproducible diff. Fetching by SHA + two-dot
+          # diff avoids merge-base computation, which would otherwise need
+          # ancestry that a shallow clone (`fetch-depth: 1`) doesn't have.
+          # If we used `origin/<ref>...HEAD` (three-dot) with a shallow
+          # clone, merge-base may resolve incorrectly when the base ref
+          # has advanced past the PR's actual base commit.
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          git fetch --depth=1 origin "$BASE_SHA"
+          mapfile -t files < <(
+            git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
+            | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$' \
+            || true
+          )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No prettier-scoped files changed in this PR."
+            exit 0
+          fi
+          printf 'Formatting %d file(s):\n' "${#files[@]}"
+          printf '  %s\n' "${files[@]}"
+          pnpm exec prettier --write "${files[@]}"
+
+      - name: Check for changes
+        id: diff
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate patch
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/auto-format"
+          git diff --staged > "$RUNNER_TEMP/auto-format/format.patch"
+          echo "${{ github.event.pull_request.number }}" \
+            > "$RUNNER_TEMP/auto-format/pr-number.txt"
+          echo "${{ github.event.pull_request.head.sha }}" \
+            > "$RUNNER_TEMP/auto-format/head-sha.txt"
+
+      - name: Upload patch artifact
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: format-patch
+          path: ${{ runner.temp }}/auto-format/
+          retention-days: 1
+          if-no-files-found: error

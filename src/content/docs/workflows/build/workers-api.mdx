@@ -59,17 +59,28 @@ Finally, any JS control-flow primitive (if conditions, loops, `try...catch` bloc
 ## WorkflowEvent
 
 ```ts
+export type WorkflowCronSchedule = {
+	/** Cron expression that triggered this event. */
+	cron: string;
+	/** Timestamp of the scheduled trigger, in milliseconds since the Unix epoch. */
+	scheduledTime: number;
+};
+
 export type WorkflowEvent<T> = {
 	payload: Readonly<T>;
 	timestamp: Date;
 	instanceId: string;
+	workflowName: string;
+	schedule?: WorkflowCronSchedule;
 };
 ```
 
-- The `WorkflowEvent` is the first argument to a Workflow's `run` method, and includes an optional `payload` parameter and a `timestamp` property.
+- The `WorkflowEvent` is the first argument to a Workflow's `run` method.
   - `payload` - a default type of `any` or type `T` if a type parameter is provided.
   - `timestamp` - a `Date` object set to the time the Workflow instance was created (triggered).
   - `instanceId` - the ID of the associated instance.
+  - `workflowName` - the name of the associated Workflow.
+  - `schedule` - metadata for Workflow instances created by a cron schedule, including the `cron` expression and `scheduledTime` in milliseconds since the Unix epoch.
 
 Refer to the [events and parameters](/workflows/build/events-and-parameters/) documentation for how to handle events within your Workflow code.
 

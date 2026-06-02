@@ -105,6 +105,8 @@ If your MCP server needs to maintain state across requests, use `createMcpHandle
 
 See [Stateful MCP Servers](/agents/api-reference/mcp-handler-api#stateful-mcp-servers) for implementation details.
 
+Streamable HTTP streams are resumable: configure an `EventStore` so clients can reconnect with a `Last-Event-ID` header and replay missed events, keeping in-flight tool calls alive across the edge idle-stream watchdog. `DurableObjectEventStore` is exported from `agents/mcp` for stateful `WorkerTransport` callers. Refer to [`McpAgent`: Stream resumability](/agents/api-reference/mcp-agent-api/#stream-resumability).
+
 ## RPC transport
 
 The **RPC transport** is designed for internal applications where your MCP server and agent are both running on Cloudflare — they can even run in the same Worker. It sends JSON-RPC messages directly over Cloudflare's [RPC bindings](/workers/runtime-apis/bindings/service-bindings/rpc/) without going over the public internet.

@@ -1,0 +1,163 @@
+---
+title: "Agents SDK v0.14.0: Agent Skills, messengers, scheduled tasks, Workflows, and hardened chat recovery"
+description: "Agents SDK v0.14.0 adds experimental Agent Skills, chat messengers with a Telegram provider, declarative scheduled tasks, and durable Think reasoning steps inside Workflows, plus a major production-hardening pass on durable chat recovery."
+products:
+  - agents
+  - workers
+date: 2026-06-02
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+The latest release of the [Agents SDK](https://github.com/cloudflare/agents) adds four new ways to build with `@cloudflare/think`: on-demand Agent Skills, chat messengers (starting with Telegram), declarative scheduled tasks, and durable reasoning steps inside Workflows. This release also significantly hardens durable chat recovery, so turns reliably ride through deploys, evictions, and stalled model streams in production.
+
+## Agent Skills (experimental)
+
+Give an agent a catalog of on-demand instructions, resources, and scripts. A skill source adds a catalog to the system prompt, and the model activates a skill only when a task matches — so a large library of capabilities does not bloat every prompt.
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+import bundledSkills from "agents:skills";
+
+export class SkillsAgent extends Think<Env> {
+	getSkills() {
+		return [
+			bundledSkills,
+			skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
+		];
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `agents:skills` import bundles a local `./skills` directory through the Agents Vite plugin (one directory per skill, each with a `SKILL.md`). Skills can also load from R2 or a manifest. When skills are available, Think exposes `activate_skill`, `read_skill_resource`, and an optional `run_skill_script` tool. Skill loading is resilient: a duplicate or failing source is skipped with a warning instead of breaking the agent.
+
+Agent Skills are **experimental**, and script execution in particular is early. The API may change in a future release. We would love your feedback — tell us what you are building and what is missing in the [Agents repository](https://github.com/cloudflare/agents/discussions).
+
+## Messengers
+
+Connect a Think agent directly to a chat platform. Think owns the webhook route, conversation routing, durable reply fiber, and streamed delivery back to the provider. Telegram ships as the first provider.
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+import {
+	defineMessengers,
+	ThinkMessengerStateAgent,
+} from "@cloudflare/think/messengers";
+import telegramMessenger from "@cloudflare/think/messengers/telegram";
+
+export { ThinkMessengerStateAgent };
+
+export class SupportAgent extends Think<Env> {
+	getMessengers() {
+		return defineMessengers({
+			telegram: telegramMessenger({
+				token: this.env.TELEGRAM_BOT_TOKEN,
+				userName: "support_bot",
+				secretToken: this.env.TELEGRAM_WEBHOOK_SECRET_TOKEN,
+			}),
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Each Chat SDK thread maps to its own Think sub-agent by default, so group chats and direct messages do not share memory. Multiple bots, custom conversation routing, and custom providers are all supported.
+
+## Scheduled tasks
+
+Declare recurring, timezone-aware prompts and handlers with a typed domain-specific language (DSL). Think reconciles the declarations on startup and re-arms the next occurrence after each run, backed by durable idempotent submissions.
+
+<TypeScriptExample>
+
+```ts
+import { Think, defineScheduledTasks } from "@cloudflare/think";
+
+export class DigestAgent extends Think<Env> {
+	getScheduledTasks() {
+		return defineScheduledTasks({
+			weeklyCommitReport: {
+				schedule: "every week on monday at 09:00",
+				prompt:
+					"Compile my GitHub commits for the last week and summarize them.",
+			},
+			workout: {
+				schedule: "every day at 08:00 in Europe/London",
+				prompt: "Start my workout.",
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Think Workflows
+
+Run a model-driven reasoning step inside a Cloudflare Workflow with `ThinkWorkflow` and `step.prompt()`, with durable typed structured output, long waits, and approval gates.
+
+<TypeScriptExample>
+
+```ts
+import { z } from "zod";
+import { ThinkWorkflow } from "@cloudflare/think/workflows";
+import type { ThinkWorkflowStep } from "@cloudflare/think/workflows";
+import type { AgentWorkflowEvent } from "agents/workflows";
+
+const draftSchema = z.object({
+	title: z.string(),
+	summary: z.string(),
+	labels: z.array(z.string()),
+});
+
+export class TriageWorkflow extends ThinkWorkflow<TriageAgent, Params> {
+	async run(event: AgentWorkflowEvent<Params>, step: ThinkWorkflowStep) {
+		const draft = await step.prompt("triage-issue", {
+			prompt: `Triage issue #${event.payload.issueNumber}`,
+			output: draftSchema,
+			timeout: "3 days",
+		});
+
+		await step.do("apply-labels", async () => {
+			await this.agent.applyLabels(draft.labels);
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Production hardening for durable chat recovery
+
+Durable chat turns have always been designed to survive a mid-turn deploy or Durable Object eviction. This release is a major hardening pass on that machinery for production.
+
+- **Better recovery during deploys.** Turns now ride through continuous deploys and evictions without losing completed work or re-running tools that already ran.
+- **A live "recovering…" signal.** `useAgentChat` exposes a new `isRecovering` flag, so a recovering turn shows progress instead of looking frozen. Most UIs render `isStreaming || isRecovering` as "busy".
+- **Stalled streams recover.** Set `chatStreamStallTimeoutMs` to route a hung provider stream into the same recovery path instead of leaving an infinite spinner.
+- **Sub-agents re-attach.** On parent recovery, an in-flight `agentTool()` child is re-attached to its result rather than abandoned and re-run, so long-running children no longer lose work under deploys.
+
+## MCP transport improvements
+
+- **Resumable streams** — In-flight tool calls over Server-Sent Events (SSE) survive a dropped connection. Clients reconnect with `Last-Event-ID` and replay anything they missed.
+- **Readable server IDs** — `addMcpServer` accepts an optional `id`, so tools surface as readable keys (for example `tool_github_create_pull_request`) instead of opaque connection IDs.
+- **Better handling of concurrent requests** — Overlapping JSON-RPC requests are now correctly correlated to their responses across the HTTP and RPC transports.
+
+## Other improvements
+
+- **Compaction** — A `Session`'s `tokenCounter` now also drives the compaction boundary decision ("what to compress"), not just the fire/no-fire trigger.
+- **`@cloudflare/worker-bundler`** — Adds a `virtualModules` option to `createWorker` to provide in-memory module source during bundling.
+- **Client-tool continuations** — Parallel tool results now coalesce into a single continuation, immediate resume requests attach to the pending continuation, and server-side `needsApproval` continuations resume reliably after approval.
+
+### Upgrade
+
+To update to the latest version:
+
+<PackageManagers pkg="agents@latest @cloudflare/think@latest @cloudflare/ai-chat@latest" />
+
+Refer to the [Agents API reference](/agents/api-reference/) and [Chat agents documentation](/agents/api-reference/chat-agents/) for more information.

@@ -37,7 +37,24 @@ On the other hand, with [asynchronous revalidation](#asynchronous-revalidation) 
 
 Cloudflare only serves stale content during revalidation if your origin includes the `stale-while-revalidate` directive in its `Cache-Control` header. Without this directive, visitors wait for the origin to respond before receiving content.
 
-If your origin sets `stale-while-revalidate` but you want to override it, you can disable stale serving through the [Serve stale content while revalidating](/cache/how-to/cache-rules/settings/#serve-stale-content-while-revalidating) setting in Cache Rules. Directives like `must-revalidate` and `no-cache` also prevent stale content from being served when [Origin Cache Control](/cache/concepts/cache-control/#enable-origin-cache-control) is enabled. For all available options, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
+If your origin sets `stale-while-revalidate` but you want to override it, you can disable stale serving through the [Serve stale content while revalidating](/cache/how-to/cache-rules/settings/#serve-stale-content-while-revalidating) setting in Cache Rules.
+
+### Directives that disable stale-while-revalidate
+
+When [Origin Cache Control](/cache/concepts/cache-control/#enable-origin-cache-control) is enabled, the following `Cache-Control` directives prevent Cloudflare from serving stale content, per [RFC 9111 §4.2.4](https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2.4):
+
+- **`must-revalidate`** — Prohibits serving stale content; the cache must revalidate with the origin first.
+- **`proxy-revalidate`** — Same as `must-revalidate`, but only applies to shared caches (like Cloudflare).
+- **`s-maxage`** — Implies `proxy-revalidate` semantics, so shared caches cannot serve stale content.
+- **`no-cache`** — Requires revalidation before serving any cached response.
+
+If any of these directives are present alongside `stale-while-revalidate`, Cloudflare will not serve stale content — requests will return `EXPIRED` instead of `UPDATING`.
+
+:::note[Workaround for different edge and browser TTLs]
+If you need `stale-while-revalidate` behavior with a different TTL for Cloudflare than for browsers, do not use `s-maxage`. Instead, configure your origin to send `max-age` with `stale-while-revalidate`, then use [Edge Cache TTL](/cache/how-to/cache-rules/settings/#edge-ttl) in Cache Rules to set a separate TTL for Cloudflare.
+:::
+
+For all available directives or behavior when Origin Cache Control is disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
 ## Smart revalidation towards users
 

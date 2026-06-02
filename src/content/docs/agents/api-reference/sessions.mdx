@@ -115,7 +115,8 @@ All builder methods return `this` for chaining. Order does not matter — provid
 | `.withContext(label, options?)` | Add a context block. Refer to [Context blocks](#context-blocks).                                           |
 | `.withCachedPrompt(provider?)`  | Enable system prompt persistence. The prompt is frozen on first use and survives hibernation and eviction. |
 | `.onCompaction(fn)`             | Register a compaction function. Refer to [Compaction](#compaction).                                        |
-| `.compactAfter(tokenThreshold)` | Auto-compact when estimated token count exceeds the threshold. Requires `.onCompaction()`.                 |
+| `.compactAfter(tokenThreshold, options?)` | Auto-compact when estimated token count exceeds the threshold. Requires `.onCompaction()`. Pass `{ tokenCounter }` to control how the threshold is measured. |
+| `.onCompactionError(handler)`   | Handle errors from automatic compaction. Handler failures are swallowed so message writes remain non-fatal. |
 
 ## Messages
 
@@ -390,6 +391,8 @@ const session = Session.create(this)
 			protectHead: 3,
 			tailTokenBudget: 20000,
 			minTailMessages: 2,
+			tokenCounter: async (messages) =>
+				estimateWithYourTokenizer({ messages }),
 		}),
 	)
 	.compactAfter(100_000);
@@ -426,9 +429,45 @@ const overlays = await session.getCompactions();
 
 When `.compactAfter(threshold)` is set, `appendMessage()` checks the estimated token count after each write. If it exceeds the threshold, `compact()` is called automatically. Auto-compaction failure is non-fatal — the message is already saved.
 
+By default, the estimate includes stored message parts plus the Session-managed frozen system prompt, so context blocks and cached prompts managed by `Session` contribute to the threshold. It does not include framework-specific prompt additions or tool schema serialization that happen outside `Session`.
+
+There are two token-counting decisions:
+
+- `.compactAfter(threshold, { tokenCounter })` controls **when** automatic compaction is triggered after writes.
+- `createCompactFunction({ tokenCounter })` controls **which** tail messages are protected from summarization. Use this when tool-heavy histories are much larger than the Workers-safe heuristic can estimate.
+
+You usually only need to configure one counter. The `.compactAfter()` counter also flows into `createCompactFunction`'s boundary walk (via `CompactContext`) when no explicit `createCompactFunction({ tokenCounter })` is given, so a single counter drives both "should we compact?" and "what should we compact?".
+
+:::caution
+The flowed counter is invoked **per message** during the boundary walk. A tokenizer-style counter budgets accurately; a usage-only counter that returns a fixed whole-prompt total (for example `usage.inputTokens` regardless of which messages are passed) degrades the tail budget to `minTailMessages` — compaction still runs and context stays bounded, but the byte budget is effectively ignored. Pass an explicit per-message `createCompactFunction({ tokenCounter })` for precise tail budgeting.
+:::
+
+Use a custom counter when you have model-reported usage or your own tokenizer:
+
+<TypeScriptExample>
+
+```ts
+const session = Session.create(this)
+	.onCompaction(myCompactFn)
+	.compactAfter(100_000, {
+		tokenCounter: async ({ messages, systemPrompt, contextBlocks }) => {
+			return estimateWithYourTokenizer({
+				messages,
+				systemPrompt,
+				contextBlocks,
+			});
+		},
+	})
+	.onCompactionError((err) => {
+		console.warn("Auto-compaction failed", err);
+	});
+```
+
+</TypeScriptExample>
+
 :::note
 
-Token estimation is heuristic (not tiktoken). It uses `max(chars/4, words*1.3)` with 4 tokens per-message overhead. Tiktoken would add 80–120 MB heap overhead, which exceeds Cloudflare Workers' 128 MB limit.
+The default token estimation is heuristic (not tiktoken). It uses `max(chars/4, words*1.3)` with 4 tokens per-message overhead, and also applies the string heuristic to the Session-managed system prompt. Tiktoken would add 80–120 MB heap overhead, which exceeds Cloudflare Workers' 128 MB limit.
 
 :::
 
@@ -464,7 +503,8 @@ Context blocks, prompt caching, and compaction settings are propagated to all se
 | `.withContext(label, options?)` | Add context block template for all sessions.                                                            |
 | `.withCachedPrompt(provider?)`  | Enable prompt persistence for all sessions.                                                             |
 | `.onCompaction(fn)`             | Register compaction function for all sessions.                                                          |
-| `.compactAfter(tokenThreshold)` | Auto-compact threshold for all sessions.                                                                |
+| `.compactAfter(tokenThreshold, options?)` | Auto-compact threshold for all sessions. Supports the same `tokenCounter` option as `Session`.    |
+| `.onCompactionError(handler)`   | Handle automatic compaction errors for managed sessions.                                                |
 | `.withSearchableHistory(label)` | Add a cross-session searchable history block. The model can search past conversations from any session. |
 
 ### Session lifecycle
@@ -862,6 +902,6 @@ By default, storage is in Durable Object SQLite and tables are created lazily on
 
 ## Related
 
-- [Think](/agents/api-reference/think/) — opinionated chat agent that uses Session for conversation storage via `configureSession()`
+- [Think](/agents/think/) — opinionated chat agent that uses Session for conversation storage via `configureSession()`
 - [Chat agents](/agents/api-reference/chat-agents/) — `AIChatAgent` with its own message persistence layer
 - [Store and sync state](/agents/api-reference/store-and-sync-state/) — `setState()` for simpler key-value persistence
