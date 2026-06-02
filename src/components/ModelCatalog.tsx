@@ -403,7 +403,7 @@ const ModelCatalog = ({
 	return (
 		<div className="not-content">
 			{/* Toolbar */}
-			<div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center">
+			<div className="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
 				{/* Search input */}
 				<div className="relative flex-1 md:min-w-[300px]">
 					<svg
