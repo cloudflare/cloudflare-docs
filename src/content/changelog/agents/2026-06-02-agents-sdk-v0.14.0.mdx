@@ -135,19 +135,18 @@ export class TriageWorkflow extends ThinkWorkflow<TriageAgent, Params> {
 
 ## Production hardening for durable chat recovery
 
-Durable chat turns have always been designed to survive a mid-turn deploy or Durable Object eviction. This release is a major hardening pass on that machinery, closing the edge cases that could still abandon a turn or re-run completed work under sustained churn.
+Durable chat turns have always been designed to survive a mid-turn deploy or Durable Object eviction. This release is a major hardening pass on that machinery for production.
 
-- **Survives sustained deploy churn.** Recovery is now bounded by a progress-aware wall clock (a 5-minute no-progress window, reset on every advancing attempt, under a 15-minute incident ceiling) instead of a raw attempt count. A turn that keeps producing content rides through continuous deploys. Previously, a rollout's reconnect storm could exhaust the budget and seal a healthy turn.
-- **Settled work is never lost or re-run.** Completed (often non-idempotent) tool results are flushed to durable storage immediately, and an interrupted tool call is preserved as an errored result instead of silently disappearing and re-executing.
+- **Better recovery during deploys.** Turns now ride through continuous deploys and evictions without losing completed work or re-running tools that already ran.
 - **A live "recovering…" signal.** `useAgentChat` exposes a new `isRecovering` flag, so a recovering turn shows progress instead of looking frozen. Most UIs render `isStreaming || isRecovering` as "busy".
-- **Stall watchdog.** Set `chatStreamStallTimeoutMs` to route a hung provider stream into the same bounded recovery path instead of leaving an infinite spinner.
-- **Sub-agents re-attach.** On parent recovery, an in-flight `agentTool()` child is re-attached to its real terminal result rather than abandoned and re-run, so long-running children no longer lose completed work under deploys. `agentTool()` now returns a structured `AgentToolFailure` envelope that distinguishes a transient `interrupted` run (retryable) from a terminal failure.
+- **Stalled streams recover.** Set `chatStreamStallTimeoutMs` to route a hung provider stream into the same recovery path instead of leaving an infinite spinner.
+- **Sub-agents re-attach.** On parent recovery, an in-flight `agentTool()` child is re-attached to its result rather than abandoned and re-run, so long-running children no longer lose work under deploys.
 
 ## MCP transport improvements
 
-- **SSE resumability and keepalive** — The MCP Streamable HTTP transports fix the SSE keepalive and add `Last-Event-ID` resumability so in-flight tool calls survive the edge idle-stream watchdog. `DurableObjectEventStore` is exported from `agents/mcp` for stateful `WorkerTransport` callers.
-- **Stable server ids** — `addMcpServer` accepts an optional `id` for connector-style integrations, so tools surface as readable keys (for example `tool_github_create_pull_request`) instead of opaque connection ids. Existing servers are migrated transparently.
-- **Correct response routing** — Concurrent and overlapping JSON-RPC requests are correlated to their request ids over both the HTTP and RPC transports.
+- **Resumable SSE streams** — In-flight tool calls survive a dropped connection. Clients reconnect with `Last-Event-ID` and replay anything they missed.
+- **Readable server ids** — `addMcpServer` accepts an optional `id`, so tools surface as readable keys (for example `tool_github_create_pull_request`) instead of opaque connection ids.
+- **Better handling of concurrent requests** — Overlapping JSON-RPC requests are now correctly correlated to their responses across the HTTP and RPC transports.
 
 ## Other improvements
 
