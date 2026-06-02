@@ -405,7 +405,7 @@ const ModelCatalog = ({
 			{/* Toolbar */}
 			<div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center">
 				{/* Search input */}
-				<div className="relative flex-1">
+				<div className="relative flex-1 md:min-w-[300px]">
 					<svg
 						className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400"
 						fill="none"
