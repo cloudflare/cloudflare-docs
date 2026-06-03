@@ -40,7 +40,14 @@ function FilterDropdown({
 	onChange: (selected: string[]) => void;
 }) {
 	const hasSelection = selected.length > 0;
-	const triggerLabel = hasSelection ? `${label} (+${selected.length})` : label;
+	const triggerContent = (
+		<span className="inline-flex items-center gap-1.5">
+			{label}
+			{hasSelection && (
+				<span className="sl-badge default">{selected.length}</span>
+			)}
+		</span>
+	);
 
 	const selectedItems = items.filter((item) => selected.includes(item.value));
 
@@ -61,8 +68,8 @@ function FilterDropdown({
 						: "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
 				}`}
 			>
-				<Combobox.Value placeholder={<span>{label}</span>}>
-					{() => triggerLabel}
+				<Combobox.Value placeholder={triggerContent}>
+					{() => triggerContent}
 				</Combobox.Value>
 				<Combobox.Icon className="flex">
 					<ChevronUpDownIcon />
