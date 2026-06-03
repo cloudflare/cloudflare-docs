@@ -238,7 +238,7 @@ Bullet point rules:
 
 Always specify a language after the opening fence. Language names must be **lowercase**.
 
-Always specify a language; use `txt` (aliases: `text`, `plaintext`) if no appropriate language exists. Unrecognized identifiers fall back to plain text without an error.
+Always specify a language; use `txt` (aliases: `text`, `plaintext`) if no appropriate language exists.
 
 ### Terminal commands
 
