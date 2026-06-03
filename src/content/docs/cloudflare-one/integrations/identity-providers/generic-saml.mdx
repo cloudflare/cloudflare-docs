@@ -156,7 +156,15 @@ Access supports the following encryption algorithms:
 | Algorithm type | Supported values |
 | --- | --- |
 | Content encryption | AES-128-CBC, AES-256-CBC, AES-128-GCM, AES-256-GCM |
-| Key transport | RSA-OAEP, RSA-1.5 |
+| Key transport | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5 |
+
+:::caution
+RSA-1.5 is supported for compatibility but is considered insecure. Use RSA-OAEP when your identity provider supports it.
+:::
+
+:::note[FedRAMP environments]
+FedRAMP High environments enforce stricter algorithm requirements. RSA-1.5 and RSA-OAEP 1.0 (`rsa-oaep-mgf1p`) are rejected. Use RSA-OAEP 1.1 with SHA-256 for key transport and AES-256-GCM or AES-256-CBC for content encryption.
+:::
 
 #### Rotate encryption certificates
 
