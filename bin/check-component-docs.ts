@@ -24,16 +24,15 @@ const STYLE_GUIDE_COMPONENTS_DIR = path.join(
 	"style-guide",
 	"components",
 );
-const AGENT_REFERENCE = path.join( ".agents" , "references"  ,'components.md' )  ;
+const AGENT_REFERENCE = path.join(".agents", "references", "components.md");
 
 // Extract the value of `styleGuide.component` from a frontmatter block.
 // Returns undefined if the field is not present.
-function extractComponentName(content: string)  :  string|undefined  {
-    const fmMatch=content.match(/^---\n([\s\S]*?)\n---/);
-        if(!fmMatch)return undefined ;
-	const componentMatch = fmMatch[1].match(/^\s*component:\s*(\S+)\s*$/m) ;
-	return componentMatch?.[ 1 ];
-
+function extractComponentName(content: string): string | undefined {
+	const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+	if (!fmMatch) return undefined;
+	const componentMatch = fmMatch[1].match(/^\s*component:\s*(\S+)\s*$/m);
+	return componentMatch?.[1];
 }
 
 // Extract primary component names from H2 section headings in the reference.
