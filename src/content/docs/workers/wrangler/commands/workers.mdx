@@ -330,7 +330,7 @@ npx wrangler secret list
 <WranglerCommand command="secret bulk" headingLevel={3} description="Create, update, or delete multiple secrets for a Worker in a single request, with up to 100 secrets per command." />
 
 :::note
-Deleting secrets by setting a key to `null` requires wrangler version 4.97.0 or later.
+Deleting secrets by setting a key to `null` requires wrangler version 4.97.0 or later and JSON format. Deletion is not supported with `.env` files.
 :::
 
 The following is an example of creating, updating, and deleting secrets from a JSON file redirected to `stdin`. Set a key to `null` to delete it.
