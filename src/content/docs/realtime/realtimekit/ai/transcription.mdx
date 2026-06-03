@@ -13,7 +13,7 @@ import { Render } from "~/components";
 RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
 
 | Mode               | Model                                                                | Use Case                       |
-| ----------------   | -------------------------------------------------------------------- | ------------------------------ |
+| ------------------ | -------------------------------------------------------------------- | ------------------------------ |
 | **Real-time**      | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | Live captions during meeting   |
 | **End-of-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | Accurate offline transcription |
 
@@ -167,13 +167,19 @@ Timestamp,Participant ID,User ID,Custom Participant ID,Participant Name,Transcri
 
 #### Webhook
 
-Configure `meeting.transcript` event in [webhooks](/api/resources/realtime_kit/subresources/webhooks/):
+Configure the `meeting.transcript` event in [RealtimeKit webhooks](/realtime/realtimekit/webhooks/):
 
 ```json
 {
 	"event": "meeting.transcript",
-	"meetingId": "meeting-123",
-	"sessionId": "session-456",
+	"meeting": {
+		"id": "meeting-123",
+		"sessionId": "session-456",
+		"title": "Product Review",
+		"status": "LIVE",
+		"startedAt": "2024-08-07T10:15:30.000Z",
+		"endedAt": "2024-08-07T10:45:30.000Z"
+	},
 	"transcriptDownloadUrl": "https://...",
 	"transcriptDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
 }

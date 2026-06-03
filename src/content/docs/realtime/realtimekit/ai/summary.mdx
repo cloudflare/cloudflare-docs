@@ -20,58 +20,64 @@ Set `summarize_on_end: true` when [creating a meeting](/realtime/realtimekit/con
 
 ```json
 {
-  "title": "Product Review",
-  "ai_config": {
-    "transcription": {
-      "language": "en-US"
-    },
-    "summarization": {
-      "word_limit": 500,
-      "text_format": "markdown",
-      "summary_type": "team_meeting"
-    }
-  },
-  "summarize_on_end": true
+	"title": "Product Review",
+	"ai_config": {
+		"transcription": {
+			"language": "en-US"
+		},
+		"summarization": {
+			"word_limit": 500,
+			"text_format": "markdown",
+			"summary_type": "team_meeting"
+		}
+	},
+	"summarize_on_end": true
 }
 ```
 
 ## Configuration
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `word_limit` | number | 300 | Summary length (150-1000 words) |
-| `text_format` | string | `plain_text` | Output format: `plain_text` or `markdown` |
-| `summary_type` | string | `general` | Meeting context for tailored summaries |
+| Option         | Type   | Default      | Description                               |
+| -------------- | ------ | ------------ | ----------------------------------------- |
+| `word_limit`   | number | 300          | Summary length (150-1000 words)           |
+| `text_format`  | string | `plain_text` | Output format: `plain_text` or `markdown` |
+| `summary_type` | string | `general`    | Meeting context for tailored summaries    |
 
 ### Summary types
 
 Choose a type that matches your meeting for better results:
 
-| Type | Best for |
-|------|----------|
-| `general` | Any meeting (default) |
-| `team_meeting` | Regular team syncs |
-| `daily_standup` | Agile standups |
-| `one_on_one_meeting` | 1:1 meetings |
-| `sales_call` | Customer sales conversations |
-| `client_check_in` | Client status updates |
-| `interview` | Job interviews |
-| `lecture` | Educational content |
-| `code_review` | Technical code reviews |
+| Type                 | Best for                     |
+| -------------------- | ---------------------------- |
+| `general`            | Any meeting (default)        |
+| `team_meeting`       | Regular team syncs           |
+| `daily_standup`      | Agile standups               |
+| `one_on_one_meeting` | 1:1 meetings                 |
+| `sales_call`         | Customer sales conversations |
+| `client_check_in`    | Client status updates        |
+| `interview`          | Job interviews               |
+| `lecture`            | Educational content          |
+| `code_review`        | Technical code reviews       |
 
 ## Consume summaries
 
 ### Webhook
 
-Configure `meeting.summary` event in [webhooks](/api/resources/realtime_kit/subresources/webhooks/):
+Configure the `meeting.summary` event in [RealtimeKit webhooks](/realtime/realtimekit/webhooks/):
 
 ```json
 {
-  "event": "meeting.summary",
-  "meetingId": "meeting-123",
-  "sessionId": "session-456",
-  "summaryDownloadUrl": "https://...",
-  "summaryDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
+	"event": "meeting.summary",
+	"meeting": {
+		"id": "meeting-123",
+		"sessionId": "session-456",
+		"title": "Product Review",
+		"status": "LIVE",
+		"startedAt": "2024-08-07T10:15:30.000Z",
+		"endedAt": "2024-08-07T10:45:30.000Z"
+	},
+	"summaryDownloadUrl": "https://...",
+	"summaryDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
 }
 ```
 
@@ -103,16 +109,19 @@ With `text_format: "markdown"` and `summary_type: "team_meeting"`:
 ## Meeting Summary
 
 ### Key Discussion Points
+
 - Reviewed Q4 roadmap priorities
 - Discussed deployment timeline for v2.0
 - Identified blockers for the auth migration
 
 ### Action Items
+
 - @alice: Update design specs by Friday
 - @bob: Schedule security review
 - @charlie: Create migration runbook
 
 ### Decisions Made
+
 - Approved moving forward with Kubernetes migration
 - Delayed analytics dashboard to next sprint
 ```
