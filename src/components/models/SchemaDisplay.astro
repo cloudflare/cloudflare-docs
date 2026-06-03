@@ -22,6 +22,7 @@ import { resolveInlineRef } from "@stoplight/json";
 import SchemaTreeView from "./SchemaTree.tsx";
 import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
 import type { SchemaRowData } from "./types";
+import { getTopLevelVariants } from "~/util/model-schema";
 
 interface Props {
 	schema: Record<string, unknown>;
@@ -354,32 +355,6 @@ function collectRows(
 	}
 
 	return rows;
-}
-
-// Check if schema has top-level oneOf/anyOf with titled variants
-// If so, we'll render them as tabs instead of nested tree
-type SchemaVariant = {
-	title: string;
-	schema: Record<string, unknown>;
-};
-
-function getTopLevelVariants(
-	schemaObj: Record<string, unknown>,
-): SchemaVariant[] | null {
-	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
-		| Record<string, unknown>[]
-		| undefined;
-	if (!variants || variants.length < 2) return null;
-
-	// Check if all variants have titles
-	const titled = variants.map((v, i) => ({
-		title: (v.title as string) || `Option ${i + 1}`,
-		schema: v,
-	}));
-
-	// Only use tabs if at least one variant has a real title
-	const hasRealTitle = variants.some((v) => v.title);
-	return hasRealTitle ? titled : null;
 }
 
 const topLevelVariants = getTopLevelVariants(schema);
