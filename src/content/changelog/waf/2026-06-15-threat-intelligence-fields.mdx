@@ -3,7 +3,7 @@ title: Use Cloudforce One threat intelligence in WAF rules
 description: New cf.intel.ip fields available in custom rules and rate limiting rules for threat intelligence matching.
 products:
   - waf
-date: 2026-06-01T12:00:00Z
+date: 2026-06-15
 ---
 
 You can now match incoming requests against Cloudforce One threat intelligence in your WAF rules. A new detection looks up the client IP address of each request against the threat intelligence database. If the IP was involved in threat activity in the past seven days, Cloudflare populates `cf.intel.ip.*` fields that you can use in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
