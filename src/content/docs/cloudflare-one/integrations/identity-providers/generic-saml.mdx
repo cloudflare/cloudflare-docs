@@ -160,9 +160,9 @@ Access supports the following encryption algorithms:
 
 #### Rotate encryption certificates
 
-You can rotate your SAML encryption certificate at any time without downtime. When you rotate, the current certificate becomes the previous certificate and a new certificate is generated. The previous certificate remains valid until its expiration date, giving you time to update your IdP configuration.
+Encryption certificates are valid for one year. Thirty days before a certificate expires, Access automatically generates a replacement certificate. The expiring certificate remains valid until its expiration date, giving you time to upload the new certificate to your IdP.
 
-To rotate a certificate:
+To manually rotate a certificate:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
 2. Select your SAML identity provider and select **Edit**.
@@ -172,8 +172,6 @@ To rotate a certificate:
 :::caution
 If you rotate again before updating your IdP with the current certificate, the previous certificate will be immediately invalidated. This may break authentication for users whose IdP is still encrypting assertions with the old certificate.
 :::
-
-Your IdP can also retrieve the encryption certificate automatically from the [SAML metadata endpoint](#optional-upload-saml-metadata).
 
 ### Sign SAML authentication request
 
