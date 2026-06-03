@@ -588,7 +588,7 @@ export class ChatAgent extends AIChatAgent {
 
 </TypeScriptExample>
 
-`AIChatAgent` defaults `chatRecovery` to `false`, so existing chat agents only get client reconnect and resumable-stream behavior unless they opt in. [`Think`](/agents/think/) defaults it to `true`.
+`AIChatAgent` defaults `chatRecovery` to `false`, so existing chat agents only get client reconnect and resumable-stream behavior unless they opt in. [`Think`](/agents/harnesses/think/) defaults it to `true`.
 
 When enabled, every `onChatMessage` call runs inside a fiber. If the agent is evicted mid-stream, the fiber row survives in SQLite. On the next activation, the framework detects the interrupted fiber, reconstructs the partial response from buffered stream chunks, and calls `onChatRecovery`.
 
@@ -766,7 +766,7 @@ The right strategy depends on whether the provider supports assistant prefill an
 While a turn is being recovered, the agent broadcasts a `cf_agent_chat_recovering` status frame so clients can show a "recovering…" indicator instead of looking frozen. It is set when a recovery continuation is scheduled and cleared on every terminal outcome, so the indicator never spins forever. Consume it through `useAgentChat`'s `isRecovering` flag (see [Return values](#return-values)). The signal is advisory and backward-compatible — clients that do not understand it ignore it.
 
 :::note
-`@cloudflare/ai-chat` broadcasts the live signal but does not yet replay it on connect, so a client connecting mid-recovery is not re-told until it reconnects to an active stream. [`Think`](/agents/think/) replays it on connect.
+`@cloudflare/ai-chat` broadcasts the live signal but does not yet replay it on connect, so a client connecting mid-recovery is not re-told until it reconnects to an active stream. [`Think`](/agents/harnesses/think/) replays it on connect.
 :::
 
 Transcript repairs — healing orphaned tool calls (preserved as errored results rather than deleted, so the record survives and the model does not silently re-run the tool) and normalizing malformed or missing tool inputs before a provider call — are emitted on the `transcript` observability channel.

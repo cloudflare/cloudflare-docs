@@ -19,7 +19,7 @@ Use it when the Workflow owns the process:
 - retryable deterministic side effects
 - a Think turn that should produce typed structured output
 
-Keep recurring prompts as [scheduled tasks](/agents/think/scheduled-tasks/), and keep simple one-off background turns on [`submitMessages()`](/agents/think/programmatic-submissions/). Workflows are for jobs where the steps matter.
+Keep recurring prompts as [scheduled tasks](/agents/harnesses/think/scheduled-tasks/), and keep simple one-off background turns on [`submitMessages()`](/agents/harnesses/think/programmatic-submissions/). Workflows are for jobs where the steps matter.
 
 ## API
 
@@ -141,7 +141,7 @@ Set `cancelOnTimeout: false` when you intentionally want the Think submission to
 
 ## Boundary with other primitives
 
-Use [`getScheduledTasks()`](/agents/think/scheduled-tasks/) for recurring prompt submissions or deterministic scheduled handlers:
+Use [`getScheduledTasks()`](/agents/harnesses/think/scheduled-tasks/) for recurring prompt submissions or deterministic scheduled handlers:
 
 ```ts
 getScheduledTasks() {
@@ -166,7 +166,7 @@ getScheduledTasks() {
 }
 ```
 
-Use [`submitMessages()`](/agents/think/programmatic-submissions/) for durable one-off turns where the caller can inspect submission status later.
+Use [`submitMessages()`](/agents/harnesses/think/programmatic-submissions/) for durable one-off turns where the caller can inspect submission status later.
 
 Use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) for app-owned idempotent Agent jobs that need recovery inside the Agent. Think's workflow notification delivery does not use fibers; it uses a private outbox because it needs to store an event until delivery succeeds.
 

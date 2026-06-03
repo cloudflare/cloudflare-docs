@@ -12,7 +12,7 @@ import { TypeScriptExample } from "~/components";
 
 Durably accept a Think turn and return before inference runs. Use `submitMessages()` for webhook handlers, RPC callers, and parent Workers that need a fast acknowledgement, safe retry, and later status inspection.
 
-Declarative [scheduled prompt tasks](/agents/think/scheduled-tasks/) use the same durable submission path under the hood. Use `getScheduledTasks()` when the trigger is recurring and code-declared; use `submitMessages()` directly when an external caller or webhook creates one-off work. To wait for the response inline, use [`saveMessages()`](/agents/think/sub-agents/#savemessages) instead.
+Declarative [scheduled prompt tasks](/agents/harnesses/think/scheduled-tasks/) use the same durable submission path under the hood. Use `getScheduledTasks()` when the trigger is recurring and code-declared; use `submitMessages()` directly when an external caller or webhook creates one-off work. To wait for the response inline, use [`saveMessages()`](/agents/harnesses/think/sub-agents/#savemessages) instead.
 
 ## submitMessages
 
@@ -119,4 +119,4 @@ If the chat is cleared or turn state is reset before a pending submission runs, 
 
 ## Compared with Workflows
 
-Use Workflows for multi-step orchestration, retries per step, long waits, external events, human approvals, or pipelines that may trigger Think as one part of a larger process. Refer to [Think Workflows](/agents/think/workflows/).
+Use Workflows for multi-step orchestration, retries per step, long waits, external events, human approvals, or pipelines that may trigger Think as one part of a larger process. Refer to [Think Workflows](/agents/harnesses/think/workflows/).

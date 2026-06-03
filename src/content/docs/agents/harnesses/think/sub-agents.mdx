@@ -13,10 +13,10 @@ import { TypeScriptExample } from "~/components";
 Think works as both a top-level agent and a sub-agent. When used as a sub-agent, the `chat()` method runs a full turn and streams events via a callback.
 
 :::note
-This page covers calling Think from server code instead of a browser — multi-agent systems, scheduled or webhook-triggered turns, and recovery. If you are building a single chat agent that users talk to in the browser, you can skip it; `useAgentChat` (see [Getting started](/agents/think/getting-started/)) is all you need.
+This page covers calling Think from server code instead of a browser — multi-agent systems, scheduled or webhook-triggered turns, and recovery. If you are building a single chat agent that users talk to in the browser, you can skip it; `useAgentChat` (see [Getting started](/agents/harnesses/think/getting-started/)) is all you need.
 :::
 
-For durable acceptance with idempotent retry and later status inspection, refer to [Programmatic submissions](/agents/think/programmatic-submissions/). For recovery after eviction, refer to [Durable recovery](/agents/think/recovery/).
+For durable acceptance with idempotent retry and later status inspection, refer to [Programmatic submissions](/agents/harnesses/think/programmatic-submissions/). For recovery after eviction, refer to [Durable recovery](/agents/harnesses/think/recovery/).
 
 ## chat
 
@@ -209,7 +209,7 @@ await this.saveMessages((current) => [
 
 ### Scheduled responses
 
-Trigger a recurring prompt turn with [`getScheduledTasks()`](/agents/think/scheduled-tasks/):
+Trigger a recurring prompt turn with [`getScheduledTasks()`](/agents/harnesses/think/scheduled-tasks/):
 
 <TypeScriptExample>
 

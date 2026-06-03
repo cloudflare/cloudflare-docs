@@ -198,8 +198,8 @@
 /aegis/analytics/ /smart-shield/configuration/dedicated-egress-ips/ips-utilization/ 301
 
 # agents
-/agents/api-reference/think/ /agents/think/ 301
-/agents/harnesses/think/ /agents/think/ 301
+/agents/api-reference/think/ /agents/harnesses/think/ 301
+/agents/think/ /agents/harnesses/think/ 301
 /agents/build/prompts/ /workers/get-started/prompting/ 301
 /agents/getting-started/build-a-chat-agent/ /agents/examples/chat-agent/ 301
 /agents/examples/browse-the-web/ /agents/tools/browser/ 301
@@ -2684,6 +2684,7 @@
 
 # ============================================================================
 # DYNAMIC REDIRECTS
+/agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
 
 # Agent Skills legacy discovery path

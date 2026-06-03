@@ -68,7 +68,7 @@ return Response.json({
 
 Use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) outside Think when the durable unit is a surrounding application job, such as accepting a webhook once, restoring provider state, posting a visible reply, and recording recovery policy. `submitMessages()` owns Think's conversation admission; managed fibers own external side effects around that turn.
 
-For the full Think API, refer to [`submitMessages()`](/agents/think/programmatic-submissions/#submitmessages).
+For the full Think API, refer to [`submitMessages()`](/agents/harnesses/think/programmatic-submissions/#submitmessages).
 ### When to use `saveMessages` vs `onChatResponse`
 
 **Use `saveMessages` when you control the trigger** — schedule callbacks, webhooks, email handlers, or any method where you decide when to inject a message.

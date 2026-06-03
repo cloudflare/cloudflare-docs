@@ -24,7 +24,7 @@ import {
 Think works as both a **top-level agent** (WebSocket chat to browser clients via `useAgentChat`) and a **sub-agent** (a child agent that another agent drives over RPC via `chat()`).
 
 :::note[New to Cloudflare Agents?]
-If this is your first agent, start with the [Getting started tutorial](/agents/think/getting-started/) for a guided build. For the bigger picture of what agents are and how they run, read [What are agents?](/agents/concepts/what-are-agents/). Think builds on two Cloudflare primitives worth a quick look: [Workers AI](/workers-ai/) provides the model, and each agent instance is a [Durable Object](/durable-objects/) that stores its state. The rest of this section is reference material you can dip into as you need it.
+If this is your first agent, start with the [Getting started tutorial](/agents/harnesses/think/getting-started/) for a guided build. For the bigger picture of what agents are and how they run, read [What are agents?](/agents/concepts/what-are-agents/). Think builds on two Cloudflare primitives worth a quick look: [Workers AI](/workers-ai/) provides the model, and each agent instance is a [Durable Object](/durable-objects/) that stores its state. The rest of this section is reference material you can dip into as you need it.
 :::
 
 ## Quick start
@@ -183,7 +183,7 @@ Think has several ways to start or continue a turn. Choose based on who starts t
 | Add context or messages without starting a model turn          | `persistMessages()`                             |
 | Advanced subclass or recovery code continues an assistant turn | `continueLastTurn()`                            |
 
-Use `saveMessages()` when the caller owns the trigger and can wait for the turn to finish. Use [`submitMessages()`](/agents/think/programmatic-submissions/) when timeout ambiguity would make retries unsafe.
+Use `saveMessages()` when the caller owns the trigger and can wait for the turn to finish. Use [`submitMessages()`](/agents/harnesses/think/programmatic-submissions/) when timeout ambiguity would make retries unsafe.
 
 Use `chat()` for low-level parent-to-child streaming when your code owns forwarding, cancellation, and replay policy. Use [Agent tools](/agents/runtime/execution/agent-tools/) when a parent model or workflow delegates to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in.
 
@@ -194,57 +194,57 @@ Use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) ou
 <CardGrid>
 	<LinkCard
 		title="Getting started"
-		href="/agents/think/getting-started/"
+		href="/agents/harnesses/think/getting-started/"
 		description="Build a Think agent step by step."
 	/>
 	<LinkCard
 		title="Configuration"
-		href="/agents/think/configuration/"
+		href="/agents/harnesses/think/configuration/"
 		description="Configuration overrides, dynamic configuration, and Session integration."
 	/>
 	<LinkCard
 		title="Tools"
-		href="/agents/think/tools/"
+		href="/agents/harnesses/think/tools/"
 		description="Workspace tools, code execution, browser tools, and extensions."
 	/>
 	<LinkCard
 		title="Lifecycle hooks"
-		href="/agents/think/lifecycle-hooks/"
+		href="/agents/harnesses/think/lifecycle-hooks/"
 		description="beforeTurn, beforeStep, onStepFinish, onChatResponse, and more."
 	/>
 	<LinkCard
 		title="Client tools"
-		href="/agents/think/client-tools/"
+		href="/agents/harnesses/think/client-tools/"
 		description="Browser-side tools, approvals, and concurrency."
 	/>
 	<LinkCard
 		title="Messengers"
-		href="/agents/think/messengers/"
+		href="/agents/harnesses/think/messengers/"
 		description="Receive and reply to Chat SDK messenger webhooks."
 	/>
 	<LinkCard
 		title="Scheduled tasks"
-		href="/agents/think/scheduled-tasks/"
+		href="/agents/harnesses/think/scheduled-tasks/"
 		description="Declarative recurring prompts and handlers."
 	/>
 	<LinkCard
 		title="Workflows"
-		href="/agents/think/workflows/"
+		href="/agents/harnesses/think/workflows/"
 		description="Durable model-driven reasoning steps inside Cloudflare Workflows."
 	/>
 	<LinkCard
 		title="Sub-agent RPC"
-		href="/agents/think/sub-agents/"
+		href="/agents/harnesses/think/sub-agents/"
 		description="chat() streaming, saveMessages, continueLastTurn, and abort."
 	/>
 	<LinkCard
 		title="Programmatic submissions"
-		href="/agents/think/programmatic-submissions/"
+		href="/agents/harnesses/think/programmatic-submissions/"
 		description="Durable turn admission for webhooks and RPC callers."
 	/>
 	<LinkCard
 		title="Durable recovery"
-		href="/agents/think/recovery/"
+		href="/agents/harnesses/think/recovery/"
 		description="Chat recovery, stream-stall watchdog, and stability detection."
 	/>
 	<LinkCard
