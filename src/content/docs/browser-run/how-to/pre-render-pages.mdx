@@ -101,7 +101,7 @@ const getTargetUrl = (request: Request) => {
 
 const renderHtml = async (env: Env, targetUrl: URL) => {
 	// The /content Quick Actions endpoint loads the page in Browser Run and returns
-	// the page HTML after the configured loading condition is met.
+	// a JSON envelope containing the rendered HTML in the result field.
 	const response = await env.BROWSER.quickAction("content", {
 		url: targetUrl.toString(),
 		gotoOptions: {
@@ -118,7 +118,16 @@ const renderHtml = async (env: Env, targetUrl: URL) => {
 		throw new Error(`Browser Run failed with ${response.status}: ${detail}`);
 	}
 
-	return response.text();
+	const data = (await response.json()) as {
+		success: boolean;
+		result?: string;
+	};
+
+	if (!data.success || typeof data.result !== "string") {
+		throw new Error("Browser Run returned an unsuccessful response");
+	}
+
+	return data.result;
 };
 
 export default {
