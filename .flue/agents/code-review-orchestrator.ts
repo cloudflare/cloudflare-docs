@@ -932,11 +932,18 @@ function renderComment(
 	forceFullReview?: boolean,
 ): string {
 	const shortSha = reviewedHeadSha.slice(0, 7);
-	const warnings = reconciled.active.filter((f) => f.severity === "warning");
-	const suggestions = reconciled.active.filter(
+	// Exclude anything acknowledged by the reviewer from active sections
+	const ignoredPaths = new Set(
+		reconciled.ignored_by_reviewer.map((f) => `${f.path}:${f.line}:${f.rule}`),
+	);
+	const activeFindings = reconciled.active.filter(
+		(f) => !ignoredPaths.has(`${f.path}:${f.line}:${f.rule}`),
+	);
+	const warnings = activeFindings.filter((f) => f.severity === "warning");
+	const suggestions = activeFindings.filter(
 		(f) => f.severity === "suggestion",
 	);
-	const totalActive = reconciled.active.length;
+	const totalActive = activeFindings.length;
 	const scope = forceFullReview ? "full PR diff" : `commit \`${shortSha}\``;
 
 	// Status line
@@ -996,6 +1003,7 @@ function renderComment(
 		lines.push(
 			`<summary>Acknowledged by author (${reconciled.ignored_by_reviewer.length})</summary>`,
 		);
+		lines.push("<br/>");
 		lines.push("");
 		lines.push("| File | Issue | Note |");
 		lines.push("|---|---|---|");
