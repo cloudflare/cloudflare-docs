@@ -31,7 +31,7 @@ RealtimeKit sends a `recording.statusUpdate` webhook when the recording transiti
 
 ```bash
 curl --request POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/webhooks" \
-  --header "Authorization: Bearer <api_token>" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "name": "Recording status webhook",
