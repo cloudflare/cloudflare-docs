@@ -46,7 +46,7 @@ Use namespace methods on the binding to access and manage memory profiles.
 
 Gets a memory profile by name. If the profile does not exist, Agent Memory creates it.
 
-- `profileName` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to access. Maximum 32 characters.
+- `profileName` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to access. Maximum 100 characters.
 - Returns <Type text="Promise<AgentMemoryProfile>" />
 
 The first `getProfile()` call for a new profile may take longer while Agent Memory creates the profile.
@@ -55,7 +55,7 @@ The first `getProfile()` call for a new profile may take longer while Agent Memo
 
 Marks a profile and all its memories and messages for deletion.
 
-- `profileName` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to delete. Maximum 32 characters.
+- `profileName` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to delete. Maximum 100 characters.
 - Returns <Type text="Promise<void>" />
 
 ## Profile methods
