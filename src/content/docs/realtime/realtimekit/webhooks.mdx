@@ -67,7 +67,7 @@ Register the publicly accessible endpoint URL using the RealtimeKit [Webhooks AP
 
 ```bash
 curl --request POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/webhooks" \
-  --header "Authorization: Bearer <api_token>" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "name": "Production webhook",
