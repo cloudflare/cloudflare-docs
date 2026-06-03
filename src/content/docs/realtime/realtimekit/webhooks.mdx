@@ -66,7 +66,7 @@ Your endpoint should return a `2xx` response as soon as it accepts the event. Mo
 Register the publicly accessible endpoint URL using the RealtimeKit [Webhooks API](/api/resources/realtime_kit/subresources/webhooks/):
 
 ```bash
-curl --request POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/webhooks" \
+curl --request POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/webhooks" \
   --header "Authorization: Bearer <api_token>" \
   --header "Content-Type: application/json" \
   --data '{
