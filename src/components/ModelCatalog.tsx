@@ -18,7 +18,14 @@ type Filters = {
 	authors: string[];
 	tasks: string[];
 	capabilities: string[];
-	hosting: string[];
+	providers: string[];
+};
+
+// URL/filter values are slugged (e.g. "cloudflare-hosted") while the underlying
+// model.hosting field stays "hosted" | "proxied". This map bridges the two.
+const PROVIDER_TO_HOSTING: Record<string, "hosted" | "proxied"> = {
+	"cloudflare-hosted": "hosted",
+	"third-party": "proxied",
 };
 
 type SortOrder = "newest" | "oldest";
@@ -206,10 +213,10 @@ function CheckIcon() {
 // Two-option facet that surfaces the existing ModelCardData.hosting field.
 // Labels match the "Cloudflare hosted" / "Third-party" badge text rendered by
 // ModelBadges.tsx so the filter chip vocabulary lines up with each card's
-// provider badge.
-const hostingItems: FilterItem[] = [
-	{ value: "hosted", label: "Cloudflare hosted" },
-	{ value: "proxied", label: "Third-party" },
+// provider badge. Slug values double as URL query string values.
+const providerItems: FilterItem[] = [
+	{ value: "cloudflare-hosted", label: "Cloudflare hosted" },
+	{ value: "third-party", label: "Third-party" },
 ];
 
 // List of model names to pin at the top
@@ -232,7 +239,7 @@ const ModelCatalog = ({
 		authors: [],
 		tasks: [],
 		capabilities: [],
-		hosting: [],
+		providers: [],
 	});
 	const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
 	const initializedRef = useRef(false);
@@ -271,14 +278,16 @@ const ModelCatalog = ({
 		const authors = params.getAll("authors");
 		const tasks = params.getAll("tasks");
 		const capabilities = params.getAll("capabilities");
-		const hosting = params.getAll("hosting");
+		const providers = params
+			.getAll("providers")
+			.filter((p) => p in PROVIDER_TO_HOSTING);
 
 		setFilters({
 			search,
 			authors,
 			tasks,
 			capabilities,
-			hosting,
+			providers,
 		});
 		initializedRef.current = true;
 	}, []);
@@ -306,8 +315,10 @@ const ModelCatalog = ({
 			);
 		}
 
-		if (filters.hosting.length > 0) {
-			filters.hosting.forEach((hosting) => params.append("hosting", hosting));
+		if (filters.providers.length > 0) {
+			filters.providers.forEach((provider) =>
+				params.append("providers", provider),
+			);
 		}
 
 		setSearchParams(params);
@@ -387,8 +398,9 @@ const ModelCatalog = ({
 			}
 		}
 
-		if (filters.hosting.length > 0) {
-			if (!filters.hosting.includes(model.hosting)) {
+		if (filters.providers.length > 0) {
+			const allowed = filters.providers.map((p) => PROVIDER_TO_HOSTING[p]);
+			if (!allowed.includes(model.hosting)) {
 				return false;
 			}
 		}
@@ -406,7 +418,7 @@ const ModelCatalog = ({
 		filters.authors.length > 0 ||
 		filters.tasks.length > 0 ||
 		filters.capabilities.length > 0 ||
-		filters.hosting.length > 0;
+		filters.providers.length > 0;
 
 	return (
 		<div className="not-content">
@@ -455,9 +467,9 @@ const ModelCatalog = ({
 					{showHostingFilter && (
 						<FilterDropdown
 							label="Providers"
-							items={hostingItems}
-							selected={filters.hosting}
-							onChange={(hosting) => setFilters({ ...filters, hosting })}
+							items={providerItems}
+							selected={filters.providers}
+							onChange={(providers) => setFilters({ ...filters, providers })}
 						/>
 					)}
 					<FilterDropdown
@@ -488,7 +500,7 @@ const ModelCatalog = ({
 								authors: [],
 								tasks: [],
 								capabilities: [],
-								hosting: [],
+								providers: [],
 							})
 						}
 						className="cursor-pointer text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
