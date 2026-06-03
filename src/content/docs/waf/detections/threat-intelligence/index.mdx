@@ -12,7 +12,7 @@ sidebar:
     label: Threat intelligence
 ---
 
-The threat intelligence detection matches incoming requests against indicators in the [Cloudforce One](/security-center/cloudforce-one/) threat intelligence database. Today, the detection matches on client IP address. If the IP was involved in threat activity in the past seven days, Cloudflare populates [threat intelligence fields](/waf/detections/threat-intelligence/fields/) you can use in WAF rule expressions.
+The threat intelligence detection matches incoming requests against indicators in the [Cloudforce One](/security-center/cloudforce-one/) threat intelligence database. The detection matches on client IP address. If the IP was involved in threat activity in the past seven days, Cloudflare populates [threat intelligence fields](/waf/detections/threat-intelligence/fields/) you can use in WAF rule expressions.
 
 You can use these fields in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/) to match on:
 

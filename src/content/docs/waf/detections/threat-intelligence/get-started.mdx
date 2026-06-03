@@ -48,22 +48,15 @@ Start by creating a rule with the _Log_ action to surface matches in [Security A
 
 </TabItem> <TabItem label="API">
 
-Threat intelligence fields work with the [Cloudflare API](/api/resources/rulesets/) and the [Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+Threat intelligence fields work with the [Cloudflare API](/api/resources/rulesets/) and the [Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). To create a custom rule via the API, refer to [Create a custom rule via API](/waf/custom-rules/create-api/).
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/rulesets/phases/http_request_firewall_custom/entrypoint" \
---request PUT \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---json '{
-  "rules": [
-    {
-      "expression": "any(cf.intel.ip.target_countries[*] == \"FR\") and any(cf.intel.ip.datasets[*] == \"ddos\")",
-      "action": "log",
-      "description": "Log DDoS threat actors targeting France"
-    }
-  ]
-}'
+Use the following expression to match IP addresses associated with DDoS activity targeting France:
+
+```txt
+any(cf.intel.ip.target_countries[*] == "FR") and any(cf.intel.ip.datasets[*] == "ddos")
 ```
+
+Set the action to `log` to validate matches before enforcing.
 
 </TabItem> </Tabs>
 
