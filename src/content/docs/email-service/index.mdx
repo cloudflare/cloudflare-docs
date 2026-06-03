@@ -50,7 +50,7 @@ Together, these two features make it possible for you to send and receive emails
 - Custom email addresses (support@, contact@, orders@)
 - Emails as a mode of interaction for agents, such as send an email to create an issue in ticket tracking
 
-Access Email Service using the [REST API](/email-service/api/send-emails/rest-api/) from any platform, or directly from Cloudflare Workers using [bindings](/email-service/api/send-emails/workers-api/):
+Access Email Service using the [REST API](/email-service/api/send-emails/rest-api/) from any platform, directly from Cloudflare Workers using [bindings](/email-service/api/send-emails/workers-api/), or over [authenticated SMTP](/email-service/api/send-emails/smtp/):
 
 <Tabs>
 <TabItem label="REST API (curl)">
@@ -135,7 +135,7 @@ export default {
 </TabItem>
 </Tabs>
 
-See the full [API reference](/email-service/api/send-emails/) for the REST API and Workers binding.
+See the full [API reference](/email-service/api/send-emails/) for the REST API, Workers binding, and SMTP.
 
 <LinkButton href="/email-service/get-started/">Get started</LinkButton>
 
@@ -164,8 +164,9 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API a
 
 <Feature header="API" href="/email-service/api/">
 	Send and route emails using the [REST
-	API](/email-service/api/send-emails/rest-api/) or [Workers
-	binding](/email-service/api/send-emails/workers-api/).
+	API](/email-service/api/send-emails/rest-api/), [Workers
+	binding](/email-service/api/send-emails/workers-api/), or
+	[SMTP](/email-service/api/send-emails/smtp/).
 </Feature>
 
 ---

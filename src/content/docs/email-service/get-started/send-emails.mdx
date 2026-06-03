@@ -77,19 +77,19 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
 2.  Add the email binding to your Wrangler configuration file:
 
     <WranglerConfig>
-        
-            ```jsonc
-            {
-            	"send_email": [
-            		{
-            			"name": "EMAIL",
-            			"remote": true,
-            		},
-            	],
-            }
-            ```
-        
-            </WranglerConfig>
+            
+                ```jsonc
+                {
+                	"send_email": [
+                		{
+                			"name": "EMAIL",
+                			"remote": true,
+                		},
+                	],
+                }
+                ```
+            
+                </WranglerConfig>
 
 3.  Create your Worker code in `src/index.ts`:
 
@@ -144,5 +144,6 @@ After deploying, test that your Worker can send emails:
 Now that you can send emails, explore advanced features:
 
 - **[Route incoming emails](/email-service/get-started/route-emails/)** - Process emails sent to your domain
+- **[Send over SMTP](/email-service/api/send-emails/smtp/)** - Use any SMTP-capable application or mail client
 - **[API reference](/email-service/api/send-emails/)** - Complete API documentation
 - **[Examples](/email-service/examples/)** - Real-world implementation patterns

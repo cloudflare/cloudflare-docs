@@ -38,22 +38,9 @@ Before you can send emails over SMTP, you need:
 
 1. An account with [Email Sending](/email-service/) enabled.
 2. At least one [domain onboarded](/email-service/configuration/domains/) under **Email Service > Email Sending** in the Cloudflare dashboard.
-3. A Cloudflare API token with the **Email Sending: Edit** permission. Both **account-owned API tokens** (recommended) and **user-owned API tokens** are accepted.
+3. A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with the **Email Sending: Edit** permission. Both account-owned (recommended) and user-owned tokens are accepted; the token is used as the SMTP password.
 
-### Create an API token
-
-Account-owned tokens are scoped to a single account and are the recommended choice for production. To create one:
-
-1. In the Cloudflare dashboard, select the account you want to send from.
-2. Go to **Manage Account** > **Account API tokens**.
-3. Select **Create Token** > **Create Custom Token**.
-4. Under **Permissions**, add **Account** > **Email Sending** > **Edit**.
-5. Select **Continue to summary**, then **Create Token**.
-6. Copy the token value and store it securely — you cannot view it again later.
-
-User-owned tokens (created under **My Profile** > **API Tokens**) also work. The server resolves the account at `MAIL FROM` time by looking up the domain ownership and authorizing the token against that account.
-
-Treat this token as a credential. Anyone with the token can send email from any onboarded domain on the matching account.
+Treat this token as a credential. Anyone with it can send email from any onboarded domain on the matching account.
 
 ## Quickstart
 

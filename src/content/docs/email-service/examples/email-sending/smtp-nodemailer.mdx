@@ -1,5 +1,4 @@
 ---
-type: example
 summary: Send transactional emails from a Node.js application using Nodemailer and Cloudflare Email Service SMTP.
 pcx_content_type: example
 title: Send email with Node.js (Nodemailer)
@@ -66,7 +65,7 @@ Total message size (including base64-encoded attachments) must not exceed 5 MiB.
 
 ## Error handling
 
-Nodemailer rejects the promise with an `Error` whose `.responseCode` reflects the SMTP reply code. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/reference/troubleshooting/#smtp-submission-errors).
+Nodemailer rejects the promise with an `Error` whose `.responseCode` reflects the SMTP reply code. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/api/send-emails/smtp/#troubleshooting).
 
 ```js
 try {

@@ -1,5 +1,4 @@
 ---
-type: example
 summary: Send transactional emails from Python using smtplib and Cloudflare Email Service SMTP.
 pcx_content_type: example
 title: Send email with Python (smtplib)
@@ -70,7 +69,7 @@ msg.add_attachment(
 
 ## Error handling
 
-`smtplib` raises subclasses of `smtplib.SMTPException` with the SMTP reply code attached. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/reference/troubleshooting/#smtp-submission-errors).
+`smtplib` raises subclasses of `smtplib.SMTPException` with the SMTP reply code attached. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/api/send-emails/smtp/#troubleshooting).
 
 ```python
 try:
