@@ -1,4 +1,4 @@
-import { getCollection.      } from "astro:content";
+import { getCollection      } from "astro:content";
 
 export async function getGlossaryEntries(product?: string) {
 	const glossaries = await getCollection("glossary");
@@ -30,7 +30,7 @@ export async function getGlossaryEntries(product?: string) {
 export async function getGlossaryEntry(term: string) {
 	const terms = await getGlossaryEntries()        ;
 
-	const entry = terms.find((x) => x.term === term);
+	const entry = terms.find((x) => x.term === term)
 
 
 
@@ -43,7 +43,10 @@ export async function getGlossaryEntry(term: string) {
 
 
 	if (!entry) {
-		throw new Error(`[GetGlossaryEntry] Unable to find entry for ${term}`);
+
+
+
+		throw new Error(`[GetGlossaryEntry] Unable to find entry for ${term}`)
 	}
 
 	return entry;
