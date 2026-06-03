@@ -238,9 +238,7 @@ Bullet point rules:
 
 Always specify a language after the opening fence. Language names must be **lowercase**.
 
-Supported languages: `bash` (alias: `curl`), `c`, `css`, `dart`, `diff`, `go`, `graphql`, `hcl` (alias: `tf`), `html`, `ini`, `java`, `js` (alias: `javascript`), `json`, `jsonc`, `kotlin`, `mdx`, `php`, `powershell`, `python` (alias: `py`), `ruby` (alias: `rb`), `rust` (alias: `rs`), `sh` (alias: `shell`), `sql`, `swift`, `toml`, `ts` (alias: `typescript`), `txt` (aliases: `text`, `plaintext`), `xml`, `yaml` (alias: `yml`).
-
-Use `txt` for unsupported languages (e.g., output blocks, Apache config fragments). Do not use `output`, `env`, `csharp`, or `promql` — they fall back to `txt` with a warning.
+Any language in [Shiki's bundled languages](https://shiki.style/languages#bundled-languages) is valid. Unrecognized identifiers fall back to plain text without an error. Use `txt` explicitly for output blocks or content with no appropriate language (aliases: `text`, `plaintext`).
 
 ### Terminal commands
 

@@ -71,38 +71,11 @@ index_name = "tutorial-index"
 
 To define the language of your code block, enter the name of the language after the first ` ``` ` fence.
 
-If there is no appropriate syntax language, use `txt` (for example, a fragment of an Apache configuration file).
+Language names must be lowercase. For example, use `javascript`, not `JavaScript`.
 
-Make sure you enter the language name in lower case, since other capitalizations of these names are not supported. For example, entering `JavaScript` would use the `txt` language as a fallback.
+Any language from [Shiki's bundled languages](https://shiki.style/languages#bundled-languages) is supported. If you use an unrecognized identifier, the block falls back to plain text without an error.
 
-Here is a list of supported languages:
-
-- `bash` (alias: `curl`) [Learn more about terminal commands](#terminal-commands)
-- `c`
-- `dart`
-- `diff`
-- `go`
-- `graphql`
-- `hcl` (alias: `tf`)
-- `html`
-- `ini`
-- `java`
-- `js` (alias: `javascript`)
-- `json` [Learn more about JSON code blocks](#json)
-- `kotlin`
-- `php`
-- `powershell` [Learn more about terminal commands](#terminal-commands)
-- `python` (alias: `py`)
-- `ruby` (alias: `rb`)
-- `rust` (alias: `rs`)
-- `sh` (alias: `shell`) [Learn more about terminal commands](#terminal-commands)
-- `sql`
-- `swift`
-- `toml`
-- `ts` (alias: `typescript`)
-- `txt` (aliases: `text`, `plaintext`, no language name)
-- `xml`
-- `yaml` (alias: `yml`)
+Use `txt` (aliases: `text`, `plaintext`) when there is no appropriate syntax language — for example, a fragment of an Apache configuration file or command output.
 
 ### Terminal commands
 
