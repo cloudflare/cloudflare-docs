@@ -4,7 +4,7 @@ name: Auto Format (Build)
 
 on:
   pull_request:
-    branches: [auto-format-canary]
+    branches: [production]
     types: [opened, synchronize]
     paths:
       - "**/*.js"
