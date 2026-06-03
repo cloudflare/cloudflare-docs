@@ -5,10 +5,8 @@ description: Rules for fenced code blocks that are not component-specific.
 
 ## Language Identifiers
 
-- If an opening fence has no language identifier (bare ` ``` `) → **warning**: always specify a language.
+- If an opening fence has no language identifier (bare ` ``` `) → **warning**: always specify a language; use `txt` if no appropriate language exists.
 - If a fence uses a capitalized language name (`JSON`, `YAML`, `TypeScript`, `JavaScript`, `Go`) → **warning**: language identifiers must be lowercase (`json`, `yaml`, `ts`, `js`, `go`).
-
-Any language supported by [Shiki's bundled languages](https://shiki.style/languages#bundled-languages) is valid. Unrecognized identifiers fall back to plain text without an error. Use `txt` explicitly for output blocks or content with no appropriate language.
 
 ## Terminal Commands
 
