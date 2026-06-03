@@ -73,15 +73,16 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 2. **Wrangler check.** `npx wrangler --version`. If missing, ask once: "Install wrangler with `npm install --save-dev wrangler` (Node project) or `npm install -g wrangler` (other)? Proceed?" **[wait for user]** If install is blocked entirely (corporate policy, blocked npm), fall back to driving Steps 4-5 via `curl` against `api.cloudflare.com/client/v4/`.
 
 3. **Auth + scope probe (FIRST irreversible action).** Run `scripts/auth-probe.sh`. Branch on `status`:
-   - `ok`: continue to Step 4.
-   - `missing_token` or `missing_scope`: ask the user to create a token at https://dash.cloudflare.com/profile/api-tokens → Custom token → permissions `Account.Turnstile:Edit` + `Account.Workers Scripts:Edit` → include the target account in Account Resources. **Do NOT direct them to `wrangler login`**. Its OAuth scope doesn't include `Account.Turnstile:Edit`. Offer three ways to hand the token over, cleanest first:
+   - `ok`: continue to Step 4. The script already picked the account (single-account token, or one matching `$CLOUDFLARE_ACCOUNT_ID`).
+   - `missing_token`, `missing_scope`, or `missing_workers_scope`: ask the user to create a token at https://dash.cloudflare.com/profile/api-tokens → Custom token → permissions `Account.Turnstile:Edit` **and** `Account.Workers Scripts:Edit` → include the target account in Account Resources. **Do NOT direct them to `wrangler login`**. Its OAuth scope doesn't include `Account.Turnstile:Edit` or `Account.Workers Scripts:Edit`. Offer three ways to hand the token over, cleanest first:
      1. **Export + relaunch** (token never enters chat): `export CLOUDFLARE_API_TOKEN=<token>` then restart the agent from that terminal.
      2. **Save to file** (token in file with user-only perms, not in chat): `umask 077 && printf '%s' '<token>' > ~/.cf-turnstile-token`, then read with `TOKEN=$(cat ~/.cf-turnstile-token)`.
      3. **Paste in chat** (fastest, but token lands in conversation log; user should rotate it after if the log is ever shared).
      While the user creates the token, run Steps 5, 6, 7 (Domain, Codebase scan, Insertion plan) in parallel. When they paste the token, re-run `auth-probe.sh`, then continue to Step 8.
-   - `account_mismatch`: tell the user to `unset CLOUDFLARE_ACCOUNT_ID` or fix it to match the token's account.
+   - `multiple_accounts`: the token covers more than one account and `$CLOUDFLARE_ACCOUNT_ID` is unset. Present the numbered `accounts` list. **[wait for user]** Then export `CLOUDFLARE_ACCOUNT_ID=<chosen>` and re-run `auth-probe.sh`.
+   - `account_mismatch`: `$CLOUDFLARE_ACCOUNT_ID` is set but isn't one of the token's accounts. Show the `accounts` list and ask the user to either `unset CLOUDFLARE_ACCOUNT_ID` or set it to one of those IDs.
 
-4. **Account selection.** If `auth-probe.sh` returned multiple accounts, present a numbered list. **[wait for user]** Otherwise use the single account silently.
+4. **Account selection.** If `auth-probe.sh` returned `ok` after a `multiple_accounts` round-trip, this is already done. Otherwise the script picked the single account silently and you continue to Step 5.
 
 5. **Domain.** Always include `localhost` and `127.0.0.1`. For production, scan `package.json` `homepage`, `wrangler.toml`, `README.md`, `AGENTS.md`, git remote. Confirm: "I'll register for `localhost`, `127.0.0.1`, and `<domain>`. OK?" **[wait for user]** If no production domain is found, ask.
 
@@ -91,7 +92,7 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
 8. **Widget creation.** Run `scripts/widget-create.sh --account-id <id> --name <name> --domains <list> --mode managed`. Report the sitekey. The secret stays in env; never write it to disk.
 
-9. **Worker deploy.** Run `scripts/worker-deploy.sh --name turnstile-siteverify-<project-slug>` with `WIDGET_SECRET` exported. Report the Worker URL.
+9. **Worker deploy.** Run `scripts/worker-deploy.sh --name turnstile-siteverify-<project-slug>` with `WIDGET_SECRET` exported. Report the Worker URL on `status: ok`. On `set_secret_failed`, the Worker deployed but `TURNSTILE_SECRET_KEY` is not set on it; surface the error, then retry with `echo "$WIDGET_SECRET" | npx wrangler secret put TURNSTILE_SECRET_KEY --name <returned worker_name>` before running validation.
 
 10. **Frontend edits.** State the contract: "I'll add the widget + gate the existing submit handler on `success === true`. The existing handler logic stays the same." Ask "yes" / "show". **[wait for user]** If "show", print unified diffs and ask again. Do NOT propose alternate behavior (mail delivery, custom backends).
 
@@ -211,13 +212,15 @@ The wizard above references deterministic helper scripts. Write these files unde
 #
 # Reads:
 #   $CLOUDFLARE_API_TOKEN  (required)
-#   $CLOUDFLARE_ACCOUNT_ID (optional; if set, checked against the token's account)
+#   $CLOUDFLARE_ACCOUNT_ID (optional; if set, must be one of the token's accounts)
 #
 # Outputs JSON to stdout, always exits 0. The agent reads `status`:
-#   "ok"              ; token has Turnstile + Workers scope, account_id captured
-#   "missing_token"   ; no token, or wrangler whoami failed
-#   "missing_scope"   ; token lacks Account.Turnstile:Edit (code 10000)
-#   "account_mismatch"; $CLOUDFLARE_ACCOUNT_ID does not match the token's account
+#   "ok"                   ; selected account passed both Turnstile and Workers scope probes
+#   "missing_token"        ; no token set, or wrangler whoami failed
+#   "missing_scope"        ; token lacks Account.Turnstile:Edit on the selected account
+#   "missing_workers_scope"; token has Turnstile scope but lacks Workers Scripts on the selected account
+#   "multiple_accounts"    ; token covers >1 accounts and $CLOUDFLARE_ACCOUNT_ID is unset; agent must ask user to pick, set it, and re-run
+#   "account_mismatch"     ; $CLOUDFLARE_ACCOUNT_ID is set but is not in the token's accounts list
 #
 # Human-readable diagnostics go to stderr. The agent surfaces them to the user.
 
@@ -242,30 +245,35 @@ if [ -z "$whoami_json" ] || [ "$(echo "$whoami_json" | head -c 1)" != "{" ]; the
   emit '{"status":"missing_token","reason":"whoami_failed"}'
 fi
 
-# Parse with jq if available, fall back to python3
-parse_json() {
-  if command -v jq >/dev/null 2>&1; then
-    echo "$1" | jq -r "$2" 2>/dev/null || python3 -c "import sys,json; obj=json.loads(sys.argv[1]); print(eval('obj' + sys.argv[2]))" "$1" "$3" 2>/dev/null
-  else
-    python3 -c "import sys,json; obj=json.loads(sys.argv[1]); print(eval('obj' + sys.argv[2]))" "$1" "$3" 2>/dev/null
-  fi
-}
-
-account_id=$(echo "$whoami_json" | (jq -r '.accounts[0].id' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)['accounts'][0]['id'])"))
+# Extract the accounts array. Fall back to python3 if jq is missing.
 accounts_json=$(echo "$whoami_json" | (jq -c '.accounts' 2>/dev/null || python3 -c "import sys,json; print(json.dumps(json.load(sys.stdin)['accounts']))"))
+account_count=$(echo "$accounts_json" | (jq 'length' 2>/dev/null || python3 -c "import sys,json; print(len(json.load(sys.stdin)))"))
 
-if [ -z "$account_id" ] || [ "$account_id" = "null" ]; then
+if [ -z "$account_count" ] || [ "$account_count" = "0" ] || [ "$account_count" = "null" ]; then
   echo "auth-probe: wrangler whoami succeeded but no accounts found on the token." >&2
   emit '{"status":"missing_token","reason":"no_accounts"}'
 fi
 
-if [ -n "$declared_account" ] && [ "$declared_account" != "$account_id" ]; then
-  echo "auth-probe: \$CLOUDFLARE_ACCOUNT_ID ($declared_account) does not match the token's account ($account_id)." >&2
-  echo "auth-probe: Either unset \$CLOUDFLARE_ACCOUNT_ID, or fix it before continuing." >&2
-  emit "{\"status\":\"account_mismatch\",\"declared\":\"$declared_account\",\"token_account\":\"$account_id\"}"
+# Pick the account to probe:
+#   - $CLOUDFLARE_ACCOUNT_ID set: must be in the token's accounts list, else account_mismatch
+#   - unset, exactly 1 account: use it silently
+#   - unset, >1 accounts: emit multiple_accounts; agent picks and re-runs
+if [ -n "$declared_account" ]; then
+  in_list=$(echo "$accounts_json" | (jq --arg id "$declared_account" 'map(.id) | index($id) != null' 2>/dev/null || python3 -c "import sys,json; print('true' if any(a['id']==sys.argv[1] for a in json.load(sys.stdin)) else 'false')" "$declared_account"))
+  if [ "$in_list" != "true" ]; then
+    echo "auth-probe: \$CLOUDFLARE_ACCOUNT_ID ($declared_account) is not one of the token's accounts." >&2
+    echo "auth-probe: Either unset \$CLOUDFLARE_ACCOUNT_ID, or set it to an account included in the token's Account Resources." >&2
+    emit "{\"status\":\"account_mismatch\",\"declared\":\"$declared_account\",\"accounts\":$accounts_json}"
+  fi
+  account_id="$declared_account"
+elif [ "$account_count" = "1" ]; then
+  account_id=$(echo "$accounts_json" | (jq -r '.[0].id' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)[0]['id'])"))
+else
+  echo "auth-probe: token covers $account_count accounts; ask the user to pick one, then export \$CLOUDFLARE_ACCOUNT_ID and re-run." >&2
+  emit "{\"status\":\"multiple_accounts\",\"accounts\":$accounts_json}"
 fi
 
-# Probe Turnstile scope
+# Probe Turnstile scope on the selected account
 tmp=$(mktemp)
 http_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
   "https://api.cloudflare.com/client/v4/accounts/$account_id/challenges/widgets" \
@@ -274,8 +282,23 @@ body=$(cat "$tmp"); rm -f "$tmp"
 success=$(echo "$body" | (jq -r '.success' 2>/dev/null || echo "false"))
 
 if [ "$success" != "true" ]; then
-  echo "auth-probe: token cannot read /challenges/widgets (HTTP $http_code). Missing Account.Turnstile:Edit." >&2
+  echo "auth-probe: token cannot read /challenges/widgets on account $account_id (HTTP $http_code). Missing Account.Turnstile:Edit." >&2
   emit "{\"status\":\"missing_scope\",\"account_id\":\"$account_id\",\"http_code\":$http_code}"
+fi
+
+# Probe Workers scope on the selected account. GET /workers/scripts requires
+# Account.Workers Scripts:Read; the Custom Token UI grants Read alongside Edit,
+# so a successful list call is a reliable proxy for deploy permission.
+tmp=$(mktemp)
+workers_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
+  "https://api.cloudflare.com/client/v4/accounts/$account_id/workers/scripts" \
+  -H "Authorization: Bearer $token" 2>/dev/null || echo "000")
+workers_body=$(cat "$tmp"); rm -f "$tmp"
+workers_success=$(echo "$workers_body" | (jq -r '.success' 2>/dev/null || echo "false"))
+
+if [ "$workers_success" != "true" ]; then
+  echo "auth-probe: token cannot read /workers/scripts on account $account_id (HTTP $workers_code). Missing Account.Workers Scripts:Edit." >&2
+  emit "{\"status\":\"missing_workers_scope\",\"account_id\":\"$account_id\",\"http_code\":$workers_code}"
 fi
 
 emit "{\"status\":\"ok\",\"account_id\":\"$account_id\",\"accounts\":$accounts_json}"
@@ -554,9 +577,11 @@ exit 1
 #   --deploy-dir <path>    Where to extract the template. Default: /tmp/turnstile-siteverify-deploy
 #
 # Outputs JSON. Exit 0 on success, non-zero on failure.
-#   ok:        {"status":"ok","worker_url":"<url>","worker_name":"<name>"}
-#   conflict:  {"status":"error","reason":"name_conflict_after_retry"}
-#   no_secret: {"status":"error","reason":"missing_input_secret_after_retry"}
+#   ok:            {"status":"ok","worker_url":"<url>","worker_name":"<name>"}
+#   conflict:      {"status":"error","reason":"name_conflict_after_retry"}
+#   deploy_failed: {"status":"error","reason":"deploy_failed"}
+#   set_secret:    {"status":"error","reason":"set_secret_failed","worker_name":"<name>"}
+#   url_parse:     {"status":"error","reason":"url_parse_failed","worker_name":"<name>"}
 
 set -uo pipefail
 
@@ -608,7 +633,12 @@ set_secret() {
   echo "$WIDGET_SECRET" | (cd "$DEPLOY_DIR" && npx wrangler secret put TURNSTILE_SECRET_KEY --name "$NAME") >/dev/null 2>&1
 }
 
-set_secret
+if ! set_secret; then
+  echo "worker-deploy: failed to set TURNSTILE_SECRET_KEY on $NAME" >&2
+  rm -f "$deploy_log"
+  echo "{\"status\":\"error\",\"reason\":\"set_secret_failed\",\"worker_name\":\"$NAME\"}"
+  exit 1
+fi
 sleep 5
 
 # Try to extract the deployed URL from the wrangler log
@@ -683,15 +713,16 @@ Already authenticated:
 
 > **Agent:** You're authenticated as `you@example.com` on Acme Corp. Use this account?
 
-Not authenticated:
+Not authenticated, or token missing the required scopes:
 
-> **Agent:** You're not logged into Cloudflare. I'm running `wrangler login`. A browser tab will open; complete the OAuth flow and tell me when you're back.
+> **Agent:** I need a Cloudflare API token with `Account.Turnstile:Edit` and `Account.Workers Scripts:Edit`. Create one at https://dash.cloudflare.com/profile/api-tokens (Custom token), include the target account in Account Resources, then either `export CLOUDFLARE_API_TOKEN=<token>` and re-launch me, or paste it here.
 
-In headless environments (Docker, CI) where a browser cannot open, the agent tells you and asks you to run `wrangler login` on a machine that has one.
+The skill does not use `wrangler login`. OAuth-based wrangler sessions do not include `Account.Turnstile:Edit` or `Account.Workers Scripts:Edit`, so they cannot create widgets or deploy Workers through this flow. A Custom API token is the only path.
 
 ### 4. Account selection (only if you have more than one)
 
 > **Agent:** Your session has access to 3 Cloudflare accounts:
+>
 > 1. Personal (`a1b2c3...`)
 > 2. Acme Corp (`e5f6g7...`)
 > 3. Acme Staging (`i9j0k1...`)
@@ -726,10 +757,10 @@ If multiple candidates exist, it shows a list:
 
 > **Agent:** I found 4 candidates for Turnstile protection:
 >
-> 1. `app/(auth)/signup/page.tsx` (public signup form)  [recommended]
-> 2. `app/(auth)/login/page.tsx` (public login form)    [recommended]
-> 3. `app/contact/page.tsx` (public contact form)       [recommended]
-> 4. `app/admin/users/page.tsx` (admin form)            [skip by default]
+> 1. `app/(auth)/signup/page.tsx` (public signup form) [recommended]
+> 2. `app/(auth)/login/page.tsx` (public login form) [recommended]
+> 3. `app/contact/page.tsx` (public contact form) [recommended]
+> 4. `app/admin/users/page.tsx` (admin form) [skip by default]
 >
 > Reply with the numbers to protect, "all", "recommended", or a list like "1,3".
 
@@ -762,6 +793,7 @@ The agent copies the bundled Worker template into a temp directory, sets `TURNST
 ### 10. Frontend edits (diff preview before write)
 
 > **Agent:** I'm about to edit these 3 files:
+>
 > - `app/(auth)/signup/page.tsx` (add Turnstile widget, wire form to Worker)
 > - `app/(auth)/login/page.tsx` (same)
 > - `app/contact/page.tsx` (same)
@@ -775,6 +807,7 @@ If you reply "show", the agent prints unified diffs and asks again before writin
 Three checks. The agent runs them and reports each:
 
 > **Agent:**
+>
 > - ✓ Worker `/health` returns `{"ok": true, "version": "..."}`
 > - ✓ Worker handles a dummy token with a structured error (`success: false`, `error-codes: [...]`, `_worker` present)
 > - ✓ Widget hostname matches `example.com`
@@ -792,6 +825,7 @@ Default to yes. If the user has `.gitignore` patterns you'd violate, surface tha
 > **Agent:** Turnstile Spin: complete.
 >
 > Created:
+>
 > - Widget "myproject (Spin)", sitekey `0x4AAAAAA...`
 > - Worker `https://turnstile-siteverify-myproject.example.workers.dev`
 > - Frontend snippets at `app/(auth)/signup/page.tsx`, `app/(auth)/login/page.tsx`, `app/contact/page.tsx`
@@ -824,13 +858,13 @@ The agent runs the full wizard in your project:
 
 ### What gets created
 
-| Artifact                          | Where it lives                                                       | Path                            |
-| --------------------------------- | -------------------------------------------------------------------- | ------------------------------- |
-| Turnstile widget                  | Cloudflare account                                                   | dashboard, widget list          |
-| Managed siteverify Worker         | Cloudflare account, default subdomain or custom route                | dashboard, Workers list         |
-| Frontend widget snippet           | Your repo, at each chosen insertion point                            | varies by framework             |
-| Secret (`TURNSTILE_SECRET_KEY`)   | Worker secret, never on disk                                         | Workers secret store            |
-| Spin skill copy                   | Your repo                                                            | `.claude/skills/turnstile-spin/SKILL.md` or equivalent |
+| Artifact                        | Where it lives                                        | Path                                                   |
+| ------------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |
+| Turnstile widget                | Cloudflare account                                    | dashboard, widget list                                 |
+| Managed siteverify Worker       | Cloudflare account, default subdomain or custom route | dashboard, Workers list                                |
+| Frontend widget snippet         | Your repo, at each chosen insertion point             | varies by framework                                    |
+| Secret (`TURNSTILE_SECRET_KEY`) | Worker secret, never on disk                          | Workers secret store                                   |
+| Spin skill copy                 | Your repo                                             | `.claude/skills/turnstile-spin/SKILL.md` or equivalent |
 
 ---
 
@@ -840,21 +874,15 @@ This section is the agent's runbook. Each step is required unless the step itsel
 
 ### Step 1: Authentication check
 
-Confirm the user is authenticated to Cloudflare before running any provisioning.
+Confirm the user has a Cloudflare API token with the required scopes before running any provisioning. The token must carry `Account.Turnstile:Edit` and `Account.Workers Scripts:Edit`, with the target account included in Account Resources. `wrangler login` (OAuth) does not include either scope, so it is not a viable substitute.
 
 ```sh
-npx wrangler whoami
+npx wrangler whoami --json
 ```
 
-Expected: a JSON-ish output showing the authenticated email and the active account. If it errors with `not logged in`:
+Expected: JSON showing the authenticated email and an `accounts` array. If it errors or returns no accounts, the user needs to create a token at https://dash.cloudflare.com/profile/api-tokens and export it as `CLOUDFLARE_API_TOKEN` before continuing.
 
-```sh
-npx wrangler login
-```
-
-This opens a browser-based OAuth flow. If the user's environment cannot open a browser (headless, container), instruct them to run `wrangler login` on their local machine and re-invoke you.
-
-If the account has multiple Cloudflare accounts attached, `wrangler whoami` lists them. Prompt the user to choose, then store the choice as `CLOUDFLARE_ACCOUNT_ID` in your conversation state. Do not write it to a file.
+If the token covers multiple accounts, `wrangler whoami --json` lists them under `accounts`. Prompt the user to choose, then export `CLOUDFLARE_ACCOUNT_ID` to that account's ID. Do not write it to a file.
 
 ### Step 2: Codebase scan
 
@@ -866,20 +894,19 @@ Run this detection in order:
 
 1. Detect framework. Look for these files at the project root:
 
-   | Marker file                  | Framework                |
-   | ---------------------------- | ------------------------ |
-   | `next.config.{js,mjs,ts}`    | Next.js                  |
-   | `astro.config.{mjs,ts}`      | Astro                    |
-   | `svelte.config.{js,ts}`      | SvelteKit                |
-   | `remix.config.{js,ts}`       | Remix                    |
-   | `hugo.toml` / `config.toml`  | Hugo                     |
-   | `wrangler.toml` + `functions/` | Cloudflare Pages       |
-   | none of the above            | vanilla HTML (fallback)  |
+   | Marker file                    | Framework               |
+   | ------------------------------ | ----------------------- |
+   | `next.config.{js,mjs,ts}`      | Next.js                 |
+   | `astro.config.{mjs,ts}`        | Astro                   |
+   | `svelte.config.{js,ts}`        | SvelteKit               |
+   | `remix.config.{js,ts}`         | Remix                   |
+   | `hugo.toml` / `config.toml`    | Hugo                    |
+   | `wrangler.toml` + `functions/` | Cloudflare Pages        |
+   | none of the above              | vanilla HTML (fallback) |
 
    If the project has both `next.config.*` and a `pages/` directory, treat as Next.js Pages Router. If it has `app/` instead, treat as Next.js App Router.
 
 2. Find candidate insertion points by grep. Heuristics:
-
    - Any element matching `<form ...>` in `.html`, `.tsx`, `.jsx`, `.astro`, `.svelte`, or `.vue` files.
    - Any handler exporting `POST` in `app/api/**/route.{ts,js}` (Next.js App Router) or `pages/api/**/*.{ts,js}` (Pages Router).
    - Any `+server.ts` or `+page.server.ts` in SvelteKit.
@@ -937,7 +964,7 @@ npx wrangler turnstile widget create \
 If the `wrangler turnstile` subcommand is not available on the user's wrangler version, fall back to a direct `curl` against the API:
 
 ```sh
-ACCOUNT_ID=$(npx wrangler whoami --json | jq -r '.account.id')
+ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-$(npx wrangler whoami --json | jq -r '.accounts[0].id')}"
 curl -X POST \
   "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
@@ -949,15 +976,15 @@ Expected response shape:
 
 ```json
 {
-  "result": {
-    "sitekey": "0x4AAAAAAA...",
-    "secret": "0x4AAAAAAA...",
-    "name": "myproject (Spin)",
-    "domains": ["example.com"],
-    "mode": "managed",
-    "created_on": "2026-05-29T..."
-  },
-  "success": true
+	"result": {
+		"sitekey": "0x4AAAAAAA...",
+		"secret": "0x4AAAAAAA...",
+		"name": "myproject (Spin)",
+		"domains": ["example.com"],
+		"mode": "managed",
+		"created_on": "2026-05-29T..."
+	},
+	"success": true
 }
 ```
 
@@ -973,11 +1000,11 @@ npx --yes degit cloudflare/skills/skills/turnstile-spin/templates/worker \
 
 cd /tmp/turnstile-siteverify-deploy
 
-# Set the secret captured in Step 4
-echo "$WIDGET_SECRET" | npx wrangler secret put TURNSTILE_SECRET_KEY
-
-# Deploy
+# Deploy first so the named Worker exists
 npx wrangler deploy --name turnstile-siteverify-{project-slug}
+
+# Then set the secret on that named Worker (not on the wrangler.toml default)
+echo "$WIDGET_SECRET" | npx wrangler secret put TURNSTILE_SECRET_KEY --name turnstile-siteverify-{project-slug}
 ```
 
 `wrangler deploy` prints the deployed Worker URL, for example `https://turnstile-siteverify-myproject.example.workers.dev`. Capture it as `WORKER_URL`.
@@ -1047,12 +1074,12 @@ Expected response (HTTP 200, with `success: false`):
 
 ```json
 {
-  "success": false,
-  "error-codes": ["invalid-input-response"],
-  "_worker": {
-    "duration_ms": 87,
-    "worker_version": "1.0.0"
-  }
+	"success": false,
+	"error-codes": ["invalid-input-response"],
+	"_worker": {
+		"duration_ms": 87,
+		"worker_version": "1.0.0"
+	}
 }
 ```
 
@@ -1103,14 +1130,14 @@ curl -sSL https://developers.cloudflare.com/turnstile/spin/index.md \
 
 For other agents:
 
-| Agent          | Persist path                                          |
-| -------------- | ----------------------------------------------------- |
-| Claude Code    | `.claude/skills/turnstile-spin/SKILL.md`              |
-| Cursor         | `.cursor/rules/turnstile-spin.md`                     |
-| Codex          | `.codex/skills/turnstile-spin/SKILL.md`               |
-| OpenCode       | `.opencode/skills/turnstile-spin/SKILL.md`            |
-| Copilot Chat   | `.github/copilot/skills/turnstile-spin.md`            |
-| Windsurf       | `.windsurf/rules/turnstile-spin.md`                   |
+| Agent        | Persist path                               |
+| ------------ | ------------------------------------------ |
+| Claude Code  | `.claude/skills/turnstile-spin/SKILL.md`   |
+| Cursor       | `.cursor/rules/turnstile-spin.md`          |
+| Codex        | `.codex/skills/turnstile-spin/SKILL.md`    |
+| OpenCode     | `.opencode/skills/turnstile-spin/SKILL.md` |
+| Copilot Chat | `.github/copilot/skills/turnstile-spin.md` |
+| Windsurf     | `.windsurf/rules/turnstile-spin.md`        |
 
 If the project already has one of these directories from a prior install, overwrite the skill file (the docs page is the source of truth and changes over time). If not, create the directory.
 
@@ -1154,26 +1181,26 @@ When the agent's codebase scan (Step 6 of the conversation flow, Step 2 of the w
 
 ### Detection signals
 
-| Signal | Pattern | What it means |
-| --- | --- | --- |
-| reCAPTCHA v2 / v3 script | `https://www.google.com/recaptcha/api.js` (with or without `?render=`) | Frontend uses reCAPTCHA |
-| reCAPTCHA widget | `class="g-recaptcha"` or `data-sitekey="6L..."` (reCAPTCHA sitekeys start with `6L`) | Widget element |
-| reCAPTCHA backend | `https://www.google.com/recaptcha/api/siteverify` in any server-side file | siteverify call to replace |
-| hCaptcha script | `https://js.hcaptcha.com/1/api.js` | Frontend uses hCaptcha |
-| hCaptcha widget | `class="h-captcha"` or hCaptcha-shaped sitekey (UUID-style) | Widget element |
-| hCaptcha backend | `https://hcaptcha.com/siteverify` in any server-side file | siteverify call to replace |
+| Signal                   | Pattern                                                                              | What it means              |
+| ------------------------ | ------------------------------------------------------------------------------------ | -------------------------- |
+| reCAPTCHA v2 / v3 script | `https://www.google.com/recaptcha/api.js` (with or without `?render=`)               | Frontend uses reCAPTCHA    |
+| reCAPTCHA widget         | `class="g-recaptcha"` or `data-sitekey="6L..."` (reCAPTCHA sitekeys start with `6L`) | Widget element             |
+| reCAPTCHA backend        | `https://www.google.com/recaptcha/api/siteverify` in any server-side file            | siteverify call to replace |
+| hCaptcha script          | `https://js.hcaptcha.com/1/api.js`                                                   | Frontend uses hCaptcha     |
+| hCaptcha widget          | `class="h-captcha"` or hCaptcha-shaped sitekey (UUID-style)                          | Widget element             |
+| hCaptcha backend         | `https://hcaptcha.com/siteverify` in any server-side file                            | siteverify call to replace |
 
 ### Substitution rules
 
-| What to find | What to replace it with |
-| --- | --- |
-| `<script src="https://www.google.com/recaptcha/api.js"...>` | `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>` |
-| `<script src="https://js.hcaptcha.com/1/api.js"...>` | Same as above. |
-| `<div class="g-recaptcha" data-sitekey="6L..."></div>` | `<div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITEKEY" data-action="turnstile-spin-v1"></div>` |
-| `<div class="h-captcha" data-sitekey="..."></div>` | Same as above. |
-| `grecaptcha.execute(...)` / `grecaptcha.render(...)` calls | `turnstile.render(...)` / `turnstile.execute(...)` with the same callbacks. The token field name changes from `g-recaptcha-response` to `cf-turnstile-response`. |
-| `https://www.google.com/recaptcha/api/siteverify` POST | The Spin-deployed managed Worker URL. Same request shape (`secret`, `response`/`token`, optional `remoteip`). |
-| `RECAPTCHA_SECRET` / `HCAPTCHA_SECRET` env var | Remove. The Turnstile secret lives in the managed Worker as a Worker secret, never in the customer's app env. |
+| What to find                                                | What to replace it with                                                                                                                                          |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<script src="https://www.google.com/recaptcha/api.js"...>` | `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`                                                                      |
+| `<script src="https://js.hcaptcha.com/1/api.js"...>`        | Same as above.                                                                                                                                                   |
+| `<div class="g-recaptcha" data-sitekey="6L..."></div>`      | `<div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITEKEY" data-action="turnstile-spin-v1"></div>`                                                         |
+| `<div class="h-captcha" data-sitekey="..."></div>`          | Same as above.                                                                                                                                                   |
+| `grecaptcha.execute(...)` / `grecaptcha.render(...)` calls  | `turnstile.render(...)` / `turnstile.execute(...)` with the same callbacks. The token field name changes from `g-recaptcha-response` to `cf-turnstile-response`. |
+| `https://www.google.com/recaptcha/api/siteverify` POST      | The Spin-deployed managed Worker URL. Same request shape (`secret`, `response`/`token`, optional `remoteip`).                                                    |
+| `RECAPTCHA_SECRET` / `HCAPTCHA_SECRET` env var              | Remove. The Turnstile secret lives in the managed Worker as a Worker secret, never in the customer's app env.                                                    |
 
 ### Edge cases
 
@@ -1482,19 +1509,19 @@ If validation in Step 7 reports `hostname-mismatch`, either the widget is regist
 
 Common causes and fixes:
 
-| Error                                       | Cause                                                   | Fix                                                                |
-| ------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ |
-| `script name already in use`                | Another Worker has the same name                        | Append a hash: `--name turnstile-siteverify-{project}-{hash}`      |
-| `no workers.dev subdomain configured`       | Account has no default subdomain                        | Set one in the dashboard, or deploy to a custom route              |
-| `unauthorized`                              | Session expired                                         | Re-run `wrangler login`                                            |
-| `secret not set`                            | `TURNSTILE_SECRET_KEY` was not pushed before deploy     | Run `wrangler secret put TURNSTILE_SECRET_KEY` then redeploy       |
-| 522 on first request after deploy           | Cold-start race                                         | Wait 5-10 seconds, retry the validation curl                       |
+| Error                                 | Cause                                                     | Fix                                                                                                                           |
+| ------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `script name already in use`          | Another Worker has the same name                          | Append a hash: `--name turnstile-siteverify-{project}-{hash}`                                                                 |
+| `no workers.dev subdomain configured` | Account has no default subdomain                          | Set one in the dashboard, or deploy to a custom route                                                                         |
+| `unauthorized`                        | Token expired or missing `Account.Workers Scripts:Edit`   | Re-create the token at https://dash.cloudflare.com/profile/api-tokens with the right scopes; re-export `CLOUDFLARE_API_TOKEN` |
+| `secret not set`                      | `TURNSTILE_SECRET_KEY` was not pushed to the named Worker | Run `echo "$WIDGET_SECRET" \| npx wrangler secret put TURNSTILE_SECRET_KEY --name <worker_name>`                              |
+| 522 on first request after deploy     | Cold-start race                                           | Wait 5-10 seconds, retry the validation curl                                                                                  |
 
 If the deploy fails for any other reason, surface the wrangler error verbatim to the user. Do not retry blindly.
 
 ### Widget creation API returns 403
 
-This usually means the account does not have Turnstile enabled, or the user's token lacks the `Account.Turnstile:Edit` permission. Direct the user to the [Turnstile dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and have them confirm Turnstile is available. If it is and the API still 403s, the token is the problem; re-run `wrangler login`.
+This usually means the account does not have Turnstile enabled, or the user's token lacks the `Account.Turnstile:Edit` permission. Direct the user to the [Turnstile dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and have them confirm Turnstile is available. If it is and the API still 403s, the token is the problem; re-create it at https://dash.cloudflare.com/profile/api-tokens with `Account.Turnstile:Edit` (and `Account.Workers Scripts:Edit` for the next step) and re-export `CLOUDFLARE_API_TOKEN`.
 
 ---
 
@@ -1544,12 +1571,12 @@ The site key never changes. The user's existing widget keeps working throughout.
 
 The deployed Worker exposes three endpoints.
 
-| Method | Path           | Purpose                                                                |
-| ------ | -------------- | ---------------------------------------------------------------------- |
-| POST   | `/`            | Siteverify proxy. Accepts JSON or form-encoded body.                   |
-| POST   | `/siteverify`  | Alias of `/`.                                                          |
-| GET    | `/health`      | Health check. Returns `{"ok": true, "version": "..."}`.                |
-| GET    | `/`            | Returns the same payload as `/health` for convenience.                 |
+| Method | Path          | Purpose                                                 |
+| ------ | ------------- | ------------------------------------------------------- |
+| POST   | `/`           | Siteverify proxy. Accepts JSON or form-encoded body.    |
+| POST   | `/siteverify` | Alias of `/`.                                           |
+| GET    | `/health`     | Health check. Returns `{"ok": true, "version": "..."}`. |
+| GET    | `/`           | Returns the same payload as `/health` for convenience.  |
 
 Request body (JSON):
 
@@ -1565,11 +1592,11 @@ The Worker forwards the token to `https://challenges.cloudflare.com/turnstile/v0
 
 ### Worker configuration
 
-| Variable                | Type    | Default   | Purpose                                                             |
-| ----------------------- | ------- | --------- | ------------------------------------------------------------------- |
-| `TURNSTILE_SECRET_KEY`  | secret  | (required)| The widget's secret. Never on disk.                                 |
-| `ALLOWED_ORIGIN`        | var     | `*`       | CORS allowed origin. Lock to your customer-facing domain in prod.   |
-| `EXPECTED_HOSTNAME`     | var     | (unset)   | If set, reject siteverify responses with a mismatched hostname.     |
+| Variable               | Type   | Default    | Purpose                                                           |
+| ---------------------- | ------ | ---------- | ----------------------------------------------------------------- |
+| `TURNSTILE_SECRET_KEY` | secret | (required) | The widget's secret. Never on disk.                               |
+| `ALLOWED_ORIGIN`       | var    | `*`        | CORS allowed origin. Lock to your customer-facing domain in prod. |
+| `EXPECTED_HOSTNAME`    | var    | (unset)    | If set, reject siteverify responses with a mismatched hostname.   |
 
 ### Telemetry marker
 
