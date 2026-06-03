@@ -211,11 +211,11 @@ function CheckIcon() {
 }
 
 // Two-option facet that surfaces the existing ModelCardData.hosting field.
-// Labels match the "Cloudflare hosted" / "Third-party" badge text rendered by
+// Labels match the "Cloudflare-hosted" / "Third-party" badge text rendered by
 // ModelBadges.tsx so the filter chip vocabulary lines up with each card's
 // provider badge. Slug values double as URL query string values.
 const providerItems: FilterItem[] = [
-	{ value: "cloudflare-hosted", label: "Cloudflare hosted" },
+	{ value: "cloudflare-hosted", label: "Cloudflare-hosted" },
 	{ value: "third-party", label: "Third-party" },
 ];
 

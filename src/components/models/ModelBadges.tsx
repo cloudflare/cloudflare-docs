@@ -11,12 +11,12 @@ type ModelType = WorkersAIModelsSchema | ResolvedModel | ModelCardData;
 
 const ModelBadges = ({ model }: { model: ModelType }) => {
 	// Provider badge: every card surfaces where the model runs (Cloudflare's
-	// infrastructure vs proxied to a third-party). Defaults to "Cloudflare
-	// hosted" for legacy models that pre-date the hosting field.
+	// infrastructure vs proxied to a third-party). Defaults to
+	// "Cloudflare-hosted" for legacy models that pre-date the hosting field.
 	const isProxied = "hosting" in model && model.hosting === "proxied";
 	const providerBadge = {
 		variant: "default",
-		text: isProxied ? "Third-party" : "Cloudflare hosted",
+		text: isProxied ? "Third-party" : "Cloudflare-hosted",
 	};
 
 	const propertyBadges = model.properties.flatMap(({ property_id, value }) => {
