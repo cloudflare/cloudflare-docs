@@ -7927,6 +7927,9 @@
 		"Input Modalities": "Text, Image",
 		"Reasoning": "Configurable (none, low, medium, high)"
 	},
+	"request_formats": [
+		"chat-completions"
+	],
 	"created_at": "2026-05-22 17:54:03",
 	"schema": {
 		"input": {

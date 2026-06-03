@@ -9642,6 +9642,10 @@
 	"metadata": {
 		"Architecture": "Transformer"
 	},
+	"request_formats": [
+		"responses",
+		"chat-completions"
+	],
 	"created_at": "2026-05-22 17:53:24",
 	"schema": {
 		"input": {

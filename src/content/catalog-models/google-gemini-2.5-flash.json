@@ -347,6 +347,7 @@
 		"Architecture": "Transformer (multimodal)",
 		"Thinking": "Yes"
 	},
+	"request_formats": null,
 	"created_at": "2026-05-22 17:53:07",
 	"schema": {
 		"input": {

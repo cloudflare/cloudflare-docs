@@ -194,6 +194,7 @@
 	"metadata": {
 		"Voices": "alloy, echo, fable, onyx, nova, shimmer"
 	},
+	"request_formats": null,
 	"created_at": "2026-05-22 17:53:43",
 	"schema": {
 		"input": {

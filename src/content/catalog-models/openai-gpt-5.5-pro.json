@@ -562,6 +562,9 @@
 		"API": "Responses",
 		"Architecture": "Transformer"
 	},
+	"request_formats": [
+		"responses"
+	],
 	"created_at": "2026-05-22 17:53:38",
 	"schema": {
 		"input": {

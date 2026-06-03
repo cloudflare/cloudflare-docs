@@ -435,6 +435,9 @@
 		"Architecture": "Transformer",
 		"Extended Thinking": "Yes"
 	},
+	"request_formats": [
+		"anthropic-messages"
+	],
 	"created_at": "2026-05-22 17:52:57",
 	"schema": {
 		"input": {

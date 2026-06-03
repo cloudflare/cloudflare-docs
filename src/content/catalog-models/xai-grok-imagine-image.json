@@ -125,6 +125,7 @@
 		"Response Formats": "url, b64_json",
 		"Text Rendering": "Yes"
 	},
+	"request_formats": null,
 	"created_at": "2026-05-22 17:54:03",
 	"schema": {
 		"input": {
