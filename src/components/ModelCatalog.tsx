@@ -204,12 +204,12 @@ function CheckIcon() {
 }
 
 // Two-option facet that surfaces the existing ModelCardData.hosting field.
-// Labels match the "Cloudflare Hosted" / "Third-Party" text rendered by
-// ModelInfo.tsx so the filter chip vocabulary lines up with each card's
-// subtitle.
+// Labels match the "Cloudflare hosted" / "Third-party" badge text rendered by
+// ModelBadges.tsx so the filter chip vocabulary lines up with each card's
+// provider badge.
 const hostingItems: FilterItem[] = [
-	{ value: "hosted", label: "Cloudflare Hosted" },
-	{ value: "proxied", label: "Third-Party" },
+	{ value: "hosted", label: "Cloudflare hosted" },
+	{ value: "proxied", label: "Third-party" },
 ];
 
 // List of model names to pin at the top
