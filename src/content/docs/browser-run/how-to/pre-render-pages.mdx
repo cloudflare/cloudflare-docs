@@ -33,7 +33,7 @@ In this tutorial, you will:
 
 To follow this tutorial, you need:
 
-- A Cloudflare account with [Browser Run enabled](/browser-run/get-started/#quick-actions)
+- A Cloudflare account
 - A Worker project that uses TypeScript
 - A public URL to pre-render
 
@@ -58,7 +58,7 @@ binding = "BROWSER"
 
 :::caution
 
-Using the `.quickAction()` method requires a `compatibility_date` of `2026-03-24` or later.
+Using the `.quickAction()` method for Browser Run Quick Actions requires a `compatibility_date` of `2026-03-24` or later.
 
 :::
 
@@ -100,7 +100,7 @@ const getTargetUrl = (request: Request) => {
 };
 
 const renderHtml = async (env: Env, targetUrl: URL) => {
-	// The /content Quick Action loads the page in Browser Run and returns
+	// The /content Quick Actions endpoint loads the page in Browser Run and returns
 	// the page HTML after the configured loading condition is met.
 	const response = await env.BROWSER.quickAction("content", {
 		url: targetUrl.toString(),
@@ -108,10 +108,13 @@ const renderHtml = async (env: Env, targetUrl: URL) => {
 			waitUntil: "networkidle2",
 			timeout: 30000,
 		},
+		// If your page has a specific readiness signal, use waitForSelector
+		// instead of relying only on network activity.
+		// waitForSelector: { selector: "[data-prerender-ready='true']", timeout: 30000 },
 	});
 
 	if (!response.ok) {
-		const detail = await response.text();
+		const detail = (await response.text()).slice(0, 500);
 		throw new Error(`Browser Run failed with ${response.status}: ${detail}`);
 	}
 
@@ -145,7 +148,7 @@ export default {
 
 The Worker accepts a `url` query parameter, validates the hostname, asks Browser Run to render that URL, and returns the rendered HTML.
 
-The `waitUntil: "networkidle2"` option waits until the page has no more than two network connections for at least 500 ms. This is often enough for client-rendered pages. If your page needs a more specific readiness signal, use [`waitForSelector`](/browser-run/reference/timeouts/#notes-and-recommendations) to wait for an element that only appears after your content has loaded.
+The `waitUntil: "networkidle2"` option waits until the page has no more than two network connections for at least 500 ms. This is often enough for client-rendered pages. If your page needs a more specific readiness signal, pass `waitForSelector` to the same Quick Actions payload to wait for an element that only appears after your content has loaded. For more information, refer to [Browser Run Quick Actions timeouts](/browser-run/reference/timeouts/).
 
 ## 3. Test pre-rendering
 
