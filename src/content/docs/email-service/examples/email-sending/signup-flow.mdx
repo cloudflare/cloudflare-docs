@@ -36,6 +36,8 @@ Configure the email binding and KV namespaces in your Wrangler configuration fil
 
 </WranglerConfig>
 
+The Worker exposes two routes: `POST /signup` creates a user, stores it in KV, and sends both a welcome email and a verification email containing a tokenized link; `GET /verify` validates that token and marks the user verified. The following code implements both handlers.
+
 ```typescript
 interface Env {
 	EMAIL: SendEmail;

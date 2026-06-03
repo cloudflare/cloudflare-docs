@@ -69,7 +69,7 @@ flowchart LR
     C -->|No| R[Reject]
     D --> E{Action?}
     E -->|Send to email| F[ARC Sign & SRS Rewrite]
-    E -->|Send to Worker| W[Email Worker]
+    E -->|Send to Worker| W[Worker]
     E -->|Drop| X[Drop]
     W --> Y{Worker action?}
     Y -->|forward| F
@@ -89,7 +89,7 @@ flowchart LR
 
 4. **Action:** The system applies the matched rule's action:
    - **Send to an email**: The message is forwarded to the verified destination address (stage 5).
-   - **Send to a Worker**: The message is passed to your [Email Worker](/email-service/api/route-emails/email-handler/). The Worker can call `forward()`, `reply()`, or `setReject()`.
+   - **Send to a Worker**: The message is passed to your [Worker](/email-service/api/route-emails/email-handler/). The Worker can call `forward()`, `reply()`, or `setReject()`.
    - **Drop**: The message is silently discarded. No further processing occurs.
 
 5. **ARC sign and SRS rewrite:** For forwarded messages, the system adds an ARC seal preserving the original authentication results and rewrites the envelope sender using the [Sender Rewriting Scheme](/email-service/reference/postmaster/#sender-rewriting). This allows SPF to pass at the destination server.

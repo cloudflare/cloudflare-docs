@@ -1,5 +1,5 @@
 ---
-title: Send method
+title: Workers API
 description: Send emails directly from Cloudflare Workers using the Email Service binding and send() method.
 pcx_content_type: concept
 sidebar:
@@ -15,70 +15,19 @@ The Workers API provides native email sending capabilities directly from your Cl
 
 ## Email binding
 
-Configure email bindings in your Wrangler configuration file to enable email sending:
+Configure a `send_email` binding in your Wrangler configuration file to enable email sending:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"send_email": [
-		{ "name": "EMAIL" },
-		// Optional: restrict sender addresses for security
-		{
-			"name": "RESTRICTED_EMAIL",
-			"allowed_sender_addresses": [
-				"noreply@yourdomain.com",
-				"support@yourdomain.com",
-			],
-		},
-	],
+	"send_email": [{ "name": "EMAIL" }],
 }
 ```
 
 </WranglerConfig>
 
-### Binding types
-
-Each entry in `send_email` can be configured to restrict what the binding can do. The sender address must always belong to a domain you have onboarded to Email Service.
-
-- **No restriction attribute**: The binding can send to any verified destination address in your account.
-- **`destination_address`**: The binding can only send to the single destination address configured here. If you call `send()` with `to` set to `null` or `undefined`, the configured address is used.
-- **`allowed_destination_addresses`**: The binding can only send to addresses listed in this allowlist.
-- **`allowed_sender_addresses`**: The binding can only send from the addresses listed in this allowlist.
-
-<WranglerConfig>
-
-```jsonc
-{
-	"send_email": [
-		// Send to any verified destination
-		{ "name": "EMAIL" },
-		// Send only to a single fixed destination
-		{
-			"name": "NOTIFY_OPS",
-			"destination_address": "ops@yourdomain.com",
-		},
-		// Send only to addresses on an allowlist
-		{
-			"name": "EMAIL_TEAM",
-			"allowed_destination_addresses": [
-				"alice@yourdomain.com",
-				"bob@yourdomain.com",
-			],
-		},
-		// Send only from addresses on an allowlist
-		{
-			"name": "RESTRICTED_EMAIL",
-			"allowed_sender_addresses": [
-				"noreply@yourdomain.com",
-				"support@yourdomain.com",
-			],
-		},
-	],
-}
-```
-
-</WranglerConfig>
+You can restrict which senders and recipients a binding may use. Refer to [Configure send bindings](/email-service/configuration/send-bindings/) for the available restriction attributes and examples.
 
 ## `send()` method
 
@@ -130,7 +79,7 @@ interface EmailSendResult {
 ```
 
 :::note[Local development with binary attachments]
-When using `wrangler dev` without [remote bindings](/workers/development-testing/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations) for the workaround.
+When using `wrangler dev` without [remote bindings](/workers/development-testing/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations).
 :::
 
 :::note[Workers binding vs REST API responses]

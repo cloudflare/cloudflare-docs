@@ -89,8 +89,8 @@ To prevent spamming unintended recipients, all routing rules are automatically d
 
 Your routing rule is now disabled. It will not forward emails to a destination address or Worker. To forward emails again, toggle the routing rule status button to **Active**.
 
-:::caution[Renaming an Email Worker]
-Renaming an Email Worker removes the binding between that Worker and any routes that point to it. After renaming, edit the affected rules to point at the renamed Worker.
+:::caution[Renaming a Worker]
+Renaming a Worker removes the binding between that Worker and any routes that point to it. After renaming, edit the affected rules to point at the renamed Worker.
 :::
 
 ### Edit a routing rule
@@ -142,6 +142,6 @@ If a routing rule for `user+detail@example.com` already exists, it takes precede
 ## Next steps
 
 - [Email handler](/email-service/api/route-emails/email-handler/) — process emails programmatically with the `email()` handler.
-- [REST API](/email-service/api/route-emails/rest-api/) — manage routing rules and destination addresses programmatically.
+- [Email Routing REST API](/email-service/platform/email-routing-rest-api/) — manage routing rules and destination addresses programmatically.
 - [Domain configuration](/email-service/configuration/domains/) — manage DNS records for Email Routing.
 - [Email routing examples](/email-service/examples/email-routing/) — advanced patterns including spam filtering and email storage.

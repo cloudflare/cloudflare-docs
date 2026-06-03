@@ -35,23 +35,11 @@ Sends to verified destination addresses are always free: they do not count towar
 | **Total message size**       | 25 MiB         | For [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) only |
 | **Header size**              | 16 KB          | All custom headers combined                                                                                            |
 
-## Workers binding limits
-
-Sending via the [Workers binding](/email-service/api/send-emails/workers-api/) runs inside your Worker's invocation, so it inherits the standard Workers platform limits below. These limits do not apply to the REST API.
-
-| Limit           | Workers Free | Workers Paid                      |
-| --------------- | ------------ | --------------------------------- |
-| **CPU time**    | 10 ms        | 30 seconds default, up to 5 min   |
-| **Subrequests** | 50           | 10,000 (up to 10M with overrides) |
-| **Memory**      | 128 MB       | 128 MB                            |
-
-Email Sending requires the [Workers Paid plan](/email-service/platform/pricing/). For full details and how to raise per-Worker CPU and subrequest limits, refer to [Workers platform limits](/workers/platform/limits/).
-
 ## Zone limits
 
-| Limit                   | Value | Notes                                                                                                                  |
-| ----------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------- |
-| **Subdomains per zone** | 50    | Maximum number of subdomains that can be configured for Email Service in a single zone, in addition to the apex domain |
+| Limit                | Value | Notes                                                                                                        |
+| -------------------- | ----- | ------------------------------------------------------------------------------------------------------------ |
+| **Domains per zone** | 30    | Combined total of domains configured for Email Routing or Email Sending in a zone, including the apex domain |
 
 ## Email Routing limits
 
@@ -64,15 +52,15 @@ The following limits apply to inbound email handled by Email Routing.
 | **Inbound message size**              | 25 MiB | Messages larger than this are rejected                                                                       |
 | **Reply `References` entries**        | 100    | If the incoming email has more than 100 `References` entries, `message.reply()` throws. Reduces reply loops. |
 
-Each routing rule maps one email pattern to one destination address or one Email Worker. To forward a single email pattern to multiple destinations, use an Email Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
+Each routing rule maps one email pattern to one destination address or one Worker. To forward a single email pattern to multiple destinations, use a Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
 
-### Email Workers on the Workers Free plan
+### Routing to Workers on the Workers Free plan
 
-Email Workers count toward the standard Workers CPU and memory limits. On the Workers Free plan, complex handlers may exceed these limits and fail to process a message. Failed invocations appear in [Workers logs](/workers/observability/logs/) with the `EXCEEDED_CPU` error. Upgrade to the [Workers Paid plan](/workers/platform/pricing/) for higher CPU and memory limits.
+Workers that handle incoming emails count toward the standard Workers CPU and memory limits. On the Workers Free plan, complex handlers may exceed these limits and fail to process a message. Failed invocations appear in [Workers logs](/workers/observability/logs/) with the `EXCEEDED_CPU` error. Upgrade to the [Workers Paid plan](/workers/platform/pricing/) for higher CPU and memory limits.
 
-### Emails sent through Email Workers
+### Emails sent from Workers
 
-Emails sent through Email Workers using the `send_email` binding appear in the Email Routing summary as **dropped**, even when they were delivered successfully. To track outbound send success, use [Email sending metrics and logs](/email-service/observability/) instead.
+Emails sent from a Worker using the `send_email` binding appear in the Email Routing summary as **dropped**, even when they were delivered successfully. To track outbound send success, use [Email sending metrics and logs](/email-service/observability/) instead.
 
 ## Compliance
 

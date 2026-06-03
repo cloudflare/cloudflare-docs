@@ -72,8 +72,6 @@ The `emailSendingAdaptiveGroups` dataset supports the following dimensions for g
 | `spf`                    | string | SPF authentication result                                    |
 | `isSpam`                 | uint8  | Whether the email was flagged as spam                        |
 | `isNDR`                  | uint8  | Whether the email is a non-delivery report                   |
-| `spamScore`              | uint32 | Spam score value                                             |
-| `spamThreshold`          | uint32 | Spam threshold value                                         |
 | `isLastEvent`            | uint8  | Whether this is the last event for this email                |
 
 The `emailSendingAdaptive` dataset includes all of the above plus per-event fields: `from`, `to`, `subject`, `messageId`, `sessionId`, `errorDetail`.
@@ -100,8 +98,6 @@ The `emailRoutingAdaptiveGroups` dataset supports the following dimensions for g
 | `spf`                    | string | SPF authentication result                                    |
 | `isSpam`                 | uint8  | Whether the email was flagged as spam                        |
 | `isNDR`                  | uint8  | Whether the email is a non-delivery report                   |
-| `spamScore`              | uint32 | Spam score value                                             |
-| `spamThreshold`          | uint32 | Spam threshold value                                         |
 | `isLastEvent`            | uint8  | Whether this is the last event for this email                |
 
 The `emailRoutingAdaptive` dataset includes all of the above plus per-event fields: `from`, `to`, `subject`, `messageId`, `sessionId`, `errorDetail`, `ruleMatched`.

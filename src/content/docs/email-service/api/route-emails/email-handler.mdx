@@ -1,5 +1,5 @@
 ---
-title: Email handler
+title: Workers API
 description: Process incoming emails with the email() handler in Cloudflare Workers to forward, reply, or reject messages.
 pcx_content_type: reference
 summary: |
@@ -77,21 +77,6 @@ export default {
 		console.log(`Subject: ${subject}`);
 		console.log(`Date: ${date}`);
 		console.log(`Message-ID: ${messageId}`);
-	},
-};
-```
-
-</TabItem>
-<TabItem label="Reading content">
-
-```ts
-export default {
-	async email(message, env, ctx): Promise<void> {
-		// Read raw email content as an ArrayBuffer, then decode to a string
-		const rawBuffer = await new Response(message.raw).arrayBuffer();
-		const rawContent = new TextDecoder().decode(rawBuffer);
-
-		console.log("Raw email content:", rawContent);
 	},
 };
 ```
@@ -447,7 +432,7 @@ async function processEmail(message, env) {
 ## Next steps
 
 - Test locally: [Email routing development](/email-service/local-development/routing/)
-- Manage rules and addresses programmatically with the [REST API](/email-service/api/route-emails/rest-api/)
+- Manage rules and addresses programmatically with the [Email Routing REST API](/email-service/platform/email-routing-rest-api/)
 - Set up [email routing configuration](/email-service/configuration/email-routing-addresses/)
 - See [email routing examples](/email-service/examples/email-routing/) for advanced email processing
 - Learn about [spam filtering](/email-service/examples/email-routing/spam-filtering/) with Workers
