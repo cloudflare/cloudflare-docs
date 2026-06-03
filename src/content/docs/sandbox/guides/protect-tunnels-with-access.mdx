@@ -1,0 +1,149 @@
+---
+title: Protect tunnels with Cloudflare Access
+pcx_content_type: how-to
+sidebar:
+  order: 8
+description: Lock down a named tunnel created with the Sandbox SDK behind a Cloudflare Access service token.
+products:
+  - sandbox
+  - cloudflare-one
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+A [named tunnel](/sandbox/api/tunnels/) created with `sandbox.tunnels.get(port, { name })` resolves to a hostname on a zone in your Cloudflare account (for example, `my-agent-api.example.com`). By default, that hostname is reachable by anyone on the internet.
+
+This guide shows how to put [Cloudflare Access](/cloudflare-one/access-controls/applications/) in front of that hostname and require callers to present a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/). After the policy is in place, only clients that send a valid Client ID and Client Secret (or a `CF_Authorization` cookie obtained from them) can reach the sandboxed service.
+
+:::note[Quick tunnels are out of scope]
+Quick tunnels (`*.trycloudflare.com`) cannot be protected with Access because the hostname is not on a zone in your account. To require authentication, use a named tunnel on one of your zones.
+:::
+
+## Before you begin
+
+You need:
+
+- A zone in your Cloudflare account that the Worker can create tunnel hostnames under.
+- `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `CLOUDFLARE_ZONE_ID` configured as Worker secrets or variables. The API token needs `Account:Cloudflare Tunnel:Edit`, `Zone:DNS:Edit`, and `Zone:Zone:Read` permissions on the zone.
+- Cloudflare Access enabled on your account. If this is your first Access application, complete the [Access onboarding](/cloudflare-one/setup/).
+
+## 1. Create a named tunnel
+
+Pass a `name` option to `sandbox.tunnels.get()`. The SDK provisions a Cloudflare Tunnel and CNAMEs `<name>.<your-zone>` at it.
+
+<TypeScriptExample>
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+    await sandbox.startProcess("python -m http.server 8080");
+
+    const tunnel = await sandbox.tunnels.get(8080, { name: "my-agent-api" });
+    // → https://my-agent-api.example.com
+
+    return Response.json({ url: tunnel.url });
+  },
+};
+```
+</TypeScriptExample>
+
+`startProcess` resolves when the process starts, not when it is listening. In real code, wait for the port to be ready before calling `tunnels.get()` — see [Expose services](/sandbox/guides/expose-services/) for an example.
+
+At this point the hostname is live but public. Anyone with the URL can reach the service. Continue to step 2 to lock it down. For production hostnames, create the Access application (steps 2–3) before deploying the Worker that calls `tunnels.get()` so the SDK CNAMEs onto an already-protected hostname.
+
+## 2. Create a service token
+
+A service token is a Client ID / Client Secret pair that automated clients send instead of going through an identity provider login.
+
+<Render file="access/create-service-token" product="cloudflare-one" />
+
+Store the Client ID and Client Secret as secrets on whichever system will call the tunnel (your CI job, agent runtime, or another Worker).
+
+## 3. Add a self-hosted Access application
+
+Create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for the tunnel hostname, then attach a Service Auth policy that references the token from step 2.
+
+**Application domain.** You have two options:
+
+- **Single hostname** — `my-agent-api.example.com`. Protects exactly the one tunnel.
+- **Wildcard subdomain** — `*.example.com`. Protects every named tunnel under the zone with a single application. Use this when your Worker creates many tunnels (for example, one per sandbox or per agent session) on the same zone.
+
+**Policy.** Add a policy with:
+
+- **Action**: `Service Auth` (see [policy actions](/cloudflare-one/access-controls/policies/#service-auth)). If you use `Allow` here, Access will redirect unauthenticated requests to an identity provider login page instead of returning an error, which is rarely what an automation client wants.
+- **Include**: `Service Token` → the token created in step 2.
+
+Optional: add a second `Allow` policy (for example, `Emails ending in @your-company.com`) so engineers can hit the URL in a browser via the identity provider flow for debugging.
+
+## 4. Call the tunnel from a client
+
+Once the policy is in place, requests must carry the service token. Access supports three patterns.
+
+### Header pair (default)
+
+Send both headers on every request:
+
+```sh
+curl https://my-agent-api.example.com \
+  --header "CF-Access-Client-Id: <CLIENT_ID>" \
+  --header "CF-Access-Client-Secret: <CLIENT_SECRET>"
+```
+
+From a Worker or any `fetch`-capable runtime:
+
+<TypeScriptExample>
+```ts
+const response = await fetch("https://my-agent-api.example.com", {
+  headers: {
+    "CF-Access-Client-Id": env.ACCESS_CLIENT_ID,
+    "CF-Access-Client-Secret": env.ACCESS_CLIENT_SECRET,
+  },
+});
+```
+</TypeScriptExample>
+
+### Single custom header
+
+If the calling system can only set one header (for example, a SaaS integration that exposes a single `Authorization` field), configure the Access application to read both values from one header. See [Authenticate with a single header](/cloudflare-one/access-controls/service-credentials/service-tokens/#authenticate-with-a-single-header).
+
+### Session cookie reuse
+
+If your Access application has at least one `Allow` policy in addition to Service Auth (see step 3), Access returns a `CF_Authorization` cookie on the first authenticated request, and subsequent requests on the same hostname can send the cookie instead of the headers. Service-Auth-only applications do not honor the cookie — every request must carry the headers. See [Authorization cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) and [Subsequent requests](/cloudflare-one/access-controls/service-credentials/service-tokens/#subsequent-requests).
+
+## 5. Verify
+
+If the hostname is brand-new, allow a few seconds for DNS and edge TLS provisioning before the first request — a `curl: (6)` or TLS error here means the hostname isn't live yet, not that the Access policy is wrong.
+
+From a machine without the token:
+
+```sh
+curl --include https://my-agent-api.example.com
+```
+
+Expect an HTTP `302` redirecting to the Access login page (or `401` if managed OAuth is enabled on the application).
+
+With the token:
+
+```sh
+curl https://my-agent-api.example.com \
+  --header "CF-Access-Client-Id: <CLIENT_ID>" \
+  --header "CF-Access-Client-Secret: <CLIENT_SECRET>"
+```
+
+Expect the response from the service running inside the sandbox.
+
+## Rotation and tear-down
+
+- **Rotate the service token** — follow [Renew service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/#renew-service-tokens) and update the secret on every client.
+- **Revoke a single client** — a service token is shared by every client that holds it. To revoke one caller individually, issue a separate service token per client and delete only that token.
+- **Remove the tunnel** — call `sandbox.tunnels.destroy(port)` from the Worker. Delete the Access application from the dashboard if the hostname is gone for good. If your Access application uses a wildcard subdomain (`*.<your-zone>`), deleting it removes protection from every other named tunnel under that zone — delete only when you are tearing down the wildcard pattern entirely.
+
+## Caveats
+
+- Named tunnel hostnames are stable per `{ name }`. The `cloudflared` process inside the container is restarted with the container, but the SDK reuses the existing Cloudflare tunnel and DNS record by name, so the Access application keyed on the hostname is unaffected.
+- A service token is a bearer credential. Anyone who holds the Client Secret can reach the application. Store it like any other production secret and rotate it on suspicion of compromise.
