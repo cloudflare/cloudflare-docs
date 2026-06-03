@@ -38,15 +38,16 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 2. **Wrangler check.** `npx wrangler --version`. If missing, ask once: "Install wrangler with `npm install --save-dev wrangler` (Node project) or `npm install -g wrangler` (other)? Proceed?" **[wait for user]** If install is blocked entirely (corporate policy, blocked npm), fall back to driving Steps 4-5 via `curl` against `api.cloudflare.com/client/v4/`.
 
 3. **Auth + scope probe (FIRST irreversible action).** Run `scripts/auth-probe.sh`. Branch on `status`:
-   - `ok`: continue to Step 4.
-   - `missing_token` or `missing_scope`: ask the user to create a token at https://dash.cloudflare.com/profile/api-tokens → Custom token → permissions `Account.Turnstile:Edit` + `Account.Workers Scripts:Edit` → include the target account in Account Resources. **Do NOT direct them to `wrangler login`**. Its OAuth scope doesn't include `Account.Turnstile:Edit`. Offer three ways to hand the token over, cleanest first:
+   - `ok`: continue to Step 4. The script already picked the account (single-account token, or one matching `$CLOUDFLARE_ACCOUNT_ID`).
+   - `missing_token`, `missing_scope`, or `missing_workers_scope`: ask the user to create a token at https://dash.cloudflare.com/profile/api-tokens → Custom token → permissions `Account.Turnstile:Edit` **and** `Account.Workers Scripts:Edit` → include the target account in Account Resources. **Do NOT direct them to `wrangler login`**. Its OAuth scope doesn't include `Account.Turnstile:Edit` or `Account.Workers Scripts:Edit`. Offer three ways to hand the token over, cleanest first:
      1. **Export + relaunch** (token never enters chat): `export CLOUDFLARE_API_TOKEN=<token>` then restart the agent from that terminal.
      2. **Save to file** (token in file with user-only perms, not in chat): `umask 077 && printf '%s' '<token>' > ~/.cf-turnstile-token`, then read with `TOKEN=$(cat ~/.cf-turnstile-token)`.
      3. **Paste in chat** (fastest, but token lands in conversation log; user should rotate it after if the log is ever shared).
-     While the user creates the token, run Steps 5, 6, 7 (Domain, Codebase scan, Insertion plan) in parallel. When they paste the token, re-run `auth-probe.sh`, then continue to Step 8.
-   - `account_mismatch`: tell the user to `unset CLOUDFLARE_ACCOUNT_ID` or fix it to match the token's account.
+        While the user creates the token, run Steps 5, 6, 7 (Domain, Codebase scan, Insertion plan) in parallel. When they paste the token, re-run `auth-probe.sh`, then continue to Step 8.
+   - `multiple_accounts`: the token covers more than one account and `$CLOUDFLARE_ACCOUNT_ID` is unset. Present the numbered `accounts` list. **[wait for user]** Then export `CLOUDFLARE_ACCOUNT_ID=<chosen>` and re-run `auth-probe.sh`.
+   - `account_mismatch`: `$CLOUDFLARE_ACCOUNT_ID` is set but isn't one of the token's accounts. Show the `accounts` list and ask the user to either `unset CLOUDFLARE_ACCOUNT_ID` or set it to one of those IDs.
 
-4. **Account selection.** If `auth-probe.sh` returned multiple accounts, present a numbered list. **[wait for user]** Otherwise use the single account silently.
+4. **Account selection.** If `auth-probe.sh` returned `ok` after a `multiple_accounts` round-trip, this is already done. Otherwise the script picked the single account silently and you continue to Step 5.
 
 5. **Domain.** Always include `localhost` and `127.0.0.1`. For production, scan `package.json` `homepage`, `wrangler.toml`, `README.md`, `AGENTS.md`, git remote. Confirm: "I'll register for `localhost`, `127.0.0.1`, and `<domain>`. OK?" **[wait for user]** If no production domain is found, ask.
 
@@ -56,7 +57,7 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
 8. **Widget creation.** Run `scripts/widget-create.sh --account-id <id> --name <name> --domains <list> --mode managed`. Report the sitekey. The secret stays in env; never write it to disk.
 
-9. **Worker deploy.** Run `scripts/worker-deploy.sh --name turnstile-siteverify-<project-slug>` with `WIDGET_SECRET` exported. Report the Worker URL.
+9. **Worker deploy.** Run `scripts/worker-deploy.sh --name turnstile-siteverify-<project-slug>` with `WIDGET_SECRET` exported. Report the Worker URL on `status: ok`. On `set_secret_failed`, the Worker deployed but `TURNSTILE_SECRET_KEY` is not set on it; surface the error, then retry with `echo "$WIDGET_SECRET" | npx wrangler secret put TURNSTILE_SECRET_KEY --name <returned worker_name>` before running validation.
 
 10. **Frontend edits.** State the contract: "I'll add the widget + gate the existing submit handler on `success === true`. The existing handler logic stays the same." Ask "yes" / "show". **[wait for user]** If "show", print unified diffs and ask again. Do NOT propose alternate behavior (mail delivery, custom backends).
 
@@ -122,31 +123,34 @@ If the existing handler was a stub, Spin leaves it a stub gated on success. The 
 During the Step 6 codebase scan, also look for existing reCAPTCHA or hCaptcha. If found, switch Step 7 to a migration plan.
 
 Detection signals:
+
 - reCAPTCHA: `https://www.google.com/recaptcha/api.js`, `class="g-recaptcha"`, `data-sitekey="6L..."`, backend POST to `/recaptcha/api/siteverify`
 - hCaptcha: `https://js.hcaptcha.com/1/api.js`, `class="h-captcha"`, backend POST to `https://hcaptcha.com/siteverify`
 
 Substitution:
+
 - Replace script tags with `https://challenges.cloudflare.com/turnstile/v0/api.js` (`async defer`).
 - Replace `class="g-recaptcha"` / `class="h-captcha"` divs with `class="cf-turnstile"`, update `data-sitekey` to the new Turnstile sitekey, add `data-action="turnstile-spin-v1"`.
 - Token field changes from `g-recaptcha-response` to `cf-turnstile-response`.
 - Backend siteverify URL points at the Spin-deployed Worker. Drop `RECAPTCHA_SECRET` / `HCAPTCHA_SECRET` env vars.
 
 Edge cases to surface to the user:
+
 - **reCAPTCHA v3 score thresholds.** Turnstile has no score. Tell the user explicitly that migrated code will reject on `success === false`.
 - **reCAPTCHA Enterprise.** Don't auto-migrate. Point at [developers.cloudflare.com/turnstile/migration/recaptcha/](https://developers.cloudflare.com/turnstile/migration/recaptcha/).
 - **Custom `action=` values.** Preserve any custom action the user passed to `grecaptcha.execute` as `data-action` on the widget. Use `turnstile-spin-v1` only when no custom action exists.
 
 ## Edge cases
 
-| Situation | Action |
-|---|---|
-| `wrangler` not installed | Install path: `npm install --save-dev wrangler` (Node project) or `npm install -g wrangler` (other) |
-| Multiple Cloudflare accounts | `scripts/auth-probe.sh` returns all accounts; ask the user to choose, export `CLOUDFLARE_ACCOUNT_ID` |
-| Cloudflare Pages project | Deploy the managed Worker anyway, OR suggest the [Pages Plugin](https://developers.cloudflare.com/pages/functions/plugins/turnstile/) |
-| `EXPECTED_HOSTNAME` mismatch | Update widget domains via PUT, not PATCH (PATCH returns `10405 Method not allowed`): `curl -X PUT .../widgets/$SITEKEY -d '{"name":"...","mode":"managed","domains":[...]}'` |
-| Worker name conflict | `worker-deploy.sh` retries automatically with a hash suffix |
-| Token expired mid-flow | Stop, re-run `scripts/auth-probe.sh`, prompt for fresh credentials |
-| Step 11 returns `missing-input-secret` | Secret didn't propagate. Re-set: `wrangler secret delete TURNSTILE_SECRET_KEY --name "$WORKER_NAME"`, then re-put, wait 10s, re-validate |
+| Situation                              | Action                                                                                                                                                                       |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `wrangler` not installed               | Install path: `npm install --save-dev wrangler` (Node project) or `npm install -g wrangler` (other)                                                                          |
+| Multiple Cloudflare accounts           | `scripts/auth-probe.sh` returns all accounts; ask the user to choose, export `CLOUDFLARE_ACCOUNT_ID`                                                                         |
+| Cloudflare Pages project               | Deploy the managed Worker anyway, OR suggest the [Pages Plugin](https://developers.cloudflare.com/pages/functions/plugins/turnstile/)                                        |
+| `EXPECTED_HOSTNAME` mismatch           | Update widget domains via PUT, not PATCH (PATCH returns `10405 Method not allowed`): `curl -X PUT .../widgets/$SITEKEY -d '{"name":"...","mode":"managed","domains":[...]}'` |
+| Worker name conflict                   | `worker-deploy.sh` retries automatically with a hash suffix                                                                                                                  |
+| Token expired mid-flow                 | Stop, re-run `scripts/auth-probe.sh`, prompt for fresh credentials                                                                                                           |
+| Step 11 returns `missing-input-secret` | Secret didn't propagate. Re-set: `wrangler secret delete TURNSTILE_SECRET_KEY --name "$WORKER_NAME"`, then re-put, wait 10s, re-validate                                     |
 
 ## Telemetry marker
 
@@ -166,7 +170,7 @@ Every snippet you write must include `data-action="turnstile-spin-v1"`. Account-
 
 The wizard above references deterministic helper scripts. Write these files under `/tmp/turnstile-spin-scripts/` before starting, then `export TURNSTILE_SPIN_SCRIPTS=/tmp/turnstile-spin-scripts` and `chmod +x /tmp/turnstile-spin-scripts/*.sh`.
 
-*If you have the `cloudflare/skills` bundle installed locally, skip this section. The scripts ship alongside the SKILL.md you are reading; this bootstrap is for the ad-hoc paste-into-agent case.*
+_If you have the `cloudflare/skills` bundle installed locally, skip this section. The scripts ship alongside the SKILL.md you are reading; this bootstrap is for the ad-hoc paste-into-agent case._
 
 ### `/tmp/turnstile-spin-scripts/auth-probe.sh`
 
@@ -176,13 +180,15 @@ The wizard above references deterministic helper scripts. Write these files unde
 #
 # Reads:
 #   $CLOUDFLARE_API_TOKEN  (required)
-#   $CLOUDFLARE_ACCOUNT_ID (optional; if set, checked against the token's account)
+#   $CLOUDFLARE_ACCOUNT_ID (optional; if set, must be one of the token's accounts)
 #
 # Outputs JSON to stdout, always exits 0. The agent reads `status`:
-#   "ok"              ; token has Turnstile + Workers scope, account_id captured
-#   "missing_token"   ; no token, or wrangler whoami failed
-#   "missing_scope"   ; token lacks Account.Turnstile:Edit (code 10000)
-#   "account_mismatch"; $CLOUDFLARE_ACCOUNT_ID does not match the token's account
+#   "ok"                   ; selected account passed both Turnstile and Workers scope probes
+#   "missing_token"        ; no token set, or wrangler whoami failed
+#   "missing_scope"        ; token lacks Account.Turnstile:Edit on the selected account
+#   "missing_workers_scope"; token has Turnstile scope but lacks Workers Scripts on the selected account
+#   "multiple_accounts"    ; token covers >1 accounts and $CLOUDFLARE_ACCOUNT_ID is unset; agent must ask user to pick, set it, and re-run
+#   "account_mismatch"     ; $CLOUDFLARE_ACCOUNT_ID is set but is not in the token's accounts list
 #
 # Human-readable diagnostics go to stderr. The agent surfaces them to the user.
 
@@ -207,30 +213,35 @@ if [ -z "$whoami_json" ] || [ "$(echo "$whoami_json" | head -c 1)" != "{" ]; the
   emit '{"status":"missing_token","reason":"whoami_failed"}'
 fi
 
-# Parse with jq if available, fall back to python3
-parse_json() {
-  if command -v jq >/dev/null 2>&1; then
-    echo "$1" | jq -r "$2" 2>/dev/null || python3 -c "import sys,json; obj=json.loads(sys.argv[1]); print(eval('obj' + sys.argv[2]))" "$1" "$3" 2>/dev/null
-  else
-    python3 -c "import sys,json; obj=json.loads(sys.argv[1]); print(eval('obj' + sys.argv[2]))" "$1" "$3" 2>/dev/null
-  fi
-}
-
-account_id=$(echo "$whoami_json" | (jq -r '.accounts[0].id' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)['accounts'][0]['id'])"))
+# Extract the accounts array. Fall back to python3 if jq is missing.
 accounts_json=$(echo "$whoami_json" | (jq -c '.accounts' 2>/dev/null || python3 -c "import sys,json; print(json.dumps(json.load(sys.stdin)['accounts']))"))
+account_count=$(echo "$accounts_json" | (jq 'length' 2>/dev/null || python3 -c "import sys,json; print(len(json.load(sys.stdin)))"))
 
-if [ -z "$account_id" ] || [ "$account_id" = "null" ]; then
+if [ -z "$account_count" ] || [ "$account_count" = "0" ] || [ "$account_count" = "null" ]; then
   echo "auth-probe: wrangler whoami succeeded but no accounts found on the token." >&2
   emit '{"status":"missing_token","reason":"no_accounts"}'
 fi
 
-if [ -n "$declared_account" ] && [ "$declared_account" != "$account_id" ]; then
-  echo "auth-probe: \$CLOUDFLARE_ACCOUNT_ID ($declared_account) does not match the token's account ($account_id)." >&2
-  echo "auth-probe: Either unset \$CLOUDFLARE_ACCOUNT_ID, or fix it before continuing." >&2
-  emit "{\"status\":\"account_mismatch\",\"declared\":\"$declared_account\",\"token_account\":\"$account_id\"}"
+# Pick the account to probe:
+#   - $CLOUDFLARE_ACCOUNT_ID set: must be in the token's accounts list, else account_mismatch
+#   - unset, exactly 1 account: use it silently
+#   - unset, >1 accounts: emit multiple_accounts; agent picks and re-runs
+if [ -n "$declared_account" ]; then
+  in_list=$(echo "$accounts_json" | (jq --arg id "$declared_account" 'map(.id) | index($id) != null' 2>/dev/null || python3 -c "import sys,json; print('true' if any(a['id']==sys.argv[1] for a in json.load(sys.stdin)) else 'false')" "$declared_account"))
+  if [ "$in_list" != "true" ]; then
+    echo "auth-probe: \$CLOUDFLARE_ACCOUNT_ID ($declared_account) is not one of the token's accounts." >&2
+    echo "auth-probe: Either unset \$CLOUDFLARE_ACCOUNT_ID, or set it to an account included in the token's Account Resources." >&2
+    emit "{\"status\":\"account_mismatch\",\"declared\":\"$declared_account\",\"accounts\":$accounts_json}"
+  fi
+  account_id="$declared_account"
+elif [ "$account_count" = "1" ]; then
+  account_id=$(echo "$accounts_json" | (jq -r '.[0].id' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)[0]['id'])"))
+else
+  echo "auth-probe: token covers $account_count accounts; ask the user to pick one, then export \$CLOUDFLARE_ACCOUNT_ID and re-run." >&2
+  emit "{\"status\":\"multiple_accounts\",\"accounts\":$accounts_json}"
 fi
 
-# Probe Turnstile scope
+# Probe Turnstile scope on the selected account
 tmp=$(mktemp)
 http_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
   "https://api.cloudflare.com/client/v4/accounts/$account_id/challenges/widgets" \
@@ -239,8 +250,23 @@ body=$(cat "$tmp"); rm -f "$tmp"
 success=$(echo "$body" | (jq -r '.success' 2>/dev/null || echo "false"))
 
 if [ "$success" != "true" ]; then
-  echo "auth-probe: token cannot read /challenges/widgets (HTTP $http_code). Missing Account.Turnstile:Edit." >&2
+  echo "auth-probe: token cannot read /challenges/widgets on account $account_id (HTTP $http_code). Missing Account.Turnstile:Edit." >&2
   emit "{\"status\":\"missing_scope\",\"account_id\":\"$account_id\",\"http_code\":$http_code}"
+fi
+
+# Probe Workers scope on the selected account. GET /workers/scripts requires
+# Account.Workers Scripts:Read; the Custom Token UI grants Read alongside Edit,
+# so a successful list call is a reliable proxy for deploy permission.
+tmp=$(mktemp)
+workers_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
+  "https://api.cloudflare.com/client/v4/accounts/$account_id/workers/scripts" \
+  -H "Authorization: Bearer $token" 2>/dev/null || echo "000")
+workers_body=$(cat "$tmp"); rm -f "$tmp"
+workers_success=$(echo "$workers_body" | (jq -r '.success' 2>/dev/null || echo "false"))
+
+if [ "$workers_success" != "true" ]; then
+  echo "auth-probe: token cannot read /workers/scripts on account $account_id (HTTP $workers_code). Missing Account.Workers Scripts:Edit." >&2
+  emit "{\"status\":\"missing_workers_scope\",\"account_id\":\"$account_id\",\"http_code\":$workers_code}"
 fi
 
 emit "{\"status\":\"ok\",\"account_id\":\"$account_id\",\"accounts\":$accounts_json}"
@@ -519,9 +545,11 @@ exit 1
 #   --deploy-dir <path>    Where to extract the template. Default: /tmp/turnstile-siteverify-deploy
 #
 # Outputs JSON. Exit 0 on success, non-zero on failure.
-#   ok:        {"status":"ok","worker_url":"<url>","worker_name":"<name>"}
-#   conflict:  {"status":"error","reason":"name_conflict_after_retry"}
-#   no_secret: {"status":"error","reason":"missing_input_secret_after_retry"}
+#   ok:            {"status":"ok","worker_url":"<url>","worker_name":"<name>"}
+#   conflict:      {"status":"error","reason":"name_conflict_after_retry"}
+#   deploy_failed: {"status":"error","reason":"deploy_failed"}
+#   set_secret:    {"status":"error","reason":"set_secret_failed","worker_name":"<name>"}
+#   url_parse:     {"status":"error","reason":"url_parse_failed","worker_name":"<name>"}
 
 set -uo pipefail
 
@@ -573,7 +601,12 @@ set_secret() {
   echo "$WIDGET_SECRET" | (cd "$DEPLOY_DIR" && npx wrangler secret put TURNSTILE_SECRET_KEY --name "$NAME") >/dev/null 2>&1
 }
 
-set_secret
+if ! set_secret; then
+  echo "worker-deploy: failed to set TURNSTILE_SECRET_KEY on $NAME" >&2
+  rm -f "$deploy_log"
+  echo "{\"status\":\"error\",\"reason\":\"set_secret_failed\",\"worker_name\":\"$NAME\"}"
+  exit 1
+fi
 sleep 5
 
 # Try to extract the deployed URL from the wrangler log
