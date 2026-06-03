@@ -204,11 +204,12 @@ function CheckIcon() {
 }
 
 // Two-option facet that surfaces the existing ModelCardData.hosting field.
-// Labels match the "Hosted" / "Proxied" text already rendered by ModelInfo.tsx
-// so the filter chip vocabulary lines up with each card's subtitle.
+// Labels match the "Cloudflare Hosted" / "Third-Party" text rendered by
+// ModelInfo.tsx so the filter chip vocabulary lines up with each card's
+// subtitle.
 const hostingItems: FilterItem[] = [
-	{ value: "hosted", label: "Hosted" },
-	{ value: "proxied", label: "Proxied" },
+	{ value: "hosted", label: "Cloudflare Hosted" },
+	{ value: "proxied", label: "Third-Party" },
 ];
 
 // List of model names to pin at the top
@@ -453,7 +454,7 @@ const ModelCatalog = ({
 					/>
 					{showHostingFilter && (
 						<FilterDropdown
-							label="Hosting"
+							label="Providers"
 							items={hostingItems}
 							selected={filters.hosting}
 							onChange={(hosting) => setFilters({ ...filters, hosting })}

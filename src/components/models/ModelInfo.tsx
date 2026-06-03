@@ -11,9 +11,9 @@ const ModelInfo = ({ model }: { model: ModelType }) => {
 	const hosting =
 		"hosting" in model
 			? model.hosting === "proxied"
-				? "Proxied"
-				: "Hosted"
-			: "Hosted";
+				? "Third-Party"
+				: "Cloudflare Hosted"
+			: "Cloudflare Hosted";
 	return (
 		<span className="mt-2 block! leading-5 text-gray-400">
 			{model.task.name} • {author} • {hosting}
