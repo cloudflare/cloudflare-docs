@@ -238,7 +238,7 @@ Bullet point rules:
 
 Always specify a language after the opening fence. Language names must be **lowercase**.
 
-Any language in [Shiki's bundled languages](https://shiki.style/languages#bundled-languages) is valid. Unrecognized identifiers fall back to plain text without an error. Use `txt` explicitly for output blocks or content with no appropriate language (aliases: `text`, `plaintext`).
+Always specify a language; use `txt` (aliases: `text`, `plaintext`) if no appropriate language exists. Unrecognized identifiers fall back to plain text without an error.
 
 ### Terminal commands
 
