@@ -940,9 +940,7 @@ function renderComment(
 		(f) => !ignoredPaths.has(`${f.path}:${f.line}:${f.rule}`),
 	);
 	const warnings = activeFindings.filter((f) => f.severity === "warning");
-	const suggestions = activeFindings.filter(
-		(f) => f.severity === "suggestion",
-	);
+	const suggestions = activeFindings.filter((f) => f.severity === "suggestion");
 	const totalActive = activeFindings.length;
 	const scope = forceFullReview ? "full PR diff" : `commit \`${shortSha}\``;
 
