@@ -15,11 +15,13 @@ Use webhooks for backend workflows that depend on asynchronous events, such as s
 
 ## How webhooks work
 
+<Steps>
 1. Create an HTTP endpoint in your backend that can receive `POST` requests.
 2. Register the endpoint URL with the RealtimeKit [Webhooks API](/api/resources/realtime_kit/subresources/webhooks/).
 3. Choose the event types that should trigger the webhook.
 4. Verify incoming requests with the `rtk-signature` header.
 5. Return a `2xx` response after accepting the event.
+</Steps>
 
 Webhook events are subscription-only. Your endpoint receives only the events included in the webhook's `events` array.
 
