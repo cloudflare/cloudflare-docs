@@ -127,6 +127,12 @@ Follow these steps if you would like to deploy a scheduled maintenance page, wit
 
 After the scheduled event has ended, users will have access to your site.  You can end the maintenance window before the scheduled event is over by setting the event to disabled.
 
+:::caution
+This approach is intended for **scheduled** maintenance windows configured in advance. Waiting Room configuration can take up to a few minutes to propagate across Cloudflare's network after initial creation, so it is not recommended for scenarios where an immediate response is required. Additionally, the Reject method will not affect users who are already active on your site at the time it is enabled, only new users will be queued.
+
+For unplanned maintenance requiring an immediate response, consider using a [Workers snippet](/rules/snippets/examples/maintenance/) to serve a maintenance page instead.
+:::
+
 ## Other API commands
 
 | Function                                                          | Command  |
