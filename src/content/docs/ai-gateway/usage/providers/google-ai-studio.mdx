@@ -6,7 +6,7 @@ products:
   - ai-gateway
 ---
 
-import { Render, Details, Tabs, TabItem } from "~/components";
+import { Render, Details, Tabs, TabItem, TypeScriptExample } from "~/components";
 
 [Google AI Studio](https://ai.google.dev/aistudio) helps you build quickly with Google Gemini models.
 
@@ -164,3 +164,44 @@ console.log(response.text);
     }}
 
 />
+
+## Models on Cloudflare (Workers AI binding)
+
+Gemini models are also available as [third-party models](/ai-gateway/integrations/worker-binding-methods/#envairun) on the unified Cloudflare AI API. This is a different surface from the provider-proxy examples above: requests go to the `/ai` REST endpoint or the Workers AI `env.AI.run()` binding, use [Unified Billing](/ai-gateway/features/unified-billing/) (Cloudflare manages the provider credentials), and reference the model by its `{author}/{model}` ID. For the full binding reference, refer to [Workers Bindings](/ai-gateway/integrations/worker-binding-methods/).
+
+### REST API
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+  "model": "google/gemini-2.5-flash",
+  "input": {
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "What are the three laws of thermodynamics?"
+          }
+        ],
+        "role": "user"
+      }
+    ]
+  }
+}'
+```
+
+### Workers AI Binding
+
+<TypeScriptExample>
+
+```ts
+const response = await env.AI.run(
+  'google/gemini-2.5-flash',
+  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },
+)
+console.log(response)
+```
+
+</TypeScriptExample>
