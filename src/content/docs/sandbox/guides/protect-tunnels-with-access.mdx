@@ -24,12 +24,38 @@ Quick tunnels (`*.trycloudflare.com`) cannot be protected with Access because th
 You need:
 
 - A zone in your Cloudflare account that the Worker can create tunnel hostnames under.
-- `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `CLOUDFLARE_ZONE_ID` configured as Worker secrets or variables. The API token needs `Account:Cloudflare Tunnel:Edit`, `Zone:DNS:Edit`, and `Zone:Zone:Read` permissions on the zone.
+- `CLOUDFLARE_API_TOKEN` configured as a Worker secret. See [Tunnels](/sandbox/api/tunnels/) for the required token permissions and other configuration.
 - Cloudflare Access enabled on your account. If this is your first Access application, complete the [Access onboarding](/cloudflare-one/setup/).
 
-## 1. Create a named tunnel
+## 1. Create a service token
 
-Pass a `name` option to `sandbox.tunnels.get()`. The SDK provisions a Cloudflare Tunnel and CNAMEs `<name>.<your-zone>` at it.
+A service token is a Client ID / Client Secret pair that automated clients send instead of going through an identity provider login.
+
+<Render file="access/create-service-token" product="cloudflare-one" />
+
+Store the Client ID and Client Secret as secrets on whichever system will call the tunnel (your CI job, agent runtime, or another Worker).
+
+## 2. Add a self-hosted Access application
+
+Create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for the tunnel hostname, then attach a Service Auth policy that references the token from step 1.
+
+**Policy.** Add a policy with:
+
+- **Action**: `Service Auth` (see [policy actions](/cloudflare-one/access-controls/policies/#service-auth)). If you use `Allow` here, Access will redirect unauthenticated requests to an identity provider login page instead of returning an error.
+- **Include**: `Service Token` → the token created in step 1.
+
+Optional: add a second `Allow` policy (for example, `Emails ending in @your-company.com`) so engineers can hit the URL in a browser via the identity provider flow for debugging.
+
+**Application domain.** Start with a single hostname, then add more domains to the same application as you create additional tunnels:
+
+- **Single hostname** — `my-agent-api.example.com`. Protects exactly the one tunnel.
+- **Wildcard subdomain** — `*.example.com`. Protects every named tunnel under the zone with a single application. Use this when your Worker creates many tunnels (for example, one per sandbox or per agent session) on the same zone.
+
+Create the Access application before deploying the Worker that calls `tunnels.get()` so the SDK CNAMEs onto an already-protected hostname.
+
+## 3. Create a named tunnel
+
+With the Access application in place, pass a `name` option to `sandbox.tunnels.get()`. The SDK provisions a Cloudflare Tunnel and CNAMEs `<name>.<your-zone>` at it, and the hostname is protected by Access from the first request.
 
 <TypeScriptExample>
 ```ts
@@ -61,34 +87,6 @@ export default {
 };
 ```
 </TypeScriptExample>
-
-The `getProcess` check makes the handler idempotent across requests, and `waitForPort` ensures the server is actually listening before the tunnel is created. See [Expose services](/sandbox/guides/expose-services/) for more patterns.
-
-At this point the hostname is live but public. Anyone with the URL can reach the service. Continue to step 2 to lock it down. For production hostnames, create the Access application (steps 2–3) before deploying the Worker that calls `tunnels.get()` so the SDK CNAMEs onto an already-protected hostname.
-
-## 2. Create a service token
-
-A service token is a Client ID / Client Secret pair that automated clients send instead of going through an identity provider login.
-
-<Render file="access/create-service-token" product="cloudflare-one" />
-
-Store the Client ID and Client Secret as secrets on whichever system will call the tunnel (your CI job, agent runtime, or another Worker).
-
-## 3. Add a self-hosted Access application
-
-Create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for the tunnel hostname, then attach a Service Auth policy that references the token from step 2.
-
-**Application domain.** You have two options:
-
-- **Single hostname** — `my-agent-api.example.com`. Protects exactly the one tunnel.
-- **Wildcard subdomain** — `*.example.com`. Protects every named tunnel under the zone with a single application. Use this when your Worker creates many tunnels (for example, one per sandbox or per agent session) on the same zone.
-
-**Policy.** Add a policy with:
-
-- **Action**: `Service Auth` (see [policy actions](/cloudflare-one/access-controls/policies/#service-auth)). If you use `Allow` here, Access will redirect unauthenticated requests to an identity provider login page instead of returning an error, which is rarely what an automation client wants.
-- **Include**: `Service Token` → the token created in step 2.
-
-Optional: add a second `Allow` policy (for example, `Emails ending in @your-company.com`) so engineers can hit the URL in a browser via the identity provider flow for debugging.
 
 ## 4. Call the tunnel from a client
 
@@ -123,7 +121,7 @@ If the calling system can only set one header (for example, a SaaS integration t
 
 ### Session cookie reuse
 
-If your Access application has at least one `Allow` policy in addition to Service Auth (see step 3), Access returns a `CF_Authorization` cookie on the first authenticated request, and subsequent requests on the same hostname can send the cookie instead of the headers. Service-Auth-only applications do not honor the cookie — every request must carry the headers. See [Authorization cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) and [Subsequent requests](/cloudflare-one/access-controls/service-credentials/service-tokens/#subsequent-requests).
+If your Access application has at least one `Allow` policy in addition to Service Auth (see step 2), Access returns a `CF_Authorization` cookie on the first authenticated request, and subsequent requests on the same hostname can send the cookie instead of the headers. Service-Auth-only applications do not honor the cookie — every request must carry the headers. See [Authorization cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) and [Subsequent requests](/cloudflare-one/access-controls/service-credentials/service-tokens/#subsequent-requests).
 
 ## 5. Verify
 
