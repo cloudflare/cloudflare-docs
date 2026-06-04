@@ -8,13 +8,17 @@
  * This agent is a pure analysis component — it never posts to GitHub.
  * All mutations are handled by code-review-orchestrator.
  *
- * POST /agents/style-guide-review/:id
+ * POST /workflows/style-guide-review
  */
-import type { FlueContext } from "@flue/runtime";
-import { getDefaultWorkspace, getShellSandbox } from "@flue/runtime/cloudflare";
+import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
+import { createAgent } from "@flue/runtime";
+import {
+	getDefaultWorkspace,
+	getShellSandbox,
+} from "../connectors/cloudflare-shell";
 import * as v from "valibot";
 
-export const triggers = { webhook: true };
+export const route: WorkflowRouteHandler = async (_c, next) => next();
 
 // Only review docs/partials/changelog MDX
 const REVIEWABLE_PATH_RE = /^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
@@ -89,13 +93,14 @@ interface PullRequestMetadata {
 	head: string;
 }
 
-export default async function ({ init, payload, env, runId }: FlueContext) {
+export async function run({ init, payload, env, runId }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, unknown>;
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as R2Bucket;
 	const loader = typedEnv.LOADER as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
+	const workspace = getDefaultWorkspace();
 
 	console.log({
 		message: `Style-guide review started: PR #${input.number}`,
@@ -153,16 +158,7 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 				head: "",
 			};
 
-	// ── 3. Init harness with empty workspace ──────────────────────────────────
-	const workspace = getDefaultWorkspace();
-	const harness = await init({
-		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
-		role: "cloudflare-docs-bot",
-		compaction: { reserveTokens: 64_000 },
-	});
-
-	// ── 4. Populate workspace from R2 at request time ─────────────────────────
+	// ── 3. Populate workspace from R2 before init ─────────────────────────────
 	// Discover and load all reference files by prefix — no hardcoded list.
 	// Any new reference file added to R2 under .agents/reference/style-guide/
 	// is automatically picked up without code changes.
@@ -171,6 +167,12 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 		bucket.list({ prefix: ".agents/reference/style-guide/" }),
 		bucket.get(".agents/skills/style-guide-review/SKILL.md"),
 	]);
+	if (!skillObj) {
+		throw new Error(
+			"Missing .agents/skills/style-guide-review/SKILL.md in DOCS_FLUE_BUCKET. " +
+				"For local dev, run `pnpm run flue:sync-agents:local` before invoking the workflow.",
+		);
+	}
 
 	// Read all reference files and diff files in parallel
 	const [referenceResults, ...diffResults] = await Promise.all([
@@ -202,31 +204,37 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 	// Write everything to workspace in parallel
 	await Promise.all([
 		// Skill file
-		skillObj
-			? harness.fs.writeFile(
-					"/.agents/skills/style-guide-review/SKILL.md",
-					await skillObj.text(),
-				)
-			: Promise.resolve(),
+		workspace.writeFile(
+			"/.agents/skills/style-guide-review/SKILL.md",
+			await skillObj.text(),
+		),
 		// All reference files (preserving subdirectory structure)
 		...referenceResults.map((r) =>
-			r.text ? harness.fs.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
+			r.text ? workspace.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
 		),
 		// Diff files (manifest, pr.json, patches)
 		...diffResults.map((r) =>
-			r.text ? harness.fs.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
+			r.text ? workspace.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
 		),
 	]);
+
+	// ── 4. Init harness ───────────────────────────────────────────────────────
+	const agent = createAgent(() => ({
+		sandbox: getShellSandbox({ workspace, loader }),
+		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
+		compaction: { reserveTokens: 64_000 },
+	}));
+	const harness = await init(agent);
 
 	// ── 5. Run the skill ───────────────────────────────────────────────────────
 	const session = await harness.session(
 		`style-guide-review:${input.number}:${runId}`,
 	);
 
-	// Use schema mode so flue injects finish/give_up tools and loops until the
+	// Use structured result mode so flue injects finish/give_up tools and loops until the
 	// model calls finish — works reliably across models that don't self-terminate.
-	const skillResult = await session.skill("style-guide-review/SKILL.md", {
-		schema: StyleGuideResultFromModelSchema,
+	const skillResult = await session.skill("style-guide-review", {
+		result: StyleGuideResultFromModelSchema,
 		args: {
 			pullRequest: {
 				number: pullRequest.number,
@@ -258,9 +266,16 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 	}
 
 	const findings = await assignFindingIds(rawData.findings);
+	const deterministicFindings = await assignFindingIds(
+		findMdxSyntaxFindings(diffResults, reviewedFiles),
+	);
+	const mergedFindings = mergeFindings([...findings, ...deterministicFindings]);
 	const data: StyleGuideResult = {
-		findings,
-		summary: rawData.summary,
+		findings: mergedFindings,
+		summary:
+			mergedFindings.length === rawData.findings.length
+				? rawData.summary
+				: `${mergedFindings.length} finding(s) found across ${reviewedFiles.length} file(s).`,
 		reviewedFiles,
 	};
 
@@ -277,6 +292,94 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 	});
 
 	return data;
+}
+
+function mergeFindings(findings: StyleGuideFinding[]): StyleGuideFinding[] {
+	const byKey = new Map<string, StyleGuideFinding>();
+	for (const finding of findings) {
+		byKey.set(
+			`${finding.path}:${finding.line ?? ""}:${finding.rule}:${finding.evidence}`,
+			finding,
+		);
+	}
+	return [...byKey.values()];
+}
+
+function findMdxSyntaxFindings(
+	diffResults: Array<{ key: string; text: string }>,
+	reviewedFiles: string[],
+): v.InferOutput<typeof StyleGuideFindingFromModelSchema>[] {
+	const reviewed = new Set(reviewedFiles);
+	const findings: v.InferOutput<typeof StyleGuideFindingFromModelSchema>[] = [];
+	for (const { key, text } of diffResults) {
+		const path = keyToReviewedPath(key);
+		if (!path || !reviewed.has(path)) continue;
+
+		for (const addedLine of getAddedLines(text)) {
+			const unescaped = findUnescapedAngleBracket(addedLine.content);
+			if (!unescaped) continue;
+			findings.push({
+				severity: "warning",
+				path,
+				line: addedLine.line,
+				rule: "Escape angle brackets in MDX prose",
+				evidence: `Line adds unescaped \`${unescaped}\` in prose: \`${addedLine.content.trim()}\``,
+				suggestion: `Replace \`${unescaped}\` with \`${unescaped === ">" ? "&gt;" : "&lt;"}\` or wrap the text in backticks.`,
+			});
+		}
+	}
+	return findings;
+}
+
+function keyToReviewedPath(key: string): string | null {
+	const filename = key.split("/").pop();
+	if (!filename?.endsWith(".patch")) return null;
+	return filename.slice(0, -".patch".length).replace(/__/g, "/");
+}
+
+function getAddedLines(
+	patch: string,
+): Array<{ line: number; content: string }> {
+	const addedLines: Array<{ line: number; content: string }> = [];
+	let currentLine = 0;
+	for (const rawLine of patch.split("\n")) {
+		const hunkMatch = rawLine.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
+		if (hunkMatch) {
+			currentLine = Number(hunkMatch[1]) - 1;
+			continue;
+		}
+		if (rawLine.startsWith("+") && !rawLine.startsWith("+++")) {
+			currentLine += 1;
+			addedLines.push({ line: currentLine, content: rawLine.slice(1) });
+			continue;
+		}
+		if (
+			!rawLine.startsWith("-") &&
+			!rawLine.startsWith("@@") &&
+			!rawLine.startsWith("\\")
+		) {
+			currentLine += 1;
+		}
+	}
+	return addedLines;
+}
+
+function findUnescapedAngleBracket(line: string): "<" | ">" | null {
+	const withoutInlineCode = line.replace(/`[^`]*`/g, "");
+	for (let i = 0; i < withoutInlineCode.length; i += 1) {
+		const char = withoutInlineCode[i];
+		if (char !== "<" && char !== ">") continue;
+		if (withoutInlineCode.slice(i).startsWith("&lt;")) continue;
+		if (withoutInlineCode.slice(i).startsWith("&gt;")) continue;
+		if (isComponentTagAt(withoutInlineCode, i)) continue;
+		return char;
+	}
+	return null;
+}
+
+function isComponentTagAt(line: string, index: number): boolean {
+	if (line[index] !== "<") return false;
+	return /^<\/?[A-Z][A-Za-z0-9]*(\s|>|\/)/.test(line.slice(index));
 }
 
 function parsePayload(payload: unknown): StyleGuideReviewPayload {

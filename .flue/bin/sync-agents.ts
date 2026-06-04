@@ -37,7 +37,7 @@ if (files.length === 0) {
 }
 
 const localFlag = isLocal
-	? "--local --persist-to .flue/dist/.wrangler/state"
+	? "--local --persist-to .flue/.wrangler/state"
 	: "--remote";
 
 // Stale R2 keys to delete — files that have been removed from the repo

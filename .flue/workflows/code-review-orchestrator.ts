@@ -10,10 +10,14 @@
  *               Does NOT mutate GitHub.
  *   "comment" — create or update the single bot review comment on the PR.
  *
- * POST /agents/code-review-orchestrator/:id
+ * POST /workflows/code-review-orchestrator
  */
-import type { FlueContext } from "@flue/runtime";
-import { getDefaultWorkspace, getShellSandbox } from "@flue/runtime/cloudflare";
+import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
+import { createAgent } from "@flue/runtime";
+import {
+	getDefaultWorkspace,
+	getShellSandbox,
+} from "../connectors/cloudflare-shell";
 import * as v from "valibot";
 import {
 	addReactionToComment,
@@ -29,7 +33,7 @@ import {
 } from "../lib/github";
 import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-review";
 
-export const triggers = { webhook: true };
+export const route: WorkflowRouteHandler = async (_c, next) => next();
 
 // Only review docs/partials/changelog MDX, capped before specialist fan-out.
 const STYLE_GUIDE_REVIEWABLE_PATH_RE =
@@ -99,23 +103,17 @@ interface CodeReviewOrchestratorPayload {
 	triggerEyesReactionId?: number | null;
 }
 
-export default async function ({
-	id,
-	init,
-	payload,
-	env,
-	runId,
-	req,
-}: FlueContext) {
+export async function run({ id, init, payload, env, runId, req }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
 
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	const loader = typedEnv.LOADER as unknown as Parameters<
+	const loader = typedEnv.LOADER as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
+	const workspace = getDefaultWorkspace();
 
 	// ── Auto-review limit check ────────────────────────────────────────────────
 	// Automatic reviews are capped at 2 per PR. Codeowner commands bypass this.
@@ -167,23 +165,31 @@ export default async function ({
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
-	const workspace = getDefaultWorkspace();
-	const harness = await init({
-		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
-		role: "cloudflare-docs-bot",
-	});
-
 	// Write reconciler skill from R2 into workspace at request time
 	const reconcileSkillObj = await bucket.get(
 		".agents/skills/reconcile-code-review/SKILL.md",
 	);
+	if (!reconcileSkillObj) {
+		throw new Error(
+			"Missing .agents/skills/reconcile-code-review/SKILL.md in DOCS_FLUE_BUCKET. " +
+				"For local dev, run `pnpm run flue:sync-agents:local` before invoking the workflow.",
+		);
+	}
 	if (reconcileSkillObj) {
-		await harness.fs.writeFile(
+		await workspace.mkdir("/.agents/skills/reconcile-code-review", {
+			recursive: true,
+		});
+		await workspace.writeFile(
 			"/.agents/skills/reconcile-code-review/SKILL.md",
 			await reconcileSkillObj.text(),
 		);
 	}
+
+	const agent = createAgent(() => ({
+		sandbox: getShellSandbox({ workspace, loader }),
+		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
+	}));
+	const harness = await init(agent);
 
 	// console.log({
 	// 	message: `Code review started: PR #${input.number}`,
@@ -520,7 +526,7 @@ export default async function ({
 		// 	action: "reconciliation_skipped",
 		// });
 	} else {
-		const { data } = await session.skill("reconcile-code-review/SKILL.md", {
+		const { data } = await session.skill("reconcile-code-review", {
 			model: "cloudflare/@cf/zai-org/glm-4.7-flash",
 			args: {
 				pullRequest: { number: input.number },
@@ -534,7 +540,7 @@ export default async function ({
 				})),
 				diffMode,
 			},
-			schema: ReconcileResultSchema,
+			result: ReconcileResultSchema,
 		});
 
 		reconciled = data ?? {
@@ -824,10 +830,8 @@ async function dispatchStyleGuideReview(
 	// Derive the base URL from the incoming request so this works on any port
 	// in local dev as well as in production without extra env config.
 	const baseUrl = req ? new URL(req.url).origin : "http://localhost:8787";
-	const url = new URL(
-		`/agents/style-guide-review/${encodeURIComponent(reviewId)}`,
-		baseUrl,
-	);
+	const url = new URL(`/workflows/style-guide-review`, baseUrl);
+	url.searchParams.set("wait", "result");
 
 	const response = await fetch(url, {
 		method: "POST",

@@ -7,10 +7,14 @@
  * Uses GitHub App auth — no long-lived PAT needed. The agent decides whether
  * to close; the actual API calls happen in trusted code, not in the sandbox.
  *
- * POST /agents/spam-and-off-topic-filter/:id  (also callable via session.task())
+ * POST /workflows/spam-and-off-topic-filter
  */
-import type { FlueContext } from "@flue/runtime";
-import { getDefaultWorkspace, getShellSandbox } from "@flue/runtime/cloudflare";
+import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
+import { createAgent } from "@flue/runtime";
+import {
+	getDefaultWorkspace,
+	getShellSandbox,
+} from "../connectors/cloudflare-shell";
 import * as v from "valibot";
 import {
 	addLabels,
@@ -22,7 +26,7 @@ import {
 	postComment,
 } from "../lib/github";
 
-export const triggers = { webhook: true };
+export const route: WorkflowRouteHandler = async (_c, next) => next();
 
 const SpamVerdictSchema = v.object({
 	is_spam: v.boolean(),
@@ -66,31 +70,40 @@ interface SpamAndOffTopicFilterPayload {
 	number: number;
 }
 
-export default async function ({ init, payload, env, runId }: FlueContext) {
+export async function run({ init, payload, env, runId }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, unknown>;
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as R2Bucket;
 	const loader = typedEnv.LOADER as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
-
 	const workspace = getDefaultWorkspace();
-	const harness = await init({
-		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
-		role: "cloudflare-docs-bot",
-	});
 
 	// Write skill from R2 into workspace at request time
 	const skillObj = await bucket.get(
 		".agents/skills/spam-and-off-topic-filter/SKILL.md",
 	);
+	if (!skillObj) {
+		throw new Error(
+			"Missing .agents/skills/spam-and-off-topic-filter/SKILL.md in DOCS_FLUE_BUCKET. " +
+				"For local dev, run `pnpm run flue:sync-agents:local` before invoking the workflow.",
+		);
+	}
 	if (skillObj) {
-		await harness.fs.writeFile(
+		await workspace.mkdir("/.agents/skills/spam-and-off-topic-filter", {
+			recursive: true,
+		});
+		await workspace.writeFile(
 			"/.agents/skills/spam-and-off-topic-filter/SKILL.md",
 			await skillObj.text(),
 		);
 	}
+
+	const agent = createAgent(() => ({
+		sandbox: getShellSandbox({ workspace, loader }),
+		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
+	}));
+	const harness = await init(agent);
 	const session = await harness.session(
 		`filter:${input.eventType}:${input.number}:${runId}`,
 	);
@@ -100,9 +113,9 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 	const itemType = item.kind === "pull_request" ? "PR" : "Issue";
 	const itemLabel = `${itemType} #${item.number} "${truncateLogValue(item.title)}"`;
 
-	const { data } = await session.skill("spam-and-off-topic-filter/SKILL.md", {
+	const { data } = await session.skill("spam-and-off-topic-filter", {
 		args: { eventType: input.eventType, item, diff },
-		schema: SpamVerdictSchema,
+		result: SpamVerdictSchema,
 	});
 
 	if (!data) {

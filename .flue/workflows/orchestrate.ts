@@ -8,9 +8,9 @@
  * - code-review-orchestrator: runs on PR opened/reopened/synchronize/ready_for_review
  *   (only if spam filter did not close the item)
  *
- * POST /agents/orchestrate/:id
+ * POST /workflows/orchestrate
  */
-import type { FlueContext } from "@flue/runtime";
+import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import {
 	addReactionToComment,
 	getInstallationToken,
@@ -18,9 +18,9 @@ import {
 	verifyGitHubSignature,
 } from "../lib/github";
 
-export const triggers = { webhook: true };
+export const route: WorkflowRouteHandler = async (_c, next) => next();
 
-export default async function ({ id, payload, env, req }: FlueContext) {
+export async function run({ id, payload, env, req }: FlueContext) {
 	// ── 1. Verify the GitHub webhook signature ─────────────────────────────
 	const secret = (env as Record<string, string>).GITHUB_WEBHOOK_SECRET;
 	const sig = req?.headers.get("x-hub-signature-256") ?? "";
@@ -144,7 +144,8 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		// Dispatch full review, passing comment info so orchestrator can swap reaction
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
-		reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
+		reviewUrl.pathname = `/workflows/code-review-orchestrator`;
+		reviewUrl.searchParams.set("wait", "result");
 		const _reviewResponse = await fetch(reviewUrl, {
 			method: "POST",
 			headers: { "content-type": "application/json" },
@@ -204,7 +205,8 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		// Dispatch a normal review (incremental if prior review exists, full if not)
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
-		reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
+		reviewUrl.pathname = `/workflows/code-review-orchestrator`;
+		reviewUrl.searchParams.set("wait", "result");
 		const _reviewResponse = await fetch(reviewUrl, {
 			method: "POST",
 			headers: { "content-type": "application/json" },
@@ -258,7 +260,8 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			results.spamFilter = { result: { closed: false }, skipped: true };
 		} else {
 			const filterUrl = new URL(baseUrl);
-			filterUrl.pathname = `/agents/spam-and-off-topic-filter/${encodeURIComponent(id)}`;
+			filterUrl.pathname = `/workflows/spam-and-off-topic-filter`;
+			filterUrl.searchParams.set("wait", "result");
 			const filterResponse = await fetch(filterUrl, {
 				method: "POST",
 				headers: { "content-type": "application/json" },
@@ -322,7 +325,8 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			true;
 		if (!isDraft || webhookAction === "ready_for_review") {
 			const reviewUrl = new URL(baseUrl);
-			reviewUrl.pathname = `/agents/code-review-orchestrator/${encodeURIComponent(id)}`;
+			reviewUrl.pathname = `/workflows/code-review-orchestrator`;
+			reviewUrl.searchParams.set("wait", "result");
 			const reviewResponse = await fetch(reviewUrl, {
 				method: "POST",
 				headers: { "content-type": "application/json" },
