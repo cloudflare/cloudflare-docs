@@ -31,9 +31,10 @@ What you get by default:
 </WranglerConfig>
 
 <TypeScriptExample>
-	```ts // Egress to a public destination — subject to your Gateway policies and
-	logged const response = await
-	env.EGRESS.fetch("https://api.example.com/data"); ```
+```ts
+// Egress to a public destination — subject to your Gateway policies and logged
+const response = await env.EGRESS.fetch("https://api.example.com/data");
+```
 </TypeScriptExample>
 
 For configuration options, refer to [VPC Networks](/workers-vpc/configuration/vpc-networks/). For policy authoring, refer to [Cloudflare Gateway traffic policies](/cloudflare-one/traffic-policies/).
