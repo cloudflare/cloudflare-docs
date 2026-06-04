@@ -20,7 +20,7 @@ import {
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
-export async function run({ id, payload, env, req }: FlueContext) {
+export async function run({ payload, env, req }: FlueContext) {
 	// ── 1. Verify the GitHub webhook signature ─────────────────────────────
 	const secret = (env as Record<string, string>).GITHUB_WEBHOOK_SECRET;
 	const sig = req?.headers.get("x-hub-signature-256") ?? "";
