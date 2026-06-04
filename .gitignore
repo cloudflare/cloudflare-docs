@@ -67,5 +67,7 @@ CLAUDE.md
 .flue/dist/
 .flue/.env*
 .flue/.wrangler/
+.flue/.flue-vite/
+.flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
 .flue/pnpm-lock.yaml
