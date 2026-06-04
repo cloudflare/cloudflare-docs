@@ -63,7 +63,9 @@ CLAUDE.md
 # certain versions of opencode mistakenly commit package-lock.json
 .opencode/package-lock.json
 
-# Flue agents build output and secrets
+# Flue agents build output, secrets, and isolated workspace artifacts
 .flue/dist/
 .flue/.env*
 .flue/.wrangler/
+.flue/node_modules/
+.flue/pnpm-lock.yaml
