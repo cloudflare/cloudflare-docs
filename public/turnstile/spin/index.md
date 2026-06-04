@@ -572,7 +572,9 @@ deploy() {
   local target_name="$1"
   rm -rf "$DEPLOY_DIR"
   npx --yes degit cloudflare/skills/skills/turnstile-spin/templates/worker "$DEPLOY_DIR" >/dev/null 2>&1
-  (cd "$DEPLOY_DIR" && npx wrangler deploy --name "$target_name") 2>"$deploy_log"
+  # Capture both streams. Wrangler prints the success URL and version ID on
+  # stdout; progress indicators on stderr. Capturing only stderr loses the URL.
+  (cd "$DEPLOY_DIR" && npx wrangler deploy --name "$target_name") >"$deploy_log" 2>&1
 }
 
 if ! deploy "$NAME"; then

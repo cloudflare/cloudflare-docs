@@ -604,7 +604,9 @@ deploy() {
   local target_name="$1"
   rm -rf "$DEPLOY_DIR"
   npx --yes degit cloudflare/skills/skills/turnstile-spin/templates/worker "$DEPLOY_DIR" >/dev/null 2>&1
-  (cd "$DEPLOY_DIR" && npx wrangler deploy --name "$target_name") 2>"$deploy_log"
+  # Capture both streams. Wrangler prints the success URL and version ID on
+  # stdout; progress indicators on stderr. Capturing only stderr loses the URL.
+  (cd "$DEPLOY_DIR" && npx wrangler deploy --name "$target_name") >"$deploy_log" 2>&1
 }
 
 if ! deploy "$NAME"; then
@@ -1036,7 +1038,9 @@ For each insertion point chosen in Step 3, write the appropriate snippet from th
 
 - `data-action="turnstile-spin-v1"` on the widget element (this is the telemetry marker, do not omit it).
 - `data-sitekey` set to the site key from Step 4.
-- A form `action` or `fetch` target pointing at the Worker URL from Step 5.
+- A submit handler that POSTs the token to the Worker URL from Step 5, checks `success === true`, and only then continues to the user's real signup/subscribe endpoint.
+
+**Do not** point the form `action` or top-level `fetch` directly at the Worker URL. The Worker is a siteverify proxy — it validates the token and returns `{ success: true | false }`, it does not persist form data or call the user's existing endpoint. Replacing the form target with the Worker URL silently drops every submission.
 
 If the user uses a framework with a managed component (e.g. `@marsidev/react-turnstile`), prefer the component over hand-rolled HTML. The marker still goes on the component's `action` prop.
 
@@ -1237,7 +1241,7 @@ Snippets per framework. Every snippet carries `data-action="turnstile-spin-v1"`.
 		></script>
 	</head>
 	<body>
-		<form action="https://YOUR_WORKER_URL/" method="POST">
+		<form id="signup-form" action="/api/subscribe" method="POST">
 			<input name="email" type="email" required />
 			<div
 				class="cf-turnstile"
@@ -1245,7 +1249,31 @@ Snippets per framework. Every snippet carries `data-action="turnstile-spin-v1"`.
 				data-action="turnstile-spin-v1"
 			></div>
 			<button type="submit">Subscribe</button>
+			<p id="signup-error" hidden>Verification failed. Try again.</p>
 		</form>
+		<script>
+			document
+				.getElementById("signup-form")
+				.addEventListener("submit", async (e) => {
+					e.preventDefault();
+					const form = e.currentTarget;
+					const token = form.querySelector(
+						'[name="cf-turnstile-response"]',
+					).value;
+					// Gate on the Spin Worker (siteverify). On success, submit to your real endpoint.
+					const verify = await fetch("https://YOUR_WORKER_URL/", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ token }),
+					});
+					const { success } = await verify.json();
+					if (!success) {
+						document.getElementById("signup-error").hidden = false;
+						return;
+					}
+					form.submit();
+				});
+		</script>
 	</body>
 </html>
 ```
@@ -1267,6 +1295,7 @@ declare global {
 
 export default function SignupPage() {
 	const [token, setToken] = useState("");
+	const [error, setError] = useState("");
 
 	useEffect(() => {
 		window.onTurnstileSuccess = (t: string) => setToken(t);
@@ -1274,15 +1303,21 @@ export default function SignupPage() {
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		const res = await fetch("https://YOUR_WORKER_URL/", {
+		setError("");
+		// Gate on the Spin Worker (siteverify).
+		const verify = await fetch("https://YOUR_WORKER_URL/", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ token }),
 		});
-		const data = await res.json();
-		if (data.success) {
-			// proceed
+		const { success } = await verify.json();
+		if (!success) {
+			setError("Verification failed. Try again.");
+			return;
 		}
+		// On success, call your real signup endpoint.
+		const formData = new FormData(e.currentTarget);
+		await fetch("/api/subscribe", { method: "POST", body: formData });
 	}
 
 	return (
@@ -1302,6 +1337,7 @@ export default function SignupPage() {
 				<button type="submit" disabled={!token}>
 					Sign up
 				</button>
+				{error && <p>{error}</p>}
 			</form>
 		</>
 	);
@@ -1316,20 +1352,53 @@ export default function SignupPage() {
 import Script from "next/script";
 import { useState } from "react";
 
+declare global {
+	interface Window {
+		onTurnstileSuccess?: (token: string) => void;
+	}
+}
+
 export default function SignupPage() {
 	const [token, setToken] = useState("");
+	const [error, setError] = useState("");
+
+	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		setError("");
+		const verify = await fetch("https://YOUR_WORKER_URL/", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ token }),
+		});
+		const { success } = await verify.json();
+		if (!success) {
+			setError("Verification failed. Try again.");
+			return;
+		}
+		const formData = new FormData(e.currentTarget);
+		await fetch("/api/subscribe", { method: "POST", body: formData });
+	}
 
 	return (
 		<>
-			<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
-			<form action="https://YOUR_WORKER_URL/" method="POST">
+			<Script
+				src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+				onLoad={() => {
+					window.onTurnstileSuccess = (t: string) => setToken(t);
+				}}
+			/>
+			<form onSubmit={handleSubmit}>
 				<input name="email" type="email" required />
 				<div
 					className="cf-turnstile"
 					data-sitekey="YOUR_SITEKEY"
 					data-action="turnstile-spin-v1"
+					data-callback="onTurnstileSuccess"
 				/>
-				<button type="submit">Sign up</button>
+				<button type="submit" disabled={!token}>
+					Sign up
+				</button>
+				{error && <p>{error}</p>}
 			</form>
 		</>
 	);
@@ -1354,7 +1423,7 @@ const WORKER_URL = "https://YOUR_WORKER_URL";
 		></script>
 	</head>
 	<body>
-		<form action={`${WORKER_URL}/`} method="POST">
+		<form id="signup-form" action="/api/subscribe" method="POST">
 			<input name="email" type="email" required />
 			<div
 				class="cf-turnstile"
@@ -1362,7 +1431,30 @@ const WORKER_URL = "https://YOUR_WORKER_URL";
 				data-action="turnstile-spin-v1"
 			/>
 			<button type="submit">Sign up</button>
+			<p id="signup-error" hidden>Verification failed. Try again.</p>
 		</form>
+		<script define:vars={{ WORKER_URL }}>
+			document
+				.getElementById("signup-form")
+				.addEventListener("submit", async (e) => {
+					e.preventDefault();
+					const form = e.currentTarget;
+					const token = form.querySelector(
+						'[name="cf-turnstile-response"]',
+					).value;
+					const verify = await fetch(WORKER_URL + "/", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ token }),
+					});
+					const { success } = await verify.json();
+					if (!success) {
+						document.getElementById("signup-error").hidden = false;
+						return;
+					}
+					form.submit();
+				});
+		</script>
 	</body>
 </html>
 ```
@@ -1375,22 +1467,28 @@ const WORKER_URL = "https://YOUR_WORKER_URL";
 <script lang="ts">
 	import { onMount } from "svelte";
 	let token = "";
+	let error = "";
 
 	onMount(() => {
 		(window as any).onTurnstileSuccess = (t: string) => (token = t);
 	});
 
-	async function handleSubmit(e: Event) {
+	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
-		const res = await fetch("https://YOUR_WORKER_URL/", {
+		error = "";
+		const form = e.currentTarget as HTMLFormElement;
+		const verify = await fetch("https://YOUR_WORKER_URL/", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ token }),
 		});
-		const data = await res.json();
-		if (data.success) {
-			// proceed
+		const { success } = await verify.json();
+		if (!success) {
+			error = "Verification failed. Try again.";
+			return;
 		}
+		const formData = new FormData(form);
+		await fetch("/api/subscribe", { method: "POST", body: formData });
 	}
 </script>
 
@@ -1411,6 +1509,7 @@ const WORKER_URL = "https://YOUR_WORKER_URL";
 		data-callback="onTurnstileSuccess"
 	></div>
 	<button type="submit" disabled={!token}>Sign up</button>
+	{#if error}<p>{error}</p>{/if}
 </form>
 ```
 
@@ -1425,7 +1524,7 @@ const WORKER_URL = "https://YOUR_WORKER_URL";
 	defer
 ></script>
 
-<form action="{{ .Site.Params.turnstileWorkerUrl }}/" method="POST">
+<form id="signup-form" action="/api/subscribe" method="POST">
 	<input name="email" type="email" required />
 	<div
 		class="cf-turnstile"
@@ -1433,7 +1532,34 @@ const WORKER_URL = "https://YOUR_WORKER_URL";
 		data-action="turnstile-spin-v1"
 	></div>
 	<button type="submit">Subscribe</button>
+	<p id="signup-error" hidden>Verification failed. Try again.</p>
 </form>
+
+<script>
+	document
+		.getElementById("signup-form")
+		.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			const form = e.currentTarget;
+			const token = form.querySelector(
+				'[name="cf-turnstile-response"]',
+			).value;
+			const verify = await fetch(
+				"{{ .Site.Params.turnstileWorkerUrl }}/",
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ token }),
+				},
+			);
+			const { success } = await verify.json();
+			if (!success) {
+				document.getElementById("signup-error").hidden = false;
+				return;
+			}
+			form.submit();
+		});
+</script>
 ```
 
 Reference in any page or layout:
