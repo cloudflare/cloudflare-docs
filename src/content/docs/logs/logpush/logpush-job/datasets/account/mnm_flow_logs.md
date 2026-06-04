@@ -61,13 +61,13 @@ The number of egress packets transmitted.
 
 Type: `int`
 
-The ethertype of the packet (2048 for IPv4, 34525 for IPv6, etc.).
+The ethertype of the packet (for example, 2048 for IPv4, 34525 for IPv6).
 
 ## FlowProtocol
 
 Type: `string`
 
-The flow protocol (e.g., 'AWS_VPC', 'IPFIX', 'SFLOW_5', 'NETFLOW_V9', etc.).
+The flow protocol (for example, 'AWS_VPC', 'IPFIX', 'SFLOW_5', 'NETFLOW_V9').
 
 ## FlowTimestamp
 
@@ -97,7 +97,7 @@ The number of packets transmitted.
 
 Type: `int`
 
-The protocol number (e.g., 6 for TCP, 17 for UDP).
+The protocol number (for example, 6 for TCP, 17 for UDP).
 
 ## RuleIDs
 
@@ -115,7 +115,7 @@ The sample rate of the flow set by the sampler (1, 100, 1000, 1024, 2000 are com
 
 Type: `string`
 
-The type of sample rate (e.g. 'flow', 'default', 'propagated').
+The type of sample rate (for example, 'flow', 'default', 'propagated').
 
 ## SamplerAddress
 
