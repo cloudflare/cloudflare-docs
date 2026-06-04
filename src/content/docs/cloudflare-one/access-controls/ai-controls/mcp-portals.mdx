@@ -278,9 +278,53 @@ If you change an alias while a user has an active session, the user must reauthe
 If the upstream server renames a tool or prompt, your alias for it will be removed on the next sync. Verify that your aliases still apply after each sync.
 :::
 
-### Tool namespacing
+### Tool and prompt namespacing
 
-All tools exposed through a portal are automatically namespaced with the server ID as a prefix. For example, a tool named `list_issues` on a server with ID `github` will appear as `github_list_issues` in the portal. This prevents name collisions when multiple MCP servers expose tools with the same name.
+All tools and prompts exposed through a portal are automatically namespaced with the server ID as a prefix. The format is `{server_id}_{original_name}`. For example, a tool named `list_issues` on a server with ID `github` appears as `github_list_issues` in the portal. This prevents name collisions when multiple MCP servers expose tools with the same name.
+
+Prompts follow the same pattern. A prompt named `summarize` on a server with ID `github` appears as `github_summarize`.
+
+#### How the server ID is determined
+
+The server ID used for namespacing comes from the **Server ID** field you set when [adding an MCP server](#add-an-mcp-server). You can enter a custom server ID in step 5 of the setup process, or let Cloudflare generate one automatically.
+
+Choose short, descriptive server IDs when you plan to expose the server through a portal. The server ID becomes part of every tool name that MCP clients and AI agents see.
+
+#### Parsing namespaced names
+
+The portal splits namespaced names on the **first** underscore only. Everything before the first underscore is the server ID, and everything after it is the tool or prompt name. This means tool names can contain underscores without ambiguity.
+
+| Namespaced name | Server ID | Tool name |
+| --- | --- | --- |
+| `github_list_issues` | `github` | `list_issues` |
+| `github_create_pull_request` | `github` | `create_pull_request` |
+| `sentry_get_issue_details` | `sentry` | `get_issue_details` |
+
+Because the split happens on the first underscore, server IDs themselves cannot contain underscores. Use hyphens instead when you need a multi-word server ID (for example, `my-server`).
+
+#### Namespacing with aliases
+
+If you [rename a tool with an alias](#rename-tools-and-prompts-with-aliases), the alias replaces the original tool name in the namespaced format. The server ID prefix still applies.
+
+For example, if you alias the tool `list_issues` to `issues` on a server with ID `github`, the namespaced name becomes `github_issues`.
+
+#### Namespacing in code mode
+
+When [code mode](#code-mode) is active, the portal applies an additional transformation to make namespaced tool names safe for use as JavaScript identifiers. Hyphens and dots in the namespaced name are replaced with underscores, names that start with a digit get a `_` prefix, and JavaScript reserved words get a `_` suffix. For example, a server with ID `my-server` and a tool named `get-data` would appear as `my_server_get_data` in the code mode sandbox.
+
+This sanitization happens automatically. You do not need to call any helper functions when using code mode as an end user.
+
+#### Helper functions in the Agents SDK
+
+If you are building an MCP client with the [Agents SDK](/agents/model-context-protocol/apis/client-api/), the SDK provides helper functions for working with server IDs and tool names:
+
+- **`normalizeServerId`** (exported from `agents/mcp/client`) normalizes a caller-supplied server ID into a safe string. For example, `"GitHub MCP!"` becomes `"github-mcp"`. The SDK calls this automatically when you pass an `id` option to `addMcpServer()`.
+
+- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in code mode contexts. Refer to the [code mode SDK reference](/agents/model-context-protocol/protocol/codemode/#sanitizetoolnamename) for details.
+
+:::note
+The Agents SDK uses a `tool_{server_id}_{tool_name}` format (with a `tool_` prefix) when returning tools from `getAITools()`. This differs from the portal format, which uses `{server_id}_{tool_name}` without the prefix.
+:::
 
 ## Manage portals via API
 
