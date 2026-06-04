@@ -167,7 +167,7 @@ console.log(response.text);
 
 ## Models on Cloudflare (Workers AI binding)
 
-Gemini models are also available as [third-party models](/ai-gateway/integrations/worker-binding-methods/#envairun) on the unified Cloudflare AI API. This is a different surface from the provider-proxy examples above: requests go to the `/ai` REST endpoint or the Workers AI `env.AI.run()` binding, use [Unified Billing](/ai-gateway/features/unified-billing/) (Cloudflare manages the provider credentials), and reference the model by its `{author}/{model}` ID. For the full binding reference, refer to [Workers Bindings](/ai-gateway/integrations/worker-binding-methods/).
+Gemini models are also available as [third-party models](/ai-gateway/integrations/worker-binding-methods/#envairun) on the unified Cloudflare AI API. This is a different surface from the provider-proxy examples on this page. Requests go to the `/ai` REST endpoint or the Workers AI `env.AI.run()` binding. Cloudflare manages the provider credentials through [Unified Billing](/ai-gateway/features/unified-billing/). Reference the model by its `{author}/{model}` ID. For the full binding reference, refer to [Workers Bindings](/ai-gateway/integrations/worker-binding-methods/).
 
 ### REST API
 
@@ -200,6 +200,11 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 const response = await env.AI.run(
   'google/gemini-2.5-flash',
   { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },
+  {
+    gateway: {
+      id: "default", // or use a specific gateway name
+    },
+  },
 )
 console.log(response)
 ```
