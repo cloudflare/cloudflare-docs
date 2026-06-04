@@ -41,7 +41,17 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-    await sandbox.startProcess("python -m http.server 8080");
+    // Start the server only if it is not already running. The Worker's
+    // fetch handler runs on every request, so guard against spawning
+    // duplicate processes by checking for an existing one first.
+    const processId = "http-server";
+    let server = await sandbox.getProcess(processId);
+    if (!server) {
+      server = await sandbox.startProcess("python -m http.server 8080", {
+        processId,
+      });
+    }
+    await server.waitForPort(8080);
 
     const tunnel = await sandbox.tunnels.get(8080, { name: "my-agent-api" });
     // → https://my-agent-api.example.com
@@ -52,7 +62,7 @@ export default {
 ```
 </TypeScriptExample>
 
-`startProcess` resolves when the process starts, not when it is listening. In real code, wait for the port to be ready before calling `tunnels.get()` — see [Expose services](/sandbox/guides/expose-services/) for an example.
+The `getProcess` check makes the handler idempotent across requests, and `waitForPort` ensures the server is actually listening before the tunnel is created. See [Expose services](/sandbox/guides/expose-services/) for more patterns.
 
 At this point the hostname is live but public. Anyone with the URL can reach the service. Continue to step 2 to lock it down. For production hostnames, create the Access application (steps 2–3) before deploying the Worker that calls `tunnels.get()` so the SDK CNAMEs onto an already-protected hostname.
 
