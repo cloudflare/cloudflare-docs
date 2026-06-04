@@ -30,6 +30,14 @@ async function run(): Promise<void> {
 			branch = payload.pull_request.head.ref;
 			commitSha = payload.pull_request.head.sha;
 			pull_number = payload.pull_request.number;
+		} else if (payload.issue?.pull_request) {
+			const { data: pull } = await octokit.rest.pulls.get({
+				...ctx.repo,
+				pull_number: payload.issue.number,
+			});
+			branch = pull.head.ref;
+			commitSha = pull.head.sha;
+			pull_number = pull.number;
 		} else {
 			branch = ctx.ref.replace("refs/heads/", "");
 			commitSha = ctx.sha;
