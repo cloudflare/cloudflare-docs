@@ -78,7 +78,7 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
      1. **Export + relaunch** (token never enters chat): `export CLOUDFLARE_API_TOKEN=<token>` then restart the agent from that terminal.
      2. **Save to file** (token in file with user-only perms, not in chat): `umask 077 && printf '%s' '<token>' > ~/.cf-turnstile-token`, then read with `TOKEN=$(cat ~/.cf-turnstile-token)`.
      3. **Paste in chat** (fastest, but token lands in conversation log; user should rotate it after if the log is ever shared).
-     While the user creates the token, run Steps 5, 6, 7 (Domain, Codebase scan, Insertion plan) in parallel. When they paste the token, re-run `auth-probe.sh`, then continue to Step 8.
+     If the user picks option 3 (paste in chat), you can use the wait to run Steps 5, 6, 7 (Domain, Codebase scan, Insertion plan). Options 1 and 2 will restart your session, so do not pre-fetch state in those cases. When auth is established, re-run `auth-probe.sh`, then continue to Step 8.
    - `multiple_accounts`: the token covers more than one account and `$CLOUDFLARE_ACCOUNT_ID` is unset. Present the numbered `accounts` list. **[wait for user]** Then export `CLOUDFLARE_ACCOUNT_ID=<chosen>` and re-run `auth-probe.sh`.
    - `account_mismatch`: `$CLOUDFLARE_ACCOUNT_ID` is set but isn't one of the token's accounts. Show the `accounts` list and ask the user to either `unset CLOUDFLARE_ACCOUNT_ID` or set it to one of those IDs.
 
@@ -640,7 +640,7 @@ deploy() {
 
 if ! deploy "$NAME"; then
   if grep -q "script name already in use" "$deploy_log"; then
-    NAME="${NAME}-$(date +%s | tail -c 5)"
+    NAME="${NAME}-$(openssl rand -hex 3 2>/dev/null || date +%s | tail -c 5)"
     echo "worker-deploy: name conflict; retrying as $NAME" >&2
     if ! deploy "$NAME"; then
       echo "worker-deploy: deploy failed even with new name" >&2
