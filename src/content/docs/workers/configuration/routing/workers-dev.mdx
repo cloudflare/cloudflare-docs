@@ -28,6 +28,10 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 When enabled, your `workers.dev` URL is available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
 
+:::note
+As an alternative, you can protect the Worker itself (rather than a specific URL) by adding a [Worker destination](/cloudflare-one/access-controls/applications/http-apps/worker-destinations/) in an Access application. Worker destinations cover all routes on the Worker automatically, including `workers.dev` and any custom domains.
+:::
+
 To limit your `workers.dev` URL to authorized emails only:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.

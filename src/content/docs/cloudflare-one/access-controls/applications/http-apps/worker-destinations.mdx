@@ -1,0 +1,235 @@
+---
+pcx_content_type: how-to
+products:
+  - cloudflare-one
+title: Protect a Worker with Access
+description: Add a Cloudflare Worker as a destination in a self-hosted Access application so that every request to the Worker passes through Access first.
+sidebar:
+  order: 3
+  label: Worker destinations
+---
+
+import { Tabs, TabItem } from "~/components";
+
+Cloudflare Access can protect a Worker directly by name, without requiring you to set up URL-based routing patterns. When you add a Worker as a destination on a self-hosted application, Access checks every incoming request to that Worker against your policies before letting it through. This covers all routes on the Worker automatically.
+
+Worker destinations are different from the hostname-based Access toggle available on the Workers dashboard. The hostname-based toggle protects a specific `workers.dev` or custom domain URL. Worker destinations protect the Worker itself, regardless of what hostnames it is reachable on.
+
+## Use cases
+
+Worker destinations support three configurations:
+
+| Configuration | What it protects | Destination type |
+| --- | --- | --- |
+| Specific Worker | A Worker and all of its preview deployments | `worker` |
+| Specific preview Worker | Only the preview deployments for a single Worker | `preview_worker` with `worker_id` |
+| All preview Workers | All preview deployments across your account | `preview_worker` without `worker_id` |
+
+You can combine Worker destinations with public hostname destinations in the same application. For example, a single app might protect both `app.example.com` and a Worker by name.
+
+## Prerequisites
+
+- A deployed [Cloudflare Worker](/workers/get-started/guide/)
+- An active [Cloudflare One](/cloudflare-one/) plan
+
+## 1. Create a self-hosted application with a Worker destination
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+2. Select **Add an application**.
+3. Select **Self-hosted**.
+4. Name your application.
+5. In the **Destination** section, select **Worker** as the destination type.
+6. Choose the Worker you want to protect from the dropdown.
+7. To also protect preview deployments separately, add another destination and select **Preview Worker**.
+8. Select **Next** and configure your [Access policies](/cloudflare-one/access-controls/policies/).
+9. Select **Add application**.
+
+</TabItem>
+<TabItem label="API">
+
+Call the Access applications endpoint with a `destinations` array containing `worker` or `preview_worker` entries. The `worker_id` is the immutable ID of the Worker (called `tag` in the [Workers scripts API](/api/resources/workers/subresources/scripts/methods/list/) or `id` in the [Workers beta API](/api/resources/workers/subresources/beta/subresources/workers/methods/list/)).
+
+**Protect a Worker and its preview deployments:**
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps" \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "type": "self_hosted",
+  "name": "My Worker app",
+  "destinations": [
+    {
+      "type": "worker",
+      "worker_id": "c81a2d22c29840ed9d61681a3270dbff"
+    }
+  ],
+  "policies": [
+    {
+      "name": "Allow employees",
+      "decision": "allow",
+      "include": [
+        {
+          "email_domain": {
+            "domain": "example.com"
+          }
+        }
+      ]
+    }
+  ]
+}'
+```
+
+**Protect only preview deployments for a specific Worker:**
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps" \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "type": "self_hosted",
+  "name": "My Worker previews",
+  "destinations": [
+    {
+      "type": "preview_worker",
+      "worker_id": "c81a2d22c29840ed9d61681a3270dbff"
+    }
+  ],
+  "policies": [
+    {
+      "name": "Allow employees",
+      "decision": "allow",
+      "include": [
+        {
+          "email_domain": {
+            "domain": "example.com"
+          }
+        }
+      ]
+    }
+  ]
+}'
+```
+
+**Protect all preview deployments on the account:**
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps" \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "type": "self_hosted",
+  "name": "All preview deployments",
+  "destinations": [
+    {
+      "type": "preview_worker"
+    }
+  ],
+  "policies": [
+    {
+      "name": "Allow employees",
+      "decision": "allow",
+      "include": [
+        {
+          "email_domain": {
+            "domain": "example.com"
+          }
+        }
+      ]
+    }
+  ]
+}'
+```
+
+</TabItem>
+</Tabs>
+
+## 2. Filter applications by Worker
+
+To find which Access applications protect a specific Worker, you can filter the application list by `worker_id` or `destination_type`.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps?destination_type=worker&worker_id=c81a2d22c29840ed9d61681a3270dbff" \
+--header "Authorization: Bearer {api_token}"
+```
+
+You can also use the standard filter format:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps?filter=destination_type:worker&filter=worker_id:c81a2d22c29840ed9d61681a3270dbff" \
+--header "Authorization: Bearer {api_token}"
+```
+
+To find applications that protect all preview Workers (no specific `worker_id`):
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps?destination_type=preview_worker&worker_id=" \
+--header "Authorization: Bearer {api_token}"
+```
+
+The existing `domain` filter also accepts Worker IDs, so `?domain=c81a2d22c29840ed9d61681a3270dbff` will return applications with that Worker as a destination.
+
+## How Worker destinations work
+
+When a request arrives at Cloudflare and Workers routing matches it to a Worker, Access checks whether any application has a destination for that Worker. The matching order is:
+
+1. If a traditional URL-based Access application matches the request hostname, that application takes precedence. This lets you create bypasses for specific URLs when needed (for example, to exempt `/.well-known` paths).
+2. If the request is for a preview deployment, Access looks for a `preview_worker` destination matching that specific Worker ID.
+3. Access then looks for a `worker` destination matching the Worker ID (which covers both production and preview).
+4. For preview deployments, Access also checks for an account-wide `preview_worker` destination (no `worker_id`).
+
+The first match wins. If none match, the request proceeds without Access.
+
+## Mixing Worker and public destinations
+
+A single application can contain both Worker destinations and public hostname destinations. This is useful when a Worker is reachable both through a custom domain and through `workers.dev`.
+
+```json
+{
+  "type": "self_hosted",
+  "name": "My app",
+  "destinations": [
+    {
+      "type": "worker",
+      "worker_id": "c81a2d22c29840ed9d61681a3270dbff"
+    },
+    {
+      "type": "public",
+      "uri": "app.example.com"
+    }
+  ]
+}
+```
+
+## Uniqueness constraints
+
+Worker IDs must be unique within each destination type across the account:
+
+- You cannot have two applications with `type: "worker"` destinations pointing to the same `worker_id`.
+- You cannot have two applications with `type: "preview_worker"` destinations pointing to the same `worker_id`.
+- You can have both a `worker` and a `preview_worker` destination for the same `worker_id` (on different applications or the same application) if you want different policies for production and preview traffic.
+- You can only have one account-wide `preview_worker` destination (with no `worker_id`).
+
+## Limitations
+
+- The Worker must exist when you create the destination. Access resolves the Worker name to an internal ID at creation time.
+- Deleting a Worker does not automatically remove Access applications that reference it. You must manually remove the destination or delete the application.
+- Worker destinations do not currently appear in App Launcher. If the application has a mix of Worker and public hostname destinations, the App Launcher link uses the public hostname.
+- Terraform support for Worker destinations is not yet available.
+
+## Compare with hostname-based Worker protection
+
+The Workers dashboard offers a one-click toggle to protect a Worker's `workers.dev` URL or preview URLs with Access. That approach creates a hostname-based Access application under the hood.
+
+| | Worker destination | Hostname toggle |
+| --- | --- | --- |
+| **Configured from** | Access dashboard or API | Workers dashboard |
+| **What it protects** | The Worker itself, regardless of hostname | A specific `workers.dev` or custom domain URL |
+| **Covers new routes automatically** | Yes | Only if the route shares the same hostname |
+| **Covers preview deployments** | Configurable per destination type | Separate toggle for preview URLs |
+| **Requires DNS on Cloudflare** | No | Yes (for custom domains) |
+
+For most new configurations, Worker destinations are the simpler option because they follow the Worker rather than its hostnames. If your Worker is only reachable on a single hostname and you want quick setup from the Workers dashboard, the hostname toggle works fine.

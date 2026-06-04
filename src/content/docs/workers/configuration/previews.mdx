@@ -95,6 +95,10 @@ The resulting alias would be associated with this version, and immediately avail
 
 When enabled, all preview URLs are available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
 
+:::note
+You can also protect preview deployments by adding a [Worker destination](/cloudflare-one/access-controls/applications/http-apps/worker-destinations/) in an Access application. Worker destinations protect the Worker by name rather than by URL, and can cover preview deployments across your entire account.
+:::
+
 To limit your preview URLs to authorized emails only:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.

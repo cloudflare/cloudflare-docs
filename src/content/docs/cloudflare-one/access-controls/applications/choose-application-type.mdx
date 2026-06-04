@@ -53,9 +53,17 @@ For setup instructions, refer to [Add a self-hosted private application](/cloudf
 
 ### Protecting Workers
 
-Self-hosted applications can also protect a Cloudflare Worker directly by name, rather than by hostname or IP. When you select a Worker as the destination, you can cover the Worker together with all of its preview deployments, or cover the preview deployments only.
+Self-hosted applications can protect a Cloudflare Worker directly by name, rather than by hostname or IP. You add a Worker destination to your application, and Access checks every request to that Worker against your policies before letting it through. This covers all routes on the Worker automatically, so you do not need to keep Access applications in sync with Workers routes.
 
-This is the safest and most straightforward way to put authentication in front of a Worker. Instead of configuring individual routes on the Worker and managing authentication at the route level, you link the entire Worker (and optionally its preview deployments) to an Access application. Any request to the Worker on any route passes through Access first.
+Three Worker destination configurations are available:
+
+- **Worker** — Protects a specific Worker and all of its preview deployments.
+- **Preview Worker (specific)** — Protects only the preview deployments for a single Worker.
+- **Preview Worker (account-wide)** — Protects all preview deployments across your account.
+
+You can combine Worker destinations with public hostname destinations in the same application. For example, you might protect both `app.example.com` and a Worker by name in a single app.
+
+For setup instructions, refer to [Protect a Worker with Access](/cloudflare-one/access-controls/applications/http-apps/worker-destinations/).
 
 ### CLI access with cloudflared
 
