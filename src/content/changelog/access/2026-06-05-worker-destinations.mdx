@@ -8,12 +8,13 @@ products:
 
 Access applications now support [Worker destinations](/cloudflare-one/access-controls/applications/http-apps/worker-destinations/), a new way to protect Cloudflare Workers without managing URL-based routing patterns. Instead of matching hostname patterns and keeping Access applications in sync with Workers routes, you select the Worker directly and Access covers every route automatically.
 
-Three destination configurations are available:
+Four destination types are available:
 
-- **Worker** — Protects a specific Worker and all of its preview deployments.
-- **Preview Worker (specific)** — Protects only the preview deployments for a specific Worker.
-- **Preview Worker (account-wide)** — Protects all preview deployments across your account.
+- **`worker`** — Protects a specific Worker and all of its preview deployments.
+- **`preview_worker`** — Protects only the preview deployments for a specific Worker.
+- **`all_workers`** — Protects every Worker on the account, including preview deployments.
+- **`all_preview_workers`** — Protects all preview deployments across the account.
 
-You can configure Worker destinations in the [Cloudflare dashboard](https://dash.cloudflare.com/) or via the API using the `destinations` array with `type: "worker"` or `type: "preview_worker"`. The API also supports new `worker_id` and `destination_type` query parameters for filtering applications by Worker.
+You can configure Worker destinations in the [Cloudflare dashboard](https://dash.cloudflare.com/) or via the API using the `destinations` array. The API also supports new `worker_id` and `destination_type` query parameters for filtering applications by Worker.
 
 To get started, refer to [Protect a Worker with Access](/cloudflare-one/access-controls/applications/http-apps/worker-destinations/).

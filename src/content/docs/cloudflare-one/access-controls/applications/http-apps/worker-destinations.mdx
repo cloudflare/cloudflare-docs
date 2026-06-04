@@ -17,13 +17,20 @@ Worker destinations are different from the hostname-based Access toggle availabl
 
 ## Use cases
 
-Worker destinations support three configurations:
+Worker destinations support five configurations:
 
 | Configuration | What it protects | Destination type |
 | --- | --- | --- |
 | Specific Worker | A Worker and all of its preview deployments | `worker` |
-| Specific preview Worker | Only the preview deployments for a single Worker | `preview_worker` with `worker_id` |
-| All preview Workers | All preview deployments across your account | `preview_worker` without `worker_id` |
+| Specific preview Worker | Only the preview deployments for a single Worker | `preview_worker` |
+| All Workers | Every Worker on the account, including preview deployments | `all_workers` |
+| All preview Workers | All preview deployments across the account | `all_preview_workers` |
+
+The `worker` and `preview_worker` types require a `worker_id`. The `all_workers` and `all_preview_workers` types do not take a `worker_id` because they apply account-wide.
+
+:::note
+The `all_workers` and `all_preview_workers` types are powerful and should be used with caution. Accidentally creating an `all_workers` destination can gate every Worker on the account behind Access, potentially causing downtime for production Workers.
+:::
 
 You can combine Worker destinations with public hostname destinations in the same application. For example, a single app might protect both `app.example.com` and a Worker by name.
 
@@ -114,6 +121,36 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps" \
 }'
 ```
 
+**Protect all Workers on the account:**
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps" \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "type": "self_hosted",
+  "name": "All Workers",
+  "destinations": [
+    {
+      "type": "all_workers"
+    }
+  ],
+  "policies": [
+    {
+      "name": "Allow employees",
+      "decision": "allow",
+      "include": [
+        {
+          "email_domain": {
+            "domain": "example.com"
+          }
+        }
+      ]
+    }
+  ]
+}'
+```
+
 **Protect all preview deployments on the account:**
 
 ```bash
@@ -125,7 +162,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps" \
   "name": "All preview deployments",
   "destinations": [
     {
-      "type": "preview_worker"
+      "type": "all_preview_workers"
     }
   ],
   "policies": [
@@ -163,10 +200,10 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps?fil
 --header "Authorization: Bearer {api_token}"
 ```
 
-To find applications that protect all preview Workers (no specific `worker_id`):
+To find applications that protect all Workers or all preview Workers:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps?destination_type=preview_worker&worker_id=" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps?destination_type=all_preview_workers" \
 --header "Authorization: Bearer {api_token}"
 ```
 
@@ -179,7 +216,8 @@ When a request arrives at Cloudflare and Workers routing matches it to a Worker,
 1. If a traditional URL-based Access application matches the request hostname, that application takes precedence. This lets you create bypasses for specific URLs when needed (for example, to exempt `/.well-known` paths).
 2. If the request is for a preview deployment, Access looks for a `preview_worker` destination matching that specific Worker ID.
 3. Access then looks for a `worker` destination matching the Worker ID (which covers both production and preview).
-4. For preview deployments, Access also checks for an account-wide `preview_worker` destination (no `worker_id`).
+4. For preview deployments, Access checks for an `all_preview_workers` destination.
+5. Access checks for an `all_workers` destination.
 
 The first match wins. If none match, the request proceeds without Access.
 
@@ -211,7 +249,8 @@ Worker IDs must be unique within each destination type across the account:
 - You cannot have two applications with `type: "worker"` destinations pointing to the same `worker_id`.
 - You cannot have two applications with `type: "preview_worker"` destinations pointing to the same `worker_id`.
 - You can have both a `worker` and a `preview_worker` destination for the same `worker_id` (on different applications or the same application) if you want different policies for production and preview traffic.
-- You can only have one account-wide `preview_worker` destination (with no `worker_id`).
+- You can only have one `all_workers` destination per account.
+- You can only have one `all_preview_workers` destination per account.
 
 ## Limitations
 
