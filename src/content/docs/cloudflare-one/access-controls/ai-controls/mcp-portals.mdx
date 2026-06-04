@@ -326,6 +326,42 @@ If you are building an MCP client with the [Agents SDK](/agents/model-context-pr
 The Agents SDK uses a `tool_{server_id}_{tool_name}` format (with a `tool_` prefix) when returning tools from `getAITools()`. This differs from the portal format, which uses `{server_id}_{tool_name}` without the prefix.
 :::
 
+### Portal-native tools
+
+In addition to upstream MCP server tools, the portal exposes its own built-in tools that let AI agents manage server connections and discover tools during a session. These tools use the `portal_` prefix and are not associated with any upstream server.
+
+#### Always available
+
+The following tools are available in every portal session, regardless of the connection mode:
+
+| Tool | Description |
+| --- | --- |
+| `portal_list_servers` | Lists all upstream MCP servers with their IDs, names, and whether they are currently enabled in the session. |
+| `portal_toggle_servers` | Opens a server selection flow. Returns a URL that the user visits in a browser to enable or disable servers and manage OAuth credentials. |
+| `portal_toggle_single_server` | Toggles a single server on or off without requiring a browser visit. Accepts a `server_id` and an `action` (`toggle` or `untoggle`). If the server requires OAuth and the user has not authenticated yet, the portal falls back to the browser-based `portal_toggle_servers` flow. |
+
+These tools power the [session management](#manage-portal-sessions) features described later in this guide. AI agents call them automatically when you ask to enable a server, disable a server, or return to the server selection page.
+
+#### Context optimization tools
+
+When you connect with the [`optimize_context`](#optimize-context) query parameter, the portal exposes additional tools for discovering and calling upstream tools:
+
+| Tool | Available in | Description |
+| --- | --- | --- |
+| `portal_query_tools` | `minimize_tools`, `search_and_execute` | Searches upstream tools by name, description, or schema using a regex pattern. Returns full tool definitions so the agent can call them. Required in `minimize_tools` mode because upstream tool schemas are stripped to reduce context size. |
+| `portal_execute` | `search_and_execute` | Calls an upstream tool by name with the provided arguments. In `search_and_execute` mode, upstream tools are hidden from the tool list entirely, so agents must use `portal_query_tools` to discover them and `portal_execute` to call them. |
+
+#### Code mode tools
+
+When you connect with [code mode](#code-mode) enabled, the portal replaces all upstream tools with two code execution tools:
+
+| Tool | Description |
+| --- | --- |
+| `portal_codemode_search` | Searches available tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode.tools()` function that returns all upstream tool definitions with sanitized names. |
+| `portal_codemode_execute` | Calls upstream tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode` proxy object where each property maps to an upstream tool. Supports `Promise.all()` for parallel tool calls. |
+
+Refer to the [code mode SDK reference](/agents/model-context-protocol/protocol/codemode/) for details on writing code for these tools.
+
 ## Manage portals via API
 
 In addition to the dashboard, you can manage MCP server portals programmatically using the Cloudflare API. The following examples show common operations.
