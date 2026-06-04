@@ -9,7 +9,7 @@ products:
   - cloudflare-one
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { APIRequest, CURL, Render, TypeScriptExample } from "~/components";
 
 A [named tunnel](/sandbox/api/tunnels/) created with `sandbox.tunnels.get(port, { name })` resolves to a hostname on a zone in your Cloudflare account (for example, `my-agent-api.example.com`). By default, that hostname is reachable by anyone on the internet.
 
@@ -50,6 +50,23 @@ Optional: add a second `Allow` policy (for example, `Emails ending in @your-comp
 
 - **Single hostname** — `my-agent-api.example.com`. Protects exactly the one tunnel.
 - **Wildcard subdomain** — `*.example.com`. Protects every named tunnel under the zone with a single application. Use this when your Worker creates many tunnels (for example, one per sandbox or per agent session) on the same zone.
+
+To add another hostname to an existing application programmatically, [`GET` the application](/api/resources/zero_trust/subresources/access/subresources/applications/methods/get/) to read its current `destinations`, then `PUT` the full configuration back with the new destination appended:
+
+<APIRequest
+	path="/accounts/{account_id}/access/apps/{app_id}"
+	method="PUT"
+	json={{
+		name: "Sandbox tunnels",
+		type: "self_hosted",
+		destinations: [
+			{ type: "public", uri: "my-agent-api.example.com" },
+			{ type: "public", uri: "another-tunnel.example.com" },
+		],
+	}}
+/>
+
+The request body must include every field returned by the previous `GET` request — fields you omit are reset to their defaults.
 
 Create the Access application before deploying the Worker that calls `tunnels.get()` so the SDK CNAMEs onto an already-protected hostname.
 
@@ -96,11 +113,13 @@ Once the policy is in place, requests must carry the service token. Access suppo
 
 Send both headers on every request:
 
-```sh
-curl https://my-agent-api.example.com \
-  --header "CF-Access-Client-Id: <CLIENT_ID>" \
-  --header "CF-Access-Client-Secret: <CLIENT_SECRET>"
-```
+<CURL
+	url="https://my-agent-api.example.com"
+	headers={{
+		"CF-Access-Client-Id": "$CF_ACCESS_CLIENT_ID",
+		"CF-Access-Client-Secret": "$CF_ACCESS_CLIENT_SECRET",
+	}}
+/>
 
 From a Worker or any `fetch`-capable runtime:
 
@@ -129,19 +148,19 @@ If the hostname is brand-new, allow a few seconds for DNS and edge TLS provision
 
 From a machine without the token:
 
-```sh
-curl --include https://my-agent-api.example.com
-```
+<CURL url="https://my-agent-api.example.com" />
 
-Expect an HTTP `302` redirecting to the Access login page (or `401` if managed OAuth is enabled on the application).
+Expect an HTTP `302` redirecting to the Access login page (or `401` if managed OAuth is enabled on the application). Add `--include` to see the response headers.
 
 With the token:
 
-```sh
-curl https://my-agent-api.example.com \
-  --header "CF-Access-Client-Id: <CLIENT_ID>" \
-  --header "CF-Access-Client-Secret: <CLIENT_SECRET>"
-```
+<CURL
+	url="https://my-agent-api.example.com"
+	headers={{
+		"CF-Access-Client-Id": "$CF_ACCESS_CLIENT_ID",
+		"CF-Access-Client-Secret": "$CF_ACCESS_CLIENT_SECRET",
+	}}
+/>
 
 Expect the response from the service running inside the sandbox.
 
