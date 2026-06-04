@@ -1,6 +1,6 @@
 ---
-pcx_content_type: guide
-title: Business continuity guide
+pcx_content_type: solution-guide
+title: Business Continuity Guide
 description: Build a business continuity strategy for the Cloudflare One Client using available disconnection mechanisms and decision guidance for service degradation scenarios.
 products:
   - cloudflare-one
@@ -22,7 +22,7 @@ For detailed architecture information, refer to the [Cloudflare One Client docum
 
 **Critical decision framework**
 
-The Cloudflare One Client operates in **fail-closed mode by default**: if the client cannot reach Cloudflare, it remains connected and blocks traffic rather than failing open to unprotected internet access. This protects your security posture but requires active decision-making during incidents.
+The Cloudflare One Client operates in **fail-closed mode by default**: if the client cannot reach Cloudflare, it remains connected and blocks traffic rather than failing open to unprotected Internet access. This protects your security posture but requires active decision-making during incidents.
 
 **When to fail open** (Cloudflare One Client stops trying to connect and allows network connectivity without Cloudflare One Client protections):
 
@@ -34,7 +34,7 @@ The Cloudflare One Client operates in **fail-closed mode by default**: if the cl
 
 - Cloudflare edge services are operational (traffic is processing normally)
 - Only management dashboard is unavailable (policies continue enforcing)
-- Regulatory/compliance requirements prohibit unfiltered internet access
+- Regulatory/compliance requirements prohibit unfiltered Internet access
 - Security incident requires maintaining visibility and control
 
 :::
@@ -56,16 +56,16 @@ The mechanisms below help you execute fail-open decisions when needed. Document 
     <tr>
       <td>
         <p><strong>Complete unavailability during Cloudflare infrastructure outage</strong></p>
-        <p>Example: Cloudflare management systems unreachable; Global Disconnection unavailable but users need internet access to maintain business operations.</p>
+        <p>Example: Cloudflare management systems unreachable; Global Disconnection unavailable but users need Internet access to maintain business operations.</p>
       </td>
       <td>
         <p><strong><a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/">External Emergency Disconnect</a></strong></p>
         <p>A customer-hosted HTTPS endpoint that clients poll for disconnect signals, operating independently of Cloudflare infrastructure.</p>
       </td>
       <td>
-        <p><strong>Use when:</strong> Cloudflare's management systems are unreachable but you need to disconnect clients to restore internet access.</p>
+        <p><strong>Use when:</strong> Cloudflare's management systems are unreachable but you need to disconnect clients to restore Internet access.</p>
         <p><strong>Guidance:</strong> Pre-configure this mechanism before outages occur. During an incident, update your endpoint to return <code>{'{"emergency_disconnect": true}'}</code>.</p>
-        <p><strong>Expected outcome:</strong> Clients disconnect within 1–2 polling intervals (configurable, default 60 seconds); users regain direct internet access without security controls.</p>
+        <p><strong>Expected outcome:</strong> Clients disconnect within 1–2 polling intervals (configurable, default 60 seconds); users regain direct Internet access without security controls.</p>
       </td>
       <td>
         <p><strong>Prerequisites:</strong></p>
@@ -87,7 +87,7 @@ The mechanisms below help you execute fail-open decisions when needed. Document 
     <tr>
       <td>
         <p><strong>Complete unavailability of client connectivity</strong></p>
-        <p>Example: Client cannot establish secure tunnel; users unable to access protected applications or filtered internet.</p>
+        <p>Example: Client cannot establish secure tunnel; users unable to access protected applications or filtered Internet.</p>
       </td>
       <td>
         <p><strong>Global Disconnection</strong></p>
@@ -96,7 +96,7 @@ The mechanisms below help you execute fail-open decisions when needed. Document 
       <td>
         <p><strong>Use when:</strong> You need immediate fleet-wide disconnection and Cloudflare's management systems are reachable.</p>
         <p><strong>Guidance:</strong> Check the <a href="https://www.cloudflarestatus.com/">Cloudflare status page</a> first. If Cloudflare infrastructure is experiencing issues, this mechanism may be unavailable — use <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/">External Emergency Disconnect</a> instead.</p>
-        <p><strong>Expected outcome:</strong> All clients disconnect within seconds; users have direct internet access without filtering, threat protection, or private application connectivity.</p>
+        <p><strong>Expected outcome:</strong> All clients disconnect within seconds; users have direct Internet access without filtering, threat protection, or private application connectivity.</p>
       </td>
       <td>
         <p><strong>Prerequisites:</strong></p>
@@ -228,7 +228,7 @@ External Emergency Disconnect is **not available on iOS, Android, or ChromeOS**.
 
 ### Prerequisites to validate before incidents
 
-- Enable the Global Disconnection feature in the Dashboard.
+- Turn on the Global Disconnection feature in the Dashboard.
 - Configure an External Emergency Disconnect endpoint and upload the certificate fingerprint.
 - Test all mechanisms in a non-production environment.
 - Document fail-open vs. fail-closed decision criteria and create an authorization matrix.
@@ -258,7 +258,7 @@ External Emergency Disconnect is **not available on iOS, Android, or ChromeOS**.
 
 When you disconnect the Cloudflare One Client, the following controls are affected:
 
-- **Web filtering and threat protection:** DNS and HTTP policies stop enforcing; users have direct, unfiltered internet access.
+- **Web filtering and threat protection:** DNS and HTTP policies stop enforcing; users have direct, unfiltered Internet access.
 - **Data loss prevention (DLP):** Content inspection stops; sensitive data uploads and downloads occur without DLP controls.
 - **Private application access:** Connectivity to applications protected by Cloudflare Tunnel is lost. Consider alternative access methods such as a direct VPN for critical applications.
 - **Gateway logging and analytics:** No visibility into user traffic during disconnection.
