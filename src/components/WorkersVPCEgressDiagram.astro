@@ -4,18 +4,26 @@ import { Icon as AstroIcon } from "astro-icon/components";
 const policies = [
 	{ label: "DNS", href: "/cloudflare-one/traffic-policies/dns-policies/" },
 	{ label: "HTTP", href: "/cloudflare-one/traffic-policies/http-policies/" },
-	{ label: "Network", href: "/cloudflare-one/traffic-policies/network-policies/" },
+	{
+		label: "Network",
+		href: "/cloudflare-one/traffic-policies/network-policies/",
+	},
 ];
 
 const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 ---
 
-<figure class="vpc-egress-diagram not-content" aria-label="Workers VPC public Internet egress through Cloudflare Mesh and Cloudflare Gateway">
+<figure
+	class="vpc-egress-diagram not-content"
+	aria-label="Workers VPC public Internet egress through Cloudflare Mesh and Cloudflare Gateway"
+>
 	<ol class="flow">
 		<li class="flow-step">
 			<div class="node-card worker-card">
 				<div class="node-header">
-					<span class="node-icon worker-icon" aria-hidden="true"><AstroIcon name="workers" /></span>
+					<span class="node-icon worker-icon" aria-hidden="true"
+						><AstroIcon name="workers" /></span
+					>
 					<a class="node-title" href="/workers/">Worker</a>
 				</div>
 				<p class="node-caption">Calls <code>env.EGRESS.fetch()</code></p>
@@ -30,11 +38,21 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<li class="flow-step">
 			<div class="node-card mesh-card">
 				<div class="node-header">
-					<span class="node-icon mesh-icon" aria-hidden="true"><AstroIcon name="cloudflare-mesh" /></span>
-					<a class="node-title" href="/cloudflare-one/networks/connectors/cloudflare-mesh/">Cloudflare Mesh</a>
+					<span class="node-icon mesh-icon" aria-hidden="true"
+						><AstroIcon name="cloudflare-mesh" /></span
+					>
+					<a
+						class="node-title"
+						href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
+						>Cloudflare Mesh</a
+					>
 				</div>
 				<p class="node-caption">
-					Bind via <a class="inline-pill mesh-pill" href="/workers-vpc/configuration/vpc-networks/"><code>cf1:network</code></a>
+					Bind via <a
+						class="inline-pill mesh-pill"
+						href="/workers-vpc/configuration/vpc-networks/"
+						><code>cf1:network</code></a
+					>
 				</p>
 			</div>
 		</li>
@@ -46,11 +64,23 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<li class="flow-step">
 			<div class="node-card gateway-card">
 				<div class="node-header">
-					<span class="node-icon gateway-icon" aria-hidden="true"><AstroIcon name="gateway" /></span>
-					<a class="node-title" href="/cloudflare-one/traffic-policies/">Cloudflare Gateway</a>
+					<span class="node-icon gateway-icon" aria-hidden="true"
+						><AstroIcon name="gateway" /></span
+					>
+					<a class="node-title" href="/cloudflare-one/traffic-policies/"
+						>Cloudflare Gateway</a
+					>
 				</div>
 				<p class="node-caption">Policies applied:</p>
-				<div class="pill-row">{policies.map((p) => <a class="policy-pill" href={p.href}>{p.label}</a>)}</div>
+				<div class="pill-row">
+					{
+						policies.map((p) => (
+							<a class="policy-pill" href={p.href}>
+								{p.label}
+							</a>
+						))
+					}
+				</div>
 			</div>
 		</li>
 
@@ -221,7 +251,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		border-radius: 5px;
 		background: var(--map-elevated);
 		color: var(--map-text);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 11px;
 		white-space: nowrap;
 	}
@@ -238,7 +270,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 
 	.connector-label {
 		color: var(--map-caption);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 11px;
 		font-weight: 500;
 		line-height: 1;
@@ -280,7 +314,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		border: 0;
 		background: transparent;
 		color: var(--map-mesh);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 11px;
 		white-space: nowrap;
 	}
@@ -296,7 +332,8 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		display: inline-flex;
 		align-items: center;
 		padding: 4px 10px;
-		border: 1px solid color-mix(in srgb, var(--map-gateway) 35%, var(--map-line));
+		border: 1px solid
+			color-mix(in srgb, var(--map-gateway) 35%, var(--map-line));
 		border-radius: 6px;
 		background: color-mix(in srgb, var(--map-gateway) 6%, var(--map-card));
 		color: var(--map-text);
@@ -341,7 +378,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 
 	.logs-title {
 		color: var(--map-strong);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 11px;
 		font-weight: 500;
 		text-transform: uppercase;

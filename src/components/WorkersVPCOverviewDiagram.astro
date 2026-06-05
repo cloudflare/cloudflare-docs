@@ -4,24 +4,40 @@ import { Icon as AstroIcon } from "astro-icon/components";
 const policies = [
 	{ label: "DNS", href: "/cloudflare-one/traffic-policies/dns-policies/" },
 	{ label: "HTTP", href: "/cloudflare-one/traffic-policies/http-policies/" },
-	{ label: "Network", href: "/cloudflare-one/traffic-policies/network-policies/" },
+	{
+		label: "Network",
+		href: "/cloudflare-one/traffic-policies/network-policies/",
+	},
 ];
 
 const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 ---
 
-<figure class="vpc-overview-diagram not-content" aria-label="Workers VPC integrations across Cloudflare Tunnel, Cloudflare Mesh, and Cloudflare WAN">
+<figure
+	class="vpc-overview-diagram not-content"
+	aria-label="Workers VPC integrations across Cloudflare Tunnel, Cloudflare Mesh, and Cloudflare WAN"
+>
 	<div class="diagram">
 		<div class="row worker-row">
 			<div class="node-card worker-card">
 				<div class="node-header">
-					<span class="node-icon worker-icon" aria-hidden="true"><AstroIcon name="workers" /></span>
+					<span class="node-icon worker-icon" aria-hidden="true"
+						><AstroIcon name="workers" /></span
+					>
 					<a class="node-title" href="/workers/">Worker</a>
 				</div>
 				<p class="node-caption">
-					Bind via <a class="inline-pill workers-vpc-pill" href="/workers-vpc/configuration/vpc-services/"><code>vpc_services</code></a>
+					Bind via <a
+						class="inline-pill workers-vpc-pill"
+						href="/workers-vpc/configuration/vpc-services/"
+						><code>vpc_services</code></a
+					>
 					<span class="caption-separator">or</span>
-					<a class="inline-pill workers-vpc-pill" href="/workers-vpc/configuration/vpc-networks/"><code>vpc_networks</code></a>
+					<a
+						class="inline-pill workers-vpc-pill"
+						href="/workers-vpc/configuration/vpc-networks/"
+						><code>vpc_networks</code></a
+					>
 				</p>
 			</div>
 		</div>
@@ -29,37 +45,69 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<div class="row on-ramps-row">
 			<div class="node-card tunnel-card">
 				<div class="node-header">
-					<span class="node-icon tunnel-icon" aria-hidden="true"><AstroIcon name="tunnel" /></span>
+					<span class="node-icon tunnel-icon" aria-hidden="true"
+						><AstroIcon name="tunnel" /></span
+					>
 					<a class="node-title" href="/tunnel/">Cloudflare Tunnel</a>
 				</div>
-				<p class="node-caption">Reach private applications or networks through <code>cloudflared</code></p>
+				<p class="node-caption">
+					Reach private applications or networks through <code
+						>cloudflared</code>
+				</p>
 			</div>
 
 			<div class="node-card mesh-card">
 				<div class="node-header">
-					<span class="node-icon mesh-icon" aria-hidden="true"><AstroIcon name="cloudflare-mesh" /></span>
-					<a class="node-title" href="/cloudflare-one/networks/connectors/cloudflare-mesh/">Cloudflare Mesh</a>
+					<span class="node-icon mesh-icon" aria-hidden="true"
+						><AstroIcon name="cloudflare-mesh" /></span
+					>
+					<a
+						class="node-title"
+						href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
+						>Cloudflare Mesh</a
+					>
 				</div>
-				<p class="node-caption">Reach the full account through <code>cf1:network</code></p>
+				<p class="node-caption">
+					Reach the full account through <code>cf1:network</code>
+				</p>
 			</div>
 
 			<div class="node-card wan-card">
 				<div class="node-header">
-					<span class="node-icon wan-icon" aria-hidden="true"><AstroIcon name="cloudflare-wan" /></span>
+					<span class="node-icon wan-icon" aria-hidden="true"
+						><AstroIcon name="cloudflare-wan" /></span
+					>
 					<a class="node-title" href="/cloudflare-wan/">Cloudflare WAN</a>
 				</div>
-				<p class="node-caption">Reach destinations through GRE, IPsec, or CNI on-ramps</p>
+				<p class="node-caption">
+					Reach destinations through GRE, IPsec, or CNI on-ramps
+				</p>
 			</div>
 		</div>
 
 		<div class="row gateway-row">
 			<div class="node-card gateway-card">
 				<div class="node-header">
-					<span class="node-icon gateway-icon" aria-hidden="true"><AstroIcon name="gateway" /></span>
-					<a class="node-title" href="/cloudflare-one/traffic-policies/">Cloudflare Gateway</a>
+					<span class="node-icon gateway-icon" aria-hidden="true"
+						><AstroIcon name="gateway" /></span
+					>
+					<a class="node-title" href="/cloudflare-one/traffic-policies/"
+						>Cloudflare Gateway</a
+					>
 				</div>
-				<p class="node-caption">Mesh and WAN traffic flows through Gateway, with policies enforced and traffic <a class="logs-link" href={logsHref}>logged</a>.</p>
-				<div class="pill-row">{policies.map((p) => <a class="policy-pill" href={p.href}>{p.label}</a>)}</div>
+				<p class="node-caption">
+					Mesh and WAN traffic flows through Gateway, with policies enforced and
+					traffic <a class="logs-link" href={logsHref}>logged</a>.
+				</p>
+				<div class="pill-row">
+					{
+						policies.map((p) => (
+							<a class="policy-pill" href={p.href}>
+								{p.label}
+							</a>
+						))
+					}
+				</div>
 			</div>
 		</div>
 
@@ -69,7 +117,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 					<span class="destination-dot private-dot" aria-hidden="true"></span>
 					<span class="destination-title">Private services</span>
 				</div>
-				<p class="destination-caption">APIs, databases, hosts in your network — reachable via any on-ramp</p>
+				<p class="destination-caption">
+					APIs, databases, hosts in your network — reachable via any on-ramp
+				</p>
 			</div>
 
 			<div class="destination-card public-card">
@@ -276,7 +326,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		border-radius: 5px;
 		background: var(--map-elevated);
 		color: var(--map-text);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 11px;
 		white-space: nowrap;
 	}
@@ -311,7 +363,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		border: 0;
 		background: transparent;
 		color: var(--map-brand);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 11px;
 		white-space: nowrap;
 	}
@@ -331,7 +385,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		border: 0;
 		background: transparent;
 		color: var(--map-mesh);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 11px;
 		white-space: nowrap;
 	}
@@ -347,7 +403,8 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		display: inline-flex;
 		align-items: center;
 		padding: 4px 10px;
-		border: 1px solid color-mix(in srgb, var(--map-gateway) 35%, var(--map-line));
+		border: 1px solid
+			color-mix(in srgb, var(--map-gateway) 35%, var(--map-line));
 		border-radius: 6px;
 		background: color-mix(in srgb, var(--map-gateway) 6%, var(--map-card));
 		color: var(--map-text);
@@ -398,7 +455,8 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 
 	.private-dot {
 		background: var(--map-private);
-		box-shadow: 0 0 0 3px color-mix(in srgb, var(--map-private) 18%, transparent);
+		box-shadow: 0 0 0 3px
+			color-mix(in srgb, var(--map-private) 18%, transparent);
 	}
 
 	.public-dot {
@@ -417,9 +475,15 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 	.logs-link {
 		color: var(--map-caption);
 		text-decoration: underline;
-		text-decoration-color: color-mix(in srgb, var(--map-caption) 35%, transparent);
+		text-decoration-color: color-mix(
+			in srgb,
+			var(--map-caption) 35%,
+			transparent
+		);
 		text-underline-offset: 2px;
-		transition: color 150ms ease, text-decoration-color 150ms ease;
+		transition:
+			color 150ms ease,
+			text-decoration-color 150ms ease;
 	}
 
 	.logs-link:hover {
