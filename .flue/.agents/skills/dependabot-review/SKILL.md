@@ -46,6 +46,7 @@ If a package has no changelog in the PR body, call `get_npm_package_info` to che
 For each package, use `search_repo` and `read_repo_file` to understand usage. **Do not skip this step.**
 
 Key files to check:
+
 - `package.json` — is it a direct dependency?
 - `pnpm-lock.yaml` — who pulls it in if transitive?
 - `src/`, `worker/`, `bin/` — direct imports and callsites
@@ -53,6 +54,7 @@ Key files to check:
 Use `search_repo` with the package name to find import sites. Then inspect found files to understand which APIs are called.
 
 Map files to dependency type:
+
 - `src/content/docs/**/*.{ts,tsx,astro,mdx}` — content/rendering (high impact if broken)
 - `src/components/**`, `src/plugins/**`, `src/util/**` — build/render tooling
 - `worker/**` — Worker runtime (medium impact)
@@ -60,13 +62,13 @@ Map files to dependency type:
 
 ### 4. Rate impact for each package
 
-| Rating | Meaning |
-|--------|---------|
-| **None** | Transitive only; or only internal/type changes; not used by this repo |
-| **Very Low** | Direct dep but changed APIs not called in this repo |
-| **Low** | Changed APIs called only in build/test tooling, not content rendering or Worker |
-| **Medium** | Changed APIs affect Astro components, MDX processing, or Worker behavior |
-| **High** | Changed APIs affect output seen by visitors — rendered HTML, search, routing, Worker responses |
+| Rating       | Meaning                                                                                        |
+| ------------ | ---------------------------------------------------------------------------------------------- |
+| **None**     | Transitive only; or only internal/type changes; not used by this repo                          |
+| **Very Low** | Direct dep but changed APIs not called in this repo                                            |
+| **Low**      | Changed APIs called only in build/test tooling, not content rendering or Worker                |
+| **Medium**   | Changed APIs affect Astro components, MDX processing, or Worker behavior                       |
+| **High**     | Changed APIs affect output seen by visitors — rendered HTML, search, routing, Worker responses |
 
 For security fixes: note what the vulnerability affects and whether usage is in the vulnerable code path.
 
@@ -81,13 +83,16 @@ Produce a Markdown block for each package. All packages must be covered.
 **Dependency type:** [direct | transitive (via <package>)]
 
 ### What changed
+
 - <specific API/behavior change>
 - ...
 
 ### Usage in this repo
+
 <"Not used directly — transitive only" OR specific import sites and callsites>
 
 ### Impact: <None | Very Low | Low | Medium | High>
+
 <1–2 sentence explanation>
 ```
 
@@ -97,14 +102,15 @@ End with a summary table and one overall recommendation:
 ## Summary
 
 | Package | Impact | Recommendation |
-|---------|--------|----------------|
-| `pkg` | Low | ✅ Merge |
-| `pkg` | High | ⚠️ Verify |
+| ------- | ------ | -------------- |
+| `pkg`   | Low    | ✅ Merge       |
+| `pkg`   | High   | ⚠️ Verify      |
 
 **Overall:** [✅ Merge | ✅ Merge + spot-check listed pages | ⚠️ Investigate before merging]
 ```
 
 Recommendation values:
+
 - **✅ Merge** — no action needed
 - **✅ Merge + spot-check** — merge, then manually verify the listed pages/areas
 - **⚠️ Investigate** — high-impact change, needs manual testing before merging
