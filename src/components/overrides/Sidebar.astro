@@ -5,26 +5,37 @@ import { Icon as AstroIcon } from "astro-icon/components";
 import { lookupProductTitle } from "~/util/sidebar";
 
 const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
+const isHomepage = !product;
+const productTitle = isHomepage
+	? null
+	: await lookupProductTitle(product, module);
 ---
 
 <div
-	class="sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] py-3.5 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]"
+	class="sidebar-header sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] pt-3.5 pb-2 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]"
 >
-	<div class="sidebar-product-title">
-		<a href={"/" + product + "/"} class="flex items-center gap-1 no-underline">
-			<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
-			<span class="text-xl font-semibold text-black">
-				{lookupProductTitle(product, module)}
-			</span>
-		</a>
-	</div>
+	{
+		!isHomepage && (
+			<div class="sidebar-product-title">
+				<a
+					href={"/" + product + "/"}
+					class="flex items-center gap-1 no-underline"
+				>
+					<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
+					<span class="text-xl font-semibold text-[var(--sidebar-text-strong)]">
+						{productTitle}
+					</span>
+				</a>
+			</div>
+		)
+	}
 
 	<!-- Search Input -->
 	<div class="relative">
 		<input
 			type="search"
 			id="sidebar-search"
-			placeholder="Search sidebar..."
+			placeholder={isHomepage ? "Search products..." : "Search sidebar..."}
 			aria-label="Search sidebar navigation"
 			autocomplete="off"
 			spellcheck="false"
@@ -44,6 +55,27 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			>global search</button
 		>.
 	</div>
+
+	{
+		!isHomepage && (
+			<a
+				href="/"
+				class="flex min-h-[2.125rem] items-start gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-[var(--sidebar-text)] no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 hover:bg-[color:var(--sidebar-hover-bg)]/80 hover:text-[var(--sidebar-hover-text)] focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400"
+			>
+				<svg
+					width="16"
+					height="16"
+					fill="currentColor"
+					viewBox="0 0 256 256"
+					class="mt-0.5 shrink-0 opacity-50"
+					aria-hidden="true"
+				>
+					<path d="M232,200a8,8,0,0,1-16,0,88.1,88.1,0,0,0-88-88H51.31l34.35,34.34a8,8,0,0,1-11.32,11.32l-48-48a8,8,0,0,1,0-11.32l48-48A8,8,0,0,1,85.66,61.66L51.31,96H128A104.11,104.11,0,0,1,232,200Z" />
+				</svg>
+				<span>Home</span>
+			</a>
+		)
+	}
 </div>
 
 <Default><slot /></Default>

@@ -60,6 +60,7 @@ async function autogenStyles() {
 	)
 		.filter((x) => x.isFile())
 		.map((x) => x.parentPath + x.name)
+		.filter((x) => x !== "./src/styles/landing.css")
 		.sort((a) => (a === "./src/styles/tailwind.css" ? -1 : 1));
 
 	return styles;
@@ -99,6 +100,7 @@ const RUN_LINK_CHECK =
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
+	cacheDir: ".astro-cache",
 	markdown: {
 		smartypants: false,
 		remarkPlugins: [remarkValidateImages],

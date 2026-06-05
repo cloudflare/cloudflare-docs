@@ -1,0 +1,25 @@
+---
+import CornerMarks from "./CornerMarks.astro";
+
+interface Props {
+	label?: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div>
+	{
+		label && (
+			<p class="text-foreground-muted mb-4 font-mono text-xs tracking-widest uppercase">
+				{label}
+			</p>
+		)
+	}
+	<div
+		class="border-border-100 bg-border-100 relative grid grid-cols-1 gap-px overflow-visible border lg:grid-cols-3"
+	>
+		<CornerMarks />
+		<slot />
+	</div>
+</div>

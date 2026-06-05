@@ -25,13 +25,17 @@ Add a pipeline binding to your Wrangler file that points to your stream:
 {
 	"pipelines": [
 		{
-			"pipeline": "<STREAM_ID>",
-			"binding": "STREAM"
+			"binding": "STREAM",
+			"stream": "<STREAM_ID>"
 		}
 	]
 }
 ```
 </WranglerConfig>
+
+:::note
+The `pipeline` field in the `pipelines` binding configuration has been renamed to `stream`. Existing configurations that use `pipeline` will continue to work, but Wrangler will display a deprecation warning. Update your configuration to use `stream` instead.
+:::
 
 ### Workers API
 

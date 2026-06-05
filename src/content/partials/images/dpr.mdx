@@ -9,7 +9,7 @@ import dpr2Img from "~/assets/images/images/examples/dpr-2.jpg";
 
 Scales the output resolution by a multiplier to match a user's specific screen density (for example, Retina or 4K). The default is `1`, which delivers the image at the exact width and height requested. The maximum supported value is `2`.
 
-Modern devices have more physical pixels than CSS pixels. If you serve a 300 px image in a 300 px container on a high-DPR smartphone, then it will look blurry. Using `dpr=2` tells Cloudflare to send a 600 px image for the same 300 px container, which results in a clearer, crisper image.
+Modern devices have more physical pixels than CSS pixels. If you serve a 300px image in a 300px container on a high-DPR smartphone, then it will look blurry. Using `dpr=2` tells Cloudflare to send a 600px image for the same 300px container, which results in a clearer, crisper image.
 
 The `dpr` parameter can be used with `srcset` to [serve responsive images](/images/optimization/make-responsive-images/).
 

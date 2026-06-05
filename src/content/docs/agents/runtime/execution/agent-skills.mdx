@@ -1,0 +1,139 @@
+---
+title: Agent Skills
+pcx_content_type: reference
+description: Give an agent a catalog of on-demand instructions, resources, and scripts with agents/skills, activated by the model only when a task matches.
+sidebar:
+  order: 17
+products:
+  - agents
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Agent Skills are on-demand instructions, resources, and scripts. A skill source provides a catalog of skill names and descriptions; the agent adds that catalog to the system prompt and exposes tools the model can use when a user task matches a skill — so a large library of capabilities does not bloat every prompt.
+
+:::note
+Agent Skills are experimental, and script execution in particular is early. The API may change in a future release.
+:::
+
+The skills engine lives in `agents/skills` and is framework-agnostic, so any agent (including a plain [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/) `onChatMessage`) can build a `SkillRegistry`. [`@cloudflare/think`](/agents/harnesses/think/) re-exports it as the `skills` namespace and wires `getSkills()` into the turn automatically.
+
+## Using skills with Think
+
+Bundled skills are usually imported with the Agents Vite plugin:
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+import bundledSkills from "agents:skills"; // resolves to ./skills next to this file
+
+type Env = {
+	AI: Ai;
+	LOADER: WorkerLoader;
+	SKILLS_BUCKET: R2Bucket;
+};
+
+export class MyAgent extends Think<Env> {
+	getSkills() {
+		return [
+			bundledSkills,
+			skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
+		];
+	}
+
+	getSkillScriptRunner() {
+		return skills.runner({
+			loader: this.env.LOADER,
+			workspaceInstance: this.workspace,
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+`agents:skills` resolves to a `./skills` directory next to the importing file; use `agents:skills/<dir>` to point at a differently named sibling directory. The `agents:skills` import is typed by ambient declarations that ship with `agents`, so importing `Think` in the same file brings the type into scope (for a file that imports only the specifier, add `/// <reference types="agents/skills-module" />`). If you are not using the Agents Vite plugin, build a source with `skills.fromManifest(...)` instead.
+
+Sources are applied in order; the first source to register a skill name wins, and later duplicates (or a source that fails to load) are skipped with a logged warning rather than failing the agent.
+
+The imported directory should contain one child directory per skill:
+
+```text
+src/skills/release-notes/SKILL.md
+src/skills/release-notes/scripts/format-release-notes.ts
+src/skills/release-notes/references/style-guide.md
+```
+
+## Skill tools
+
+When skills are available, the agent exposes:
+
+| Tool                  | Purpose                                                             |
+| --------------------- | ------------------------------------------------------------------- |
+| `activate_skill`      | Load a matching skill's instructions and bundled resource list      |
+| `read_skill_resource` | Read a bundled resource by `{ name, path }` or `skill-name/path`    |
+| `run_skill_script`    | Run a bundled script when `getSkillScriptRunner()` returns a runner |
+
+Skills are not always-on system prompt text. Use `getSystemPrompt()` or a Session context block for behavior that should apply to every turn. Use skills for task-specific procedures, references, scripts, templates, and assets that should be loaded only when relevant.
+
+## Script execution
+
+Script execution is opt-in and requires a Worker Loader binding:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [{ "binding": "LOADER" }]
+}
+```
+
+</WranglerConfig>
+
+`skills.runner()` is experimental and runs JavaScript, TypeScript, Python, and Bash scripts under `scripts/`. TypeScript is compiled with `@cloudflare/worker-bundler`; Python runs as Python Dynamic Workers; Bash runs through `just-bash`.
+
+JavaScript and TypeScript scripts are function-style:
+
+<TypeScriptExample>
+
+```ts
+import type { SkillRunContext } from "@cloudflare/think";
+
+export default async function run(input: unknown, ctx: SkillRunContext) {
+	const guide = ctx.files["references/style-guide.md"]; // bundled text resources
+	const docs = await ctx.workspace.readFile("README.md"); // gated by permission
+	const summary = await ctx.tools.call("summarize", { input }); // explicit tools
+	await ctx.output.writeFile("notes.md", summary); // scratch artifact
+	return { ok: true };
+}
+```
+
+</TypeScriptExample>
+
+`ctx` is `{ skill, files, workspace, tools, output }`. `ctx.files` holds bundled text resources by relative path, `ctx.workspace` is gated by the workspace permission, `ctx.tools` only exposes tools the runner was given, and `ctx.output.writeFile(name, content)` returns scratch artifacts to the model (it does not mutate the workspace). Python and Bash use the path-based contract instead: `/input.json`, `/context.json`, bundled resources under `/skill`, and `/output` for artifacts.
+
+Passing `workspaceInstance` gives scripts read-only workspace access by default. Network access, tools, and workspace writes are opt-in. The default timeout is 30 seconds.
+
+## Example
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+export class SkillsAgent extends Think<Env> {
+	getSkills() {
+		return [skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })];
+	}
+}
+```
+
+</TypeScriptExample>
+
+Refer to the [`agent-skills` example](https://github.com/cloudflare/agents/tree/main/examples/agent-skills) for bundled skills, R2-backed skills, and script execution.
+
+## Related
+
+- [Think](/agents/harnesses/think/) — wires `getSkills()` and `getSkillScriptRunner()` into the agentic loop
+- [Think tools](/agents/harnesses/think/tools/) — how skill tools merge with workspace, custom, MCP, and client tools

@@ -75,7 +75,7 @@ To call a Workers AI model, use the `@cf/` prefix in the model name and include 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "cf-aig-gateway-id: my-gateway" \
+  --header "cf-aig-gateway-id: default" \
   --header "Content-Type: application/json" \
   --data '{
     "model": "@cf/moonshotai/kimi-k2.6",
@@ -212,7 +212,7 @@ By default, third-party model requests route through your account's default AI G
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "cf-aig-gateway-id: my-gateway" \
+  --header "cf-aig-gateway-id: default" \
   --header "Content-Type: application/json" \
   --data '{
     "model": "anthropic/claude-sonnet-4",
@@ -232,7 +232,7 @@ const openai = new OpenAI({
   apiKey: CLOUDFLARE_API_TOKEN,
   baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
   defaultHeaders: {
-    "cf-aig-gateway-id": "my-gateway",
+    "cf-aig-gateway-id": "default",
   },
 });
 ```

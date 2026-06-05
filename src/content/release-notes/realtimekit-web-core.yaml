@@ -3,6 +3,29 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-05-28"
+    title: RealtimeKit Web Core 1.5.1
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.2.0 or later.
+
+      **Features**
+
+      - Added a dedicated error code `0014` for media (WebRTC) connection failures during room join, making it easier to distinguish media failures from socket and signaling failures.
+
+      **Enhancements**
+
+      - Init and join failures from `Client.init()` and `meeting.join()` now surface specific error codes and descriptive messages instead of generic or stacked errors.
+      - Telemetry logs are now compressed using gzip when the browser supports the `CompressionStream` API, achieving approximately a 10:1 compression ratio. Older browsers and React Native fall back to uncompressed JSON with smaller batch sizes.
+
+      **Fixes**
+
+      - Fixed a regex-based issue where the Safari video middleware flag was incorrectly removed, potentially breaking video processing on Safari.
+      - Fixed an issue where `ClientError` objects were wrapped inside each other when the SDK retried failed API requests. This caused nested error messages, duplicate `onError` callbacks, and redundant `window` error events.
+
+      **Removed APIs**
+
+      - Removed the third-party flag service. `meeting.__internals__.features` is now deprecated and will be removed in a future release.
+
   - publish_date: "2026-04-20"
     title: RealtimeKit Web Core 1.4.0
     description: |-

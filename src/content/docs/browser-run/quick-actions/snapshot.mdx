@@ -84,6 +84,23 @@ const snapshot = await client.browserRendering.snapshot.create({
 console.log(snapshot.content);
 ```
 
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("snapshot", {
+			url: "https://example.com/",
+			addScriptTag: [{ content: 'document.body.innerHTML = "Snapshot Page";' }],
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
 </TabItem> </Tabs>
 
 ## Advanced usage

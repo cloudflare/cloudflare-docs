@@ -18,6 +18,7 @@ import {
 	InlineBadge,
 	CardGrid,
 	Card,
+	Steps,
 	Type,
 	TypeScriptExample,
 } from "~/components";
@@ -300,13 +301,54 @@ There are two recommended patterns for this:
 
 ### Important Considerations
 
+- **Cloudflare Access**: If your Worker is protected by [Cloudflare Access](/cloudflare-one/), Wrangler must authenticate with Access when connecting to remote bindings. Refer to [Connect to Access-protected Workers](#connect-to-access-protected-workers).
+
 - **Data modification**: Operations (writes, deletes, updates) on bindings connected remotely will affect your actual data in the targeted Cloudflare resource (be it preview or production).
 
 - **Billing**: Interactions with remote Cloudflare services through these connections will incur standard operational costs for those services (such as KV operations, R2 storage/operations, AI requests, D1 usage).
 
 - **Network latency**: Expect network latency for operations on these remotely connected bindings, as they involve communication over the internet.
 
-- **CI and non-interactive environments**: If your worker uses [Cloudflare Access](/cloudflare-one/), Wrangler must authenticate with Access when connecting to remote bindings. In non-interactive environments such as CI/CD pipelines, set the `CLOUDFLARE_ACCESS_CLIENT_ID` and `CLOUDFLARE_ACCESS_CLIENT_SECRET` [system environment variables](/workers/wrangler/system-environment-variables/) to authenticate using an [Access Service Token](/cloudflare-one/access-controls/service-credentials/service-tokens/). Without these variables, Wrangler throws an error instead of launching the interactive `cloudflared access login` flow.
+### Connect to Access-protected Workers
+
+If your Worker is deployed behind a [Cloudflare Access](/cloudflare-one/) application — for example, if the `*.workers.dev` subdomain on your account is protected by Access, or if you have placed an Access policy on the custom route of the Worker — Wrangler must authenticate with Access when connecting to your remote bindings.
+
+There are two ways you can authenticate against Access:
+
+- **Interactive login** (local development): If you have a policy defined that accepts user login, then Wrangler launches the interactive `cloudflared access login` flow in your browser. No additional setup is required beyond being signed in to the correct account. If the policy only allows service token authentication, Wrangler will skip the interactive flow and throw an error indicating that service token credentials are required.
+
+- **Service token** (CI / non-interactive environments): In CI/CD pipelines and other non-interactive contexts, or where the policy only allows service token authentication, Wrangler cannot trigger the interactive flow via the browser. Authentication must be via a [Cloudflare Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) instead. If you do not configure a service token in a non-interactive environment, Wrangler will throw an error rather than attempting the interactive flow.
+
+To set up service token authentication:
+
+<Steps>
+
+1. **Create a service token.**
+
+   In the Cloudflare dashboard, go to **Zero Trust** > **Access** > **Service Auth** > **Service Tokens** and create a new token. Refer to [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) for the full reference. You will be shown a Client ID and a Client Secret — save them somewhere safe, as the secret is not shown again.
+
+2. **Add a Service Auth policy to the Access application that protects your Worker.**
+
+   Open the _existing_ Access application that already covers the hostname of the Worker — typically the wildcard application for `*.<account>.workers.dev`, or the application that protects your custom domain — and attach a new policy with:
+   - **Action**: Service Auth
+   - **Include**: The service token you created, or "Any Access Service Token" if you want to allow any service token to access the Worker.
+
+   :::caution
+   Do not create a _separate_ Access application scoped only to the Worker's hostname. Doing so has been observed to block requests even when the existing wildcard application is left in place — refer to [opennextjs-cloudflare#1171](https://github.com/opennextjs/opennextjs-cloudflare/issues/1171). Attach the Service Auth policy to the existing application that already protects the hostname.
+   :::
+
+3. **Expose the credentials to Wrangler.**
+
+   Set the `CLOUDFLARE_ACCESS_CLIENT_ID` and `CLOUDFLARE_ACCESS_CLIENT_SECRET` [system environment variables](/workers/wrangler/system-environment-variables/) in the environment that runs Wrangler:
+
+   ```sh
+   export CLOUDFLARE_ACCESS_CLIENT_ID=<CLIENT_ID>
+   export CLOUDFLARE_ACCESS_CLIENT_SECRET=<CLIENT_SECRET>
+   ```
+
+   In CI, store the values as secrets and expose them as environment variables to the step that runs Wrangler.
+
+</Steps>
 
 ### API
 

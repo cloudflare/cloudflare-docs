@@ -1,0 +1,412 @@
+---
+const channels = [
+	{ type: "Chat", name: "AIChatAgent", href: "/agents/communication-channels/chat/" },
+	{ type: "Email", name: "onEmail", href: "/agents/communication-channels/email/" },
+	{ type: "Voice", name: "withVoice", href: "/agents/communication-channels/voice/" },
+	{ type: "Slack", name: "Events", href: "/agents/communication-channels/slack/" },
+	{ type: "Webhook", name: "HTTP", href: "/agents/communication-channels/webhooks/" },
+];
+
+const runtime = [
+	{ label: "State", href: "/agents/runtime/lifecycle/state/" },
+	{ label: "Sessions", href: "/agents/runtime/lifecycle/sessions/" },
+	{ label: "Routing", href: "/agents/runtime/communication/routing/" },
+	{ label: "WebSockets", href: "/agents/runtime/communication/websockets/" },
+	{ label: "Scheduling", href: "/agents/runtime/execution/schedule-tasks/" },
+	{ label: "Fibers", href: "/agents/runtime/execution/durable-execution/" },
+];
+
+const tools = [
+	{ type: "Sandbox", name: "Bash/Shell", href: "/agents/tools/sandbox/" },
+	{ type: "MCP", name: "Servers", href: "/agents/tools/mcp/" },
+	{ type: "Browser", name: "CDP", href: "/agents/tools/browser/" },
+	{ type: "AI Search", name: "Retrieval", href: "/agents/tools/ai-search/" },
+	{ type: "Payments", name: "x402 · MPP", href: "/agents/tools/payments/" },
+];
+---
+
+<figure class="agents-platform-diagram" aria-label="Cloudflare Agent Platform architecture map">
+	<div class="architecture-map">
+		<svg class="connection-layer" viewBox="0 0 980 390" preserveAspectRatio="none" aria-hidden="true">
+			<path class="connection" d="M 300 154 C 360 154 360 154 420 154" />
+			<path class="connection" d="M 560 154 C 620 154 620 154 680 154" />
+			<path class="connection" d="M 490 245 C 490 285 490 295 490 326" />
+		</svg>
+
+		<section class="resource-card inbound-card" aria-label="Communication channels">
+			<header class="card-header">
+				<div class="card-title">Channels</div>
+				<span class="count-badge">{channels.length}</span>
+			</header>
+			<div class="pill-stack">
+				{channels.map((item) => (
+					<a class="binding-pill" href={item.href}>{item.type}</a>
+				))}
+			</div>
+		</section>
+
+		<section class="agent-card" aria-label="Agent">
+			<div class="agent-card-inner">
+				<header class="agent-header">
+					<span class="agent-icon" aria-hidden="true">A</span>
+					<div class="agent-title">Agent</div>
+					<span class="status-dot" aria-label="Active"></span>
+				</header>
+
+				<div class="agent-section harness-section">
+					<div class="agent-section-copy">
+						<div class="section-title">Agent harness</div>
+						<p>Controls planning, tool use, and response flow.</p>
+					</div>
+					<div class="section-row">
+						<a href="/agents/harnesses/think/">Project Think</a>
+						<a href="/agents/runtime/agents-api/">Build-your-own agent</a>
+					</div>
+				</div>
+
+				<div class="agent-section runtime-section">
+					<div class="agent-section-copy">
+						<div class="section-title">Agents SDK runtime</div>
+						<p>Durable identity, state, connections, scheduling, and recovery.</p>
+					</div>
+					<a class="agent-class" href="/agents/runtime/agents-api/">Agent class</a>
+					<div class="runtime-list">
+						{runtime.map((item) => <a href={item.href}>{item.label}</a>)}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="resource-card tools-card" aria-label="Tools">
+			<header class="card-header">
+				<div class="card-title">Tools</div>
+				<span class="count-badge">{tools.length}</span>
+			</header>
+			<div class="pill-stack">
+				{tools.map((item) => (
+					<a class="binding-pill" href={item.href}>{item.type}</a>
+				))}
+			</div>
+		</section>
+
+		<a class="observability-card" href="/agents/runtime/operations/observability/">
+			<span class="observability-title">Observability</span>
+			<span class="observability-copy">Logs · metrics · traces</span>
+		</a>
+	</div>
+</figure>
+
+<style>
+	.agents-platform-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-overlay: light-dark(#f5f5f5, #222226);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-subtle: light-dark(#737373, #d4d4d4);
+		--map-brand: #f6821f;
+		--map-blue-bg: light-dark(#eff6ff, #172554);
+		--map-blue-ring: light-dark(#93c5fd, #3b82f6);
+		--map-blue-text: light-dark(#1d4ed8, #bfdbfe);
+		margin: 1rem 0;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.agents-platform-diagram a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.architecture-map {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(200px, 220px) minmax(0, 1fr);
+		grid-template-areas:
+			"inbound agent tools"
+			"observability observability observability";
+		align-items: center;
+		justify-content: center;
+		gap: 14px 18px;
+		min-height: 320px;
+		width: 100%;
+		max-width: 100%;
+		padding: 16px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 12px 12px;
+		overflow: hidden;
+	}
+
+	.connection-layer {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+	}
+
+	.connection {
+		fill: none;
+		stroke: var(--map-line);
+		stroke-width: 2;
+		stroke-linecap: round;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.resource-card,
+	.agent-card,
+	.observability-card {
+		position: relative;
+		z-index: 1;
+		min-width: 0;
+	}
+
+	.resource-card {
+		border: 1px solid rgb(0 0 0 / 15%);
+		border-color: var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+		padding: 4px;
+	}
+
+	.inbound-card { grid-area: inbound; }
+	.tools-card { grid-area: tools; }
+
+	.inbound-card,
+	.tools-card,
+	.agent-card {
+		align-self: start;
+	}
+
+	.card-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 40px;
+		padding: 0 10px;
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		ring: 1px solid var(--map-line);
+	}
+
+	.card-title,
+	.section-title,
+	.observability-title {
+		margin: 0;
+		color: var(--map-strong);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		text-transform: uppercase;
+	}
+
+	.agent-section-copy {
+		display: grid;
+		gap: 2px;
+		margin: 0 0 5px;
+	}
+
+	.agent-section-copy p {
+		margin: 0;
+		color: var(--map-subtle);
+		font-size: 11px;
+		line-height: 1.25;
+	}
+
+	.count-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 18px;
+		height: 18px;
+		border-radius: 4px;
+		background: var(--map-subtle);
+		color: var(--map-card);
+		font-size: 12px;
+		font-weight: 500;
+	}
+
+	.pill-stack {
+		display: grid;
+		gap: 8px;
+		padding: 8px 4px 4px;
+	}
+
+	.binding-pill {
+		display: flex;
+		align-items: center;
+		height: 30px;
+		min-width: 0;
+		padding: 0 12px;
+		overflow: hidden;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+		color: var(--map-text);
+		font-size: 12px;
+		font-weight: 500;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		transition:
+			background-color 150ms ease,
+			border-color 150ms ease,
+			transform 150ms ease;
+	}
+
+	.binding-pill:hover {
+		background: var(--map-overlay);
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+		transform: translateY(-1px);
+	}
+
+	.agent-card {
+		grid-area: agent;
+		padding: 4px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+	}
+
+	.agent-card-inner {
+		width: 100%;
+		max-width: 230px;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		overflow: hidden;
+	}
+
+	.agent-header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		height: 46px;
+		padding: 0 10px;
+	}
+
+	.agent-title {
+		min-width: 0;
+		margin: 0;
+		flex: 1;
+		color: var(--map-text);
+		font-size: 20px;
+		font-weight: 600;
+		font-variation-settings: "opsz" 24;
+	}
+
+	.agent-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 30px;
+		height: 30px;
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--map-brand) 14%, transparent);
+		color: var(--map-brand);
+		font-size: 17px;
+		font-weight: 600;
+	}
+
+	.status-dot {
+		width: 14px;
+		height: 14px;
+		border: 3px solid color-mix(in srgb, var(--map-blue-ring) 35%, var(--map-card));
+		border-radius: 9999px;
+		background: var(--map-blue-text);
+	}
+
+	.agent-section {
+		margin-top: 0;
+		padding: 6px 12px 8px;
+		border-top: 1px solid var(--map-line);
+	}
+
+	.section-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 6px;
+		margin-top: 9px;
+	}
+
+	.section-row a,
+	.agent-class,
+	.runtime-list a {
+		display: grid;
+		place-items: center;
+		min-height: 28px;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-size: 12px;
+		font-weight: 500;
+	}
+
+	.agent-class {
+		margin-top: 9px;
+	}
+
+	.runtime-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 6px;
+		margin-top: 3px;
+	}
+
+	.runtime-list a {
+		min-height: 26px;
+		font-size: 12px;
+	}
+
+	.observability-card {
+		grid-area: observability;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		margin-bottom: 8px;
+		padding: 10px 14px;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	}
+
+	.observability-copy {
+		color: var(--map-subtle);
+		font-size: 13px;
+	}
+
+	@media (max-width: 58rem) {
+		.architecture-map {
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				"inbound"
+				"agent"
+				"tools"
+				"observability";
+			min-height: 0;
+			gap: 12px;
+		}
+
+		.connection-layer {
+			display: none;
+		}
+
+		.agent-card-inner {
+			width: 100%;
+			max-width: none;
+		}
+	}
+</style>

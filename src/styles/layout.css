@@ -55,14 +55,24 @@ main > .content-panel + .content-panel {
 
 /* ── Right Sidebar (TOC) Alignment ── */
 .right-sidebar-panel {
-	padding-top: var(--layout-space-6);
-	padding-left: var(--layout-space-6);
+	padding-top: var(--layout-space-6) !important;
+	padding-left: var(--layout-space-6) !important;
 }
 
-/* ── Dividers ── */
-/* TOC vertical divider — whitespace does the separation work */
-.right-sidebar {
-	border-inline-start: none;
+/* ── Right Sidebar (TOC) Positioning ── */
+/* Override Starlight's position: fixed with sticky.
+   Starlight scopes its styles with [data-astro-cid-*] attribute selectors,
+   giving them specificity 0,2,0 which beats our bare class selectors (0,1,0).
+   We must use !important to override the scoped declarations. */
+@media (min-width: 72rem) {
+	.right-sidebar {
+		position: sticky !important;
+		top: var(--sl-nav-height) !important;
+		height: auto !important;
+		max-height: calc(100vh - var(--sl-nav-height));
+		padding-top: 0 !important;
+		border-inline-start: none !important;
+	}
 }
 
 /* Header/body horizontal divider — replaced by spacing only */
@@ -92,8 +102,8 @@ starlight-tabs [role="tablist"] {
 }
 
 .right-sidebar-panel .sl-container {
-	width: 100%;
-	max-width: var(--layout-toc-width);
+	width: 100% !important;
+	max-width: var(--layout-toc-width) !important;
 }
 
 /* ── Breadcrumb Spacing ── */

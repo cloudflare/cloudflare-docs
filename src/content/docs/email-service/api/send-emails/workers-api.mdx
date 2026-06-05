@@ -42,16 +42,21 @@ interface SendEmail {
 	send(message: EmailMessage | EmailMessageBuilder): Promise<EmailSendResult>;
 }
 
+interface EmailAddress {
+	email: string;
+	name?: string;
+}
+
 // Structured email builder (recommended)
 interface EmailMessageBuilder {
-	to: string | string[]; // Max 50 recipients
-	from: string | { email: string; name: string };
+	to: string | EmailAddress | (string | EmailAddress)[]; // Max 50 recipients
+	from: string | EmailAddress;
 	subject: string;
 	html?: string;
 	text?: string;
-	cc?: string | string[];
-	bcc?: string | string[];
-	replyTo?: string | { email: string; name: string };
+	cc?: string | EmailAddress | (string | EmailAddress)[];
+	bcc?: string | EmailAddress | (string | EmailAddress)[];
+	replyTo?: string | EmailAddress;
 	attachments?: Attachment[];
 	headers?: { [key: string]: string }; // See /email-service/reference/headers/
 }
@@ -110,6 +115,35 @@ const response = await env.EMAIL.send({
 	subject: "Order Confirmation #12345",
 	html: "<h1>Your order is confirmed</h1>",
 	text: "Your order is confirmed",
+});
+```
+
+</TabItem>
+<TabItem label="Named recipients">
+
+```ts
+const response = await env.EMAIL.send({
+	to: { email: "jane@example.com", name: "Jane Doe" },
+	from: { email: "support@example.com", name: "Support Team" },
+	subject: "Welcome!",
+	html: "<h1>Thanks for joining!</h1>",
+	text: "Thanks for joining!",
+});
+```
+
+</TabItem>
+<TabItem label="Mixed recipients">
+
+```ts
+const response = await env.EMAIL.send({
+	to: [
+		"plain@example.com",
+		{ email: "jane@example.com", name: "Jane Doe" },
+	],
+	from: "support@yourdomain.com",
+	subject: "Team update",
+	html: "<h1>Monthly update</h1>",
+	text: "Monthly update",
 });
 ```
 
@@ -240,6 +274,7 @@ The following error codes may be returned when sending emails:
 | `E_VALIDATION_ERROR`            | Validation error in the payload         | Invalid email format, missing required fields, malformed data |
 | `E_FIELD_MISSING`               | Required field is missing               | Missing `to`, `from`, or `subject` fields                     |
 | `E_TOO_MANY_RECIPIENTS`         | Too many recipients in to/cc/bcc arrays | Combined recipients exceed 50 limit                           |
+| `E_TOO_MANY_ATTACHMENTS`        | Too many attachments in `attachments` array | `attachments` array exceeds 32 entries                    |
 | `E_SENDER_NOT_VERIFIED`         | Sender domain not verified              | Attempting to send from unverified domain                     |
 | `E_RECIPIENT_NOT_ALLOWED`       | Recipient not in allowed list           | Recipient address not in `allowed_destination_addresses`      |
 | `E_RECIPIENT_SUPPRESSED`        | Recipient is on suppression list        | Email address has bounced or reported your emails as spam     |

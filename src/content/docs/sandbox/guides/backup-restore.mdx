@@ -67,6 +67,8 @@ Use backup and restore when you want workspace state, such as `/workspace`, to c
 
    </WranglerConfig>
 
+   If your R2 bucket uses a jurisdiction-specific endpoint, you can also add `BACKUP_BUCKET_ENDPOINT` to `vars` to override the default presigned URL endpoint (for example, `https://<ACCOUNT_ID>.eu.r2.cloudflarestorage.com` for an EU-region bucket).
+
 3. Set your R2 API credentials as secrets:
 
    ```sh

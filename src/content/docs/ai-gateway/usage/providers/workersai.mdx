@@ -21,7 +21,7 @@ Use the [REST API](/ai-gateway/usage/rest-api/) to call Workers AI models. Worke
 ```bash title="Request to Workers AI Kimi model"
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "cf-aig-gateway-id: my-gateway" \
+  --header "cf-aig-gateway-id: default" \
   --header "Content-Type: application/json" \
   --data '{
     "model": "@cf/moonshotai/kimi-k2.6",
