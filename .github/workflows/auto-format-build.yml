@@ -98,8 +98,6 @@ jobs:
           git diff --staged > "$RUNNER_TEMP/auto-format/format.patch"
           echo "${{ github.event.pull_request.number }}" \
             > "$RUNNER_TEMP/auto-format/pr-number.txt"
-          echo "${{ github.event.pull_request.head.sha }}" \
-            > "$RUNNER_TEMP/auto-format/head-sha.txt"
 
       - name: Upload patch artifact
         if: steps.diff.outputs.changed == 'true'

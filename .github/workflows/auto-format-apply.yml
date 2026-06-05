@@ -73,9 +73,8 @@ jobs:
 
           PATCH_PATH="$RUNNER_TEMP/auto-format/format.patch"
           PR_NUM_PATH="$RUNNER_TEMP/auto-format/pr-number.txt"
-          SHA_PATH="$RUNNER_TEMP/auto-format/head-sha.txt"
 
-          for f in "$PATCH_PATH" "$PR_NUM_PATH" "$SHA_PATH"; do
+          for f in "$PATCH_PATH" "$PR_NUM_PATH"; do
             if [ ! -f "$f" ]; then
               echo "::error::Artifact missing required file: $f"
               exit 1
@@ -83,21 +82,15 @@ jobs:
           done
 
           PR_NUMBER=$(tr -d '[:space:]' < "$PR_NUM_PATH")
-          BUILD_SHA=$(tr -d '[:space:]' < "$SHA_PATH")
 
           if ! [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
             echo "::error::Invalid PR number in artifact: $PR_NUMBER"
-            exit 1
-          fi
-          if ! [[ "$BUILD_SHA" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "::error::Invalid head SHA in artifact: $BUILD_SHA"
             exit 1
           fi
 
           {
             echo "patch_path=$PATCH_PATH"
             echo "pr_number=$PR_NUMBER"
-            echo "build_sha=$BUILD_SHA"
           } >> "$GITHUB_OUTPUT"
 
       - name: Validate patch paths
@@ -151,7 +144,6 @@ jobs:
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           PR_NUMBER: ${{ steps.meta.outputs.pr_number }}
-          BUILD_SHA: ${{ steps.meta.outputs.build_sha }}
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           script: |
@@ -164,9 +156,9 @@ jobs:
 
             // Refuse to push if the PR has advanced since the patch was built.
             // Otherwise we'd be applying a stale patch.
-            if (pr.head.sha !== process.env.BUILD_SHA) {
+            if (pr.head.sha !== context.payload.workflow_run.head_sha) {
               core.info(
-                `PR head moved from ${process.env.BUILD_SHA} to ${pr.head.sha}; ` +
+                `PR head moved from ${context.payload.workflow_run.head_sha} to ${pr.head.sha}; ` +
                   `skipping. A new run will be triggered for the new commit.`,
               );
               core.setOutput('stale', 'true');
