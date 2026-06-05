@@ -1,0 +1,538 @@
+---
+title: Workspace
+pcx_content_type: concept
+sidebar:
+  order: 2
+description: Give your agents a computer. Workspaces are shared between a Durable Object and a container, with built-in shell, mounts, and common filesystem tools.
+---
+
+import { Aside, LinkCard, Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components";
+
+[`@cloudflare/workspace`](https://www.npmjs.com/package/@cloudflare/workspace) gives an agent a lightweight computer.
+
+Most work performed by an agent that requires a filesystem doesn't require a heavy Linux environment. Workspaces live inside a [Durable Object](/durable-objects/) right next to your agent harness.
+
+Take advantage of the speed of working on files within the Worker environment and should a Linux environment be needed, you can drop into a [Cloudflare Container](/containers/) to execute bash commands, changes in either environment are reflected everywhere.
+
+File operations, R2 mounts and git clones within the Durable Object are all covered today, lightweight bash execution and code execution are coming soon!
+
+<Aside type="caution" title="Prototype">
+	`@cloudflare/workspace` is a prototype. APIs are unstable and the design is still moving. Use it for experiments and feedback, not production workloads.
+</Aside>
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { R2Bucket, Workspace } from "@cloudflare/workspace";
+
+// Re-exported so the runtime can build a loopback binding for the
+// container's outbound traffic.
+export { WorkspaceProxy } from "@cloudflare/workspace";
+
+export class Agent extends DurableObject<Env> {
+	readonly #workspace: Workspace;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.#workspace = new Workspace({
+			storage: ctx.storage,
+			mounts: {
+				"/workspace/data": R2Bucket(env.Bucket),
+			},
+		});
+
+		const report = await this.#workspace.fs.readFile("/workspace/data/report.csv", "utf8");
+	}
+}
+```
+
+</TypeScriptExample>
+
+## When to use Workspace
+
+Use Workspace for agents that need:
+
+- A working directory that persists along with your Agent.
+- A filesystem that is readable and writable from both Worker code and shell commands without copying bytes between the two.
+- Read-only mounts from external sources like [R2](/r2/) that appear as ordinary files inside the container.
+- A shell to run language runtimes, build tools, or model-generated code against that filesystem.
+
+If your agent only needs to execute code in a fresh container and does not need the filesystem itself to be durable or queryable from the Worker, use [Sandbox](/agents/tools/sandbox/) instead. See [Compare with Sandbox](#compare-with-sandbox) below.
+
+## How it works
+
+```txt
+client ─► Worker
+            │  (Binding)
+            ▼
+       Workspace DO ──► Container ──► CLI ──► FUSE mount
+            ▲                          │
+            │                          │
+            └──────    RPC sync     ◄──┘
+```
+
+1. A Durable Object constructs a `Workspace` backed by the Durable Object SQLite storage and configures a backend (currently a Cloudflare Container).
+2. The backend starts the container, whose entrypoint is the a small `wsd` client. `wsd` mounts the workspace at a path inside the container using FUSE.
+3. The Durable Object exposes a `getWorkspace()` method that returns a `WorkspaceStub`. The stub carries `fs` and `shell` sub-stubs that the Worker calls directly.
+4. Writes through `ws.fs` land in the Durable Object's SQLite store and are pushed to `wsd` on the next operation. Writes from inside the container are pulled back after each `shell.exec` completes or can be handled manually using the `push()` and `pull()` APIs.
+
+## Basic setup
+
+This recipe puts one container and one `Workspace` together in a single Durable Object. It is the layout used by the [`wsd-container` example](https://github.com/cloudflare/workspace/tree/main/examples/wsd-container).
+
+### Install
+
+```sh
+npm install @cloudflare/workspace
+```
+
+### Configure `wrangler.jsonc`
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-05-26",
+	"compatibility_flags": ["nodejs_compat"],
+
+	"containers": [
+		{
+			"class_name": "WorkspaceContainer",
+			"image": "./Dockerfile",
+			"max_instances": 5,
+		},
+	],
+
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "WorkspaceContainer",
+				"class_name": "WorkspaceContainer",
+			},
+		],
+	},
+
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["WorkspaceContainer"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+The container image's entrypoint must be the `wsd` daemon. See [`examples/wsd-container/Dockerfile`](https://github.com/cloudflare/workspace/blob/main/examples/wsd-container/Dockerfile) for a reference Dockerfile. Cloudflare Containers grant `/dev/fuse` and `CAP_SYS_ADMIN` automatically when deployed; local `wrangler dev` does not, in this environment a basic shim is used to replicate FUSE.
+
+### Define the Durable Object
+
+The Durable Object mixes in `withWorkspaceContainer` to expose a container-control surface, owns one `Workspace`, and re-exports `WorkspaceProxy` so the runtime can route the container's outbound `/ws` upgrade back into the DO.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	CloudflareContainerBackend,
+	type DurableObjectStorageLike,
+	Workspace,
+	type WorkspaceStub,
+	withWorkspaceContainer,
+} from "@cloudflare/workspace";
+
+export { WorkspaceProxy } from "@cloudflare/workspace";
+
+export class WorkspaceContainer extends withWorkspaceContainer(
+	class extends DurableObject<Env> {},
+) {
+	readonly #backend: CloudflareContainerBackend;
+	readonly #workspace: Workspace;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.#backend = new CloudflareContainerBackend({
+			container: () => this,
+			workspace: { binding: "WorkspaceContainer", id: ctx.id.toString() },
+		});
+		this.#workspace = new Workspace({
+			storage: ctx.storage as unknown as DurableObjectStorageLike,
+			backends: [this.#backend],
+		});
+	}
+
+	async getWorkspace(): Promise<WorkspaceStub> {
+		await this.#workspace.ready();
+		return this.#workspace.stub();
+	}
+
+	override async fetch(request: Request): Promise<Response> {
+		return this.#backend.handleFetch(request);
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Call it from a Worker
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const id = env.WorkspaceContainer.idFromName("user-123");
+		using ws = await env.WorkspaceContainer.get(id).getWorkspace();
+
+		await ws.fs.writeFile("/notes.md", "hello");
+		using handle = await ws.shell.exec("ls /workspace", { encoding: "utf8" });
+		const { exitCode, stdout } = await handle.result();
+
+		return new Response(stdout, { status: exitCode === 0 ? 200 : 500 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+<Aside type="note" title="Always use `using`">
+	The RPC binding will not garbage-collect remote stubs. Declare the value returned by `getWorkspace()` and the handle returned by `shell.exec()` with [`using`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html#using-declarations-and-explicit-resource-management) so they are disposed at the end of the block. Pure-value returns like `readFile(path, "utf8")` and `stat()` carry no stubs and do not need disposal.
+</Aside>
+
+## Advanced setup: separate Container and Workspace DOs
+
+For container-pool deployments — where the Durable Object that owns the agent state should outlive any single container — split the container and the `Workspace` across two Durable Object classes:
+
+- A **container DO** that holds the `ctx.container` binding and mixes in `withWorkspaceContainer`. Pool members can be leased between sessions.
+- A **Workspace DO** (typically your `Agent`) that owns the `Workspace` and the user-facing state. It receives the container DO's `ws` accessor — an `IWorkspaceContainerAPI` `RpcTarget` — and uses it as its backend.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "WorkspacePool",
+			"image": "./Dockerfile",
+			"max_instances": 50,
+		},
+	],
+
+	"durable_objects": {
+		"bindings": [
+			{ "name": "WorkspacePool", "class_name": "WorkspacePool" },
+			{ "name": "AgentDO", "class_name": "AgentDO" },
+		],
+	},
+
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["WorkspacePool", "AgentDO"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	CloudflareContainerBackend,
+	type IWorkspaceContainerAPI,
+	Workspace,
+	withWorkspaceContainer,
+} from "@cloudflare/workspace";
+
+export { WorkspaceProxy } from "@cloudflare/workspace";
+
+// Pool member: holds the container, exposes a typed `ws` accessor.
+export class WorkspacePool extends withWorkspaceContainer(
+	class extends DurableObject<Env> {},
+) {}
+
+// Agent: owns the Workspace, points its backend at a pool member.
+export class AgentDO extends DurableObject<Env> {
+	readonly #workspace: Workspace;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// Pick (or lease) a pool member.
+		const poolId = env.WorkspacePool.idFromName("pool-slot-1");
+		const container: IWorkspaceContainerAPI = env.WorkspacePool.get(poolId).ws;
+
+		this.#workspace = new Workspace({
+			storage: ctx.storage,
+			backends: [
+				new CloudflareContainerBackend({
+					container: () => container,
+					// Tells wsd how to route its /ws upgrade back to *this* DO.
+					workspace: { binding: "AgentDO", id: ctx.id.toString() },
+				}),
+			],
+		});
+	}
+
+	async getWorkspace() {
+		await this.#workspace.ready();
+		return this.#workspace.stub();
+	}
+
+	override async fetch(request: Request): Promise<Response> {
+		// The /ws upgrade from the container lands here. Forward it
+		// to the backend that owns the capnweb session.
+		return this.#workspace.handleFetch(request);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `workspace: { binding, id }` reference is plain data, so the container DO can record it and dial back into the right agent when `wsd` opens its WebSocket.
+
+<Aside type="note" title="Prefer ReadableStream where possible">
+Durable Objects are limited to 128MiB memory so it is preferable to avoid buffering data, particularly files into memory. All operations will default to `ReadableStream` and provide non-streaming alternatives when needed.
+</Aside>
+
+
+## Filesystem API
+
+`ws.fs` mirrors the in-process `WorkspaceFilesystem` surface over Workers RPC. Interfaces support streaming data via `ReadableStream` or encoding as strings.
+
+| Method                                | Returns                                 | Notes                                                                           |
+| ------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------- |
+| `readFile(path)`                      | `ReadableStream<Uint8Array>`            | Streams the file body.                                                          |
+| `readFile(path, "utf8")`              | `string`                                | Decodes the whole file.                                                         |
+| `stat(path)`                          | `WorkspaceStatResult`                   | Size, mode, mtime, kind.                                                        |
+| `readdir(path)`                       | `WorkspaceDirentResult[]`               | One level deep.                                                                 |
+| `ls(prefix)`                          | `string[]`                              | Flat list of paths under a prefix.                                              |
+| `find(directory, pattern?)`           | `WorkspaceFoundEntry[]`                 | Recursive search by filename pattern.                                           |
+| `grep(pattern, path, options?)`       | `WorkspaceGrepMatch[]`                  | Regex search across files under `path`.                                         |
+| `writeFile(path, content, options?)`  | `Promise<void>`                         | `content` is `string`, `Uint8Array`, or `ReadableStream<Uint8Array>`.           |
+| `mkdir(path, options?)`               | `Promise<void>`                         | Pass `{ recursive: true }` to create intermediate directories.                  |
+| `rm(path, options?)`                  | `Promise<void>`                         | Pass `{ recursive: true }` for non-empty directories.                           |
+
+<TypeScriptExample>
+
+```ts
+using ws = await env.WorkspaceContainer.get(id).getWorkspace();
+
+// Write a file from a string.
+await ws.fs.writeFile("/src/index.ts", "console.log('hi')\n");
+
+// Stream a large upload straight into the workspace.
+await ws.fs.writeFile("/uploads/big.bin", request.body!);
+
+// Read it back as text.
+const source = await ws.fs.readFile("/src/index.ts", "utf8");
+
+// Inspect the tree.
+const entries = await ws.fs.readdir("/src");
+const stat = await ws.fs.stat("/src/index.ts");
+
+// Search.
+const hits = await ws.fs.grep("TODO", "/src", { ignoreCase: true });
+
+// Clean up.
+await ws.fs.rm("/uploads", { recursive: true });
+```
+
+</TypeScriptExample>
+
+## Shell API
+
+`ws.shell.exec(command, options?)` spawns a command inside the container and returns an `ExecHandle` stub. Today's API is run-and-wait — call `handle.result()` to await the exit code and collected output. Streaming exec is coming soon.
+
+Every `exec()` ensures the remote filesystem is in sync with the host:
+
+1. A **push** runs before the spawn so any Worker-side writes since the last operation are visible to the command.
+2. A **pull** runs after the command exits so anything the command produced is visible to subsequent `ws.fs` reads.
+
+### `ExecOptions`
+
+| Option     | Type             | Default            | Notes                                                                                  |
+| ---------- | ---------------- | ------------------ | -------------------------------------------------------------------------------------- |
+| `cwd`      | `string`         | workspace root     | Absolute path inside the container.                                                    |
+| `encoding` | `"utf8"`         | `undefined`        | When `"utf8"`, `stdout` and `stderr` come back as strings instead of `Uint8Array`.     |
+
+### `ExecResult`
+
+```ts
+interface WorkspaceExecResult<E extends "utf8" | undefined> {
+	exitCode: number;
+	stdout: E extends "utf8" ? string : Uint8Array;
+	stderr: E extends "utf8" ? string : Uint8Array;
+}
+```
+
+<TypeScriptExample>
+
+```ts
+using ws = await env.WorkspaceContainer.get(id).getWorkspace();
+
+// Write a script, then run it. The pre-exec push makes /src/build.sh
+// visible inside the container.
+await ws.fs.writeFile("/src/build.sh", "#!/bin/sh\nset -e\nnpm install\nnpm test\n");
+
+using handle = await ws.shell.exec("sh /src/build.sh", {
+	cwd: "/workspace",
+	encoding: "utf8",
+});
+const { exitCode, stdout, stderr } = await handle.result();
+
+if (exitCode !== 0) {
+	console.error(stderr);
+}
+
+const report = await ws.fs.readFile("/workspace/test-report.json");
+return new Response(report);
+```
+
+</TypeScriptExample>
+
+## Mounts
+
+A mount populates a subtree of the workspace from an external source on first use. After indexing, paths under the mount root behave like any other file — they can be read, listed, and grepped through `ws.fs`. Read-only mounts reject writes anywhere under the root with `EROFS`.
+
+Today's shipping provider is `R2Bucket`, which streams an [R2](/r2/) bucket into the VFS. The mount model is pluggable; new providers can be added by implementing the `Mount` interface.
+
+<TypeScriptExample>
+
+```ts
+import { R2Bucket, Workspace } from "@cloudflare/workspace";
+
+this.#workspace = new Workspace({
+	storage: ctx.storage,
+	backends: [this.#backend],
+	mounts: {
+		// Surface the entire bucket under /workspace/data.
+		"/workspace/data": R2Bucket(env.Bucket),
+
+		// Or restrict to a prefix, with caps.
+		"/workspace/skills": R2Bucket(env.Skills, {
+			prefix: "v1/",
+			maxBytes: 50 * 1024 * 1024,
+			maxEntries: 5000,
+		}),
+	},
+});
+```
+
+</TypeScriptExample>
+
+Add the matching binding in `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"r2_buckets": [
+		{ "binding": "Bucket", "bucket_name": "my-agent-data" },
+		{ "binding": "Skills", "bucket_name": "my-agent-skills" },
+	],
+}
+```
+
+</WranglerConfig>
+
+A mount is indexed exactly once per workspace store. After the first successful pass — even on an empty source — the mount is marked indexed and subsequent boots skip it. Upstream changes (new R2 objects, new keys) are not picked up automatically; the workspace must be rebuilt over a fresh store to re-index.
+
+## Git tools
+
+`@cloudflare/workspace/git` wraps [`isomorphic-git`](https://isomorphic-git.org/) so an agent can clone a repository directly into the workspace and diff its working tree against a ref.
+
+```sh
+npm install isomorphic-git diff
+```
+
+`isomorphic-git` and `diff` are optional peer dependencies. Install them in any project that uses the git surface.
+
+<TypeScriptExample>
+
+```ts
+import { createGitClient } from "@cloudflare/workspace/git";
+
+// Inside the Workspace-owning Durable Object, where `this.#workspace`
+// is a Workspace instance.
+const git = createGitClient({ ws: this.#workspace });
+
+// Shallow-clone a repo into /workspace/repo.
+await git.clone({
+	url: "https://github.com/cloudflare/workers-sdk.git",
+	dir: "/workspace/repo",
+	ref: "main",
+	depth: 1,
+});
+
+// Let the agent or a shell command modify files…
+await this.#workspace.fs.writeFile(
+	"/workspace/repo/README.md",
+	"# Edited by the agent\n",
+);
+
+// …then produce a unified diff against HEAD.
+const patch = await git.diff({ dir: "/workspace/repo" });
+```
+
+</TypeScriptExample>
+
+Only HTTPS transport is supported. For private repositories, pass an `Authorization` header via `GitCloneOptions.headers`. The client is bound to one workspace, so subsequent `clone` and `diff` calls reuse the same `@platformatic/vfs` adapter and `isomorphic-git` pack cache — important for performance on real-sized histories.
+
+## Compare with Sandbox
+
+[Sandbox](/agents/tools/sandbox/) and Workspace solve overlapping but distinct problems.
+
+Choose **Workspace** when the filesystem itself must be lightweight, durable and queryable from Worker code. Choose **Sandbox** when you need a Linux environment for majority of the work, or service previews.
+
+The two are not exclusive. An agent can keep durable project state in a `Workspace` and shell out to a `Sandbox` for one-off untrusted execution.
+
+## Compare with Artifacts
+
+[Artifacts](/artifacts/) and Workspace solve similar problems.
+
+Workspaces are intended to provide composable filesystems for agents to work in. This may be composed of Git repositories, static files from cloud storage and other remote sources. Artifacts are a great fit today for providing a Git repository for Workspaces to operate on.
+
+## References
+
+<LinkCard
+	title="@cloudflare/workspace on npm"
+	href="https://www.npmjs.com/package/@cloudflare/workspace"
+	description="Package and changelog."
+/>
+<LinkCard
+	title="cloudflare/workspace on GitHub"
+	href="https://github.com/cloudflare/workspace"
+	description="Source, design docs under /docs, and the wsd daemon."
+/>
+<LinkCard
+	title="wsd-container example"
+	href="https://github.com/cloudflare/workspace/tree/main/examples/wsd-container"
+	description="End-to-end Worker + Durable Object + Container deployment, including an R2 mount."
+/>
+<LinkCard
+	title="Sandbox"
+	href="/agents/tools/sandbox/"
+	description="Compare against Cloudflare's container-based code execution tool."
+/>
+<LinkCard
+	title="Cloudflare Containers"
+	href="/containers/"
+	description="The container runtime Workspace builds on."
+/>
+<LinkCard
+	title="Durable Objects"
+	href="/durable-objects/"
+	description="The storage and addressing model that holds the workspace state."
+/>
+<LinkCard
+	title="R2"
+	href="/r2/"
+	description="Object storage used by the R2Bucket mount."
+/>
