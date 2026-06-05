@@ -58,6 +58,13 @@
 				"StyleGuideReview",
 			],
 		},
+		// FlueRegistry schema changed in 0.9.1 (added owner_kind column).
+		// Delete the old instance so 0.9.1 recreates tables on first request.
+		{
+			"tag": "flue-reset-registry-schema",
+			"deleted_classes": ["FlueRegistry"],
+			"new_sqlite_classes": ["FlueRegistry"],
+		},
 	],
 	"observability": {
 		"enabled": true,
