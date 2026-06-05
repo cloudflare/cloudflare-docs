@@ -176,9 +176,9 @@ type MountBucketOptions =
 
 - `credentialProxy` (remote endpoint mode only) - Route S3 requests through the Durable Object for signing
   - When `true`, credentials are never written to the container's disk. The Durable Object intercepts and re-signs all outbound S3 requests at the network layer before forwarding them upstream.
-  - Supports AWS SigV4 signing for S3-compatible endpoints (including R2) and HMAC signing for Google Cloud Storage
+  - Supports [AWS SigV4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html) signing for S3-compatible endpoints (including R2) and HMAC signing for Google Cloud Storage
   - Requires `ContainerProxy` to be exported from your Worker entrypoint
-  - Default: `false`
+  - Default: `false` (backwards compatibility — recommended to set to `true`; will become the default in a future version)
 
 - `readOnly` (optional) - Mount in read-only mode
   - Default: `false`
