@@ -214,7 +214,7 @@ Gateway routing only applies to real-time tool calls made by users through the p
 
 ### Supported transports
 
-Gateway routing supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) connections only. If an upstream MCP server is configured with an SSE endpoint (a URL ending in `/sse`), the portal will automatically attempt to connect using Streamable HTTP instead. If the upstream server does not support Streamable HTTP, the connection will fail when Gateway routing is turned on.
+Gateway routing supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) connections only. If an upstream MCP server is configured with a Server-Sent Events (SSE) endpoint (a URL ending in `/sse`), the portal will automatically attempt to connect using Streamable HTTP instead. If the upstream server does not support Streamable HTTP, the connection will fail when Gateway routing is turned on.
 
 ### Enable Gateway routing
 
