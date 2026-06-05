@@ -40,51 +40,9 @@ const localFlag = isLocal
 	? "--local --persist-to .flue/.wrangler/state"
 	: "--remote";
 
-// Stale R2 keys to delete — files that have been removed from the repo
-// but may still exist in R2 from previous syncs.
-const staleKeys = [
-	// Old flat style-guide reference files replaced by always/+conditional/+components/ structure
-	".agents/reference/style-guide/code-blocks.md",
-	".agents/reference/style-guide/components.md",
-	".agents/reference/style-guide/formatting.md",
-	".agents/reference/style-guide/headings.md",
-	".agents/reference/style-guide/links.md",
-	".agents/reference/style-guide/mdx-syntax.md",
-	".agents/reference/style-guide/terminology.md",
-	".agents/reference/style-guide/writing.md",
-	// Component reference files removed — import-only rules are handled by CI build
-	".agents/reference/style-guide/components/available-notifications.md",
-	".agents/reference/style-guide/components/badge.md",
-	".agents/reference/style-guide/components/card-grid.md",
-	".agents/reference/style-guide/components/card.md",
-	".agents/reference/style-guide/components/description.md",
-	".agents/reference/style-guide/components/directory-listing.md",
-	".agents/reference/style-guide/components/external-resources.md",
-	".agents/reference/style-guide/components/feature-table.md",
-	".agents/reference/style-guide/components/feature.md",
-	".agents/reference/style-guide/components/glossary-definition.md",
-	".agents/reference/style-guide/components/glossary-tooltip.md",
-	".agents/reference/style-guide/components/glossary.md",
-	".agents/reference/style-guide/components/inline-badge.md",
-	".agents/reference/style-guide/components/link-button.md",
-	".agents/reference/style-guide/components/link-card.md",
-	".agents/reference/style-guide/components/link-title-card.md",
-	".agents/reference/style-guide/components/list-card.md",
-	".agents/reference/style-guide/components/list-tutorials.md",
-	".agents/reference/style-guide/components/pages-build-preset.md",
-	".agents/reference/style-guide/components/plan.md",
-	".agents/reference/style-guide/components/product-availability-text.md",
-	".agents/reference/style-guide/components/product-changelog.md",
-	".agents/reference/style-guide/components/product-features.md",
-	".agents/reference/style-guide/components/public-stats.md",
-	".agents/reference/style-guide/components/related-product.md",
-	".agents/reference/style-guide/components/resources-by-selector.md",
-	".agents/reference/style-guide/components/rule-id.md",
-	".agents/reference/style-guide/components/tab-item.md",
-	".agents/reference/style-guide/components/width.md",
-	".agents/reference/style-guide/components/wrangler-namespace.md",
-	".agents/reference/style-guide/components/youtube.md",
-];
+// Stale R2 keys to delete — add entries here when files are removed from
+// .flue/.agents/ so they get cleaned up from the bucket on next sync.
+const staleKeys: string[] = [];
 
 for (const key of staleKeys) {
 	const r2Key = `${bucket}/${key}`;
