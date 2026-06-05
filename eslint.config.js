@@ -31,6 +31,7 @@ export default [
 			".wrangler/",
 			".flue/dist/",
 			".flue/.flue-vite/",
+			".flue/.wrangler/",
 			"dist/",
 			".github/",
 		],

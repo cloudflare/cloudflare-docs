@@ -67,6 +67,7 @@ CLAUDE.md
 .flue/dist/
 .flue/.env*
 .flue/.wrangler/
+.flue/.wrangler/tmp/
 .flue/.flue-vite/
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
