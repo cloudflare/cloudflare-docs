@@ -182,7 +182,7 @@ After you save, only authenticators whose AAGUIDs appear in the list can be enro
 </Tabs>
 
 :::note
-AAGUID restrictions and [AMR matching](#use-identity-provider-mfa) can both be turned on, but AMR matching is more permissive than independent MFA when AAGUID restrictions are configured. Most identity providers do not include AAGUID information in their AMR claims, so Access cannot verify that the authenticator used for IdP MFA is in the list of approved AAGUIDs. If the IdP returns a matching AMR value, Access will skip the independent MFA prompt regardless of which authenticator the user used at the IdP.
+AAGUID restrictions and [AMR matching](#use-identity-provider-mfa) can both be turned on simultaneously, but AMR matching is more permissive than independent MFA when AAGUID restrictions are configured. Most identity providers do not include AAGUID information in their AMR claims, so Access cannot verify that the authenticator used for IdP MFA is in the list of approved AAGUIDs. If the IdP returns a matching AMR value, Access will skip the independent MFA prompt regardless of which authenticator the user used at the IdP.
 :::
 
 ## Use identity provider MFA
