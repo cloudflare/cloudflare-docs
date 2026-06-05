@@ -76,8 +76,17 @@ reviewed: 2025-01-15
 - Replace `e.g.` with "for example" and `i.e.` with "that is". Never use `etc.` — rewrite or list items explicitly.
 - Do not use "please" in instructions.
 - Do not use directional language ("above", "below", "on the right") — reference elements by name instead.
-- **No emojis in prose, titles, headings, or sidebar labels.** Do not use emoji as inline admonition substitutes (`💡 Tip:`, `⚠️ Warning:`, `ℹ️ Note:`). Always use the `:::note`, `:::caution`, or `:::tip` directive syntax instead.
-- **Avoid obviously LLM-written patterns.** Common tells to flag and fix: excessive em dashes; "simply"/"just"/"easily"; throat-clearing intros ("In this guide you will learn..."); closing summaries that restate what was just written; "we"/"let's" instead of imperative; ✅/❌ columns in tables; manual tables of contents in the page body; bold used on arbitrary phrases rather than key terms.
+- **No emojis anywhere in docs.** No emoji in prose, titles, headings, sidebar labels, or tables. Do not use emoji as admonition substitutes — `💡 Tip:` and `⚠️ Warning:` in prose are not supported patterns. Use `:::tip` and `:::caution` instead.
+- **Avoid LLM-written patterns.** These are the most common tells — flag and fix them:
+  - **Em dashes overused.** One per page is a sign of good writing. One per paragraph is not. Restructure or use a comma or period.
+  - **Journalistic/magazine voice.** Docs are not blog posts. Cut scene-setting, dramatic framing, and rhetorical questions. Get to the information.
+  - **Filler qualifiers.** "Simply", "just", "easily", "quickly" — remove them. They add no information and imply the reader is at fault if they struggle.
+  - **Throat-clearing intros.** "In this guide, you will learn..." and "By the end of this tutorial..." restate the title. Delete them.
+  - **Closing summaries.** Paragraphs that restate what was just written. Delete them.
+  - **"We" and "let's".** Use imperative ("Run the command") or second person ("You can configure..."). Not "Let's run" or "We will configure".
+  - **✅/❌/⚠️ in tables.** Use plain text: "Yes", "No", "Partial".
+  - **Manual tables of contents.** A bulleted list of anchor links at the top of a page is always wrong. The sidebar and on-page TOC handle navigation.
+  - **Arbitrary bold.** Bold is for key terms and UI element names. If a sentence needs bold to make its point, rewrite the sentence.
 
 ### Abbreviations and acronyms
 
