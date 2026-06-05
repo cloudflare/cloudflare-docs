@@ -15,6 +15,7 @@ import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import {
 	addReactionToComment,
 	getInstallationToken,
+	getPullRequest,
 	isCodeOwner,
 	verifyGitHubSignature,
 } from "../lib/github";
@@ -190,10 +191,10 @@ export async function run({ payload, env, req }: FlueContext) {
 		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
 
 		// Check if the PR is from Dependabot — if so route to dependabot-review
-		const prAuthorForSlash = await fetchPrAuthor(token, number);
+		const prForSlash = await getPullRequest(token, number).catch(() => null);
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
-		if (prAuthorForSlash === "dependabot[bot]") {
+		if (prForSlash?.user?.login === "dependabot[bot]") {
 			reviewUrl.pathname = `/workflows/dependabot-review`;
 			reviewUrl.searchParams.set("wait", "result");
 			const _reviewResponse = await fetch(reviewUrl, {
@@ -267,10 +268,10 @@ export async function run({ payload, env, req }: FlueContext) {
 		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
 
 		// Check if the PR is from Dependabot — if so route to dependabot-review
-		const prAuthorForReview = await fetchPrAuthor(token, number);
+		const prForReview = await getPullRequest(token, number).catch(() => null);
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
-		if (prAuthorForReview === "dependabot[bot]") {
+		if (prForReview?.user?.login === "dependabot[bot]") {
 			reviewUrl.pathname = `/workflows/dependabot-review`;
 			reviewUrl.searchParams.set("wait", "result");
 			const _reviewResponse = await fetch(reviewUrl, {
@@ -515,32 +516,4 @@ function getIssueOrPullRequestTitle(
 
 function truncateLogValue(value: string) {
 	return value.length > 100 ? `${value.slice(0, 97)}...` : value;
-}
-
-/**
- * Fetch the author login of a pull request.
- * Used by slash-command handlers to route Dependabot PRs correctly.
- */
-async function fetchPrAuthor(
-	token: string,
-	prNumber: number,
-): Promise<string | null> {
-	try {
-		const res = await fetch(
-			`https://api.github.com/repos/cloudflare/cloudflare-docs/pulls/${prNumber}`,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-					Accept: "application/vnd.github+json",
-					"X-GitHub-Api-Version": "2022-11-28",
-					"User-Agent": "cloudflare-docs-agents",
-				},
-			},
-		);
-		if (!res.ok) return null;
-		const pr = (await res.json()) as { user?: { login?: string } };
-		return pr.user?.login ?? null;
-	} catch {
-		return null;
-	}
 }

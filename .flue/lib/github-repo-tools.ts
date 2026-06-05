@@ -131,14 +131,13 @@ export function makeReadRepoFileTool(token: string): ToolDefinition {
 
 // ── Tool: search_repo ─────────────────────────────────────────────────────────
 //
-// Uses the GitHub code search API. Falls back to recursive tree scan + content
-// fetch for queries that GitHub search doesn't index well (e.g. lock file
-// package names).
+// Uses the GitHub code search API. If search returns no results or errors,
+// use read_repo_file on specific paths instead.
 
 export function makeSearchRepoTool(token: string): ToolDefinition {
 	return {
 		name: "search_repo",
-		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern. Returns matching file paths and line snippets. Use to find import sites, usages, and configuration for a package. Limited to 20 results.`,
+		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippets. Use to find import sites, usages, and configuration for a package. Limited to 20 results. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
 		parameters: Type.Object({
 			query: Type.String({
 				description:

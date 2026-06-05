@@ -21,9 +21,11 @@ import {
 	getShellSandbox,
 } from "../connectors/cloudflare-shell";
 import {
+	addReactionToComment,
 	getInstallationToken,
 	getIssueComments,
 	postComment,
+	removeReactionFromComment,
 	updateIssueComment,
 	type GitHubIssueComment,
 } from "../lib/github";
@@ -207,7 +209,7 @@ async function postOrUpdateComment(
 
 export async function run({ init, payload, env, runId }: FlueContext) {
 	const input = parsePayload(payload);
-	const typedEnv = env as Record<string, string & unknown>;
+	const typedEnv = env as Record<string, unknown>;
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
@@ -252,6 +254,13 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 
 	const prBody = pr.body ?? "";
 	const packages = parseDependabotPackages(prBody);
+
+	if (packages.length === 0) {
+		return {
+			acted: false,
+			summary: `Could not parse any packages from Dependabot PR body for #${input.number}.`,
+		};
+	}
 
 	console.log({
 		message: `Dependabot review started: PR #${input.number} — ${packages.length} package(s)`,
@@ -390,6 +399,20 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 		const fresh =
 			existingComment ?? (await findExistingBotComment(token, input.number));
 		await postOrUpdateComment(token, input.number, fresh, commentBody);
+
+		// Swap 👀 → 👍 on the trigger comment if this was a slash-command run
+		if (input.triggerCommentId) {
+			if (input.triggerEyesReactionId) {
+				await removeReactionFromComment(
+					token,
+					input.triggerCommentId,
+					input.triggerEyesReactionId,
+				).catch(() => {}); // non-fatal
+			}
+			await addReactionToComment(token, input.triggerCommentId, "+1").catch(
+				() => {},
+			); // non-fatal
+		}
 
 		console.log({
 			message: `Dependabot review complete: PR #${input.number} — ${reviewResult.recommendation}`,
