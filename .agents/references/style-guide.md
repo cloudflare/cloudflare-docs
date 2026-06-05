@@ -72,11 +72,22 @@ reviewed: 2025-01-15
 - **Imperative mood for procedures.** Start steps with a verb: "Select", "Run", "Go to".
 - **Plain language.** Avoid obscure words and jargon. Define acronyms on first use.
 - **Objective first, then action.** "To create a tunnel, run..." not "Run this command to create a tunnel."
-- **Avoid LLM-filler phrases.** Do not use "It's important to note", "leverage", "seamless", "dive into", "straightforward", or similar.
+- **Avoid LLM-filler phrases and marketing language.** Do not use: "It's important to note", "leverage", "seamless", "dive into", "straightforward", "robust", "powerful", "cutting-edge", "unlock", "out of the box", "at a glance", or similar. Write what the thing actually does.
+- **Avoid condescending qualifiers.** Do not use "simply", "just", or "easily" — they imply the reader is at fault if the task is hard.
+- **No throat-clearing introductions.** Do not open pages or sections with "In this guide, you will learn..." or "By the end of this tutorial, you will be able to...". The title and description already state the purpose.
+- **No summary paragraphs at the end of sections.** Do not restate what was just written. If the content needs a recap, restructure it.
+- **Use second person or imperative, not "we" or "let's".** Write "Run the command" or "You can configure...", not "Let's run the command" or "We will configure...".
+- **Do not use "note that" or "it is worth noting" in prose.** If the information warrants calling out, use an admonition. If it does not, fold it into the sentence.
+- **Avoid "ensure" as a verb for the reader.** "Ensure that the file exists" is weaker than "The file must exist" or restructuring the step to create the file. Reserve "ensure" for describing what a system guarantees.
+- **Do not use "as mentioned above" or "as we saw earlier".** Link to the relevant section instead or restructure to avoid the back-reference.
 - Replace `e.g.` with "for example" and `i.e.` with "that is". Never use `etc.` — rewrite or list items explicitly.
 - Do not use "please" in instructions.
 - Do not use directional language ("above", "below", "on the right") — reference elements by name instead.
-- No emojis in page titles, headings, or sidebar labels.
+- **Em dashes sparingly.** An occasional em dash for a sharp aside is fine; using them in every other sentence is a sign the sentence should be restructured. Prefer a period or a comma.
+- **No emojis in prose, titles, headings, or sidebar labels.** Do not use emoji as inline admonition substitutes (`💡 Tip:`, `⚠️ Warning:`, `ℹ️ Note:`). Always use the `:::note`, `:::caution`, or `:::tip` directive syntax instead.
+- **No emoji or symbol columns in tables** (✅, ❌, ⚠️). Use plain text: "Yes", "No", "Partial", or a short phrase.
+- **Do not add a manual table of contents in the page body.** Navigation is handled by the sidebar and the on-page TOC. A bulleted list of anchor links at the top of a page is always wrong.
+- **Bold is for key terms and UI element names, not for emphasis on arbitrary phrases.** If a sentence needs bold to land its point, rewrite the sentence.
 
 ### Abbreviations and acronyms
 
@@ -364,6 +375,7 @@ Usage rules:
 - No more than one admonition of the same type per section.
 - Do not add a header to admonitions inside numbered step instructions — the background color is sufficient.
 - Use admonitions sparingly overall. If most of a page is wrapped in them, restructure the content.
+- **Do not use emoji as inline admonition substitutes.** Patterns like `💡 Tip:`, `⚠️ Warning:`, or `ℹ️ Note:` in prose are not supported. Always use the `:::note`, `:::caution`, or `:::tip` directive syntax.
 
 ---
 
