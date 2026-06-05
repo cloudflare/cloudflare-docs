@@ -6,7 +6,14 @@ sidebar:
 description: Give your agents a computer. Workspaces are shared between a Durable Object and a container, with built-in shell, mounts, and common filesystem tools.
 ---
 
-import { Aside, LinkCard, Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	Aside,
+	LinkCard,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 [`@cloudflare/workspace`](https://www.npmjs.com/package/@cloudflare/workspace) gives an agent a lightweight computer.
 
@@ -17,7 +24,8 @@ Take advantage of the speed of working on files within the Worker environment an
 File operations, R2 mounts and git clones within the Durable Object are all covered today, lightweight bash execution and code execution are coming soon!
 
 <Aside type="caution" title="Prototype">
-	`@cloudflare/workspace` is a prototype. APIs are unstable and the design is still moving. Use it for experiments and feedback, not production workloads.
+	`@cloudflare/workspace` is a prototype. APIs are unstable and the design is
+	still moving. Use it for experiments and feedback, not production workloads.
 </Aside>
 
 <TypeScriptExample>
@@ -42,7 +50,10 @@ export class Agent extends DurableObject<Env> {
 			},
 		});
 
-		const report = await this.#workspace.fs.readFile("/workspace/data/report.csv", "utf8");
+		const report = await this.#workspace.fs.readFile(
+			"/workspace/data/report.csv",
+			"utf8",
+		);
 	}
 }
 ```
@@ -126,7 +137,24 @@ npm install @cloudflare/workspace
 
 </WranglerConfig>
 
-The container image's entrypoint must be the `wsd` daemon. See [`examples/wsd-container/Dockerfile`](https://github.com/cloudflare/workspace/blob/main/examples/wsd-container/Dockerfile) for a reference Dockerfile. Cloudflare Containers grant `/dev/fuse` and `CAP_SYS_ADMIN` automatically when deployed; local `wrangler dev` does not, in this environment a basic shim is used to replicate FUSE.
+### Dockerfile
+
+The container image's entrypoint must be the `wsd` daemon. A prebuilt Linux binary ships inside the `@cloudflare/workspace` npm package, so the Dockerfile just copies it out of `node_modules` and marks it executable — no compile step required.
+
+```dockerfile
+FROM debian:stable-slim
+
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends fuse3 ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
+
+COPY node_modules/@cloudflare/workspace/dist/bin/wsd-linux-x64 /usr/local/bin/wsd
+RUN chmod +x /usr/local/bin/wsd
+
+ENTRYPOINT ["/usr/local/bin/wsd"]
+```
+
+Cloudflare Containers grant `/dev/fuse` and `CAP_SYS_ADMIN` automatically when deployed; local `wrangler dev` does not, so in this environment a basic shim is used to replicate FUSE.
 
 ### Define the Durable Object
 
@@ -199,7 +227,11 @@ export default {
 </TypeScriptExample>
 
 <Aside type="note" title="Always use `using`">
-	The RPC binding will not garbage-collect remote stubs. Declare the value returned by `getWorkspace()` and the handle returned by `shell.exec()` with [`using`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html#using-declarations-and-explicit-resource-management) so they are disposed at the end of the block. Pure-value returns like `readFile(path, "utf8")` and `stat()` carry no stubs and do not need disposal.
+	The RPC binding will not garbage-collect remote stubs. Declare the value
+	returned by `getWorkspace()` and the handle returned by `shell.exec()` with
+	[`using`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html#using-declarations-and-explicit-resource-management)
+	so they are disposed at the end of the block. Pure-value returns like
+	`readFile(path, "utf8")` and `stat()` carry no stubs and do not need disposal.
 </Aside>
 
 ## Advanced setup: separate Container and Workspace DOs
@@ -298,26 +330,27 @@ export class AgentDO extends DurableObject<Env> {
 The `workspace: { binding, id }` reference is plain data, so the container DO can record it and dial back into the right agent when `wsd` opens its WebSocket.
 
 <Aside type="note" title="Prefer ReadableStream where possible">
-Durable Objects are limited to 128MiB memory so it is preferable to avoid buffering data, particularly files into memory. All operations will default to `ReadableStream` and provide non-streaming alternatives when needed.
+	Durable Objects are limited to 128MiB memory so it is preferable to avoid
+	buffering data, particularly files into memory. All operations will default to
+	`ReadableStream` and provide non-streaming alternatives when needed.
 </Aside>
-
 
 ## Filesystem API
 
 `ws.fs` mirrors the in-process `WorkspaceFilesystem` surface over Workers RPC. Interfaces support streaming data via `ReadableStream` or encoding as strings.
 
-| Method                                | Returns                                 | Notes                                                                           |
-| ------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------- |
-| `readFile(path)`                      | `ReadableStream<Uint8Array>`            | Streams the file body.                                                          |
-| `readFile(path, "utf8")`              | `string`                                | Decodes the whole file.                                                         |
-| `stat(path)`                          | `WorkspaceStatResult`                   | Size, mode, mtime, kind.                                                        |
-| `readdir(path)`                       | `WorkspaceDirentResult[]`               | One level deep.                                                                 |
-| `ls(prefix)`                          | `string[]`                              | Flat list of paths under a prefix.                                              |
-| `find(directory, pattern?)`           | `WorkspaceFoundEntry[]`                 | Recursive search by filename pattern.                                           |
-| `grep(pattern, path, options?)`       | `WorkspaceGrepMatch[]`                  | Regex search across files under `path`.                                         |
-| `writeFile(path, content, options?)`  | `Promise<void>`                         | `content` is `string`, `Uint8Array`, or `ReadableStream<Uint8Array>`.           |
-| `mkdir(path, options?)`               | `Promise<void>`                         | Pass `{ recursive: true }` to create intermediate directories.                  |
-| `rm(path, options?)`                  | `Promise<void>`                         | Pass `{ recursive: true }` for non-empty directories.                           |
+| Method                               | Returns                      | Notes                                                                 |
+| ------------------------------------ | ---------------------------- | --------------------------------------------------------------------- |
+| `readFile(path)`                     | `ReadableStream<Uint8Array>` | Streams the file body.                                                |
+| `readFile(path, "utf8")`             | `string`                     | Decodes the whole file.                                               |
+| `stat(path)`                         | `WorkspaceStatResult`        | Size, mode, mtime, kind.                                              |
+| `readdir(path)`                      | `WorkspaceDirentResult[]`    | One level deep.                                                       |
+| `ls(prefix)`                         | `string[]`                   | Flat list of paths under a prefix.                                    |
+| `find(directory, pattern?)`          | `WorkspaceFoundEntry[]`      | Recursive search by filename pattern.                                 |
+| `grep(pattern, path, options?)`      | `WorkspaceGrepMatch[]`       | Regex search across files under `path`.                               |
+| `writeFile(path, content, options?)` | `Promise<void>`              | `content` is `string`, `Uint8Array`, or `ReadableStream<Uint8Array>`. |
+| `mkdir(path, options?)`              | `Promise<void>`              | Pass `{ recursive: true }` to create intermediate directories.        |
+| `rm(path, options?)`                 | `Promise<void>`              | Pass `{ recursive: true }` for non-empty directories.                 |
 
 <TypeScriptExample>
 
@@ -357,10 +390,10 @@ Every `exec()` ensures the remote filesystem is in sync with the host:
 
 ### `ExecOptions`
 
-| Option     | Type             | Default            | Notes                                                                                  |
-| ---------- | ---------------- | ------------------ | -------------------------------------------------------------------------------------- |
-| `cwd`      | `string`         | workspace root     | Absolute path inside the container.                                                    |
-| `encoding` | `"utf8"`         | `undefined`        | When `"utf8"`, `stdout` and `stderr` come back as strings instead of `Uint8Array`.     |
+| Option     | Type     | Default        | Notes                                                                              |
+| ---------- | -------- | -------------- | ---------------------------------------------------------------------------------- |
+| `cwd`      | `string` | workspace root | Absolute path inside the container.                                                |
+| `encoding` | `"utf8"` | `undefined`    | When `"utf8"`, `stdout` and `stderr` come back as strings instead of `Uint8Array`. |
 
 ### `ExecResult`
 
@@ -379,7 +412,10 @@ using ws = await env.WorkspaceContainer.get(id).getWorkspace();
 
 // Write a script, then run it. The pre-exec push makes /src/build.sh
 // visible inside the container.
-await ws.fs.writeFile("/src/build.sh", "#!/bin/sh\nset -e\nnpm install\nnpm test\n");
+await ws.fs.writeFile(
+	"/src/build.sh",
+	"#!/bin/sh\nset -e\nnpm install\nnpm test\n",
+);
 
 using handle = await ws.shell.exec("sh /src/build.sh", {
 	cwd: "/workspace",
