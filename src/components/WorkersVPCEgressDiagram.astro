@@ -10,7 +10,7 @@ const policies = [
 const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 ---
 
-<figure class="vpc-egress-diagram" aria-label="Workers VPC public Internet egress through Cloudflare Mesh and Cloudflare Gateway">
+<figure class="vpc-egress-diagram not-content" aria-label="Workers VPC public Internet egress through Cloudflare Mesh and Cloudflare Gateway">
 	<ol class="flow">
 		<li class="flow-step">
 			<div class="node-card worker-card">
@@ -148,11 +148,11 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 	.node-header {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 10px;
 	}
 
 	.node-title {
-		flex: 1;
 		min-width: 0;
 		color: var(--map-text);
 		font-size: 14px;
@@ -211,6 +211,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		color: var(--map-caption);
 		font-size: 12px;
 		line-height: 1.5;
+		text-align: center;
 	}
 
 	.node-caption code {
@@ -287,6 +288,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 	.pill-row {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: 6px;
 	}
 

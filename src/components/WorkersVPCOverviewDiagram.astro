@@ -10,7 +10,7 @@ const policies = [
 const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 ---
 
-<figure class="vpc-overview-diagram" aria-label="Workers VPC integrations across Cloudflare Tunnel, Cloudflare Mesh, and Cloudflare WAN">
+<figure class="vpc-overview-diagram not-content" aria-label="Workers VPC integrations across Cloudflare Tunnel, Cloudflare Mesh, and Cloudflare WAN">
 	<div class="diagram">
 		<div class="row worker-row">
 			<div class="node-card worker-card">
@@ -30,9 +30,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 			<div class="node-card tunnel-card">
 				<div class="node-header">
 					<span class="node-icon tunnel-icon" aria-hidden="true"><AstroIcon name="tunnel" /></span>
-					<a class="node-title" href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a>
+					<a class="node-title" href="/tunnel/">Cloudflare Tunnel</a>
 				</div>
-				<p class="node-caption">Reach a specific private network or hostname</p>
+				<p class="node-caption">Reach private applications or networks through <code>cloudflared</code></p>
 			</div>
 
 			<div class="node-card mesh-card">
@@ -40,7 +40,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 					<span class="node-icon mesh-icon" aria-hidden="true"><AstroIcon name="cloudflare-mesh" /></span>
 					<a class="node-title" href="/cloudflare-one/networks/connectors/cloudflare-mesh/">Cloudflare Mesh</a>
 				</div>
-				<p class="node-caption">Bind to <a class="inline-pill mesh-pill" href="/workers-vpc/configuration/vpc-networks/"><code>cf1:network</code></a> to reach the full account</p>
+				<p class="node-caption">Reach the full account through <code>cf1:network</code></p>
 			</div>
 
 			<div class="node-card wan-card">
@@ -48,7 +48,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 					<span class="node-icon wan-icon" aria-hidden="true"><AstroIcon name="cloudflare-wan" /></span>
 					<a class="node-title" href="/cloudflare-wan/">Cloudflare WAN</a>
 				</div>
-				<p class="node-caption">Reach destinations via GRE, IPsec, or CNI on-ramps</p>
+				<p class="node-caption">Reach destinations through GRE, IPsec, or CNI on-ramps</p>
 			</div>
 		</div>
 
@@ -58,7 +58,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 					<span class="node-icon gateway-icon" aria-hidden="true"><AstroIcon name="gateway" /></span>
 					<a class="node-title" href="/cloudflare-one/traffic-policies/">Cloudflare Gateway</a>
 				</div>
-				<p class="node-caption">Public-Internet traffic from Mesh and WAN flows through Gateway</p>
+				<p class="node-caption">Mesh and WAN traffic flows through Gateway, with policies enforced and traffic <a class="logs-link" href={logsHref}>logged</a>.</p>
 				<div class="pill-row">{policies.map((p) => <a class="policy-pill" href={p.href}>{p.label}</a>)}</div>
 			</div>
 		</div>
@@ -77,19 +77,10 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 					<span class="destination-dot public-dot" aria-hidden="true"></span>
 					<span class="destination-title">Public Internet</span>
 				</div>
-				<p class="destination-caption">Reachable via Mesh or WAN, with Gateway policies enforced</p>
+				<p class="destination-caption">Reachable via Mesh or WAN</p>
 			</div>
 		</div>
 	</div>
-
-	<a class="logs-card" href={logsHref} aria-label="Gateway logs">
-		<span class="logs-title">Gateway logs</span>
-		<span class="logs-pills">
-			<span class="logs-pill">DNS</span>
-			<span class="logs-pill">HTTP</span>
-			<span class="logs-pill">Network</span>
-		</span>
-	</a>
 </figure>
 
 <style>
@@ -143,6 +134,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		position: relative;
 		display: grid;
 		gap: 16px;
+		align-items: stretch;
 	}
 
 	.row::before {
@@ -202,11 +194,11 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 	.node-header {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 10px;
 	}
 
 	.node-title {
-		flex: 1;
 		min-width: 0;
 		color: var(--map-text);
 		font-size: 14px;
@@ -270,6 +262,11 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		color: var(--map-caption);
 		font-size: 12px;
 		line-height: 1.5;
+		text-align: center;
+	}
+
+	.on-ramps-row .node-caption {
+		min-height: calc(2 * 12px * 1.5);
 	}
 
 	.node-caption code {
@@ -342,6 +339,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 	.pill-row {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: 6px;
 	}
 
@@ -370,15 +368,17 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		flex-direction: column;
 		gap: 6px;
 		padding: 12px 14px;
-		border: 1px dashed var(--map-line);
+		border: 1px solid var(--map-line);
 		border-radius: 10px;
-		background: transparent;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
 		color: var(--map-text);
 	}
 
 	.destination-header {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 8px;
 	}
 
@@ -411,59 +411,20 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		color: var(--map-caption);
 		font-size: 12px;
 		line-height: 1.5;
+		text-align: center;
 	}
 
-	.logs-card {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-		gap: 10px 14px;
-		margin: 4px auto 0;
-		padding: 10px 16px;
-		width: 100%;
-		max-width: 360px;
-		border: 1px solid var(--map-line);
-		border-radius: 8px;
-		background: var(--map-card);
-		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	.logs-link {
+		color: var(--map-caption);
+		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, var(--map-caption) 35%, transparent);
+		text-underline-offset: 2px;
+		transition: color 150ms ease, text-decoration-color 150ms ease;
+	}
+
+	.logs-link:hover {
 		color: var(--map-text);
-		transition:
-			background-color 150ms ease,
-			border-color 150ms ease,
-			transform 150ms ease;
-	}
-
-	.logs-card:hover {
-		background: var(--map-overlay);
-		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
-		transform: translateY(-1px);
-	}
-
-	.logs-title {
-		color: var(--map-strong);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-		font-size: 11px;
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: -0.01em;
-	}
-
-	.logs-pills {
-		display: inline-flex;
-		flex-wrap: wrap;
-		gap: 6px;
-	}
-
-	.logs-pill {
-		display: inline-flex;
-		align-items: center;
-		padding: 2px 8px;
-		border: 1px solid var(--map-line);
-		border-radius: 5px;
-		background: var(--map-elevated);
-		color: var(--map-subtle);
-		font-size: 11px;
+		text-decoration-color: var(--map-gateway);
 	}
 
 	@media (max-width: 52rem) {
