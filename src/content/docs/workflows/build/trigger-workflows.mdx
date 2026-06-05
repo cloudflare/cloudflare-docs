@@ -15,17 +15,19 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 You can trigger Workflows both programmatically and via the Workflows APIs, including:
 
 1. With [Workers](/workers) via HTTP requests in a `fetch` handler, or bindings from a `queue` or `scheduled` handler
-2. Using the [Workflows REST API](/api/resources/workflows/methods/list/)
-3. Via the [wrangler CLI](/workers/wrangler/commands/workflows/#workflows) in your terminal
+2. On a recurring interval by defining `schedules` on a Workflow binding in your Wrangler configuration
+3. Using the [Workflows REST API](/api/resources/workflows/methods/list/)
+4. Via the [wrangler CLI](/workers/wrangler/commands/workflows/#workflows) in your terminal
 
 ## Workers API (Bindings)
 
 You can interact with Workflows programmatically from any Worker script by creating a binding to a Workflow. A Worker can bind to multiple Workflows, including Workflows defined in other Workers projects (scripts) within your account.
 
-You can interact with a Workflow:
+You can trigger a Workflow:
 
 - Directly over HTTP via the [`fetch`](/workers/runtime-apis/handlers/fetch/) handler
 - From a [Queue consumer](/queues/configuration/javascript-apis/#consumer) inside a `queue` handler
+- On a recurring schedule by defining `schedules` on the Workflow binding in `wrangler.jsonc`
 - From a [Cron Trigger](/workers/configuration/cron-triggers/) inside a `scheduled` handler
 - Within a [Durable Object](/durable-objects/)
 
@@ -63,6 +65,50 @@ To bind to a Workflow from your Workers code, you need to define a [binding](/wo
 </WranglerConfig>
 
 The `binding = "MY_WORKFLOW"` line defines the JavaScript variable that our Workflow methods are accessible on, including `create` (which triggers a new instance) or `get` (which returns the status of an existing instance).
+
+### Schedule a Workflow directly
+
+If you want to create Workflow instances on a recurring interval, add a `schedules` array to the Workflow binding in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workflows-tutorial",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"workflows": [
+		{
+			"name": "workflows-tutorial",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"schedules": ["0 * * * *"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Each matching cron expression creates a new Workflow instance automatically. Use this when you want to run a Workflow on a schedule without defining top-level `triggers.crons` and a separate `scheduled` handler.
+
+Scheduled instances include the matching cron expression and scheduled trigger time on `event.schedule`:
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env> {
+	async run(event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		if (event.schedule) {
+			console.log(event.schedule.cron);
+			console.log(new Date(event.schedule.scheduledTime));
+		}
+	}
+}
+```
+
+On [Workers Paid](/workers/platform/pricing/#workers), Workflow instances created by `schedules` can run for up to one hour per cron firing without consuming a Workflow concurrency slot. If the instance pauses or sleeps after that window, the instance yields and enters the normal concurrency queue upon resume. It resumes when a concurrency slot is available.
+
+Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
 
 The following example shows how you can manage Workflows from within a Worker, including:
 

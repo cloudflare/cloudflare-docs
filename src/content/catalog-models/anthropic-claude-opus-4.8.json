@@ -276,6 +276,9 @@
 		"Adaptive Thinking": "Yes",
 		"Architecture": "Transformer"
 	},
+	"request_formats": [
+		"anthropic-messages"
+	],
 	"created_at": "2026-05-28 17:14:04",
 	"schema": {
 		"input": {

@@ -135,6 +135,7 @@
 		"Languages": "15",
 		"Latency": "~120ms"
 	},
+	"request_formats": null,
 	"created_at": "2026-05-22 17:53:16",
 	"schema": {
 		"input": {

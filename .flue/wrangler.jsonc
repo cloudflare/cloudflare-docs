@@ -13,6 +13,52 @@
 			"bucket_name": "docs-flue-bucket",
 		},
 	],
+	"migrations": [
+		// Previous agent class migrations — kept for deployed history, classes are removed.
+		{
+			"tag": "flue-class-CodeReviewOrchestrator",
+			"new_sqlite_classes": ["CodeReviewOrchestrator"],
+		},
+		{
+			"tag": "flue-class-FlueRegistry",
+			"new_sqlite_classes": ["FlueRegistry"],
+		},
+		{ "tag": "flue-class-Orchestrate", "new_sqlite_classes": ["Orchestrate"] },
+		{
+			"tag": "flue-class-SpamAndOffTopicFilter",
+			"new_sqlite_classes": ["SpamAndOffTopicFilter"],
+		},
+		{
+			"tag": "flue-class-StyleGuideReview",
+			"new_sqlite_classes": ["StyleGuideReview"],
+		},
+		// New workflow classes added in 0.9.1 upgrade.
+		{
+			"tag": "flue-class-OrchestrateWorkflow",
+			"new_sqlite_classes": ["OrchestrateWorkflow"],
+		},
+		{
+			"tag": "flue-class-CodeReviewOrchestratorWorkflow",
+			"new_sqlite_classes": ["CodeReviewOrchestratorWorkflow"],
+		},
+		{
+			"tag": "flue-class-SpamAndOffTopicFilterWorkflow",
+			"new_sqlite_classes": ["SpamAndOffTopicFilterWorkflow"],
+		},
+		{
+			"tag": "flue-class-StyleGuideReviewWorkflow",
+			"new_sqlite_classes": ["StyleGuideReviewWorkflow"],
+		},
+		{
+			"tag": "flue-delete-old-agent-classes",
+			"deleted_classes": [
+				"CodeReviewOrchestrator",
+				"Orchestrate",
+				"SpamAndOffTopicFilter",
+				"StyleGuideReview",
+			],
+		},
+	],
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,
