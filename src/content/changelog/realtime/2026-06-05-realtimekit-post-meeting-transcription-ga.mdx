@@ -8,13 +8,13 @@ date: 2026-06-05
 
 [RealtimeKit](/realtime/realtimekit/) lets you build products where people meet over live audio and video — such as HealthTech, EdTech, proctoring, and other real-time platforms — on Cloudflare's [global WebRTC infrastructure](/realtime/sfu/calls-vs-sfus/).
 
-[Post-meeting transcription](/realtime/realtimekit/ai/transcription/#post-meeting-transcription) is now Generally Available, so completed RealtimeKit meetings can automatically produce full transcript files after they end. Those transcripts can also power [AI-generated summaries](/realtime/realtimekit/ai/summary/) for meeting notes, review workflows, and follow-up tasks.
+[Post-meeting transcription](/realtime/realtimekit/ai/transcription/#post-meeting-transcription) is now Generally Available, so completed RealtimeKit meetings can automatically produce full transcript files after they end. Those transcripts can also power [AI-generated summaries](/realtime/realtimekit/ai/summary/) for meeting notes, review workflows, and follow-up tasks after the transcript is available.
 
 Post-meeting transcription is a managed service powered by [Workers AI](/workers-ai/) using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). RealtimeKit handles transcription processing and returns transcript files through webhooks or the REST API, so you do not need to run your own transcription infrastructure.
 
-## Generate transcripts and summaries
+## Generate transcripts
 
-To generate a transcript after a meeting ends, set `transcribe_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/). To also generate an [AI summary](/realtime/realtimekit/ai/summary/), set `summarize_on_end: true`.
+To generate a transcript after a meeting ends, set `transcribe_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/):
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
@@ -23,17 +23,19 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime
   -d '{
     "title": "Weekly product review",
     "transcribe_on_end": true,
-    "summarize_on_end": true,
     "ai_config": {
       "transcription": {
         "language": "en"
-      },
-      "summarization": {
-        "summary_type": "team_meeting",
-        "text_format": "markdown"
       }
     }
   }'
+```
+
+After the transcript is available, use the [summary API](/api/resources/realtime_kit/subresources/sessions/methods/generate_summary_of_transcripts/) to generate an AI summary for the session:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/summary" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ## Consume results
