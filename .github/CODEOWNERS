@@ -89,6 +89,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/partials/cloudflare-one/tunnel/ @nikitacano @ranbel @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/partials/cloudflare-one/warp/ @ranbel @cf-rhett @csujedihy @lpraneis @jiulingz @tojens-ietf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/partials/cloudflare-one/access/ @kennyj42 @asamborski @ranbel @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/changelog/cloudflare-one/ @kennyj42 @asamborski @ranbel @cloudflare/pm-changelogs @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
