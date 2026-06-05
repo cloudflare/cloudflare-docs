@@ -127,7 +127,32 @@ function renderComment(
 		"",
 	];
 
-	// Per-package blocks
+	// ── Summary table (always visible) ───────────────────────────────────────
+	lines.push("| Package | Impact | Recommendation |");
+	lines.push("|---------|--------|----------------|");
+	for (const pkg of result.packageReviews) {
+		const emoji = impactEmoji[pkg.impact] ?? "⬜";
+		const pkgRec =
+			pkg.impact === "High" || pkg.impact === "Medium"
+				? "⚠️ Verify"
+				: "✅ Merge";
+		lines.push(
+			`| \`${pkg.name}\` ${pkg.from} → ${pkg.to} | ${emoji} ${pkg.impact} | ${pkgRec} |`,
+		);
+	}
+	lines.push("");
+	lines.push(`**Overall:** ${recLabel}`);
+	if (result.summary) {
+		lines.push("");
+		lines.push(result.summary);
+	}
+	lines.push("");
+
+	// ── Per-package detail blocks (collapsed) ─────────────────────────────────
+	lines.push("<details>");
+	lines.push("<summary>Package details</summary>");
+	lines.push("<br/>");
+	lines.push("");
 	for (const pkg of result.packageReviews) {
 		const emoji = impactEmoji[pkg.impact] ?? "⬜";
 		lines.push(`### \`${pkg.name}\`: ${pkg.from} → ${pkg.to}`);
@@ -150,26 +175,7 @@ function renderComment(
 		lines.push("---");
 		lines.push("");
 	}
-
-	// Summary table
-	lines.push("## Summary");
-	lines.push("");
-	lines.push("| Package | Impact | Recommendation |");
-	lines.push("|---------|--------|----------------|");
-	for (const pkg of result.packageReviews) {
-		const emoji = impactEmoji[pkg.impact] ?? "⬜";
-		const pkgRec =
-			pkg.impact === "High" || pkg.impact === "Medium"
-				? "⚠️ Verify"
-				: "✅ Merge";
-		lines.push(`| \`${pkg.name}\` | ${emoji} ${pkg.impact} | ${pkgRec} |`);
-	}
-	lines.push("");
-	lines.push(`**Overall:** ${recLabel}`);
-	if (result.summary) {
-		lines.push("");
-		lines.push(result.summary);
-	}
+	lines.push("</details>");
 
 	return lines.join("\n");
 }
