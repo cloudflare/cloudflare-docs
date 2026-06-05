@@ -8,6 +8,8 @@ products:
   - agents
 ---
 
+import { TypeScriptExample } from "~/components";
+
 Think owns the `streamText` call and provides hooks at each stage of the chat turn. Hooks fire on every turn regardless of entry path — WebSocket chat, sub-agent `chat()`, `saveMessages()`, durable `submitMessages()` execution, `continueLastTurn()`, and auto-continuation after tool results.
 
 ## Hook summary
@@ -325,6 +327,8 @@ The second argument is a [`ChatErrorContext`](#onchaterror). During overflow rec
 
 For the common case, assign the bundled `defaultContextOverflowClassifier`, which matches the context-overflow errors of Anthropic, OpenAI, Google, Bedrock, and others:
 
+<TypeScriptExample>
+
 ```ts
 import { Think, defaultContextOverflowClassifier } from "@cloudflare/think";
 
@@ -333,16 +337,24 @@ export class MyAgent extends Think<Env> {
 }
 ```
 
+</TypeScriptExample>
+
 Or write your own, optionally delegating to the bundled classifier:
+
+<TypeScriptExample>
 
 ```ts
 import type { ChatErrorClassification } from "@cloudflare/think";
-import { defaultContextOverflowClassifier } from "@cloudflare/think";
+import { Think, defaultContextOverflowClassifier } from "@cloudflare/think";
 
-classifyChatError(error: unknown): ChatErrorClassification | void {
-	if (error instanceof Error && /rate.?limit/i.test(error.message)) {
-		return "rate_limit";
+export class MyAgent extends Think<Env> {
+	override classifyChatError(error: unknown): ChatErrorClassification | void {
+		if (error instanceof Error && /rate.?limit/i.test(error.message)) {
+			return "rate_limit";
+		}
+		return defaultContextOverflowClassifier(error);
 	}
-	return defaultContextOverflowClassifier(error);
 }
 ```
+
+</TypeScriptExample>

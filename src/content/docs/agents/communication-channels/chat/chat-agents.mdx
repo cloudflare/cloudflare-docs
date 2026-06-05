@@ -626,7 +626,7 @@ export class ChatAgent extends AIChatAgent {
 
 </TypeScriptExample>
 
-**`chatRecovery` configuration:**
+The `chatRecovery` object accepts the following configuration options:
 
 | Field                  | Default           | Description                                                                                                                                                                                                                                       |
 | ---------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -638,7 +638,7 @@ export class ChatAgent extends AIChatAgent {
 | `shouldKeepRecovering` | —                 | Caller policy consulted from the second recovery attempt onward. Return `false` to stop recovery. Use it to enforce a token or cost budget. `ctx.work` is a coarse segment count, not tokens, so track real spend yourself.                       |
 | `onExhausted`          | —                 | Called once when recovery is given up on, before the terminal message is delivered. Inspect `ctx.reason` for why.                                                                                                                                 |
 
-**`ChatRecoveryProgressContext`** (the `ctx` passed to `shouldKeepRecovering`):
+`ChatRecoveryProgressContext` (the `ctx` passed to `shouldKeepRecovering`) contains the following fields:
 
 | Field                   | Type                    | Description                                                                                       |
 | ----------------------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
