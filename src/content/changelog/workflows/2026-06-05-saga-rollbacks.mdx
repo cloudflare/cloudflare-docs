@@ -1,5 +1,5 @@
 ---
-title: "Rollback support now available in Workflows"
+title: "Workflows now supports saga-style rollbacks"
 description: Workflows now lets you attach rollback handlers to step.do(), inspect rollback outcomes, and query rollback events in analytics.
 products:
   - workflows
@@ -8,34 +8,118 @@ date: 2026-06-05 15:00:00 UTC
 
 import { TypeScriptExample } from "~/components";
 
-[Workflows](/workflows/) now supports saga-style rollbacks,  allowing you to add compensating logic to each `step.do()` in case of downstream failures. If the instance fails, the rollback handlers will execute in reverse `step-start` order.
+You can now control the behavior of every `step.do()` upon a [Workflows](/workflows/) instance failure by registering a **rollback handler**, which defines the action to be taken if any step on the workflow fails. 
 
-This is useful for multi-step operations that touch external systems, such as inventory reservations, payment authorization, ticket creation, or infrastructure provisioning. Instead of writing all cleanup logic in a top-level `catch`, you can keep each compensating action next to the step it undoes.
+Upon failure, the rollback handlers will execute in reverse `step-start` order. 
 
-Rollback handlers support their own retry and timeout configuration, and Workflows now exposes rollback outcomes in instance status responses. Workflows analytics also emits rollback lifecycle events, making it easier to distinguish a forward execution failure from a rollback failure when debugging production workflows.
+This is useful when your workflow performs a series of actions across different services, like reserving inventory, charging a payment, or creating a ticket. If a subsequent step fails, it may leave earlier steps in a bad state. 
+
+Previously, you had to track the completion and compensating action for every step yourself and replay them in reverse inside a top-level `catch`. Each new step meant another rollback to register and maintain:
 
 <TypeScriptExample>
 
 ```ts
-await step.do(
-	"provision resource",
+const rollbacks: Array<() => Promise<unknown>> = [];
+
+try {
+	const debit = await step.do("debit-account-a", async () => {
+		return await bankA.debit({
+			accountId: fromAccountId,
+			amount,
+			idempotencyKey: `${transferId}:debit-account-a`,
+		});
+	});
+	rollbacks.push(() =>
+		step.do("rollback-debit-account-a", async () => {
+			await bankA.credit({
+				accountId: fromAccountId,
+				amount,
+				idempotencyKey: `${transferId}:rollback-debit-account-a`,
+			});
+		}),
+	);
+
+	const credit = await step.do("credit-account-b", async () => {
+		return await bankB.credit({
+			accountId: toAccountId,
+			amount,
+			idempotencyKey: `${transferId}:credit-account-b`,
+		});
+	});
+	rollbacks.push(() =>
+		step.do("rollback-credit-account-b", async () => {
+			await bankB.debit({
+				accountId: toAccountId,
+				amount,
+				idempotencyKey: `${transferId}:rollback-credit-account-b`,
+			});
+		}),
+	);
+} catch (error) {
+	// replay each registered rollback in reverse order
+	for (const rollback of rollbacks.reverse()) {
+		await rollback();
+	}
+	throw error;
+}
+```
+
+</TypeScriptExample>
+
+Instead of adding this complex, top-level error handling, you can now add compensating logic to each step directly in its rollback handler:
+
+<TypeScriptExample>
+
+```ts
+const debit = await step.do(
+	"debit-account-a",
 	async () => {
-		const resource = await provisionResource();
-		return { resourceId: resource.id };
+		return await bankA.debit({
+			accountId: fromAccountId,
+			amount,
+			idempotencyKey: `${transferId}:debit-account-a`,
+		});
+	},
+	{
+		rollback: async () => {
+			await bankA.credit({
+				accountId: fromAccountId,
+				amount,
+				idempotencyKey: `${transferId}:rollback-debit-account-a`,
+			});
+		},
+	}
+);
+
+// if the credit step fails, it will trigger the rollback of debit step
+
+const credit = await step.do(
+	"credit-account-b",
+	async () => {
+		return await bankB.credit({
+			accountId: toAccountId,
+			amount,
+			idempotencyKey: `${transferId}:credit-account-b`,
+		});
 	},
 	{
 		rollback: async ({ output }) => {
-			const { resourceId } = output as { resourceId: string };
-			await deleteResource(resourceId);
+			if (output === undefined) {
+				return;
+			}
+
+			await bankB.debit({
+				accountId: toAccountId,
+				amount,
+				idempotencyKey: `${transferId}:rollback-credit-account-b`,
+			});
 		},
-		rollbackConfig: {
-			retries: { limit: 3, delay: "15 seconds", backoff: "linear" },
-			timeout: "2 minutes",
-		},
-	},
+	}
 );
 ```
 
 </TypeScriptExample>
+
+Rollback handlers support their own retry and timeout configuration, and Workflows now exposes rollback outcomes in instance status responses. Workflows analytics also emits rollback lifecycle events, making it easier to distinguish a forward execution failure from a rollback failure when debugging production workflows. 
 
 Refer to [rollback options](/workflows/build/workers-api/#rollback-options) to learn more.
