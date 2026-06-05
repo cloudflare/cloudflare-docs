@@ -1,0 +1,24 @@
+---
+title: "Event subscriptions for Artifacts lifecycle events"
+description: Subscribe to Artifacts events for repository creates, deletes, forks, imports, pushes, clones, and fetches.
+products:
+  - artifacts
+  - queues
+date: 2026-05-19
+publish_future_dated_entry: true
+---
+
+You can now receive [event notifications](/queues/event-subscriptions/) for [Artifacts](/artifacts/) repository changes and consume them from a Worker to build commit-driven automation.
+
+This allows you to:
+
+* Run custom workflows when a repository is created or imported
+* Kick off a build and deploy a change when an agent pushes to a repo
+* Trigger a review agent on every push
+
+Available events include:
+
+* **Account-level events** (`artifacts` source) — `repo.created`, `repo.deleted`, `repo.forked`, `repo.imported`
+* **Repository-level events** (`artifacts.repo` source) — `pushed`, `cloned`, `fetched`
+
+To learn more, refer to [Artifacts documentation](/artifacts/guides/event-subscriptions/).

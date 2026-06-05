@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Transcription
-description: Enable real-time and post-meeting speech-to-text transcription in RealtimeKit.
+description: Enable real-time and end-of-meeting speech-to-text transcription in RealtimeKit.
 sidebar:
   order: 1
 products:
@@ -12,10 +12,10 @@ import { Render } from "~/components";
 
 RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
 
-| Mode             | Model                                                                | Use Case                       |
-| ---------------- | -------------------------------------------------------------------- | ------------------------------ |
-| **Real-time**    | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | Live captions during meeting   |
-| **Post-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | Accurate offline transcription |
+| Mode               | Model                                                                | Use Case                       |
+| ----------------   | -------------------------------------------------------------------- | ------------------------------ |
+| **Real-time**      | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | Live captions during meeting   |
+| **End-of-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | Accurate offline transcription |
 
 ## Real-time transcription
 
@@ -107,17 +107,26 @@ meeting.ai.on("transcript", (data) => {
 
 ---
 
-## Post-meeting transcription
+## End of meeting transcription
 
 Generates transcripts after the meeting ends using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). Transcripts from all participants are consolidated into a unified timeline and delivered via webhook or REST API.
 
-:::note
-Post-meeting transcription is currently in closed beta. If you are interested in this feature, contact your account team.
-:::
+### Enable end of meeting transcription
+
+Set `transcribe_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/):
+
+```json
+{
+	"title": "Team Standup",
+	"transcribe_on_end": true
+}
+```
+
+Use `ai_config.transcription.language` to set the transcript language. If `transcribe_on_end` is not set, end-of-meeting transcription is disabled and real time transcripts are generated.
 
 ### Supported languages
 
-Supports all languages in [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). Uses ISO 639-1 language codes.
+Supports all languages in [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). Use ISO 639-1 language codes, such as `en`, `es`, or `fr`.
 
 ### Output formats
 

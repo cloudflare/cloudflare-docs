@@ -191,17 +191,41 @@ You can send an event to a Workflow instance _before_ it reaches the correspondi
 
 ## TypeScript and type parameters
 
-By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following, with `payload` (your data), `timestamp`, and `instanceId` properties:
+By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following:
 
 ```ts
-export type WorkflowEvent<T> = {
-	// The data passed as the parameter when the Workflow instance was triggered
-	payload: T;
-	// The timestamp that the Workflow was triggered
-	timestamp: Date;
-	// ID of the current Workflow instance
-	instanceId: string;
+export type WorkflowCronSchedule = {
+	/** Cron expression that triggered this event. */
+	cron: string;
+	/** Timestamp of the scheduled trigger, in milliseconds since the Unix epoch. */
+	scheduledTime: number;
 };
+
+export type WorkflowEvent<T> = {
+	/** The data passed as the parameter when the Workflow instance was triggered. */
+	payload: Readonly<T>;
+	/** The timestamp that the Workflow was triggered. */
+	timestamp: Date;
+	/** ID of the current Workflow instance. */
+	instanceId: string;
+	/** Name of the current Workflow. */
+	workflowName: string;
+	/** Metadata for Workflow instances created by a cron schedule. */
+	schedule?: WorkflowCronSchedule;
+};
+```
+
+When a Workflow instance is created by a cron schedule configured on a Workflow binding, `event.schedule` includes the cron expression that created the instance and the scheduled trigger time:
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env> {
+	async run(event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		if (event.schedule) {
+			console.log(event.schedule.cron);
+			console.log(new Date(event.schedule.scheduledTime));
+		}
+	}
+}
 ```
 
 You can optionally type these events by defining your own type and passing it as a [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables) to the `WorkflowEvent`:

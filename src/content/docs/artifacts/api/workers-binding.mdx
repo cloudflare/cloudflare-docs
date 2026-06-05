@@ -64,6 +64,8 @@ Use namespace methods on `env.ARTIFACTS` to create, list, inspect, import, or de
 - `opts.setDefaultBranch` <Type text="string" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
+`create()` returns repo metadata including `name`, `remote`, `defaultBranch`, and an initial token. Save these values if you need them later.
+
 <TypeScriptExample>
 
 ```ts
@@ -85,20 +87,21 @@ async function createRepo(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
-The returned token encodes its expiry directly in the `?expires=` suffix.
-
 ### `get(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<ArtifactsRepo>" />
 - Throws if the repo does not exist or is not ready yet.
 
+`get()` returns a handle to an existing repo. Use the handle to call async methods on the repo, such as `createToken()`, `listTokens()`, `revokeToken()`, and `fork()`.
+
 <TypeScriptExample>
 
 ```ts
 async function getRepoHandle(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
-	return repo;
+	const token = await repo.createToken("read", 3600);
+	return token;
 }
 ```
 
@@ -142,6 +145,8 @@ Import a repository from an external git remote.
 - `params.target.opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
+`import()` returns repo metadata including `name`, `remote`, `defaultBranch`, and an initial token. Save the `remote` and `name` values if you need them later.
+
 <TypeScriptExample>
 
 ```ts
@@ -166,8 +171,6 @@ async function importFromGitHub(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
-Imported repos return the same create-style token format. The token encodes its expiry directly in the `?expires=` suffix.
-
 ### `delete(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
@@ -185,18 +188,7 @@ async function deleteRepo(artifacts: Artifacts) {
 
 ## Repo handle methods
 
-Call `await artifacts.get(name)` to get a repo handle. The handle extends `ArtifactsRepoInfo`, so repo metadata (`id`, `name`, `remote`, `defaultBranch`, etc.) is available directly as properties.
-
-<TypeScriptExample>
-
-```ts
-async function getRemoteUrl(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	return repo.remote;
-}
-```
-
-</TypeScriptExample>
+Call `await artifacts.get(name)` to get a repo handle. Use the handle to call async methods on the repo.
 
 ### `createToken(scope?, ttl?)`
 
@@ -260,6 +252,8 @@ async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
 - `opts.defaultBranchOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
+`fork()` returns metadata for the new repo. Save the `remote` and `name` values if you need them later.
+
 <TypeScriptExample>
 
 ```ts
@@ -300,16 +294,6 @@ export default {
 			});
 		}
 
-		if (request.method === "GET" && url.pathname === "/repos/starter-repo") {
-			const repo = await env.ARTIFACTS.get("starter-repo");
-			return Response.json({
-				id: repo.id,
-				name: repo.name,
-				remote: repo.remote,
-				defaultBranch: repo.defaultBranch,
-			});
-		}
-
 		if (request.method === "POST" && url.pathname === "/tokens") {
 			const repo = await env.ARTIFACTS.get("starter-repo");
 			const token = await repo.createToken("read", 3600);
@@ -317,7 +301,7 @@ export default {
 		}
 
 		return Response.json(
-			{ message: "Use POST /repos, GET /repos/starter-repo, or POST /tokens." },
+			{ message: "Use POST /repos or POST /tokens." },
 			{ status: 404 },
 		);
 	},

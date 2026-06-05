@@ -1,0 +1,29 @@
+---
+title: Flagship now in public beta
+description: Evaluate feature flags at the edge directly from Cloudflare Workers with Flagship, Cloudflare's native feature flag service.
+products:
+  - flagship
+date: 2026-05-26
+---
+
+import { TypeScriptExample } from "~/components";
+
+**[Flagship](/flagship/)** is now in public beta. Evaluate feature flags directly from Cloudflare Workers with no outbound HTTP calls, using globally distributed flag configuration backed by Workers KV and Durable Objects. Flagship supports typed flag values, targeting rules, percentage rollouts, audit history, and OpenFeature-compatible SDKs.
+
+Evaluate a flag from a Worker in a few lines of code:
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const showNewCheckout = await env.FLAGS.getBooleanValue("new-checkout", false);
+
+		return new Response(
+			showNewCheckout ? "New checkout" : "Standard checkout",
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
+Start creating flags from the Cloudflare dashboard today. Refer to the [Flagship documentation](/flagship/get-started/) to get started.

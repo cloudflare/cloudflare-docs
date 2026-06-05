@@ -3,7 +3,6 @@ import Default from "@astrojs/starlight/components/TableOfContents.astro";
 import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
 
-const tags = Astro.locals.starlightRoute.entry.data.tags;
 const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 const showActions = !Astro.url.pathname.startsWith("/support/");
 const { editUrl } = Astro.locals.starlightRoute;
@@ -12,27 +11,6 @@ const { editUrl } = Astro.locals.starlightRoute;
 <div class="tb-container bg-[var(--sl-color-bg-elevated)] pr-4">
 	{/* We use Starlight's native TOC component instead of re-implementing it */}
 	<Default />
-
-	{
-		tags && tags.length > 0 && (
-			<div class="mt-8 border-t border-[var(--sidebar-border)] pt-6">
-				<h3 class="mb-3 text-[11px] font-semibold tracking-widest text-[var(--sl-color-gray-3)] uppercase">
-					Tags
-				</h3>
-				<div class="flex flex-wrap gap-2">
-					{tags.map((tag) => (
-						<a
-							href={`/search/?tags=${tag}`}
-							class="rounded-full border border-[var(--sidebar-border)] bg-transparent px-3 py-1 text-[11px] font-medium text-[var(--sl-color-gray-3)] transition-colors duration-150 ease-out hover:border-[var(--sl-color-gray-2)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-							data-tag-serp-link={true}
-						>
-							{tag}
-						</a>
-					))}
-				</div>
-			</div>
-		)
-	}
 
 	{
 		(showFeedback || showActions) && (
@@ -46,29 +24,21 @@ const { editUrl } = Astro.locals.starlightRoute;
 				{showActions && (
 					<nav class="flex flex-col gap-3" aria-label="Page actions">
 						{editUrl && (
+							<a
+								href={editUrl}
+								target="_blank"
+								class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+							>
+								<Icon name="pencil" class="h-3.5 w-3.5" aria-hidden="true" />
+								<span>Edit page</span>
+							</a>
+						)}
 						<a
-							href={editUrl}
+							href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
 							target="_blank"
-						class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-					>
-							<Icon
-								name="pencil"
-								class="h-3.5 w-3.5"
-								aria-hidden="true"
-							/>
-							<span>Edit page</span>
-						</a>
-					)}
-				<a
-					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
-					target="_blank"
-					class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-				>
-						<Icon
-							name="github"
-							class="h-3.5 w-3.5"
-								aria-hidden="true"
-							/>
+							class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+						>
+							<Icon name="github" class="h-3.5 w-3.5" aria-hidden="true" />
 							<span>Report issue</span>
 						</a>
 					</nav>
@@ -79,9 +49,9 @@ const { editUrl } = Astro.locals.starlightRoute;
 </div>
 
 <style is:global>
-	/* 
-	 * "Table Track" Design System 
-	 * We inject this globally, but scope it to the .tb-container to override Starlight's defaults safely. 
+	/*
+	 * "Table Track" Design System
+	 * We inject this globally, but scope it to the .tb-container to override Starlight's defaults safely.
 	 */
 
 	.tb-container {
@@ -137,8 +107,8 @@ const { editUrl } = Astro.locals.starlightRoute;
 		transition: all 150ms ease-out !important;
 		border-radius: 0 !important; /* Strip native starlight rounding */
 
-		/* 
-		 * The Magic: 
+		/*
+		 * The Magic:
 		 * 1. Calculate left padding strictly via Starlight's native --depth CSS variable.
 		 *    Base offset is 1.25rem (gap from line to text). Nested items get +1rem per depth.
 		 * 2. Pull the link back 2px to directly overlap the root border-left track.

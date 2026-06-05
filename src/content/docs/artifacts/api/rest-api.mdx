@@ -489,7 +489,7 @@ Request body:
 
 - `repo` <Type text="RepoName" /> <MetaInfo text="required" />
 - `scope` <Type text='"read" | "write"' /> <MetaInfo text='optional (default: "write")' />
-- `ttl` <Type text="number" /> <MetaInfo text="optional (seconds, default: 86400)" />
+- `ttl` <Type text="number" /> <MetaInfo text="optional" /> — Token time-to-live in seconds. Minimum 60 (1 minute), maximum 31,536,000 (1 year). Defaults to 86,400 (24 hours).
 
 Response type:
 

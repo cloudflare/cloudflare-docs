@@ -3,6 +3,10 @@ link: "/browser-run/changelog/"
 productName: Browser Run
 productLink: "/browser-run/"
 entries:
+  - publish_date: "2026-05-28"
+    title: "Use Quick Actions directly from Workers"
+    description: |-
+      * You can now call [Quick Actions](/browser-run/quick-actions/) directly from a [Worker](/workers/) using the `quickAction()` method on the [browser binding](/browser-run/reference/wrangler/#bindings). This removes the need for API tokens or external HTTP requests when using Quick Actions within Workers. Supported actions include [screenshot](/browser-run/quick-actions/screenshot-endpoint/), [PDF](/browser-run/quick-actions/pdf-endpoint/), [content](/browser-run/quick-actions/content-endpoint/), [markdown](/browser-run/quick-actions/markdown-endpoint/), [JSON](/browser-run/quick-actions/json-endpoint/), [scrape](/browser-run/quick-actions/scrape-endpoint/), [links](/browser-run/quick-actions/links-endpoint/), and [snapshot](/browser-run/quick-actions/snapshot/). The `quickAction()` method requires a compatibility date of `2026-03-24` or later.
   - publish_date: "2026-04-15"
     title: "@cloudflare/playwright v1.3.0 released"
     description: |-

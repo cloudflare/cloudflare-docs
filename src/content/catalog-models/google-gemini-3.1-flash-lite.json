@@ -20,17 +20,17 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "What are the three laws of thermodynamics?"
 							}
-						]
+						],
+						"role": "user"
 					}
 				]
 			},
 			"output": {
-				"text": "The three laws of thermodynamics (plus the \"zeroth\" law, which was defined later but is foundational) describe how energy moves and transforms within physical systems.\n\nHere is a breakdown of the laws:\n\n### 0. The Zeroth Law (The Law of Equilibrium)\n**\"If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.\"**\n*   **What it means:** This law essentially defines the concept of **temperature**. It allows us to use thermometers; if a thermometer reads the same temperature when placed in two different containers of water, we know the water in both containers is at the same temperature, even if they aren't touching.\n\n### 1. The First Law (The Law of Conservation of Energy)\n**\"Energy cannot be created or destroyed, only transformed from one form to another.\"**\n*   **What it means:** The total energy of an isolated system remains constant. You can change energy from heat to work (or vice versa), but you cannot get \"something for nothing.\" If you put a certain amount of energy into a system, you will get that same amount back out in some form (like heat or motion), unless some is lost to the environment.\n\n### 2. The Second Law (The Law of Entropy)\n**\"The entropy of an isolated system will always increase over time; it can never decrease.\"**\n*   **What it means:** This law introduces the concept of **entropy**, which is often described as a measure of disorder or randomness. It states that energy naturally spreads out and becomes less useful over time. Heat will always flow spontaneously from a hot object to a cold object, never the other way around. This is why perpetual motion machines are impossible and why time feels like it has a \"direction\" (the arrow of time).\n\n### 3. The Third Law (The Law of Absolute Zero)\n**\"As the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero.\"**\n*   **What it means:** It is impossible to reach absolute zero through any finite number of physical processes. As a system gets colder, its particles lose energy and move less, eventually reaching a state of minimum possible motion and perfect order (a perfect crystal structure). Because you can never extract all the energy from a system, you can never reach absolute zero.\n\n***\n\n### Summary\n*   **0th Law:** You have to play by the rules of temperature (equilibrium).\n*   **1st Law:** You can't win (you can't create energy).\n*   **2nd Law:** You can't even break even (you always lose some energy to entropy).\n*   **3rd Law:** You can't get out of the game (you can't reach absolute zero)."
+				"text": "The three laws of thermodynamics (plus the \"zeroth\" law, which was defined later) describe the fundamental rules governing energy, heat, and entropy in the universe.\n\nHere is a breakdown of each:\n\n### 0. The Zeroth Law (The Law of Equilibrium)\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.\n*   **What it means:** This is the logical basis for temperature. It explains why thermometers work: if a thermometer reads the same temperature as object A, and the same temperature as object B, then object A and object B have the same temperature as each other.\n\n### 1. The First Law (The Law of Conservation of Energy)\nEnergy cannot be created or destroyed, only transformed from one form to another. The total energy of an isolated system remains constant.\n*   **What it means:** You cannot get \"something for nothing.\" If you want to increase the energy inside a system, you must add energy from the outside (by doing work on it or adding heat). Mathematically, it is often expressed as: **\u0394U = Q - W** (The change in internal energy equals the heat added to the system minus the work done by the system).\n\n### 2. The Second Law (The Law of Entropy)\nThe total entropy of an isolated system can never decrease over time; it can only remain constant or increase. \n*   **What it means:** Heat always flows spontaneously from a hotter object to a colder object, never the other way around. It also implies that \"disorder\" (entropy) in the universe is constantly increasing. This law effectively dictates the \"arrow of time\" and explains why perpetual motion machines are impossible: some energy is always lost to the environment as unusable heat.\n\n### 3. The Third Law (The Law of Absolute Zero)\nAs the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero.\n*   **What it means:** It is impossible to reach absolute zero in a finite number of steps. At absolute zero, all molecular motion would theoretically stop, and a perfectly ordered crystal would have no \"randomness\" or entropy. Because entropy can never be fully removed, you can get very close to absolute zero, but you can never actually reach it.\n\n***\n\n### Summary for easy remembering:\n*   **Zeroth:** You have to play the game (temperature exists).\n*   **First:** You can't win (you can't create energy).\n*   **Second:** You can't break even (you can't get back as much energy as you put in; some is always lost).\n*   **Third:** You can't leave the game (you can't reach absolute zero)."
 			},
 			"raw_response": {
 				"candidates": [
@@ -39,8 +39,8 @@
 							"role": "model",
 							"parts": [
 								{
-									"text": "The three laws of thermodynamics (plus the \"zeroth\" law, which was defined later but is foundational) describe how energy moves and transforms within physical systems.\n\nHere is a breakdown of the laws:\n\n### 0. The Zeroth Law (The Law of Equilibrium)\n**\"If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.\"**\n*   **What it means:** This law essentially defines the concept of **temperature**. It allows us to use thermometers; if a thermometer reads the same temperature when placed in two different containers of water, we know the water in both containers is at the same temperature, even if they aren't touching.\n\n### 1. The First Law (The Law of Conservation of Energy)\n**\"Energy cannot be created or destroyed, only transformed from one form to another.\"**\n*   **What it means:** The total energy of an isolated system remains constant. You can change energy from heat to work (or vice versa), but you cannot get \"something for nothing.\" If you put a certain amount of energy into a system, you will get that same amount back out in some form (like heat or motion), unless some is lost to the environment.\n\n### 2. The Second Law (The Law of Entropy)\n**\"The entropy of an isolated system will always increase over time; it can never decrease.\"**\n*   **What it means:** This law introduces the concept of **entropy**, which is often described as a measure of disorder or randomness. It states that energy naturally spreads out and becomes less useful over time. Heat will always flow spontaneously from a hot object to a cold object, never the other way around. This is why perpetual motion machines are impossible and why time feels like it has a \"direction\" (the arrow of time).\n\n### 3. The Third Law (The Law of Absolute Zero)\n**\"As the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero.\"**\n*   **What it means:** It is impossible to reach absolute zero through any finite number of physical processes. As a system gets colder, its particles lose energy and move less, eventually reaching a state of minimum possible motion and perfect order (a perfect crystal structure). Because you can never extract all the energy from a system, you can never reach absolute zero.\n\n***\n\n### Summary\n*   **0th Law:** You have to play by the rules of temperature (equilibrium).\n*   **1st Law:** You can't win (you can't create energy).\n*   **2nd Law:** You can't even break even (you always lose some energy to entropy).\n*   **3rd Law:** You can't get out of the game (you can't reach absolute zero).",
-									"thoughtSignature": "AY89a18/qrzuCK5CIDaOYqC1wX01eZUMGTdZMAh65fcN1mR4la5a1PFsdF4H9pnJ50w="
+									"text": "The three laws of thermodynamics (plus the \"zeroth\" law, which was defined later) describe the fundamental rules governing energy, heat, and entropy in the universe.\n\nHere is a breakdown of each:\n\n### 0. The Zeroth Law (The Law of Equilibrium)\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.\n*   **What it means:** This is the logical basis for temperature. It explains why thermometers work: if a thermometer reads the same temperature as object A, and the same temperature as object B, then object A and object B have the same temperature as each other.\n\n### 1. The First Law (The Law of Conservation of Energy)\nEnergy cannot be created or destroyed, only transformed from one form to another. The total energy of an isolated system remains constant.\n*   **What it means:** You cannot get \"something for nothing.\" If you want to increase the energy inside a system, you must add energy from the outside (by doing work on it or adding heat). Mathematically, it is often expressed as: **\u0394U = Q - W** (The change in internal energy equals the heat added to the system minus the work done by the system).\n\n### 2. The Second Law (The Law of Entropy)\nThe total entropy of an isolated system can never decrease over time; it can only remain constant or increase. \n*   **What it means:** Heat always flows spontaneously from a hotter object to a colder object, never the other way around. It also implies that \"disorder\" (entropy) in the universe is constantly increasing. This law effectively dictates the \"arrow of time\" and explains why perpetual motion machines are impossible: some energy is always lost to the environment as unusable heat.\n\n### 3. The Third Law (The Law of Absolute Zero)\nAs the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero.\n*   **What it means:** It is impossible to reach absolute zero in a finite number of steps. At absolute zero, all molecular motion would theoretically stop, and a perfectly ordered crystal would have no \"randomness\" or entropy. Because entropy can never be fully removed, you can get very close to absolute zero, but you can never actually reach it.\n\n***\n\n### Summary for easy remembering:\n*   **Zeroth:** You have to play the game (temperature exists).\n*   **First:** You can't win (you can't create energy).\n*   **Second:** You can't break even (you can't get back as much energy as you put in; some is always lost).\n*   **Third:** You can't leave the game (you can't reach absolute zero).",
+									"thoughtSignature": "AY89a1/EHFiot4UXSeid202GCFEHyZa98rcGe1Gu+0O8+BEZz4yYyhqwk0jb/IjL11U="
 								}
 							]
 						},
@@ -49,8 +49,8 @@
 				],
 				"usageMetadata": {
 					"promptTokenCount": 8,
-					"candidatesTokenCount": 589,
-					"totalTokenCount": 597,
+					"candidatesTokenCount": 582,
+					"totalTokenCount": 590,
 					"trafficType": "ON_DEMAND",
 					"promptTokensDetails": [
 						{
@@ -61,13 +61,13 @@
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
-							"tokenCount": 589
+							"tokenCount": 582
 						}
 					]
 				},
 				"modelVersion": "gemini-3.1-flash-lite-preview",
-				"createTime": "2026-04-17T05:56:31.311694Z",
-				"responseId": "j8vhaY6DE6yQq8YPhOuliQs",
+				"createTime": "2026-05-28T00:56:41.227568Z",
+				"responseId": "yZIXavDxDfqE3dAP7f2X4Qo",
 				"gatewayMetadata": {
 					"keySource": "Unified"
 				}
@@ -76,7 +76,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'What are the three laws of thermodynamics?',\n          },\n        ],\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the three laws of thermodynamics?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
 				}
 			]
 		},
@@ -86,27 +91,27 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "How do I read a JSON file in Python?"
 							}
-						]
+						],
+						"role": "user"
 					}
 				],
+				"generationConfig": {
+					"temperature": 0.3
+				},
 				"systemInstruction": {
 					"parts": [
 						{
 							"text": "You are a helpful coding assistant specializing in Python."
 						}
 					]
-				},
-				"generationConfig": {
-					"temperature": 0.3
 				}
 			},
 			"output": {
-				"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the standard way to do it:\n\n### 1. The Basic Approach\nUse the `open()` function to open the file and `json.load()` to parse it into a Python dictionary or list.\n\n```python\nimport json\n\n# Open the file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Key details:\n*   **`with open(...)`**: This is a \"context manager.\" It is best practice because it ensures the file is automatically closed after you are done reading it, even if an error occurs.\n*   **`json.load()`**: This function takes the file object and converts the JSON data into the corresponding Python object (e.g., `{}` becomes a `dict`, `[]` becomes a `list`, `true` becomes `True`).\n\n---\n\n### 2. Handling Errors (Best Practice)\nIf the file might not exist or the JSON might be malformed, it is good practice to add error handling:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\n```\n\n---\n\n### 3. What if you have a JSON string instead of a file?\nIf you already have the JSON data stored in a variable (as a string) rather than in a file, use `json.loads()` (the \"s\" stands for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])  # Output: Alice\n```\n\n### Summary:\n*   Use **`json.load(file_object)`** to read from a **file**.\n*   Use **`json.loads(string)`** to read from a **string**."
+				"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the standard way to do it:\n\n### The Basic Approach\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Breakdown of the code:\n1.  **`import json`**: Imports Python's built-in library for handling JSON.\n2.  **`with open(...)`**: This is a \"context manager.\" It is the best practice because it ensures the file is automatically closed after you are done reading it, even if an error occurs.\n3.  **`json.load(file)`**: This function parses the file object and converts the JSON data into the corresponding Python object (e.g., a JSON object becomes a `dict`, a JSON array becomes a `list`).\n\n---\n\n### Common Scenarios\n\n#### 1. What if the file is empty or malformed?\nIf the file is empty or contains invalid JSON, `json.load()` will raise a `json.JSONDecodeError`. You can handle this with a `try-except` block:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\nexcept FileNotFoundError:\n    print(\"The file does not exist.\")\n```\n\n#### 2. Reading a JSON string (instead of a file)\nIf you have the JSON data as a string variable rather than a file, use `json.loads()` (the \"s\" stands for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])  # Output: Alice\n```\n\n### Summary: Which one to use?\n*   Use **`json.load(file_object)`** when reading from a **file**.\n*   Use **`json.loads(string)`** when reading from a **string**."
 			},
 			"raw_response": {
 				"candidates": [
@@ -115,8 +120,8 @@
 							"role": "model",
 							"parts": [
 								{
-									"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the standard way to do it:\n\n### 1. The Basic Approach\nUse the `open()` function to open the file and `json.load()` to parse it into a Python dictionary or list.\n\n```python\nimport json\n\n# Open the file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Key details:\n*   **`with open(...)`**: This is a \"context manager.\" It is best practice because it ensures the file is automatically closed after you are done reading it, even if an error occurs.\n*   **`json.load()`**: This function takes the file object and converts the JSON data into the corresponding Python object (e.g., `{}` becomes a `dict`, `[]` becomes a `list`, `true` becomes `True`).\n\n---\n\n### 2. Handling Errors (Best Practice)\nIf the file might not exist or the JSON might be malformed, it is good practice to add error handling:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\n```\n\n---\n\n### 3. What if you have a JSON string instead of a file?\nIf you already have the JSON data stored in a variable (as a string) rather than in a file, use `json.loads()` (the \"s\" stands for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])  # Output: Alice\n```\n\n### Summary:\n*   Use **`json.load(file_object)`** to read from a **file**.\n*   Use **`json.loads(string)`** to read from a **string**.",
-									"thoughtSignature": "AY89a1+QCQyLEPmRYl+2AVmXHaIx0o+LPUSsAf95sDbX+GN5Rb8WyV+hgYbfVxXFwDQ="
+									"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the standard way to do it:\n\n### The Basic Approach\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Breakdown of the code:\n1.  **`import json`**: Imports Python's built-in library for handling JSON.\n2.  **`with open(...)`**: This is a \"context manager.\" It is the best practice because it ensures the file is automatically closed after you are done reading it, even if an error occurs.\n3.  **`json.load(file)`**: This function parses the file object and converts the JSON data into the corresponding Python object (e.g., a JSON object becomes a `dict`, a JSON array becomes a `list`).\n\n---\n\n### Common Scenarios\n\n#### 1. What if the file is empty or malformed?\nIf the file is empty or contains invalid JSON, `json.load()` will raise a `json.JSONDecodeError`. You can handle this with a `try-except` block:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\nexcept FileNotFoundError:\n    print(\"The file does not exist.\")\n```\n\n#### 2. Reading a JSON string (instead of a file)\nIf you have the JSON data as a string variable rather than a file, use `json.loads()` (the \"s\" stands for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])  # Output: Alice\n```\n\n### Summary: Which one to use?\n*   Use **`json.load(file_object)`** when reading from a **file**.\n*   Use **`json.loads(string)`** when reading from a **string**.",
+									"thoughtSignature": "AY89a19YeehPDK20Ix1JZMp7Y711rMQkP3i2gEgq6TQjivmc3a78w5LmaBP2PZS2AZM="
 								}
 							]
 						},
@@ -125,8 +130,8 @@
 				],
 				"usageMetadata": {
 					"promptTokenCount": 20,
-					"candidatesTokenCount": 478,
-					"totalTokenCount": 498,
+					"candidatesTokenCount": 493,
+					"totalTokenCount": 513,
 					"trafficType": "ON_DEMAND",
 					"promptTokensDetails": [
 						{
@@ -137,13 +142,13 @@
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
-							"tokenCount": 478
+							"tokenCount": 493
 						}
 					]
 				},
 				"modelVersion": "gemini-3.1-flash-lite-preview",
-				"createTime": "2026-04-17T05:56:31.695319Z",
-				"responseId": "j8vhaZe4Kuyeq8YPgY-7yQ8",
+				"createTime": "2026-05-28T00:56:44.293757Z",
+				"responseId": "zJIXav32EfeY3dAPlp-m0AY",
 				"gatewayMetadata": {
 					"keySource": "Unified"
 				}
@@ -152,7 +157,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'How do I read a JSON file in Python?',\n          },\n        ],\n      },\n    ],\n    systemInstruction: {\n      parts: [\n        {\n          text: 'You are a helpful coding assistant specializing in Python.',\n        },\n      ],\n    },\n    generationConfig: {\n      temperature: 0.3,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [{ parts: [{ text: 'How do I read a JSON file in Python?' }], role: 'user' }],\n    generationConfig: { temperature: 0.3 },\n    systemInstruction: {\n      parts: [{ text: 'You are a helpful coding assistant specializing in Python.' }],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"How do I read a JSON file in Python?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.3\n    },\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are a helpful coding assistant specializing in Python.\"\n        }\n      ]\n    }\n  }\n}'"
 				}
 			]
 		},
@@ -162,48 +172,56 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "I need help planning a road trip from San Francisco to Los Angeles."
 							}
-						]
+						],
+						"role": "user"
 					},
 					{
-						"role": "model",
 						"parts": [
 							{
 								"text": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
 							}
-						]
+						],
+						"role": "model"
 					},
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "Yes, what are some good places to stop?"
 							}
-						]
+						],
+						"role": "user"
 					}
 				],
 				"generationConfig": {
-					"maxOutputTokens": 500
+					"maxOutputTokens": 2048
 				}
 			},
-			"output": {},
+			"output": {
+				"text": "To give you the best recommendations, it helps to know which route you plan to take. There are two primary ways to drive from San Francisco to Los Angeles:\n\n### 1. The Pacific Coast Highway (Highway 1) \u2013 The Scenic Route\n*   **Time:** 9\u201312 hours of driving (without stops). This is best done over **2\u20133 days**.\n*   **Best for:** Views, photography, nature, and cute coastal towns.\n\n**Top Stops:**\n*   **Santa Cruz:** Grab a coffee, walk the famous Beach Boardwalk, or watch the surfers at Steamer Lane.\n*   **Monterey/Carmel-by-the-Sea:** Visit the world-class Monterey Bay Aquarium and take the iconic \"17-Mile Drive\" through Pebble Beach. Carmel is perfect for a boutique lunch.\n*   **Big Sur:** This is the highlight. Stop at **Bixby Creek Bridge** for the classic photo. If you have time, hike in **Pfeiffer Big Sur State Park** or see **McWay Falls** (a waterfall that drops onto the beach).\n*   **San Simeon:** Visit **Hearst Castle** (book in advance!) and the nearby **Elephant Seal Vista Point** to see hundreds of seals lounging on the beach.\n*   **San Luis Obispo / Pismo Beach:** A great spot to grab a tri-tip sandwich or walk out on the Pismo Pier.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Walk State Street for shopping and dining, or visit the Old Mission Santa Barbara.\n\n---\n\n### 2. The I-5 Freeway \u2013 The \"Get There Fast\" Route\n*   **Time:** 5\u20136 hours.\n*   **Best for:** Efficiency. It is largely agricultural and flat, but there are a few unique spots to break up the monotony.\n\n**Top Stops:**\n*   **Harris Ranch (Coalinga):** The most famous stop on the I-5. It\u2019s an enormous cattle ranch and restaurant known for their steaks. It\u2019s the primary \"pit stop\" for most road trippers.\n*   **The Grapevine:** As you descend toward LA, you\u2019ll hit the \"Grapevine\" mountain pass. There are several scenic overlooks where you can see the Tejon Pass.\n*   **Castaic/Valencia:** As you enter the LA basin, you\u2019ll pass Six Flags Magic Mountain if you want a thrill-seeking break.\n\n---\n\n### Which one should you pick?\n*   **Choose Highway 1 if:** You are on vacation, have at least two days, and want to see some of the most famous coastline in the world.\n*   **Choose I-5 if:** You need to get to LA for an appointment, have limited time, or simply want the most direct route possible.\n\n**Pro Tip:** If you take Highway 1, **check road conditions before you leave.** Big Sur is prone to landslides, and parts of the highway are occasionally closed for repairs.\n\n**Are you planning to do this in one day or spread it out over a few?** I can help you build an itinerary based on your timeline!"
+			},
 			"raw_response": {
 				"candidates": [
 					{
 						"content": {
-							"role": "model"
+							"role": "model",
+							"parts": [
+								{
+									"text": "To give you the best recommendations, it helps to know which route you plan to take. There are two primary ways to drive from San Francisco to Los Angeles:\n\n### 1. The Pacific Coast Highway (Highway 1) \u2013 The Scenic Route\n*   **Time:** 9\u201312 hours of driving (without stops). This is best done over **2\u20133 days**.\n*   **Best for:** Views, photography, nature, and cute coastal towns.\n\n**Top Stops:**\n*   **Santa Cruz:** Grab a coffee, walk the famous Beach Boardwalk, or watch the surfers at Steamer Lane.\n*   **Monterey/Carmel-by-the-Sea:** Visit the world-class Monterey Bay Aquarium and take the iconic \"17-Mile Drive\" through Pebble Beach. Carmel is perfect for a boutique lunch.\n*   **Big Sur:** This is the highlight. Stop at **Bixby Creek Bridge** for the classic photo. If you have time, hike in **Pfeiffer Big Sur State Park** or see **McWay Falls** (a waterfall that drops onto the beach).\n*   **San Simeon:** Visit **Hearst Castle** (book in advance!) and the nearby **Elephant Seal Vista Point** to see hundreds of seals lounging on the beach.\n*   **San Luis Obispo / Pismo Beach:** A great spot to grab a tri-tip sandwich or walk out on the Pismo Pier.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Walk State Street for shopping and dining, or visit the Old Mission Santa Barbara.\n\n---\n\n### 2. The I-5 Freeway \u2013 The \"Get There Fast\" Route\n*   **Time:** 5\u20136 hours.\n*   **Best for:** Efficiency. It is largely agricultural and flat, but there are a few unique spots to break up the monotony.\n\n**Top Stops:**\n*   **Harris Ranch (Coalinga):** The most famous stop on the I-5. It\u2019s an enormous cattle ranch and restaurant known for their steaks. It\u2019s the primary \"pit stop\" for most road trippers.\n*   **The Grapevine:** As you descend toward LA, you\u2019ll hit the \"Grapevine\" mountain pass. There are several scenic overlooks where you can see the Tejon Pass.\n*   **Castaic/Valencia:** As you enter the LA basin, you\u2019ll pass Six Flags Magic Mountain if you want a thrill-seeking break.\n\n---\n\n### Which one should you pick?\n*   **Choose Highway 1 if:** You are on vacation, have at least two days, and want to see some of the most famous coastline in the world.\n*   **Choose I-5 if:** You need to get to LA for an appointment, have limited time, or simply want the most direct route possible.\n\n**Pro Tip:** If you take Highway 1, **check road conditions before you leave.** Big Sur is prone to landslides, and parts of the highway are occasionally closed for repairs.\n\n**Are you planning to do this in one day or spread it out over a few?** I can help you build an itinerary based on your timeline!",
+									"thoughtSignature": "AY89a18J+OP94FihCOOSKOTP1/A3aj1DPFpKGlAu0M+6gC05cuBJdnWi+n4VC0J/O7s="
+								}
+							]
 						},
-						"finishReason": "MAX_TOKENS"
+						"finishReason": "STOP"
 					}
 				],
 				"usageMetadata": {
 					"promptTokenCount": 64,
-					"candidatesTokenCount": 496,
-					"totalTokenCount": 560,
+					"candidatesTokenCount": 669,
+					"totalTokenCount": 733,
 					"trafficType": "ON_DEMAND",
 					"promptTokensDetails": [
 						{
@@ -214,13 +232,13 @@
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
-							"tokenCount": 496
+							"tokenCount": 669
 						}
 					]
 				},
 				"modelVersion": "gemini-3.1-flash-lite-preview",
-				"createTime": "2026-04-17T05:56:34.641767Z",
-				"responseId": "ksvhaeeVJ6CIq8YPzKOY8Qk",
+				"createTime": "2026-05-28T00:56:47.115882Z",
+				"responseId": "z5IXaqqJB4GR3dAP46nYuQ8",
 				"gatewayMetadata": {
 					"keySource": "Unified"
 				}
@@ -229,7 +247,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'I need help planning a road trip from San Francisco to Los Angeles.',\n          },\n        ],\n      },\n      {\n        role: 'model',\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n      },\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Yes, what are some good places to stop?',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      maxOutputTokens: 500,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        parts: [{ text: 'I need help planning a road trip from San Francisco to Los Angeles.' }],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Yes, what are some good places to stop?' }], role: 'user' },\n    ],\n    generationConfig: { maxOutputTokens: 2048 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"I need help planning a road trip from San Francisco to Los Angeles.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"I'\\''d be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Yes, what are some good places to stop?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 2048\n    }\n  }\n}'"
 				}
 			]
 		},
@@ -239,21 +262,21 @@
 			"input": {
 				"contents": [
 					{
-						"role": "user",
 						"parts": [
 							{
 								"text": "Write a short story opening about a detective finding an unusual clue."
 							}
-						]
+						],
+						"role": "user"
 					}
 				],
 				"generationConfig": {
-					"temperature": 0.8,
-					"maxOutputTokens": 300
+					"maxOutputTokens": 1500,
+					"temperature": 0.8
 				}
 			},
 			"output": {
-				"text": "The rain drummed a frantic rhythm against the windowpane of the derelict apartment, but Detective Elias Thorne didn\u2019t hear it. He was staring at the center of the dust-choked rug, where the victim had supposedly spent his final moments.\n\nThere was no blood. There were no shell casings. There was only a single, perfectly preserved sprig of lavender resting on the floorboards.\n\nThorne knelt, his knees popping in the silence, and pulled a pair of latex gloves from his pocket. As he leaned in, the scent hit him\u2014not the stale, metallic smell of death he had expected, but a sharp, clinical floral aroma that felt entirely out of place in a room smelling of rot and damp wallpaper. \n\nHe reached out with his tweezers to bag the evidence, but stopped cold. The lavender wasn't just lying on the wood; it was pulsing. A faint, rhythmic bioluminescence ebbed from the petals, casting a soft, rhythmic violet glow against the floorboards. It was breathing in sync with his own heartbeat.\n\nThorne pulled his hand back, his pulse quickening. He had been a homicide detective for twenty years, and he knew that dead men didn't leave behind flowers that remembered how to live."
+				"text": "The rain drummed a relentless, hollow rhythm against the skylight of the abandoned clock tower, but Elias Thorne didn\u2019t hear it. He was too busy staring at the centerpiece of the crime scene.\n\nThe victim lay sprawled across the floorboards, exactly where the anonymous tip had promised, but it wasn't the body that made the breath hitch in Elias\u2019s throat. Tucked neatly into the victim\u2019s stiff, pale hand was a small, ornate music box\u2014not the kind you\u2019d find in a dusty antique shop, but one carved from a material that seemed to swallow the beam of his flashlight. \n\nElias knelt, his joints popping in the quiet room. He reached out with a gloved finger to nudge the lid. As the mechanism clicked open, a melody drifted into the damp air\u2014a discordant, shivering waltz that sounded less like a song and more like a warning. \n\nBut it was what sat inside the velvet lining that turned his blood to ice: a perfectly preserved, human tooth, still damp, with a tiny, silver serial number etched into the enamel."
 			},
 			"raw_response": {
 				"candidates": [
@@ -262,8 +285,8 @@
 							"role": "model",
 							"parts": [
 								{
-									"text": "The rain drummed a frantic rhythm against the windowpane of the derelict apartment, but Detective Elias Thorne didn\u2019t hear it. He was staring at the center of the dust-choked rug, where the victim had supposedly spent his final moments.\n\nThere was no blood. There were no shell casings. There was only a single, perfectly preserved sprig of lavender resting on the floorboards.\n\nThorne knelt, his knees popping in the silence, and pulled a pair of latex gloves from his pocket. As he leaned in, the scent hit him\u2014not the stale, metallic smell of death he had expected, but a sharp, clinical floral aroma that felt entirely out of place in a room smelling of rot and damp wallpaper. \n\nHe reached out with his tweezers to bag the evidence, but stopped cold. The lavender wasn't just lying on the wood; it was pulsing. A faint, rhythmic bioluminescence ebbed from the petals, casting a soft, rhythmic violet glow against the floorboards. It was breathing in sync with his own heartbeat.\n\nThorne pulled his hand back, his pulse quickening. He had been a homicide detective for twenty years, and he knew that dead men didn't leave behind flowers that remembered how to live.",
-									"thoughtSignature": "AY89a1+eXS7mOv1k0+/v1b+BiI4lvuku7YD6rc6ahAuTpH0CIsazBf70N9Q9YTPsq9k="
+									"text": "The rain drummed a relentless, hollow rhythm against the skylight of the abandoned clock tower, but Elias Thorne didn\u2019t hear it. He was too busy staring at the centerpiece of the crime scene.\n\nThe victim lay sprawled across the floorboards, exactly where the anonymous tip had promised, but it wasn't the body that made the breath hitch in Elias\u2019s throat. Tucked neatly into the victim\u2019s stiff, pale hand was a small, ornate music box\u2014not the kind you\u2019d find in a dusty antique shop, but one carved from a material that seemed to swallow the beam of his flashlight. \n\nElias knelt, his joints popping in the quiet room. He reached out with a gloved finger to nudge the lid. As the mechanism clicked open, a melody drifted into the damp air\u2014a discordant, shivering waltz that sounded less like a song and more like a warning. \n\nBut it was what sat inside the velvet lining that turned his blood to ice: a perfectly preserved, human tooth, still damp, with a tiny, silver serial number etched into the enamel.",
+									"thoughtSignature": "AY89a1+efRG966PVAWsOCpYT3WsWbVd23ij9APAlGDpoQpVy3/vLRUmxGHuK6AsLd8I="
 								}
 							]
 						},
@@ -272,8 +295,8 @@
 				],
 				"usageMetadata": {
 					"promptTokenCount": 13,
-					"candidatesTokenCount": 256,
-					"totalTokenCount": 269,
+					"candidatesTokenCount": 226,
+					"totalTokenCount": 239,
 					"trafficType": "ON_DEMAND",
 					"promptTokensDetails": [
 						{
@@ -284,13 +307,13 @@
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
-							"tokenCount": 256
+							"tokenCount": 226
 						}
 					]
 				},
 				"modelVersion": "gemini-3.1-flash-lite-preview",
-				"createTime": "2026-04-17T05:56:34.799909Z",
-				"responseId": "ksvhaaXpMIGPq8YPsdmS-Qc",
+				"createTime": "2026-05-28T00:56:50.984912Z",
+				"responseId": "0pIXatCOPOCH3dAPs-CH0Ac",
 				"gatewayMetadata": {
 					"keySource": "Unified"
 				}
@@ -299,114 +322,98 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Write a short story opening about a detective finding an unusual clue.',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      temperature: 0.8,\n      maxOutputTokens: 300,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 1500, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 1500,\n      \"temperature\": 0.8\n    }\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
 	"external_info": "https://deepmind.google/technologies/gemini/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-3.1-flash-lite.png",
 	"metadata": {
 		"Architecture": "Transformer (multimodal)"
 	},
-	"created_at": "2026-04-13 16:46:30",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"request_formats": null,
+	"created_at": "2026-05-22 17:53:09",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": {},
 			"properties": {
 				"contents": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": {},
 						"properties": {
-							"role": {
-								"type": "string",
-								"enum": [
-									"user",
-									"model"
-								]
-							},
 							"parts": {
-								"type": "array",
 								"items": {
-									"type": "object",
+									"additionalProperties": {},
 									"properties": {
 										"text": {
 											"type": "string"
 										}
 									},
-									"additionalProperties": {}
-								}
+									"type": "object"
+								},
+								"type": "array"
+							},
+							"role": {
+								"enum": [
+									"user",
+									"model"
+								],
+								"type": "string"
 							}
 						},
 						"required": [
 							"parts"
 						],
-						"additionalProperties": {}
-					}
-				},
-				"systemInstruction": {
-					"type": "object",
-					"properties": {
-						"parts": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"text": {
-										"type": "string"
-									}
-								},
-								"additionalProperties": {}
-							}
-						}
+						"type": "object"
 					},
-					"required": [
-						"parts"
-					],
-					"additionalProperties": {}
+					"type": "array"
 				},
 				"generationConfig": {
-					"type": "object",
+					"additionalProperties": {},
 					"properties": {
-						"temperature": {
-							"type": "number"
-						},
-						"topP": {
-							"type": "number"
-						},
-						"topK": {
+						"candidateCount": {
 							"type": "number"
 						},
 						"maxOutputTokens": {
 							"type": "number"
 						},
-						"candidateCount": {
-							"type": "number"
-						},
-						"stopSequences": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						},
 						"responseMimeType": {
 							"type": "string"
+						},
+						"stopSequences": {
+							"items": {
+								"type": "string"
+							},
+							"type": "array"
+						},
+						"temperature": {
+							"type": "number"
+						},
+						"topK": {
+							"type": "number"
+						},
+						"topP": {
+							"type": "number"
 						}
 					},
-					"additionalProperties": {}
+					"type": "object"
 				},
 				"safetySettings": {
-					"type": "array",
 					"items": {
-						"type": "object",
+						"additionalProperties": {},
 						"properties": {
 							"category": {
 								"type": "string"
@@ -419,48 +426,70 @@
 							"category",
 							"threshold"
 						],
-						"additionalProperties": {}
-					}
+						"type": "object"
+					},
+					"type": "array"
 				},
+				"systemInstruction": {
+					"additionalProperties": {},
+					"properties": {
+						"parts": {
+							"items": {
+								"additionalProperties": {},
+								"properties": {
+									"text": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							},
+							"type": "array"
+						}
+					},
+					"required": [
+						"parts"
+					],
+					"type": "object"
+				},
+				"toolConfig": {},
 				"tools": {
-					"type": "array",
-					"items": {}
-				},
-				"toolConfig": {}
+					"items": {},
+					"type": "array"
+				}
 			},
 			"required": [
 				"contents"
 			],
-			"additionalProperties": {}
+			"type": "object"
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"type": "object",
+			"additionalProperties": {},
 			"properties": {
 				"candidates": {
-					"type": "array",
-					"items": {}
+					"items": {},
+					"type": "array"
+				},
+				"modelVersion": {
+					"type": "string"
 				},
 				"usageMetadata": {
-					"type": "object",
+					"additionalProperties": {},
 					"properties": {
-						"promptTokenCount": {
+						"candidatesTokenCount": {
 							"type": "number"
 						},
-						"candidatesTokenCount": {
+						"promptTokenCount": {
 							"type": "number"
 						},
 						"totalTokenCount": {
 							"type": "number"
 						}
 					},
-					"additionalProperties": {}
-				},
-				"modelVersion": {
-					"type": "string"
+					"type": "object"
 				}
 			},
-			"additionalProperties": {}
+			"type": "object"
 		}
 	}
 }

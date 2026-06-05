@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pricing
-description: R2 SQL pricing details and billing information during open beta.
+description: R2 SQL pricing based on data scanned, with free tier details and billing examples.
 sidebar:
   order: 1
 head:
@@ -11,8 +11,63 @@ products:
   - r2-sql
 ---
 
-R2 SQL is in open beta and available to any developer with an [R2 subscription](/r2/pricing/).
+R2 SQL charges based on a single dimension:
 
-We are not currently billing for R2 SQL during open beta. However, you will be billed for standard [R2 storage and operations](/r2/pricing/) for data accessed by queries.
+- **Data scanned**: The volume of compressed data read from R2 to execute your query.
 
-We plan to bill based on the volume of data queried by R2 SQL. We'll provide at least 30 days notice before we make any changes or start charging for R2 SQL usage.
+R2 SQL pricing is additive to standard [R2 storage and operations](/r2/pricing/) and [R2 Data Catalog](/r2/data-catalog/platform/pricing/) charges. When the query engine reads files, those requests count as R2 Class B (read) operations. R2 does not charge for egress, so there is no additional data transfer cost.
+
+All included usage is on a monthly basis.
+
+## R2 SQL pricing
+
+|                | Free plan       | Paid plan                 |
+| -------------- | --------------- | ------------------------- |
+| Included       | 1 GB / month    | 10 GB / month             |
+| Data scanned   | N/A             | $0.0025 / GB ($2.50 / TB) |
+
+### What counts as data scanned
+
+Data scanned is the compressed bytes read from R2 object storage to answer your query. This matches what you see in your R2 bucket &mdash; if a Parquet file is 100 MB on disk, scanning that file bills for 100 MB.
+
+- **Minimum per query**: 10 MB. If a query scans less than 10 MB, you are billed for 10 MB.
+- **Failed queries**: Queries that fail due to a system error or syntax error caught before execution are not charged. Queries that fail mid-execution due to a runtime error are also not charged.
+- **Metadata-only operations**: Operations such as `EXPLAIN`, `SHOW`, and `DESCRIBE` do not scan data and are free. Standard R2 and R2 Data Catalog request charges still apply.
+
+## Billing examples
+
+### Example 1: Ad-hoc analytics on 500 GB of Parquet data
+
+A user stores 500 GB of Parquet data in R2 Data Catalog and runs queries that scan a total of 50 GB of compressed data during the month.
+
+| Dimension                   | Usage              | Included    | Billable           | Cost        |
+| --------------------------- | ------------------ | ----------- | ------------------ | ----------- |
+| R2 storage                  | 500 GB-month       | 10 GB-month | 490 GB-month       | $7.35       |
+| R2 SQL (data scanned)       | 50 GB              | 10 GB       | 40 GB              | $0.10       |
+| **Total**                   |                    |             |                    | **$7.45**   |
+
+### Example 2: Heavy query workload on 10 TB dataset
+
+A data team stores 10 TB of compressed Parquet/Iceberg data and scans 50 TB of data per month across their queries. The team also makes 2 million catalog operations with compaction processing 500 GB.
+
+| Dimension                         | Usage              | Included         | Billable            | Cost          |
+| --------------------------------- | ------------------ | ---------------- | ------------------- | ------------- |
+| R2 storage                        | 10,000 GB-month    | 10 GB-month      | 9,990 GB-month      | $149.85       |
+| R2 SQL (data scanned)             | 50,000 GB          | 10 GB            | 49,990 GB           | $124.98       |
+| R2 Data Catalog operations        | 2,000,000          | 1,000,000        | 1,000,000           | $9.00         |
+| R2 Data Catalog compaction (data) | 500 GB             | 10 GB            | 490 GB              | $2.45         |
+| **Total**                         |                    |                  |                     | **$286.28**   |
+
+## Frequently asked questions
+
+### Is there a minimum billing increment per query?
+
+Yes. Each query is billed for a minimum of 10 MB of data scanned. This covers the overhead of initializing the query engine.
+
+### Does data scanned include R2 egress fees?
+
+No. R2 does not charge for egress. The query engine runs within the Cloudflare network adjacent to R2 storage, so there are no data transfer costs.
+
+## Cloudflare billing policy
+
+To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/billing/understand/billing-policy/).

@@ -19,3 +19,17 @@ The table below lists the service types you can route to a public hostname. Non-
 | HTTP_STATUS  | Responds to all requests with a fixed HTTP status code. | `http_status:404` |
 | BASTION      | Allows `cloudflared` to act as a jump host, providing access to any local address. | `bastion` |
 | HELLO_WORLD  | Test server for validating your Cloudflare Tunnel connection (for <a href={props.locallyManagedTunnelsURL}>locally managed tunnels</a> only). | `hello_world` |
+
+## IPv6 service addresses
+
+When the service value is an IPv6 literal, wrap the address in square brackets as defined by [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-3.2.2). The brackets are required so that the `:` characters in the address are not confused with the port separator.
+
+| Service type | Example `service` value     |
+| ------------ | --------------------------- |
+| HTTP         | `http://[2001:db8::1]:8000` |
+| HTTPS        | `https://[2001:db8::1]:443` |
+| TCP          | `tcp://[2001:db8::1]:2222`  |
+| SSH          | `ssh://[2001:db8::1]:22`    |
+| RDP          | `rdp://[2001:db8::1]:3389`  |
+
+Hostnames and IPv4 addresses do not need brackets — `http://localhost:8000` and `http://192.0.2.1:8000` are valid as-is.

@@ -8,5 +8,5 @@ entry:
 
 meta:
   title: Cloudflare Infrastructure docs
-  description: The Infrastructure tab in Security Center displays an overview of the infrastructure associated with your Cloudflare account after enabling Security Insights.
+  description: The Infrastructure tab in Security Center displays an overview of the infrastructure associated with your Cloudflare account.
   author: "@cloudflare"

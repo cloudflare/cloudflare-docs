@@ -45,8 +45,10 @@ To support non-SNI requests, you can:
 
 If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [proxied DNS records](/dns/proxy-status/), and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
-:::caution
-Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS certificate served by Cloudflare. This means that disabling Universal SSL, for example, could impact this behavior.
+:::caution[Universal SSL required for automatic HTTPS records]
+Disabling Universal SSL will prevent automatic HTTPS record generation for proxied hostnames, even if you have [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificates](/ssl/edge-certificates/custom-certificates/) configured. This is because automatic HTTPS record generation is tied specifically to the Universal SSL feature.
+
+If you need HTTPS records without Universal SSL, you can manually add them, but only if **all records with the same name are DNS-only (grey cloud)**. Refer to [SVCB and HTTPS records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) for details and examples.
 :::
 
 ## OCSP and HTTP versions

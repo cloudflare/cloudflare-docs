@@ -8,6 +8,8 @@ products:
   - workflows
 ---
 
+import { TypeScriptExample } from "~/components";
+
 This guide details how to sleep a Workflow and/or configure retries for a Workflow step.
 
 ## Sleep a Workflow
@@ -125,6 +127,61 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 ```
 
 The Workflow instance itself will fail immediately, no further steps will be invoked, and the Workflow will not be retried.
+
+If earlier steps registered rollback handlers, those handlers will still run before the instance settles into its terminal state.
+
+## Register rollback handlers
+
+You can attach a rollback handler to `step.do()` to implement saga-style compensation. When the Workflow later fails, Workflows runs registered rollback handlers in reverse `step-start` order.
+
+A failed step with rollback options can also participate in rollback alongside any completed steps which have a rollback handler registered. For example, if a steps throws a `NonRetryableError` after registering rollback, its rollback handler runs with `output` set to `undefined`.
+
+<TypeScriptExample>
+
+```ts
+import {
+	WorkflowEntrypoint,
+	type WorkflowEvent,
+	type WorkflowStep,
+} from "cloudflare:workers";
+import { NonRetryableError } from "cloudflare:workflows";
+
+export class OrderWorkflow extends WorkflowEntrypoint<Env> {
+	async run(_event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		await step.do(
+			"reserve inventory",
+			async () => {
+				const reservation = await reserveInventory();
+				return { reservationId: reservation.id };
+			},
+			{
+				rollback: async ({ output }) => {
+					const { reservationId } = output as { reservationId: string };
+					await releaseInventory(reservationId);
+				},
+				rollbackConfig: {
+					retries: { limit: 3, delay: "10 seconds", backoff: "linear" },
+					timeout: "2 minutes",
+				},
+			},
+		);
+
+		await step.do("charge card", async () => {
+			throw new NonRetryableError("payment processor rejected the charge");
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Rollback handlers receive:
+
+- `error` - the error that caused the Workflow to fail.
+- `output` - the value returned by the forward step, or `undefined` if the step failed before returning
+- `stepName` - the fully-qualified step name, including its count suffix.
+
+You can use `rollbackConfig` to control retry behavior for the rollback handler. Throw a `NonRetryableError` from the rollback handler to stop retrying it immediately.
 
 ## Catch Workflow errors
 

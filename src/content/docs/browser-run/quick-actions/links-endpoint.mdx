@@ -146,6 +146,22 @@ const links = await client.browserRendering.links.create({
 console.log(links);
 ```
 
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("links", {
+			url: "https://developers.cloudflare.com/",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
 </TabItem> </Tabs>
 
 ## Advanced usage

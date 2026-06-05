@@ -18,6 +18,14 @@ type Filters = {
 	authors: string[];
 	tasks: string[];
 	capabilities: string[];
+	providers: string[];
+};
+
+// URL/filter values are slugged (e.g. "cloudflare-hosted") while the underlying
+// model.hosting field stays "hosted" | "proxied". This map bridges the two.
+const PROVIDER_TO_HOSTING: Record<string, "hosted" | "proxied"> = {
+	"cloudflare-hosted": "hosted",
+	"third-party": "proxied",
 };
 
 type SortOrder = "newest" | "oldest";
@@ -39,7 +47,14 @@ function FilterDropdown({
 	onChange: (selected: string[]) => void;
 }) {
 	const hasSelection = selected.length > 0;
-	const triggerLabel = hasSelection ? `${label} (+${selected.length})` : label;
+	const triggerContent = (
+		<span className="inline-flex items-center gap-1.5">
+			{label}
+			{hasSelection && (
+				<span className="sl-badge default">{selected.length}</span>
+			)}
+		</span>
+	);
 
 	const selectedItems = items.filter((item) => selected.includes(item.value));
 
@@ -60,8 +75,8 @@ function FilterDropdown({
 						: "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
 				}`}
 			>
-				<Combobox.Value placeholder={<span>{label}</span>}>
-					{() => triggerLabel}
+				<Combobox.Value placeholder={triggerContent}>
+					{() => triggerContent}
 				</Combobox.Value>
 				<Combobox.Icon className="flex">
 					<ChevronUpDownIcon />
@@ -195,6 +210,15 @@ function CheckIcon() {
 	);
 }
 
+// Two-option facet that surfaces the existing ModelCardData.hosting field.
+// Labels match the "Cloudflare-hosted" / "Third-party" badge text rendered by
+// ModelBadges.tsx so the filter chip vocabulary lines up with each card's
+// provider badge. Slug values double as URL query string values.
+const providerItems: FilterItem[] = [
+	{ value: "cloudflare-hosted", label: "Cloudflare-hosted" },
+	{ value: "third-party", label: "Third-party" },
+];
+
 // List of model names to pin at the top
 const pinnedModelNames = [
 	"@cf/moonshotai/kimi-k2.6",
@@ -215,6 +239,7 @@ const ModelCatalog = ({
 		authors: [],
 		tasks: [],
 		capabilities: [],
+		providers: [],
 	});
 	const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
 	const initializedRef = useRef(false);
@@ -253,12 +278,16 @@ const ModelCatalog = ({
 		const authors = params.getAll("authors");
 		const tasks = params.getAll("tasks");
 		const capabilities = params.getAll("capabilities");
+		const providers = params
+			.getAll("providers")
+			.filter((p) => p in PROVIDER_TO_HOSTING);
 
 		setFilters({
 			search,
 			authors,
 			tasks,
 			capabilities,
+			providers,
 		});
 		initializedRef.current = true;
 	}, []);
@@ -283,6 +312,12 @@ const ModelCatalog = ({
 		if (filters.capabilities.length > 0) {
 			filters.capabilities.forEach((capability) =>
 				params.append("capabilities", capability),
+			);
+		}
+
+		if (filters.providers.length > 0) {
+			filters.providers.forEach((provider) =>
+				params.append("providers", provider),
 			);
 		}
 
@@ -332,6 +367,14 @@ const ModelCatalog = ({
 		[models],
 	);
 
+	// Hide the Hosting facet when the incoming list is uniform on that axis
+	// (e.g. /workers-ai/models/ is 100% hosted). Future-proofs for when the
+	// hosting field moves to the Deus CMS and may diverge from data source.
+	const showHostingFilter = useMemo(
+		() => new Set(models.map((m) => m.hosting)).size > 1,
+		[models],
+	);
+
 	const modelList = mapped.filter(({ model }) => {
 		if (filters.authors.length > 0) {
 			const selectedAuthorNames = new Set(
@@ -355,6 +398,13 @@ const ModelCatalog = ({
 			}
 		}
 
+		if (filters.providers.length > 0) {
+			const allowed = filters.providers.map((p) => PROVIDER_TO_HOSTING[p]);
+			if (!allowed.includes(model.hosting)) {
+				return false;
+			}
+		}
+
 		if (filters.search) {
 			if (!model.name.toLowerCase().includes(filters.search.toLowerCase())) {
 				return false;
@@ -367,14 +417,15 @@ const ModelCatalog = ({
 	const hasActiveFilters =
 		filters.authors.length > 0 ||
 		filters.tasks.length > 0 ||
-		filters.capabilities.length > 0;
+		filters.capabilities.length > 0 ||
+		filters.providers.length > 0;
 
 	return (
 		<div className="not-content">
 			{/* Toolbar */}
-			<div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center">
+			<div className="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
 				{/* Search input */}
-				<div className="relative flex-1">
+				<div className="relative flex-1 md:min-w-[300px]">
 					<svg
 						className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400"
 						fill="none"
@@ -413,6 +464,14 @@ const ModelCatalog = ({
 							setFilters({ ...filters, capabilities })
 						}
 					/>
+					{showHostingFilter && (
+						<FilterDropdown
+							label="Providers"
+							items={providerItems}
+							selected={filters.providers}
+							onChange={(providers) => setFilters({ ...filters, providers })}
+						/>
+					)}
 					<FilterDropdown
 						label="Authors"
 						items={authorItems}
@@ -441,6 +500,7 @@ const ModelCatalog = ({
 								authors: [],
 								tasks: [],
 								capabilities: [],
+								providers: [],
 							})
 						}
 						className="cursor-pointer text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
