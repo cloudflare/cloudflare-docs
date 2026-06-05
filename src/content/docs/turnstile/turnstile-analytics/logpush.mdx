@@ -1,0 +1,63 @@
+---
+title: Logpush
+pcx_content_type: how-to
+description: Export Turnstile event logs to your storage destination using Logpush.
+products:
+  - turnstile
+tags:
+  - Analytics
+  - Logpush
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+Turnstile supports exporting event logs via [Logpush](/logs/logpush/). You can use Logpush to send Turnstile event data to cloud storage, SIEM tools, or other destinations supported by Logpush.
+
+## Availability
+
+Turnstile Events (`turnstile_events`) is an account-scoped Logpush dataset available on Turnstile Paid and Enterprise plans.
+
+| Plan       | Max Logpush jobs |
+| ---------- | ---------------- |
+| Free       | Not available    |
+| Paid       | 2                |
+| Enterprise | 4                |
+
+## Dataset fields
+
+The `turnstile_events` dataset includes the following fields:
+
+<DirectoryListing path="/logs/logpush/logpush-job/datasets/account/turnstile_events" />
+
+Refer to the [full field reference](/logs/logpush/logpush-job/datasets/account/turnstile_events/) for detailed descriptions.
+
+## Set up Logpush for Turnstile
+
+To create a Logpush job for Turnstile events:
+
+1. Go to **Dashboard** > **Your Account** > **Logs** > **Logpush**.
+2. Select **Add job**.
+3. Choose the **Turnstile Events** dataset.
+4. Select the data fields to include. The `ClientIP` field requires the [PII read permission](/logs/logpush/logpush-job/api-configuration/#pii).
+5. Select your destination and complete the setup.
+
+You can also create jobs via the [Logpush API](/logs/logpush/logpush-job/api-configuration/) using the `turnstile_events` dataset name.
+
+## Event types
+
+The `EventType` field indicates the outcome of the Turnstile interaction:
+
+| Event type                                      | Description                                               |
+| ----------------------------------------------- | --------------------------------------------------------- |
+| `challenge_issued`                              | A challenge was presented to the visitor.                 |
+| `challenge_non_interactive_solved`              | The visitor passed the challenge without interaction.     |
+| `challenge_interactive_solved`                  | The visitor passed the challenge with interaction.        |
+| `challenge_non_interactive_siteverify_solved`   | A non-interactive challenge was verified via siteverify.  |
+| `challenge_interactive_siteverify_solved`       | An interactive challenge was verified via siteverify.     |
+| `challenge_clearance_siteverify_solved`         | A pre-clearance challenge was verified via siteverify.    |
+| `challenge_siteverify_failed_double_redemption` | Siteverify failed because the token was already redeemed. |
+| `challenge_siteverify_failed_invalid_token`     | Siteverify failed because the token was invalid.          |
+| `challenge_siteverify_failed_other`             | Siteverify failed for another reason.                     |
+| `challenge_siteverify_ratelimited`              | Siteverify was rate-limited.                              |
