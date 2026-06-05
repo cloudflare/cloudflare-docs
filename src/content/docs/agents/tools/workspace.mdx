@@ -49,11 +49,6 @@ export class Agent extends DurableObject<Env> {
 				"/workspace/data": R2Bucket(env.Bucket),
 			},
 		});
-
-		const report = await this.#workspace.fs.readFile(
-			"/workspace/data/report.csv",
-			"utf8",
-		);
 	}
 }
 ```
