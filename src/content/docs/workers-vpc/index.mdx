@@ -19,7 +19,7 @@ import {
 	TabItem,
 	Tabs,
 	RelatedProduct,
-	WorkersVPCEgressDiagram,
+	WorkersVPCOverviewDiagram,
 } from "~/components";
 
 <Description>
@@ -36,7 +36,7 @@ With Workers VPC, you can configure a [Cloudflare Tunnel](/cloudflare-one/networ
 
 You can also use [VPC Network bindings](/workers-vpc/configuration/vpc-networks/) to give Workers broader access to your private infrastructure — services behind [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), subnet and hostname routes announced through Cloudflare Tunnel or Mesh, and destinations connected through [Cloudflare WAN](/cloudflare-wan/) on-ramps (GRE, IPsec, and CNI). The same binding can also egress to public Internet destinations through [Cloudflare Gateway](/cloudflare-one/traffic-policies/), so your existing Zero Trust traffic policies and logs apply to Worker requests.
 
-<WorkersVPCEgressDiagram />
+<WorkersVPCOverviewDiagram />
 
 :::note
 
