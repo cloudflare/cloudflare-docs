@@ -22,9 +22,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 			</div>
 		</li>
 
-		<li class="flow-connector" aria-hidden="true">
-			<span class="connector-label">VPC binding</span>
-			<span class="connector-arrow">↓</span>
+		<li class="flow-connector">
+			<a class="connector-label" href="/workers-vpc/">VPC binding</a>
+			<span class="connector-arrow" aria-hidden="true">↓</span>
 		</li>
 
 		<li class="flow-step">
@@ -241,6 +241,14 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		font-size: 11px;
 		font-weight: 500;
 		line-height: 1;
+	}
+
+	a.connector-label {
+		transition: color 150ms ease;
+	}
+
+	a.connector-label:hover {
+		color: var(--map-brand);
 	}
 
 	.connector-arrow {
