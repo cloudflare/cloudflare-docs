@@ -147,6 +147,24 @@ Cloudflare Access automatically synchronizes with your MCP server every 24 hours
 
 The MCP server page will show the updated list of tools and prompts. New tools and prompts are automatically enabled in the MCP server portal.
 
+### Upstream OAuth callback URL
+
+When a user authorizes an upstream MCP server that requires per-user OAuth, the portal performs an OAuth authorization code flow with the upstream server on the user's behalf. As part of this flow, the portal registers a callback URL (`redirect_uri`) with the upstream server. The upstream server redirects to this URL after the user authorizes access.
+
+For newly created MCP servers, the portal uses a shared callback URL owned by Cloudflare:
+
+```txt
+https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
+```
+
+Upstream MCP server vendors only need to allowlist this single Cloudflare URL rather than each individual portal hostname. This resolves issues where some vendors rejected portal-specific hostnames that were not in their redirect URI allowlists.
+
+Existing MCP servers that were created before this change continue to use the portal domain as the callback URL (for example, `https://my-portal.example.com/servers-callback`). No action is required for existing servers.
+
+:::note
+If an upstream OAuth provider rejects the callback URL, verify that `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback` is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path. For existing servers that still use per-portal callbacks, allowlist the portal domain instead.
+:::
+
 ## Create a portal
 
 To create an MCP server portal:
@@ -776,6 +794,13 @@ To resolve this, [reauthenticate the server](#reauthenticate-the-mcp-server) wit
 1. If the server uses per-user OAuth (**Require user auth** is turned on), the user's OAuth token may have expired. Ask the user to [reauthenticate the server](#reauthenticate-a-server) from their MCP client.
 2. If the server uses admin credentials, check the [server status](#server-status). A status of **Error** or **Sync Required** indicates the admin credential needs to be refreshed.
 3. If the user recently changed permissions on the upstream service (for example, revoked OAuth scopes), they will need to reauthenticate.
+
+### OAuth authentication fails with a redirect URI error when connecting to an upstream MCP server.
+
+Errors such as `invalid_redirect_uri`, `invalid_client_metadata`, or `Redirect URI not allowed` indicate that the upstream MCP server rejected the callback URL that the portal registered during the OAuth flow. Refer to [Upstream OAuth callback URL](#upstream-oauth-callback-url) for background on how the callback URL is determined.
+
+1. For newly created servers, the upstream provider must allowlist `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback` as a redirect URI. OAuth providers typically exact-match the full URI including path. Contact the upstream MCP server vendor if you do not control the allowlist.
+2. For servers created before this feature was introduced, the upstream provider must allowlist your portal domain (for example, `https://my-portal.example.com`). To switch to the shared callback URL, delete the server and re-add it.
 
 ### Tool calls fail when Gateway routing is turned on.
 
