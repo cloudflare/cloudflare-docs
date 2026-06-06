@@ -1,0 +1,56 @@
+---
+{}
+---
+
+import { WranglerConfig } from "~/components";
+
+### Add your API Worker
+
+Create a `worker/index.ts` file with the following contents:
+
+```ts title="worker/index.ts"
+export default {
+	fetch(request) {
+		const url = new URL(request.url);
+
+		if (url.pathname.startsWith("/api/")) {
+			return Response.json({
+				name: "Cloudflare",
+			});
+		}
+
+		return new Response(null, { status: 404 });
+	},
+} satisfies ExportedHandler;
+```
+
+The Worker above will be invoked for any non-navigation request that does not match a static asset.
+It returns a JSON response if the `pathname` starts with `/api/` and otherwise returns a `404` response.
+
+:::note
+For top-level navigation requests, browsers send a `Sec-Fetch-Mode: navigate` header.
+If this is present and the URL does not match a static asset, the `not_found_handling` behavior will be invoked rather than the Worker.
+This implicit routing is the default behavior.
+
+If you would instead like to define the routes that invoke your Worker explicitly, you can provide an array of route patterns to [`run_worker_first`](/workers/static-assets/binding/#run_worker_first).
+This opts out of interpreting the `Sec-Fetch-Mode` header.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-tutorial",
+	"compatibility_date": "$today",
+	"assets": {
+		"not_found_handling": "single-page-application",
+		"run_worker_first": [
+			"/api/*"
+		]
+	},
+	"main": "./worker/index.ts"
+}
+```
+
+</WranglerConfig>
+:::

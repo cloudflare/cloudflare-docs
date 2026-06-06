@@ -1,0 +1,27 @@
+---
+{}
+---
+
+import { WranglerConfig } from "~/components";
+
+### Add the Worker entrypoint to your configuration
+
+Update your Wrangler configuration file to add a `main` field that points to your Worker entrypoint:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-app",
+	"compatibility_date": "$today",
+	"assets": {
+		"not_found_handling": "single-page-application"
+	},
+	"main": "./worker/index.ts"
+}
+```
+
+</WranglerConfig>
+
+The `main` field specifies the entry file for your Worker code.

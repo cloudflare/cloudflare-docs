@@ -18,7 +18,16 @@ import {
 	Details,
 	FileTree,
 	Steps,
+	Tabs,
+	TabItem,
 } from "~/components";
+
+[React](https://react.dev/) is a framework for building user interfaces. It allows you to create reusable UI components and manage the state of your application efficiently. You can use React to build a single-page application (SPA), and combine it with a backend API running on Cloudflare Workers to create a full-stack application.
+
+This guide shows you how to deploy a React + Vite application to Cloudflare Workers. You can either create a new project using the `create-cloudflare` CLI (C3) or adapt an existing React + Vite project.
+
+<Tabs>
+	<TabItem label="Create new project">
 
 **Start from CLI** - scaffold a full-stack app with a React SPA, Cloudflare Workers API, and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
 
@@ -27,70 +36,163 @@ import {
 	pkg="cloudflare@latest"
 	args="my-react-app --framework=react"
 />
+
 ---
 
 **Or just deploy** - create a full-stack app using React, a Workers API, and Vite, with CI/CD and previews all set up for you.
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/react-starter-template)
 
-## What is React?
-
-[React](https://react.dev/) is a framework for building user interfaces. It allows you to create reusable UI components and manage the state of your application efficiently. You can use React to build a single-page application (SPA), and combine it with a backend API running on Cloudflare Workers to create a full-stack application.
-
-## Creating a full-stack app with React
-
 <Steps>
 1. **Create a new project with the create-cloudflare CLI (C3)**
 
-    	<PackageManagers
-    		type="create"
-    		pkg="cloudflare@latest"
-    		args="my-react-app --framework=react"
-    	/>
+     <PackageManagers
+     	type="create"
+     	pkg="cloudflare@latest"
+     	args="my-react-app --framework=react"
+    />
     		 <Details header="How is this project set up?">
-        			Below is a simplified file tree of the project.
-        			<FileTree>
-    							- my-react-app
-    								- src/
-    										- App.tsx
-    								- worker/
-    									- index.ts
-    								- index.html
-    								- vite.config.ts
-    								- wrangler.jsonc
-        			</FileTree>
+        		Below is a simplified file tree of the project.
+        		<FileTree>
+    					- my-react-app
+    						- src/
+    								- App.tsx
+    						- worker/
+    							- index.ts
+    						- index.html
+    						- vite.config.ts
+    						- wrangler.jsonc
+        		</FileTree>
 
-        			`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/).
-        			In this file:
-        					- `main` points to `worker/index.ts`. This is your Worker, which is going to act as your backend API.
-        					- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your React SPA do not go to the Worker, and are thus free.
-        					- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
+        		`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/).
+        		In this file:
+        				- `main` points to `worker/index.ts`. This is your Worker, which is going to act as your backend API.
+        				- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your React SPA do not go to the Worker, and are thus free.
+        				- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
 
-    						`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
+    				`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
 
-    						`worker/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
-    						At `src/App.tsx`, your React app calls this endpoint to get a message back and displays this.
-        		</Details>
+    				`worker/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
+    				At `src/App.tsx`, your React app calls this endpoint to get a message back and displays this.
+        	</Details>
 
 2.  **Develop locally with the [Cloudflare Vite plugin](/workers/vite-plugin/)**
 
         After creating your project, run the following command in your project directory to start a local development server.
         <PackageManagers type="run" args="dev" />
         		<Details header="What's happening in local development?">
-        			This project uses Vite for local development and build, and thus comes with all of Vite's features, including hot module replacement (HMR).
+        		This project uses Vite for local development and build, and thus comes with all of Vite's features, including hot module replacement (HMR).
 
-        			In addition, `vite.config.ts` is set up to use the Cloudflare Vite plugin. This runs your application in the Cloudflare Workers runtime, just like in production, and enables access to local emulations of bindings.
-        		</Details>
+        		In addition, `vite.config.ts` is set up to use the Cloudflare Vite plugin. This runs your application in the Cloudflare Workers runtime, just like in production, and enables access to local emulations of bindings.
+        	</Details>
 
 3.  **Deploy your project**
 
-        	Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
+        Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
 
-        	The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+        The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
-        	<PackageManagers type="run" args={"deploy"} />
+        <PackageManagers type="run" args={"deploy"} />
 
 </Steps>
+
+	</TabItem>
+	<TabItem label="Deploy existing project">
+
+If you already have a React + Vite application, you can adapt it to deploy to Cloudflare Workers using the Cloudflare Vite plugin. This approach preserves your existing code while adding the ability to deploy to Cloudflare's edge network with static assets and an optional API Worker.
+
+<Steps>
+1.  **Navigate to your project directory**
+
+        Open your existing React + Vite project in your editor of choice. If you don't have one yet, scaffold a new project with Vite first:
+
+        <PackageManagers
+        	type="create"
+        	pkg="vite@latest"
+        	args="my-react-app --template react-ts"
+        />
+
+        Next, open the `my-react-app` directory in your editor of choice.
+
+2.  **Add the Cloudflare Vite plugin**
+
+        <Render file="vite-plugin/add-dependencies" product="workers" />
+
+        <Render file="vite-plugin/add-plugin-to-vite-config" product="workers" />
+
+        Refer to the [API reference](/workers/vite-plugin/reference/api/) for configuration options.
+
+3.  **Add a Wrangler configuration file**
+
+        <Render file="vite-plugin/create-wrangler-config" product="workers" />
+
+4.  **Update the `.gitignore` file**
+
+        <Render file="vite-plugin/update-gitignore" product="workers" />
+
+5.  **Develop locally**
+
+        <Render file="vite-plugin/run-dev-server" product="workers" />
+
+6.  **Build and deploy your project**
+
+        <Render file="vite-plugin/build-app" product="workers" />
+
+        <Render file="vite-plugin/preview-app" product="workers" />
+
+        <Render file="vite-plugin/deploy" product="workers" />
+
+</Steps>
+
+### Add an API Worker to an existing project
+
+If you want to add an API Worker to your existing React + Vite project, follow these additional steps:
+
+<Steps>
+1.  **Configure TypeScript for your Worker code**
+
+        <Render file="vite-plugin/add-tsconfig-worker" product="workers" />
+
+2.  **Add the Worker entrypoint to your configuration**
+
+        <Render file="vite-plugin/add-worker-config" product="workers" />
+
+3.  **Add your API Worker**
+
+        <Render file="vite-plugin/add-api-worker" product="workers" />
+
+4.  **Call the API from the client**
+
+        You can now call your API from your React components. For example, in `src/App.tsx`:
+
+        ```tsx title="src/App.tsx"
+        import { useState } from "react";
+
+        function App() {
+        	const [name, setName] = useState("unknown");
+
+        	return (
+        		<div className="card">
+        			<button
+        				onClick={() => {
+        					fetch("/api/")
+        						.then((res) => res.json() as Promise<{ name: string }>)
+        						.then((data) => setName(data.name));
+        				}}
+        			>
+        				Name from API is: {name}
+        			</button>
+        		</div>
+        	);
+        }
+
+        export default App;
+        ```
+
+</Steps>
+
+	</TabItem>
+</Tabs>
 
 ---
 
@@ -102,6 +204,6 @@ If you're using React as a SPA, you will want to set `not_found_handling = "sing
 
 ## Use bindings with React
 
-Your new project also contains a Worker at `./worker/index.ts`, which you can use as a backend API for your React application. While your React application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your React application to the Worker, which can then handle the request and use bindings. Learn how to [configure Workers bindings](/workers/runtime-apis/bindings/).
+Your project can also contain a Worker at `./worker/index.ts`, which you can use as a backend API for your React application. While your React application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your React application to the Worker, which can then handle the request and use bindings. Learn how to [configure Workers bindings](/workers/runtime-apis/bindings/).
 
 <Render file="frameworks-bindings" product="workers" />
