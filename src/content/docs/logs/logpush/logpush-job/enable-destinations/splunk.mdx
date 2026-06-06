@@ -11,7 +11,14 @@ products:
   - logpush
 ---
 
-import { Render, APIRequest, Tabs, TabItem, DashButton } from "~/components";
+import {
+	Render,
+	APIRequest,
+	Tabs,
+	TabItem,
+	DashButton,
+	Steps,
+} from "~/components";
 
 The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools/httpeventcollector/) is a reliable method to receive data from Splunk Enterprise or Splunk Cloud Platform. Cloudflare Logpush supports pushing logs directly to Splunk HEC via the Cloudflare dashboard or API.
 
@@ -75,7 +82,6 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   :::note
   Cloudflare highly recommends setting this value to `false`. Refer to the [Logpush FAQ](/logs/faq/logpush/) for more information.
   :::
-
   - **\<SOURCE_TYPE>**: The Splunk source type. For example: `cloudflare:json`.
   - **\<SPLUNK_AUTH_TOKEN>**: The Splunk authorization token that is URL-encoded and must be prefixed with the word `Splunk`. For example: `Splunk e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
 
@@ -111,7 +117,7 @@ Example request using cURL:
 			timestamp_format: "rfc3339",
 		},
 		dataset: "http_requests",
-    enabled: true,
+		enabled: true,
 	}}
 />
 
@@ -144,7 +150,7 @@ Refer to [Manage Logpush with cURL](/logs/logpush/examples/example-logpush-curl/
 
 Refer to the [Logpush FAQ](/logs/faq/logpush/) for troubleshooting information.
 
-### 3. Create WAF custom rule for Splunk HEC endpoint (optional)
+### 2. Create WAF custom rule for Splunk HEC endpoint (optional)
 
 If your logpush destination hostname is proxied through Cloudflare, and you have the Cloudflare Web Application Firewall (WAF) turned on, you may be challenged or blocked when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a [custom rule](/waf/custom-rules/) that allows Cloudflare to bypass the HEC endpoint.
 
@@ -245,12 +251,83 @@ curl "https://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-ve
 Expected response:
 
 ```json
-{"text":"Success","code":0}
+{ "text": "Success", "code": 0 }
 ```
 
 ### Network port requirements
 
 Cloudflare expects the HEC network port to be configured to `:443` or `:8088`. Other ports are not supported.
+
+### Splunk Add-on for AWS cannot read R2
+
+[R2](/r2/) exposes an S3-compatible API, so most tools that read from Amazon S3 can also read from R2. The Splunk Add-on for AWS is an exception.
+
+The add-on validates account credentials against AWS Security Token Service (STS) before it saves them. R2 credentials are not AWS credentials, so this check fails and the add-on cannot create the account.
+
+This validation runs at the account stage, before any input configuration. Input-level settings cannot work around it.
+
+:::caution
+The following changes do not resolve the error, because the failure happens during account validation:
+
+- Entering an R2 access key and secret in the account configuration screen.
+- Setting `host_name` to your R2 endpoint in `inputs.conf`.
+- Setting `sts_private_endpoint_url` to a non-AWS endpoint.
+- Changing the region to `auto` or `us-east-1`.
+- Clearing the private endpoint option.
+  :::
+
+R2 S3 API compatibility is not the cause. R2 supports the S3 operations that Splunk uses, including `ListObjectsV2`, `GetObject`, and `HeadObject`, and authenticates with Signature Version 4. For details, refer to [R2 S3 API compatibility](/r2/api/s3/api/).
+
+Use one of the following approaches to send Cloudflare logs to Splunk instead.
+
+:::note
+Zero Trust datasets, such as Gateway DNS, require both the `Logs Edit` and `Zero Trust: PII Read` permissions on the API token used to create the Logpush job. This applies to all three approaches below. Refer to [Logpush permissions](/logs/logpush/permissions/).
+:::
+
+#### Use Logpush with the HTTP Event Collector
+
+The most direct option is to send logs to the Splunk HTTP Event Collector (HEC) with Logpush, which removes the need for S3-style polling. To set up a HEC destination, refer to [Manage via the Cloudflare dashboard](#manage-via-the-cloudflare-dashboard).
+
+For an on-premises Splunk instance with no inbound connectivity, use Cloudflare Tunnel to create an outbound-only connection from your network to Cloudflare.
+
+<Steps>
+
+1. Install `cloudflared` on a host that can reach your Splunk instance. Refer to [Create a tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
+
+2. Create a tunnel with a public hostname that points to your Splunk HEC endpoint.
+
+3. In Splunk, create an HTTP Event Collector token and set the source type to `cloudflare:json`.
+
+4. Create a Logpush job with Splunk as the destination, using the tunnel hostname.
+
+5. Restrict access to the endpoint with a [WAF custom rule](#2-create-waf-custom-rule-for-splunk-hec-endpoint-optional) or an Access service token.
+
+</Steps>
+
+#### Use cloud storage as an intermediary
+
+If you cannot reach a Splunk HEC endpoint, send logs to a cloud storage destination that has a dedicated Splunk add-on, then let Splunk poll that storage.
+
+For Azure Blob Storage, use the [Azure Logpush destination](/logs/logpush/logpush-job/enable-destinations/azure/) together with the Splunk Add-on for Microsoft Cloud Services. That add-on reads from Azure storage directly, so it does not hit the AWS credential validation that blocks R2.
+
+This approach is not real time. Splunk polls storage on a schedule, which adds delivery lag and more infrastructure to manage.
+
+#### Pull from R2 with the AWS CLI
+
+To keep an existing R2 Logpush setup, bypass the add-on and pull objects with the AWS CLI, then index the downloaded files with a Splunk monitor input.
+
+Configure the AWS CLI with your R2 credentials and pass `--endpoint-url` on every command. For setup details, refer to [Use the AWS CLI with R2](/r2/examples/aws/aws-cli/).
+
+```bash
+ENDPOINT="https://<ACCOUNT_ID>.r2.cloudflarestorage.com"
+aws s3 sync s3://<BUCKET_NAME>/ /opt/splunk/var/log/cloudflare/ --endpoint-url "$ENDPOINT"
+```
+
+`aws s3 sync` copies only new or changed objects, so repeated runs do not re-download existing files. With this approach, you maintain the synchronization schedule yourself.
+
+:::caution
+Do not add the `--delete` flag when the destination is a directory that a Splunk monitor input reads. `--delete` removes local files that are no longer present in the bucket, which can delete logs before Splunk indexes them.
+:::
 
 ### Cloudflare Splunk App integration
 
