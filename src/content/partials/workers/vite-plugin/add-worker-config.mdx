@@ -10,16 +10,15 @@ Update your Wrangler configuration file to add a `main` field that points to you
 
 <WranglerConfig>
 
-```jsonc
-{
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "my-app",
-	"compatibility_date": "$today",
-	"assets": {
-		"not_found_handling": "single-page-application"
-	},
-	"main": "./worker/index.ts"
-}
+```toml
+$schema = "./node_modules/wrangler/config-schema.json"
+name = "my-app"
+compatibility_date = "$today"
+
+[assets]
+not_found_handling = "single-page-application"
+
+main = "./worker/index.ts"
 ```
 
 </WranglerConfig>

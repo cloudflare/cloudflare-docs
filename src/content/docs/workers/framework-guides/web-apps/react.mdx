@@ -4,15 +4,12 @@ title: React + Vite
 sidebar:
   order: 1
 tags: ["spa"]
-description: Create a React application and deploy it to Cloudflare Workers with Workers Assets.
+description: Create a new React + Vite application or deploy an existing one to Cloudflare Workers with Workers Assets.
 products:
   - workers
 ---
 
 import {
-	Badge,
-	Description,
-	InlineBadge,
 	Render,
 	PackageManagers,
 	Details,
@@ -52,7 +49,7 @@ This guide shows you how to deploy a React + Vite application to Cloudflare Work
      	args="my-react-app --framework=react"
     />
     		 <Details header="How is this project set up?">
-        		Below is a simplified file tree of the project.
+        		The following is a simplified file tree of the project.
         		<FileTree>
     					- my-react-app
     						- src/
@@ -104,7 +101,7 @@ If you already have a React + Vite application, you can adapt it to deploy to Cl
 <Steps>
 1.  **Navigate to your project directory**
 
-        Open your existing React + Vite project in your editor of choice. If you don't have one yet, scaffold a new project with Vite first:
+        Open your existing React + Vite project in your editor of choice. If you do not have one yet, scaffold a new project with Vite first:
 
         <PackageManagers
         	type="create"
@@ -144,7 +141,7 @@ If you already have a React + Vite application, you can adapt it to deploy to Cl
 
 </Steps>
 
-### Add an API Worker to an existing project
+## Add an API Worker to an existing project
 
 If you want to add an API Worker to your existing React + Vite project, follow these additional steps:
 

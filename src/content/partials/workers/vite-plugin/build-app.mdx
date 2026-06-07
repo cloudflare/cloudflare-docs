@@ -1,16 +1,14 @@
 ---
 {}
+
 ---
+
+import { PackageManagers } from "~/components";
 
 ### Build your application
 
-Run `npm run build` to build your application.
+Run the build command to build your application.
 
-```sh
-npm run build
-```
+<PackageManagers type="run" args="build" />
 
-If you inspect the `dist` directory, you will see that it contains two subdirectories:
-
-- `client` - the client code that runs in the browser
-- a directory containing your Worker code alongside the output `wrangler.json` configuration file
+The `dist` directory will contain your client build output in the `client` subdirectory and your Worker code alongside the output `wrangler.json` configuration file.

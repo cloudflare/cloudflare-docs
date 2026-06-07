@@ -1,13 +1,14 @@
 ---
 {}
+
 ---
+
+import { PackageManagers } from "~/components";
 
 ### Deploy to Cloudflare
 
-Run `npm exec wrangler deploy` to deploy your application to Cloudflare.
+Run the deploy command to deploy your application to Cloudflare.
 
-```sh
-npm exec wrangler deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 This command will automatically use the output `wrangler.json` that was included in the build output.

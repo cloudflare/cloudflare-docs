@@ -24,7 +24,7 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-The Worker above will be invoked for any non-navigation request that does not match a static asset.
+The Worker defined in the preceding code block will be invoked for any non-navigation request that does not match a static asset.
 It returns a JSON response if the `pathname` starts with `/api/` and otherwise returns a `404` response.
 
 :::note
@@ -37,19 +37,16 @@ This opts out of interpreting the `Sec-Fetch-Mode` header.
 
 <WranglerConfig>
 
-```jsonc
-{
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "cloudflare-vite-tutorial",
-	"compatibility_date": "$today",
-	"assets": {
-		"not_found_handling": "single-page-application",
-		"run_worker_first": [
-			"/api/*"
-		]
-	},
-	"main": "./worker/index.ts"
-}
+```toml
+$schema = "./node_modules/wrangler/config-schema.json"
+name = "cloudflare-vite-tutorial"
+compatibility_date = "$today"
+
+[assets]
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
+
+main = "./worker/index.ts"
 ```
 
 </WranglerConfig>
