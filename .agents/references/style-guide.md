@@ -8,10 +8,11 @@ Prescriptive rules for writing and reviewing content in this repository. Distill
 
 These characters have special meaning in MDX and **will break the build** if used unescaped in prose, tables, or headings:
 
-| Character | Problem                       | Fix                                    | Scope                                                                                                                     |
-| --------- | ----------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`     | Only literal `{` `}` in prose/tables/headings — not JS expressions in JSX                                                 |
-| `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks | Only literal `<` `>` in prose/tables/headings (e.g. "values > 100") — not JSX component tags like `<Details>` or `<Tabs>` |
+| Character | Problem                       | Fix                                |
+| --------- | ----------------------------- | ---------------------------------- |
+| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}` |
+
+Do not check for unescaped `<` and `>` manually — the build catches real violations. Attempting to enforce this with pattern matching produces false positives on JSX component tags, TypeScript generics inside code blocks, and other valid MDX syntax.
 
 Component imports must appear after the frontmatter block. A used-but-not-imported component is a silent build failure.
 
