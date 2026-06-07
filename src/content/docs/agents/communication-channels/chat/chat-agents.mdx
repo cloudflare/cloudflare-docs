@@ -1003,7 +1003,7 @@ tools: {
 	processPayment: tool({
 		description: "Process a payment",
 		inputSchema: z.object({
-			amount: z.number(),
+			amount: z.coerce.number(),
 			recipient: z.string(),
 		}),
 		needsApproval: async ({ amount }) => amount > 100,
