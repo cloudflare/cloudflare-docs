@@ -8,12 +8,10 @@ Prescriptive rules for writing and reviewing content in this repository. Distill
 
 These characters have special meaning in MDX and **will break the build** if used unescaped in prose, tables, or headings:
 
-| Character | Problem                       | Fix                                    |
-| --------- | ----------------------------- | -------------------------------------- |
-| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`     |
-| `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks |
-
-> **Scope:** This applies only to literal `<` and `>` characters in prose, tables, and headings (for example, "values > 100" or "use the <zone> placeholder"). Valid JSX component tags (`<Details>`, `<Tabs>`, `<TabItem>`, etc.) are correct MDX syntax and must **not** be escaped.
+| Character | Problem                       | Fix                                                                                                                          | Scope                                                                      |
+| --------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`                                                                                           | Only literal `{` `}` in prose/tables/headings — not JS expressions in JSX |
+| `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks                                                                                       | Only literal `<` `>` in prose/tables/headings (e.g. "values > 100") — not JSX component tags like `<Details>` or `<Tabs>` |
 
 Component imports must appear after the frontmatter block. A used-but-not-imported component is a silent build failure.
 
