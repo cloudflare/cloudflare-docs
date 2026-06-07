@@ -230,7 +230,7 @@ export class MyAgent extends AIChatAgent<Env> {
     await registry.load();
 
     return streamText({
-      model: /* your model */,
+      model: myModel,
       system: `You are a helpful assistant.\n\n${registry.systemPrompt() ?? ""}`,
       messages,
       tools: {
