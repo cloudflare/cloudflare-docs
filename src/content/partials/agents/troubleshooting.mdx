@@ -18,15 +18,10 @@ Add the migration to the Wrangler configuration file:
 
 <WranglerConfig>
 
-```jsonc
-{
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["YourAgentClass"],
-		},
-	],
-}
+```toml
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["YourAgentClass"]
 ```
 
 </WranglerConfig>

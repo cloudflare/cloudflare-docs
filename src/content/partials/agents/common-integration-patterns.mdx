@@ -99,22 +99,22 @@ Update the Wrangler configuration file:
 
 <WranglerConfig>
 
-```jsonc
-{
-	"durable_objects": {
-		"bindings": [
-			{ "name": "CounterAgent", "class_name": "CounterAgent" },
-			{ "name": "Chat", "class_name": "Chat" },
-			{ "name": "Scheduler", "class_name": "Scheduler" },
-		],
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["CounterAgent", "Chat", "Scheduler"],
-		},
-	],
-}
+```toml
+[[durable_objects.bindings]]
+name = "CounterAgent"
+class_name = "CounterAgent"
+
+[[durable_objects.bindings]]
+name = "Chat"
+class_name = "Chat"
+
+[[durable_objects.bindings]]
+name = "Scheduler"
+class_name = "Scheduler"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["CounterAgent", "Chat", "Scheduler"]
 ```
 
 </WranglerConfig>
