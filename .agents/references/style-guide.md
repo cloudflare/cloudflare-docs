@@ -4,14 +4,6 @@ Prescriptive rules for writing and reviewing content in this repository. Distill
 
 ---
 
-## MDX syntax gotchas
-
-Some characters have special meaning in MDX and can break the build if used unescaped in prose, tables, or headings. Do not check for unescaped `{`, `}`, `<`, or `>` manually with pattern matching — the build catches real MDX parse violations. Pattern matching produces false positives on JSX component tags, JavaScript expressions, TypeScript generics inside code blocks, and other valid MDX syntax.
-
-Component imports must appear after the frontmatter block. A used-but-not-imported component is a silent build failure.
-
----
-
 ## Frontmatter
 
 ### Expected fields
@@ -154,10 +146,6 @@ Common terms:
 
 ## Links
 
-- Use **root-relative paths**: `/workers/get-started/` — never `https://developers.cloudflare.com/workers/get-started/`
-- No file extensions: `/workers/get-started/` — not `/workers/get-started.mdx`
-- No relative links: `./page` is not supported
-- Trailing slash required: `/workers/get-started/` — not `/workers/get-started`
 - Descriptive link text — never "here", "this page", "read more", "click here"
 
 Standard phrasing:
@@ -274,8 +262,6 @@ Package install commands must use `PackageManagers`.
 
 ## Components
 
-All components are imported from `~/components`. Imports must appear after the frontmatter block.
-
 **Mandatory component usage** — do not use bare fences for these:
 
 - Workers JS/TS examples → `TypeScriptExample`
@@ -312,7 +298,7 @@ All components are imported from `~/components`. Imports must appear after the f
 | `LinkButton`                          | Styled link button (`variant="primary"`, `"secondary"`, `"minimal"`)                |
 | `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages                            |
 | `LinkCard` / `CardGrid`               | Starlight link cards, optionally in a grid                                          |
-| `DashButton`                          | Button linking to a validated dashboard deeplink                                    |
+| `DashButton`                          | Button linking to a dashboard page                                                  |
 | `GitHubCode`                          | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash)       |
 | `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                            |
 | `ListTutorials`                       | Auto-generated tutorial table for the current product                               |
@@ -380,7 +366,6 @@ For full rules see `.agents/references/procedures.md`.
 - Partials: `src/content/partials/{product}/`
 - Images: `src/assets/images/{product}/` — images must not go in `src/content/`
 - Changelogs: `src/content/changelog/{product}/`
-- Allowed file types in `src/content/`: `.mdx`, `.md`, `.json`, `.yml`, `.yaml`, `.txt` only. CI rejects everything else, except files under `src/content/collections/`.
 
 ---
 
