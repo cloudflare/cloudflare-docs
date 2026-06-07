@@ -5,7 +5,7 @@ description: Rules for MDX page frontmatter fields.
 
 ## Description
 
-- If a file has `pcx_content_type:` set and no `description:` field → **warning**: add a description.
+- If a file has a `pcx_content_type` set and no `description:` field → **warning**: `description` is required when `pcx_content_type` is set.
 
 ## pcx_content_type
 
@@ -16,6 +16,10 @@ Valid values: `changelog`, `concept`, `configuration`, `design-guide`, `example`
 ## reviewed Date
 
 - Do not flag a stale or missing `reviewed:` date — this is explicitly excluded from review.
+
+## Tags
+
+- If a tag value is not in the site's allowlist (`src/schemas/tags.ts`) → **warning**: use only validated tags. Common valid tags include `JavaScript`, `Workers`, `TypeScript`, `Python`, `Rust`, `Go`.
 
 ## Sidebar
 

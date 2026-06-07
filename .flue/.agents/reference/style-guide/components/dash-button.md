@@ -5,7 +5,7 @@ description: Rules for the DashButton component used for dashboard deeplinks.
 
 ## Rules
 
-- If a prose step links directly to `dash.cloudflare.com` for navigation → **suggestion**: use `<DashButton>` instead for dashboard navigation.
+- If a prose step links directly to `dash.cloudflare.com` for navigation → **suggestion**: use `<DashButton>` instead for validated deeplinks.
 
 ## Example
 

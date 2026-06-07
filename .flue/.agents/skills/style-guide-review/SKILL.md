@@ -42,6 +42,7 @@ For each selected patch:
 - Always read every manifest entry with `load: "always"`.
 - Read `conditional/links.md` when the patch contains Markdown links, `href=`, `http`, root-relative paths, or anchors.
 - Read `conditional/code-blocks.md` when the patch contains fenced code blocks.
+- Read `conditional/imports.md` when the patch contains `import` statements or JSX component tags.
 - Read `conditional/frontmatter.md` when the patch changes frontmatter fields at the top of the file.
 - Read a component reference only when the patch contains that component tag or imports that component name.
 - For component references, use the manifest `componentNames` field to match component names.
