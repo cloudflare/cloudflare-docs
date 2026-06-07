@@ -1,0 +1,217 @@
+---
+title: Skills
+pcx_content_type: reference
+description: Configure Agent Skills in a Think agent via getSkills() and getSkillScriptRunner() — bundled with the Vite plugin, loaded from R2, or provided by custom sources.
+sidebar:
+  order: 12
+products:
+  - agents
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Think wires the `agents/skills` engine into every turn automatically. Override `getSkills()` to return skill sources and `getSkillScriptRunner()` to enable sandboxed script execution. For the framework-agnostic primitives and conceptual overview, refer to [Agent Skills](/agents/runtime/execution/agent-skills/).
+
+## Setting up skills
+
+Think creates a `SkillRegistry` from the sources returned by `getSkills()`, registers the skill catalog as a Session context block, and merges skill tools into every turn. Sources are applied in order; the first source to register a skill name wins, and later duplicates or failed sources are logged as warnings without failing the agent.
+
+### Bundled skills with the Vite plugin
+
+The Agents Vite plugin provides the `agents:skills` virtual module, which bundles a `./skills` directory as a `SkillSource` at build time:
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+import bundledSkills from "agents:skills"; // resolves to ./skills next to this file
+
+type Env = {
+  AI: Ai;
+  LOADER: WorkerLoader;
+  SKILLS_BUCKET: R2Bucket;
+};
+
+export class MyAgent extends Think<Env> {
+  getSkills() {
+    return [
+      bundledSkills,
+      skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
+    ];
+  }
+
+  getSkillScriptRunner() {
+    return skills.runner({
+      loader: this.env.LOADER,
+      workspaceInstance: this.workspace,
+    });
+  }
+}
+```
+
+</TypeScriptExample>
+
+`agents:skills` resolves to a `./skills` directory next to the importing file. Use `agents:skills/<dir>` to point at a differently named sibling directory. The import is typed by ambient declarations that ship with `agents`, so importing `Think` in the same file brings the type into scope. For a file that imports only the specifier, add:
+
+```ts
+/// <reference types="agents/skills-module" />
+```
+
+If you are not using the Agents Vite plugin, build a source with `skills.fromManifest(...)` instead.
+
+Each skill directory must contain a `SKILL.md` file:
+
+```text
+src/skills/release-notes/SKILL.md
+src/skills/release-notes/scripts/format-release-notes.ts
+src/skills/release-notes/references/style-guide.md
+```
+
+### R2-backed skills
+
+`skills.r2()` creates a source backed by an R2 bucket. The R2 source auto-discovers skills from `SKILL.md` files under the configured prefix and refreshes every 60 seconds by default. Skills added or updated in the bucket become available without redeploying the agent.
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+  getSkills() {
+    return [
+      skills.r2(this.env.SKILLS_BUCKET, {
+        prefix: "skills/",
+        refreshIntervalMs: 60_000,    // default 60s
+        fingerprint: "content",       // "metadata" (etag+size) or "content" (hash)
+      }),
+    ];
+  }
+}
+```
+
+</TypeScriptExample>
+
+### Custom sources
+
+Return any object implementing the `SkillSource` interface from `getSkills()`:
+
+<TypeScriptExample>
+
+```ts
+import type { SkillSource, SkillDescriptor, SkillContent } from "agents/skills";
+
+export class MyAgent extends Think<Env> {
+  getSkills() {
+    return [
+      {
+        id: "my-db-source",
+        fingerprint: "v1",
+        async list(): Promise<SkillDescriptor[]> {
+          return [
+            { name: "onboarding", description: "New user onboarding procedure" },
+          ];
+        },
+        async load(name: string): Promise<SkillContent | null> {
+          const body = await this.env.DB.prepare(
+            "SELECT body FROM skills WHERE name = ?"
+          ).bind(name).first("body");
+          return body ? { name, description: `Skill: ${name}`, body, resources: [] } : null;
+        },
+      } satisfies SkillSource,
+    ];
+  }
+}
+```
+
+</TypeScriptExample>
+
+## Script runner
+
+Enable sandboxed script execution by overriding `getSkillScriptRunner()`:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Think<Env> {
+  getSkills() { /* ... */ }
+
+  getSkillScriptRunner() {
+    return skills.runner({
+      loader: this.env.LOADER,
+      workspaceInstance: this.workspace,
+      workspace: "read",           // "none" | "read" | "read-write" (default: "read" with workspaceInstance)
+      network: false,              // network access (default: false)
+      tools: myLimitedToolSet,     // tools available to scripts (default: none)
+      timeout: 30_000,             // per-script timeout in ms (default: 30000)
+    });
+  }
+}
+```
+
+</TypeScriptExample>
+
+A Worker Loader binding is required:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "worker_loaders": [{ "binding": "LOADER" }]
+}
+```
+
+</WranglerConfig>
+
+Passing `workspaceInstance` gives scripts read-only workspace access by default. Network access, tool access, and workspace writes are opt-in. For details on the script contract, runtimes, and permissions, refer to [Script execution](/agents/runtime/execution/agent-skills/#script-execution).
+
+## How Think integrates skills
+
+Think handles the integration of skills at several points in the agent lifecycle. You do not need to call `registry.load()`, `registry.systemPrompt()`, or `registry.tools()` — Think does it automatically.
+
+### Initialization
+
+During `onStart()`, Think calls `getSkills()` to collect skill sources, creates a `SkillRegistry`, calls `registry.load()`, and registers the skill catalog as a Session context block labeled `think_skills`. If the catalog changes (after a source refresh or a deploy with updated bundled skills), the system prompt is rebuilt.
+
+### Turn loop
+
+At the start of every turn, Think calls `_refreshSkillsIfChanged()`, which:
+
+1. Calls `registry.refresh()` to re-list live sources (for example, checking R2 for new or updated skills)
+2. Compares the composite fingerprint against the last known fingerprint cached in durable state
+3. If the fingerprint changed, refreshes the system prompt so the model sees the updated catalog on the next inference call
+4. If the refresh fails, keeps the last known good catalog so skills do not disappear mid-conversation
+
+Skill tools are merged into every turn's tool set. In the merge order, skill tools sit after Session tools and before MCP tools, so MCP tools can override skill tools if names collide. Refer to [Think tools](/agents/harnesses/think/tools/#tool-merge-order) for the full merge order.
+
+### Session persistence
+
+Think registers the skill catalog as a Session context block. This means the catalog persists across conversation compactions — even when older messages are summarized to stay within the context window, the skill catalog remains available to the model on every turn without re-injection.
+
+## Disabling skills
+
+If `getSkills()` returns an empty array (the default), no skill tools are injected and the `think_skills` context block is not created. Returning `null` from `getSkillScriptRunner()` (the default) omits the `run_skill_script` tool.
+
+## Example
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+export class SkillsAgent extends Think<Env> {
+  getSkills() {
+    return [skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })];
+  }
+}
+```
+
+</TypeScriptExample>
+
+Refer to the [`agent-skills` example](https://github.com/cloudflare/agents/tree/main/examples/agent-skills) for bundled skills, R2-backed skills, and script execution in a complete project.
+
+## Related
+
+- [Agent Skills](/agents/runtime/execution/agent-skills/) — framework-agnostic primitives, tool definitions, and script execution
+- [Think tools](/agents/harnesses/think/tools/) — how skill tools merge with workspace, custom, MCP, and client tools
+- [Think configuration](/agents/harnesses/think/configuration/) — all Think configuration overrides
+- [Sessions](/agents/runtime/lifecycle/sessions/) — context blocks and memory (the storage layer Think builds on)

@@ -1,6 +1,6 @@
 ---
 title: Agent Skills
-pcx_content_type: reference
+pcx_content_type: concept
 description: Give an agent a catalog of on-demand instructions, resources, and scripts with agents/skills, activated by the model only when a task matches.
 sidebar:
   order: 17
@@ -10,54 +10,135 @@ products:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Agent Skills are on-demand instructions, resources, and scripts. A skill source provides a catalog of skill names and descriptions; the agent adds that catalog to the system prompt and exposes tools the model can use when a user task matches a skill — so a large library of capabilities does not bloat every prompt.
+Agent Skills are on-demand instructions, resources, and scripts. Instead of loading all capability definitions into every system prompt — which wastes tokens and dilutes model attention — a skill catalog exposes only skill names and descriptions. The model calls `activate_skill` when a task matches, loading the full instructions only when needed.
+
+The skills engine lives in `agents/skills`. It is framework-agnostic: the core primitives (`SkillRegistry`, skill sources, the script runner) work with any agent loop. [`@cloudflare/think`](/agents/harnesses/think/) re-exports `agents/skills` as the `skills` namespace and wires the registry into every turn automatically. For Think-specific configuration instructions, refer to [Skills with Think](/agents/harnesses/think/skills/).
 
 :::note
 Agent Skills are experimental, and script execution in particular is early. The API may change in a future release.
 :::
 
-The skills engine lives in `agents/skills` and is framework-agnostic, so any agent (including a plain [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/) `onChatMessage`) can build a `SkillRegistry`. [`@cloudflare/think`](/agents/harnesses/think/) re-exports it as the `skills` namespace and wires `getSkills()` into the turn automatically.
+## DIY skills vs managed skills
 
-## Using skills with Think
+You can always build your own skill system: load files from disk, parse metadata, inject instructions into the system prompt, and define tools the model can call. Agent Skills is not doing anything you cannot build yourself. It is doing the **architecture and security model** so you do not have to.
 
-Bundled skills are usually imported with the Agents Vite plugin:
+| Concern | DIY approach | Agent Skills |
+| --- | --- | --- |
+| **Prompt hygiene** | Manually decide which skill instructions to include per turn, or include all of them and bloat every prompt | Catalog of names and descriptions in system prompt; full instructions loaded only when the model activates a skill |
+| **Tool definitions** | Write AI SDK `tool()` definitions yourself for each skill operation | `registry.tools()` returns ready-made `activate_skill`, `read_skill_resource`, and `run_skill_script` |
+| **Resource resolution** | Implement file reading, path validation, and bundling logic | Skill sources resolve bundled resources by name and path, from local files or R2 |
+| **Multi-source skills** | Build sync logic for each source (local files, object storage, databases) | `SkillSource` interface with built-in `r2()` and `fromManifest()` sources, plus a custom source API |
+| **Deduplication** | Handle name collisions across sources yourself | First source to register a name wins; collisions are logged as warnings without failing the agent |
+| **Configuring multiple agents** | Manual consistency rules. No common path for distributing changes. | Shared catalog via R2, consistent tool names (`activate_skill`), and the same registry code for every agent. |
+| **Dynamic updates** | Redeploy to change skill content | R2-backed sources auto-refresh every 60 seconds; skills update without deploying the agent |
+| **Fingerprint caching** | Write cache invalidation logic | `registry.refresh()` and `registry.fingerprint` detect changes and rebuild the catalog automatically |
+| **Sandboxed execution** | Run scripts in-process with full permissions | `skills.runner()` executes JS/TS/Python/Bash in a Worker Loader sandbox with opt-in permissions |
+| **Permission gating** | Enforce access control manually | Workspace access, network access, and tool access are opt-in per script runner; default is least privilege |
+
+## How Agent Skills works
+
+Agent Skills consists of three layers, from SDK-agnostic to framework-specific:
+
+| Layer | What it provides | Import path | AI SDK dependency |
+| --- | --- | --- | --- |
+| **Primitives** | `SkillRegistry` orchestrator, `SkillSource` interface, `r2()` and `fromManifest()` sources, `skills.runner()` script executor, Markdown parsers, validators, all types | `agents/skills` | None |
+| **AI SDK tools** | `registry.tools()` returns a Vercel AI SDK `ToolSet` with `activate_skill`, `read_skill_resource`, and (optionally) `run_skill_script` | `agents/skills` | Only `registry.tools()` — the underlying primitives are SDK-agnostic |
+| **Think integration** | `getSkills()` and `getSkillScriptRunner()` override points, automatic turn-loop wiring, fingerprint caching, Session context block registration | `@cloudflare/think` | Yes (Think uses AI SDK internally) |
+
+The flow is:
+
+1. A skill source (local files, R2 bucket, or custom) provides a catalog of skill names and descriptions
+2. `SkillRegistry` loads all sources, deduplicates, and builds the catalog
+3. The catalog — a markdown list of available skills — is injected into the system prompt
+4. `registry.tools()` provides tools the model can call: `activate_skill` to load a skill's full instructions, `read_skill_resource` to read bundled references, and `run_skill_script` to execute bundled scripts
+5. When the model calls `activate_skill("code-review")`, the registry loads the skill's body and resource listing and returns them to the model
+6. The model can then call `read_skill_resource` to read a reference file or `run_skill_script` to run a bundled script
+
+## Framework-agnostic primitives
+
+The following classes and functions work in any agent loop — Think, AIChatAgent, or your own loop built with OpenAI SDK or any other LLM client. Everything is importable from `agents/skills`.
+
+### SkillRegistry
+
+`SkillRegistry` is the central orchestrator. It takes a list of `SkillSource` objects and an optional `SkillScriptRunner`.
+
+```ts
+import { SkillRegistry, r2, runner } from "agents/skills";
+
+const registry = new SkillRegistry(
+  [r2(env.SKILLS_BUCKET, { prefix: "skills/" })],
+  runner({ loader: env.LOADER })
+);
+
+await registry.load();
+```
+
+Key methods:
+
+| Method | Returns | Description |
+| --- | --- | --- |
+| `load()` | `Promise<void>` | Lists all sources, deduplicates, builds the internal index |
+| `refresh()` | `Promise<void>` | Re-lists live sources, reloads if the composite fingerprint changed |
+| `fingerprint` | `string` (getter) | Composite hash of all sources — changes when any source changes |
+| `systemPrompt()` | `string` or `null` | Markdown catalog of available skills and their descriptions, for injection into the system prompt |
+| `snapshot()` | `SkillRegistrySnapshot` | `{ fingerprint, catalogPrompt }` — for caching and state management |
+| `loadSkill(name)` | `Promise<SkillContent or null>` | Loads the full skill body, resource listing, and metadata by name |
+| `readResource(name, path)` | `Promise<string or null>` | Reads a bundled resource by skill name and relative path |
+| `tools()` | `ToolSet` | Returns Vercel AI SDK tool definitions for `activate_skill`, `read_skill_resource`, and (if a script runner was provided) `run_skill_script` |
+| `warnings` | `string[]` (readonly) | Non-fatal diagnostics: duplicate names across sources, failed source loads |
+
+### Skill sources
+
+Skill sources provide the catalog of available skills. The `SkillSource` interface defines the contract:
+
+```ts
+interface SkillSource {
+  id: string;
+  fingerprint: string;
+  list(): Promise<SkillDescriptor[]>;
+  load(name: string): Promise<SkillContent | null>;
+  readResource?(name: string, path: string): Promise<string | null>;
+  refresh?(): Promise<void>;
+}
+```
+
+Built-in sources:
+
+| Factory | Import | Description |
+| --- | --- | --- |
+| `r2(bucket, opts?)` | `agents/skills` | R2-backed source. Auto-discovers skills from `SKILL.md` files under a prefix. Refreshes every 60 seconds by default. |
+| `fromManifest(manifest)` | `agents/skills` | Converts a `SkillManifest` (the serialized format produced by the Vite plugin's `agents:skills` virtual module) into a live `SkillSource` |
+
+The R2 source scans for `{prefix}/{directory}/SKILL.md` files, parses YAML frontmatter for `name` and `description`, and auto-discovers bundled resources (subdirectories called `scripts/`, `references/`, `assets/`, and `files/`) in the same directory.
+
+To build a custom source, implement the `SkillSource` interface:
 
 <TypeScriptExample>
 
 ```ts
-import { Think, skills } from "@cloudflare/think";
-import bundledSkills from "agents:skills"; // resolves to ./skills next to this file
+import type { SkillSource, SkillDescriptor, SkillContent } from "agents/skills";
 
-type Env = {
-	AI: Ai;
-	LOADER: WorkerLoader;
-	SKILLS_BUCKET: R2Bucket;
-};
-
-export class MyAgent extends Think<Env> {
-	getSkills() {
-		return [
-			bundledSkills,
-			skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
-		];
-	}
-
-	getSkillScriptRunner() {
-		return skills.runner({
-			loader: this.env.LOADER,
-			workspaceInstance: this.workspace,
-		});
-	}
+function mySource(data: Record<string, string>): SkillSource {
+  return {
+    id: "my-source",
+    fingerprint: String(Date.now()),
+    async list() {
+      return Object.entries(data).map(([name, description]) => ({ name, description }));
+    },
+    async load(name) {
+      const body = data[name];
+      if (!body) return null;
+      return { name, description: name, body, resources: [] };
+    }
+  };
 }
 ```
 
 </TypeScriptExample>
 
-`agents:skills` resolves to a `./skills` directory next to the importing file; use `agents:skills/<dir>` to point at a differently named sibling directory. The `agents:skills` import is typed by ambient declarations that ship with `agents`, so importing `Think` in the same file brings the type into scope (for a file that imports only the specifier, add `/// <reference types="agents/skills-module" />`). If you are not using the Agents Vite plugin, build a source with `skills.fromManifest(...)` instead.
+### Skill directory structure
 
-Sources are applied in order; the first source to register a skill name wins, and later duplicates (or a source that fails to load) are skipped with a logged warning rather than failing the agent.
-
-The imported directory should contain one child directory per skill:
+Each skill is a directory containing a `SKILL.md` file. The directory name becomes the default skill name (overridable via YAML frontmatter in `SKILL.md`).
 
 ```text
 src/skills/release-notes/SKILL.md
@@ -65,35 +146,199 @@ src/skills/release-notes/scripts/format-release-notes.ts
 src/skills/release-notes/references/style-guide.md
 ```
 
-## Skill tools
+The `SKILL.md` file uses YAML frontmatter:
 
-When skills are available, the agent exposes:
+```md
+---
+name: Release notes
+description: Format, write, and review changelog release notes for a product.
+---
+# Release Notes
 
-| Tool                  | Purpose                                                             |
-| --------------------- | ------------------------------------------------------------------- |
-| `activate_skill`      | Load a matching skill's instructions and bundled resource list      |
-| `read_skill_resource` | Read a bundled resource by `{ name, path }` or `skill-name/path`    |
-| `run_skill_script`    | Run a bundled script when `getSkillScriptRunner()` returns a runner |
+Instructions, templates, and procedures for writing release notes...
+```
 
-Skills are not always-on system prompt text. Use `getSystemPrompt()` or a Session context block for behavior that should apply to every turn. Use skills for task-specific procedures, references, scripts, templates, and assets that should be loaded only when relevant.
+Required frontmatter fields are `name` and `description`. Optional fields include `compatibility`, `license`, `allowed-tools` (for scripts), and `metadata`.
+
+### Parsers and validators
+
+Low-level utilities for reading and validating skill files:
+
+| Export | Description |
+| --- | --- |
+| `parseSkillMarkdown(raw)` | Parses a SKILL.md string into `{ name, description, body, ... }` — returns `null` if required fields are missing |
+| `parseSkillFrontmatter(raw)` | Lower-level YAML frontmatter and body split, returns `{ data, body }` |
+| `validateSkillResourcePath(path)` | Returns `null` if valid, or an error string if the path contains traversal (`..`), null bytes, or empty segments |
+| `validateSkillScriptPath(path)` | Validates the path starts with `scripts/`, has a supported extension (`.js`, `.mjs`, `.ts`, `.tsx`, `.py`, `.sh`, `.bash`), and contains no traversal |
+
+### All types
+
+The following types are exported from `agents/skills` and are framework-agnostic:
+
+| Type | Description |
+| --- | --- |
+| `SkillDescriptor` | Minimal skill metadata: `name`, `description`, `compatibility?`, `license?`, `allowedTools?`, `metadata?` |
+| `SkillContent` | Extends `SkillDescriptor` with `body`, `rawContent?`, `resources?` |
+| `SkillResourceDescriptor` | Resource metadata: `path`, `kind` (`"reference"`, `"script"`, `"asset"`, or `"file"`), `size?`, `mimeType?` |
+| `SkillResource` | Extends `SkillResourceDescriptor` with `content: string` |
+| `SkillSource` | Interface for providing skill catalogs |
+| `SkillScriptRunner` | Interface with `run(request: SkillScriptRequest): Promise<unknown>` |
+| `SkillRunContext` | Context passed to function-style scripts: `{ skill, files, workspace, tools, output }` |
+| `SkillRegistrySnapshot` | `{ fingerprint: string, catalogPrompt: string or null }` |
+
+## AI SDK tool integration
+
+`registry.tools()` is the only component in `agents/skills` that depends on the Vercel AI SDK. It returns a `ToolSet` with up to three tools:
+
+| Tool | Available when | What it does |
+| --- | --- | --- |
+| `activate_skill` | Always (if skills exist) | Model calls with a skill `name` from the catalog. Returns the skill's full body plus a resource listing, wrapped in `<skill_content>` tags. |
+| `read_skill_resource` | Always (if skills exist) | Model reads a bundled resource by passing `{ name, path }` or a qualified path like `"release-notes/references/style-guide.md"`. |
+| `run_skill_script` | When a `SkillScriptRunner` was provided to the registry constructor | Model runs a bundled script from the skill's `scripts/` directory with sandboxed execution. |
+
+These tools are standard AI SDK `tool()` definitions with Zod schemas. Their implementations call the same framework-agnostic primitives (`registry.loadSkill()`, `registry.readResource()`, `runner.run()`) that you can call directly if you are not using the AI SDK.
+
+### Using skills in an AIChatAgent
+
+You can wire `SkillRegistry` into any agent, including a plain `AIChatAgent`:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents";
+import { SkillRegistry, r2, runner } from "agents/skills";
+import { streamText } from "ai";
+
+type Env = {
+  AI: Ai;
+  LOADER: WorkerLoader;
+  SKILLS_BUCKET: R2Bucket;
+};
+
+export class MyAgent extends AIChatAgent<Env> {
+  async onChatMessage(
+    messages: Parameters<Parameters<typeof streamText>[0]["messages"]>
+  ) {
+    const registry = new SkillRegistry(
+      [r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })],
+      runner({ loader: this.env.LOADER })
+    );
+    await registry.load();
+
+    return streamText({
+      model: /* your model */,
+      system: `You are a helpful assistant.\n\n${registry.systemPrompt() ?? ""}`,
+      messages,
+      tools: {
+        // your other tools here
+        ...registry.tools(),
+      },
+    });
+  }
+}
+```
+
+</TypeScriptExample>
+
+### Using skills with OpenAI SDK or other LLM clients
+
+The primitives are SDK-agnostic. To use skills with OpenAI SDK or any other LLM client, call the primitives directly and wrap them in your own tool format:
+
+```ts
+import { SkillRegistry, r2 } from "agents/skills";
+
+const registry = new SkillRegistry([r2(env.SKILLS_BUCKET)]);
+await registry.load();
+
+// Inject the catalog into your system prompt
+const catalog = registry.systemPrompt();
+
+const response = await openai.chat.completions.create({
+  model: "gpt-4o",
+  messages: [
+    { role: "system", content: `${yourPrompt}\n\nAvailable skills:\n${catalog}` },
+    ...history
+  ],
+  tools: [
+    {
+      type: "function",
+      function: {
+        name: "activate_skill",
+        description: "Load a skill's full instructions. Choose from the available skills list in the system prompt.",
+        parameters: { type: "object", properties: { name: { type: "string" } } }
+      }
+    },
+    {
+      type: "function",
+      function: {
+        name: "read_skill_resource",
+        description: "Read a bundled resource from an activated skill.",
+        parameters: { type: "object", properties: { name: { type: "string" }, path: { type: "string" } } }
+      }
+    }
+  ]
+});
+
+// In your tool router:
+if (toolCall.function.name === "activate_skill") {
+  const skill = await registry.loadSkill(args.name);
+  // Inject skill.body into the conversation
+}
+if (toolCall.function.name === "read_skill_resource") {
+  const content = await registry.readResource(args.name, args.path);
+  // Return content to the model
+}
+```
 
 ## Script execution
 
-Script execution is opt-in and requires a Worker Loader binding:
+Agent Skills can run bundled scripts in a sandboxed Worker Loader. This is opt-in — you must provide a `SkillScriptRunner` to the registry.
+
+### Enabling script execution
+
+Create a runner with `skills.runner()` and pass it to the registry:
+
+```ts
+import { SkillRegistry, r2, runner } from "agents/skills";
+
+const registry = new SkillRegistry(
+  [r2(env.SKILLS_BUCKET)],
+  runner({
+    loader: env.LOADER,
+    workspace: "read",           // "none" | "read" | "read-write" (default: "none")
+    tools: myToolSet,            // tools available to scripts
+    network: false,              // network access (default: false)
+    timeout: 30_000,             // per-script timeout in ms (default: 30000)
+  })
+);
+```
+
+A Worker Loader binding is required:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"worker_loaders": [{ "binding": "LOADER" }]
+  "worker_loaders": [{ "binding": "LOADER" }]
 }
 ```
 
 </WranglerConfig>
 
-`skills.runner()` is experimental and runs JavaScript, TypeScript, Python, and Bash scripts under `scripts/`. TypeScript is compiled with `@cloudflare/worker-bundler`; Python runs as Python Dynamic Workers; Bash runs through `just-bash`.
+### Supported runtimes
 
-JavaScript and TypeScript scripts are function-style:
+`skills.runner()` supports four runtime types:
+
+| Runtime | Extension | Execution model |
+| --- | --- | --- |
+| JavaScript | `.js`, `.mjs` | Function-style: `export default async function run(input, ctx)` |
+| TypeScript | `.ts`, `.tsx` | Compiled with `@cloudflare/worker-bundler`, then function-style |
+| Python | `.py` | Python Dynamic Workers — both function-style (`def run(input, ctx)`) and CLI-style supported |
+| Bash | `.sh`, `.bash` | Executed via `just-bash` with workspace and tool commands available |
+
+### Script contract
+
+JavaScript and TypeScript scripts use a function-style contract:
 
 <TypeScriptExample>
 
@@ -101,39 +346,43 @@ JavaScript and TypeScript scripts are function-style:
 import type { SkillRunContext } from "@cloudflare/think";
 
 export default async function run(input: unknown, ctx: SkillRunContext) {
-	const guide = ctx.files["references/style-guide.md"]; // bundled text resources
-	const docs = await ctx.workspace.readFile("README.md"); // gated by permission
-	const summary = await ctx.tools.call("summarize", { input }); // explicit tools
-	await ctx.output.writeFile("notes.md", summary); // scratch artifact
-	return { ok: true };
+  const guide = ctx.files["references/style-guide.md"]; // bundled text resources
+  const docs = await ctx.workspace.readFile("README.md"); // gated by permission
+  const summary = await ctx.tools.call("summarize", { input }); // explicit tools
+  await ctx.output.writeFile("notes.md", summary); // scratch artifact
+  return { ok: true };
 }
 ```
 
 </TypeScriptExample>
 
-`ctx` is `{ skill, files, workspace, tools, output }`. `ctx.files` holds bundled text resources by relative path, `ctx.workspace` is gated by the workspace permission, `ctx.tools` only exposes tools the runner was given, and `ctx.output.writeFile(name, content)` returns scratch artifacts to the model (it does not mutate the workspace). Python and Bash use the path-based contract instead: `/input.json`, `/context.json`, bundled resources under `/skill`, and `/output` for artifacts.
+The `ctx` object has five fields:
 
-Passing `workspaceInstance` gives scripts read-only workspace access by default. Network access, tools, and workspace writes are opt-in. The default timeout is 30 seconds.
+| Field | Description |
+| --- | --- |
+| `skill` | The `SkillDescriptor` for the current skill |
+| `files` | Bundled text resources keyed by relative path from the skill directory |
+| `workspace` | Gated workspace access (read-only by default when `workspaceInstance` is passed) |
+| `tools` | Only tools explicitly passed to the runner |
+| `output` | Scratch artifacts returned to the model; does not mutate the workspace |
 
-## Example
+Python and Bash scripts use a path-based contract: `/input.json` for input, `/context.json` for the skill context, bundled resources under `/skill/`, and `/output/` for scratch artifacts.
 
-<TypeScriptExample>
+### Permissions
 
-```ts
-import { Think, skills } from "@cloudflare/think";
+By default, scripts run with no network access, no workspace access, and no tool access. Each permission is opt-in:
 
-export class SkillsAgent extends Think<Env> {
-	getSkills() {
-		return [skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })];
-	}
-}
-```
-
-</TypeScriptExample>
-
-Refer to the [`agent-skills` example](https://github.com/cloudflare/agents/tree/main/examples/agent-skills) for bundled skills, R2-backed skills, and script execution.
+- `workspace: "read"` or `workspace: "read-write"` — when passing `workspaceInstance`, the default is `"read"`
+- `network: true` — enables outbound fetch
+- `tools: myToolSet` — exposes specific tools to the script
+- `timeout` — per-script timeout in milliseconds (default: 30 seconds)
+- Output artifacts are capped at 64 KB each, with a maximum of 20 artifacts per invocation
 
 ## Related
 
-- [Think](/agents/harnesses/think/) — wires `getSkills()` and `getSkillScriptRunner()` into the agentic loop
+- [Skills with Think](/agents/harnesses/think/skills/) — configuring skills via `getSkills()` and `getSkillScriptRunner()` in a Think agent
+- [Think](/agents/harnesses/think/) — opinionated chat agent framework that wires skills into every turn automatically
 - [Think tools](/agents/harnesses/think/tools/) — how skill tools merge with workspace, custom, MCP, and client tools
+- [Chat agents](/agents/communication-channels/chat/chat-agents/) — `AIChatAgent` for when you need full control over the LLM call
+- [Sessions](/agents/runtime/lifecycle/sessions/) — context blocks and memory (the storage layer Think builds on)
+- [`agent-skills` example](https://github.com/cloudflare/agents/tree/main/examples/agent-skills) — bundled skills, R2-backed skills, and script execution
