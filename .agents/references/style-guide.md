@@ -13,6 +13,8 @@ These characters have special meaning in MDX and **will break the build** if use
 | `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`     |
 | `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks |
 
+> **Scope:** This applies only to literal `<` and `>` characters in prose, tables, and headings (for example, "values > 100" or "use the <zone> placeholder"). Valid JSX component tags (`<Details>`, `<Tabs>`, `<TabItem>`, etc.) are correct MDX syntax and must **not** be escaped.
+
 Component imports must appear after the frontmatter block. A used-but-not-imported component is a silent build failure.
 
 ---
