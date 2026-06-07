@@ -52,6 +52,7 @@ description: Always load for any MDX file with added content lines.
 
 - If prose uses `click` for a UI element → **suggestion**: use `select`.
 - If an example domain is a real-looking but non-reserved domain (`yourdomain.com`, `mysite.com`) → **suggestion**: use `example.com`, `example.org`, or `myappexample.com` instead.
+- If an image file is added to `src/content/` → **warning**: images must go in `src/assets/images/{product}/`, not in `src/content/`.
 
 ---
 
