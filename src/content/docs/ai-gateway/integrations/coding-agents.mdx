@@ -27,7 +27,7 @@ Routing a coding agent through AI Gateway gives you:
 
 Before you start, you need:
 
-1. An AI Gateway gateway. To create one, refer to [Getting started](/ai-gateway/get-started/).
+1. A gateway. To create one, refer to [Getting started](/ai-gateway/get-started/).
 2. Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 3. Claude Code installed and updated to the latest version.
 
@@ -43,22 +43,22 @@ This configuration uses your Anthropic API key, so Anthropic bills you for model
 
 1. Set the base URL to your gateway's Anthropic endpoint and pass your Anthropic API key.
 
-   Replace `{account_id}` and `{gateway_id}` with your values.
+   Replace `<ACCOUNT_ID>` and `<GATEWAY_ID>` with your values.
 
    <Tabs syncKey="os">
    <TabItem label="macOS / Linux">
 
    ```bash
-   export ANTHROPIC_BASE_URL=https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic
-   export ANTHROPIC_API_KEY={your_anthropic_api_key}
+   export ANTHROPIC_BASE_URL=https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/anthropic
+   export ANTHROPIC_API_KEY=<ANTHROPIC_API_KEY>
    ```
 
    </TabItem>
    <TabItem label="Windows (PowerShell)">
 
    ```powershell
-   $env:ANTHROPIC_BASE_URL = "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic"
-   $env:ANTHROPIC_API_KEY = "{your_anthropic_api_key}"
+   $env:ANTHROPIC_BASE_URL = "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/anthropic"
+   $env:ANTHROPIC_API_KEY = "<ANTHROPIC_API_KEY>"
    ```
 
    </TabItem>
@@ -76,17 +76,19 @@ If your gateway requires authentication, refer to [Authenticated Gateway](/ai-ga
 
 ## Any OpenAI-compatible coding tool
 
-Tools that speak the OpenAI chat completions format can route through AI Gateway's [REST API](/ai-gateway/usage/rest-api/). Point the tool's base URL at the following endpoint:
+Tools that speak the OpenAI chat completions format can route through AI Gateway's [REST API](/ai-gateway/usage/rest-api/). Set the tool's base URL to:
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/v1
 ```
+
+Most OpenAI-compatible tools append `/chat/completions` to the base URL automatically.
 
 Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has the `AI Gateway Run` permission, and pass it in the `Authorization` header. Specify the model in `author/model` format, such as `openai/gpt-4.1` or `anthropic/claude-sonnet-4-5`.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions" \
-  --header "Authorization: Bearer {cloudflare_api_token}" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "model": "openai/gpt-4.1",
