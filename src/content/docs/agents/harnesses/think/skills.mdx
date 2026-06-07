@@ -102,6 +102,7 @@ import type { SkillSource, SkillDescriptor, SkillContent } from "agents/skills";
 
 export class MyAgent extends Think<Env> {
   getSkills() {
+    const db = this.env.DB;
     return [
       {
         id: "my-db-source",
@@ -112,7 +113,7 @@ export class MyAgent extends Think<Env> {
           ];
         },
         async load(name: string): Promise<SkillContent | null> {
-          const body = await this.env.DB.prepare(
+          const body = await db.prepare(
             "SELECT body FROM skills WHERE name = ?"
           ).bind(name).first("body");
           return body ? { name, description: `Skill: ${name}`, body, resources: [] } : null;
@@ -154,10 +155,9 @@ A Worker Loader binding is required:
 
 <WranglerConfig>
 
-```jsonc
-{
-  "worker_loaders": [{ "binding": "LOADER" }]
-}
+```toml
+[[worker_loaders]]
+binding = "LOADER"
 ```
 
 </WranglerConfig>

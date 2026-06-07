@@ -62,6 +62,8 @@ The following classes and functions work in any agent loop — Think, AIChatAgen
 
 `SkillRegistry` is the central orchestrator. It takes a list of `SkillSource` objects and an optional `SkillScriptRunner`.
 
+<TypeScriptExample>
+
 ```ts
 import { SkillRegistry, r2, runner } from "agents/skills";
 
@@ -72,6 +74,8 @@ const registry = new SkillRegistry(
 
 await registry.load();
 ```
+
+</TypeScriptExample>
 
 Key methods:
 
@@ -244,6 +248,8 @@ export class MyAgent extends AIChatAgent<Env> {
 
 The primitives are SDK-agnostic. To use skills with OpenAI SDK or any other LLM client, call the primitives directly and wrap them in your own tool format:
 
+<TypeScriptExample>
+
 ```ts
 import { SkillRegistry, r2 } from "agents/skills";
 
@@ -290,6 +296,8 @@ if (toolCall.function.name === "read_skill_resource") {
 }
 ```
 
+</TypeScriptExample>
+
 ## Script execution
 
 Agent Skills can run bundled scripts in a sandboxed Worker Loader. This is opt-in — you must provide a `SkillScriptRunner` to the registry.
@@ -297,6 +305,8 @@ Agent Skills can run bundled scripts in a sandboxed Worker Loader. This is opt-i
 ### Enabling script execution
 
 Create a runner with `skills.runner()` and pass it to the registry:
+
+<TypeScriptExample>
 
 ```ts
 import { SkillRegistry, r2, runner } from "agents/skills";
@@ -312,6 +322,8 @@ const registry = new SkillRegistry(
   })
 );
 ```
+
+</TypeScriptExample>
 
 A Worker Loader binding is required:
 
@@ -343,7 +355,7 @@ JavaScript and TypeScript scripts use a function-style contract:
 <TypeScriptExample>
 
 ```ts
-import type { SkillRunContext } from "@cloudflare/think";
+import type { SkillRunContext } from "agents/skills";
 
 export default async function run(input: unknown, ctx: SkillRunContext) {
   const guide = ctx.files["references/style-guide.md"]; // bundled text resources
