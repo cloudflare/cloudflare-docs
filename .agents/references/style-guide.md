@@ -4,9 +4,22 @@ Prescriptive rules for writing and reviewing content in this repository. Distill
 
 ---
 
+## MDX syntax gotchas
+
+These characters have special meaning in MDX and **will break the build** if used unescaped in prose, tables, or headings:
+
+| Character | Problem                       | Fix                                    |
+| --------- | ----------------------------- | -------------------------------------- |
+| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`     |
+| `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks |
+
+Component imports must appear after the frontmatter block. A used-but-not-imported component is a silent build failure.
+
+---
+
 ## Frontmatter
 
-### Expected fields
+### Required fields
 
 | Field              | Rule                                                                                             |
 | ------------------ | ------------------------------------------------------------------------------------------------ |
@@ -15,8 +28,6 @@ Prescriptive rules for writing and reviewing content in this repository. Distill
 | `description`      | Required for all pages with `pcx_content_type`. 1–2 self-contained sentences, 50–160 characters. |
 
 Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
-
-Treat `pcx_content_type` and `description` as agent review expectations, not CI guarantees. The current content schema does not enforce the `pcx_content_type` enum or require `description` on every docs page.
 
 ### Optional fields
 
@@ -146,6 +157,10 @@ Common terms:
 
 ## Links
 
+- Use **root-relative paths**: `/workers/get-started/` — never `https://developers.cloudflare.com/workers/get-started/`
+- No file extensions: `/workers/get-started/` — not `/workers/get-started.mdx`
+- No relative links: `./page` is not supported
+- Trailing slash required: `/workers/get-started/` — not `/workers/get-started`
 - Descriptive link text — never "here", "this page", "read more", "click here"
 
 Standard phrasing:
@@ -254,7 +269,7 @@ Use `<br/>`, never two trailing spaces.
 
 Workers JS/TS examples must use `TypeScriptExample` — not bare `js`/`ts` fences.
 
-Wrangler config should use `WranglerConfig` with TOML input. Use `$today` for `compatibility_date`. This is a style convention: the component can currently parse JSONC input, so do not describe TOML input as CI-enforced.
+Wrangler config must use `WranglerConfig` with TOML input. Use `$today` for `compatibility_date`.
 
 Package install commands must use `PackageManagers`.
 
@@ -262,10 +277,12 @@ Package install commands must use `PackageManagers`.
 
 ## Components
 
+All components are imported from `~/components`. Imports must appear after the frontmatter block.
+
 **Mandatory component usage** — do not use bare fences for these:
 
 - Workers JS/TS examples → `TypeScriptExample`
-- Wrangler config → `WranglerConfig` (prefer TOML input, use `$today` for `compatibility_date`)
+- Wrangler config → `WranglerConfig` (TOML input, use `$today` for `compatibility_date`)
 - Package install/exec commands → `PackageManagers`
 - Multi-step procedures → `Steps`
 - Dashboard navigation steps → `DashButton` (not bare links)
@@ -298,7 +315,7 @@ Package install commands must use `PackageManagers`.
 | `LinkButton`                          | Styled link button (`variant="primary"`, `"secondary"`, `"minimal"`)                |
 | `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages                            |
 | `LinkCard` / `CardGrid`               | Starlight link cards, optionally in a grid                                          |
-| `DashButton`                          | Button linking to a dashboard page                                                  |
+| `DashButton`                          | Button linking to a validated dashboard deeplink                                    |
 | `GitHubCode`                          | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash)       |
 | `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                            |
 | `ListTutorials`                       | Auto-generated tutorial table for the current product                               |
@@ -366,6 +383,7 @@ For full rules see `.agents/references/procedures.md`.
 - Partials: `src/content/partials/{product}/`
 - Images: `src/assets/images/{product}/` — images must not go in `src/content/`
 - Changelogs: `src/content/changelog/{product}/`
+- Allowed file types in `src/content/`: `.mdx`, `.json`, `.yml`, `.yaml`, `.txt` only. CI rejects everything else.
 
 ---
 

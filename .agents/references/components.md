@@ -1,6 +1,6 @@
 # Cloudflare Docs — Component Reference
 
-Full usage details for MDX components available in this repository. All components are imported from `~/components`.
+Full usage details for MDX components available in this repository. All components are imported from `~/components`. Imports must appear after the frontmatter block.
 
 ---
 
@@ -281,7 +281,7 @@ import { InlineBadge } from "~/components";
 
 ## DashButton
 
-Renders a button linking to a Cloudflare dashboard page. Preferred over bare links for in-procedure dashboard navigation steps.
+Renders a button linking to a validated Cloudflare dashboard deeplink. Preferred over bare links for in-procedure dashboard navigation steps.
 
 ```mdx
 import { DashButton } from "~/components";
@@ -295,7 +295,7 @@ import { DashButton } from "~/components";
 <DashButton url="/?to=/:account/access/ai-controls" zeroTrust />
 ```
 
-Props: `url` (required), `buttonName` (optional, overrides default label), `zeroTrust` (boolean, uses Zero Trust routes).
+Props: `url` (required, must exist in `src/content/dash-routes/index.json` — build fails otherwise), `buttonName` (optional, overrides default label), `zeroTrust` (boolean, uses Zero Trust routes).
 
 ---
 

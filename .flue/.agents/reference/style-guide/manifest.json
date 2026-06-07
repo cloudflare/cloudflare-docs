@@ -18,12 +18,6 @@
 		"when": "Patch contains fenced code blocks."
 	},
 	{
-		"id": "imports",
-		"file": "conditional/imports.md",
-		"load": "conditional",
-		"when": "Patch contains import statements or JSX component tags."
-	},
-	{
 		"id": "frontmatter",
 		"file": "conditional/frontmatter.md",
 		"load": "conditional",
