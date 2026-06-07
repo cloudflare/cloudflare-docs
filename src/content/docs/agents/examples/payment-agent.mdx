@@ -6,8 +6,11 @@ sidebar:
 description: Use withX402Client to pay for resources from a Cloudflare Agent.
 ---
 
+import { TypeScriptExample } from "~/components";
+
 Build an agent that can pay for x402-protected tools. The Agents SDK includes an MCP client that can pay for protected resources from your Agents or any MCP client connection.
 
+<TypeScriptExample>
 ```ts
 import { Agent } from "agents";
 import { withX402Client } from "agents/x402";
@@ -15,6 +18,7 @@ import { privateKeyToAccount } from "viem/accounts";
 
 export class MyAgent extends Agent {
 	// Your Agent definitions...
+	x402Client: ReturnType<typeof withX402Client>;
 
 	async onStart() {
 		const { id } = await this.mcp.connect(`${this.env.WORKER_URL}/mcp`);
@@ -26,20 +30,24 @@ export class MyAgent extends Agent {
 		});
 	}
 
-	onPaymentRequired(paymentRequirements): Promise<boolean> {
+	onPaymentRequired(paymentRequirements: unknown): Promise<boolean> {
 		// Your human-in-the-loop confirmation flow...
 	}
 
 	async onToolCall(toolName: string, toolArgs: unknown) {
 		// The first parameter is the confirmation callback.
 		// Set to `null` for the agent to pay automatically.
-		return await this.x402Client.callTool(this.onPaymentRequired, {
-			name: toolName,
-			arguments: toolArgs,
-		});
+		return await this.x402Client.callTool(
+			this.onPaymentRequired.bind(this),
+			{
+				name: toolName,
+				arguments: toolArgs,
+			},
+		);
 	}
 }
 ```
+</TypeScriptExample>
 
 For a complete working example, see [x402-mcp on GitHub](https://github.com/cloudflare/agents/tree/main/examples/x402-mcp).
 

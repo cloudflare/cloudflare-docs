@@ -7,7 +7,7 @@ description: Build an agent that clones repositories, analyzes code with Claude,
 reviewed: 2025-10-15
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
 
 Build a code review agent that responds to pull requests, clones the repository in a [Sandbox](/agents/tools/sandbox/), uses Claude to analyze code changes, and posts review comments.
 
@@ -48,7 +48,8 @@ cd code-review-bot
 
 Replace `src/index.ts`:
 
-```typescript
+<TypeScriptExample>
+```ts
 import { getSandbox, proxyToSandbox, type Sandbox } from "@cloudflare/sandbox";
 import { Octokit } from "@octokit/rest";
 import Anthropic from "@anthropic-ai/sdk";
@@ -240,7 +241,7 @@ Provide a brief code review focusing on bugs, security, and best practices.`,
 		await sandbox.destroy();
 	}
 }
-```
+</TypeScriptExample>
 
 ## 4. Set up local environment variables
 

@@ -6,13 +6,7 @@ sidebar:
   order: 6
 ---
 
-import {
-	MetaInfo,
-	Render,
-	Type,
-	TypeScriptExample,
-	WranglerConfig,
-} from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Build an agent that uses Retrieval Augmented Generation (RAG) to retrieve relevant information and augment [calls to AI models](/agents/runtime/operations/using-ai-models/). Store a user's chat history to use as context for future conversations, summarize documents to bootstrap an Agent's knowledge base, and/or use data from your Agent's [browser](/agents/tools/browser/) tasks to enhance your Agent's capabilities.
 
@@ -20,7 +14,7 @@ For long-running document ingestion, indexing, or background research tasks, pai
 
 You can use the Agent's own [SQL database](/agents/runtime/lifecycle/state/) as the source of truth for your data and store embeddings in [Vectorize](/vectorize/) (or any other vector-enabled database) to allow your Agent to retrieve relevant information.
 
-### Vector search
+## Vector search
 
 :::note
 
@@ -98,7 +92,7 @@ You'll also need to connect your Agent to your vector indexes:
 
 If you have multiple indexes you want to make available, you can provide an array of `vectorize` bindings.
 
-#### Next steps
+### Next steps
 
 - Learn more on how to [combine Vectorize and Workers AI](/vectorize/get-started/embeddings/)
 - Review the [Vectorize query API](/vectorize/reference/client-api/)
