@@ -855,7 +855,19 @@ entries:
   - name: cf.tls_client_auth.cert_rfc9440_too_large
     data_type: Boolean
     categories: [Request, mTLS]
-    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain, too large, error]
+    keywords:
+      [
+        request,
+        ssl,
+        mtls,
+        client,
+        visitor,
+        rfc9440,
+        cert,
+        chain,
+        too large,
+        error,
+      ]
     summary: Returns `true` when the RFC 9440 encoded mTLS client certificate exceeds the 10 KiB size limit.
     description: |-
       When `true`, [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/) contains an empty string instead of the encoded certificate.
@@ -881,7 +893,19 @@ entries:
   - name: cf.tls_client_auth.cert_chain_rfc9440_too_large
     data_type: Boolean
     categories: [Request, mTLS]
-    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain, too large, error]
+    keywords:
+      [
+        request,
+        ssl,
+        mtls,
+        client,
+        visitor,
+        rfc9440,
+        cert,
+        chain,
+        too large,
+        error,
+      ]
     summary: Returns `true` when the RFC 9440 encoded client certificate chain exceeds the 16 KiB size limit.
     description: |-
       When `true`, [`cf.tls_client_auth.cert_chain_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440/) contains an empty string instead of the encoded certificate chain.

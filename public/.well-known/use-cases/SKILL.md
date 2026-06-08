@@ -19,18 +19,18 @@ Structured decision trees that help agents route customers to the right Cloudfla
 
 Each YAML file contains:
 
-| Field | Description |
-|-------|-------------|
-| `id` | Unique identifier (e.g., `sec-001`, `zt-003`) |
-| `name` | Plain-language description of the customer goal |
-| `category` | One of 12 categories (see below) |
-| `description` | Concise summary of what this use case solves |
-| `aliases` | Alternate names, jargon, and search keywords for discoverability |
-| `products` | Cloudflare products involved |
-| `qualifying_questions` | Questions with options that accumulate context tags |
-| `default_path` | ID of the recommended path for non-interactive agents |
-| `paths` | Implementation plans with conditions and ordered steps |
-| `related_use_cases` | Cross-references to related use case IDs |
+| Field                  | Description                                                      |
+| ---------------------- | ---------------------------------------------------------------- |
+| `id`                   | Unique identifier (e.g., `sec-001`, `zt-003`)                    |
+| `name`                 | Plain-language description of the customer goal                  |
+| `category`             | One of 12 categories (see below)                                 |
+| `description`          | Concise summary of what this use case solves                     |
+| `aliases`              | Alternate names, jargon, and search keywords for discoverability |
+| `products`             | Cloudflare products involved                                     |
+| `qualifying_questions` | Questions with options that accumulate context tags              |
+| `default_path`         | ID of the recommended path for non-interactive agents            |
+| `paths`                | Implementation plans with conditions and ordered steps           |
+| `related_use_cases`    | Cross-references to related use case IDs                         |
 
 ## Categories
 

@@ -86,9 +86,7 @@ function getLabel(label: string): string {
 					Response
 					<span class="example-status-badge">200</span>
 				</span>
-				{hasImage && (
-					<img src={imageUrl} alt={example.name} loading="lazy" />
-				)}
+				{hasImage && <img src={imageUrl} alt={example.name} loading="lazy" />}
 				{hasVideo && (
 					<video src={videoUrl} controls preload="metadata">
 						<track kind="captions" />
@@ -131,10 +129,7 @@ function getLabel(label: string): string {
 						<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
 					</TabItem>
 					<TabItem label="Output">
-						<Code
-							code={JSON.stringify(example.output, null, 4)}
-							lang="json"
-						/>
+						<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
 					</TabItem>
 				</Tabs>
 			</details>

@@ -41,7 +41,15 @@ qualifying_questions:
       - label: "Tracking usage per customer for billing"
         sets: [usage-analytics]
       - label: "All of the above"
-        sets: [cost-reduction, custom-domains, customer-code, data-isolation, security-perf, usage-analytics]
+        sets:
+          [
+            cost-reduction,
+            custom-domains,
+            customer-code,
+            data-isolation,
+            security-perf,
+            usage-analytics,
+          ]
       - label: "I'm not sure"
         sets: [custom-domains]
 
