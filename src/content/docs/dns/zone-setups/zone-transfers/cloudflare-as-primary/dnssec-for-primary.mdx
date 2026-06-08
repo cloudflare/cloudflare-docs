@@ -78,7 +78,7 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk' \
 Command line query example:
 
 ```sh
-$ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
+dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
 
 </Example>

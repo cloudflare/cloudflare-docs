@@ -163,7 +163,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk" \
 Command line query example:
 
 ```sh
-$ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
+dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
 
 2. Add Cloudflare's ZSK that you fetched in the previous step to the DNSKEY record set of your external provider(s).
