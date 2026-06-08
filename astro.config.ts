@@ -13,6 +13,7 @@ import { readdir, readFile } from "fs/promises";
 import { join } from "path";
 import { fileURLToPath } from "url";
 
+import remarkGfm from "remark-gfm";
 import remarkValidateImages from "./src/plugins/remark/validate-images";
 
 import rehypeTitleFigure from "rehype-title-figure";
@@ -103,7 +104,7 @@ export default defineConfig({
 	cacheDir: ".astro-cache",
 	markdown: {
 		smartypants: false,
-		remarkPlugins: [remarkValidateImages],
+		remarkPlugins: [remarkGfm, remarkValidateImages],
 		rehypePlugins: [
 			rehypeMermaid,
 			rehypeExternalLinks,
