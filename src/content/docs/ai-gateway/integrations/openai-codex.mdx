@@ -1,0 +1,27 @@
+---
+title: OpenAI Codex
+description: Configure OpenAI Codex to send model requests through Cloudflare AI Gateway.
+pcx_content_type: configuration
+sidebar:
+  order: 4
+products:
+  - ai-gateway
+---
+
+[OpenAI Codex](https://developers.openai.com/codex/) supports [custom model providers](https://developers.openai.com/codex/config-advanced#custom-model-providers) in its local configuration file.
+
+Add the provider configuration to your user config at `~/.codex/config.toml`. Codex can also load project-scoped files from `.codex/config.toml`, but provider settings such as `model_provider` and `model_providers` must be configured in the user-level config. Refer to the Codex docs for [config and state locations](https://developers.openai.com/codex/config-advanced#config-and-state-locations).
+
+You need your Cloudflare Account ID and AI Gateway ID from the [AI Gateway dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway), plus a [Cloudflare API token](/fundamentals/api/get-started/create-token/) with access to AI Gateway.
+
+```toml
+model = "openai/gpt-5.5"
+model_provider = "cloudflare-ai-gateway"
+
+[model_providers.cloudflare-ai-gateway]
+name = "Cloudflare AI Gateway"
+base_url = "https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/v1"
+wire_api = "responses"
+env_key = "CLOUDFLARE_API_TOKEN"
+http_headers = { "cf-aig-gateway-id" = "<gateway_id>" }
+```
