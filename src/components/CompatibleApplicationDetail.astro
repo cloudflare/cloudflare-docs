@@ -31,14 +31,11 @@ const { appName } = Astro.props;
 
 const collection = await getCollection("granular-control-applications");
 
-console.log({ collection });
-
 let app: Application | undefined;
 for (const entry of collection) {
 	app = (entry.data.applications as Application[]).find(
 		(a) => a.name === appName,
 	);
-	console.log({ controls: app?.controls[0].items });
 	if (app) break;
 }
 ---
@@ -62,11 +59,11 @@ for (const entry of collection) {
 												</span>
 											</div>
 											<div class="op-field">
-												<span class="op-label">Application Control</span>
+												<span class="op-label">Application control</span>
 												<span>{item.application_control ?? "—"}</span>
 											</div>
 											<div class="op-field">
-												<span class="op-label">Application Control ID</span>
+												<span class="op-label">Application control ID</span>
 												<span>
 													{item.application_control_id !== null ? (
 														<code>{item.application_control_id}</code>
@@ -76,15 +73,15 @@ for (const entry of collection) {
 												</span>
 											</div>
 											<div class="op-field">
-												<span class="op-label">Contains Payload</span>
+												<span class="op-label">Contains payload</span>
 												<span>{item.contains_payload ? "✓" : "—"}</span>
 											</div>
 											<div class="op-field">
-												<span class="op-label">Operation Group</span>
+												<span class="op-label">Operation group</span>
 												<span>{item.operation_group}</span>
 											</div>
 											<div class="op-field">
-												<span class="op-label">Operation Group ID</span>
+												<span class="op-label">Operation group ID</span>
 												<span>
 													<code>{item.operation_group_id}</code>
 												</span>
@@ -109,11 +106,11 @@ for (const entry of collection) {
 									</span>
 								</div>
 								<div class="op-field">
-									<span class="op-label">Application Control</span>
+									<span class="op-label">Application control</span>
 									<span>{item.application_control ?? "—"}</span>
 								</div>
 								<div class="op-field">
-									<span class="op-label">Application Control ID</span>
+									<span class="op-label">Application control ID</span>
 									<span>
 										{item.application_control_id !== null ? (
 											<code>{item.application_control_id}</code>
@@ -123,15 +120,15 @@ for (const entry of collection) {
 									</span>
 								</div>
 								<div class="op-field">
-									<span class="op-label">Contains Payload</span>
+									<span class="op-label">Contains payload</span>
 									<span>{item.contains_payload ? "✓" : "—"}</span>
 								</div>
 								<div class="op-field">
-									<span class="op-label">Operation Group</span>
+									<span class="op-label">Operation group</span>
 									<span>{item.operation_group}</span>
 								</div>
 								<div class="op-field">
-									<span class="op-label">Operation Group ID</span>
+									<span class="op-label">Operation group ID</span>
 									<span>
 										<code>{item.operation_group_id}</code>
 									</span>

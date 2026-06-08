@@ -30,13 +30,13 @@ const sorted = [...collection].sort((a, b) =>
 );
 
 const COLUMNS = [
-	"Operation Name",
+	"Operation name",
 	"Operation ID",
-	"Application Control",
-	"Application Control ID",
-	"Contains Payload",
-	"Operation Group",
-	"Operation Group ID",
+	"Application control",
+	"Application control ID",
+	"Contains payload",
+	"Operation group",
+	"Operation group ID",
 ] as const;
 ---
 
@@ -63,29 +63,29 @@ const COLUMNS = [
 											<tbody>
 												{control.items.map((item) => (
 													<tr>
-														<td data-label="Operation Name">
+														<td data-label="Operation name">
 															<strong>{item.operation_name}</strong>
 														</td>
 														<td data-label="Operation ID">
 															<code>{item.operation_id}</code>
 														</td>
-														<td data-label="Application Control">
+														<td data-label="Application control">
 															{item.application_control ?? "—"}
 														</td>
-														<td data-label="Application Control ID">
+														<td data-label="Application control ID">
 															{item.application_control_id !== null ? (
 																<code>{item.application_control_id}</code>
 															) : (
 																"—"
 															)}
 														</td>
-														<td data-label="Contains Payload">
+														<td data-label="Contains payload">
 															{item.contains_payload ? "✓" : "—"}
 														</td>
-														<td data-label="Operation Group">
+														<td data-label="Operation group">
 															{item.operation_group}
 														</td>
-														<td data-label="Operation Group ID">
+														<td data-label="Operation group ID">
 															<code>{item.operation_group_id}</code>
 														</td>
 													</tr>
@@ -107,29 +107,29 @@ const COLUMNS = [
 								<tbody>
 									{app.controls[0].items.map((item) => (
 										<tr>
-											<td data-label="Operation Name">
+											<td data-label="Operation name">
 												<strong>{item.operation_name}</strong>
 											</td>
 											<td data-label="Operation ID">
 												<code>{item.operation_id}</code>
 											</td>
-											<td data-label="Application Control">
+											<td data-label="Application control">
 												{item.application_control ?? "—"}
 											</td>
-											<td data-label="Application Control ID">
+											<td data-label="Application control ID">
 												{item.application_control_id !== null ? (
 													<code>{item.application_control_id}</code>
 												) : (
 													"—"
 												)}
 											</td>
-											<td data-label="Contains Payload">
+											<td data-label="Contains payload">
 												{item.contains_payload ? "✓" : "—"}
 											</td>
-											<td data-label="Operation Group">
+											<td data-label="Operation group">
 												{item.operation_group}
 											</td>
-											<td data-label="Operation Group ID">
+											<td data-label="Operation group ID">
 												<code>{item.operation_group_id}</code>
 											</td>
 										</tr>
