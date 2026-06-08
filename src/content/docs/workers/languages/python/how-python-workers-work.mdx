@@ -13,9 +13,11 @@ products:
 
 import { Render, WranglerConfig } from "~/components";
 
-Workers written in Python are executed by [Pyodide](https://pyodide.org/en/stable/index.html). Pyodide is a port of [CPython](https://github.com/python) (the reference implementation of Python — commonly referred to as just "Python") to WebAssembly.
+Workers written in Python are executed by [Pyodide](https://pyodide.org/en/stable/index.html).
+Pyodide is a [CPython](https://github.com/python/cpython) (the reference implementation of Python — commonly referred to as just "Python") compiled to WebAssembly.
 
-When you write a Python Worker, your code is interpreted directly by Pyodide, within a V8 isolate. Refer to [How Workers works](/workers/reference/how-workers-works/) to learn more.
+When you write a Python Worker, your code is interpreted directly by Pyodide, within a V8 isolate.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn more.
 
 ## Local Development
 
@@ -57,7 +59,7 @@ Refer to the [Python examples](/workers/languages/python/examples/) to learn how
 
 ## Deployment Lifecycle and Cold Start Optimizations
 
-To reduce cold start times, when you deploy a Python Worker, Cloudflare performs as much of the expensive work as possible upfront, at deploy time. When you run npx `uv run pywrangler deploy`, the following happens:
+To reduce cold start times, when you deploy a Python Worker, Cloudflare performs as much of the expensive work as possible upfront, at deploy time. When you run `uv run pywrangler deploy`, the following happens:
 
 1. Wrangler uploads your Python code and any packages included in your `pyproject.toml` to the Workers API.
 2. Cloudflare sends your Python code to the Workers runtime to be validated.
