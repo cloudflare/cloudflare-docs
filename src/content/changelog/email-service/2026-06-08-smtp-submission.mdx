@@ -1,10 +1,10 @@
 ---
 title: Authenticated SMTP submission now available in beta
 description: Send transactional emails through Cloudflare Email Service from any SMTP-capable application or mail client using authenticated SMTP submission on smtp.mx.cloudflare.net.
-date: 2026-05-13
+date: 2026-06-08
 ---
 
-You can now send emails through **Cloudflare Email Service** using authenticated [SMTP submission](/email-service/api/send-emails/smtp/) on `smtp.mx.cloudflare.net:465`. SMTP joins the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) as a third way to send transactional email — useful for existing applications that already speak SMTP, language-native SMTP libraries (Nodemailer, `smtplib`, PHPMailer, JavaMail), and desktop mail clients.
+You can now send emails through **Cloudflare Email Service** using authenticated [SMTP submission](/email-service/api/send-emails/smtp/) on `smtp.mx.cloudflare.net:465`. SMTP joins the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) as a third way to send transactional email — useful for existing applications that already speak SMTP and language-native SMTP libraries (Nodemailer, `smtplib`, PHPMailer, JavaMail).
 
 | Setting  | Value                                                                             |
 | -------- | --------------------------------------------------------------------------------- |
@@ -27,4 +27,4 @@ curl --ssl-reqd \
   --upload-file mail.txt
 ```
 
-Refer to the [SMTP reference](/email-service/api/send-emails/smtp/) for authentication details, response codes, language-specific examples, and desktop mail client settings.
+Refer to the [SMTP reference](/email-service/api/send-emails/smtp/) for authentication details, response codes, and language-specific examples.

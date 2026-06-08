@@ -10,7 +10,7 @@ products:
 
 import { Render } from "~/components";
 
-Cloudflare Email Service exposes an authenticated SMTP submission endpoint so you can send emails from any application, framework, or off-the-shelf mail client that speaks SMTP. Use SMTP when the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) are not a good fit — for example, when integrating an existing application that already speaks SMTP, a language-native SMTP library (Nodemailer, `smtplib`, PHPMailer, JavaMail), or a desktop mail client.
+Cloudflare Email Service exposes an authenticated SMTP submission endpoint so you can send emails from any application, framework, or off-the-shelf mail client that speaks SMTP. Use SMTP when the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) are not a good fit — for example, when integrating an existing application that already speaks SMTP, or a language-native SMTP library (Nodemailer, `smtplib`, PHPMailer, JavaMail).
 
 Emails submitted over SMTP enter the same delivery pipeline as the REST API and the Workers binding: they are subject to the same [limits](/email-service/platform/limits/), receive the same DKIM and ARC signing, and produce the same delivery logs.
 
@@ -100,20 +100,6 @@ The `250 2.0.0 Ok` response after the message body includes the assigned Message
 
 For language-specific examples — curl, Nodemailer, Python `smtplib`, and PHPMailer — see [Send email over SMTP](/email-service/examples/email-sending/smtp/).
 
-## Desktop mail client
-
-Most graphical mail clients (Apple Mail, Thunderbird, Outlook) can send through Cloudflare SMTP using these settings:
-
-| Field           | Value                                     |
-| --------------- | ----------------------------------------- |
-| Outgoing server | `smtp.mx.cloudflare.net`                  |
-| Port            | `465`                                     |
-| Connection      | SSL/TLS (sometimes labelled SMTPS)        |
-| Authentication  | Password (PLAIN or LOGIN)                 |
-| Username        | `api_token`                               |
-| Password        | Your Cloudflare API token                 |
-| From address    | An address on a domain you have onboarded |
-
 ## Limits
 
 The following per-session limits apply to SMTP submission:
@@ -175,7 +161,7 @@ For authentication problems related to SPF, DKIM, or DMARC on the recipient side
 
 ## Related resources
 
-- [Send email over SMTP](/email-service/examples/email-sending/smtp/) — examples for curl, Nodemailer, Python, PHP, and desktop mail clients.
+- [Send email over SMTP](/email-service/examples/email-sending/smtp/) — examples for curl, Nodemailer, Python, and PHP.
 - [REST API](/email-service/api/send-emails/rest-api/) — send emails over HTTPS.
 - [Workers API](/email-service/api/send-emails/workers-api/) — send emails from a Cloudflare Worker using bindings.
 - [Domain configuration](/email-service/configuration/domains/) — onboard a domain for Email Sending.
