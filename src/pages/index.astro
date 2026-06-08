@@ -76,7 +76,6 @@ const sidebar = [
 					{ label: "Queues", link: "/queues/" },
 					{ label: "Workflows", link: "/workflows/" },
 					{ label: "Browser Run", link: "/browser-run/" },
-					{ label: "Pipelines", link: "/pipelines/" },
 					{ label: "Workers VPC", link: "/workers-vpc/" },
 					{
 						label: "Cloudflare for Platforms",
@@ -90,9 +89,11 @@ const sidebar = [
 				collapsed: true,
 				badge: groupIcon("workers-ai"),
 				items: [
+					{ label: "Models", link: "/ai/models/" },
 					{ label: "Workers AI", link: "/workers-ai/" },
 					{ label: "AI Gateway", link: "/ai-gateway/" },
 					{ label: "Agents", link: "/agents/" },
+					{ label: "Agent Memory", link: "/agent-memory/" },
 					{ label: "Sandbox SDK", link: "/sandbox/" },
 					{ label: "Vectorize", link: "/vectorize/" },
 					{ label: "AI Search", link: "/ai-search/" },
@@ -105,6 +106,9 @@ const sidebar = [
 				badge: groupIcon("kv"),
 				items: [
 					{ label: "R2", link: "/r2/" },
+					{ label: "R2 Data Catalog", link: "/r2/data-catalog/" },
+					{ label: "R2 SQL", link: "/r2-sql/" },
+					{ label: "Pipelines", link: "/pipelines/" },
 					{ label: "D1", link: "/d1/" },
 					{ label: "KV", link: "/kv/" },
 					{ label: "Hyperdrive", link: "/hyperdrive/" },

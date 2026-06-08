@@ -910,6 +910,7 @@
 	"metadata": {
 		"Multilingual": "Yes"
 	},
+	"request_formats": null,
 	"created_at": "2026-05-22 17:52:58",
 	"schema": {
 		"input": {
@@ -929,7 +930,7 @@
 					"type": "integer"
 				},
 				"audio_url": {
-					"description": "The URL of the audio file to transcribe. Can be a publicly accessible URL or a data URI (data:audio/...;base64,...). For data URIs, the audio will be uploaded to AssemblyAI automatically.",
+					"description": "The URL of the audio file to transcribe. Can be a publicly accessible URL or a data URI (data:audio/...;base64,...). For data URIs, the audio will be uploaded to AssemblyAI automatically. Required for pre-recorded transcription (when stream is false or not set).",
 					"type": "string"
 				},
 				"auto_chapters": {
@@ -1080,6 +1081,10 @@
 					"format": "uri",
 					"type": "string"
 				},
+				"websocket": {
+					"description": "Enable real-time WebSocket streaming for live audio transcription. When true, a WebSocket connection is established instead of submitting a pre-recorded transcription job. Cannot be used with audio_url.",
+					"type": "boolean"
+				},
 				"word_boost": {
 					"description": "Array of words to boost recognition accuracy (legacy - use keyterms_prompt instead).",
 					"items": {
@@ -1088,9 +1093,6 @@
 					"type": "array"
 				}
 			},
-			"required": [
-				"audio_url"
-			],
 			"type": "object"
 		},
 		"output": {

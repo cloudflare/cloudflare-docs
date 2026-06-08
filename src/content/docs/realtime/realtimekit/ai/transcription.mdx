@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Transcription
-description: Enable real-time and post-meeting speech-to-text transcription in RealtimeKit.
+description: Turn on real-time and post-meeting speech-to-text transcription in RealtimeKit.
 sidebar:
   order: 1
 products:
@@ -25,9 +25,9 @@ We recommend upgrading to the Workers Paid plan to avoid Workers AI processing l
 
 Real-time transcription streams participant audio to [Deepgram Nova-3](/workers-ai/models/nova-3/) on Workers AI and sends [transcript events](#consume-real-time-transcripts) to meeting participants during the meeting.
 
-### Enable real-time transcription
+### Turn on real-time transcription
 
-You can enable real-time transcription for participants by setting `permissions.transcription_enabled: true` in the participant's [preset](/realtime/realtimekit/concepts/preset/). This lets you decide which participant audio is transcribed. For example, you can transcribe speaker audio without transcribing audience audio.
+You can turn on real-time transcription for participants by setting `permissions.transcription_enabled: true` in the participant's [preset](/realtime/realtimekit/concepts/preset/). This lets you decide which participant audio is transcribed. For example, you can transcribe speaker audio without transcribing audience audio.
 
 To update an existing preset, use the [Update a preset API](/api/resources/realtime_kit/subresources/presets/methods/update/):
 
@@ -133,9 +133,9 @@ meeting.ai.on("transcript", (transcript) => {
 
 Post-meeting transcription generates a transcript after the meeting ends using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) on Workers AI and delivers it through a [webhook](/realtime/realtimekit/webhooks/) or [REST API](#rest-api). To identify speakers, RealtimeKit processes each participant's audio separately before creating the [final transcript](#output-formats).
 
-### Enable post-meeting transcription
+### Turn on post-meeting transcription
 
-You can enable post-meeting transcription when you create a meeting. Set `transcribe_on_end: true` to generate a transcript after the meeting ends. To also generate a [summary](/realtime/realtimekit/ai/summary/) automatically after the transcript is available, set `summarize_on_end: true`.
+You can turn on post-meeting transcription when you create a meeting. Set `transcribe_on_end: true` to generate a transcript after the meeting ends. To also generate a [summary](/realtime/realtimekit/ai/summary/) automatically after the transcript is available, set `summarize_on_end: true`.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
@@ -366,7 +366,7 @@ Transcripts are available for **7 days** after the meeting ends. Download or cop
 
 ## Billing and Free plan limits
 
-RealtimeKit's out-of-the-box transcription records each participant's audio track and processes it with Workers AI. Workers AI usage is billed to your Cloudflare account using [audio model pricing](/workers-ai/platform/pricing/#audio-model-pricing), which scales by participant audio minutes, not meeting duration.
+RealtimeKit's default transcription records each participant's audio track and processes it with Workers AI. Workers AI usage is billed to your Cloudflare account using [audio model pricing](/workers-ai/platform/pricing/#audio-model-pricing), which scales by participant audio minutes, not meeting duration.
 
 On the Workers Free plan, Workers AI includes 10,000 Neurons per day. To use more than 10,000 Neurons per day, upgrade to the [Workers Paid plan](/workers/platform/pricing/#workers). Workers Paid includes the same 10,000 daily free Neurons, then bills additional usage at `$0.011` per 1,000 Neurons.
 
@@ -383,7 +383,7 @@ RealtimeKit transcription uses these Workers AI audio model rates:
 
 RealtimeKit transcription is a managed transcription workflow. When transcription is turned on, RealtimeKit processes participant audio with Workers AI and stores [transcript outputs](#output-formats) in RealtimeKit-managed storage.
 
-For real-time transcription, RealtimeKit streams enabled participant audio to Workers AI and sends transcript updates to meeting participants during the meeting.
+For real-time transcription, RealtimeKit streams audio from participants with transcription turned on to Workers AI and sends transcript updates to meeting participants during the meeting.
 
 For post-meeting transcription, RealtimeKit processes each participant's audio separately after the meeting ends, creates the final transcript files, and makes them available through a webhook or REST API.
 

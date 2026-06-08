@@ -168,11 +168,40 @@ Follow the steps below to learn how to build a Workflow from scratch.
    }
    ```
 
-   </WranglerConfig>
+    </WranglerConfig>
 
-   The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`).
+    The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`).
 
-   You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
+    If you want the same Workflow to run automatically on a recurring interval, add `schedules` to the Workflow definition:
+
+    <WranglerConfig>
+
+    ```jsonc
+    {
+      "$schema": "node_modules/wrangler/config-schema.json",
+      "name": "my-workflow",
+      "main": "src/index.ts",
+      "compatibility_date": "$today",
+      "workflows": [
+        {
+          "name": "my-workflow",
+          "binding": "MY_WORKFLOW",
+          "class_name": "MyWorkflow",
+          "schedules": ["0 * * * *"]
+        }
+      ]
+    }
+    ```
+
+    </WranglerConfig>
+
+    Each matching cron expression creates a new Workflow instance automatically, so you do not need top-level `triggers.crons` and a separate `scheduled` handler for Workflow-specific recurring runs.
+
+    Scheduled instances include the matching cron expression and scheduled trigger time on `event.schedule`.
+
+    Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
+
+    You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
 
 2. Now, generate types for your bindings:
 

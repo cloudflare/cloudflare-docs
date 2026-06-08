@@ -47,7 +47,7 @@ These records authenticate your outbound emails. Email Sending creates DNS recor
 
 **Purpose**: Route bounce emails back to Cloudflare for processing.
 
-```dns
+```txt
 MX cf-bounce.yourdomain.com route1.mx.cloudflare.net
 MX cf-bounce.yourdomain.com route2.mx.cloudflare.net
 MX cf-bounce.yourdomain.com route3.mx.cloudflare.net
@@ -65,7 +65,7 @@ MX cf-bounce.yourdomain.com route3.mx.cloudflare.net
 
 **Purpose**: Authorizes Cloudflare to send emails on behalf of your domain.
 
-```dns
+```txt
 TXT cf-bounce.yourdomain.com "v=spf1 include:_spf.mx.cloudflare.net ~all"
 ```
 
@@ -81,7 +81,7 @@ TXT cf-bounce.yourdomain.com "v=spf1 include:_spf.mx.cloudflare.net ~all"
 
 **Purpose**: Provides cryptographic authentication for your emails.
 
-```dns
+```txt
 TXT cf-bounce._domainkey.yourdomain.com "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA..."
 ```
 
@@ -97,7 +97,7 @@ TXT cf-bounce._domainkey.yourdomain.com "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgk
 
 **Purpose**: Sets policy for email authentication failures.
 
-```dns
+```txt
 TXT _dmarc.yourdomain.com "v=DMARC1; p=reject;"
 ```
 
@@ -126,7 +126,7 @@ These records route incoming emails to Cloudflare and authenticate forwarded ema
 
 **Purpose**: Route incoming emails to Cloudflare's mail servers.
 
-```dns
+```txt
 MX yourdomain.com route1.mx.cloudflare.net
 MX yourdomain.com route2.mx.cloudflare.net
 MX yourdomain.com route3.mx.cloudflare.net
@@ -144,7 +144,7 @@ MX yourdomain.com route3.mx.cloudflare.net
 
 **Purpose**: Authorizes Cloudflare to forward emails on behalf of your domain.
 
-```dns
+```txt
 TXT yourdomain.com "v=spf1 include:_spf.mx.cloudflare.net ~all"
 ```
 
@@ -164,7 +164,7 @@ If you have existing SPF records, merge them: `v=spf1 include:_spf.mx.cloudflare
 
 **Purpose**: Provides cryptographic authentication for forwarded emails.
 
-```dns
+```txt
 TXT cf2024-1._domainkey.yourdomain.com "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA..."
 ```
 

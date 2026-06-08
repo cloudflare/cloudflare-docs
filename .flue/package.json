@@ -1,0 +1,22 @@
+{
+	"name": "cloudflare-docs-flue",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"description": "Flue-powered docs bot for cloudflare/cloudflare-docs. Deployed as a Cloudflare Worker.",
+	"scripts": {
+		"build": "flue build",
+		"dev": "flue dev",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@cloudflare/codemode": "0.3.8",
+		"@cloudflare/shell": "0.3.8",
+		"@cloudflare/workers-types": "4.20260526.1",
+		"@flue/cli": "0.9.1",
+		"@flue/runtime": "0.9.1",
+		"agents": "0.14.1",
+		"valibot": "1.4.1",
+		"wrangler": "4.97.0"
+	}
+}

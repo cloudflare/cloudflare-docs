@@ -258,7 +258,7 @@ In earlier versions, each configuration for that organization must include `envi
 
 ### `external_emergency_signal_fingerprint`
 
-The SHA-256 fingerprint that the Cloudflare One Client will use to validate the [`external_emergency_signal_url`](#external_emergency_signal_url) HTTPS endpoint. Refer to [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect) for details on how to extract this fingerprint.
+The SHA-256 fingerprint that the Cloudflare One Client will use to validate the [`external_emergency_signal_url`](#external_emergency_signal_url) HTTPS endpoint. Refer to [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect) for details on how to extract this fingerprint.
 
 **Value Type:** `string`
 
@@ -266,7 +266,7 @@ The SHA-256 fingerprint that the Cloudflare One Client will use to validate the 
 
 ### `external_emergency_signal_interval`
 
-How often the Cloudflare One Client will poll [`external_emergency_signal_url`](#external_emergency_signal_url) for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/) signal.
+How often the Cloudflare One Client will poll [`external_emergency_signal_url`](#external_emergency_signal_url) for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect) signal.
 
 **Value Type:** `integer`
 
@@ -274,13 +274,24 @@ How often the Cloudflare One Client will poll [`external_emergency_signal_url`](
 
 ### `external_emergency_signal_url`
 
-The HTTPS endpoint that the Cloudflare One Client will poll for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/) signal.
+The HTTPS endpoint that the Cloudflare One Client will poll for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect) signal.
 
 **Value Type:** `string`
 
 **Value:** `https://192.0.2.1:3333/status/disconnect`
 
 The URL must use `https://` and use an IPv4 or IPv6 address as host (not a domain).
+
+### `local_emergency_signal_enabled`
+
+Enables [Local Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-local-emergency-disconnect). When enabled, the Cloudflare One Client monitors a fixed-path JSON file on the device for an emergency disconnect signal.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+- `false` — (default) Local signal file monitoring is disabled.
+- `true` — The client monitors the local signal file for emergency disconnect.
 
 ### `onboarding`
 

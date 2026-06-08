@@ -19,6 +19,7 @@ import {
 	TabItem,
 	Tabs,
 	RelatedProduct,
+	WorkersVPCOverviewDiagram,
 } from "~/components";
 
 <Description>
@@ -33,7 +34,9 @@ Workers VPC allows you to connect your Workers to your private APIs, services, a
 
 With Workers VPC, you can configure a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to establish secure, private connections from your private networks to Cloudflare. Then, you can configure a [VPC Service](/workers-vpc/configuration/vpc-services/) for each service in the external private network you need to connect to, and use [VPC Service bindings](/workers-vpc/api/) to connect from Workers. VPC Services support both HTTP and TCP service types, allowing you to connect to web APIs and databases (through [Hyperdrive](/hyperdrive/)).
 
-You can also use [VPC Network bindings](/workers-vpc/configuration/vpc-networks/) to give Workers broader access to your private infrastructure — services behind [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), subnet and hostname routes announced through Cloudflare Tunnel or Mesh, and destinations connected through [Cloudflare WAN](/cloudflare-wan/) on-ramps (GRE, IPsec, and CNI).
+You can also use [VPC Network bindings](/workers-vpc/configuration/vpc-networks/) to give Workers broader access to your private infrastructure — services behind [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), subnet and hostname routes announced through Cloudflare Tunnel or Mesh, and destinations connected through [Cloudflare WAN](/cloudflare-wan/) on-ramps (GRE, IPsec, and CNI). The same binding can also egress to public Internet destinations through [Cloudflare Gateway](/cloudflare-one/traffic-policies/), so your existing Zero Trust traffic policies and logs apply to Worker requests.
+
+<WorkersVPCOverviewDiagram />
 
 :::note
 
@@ -97,6 +100,10 @@ Route requests to internal microservices in your private network based on URL pa
 ### Internal tooling, agents, dashboards
 
 Build employee-facing applications and MCP servers that aggregate data from multiple private services. Create unified dashboards, admin panels, and internal tools without exposing backend systems.
+
+### Apply Zero Trust controls to Worker egress
+
+Route public Internet traffic from your Workers through [Cloudflare Gateway](/cloudflare-one/traffic-policies/) so existing DNS, HTTP, Network, and egress policies — and the corresponding logs — apply to programmatic compute the same way they apply to your workforce. Stop a Worker from reaching unwanted destinations without writing custom proxy logic.
 
 ## Related products
 

@@ -327,14 +327,19 @@ npx wrangler secret list
 
 ---
 
-<WranglerCommand command="secret bulk" headingLevel={3} />
+<WranglerCommand command="secret bulk" headingLevel={3} description="Create, update, or delete multiple secrets for a Worker in a single request, with up to 100 secrets per command." />
 
-The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
+:::note
+Deleting secrets by setting a key to `null` requires wrangler version 4.97.0 or later and JSON format. Deletion is not supported with `.env` files.
+:::
+
+The following is an example of creating, updating, and deleting secrets from a JSON file redirected to `stdin`. Set a key to `null` to delete it.
 
 ```json
 {
 	"secret-name-1": "secret-value-1",
-	"secret-name-2": "secret-value-2"
+	"secret-name-2": "secret-value-2",
+	"secret-name-3": null
 }
 ```
 
@@ -343,15 +348,14 @@ npx wrangler secret bulk < secrets.json
 ```
 
 ```sh output
-🌀 Creating the secrets for the Worker "script-name"
+🌀 Processing the secrets for the Worker "script-name"
 ✨ Successfully created secret for key: secret-name-1
-...
-🚨 Error uploading secret for key: secret-name-1
 ✨ Successfully created secret for key: secret-name-2
+💥 Successfully deleted secret for key: secret-name-3
 
-Finished processing secrets JSON file:
-✨ 1 secrets successfully uploaded
-🚨 1 secrets failed to upload
+Finished processing secrets file:
+✨ 2 secrets successfully created
+💥 1 secrets successfully deleted
 ```
 
 ---

@@ -1,5 +1,6 @@
 import { env as workerEnv } from "cloudflare:workers";
-import { registerProvider, flue } from "@flue/runtime/app";
+import { registerProvider } from "@flue/runtime";
+import { flue } from "@flue/runtime/routing";
 
 const bindings = workerEnv as unknown as {
 	AI: Ai;

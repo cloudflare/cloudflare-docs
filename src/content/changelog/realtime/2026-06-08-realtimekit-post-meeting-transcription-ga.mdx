@@ -39,7 +39,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime
 
 ## Consume results
 
-When RealtimeKit finishes processing a meeting, it creates download URLs for the transcript and, if `summarize_on_end` is enabled, the summary. You can receive those URLs automatically with [webhooks](/realtime/realtimekit/webhooks/), or fetch them later for a specific session with the [REST API](/realtime/realtimekit/ai/summary/#rest-api).
+When RealtimeKit finishes processing a meeting, it creates download URLs for the transcript and, if `summarize_on_end` is set, the summary. You can receive those URLs automatically with [webhooks](/realtime/realtimekit/webhooks/), or fetch them later for a specific session with the [REST API](/realtime/realtimekit/ai/summary/#rest-api).
 
 To receive results as soon as they are ready, configure the `meeting.transcript` and `meeting.summary` webhook events:
 
@@ -65,7 +65,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-Use the [Generate summary of transcripts for the session](/api/resources/realtime_kit/subresources/sessions/methods/generate_summary_of_transcripts/) API only if `summarize_on_end` was not enabled and you want to generate a summary manually after the transcript is available:
+Use the [Generate summary of transcripts for the session](/api/resources/realtime_kit/subresources/sessions/methods/generate_summary_of_transcripts/) API only if `summarize_on_end` was not set and you want to generate a summary manually after the transcript is available:
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/summary" \

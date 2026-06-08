@@ -187,7 +187,7 @@ Requires the [Super Administrator](/cloudflare-one/roles-permissions/) role.
 
 To resume normal operations, turn off **Disconnect the Cloudflare One Client on all devices**. The Cloudflare One Client will automatically reconnect.
 
-For more information on how **Disconnect the Cloudflare One Client on all devices** works with other device client settings, refer to [Device client settings precedence](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/#warp-settings-precedence).
+For more information on how **Disconnect the Cloudflare One Client on all devices** works with other device client settings, refer to [Device client settings precedence](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#device-client-settings-precedence).
 
 ### Manage device connection using an external signal
 
@@ -195,7 +195,15 @@ For more information on how **Disconnect the Cloudflare One Client on all device
 
 Allows administrators to disconnect and reconnect the Cloudflare One Client independently from any Cloudflare infrastructure. When `Enabled`, Cloudflare One Clients will periodically poll the configured HTTPS endpoint and disconnect when they receive a valid disconnect signal.
 
-To set up the external HTTPS endpoint, refer to [External emergency disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/).
+To set up the external HTTPS endpoint, refer to [Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect).
+
+### Manage device connection using a local file
+
+<Render file="warp/local-disconnect-availability" product="cloudflare-one" />
+
+Allows administrators to disconnect and reconnect the Cloudflare One Client using a local JSON file on the device, without requiring any network connectivity. When `Enabled`, the Cloudflare One Client monitors a fixed file path for a disconnect signal. This is useful for disaster recovery scenarios where both Cloudflare and your own infrastructure may be unreachable.
+
+To set up the local signal file, refer to [Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-local-emergency-disconnect).
 
 ## Device profile settings
 

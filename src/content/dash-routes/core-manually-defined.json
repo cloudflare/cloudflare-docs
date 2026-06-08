@@ -5,6 +5,11 @@
 		"parent": ["Networking"]
 	},
 	{
+		"deeplink": "/?to=/:account/data-catalog/overview",
+		"name": "R2 Data Catalog",
+		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
 		"name": "Browser Run",
 		"deeplink": "/?to=/:account/workers/browser-run",
 		"parent": ["Compute & AI"]

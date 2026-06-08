@@ -1,0 +1,21 @@
+---
+title: TLS bug detection in the Cloudflare Radar post-quantum checker
+description: The Radar post-quantum TLS support checker now surfaces detected TLS bugs with descriptions and remediation guidance
+products:
+  - radar
+date: 2026-05-29
+---
+
+The [**Radar**](/radar/) [post-quantum TLS support checker](https://radar.cloudflare.com/post-quantum#website-support) now also reports TLS bugs detected during the handshake test. When a scanned host exhibits compatibility issues, the results include details on the specific bugs detected, along with guidance on how to investigate and remediate each issue. The bugs section only appears for hosts where issues are found.
+
+The following TLS bugs are detected:
+
+- **Split ClientHello** — The connection fails with a fragmented post-quantum `ClientHello` but succeeds with classical handshakes. Typically caused by middleboxes or firewalls that cannot reassemble split TLS messages.
+- **HRR Failure** — The server sends a `HelloRetryRequest` but fails to complete the handshake afterward.
+- **Unknown Keyshare** — The server cannot handle unknown key exchange algorithms and fails instead of responding with a `HelloRetryRequest` as required by the TLS 1.3 specification.
+
+![TLS bug detection results in the Radar post-quantum checker](~/assets/images/radar/pq-tls-bug-detection.png)
+
+Bug detection data is available through the existing [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) endpoint.
+
+Visit the [Post-Quantum Encryption](https://radar.cloudflare.com/post-quantum#website-support) page to test a host.

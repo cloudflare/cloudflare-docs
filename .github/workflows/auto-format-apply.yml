@@ -1,0 +1,364 @@
+name: Auto Format (Apply)
+
+# Part 2 of 2 of the auto-formatter (companion: auto-format-build.yml).
+
+on:
+  workflow_run:
+    workflows: ["Auto Format (Build)"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  apply-patch:
+    name: Apply format patch
+    # Only proceed when the build job succeeded for a pull_request event.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Generate App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_ID }}
+          private-key: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_PRIVATE_KEY }}
+
+      - name: Download patch artifact
+        id: download
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const { data: list } =
+              await github.rest.actions.listWorkflowRunArtifacts({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: context.payload.workflow_run.id,
+              });
+
+            const match = list.artifacts.find((a) => a.name === 'format-patch');
+            if (!match) {
+              core.info('No format-patch artifact found; nothing to apply.');
+              core.setOutput('found', 'false');
+              return;
+            }
+
+            const { data: zip } = await github.rest.actions.downloadArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: match.id,
+              archive_format: 'zip',
+            });
+
+            const tmp = process.env.RUNNER_TEMP;
+            const zipPath = path.join(tmp, 'format-patch.zip');
+            fs.writeFileSync(zipPath, Buffer.from(zip));
+            core.setOutput('found', 'true');
+            core.setOutput('zip', zipPath);
+
+      - name: Unzip and read metadata
+        if: steps.download.outputs.found == 'true'
+        id: meta
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/auto-format"
+          unzip -q "${{ steps.download.outputs.zip }}" -d "$RUNNER_TEMP/auto-format"
+
+          PATCH_PATH="$RUNNER_TEMP/auto-format/format.patch"
+          PR_NUM_PATH="$RUNNER_TEMP/auto-format/pr-number.txt"
+          SHA_PATH="$RUNNER_TEMP/auto-format/head-sha.txt"
+
+          for f in "$PATCH_PATH" "$PR_NUM_PATH" "$SHA_PATH"; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Artifact missing required file: $f"
+              exit 1
+            fi
+          done
+
+          PR_NUMBER=$(tr -d '[:space:]' < "$PR_NUM_PATH")
+          BUILD_SHA=$(tr -d '[:space:]' < "$SHA_PATH")
+
+          if ! [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "::error::Invalid PR number in artifact: $PR_NUMBER"
+            exit 1
+          fi
+          if ! [[ "$BUILD_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::Invalid head SHA in artifact: $BUILD_SHA"
+            exit 1
+          fi
+
+          {
+            echo "patch_path=$PATCH_PATH"
+            echo "pr_number=$PR_NUMBER"
+            echo "build_sha=$BUILD_SHA"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate patch paths
+        if: steps.download.outputs.found == 'true'
+        run: |
+          set -euo pipefail
+          PATCH="${{ steps.meta.outputs.patch_path }}"
+
+          # File extensions prettier is allowed to format.
+          ALLOWED_EXT='\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$'
+
+          # Paths the bot must NEVER modify regardless of extension. The
+          # blocklist is the security boundary; the allowlist is a sanity
+          # check.
+          BLOCKED='^(\.github/|package\.json$|package-lock\.json$|pnpm-lock\.yaml$|\.npmrc$|patches/|\.husky/)'
+
+          # Extract destination paths ("b/<path>") from the patch header.
+          # We intentionally check the destination side, since renames could
+          # otherwise smuggle a blocked path on the b/ side.
+          paths=$(grep -E '^diff --git ' "$PATCH" | awk '{print $4}' | sed 's|^b/||')
+
+          if [ -z "$paths" ]; then
+            echo "::error::Patch contains no file headers"
+            exit 1
+          fi
+
+          fail=0
+          while IFS= read -r p; do
+            if echo "$p" | grep -qE "$BLOCKED"; then
+              echo "::error::Patch touches blocked path: $p"
+              fail=1
+              continue
+            fi
+            if ! echo "$p" | grep -qE "$ALLOWED_EXT"; then
+              echo "::error::Patch touches path with non-allowlisted extension: $p"
+              fail=1
+              continue
+            fi
+          done <<< "$paths"
+
+          if [ "$fail" -ne 0 ]; then
+            exit 1
+          fi
+
+          echo "Patch validated. Files:"
+          echo "$paths"
+
+      - name: Look up PR
+        if: steps.download.outputs.found == 'true'
+        id: pr
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          PR_NUMBER: ${{ steps.meta.outputs.pr_number }}
+          BUILD_SHA: ${{ steps.meta.outputs.build_sha }}
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const prNumber = parseInt(process.env.PR_NUMBER, 10);
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+
+            // Refuse to push if the PR has advanced since the patch was built.
+            // Otherwise we'd be applying a stale patch.
+            if (pr.head.sha !== process.env.BUILD_SHA) {
+              core.info(
+                `PR head moved from ${process.env.BUILD_SHA} to ${pr.head.sha}; ` +
+                  `skipping. A new run will be triggered for the new commit.`,
+              );
+              core.setOutput('stale', 'true');
+              return;
+            }
+
+            if (pr.state !== 'open') {
+              core.info(`PR #${prNumber} is ${pr.state}; skipping.`);
+              core.setOutput('stale', 'true');
+              return;
+            }
+
+            if (!pr.head.repo) {
+              core.info(
+                `PR #${prNumber} source repository no longer exists ` +
+                  `(fork deleted?); skipping.`,
+              );
+              core.setOutput('stale', 'true');
+              return;
+            }
+
+            const isFork =
+              pr.head.repo.fork ||
+              pr.head.repo.full_name !==
+                `${context.repo.owner}/${context.repo.repo}`;
+
+            core.setOutput('stale', 'false');
+            core.setOutput('ref', pr.head.ref);
+            core.setOutput('sha', pr.head.sha);
+            core.setOutput('is_fork', isFork.toString());
+            core.setOutput('full_name', pr.head.repo.full_name);
+            core.setOutput('number', prNumber.toString());
+
+      # ------------------------------------------------------------------
+      # SECURITY NOTE — Both checkout steps below place PR-controlled code
+      # in the workspace of a privileged workflow (workflow_run has the App
+      # token in scope). CodeQL flags this as the "Checkout of untrusted
+      # code in privileged context" pattern (the GitHub Security Lab "pwn
+      # request" anti-pattern). The alert is dismissed deliberately for
+      # this workflow. Justification:
+      #
+      #   1. No PR-controlled code is executed. The only operations
+      #      performed against the checked-out tree are `git apply` (a
+      #      textual patch operation), `git commit --no-verify` (hooks
+      #      explicitly bypassed), and `git push`. No `pnpm install`,
+      #      no `pnpm run`, no `node`, no `uses:` referencing PR paths.
+      #
+      #   2. The patch contents are validated against a path allowlist
+      #      BEFORE checkout (see "Validate patch paths" step) and the
+      #      resulting staged diff is re-validated AFTER `git apply` but
+      #      BEFORE push (see "Apply patch" step). The bot cannot push
+      #      changes to `.github/`, `package.json`, lockfiles, `.npmrc`,
+      #      `patches/`, or `.husky/` regardless of what prettier did.
+      #
+      #   3. The PR head SHA is verified to match the build artifact's
+      #      SHA before we proceed; a stale-head PR is skipped (see
+      #      "Look up PR" step).
+      #
+      #   4. Fork checkouts use `persist-credentials: false` so no token
+      #      lands in the local .git/config of an untrusted tree.
+      #
+      # ANY FUTURE CHANGE to this workflow that adds `pnpm install`,
+      # `npm install`, `pnpm run`, `npm run`, `node <pr-path>`, or any
+      # action whose `uses:` references a path inside the PR tree
+      # INVALIDATES this dismissal and must re-evaluate the threat model
+      # before merging.
+      # ------------------------------------------------------------------
+
+      # --- Same-repo: checkout with the App token for direct push ---
+
+      - name: Checkout (same-repo)
+        if: >-
+          steps.download.outputs.found == 'true' &&
+          steps.pr.outputs.stale == 'false' &&
+          steps.pr.outputs.is_fork == 'false'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ steps.pr.outputs.ref }}
+          token: ${{ steps.app-token.outputs.token }}
+          # Intentional: the push step below pushes back to the PR branch
+          # using this credential. See SECURITY NOTE above.
+          persist-credentials: true
+
+      # --- Fork: checkout the fork at the pinned SHA, no creds persisted ---
+
+      - name: Checkout (fork)
+        if: >-
+          steps.download.outputs.found == 'true' &&
+          steps.pr.outputs.stale == 'false' &&
+          steps.pr.outputs.is_fork == 'true'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          repository: ${{ steps.pr.outputs.full_name }}
+          ref: ${{ steps.pr.outputs.sha }}
+          # Intentional: no token persisted into the fork's tree. The
+          # subsequent push uses GIT_ASKPASS to supply the App token only
+          # to the push process. See SECURITY NOTE above.
+          persist-credentials: false
+
+      - name: Apply patch
+        if: >-
+          steps.download.outputs.found == 'true' &&
+          steps.pr.outputs.stale == 'false'
+        run: |
+          set -euo pipefail
+          git apply --whitespace=nowarn "${{ steps.meta.outputs.patch_path }}"
+          git add -A
+          # Re-validate the staged diff against the same path rules. This
+          # guards against any drift between artifact contents and what
+          # actually applied (renames, partial application, etc.).
+          ALLOWED_EXT='\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$'
+          BLOCKED='^(\.github/|package\.json$|package-lock\.json$|pnpm-lock\.yaml$|\.npmrc$|patches/|\.husky/)'
+          staged=$(git diff --staged --name-only)
+          fail=0
+          while IFS= read -r p; do
+            [ -z "$p" ] && continue
+            if echo "$p" | grep -qE "$BLOCKED"; then
+              echo "::error::Staged change touches blocked path: $p"
+              fail=1
+              continue
+            fi
+            if ! echo "$p" | grep -qE "$ALLOWED_EXT"; then
+              echo "::error::Staged change touches non-allowlisted extension: $p"
+              fail=1
+              continue
+            fi
+          done <<< "$staged"
+          if [ "$fail" -ne 0 ]; then
+            exit 1
+          fi
+
+      # --- Same-repo: push directly ---
+
+      - name: Commit and push (same-repo)
+        if: >-
+          steps.download.outputs.found == 'true' &&
+          steps.pr.outputs.stale == 'false' &&
+          steps.pr.outputs.is_fork == 'false'
+        run: |
+          set -euo pipefail
+          git config user.name "cloudflare-docs-bot[bot]"
+          git config user.email "cloudflare-docs-bot[bot]@users.noreply.github.com"
+          git commit --no-verify -m "style: format"
+          git push
+
+      # --- Fork: push via GIT_ASKPASS to avoid leaking the token ---
+
+      - name: Commit and push (fork)
+        if: >-
+          steps.download.outputs.found == 'true' &&
+          steps.pr.outputs.stale == 'false' &&
+          steps.pr.outputs.is_fork == 'true'
+        id: push-fork
+        env:
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "cloudflare-docs-bot[bot]"
+          git config user.email "cloudflare-docs-bot[bot]@users.noreply.github.com"
+          git commit --no-verify -m "style: format"
+
+          export GIT_ASKPASS="$RUNNER_TEMP/git-askpass.sh"
+          printf '#!/bin/sh\necho "%s"\n' "$APP_TOKEN" > "$GIT_ASKPASS"
+          chmod +x "$GIT_ASKPASS"
+
+          git remote add fork \
+            "https://x-access-token@github.com/${{ steps.pr.outputs.full_name }}.git"
+
+          if git push fork "HEAD:${{ steps.pr.outputs.ref }}"; then
+            echo "push_failed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "push_failed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+          rm -f "$GIT_ASKPASS"
+
+      - name: Comment on push failure
+        if: steps.push-fork.outputs.push_failed == 'true'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const prNumber = parseInt(process.env.PR_NUMBER, 10);
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body:
+                'Could not push formatting changes to this fork. ' +
+                'The contributor may have "Allow edits by maintainers" disabled.\n\n' +
+                'Please run the formatter locally:\n\n' +
+                '```\npnpm format\n```',
+            });
