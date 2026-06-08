@@ -906,7 +906,7 @@ MCP server portals have the following known limitations:
 
 - **Not all MCP servers support OAuth dynamic client registration.** MCP servers that do not support [OAuth dynamic client registration](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#dynamic-client-registration) cannot use the portal's OAuth authentication flow. For these servers, select **Custom Headers** as the authentication method and provide static credentials (for example, API keys or personal access tokens) instead.
 
-- **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
+- **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync Required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
 
 ## Troubleshooting
 
