@@ -902,6 +902,18 @@ You can automatically export MCP portal logs to third-party storage destinations
 
 To set up a Logpush job for MCP portal logs, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/). For a list of available log fields, refer to [MCP portal logs](/logs/logpush/logpush-job/datasets/account/mcp_portal_logs/).
 
+## Known limitations
+
+MCP server portals have the following known limitations:
+
+- **Only remote HTTP MCP servers are supported.** MCP servers that use [stdio transport only](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) (for example, `github/github-mcp-server`) do not expose a remote HTTP endpoint and cannot be added to an MCP server portal. To use a stdio-only server, you must self-host it behind an HTTP endpoint and authenticate with a [bearer token or custom headers](#create-an-mcp-server).
+
+- **Some MCP servers block proxy-based clients.** Certain MCP servers reject requests from proxy-based clients like MCP server portals, returning a `403` error on the registration endpoint. These servers are not compatible with MCP server portals until those providers add Cloudflare as a supported MCP client.
+
+- **Not all MCP servers support OAuth dynamic client registration.** MCP servers that do not support [OAuth dynamic client registration](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#dynamic-client-registration) cannot use the portal's OAuth authentication flow. For these servers, select **Custom Headers** as the authentication method and provide static credentials (for example, API keys or personal access tokens) instead.
+
+- **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync Required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
+
 ## Troubleshooting
 
 ### After authenticating to the portal, my user receives the error `No allowed servers available, check your Zero Trust Policies`.
