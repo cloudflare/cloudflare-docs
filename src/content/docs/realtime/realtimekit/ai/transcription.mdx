@@ -1,54 +1,71 @@
 ---
 pcx_content_type: how-to
 title: Transcription
-description: Enable real-time and end-of-meeting speech-to-text transcription in RealtimeKit.
+description: Turn on real-time and post-meeting speech-to-text transcription in RealtimeKit.
 sidebar:
   order: 1
 products:
   - realtime
 ---
 
-import { Render } from "~/components";
+import { Details, Render, TabItem, Tabs } from "~/components";
 
-RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
+RealtimeKit provides two transcription modes powered by [Cloudflare Workers AI](/workers-ai/):
 
-| Mode               | Model                                                                | Use Case                       |
-| ------------------ | -------------------------------------------------------------------- | ------------------------------ |
-| **Real-time**      | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | Live captions during meeting   |
-| **End-of-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | Accurate offline transcription |
+| Mode                                            | Model                                                                | Processing time        | Use case                                                                            |
+| ----------------------------------------------- | -------------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------- |
+| [**Real-time**](#real-time-transcription)       | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | During the meeting     | Live captions for attendees                                                         |
+| [**Post-meeting**](#post-meeting-transcription) | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | After the meeting ends | [Transcript files](#output-formats) and [webhooks](/realtime/realtimekit/webhooks/) |
+
+RealtimeKit processes each participant audio stream separately. This helps identify each speaker in the final transcript.
+
+We recommend upgrading to the Workers Paid plan to avoid Workers AI processing limits on the Free plan. Learn more in [Billing and Free plan limits](#billing-and-free-plan-limits).
 
 ## Real-time transcription
 
-Streams transcripts to participants as they speak using [Deepgram Nova-3](/workers-ai/models/nova-3/) via Cloudflare AI Gateway.
+Real-time transcription streams participant audio to [Deepgram Nova-3](/workers-ai/models/nova-3/) on Workers AI and sends [transcript events](#consume-real-time-transcripts) to meeting participants during the meeting.
 
-### Enable via preset
+### Turn on real-time transcription
 
-Set `transcription_enabled: true` in the participant's [preset](/realtime/realtimekit/concepts/preset/):
+You can turn on real-time transcription for participants by setting `permissions.transcription_enabled: true` in the participant's [preset](/realtime/realtimekit/concepts/preset/). This lets you decide which participant audio is transcribed. For example, you can transcribe speaker audio without transcribing audience audio.
 
-```json
-{
-	"name": "webinar_host",
-	"transcription_enabled": true
-}
+To update an existing preset, use the [Update a preset API](/api/resources/realtime_kit/subresources/presets/methods/update/):
+
+```bash
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/presets/$PRESET_ID" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "permissions": {
+      "transcription_enabled": true
+    }
+  }'
 ```
 
-Only participants with this flag will have their audio transcribed.
+To create a preset, refer to the [Create a preset API reference](/api/resources/realtime_kit/subresources/presets/methods/create/).
 
-### Configure
+RealtimeKit transcribes audio only for participants who join with a preset that has `permissions.transcription_enabled: true`.
 
-Pass `ai_config.transcription` when [creating a meeting](/realtime/realtimekit/concepts/meeting/):
+During the meeting, RealtimeKit streams transcript updates to the client SDK. To access existing transcripts from `meeting.ai.transcripts` or listen for new transcript events with `meeting.ai.on("transcript", ...)`, refer to [Consume real-time transcripts](#consume-real-time-transcripts).
 
-```json
-{
-	"title": "Team Standup",
-	"ai_config": {
-		"transcription": {
-			"language": "en-US",
-			"keywords": ["RealtimeKit", "Cloudflare"],
-			"profanity_filter": false
-		}
-	}
-}
+### Configure transcription settings
+
+The preset controls whose audio is transcribed. The meeting configuration controls how RealtimeKit transcribes that audio. Use `ai_config.transcription` to set the [spoken language](#real-time-supported-languages), boost recognition for custom terms, and control profanity filtering for a specific meeting.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Weekly product review",
+    "ai_config": {
+      "transcription": {
+        "language": "en-US",
+        "keywords": ["RealtimeKit", "Cloudflare"],
+        "profanity_filter": false
+      }
+    }
+  }'
 ```
 
 | Option             | Type     | Default | Description                                |
@@ -57,29 +74,30 @@ Pass `ai_config.transcription` when [creating a meeting](/realtime/realtimekit/c
 | `keywords`         | string[] | `[]`    | Terms to boost recognition (names, jargon) |
 | `profanity_filter` | boolean  | `false` | Filter offensive language                  |
 
-### Supported languages
+### Real-time supported languages
 
 Real-time transcription is powered by [Deepgram Nova-3](/workers-ai/models/nova-3/) on Workers AI.
 
 <Render file="nova-3-supported-languages" product="workers-ai" />
 
-### Consume transcripts
+### Consume real-time transcripts
+
+Real-time transcription sends interim and final transcript updates to the client SDK. Use interim updates for live captions, and use final updates for transcript history or saved UI state.
 
 #### Client SDK
 
-```javascript
-// Get all transcripts
+```js
+// Get transcript entries already received by the client.
 const transcripts = meeting.ai.transcripts;
 
-// Listen for new transcripts
-meeting.ai.on("transcript", (data) => {
-	if (data.isPartialTranscript) {
-		// Interim result - speaker still talking
-		updateLiveCaption(data.peerId, data.transcript);
-	} else {
-		// Final result
-		appendToHistory(data);
+// Listen for transcript updates during the meeting.
+meeting.ai.on("transcript", (transcript) => {
+	if (transcript.isPartialTranscript) {
+		updateLiveCaption(transcript.peerId, transcript.transcript);
+		return;
 	}
+
+	appendFinalTranscript(transcript);
 });
 ```
 
@@ -94,94 +112,242 @@ meeting.ai.on("transcript", (data) => {
 	"customParticipantId": "abc123xyz",
 	"transcript": "Hello everyone",
 	"isPartialTranscript": false,
-	"date": "2024-08-07T10:15:30.000Z"
+	"timestamp": 1716700000000
 }
 ```
 
-| Field                 | Description                                        |
-| --------------------- | -------------------------------------------------- |
-| `isPartialTranscript` | `true` = interim (still speaking), `false` = final |
-| `peerId`              | Changes if participant rejoins                     |
-| `userId`              | Persistent participant ID                          |
-| `customParticipantId` | Your custom ID from Add Participant API            |
+| Field                 | Description                                                   |
+| --------------------- | ------------------------------------------------------------- |
+| `id`                  | Unique transcript entry ID                                    |
+| `name`                | Display name of the participant who spoke                     |
+| `peerId`              | Peer ID of the participant who spoke. Changes if they rejoin. |
+| `userId`              | Persistent participant ID                                     |
+| `customParticipantId` | Participant identifier set when the participant was added     |
+| `transcript`          | Transcribed text                                              |
+| `isPartialTranscript` | `true` for interim updates, `false` for final updates         |
+| `timestamp`           | Unix epoch timestamp in milliseconds                          |
 
 ---
 
-## End of meeting transcription
+## Post-meeting transcription
 
-Generates transcripts after the meeting ends using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). Transcripts from all participants are consolidated into a unified timeline and delivered via webhook or REST API.
+Post-meeting transcription generates a transcript after the meeting ends using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) on Workers AI and delivers it through a [webhook](/realtime/realtimekit/webhooks/) or [REST API](#rest-api). To identify speakers, RealtimeKit processes each participant's audio separately before creating the [final transcript](#output-formats).
 
-### Enable end of meeting transcription
+### Turn on post-meeting transcription
 
-Set `transcribe_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/):
+You can turn on post-meeting transcription when you create a meeting. Set `transcribe_on_end: true` to generate a transcript after the meeting ends. To also generate a [summary](/realtime/realtimekit/ai/summary/) automatically after the transcript is available, set `summarize_on_end: true`.
 
-```json
-{
-	"title": "Team Standup",
-	"transcribe_on_end": true
-}
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Weekly product review",
+    "transcribe_on_end": true,
+    "summarize_on_end": true,
+    "ai_config": {
+      "transcription": {
+        "language": "en"
+      }
+    }
+  }'
 ```
 
-Use `ai_config.transcription.language` to set the transcript language. If `transcribe_on_end` is not set, end-of-meeting transcription is disabled and real time transcripts are generated.
+Use `ai_config.transcription.language` to set the transcript language. For supported values, refer to [Post-meeting supported languages](#post-meeting-supported-languages). If `transcribe_on_end` is not set, RealtimeKit does not generate a post-meeting transcript.
 
-### Supported languages
+### Post-meeting supported languages
 
-Supports all languages in [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). Use ISO 639-1 language codes, such as `en`, `es`, or `fr`.
+Post-meeting transcription supports [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) language codes. Omit `ai_config.transcription.language` to let Whisper detect the spoken language.
+
+Common language codes include:
+
+| Language | Code | Language | Code | Language   | Code  |
+| -------- | ---- | -------- | ---- | ---------- | ----- |
+| English  | `en` | Spanish  | `es` | French     | `fr`  |
+| German   | `de` | Hindi    | `hi` | Portuguese | `pt`  |
+| Japanese | `ja` | Italian  | `it` | Dutch      | `nl`  |
+| Russian  | `ru` | Chinese  | `zh` | Cantonese  | `yue` |
+
+<Details header="Additional post-meeting language codes">
+
+| Language          | Code  |
+| ----------------- | ----- |
+| Afrikaans         | `af`  |
+| Albanian          | `sq`  |
+| Amharic           | `am`  |
+| Arabic            | `ar`  |
+| Assamese          | `as`  |
+| Azerbaijani       | `az`  |
+| Bashkir           | `ba`  |
+| Basque            | `eu`  |
+| Belarusian        | `be`  |
+| Bengali           | `bn`  |
+| Bosnian           | `bs`  |
+| Breton            | `br`  |
+| Bulgarian         | `bg`  |
+| Catalan           | `ca`  |
+| Croatian          | `hr`  |
+| Czech             | `cs`  |
+| Danish            | `da`  |
+| Estonian          | `et`  |
+| Faroese           | `fo`  |
+| Finnish           | `fi`  |
+| Galician          | `gl`  |
+| Georgian          | `ka`  |
+| Greek             | `el`  |
+| Gujarati          | `gu`  |
+| Haitian Creole    | `ht`  |
+| Hausa             | `ha`  |
+| Hawaiian          | `haw` |
+| Hebrew            | `he`  |
+| Hungarian         | `hu`  |
+| Icelandic         | `is`  |
+| Indonesian        | `id`  |
+| Javanese          | `jw`  |
+| Kannada           | `kn`  |
+| Kazakh            | `kk`  |
+| Khmer             | `km`  |
+| Korean            | `ko`  |
+| Lao               | `lo`  |
+| Latin             | `la`  |
+| Latvian           | `lv`  |
+| Lingala           | `ln`  |
+| Lithuanian        | `lt`  |
+| Luxembourgish     | `lb`  |
+| Macedonian        | `mk`  |
+| Malagasy          | `mg`  |
+| Malay             | `ms`  |
+| Malayalam         | `ml`  |
+| Maltese           | `mt`  |
+| Maori             | `mi`  |
+| Marathi           | `mr`  |
+| Mongolian         | `mn`  |
+| Myanmar           | `my`  |
+| Nepali            | `ne`  |
+| Norwegian         | `no`  |
+| Norwegian Nynorsk | `nn`  |
+| Occitan           | `oc`  |
+| Pashto            | `ps`  |
+| Persian           | `fa`  |
+| Polish            | `pl`  |
+| Punjabi           | `pa`  |
+| Romanian          | `ro`  |
+| Sanskrit          | `sa`  |
+| Serbian           | `sr`  |
+| Shona             | `sn`  |
+| Sindhi            | `sd`  |
+| Sinhala           | `si`  |
+| Slovak            | `sk`  |
+| Slovenian         | `sl`  |
+| Somali            | `so`  |
+| Sundanese         | `su`  |
+| Swahili           | `sw`  |
+| Swedish           | `sv`  |
+| Tagalog           | `tl`  |
+| Tajik             | `tg`  |
+| Tamil             | `ta`  |
+| Tatar             | `tt`  |
+| Telugu            | `te`  |
+| Thai              | `th`  |
+| Tibetan           | `bo`  |
+| Turkmen           | `tk`  |
+| Turkish           | `tr`  |
+| Ukrainian         | `uk`  |
+| Urdu              | `ur`  |
+| Uzbek             | `uz`  |
+| Vietnamese        | `vi`  |
+| Welsh             | `cy`  |
+| Yiddish           | `yi`  |
+| Yoruba            | `yo`  |
+
+</Details>
 
 ### Output formats
 
-| Format   | Use Case                               |
+Post-meeting transcripts are available in multiple formats. Use CSV or JSON for application workflows, and use SRT or VTT when you need subtitle files.
+
+| Format   | Use case                               |
 | -------- | -------------------------------------- |
-| **CSV**  | Spreadsheets, data analysis            |
+| **CSV**  | Spreadsheets and data analysis         |
+| **JSON** | Programmatic access                    |
 | **SRT**  | Video subtitle files                   |
 | **VTT**  | Web video captions (`<track>` element) |
-| **JSON** | Programmatic access                    |
 
-#### CSV example
+#### Examples
+
+<Tabs syncKey="transcriptFormat">
+	<TabItem label="CSV">
 
 ```csv
-Timestamp,Participant ID,User ID,Custom Participant ID,Participant Name,Transcript
-2024-08-07T10:15:30.000Z,peer-123,user-456,cust-789,Alice,Hello everyone
-2024-08-07T10:15:35.000Z,peer-234,user-567,cust-890,Bob,Hi Alice
+"1000","peer-123","user-456","cust-789","Alice","Hello everyone"
+"3000","peer-234","user-567","cust-890","Bob","Hi Alice"
 ```
 
-#### JSON example
+CSV rows use the following field order: start time in milliseconds, peer ID, user ID, custom participant ID, participant name, and transcript text.
+
+	</TabItem>
+	<TabItem label="JSON">
 
 ```json
 [
 	{
-		"startTime": 0,
-		"endTime": 2.5,
+		"startTime": 1000,
+		"endTime": 2500,
 		"sentence": "Hello everyone",
 		"peerData": {
 			"id": "peer-123",
 			"userId": "user-456",
 			"displayName": "Alice",
-			"cpi": "cust-789"
+			"cpi": "cust-789",
+			"joinedAt": "2024-08-07T10:15:29.000Z",
+			"leftAt": ""
 		}
 	}
 ]
 ```
 
-### Fetch transcripts
+	</TabItem>
+	<TabItem label="SRT">
+
+```txt
+1
+00:00:01,000 --> 00:00:02,500
+Alice: Hello everyone
+
+2
+00:00:03,000 --> 00:00:04,500
+Bob: Hi Alice
+```
+
+	</TabItem>
+</Tabs>
+
+### Consume post-meeting transcripts
+
+After RealtimeKit finishes processing a post-meeting transcript, you can receive the transcript download URL through a webhook or fetch it with the REST API. Use webhooks for asynchronous backend workflows, and use the REST API when you need to retrieve the transcript for a specific session.
 
 #### Webhook
 
-Configure the `meeting.transcript` event in [RealtimeKit webhooks](/realtime/realtimekit/webhooks/):
+Configure the `meeting.transcript` event in [RealtimeKit webhooks](/realtime/realtimekit/webhooks/#meetingtranscript):
 
 ```json
 {
 	"event": "meeting.transcript",
 	"meeting": {
-		"id": "meeting-123",
-		"sessionId": "session-456",
-		"title": "Product Review",
+		"id": "bbb8940e-1b97-402a-97d6-2708b7feca41",
+		"title": "Weekly sync",
+		"endedAt": "2026-06-03T10:30:00.000Z",
+		"createdAt": "2026-06-03T10:00:00.000Z",
+		"sessionId": "05e57591-d89e-45c9-ae44-08dc1eaad0e0",
+		"startedAt": "2026-06-03T10:00:00.000Z",
 		"status": "LIVE",
-		"startedAt": "2024-08-07T10:15:30.000Z",
-		"endedAt": "2024-08-07T10:45:30.000Z"
+		"organizedBy": {
+			"id": "c94c437b-592a-4a39-b9e2-47ef1451e43b",
+			"name": "Example organization"
+		}
 	},
-	"transcriptDownloadUrl": "https://...",
-	"transcriptDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
+	"transcriptDownloadUrl": "https://example.com/transcript.csv",
+	"transcriptDownloadUrlExpiry": "2026-06-10T10:30:00.000Z"
 }
 ```
 
@@ -190,8 +356,39 @@ Configure the `meeting.transcript` event in [RealtimeKit webhooks](/realtime/rea
 Refer to [Fetch the complete transcript for a session](/api/resources/realtime_kit/subresources/sessions/methods/get_session_transcripts/).
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/transcript" \
-  -H "Authorization: Bearer {api_token}"
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/transcript" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-Transcripts are available for **7 days** after meeting ends.
+#### Transcript availability
+
+Transcripts are available for **7 days** after the meeting ends. Download or copy transcript files before the URL expiry time returned by the webhook or REST API.
+
+## Billing and Free plan limits
+
+RealtimeKit's default transcription records each participant's audio track and processes it with Workers AI. Workers AI usage is billed to your Cloudflare account using [audio model pricing](/workers-ai/platform/pricing/#audio-model-pricing), which scales by participant audio minutes, not meeting duration.
+
+On the Workers Free plan, Workers AI includes 10,000 Neurons per day. To use more than 10,000 Neurons per day, upgrade to the [Workers Paid plan](/workers/platform/pricing/#workers). Workers Paid includes the same 10,000 daily free Neurons, then bills additional usage at `$0.011` per 1,000 Neurons.
+
+You can upgrade to the Workers Paid plan in the Cloudflare dashboard under **Manage account**.
+
+RealtimeKit transcription uses these Workers AI audio model rates:
+
+| Transcription mode | Workers AI model                    | Neurons per audio minute |
+| ------------------ | ----------------------------------- | ------------------------ |
+| Post-meeting       | `@cf/openai/whisper-large-v3-turbo` | `46.63`                  |
+| Real-time          | `@cf/deepgram/nova-3` WebSocket     | `836.36`                 |
+
+## Data processing and storage
+
+RealtimeKit transcription is a managed transcription workflow. When transcription is turned on, RealtimeKit processes participant audio with Workers AI and stores [transcript outputs](#output-formats) in RealtimeKit-managed storage.
+
+For real-time transcription, RealtimeKit streams audio from participants with transcription turned on to Workers AI and sends transcript updates to meeting participants during the meeting.
+
+For post-meeting transcription, RealtimeKit processes each participant's audio separately after the meeting ends, creates the final transcript files, and makes them available through a webhook or REST API.
+
+:::note[Storage for sensitive workloads]
+Post-meeting transcription uses RealtimeKit-managed storage for intermediate participant audio tracks and transcript outputs. If you configured external storage for regular recordings, that storage configuration is not used for transcription processing.
+
+For workloads with stricter storage, retention, or processing requirements, use [RealtimeKit recording with custom cloud storage](/realtime/realtimekit/recording-guide/custom-cloud-storage/) instead of managed transcription. You can then run your own transcription pipeline with your preferred infrastructure, access controls, and retention policy.
+:::

@@ -116,6 +116,7 @@ interface RemoteMountBucketOptions {
   endpoint: string;
   provider?: BucketProvider;
   credentials?: BucketCredentials;
+  credentialProxy?: boolean;
   readOnly?: boolean;
   s3fsOptions?: string[];
   prefix?: string;
@@ -152,6 +153,7 @@ type MountBucketOptions =
 
 - **Remote endpoint mount** - Set `endpoint` to mount any S3-compatible provider
   - Supports explicit `credentials` or environment variable auto-detection
+  - Set `credentialProxy: true` to keep credentials out of the container (egress interception)
   - Supports `provider`, `prefix`, `readOnly`, and `s3fsOptions`
 
 **Field details**:
@@ -171,6 +173,12 @@ type MountBucketOptions =
 - `credentials` (remote endpoint mode only) - API credentials
   - Contains `accessKeyId` and `secretAccessKey`
   - If not provided, uses environment variables
+
+- `credentialProxy` (remote endpoint mode only) - Route S3 requests through the Durable Object for signing
+  - When `true`, credentials are never written to the container's disk. The Durable Object intercepts and re-signs all outbound S3 requests at the network layer before forwarding them upstream.
+  - Supports [AWS SigV4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html) signing for S3-compatible endpoints (including R2) and HMAC signing for Google Cloud Storage
+  - Requires `ContainerProxy` to be exported from your Worker entrypoint
+  - Default: `false` (backwards compatibility — recommended to set to `true`; will become the default in a future version)
 
 - `readOnly` (optional) - Mount in read-only mode
   - Default: `false`

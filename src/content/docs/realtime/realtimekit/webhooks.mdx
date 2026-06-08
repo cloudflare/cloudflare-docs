@@ -135,83 +135,86 @@ Verify `rtk-signature` against the raw request body. Do not reserialize parsed J
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+type Env = {
+	REALTIMEKIT_WEBHOOK_PUBLIC_KEY_URL: string;
+};
+
 type RealtimeKitWebhookEvent = {
-    event: string;
+	event: string;
 };
 
 async function verifySignature(
-    publicKeyPem: string,
-    signature: string,
-    body: ArrayBuffer,
+	publicKeyPem: string,
+	signature: string,
+	body: ArrayBuffer,
 ): Promise<boolean> {
-    const publicKey = await crypto.subtle.importKey(
-        'spki',
-        Uint8Array.from(atob(publicKeyPem), (c) => c.charCodeAt(0)),
-        { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
-        false,
-        ['verify'],
-    );
+	const publicKey = await crypto.subtle.importKey(
+		"spki",
+		Uint8Array.from(atob(publicKeyPem), (c) => c.charCodeAt(0)),
+		{ name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+		false,
+		["verify"],
+	);
 
-    return crypto.subtle.verify(
-        'RSASSA-PKCS1-v1_5',
-        publicKey,
-        Uint8Array.from(atob(signature), (c) => c.charCodeAt(0)),
-        body,
-    );
+	return crypto.subtle.verify(
+		"RSASSA-PKCS1-v1_5",
+		publicKey,
+		Uint8Array.from(atob(signature), (c) => c.charCodeAt(0)),
+		body,
+	);
 }
 
 async function handleEvent(event: RealtimeKitWebhookEvent): Promise<void> {
-    // Process the event.
+	// Process the event.
 }
 
 export default {
-    async fetch(
-        request: Request,
-        env: Env,
-        ctx: ExecutionContext,
-    ): Promise<Response> {
-        const signature = request.headers.get('rtk-signature');
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const signature = request.headers.get("rtk-signature");
 
-        if (!signature) {
-            return new Response('Missing signature', {
-                status: 400,
-            });
-        }
+		if (!signature) {
+			return new Response("Missing signature", {
+				status: 400,
+			});
+		}
 
-        const body = await request.arrayBuffer();
+		const body = await request.arrayBuffer();
 
-        const resp = await fetch(env.REALTIMEKIT_WEBHOOK_PUBLIC_KEY_URL);
-        if (!resp.ok) {
-            return new Response('Missing public key', {
-                status: 400,
-            });
-        }
+		const resp = await fetch(env.REALTIMEKIT_WEBHOOK_PUBLIC_KEY_URL);
+		if (!resp.ok) {
+			return new Response("Missing public key", {
+				status: 400,
+			});
+		}
 
-        const respBody = await resp.json<{
-            success: true;
-            data: { publicKey: string };
-        }>();
+		const respBody = await resp.json<{
+			success: true;
+			data: { publicKey: string };
+		}>();
 
-        const cleanPem = respBody.data.publicKey
-            .replace(/\\n/g, '') // Remove literal \n characters
-            .replace(/-----BEGIN PUBLIC KEY-----/, '')
-            .replace(/-----END PUBLIC KEY-----/, '')
-            .replace(/\s+/g, '');
+		const cleanPem = respBody.data.publicKey
+			.replace(/\\n/g, "")
+			.replace(/-----BEGIN PUBLIC KEY-----/, "")
+			.replace(/-----END PUBLIC KEY-----/, "")
+			.replace(/\s+/g, "");
 
-        const verified = await verifySignature(cleanPem, signature, body);
+		const verified = await verifySignature(cleanPem, signature, body);
 
-        if (!verified) {
-            return new Response('Invalid signature', { status: 401 });
-        }
+		if (!verified) {
+			return new Response("Invalid signature", { status: 401 });
+		}
 
-        const event = JSON.parse(new TextDecoder().decode(body));
+		const event = JSON.parse(new TextDecoder().decode(body));
 
-        ctx.waitUntil(handleEvent(event));
+		ctx.waitUntil(handleEvent(event));
 
-        return new Response(null, { status: 200 });
-    },
+		return new Response(null, { status: 200 });
+	},
 } satisfies ExportedHandler<Env>;
-
 ```
 
 </TypeScriptExample>
