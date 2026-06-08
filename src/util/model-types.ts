@@ -35,6 +35,12 @@ export interface ModelCardData {
 	}>;
 	dataSource: "catalog" | "legacy";
 	hosting: "proxied" | "hosted";
+	/**
+	 * Optional supplementary note about ZDR support (plan requirements,
+	 * conditions, etc.). Rendered as a `title` tooltip on the ZDR badge
+	 * when present. Null/undefined leaves the badge without a tooltip.
+	 */
+	zdrComment?: string | null;
 }
 
 /**
@@ -117,4 +123,12 @@ export interface ResolvedModel {
 	// hosted models run on Cloudflare infrastructure.
 	// Currently inferred from data source; will eventually come from the Deus CMS.
 	hosting: "proxied" | "hosted";
+
+	/**
+	 * Optional supplementary note about ZDR support (plan requirements,
+	 * conditions, etc.). Surfaced from `zdr_comment` on the catalog row;
+	 * legacy Workers AI models never set it. Rendered as a `title`
+	 * tooltip on the ZDR badge in `ModelBadges`.
+	 */
+	zdrComment?: string | null;
 }
