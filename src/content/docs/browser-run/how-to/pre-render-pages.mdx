@@ -14,6 +14,7 @@ sidebar:
 
 import {
 	PackageManagers,
+	Steps,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
@@ -41,7 +42,7 @@ The page you pre-render can run anywhere. The Worker in this tutorial only acts 
 
 ## 1. Configure Browser Run
 
-Add a Browser Run binding to your Wrangler configuration.
+Add a Browser Run binding to your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -161,31 +162,39 @@ The `waitUntil: "networkidle2"` option waits until the page has no more than two
 
 ## 3. Test pre-rendering
 
-Start your Worker in remote mode:
+<Steps>
 
-<PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
+1. Start your Worker in remote mode:
 
-The `.quickAction()` method is not yet supported in local development mode. Use `wrangler dev --remote` when testing Browser Run Quick Actions locally.
+   <PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
-In another terminal, request a rendered page:
+   The `.quickAction()` method is not yet supported in local development mode. Use `wrangler dev --remote` when testing Browser Run Quick Actions locally.
 
-```bash
-curl "http://localhost:8787/?url=https://example.com/"
-```
+2. In another terminal, request a rendered page:
 
-The response should contain the rendered HTML for the target page.
+   ```bash
+   curl "http://localhost:8787/?url=https://example.com/"
+   ```
+
+   The response should contain the rendered HTML for the target page.
+
+</Steps>
 
 ## 4. Deploy
 
-Deploy the Worker after local validation:
+<Steps>
 
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+1. Deploy the Worker after local validation:
 
-After deployment, request a rendered page from your Worker URL:
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-```bash
-curl "https://<YOUR_WORKER_HOSTNAME>/?url=https://example.com/"
-```
+2. After deployment, request a rendered page from your Worker URL:
+
+   ```bash
+   curl "https://<YOUR_WORKER_HOSTNAME>/?url=https://example.com/"
+   ```
+
+</Steps>
 
 ## Production considerations
 
