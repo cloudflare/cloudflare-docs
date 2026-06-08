@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { Tabs, TabItem, WranglerConfig } from "~/components";
+import { WranglerConfig } from "~/components";
 
 The Workers API provides native email sending capabilities directly from your Cloudflare Workers through bindings. If you are not using Workers, you can send emails using the [REST API](/email-service/api/send-emails/rest-api/) instead.
 
@@ -82,14 +82,7 @@ interface EmailSendResult {
 When using `wrangler dev` without [remote bindings](/workers/development-testing/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations).
 :::
 
-:::note[Workers binding vs REST API responses]
-The Workers binding returns a single `messageId` per `send()` call. The [REST API](/email-service/api/send-emails/rest-api/) returns recipient-grouped delivery status instead.
-:::
-
 ### Basic usage
-
-<Tabs>
-<TabItem label="Simple email">
 
 ```ts
 const response = await env.EMAIL.send({
@@ -101,72 +94,11 @@ const response = await env.EMAIL.send({
 });
 ```
 
-</TabItem>
-<TabItem label="Multiple recipients">
-
-```ts
-// Send to multiple recipients (combined to/cc/bcc max 50)
-const response = await env.EMAIL.send({
-	to: ["user1@example.com", "user2@example.com", "user3@example.com"],
-	from: { email: "newsletter@yourdomain.com", name: "Newsletter Team" },
-	subject: "Monthly Newsletter",
-	html: "<h1>This month's updates</h1>",
-	text: "This month's updates",
-});
-```
-
-</TabItem>
-<TabItem label="With CC and BCC">
-
-```ts
-const response = await env.EMAIL.send({
-	to: "customer@example.com",
-	cc: ["manager@example.com"],
-	bcc: ["archive@example.com"],
-	from: "orders@yourdomain.com",
-	replyTo: "support@yourdomain.com",
-	subject: "Order Confirmation #12345",
-	html: "<h1>Your order is confirmed</h1>",
-	text: "Your order is confirmed",
-});
-```
-
-</TabItem>
-<TabItem label="Named recipients">
-
-```ts
-const response = await env.EMAIL.send({
-	to: { email: "jane@example.com", name: "Jane Doe" },
-	from: { email: "support@example.com", name: "Support Team" },
-	subject: "Welcome!",
-	html: "<h1>Thanks for joining!</h1>",
-	text: "Thanks for joining!",
-});
-```
-
-</TabItem>
-<TabItem label="Mixed recipients">
-
-```ts
-const response = await env.EMAIL.send({
-	to: [
-		"plain@example.com",
-		{ email: "jane@example.com", name: "Jane Doe" },
-	],
-	from: "support@yourdomain.com",
-	subject: "Team update",
-	html: "<h1>Monthly update</h1>",
-	text: "Monthly update",
-});
-```
-
-</TabItem>
-</Tabs>
+For multiple recipients, CC/BCC, and named addresses, see [Specify recipients](/email-service/examples/email-sending/recipients/).
 
 ### Attachments
 
-<Tabs>
-<TabItem label="PDF attachment">
+Send files by including base64-encoded content in the `attachments` array. The total message size must not exceed 5 MiB (including attachments).
 
 ```ts
 const response = await env.EMAIL.send({
@@ -185,33 +117,7 @@ const response = await env.EMAIL.send({
 });
 ```
 
-</TabItem>
-<TabItem label="Inline image">
-
-```ts
-const response = await env.EMAIL.send({
-	to: "user@example.com",
-	from: "marketing@yourdomain.com",
-	subject: "Check out our new product!",
-	html: `
-    <h1>New Product Launch</h1>
-    <img src="cid:product-image" alt="New Product" />
-    <p>Check out our amazing new product!</p>
-  `,
-	attachments: [
-		{
-			content: "iVBORw0KGgoAAAANSUhEUgAA...", // Base64 image content
-			filename: "product.png",
-			type: "image/png",
-			disposition: "inline",
-			contentId: "product-image",
-		},
-	],
-});
-```
-
-</TabItem>
-</Tabs>
+For inline images and file uploads, see [Email attachments](/email-service/examples/email-sending/email-attachments/).
 
 ## Error handling
 

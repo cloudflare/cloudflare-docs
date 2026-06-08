@@ -8,17 +8,11 @@ products:
   - email-service
 ---
 
-import { Tabs, TabItem } from "~/components";
-
-The REST API allows you to send emails from any application using standard HTTP requests. Use it from any backend, serverless function, or CI/CD pipeline — no Cloudflare Workers binding is required.
+The REST API allows you to send emails from any application using a standard HTTP request to `POST /accounts/{account_id}/email/sending/send`. Use it from any backend, serverless function, or CI/CD pipeline — no Cloudflare Workers binding is required.
 
 For the full OpenAPI specification, refer to the [Email Sending API reference](/api/resources/email_sending/methods/send/).
 
-## Endpoint
-
-```txt
-POST https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send
-```
+Cloudflare also provides official SDKs for the REST API: [Node](/api/node/), [Python](/api/python/), and [Go](/api/go/).
 
 ## Authentication
 
@@ -29,9 +23,6 @@ Authorization: Bearer <API_TOKEN>
 ```
 
 ## Send an email
-
-<Tabs>
-<TabItem label="Simple email">
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
@@ -46,78 +37,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
   }'
 ```
 
-</TabItem>
-<TabItem label="Multiple recipients">
-
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "to": ["user1@example.com", "user2@example.com"],
-    "from": { "address": "newsletter@yourdomain.com", "name": "Newsletter Team" },
-    "subject": "Monthly Newsletter",
-    "html": "<h1>This month'\''s updates</h1>",
-    "text": "This month'\''s updates"
-  }'
-```
-
-</TabItem>
-<TabItem label="With CC and BCC">
-
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "to": "customer@example.com",
-    "cc": ["manager@example.com"],
-    "bcc": ["archive@example.com"],
-    "from": "orders@yourdomain.com",
-    "reply_to": "support@yourdomain.com",
-    "subject": "Order Confirmation #12345",
-    "html": "<h1>Your order is confirmed</h1>",
-    "text": "Your order is confirmed"
-  }'
-```
-
-</TabItem>
-<TabItem label="Named recipients">
-
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "to": { "address": "jane@example.com", "name": "Jane Doe" },
-    "from": { "address": "support@example.com", "name": "Support Team" },
-    "subject": "Welcome!",
-    "html": "<h1>Thanks for joining!</h1>",
-    "text": "Thanks for joining!"
-  }'
-```
-
-</TabItem>
-<TabItem label="Mixed recipients">
-
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "to": [
-      "plain@example.com",
-      { "address": "jane@example.com", "name": "Jane Doe" }
-    ],
-    "from": "support@yourdomain.com",
-    "subject": "Team update",
-    "html": "<h1>Monthly update</h1>",
-    "text": "Monthly update"
-  }'
-```
-
-</TabItem>
-</Tabs>
+For multiple recipients, CC/BCC, and named addresses, see [Specify recipients](/email-service/examples/email-sending/recipients/).
 
 ## Attachments
 
@@ -142,6 +62,8 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
     ]
   }'
 ```
+
+For inline images and file uploads, see [Email attachments](/email-service/examples/email-sending/email-attachments/).
 
 ## Custom headers
 

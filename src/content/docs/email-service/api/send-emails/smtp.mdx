@@ -4,12 +4,11 @@ description: Send emails from any SMTP-capable application or mail client using 
 pcx_content_type: concept
 sidebar:
   order: 3
-  badge: Beta
 products:
   - email-service
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 Cloudflare Email Service exposes an authenticated SMTP submission endpoint so you can send emails from any application, framework, or off-the-shelf mail client that speaks SMTP. Use SMTP when the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) are not a good fit — for example, when integrating an existing application that already speaks SMTP, a language-native SMTP library (Nodemailer, `smtplib`, PHPMailer, JavaMail), or a desktop mail client.
 
@@ -99,108 +98,21 @@ The `250 2.0.0 Ok` response after the message body includes the assigned Message
 
 ## Examples
 
-<Tabs syncKey="smtp-language">
-<TabItem label="curl">
+For language-specific examples — curl, Nodemailer, Python `smtplib`, and PHPMailer — see [Send email over SMTP](/email-service/examples/email-sending/smtp/).
 
-```sh
-curl --ssl-reqd \
-  --url "smtps://smtp.mx.cloudflare.net:465" \
-  --user "api_token:<API_TOKEN>" \
-  --mail-from "welcome@yourdomain.com" \
-  --mail-rcpt "recipient@example.com" \
-  --upload-file mail.txt
-```
-
-</TabItem>
-<TabItem label="Node.js (Nodemailer)">
-
-```js
-import nodemailer from "nodemailer";
-
-const transporter = nodemailer.createTransport({
-	host: "smtp.mx.cloudflare.net",
-	port: 465,
-	secure: true, // implicit TLS
-	auth: {
-		user: "api_token",
-		pass: process.env.CF_API_TOKEN,
-	},
-});
-
-await transporter.sendMail({
-	from: '"Acme" <welcome@yourdomain.com>',
-	to: "recipient@example.com",
-	subject: "Welcome to our service!",
-	text: "Thanks for signing up.",
-	html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-});
-```
-
-</TabItem>
-<TabItem label="Python (smtplib)">
-
-```python
-import os
-import smtplib
-from email.message import EmailMessage
-
-msg = EmailMessage()
-msg["From"] = "welcome@yourdomain.com"
-msg["To"] = "recipient@example.com"
-msg["Subject"] = "Welcome to our service!"
-msg.set_content("Thanks for signing up.")
-msg.add_alternative(
-	"<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-	subtype="html",
-)
-
-with smtplib.SMTP_SSL("smtp.mx.cloudflare.net", 465) as s:
-	s.login("api_token", os.environ["CF_API_TOKEN"])
-	s.send_message(msg)
-```
-
-</TabItem>
-<TabItem label="PHP (PHPMailer)">
-
-```php
-<?php
-use PHPMailer\PHPMailer\PHPMailer;
-
-require 'vendor/autoload.php';
-
-$mail = new PHPMailer(true);
-$mail->isSMTP();
-$mail->Host       = 'smtp.mx.cloudflare.net';
-$mail->Port       = 465;
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-$mail->SMTPAuth   = true;
-$mail->Username   = 'api_token';
-$mail->Password   = getenv('CF_API_TOKEN');
-
-$mail->setFrom('welcome@yourdomain.com', 'Acme');
-$mail->addAddress('recipient@example.com');
-$mail->Subject = 'Welcome to our service!';
-$mail->Body    = 'Thanks for signing up.';
-$mail->send();
-```
-
-</TabItem>
-<TabItem label="Desktop mail client">
+## Desktop mail client
 
 Most graphical mail clients (Apple Mail, Thunderbird, Outlook) can send through Cloudflare SMTP using these settings:
 
-| Field             | Value                                      |
-| ----------------- | ------------------------------------------ |
-| Outgoing server   | `smtp.mx.cloudflare.net`                   |
-| Port              | `465`                                      |
-| Connection        | SSL/TLS (sometimes labelled SMTPS)         |
-| Authentication    | Password (PLAIN or LOGIN)                  |
-| Username          | `api_token`                                |
-| Password          | Your Cloudflare API token                  |
-| From address      | An address on a domain you have onboarded  |
-
-</TabItem>
-</Tabs>
+| Field           | Value                                     |
+| --------------- | ----------------------------------------- |
+| Outgoing server | `smtp.mx.cloudflare.net`                  |
+| Port            | `465`                                     |
+| Connection      | SSL/TLS (sometimes labelled SMTPS)        |
+| Authentication  | Password (PLAIN or LOGIN)                 |
+| Username        | `api_token`                               |
+| Password        | Your Cloudflare API token                 |
+| From address    | An address on a domain you have onboarded |
 
 ## Limits
 
@@ -263,6 +175,7 @@ For authentication problems related to SPF, DKIM, or DMARC on the recipient side
 
 ## Related resources
 
+- [Send email over SMTP](/email-service/examples/email-sending/smtp/) — examples for curl, Nodemailer, Python, PHP, and desktop mail clients.
 - [REST API](/email-service/api/send-emails/rest-api/) — send emails over HTTPS.
 - [Workers API](/email-service/api/send-emails/workers-api/) — send emails from a Cloudflare Worker using bindings.
 - [Domain configuration](/email-service/configuration/domains/) — onboard a domain for Email Sending.
