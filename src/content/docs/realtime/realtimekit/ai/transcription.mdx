@@ -135,7 +135,7 @@ Post-meeting transcription generates a transcript after the meeting ends using [
 
 ### Enable post-meeting transcription
 
-You can enable post-meeting transcription when you create a meeting. Set `transcribe_on_end: true` to generate a transcript after the meeting ends.
+You can enable post-meeting transcription when you create a meeting. Set `transcribe_on_end: true` to generate a transcript after the meeting ends. To also generate a [summary](/realtime/realtimekit/ai/summary/) automatically after the transcript is available, set `summarize_on_end: true`.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
@@ -144,6 +144,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime
   -d '{
     "title": "Weekly product review",
     "transcribe_on_end": true,
+    "summarize_on_end": true,
     "ai_config": {
       "transcription": {
         "language": "en"

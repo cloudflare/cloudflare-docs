@@ -23,15 +23,21 @@ RealtimeKit provides AI-powered features using Cloudflare's AI infrastructure to
 
 ## Quick start
 
-Enable post-meeting transcription when creating a meeting:
+Enable post-meeting transcription and automatic summaries when creating a meeting:
 
 ```json
 {
 	"title": "Team Standup",
 	"transcribe_on_end": true,
+	"summarize_on_end": true,
 	"ai_config": {
 		"transcription": {
 			"language": "en"
+		},
+		"summarization": {
+			"word_limit": 500,
+			"text_format": "markdown",
+			"summary_type": "team_meeting"
 		}
 	}
 }

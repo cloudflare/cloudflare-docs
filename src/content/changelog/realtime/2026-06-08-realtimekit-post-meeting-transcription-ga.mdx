@@ -10,11 +10,11 @@ date: 2026-06-08
 
 [Post-meeting transcription](/realtime/realtimekit/ai/transcription/#post-meeting-transcription) is now Generally Available, so completed RealtimeKit meetings can automatically produce full transcript files after they end. Those transcripts can also power [AI-generated summaries](/realtime/realtimekit/ai/summary/) for meeting notes, review workflows, and follow-up tasks after the transcript is available.
 
-Post-meeting transcription is a managed service powered by [Workers AI](/workers-ai/) using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). RealtimeKit handles transcription processing and returns transcript files through webhooks or the REST API, so you do not need to run your own transcription infrastructure.
+Post-meeting transcription is a managed service powered by [Workers AI](/workers-ai/) using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). RealtimeKit handles transcription processing and can return transcript and summary files through [webhooks](/realtime/realtimekit/webhooks/) or the REST API, so you do not need to run your own transcription infrastructure.
 
-## Generate transcripts
+## Generate transcripts and summaries
 
-To generate a transcript after a meeting ends, set `transcribe_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/):
+To generate a transcript after a meeting ends, set `transcribe_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/). To also generate an AI summary automatically after the transcript is available, set `summarize_on_end: true`:
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
@@ -23,24 +23,23 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime
   -d '{
     "title": "Weekly product review",
     "transcribe_on_end": true,
+    "summarize_on_end": true,
     "ai_config": {
       "transcription": {
         "language": "en"
+      },
+      "summarization": {
+        "word_limit": 500,
+        "text_format": "markdown",
+        "summary_type": "team_meeting"
       }
     }
   }'
 ```
 
-After the transcript is available, use the [summary API](/api/resources/realtime_kit/subresources/sessions/methods/generate_summary_of_transcripts/) to generate an AI summary for the session:
-
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/summary" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
-
 ## Consume results
 
-When RealtimeKit finishes processing a meeting, it creates download URLs for the transcript and summary. You can receive those URLs automatically with [webhooks](/realtime/realtimekit/ai/transcription/#webhook), or fetch them later for a specific session with the [REST API](/realtime/realtimekit/ai/summary/#rest-api).
+When RealtimeKit finishes processing a meeting, it creates download URLs for the transcript and, if `summarize_on_end` is enabled, the summary. You can receive those URLs automatically with [webhooks](/realtime/realtimekit/webhooks/), or fetch them later for a specific session with the [REST API](/realtime/realtimekit/ai/summary/#rest-api).
 
 To receive results as soon as they are ready, configure the `meeting.transcript` and `meeting.summary` webhook events:
 
@@ -63,6 +62,13 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/summary" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Use the [Generate summary of transcripts for the session](/api/resources/realtime_kit/subresources/sessions/methods/generate_summary_of_transcripts/) API only if `summarize_on_end` was not enabled and you want to generate a summary manually after the transcript is available:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/summary" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
