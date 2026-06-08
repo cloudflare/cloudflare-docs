@@ -102,6 +102,7 @@ export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	cacheDir: ".astro-cache",
 	markdown: {
+		gfm: true,
 		smartypants: false,
 		remarkPlugins: [remarkValidateImages],
 		rehypePlugins: [
