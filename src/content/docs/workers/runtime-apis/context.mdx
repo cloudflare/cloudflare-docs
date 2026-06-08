@@ -244,9 +244,11 @@ export default {
 
 :::caution[Reuse of body]
 
-The Workers Runtime uses streaming for request and response bodies. It does not buffer the body. Hence, if an exception occurs after the body has been consumed, `passThroughOnException()` cannot send the body again.
+The Workers runtime uses streaming for request and response bodies. It does not buffer the body. If an exception occurs after the body has been consumed, `passThroughOnException()` cannot send the body again.
 
-If this causes issues, we recommend cloning the request body and handling exceptions in code. This will protect against uncaught code exceptions. However some exception times such as exceed CPU or memory limits will not be mitigated.
+For proxy Workers, avoid relying on the runtime fallback for failures from `fetch(request)`. If the origin fetch throws after consuming the request body, the fallback request may reach your origin without the original body and fail with an unrelated `4xx` error. Catch origin fetch errors and return a `5xx` response instead.
+
+This protects against uncaught code exceptions. It does not mitigate failures such as exceeding CPU or memory limits.
 :::
 
 The `passThroughOnException` method allows a Worker to [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), and pass a request through to an origin server when a Worker throws an unhandled exception. This can be useful when using Workers as a layer in front of an existing service, allowing the service behind the Worker to handle any unexpected error cases that arise in your Worker.
@@ -257,6 +259,23 @@ export default {
 		// Proxy to origin on unhandled/uncaught exceptions
 		ctx.passThroughOnException();
 		throw new Error("Oops");
+	},
+};
+```
+
+If your Worker proxies to origin in the normal request path, catch errors from the origin fetch to avoid a second fetch with a consumed request body:
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		ctx.passThroughOnException();
+
+		try {
+			return await fetch(request);
+		} catch (error) {
+			console.error("Origin fetch failed", error);
+			return new Response("Bad Gateway", { status: 502 });
+		}
 	},
 };
 ```

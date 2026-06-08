@@ -336,7 +336,9 @@ Configure the [Wasm Coredump Service](https://github.com/cloudflare/wasm-coredum
 
 ## Go to origin on error
 
-By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+By using [`passThroughOnException()`](/workers/runtime-apis/context/#passthroughonexception), a Workers application can forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+
+If your Worker proxies to origin in the normal request path, catch errors from the origin fetch and return a `5xx` response. If `fetch(request)` throws after consuming the request body, `passThroughOnException()` cannot replay the body for the fallback request.
 
 <Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
@@ -344,8 +346,15 @@ By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthr
 export default {
 	async fetch(request, env, ctx) {
 		ctx.passThroughOnException();
-		// an error here will return the origin response, as if the Worker wasn't present
-		return fetch(request);
+
+		// Add logging, tracking, or other logic here.
+
+		try {
+			return await fetch(request);
+		} catch (error) {
+			console.error("Origin fetch failed", error);
+			return new Response("Bad Gateway", { status: 502 });
+		}
 	},
 };
 ```
@@ -365,9 +374,14 @@ addEventListener("fetch", (event) => {
 });
 
 async function handleRequest(request) {
-	// An error here will return the origin response, as if the Worker wasn’t present.
-	// ...
-	return fetch(request);
+	// Add logging, tracking, or other logic here.
+
+	try {
+		return await fetch(request);
+	} catch (error) {
+		console.error("Origin fetch failed", error);
+		return new Response("Bad Gateway", { status: 502 });
+	}
 }
 ```
 
