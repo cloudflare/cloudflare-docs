@@ -34,8 +34,7 @@ const ModelBadges = ({ model }: { model: ModelType }) => {
 	// Catalog rows carry `zdr_comment` on the resolved model rather than in the
 	// properties array (Property.value is string-only). Look it up once so the
 	// per-badge map below can attach it as a `title` tooltip on the ZDR span.
-	const zdrComment =
-		"zdrComment" in model ? (model.zdrComment ?? null) : null;
+	const zdrComment = "zdrComment" in model ? (model.zdrComment ?? null) : null;
 
 	const propertyBadges: Badge[] = model.properties.flatMap(
 		({ property_id, value }) => {
@@ -73,10 +72,7 @@ const ModelBadges = ({ model }: { model: ModelType }) => {
 		<ul className="m-0 flex list-none flex-wrap items-center gap-1.5 p-0 text-xs [&>li]:m-0">
 			{badges.map((badge) => (
 				<li key={badge.text}>
-					<span
-						className={`sl-badge ${badge.variant}`}
-						title={badge.title}
-					>
+					<span className={`sl-badge ${badge.variant}`} title={badge.title}>
 						{badge.text}
 					</span>
 				</li>
