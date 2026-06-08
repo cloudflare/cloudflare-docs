@@ -1,0 +1,10 @@
+---
+title: New formats parameter for the /snapshot endpoint
+description: The /snapshot endpoint now accepts a formats parameter to return Markdown and the accessibility tree alongside HTML content and screenshots.
+products:
+  - browser-run
+date: 2026-06-08
+---
+
+The [/snapshot endpoint](/browser-run/quick-actions/snapshot/) now supports a `formats` parameter, letting you choose which representations of a page are returned in a single request. Accepted values are `"content"`, `"screenshot"`, `"markdown"`, and `"accessibilityTree"`. The default remains `["content", "screenshot"]`.
+You must request at least two formats — if you only need one, use the respective dedicated endpoint instead.

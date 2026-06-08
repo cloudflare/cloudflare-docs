@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: /snapshot - Take a webpage snapshot
-description: Capture both HTML content and a screenshot of a webpage in a single Browser Run /snapshot request. 
+description: Capture both HTML content and a screenshot of a webpage in a single Browser Run /snapshot request.
 sidebar:
   order: 6
 products:
@@ -152,11 +152,11 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ### Choose which outputs to return
 
-Use the optional `formats` parameter to control which representations of the page are included in the response. Accepted values are `"content"`, `"screenshot"`, `"markdown"`, and `"accessibilityTree"`. If omitted, `formats` defaults to return `content` and `screenshot` only. 
+Use the optional `formats` parameter to control which representations of the page are included in the response. Accepted values are `"content"`, `"screenshot"`, `"markdown"`, and `"accessibilityTree"`. If omitted, `formats` defaults to return `content` and `screenshot` only.
 
-You must requqest at least two formats. If you only need one, use the dedicated endpoint instead. 
+You must requqest at least two formats. If you only need one, use the dedicated endpoint instead.
 
-The following example requests Markdown and the accessibility tree alongside the screenshot:
+The following example requests `markdown` and `accessibilityTree` alongside the `screenshot`:
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
@@ -167,6 +167,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
     "formats": ["screenshot", "markdown", "accessibilityTree"]
   }'
 ```
+
 ```json
 {
   "success": true,
