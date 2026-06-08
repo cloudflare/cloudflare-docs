@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: /snapshot - Take a webpage snapshot
-description: Capture both HTML content and a screenshot of a webpage in a single Browser Run /snapshot request.
+description: Capture both HTML content and a screenshot of a webpage in a single Browser Run /snapshot request. 
 sidebar:
   order: 6
 products:
@@ -10,7 +10,7 @@ products:
 
 import { Tabs, TabItem, Render } from "~/components";
 
-The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
+The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image, and can optionally also reeturn Markdown and the accessibility tree. Use the `formats` parameter to control which outputs are returned.
 
 <Render file="rest-api-token-permissions" product="browser-run" />
 
@@ -147,6 +147,34 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 		"screenshot": "AdvancedBase64Screenshot",
 		"content": "<html><body>Advanced Snapshot</body></html>"
 	}
+}
+```
+
+### Choose which outputs to return
+
+Use the optional `formats` parameter to control which representations of the page are included in the response. Accepted values are `"content"`, `"screenshot"`, `"markdown"`, and `"accessibilityTree"`. If omitted, `formats` defaults to return `content` and `screenshot` only. 
+
+You must requqest at least two formats. If you only need one, use the dedicated endpoint instead. 
+
+The following example requests Markdown and the accessibility tree alongside the screenshot:
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "formats": ["screenshot", "markdown", "accessibilityTree"]
+  }'
+```
+```json
+{
+  "success": true,
+  "result": {
+    "screenshot": "AdvancedBase64Screenshot",
+    "markdown": "# Example Domain\n\nThis domain is for use in illustrative examples...",
+    "accessibilityTree": { "role": "RootWebArea", "name": "Example Domain", "children": [ ... ] }
+  }
 }
 ```
 
