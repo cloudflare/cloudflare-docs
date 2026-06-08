@@ -54,11 +54,12 @@ export class MyContainer extends Container {
 
 	async runAndPersist() {
 		const res = await this.fetch("/run-task");
+		const body = await res.text();
 		await this.ctx.storage.sql.exec(
 			"INSERT OR REPLACE INTO results (value) VALUES (?)",
-			res,
+			body,
 		);
-		return res;
+		return body;
 	}
 }
 ```
