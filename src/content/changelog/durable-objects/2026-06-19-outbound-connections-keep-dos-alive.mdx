@@ -1,0 +1,20 @@
+---
+title: Outbound connections keep Durable Objects alive
+description: Active outbound TCP sockets and outbound WebSocket connections now prevent a Durable Object from being evicted while the connection is open.
+products:
+  - durable-objects
+date: 2026-06-19
+---
+
+Durable Objects now remain alive for the duration of active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-sockets/) or an outbound WebSocket. Previously, the routing supervisor would evict a Durable Object after 70-140 seconds of no incoming traffic, even if the object had an open outbound connection — a common pattern when streaming responses from an LLM or other long-lived upstream API.
+
+With this change, each active outbound connection holds a keepalive token that prevents eviction. Once all outbound connections close, the standard 70-140 second inactivity window applies before the Durable Object is evicted.
+
+This applies to outbound TCP sockets (`connect()`) and outbound WebSockets, including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`. Plain `fetch()` subrequests never keep a Durable Object alive — they are pass-through and have no effect on DO lifetime, even while the response body is still streaming.
+
+**Limits:**
+
+- Each outbound connection pins the Durable Object for a maximum of **15 minutes**. After 15 minutes, the connection stops preventing eviction (the connection itself continues operating), and normal eviction rules resume.
+- The Durable Object's existing [per-account instance limits](/durable-objects/platform/limits/) still apply.
+
+For more information, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
