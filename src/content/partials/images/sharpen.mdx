@@ -1,9 +1,33 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import sharpenImg from "~/assets/images/images/examples/sharpen-5.jpg";
 
-Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images.
+### `sharpen`
+
+Applies a sharpening filter to enhance edge definition in an image. Accepts a decimal value from `0` (no sharpening) to `10` (maximum sharpening). The default is `0`. The recommended value for downscaled images is `1`. 
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={sharpenImg.src} alt="sharpen=5 output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>sharpen=5</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">

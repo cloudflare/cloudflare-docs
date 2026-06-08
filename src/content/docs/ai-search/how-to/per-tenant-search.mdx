@@ -1,0 +1,134 @@
+---
+pcx_content_type: how-to
+title: Build per-tenant search
+description: Isolate search results per tenant in AI Search using separate instances or metadata filtering.
+sidebar:
+  order: 5
+products:
+  - ai-search
+---
+
+import { FileTree, TypeScriptExample, WranglerConfig } from "~/components";
+
+AI Search supports per-tenant search isolation. You can either create a separate instance for each tenant or use a shared instance with metadata filtering.
+
+## Instance per tenant
+
+Create isolated AI Search instances for each tenant at runtime using the [namespace binding](/ai-search/concepts/namespaces/). Each tenant gets their own instance with separate storage and search index.
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "TENANTS"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+<TypeScriptExample>
+
+```ts
+export type Env = {
+	TENANTS: AiSearchNamespace;
+};
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Identify the tenant from the request header
+		const tenantId = request.headers.get("x-tenant-id");
+
+		if (!tenantId) {
+			return new Response("Missing x-tenant-id header", { status: 400 });
+		}
+
+		// Create a new instance for the tenant
+		if (url.pathname === "/onboard" && request.method === "POST") {
+			const instance = await env.TENANTS.create({
+				id: `tenant-${tenantId}`,
+			});
+			return Response.json({ success: true, instance: await instance.info() });
+		}
+
+		// Upload a document to the tenant's instance
+		if (url.pathname === "/upload" && request.method === "POST") {
+			const formData = await request.formData();
+			const file = formData.get("file") as File;
+
+			// Upload the file to the tenant's built-in storage
+			const item = await env.TENANTS.get(`tenant-${tenantId}`).items.upload(
+				file.name,
+				await file.arrayBuffer(),
+			);
+			return Response.json({ success: true, item });
+		}
+
+		// Search the tenant's instance
+		if (url.pathname === "/search") {
+			const query = url.searchParams.get("q") || "";
+
+			// Each tenant's search is isolated to their own instance
+			const results = await env.TENANTS.get(`tenant-${tenantId}`).search({
+				messages: [{ role: "user", content: query }],
+			});
+			return Response.json(results);
+		}
+
+		// Delete the tenant's instance and all its data
+		if (url.pathname === "/offboard" && request.method === "DELETE") {
+			await env.TENANTS.delete(`tenant-${tenantId}`);
+			return Response.json({ success: true });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Shared instance with metadata filtering
+
+Use a single AI Search instance and organize content by tenant using folder paths. This approach works with both [R2 buckets](/ai-search/configuration/data-source/r2/) and [built-in storage](/ai-search/configuration/data-source/built-in-storage/). Apply [metadata filters](/ai-search/configuration/indexing/metadata/) at query time to ensure each tenant only retrieves their own documents.
+
+<WranglerConfig>
+
+```toml
+[[ai_search]]
+binding = "SHARED_INSTANCE"
+instance_name = "shared-instance"
+```
+
+</WranglerConfig>
+
+Organize your content by tenant using unique folder paths:
+
+<FileTree>
+
+- customer-a
+  - logs/
+  - contracts/
+- customer-b
+  - contracts/
+
+</FileTree>
+
+When searching, filter by the tenant's folder to restrict results:
+
+```ts
+// Filter results to only return documents from this tenant's folder
+const results = await env.SHARED_INSTANCE.search({
+	messages: [{ role: "user", content: "When did I sign my agreement?" }],
+	ai_search_options: {
+		retrieval: {
+			filters: {
+				folder: { $gte: "customer-a/", $lt: "customer-a0" },
+			},
+		},
+	},
+});
+```
+
+This example uses a ["starts with" filter](/ai-search/configuration/indexing/metadata/#starts-with-filter-for-folders) to match all files under `customer-a/` including subfolders.

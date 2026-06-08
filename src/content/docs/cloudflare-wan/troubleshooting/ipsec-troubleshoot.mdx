@@ -1,6 +1,9 @@
 ---
-title: Troubleshoot with IPsec logs
-pcx_content_type: how-to
+title: Troubleshoot IPsec tunnels
+pcx_content_type: troubleshooting
+description: Troubleshoot IPsec tunnel issues.
+products:
+  - cloudflare-wan
 sidebar:
   order: 1
 ---
@@ -9,4 +12,10 @@ import { Render } from "~/components"
 
 <Render file="ipsec-logs-troubleshooting"
 	product="networking-services"
+	params={{
+		supportedIpsecConfigLink: "/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		antiReplayLink: "/cloudflare-wan/reference/anti-replay-protection/",
+		tunnelHealthLink: "/cloudflare-wan/troubleshooting/tunnel-health/",
+		mtuMssLink: "/cloudflare-wan/reference/mtu-mss/"
+	}}
 />

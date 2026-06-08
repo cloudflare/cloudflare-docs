@@ -4,12 +4,18 @@ pcx_content_type: how-to
 sidebar:
   order: 4
 description: Create preview URLs and expose ports for web services.
+products:
+  - sandbox
 ---
 
 import { TypeScriptExample } from "~/components";
 
 :::note[Production requires custom domain]
 Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/) for setup instructions.
+:::
+
+:::note[Alternative: quick tunnels]
+If you only need a public URL for development or a `.workers.dev` deployment, [`sandbox.tunnels`](/sandbox/api/tunnels/) returns a `*.trycloudflare.com` URL without DNS setup. For production, follow this guide and use `exposePort()` with a custom domain.
 :::
 
 This guide shows you how to expose services running in your sandbox to the internet via preview URLs.
@@ -391,3 +397,4 @@ See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#norm
 - [Ports API reference](/sandbox/api/ports/) - Complete port exposure API
 - [Background processes guide](/sandbox/guides/background-processes/) - Managing services
 - [Execute commands guide](/sandbox/guides/execute-commands/) - Starting services
+- [Tunnels API reference](/sandbox/api/tunnels/) - Quick `*.trycloudflare.com` URLs as an alternative to `exposePort()`

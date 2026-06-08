@@ -1,23 +1,38 @@
 ---
 pcx_content_type: reference
+description: Available WARP connection modes and their behavior.
+products:
+  - warp-client
 title: WARP modes
+tags:
+  - Post-quantum
 sidebar:
   order: 2
 ---
 
 The WARP client has several modes to better suit different connection needs.
 
-## 1.1.1.1
+## DNS only
 
-1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. It also offers a DNS encryption service through DNS over HTTPS (DoH) or DNS over TLS (DoT) for increased security and privacy.
+Formerly known as **1.1.1.1**.
+
+In **DNS only** mode, WARP routes only DNS queries through Cloudflare's 1.1.1.1 resolver and does not tunnel device traffic. DNS queries are always encrypted: **DNS only (HTTPS)** uses DNS-over-HTTPS (DoH), and **DNS only (TLS)** uses DNS-over-TLS (DoT).
 
 Refer to [1.1.1.1 resolver](/1.1.1.1/encryption/) to learn more about DNS encryption.
 
-## 1.1.1.1 with WARP
+## Traffic and DNS
+
+Formerly known as **1.1.1.1 with WARP**.
 
 The WARP application uses [MASQUE](https://blog.cloudflare.com/zero-trust-warp-with-a-masque/) to encrypt and send traffic from your device directly to Cloudflare's global network. This ensures Internet traffic between your device and the Internet is secure and private, while also preventing third parties from accessing your traffic. All traffic[^1] tunneled over the MASQUE connection is encrypted using [post-quantum cryptography](https://blog.cloudflare.com/post-quantum-zero-trust/) to protect against [harvest-now-decrypt-later attacks](https://www.nist.gov/cybersecurity/what-post-quantum-cryptography).
 
 [^1]: Post-quantum cryptography requires the following minimum WARP versions: <br/> **Android**: 2.4.3<br/> **iOS**: 1.11.1 <br/> **Windows, macOS, and Linux**: 2025.6.1335.0
+
+This mode is available in three flavors:
+
+- **Traffic and DNS (UDP)** — All device traffic is routed through WARP, and DNS queries use UDP inside the tunnel.
+- **Traffic and DNS (TLS)** — All device traffic is routed through WARP, and DNS queries are encrypted via DNS-over-TLS (DoT).
+- **Traffic and DNS (HTTPS)** — All device traffic is routed through WARP, and DNS queries are encrypted via DNS-over-HTTPS (DoH).
 
 If the site you are visiting is already a Cloudflare customer, the content is immediately sent to your device. If not, Cloudflare uses its global network of data centers to devise the shortest path to the site. For more information, refer to our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/).
 
@@ -27,7 +42,11 @@ WARP does not provide anonymity, and it is not designed to prevent servers you c
 
 :::
 
-## WARP via Local Proxy
+## Traffic only
+
+In **Traffic only** mode, all device traffic is routed through WARP, but DNS resolution remains managed by the device operating system.
+
+## Local proxy
 
 Currently, this mode is available on desktop clients only. When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTPS or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for example, your web browser or a specific application. Everything else will not be encrypted and will be sent over a regular Internet connection.
 
@@ -36,7 +55,7 @@ Because this feature restricts WARP to just applications configured to use the l
 1. Navigate to **Preferences** > **Advanced** and select **Configure Proxy**.
 2. On the window that opens, check the box and configure the port you want to listen on.
 
-This will enable the **WARP via Local Proxy** option in the **WARP Settings** menu.
+This will enable the **Local proxy** option in the **WARP Settings** menu.
 
 If you enable [FIPS compliance](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance) for TLS decryption, you must [disable QUIC](/cloudflare-one/traffic-policies/http-policies/http3/#force-http2-traffic) in your users' browsers. Otherwise, HTTP/3 traffic will bypass inspection by the WARP client.
 

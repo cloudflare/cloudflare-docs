@@ -1,6 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Debugging Pages
+description: Troubleshoot common Cloudflare Pages build errors and deployment failures.
+products:
+  - pages
 ---
 
 import { DashButton } from "~/components";
@@ -87,7 +90,7 @@ If you are not using Functions or have reviewed that your Functions configuratio
 
 ## Differences between `pages.dev` and custom domains
 
-If your custom domain is proxied (orange-clouded) through Cloudflare, your zone's settings, like caching, will apply.
+If your custom domain is proxied ([orange-clouded](/dns/proxy-status/#benefits)) through Cloudflare, your zone's settings, like caching, will apply.
 
 If you are experiencing issues with new content not being shown, go to **Rules** > **Page Rules** in the Cloudflare dashboard and check for a Page Rule with **Cache Everything** enabled. If present, remove this rule as Pages handles its own cache.
 
@@ -104,7 +107,7 @@ Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. 
 To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 
 ```sh
-curl -I https://example.com/.well-known/acme-challenge/randomstring
+curl -s -o /dev/null -D - https://example.com/.well-known/acme-challenge/randomstring
 ```
 
 ```sh output
@@ -121,6 +124,8 @@ cf-ray: 7b1ffdaa8ad60693-MAN
 In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until the domain is verified. After the domain is verified, Access can be re-enabled.
 
 You will need to do the same kind of thing for Redirect Rules or a Worker example too.
+
+Refer to the [Troubleshooting Domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/troubleshooting/) article for more details.
 
 ### Missing CAA records
 
@@ -154,7 +159,7 @@ example.com.	300	IN	CAA	0 issue "amazon.com"
 ;; MSG SIZE  rcvd: 76
 ```
 
-In the above example, there is only a single CAA record which is allowing Amazon to issue ceritficates.
+In the above example, there is only a single CAA record which is allowing Amazon to issue certificates.
 
 To resolve this, you will need to add the following CAA records which allows all of the Certificate Authorities (CAs) Cloudflare uses to issue certificates:
 

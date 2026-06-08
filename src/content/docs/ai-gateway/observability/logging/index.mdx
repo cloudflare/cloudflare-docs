@@ -1,6 +1,9 @@
 ---
 pcx_content_type: reference
 title: Logging
+description: Store and inspect AI Gateway request logs including prompts, responses, tokens, costs, and DLP actions.
+products:
+  - ai-gateway
 ---
 
 import { Render } from "~/components";
@@ -31,20 +34,19 @@ The `cf-aig-collect-log` header allows you to bypass the default log setting for
 In the example below, we use `cf-aig-collect-log` to bypass the default setting to avoid saving the log.
 
 ```bash
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header "Authorization: Bearer $TOKEN" \
-  --header 'Content-Type: application/json' \
-  --header 'cf-aig-collect-log: false' \
-  --data ' {
-        "model": "gpt-4o-mini",
-        "messages": [
-          {
-            "role": "user",
-            "content": "What is the email address and phone number of user123?"
-          }
-        ]
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-collect-log: false" \
+  --data '{
+    "model": "openai/gpt-4.1-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the email address and phone number of user123?"
       }
-'
+    ]
+  }'
 ```
 
 ### Collect log payload (`cf-aig-collect-log-payload`)
@@ -61,20 +63,19 @@ This is useful when you want to maintain visibility into usage metrics and reque
 In the example below, we use `cf-aig-collect-log-payload` to skip storing the request and response bodies while keeping the metadata log.
 
 ```bash
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header "Authorization: Bearer $TOKEN" \
-  --header 'Content-Type: application/json' \
-  --header 'cf-aig-collect-log-payload: false' \
-  --data ' {
-        "model": "gpt-4o-mini",
-        "messages": [
-          {
-            "role": "user",
-            "content": "What is the email address and phone number of user123?"
-          }
-        ]
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-collect-log-payload: false" \
+  --data '{
+    "model": "openai/gpt-4.1-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the email address and phone number of user123?"
       }
-'
+    ]
+  }'
 ```
 
 :::note
@@ -117,7 +118,7 @@ See full list of available filters and their descriptions below:
 | Provider        | specific providers                                           | the selected AI provider.                 |
 | AI Models       | specific models                                              | the selected AI model.                    |
 | Cost            | less than, greater than                                      | cost, specifying a threshold.             |
-| Request type    | Universal, Workers AI Binding, WebSockets                    | the type of request.                      |
+| Request type    | Workers AI Binding, WebSockets                               | the type of request.                      |
 | Tokens          | Total tokens, Tokens In, Tokens Out                          | token count (less than or greater than).  |
 | Duration        | less than, greater than                                      | request duration.                         |
 | Feedback        | equals, does not equal (thumbs up, thumbs down, no feedback) | feedback type.                            |

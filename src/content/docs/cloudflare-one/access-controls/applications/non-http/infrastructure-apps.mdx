@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Add an infrastructure application in Access.
+products:
+  - cloudflare-one
 title: Add an infrastructure application
 sidebar:
   order: 2
@@ -35,7 +38,7 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/networks
 
 ## Prerequisites
 
-- [Connect your infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) to Cloudflare using `cloudflared` or WARP Connector.
+- [Connect your infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) to Cloudflare using `cloudflared` or Cloudflare Mesh.
 - [Deploy the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on user devices in Traffic and DNS mode.
 
 ## 1. Add a target
@@ -106,6 +109,12 @@ To view all available filters, type `warp-cli target list --help`.
 ## Revoke a user's session
 
 To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/access-controls/access-settings/session-management/#per-user) or revoke their device. Cloudflare does not currently support revoking a user's session for a specific target.
+
+## Granular target permissions
+
+Infrastructure Access supports granular read permissions through [Cloudflare's role-based access control](/fundamentals/manage-members/roles/). Administrators can assign read-only roles scoped to specific targets instead of granting account-wide access. When a user with a scoped role calls the targets list API, the response is automatically filtered to only include the targets they have permission to view.
+
+This is useful for organizations that want to give teams visibility into their own infrastructure targets without exposing the full target inventory.
 
 ## Infrastructure policy selectors
 

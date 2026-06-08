@@ -12,7 +12,7 @@ DLP can now natively detect and inspect user prompts submitted to popular AI app
 
 2. **Prompt Analysis and Topic Classification**
 
-Our DLP engine performs deep analysis on each prompt, applying [topic classification](/cloudflare-one/data-loss-prevention/detection-entries/#ai-prompt-topics). These topics are grouped into two evaluation categories:
+Our DLP engine performs deep analysis on each prompt, applying [topic classification](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/#ai-prompt-topics). These topics are grouped into two evaluation categories:
 
         - **Content:** PII, Source Code, Credentials and Secrets, Financial Information, and Customer Data.
 
@@ -24,7 +24,7 @@ To help you apply these topics quickly, we have also released five new predefine
 
 3. **Granular Guardrails**
 
-    You can now build guardrails using Gateway HTTP policies with [application granular controls](/cloudflare-one/traffic-policies/http-policies/#granular-controls). Apply a DLP profile containing an [AI prompt topic detection](/cloudflare-one/data-loss-prevention/detection-entries/#ai-prompt-topics) to individual AI applications (for example, ```ChatGPT```) and specific user actions (for example, ```SendPrompt```) to block sensitive prompts.
+    You can now build guardrails using Gateway HTTP policies with [application granular controls](/cloudflare-one/traffic-policies/http-policies/#granular-controls). Apply a DLP profile containing an [AI prompt topic detection](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/#ai-prompt-topics) to individual AI applications (for example, `ChatGPT`) and specific user actions (for example, `SendPrompt`) to block sensitive prompts.
 
     ![DLP](~/assets/images/changelog/dlp/ai-prompt-policy.png)
 
@@ -34,4 +34,4 @@ To help you apply these topics quickly, we have also released five new predefine
 
     ![DLP](~/assets/images/changelog/dlp/ai-prompt-log.png)
 
-AI prompt protection is now available in open beta. To learn more about it, read the [blog](https://blog.cloudflare.com/ai-prompt-protection/#closing-the-loop-logging) or refer to [AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/#ai-prompt-topics).
+AI prompt protection is now available in open beta. To learn more about it, read the [blog](https://blog.cloudflare.com/ai-prompt-protection/#closing-the-loop-logging) or refer to [AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/#ai-prompt-topics).

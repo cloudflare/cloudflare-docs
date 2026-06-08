@@ -1,0 +1,383 @@
+---
+type: example
+summary: Send emails with various types of attachments including PDFs, images, and file uploads with proper validation.
+pcx_content_type: example
+title: Email attachments
+description: Handle different types of email attachments including PDFs, inline images, and file uploads with validation and encoding.
+sidebar:
+  order: 8
+products:
+  - email-service
+---
+
+This example demonstrates how to send emails with various types of attachments including PDFs, inline images, and file uploads.
+
+```typescript
+interface Env {
+	EMAIL: SendEmail;
+	DOMAIN: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/send-invoice" && request.method === "POST") {
+			return sendInvoiceWithPDF(request, env);
+		}
+
+		if (url.pathname === "/send-report" && request.method === "POST") {
+			return sendReportWithImages(request, env);
+		}
+
+		if (url.pathname === "/upload-attachment" && request.method === "POST") {
+			return sendEmailWithUpload(request, env);
+		}
+
+		return new Response("Not Found", { status: 404 });
+	},
+};
+```
+
+## PDF Attachments
+
+Generate and send PDF documents as email attachments:
+
+```typescript
+async function sendInvoiceWithPDF(
+	request: Request,
+	env: Env,
+): Promise<Response> {
+	const { customerEmail, invoiceData } = await request.json();
+
+	// Generate PDF content
+	const pdfContent = generateInvoicePDF(invoiceData);
+	const pdfBase64 = btoa(pdfContent);
+
+	await env.EMAIL.send({
+		to: customerEmail,
+		from: `billing@${env.DOMAIN}`,
+		subject: `Invoice #${invoiceData.number}`,
+		html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h1>Invoice #${invoiceData.number}</h1>
+        <p>Dear ${invoiceData.customerName},</p>
+        
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3>Invoice Details</h3>
+          <p><strong>Invoice Number:</strong> ${invoiceData.number}</p>
+          <p><strong>Date:</strong> ${new Date(invoiceData.date).toLocaleDateString()}</p>
+          <p><strong>Amount Due:</strong> $${invoiceData.total}</p>
+          <p><strong>Due Date:</strong> ${new Date(invoiceData.dueDate).toLocaleDateString()}</p>
+        </div>
+        
+        <p>Please find your invoice attached. Payment is due within 30 days.</p>
+        <p>Thank you for your business!</p>
+      </div>
+    `,
+		attachments: [
+			{
+				filename: `invoice-${invoiceData.number}.pdf`,
+				content: pdfBase64,
+				contentType: "application/pdf",
+				disposition: "attachment",
+			},
+		],
+	});
+
+	return new Response(
+		JSON.stringify({ success: true, message: "Invoice sent" }),
+	);
+}
+
+function generateInvoicePDF(invoiceData: any): string {
+	// Simple PDF generation (in practice, use a proper PDF library)
+	const pdfContent = `%PDF-1.4
+1 0 obj<< /Type /Catalog /Pages 2 0 R >>endobj
+2 0 obj<< /Type /Pages /Kids [3 0 R] /Count 1 >>endobj
+3 0 obj<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>endobj
+4 0 obj<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>endobj
+5 0 obj<< /Length 200 >>stream
+BT
+/F1 24 Tf
+50 700 Td
+(INVOICE #${invoiceData.number}) Tj
+0 -50 Td
+/F1 12 Tf
+(Customer: ${invoiceData.customerName}) Tj
+0 -20 Td
+(Date: ${new Date(invoiceData.date).toLocaleDateString()}) Tj
+0 -20 Td
+(Amount: $${invoiceData.total}) Tj
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000010 00000 n 
+0000000053 00000 n 
+0000000100 00000 n 
+0000000200 00000 n 
+0000000300 00000 n 
+trailer<< /Size 6 /Root 1 0 R >>
+startxref
+400
+%%EOF`;
+
+	return pdfContent;
+}
+```
+
+## Inline Images
+
+Embed images directly in email content using Content-ID references:
+
+```typescript
+async function sendReportWithImages(
+	request: Request,
+	env: Env,
+): Promise<Response> {
+	const { recipientEmail, reportData } = await request.json();
+
+	// Generate chart and logo images (base64 encoded)
+	const chartImage = generateChartImage(reportData);
+	const logoImage = getCompanyLogo();
+
+	await env.EMAIL.send({
+		to: recipientEmail,
+		from: `reports@${env.DOMAIN}`,
+		subject: `${reportData.title} - ${reportData.period}`,
+		html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <!-- Company Logo (inline) -->
+        <div style="text-align: center; margin-bottom: 30px;">
+          <img src="cid:company-logo" alt="Company Logo" style="width: 200px; height: auto;">
+        </div>
+        
+        <h1 style="color: #2563eb;">${reportData.title}</h1>
+        <p style="color: #666;">Period: ${reportData.period}</p>
+        
+        <h2>Key Metrics</h2>
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <p><strong>Revenue:</strong> $${reportData.metrics.revenue.toLocaleString()}</p>
+          <p><strong>New Users:</strong> ${reportData.metrics.users.toLocaleString()}</p>
+          <p><strong>Growth Rate:</strong> ${reportData.metrics.growth}%</p>
+        </div>
+        
+        <h2>Performance Chart</h2>
+        <!-- Inline chart image -->
+        <div style="text-align: center; margin: 20px 0;">
+          <img src="cid:performance-chart" alt="Performance Chart" 
+               style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        
+        <p>For detailed analysis, please contact our team.</p>
+      </div>
+    `,
+		attachments: [
+			{
+				filename: "company-logo.png",
+				content: logoImage,
+				contentType: "image/png",
+				disposition: "inline",
+				contentId: "company-logo",
+			},
+			{
+				filename: "performance-chart.png",
+				content: chartImage,
+				contentType: "image/png",
+				disposition: "inline",
+				contentId: "performance-chart",
+			},
+		],
+	});
+
+	return new Response(
+		JSON.stringify({ success: true, message: "Report sent" }),
+	);
+}
+
+function generateChartImage(reportData: any): string {
+	// Generate simple SVG chart (in practice, use a chart library)
+	const chartSVG = `
+    <svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="200" fill="#f8f9fa" stroke="#dee2e6"/>
+      <rect x="50" y="150" width="30" height="${Math.max(10, reportData.metrics.growth * 2)}" fill="#2563eb"/>
+      <rect x="100" y="120" width="30" height="50" fill="#28a745"/>
+      <rect x="150" y="100" width="30" height="70" fill="#ffc107"/>
+      <rect x="200" y="80" width="30" height="90" fill="#dc3545"/>
+      <text x="200" y="30" text-anchor="middle" font-family="Arial" font-size="16">Performance Chart</text>
+    </svg>
+  `;
+
+	return btoa(chartSVG);
+}
+
+function getCompanyLogo(): string {
+	// Simple SVG logo
+	const logoSVG = `
+    <svg width="200" height="60" xmlns="http://www.w3.org/2000/svg">
+      <rect width="200" height="60" fill="#2563eb" rx="8"/>
+      <text x="100" y="35" text-anchor="middle" font-family="Arial" 
+            font-size="24" font-weight="bold" fill="white">Company</text>
+    </svg>
+  `;
+
+	return btoa(logoSVG);
+}
+```
+
+## File Uploads
+
+Handle file uploads and send them as email attachments with validation:
+
+```typescript
+async function sendEmailWithUpload(
+	request: Request,
+	env: Env,
+): Promise<Response> {
+	const formData = await request.formData();
+	const file = formData.get("file") as File;
+	const recipientEmail = formData.get("email") as string;
+	const message = formData.get("message") as string;
+	const senderName = (formData.get("senderName") as string) || "Someone";
+
+	if (!file || !recipientEmail) {
+		return new Response(
+			JSON.stringify({
+				error: "Missing required fields: file and email",
+			}),
+			{ status: 400 },
+		);
+	}
+
+	// Validate file
+	const validation = validateFile(file);
+	if (!validation.valid) {
+		return new Response(
+			JSON.stringify({
+				error: validation.error,
+			}),
+			{ status: 400 },
+		);
+	}
+
+	// Convert file to base64
+	const fileBuffer = await file.arrayBuffer();
+	const fileBase64 = btoa(String.fromCharCode(...new Uint8Array(fileBuffer)));
+
+	await env.EMAIL.send({
+		to: recipientEmail,
+		from: `uploads@${env.DOMAIN}`,
+		subject: `File shared: ${file.name}`,
+		html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #2563eb;">📎 File Shared</h1>
+        
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <p><strong>${senderName}</strong> has shared a file with you.</p>
+          ${message ? `<p><em>"${message}"</em></p>` : ""}
+        </div>
+        
+        <div style="border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px 0;">
+          <h3 style="margin: 0 0 15px 0;">File Details</h3>
+          <p><strong>Filename:</strong> ${file.name}</p>
+          <p><strong>Size:</strong> ${formatFileSize(file.size)}</p>
+          <p><strong>Type:</strong> ${getFileTypeDescription(file.type)}</p>
+        </div>
+        
+        <p>The file is attached to this email for download.</p>
+        
+        <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 4px;">
+          <p style="margin: 0; color: #856404;">
+            <strong>⚠️ Security Notice:</strong> Always verify the source before opening attachments.
+          </p>
+        </div>
+      </div>
+    `,
+		attachments: [
+			{
+				filename: file.name,
+				content: fileBase64,
+				contentType: file.type,
+				disposition: "attachment",
+			},
+		],
+	});
+
+	return new Response(
+		JSON.stringify({
+			success: true,
+			message: `File ${file.name} sent to ${recipientEmail}`,
+		}),
+	);
+}
+
+function validateFile(file: File): { valid: boolean; error?: string } {
+	const maxSize = 25 * 1024 * 1024; // 25MB limit
+	const allowedTypes = [
+		"image/jpeg",
+		"image/png",
+		"image/gif",
+		"application/pdf",
+		"text/plain",
+		"text/csv",
+		"application/msword",
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		"application/vnd.ms-excel",
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		"application/zip",
+	];
+
+	if (file.size === 0) {
+		return { valid: false, error: "File is empty" };
+	}
+
+	if (file.size > maxSize) {
+		return {
+			valid: false,
+			error: `File too large (max ${formatFileSize(maxSize)})`,
+		};
+	}
+
+	if (!allowedTypes.includes(file.type)) {
+		return { valid: false, error: "File type not allowed" };
+	}
+
+	// Check for dangerous extensions
+	const dangerousExtensions = [".exe", ".bat", ".cmd", ".scr", ".vbs", ".js"];
+	const fileName = file.name.toLowerCase();
+	if (dangerousExtensions.some((ext) => fileName.endsWith(ext))) {
+		return {
+			valid: false,
+			error: "File extension not allowed for security reasons",
+		};
+	}
+
+	return { valid: true };
+}
+
+function formatFileSize(bytes: number): string {
+	if (bytes === 0) return "0 Bytes";
+	const k = 1024;
+	const sizes = ["Bytes", "KB", "MB", "GB"];
+	const i = Math.floor(Math.log(bytes) / Math.log(k));
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
+
+function getFileTypeDescription(mimeType: string): string {
+	const typeMap: Record<string, string> = {
+		"image/jpeg": "JPEG Image",
+		"image/png": "PNG Image",
+		"image/gif": "GIF Image",
+		"application/pdf": "PDF Document",
+		"text/plain": "Text Document",
+		"application/msword": "Word Document",
+		"application/vnd.ms-excel": "Excel Spreadsheet",
+		"application/zip": "ZIP Archive",
+	};
+
+	return typeMap[mimeType] || "Unknown";
+}
+```

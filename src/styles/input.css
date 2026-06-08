@@ -1,13 +1,20 @@
 @layer theme {
-	input,
-	textarea,
-	select {
+	/*
+	 * Scoped to <main> so these styles apply to form controls inside page
+	 * content (feedback prompt, glossary search, model catalog, etc.) without
+	 * leaking into Starlight's header chrome (e.g. the theme-select dropdown).
+	 * The bare selector would otherwise beat Starlight's own styles on any
+	 * page where CSS layer order flips — which can happen when a page imports
+	 * a Starlight user-component (like <Code>) early enough to declare the
+	 * starlight.* layers before Tailwind's layer order statement.
+	 */
+	main :is(input, textarea, select) {
 		background-color: var(--sl-color-bg-nav);
 		border-color: var(--sl-color-gray-5);
 		border-width: 2px;
 	}
 
-	input[readonly] {
+	main input[readonly] {
 		background-color: var(--sl-color-backdrop-overlay);
 		cursor: not-allowed;
 	}

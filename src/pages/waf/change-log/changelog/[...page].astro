@@ -16,7 +16,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 	const entries = await getChangelogs({
 		filter: (entry) =>
 			!entry.data.hidden &&
-			!entry.data.scheduled &&
+			!entry.data.publish_future_dated_entry &&
 			entry.data.products.some((p) => p.id === "waf"),
 	});
 

@@ -1,9 +1,12 @@
 ---
 pcx_content_type: tutorial
+difficulty: Intermediate
 source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add multiple sites via automation
 description: To add multiple sites to Cloudflare at once and more efficiently, you can do so via the Cloudflare API.
 reviewed: 2026-01-26
+products:
+  - fundamentals
 ---
 
 import { Render } from "~/components";
@@ -34,9 +37,9 @@ To add multiple sites to Cloudflare via automation, you need:
   - Account-level `Domain Administrator`
 - To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name).
 
-   <Render file="dnssec-providers" product="dns" />
+  <Render file="dnssec-providers" product="dns" />
 
-   <Render file="dnssec-enabled-migration" product="dns" />
+  <Render file="dnssec-enabled-migration" product="dns" />
 
 ---
 
@@ -182,7 +185,7 @@ You can find your zones nameservers in the following locations:
 | ---------- | ------------- | ------------------------------------------------- |
 | \<ZONE_ID> | `example.com` | `arya.ns.cloudflare.com`, `tim.ns.cloudflare.com` |
 
-2. Use the values in the **NAME SERVERS** column to [update the nameservers](/dns/zone-setups/full-setup/setup/#update-your-registrar) at the registrar of each domain.
+2. Use the values in the **NAME SERVERS** column to [update the nameservers](/dns/zone-setups/full-setup/setup/#34-update-your-registrar) at the registrar of each domain.
 
 ---
 

@@ -1,0 +1,218 @@
+---
+pcx_content_type: reference
+title: Workers binding
+description: Search and chat with AI Search instances from a Cloudflare Worker using the Workers binding.
+sidebar:
+  order: 1
+products:
+  - ai-search
+---
+
+import { Render, MetaInfo, Type } from "~/components";
+
+[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to search and chat with your AI Search instances from a Cloudflare Worker.
+
+:::note
+The previous `env.AI.autorag()` binding is no longer recommended for use. Refer to [Workers binding migration](/ai-search/api/migration/workers-binding/) for details.
+:::
+
+## Configure the binding
+
+<Render file="binding-config" product="ai-search" />
+
+## Instance methods
+
+The following methods are available on both the `ai_search_namespaces` and `ai_search` bindings. With the namespace binding, call methods on the handle returned by `get()`. With the instance binding, call methods directly on the binding (for example, `env.MY_SEARCH.search()`).
+
+The examples below use the namespace binding.
+
+### `search()`
+
+Search for relevant content chunks from your indexed data source. Returns scored chunks with source references.
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const results = await instance.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+```
+
+#### Parameters
+
+<Render file="v2-search-params" product="ai-search" />
+
+#### Response
+
+<Render file="v2-search-response" product="ai-search" />
+
+### `chatCompletions()`
+
+Generate chat completions using your AI Search instance as context. This method retrieves relevant content and uses it to generate a response.
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const response = await instance.chatCompletions({
+	messages: [
+		{ role: "system", content: "You are a helpful documentation assistant." },
+		{ role: "user", content: "What is Cloudflare?" },
+	],
+	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	ai_search_options: {
+		retrieval: {
+			max_num_results: 5,
+		},
+		query_rewrite: {
+			enabled: true,
+		},
+	},
+});
+```
+
+#### Stream responses
+
+Set `stream: true` to receive responses as Server-Sent Events (SSE) as they are generated:
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const stream = await instance.chatCompletions({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	stream: true,
+});
+
+return new Response(stream, {
+	headers: {
+		"content-type": "text/event-stream",
+		"cache-control": "no-cache",
+	},
+});
+```
+
+When `stream` is enabled, the method returns a `ReadableStream` of SSE events. Each event contains a JSON object with `choices[0].delta.content` for incremental text. The stream ends with a `data: [DONE]` event.
+
+#### Parameters
+
+<Render file="v2-chat-completions-params" product="ai-search" />
+
+#### Response (non-streaming)
+
+| Field                       | Type   | Description                                                                         |
+| --------------------------- | ------ | ----------------------------------------------------------------------------------- |
+| `id`                        | string | Unique identifier for the completion.                                               |
+| `object`                    | string | Always `chat.completion`.                                                           |
+| `created`                   | number | Unix timestamp of when the completion was created.                                  |
+| `model`                     | string | The model used to generate the response.                                            |
+| `choices`                   | array  | Array of completion choices.                                                        |
+| `choices[].message.role`    | string | Always `assistant`.                                                                 |
+| `choices[].message.content` | string | The generated response text.                                                        |
+| `choices[].finish_reason`   | string | Why the model stopped generating. Typically `stop`.                                 |
+| `usage.prompt_tokens`       | number | Number of tokens in the prompt.                                                     |
+| `usage.completion_tokens`   | number | Number of tokens in the generated response.                                         |
+| `usage.total_tokens`        | number | Total tokens used.                                                                  |
+| `chunks`                    | array  | The source chunks used as context. Same format as the [search response](#response). |
+
+#### Response (streaming)
+
+When `stream: true`, the method returns a `ReadableStream` of Server-Sent Events. The retrieved chunks are sent first as a `chunks` event, followed by the streamed response.
+
+```txt
+event: chunks
+data: [{"id":"chunk-001","type":"text","score":0.85,"text":"...","item":{"key":"about-cloudflare.md","timestamp":1775925540000},"scoring_details":{"vector_score":0.85}}]
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" document"}}]}
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" you provided doesn"}}]}
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"'t contain"}}]}
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" information"}}]}
+
+data: [DONE]
+```
+
+## Namespace methods
+
+The following methods are only available when using the `ai_search_namespaces` binding. Search and chat across multiple instances in a single call using the namespace handle directly (`env.AI_SEARCH`).
+
+### `search()`
+
+Pass `instance_ids` in `ai_search_options` to specify which instances to query. Results are merged and ranked, and each chunk includes an `instance_id` field identifying which instance it came from.
+
+```ts
+const results = await env.AI_SEARCH.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		instance_ids: ["product-docs", "customer-abc123"],
+	},
+});
+```
+
+#### Parameters
+
+Same as [instance-level search](#parameters), with one additional required field:
+
+| Parameter                        | Type   | Required | Description                                           |
+| -------------------------------- | ------ | -------- | ----------------------------------------------------- |
+| `ai_search_options`              | object | Yes      | Required for namespace-level search.                  |
+| `ai_search_options.instance_ids` | array  | Yes      | Instance IDs to search across. Minimum 1, maximum 10. |
+
+#### Response
+
+Same as [instance-level search](#response), with additional fields:
+
+| Field                  | Type   | Description                                                                               |
+| ---------------------- | ------ | ----------------------------------------------------------------------------------------- |
+| `chunks[].instance_id` | string | The instance this chunk came from.                                                        |
+| `errors`               | array  | Per-instance errors if any instances failed. Each object has `instance_id` and `message`. |
+
+### `chatCompletions()`
+
+Generate chat completions using context retrieved from multiple instances.
+
+```ts
+const response = await env.AI_SEARCH.chatCompletions({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		instance_ids: ["product-docs", "customer-abc123"],
+	},
+});
+```
+
+Streaming is supported with `stream: true`.
+
+#### Parameters
+
+Same as [instance-level chat completions](#parameters-1), with one additional required field:
+
+| Parameter                        | Type   | Required | Description                                           |
+| -------------------------------- | ------ | -------- | ----------------------------------------------------- |
+| `ai_search_options`              | object | Yes      | Required for namespace-level chat completions.        |
+| `ai_search_options.instance_ids` | array  | Yes      | Instance IDs to search across. Minimum 1, maximum 10. |
+
+#### Response
+
+Same as [instance-level chat completions](#response-non-streaming), with additional fields on each chunk:
+
+| Field                  | Type   | Description                                                                               |
+| ---------------------- | ------ | ----------------------------------------------------------------------------------------- |
+| `chunks[].instance_id` | string | The instance this chunk came from.                                                        |
+| `errors`               | array  | Per-instance errors if any instances failed. Each object has `instance_id` and `message`. |
+
+## Local development
+
+Local development is supported by proxying requests to your deployed AI Search instance. Add `remote: true` to your binding configuration to enable local development with `wrangler dev`.
+
+```jsonc
+// wrangler.jsonc
+{
+	"ai_search": [
+		{
+			"binding": "MY_SEARCH",
+			"instance_name": "my-instance",
+			"remote": true,
+		},
+	],
+}
+```

@@ -1,10 +1,13 @@
 ---
 pcx_content_type: navigation
 title: Build using Core SDK
+description: Initialize and build with the RealtimeKit Core SDK for full control over video calls.
 slug: realtime/realtimekit/core
 sidebar:
   order: 6
   label: Getting Started
+products:
+  - realtime
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
@@ -346,7 +349,7 @@ Reference for the types:
 ```ts
 interface AudioQualityConstraints {
 	echoCancellation?: boolean;
-	noiseSupression?: boolean;
+	noiseSuppression?: boolean;
 	autoGainControl?: boolean;
 	enableStereo?: boolean;
 	enableHighBitrate?: boolean;

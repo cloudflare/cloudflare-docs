@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Device monitoring in Zero Trust analytics.
+products:
+  - cloudflare-one
 title: Device monitoring
 sidebar:
   order: 2
@@ -7,7 +10,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-Monitor performance and network status for your organization's [fleet](/cloudflare-one/insights/dex/monitoring/#fleet-status) or individual [user devices](/cloudflare-one/insights/dex/monitoring/#device-monitoring).
+Monitor performance and network status for your organization's [fleet](/cloudflare-one/insights/dex/monitoring/#fleet-status) (all devices with the Cloudflare One Client installed and connected to your Zero Trust organization) or individual [user devices](/cloudflare-one/insights/dex/monitoring/#device-monitoring).
 
 Network and device performance data helps IT administrators troubleshoot performance issues, investigate network connectivity problems, and monitor device health.
 
@@ -34,10 +37,10 @@ To view analytics on a per-device level, go to [Device monitoring](/cloudflare-o
 
   | Status       | Description                                                                                                                                                                                                                                                                                                                                                                               |
   | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | Connected    | the Cloudflare One Client has successfully established a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                                                          |
-  | Disconnected | the Cloudflare One Client has been intentionally or unintentionally disconnected from the Cloudflare global network.                                                                                                                                                                                                                                                                                           |
+  | Connected    | The Cloudflare One Client has successfully established a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                                                          |
+  | Disconnected | The Cloudflare One Client has been intentionally or unintentionally disconnected from the Cloudflare global network.                                                                                                                                                                                                                                                                                           |
   | Paused       | A user or administrator has taken an explicit action to temporarily turn off WARP, for example by entering an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes). Paused clients will [auto-connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) after a timeout period. |
-  | Connecting   | the Cloudflare One Client is pending connection, but is actively trying to establish a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                            |
+  | Connecting   | The Cloudflare One Client is pending connection, but is actively trying to establish a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                            |
 
 - **Mode**: [Client mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) deployed on the device.
 
@@ -68,7 +71,7 @@ To view a device's network and device performance metrics:
 
 #### Network performance metrics
 
-- **Unique networks over time**: How many unique SSIDs the device was connected to.
+- **Unique networks over time**: How many unique SSIDs (Wi-Fi network names) the device was connected to.
 
 - **Network I/O**: How much data the device transferred (uploads and downloads) over the primary network interface.
 

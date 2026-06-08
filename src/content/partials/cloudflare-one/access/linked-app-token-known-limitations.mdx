@@ -1,0 +1,6 @@
+---
+{}
+---
+
+- The Linked App Token policy can only be added to [self-hosted applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). It cannot be added to [SaaS applications](/cloudflare-one/access-controls/applications/http-apps/saas-apps/) or other application types.
+- This feature works best with applications that rely on the [Cloudflare Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) for authentication and identity. If the downstream application implements its own authentication layer after Cloudflare Access, requests that pass Access validation may still be rejected by the application itself.

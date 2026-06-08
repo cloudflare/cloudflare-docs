@@ -6,10 +6,13 @@ sidebar:
   order: 5
 description: Execute Workers code in reaction to Container status changes
 reviewed: 2025-06-24
+products:
+  - containers
+  - workers
 ---
 
 When a Container starts, stops, becomes idle, and errors, it can trigger code execution in a Worker
-that has defined status hooks on the `Container` class. Refer to the [Container package docs](https://github.com/cloudflare/containers/blob/main/README.md#lifecycle-hooks) for more details.
+that has defined status hooks on the `Container` class. Refer to the [Container class lifecycle hooks](/containers/container-class/#lifecycle-hooks) for more details.
 
 ```ts
 import { Container } from "@cloudflare/containers";

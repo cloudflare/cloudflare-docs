@@ -1,0 +1,17 @@
+---
+pcx_content_type: integration-guide
+description: Connect Amazon AWS Transit Gateway to Cloudflare WAN.
+products:
+  - cloudflare-wan
+title: Amazon AWS Transit Gateway
+
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/aws"
+  product="networking-services"
+  params={{
+    addTunnelsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    createAStaticRouteUrl: "/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route"
+  }} />

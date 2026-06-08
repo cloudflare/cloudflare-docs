@@ -1,6 +1,9 @@
 ---
 title: Unexpected DNS records
 pcx_content_type: troubleshooting
+description: Identify and remove unexpected DNS records.
+products:
+  - dns
 sidebar:
   order: 11
   label: Unexpected DNS records
@@ -47,6 +50,83 @@ If you want to remove these records:
 
 - [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to universal and backup certificates.
 - [Delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to advanced certificates.
+
+---
+
+## \_dc-mx and dc-##### subdomains
+
+You notice a `_dc-mx` or `dc-#####` subdomain that you did not create (for example, `_dc-mx.a1b2c3d4e5f6.example.com`). This response does not appear in your Cloudflare DNS records table, but will appear in `dig` responses.
+
+### Cause
+
+When your `MX` or `SRV` record resolves to a domain configured to [proxy](/dns/proxy-status/) through Cloudflare, Cloudflare dynamically inserts a record into DNS responses that resolves to the origin IP address. This record is added at query time to ensure that mail or service traffic bypasses the Cloudflare proxy and reaches your server directly.
+
+The prefix of the auto-generated record depends on the record type that triggered it:
+
+- **MX records:** Cloudflare inserts a record with the `_dc-mx` prefix (for example, `_dc-mx.a1b2c3d4e5f6.example.com`).
+- **SRV records:** Cloudflare inserts a record with the `dc-` prefix (for example, `dc-a1b2c3d4e5f6.example.com`).
+
+#### How \_dc-mx records work
+
+Before using Cloudflare, suppose your DNS records for mail are as follows:
+
+`example.com MX example.com`
+
+`example.com A 192.0.2.1`
+
+After using Cloudflare and proxying the `A` record, Cloudflare provides DNS responses with a [Cloudflare IP address](/fundamentals/concepts/cloudflare-ip-addresses/) (`203.0.113.1` in the example below):
+
+`example.com MX example.com`
+
+`example.com A 203.0.113.1`
+
+Since proxying mail traffic through Cloudflare would break your mail services, Cloudflare detects this situation and dynamically inserts a `_dc-mx` record into DNS responses:
+
+`example.com MX _dc-mx.a1b2c3d4e5f6.example.com`
+
+`_dc-mx.a1b2c3d4e5f6.example.com A 192.0.2.1`
+
+`example.com A 203.0.113.1`
+
+You can verify this behavior by querying your domain's MX records (replace `example.com` with your domain):
+
+```sh
+dig example.com mx +short
+```
+
+```sh output
+100 _dc-mx.a1b2c3d4e5f6.example.com.
+```
+
+The `_dc-mx` record resolves directly to your origin IP:
+
+```sh
+dig _dc-mx.a1b2c3d4e5f6.example.com a +short
+```
+
+```sh output
+192.0.2.1
+```
+
+### Solution
+
+These records are safe — they ensure your mail traffic reaches your server correctly.
+
+If you want to avoid a `_dc-mx` or `dc-#####` response, you must address the underlying proxy conflict:
+
+- If no mail is received for the domain, delete the `MX` record.
+- If mail is received for the domain, update the `MX` record to resolve to a separate `A` record for a mail subdomain that is not proxied by Cloudflare:
+
+  `example.com MX mail.example.com`
+
+  `mail.example.com A 192.0.2.1`
+
+  `example.com A 203.0.113.1`
+
+:::caution
+
+If your mail server resides on the same IP as your web server, your MX record will expose your origin IP address, since it is not hidden behind the Cloudflare proxy.
+:::
 
 ---
 

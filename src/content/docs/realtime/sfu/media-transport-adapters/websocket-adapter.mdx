@@ -1,10 +1,13 @@
 ---
 pcx_content_type: reference
 title: WebSocket adapter
+description: Stream audio and video between WebRTC tracks and WebSocket endpoints using Realtime SFU.
 sidebar:
   order: 1
   label: WebSocket
   badge: Beta
+products:
+  - realtime
 ---
 
 import { Render, Tabs, TabItem } from "~/components";
@@ -76,6 +79,7 @@ graph LR
 - Requires existing session ID with track
 - Audio: Sends individual PCM frames as they are produced; each includes timestamp and sequence number
 - Video: Sends individual JPEG frames at approximately 1 FPS; each includes timestamp (sequence number may be unset)
+- Automatically retries the same WebSocket endpoint for up to 5 seconds after brief disconnects or endpoint restarts. Refer to [Automatic reconnection for streaming](#automatic-reconnection-for-streaming).
 
 </TabItem>
 </Tabs>
@@ -188,6 +192,7 @@ POST /v1/apps/{appId}/adapters/websocket/new
 - Video frames are sent individually as JPEG at approximately 1 FPS with timestamp; sequence number may be unset.
 - Each frame is a separate WebSocket message.
 - No mode parameter; frames are sent as produced.
+- The SFU automatically retries the same WebSocket endpoint for up to 5 seconds after brief disconnects.
 :::
 
 </TabItem>
@@ -203,11 +208,11 @@ POST /v1/apps/{appId}/adapters/websocket/close
 
 ```json
 {
-  "tracks": [
-    {
-      "adapterId": "string"
-    }
-  ]
+	"tracks": [
+		{
+			"adapterId": "string"
+		}
+	]
 }
 ```
 
@@ -228,7 +233,7 @@ Media uses Protocol Buffers. Audio uses PCM payloads; video uses JPEG payloads:
 - Stereo (left/right interleaved)
 - Video: JPEG image payload (one frame per message)
 
-```protobuf
+```proto
 message Packet {
     uint32 sequenceNumber = 1;  // Used in Stream mode only
     uint32 timestamp = 2;       // Used in Stream mode only
@@ -239,6 +244,7 @@ message Packet {
 **Ingest mode (buffer)**: Only the `payload` field is used, containing chunks of audio data.
 
 **Stream mode (egress)**:
+
 - For audio frames:
   - `sequenceNumber`: Incremental packet counter
   - `timestamp`: Timestamp for synchronization
@@ -264,12 +270,14 @@ Connects to your WebSocket endpoint:
 ### Message format
 
 #### Buffer mode (ingest)
+
 - **Binary messages**: PCM audio data in chunks
 - **Maximum message size**: 32 KB per WebSocket message
 - **Important**: Account for serialization overhead when chunking audio buffers
 - Send audio in small, frequent chunks rather than large batches
 
-#### Stream mode (egress)  
+#### Stream mode (egress)
+
 - **Binary messages**: Individual frames with metadata (audio or video)
 - Audio frames include:
   - Timestamp information
@@ -287,7 +295,24 @@ Connects to your WebSocket endpoint:
 1. Connects to the WebSocket endpoint
 2. Audio streaming begins
 3. Video streaming begins (if configured)
-4. Connection closes when closed or on error
+4. For WebRTC to WebSocket streaming, briefly retries the same endpoint after disconnects
+5. Connection closes when closed, on error, or after the automatic reconnect window is exhausted
+
+## Automatic reconnection for streaming
+
+When you use the WebSocket adapter in [Stream mode (egress)](#stream-mode-egress) to send live audio or video from the SFU to your own WebSocket endpoint (`WebRTC → WebSocket`), the SFU automatically reconnects after brief endpoint disconnects or restarts.
+
+The SFU retries the same WebSocket endpoint for up to 5 seconds. No API changes are required. If the endpoint remains unavailable after the reconnect window, the adapter closes and your application must create a new adapter to resume streaming.
+
+### Media buffering during reconnect
+
+Automatic reconnection uses live-first buffering while the WebSocket endpoint is temporarily unavailable:
+
+- **Audio buffering**: The SFU keeps a short, bounded backlog of audio frames. If the interruption lasts longer than the backlog can cover, older audio may be dropped so reconnect recovery stays bounded.
+- **Video buffering**: The SFU keeps only the latest available JPEG frame. Newer frames replace older frames while reconnecting, so video resumes near-live instead of replaying stale frames.
+- **Delivery behavior**: Buffering reduces media loss during brief interruptions, but it is not a replay mechanism and does not guarantee gapless or exactly-once delivery.
+
+Automatic reconnection applies only when using [Stream mode (egress)](#stream-mode-egress). It retries the same endpoint only and does not provide multi-endpoint failover.
 
 ## Pricing
 
@@ -303,7 +328,9 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 
 - Closing an already-closed instance returns success
 - Close when sessions end
-- Implement reconnection logic for network failures
+- When using [Stream mode (egress)](#stream-mode-egress), handle adapter closure after the 5-second [automatic reconnect window](#automatic-reconnection-for-streaming) is exhausted.
+- When ingesting from WebSocket to WebRTC, implement reconnection logic in your WebSocket client if the connection drops.
+- Make your WebSocket endpoint restart-safe so it can accept reconnects to the same URL during brief restarts.
 
 ### Performance
 
@@ -323,15 +350,18 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 - **Beta status**: API may change in future releases
 - **Video support**: Egress only (JPEG)
 - **Video frame rate**: Approximately 1 FPS (beta; not configurable)
+- **Streaming reconnects**: When using [Stream mode (egress)](#stream-mode-egress), the SFU automatically retries the same WebSocket endpoint for short disconnects only. It does not fail over to alternate endpoints.
+- **Best-effort recovery**: Brief reconnects reduce media loss, but do not guarantee gapless or exactly-once delivery.
+- **Video reconnect behavior**: Video resumes from the latest available JPEG frame rather than replaying older frames.
 - **Unidirectional flow**: Each instance handles one direction
 
 ## Error handling
 
-| Error Code | Description |
-|------------|-------------|
-| `400` | Invalid request parameters |
-| `404` | Session or track not found |
-| `503` | Adapter not found (for close operations) |
+| Error Code | Description                              |
+| ---------- | ---------------------------------------- |
+| `400`      | Invalid request parameters               |
+| `404`      | Session or track not found               |
+| `503`      | Adapter not found (for close operations) |
 
 ## Reference implementations
 
@@ -351,7 +381,14 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 A: No, each instance is unidirectional. Create separate adapters for send and receive.
 
 **Q: What happens if the WebSocket connection drops?**
-A: The adapter closes and must be recreated. Implement reconnection logic in your app.
+
+A: When using [Stream mode (egress)](#stream-mode-egress), the SFU automatically retries the same WebSocket endpoint for up to 5 seconds. If the endpoint comes back within that window, streaming resumes automatically.
+
+Audio uses a short bounded backlog to reduce audible loss during brief interruptions. Video resumes from the latest available JPEG frame instead of replaying older frames.
+
+If the endpoint remains unavailable after the 5-second [automatic reconnect window](#automatic-reconnection-for-streaming), the adapter closes and must be recreated.
+
+When ingesting from WebSocket to WebRTC, your WebSocket client should reconnect and recreate the adapter as needed.
 
 **Q: Is there a limit on concurrent adapters?**
 A: Limits follow standard Cloudflare Realtime quotas. Contact support for specific requirements.

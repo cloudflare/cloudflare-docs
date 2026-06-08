@@ -1,0 +1,165 @@
+---
+type: example
+summary: Send welcome and verification emails during user signup with secure token-based email verification.
+pcx_content_type: example
+title: User signup flow
+description: Handle user registration with automated welcome emails and email verification using secure tokens.
+sidebar:
+  order: 6
+products:
+  - email-service
+---
+
+This example demonstrates a complete user registration system with welcome emails and email verification.
+
+```typescript
+interface Env {
+	EMAIL: SendEmail;
+	USERS: KVNamespace;
+	VERIFICATION_TOKENS: KVNamespace;
+	DOMAIN: string;
+	COMPANY_NAME: string;
+}
+
+interface User {
+	id: string;
+	email: string;
+	firstName: string;
+	verified: boolean;
+	createdAt: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/signup" && request.method === "POST") {
+			return handleSignup(request, env);
+		}
+
+		if (url.pathname === "/verify" && request.method === "GET") {
+			return handleVerification(request, env);
+		}
+
+		return new Response("Not Found", { status: 404 });
+	},
+};
+
+async function handleSignup(request: Request, env: Env): Promise<Response> {
+	const { email, firstName } = await request.json();
+
+	// Validate and check for existing user
+	if (!email || !firstName || !isValidEmail(email)) {
+		return new Response(JSON.stringify({ error: "Invalid input" }), {
+			status: 400,
+		});
+	}
+
+	if (await env.USERS.get(email)) {
+		return new Response(JSON.stringify({ error: "User already exists" }), {
+			status: 409,
+		});
+	}
+
+	// Create user
+	const userId = crypto.randomUUID();
+	const user: User = {
+		id: userId,
+		email,
+		firstName,
+		verified: false,
+		createdAt: new Date().toISOString(),
+	};
+
+	await env.USERS.put(email, JSON.stringify(user));
+
+	// Generate verification token (expires in 1 hour)
+	const verificationToken = crypto.randomUUID();
+	await env.VERIFICATION_TOKENS.put(verificationToken, email, {
+		expirationTtl: 3600,
+	});
+
+	// Send welcome email
+	await env.EMAIL.send({
+		to: email,
+		from: `noreply@${env.DOMAIN}`,
+		subject: `Welcome to ${env.COMPANY_NAME}!`,
+		html: `
+      <h1>Welcome ${firstName}!</h1>
+      <p>Thanks for joining ${env.COMPANY_NAME}. Please verify your email to get started.</p>
+    `,
+	});
+
+	// Send verification email
+	const verificationUrl = `https://${env.DOMAIN}/verify?token=${verificationToken}`;
+	await env.EMAIL.send({
+		to: email,
+		from: `noreply@${env.DOMAIN}`,
+		subject: "Please verify your email address",
+		html: `
+      <h1>Verify Your Email</h1>
+      <p>Hi ${firstName}! Click the link below to verify your email:</p>
+      <a href="${verificationUrl}" style="background: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">Verify Email</a>
+      <p>This link expires in 1 hour.</p>
+    `,
+	});
+
+	return new Response(
+		JSON.stringify({
+			success: true,
+			message: "Account created. Please check your email.",
+			userId,
+		}),
+		{ status: 201 },
+	);
+}
+
+async function handleVerification(
+	request: Request,
+	env: Env,
+): Promise<Response> {
+	const url = new URL(request.url);
+	const token = url.searchParams.get("token");
+
+	if (!token) {
+		return new Response("Missing token", { status: 400 });
+	}
+
+	// Verify token
+	const userEmail = await env.VERIFICATION_TOKENS.get(token);
+	if (!userEmail) {
+		return new Response("Invalid or expired token", { status: 400 });
+	}
+
+	// Get and update user
+	const userData = await env.USERS.get(userEmail);
+	if (!userData) {
+		return new Response("User not found", { status: 404 });
+	}
+
+	const user: User = JSON.parse(userData);
+	user.verified = true;
+
+	await env.USERS.put(user.email, JSON.stringify(user));
+	await env.VERIFICATION_TOKENS.delete(token);
+
+	return new Response(
+		`
+    <html>
+      <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+        <h1>✅ Email Verified!</h1>
+        <p>Welcome ${user.firstName}! Your account is now active.</p>
+        <a href="/" style="background: #28a745; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">Continue</a>
+      </body>
+    </html>
+  `,
+		{
+			headers: { "Content-Type": "text/html" },
+		},
+	);
+}
+
+function isValidEmail(email: string): boolean {
+	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+```

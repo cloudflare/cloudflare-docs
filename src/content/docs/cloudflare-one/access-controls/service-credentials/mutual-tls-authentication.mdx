@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Mutual TLS in Access.
+products:
+  - cloudflare-one
 title: Mutual TLS
 tags:
   - mTLS
@@ -58,9 +61,7 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 
    **Example mTLS policy**
 
-   | Action       | Rule type | Selector    | Value      |
-   | ------------ | --------- | ----------- | ---------- |
-   | Service Auth | Include   | Common Name | `John Doe` |
+   <Render file="access/example-service-auth-mtls" product="cloudflare-one" />
 
    </Example>
 

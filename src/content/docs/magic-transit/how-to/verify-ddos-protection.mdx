@@ -1,0 +1,112 @@
+---
+title: Verify DDoS protection
+pcx_content_type: how-to
+products:
+  - magic-transit
+sidebar:
+  order: 7
+description: Confirm Magic Transit DDoS protection layers are active and configured.
+---
+
+import { DashButton } from "~/components";
+
+After onboarding your IP prefixes to Magic Transit, verify that your DDoS protection layers are active and correctly configured. Magic Transit includes multiple mitigation systems that work together. For a description of each layer and the execution order, refer to [DDoS protection](/magic-transit/ddos/).
+
+## Prerequisites
+
+Before you start, make sure you have completed the following:
+
+- [Onboarded your IP prefixes](/magic-transit/get-started/) to Magic Transit.
+- [Advertised your prefixes](/magic-transit/how-to/advertise-prefixes/) to Cloudflare.
+
+## Verify DDoS managed rulesets
+
+The [network-layer DDoS managed ruleset](/ddos-protection/managed-rulesets/network/) is always enabled on IP prefixes onboarded to Magic Transit. You cannot turn it off, but you can customize the sensitivity level and action for individual rules.
+
+To review your current configuration:
+
+1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+
+   <DashButton url="/?to=/:account/network-security/ddos" />
+
+2. Select the **Network-layer DDoS Protection** tab.
+
+If you have not deployed any overrides, the managed ruleset runs with default settings (High sensitivity, DDoS Dynamic action). This is the recommended configuration for most deployments.
+
+:::note
+Enterprise customers should start with the ruleset action set to **Log** to observe flagged traffic in Network Analytics before making adjustments. For more information, refer to [Get started with DDoS protection](/ddos-protection/get-started/).
+:::
+
+## Verify Advanced TCP and DNS Protection
+
+Advanced TCP Protection and Advanced DNS Protection are automatically enabled in monitoring mode for new Magic Transit customers. In monitoring mode, the systems learn your traffic patterns and show what they would have mitigated without affecting live traffic.
+
+To check the status of Advanced DDoS systems:
+
+1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+
+   <DashButton url="/?to=/:account/network-security/ddos" />
+
+2. Go to **Advanced Protection** > **General settings**.
+3. Verify that the system is turned on and that your prefixes are listed.
+
+To review individual protection rules:
+
+- For Advanced TCP Protection, go to **Advanced Protection** > **Advanced TCP Protection**. Check that SYN Flood Protection and Out-of-state TCP Protection rules exist and are set to the expected mode.
+- For Advanced DNS Protection, go to **Advanced Protection** > **Advanced DNS Protection**. Check that a DNS Protection rule exists.
+
+### Switch from monitoring to mitigation mode
+
+After your Advanced DDoS systems have collected at least seven days of traffic data, Cloudflare calculates protection thresholds based on the 95th percentile of your traffic over that period. Thresholds are recalculated every 10 minutes.
+
+To switch from monitoring to mitigation:
+
+1. Review your traffic in [Network Analytics](/magic-transit/analytics/network-analytics/) to confirm the systems are correctly identifying normal versus anomalous traffic.
+2. Go to the rule you want to update (SYN Flood, Out-of-state TCP, or DNS Protection).
+3. Change the rule mode from **Monitoring** to **Mitigation (Enabled)**.
+
+:::caution
+Customer visibility into the calculated thresholds is not available. If you are unsure whether your thresholds are correctly configured, contact your account team before switching to mitigation mode.
+:::
+
+## Set up alerts
+
+Configure DDoS alerts so you are notified when attacks are detected and mitigated:
+
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+
+   <DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
+3. Select **Layer 3/4 DDoS Attack Alert**. Enterprise accounts can select **Advanced Layer 3/4 DDoS Attack Alert** for additional filtering support.
+4. Configure your delivery method (email, webhook, or PagerDuty).
+
+:::note
+DDoS alerts cover attacks detected by DDoS managed rulesets only. Alerts are not available for attacks detected by Advanced TCP Protection, Advanced DNS Protection, or Programmable Flow Protection. Use Network Analytics to monitor these systems.
+:::
+
+Magic Transit and Spectrum BYOIP customers automatically receive a weekly DDoS summary report by email every Tuesday. The report covers the previous Monday-to-Sunday period and includes total attacks, the largest attack by packets per second and bits per second, and total bytes mitigated.
+
+## Monitor with Network Analytics
+
+[Network Analytics](/magic-transit/analytics/network-analytics/) is the primary dashboard for monitoring DDoS activity on your Magic Transit prefixes. It shows traffic entering and leaving the Cloudflare network, including traffic blocked by DDoS rules and Network Firewall rules.
+
+To review DDoS activity:
+
+1. In the Cloudflare dashboard, go to the **Network analytics** page.
+
+   <DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics" />
+
+2. Filter by mitigations applied to isolate traffic blocked by DDoS managed rulesets or Network Firewall rules.
+
+You can also query DDoS analytics programmatically using the [GraphQL Analytics API](/analytics/graphql-api/).
+
+## Test your DDoS protection
+
+You can simulate DDoS attacks against your own Magic Transit-protected IP prefixes to verify that detection and mitigation work as expected. You do not need permission from Cloudflare to test against your own properties.
+
+For guidance on testing, refer to [Simulate test DDoS attacks](/ddos-protection/reference/simulate-ddos-attack/).
+
+:::note
+HTTP DDoS testing requires that your HTTP application is onboarded to the Cloudflare reverse proxy service. If you only use Magic Transit, HTTP DDoS tests do not work. Network-layer DDoS tests against your Magic Transit-protected prefixes do not have this limitation.
+:::

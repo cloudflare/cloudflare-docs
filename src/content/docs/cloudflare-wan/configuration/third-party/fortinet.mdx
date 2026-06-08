@@ -1,0 +1,19 @@
+---
+pcx_content_type: integration-guide
+description: Connect Fortinet to Cloudflare WAN.
+products:
+  - cloudflare-wan
+title: Fortinet
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/fortinet"
+  product="networking-services"
+  params={{
+    bidirectionalHealthChecksUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    addTunnelsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    equalCostMultipathRoutingEcmpUrl: "/cloudflare-wan/reference/traffic-steering/#equal-cost-multi-path-routing",
+    configureStaticRoutesUrl: "/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route",
+    checkTunnelHealthInTheDashboardUrl: "/cloudflare-wan/configuration/common-settings/check-tunnel-health-dashboard/"
+  }} />

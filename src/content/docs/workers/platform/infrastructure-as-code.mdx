@@ -1,8 +1,11 @@
 ---
 title: Infrastructure as Code (IaC)
+description: Deploy and manage Cloudflare Workers using Terraform, Pulumi, and the Cloudflare API SDKs.
 pcx_content_type: concept
 sidebar:
   order: 11
+products:
+  - workers
 ---
 
 import { GitHubCode, TabItem, Tabs } from "~/components";
@@ -711,11 +714,11 @@ resource "cloudflare_worker_version" "my_worker_version" {
       "MyDurableObjectClass"
     ]
   }
-  # ...version props ommitted for brevity
+  # ...version props omitted for brevity
 }
 
 resource "cloudflare_workers_deployment" "my_worker_deployment" {
-  # ...deployment props ommitted for brevity
+  # ...deployment props omitted for brevity
 }
 ```
 

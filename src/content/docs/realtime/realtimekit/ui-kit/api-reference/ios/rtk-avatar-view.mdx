@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkAvatarView
+description: API reference for RtkAvatarView component (iOS Library)
+products:
+  - realtime
+---
+
+A circular avatar view that displays a participant's profile image or name initials as a fallback.
+
+## Initializer parameters
+
+| Parameter     | Type                    | Required | Default | Description                             |
+| ------------- | ----------------------- | -------- | ------- | --------------------------------------- |
+| `participant` | `RtkMeetingParticipant` | ✅       | -       | The participant whose avatar to display |
+
+## Methods
+
+| Method                  | Return Type | Description                                           |
+| ----------------------- | ----------- | ----------------------------------------------------- |
+| `set(participant:)`     | `Void`      | Updates the avatar to display a different participant |
+| `refresh()`             | `Void`      | Refreshes the avatar image or initials                |
+| `setInitialName(font:)` | `Void`      | Sets the font used for rendering name initials        |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let avatarView = RtkAvatarView(participant: participant)
+view.addSubview(avatarView)
+```
+
+### Update participant
+
+```swift
+import RealtimeKitUI
+
+let avatarView = RtkAvatarView(participant: participant)
+view.addSubview(avatarView)
+
+// Update to a different participant
+avatarView.set(participant: newParticipant)
+avatarView.refresh()
+```

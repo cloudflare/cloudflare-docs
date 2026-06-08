@@ -1,0 +1,19 @@
+# Minimum age (in minutes) a package version must be published before pnpm will install it.
+minimumReleaseAge: 1440
+
+# Prevent transitive dependencies from using exotic sources.
+blockExoticSubdeps: true
+
+# Packages permitted to run install scripts.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  tldjs: true
+  workerd: true
+  "@google/genai": false
+  "@mongodb-js/zstd": false
+  core-js-pure: false
+  node-liblzma: false
+  protobufjs: false
+
+saveExact: true

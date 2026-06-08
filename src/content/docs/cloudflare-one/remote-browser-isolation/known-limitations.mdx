@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: Reference information for Known limitations in Browser Isolation.
+products:
+  - cloudflare-one
 title: Known limitations
 sidebar:
   order: 9
@@ -16,12 +19,12 @@ Below, you will find information regarding the current limitations for Browser I
 
 ## Website compatibility
 
-Our Network Vector Rendering (NVR) technology allows us to deliver a secure remote computing experience without the bandwidth limitations of video streams. While we expect most websites to work perfectly, some browser features and web technologies are unsupported and will be implemented in the future:
+Our Network Vector Rendering (NVR) technology sends drawing instructions to the user's browser instead of streaming video of the page. This allows us to deliver a secure remote computing experience without the bandwidth limitations of video streams. While we expect most websites to work perfectly, some browser features and web technologies are unsupported and will be implemented in the future:
 
 - Webcam and microphone support is unavailable.
-- Websites that use WebGL may not function. To turn off WebGL in the browser, refer to [WebGL Rendering Error](/cloudflare-one/remote-browser-isolation/troubleshooting/#webgl-rendering-error).
+- Websites that use WebGL (a browser technology for rendering 3D graphics) may not function. To turn off WebGL in the browser, refer to [WebGL Rendering Error](/cloudflare-one/remote-browser-isolation/troubleshooting/#webgl-rendering-error).
 - Netflix and Spotify Web Player are unavailable.
-- H.265/HEVC is not a supported video format at this time.
+- H.265/HEVC (a video compression format) is not a supported video format at this time.
 
 ## Browser compatibility
 
@@ -36,7 +39,7 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 
 ### Brave
 
-Brave's WebRTC IP Handling Policy can impact how Cloudflare RBI loads and functions. If the WebRTC IP Handling Policy is configured to **Disable Non-Proxied UDP**, RBI may fail to load correctly.
+Browser Isolation uses [WebRTC](/cloudflare-one/remote-browser-isolation/network-dependencies/#webrtc-channel) for low-latency communication between the local and remote browser. Brave's WebRTC IP Handling Policy can impact how Cloudflare RBI loads and functions. If the WebRTC IP Handling Policy is configured to **Disable Non-Proxied UDP**, RBI may fail to load correctly because Brave blocks the UDP connections that WebRTC requires.
 
 To ensure RBI loads correctly, go to `brave://settings/privacy` in your Brave browser window, find **WebRTC IP Handling Policy**, and change the setting from **Disable Non-Proxied UDP** to one of the following:
 
@@ -46,7 +49,7 @@ To ensure RBI loads correctly, go to `brave://settings/privacy` in your Brave br
 
 ## Protocol support
 
-Browser Isolation does not support HTTP.
+Browser Isolation requires HTTPS. Websites served over unencrypted HTTP cannot be isolated.
 
 ## Virtual machines
 
@@ -68,11 +71,11 @@ When a user downloads a file within the remote browser, the file is held in memo
 
 ## Multifactor authentication
 
-[Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN. These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Therefore, they will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/remote-browser-isolation/setup/) such as [isolated Access applications](/cloudflare-one/access-controls/policies/isolate-application/).
+[Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN (hardware security key authentication). These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Clientless Web Isolation changes the URL by adding a prefix, which breaks this requirement. Therefore, Yubikey and WebAuthN will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/remote-browser-isolation/setup/) such as [isolated Access applications](/cloudflare-one/access-controls/policies/isolate-application/).
 
 ## SAML applications
 
-Cloudflare Remote Browser Isolation now [supports SAML applications that use HTTP-POST bindings](/cloudflare-one/changelog/browser-isolation/#2025-05-13). This resolves previous issues such as `405` errors and login loops during SSO authentication flows.
+Cloudflare Remote Browser Isolation now [supports SAML applications that use HTTP-POST bindings](/cloudflare-one/changelog/browser-isolation/#2025-05-13). SAML is a protocol used for single sign-on (SSO), and some SAML implementations send login data via an HTTP POST request (HTTP-POST bindings). This resolves previous issues such as `405` errors and login loops during SSO authentication flows.
 
 You no longer need to isolate both the Identity Provider (IdP) and Service Provider (SP), or switch to HTTP-Redirect bindings, to use Browser Isolation with POST-based SSO. Users can log in to internal or SaaS applications in the isolated browser securely and seamlessly.
 

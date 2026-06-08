@@ -1,5 +1,8 @@
 ---
 pcx_content_type: faq
+description: Answers to common questions about Cloudflare Web Analytics.
+products:
+  - web-analytics
 title: FAQs
 sidebar:
   order: 7
@@ -49,6 +52,16 @@ Since only one JS snippet can be rendered and used per page, you cannot have mul
 
 If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/concepts/cache-control/) for more information.
 
+### Why am I getting a `405 Method Not Allowed` error from `/cdn-cgi/rum`?
+
+The `/cdn-cgi/rum` endpoint only accepts `POST` requests for data ingestion. If you send a request using any other HTTP method (for example, `GET`, `PUT`, or `DELETE`), the endpoint returns a `405 Method Not Allowed` response with an `Allow: POST, OPTIONS` header (`OPTIONS` is allowed for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS) support).
+
+The Web Analytics beacon (`beacon.min.js`) always uses `POST` when reporting metrics. If you see `405` errors in your logs, the requests are not coming from the beacon itself.
+
+They are most likely coming from an automated testing tool making erroneous requests, in which case you should correct it to use `POST` or ignore the errors.
+
+We do not support custom integrations directly with the endpoint: all requests should originate from our beacon JavaScript.
+
 ---
 
 ## Setup
@@ -82,6 +95,40 @@ Add the following script:
 ></script>
 ```
 
+### What do I need to add to my Content Security Policy (CSP)?
+
+If your site implements a Content Security Policy (CSP), you'll need to add some entries to this HTTP header to allow browsers to download the beacon script and transmit beacons to Cloudflare.
+
+**Warning:** be sure to validate any CSP changes on a test environment before releasing an update to your production environment. You may wish to use [Content Security Rules](https://developers.cloudflare.com/client-side-security/rules/) or trial with `Content-Security-Policy-Report-Only` first.
+
+You'll first need to permit our script to execute by adding it to your `script-src` directive:
+
+```
+script-src [...existing values...] https://static.cloudflareinsights.com/beacon.min.js
+```
+
+_Note: if you have a query string in the script as per the example above for Google Tag Manager, then you'll need to include this in the URL too, e.g. `script-src [...existing values...] https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN`_
+
+Secondly, you'll need to permit the endpoint we transmit the beacon data to.
+
+For automatic injection, this will be the same domain, so ensure your `connect-src` includes `'self'`:
+
+```
+connect-src [...existing values...] 'self'
+```
+
+For manual embedding, this script instead connects to `cloudflareinsights.com`, so ensure that's included instead:
+
+```
+connect-src [...existing values...] cloudflareinsights.com
+```
+
+### How can I enforce Subresource Integrity (SRI) with the JS beacon? 
+
+If you're using the automated injection (i.e. not the manually-embedded script approach mentioned above), Cloudflare automatically includes an `integrity` attribute in the `<script>`. This ensures the script will only execute if a local hash of its downloaded contents match the integrity hash supplied in the HTML.
+
+Unfortunately, if you're using the manually-embedded script approach, there is no current way to safely apply an `integrity` attribute because we do not support version-pinning our beacon script. We do this because it ensures we can release periodic updates to maintain security, address bugs and ensure 
+
 ### Can I use the same JS Snippet for a different domain?
 
 No. However, if the apex domain (also known as "root domain" or "naked domain") is the same, you can use the same site tag. For example, if you have provided us a hostname `example.com` when registering a site, you can use the JS snippet from that site for `abc.example.com` and `def.example.com` since they use the same apex domain. When payload gets sent to the beacon endpoint, we validate the hostname with postfix matching, so if your domain shares the same apex domain, that would work.
@@ -96,9 +143,27 @@ If you have a DNS-only domain, you will have to do a [manual setup](/web-analyti
 
 <Render file="web-analytics-troubleshooting" product="web-analytics" />
 
+### Can I use Real User Monitoring (RUM) with Cloudflare Workers?
+
+Cloudflare's Real User Monitoring (RUM) operates exclusively on the initial client request and cannot collect metrics from Worker subrequests. This is a fundamental architectural limitation designed to ensure accurate performance measurements and prevent duplicate or misleading analytics data.
+
 ---
 
 ## Functionality
+
+### Is the data sampled?
+
+We retain unsampled beacon data for the past 7 days, after this point data is aggregated down to around 10%.
+
+When aggregating metrics in the Cloudflare Dashboard or querying the GraphQL API, a level of sampling (between 0.0001% and 100%) will be dynamically selected based on the filters applied and the volume of matching rows. This ensures a high confidence in the accuracy of figures while maintaining a reasonable response time. You can [read more about this approach on the Cloudflare blog](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
+
+Note: the GraphQL API exposes a `sampleInterval` field to indicate which level of sampling has been applied to the query.
+
+* The beacon script will fire on every pageview.
+* The data ingestion pipeline does not apply sampling—every received beacon will be recorded.
+* We store the unsampled data for 7 days.
+* We also aggregate it down so it's around 10% of the original volume for long-term storage.
+* Sites with very low traffic volumes are sampled to greater percentages to maintain high confidence in aggregate figures.
 
 ### Can I see server-side analytics by URL?
 

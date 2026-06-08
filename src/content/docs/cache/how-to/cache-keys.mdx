@@ -1,10 +1,17 @@
 ---
 title: Cache keys
 pcx_content_type: concept
+description: Customize cache keys to control how Cloudflare stores cached resources.
+products:
+  - cache
+tags:
+  - CORS
+  - Geolocation
+  - Headers
+  - Cookies
 head:
   - tag: title
     content: Cache Keys
-
 ---
 
 import { FeatureTable, DashButton } from "~/components"
@@ -156,7 +163,7 @@ Cache keys options availability varies according to your plan.
 
 ## Troubleshooting
 
-You can use [Cloudflare Trace](/rules/trace-request/) to find which Cache Key settings were applied to your request. When you send a request through the Trace tool, if the request was served from cache, it will show a cache hit in the **Cache Paremeters** section. Then select **View paremeter detail** to see exactly which Cache Key properties were used.
+You can use [Cloudflare Trace](/rules/trace-request/) to find which Cache Key settings were applied to your request. When you send a request through the Trace tool, if the request was served from cache, it will show a cache hit in the **Cache Parameters** section. Then select **View parameter detail** to see exactly which Cache Key properties were used.
 
 ## Limitations
 

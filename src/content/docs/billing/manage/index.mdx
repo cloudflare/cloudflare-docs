@@ -1,0 +1,56 @@
+---
+pcx_content_type: navigation
+title: Manage
+sidebar:
+  order: 3
+  group:
+    hideIndex: true
+description: Manage subscriptions, invoices, and usage.
+products:
+  - billing
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Use these guides to manage invoices, subscriptions, payment status, and usage-based spend.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Pay an outstanding balance"
+	href="/billing/manage/pay-invoices-overdue-balances/"
+>
+	Pay overdue invoices and restore billing access after a failed payment.
+</LinkTitleCard>
+
+<LinkTitleCard title="Change domain plan" href="/billing/manage/change-plan/">
+	Upgrade or downgrade the Cloudflare plan for a domain.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Cancel Cloudflare subscriptions"
+	href="/billing/manage/cancel-subscription/"
+>
+	Cancel plans, add-ons, and subscriptions before the next billing period.
+</LinkTitleCard>
+
+<LinkTitleCard title="Invoices" href="/billing/manage/invoices/">
+	View, download, and receive Cloudflare invoices by email.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Monitor billable usage"
+	href="/billing/manage/billable-usage/"
+>
+	Track daily usage-based costs across products.
+</LinkTitleCard>
+
+<LinkTitleCard title="Budget alerts" href="/billing/manage/budget-alerts/">
+	Receive email notifications when usage-based spend crosses a dollar threshold.
+</LinkTitleCard>
+
+<LinkTitleCard title="Optimize costs" href="/billing/manage/optimize-costs/">
+	Reduce usage-based charges across Cloudflare products.
+</LinkTitleCard>
+
+</CardGrid>

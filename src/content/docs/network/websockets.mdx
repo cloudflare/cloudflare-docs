@@ -2,6 +2,9 @@
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/200169466-Using-Cloudflare-with-WebSockets
 title: WebSockets
+description: Proxy WebSocket connections through Cloudflare's network.
+products:
+  - network
 ---
 
 import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
@@ -76,3 +79,14 @@ Investigating issues with Websocket can be facilitated with client tools like [w
 Being able to reproduce an issue on a single URL with a minimalistic tool helps narrowing down the issue.
 
 The `EdgeStartTimestamp` and `EdgeStopTimestamp` fields in [HTTP requests logs](/logs/logpush/logpush-job/datasets/zone/http_requests/) represent the duration of the WebSocket connection (they do not represent the initial HTTP connection).
+
+## Connection limits
+
+### Idle timeout
+
+Cloudflare will close a WebSocket connection when no data is transmitted in either direction for a period of time. Enterprise customers can contact their account team to configure a custom idle timeout. To keep long-lived connections alive during periods of inactivity, implement a client-side heartbeat (ping/pong) mechanism.
+
+### Session affinity for load-balanced WebSocket origins
+
+If your WebSocket origin is behind a Cloudflare Load Balancer, turn on **Session affinity** to ensure all requests from the same client are routed to the same origin server. Without session affinity, a WebSocket reconnect may land on a different origin that does not have the session state.
+

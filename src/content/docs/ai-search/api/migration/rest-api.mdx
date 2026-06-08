@@ -1,0 +1,183 @@
+---
+pcx_content_type: how-to
+title: REST API migration
+description: Migrate from the legacy AutoRAG REST API endpoints to the new AI Search API endpoints.
+sidebar:
+  order: 2
+products:
+  - ai-search
+---
+
+The [AutoRAG API endpoints](/api/resources/autorag/) are the legacy REST API for AI Search. They will continue to work, but all new features and improvements are only available through the new [AI Search API endpoints](/ai-search/api/search/rest-api/).
+
+## Endpoint changes
+
+The legacy AutoRAG API endpoints under `/autorag/rags/` have been replaced by new endpoints under `/ai-search/instances/`.
+
+| Description      | New endpoint                                   | Reference                                                                                  |
+| ---------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Chat completions | `/ai-search/instances/{name}/chat/completions` | [API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/) |
+| Search           | `/ai-search/instances/{name}/search`           | [API reference](/api/resources/ai_search/subresources/instances/methods/search/)           |
+
+The new API also includes endpoints for [instance management](/ai-search/api/instances/rest-api/), [items](/ai-search/api/items/rest-api/), and [namespace-level search](/ai-search/api/search/rest-api/#namespace-level) that are not available in the legacy API. For the legacy endpoints, refer to the [AutoRAG API reference](/api/resources/autorag/).
+
+## Chat completions
+
+How to migrate from the AutoRAG `/ai-search` endpoint to the new `/chat/completions` endpoint:
+
+**Before (AutoRAG API):**
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag/rags/<INSTANCE_NAME>/ai-search" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -d '{
+    "query": "What is Cloudflare?"
+  }'
+```
+
+**After (AI Search API):**
+
+The new API uses the `messages` array format.
+
+```bash ins="ai-search/instances" ins="/chat/completions" ins='"messages"' ins='"content"' ins='"role"'
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -d '{
+    "messages": [
+      {
+        "content": "What is Cloudflare?",
+        "role": "user"
+      }
+    ]
+  }'
+```
+
+## Search
+
+How to migrate from the AutoRAG `/search` endpoint to the new `/search` endpoint:
+
+**Before (AutoRAG API):**
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag/rags/<INSTANCE_NAME>/search" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -d '{
+    "query": "What is Cloudflare?"
+  }'
+```
+
+**After (AI Search API):**
+
+The new API uses the `messages` array format. The `query` string format is also supported.
+
+```bash ins="ai-search/instances" ins='"messages"' ins='"content"' ins='"role"'
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/search" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -d '{
+    "messages": [
+      {
+        "content": "What is Cloudflare?",
+        "role": "user"
+      }
+    ]
+  }'
+```
+
+## Streaming behavior changes
+
+In the old AutoRAG API, when `stream` was set to `true`, you would only receive the streamed response without the retrieved chunks.
+
+In the new AI Search API, streaming responses include the chunks. The retrieved chunks are sent first as a `chunks` event, followed by the streamed response data. This allows you to display the source chunks immediately while streaming the generated response to the user.
+
+## Filter format
+
+The new AI Search REST API uses Vectorize-style metadata filtering, which differs from the AutoRAG API format. Filters are now nested under `ai_search_options.retrieval.filters` in the request body. For full documentation of the old format, refer to [Metadata filter format (legacy)](/ai-search/api/migration/autorag-filter-format/).
+
+### Operator mapping
+
+The filter operators have been renamed to use a `$` prefix:
+
+| AutoRAG API | AI Search API       |
+| ----------- | ------------------- |
+| `eq`        | `$eq` (or implicit) |
+| `ne`        | `$ne`               |
+| `gt`        | `$gt`               |
+| `gte`       | `$gte`              |
+| `lt`        | `$lt`               |
+| `lte`       | `$lte`              |
+|             | `$in` (new)         |
+|             | `$nin` (new)        |
+
+### Examples
+
+#### Simple filter
+
+Filter by a single metadata field using implicit equality:
+
+**Before (AutoRAG API):**
+
+```json
+{
+	"filters": {
+		"type": "eq",
+		"key": "folder",
+		"value": "customer-a/"
+	}
+}
+```
+
+**After (AI Search API):**
+
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": "customer-a/" }
+		}
+	}
+}
+```
+
+#### Compound filter (AND)
+
+Combine multiple conditions where all must match:
+
+**Before (AutoRAG API):**
+
+```json
+{
+	"filters": {
+		"type": "and",
+		"filters": [
+			{ "type": "eq", "key": "folder", "value": "customer-a/" },
+			{ "type": "gte", "key": "timestamp", "value": "1735689600000" }
+		]
+	}
+}
+```
+
+**After (AI Search API):**
+
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": {
+				"folder": "customer-a/",
+				"timestamp": { "$gte": 1735689600 }
+			}
+		}
+	}
+}
+```
+
+## API references
+
+- [REST API documentation](/ai-search/api/search/rest-api/)
+- [Chat Completions API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/)
+- [Search API reference](/api/resources/ai_search/subresources/instances/methods/search/)
+- [Legacy AutoRAG API reference](/api/resources/autorag/)

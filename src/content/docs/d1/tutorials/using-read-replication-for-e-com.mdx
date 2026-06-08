@@ -10,6 +10,8 @@ tags:
   - SQL
 description: >-
   D1 Read Replication is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves read throughput.
+products:
+  - d1
 ---
 
 import {
@@ -639,7 +641,8 @@ The `withRetry` function is a utility function that retries a given operation wi
 
 :::caution
 
-In a distrubed system, retry mechanisms can have certain risks. Read the article [Retry Strategies in Distributed Systems: Identifying and Addressing Key Pitfalls](https://www.computer.org/publications/tech-news/trends/retry-strategies-avoiding-pitfalls) to learn more about the risks of retry mechanisms and how to avoid them.
+In a distributed system, retry mechanisms can have certain risks. Read the article [Retry Strategies in Distributed Systems: Identifying and Addressing Key Pitfalls](https://www.computer.org/publications/tech-news/trends/retry-strategies-avoiding-pitfalls) to learn more about the risks of retry mechanisms and how to avoid them.
+
 
 Retries can sometimes lead to data inconsistency. Make sure to handle the retry logic carefully.
 

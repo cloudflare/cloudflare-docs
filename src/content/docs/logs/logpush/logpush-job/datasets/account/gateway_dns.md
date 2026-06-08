@@ -465,6 +465,12 @@ Type: `int`
 
 The port used by the client when they sent the DNS request (for example, 0).
 
+## TenantID
+
+Type: `string`
+
+The tenant ID of the DNS request, if exists.
+
 ## TimeZone
 
 Type: `string`

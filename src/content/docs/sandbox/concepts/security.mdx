@@ -1,8 +1,11 @@
 ---
 title: Security model
+description: Sandbox SDK uses VM-level isolation, input validation, and network controls to run untrusted code safely.
 pcx_content_type: concept
 sidebar:
   order: 6
+products:
+  - sandbox
 ---
 
 The Sandbox SDK is built on [Containers](/containers/), which run each sandbox in its own VM for strong isolation.
@@ -88,6 +91,16 @@ To revoke access, unexpose the port:
 ```typescript
 await sandbox.unexposePort(8080);
 ```
+
+### Quick tunnel URLs
+
+Quick tunnels (`sandbox.tunnels.get(port)`) return a `*.trycloudflare.com` URL with a random hostname assigned by Cloudflare — there is no separate access token. The hostname itself is the access control: anyone who knows the URL can reach the service. To revoke access, destroy the tunnel:
+
+```typescript
+await sandbox.tunnels.destroy(8080);
+```
+
+URLs do not survive a container restart, so a restart effectively rotates the hostname. As with preview URLs, add application-level authentication for any sensitive service. See the [Tunnels API](/sandbox/api/tunnels/) for details.
 
 ```python
 from flask import Flask, request, abort

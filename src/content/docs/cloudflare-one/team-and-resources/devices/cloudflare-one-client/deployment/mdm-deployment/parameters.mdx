@@ -1,9 +1,14 @@
 ---
 pcx_content_type: reference
+products:
+  - cloudflare-one
 title: Parameters
 description: Explore parameters for deploying the Cloudflare One Client via MDM, including organization setup and device registration for Zero Trust.
 sidebar:
   order: 2
+tags:
+  - XML
+  - Post-quantum
 ---
 
 import { GlossaryTooltip, Details, InlineBadge } from "~/components";
@@ -177,7 +182,47 @@ Configures the Cloudflare One Client to connect to Cloudflare's FedRAMP High aut
 - `normal` — (default) The Cloudflare One Client connects to the standard API endpoints, IPs, and domains (like `<ACCOUNT_ID>.cloudflare-gateway.com`) and forwards traffic to Cloudflare data centers worldwide.
 - `fedramp_high` — The Cloudflare One Client connects to FedRAMP-specific API endpoints, IPs, and domains (like `<ACCOUNT_ID>.fed.cloudflare-gateway.com`). Traffic is forwarded to FedRAMP High compliant data centers for processing. To configure the FedRAMP High environment, you must allow the [FedRAMP-specific endpoints, IPs, and domains](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/) through your firewall.
 
-When using [multiple configurations](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/switch-organizations/) for the same organization, all configurations must specify the same `environment` value. A single organization cannot operate in both the normal and FedRAMP High environments. For example, if your FedRAMP High organization has multiple MDM configurations (such as production and staging), each configuration for that organization must include `environment` set to `fedramp_high`:
+When using [multiple configurations](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/switch-organizations/) for the same organization, all configurations must specify the same `environment` value. A single organization cannot operate in both the normal and FedRAMP High environments.
+
+In version 2026.5.0 and above, use [`organization_configs`](#organization_configs) to set `environment` once per organization rather than repeating it in every config entry:
+
+```xml
+<dict>
+  <key>organization_configs</key>
+  <dict>
+    <key>mycompany-gov</key>
+    <dict>
+      <key>environment</key>
+      <string>fedramp_high</string>
+    </dict>
+  </dict>
+  <key>configs</key>
+  <array>
+    <dict>
+      <key>organization</key>
+      <string>mycompany-gov</string>
+      <key>display_name</key>
+      <string>Production</string>
+    </dict>
+    <dict>
+      <key>organization</key>
+      <string>mycompany-gov</string>
+      <key>display_name</key>
+      <string>Staging</string>
+    </dict>
+    <dict>
+      <key>organization</key>
+      <string>test-org</string>
+      <key>display_name</key>
+      <string>Test</string>
+      <key>environment</key>
+      <string>normal</string>
+    </dict>
+  </array>
+</dict>
+```
+
+In earlier versions, each configuration for that organization must include `environment` explicitly:
 
 ```xml
 <dict>
@@ -213,7 +258,7 @@ When using [multiple configurations](/cloudflare-one/team-and-resources/devices/
 
 ### `external_emergency_signal_fingerprint`
 
-The SHA-256 fingerprint that the Cloudflare One Client will use to validate the [`external_emergency_signal_url`](#external_emergency_signal_url) HTTPS endpoint. Refer to [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect) for details on how to extract this fingerprint.
+The SHA-256 fingerprint that the Cloudflare One Client will use to validate the [`external_emergency_signal_url`](#external_emergency_signal_url) HTTPS endpoint. Refer to [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect) for details on how to extract this fingerprint.
 
 **Value Type:** `string`
 
@@ -221,7 +266,7 @@ The SHA-256 fingerprint that the Cloudflare One Client will use to validate the 
 
 ### `external_emergency_signal_interval`
 
-How often the Cloudflare One Client will poll [`external_emergency_signal_url`](#external_emergency_signal_url) for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/) signal.
+How often the Cloudflare One Client will poll [`external_emergency_signal_url`](#external_emergency_signal_url) for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect) signal.
 
 **Value Type:** `integer`
 
@@ -229,13 +274,24 @@ How often the Cloudflare One Client will poll [`external_emergency_signal_url`](
 
 ### `external_emergency_signal_url`
 
-The HTTPS endpoint that the Cloudflare One Client will poll for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/) signal.
+The HTTPS endpoint that the Cloudflare One Client will poll for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect) signal.
 
 **Value Type:** `string`
 
 **Value:** `https://192.0.2.1:3333/status/disconnect`
 
 The URL must use `https://` and use an IPv4 or IPv6 address as host (not a domain).
+
+### `local_emergency_signal_enabled`
+
+Enables [Local Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-local-emergency-disconnect). When enabled, the Cloudflare One Client monitors a fixed-path JSON file on the device for an emergency disconnect signal.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+- `false` — (default) Local signal file monitoring is disabled.
+- `true` — The client monitors the local signal file for emergency disconnect.
 
 ### `onboarding`
 
@@ -383,6 +439,69 @@ Enables multiple user registrations on a Windows device.
 
 - `false` — (default) Only one Cloudflare One Client registration is stored per device. After a user logs in to the Cloudflare One Client, their settings and identity will apply to all traffic from the device.
 - `true` — Each Windows user has their own Cloudflare One Client registration. For more information, refer to [Multiple users on a Windows device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-multiuser/).
+
+### `organization_configs`
+
+<Details header="Feature availability">
+
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                                                         | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2026.5.0             |
+| macOS    | ✅           | 2026.5.0             |
+| Linux    | ✅           | 2026.5.0             |
+| iOS      | ❌           | N/A                  |
+| Android  | ❌           | N/A                  |
+| ChromeOS | ❌           | N/A                  |
+
+</Details>
+
+Defines organization-wide settings that apply to all [`configs`](#configs) entries for a given organization, overriding any conflicting values set within individual config entries.
+
+**Value Type:** `dict`
+
+**Value:** A dict where each key is an organization name (team name) and each value is a dict of organization-wide settings.
+
+Supported settings:
+
+| Key | Description |
+| --- | ----------- |
+| `environment` | Overrides the [`environment`](#environment) value for all configs belonging to this organization. |
+
+Use `organization_configs` when you have multiple configurations for the same organization and want to enforce a single `environment` value across all of them. Any `environment` value set inside an individual `configs` entry for that organization will be overridden by the value specified in `organization_configs`.
+
+Example configuration where `test-org` has two configs (Production and Staging), both enforced to use `fedramp_high` via `organization_configs`:
+
+```xml
+<dict>
+  <key>organization_configs</key>
+  <dict>
+    <key>test-org</key>
+    <dict>
+      <key>environment</key>
+      <string>fedramp_high</string>
+    </dict>
+  </dict>
+  <key>configs</key>
+  <array>
+    <dict>
+      <key>organization</key>
+      <string>test-org</string>
+      <key>display_name</key>
+      <string>Production</string>
+    </dict>
+    <dict>
+      <key>organization</key>
+      <string>test-org</string>
+      <key>display_name</key>
+      <string>Staging</string>
+    </dict>
+  </array>
+</dict>
+```
 
 ### `pre_login`
 

@@ -1,0 +1,29 @@
+---
+{}
+---
+
+import { DashButton } from "~/components";
+
+Before using Email Sending, you need to configure your domain.
+
+1. In the Cloudflare dashboard, go to **Email Sending**.
+
+   <DashButton url="/?to=/:account/email-service/sending" />
+
+2. Select **Onboard Domain**.
+
+3. Choose a domain from your Cloudflare account.
+
+4. Select **Continue** to proceed with DNS configuration.
+
+5. Select **Add records and onboard**. This will add the following DNS records on the `cf-bounce` subdomain of your domain:
+   - MX records for bounce handling.
+   - TXT record for SPF to authorize sending emails.
+   - TXT record for DKIM to provide authentication for emails sent from your domain.
+   - TXT record for DMARC on `_dmarc.yourdomain.com`.
+
+:::note[DNS Propagation]
+DNS changes can take up to 24 hours to propagate globally, but usually complete within 5-15 minutes for domains using Cloudflare DNS.
+:::
+
+Once your domain is onboarded, you can start sending emails.

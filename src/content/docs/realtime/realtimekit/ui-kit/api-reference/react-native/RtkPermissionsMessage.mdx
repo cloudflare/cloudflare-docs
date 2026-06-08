@@ -1,0 +1,39 @@
+---
+pcx_content_type: reference
+title: RtkPermissionsMessage
+description: API reference for RtkPermissionsMessage component (React Native Library)
+products:
+  - realtime
+---
+
+Displays a message when device permissions (camera/microphone) are denied, with options to continue or open system settings.
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`           | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPermissionsMessage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPermissionsMessage meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPermissionsMessage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPermissionsMessage meeting={meeting} iconPack={customIconPack} />;
+}
+```

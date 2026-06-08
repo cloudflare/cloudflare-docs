@@ -1,0 +1,46 @@
+---
+title: "WAF Release - 2026-05-07 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-05-07 emergency release
+date: 2026-05-07
+---
+
+import { RuleID } from "~/components";
+
+This emergency release introduces a new rule to detect Next.js App Router middleware and proxy bypass attempts via segment-prefetch routes (CVE-2026-44575).
+
+**Key Findings**
+
+CVE-2026-44575: Next.js Middleware / Proxy Bypass in App Router Applications via Segment-Prefetch Routes
+
+Successful exploitation allows unauthenticated attackers to bypass middleware or proxy-based authorization checks in affected Next.js App Router applications. This leads to unauthorized access to protected content, potential exposure of sensitive application data, and compromise of application security boundaries.
+
+We strongly recommend upgrading to Next.js 15.5.16 or 16.2.5 (or later) immediately to address the underlying vulnerability. If you cannot upgrade immediately, enforce authorization in the underlying route or page logic instead of relying solely on middleware.
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="1de95bf6d6374e1099854278e77e4a53" />
+			</td>
+			<td>N/A</td>
+			<td>Next.js - Middleware Bypass via Invalid RSC Header - CVE:CVE-2026-44575</td>
+			<td>N/A</td>
+			<td>Disabled</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+	</tbody>
+</table>

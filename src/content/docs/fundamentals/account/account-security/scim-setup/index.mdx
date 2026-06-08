@@ -1,6 +1,9 @@
 ---
 pcx_content_type: how-to
 title: SCIM provisioning
+description: Provision users and groups into your Cloudflare account using the SCIM protocol with Okta, Microsoft Entra, or Authentik.
+products:
+  - fundamentals
 ---
 
 Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect an external identity provider (IdP) to Cloudflare, quickly onboard and manage user permissions. Currently, SCIM provisioning has been integrated with Okta, Microsoft Entra, and Authentik.
@@ -29,6 +32,10 @@ Expectations for user lifecycle management with SCIM:
 | Add role to user                               | Add the user to a group in the IdP which is pushed via SCIM. They must also be assigned to the SCIM application and exist as an account member.                 |
 | Remove role from user                          | Remove the user from the corresponding group in the IdP.                                                                                                        |
 | Retain user in account but with no permissions | Remove the user from all role groups but leave them assigned to the SCIM application. They will be an account member with only the role Minimal Account Access. |
+
+:::note
+Dashboard SCIM handles group membership and user account lifecycle through separate services. Removing a user from a SCIM group updates their group membership in Cloudflare but has no effect on their account membership. Account membership removal requires the identity provider to send `active: false` in a `PATCH /Users` or `PUT /Users` request. Ensure your IdP is configured with the `active` attribute mapping. For Microsoft Entra ID, refer to [Provision with Microsoft Entra](/fundamentals/account/account-security/scim-setup/entra/).
+:::
 
 ## Limitations
 

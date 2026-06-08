@@ -1,0 +1,19 @@
+---
+import type { GetStaticPaths } from "astro";
+import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
+import { getLegacyModels } from "~/util/model-resolver";
+
+export const getStaticPaths = (async () => {
+	const models = await getLegacyModels();
+
+	// Generate pages at short slug only (e.g., "kimi-k2.5")
+	return models.map((model) => ({
+		params: { name: model.name.split("/").at(-1) },
+		props: { model },
+	}));
+}) satisfies GetStaticPaths;
+
+const { model } = Astro.props;
+---
+
+<ModelDetailPage model={model} />

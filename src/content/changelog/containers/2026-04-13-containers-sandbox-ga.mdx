@@ -1,0 +1,29 @@
+---
+title: Containers and Sandboxes are now generally available
+description: Containers and Sandbox SDK are now generally available on the Workers Paid plan.
+products:
+  - containers
+date: 2026-04-13
+---
+
+Cloudflare [Containers](/containers/) and [Sandboxes](/sandbox/) are now generally available.
+
+Containers let you run more workloads on the Workers platform, including resource-intensive applications, different languages, and CLI tools that need full Linux environments.
+
+Since the initial launch of Containers, there have been significant improvements to Containers' performance, stability, and feature set. Some highlights include:
+
+- [Higher limits](/changelog/post/2026-02-25-higher-container-resource-limits/) allow you to run thousands of containers concurrently.
+- [Active-CPU pricing](/changelog/post/2025-11-21-new-cpu-pricing/) means that you only pay for used CPU cycles.
+- [Easy connections to Workers and other bindings](/changelog/post/2026-03-26-outbound-workers/) via hostnames help you extend your Containers with additional functionality.
+- [Docker Hub support](/changelog/post/2026-03-24-docker-hub-images/) makes it easy to use your existing images and registries.
+- [SSH support](/changelog/post/2026-03-12-ssh-support/) helps you access and debug issues in live containers.
+
+The [Sandbox SDK](/sandbox/) provides isolated environments for running untrusted code securely, with a simple TypeScript API for executing commands, managing files, and exposing services. This makes it easier to secure and manage your agents at scale. Some additions since launch include:
+
+- [Live preview URLs](/changelog/post/2025-08-05-sandbox-sdk-major-update/) so agents can run long-lived services and verify in-flight changes.
+- [Persistent code interpreters](/changelog/post/2025-08-05-sandbox-sdk-major-update/) for Python, JavaScript, and TypeScript, with rich structured outputs.
+- [Interactive PTY terminals](/changelog/post/2026-02-09-pty-terminal-support/) for real browser-based terminal access with multiple isolated shells per sandbox.
+- [Backup and restore APIs](/changelog/post/2026-02-23-sandbox-backup-restore-api/) to snapshot a workspace and quickly restore an agent's coding session without repeating expensive setup steps.
+- [Real-time filesystem watching](/changelog/post/2026-03-03-sandbox-watch-file-events/) so apps and agents can react immediately to file changes inside a sandbox.
+
+For more information, refer to [Containers](/containers/) and [Sandbox SDK](/sandbox/) documentation.

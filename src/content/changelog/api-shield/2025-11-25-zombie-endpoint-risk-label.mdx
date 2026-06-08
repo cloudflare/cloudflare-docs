@@ -1,0 +1,11 @@
+---
+title: New Zombie API detection for API Shield
+description: API Shield now automatically labels inactive saved endpoints with the cf-risk-zombie risk label.
+date: 2025-11-25
+---
+
+API Shield now automatically detects zombie endpoints — saved endpoints that have not received traffic for an extended period. When detected, the `cf-risk-zombie` [risk label](/api-shield/management-and-monitoring/endpoint-labels/#risk-labels) is applied.
+
+The scan runs daily alongside existing risk scans. Endpoints are labeled after 32 days without traffic.
+
+Zombie endpoints may indicate deprecated or forgotten API surface area that could pose a security risk. Review these endpoints and consider removing them from Endpoint Management if they are no longer in use. Also consider using a [fallthrough rule](/api-shield/security/schema-validation/#add-validation-by-adding-a-fallthrough-rule) to prevent communication with endpoints removed from Endpoint Management.

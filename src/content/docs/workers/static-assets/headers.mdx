@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Headers
+description: Learn about default and custom headers for Workers static assets, including Cache-Control, ETag, and Content-Type behavior.
 sidebar:
   order: 4
+products:
+  - workers
 ---
 
 import { Render } from "~/components";
@@ -35,4 +38,4 @@ Cloudflare reserves the right to attach new headers to static asset responses at
 	product="workers"
 />
 
-[^1]: Due to a technical limitation that we hope to address in the future, the `CF-Cache-Status` header is not always entirely accurate. It is possible for false-positives and false-negatives to occur. This should be rare. In the meantime, this header should be considered as returning a "probablistic" result.
+[^1]: Due to a technical limitation that we hope to address in the future, the `CF-Cache-Status` header is not always entirely accurate. It is possible for false-positives and false-negatives to occur. This should be rare. In the meantime, this header should be considered as returning a "probabilistic" result.

@@ -9,6 +9,30 @@ sidebar:
 
 The descriptions below detail the fields available for `http_requests`.
 
+## AISecurityInjectionScore
+
+Type: `int`
+
+The score indicating the likelihood of a prompt injection attack in the request, as determined by AI Security.
+
+## AISecurityPIICategories
+
+Type: `array[string]`
+
+List of PII categories detected in the request by AI Security.
+
+## AISecurityTokenCount
+
+Type: `int`
+
+The number of tokens in the request, as counted by AI Security.
+
+## AISecurityUnsafeTopicCategories
+
+Type: `array[string]`
+
+List of unsafe topic categories detected in the request by AI Security.
+
 ## BotDetectionIDs
 
 Type: `array[int]`
@@ -345,6 +369,30 @@ Type: `int`
 
 Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time.
 
+## FirewallForAIInjectionScore (deprecated)
+
+Type: `int`
+
+The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI. Deprecated: Use AISecurityInjectionScore instead.
+
+## FirewallForAIPIICategories (deprecated)
+
+Type: `array[string]`
+
+List of PII categories detected in the request by Firewall for AI. Deprecated: Use AISecurityPIICategories instead.
+
+## FirewallForAITokenCount (deprecated)
+
+Type: `int`
+
+The number of tokens in the request, as counted by Firewall for AI. Deprecated: Use AISecurityTokenCount instead.
+
+## FirewallForAIUnsafeTopicCategories (deprecated)
+
+Type: `array[string]`
+
+List of unsafe topic categories detected in the request by Firewall for AI. Deprecated: Use AISecurityUnsafeTopicCategories instead.
+
 ## FraudAttack
 
 Type: `string`
@@ -405,6 +453,12 @@ Type: `string`
 
 Result of the check for [leaked credentials](/waf/detections/leaked-credentials/). <br />Possible results are: <em>password_leaked</em> \| <em>username_and_password_leaked</em> \| <em>username_password_similar</em> \| <em>username_leaked</em> \| <em>clean</em>.
 
+## MatchedRules
+
+Type: `array[object]`
+
+Array of matched Cloudflare Rules product rules grouped by product. Each object contains: <em>product</em> (string, for example snippets, transform, redirects), <em>rulesetId</em> (string), <em>rulesetVersion</em> (int), and <em>rules</em> (array of objects, each with <em>id</em> (string) and optional <em>metadata</em> (object with string key-value pairs)).
+
 ## OriginDNSResponseTimeMs
 
 Type: `int`
@@ -427,7 +481,7 @@ Time taken to send request headers to origin after establishing a connection. No
 
 Type: `int`
 
-Number of bytes returned by the origin server.
+Number of bytes returned by the origin server. Consider using CacheResponseBytes and filtering out OriginResponseStatus with values 0 and 304, which indicate a revalidated response. Refer to [Calculating origin-served bytes](/logs/faq/common-calculations/#how-can-i-calculate-bytes-served-by-the-origin-from-cloudflare-logs).
 
 ## OriginResponseDurationMs
 
@@ -554,6 +608,12 @@ Array of security products that matched the request. The same product can appear
 Type: `int`
 
 The Cloudflare data center used to connect to the origin server if Argo Smart Routing is used.
+
+## Subrequests
+
+Type: `array[object]`
+
+Flattened list of subrequests associated with this request. Each subrequest contains the same fields as the parent request (excluding Subrequests itself).
 
 ## UpperTierColoID
 

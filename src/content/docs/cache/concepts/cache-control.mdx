@@ -1,10 +1,14 @@
 ---
 title: Origin Cache Control
 pcx_content_type: concept
+description: How origin Cache-Control headers affect Cloudflare caching behavior.
+products:
+  - cache
+tags:
+  - Headers
 head:
   - tag: title
     content: Origin Cache Control
-
 ---
 
 import { Details } from "~/components"
@@ -17,7 +21,7 @@ With the Origin Cache Control feature enabled, `Cache-Control` directives presen
 
 Cloudflare's [Cache Rules](/cache/how-to/cache-rules/) allows users to either augment or override an origin server's `Cache-Control` headers or [default policies](/cache/concepts/default-cache-behavior/) set by Cloudflare.
 
-In the following sections, we will provide more details regarding:
+The following sections cover:
 
 * The most common `Cache-Control` directives.
 * How to enable Origin Cache Control.
@@ -65,7 +69,11 @@ When setting `no-cache` with Origin Cache Control off, Cloudflare does not cache
 :::
 
 * `max-age=seconds` — Indicates the response is stale after its age is greater than the specified number of seconds. Age is defined as the time in seconds since the asset was served from the origin server. The `seconds` argument is an unquoted integer.
-* `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the proxy-revalidate response directive. Browsers ignore `s-maxage`.
+* `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the `proxy-revalidate` response directive. Browsers ignore `s-maxage`.
+
+:::caution[`s-maxage` disables `stale-while-revalidate`]
+Per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.10-4), `s-maxage` incorporates the semantics of `proxy-revalidate`, which means a shared cache must not serve stale content without first revalidating with the origin. For a complete list of directives that disable `stale-while-revalidate` and workarounds, refer to [Controlling stale behavior](/cache/concepts/revalidation/#controlling-stale-behavior).
+:::
 * `no-cache` — Indicates the response cannot be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using the origin to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
 
 Ensure the HTTP `Expires` header is set in your origin server to use Greenwich Mean Time (GMT) as stipulated in [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3 "3.3.1 Full Date").
@@ -294,12 +302,16 @@ With this configuration, Cloudflare attempts to revalidate the content with the 
 
 This configuration indicates the asset is fresh for 600 seconds. The asset can be served stale for up to an additional 30 seconds while Cloudflare revalidates the asset with the origin in the background. For more information, refer to [Revalidation](/cache/concepts/revalidation/).
 
+:::note
+Do not use `s-maxage` with `stale-while-revalidate`. The `s-maxage` directive implies `proxy-revalidate`, which prevents shared caches from serving stale content. For workarounds, refer to [Controlling stale behavior](/cache/concepts/revalidation/#controlling-stale-behavior).
+:::
+
 
 </Details>
 
 ## Interaction with other Cloudflare features
 
-In this section, we provide details regarding how other Cloudflare features interact with `Cache-Control` directives.
+This section covers how other Cloudflare features interact with `Cache-Control` directives.
 
 ### Edge Cache TTL
 
@@ -316,3 +328,7 @@ In this section, we provide details regarding how other Cloudflare features inte
 ### Gzip and Other Compression
 
 Compression is disabled when the `no-transform` directive is present. If the original asset fetched from the origin is compressed, it is served compressed to the visitor. If the original asset is uncompressed, compression is not applied.
+
+### JavaScript Detections
+
+[JavaScript Detections](/cloudflare-challenges/challenge-types/javascript-detections/) injection is disabled when the `no-transform` directive is present. The `cf.bot_management.js_detection.passed` field will show as `missing` for affected requests.

@@ -1,8 +1,11 @@
 ---
 title: Authentication
+description: Generate and manage R2 API tokens for use with S3-compatible SDKs and APIs.
 pcx_content_type: how-to
 sidebar:
   order: 2
+products:
+  - r2
 ---
 
 import { DashButton } from "~/components";
@@ -220,18 +223,6 @@ You can get the Access Key ID and Secret Access Key values from the response of 
 
 Refer to [Authenticate against R2 API using auth tokens](/r2/examples/authenticate-r2-auth-tokens/) for a tutorial with JavaScript, Python, and Go examples.
 
-## Temporary access credentials
+## Temporary credentials
 
-If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](/api/resources/r2/subresources/temporary_credentials/methods/create/) in the API. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the API result for an S3-compatible request by setting the credential variables like so:
-
-```
-AWS_ACCESS_KEY_ID = <accessKeyId>
-AWS_SECRET_ACCESS_KEY = <secretAccessKey>
-AWS_SESSION_TOKEN = <sessionToken>
-```
-
-:::note
-
-The temporary access key cannot have a permission that is higher than the parent access key. e.g. if the parent key is set to `Object Read Write`, the temporary access key could only have `Object Read Write` or `Object Read Only` permissions.
-
-:::
+To issue short-lived, scoped credentials derived from an API token, use [temporary credentials](/r2/api/s3/temporary-credentials/). R2 supports generating them via the Temporary Credentials API or locally by signing a JWT with the parent token's secret access key.

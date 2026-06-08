@@ -65,7 +65,7 @@ The network diagram in Figure 2 illustrates such a Magic Transit setup, and the 
 
 ![Figure 2: Reference Configuration of Magic Transit anycast Tunnel (GRE) With Default DSR Option](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-2.png "Figure 2: Reference Configuration of Magic Transit anycast Tunnel (GRE) With Default DSR Option")
 
-- Cloudflare provides the customer with a pair of anycast IP addresses for the Cloudflare end of the tunnel endpoints. These are publicly routable IP addresses from Cloudflare-owned address space. The pair of anycast IP addresses can be used to configure two tunnels for network redundancy, although only one is required for a basic configuration. The above configuration shows a single tunnel, with the Cloudflare end of the tunnel endpoint address being 192.0.2.1.
+- Cloudflare provides the customer with an IPv4 anycast address for the Cloudflare end of the tunnel endpoints. This is a publicly routable IP address from Cloudflare-owned address space. Cloudflare handles failures on its network automatically by advertising the endpoint IP from multiple nodes across many globally distributed data centers. To handle failures on the customer network, configure two tunnels from separate routers. Customers can contact their account team to request additional anycast IP addresses. The above configuration shows a single tunnel, with the Cloudflare end of the tunnel endpoint address being 192.0.2.1.
 
 - The customer end of the anycast GRE tunnel needs to be a publicly routable address. It is typically the IP address of the WAN interface on the customer edge router. In this example it is 192.0.2.153.
 

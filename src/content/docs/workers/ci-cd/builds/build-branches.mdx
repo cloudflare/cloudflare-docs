@@ -4,6 +4,8 @@ title: Build branches
 description: Configure which git branches should trigger a Workers Build
 sidebar:
   order: 6
+products:
+  - workers
 ---
 
 When you connect a git repository to Workers, commits made on the production git branch will produce a Workers Build. If you want to take advantage of [preview URLs](/workers/configuration/previews/) and [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment), you can additionally enable "non-production branch builds" in order to trigger a build on all branches of your repository.

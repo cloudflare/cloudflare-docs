@@ -1,0 +1,372 @@
+{
+	"model_id": "xai/grok-tts",
+	"provider_id": "xai",
+	"name": "Grok TTS",
+	"description": "xAI's Grok text-to-speech model. Generates high-fidelity spoken audio in 5 expressive voices (eve, ara, rex, sal, leo) with 20+ supported languages. Supports inline speech tags for laughter, whispers, and pauses.",
+	"task": "Text-to-Speech",
+	"tags": [
+		"Text-to-Speech",
+		"Audio Generation",
+		"Multilingual"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Generate speech with the default voice (eve) in English",
+			"input": {
+				"text": "Hello! Welcome to the xAI Text to Speech API.",
+				"language": "en"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/simple-generation.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/simple-generation.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-tts',\n  { text: 'Hello! Welcome to the xAI Text to Speech API.', language: 'en' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-tts\",\n  \"input\": {\n    \"text\": \"Hello! Welcome to the xAI Text to Speech API.\",\n    \"language\": \"en\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Different Voice",
+			"description": "Use the warm, conversational `ara` voice",
+			"input": {
+				"text": "Thank you for calling. How can I help you today?",
+				"voice_id": "ara",
+				"language": "en"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/different-voice.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/different-voice.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-tts',\n  { text: 'Thank you for calling. How can I help you today?', voice_id: 'ara', language: 'en' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-tts\",\n  \"input\": {\n    \"text\": \"Thank you for calling. How can I help you today?\",\n    \"voice_id\": \"ara\",\n    \"language\": \"en\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "High-Fidelity MP3",
+			"description": "44.1 kHz / 192 kbps MP3 for production use",
+			"input": {
+				"text": "Crystal clear audio at maximum quality.",
+				"voice_id": "rex",
+				"language": "en",
+				"output_format": {
+					"codec": "mp3",
+					"sample_rate": 44100,
+					"bit_rate": 192000
+				}
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/high-fidelity-mp3.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/high-fidelity-mp3.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-tts',\n  {\n    text: 'Crystal clear audio at maximum quality.',\n    voice_id: 'rex',\n    language: 'en',\n    output_format: { codec: 'mp3', sample_rate: 44100, bit_rate: 192000 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-tts\",\n  \"input\": {\n    \"text\": \"Crystal clear audio at maximum quality.\",\n    \"voice_id\": \"rex\",\n    \"language\": \"en\",\n    \"output_format\": {\n      \"codec\": \"mp3\",\n      \"sample_rate\": 44100,\n      \"bit_rate\": 192000\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Telephony (mulaw)",
+			"description": "G.711 \u03bc-law at 8 kHz for SIP / PSTN integration",
+			"input": {
+				"text": "Hello, thank you for calling. How can I help you today?",
+				"voice_id": "ara",
+				"language": "en",
+				"output_format": {
+					"codec": "mulaw",
+					"sample_rate": 8000
+				}
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/telephony-law.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/telephony-law.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-tts',\n  {\n    text: 'Hello, thank you for calling. How can I help you today?',\n    voice_id: 'ara',\n    language: 'en',\n    output_format: { codec: 'mulaw', sample_rate: 8000 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-tts\",\n  \"input\": {\n    \"text\": \"Hello, thank you for calling. How can I help you today?\",\n    \"voice_id\": \"ara\",\n    \"language\": \"en\",\n    \"output_format\": {\n      \"codec\": \"mulaw\",\n      \"sample_rate\": 8000\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Expressive Delivery",
+			"description": "Inline speech tags for laughter, pauses, and whispers",
+			"input": {
+				"text": "So I walked in and [pause] there it was. [laugh] I honestly could not believe it! <whisper>It was a secret the whole time.</whisper>",
+				"voice_id": "eve",
+				"language": "en"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/expressive-delivery.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/expressive-delivery.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-tts',\n  {\n    text: 'So I walked in and [pause] there it was. [laugh] I honestly could not believe it! <whisper>It was a secret the whole time.</whisper>',\n    voice_id: 'eve',\n    language: 'en',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-tts\",\n  \"input\": {\n    \"text\": \"So I walked in and [pause] there it was. [laugh] I honestly could not believe it! <whisper>It was a secret the whole time.</whisper>\",\n    \"voice_id\": \"eve\",\n    \"language\": \"en\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Text Normalization",
+			"description": "Convert written numbers and abbreviations to spoken form",
+			"input": {
+				"text": "The total is $1,234.56 and the meeting is at 3pm on Jan 15th.",
+				"voice_id": "rex",
+				"language": "en",
+				"text_normalization": true
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/text-normalization.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/xai/grok-tts/text-normalization.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-tts',\n  {\n    text: 'The total is $1,234.56 and the meeting is at 3pm on Jan 15th.',\n    voice_id: 'rex',\n    language: 'en',\n    text_normalization: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-tts\",\n  \"input\": {\n    \"text\": \"The total is $1,234.56 and the meeting is at 3pm on Jan 15th.\",\n    \"voice_id\": \"rex\",\n    \"language\": \"en\",\n    \"text_normalization\": true\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.x.ai/developers/model-capabilities/audio/text-to-speech",
+	"terms": "https://x.ai/legal/terms-of-service",
+	"cover_image_url": null,
+	"metadata": {
+		"Voices": "eve, ara, rex, sal, leo (+ custom)",
+		"Languages": "20+ BCP-47 codes (en, fr, de, ja, zh, ...) plus auto-detect",
+		"Max Text Length": "15,000 characters",
+		"Output Formats": "MP3 (default), WAV, PCM, \u03bc-law, A-law"
+	},
+	"request_formats": null,
+	"created_at": "2026-06-03 20:26:50",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"language": {
+					"description": "BCP-47 language code (e.g. \"en\", \"zh\", \"pt-BR\") or \"auto\" for automatic language detection. Required \u2014 xAI returns 400 if omitted. Supported codes: auto, en, ar-EG, ar-SA, ar-AE, bn, zh, fr, de, hi, id, it, ja, ko, pt-BR, pt-PT, ru, es-MX, es-ES, tr, vi.",
+					"type": "string"
+				},
+				"optimize_streaming_latency": {
+					"anyOf": [
+						{
+							"const": 0,
+							"type": "number"
+						},
+						{
+							"const": 1,
+							"type": "number"
+						}
+					],
+					"description": "Latency optimization for streaming synthesis. 0 (default): no optimization, best audio quality. 1: reduced first-chunk size for lower time-to-first-audio with minor quality tradeoff."
+				},
+				"output_format": {
+					"additionalProperties": false,
+					"description": "Output audio format. Defaults to MP3 at 24 kHz / 128 kbps when omitted.",
+					"properties": {
+						"bit_rate": {
+							"anyOf": [
+								{
+									"const": 32000,
+									"type": "number"
+								},
+								{
+									"const": 64000,
+									"type": "number"
+								},
+								{
+									"const": 96000,
+									"type": "number"
+								},
+								{
+									"const": 128000,
+									"type": "number"
+								},
+								{
+									"const": 192000,
+									"type": "number"
+								}
+							],
+							"description": "Bit rate in bps. MP3 only. Defaults to 128000. Supported: 32000, 64000, 96000, 128000, 192000."
+						},
+						"codec": {
+							"description": "Audio codec. Defaults to \"mp3\". mp3 \u2192 audio/mpeg (general use); wav \u2192 audio/wav (lossless); pcm \u2192 audio/pcm (raw 16-bit LE, real-time pipelines); mulaw/ulaw \u2192 audio/basic (G.711 \u03bc-law, telephony); alaw \u2192 audio/alaw (G.711 A-law, telephony).",
+							"enum": [
+								"mp3",
+								"wav",
+								"pcm",
+								"mulaw",
+								"ulaw",
+								"alaw"
+							],
+							"type": "string"
+						},
+						"sample_rate": {
+							"anyOf": [
+								{
+									"const": 8000,
+									"type": "number"
+								},
+								{
+									"const": 16000,
+									"type": "number"
+								},
+								{
+									"const": 22050,
+									"type": "number"
+								},
+								{
+									"const": 24000,
+									"type": "number"
+								},
+								{
+									"const": 44100,
+									"type": "number"
+								},
+								{
+									"const": 48000,
+									"type": "number"
+								}
+							],
+							"description": "Sample rate in Hz. Defaults to 24000. Supported: 8000, 16000, 22050, 24000, 44100, 48000. Telephony codecs (mulaw, alaw) typically use 8000."
+						}
+					},
+					"type": "object"
+				},
+				"text": {
+					"description": "Text to convert to speech. Maximum 15,000 characters. Supports inline speech tags: [pause], [laugh], <whisper>\u2026</whisper>, etc.",
+					"maxLength": 15000,
+					"minLength": 1,
+					"type": "string"
+				},
+				"text_normalization": {
+					"description": "When true, normalizes written-form text into spoken-form before synthesis (e.g. \"Dr.\" \u2192 \"Doctor\", \"100\" \u2192 \"one hundred\"). Defaults to false.",
+					"type": "boolean"
+				},
+				"voice_id": {
+					"description": "Voice for synthesis. Defaults to \"eve\". Built-in voices: eve (energetic), ara (warm), rex (confident), sal (balanced), leo (authoritative). Custom voice IDs from /v1/tts/voices are also accepted. Case-insensitive \u2014 \"Eve\", \"EVE\", and \"eve\" are equivalent.",
+					"minLength": 1,
+					"type": "string"
+				}
+			},
+			"required": [
+				"text",
+				"language"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"audio": {
+					"description": "Presigned R2 URL for the generated audio file. MIME type reflects the requested codec (audio/mpeg for mp3, audio/wav for wav, etc.).",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"type": "object"
+		}
+	}
+}

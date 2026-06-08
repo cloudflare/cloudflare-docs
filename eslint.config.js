@@ -26,7 +26,15 @@ export default [
 		...pluginReact.configs.flat["jsx-runtime"],
 	},
 	{
-		ignores: [".astro/", ".wrangler/", "dist/", ".github/"],
+		ignores: [
+			".astro/",
+			".wrangler/",
+			".flue/dist/",
+			".flue/.flue-vite/",
+			".flue/.wrangler/",
+			"dist/",
+			".github/",
+		],
 	},
 	{
 		rules: {
@@ -40,6 +48,17 @@ export default [
 					varsIgnorePattern: "^_",
 					caughtErrorsIgnorePattern: "^_",
 					destructuredArrayIgnorePattern: "^_",
+				},
+			],
+		},
+	},
+	{
+		files: ["src/scripts/**/*.{js,ts}"],
+		rules: {
+			"no-console": [
+				"error",
+				{
+					allow: ["warn", "error"],
 				},
 			],
 		},

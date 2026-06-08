@@ -1,0 +1,50 @@
+---
+title: How Artifacts works
+description: Understand namespaces, repos, and durability.
+pcx_content_type: concept
+sidebar:
+  order: 1
+products:
+  - artifacts
+---
+
+Artifacts creates Git repos on demand. Each repo is an isolated Git service with its own remote URL, tokens, and durable state.
+
+## Core model
+
+Namespaces are the top-level container for repos. A repo lives inside one namespace, and its name is unique within that namespace.
+
+Artifacts does not provision namespaces separately. When you create the first repo with a new namespace name, Artifacts creates that namespace implicitly.
+
+A namespace provides the naming and routing boundary for repos. Together, the namespace and repo name form the repo's stable address, and API responses also return a repo ID.
+
+Like [Durable Objects](/durable-objects/concepts/what-are-durable-objects/), a repo is a single logical instance that Cloudflare can route to from any region.
+
+Because each repo is isolated, it has its own:
+
+- Git history and refs
+- access tokens and remote URL
+- lifecycle and durable state
+
+Repos can be created as needed. This lets Artifacts model many small units of work across separate repos.
+
+Forking follows the same model. A fork creates a new repo that starts from an existing repo's history, then diverges independently with its own tokens, routing, and lifecycle.
+
+Access is also repo-scoped. Each repo has its own tokens, and each token can be limited to a specific level of access:
+
+- `read` for clone, fetch, pull, indexing, and review
+- `write` for push and other mutations
+
+Your Worker or API layer decides when to mint those tokens. That keeps authentication and authorization outside the repo while still making the repo usable from Workers, the REST API, or any standard Git client.
+
+## Durability
+
+Artifacts is durable by default. A repo does not depend on one process staying alive or on one data center staying available.
+
+Behind the scenes, Cloudflare replicates repo data synchronously across multiple data centers and copies it asynchronously to object storage and snapshots. You do not need to build your own replication, failover, or snapshot pipeline to keep repository state available.
+
+Artifacts handles the Git server lifecycle and storage infrastructure underneath these Git workflows.
+
+## Learn more
+
+For repo patterns, refer to [Best practices for Artifacts](/artifacts/concepts/best-practices/). For token behavior, refer to [Git protocol](/artifacts/api/git-protocol/). For product updates, refer to the [Artifacts changelog](/artifacts/platform/changelog/).

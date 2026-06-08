@@ -1,0 +1,25 @@
+---
+pcx_content_type: reference
+title: RtkLiveStreamPlayer
+description: API reference for RtkLiveStreamPlayer component (React Native Library)
+products:
+  - realtime
+---
+
+IVS (Amazon Interactive Video Service) player for viewing livestream playback. Requires `amazon-ivs-react-native-player` peer dependency.
+
+## Properties
+
+This component does not accept any props. It reads the livestream URL from the meeting context.
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLiveStreamPlayer } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLiveStreamPlayer />;
+}
+```

@@ -5,7 +5,7 @@ import { join } from "node:path";
  * Parses the `Disallow` directives from `public/robots.txt` for the wildcard
  * user-agent (`*`) and returns them as an array of path prefixes.
  *
- * Only the first `User-agent: *` block is considered. Blank `Disallow` entries
+ * Only `User-agent: *` blocks are considered. Blank `Disallow` entries
  * (which re-allow everything) are ignored.
  */
 function parseDisallowedPaths(): string[] {
@@ -31,7 +31,7 @@ function parseDisallowedPaths(): string[] {
 		if (!inWildcardBlock) continue;
 
 		if (line.toLowerCase().startsWith("disallow:")) {
-			const path = line.slice("disallow:".length).trim();
+			const path = line.slice("disallow:".length).split("#")[0].trim();
 			if (path) disallowed.push(path);
 		}
 	}

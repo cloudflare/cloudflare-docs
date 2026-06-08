@@ -25,7 +25,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Cloudflare WAN (f
 	<>
 		<Markdown
 			text={`
-			1. Refer to [Add tunnels](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) to learn how to add IPsec tunnels.`}
+			1. Refer to [Add tunnels](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels) to learn how to add IPsec tunnels.`}
 			inline={false}
 		/>
 	</>
@@ -38,7 +38,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Cloudflare WAN (f
 )}
 2. Select **IPsec tunnel** > **Next**, and fill in the following settings:
 	   - **Name**: `unifi-gw-primary`
-	   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
+	   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/)
 	   - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
    - **Cloudflare Endpoint**: This should be one of the IPv4 addresses gathered from Leased IPs.
    - Under **Tunnel Health checks**, select:
@@ -60,7 +60,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Cloudflare WAN (f
    - **Local IP:** Select the WAN interface (for example, `WAN1`).
    - **Remote IP:** Enter the Cloudflare endpoint IP from [Step 1](#1-configure-cloudflare-wan).
    - **VPN Method:** Route Based.
-   - **Tunnel IP:** `10.252.2.29/31` or refer to the [Tunnel endpoints documentation](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/).
+   - **Tunnel IP:** `10.252.2.29/31` or refer to the [Tunnel endpoints documentation](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/).
    - **Remote Networks:** Inside Cloudflare tunnel address (for example, `10.252.2.28/31`) and other remote subnets to access through Cloudflare WAN.
 4. Set Advanced settings:
    - **Key Exchange Version**: IKEv2.

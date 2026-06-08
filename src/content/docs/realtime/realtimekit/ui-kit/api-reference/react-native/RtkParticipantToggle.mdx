@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: RtkParticipantToggle
+description: API reference for RtkParticipantToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to open the participants sidebar panel. Shows a badge with pending request count.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant                   |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `states`   | `States`                       | ❌       | -                 | UI state object                  |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkParticipantToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkParticipantToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkParticipantToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkParticipantToggle meeting={meeting} size="md" variant="button" />;
+}
+```

@@ -1,0 +1,39 @@
+---
+pcx_content_type: reference
+title: RtkClock
+description: API reference for RtkClock component (React Native Library)
+products:
+  - realtime
+---
+
+Displays elapsed meeting time as a running clock (HH:MM:SS or MM:SS).
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`           | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkClock } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkClock meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkClock } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkClock meeting={meeting} iconPack={customIconPack} />;
+}
+```

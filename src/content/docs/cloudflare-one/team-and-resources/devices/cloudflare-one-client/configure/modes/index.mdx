@@ -1,8 +1,14 @@
 ---
 pcx_content_type: reference
+description: Reference information for Client modes in Zero Trust.
+products:
+  - cloudflare-one
 title: Client modes
 sidebar:
   order: 2
+tags:
+  - DNS
+  - Posture
 ---
 
 You can deploy the Cloudflare One Client (formerly WARP) in different modes to control the types of traffic sent to Cloudflare Gateway. The client mode determines which Zero Trust features are available on the device.
@@ -63,7 +69,7 @@ The default profile is used for all devices that are not assigned to a specific 
 
 To set up Local proxy mode:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Device profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Teams & Resources** > **Device profiles**.
 2. Decide whether you would like to edit the default profile or create a new device profile.
 3. Select the device profile you want to configure > **Edit** (If you only see **View**, you lack the permissions required to modify profiles).
 4. Ensure the **Device tunnel protocol** is set to `MASQUE`.

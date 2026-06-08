@@ -2,33 +2,55 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem} from "~/components";
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import backgroundImg from "~/assets/images/images/examples/background-red.jpg";
 
-Background color to add underneath the image. Applies to images with transparency (for example, PNG) and images resized with `fit=pad`. Accepts any CSS color using CSS4 modern syntax, such as `rgb(255 255 0)` and `rgba(255 255 0 100)`.
+### `background`
+
+Specifies an opaque or transparent color to fill blank or transparent pixels in the image. The default is `%23FFFFFF` (white).
+
+Accepts the following properties:
+
+- A HEX color code, formatted as `%23RRGGBB`.
+- A CSS color name, e.g. `white` or `red`.
+- An `rgb()` or `rgba()` CSS color function, e.g. `rgba(250,40,145,0.5)`.
+
+The background color is visible in images with transparent pixels, including images that are resized with `fit=pad`.
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={backgroundImg.src} alt="background=red output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+      1080 x 720
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+      1080 x 900
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">
   ```txt
-background=%23RRGGBB
-
-OR
-
+background=%23ff0000
 background=red
-
-OR
-
 background=rgb%28240%2C40%2C145%29
-
 ```
 </TabItem>
 <TabItem label="Workers">
 ```js
 cf: {image: {background: "#RRGGBB"}}
-
-OR
-
-cf:{image: {background: "rgba(240,40,145,0)"}}
+cf: {image: {background: "rgba(240,40,145,0)"}}
 ```
-
   </TabItem>
 </Tabs>

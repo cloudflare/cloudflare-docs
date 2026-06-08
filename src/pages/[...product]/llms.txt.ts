@@ -58,7 +58,8 @@ export const getStaticPaths = (async () => {
 					(e.id.startsWith(prefix + "/") || e.id === prefix) &&
 					!isDirectoryOnlyPage(e.body ?? "") &&
 					!isDisallowedByRobots(`/${e.id}/`) &&
-					!isExternalRedirect(`/${e.id}/`),
+					!isExternalRedirect(`/${e.id}/`) &&
+					(!e.data.external_link || e.data.external_link.startsWith("/")),
 			);
 
 			if (pages.length === 0) return null;
@@ -76,8 +77,10 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
 
 function formatPage(base: string, e: Page) {
-	const resolved = resolveRedirect(`/${e.id}/`);
-	const line = `- [${e.data.title}](${base}${resolved}index.md)`;
+	const path = e.data.external_link?.startsWith("/")
+		? resolveRedirect(e.data.external_link)
+		: resolveRedirect(`/${e.id}/`);
+	const line = `- [${e.data.title}](${base}${path}index.md)`;
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 }
 
@@ -190,8 +193,6 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 		> Links below point directly to Markdown versions of each page. Any page can also be retrieved as Markdown by sending an \`Accept: text/markdown\` header to the page's URL without the \`index.md\` suffix (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`).
 		>
 		> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
-		>
-		> Use [${title} llms-full.txt](${base}${productUrl}llms-full.txt) for the complete ${title} documentation in a single file, intended for offline indexing, bulk vectorization, or large-context models.
 
 		${pagesSection}
 	`);

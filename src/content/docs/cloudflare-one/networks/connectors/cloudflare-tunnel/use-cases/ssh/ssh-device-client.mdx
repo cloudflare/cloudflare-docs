@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Connect with self-managed SSH keys in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Connect with self-managed SSH keys
 tags:
   - SSH
@@ -77,7 +80,7 @@ This section covers how to create a new Cloudflare Tunnel for your SSH server. Y
 
 Hostname routes allow you to SSH directly to `ssh.internal.local` without managing static IP routes.  Hostname routes are especially useful when your SSH server has an unknown or ephemeral IP address, such as dynamic infrastructure provisioned by cloud providers.
 
-   <Details header="How hostame routing works">
+   <Details header="How hostname routing works">
 
 	When you create a hostname route in Cloudflare Tunnel:
 

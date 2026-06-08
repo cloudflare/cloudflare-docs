@@ -1,0 +1,93 @@
+---
+{}
+---
+
+import { MetaInfo, Type } from "~/components";
+
+`messages` <Type text="array" /> <MetaInfo text="required" />
+
+An array of message objects representing the conversation. Each message has a `role` and `content` field.
+
+- `role` <Type text="string" /> <MetaInfo text="required" />
+  - The role of the message sender. Valid values: `system`, `developer`, `user`, `assistant`, `tool`.
+
+- `content` <Type text="string" /> <MetaInfo text="required" />
+  - The content of the message.
+
+---
+
+`model` <Type text="string" /> <MetaInfo text="optional" />
+
+The text-generation model used to generate responses. Defaults to the generation model configured in the AI Search instance settings. For a list of supported models, refer to [Supported models](/ai-search/configuration/models/supported-models/).
+
+---
+
+`stream` <Type text="boolean" /> <MetaInfo text="optional" />
+
+Returns a stream of results as they are generated. When enabled, returns a `Response` object with a readable stream. Defaults to `false`.
+
+---
+
+`ai_search_options` <Type text="object" /> <MetaInfo text="optional" />
+
+Configuration options for the search and generation operation.
+
+- `retrieval` <Type text="object" /> <MetaInfo text="optional" />
+  - `retrieval_type` <Type text="string" /> <MetaInfo text="optional" />
+    - The type of retrieval to perform. Valid values: `vector`, `keyword`, `hybrid`. Defaults to `hybrid`.
+
+  - `match_threshold` <Type text="number" /> <MetaInfo text="optional" />
+    - The minimum match score required for a result to be considered a match. Must be between `0` and `1`. Defaults to `0.4`.
+
+  - `max_num_results` <Type text="integer" /> <MetaInfo text="optional" />
+    - The maximum number of results to return. Must be between `1` and `50`. Defaults to `10`.
+
+  - `filters` <Type text="object" /> <MetaInfo text="optional" />
+    - Filter search results based on metadata. Supports comparison filters (`eq`, `ne`, `gt`, `gte`, `lt`, `lte`) and compound filters (`and`, `or`). For more details, refer to [Metadata filtering](/ai-search/configuration/indexing/metadata/).
+
+  - `context_expansion` <Type text="integer" /> <MetaInfo text="optional" />
+    - The number of surrounding chunks to include for additional context. Must be between `0` and `3`. Defaults to `0`.
+
+  - `fusion_method` <Type text="string" /> <MetaInfo text="optional" />
+    - Controls how vector and keyword scores are combined when using hybrid retrieval. Valid values: `rrf` (Reciprocal Rank Fusion), `max` (takes the maximum score). Defaults to the instance-level setting.
+
+  - `keyword_match_mode` <Type text="string" /> <MetaInfo text="optional" />
+    - Controls how keyword (BM25) matching selects candidate documents. `and` requires all terms to match. `or` requires any term to match. Defaults to `and`.
+
+  - `boost_by` <Type text="array" /> <MetaInfo text="optional" />
+    - Boost results by metadata fields. Maximum 3 items. Each item has:
+      - `field` <Type text="string" /> <MetaInfo text="required" /> - The metadata field name to boost by (for example, `timestamp`). Maximum 64 characters.
+      - `direction` <Type text="string" /> <MetaInfo text="optional" /> - The boost direction. Valid values: `asc`, `desc`, `exists`, `not_exists`. Defaults to `asc` for numeric fields and `exists` for text fields.
+
+  - `metadata_only` <Type text="boolean" /> <MetaInfo text="optional" />
+    - Return only metadata for each chunk without the text content.
+
+  - `return_on_failure` <Type text="boolean" /> <MetaInfo text="optional" />
+    - Whether to return partial results if some processing steps fail. Defaults to `true`.
+
+- `query_rewrite` <Type text="object" /> <MetaInfo text="optional" />
+  - `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+    - Rewrites the query to improve retrieval accuracy. Defaults to `false`.
+
+  - `model` <Type text="string" /> <MetaInfo text="optional" />
+    - The model to use for query rewriting.
+
+  - `rewrite_prompt` <Type text="string" /> <MetaInfo text="optional" />
+    - A custom prompt to guide query rewriting.
+
+- `reranking` <Type text="object" /> <MetaInfo text="optional" />
+  - `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+    - Reorders retrieved results based on semantic relevance using a reranking model. Defaults to `false`.
+
+  - `model` <Type text="string" /> <MetaInfo text="optional" />
+    - The reranking model to use. Valid value: `@cf/baai/bge-reranker-base`.
+
+  - `match_threshold` <Type text="number" /> <MetaInfo text="optional" />
+    - The minimum score for reranked results. Must be between `0` and `1`. Defaults to `0.4`.
+
+- `cache` <Type text="object" /> <MetaInfo text="optional" />
+  - `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+    - Override the instance-level cache setting for this request.
+
+  - `cache_threshold` <Type text="string" /> <MetaInfo text="optional" />
+    - The similarity threshold for cache hits. Valid values: `super_strict_match`, `close_enough`, `flexible_friend`, `anything_goes`.

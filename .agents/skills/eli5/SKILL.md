@@ -48,6 +48,7 @@ This is **especially critical for Cloudflare-specific implementations**. Cloudfl
 1. **Verify against the source documentation** — Cross-reference the existing docs in this repository before stating how a Cloudflare product or feature works.
 2. **Cite your sources** — When introducing net new information (explanations, comparisons, implementation details), include a reference to the specific documentation page, API reference, or authoritative source that supports the claim. Use inline links or footnotes.
 3. **Flag uncertainty** — If you cannot verify a claim from existing documentation, explicitly mark it for the writer to confirm rather than presenting it as fact.
+4. **Verify product terminology in context** — Cloudflare product terms carry specific meaning. "Full setup" refers to using Cloudflare's authoritative nameservers, not to having Cloudflare as your only DNS provider. "Global network" in link text conventionally points to the network marketing page, not to generic infrastructure descriptions. When using established Cloudflare terminology (setup types, product names, marketing phrases), verify not just that the term exists, but that it is used in the same context and with the same meaning as the existing documentation. A real term applied in the wrong context is as misleading as a fabricated one.
 
 **Tone:** Clear, direct, professional. Not condescending, not overly casual, not hyperbolic. Never use "simply," "just," "obviously," "clearly," "as everyone knows," or "it's easy to."
 
@@ -160,6 +161,14 @@ I compile a deduplicated list of all terms that may need glossary definitions or
 
 For each term I report: the term, where it appears (line number), whether it is defined in-context, and a suggested action (add glossary tooltip, add cross-link, or add inline definition).
 
+**GlossaryTooltip quality gate:** Before suggesting a GlossaryTooltip for any term, read the actual glossary definition (in `src/content/glossary/`). Evaluate it against these criteria:
+
+- **Is the definition accurate?** If the glossary entry is vague, outdated, or technically imprecise, flag it for improvement rather than linking to it. A bad tooltip is worse than no tooltip.
+- **Is the definition redundant with the surrounding sentence?** If the tooltip would repeat nearly the same words as the prose it is attached to, skip it — the tooltip adds visual clutter without new understanding.
+- **Does the definition stand alone?** The reader sees the tooltip in isolation. If the glossary entry only makes sense in a different context or uses jargon of its own, flag it rather than linking.
+
+When a glossary entry fails any of these checks, report it in the Terminology Index with the action "Flag glossary entry for review — [reason]" instead of "Add glossary tooltip."
+
 Always include the Terminology Index in the output. If no terms need action, state that explicitly.
 
 **7. Generate Comparison**
@@ -221,6 +230,8 @@ These are the highest-risk categories when documentation has been simplified. Pr
 3. **Net-new claims** — Any explanation, context, or framing added during simplification that was not present in the original document. Every piece of new information requires a citation. If the original said "zones pair with resolver policies" and the simplification adds "based on source IP, user identity, or domain," verify that all three of those selectors are actually supported.
 
 4. **Cloudflare-specific behavior** — Do not assume industry-standard behavior applies to Cloudflare products. Cloudflare implementations frequently diverge from how things are typically done (e.g., Workers request lifecycle vs. traditional serverless, Cloudflare CDN cache logic vs. other CDNs, how Cloudflare Tunnel health checks work vs. generic health check patterns). Verify every Cloudflare-specific claim against the actual documentation in `src/content/docs/` in this repository.
+
+5. **Over-generalization across categories** — When a simplification says "all records," "the IP address" (singular), or "every request," verify whether the claim actually applies universally. DNS record types (A, AAAA, CNAME, MX, TXT, NS) have different proxying rules. Cloudflare returns multiple anycast IPs, not one. Protocol behaviors, plan-level features, and configuration defaults frequently vary by record type, plan, or product tier. Check that quantifiers ("all," "every," "any") and articles ("the" implying singular) are accurate. A statement that is true for A records may be false for MX records; a feature available on Enterprise may not exist on Free.
 
 ### Review process
 
@@ -285,6 +296,12 @@ Then ask: **What would you like to do next?**
 - **No** if the target audience can infer the consequence from the stated cause. For example, "blocking health checks" does not need "which means Cloudflare may consider your tunnels unhealthy" for a networking audience. Trust domain expertise.
 - **Yes** only if the consequence is non-obvious, counterintuitive, or the audience genuinely lacks the domain knowledge to connect the dots.
 
+**Should I add a GlossaryTooltip?**
+
+- **Yes** if: the glossary definition is accurate, adds information beyond what the sentence already says, and stands alone without additional context
+- **No** if: the glossary definition is vague, technically imprecise, or nearly identical to the surrounding sentence. Flag the glossary entry for review instead.
+- **No** if: the term is already clearly defined inline in the same paragraph
+
 **Should I add synonyms or aliases for a term?**
 
 - **No.** One inline definition is enough. Do not pile on "also called X" aliases when the definition already explains the concept through its behavior. Define terms by what they do, not by listing alternative names.
@@ -312,6 +329,7 @@ Before finalizing, verify:
 - [ ] No consequence chains the audience can infer
 - [ ] No synonym glosses when behavior-based definitions exist
 - [ ] No rhetorical questions (examples stated as examples)
+- [ ] Bold formatting follows Cloudflare style guide (bold for clickable UI elements only — not used for sporadic emphasis in explanatory prose)
 - [ ] Every simplification describes the correct mechanism
 - [ ] Register matches the existing documentation voice
 - [ ] Adversarial review completed
@@ -351,6 +369,10 @@ Do not explain that `==` means "equals" to an audience writing Wireshark-syntax 
 **8. Using casual register in formal docs**
 
 "Let you" is too casual for Cloudflare docs. Use "allow you to" or state the action directly. Match the existing voice of the documentation, not a conversational ideal.
+
+**9. Conflating related but distinct concepts in a single statement**
+
+When simplifying, do not merge two separate concepts into one sentence in a way that implies they are the same thing or that one requires the other. Example: "CNAME flattening resolves the chain and returns a Cloudflare anycast IP" conflates CNAME flattening (a DNS resolution behavior) with proxying (a traffic-routing decision) — you can have CNAME flattening with proxy off, in which case no Cloudflare IP is returned. Similarly, "Full setup means Cloudflare is your only DNS provider" conflates the setup type (using Cloudflare authoritative nameservers) with exclusivity (having no other provider). Each concept should be introduced on its own terms, even if they often appear together. If two features interact, describe them separately and then explain the relationship.
 
 ## Edge Cases
 

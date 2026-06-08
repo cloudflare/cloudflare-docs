@@ -4,6 +4,8 @@ pcx_content_type: get-started
 sidebar:
   order: 1
 description: Build your first agent in 10 minutes — a counter with persistent state that syncs to a React frontend in real-time.
+products:
+  - agents
 ---
 
 import {
@@ -30,7 +32,7 @@ Build AI agents that persist, think, and act. Agents run on Cloudflare's global 
 Then install dependencies and start the dev server:
 
 ```sh
-cd my-agent
+cd agents-starter
 npm install
 npm run dev
 ```
@@ -153,6 +155,8 @@ Update `wrangler.jsonc` to register the agent:
 Replace `src/client.tsx`:
 
 ```tsx title="src/client.tsx"
+import "./styles.css";
+import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { useAgent } from "agents/react";
 import type { CounterAgent, CounterState } from "./server";
@@ -178,6 +182,9 @@ export default function App() {
 		</div>
 	);
 }
+
+const root = createRoot(document.getElementById("root")!);
+root.render(<App />);
 ```
 
 Key points:
@@ -326,34 +333,34 @@ Now that you have a working agent, explore these topics:
 
 | Learn how to             | Refer to                                                  |
 | ------------------------ | --------------------------------------------------------- |
-| Add AI/LLM capabilities  | [Using AI models](/agents/api-reference/using-ai-models/) |
-| Expose tools via MCP     | [MCP servers](/agents/api-reference/mcp-agent-api/)       |
-| Run background tasks     | [Schedule tasks](/agents/api-reference/schedule-tasks/)   |
-| Handle emails            | [Email routing](/agents/api-reference/email/)             |
-| Use Cloudflare Workflows | [Run Workflows](/agents/api-reference/run-workflows/)     |
+| Add AI/LLM capabilities  | [Using AI models](/agents/runtime/operations/using-ai-models/) |
+| Expose tools via MCP     | [MCP servers](/agents/model-context-protocol/apis/agent-api/)       |
+| Run background tasks     | [Schedule tasks](/agents/runtime/execution/schedule-tasks/)   |
+| Handle emails            | [Email routing](/agents/communication-channels/email/)             |
+| Use Cloudflare Workflows | [Run Workflows](/agents/runtime/execution/run-workflows/)     |
 
 ### Explore more
 
 <LinkCard
 	title="State management"
-	href="/agents/api-reference/store-and-sync-state/"
+	href="/agents/runtime/lifecycle/state/"
 	description="Deep dive into setState(), initialState, and onStateChanged()."
 />
 
 <LinkCard
 	title="Client SDK"
-	href="/agents/api-reference/client-sdk/"
+	href="/agents/communication-channels/chat/client-sdk/"
 	description="Full useAgent and AgentClient API reference."
 />
 
 <LinkCard
 	title="Callable methods"
-	href="/agents/api-reference/callable-methods/"
+	href="/agents/runtime/lifecycle/callable-methods/"
 	description="Expose methods to clients with @callable()."
 />
 
 <LinkCard
 	title="Schedule tasks"
-	href="/agents/api-reference/schedule-tasks/"
+	href="/agents/runtime/execution/schedule-tasks/"
 	description="Run tasks on a delay, schedule, or cron."
 />

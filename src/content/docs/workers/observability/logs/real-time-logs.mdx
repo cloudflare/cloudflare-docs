@@ -6,6 +6,8 @@ description: Debug your Worker application by accessing logs and exceptions
   through the Cloudflare dashboard or `wrangler tail`.
 sidebar:
   order: 3
+products:
+  - workers
 ---
 
 import { TabItem, Tabs, DashButton } from "~/components";
@@ -78,7 +80,7 @@ You can customize how `wrangler tail` works to fit your needs. Refer to [the `wr
 
 :::note
 
-You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/general/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitgate messages from being dropped.
+You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/general/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitigate messages from being dropped.
 
 :::
 
