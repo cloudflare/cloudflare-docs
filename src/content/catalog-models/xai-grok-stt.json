@@ -4,11 +4,7 @@
 	"name": "Grok STT",
 	"description": "xAI's Grok speech-to-text model. Transcribes audio files into text across 25 languages with word-level timestamps, multichannel transcription, speaker diarization, and key-term biasing.",
 	"task": "Automatic Speech Recognition",
-	"tags": [
-		"Speech-to-Text",
-		"Transcription",
-		"Multilingual"
-	],
+	"tags": ["Speech-to-Text", "Transcription", "Multilingual"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -152,10 +148,7 @@
 				"url": "https://storage.googleapis.com/cloud-samples-data/speech/brooklyn_bridge.mp3",
 				"language": "en",
 				"diarize": true,
-				"keyterm": [
-					"Brooklyn",
-					"Manhattan"
-				]
+				"keyterm": ["Brooklyn", "Manhattan"]
 			},
 			"output": {
 				"text": "How old is the Brooklyn Bridge?"
@@ -346,11 +339,7 @@
 			"properties": {
 				"audio_format": {
 					"description": "Format hint for raw/headerless audio. Required for pcm, mulaw, alaw. Omit for container formats (mp3, wav, etc.) \u2014 xAI auto-detects them.",
-					"enum": [
-						"pcm",
-						"mulaw",
-						"alaw"
-					],
+					"enum": ["pcm", "mulaw", "alaw"],
 					"type": "string"
 				},
 				"channels": {
@@ -435,20 +424,13 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"text",
-										"start",
-										"end"
-									],
+									"required": ["text", "start", "end"],
 									"type": "object"
 								},
 								"type": "array"
 							}
 						},
-						"required": [
-							"index",
-							"text"
-						],
+						"required": ["index", "text"],
 						"type": "object"
 					},
 					"type": "array"
@@ -483,19 +465,13 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"text",
-							"start",
-							"end"
-						],
+						"required": ["text", "start", "end"],
 						"type": "object"
 					},
 					"type": "array"
 				}
 			},
-			"required": [
-				"text"
-			],
+			"required": ["text"],
 			"type": "object"
 		}
 	}

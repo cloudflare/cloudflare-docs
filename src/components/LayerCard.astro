@@ -8,17 +8,17 @@ const { header = "Next Steps", href } = Astro.props;
 ---
 
 <div
-	class="flex w-full flex-col overflow-hidden rounded-lg bg-cl1-gray-9 text-base ring-1 ring-cl1-gray-8 dark:bg-cl1-gray-0 dark:ring-cl1-gray-1"
+	class="bg-cl1-gray-9 ring-cl1-gray-8 dark:bg-cl1-gray-0 dark:ring-cl1-gray-1 flex w-full flex-col overflow-hidden rounded-lg text-base ring-1"
 >
 	<div
-		class="-my-2 flex items-center justify-between gap-2 bg-cl1-gray-9 p-4 text-base font-medium text-cl1-gray-4 dark:bg-cl1-gray-1 dark:text-cl1-gray-7"
+		class="bg-cl1-gray-9 text-cl1-gray-4 dark:bg-cl1-gray-1 dark:text-cl1-gray-7 -my-2 flex items-center justify-between gap-2 p-4 text-base font-medium"
 	>
 		<div>{header}</div>
 		{
 			href && (
 				<a
 					href={href}
-					class="flex size-[1.625rem] shrink-0 cursor-pointer items-center justify-center rounded-md bg-transparent text-cl1-gray-0 no-underline hover:bg-cl1-gray-8 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cl1-gray-8 dark:text-cl1-gray-7 dark:hover:bg-cl1-gray-2 dark:focus-visible:outline-cl1-gray-3"
+					class="text-cl1-gray-0 hover:bg-cl1-gray-8 focus-visible:outline-cl1-gray-8 dark:text-cl1-gray-7 dark:hover:bg-cl1-gray-2 dark:focus-visible:outline-cl1-gray-3 flex size-[1.625rem] shrink-0 cursor-pointer items-center justify-center rounded-md bg-transparent no-underline focus-visible:outline focus-visible:outline-1"
 					aria-label={`Go to ${header.toLowerCase()}`}
 				>
 					<svg
@@ -35,7 +35,7 @@ const { header = "Next Steps", href } = Astro.props;
 		}
 	</div>
 	<div
-		class="relative mt-0 flex flex-col gap-2 overflow-hidden rounded-lg bg-cl1-white p-4 pr-3 ring-1 ring-cl1-gray-8 dark:bg-cl1-gray-2 dark:ring-cl1-gray-2"
+		class="bg-cl1-white ring-cl1-gray-8 dark:bg-cl1-gray-2 dark:ring-cl1-gray-2 relative mt-0 flex flex-col gap-2 overflow-hidden rounded-lg p-4 pr-3 ring-1"
 	>
 		<slot />
 	</div>

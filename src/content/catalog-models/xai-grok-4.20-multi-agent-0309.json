@@ -4,12 +4,7 @@
 	"name": "Grok 4.20 Multi-Agent",
 	"description": "xAI's Grok 4.20 multi-agent model with a 2M-token context window. Multiple agents collaborate in parallel to perform deep research tasks, with function calling, structured outputs, and reasoning capabilities.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Agentic",
-		"Reasoning",
-		"Tool Use"
-	],
+	"tags": ["LLM", "Agentic", "Reasoning", "Tool Use"],
 	"context_length": 2000000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -668,9 +663,7 @@
 		"Architecture": "Transformer",
 		"Tool Use": "Yes"
 	},
-	"request_formats": [
-		"responses"
-	],
+	"request_formats": ["responses"],
 	"created_at": "2026-05-22 17:54:02",
 	"schema": {
 		"input": {
@@ -793,11 +786,7 @@
 						"effort": {
 							"anyOf": [
 								{
-									"enum": [
-										"low",
-										"medium",
-										"high"
-									],
+									"enum": ["low", "medium", "high"],
 									"type": "string"
 								},
 								{
@@ -856,11 +845,7 @@
 						"mode": {
 							"anyOf": [
 								{
-									"enum": [
-										"off",
-										"on",
-										"auto"
-									],
+									"enum": ["off", "on", "auto"],
 									"type": "string"
 								},
 								{
@@ -957,9 +942,7 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"name"
-									],
+									"required": ["name"],
 									"type": "object"
 								},
 								"type": {
@@ -967,10 +950,7 @@
 									"type": "string"
 								}
 							},
-							"required": [
-								"type",
-								"function"
-							],
+							"required": ["type", "function"],
 							"type": "object"
 						}
 					]
@@ -1005,11 +985,7 @@
 												"type": "string"
 											}
 										},
-										"required": [
-											"type",
-											"name",
-											"parameters"
-										],
+										"required": ["type", "name", "parameters"],
 										"type": "object"
 									},
 									{
@@ -1024,9 +1000,7 @@
 												"type": "string"
 											}
 										},
-										"required": [
-											"type"
-										],
+										"required": ["type"],
 										"type": "object"
 									}
 								]
@@ -1074,9 +1048,7 @@
 					]
 				}
 			},
-			"required": [
-				"input"
-			],
+			"required": ["input"],
 			"type": "object"
 		},
 		"output": {
@@ -1159,12 +1131,7 @@
 					]
 				},
 				"status": {
-					"enum": [
-						"in_progress",
-						"completed",
-						"incomplete",
-						"failed"
-					],
+					"enum": ["in_progress", "completed", "incomplete", "failed"],
 					"type": "string"
 				},
 				"store": {
@@ -1219,9 +1186,7 @@
 									"type": "number"
 								}
 							},
-							"required": [
-								"cached_tokens"
-							],
+							"required": ["cached_tokens"],
 							"type": "object"
 						},
 						"num_server_side_tools_used": {
@@ -1240,20 +1205,14 @@
 									"type": "number"
 								}
 							},
-							"required": [
-								"reasoning_tokens"
-							],
+							"required": ["reasoning_tokens"],
 							"type": "object"
 						},
 						"total_tokens": {
 							"type": "number"
 						}
 					},
-					"required": [
-						"input_tokens",
-						"output_tokens",
-						"total_tokens"
-					],
+					"required": ["input_tokens", "output_tokens", "total_tokens"],
 					"type": "object"
 				},
 				"user": {
@@ -1267,14 +1226,7 @@
 					]
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created_at",
-				"model",
-				"status",
-				"output"
-			],
+			"required": ["id", "object", "created_at", "model", "status", "output"],
 			"type": "object"
 		}
 	}

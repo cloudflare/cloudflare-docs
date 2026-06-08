@@ -20,9 +20,7 @@ const { slug } = Astro.props;
 const agent = AGENTS.find((a) => a.slug === slug);
 
 if (!agent) {
-	throw new Error(
-		`[AgentHeader] No agent found for slug="${slug}"`,
-	);
+	throw new Error(`[AgentHeader] No agent found for slug="${slug}"`);
 }
 
 const externalLinks = [

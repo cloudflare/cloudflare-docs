@@ -11,10 +11,7 @@ Wrap all multi-step procedures in the `Steps` component:
 ```mdx
 import { Steps } from "~/components";
 
-<Steps>
-1. Step one
-2. Step two
-</Steps>
+<Steps>1. Step one 2. Step two</Steps>
 ```
 
 Single-step procedures: fold the step into the introductory sentence rather than making a one-item list.
@@ -26,14 +23,17 @@ Sub-steps use lowercase letters (a, b, c). Sub-sub-steps use lowercase Roman num
 ## Writing rules
 
 **Order**: state location before action, purpose before action.
+
 - "In the **DNS** section, select **Add record**." (location → action)
 - "To delete the rule, select **Delete**." (purpose → action)
 
 **First step**: consolidate login and navigation. Do not make "Log in" its own step if the next step is navigating somewhere.
+
 - "Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and go to **DNS** > **Records**."
 - Write "log in to" (three words), not "log into".
 
 **Optional steps**: prefix with `(Optional)` as the first word.
+
 - "(Optional) Enter a description for the rule."
 
 **Enter key**: if the user must press **Enter** after a step, include it in that step.
@@ -62,10 +62,10 @@ Provide a screenshot when the UI element is genuinely hard to locate without one
 
 ## Terminology in procedures
 
-| Use | Not |
-| --- | --- |
-| select | click |
-| go to | navigate to |
+| Use                | Not              |
+| ------------------ | ---------------- |
+| select             | click            |
+| go to              | navigate to      |
 | turn on / turn off | enable / disable |
-| log in to | log into |
-| (Optional) | Optional: |
+| log in to          | log into         |
+| (Optional)         | Optional:        |

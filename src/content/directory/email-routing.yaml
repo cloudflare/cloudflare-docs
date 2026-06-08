@@ -8,5 +8,5 @@ entry:
 
 meta:
   title: Cloudflare Email Routing docs
-  description:  Create and manage email addresses and route to your preferred inbox
+  description: Create and manage email addresses and route to your preferred inbox
   author: "@cloudflare"

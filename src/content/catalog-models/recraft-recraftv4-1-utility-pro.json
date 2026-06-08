@@ -4,12 +4,7 @@
 	"name": "Recraft V4.1 Utility Pro",
 	"description": "Recraft V4.1 Utility Pro is a general-purpose text-to-image model producing high-resolution 2048px+ output for a wide range of production and print use cases.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Design",
-		"Text Rendering",
-		"High Resolution"
-	],
+	"tags": ["Image Generation", "Design", "Text Rendering", "High Resolution"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -84,26 +79,14 @@
 				"prompt": "A clean, modern banner illustration of a smartphone displaying a productivity app",
 				"controls": {
 					"background_color": {
-						"rgb": [
-							250,
-							250,
-							255
-						]
+						"rgb": [250, 250, 255]
 					},
 					"colors": [
 						{
-							"rgb": [
-								100,
-								200,
-								150
-							]
+							"rgb": [100, 200, 150]
 						},
 						{
-							"rgb": [
-								20,
-								20,
-								60
-							]
+							"rgb": [20, 20, 60]
 						}
 					]
 				},
@@ -202,9 +185,7 @@
 									"type": "array"
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"type": "object"
 						},
 						"colors": {
@@ -222,9 +203,7 @@
 										"type": "array"
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"type": "object"
 							},
 							"maxItems": 5,
@@ -246,9 +225,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -259,9 +236,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

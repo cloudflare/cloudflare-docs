@@ -4,11 +4,7 @@
 	"name": "Grok Imagine Video 1.5 Preview",
 	"description": "xAI's next-generation video generation model. Generates, edits, and extends videos from text and image inputs. Supports multiple aspect ratios and resolutions with improved quality over the previous generation.",
 	"task": "Image-to-Video",
-	"tags": [
-		"Video Generation",
-		"Image-to-Video",
-		"Multimodal"
-	],
+	"tags": ["Video Generation", "Image-to-Video", "Multimodal"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -71,23 +67,11 @@
 			"additionalProperties": false,
 			"properties": {
 				"_operation": {
-					"enum": [
-						"generate",
-						"edit",
-						"extend"
-					],
+					"enum": ["generate", "edit", "extend"],
 					"type": "string"
 				},
 				"aspect_ratio": {
-					"enum": [
-						"1:1",
-						"16:9",
-						"9:16",
-						"4:3",
-						"3:4",
-						"3:2",
-						"2:3"
-					],
+					"enum": ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"],
 					"type": "string"
 				},
 				"duration": {
@@ -102,9 +86,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"url"
-					],
+					"required": ["url"],
 					"type": "object"
 				},
 				"output": {
@@ -114,9 +96,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"upload_url"
-					],
+					"required": ["upload_url"],
 					"type": "object"
 				},
 				"prompt": {
@@ -130,28 +110,18 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"url"
-						],
+						"required": ["url"],
 						"type": "object"
 					},
 					"maxItems": 10,
 					"type": "array"
 				},
 				"resolution": {
-					"enum": [
-						"480p",
-						"720p"
-					],
+					"enum": ["480p", "720p"],
 					"type": "string"
 				},
 				"size": {
-					"enum": [
-						"848x480",
-						"1696x960",
-						"1280x720",
-						"1920x1080"
-					],
+					"enum": ["848x480", "1696x960", "1280x720", "1920x1080"],
 					"type": "string"
 				},
 				"user": {
@@ -164,9 +134,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"url"
-					],
+					"required": ["url"],
 					"type": "object"
 				}
 			},
@@ -180,9 +148,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"type": "object"
 		}
 	}

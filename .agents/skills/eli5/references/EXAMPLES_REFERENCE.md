@@ -26,6 +26,7 @@ Once content type is detected and validated, I apply type-specific simplificatio
 **Purpose:** Help users quickly understand what a product/feature is and decide if they need it.
 
 **Required Elements:**
+
 - Opening benefit statement (what problem this solves)
 - Problem/Solution/Benefit structure
 - "Perfect for" self-identification section
@@ -33,6 +34,7 @@ Once content type is detected and validated, I apply type-specific simplificatio
 - Technical architecture separated to bottom
 
 **Analysis Focus:**
+
 - Does opening paragraph answer "what" and "why"?
 - Are features explained with benefits, not just descriptions?
 - Is there a clear call-to-action?
@@ -49,32 +51,36 @@ Once content type is detected and validated, I apply type-specific simplificatio
 **Pattern Example:**
 
 ❌ **Before (Technical-first):**
+
 ```markdown
 ## Product X
 
-Product X is a distributed edge computing platform utilizing V8 
-isolates for serverless code execution with sub-millisecond cold 
+Product X is a distributed edge computing platform utilizing V8
+isolates for serverless code execution with sub-millisecond cold
 start performance.
 
 Features:
+
 - Global anycast network deployment
 - Automatic scaling and load distribution
 - Pay-per-request pricing model
 ```
 
 ✅ **After (Benefit-first):**
+
 ```markdown
 ## Product X
 
-Run code worldwide without managing servers. Deploy in seconds, 
+Run code worldwide without managing servers. Deploy in seconds,
 scale automatically, pay only for what you use.
 
 **What problem it solves:**
-Maintaining global infrastructure is expensive and complex. Product X 
-runs your code in 300+ cities automatically, handling all the 
+Maintaining global infrastructure is expensive and complex. Product X
+runs your code in 300+ cities automatically, handling all the
 infrastructure for you.
 
 **Perfect for:**
+
 - Applications needing fast global performance
 - Teams wanting to skip server management
 - Projects with variable traffic (scale from zero to millions)
@@ -83,7 +89,7 @@ infrastructure for you.
 
 ---
 
-**For technical users:** Built on V8 isolates with global anycast 
+**For technical users:** Built on V8 isolates with global anycast
 deployment. [Architecture details →]
 ```
 
@@ -94,6 +100,7 @@ deployment. [Architecture details →]
 **Purpose:** Build understanding of WHY something works the way it does.
 
 **Required Elements:**
+
 - Opening analogy or visual (accessible to all)
 - Plain language definition
 - "Why it matters" business value
@@ -102,6 +109,7 @@ deployment. [Architecture details →]
 - Technical details for advanced users (separated)
 
 **Analysis Focus:**
+
 - Is there an analogy early in the content?
 - Does it explain WHY before HOW?
 - Are use cases concrete and realistic?
@@ -118,47 +126,51 @@ deployment. [Architecture details →]
 **Pattern Example:**
 
 ❌ **Before (Technical-only):**
+
 ```markdown
 ## Rate Limiting
 
-Rate limiting implements token bucket algorithms to control request 
-throughput based on configurable parameters including burst size and 
+Rate limiting implements token bucket algorithms to control request
+throughput based on configurable parameters including burst size and
 refill rate. Requests exceeding limits receive 429 status codes.
 ```
 
 ✅ **After (Layered explanation):**
+
 ```markdown
 ## Rate Limiting
 
-**Think of it like:** A nightclub with maximum capacity. Even if 
-1,000 people want to enter at once, you only let a controlled number 
+**Think of it like:** A nightclub with maximum capacity. Even if
+1,000 people want to enter at once, you only let a controlled number
 in at a time to keep things manageable.
 
 **What it is:**
-Rate limiting controls how many requests can hit your website in a 
-given time period. Without it, a sudden spike—whether from real 
+Rate limiting controls how many requests can hit your website in a
+given time period. Without it, a sudden spike—whether from real
 users or attackers—could overwhelm your server.
 
 **Why you need it:**
+
 - Prevents DDoS attacks from taking your site down
 - Stops bots from scraping your content
 - Ensures fair usage across all users
 - Keeps infrastructure costs predictable
 
 **How it works:**
-You set a rule like "100 requests per minute per IP address." When 
-someone exceeds this limit, we block additional requests until the 
+You set a rule like "100 requests per minute per IP address." When
+someone exceeds this limit, we block additional requests until the
 time window resets.
 
 **Real scenarios:**
+
 - E-commerce site during Black Friday preventing bot purchases
 - API preventing scraping of product catalog
 - Forum preventing spam post flooding
 
 ---
 
-**For technical users:** Implements token bucket algorithm with 
-configurable burst size and refill rates. Returns 429 status with 
+**For technical users:** Implements token bucket algorithm with
+configurable burst size and refill rates. Returns 429 status with
 Retry-After header. [Implementation details →]
 ```
 
@@ -169,6 +181,7 @@ Retry-After header. [Implementation details →]
 **Purpose:** Help users successfully accomplish specific tasks.
 
 **Required Elements:**
+
 - Context (what this accomplishes, why you'd do it)
 - Prerequisites listed upfront
 - Expected outcome stated
@@ -179,6 +192,7 @@ Retry-After header. [Implementation details →]
 - Common issues and troubleshooting
 
 **Analysis Focus:**
+
 - Is context provided before steps?
 - Are prerequisites clearly stated?
 - Is there both a Dashboard and API path?
@@ -197,6 +211,7 @@ Retry-After header. [Implementation details →]
 **Pattern Example:**
 
 ❌ **Before (Steps-only):**
+
 ```markdown
 ## Enable Feature
 
@@ -207,16 +222,17 @@ Retry-After header. [Implementation details →]
 ```
 
 ✅ **After (Contextual multi-path):**
-```markdown
+
+````markdown
 ## Enable Feature
 
-**What this does:** Protects your site from [specific threat] by 
+**What this does:** Protects your site from [specific threat] by
 [specific mechanism].
 
 **Time required:** ~2 minutes  
 **Prerequisites:** Admin access to your account
 
-**What happens:** After enabling, all incoming requests will be 
+**What happens:** After enabling, all incoming requests will be
 [specific behavior]. You'll see results in Analytics within 5 minutes.
 
 ### Via Dashboard
@@ -227,7 +243,7 @@ Retry-After header. [Implementation details →]
 4. Find **Feature Name** and toggle it **On**
 5. Click **Save Changes**
 
-💡 **Note:** Changes take effect immediately, but analytics may take 
+💡 **Note:** Changes take effect immediately, but analytics may take
 5 minutes to update.
 
 ### Via API
@@ -240,15 +256,17 @@ curl -X PATCH "https://api.example.com/v1/settings" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{"feature_enabled": true}'
 ```
+````
 
 **Response:**
+
 ```json
 {
-  "success": true,
-  "result": {
-    "feature_enabled": true,
-    "updated_at": "2026-02-09T10:30:00Z"
-  }
+	"success": true,
+	"result": {
+		"feature_enabled": true,
+		"updated_at": "2026-02-09T10:30:00Z"
+	}
 }
 ```
 
@@ -266,9 +284,10 @@ curl -X PATCH "https://api.example.com/v1/settings" \
 ## Troubleshooting
 
 **Problem:** Feature doesn't seem to be active  
-**Solution:** Clear your browser cache and wait 5 minutes for 
+**Solution:** Clear your browser cache and wait 5 minutes for
 propagation. Still not working? Check that [prerequisite].
-```
+
+````
 
 ---
 
@@ -304,19 +323,20 @@ propagation. Still not working? Check that [prerequisite].
 ```markdown
 ## Cache Headers
 
-**Cache-Control:** Controls caching. Values: public, private, 
+**Cache-Control:** Controls caching. Values: public, private,
 no-cache, max-age=seconds
 
 **Expires:** HTTP date for expiration
 
 **Pragma:** Legacy directive. Value: no-cache
-```
+````
 
 ✅ **After (Use-case organized with examples):**
-```markdown
+
+````markdown
 ## Cache Headers Reference
 
-**When to use:** Control how long content stays cached and who can 
+**When to use:** Control how long content stays cached and who can
 cache it.
 
 ### Common Scenarios
@@ -335,17 +355,19 @@ cache it.
 
 **What it does:** Caches content for 1 year before checking for updates
 
-**When to use:** Files that never change, like `logo-v2.png` or 
+**When to use:** Files that never change, like `logo-v2.png` or
 `style.abc123.css` with version hash in filename
 
 **Technical spec:** Integer, seconds. Range: 0-31536000 (1 year max)
 
 **Example:**
+
 ```http
 Cache-Control: public, max-age=31536000, immutable
 ```
+````
 
-**Result:** First visitor downloads the file. For the next year, all 
+**Result:** First visitor downloads the file. For the next year, all
 visitors get the cached version with zero origin requests.
 
 ---
@@ -354,17 +376,18 @@ visitors get the cached version with zero origin requests.
 
 **What it does:** Tells browsers this file will literally never change
 
-**When to use:** Combine with `max-age` for versioned assets 
+**When to use:** Combine with `max-age` for versioned assets
 (filename includes hash/version number)
 
 **Technical spec:** No value. Presence activates directive.
 
 **Example:**
+
 ```http
 Cache-Control: public, max-age=31536000, immutable
 ```
 
-**Result:** Browsers won't revalidate even on refresh. Perfect for 
+**Result:** Browsers won't revalidate even on refresh. Perfect for
 `style.abc123.css` where hash changes when content changes.
 
 ---
@@ -375,17 +398,18 @@ Cache-Control: public, max-age=31536000, immutable
 
 **What it does:** Caches content for 1 hour
 
-**When to use:** Content that updates occasionally but doesn't need 
+**When to use:** Content that updates occasionally but doesn't need
 to be real-time, like blog posts or product pages
 
 **Technical spec:** Integer, seconds
 
 **Example:**
+
 ```http
 Cache-Control: public, max-age=3600
 ```
 
-**Result:** Content stays cached for 1 hour. After expiration, next 
+**Result:** Content stays cached for 1 hour. After expiration, next
 request checks origin for updates.
 
 ---
@@ -394,17 +418,18 @@ request checks origin for updates.
 
 **What it does:** Always check with origin before using cached version
 
-**When to use:** Content that changes frequently but can still be 
+**When to use:** Content that changes frequently but can still be
 cached briefly (shopping cart, personalized pages)
 
 **Technical spec:** No value. Presence activates.
 
 **Example:**
+
 ```http
 Cache-Control: no-cache
 ```
 
-**Result:** Every request checks origin via If-Modified-Since or 
+**Result:** Every request checks origin via If-Modified-Since or
 ETag. If nothing changed, serves cached version (304 response).
 
 ---
@@ -415,19 +440,21 @@ ETag. If nothing changed, serves cached version (304 response).
 
 **What it does:** Prevents any caching
 
-**When to use:** Sensitive data (account info, payment details) or 
+**When to use:** Sensitive data (account info, payment details) or
 highly dynamic content (real-time scores, live chat)
 
 **Technical spec:** Combine both directives
 
 **Example:**
+
 ```http
 Cache-Control: private, no-store
 ```
 
-**Result:** Every request fetches fresh from origin. Nothing cached 
+**Result:** Every request fetches fresh from origin. Nothing cached
 anywhere.
-```
+
+````
 
 ---
 
@@ -473,8 +500,9 @@ const handler = async (req) => {
   return new Response('Hello')
 }
 addEventListener('fetch', e => e.respondWith(handler(e.request)))
-```
-```
+````
+
+````
 
 ✅ **After (Explained progression):**
 ```markdown
@@ -482,14 +510,14 @@ addEventListener('fetch', e => e.respondWith(handler(e.request)))
 
 ### What You'll Build
 
-A working URL shortener that redirects short links to long URLs, 
+A working URL shortener that redirects short links to long URLs,
 stores mappings, and tracks click analytics.
 
 **Live example:** `short.example.com/github` → `github.com/cloudflare`
 
 ### Who This Is For
 
-Developers comfortable with JavaScript. No prior experience with 
+Developers comfortable with JavaScript. No prior experience with
 Workers needed, but you should understand:
 - HTTP requests and responses
 - JSON data format
@@ -510,7 +538,7 @@ Workers needed, but you should understand:
 
 ## Step 1: Create Your First Worker
 
-Let's start with the absolute minimum—a Worker that responds to 
+Let's start with the absolute minimum—a Worker that responds to
 requests:
 
 ```javascript
@@ -526,7 +554,7 @@ async function handleRequest(request) {
     headers: { 'content-type': 'text/plain' }
   })
 }
-```
+````
 
 **What this code does:**
 
@@ -550,15 +578,15 @@ Now let's make it recognize short codes in the URL:
 
 ```javascript
 async function handleRequest(request) {
-  // Extract the pathname from the URL
-  // Example: https://short.example.com/github → "/github"
-  const url = new URL(request.url)
-  const shortCode = url.pathname.slice(1) // Remove leading "/"
-  
-  // For now, just echo back the short code
-  return new Response(`You requested: ${shortCode}`, {
-    headers: { 'content-type': 'text/plain' }
-  })
+	// Extract the pathname from the URL
+	// Example: https://short.example.com/github → "/github"
+	const url = new URL(request.url);
+	const shortCode = url.pathname.slice(1); // Remove leading "/"
+
+	// For now, just echo back the short code
+	return new Response(`You requested: ${shortCode}`, {
+		headers: { "content-type": "text/plain" },
+	});
 }
 ```
 
@@ -590,15 +618,15 @@ Now we can detect what short code someone's requesting...
 
 **Cause:** Your Worker is doing too much computation in a single request
 
-**Solution:** Workers have a 50ms CPU time limit. Move heavy processing 
+**Solution:** Workers have a 50ms CPU time limit. Move heavy processing
 to background tasks or use Durable Objects for longer operations.
 
 **Problem:** "KV data not updating"
 
-**Cause:** KV is eventually consistent and may take 60 seconds to 
+**Cause:** KV is eventually consistent and may take 60 seconds to
 propagate globally
 
-**Solution:** For testing, add a cache-busting parameter (`?v=2`) or 
+**Solution:** For testing, add a cache-busting parameter (`?v=2`) or
 wait 60 seconds between writes and reads.
 
 ---
@@ -608,20 +636,24 @@ wait 60 seconds between writes and reads.
 Want to take this further? Here are some ideas:
 
 **Add Click Analytics** (Medium difficulty)
+
 - Store click count in KV
 - Increment on each redirect
 - Create stats endpoint
 
 **Custom Short Codes** (Easy)
+
 - Let users choose their short code
 - Check if code is already taken
 - Return error if unavailable
 
 **Expiring Links** (Medium)
+
 - Store expiration timestamp
 - Check before redirecting
 - Return 404 if expired
-```
+
+````
 
 ---
 
@@ -642,7 +674,7 @@ Want to take this further? Here are some ideas:
 - Not: "Webhooks, which are HTTP callbacks, send notifications containing event data to your specified endpoint when certain events occur on the platform."
 
 ✅ **Active voice** over passive
-- "The system sends a notification" 
+- "The system sends a notification"
 - Not: "A notification is sent by the system"
 
 ✅ **Concrete nouns** over abstract
@@ -663,11 +695,12 @@ Want to take this further? Here are some ideas:
 
 **Always define on first use:**
 ```markdown
-An API (Application Programming Interface) defines how programs 
+An API (Application Programming Interface) defines how programs
 can request and exchange data...
-```
+````
 
 **Expand acronyms:**
+
 ```markdown
 CDN (Content Delivery Network)
 CI/CD (Continuous Integration/Continuous Deployment)
@@ -675,9 +708,10 @@ HMAC (Hash-based Message Authentication Code)
 ```
 
 **Provide context for technical terms:**
+
 ```markdown
 Not: "Configure the webhook endpoint."
-But: "A webhook endpoint is the URL where we'll send notifications. 
+But: "A webhook endpoint is the URL where we'll send notifications.
 Configure it to point to your server."
 ```
 
@@ -696,16 +730,16 @@ Configure it to point to your server."
 
 ```markdown
 **Think of It Like:**
-An API is like a restaurant menu. The menu shows you what dishes 
-are available (endpoints), what customizations you can request 
-(parameters like "no onions" or "extra spicy"), and what you'll 
-receive (the response - your meal). You don't need to know how the 
-kitchen operates or what cooking techniques they use. You just order 
+An API is like a restaurant menu. The menu shows you what dishes
+are available (endpoints), what customizations you can request
+(parameters like "no onions" or "extra spicy"), and what you'll
+receive (the response - your meal). You don't need to know how the
+kitchen operates or what cooking techniques they use. You just order
 from the menu, and the kitchen handles the rest.
 
 **Where this breaks down:**
-Unlike a restaurant where you wait for your food, API responses are 
-usually near-instantaneous. Also, APIs can fail (kitchen is out of 
+Unlike a restaurant where you wait for your food, API responses are
+usually near-instantaneous. Also, APIs can fail (kitchen is out of
 ingredients), requiring error handling.
 ```
 
@@ -713,15 +747,15 @@ ingredients), requiring error handling.
 
 ```markdown
 **Think of It Like:**
-Caching is like a library's reserve desk. Popular books are kept at 
-the front desk for quick access instead of requiring a trip to the 
-stacks. The first person requesting a book triggers the librarian to 
-fetch it from the stacks, but then it stays at the reserve desk so 
+Caching is like a library's reserve desk. Popular books are kept at
+the front desk for quick access instead of requiring a trip to the
+stacks. The first person requesting a book triggers the librarian to
+fetch it from the stacks, but then it stays at the reserve desk so
 subsequent readers can grab it immediately.
 
 **Where this breaks down:**
-Caches expire (books eventually return to the stacks), and cache 
-invalidation (deciding when to return books) is more complex than 
+Caches expire (books eventually return to the stacks), and cache
+invalidation (deciding when to return books) is more complex than
 the metaphor suggests.
 ```
 
@@ -729,15 +763,15 @@ the metaphor suggests.
 
 ```markdown
 **Think of It Like:**
-Load balancing is like grocery store checkout lanes. Instead of 
-everyone lining up at a single register (which would create a huge 
-wait), customers are distributed across multiple lanes. If one lane 
-gets too long or a register breaks down, the store can redirect 
+Load balancing is like grocery store checkout lanes. Instead of
+everyone lining up at a single register (which would create a huge
+wait), customers are distributed across multiple lanes. If one lane
+gets too long or a register breaks down, the store can redirect
 people to other lanes.
 
 **Where this breaks down:**
-Load balancers are more intelligent than checkout lane selection—they 
-know which servers are healthy, how busy they are, and can route 
+Load balancers are more intelligent than checkout lane selection—they
+know which servers are healthy, how busy they are, and can route
 based on sophisticated algorithms.
 ```
 
@@ -745,14 +779,14 @@ based on sophisticated algorithms.
 
 ```markdown
 **Think of It Like:**
-A webhook is like a doorbell notification. Instead of constantly 
-checking your front door to see if someone arrived (polling), the 
-doorbell alerts you the moment someone presses it (push notification). 
+A webhook is like a doorbell notification. Instead of constantly
+checking your front door to see if someone arrived (polling), the
+doorbell alerts you the moment someone presses it (push notification).
 You only respond when there's actually something to respond to.
 
 **Where this breaks down:**
-Doorbells are instantaneous, while webhooks have some latency due to 
-network transmission. Also, webhooks can fail if your server is down 
+Doorbells are instantaneous, while webhooks have some latency due to
+network transmission. Also, webhooks can fail if your server is down
 (like a broken doorbell).
 ```
 
@@ -760,15 +794,15 @@ network transmission. Also, webhooks can fail if your server is down
 
 ```markdown
 **Think of It Like:**
-Authentication is like a building security badge system. You present 
-your badge (credentials) when entering. The system verifies you are 
-who you claim to be (authentication), then checks what floors you're 
-allowed to access (authorization). Different badges have different 
+Authentication is like a building security badge system. You present
+your badge (credentials) when entering. The system verifies you are
+who you claim to be (authentication), then checks what floors you're
+allowed to access (authorization). Different badges have different
 access levels.
 
 **Where this breaks down:**
-Digital authentication often uses time-limited tokens (like a badge 
-that expires), and can verify identity through multiple methods 
+Digital authentication often uses time-limited tokens (like a badge
+that expires), and can verify identity through multiple methods
 (password + fingerprint), which isn't common with physical badges.
 ```
 
@@ -776,15 +810,15 @@ that expires), and can verify identity through multiple methods
 
 ```markdown
 **Think of It Like:**
-Rate limiting is like freeway on-ramp metering lights. Instead of 
-letting everyone merge at once (causing congestion), the lights 
-control how many cars enter per minute. This keeps traffic flowing 
-smoothly on the main freeway. If you arrive too fast, you wait at 
+Rate limiting is like freeway on-ramp metering lights. Instead of
+letting everyone merge at once (causing congestion), the lights
+control how many cars enter per minute. This keeps traffic flowing
+smoothly on the main freeway. If you arrive too fast, you wait at
 the red light.
 
 **Where this breaks down:**
-Rate limits are often user-specific (you get your own limit), not 
-shared like a metering light. Also, rate limits reset on schedules 
+Rate limits are often user-specific (you get your own limit), not
+shared like a metering light. Also, rate limits reset on schedules
 (every hour, every day), unlike continuous traffic flow.
 ```
 
@@ -792,14 +826,14 @@ shared like a metering light. Also, rate limits reset on schedules
 
 ```markdown
 **Think of It Like:**
-A database index is like the index at the back of a textbook. Instead 
-of reading every page to find mentions of "webhooks," you check the 
-index, which tells you exactly which pages to look at. The index 
+A database index is like the index at the back of a textbook. Instead
+of reading every page to find mentions of "webhooks," you check the
+index, which tells you exactly which pages to look at. The index
 takes up extra space, but makes searching dramatically faster.
 
 **Where this breaks down:**
-Database indexes need updating when data changes (like keeping a 
-book index current as you add pages), and choosing which fields to 
+Database indexes need updating when data changes (like keeping a
+book index current as you add pages), and choosing which fields to
 index involves tradeoffs between search speed and write speed.
 ```
 
@@ -807,16 +841,16 @@ index involves tradeoffs between search speed and write speed.
 
 ```markdown
 **Think of It Like:**
-A CDN (Content Delivery Network) is like having local warehouses 
-instead of shipping everything from one central warehouse. When 
-someone in California orders a product, it ships from the California 
-warehouse (faster delivery). When someone in New York orders, it 
+A CDN (Content Delivery Network) is like having local warehouses
+instead of shipping everything from one central warehouse. When
+someone in California orders a product, it ships from the California
+warehouse (faster delivery). When someone in New York orders, it
 ships from New York. Same product, closer source.
 
 **Where this breaks down:**
-Unlike physical warehouses with unique inventory, CDNs store copies 
-of the same content in many locations. Updates need to propagate to 
-all locations (cache invalidation), which has no physical warehouse 
+Unlike physical warehouses with unique inventory, CDNs store copies
+of the same content in many locations. Updates need to propagate to
+all locations (cache invalidation), which has no physical warehouse
 equivalent.
 ```
 
@@ -824,17 +858,17 @@ equivalent.
 
 ```markdown
 **Think of It Like:**
-Software containers are like shipping containers. Before shipping 
-containers existed, moving goods required different methods for 
-different types of cargo. Shipping containers standardized this—put 
-anything inside a standard container, and it can go on any ship, 
-truck, or train. Software containers work the same way: package your 
+Software containers are like shipping containers. Before shipping
+containers existed, moving goods required different methods for
+different types of cargo. Shipping containers standardized this—put
+anything inside a standard container, and it can go on any ship,
+truck, or train. Software containers work the same way: package your
 application and its dependencies, and it runs anywhere.
 
 **Where this breaks down:**
-Shipping containers physically isolate cargo, while software 
-containers share the same operating system kernel. Also, you can run 
-thousands of software containers on one machine, unlike physical 
+Shipping containers physically isolate cargo, while software
+containers share the same operating system kernel. Also, you can run
+thousands of software containers on one machine, unlike physical
 containers.
 ```
 
@@ -843,15 +877,15 @@ containers.
 ```markdown
 **Think of It Like:**
 Environment variables are like your application's settings panel—
-configuration values that change behavior without modifying code. 
-Just like you might set your phone to dark mode or adjust notification 
-preferences, environment variables let you configure database URLs, 
+configuration values that change behavior without modifying code.
+Just like you might set your phone to dark mode or adjust notification
+preferences, environment variables let you configure database URLs,
 API keys, or feature flags without rewriting your application.
 
 **Where this breaks down:**
-Environment variables are usually set before the application starts 
-(not changed while running), and they're text-based rather than UI 
-toggles. They're also specific to each deployment environment (dev, 
+Environment variables are usually set before the application starts
+(not changed while running), and they're text-based rather than UI
+toggles. They're also specific to each deployment environment (dev,
 staging, production).
 ```
 
@@ -870,22 +904,26 @@ When you encounter a concept not in this library, create a new metaphor by:
 **Always structure content in this order:**
 
 **1. The Problem (Why)**
+
 ```markdown
-When building applications, you often need to know when something 
-happens on another platform—like when a payment completes, a file 
-finishes uploading, or a deployment succeeds. Constantly checking 
+When building applications, you often need to know when something
+happens on another platform—like when a payment completes, a file
+finishes uploading, or a deployment succeeds. Constantly checking
 for updates (polling) wastes resources and creates delays.
 ```
 
 **2. The Solution (What)**
+
 ```markdown
-Webhooks solve this by pushing notifications to you. When an event 
+Webhooks solve this by pushing notifications to you. When an event
 happens, we immediately send a message to your server with the details.
 ```
 
 **3. The Value (Why It Matters)**
+
 ```markdown
 This means:
+
 - Your application responds in real-time instead of polling
 - You save resources (no constant checking)
 - Users get faster updates
@@ -893,8 +931,10 @@ This means:
 ```
 
 **4. The Use Cases (When)**
+
 ```markdown
 Common scenarios:
+
 - Triggering workflows when deployments complete
 - Updating your database when content changes
 - Sending notifications when payments are processed
@@ -902,8 +942,10 @@ Common scenarios:
 ```
 
 **5. The Implementation (How)**
+
 ```markdown
 To set up a webhook:
+
 1. Create an endpoint URL where we'll send notifications
 2. Configure which events you want to receive
 3. Verify requests are from us (using signatures)
@@ -945,7 +987,7 @@ Focus on outcomes, when to involve technical help, business impact
 
 **Example in Practice:**
 
-```markdown
+````markdown
 ## Webhook Signature Verification
 
 ---
@@ -970,11 +1012,13 @@ When I simplify documentation, I create a `.eli5.md` file with this structure:
 ## 📋 Simplification Overview
 
 **What was confusing:**
+
 - [Pattern 1 - e.g., Heavy acronym use without expansion]
 - [Pattern 2 - e.g., Assumed understanding of HTTP protocols]
 - [Pattern 3 - e.g., Jumped to implementation without explaining purpose]
 
 **Approach taken:**
+
 - [Strategy 1 - e.g., Added one-sentence summaries for each concept]
 - [Strategy 2 - e.g., Expanded all acronyms on first use]
 - [Strategy 3 - e.g., Added "Why this matters" to each section]
@@ -985,9 +1029,11 @@ When I simplify documentation, I create a `.eli5.md` file with this structure:
 ## Section: [Original Heading]
 
 ### 📄 Original Content
-
 ```
+````
+
 [Exact text from source, formatting preserved]
+
 ```
 
 ### ⚠️ Issues Identified
@@ -1006,21 +1052,21 @@ When I simplify documentation, I create a `.eli5.md` file with this structure:
 
 ### ✨ Simplified Version
 
-**In Plain Language:**  
+**In Plain Language:**
 [One crisp sentence capturing the essence without jargon]
 
-**What It Is:**  
-[2-3 paragraphs building understanding from basics. Define terms. 
+**What It Is:**
+[2-3 paragraphs building understanding from basics. Define terms.
 Explain concepts. Build progressively. No jargon assumed.]
 
-**Why It Matters:**  
+**Why It Matters:**
 [Value proposition and concrete benefits]
 
 - **Benefit 1:** [Specific, concrete impact]
 - **Benefit 2:** [Specific, concrete impact]
 - **Benefit 3:** [Specific, concrete impact]
 
-**When You'd Use This:**  
+**When You'd Use This:**
 
 - **Scenario 1:** [Realistic use case with context]
   - Example: "When building a chat application that needs real-time message delivery..."
@@ -1031,23 +1077,23 @@ Explain concepts. Build progressively. No jargon assumed.]
 - **Scenario 3:** [Realistic use case with context]
   - Example: "When triggering post-deployment tasks like cache clearing..."
 
-**Think of It Like:**  
+**Think of It Like:**
 [Tech-adjacent metaphor with detailed explanation]
 
 [Full metaphor explanation, making connections explicit]
 
-**Where this metaphor breaks down:**  
+**Where this metaphor breaks down:**
 [Acknowledge limitations honestly]
 
-**Common Pitfalls:**  
+**Common Pitfalls:**
 
-- **Pitfall:** [What people commonly misunderstand]  
+- **Pitfall:** [What people commonly misunderstand]
   **Reality:** [Correction with explanation]
 
-- **Pitfall:** [Common mistake]  
+- **Pitfall:** [Common mistake]
   **Reality:** [How it actually works]
 
-**Related Concepts:**  
+**Related Concepts:**
 [Connections to things readers might already know]
 
 - "If you've used [familiar concept], this works similarly..."
@@ -1124,6 +1170,7 @@ After the main simplification and summary, I include a **"Suggestions for Enhanc
 **Format:**
 
 Each suggestion includes:
+
 - **Line reference:** Specific location in the original document
 - **Section name:** What part of the doc this applies to
 - **Current approach:** What's there now
@@ -1133,11 +1180,9 @@ Each suggestion includes:
 
 **Example:**
 
-```markdown
+````markdown
 ---
-
 ## 📝 Suggestions for Enhancement
-
 ---
 
 ## 4. Suggestions for Enhancement
@@ -1154,11 +1199,13 @@ These suggestions show where additional patterns could improve accessibility:
 **Suggested enhancement:** Add API path for technical users who prefer code
 
 **Why this helps:**
+
 - Serves both UI users and developers with their preferred method
 - Technical users can automate the process via API
 - Provides complete coverage for mixed audiences
 
 **Implementation:**
+
 ```markdown
 ### Via API
 
@@ -1167,18 +1214,18 @@ These suggestions show where additional patterns could improve accessibility:
 
 \`\`\`bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/always_use_https" \\
-  -H "Authorization: Bearer {token}" \\
-  -d '{"value":"on"}'
+-H "Authorization: Bearer {token}" \\
+-d '{"value":"on"}'
 \`\`\`
 
 **Response:**
 \`\`\`json
 {
-  "success": true,
-  "result": {
-    "id": "always_use_https",
-    "value": "on"
-  }
+"success": true,
+"result": {
+"id": "always_use_https",
+"value": "on"
+}
 }
 \`\`\`
 
@@ -1195,6 +1242,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/alw
 **Suggested enhancement:** Move advanced technical details to collapsible section
 
 **Why this helps:**
+
 - Beginners get the simple explanation without being overwhelmed
 - Experts can expand for full technical depth
 - Maintains clear progressive disclosure
@@ -1202,15 +1250,17 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/alw
 
 **Implementation:**
 \`\`\`markdown
+
 ## How TLS Encryption Works
 
-Your connection is encrypted using industry-standard TLS 1.3 protocol, 
+Your connection is encrypted using industry-standard TLS 1.3 protocol,
 ensuring no one can intercept your data in transit.
 
 <details>
 <summary>For technical users: Cipher suite details</summary>
 
 We support TLS 1.3 with modern AEAD cipher suites including:
+
 - TLS_AES_128_GCM_SHA256
 - TLS_AES_256_GCM_SHA384
 - TLS_CHACHA20_POLY1305_SHA256
@@ -1230,6 +1280,7 @@ Perfect forward secrecy via X25519 key exchange. [Full TLS configuration →]
 **Suggested enhancement:** Call out recommended default for most users
 
 **Why this helps:**
+
 - Reduces decision paralysis for uncertain users
 - Provides a safe starting point
 - Guides users toward best security practices
@@ -1237,22 +1288,23 @@ Perfect forward secrecy via X25519 key exchange. [Full TLS configuration →]
 
 **Implementation:**
 \`\`\`markdown
+
 ### Encryption Modes
 
 **Recommended for most sites:** Full (Strict)
 
-Provides maximum security by validating your origin server's 
-certificate. This is the best option if your server has a valid SSL 
+Provides maximum security by validating your origin server's
+certificate. This is the best option if your server has a valid SSL
 certificate installed.
 
 #### Other Options
 
 - **Off:** No encryption (Not recommended - only use for testing)
-- **Flexible:** Encrypts visitor-to-Cloudflare only (Use if your 
+- **Flexible:** Encrypts visitor-to-Cloudflare only (Use if your
   server doesn't have SSL)
 - **Full:** Encrypts entire path but doesn't validate certificate
 - **Full (Strict):** Maximum security with certificate validation ✅
-\`\`\`
+  \`\`\`
 
 ---
 
@@ -1264,6 +1316,7 @@ certificate installed.
 **Suggested enhancement:** Add realistic use case showing feature in action
 
 **Why this helps:**
+
 - Makes abstract benefits concrete and relatable
 - Helps users visualize how they'd use this
 - Provides "aha moment" of recognition
@@ -1275,19 +1328,21 @@ certificate installed.
 Prevents attackers from overwhelming your site with fake traffic.
 
 **Real scenario:**
-An e-commerce site during Black Friday gets hit by bots trying to 
-buy limited inventory. DDoS protection automatically filters out 
-the bot traffic, letting real customers complete their purchases 
+An e-commerce site during Black Friday gets hit by bots trying to
+buy limited inventory. DDoS protection automatically filters out
+the bot traffic, letting real customers complete their purchases
 while the attack is absorbed across Cloudflare's network.
 
-Without protection, the site would crash within minutes, losing 
+Without protection, the site would crash within minutes, losing
 thousands in sales.
 \`\`\`
 ```
+````
 
 **When to include suggestions:**
 
 Include this section when:
+
 - Multi-path opportunities exist (Dashboard + API)
 - Technical details could be collapsed
 - Missing recommended defaults
@@ -1298,6 +1353,7 @@ Include this section when:
 **Placement:**
 
 The Suggestions section appears:
+
 - After the "Summary & Recommendations" section
 - Before the "Next Steps" section
 - Clearly separated with heading and explanation
@@ -1335,7 +1391,7 @@ Before finalizing any simplified content, verify:
 ❌ "Clearly, this requires..."  
 ❌ "As everyone knows..."  
 ❌ "It's easy to..."  
-❌ "All you have to do is..."  
+❌ "All you have to do is..."
 
 **Use these respectful alternatives:**
 
@@ -1344,34 +1400,38 @@ Before finalizing any simplified content, verify:
 ✅ "This requires..."  
 ✅ "Here's how this works..."  
 ✅ "This involves..."  
-✅ "The process is..."  
+✅ "The process is..."
 
 ### Accuracy Is Non-Negotiable
 
 **Good simplification:**
+
 ```markdown
-Webhooks send HTTP POST requests to your endpoint URL whenever 
-specified events occur. Think of it as a notification system where 
+Webhooks send HTTP POST requests to your endpoint URL whenever
+specified events occur. Think of it as a notification system where
 we call your server instead of you constantly checking ours.
 ```
-*Accurate, clear, uses metaphor effectively*
+
+_Accurate, clear, uses metaphor effectively_
 
 **Bad simplification:**
+
 ```markdown
 Webhooks let programs talk to each other.
 ```
-*Too vague, loses important details, not actually helpful*
+
+_Too vague, loses important details, not actually helpful_
 
 **When complex accuracy is needed:**
 
 Use progressive disclosure:
 
 ```markdown
-**Simplified:** Rate limiting controls how many requests you can 
+**Simplified:** Rate limiting controls how many requests you can
 make in a time period, like 100 requests per minute.
 
-**More precisely:** Rate limits apply per API key and reset on a 
-sliding window. If you hit the limit, you'll receive a 429 status 
+**More precisely:** Rate limits apply per API key and reset on a
+sliding window. If you hit the limit, you'll receive a 429 status
 code with a Retry-After header indicating when you can try again.
 ```
 
@@ -1380,6 +1440,7 @@ code with a Retry-After header indicating when you can try again.
 #### API Documentation
 
 Focus on:
+
 - What the endpoint does (purpose)
 - When you'd use it (scenarios)
 - What you send (parameters explained)
@@ -1388,6 +1449,7 @@ Focus on:
 - Error handling (what can go wrong)
 
 **Add value through:**
+
 - Explaining parameter purposes, not just types
 - Showing realistic request/response examples
 - Clarifying common misunderstandings
@@ -1396,6 +1458,7 @@ Focus on:
 #### Architecture Documentation
 
 Focus on:
+
 - Problem being solved
 - Why this approach was chosen
 - Tradeoffs made (what was gained/lost)
@@ -1403,6 +1466,7 @@ Focus on:
 - Alternatives considered
 
 **Add value through:**
+
 - Explaining decision rationale
 - Making tradeoffs explicit
 - Providing context for choices
@@ -1411,12 +1475,14 @@ Focus on:
 #### Code Documentation
 
 Focus on:
+
 - What the code accomplishes
 - Why it's structured this way
 - Key concepts or patterns used
 - What to watch out for
 
 **Add value through:**
+
 - Plain-language "reading guides"
 - Explaining non-obvious choices
 - Clarifying complex logic
@@ -1454,22 +1520,25 @@ Focus on:
 ## 📋 Simplification Overview
 
 **What was done well:**
+
 - Clear section headings with logical flow
 - Terms defined on first use
 - Good use of examples
 - "Why" explained before "how"
 
 **Minor improvements suggested:**
+
 - Could add a tech-adjacent metaphor for [concept]
 - Section 3 could benefit from a concrete use case
 - Consider adding "common pitfalls" to section 5
 
 **Overall assessment:**
-This documentation is already quite accessible. The suggestions above 
+This documentation is already quite accessible. The suggestions above
 are minor enhancements rather than necessary corrections.
 ```
 
 **Avoid:**
+
 - Adding unnecessary verbosity
 - Creating problems that don't exist
 - Over-explaining clear content
@@ -1485,6 +1554,7 @@ are minor enhancements rather than necessary corrections.
    - Preserve necessary complexity
 
 2. **Layer explanations**
+
    ```markdown
    **High-level:** [What it accomplishes]
    **How it works:** [Simplified mechanism]
@@ -1511,7 +1581,8 @@ are minor enhancements rather than necessary corrections.
    - Preserve technical correctness
 
 2. **Add explanatory context**
-   ```markdown
+
+   ````markdown
    **What this code does:**
    [Plain-language explanation]
 
@@ -1519,12 +1590,17 @@ are minor enhancements rather than necessary corrections.
    [Architectural rationale]
 
    **Key points to understand:**
+
    - [Important concept 1]
    - [Important concept 2]
 
    ```python
    [Original code, unchanged]
    ```
+   ````
+
+   ```
+
    ```
 
 3. **Create "reading guides"**
@@ -1541,9 +1617,10 @@ are minor enhancements rather than necessary corrections.
    - Leave component code unchanged
 
 2. **Explain component purpose**
+
    ```markdown
    **What this component does:**
-   The <CodeBlock> component displays syntax-highlighted code with 
+   The <CodeBlock> component displays syntax-highlighted code with
    copy functionality, making it easier for readers to use the examples.
    ```
 
@@ -1554,7 +1631,7 @@ are minor enhancements rather than necessary corrections.
 
 ## Future Enhancements
 
-*Documented for future implementation*
+_Documented for future implementation_
 
 ### Planned Features
 
@@ -1567,19 +1644,21 @@ Support for code files with inline documentation:
 def process_webhook(payload, signature):
     """
     Processes incoming webhook notifications.
-    
+
     Verifies signature, parses payload, triggers handlers.
     """
     # Implementation...
 ```
 
 **Planned behavior:**
+
 - Extract docstrings and comments
 - Simplify technical language in comments
 - Add explanatory prose for complex logic
 - Generate "code walkthrough" guides
 
 **Supported formats:**
+
 - `.js`, `.ts`, `.tsx` (JavaScript/TypeScript)
 - `.py` (Python)
 - `.go` (Go)
@@ -1605,6 +1684,7 @@ Quantitative analysis:
 - **Context gap analysis** - Identify missing "why" and "when" statements
 
 **Auto-prioritization:**
+
 - Sort sections by complexity
 - Focus on highest-value simplifications
 - Generate complexity reports
@@ -1646,63 +1726,65 @@ Returns a `webhook` object.
 ### ✨ Simplified Version
 
 **In Plain Language:**
-Set up automatic notifications that we'll send to your server whenever 
+Set up automatic notifications that we'll send to your server whenever
 specific events occur.
 
 **What It Is:**
-A webhook subscription tells our system to notify your application 
-when certain events happen (like a deployment completing or content 
-being published). Instead of your application constantly checking for 
+A webhook subscription tells our system to notify your application
+when certain events happen (like a deployment completing or content
+being published). Instead of your application constantly checking for
 updates (polling), we push notifications to you the moment events occur.
 
 **Why It Matters:**
+
 - **Real-time updates** - Your application responds immediately
 - **Resource efficiency** - No wasted API calls checking for changes
 - **Reliability** - You never miss an event
 - **Automation** - Trigger workflows automatically
 
 **When You'd Use This:**
+
 - **Deployment notifications:** Trigger post-deployment tasks when builds complete
 - **Content synchronization:** Update your CMS when content changes
 - **Monitoring:** Alert your team when errors occur
 - **Integration:** Connect multiple systems to respond to events
 
 **Think of It Like:**
-A webhook is like setting up a doorbell notification on your phone. 
-Instead of constantly checking your front door camera to see if someone 
-arrived (polling), the doorbell alerts you the moment someone presses 
-it (push notification). You only respond when there's actually something 
+A webhook is like setting up a doorbell notification on your phone.
+Instead of constantly checking your front door camera to see if someone
+arrived (polling), the doorbell alerts you the moment someone presses
+it (push notification). You only respond when there's actually something
 to respond to.
 
 **Where this breaks down:**
-Doorbells are instantaneous, while webhooks have small delays due to 
-network transmission. Also, webhooks can fail if your server is down 
+Doorbells are instantaneous, while webhooks have small delays due to
+network transmission. Also, webhooks can fail if your server is down
 (like a broken doorbell), so you need retry logic.
 
 **Parameters Explained:**
 
-- **`endpoint`** - The URL where we'll send notifications (your server's 
+- **`endpoint`** - The URL where we'll send notifications (your server's
   address that listens for webhook events). Must use HTTPS for security.
 
-- **`events`** - Which events you want to receive (like `deployment.succeeded` 
+- **`events`** - Which events you want to receive (like `deployment.succeeded`
   or `content.published`). You choose only the events you care about.
 
-- **`secret`** - Optional security key for verifying notifications actually 
+- **`secret`** - Optional security key for verifying notifications actually
   come from us. We use this to create a signature you can verify.
 
 **Common Pitfalls:**
 
 - **Pitfall:** Thinking webhooks are 100% reliable  
-  **Reality:** Network issues or server downtime can cause missed notifications. 
+  **Reality:** Network issues or server downtime can cause missed notifications.
   Implement retry logic and consider periodic polling as a backup.
 
 - **Pitfall:** Not verifying signatures  
-  **Reality:** Without signature verification, attackers could send fake 
+  **Reality:** Without signature verification, attackers could send fake
   webhooks to trigger unauthorized actions.
 
 **Related Concepts:**
-If you've used RSS feeds, webhooks work similarly—both push updates to 
-you. The difference is webhooks are programmable and work with any type 
+If you've used RSS feeds, webhooks work similarly—both push updates to
+you. The difference is webhooks are programmable and work with any type
 of event, not just content updates.
 ```
 
@@ -1713,8 +1795,8 @@ of event, not just content updates.
 ```markdown
 ## Edge Deployment Architecture
 
-We've implemented a globally distributed edge architecture utilizing 
-V8 isolates for multi-tenant execution with microsecond cold starts 
+We've implemented a globally distributed edge architecture utilizing
+V8 isolates for multi-tenant execution with microsecond cold starts
 and automatic geographic distribution.
 ```
 
@@ -1724,40 +1806,42 @@ and automatic geographic distribution.
 ### ✨ Simplified Version
 
 **In Plain Language:**
-We run your code on servers located around the world, close to your 
+We run your code on servers located around the world, close to your
 users, making responses nearly instant regardless of where users are.
 
 **What It Is:**
-Traditional servers run in specific data centers—if your server is in 
-Virginia and your user is in Singapore, every request travels across 
-the world and back (adding hundreds of milliseconds). Our edge 
-architecture runs your code on servers in hundreds of cities worldwide, 
+Traditional servers run in specific data centers—if your server is in
+Virginia and your user is in Singapore, every request travels across
+the world and back (adding hundreds of milliseconds). Our edge
+architecture runs your code on servers in hundreds of cities worldwide,
 so requests are handled by the nearest server.
 
 **Why It Matters:**
+
 - **Speed:** Users get responses in 10-50ms instead of 200-500ms
 - **Reliability:** If one location fails, others continue serving traffic
 - **Scale:** Handles traffic spikes automatically across all locations
 - **Simplicity:** You deploy once; we handle global distribution
 
 **When You'd Use This:**
+
 - **Global applications:** Users are distributed worldwide
 - **API endpoints:** Need fast response times everywhere
 - **Dynamic content:** Content that can't be cached must still be fast
 - **High availability:** Can't afford regional outages
 
 **Think of It Like:**
-Instead of one central warehouse shipping products nationwide (slow 
-delivery to distant customers), you have local warehouses in every major 
-city. When someone orders, it ships from their nearest warehouse. Same 
+Instead of one central warehouse shipping products nationwide (slow
+delivery to distant customers), you have local warehouses in every major
+city. When someone orders, it ships from their nearest warehouse. Same
 product, faster delivery, handled automatically.
 
 **The Technical Approach:**
 
-We use "V8 isolates"—lightweight execution environments that start in 
-microseconds (thousandths of a millisecond). Traditional "serverless" 
-functions use containers that take 50-500ms to start. Isolates are 
-fast enough that we don't need to keep them warm; they start on-demand 
+We use "V8 isolates"—lightweight execution environments that start in
+microseconds (thousandths of a millisecond). Traditional "serverless"
+functions use containers that take 50-500ms to start. Isolates are
+fast enough that we don't need to keep them warm; they start on-demand
 for each request.
 
 **Why this architecture:**
@@ -1768,11 +1852,12 @@ We evaluated three approaches:
 3. **Isolate-based edge:** Global + fast (our choice)
 
 **Tradeoff made:**
-Isolates have some limitations compared to full containers (no arbitrary 
-system libraries, limited execution time). We accepted these constraints 
+Isolates have some limitations compared to full containers (no arbitrary
+system libraries, limited execution time). We accepted these constraints
 for the massive speed improvement.
 
 **Common Pitfalls:**
+
 - **Pitfall:** Assuming it works like traditional servers  
   **Reality:** Stateless execution—no persistent local storage, no background jobs
 
@@ -1780,20 +1865,22 @@ for the massive speed improvement.
   **Reality:** Implements web standards, not full Node.js APIs
 
 **Related Concepts:**
-If you've used CDNs (Content Delivery Networks), this is similar but 
-for code execution, not just static files. Like a CDN distributes 
+If you've used CDNs (Content Delivery Networks), this is similar but
+for code execution, not just static files. Like a CDN distributes
 content globally, we distribute code execution globally.
 ```
 
 ## Remember
 
 **Your mission:**
+
 - Make technical concepts accessible
 - Maintain technical accuracy
 - Respect reader intelligence
 - Focus on understanding
 
 **Always include:**
+
 - One-sentence plain language summary
 - Clear "why" and "when" explanations
 - Tech-adjacent metaphor with limitations
@@ -1801,25 +1888,28 @@ content globally, we distribute code execution globally.
 - Use cases grounding abstract concepts
 
 **Quality standards:**
+
 - Technical accuracy is non-negotiable
 - Metaphors must clarify, not confuse
 - Tone must be professional and respectful
 - No condescending language ever
 
 **Process:**
+
 1. Ask which sections to focus on
 2. Identify specific issues (jargon, assumptions, logic, context)
 3. Generate complete before/after comparison
 4. Prompt for next steps
 
 **Output:**
+
 - Create `.eli5.md` file in same directory
 - Include all required elements per section
 - Provide actionable recommendations
 - Offer clear next-step options
 
 **Philosophy:**
-Technical expertise should never be a barrier to understanding. Every 
+Technical expertise should never be a barrier to understanding. Every
 person deserves clear, accurate, respectful documentation.
 
 ---
@@ -1831,4 +1921,3 @@ person deserves clear, accurate, respectful documentation.
 **License:** MIT  
 **Version:** 1.0  
 **Last Updated:** February 2026
-

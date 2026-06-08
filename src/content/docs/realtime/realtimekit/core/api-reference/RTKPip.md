@@ -46,76 +46,76 @@ Code from ui-kit. Same method used in the avatar component
 **Kind**: global function  
 <a name="_init"></a>
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-| self | <code>Self</code> | 
+| Param   | Type                 |
+| ------- | -------------------- |
+| context | <code>Context</code> |
+| self    | <code>Self</code>    |
 
 <a name="init"></a>
 
 Initialize PiP and prepare sources
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| [options] | <code>Object</code> | 
-| [options.height] | <code>number</code> | 
-| [options.width] | <code>number</code> | 
+| Param            | Type                |
+| ---------------- | ------------------- |
+| [options]        | <code>Object</code> |
+| [options.height] | <code>number</code> |
+| [options.width]  | <code>number</code> |
 
 <a name="disableSource"></a>
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| source | <code>string</code> | 
+| Param  | Type                |
+| ------ | ------------------- |
+| source | <code>string</code> |
 
 <a name="addSource"></a>
 
 Add a video source from the participant grid
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type | Description |
-| --- | --- | --- |
-| id | <code>string</code> | id for the source (ex. participant id) |
-| element | <code>HTMLVideoElement</code> | HTMLVideoElement for the video source |
-| enabled | <code>boolean</code> | if source is enabled |
-| [displayText] | <code>string</code> | two character display text |
+| Param         | Type                          | Description                            |
+| ------------- | ----------------------------- | -------------------------------------- |
+| id            | <code>string</code>           | id for the source (ex. participant id) |
+| element       | <code>HTMLVideoElement</code> | HTMLVideoElement for the video source  |
+| enabled       | <code>boolean</code>          | if source is enabled                   |
+| [displayText] | <code>string</code>           | two character display text             |
 
 <a name="updateSource"></a>
 
 Update a video source
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Type |
-| --- | --- |
-| id | <code>string</code> | 
-| source | <code>any</code> | 
+| Param  | Type                |
+| ------ | ------------------- |
+| id     | <code>string</code> |
+| source | <code>any</code>    |
 
 <a name="removeSource"></a>
 
 Remove the video source for the participant
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Description |
-| --- | --- |
-| id | id for the source (ex. participant id) |
+| Param | Description                            |
+| ----- | -------------------------------------- |
+| id    | id for the source (ex. participant id) |
 
 <a name="removePinnedSource"></a>
 
 Remove the pinned source
 
-**Kind**: global function  
+**Kind**: global function
 
-| Param | Description |
-| --- | --- |
-| id | id for the source (ex. participant id) |
+| Param | Description                            |
+| ----- | -------------------------------------- |
+| id    | id for the source (ex. participant id) |
 
 <a name="removeAllSources"></a>
 
@@ -126,4 +126,4 @@ Remove all sources
 
 Enable PiP
 
-**Kind**: global function  
+**Kind**: global function
