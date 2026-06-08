@@ -12,10 +12,10 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 
 RealtimeKit provides two transcription modes powered by [Cloudflare Workers AI](/workers-ai/):
 
-| Mode             | Model                                                                | Processing time        | Use case                      |
-| ---------------- | -------------------------------------------------------------------- | ---------------------- | ----------------------------- |
-| **Real-time**    | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | During the meeting     | Live captions for attendees   |
-| **Post-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | After the meeting ends | Transcript files and webhooks |
+| Mode                                            | Model                                                                | Processing time        | Use case                                                                            |
+| ----------------------------------------------- | -------------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------- |
+| [**Real-time**](#real-time-transcription)       | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | During the meeting     | Live captions for attendees                                                         |
+| [**Post-meeting**](#post-meeting-transcription) | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | After the meeting ends | [Transcript files](#output-formats) and [webhooks](/realtime/realtimekit/webhooks/) |
 
 RealtimeKit processes each participant audio stream separately. This helps identify each speaker in the final transcript.
 
@@ -23,9 +23,9 @@ We recommend upgrading to the Workers Paid plan to avoid Workers AI processing l
 
 ## Real-time transcription
 
-Real-time transcription streams participant audio to [Deepgram Nova-3](/workers-ai/models/nova-3/) on Workers AI and sends transcript events to meeting participants during the meeting.
+Real-time transcription streams participant audio to [Deepgram Nova-3](/workers-ai/models/nova-3/) on Workers AI and sends [transcript events](#consume-real-time-transcripts) to meeting participants during the meeting.
 
-### Enable via preset
+### Enable real-time transcription
 
 You can enable real-time transcription for participants by setting `permissions.transcription_enabled: true` in the participant's [preset](/realtime/realtimekit/concepts/preset/). This lets you decide which participant audio is transcribed. For example, you can transcribe speaker audio without transcribing audience audio.
 
@@ -46,11 +46,11 @@ To create a preset, refer to the [Create a preset API reference](/api/resources/
 
 RealtimeKit transcribes audio only for participants who join with a preset that has `permissions.transcription_enabled: true`.
 
-During the meeting, RealtimeKit streams transcript updates to the client SDK. To access existing transcripts from `meeting.ai.transcripts` or listen for new transcript events with `meeting.ai.on("transcript", ...)`, refer to [Consume transcripts](#consume-transcripts).
+During the meeting, RealtimeKit streams transcript updates to the client SDK. To access existing transcripts from `meeting.ai.transcripts` or listen for new transcript events with `meeting.ai.on("transcript", ...)`, refer to [Consume real-time transcripts](#consume-real-time-transcripts).
 
 ### Configure transcription settings
 
-The preset controls whose audio is transcribed. The meeting configuration controls how RealtimeKit transcribes that audio. Use `ai_config.transcription` to set the spoken language, boost recognition for custom terms, and control profanity filtering for a specific meeting.
+The preset controls whose audio is transcribed. The meeting configuration controls how RealtimeKit transcribes that audio. Use `ai_config.transcription` to set the [spoken language](#real-time-supported-languages), boost recognition for custom terms, and control profanity filtering for a specific meeting.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
@@ -80,7 +80,7 @@ Real-time transcription is powered by [Deepgram Nova-3](/workers-ai/models/nova-
 
 <Render file="nova-3-supported-languages" product="workers-ai" />
 
-### Consume transcripts
+### Consume real-time transcripts
 
 Real-time transcription sends interim and final transcript updates to the client SDK. Use interim updates for live captions, and use final updates for transcript history or saved UI state.
 
@@ -131,7 +131,7 @@ meeting.ai.on("transcript", (transcript) => {
 
 ## Post-meeting transcription
 
-Post-meeting transcription generates a transcript after the meeting ends using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) on Workers AI and delivers it through a webhook or REST API. To identify speakers, RealtimeKit processes each participant's audio separately before creating the final transcript.
+Post-meeting transcription generates a transcript after the meeting ends using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) on Workers AI and delivers it through a [webhook](/realtime/realtimekit/webhooks/) or [REST API](#rest-api). To identify speakers, RealtimeKit processes each participant's audio separately before creating the [final transcript](#output-formats).
 
 ### Enable post-meeting transcription
 
@@ -321,33 +321,32 @@ Bob: Hi Alice
 	</TabItem>
 </Tabs>
 
-### Fetch post-meeting transcripts
+### Consume post-meeting transcripts
 
 After RealtimeKit finishes processing a post-meeting transcript, you can receive the transcript download URL through a webhook or fetch it with the REST API. Use webhooks for asynchronous backend workflows, and use the REST API when you need to retrieve the transcript for a specific session.
 
 #### Webhook
 
-Configure the `meeting.transcript` event in [webhooks](/api/resources/realtime_kit/subresources/webhooks/):
+Configure the `meeting.transcript` event in [RealtimeKit webhooks](/realtime/realtimekit/webhooks/#meetingtranscript):
 
 ```json
 {
 	"event": "meeting.transcript",
 	"meeting": {
-		"id": "meeting-123",
-		"sessionId": "session-456",
-		"title": "Weekly product review",
-		"roomName": "meeting-123",
+		"id": "bbb8940e-1b97-402a-97d6-2708b7feca41",
+		"title": "Weekly sync",
+		"endedAt": "2026-06-03T10:30:00.000Z",
+		"createdAt": "2026-06-03T10:00:00.000Z",
+		"sessionId": "05e57591-d89e-45c9-ae44-08dc1eaad0e0",
+		"startedAt": "2026-06-03T10:00:00.000Z",
 		"status": "LIVE",
-		"createdAt": "2024-08-07T10:00:00.000Z",
-		"startedAt": "2024-08-07T10:15:30.000Z",
-		"endedAt": "2024-08-07T10:45:30.000Z",
 		"organizedBy": {
-			"id": "organization-123",
+			"id": "c94c437b-592a-4a39-b9e2-47ef1451e43b",
 			"name": "Example organization"
 		}
 	},
-	"transcriptDownloadUrl": "https://...",
-	"transcriptDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
+	"transcriptDownloadUrl": "https://example.com/transcript.csv",
+	"transcriptDownloadUrlExpiry": "2026-06-10T10:30:00.000Z"
 }
 ```
 
@@ -381,7 +380,7 @@ RealtimeKit transcription uses these Workers AI audio model rates:
 
 ## Data processing and storage
 
-RealtimeKit transcription is a managed transcription workflow. When transcription is turned on, RealtimeKit processes participant audio with Workers AI and stores transcript outputs in RealtimeKit-managed storage.
+RealtimeKit transcription is a managed transcription workflow. When transcription is turned on, RealtimeKit processes participant audio with Workers AI and stores [transcript outputs](#output-formats) in RealtimeKit-managed storage.
 
 For real-time transcription, RealtimeKit streams enabled participant audio to Workers AI and sends transcript updates to meeting participants during the meeting.
 

@@ -66,27 +66,21 @@ Choose a type that matches your meeting for better results:
 
 ### Webhook
 
-Configure the `meeting.summary` event in [webhooks](/api/resources/realtime_kit/subresources/webhooks/):
+Configure the `meeting.summary` event in [RealtimeKit webhooks](/realtime/realtimekit/webhooks/#meetingsummary):
 
 ```json
 {
 	"event": "meeting.summary",
 	"meeting": {
-		"id": "meeting-123",
-		"sessionId": "session-456",
-		"title": "Product Review",
-		"roomName": "meeting-123",
-		"status": "LIVE",
-		"createdAt": "2024-08-07T10:00:00.000Z",
-		"startedAt": "2024-08-07T10:15:30.000Z",
-		"endedAt": "2024-08-07T10:45:30.000Z",
+		"id": "bbb8940e-1b97-402a-97d6-2708b7feca41",
+		"sessionId": "05e57591-d89e-45c9-ae44-08dc1eaad0e0",
 		"organizedBy": {
-			"id": "organization-123",
+			"id": "c94c437b-592a-4a39-b9e2-47ef1451e43b",
 			"name": "Example organization"
 		}
 	},
-	"summaryDownloadUrl": "https://...",
-	"summaryDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
+	"summaryDownloadUrl": "https://example.com/summary.txt",
+	"summaryDownloadUrlExpiry": "2026-06-10T10:30:00.000Z"
 }
 ```
 
