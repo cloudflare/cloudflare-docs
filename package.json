@@ -38,10 +38,6 @@
 		"flue:sync-agents:remote": "tsx .flue/bin/sync-agents.ts",
 		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
 		"lint": "eslint",
-		"ai-setup:import-from-opencode": "rulesync import --targets opencode --features rules,commands,subagents",
-		"ai-setup:claudecode": "pnpm run ai-setup:import-from-opencode && rulesync generate --targets claudecode --features rules,commands,subagents",
-		"ai-setup:cursor": "pnpm run ai-setup:import-from-opencode && rulesync generate --targets cursor --features commands,subagents",
-		"ai-setup:copilot": "pnpm run ai-setup:import-from-opencode && rulesync generate --targets copilot --features commands,subagents",
 		"prepare": "husky"
 	},
 	"devDependencies": {
@@ -147,7 +143,6 @@
 		"remark": "15.0.1",
 		"remark-gfm": "4.0.1",
 		"remark-stringify": "11.0.0",
-		"rulesync": "8.24.1",
 		"sharp": "0.34.5",
 		"solarflare-theme": "0.0.6",
 		"space-separated-tokens": "2.0.2",

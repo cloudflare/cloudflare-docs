@@ -71,6 +71,7 @@ jobs:
           mapfile -t files < <(
             git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
             | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$' \
+            | while IFS= read -r f; do [[ -L "$f" ]] || echo "$f"; done \
             || true
           )
           if [ "${#files[@]}" -eq 0 ]; then
