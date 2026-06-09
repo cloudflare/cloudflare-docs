@@ -88,11 +88,9 @@ export default {
 
 ### `.transform(options)`
 
-Applies optimization parameters to the image, such as `width`, `height`, or `blur`. You can chain multiple `.transform()` calls to control the order that parameters will be applied.
+Applies [optimization parameters](/images/optimization/features/#parameters) to the image, such as `width`, `height`, or `blur`. You can chain multiple `.transform()` calls to control the order that parameters will be applied.
 
-For the full list of parameters, refer to [Features](/images/optimization/features/).
-
-The example below shows how you can resize an image that is [stored in Images](/images/storage/binding/) by getting the image bytes:
+The example below shows how you can optimize [images that are stored in Images](/images/storage/binding/) by getting the image bytes:
 
 <TypeScriptExample>
 
@@ -118,7 +116,56 @@ Draws an overlay image over another image.
 
 The overlay can be a stream of image bytes or another `.input()` chain. You can pass a child `.transform()` function inside this method to resize or manipulate the overlay before drawing it.
 
-Accepts `opacity`, `repeat`, and a side (`left`, `right`, `top`, `bottom`). For the full list of draw options and examples, refer to [Draw overlays and watermarks](/images/optimization/transformations/draw-overlays/#options).
+Accepts `opacity`, `repeat`, and a side (`left`, `right`, `top`, `bottom`).
+
+#### `opacity`
+
+Sets the opacity of the overlay image. Accepts a decimal value between `0.0` (fully transparent) and `1.0` (fully opaque).
+
+#### `repeat`
+
+Determines whether to tile the overlay across the image.
+
+Accepts the following values:
+
+- `true` — The overlay image will be tiled to cover the entire area. This is useful for stock photos.
+- `x` — The overlay image will be tiled horizontally.
+- `y` — The overlay image will be tiled vertically.
+
+#### `left`, `right`, `top`, `bottom`
+
+Sets the position of the overlay image as an offset, in pixels, to the specified edge. If this option is not set, then the image will be centered.
+
+`0` aligns the overlay flush to the edge. For example, `{ bottom: 0, right: 10 }` places the overlay at the bottom-right corner, 10 pixels inward from the right edge.
+
+The example below shows how you can overlay a resized watermark on an image from external URLs:
+
+<TypeScriptExample>
+
+```ts
+export default {
+  async fetch(request,env) {
+    const baseURL = "https://example.com/base.png";
+    const overlayURL = "https://example.com/watermark.png";
+    
+    // Fetch responses from image URLs
+    const [base, overlay] = await Promise.all([fetch(baseURL),fetch(overlayURL)]);
+
+    return (
+      await env.IMAGES
+        .input(base.body)
+        .draw(
+          env.IMAGES.input(overlay.body)
+            .transform({width: 32, height: 32}), // Resize the overlay image
+            {bottom: 0, right: 0} // Position the overlay
+        )
+        .output({format:"image/avif"})
+    ).response();
+  }
+};
+```
+
+</TypeScriptExample>
 
 ### `.output(options)`
 
