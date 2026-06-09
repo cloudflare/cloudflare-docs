@@ -79,7 +79,7 @@ jobs:
           fi
           printf 'Formatting %d file(s):\n' "${#files[@]}"
           printf '  %s\n' "${files[@]}"
-          pnpm exec prettier --write "${files[@]}"
+          pnpm exec prettier --write --ignore-path .prettierignore "${files[@]}"
 
       - name: Check for changes
         id: diff
