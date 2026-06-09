@@ -160,11 +160,11 @@ In the example below, the original image (1080x720) is smaller than the target a
 When the original image is larger than the target area, it behaves like `cover` (fills the target area and crops the rest) instead.
 
 #### `aspect-crop`
-Crops the image to match the target aspect ratio, scaling down if needed but never enlarging the image.
+Crops the image to match the target aspect ratio, scaling down if needed but never upscaling.
 
-When the original image is larger than the target area, it behaves like `cover` — the image is scaled down to the smallest size that still covers the target dimensions, then cropped to match.
+When the original image is larger than the target area, it downscales to the smallest size that still fills the target dimensions, then is cropped to match the target aspect ratio (like `cover`).
 
-When the original image is smaller than the target area, it is kept at its original size but cropped to match the target aspect ratio. Unlike `crop`, which leaves smaller images completely untouched, `aspect-crop` always enforces the target aspect ratio.
+When the original image is smaller than the target area, it keeps its original size but is cropped to match the target aspect ratio. Unlike `crop`, which preserves the original size and dimensions of smaller images, `aspect-crop` always enforces the target aspect ratio.
 
 For example, a 612x613 image requested at 1920x1120 will not be upscaled. Instead, it stays at its original size and is cropped to 612x357, matching the 1920:1120 aspect ratio. Use the [`gravity`](#gravity) parameter to control which part of the image is preserved during cropping.
 
