@@ -74,7 +74,7 @@ If you're only looking to route subdomain records (e.g. `customer1.saas.com`), y
 
 To set up subdomain routing:
 
-1. Create an orange-clouded wildcard DNS record: `*.saas.com` that points to the origin. If the Worker is the origin then you can use a dummy DNS value (for example, `A 192.0.2.0`).
+1. Create an [orange-clouded](/dns/proxy-status/#benefits) wildcard DNS record: `*.saas.com` that points to the origin. If the Worker is the origin then you can use a dummy DNS value (for example, `A 192.0.2.0`).
 2. Set wildcard route: `*.saas.com/*` pointing to your dispatch Worker
 3. Add logic to the dispatch Worker to route subdomain requests to the right Worker.
 
@@ -103,7 +103,7 @@ When your customers are also using Cloudflare and point their custom domain to y
 
 This can cause inconsistent behavior when using specific hostname routes:
 
-- If you're routing based on the CNAME target (`saas.com`), the custom hostname's DNS record must be orange-clouded for the Worker to be invoked.
+- If you're routing based on the CNAME target (`saas.com`), the custom hostname's DNS record must be [orange-clouded](/dns/proxy-status/#benefits) for the Worker to be invoked.
 - If you're routing based on the custom hostname (`mystore.com`), the customer's record must be grey-clouded for the Worker to be invoked.
 
 Since you may not have control over your customer's DNS proxy settings, we recommend using `*/*` wildcard route to ensure routing logic always works as expected, regardless of how DNS is configured.
