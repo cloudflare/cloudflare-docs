@@ -53,7 +53,7 @@ The RPC system also supports a number of types that are not Structured Cloneable
 
 - Functions, which are replaced by stubs that call back to the sender.
 - Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
-- [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
+- [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WritableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
 - [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
 - RPC stubs themselves, even if the stub was received from a third Worker.
 
@@ -252,9 +252,9 @@ export default {
 
 If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
 
-## ReadableStream, WriteableStream, Request and Response
+## ReadableStream, WritableStream, Request and Response
 
-You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control. This allows you to send messages over RPC which are larger than [the typical 32 MiB limit](#limitations).
+You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WritableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control. This allows you to send messages over RPC which are larger than [the typical 32 MiB limit](#limitations).
 
 Only [byte-oriented streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_byte_streams) (streams with an underlying byte source of `type: "bytes"`) are supported.
 
