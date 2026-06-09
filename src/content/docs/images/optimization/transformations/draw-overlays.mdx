@@ -43,7 +43,7 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
   - Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing watermarks or non-rectangular overlays, Cloudflare recommends that you use PNG or WebP images.
 
 - `width` and `height`
-  - Maximum size of the overlay image. Can be an integer (pixels) or a decimal between `0` and `1` representing a fraction of the parent image's dimension. For example, `height: 0.25` sets the overlay height to 25% of the parent image's height.
+  - Maximum size of the overlay image. Accepts an integer (pixels) or a decimal between `0` and `1` representing a fraction of the original image's dimension. For example, `height: 0.25` sets the overlay height to 25% of the parent image's height.
 
 - `fit` and `gravity`
   - Affects interpretation of `width` and `height`. Same as [for the main image](/images/optimization/features/).
