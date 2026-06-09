@@ -4,7 +4,11 @@
 	"name": "FLUX.2 [pro] Preview",
 	"description": "FLUX.2 [pro] Preview is Black Forest Labs' recommended default for production image generation and editing \u2014 tracks the latest [pro] weights with strong multi-reference support.",
 	"task": "Text-to-Image",
-	"tags": ["Image Generation", "Image Editing", "Preview"],
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Preview"
+	],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -147,7 +151,11 @@
 				},
 				"output_format": {
 					"description": "Output image format. Defaults to jpeg.",
-					"enum": ["jpeg", "png", "webp"],
+					"enum": [
+						"jpeg",
+						"png",
+						"webp"
+					],
 					"type": "string"
 				},
 				"prompt": {
@@ -173,7 +181,9 @@
 					"type": "integer"
 				}
 			},
-			"required": ["prompt"],
+			"required": [
+				"prompt"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -186,7 +196,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["image"],
+			"required": [
+				"image"
+			],
 			"type": "object"
 		}
 	}

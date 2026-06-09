@@ -4,7 +4,11 @@
 	"name": "Grok TTS",
 	"description": "xAI's Grok text-to-speech model. Generates high-fidelity spoken audio in 5 expressive voices (eve, ara, rex, sal, leo) with 20+ supported languages. Supports inline speech tags for laughter, whispers, and pauses.",
 	"task": "Text-to-Speech",
-	"tags": ["Text-to-Speech", "Audio Generation", "Multilingual"],
+	"tags": [
+		"Text-to-Speech",
+		"Audio Generation",
+		"Multilingual"
+	],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -239,7 +243,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"language": {
-					"description": "BCP-47 language code (e.g. \"en\", \"zh\", \"pt-BR\") or \"auto\" for automatic language detection. Required \u2014 xAI returns 400 if omitted. Supported codes: auto, en, ar-EG, ar-SA, ar-AE, bn, zh, fr, de, hi, id, it, ja, ko, pt-BR, pt-PT, ru, es-MX, es-ES, tr, vi.",
+					"description": "BCP-47 language code (e.g. \"en\", \"zh\", \"pt-BR\") or \"auto\" for automatic language detection. Required for both REST and WebSocket modes. Supported codes: auto, en, ar-EG, ar-SA, ar-AE, bn, zh, fr, de, hi, id, it, ja, ko, pt-BR, pt-PT, ru, es-MX, es-ES, tr, vi.",
 					"type": "string"
 				},
 				"optimize_streaming_latency": {
@@ -286,7 +290,14 @@
 						},
 						"codec": {
 							"description": "Audio codec. Defaults to \"mp3\". mp3 \u2192 audio/mpeg (general use); wav \u2192 audio/wav (lossless); pcm \u2192 audio/pcm (raw 16-bit LE, real-time pipelines); mulaw/ulaw \u2192 audio/basic (G.711 \u03bc-law, telephony); alaw \u2192 audio/alaw (G.711 A-law, telephony).",
-							"enum": ["mp3", "wav", "pcm", "mulaw", "ulaw", "alaw"],
+							"enum": [
+								"mp3",
+								"wav",
+								"pcm",
+								"mulaw",
+								"ulaw",
+								"alaw"
+							],
 							"type": "string"
 						},
 						"sample_rate": {
@@ -321,8 +332,14 @@
 					},
 					"type": "object"
 				},
+				"speed": {
+					"description": "Speech speed multiplier. 1.0 is normal speed. Range: 0.7 to 1.5. Defaults to 1.0. Only used in WebSocket mode.",
+					"maximum": 1.5,
+					"minimum": 0.7,
+					"type": "number"
+				},
 				"text": {
-					"description": "Text to convert to speech. Maximum 15,000 characters. Supports inline speech tags: [pause], [laugh], <whisper>\u2026</whisper>, etc.",
+					"description": "Text to convert to speech. Maximum 15,000 characters. Supports inline speech tags: [pause], [laugh], <whisper>\u2026</whisper>, etc. Required for REST mode, mutually exclusive with websocket.",
 					"maxLength": 15000,
 					"minLength": 1,
 					"type": "string"
@@ -335,9 +352,15 @@
 					"description": "Voice for synthesis. Defaults to \"eve\". Built-in voices: eve (energetic), ara (warm), rex (confident), sal (balanced), leo (authoritative). Custom voice IDs from /v1/tts/voices are also accepted. Case-insensitive \u2014 \"Eve\", \"EVE\", and \"eve\" are equivalent.",
 					"minLength": 1,
 					"type": "string"
+				},
+				"websocket": {
+					"description": "Enable WebSocket streaming for text-to-speech. When true, establishes a bidirectional WebSocket connection. Mutually exclusive with text.",
+					"type": "boolean"
 				}
 			},
-			"required": ["text", "language"],
+			"required": [
+				"language"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -349,7 +372,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["audio"],
+			"required": [
+				"audio"
+			],
 			"type": "object"
 		}
 	}
