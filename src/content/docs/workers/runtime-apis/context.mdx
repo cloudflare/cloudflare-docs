@@ -246,7 +246,7 @@ export default {
 
 The Workers runtime uses streaming for request and response bodies. It does not buffer the body. If an exception occurs after the body has been consumed, `passThroughOnException()` cannot send the body again.
 
-For proxy Workers, avoid relying on the runtime fallback for failures from `fetch(request)`. If the origin fetch throws after consuming the request body, the fallback request may reach your origin without the original body and fail with an unrelated `4xx` error. Catch origin fetch errors and return a `5xx` response instead.
+For a Worker that proxies requests to an origin, avoid relying on the runtime fallback when the origin `fetch()` fails. If the origin `fetch()` throws after consuming the request body, the fallback request may reach your origin without the original body and fail with an unrelated `4xx` error. Catch origin fetch errors and return a `5xx` response instead.
 
 This protects against uncaught code exceptions. It does not mitigate failures such as exceeding CPU or memory limits.
 :::
