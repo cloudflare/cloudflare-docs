@@ -78,14 +78,20 @@ type DependabotReviewResult = v.InferOutput<
 // ── Dependabot PR body parser ─────────────────────────────────────────────────
 
 /**
- * Parse the Dependabot PR body for the package bump table.
- * Dependabot always includes a markdown table of the form:
+ * Parse the Dependabot PR body for bumped packages.
+ *
+ * Grouped PRs use a markdown table:
  *   | Package | From | To |
  *   | --- | --- | --- |
  *   | [name](url) | `old` | `new` |
+ *
+ * Single-package PRs use prose on the first line:
+ *   Bumps [name](url) from X to Y.
  */
 function parseDependabotPackages(body: string): DependabotPackage[] {
 	const packages: DependabotPackage[] = [];
+
+	// Grouped PR: package table rows
 	const tableRowRe =
 		/^\|\s*\[([^\]]+)\]\(([^)]+)\)\s*\|\s*`([^`]+)`\s*\|\s*`([^`]+)`\s*\|/gm;
 	let m: RegExpExecArray | null;
@@ -97,6 +103,21 @@ function parseDependabotPackages(body: string): DependabotPackage[] {
 			to: m[4],
 		});
 	}
+
+	// Single-package PR: prose on first line — "Bumps [name](url) from X to Y."
+	if (packages.length === 0) {
+		const proseRe = /^Bumps \[([^\]]+)\]\(([^)]+)\) from ([\S]+) to ([\S]+)/m;
+		const pm = proseRe.exec(body);
+		if (pm) {
+			packages.push({
+				name: pm[1],
+				repoUrl: pm[2],
+				from: pm[3],
+				to: pm[4].replace(/\.$/, ""), // strip trailing period if present
+			});
+		}
+	}
+
 	return packages;
 }
 
