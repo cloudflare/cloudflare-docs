@@ -144,22 +144,22 @@ The example below shows how you can overlay a resized watermark on an image from
 
 ```ts
 export default {
-  async fetch(request,env) {
+  async fetch(request, env) {
     const baseURL = "https://example.com/base.png";
     const overlayURL = "https://example.com/watermark.png";
     
     // Fetch responses from image URLs
-    const [base, overlay] = await Promise.all([fetch(baseURL),fetch(overlayURL)]);
+    const [base, overlay] = await Promise.all([fetch(baseURL), fetch(overlayURL)]);
 
     return (
       await env.IMAGES
         .input(base.body)
         .draw(
           env.IMAGES.input(overlay.body)
-            .transform({width: 32, height: 32}), // Resize the overlay image
-            {bottom: 0, right: 0} // Position the overlay
+            .transform({ width: 32, height: 32 }), // Resize the overlay image
+            { bottom: 0, right: 0 } // Position the overlay
         )
-        .output({format:"image/avif"})
+        .output({ format: "image/avif" })
     ).response();
   }
 };
