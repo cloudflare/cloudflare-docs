@@ -4,13 +4,7 @@
 	"name": "MiniMax Speech 2.8 Turbo",
 	"description": "MiniMax Speech 2.8 Turbo turns text into natural, expressive speech with voice cloning, emotion control, and 40+ language support at faster speeds.",
 	"task": "Text-to-Speech",
-	"tags": [
-		"TTS",
-		"Speech Synthesis",
-		"Voice Cloning",
-		"Multilingual",
-		"Fast"
-	],
+	"tags": ["TTS", "Speech Synthesis", "Voice Cloning", "Multilingual", "Fast"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -198,11 +192,7 @@
 				"format": {
 					"default": "mp3",
 					"description": "Output audio format",
-					"enum": [
-						"mp3",
-						"flac",
-						"wav"
-					],
+					"enum": ["mp3", "flac", "wav"],
 					"type": "string"
 				},
 				"pitch": {
@@ -266,14 +256,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"text",
-				"voice_id",
-				"speed",
-				"volume",
-				"pitch",
-				"format"
-			],
+			"required": ["text", "voice_id", "speed", "volume", "pitch", "format"],
 			"type": "object"
 		},
 		"output": {
@@ -285,9 +268,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"type": "object"
 		}
 	}

@@ -4,10 +4,7 @@
 	"name": "Wan 2.6 Image",
 	"description": "Alibaba's Wan 2.6 text-to-image model generating images from text prompts with optional negative prompts and customizable dimensions.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Negative Prompt"
-	],
+	"tags": ["Image Generation", "Negative Prompt"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -202,9 +199,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -216,9 +211,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

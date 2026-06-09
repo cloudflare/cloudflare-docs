@@ -150,11 +150,7 @@
 				},
 				"output_format": {
 					"description": "Output image format. Defaults to jpeg.",
-					"enum": [
-						"jpeg",
-						"png",
-						"webp"
-					],
+					"enum": ["jpeg", "png", "webp"],
 					"type": "string"
 				},
 				"prompt": {
@@ -180,9 +176,7 @@
 					"type": "integer"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -195,9 +189,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

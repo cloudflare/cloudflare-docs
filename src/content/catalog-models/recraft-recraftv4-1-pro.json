@@ -4,12 +4,7 @@
 	"name": "Recraft V4.1 Pro",
 	"description": "Recraft V4.1 Pro generates high-resolution, art-directed images at 2048px+ tuned for high aesthetics, with strong composition, text rendering, and refined design taste. Built for print and production work.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Design",
-		"Text Rendering",
-		"High Resolution"
-	],
+	"tags": ["Image Generation", "Design", "Text Rendering", "High Resolution"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -84,26 +79,14 @@
 				"prompt": "A modern, clean illustration of a shield with a checkmark inside, representing security and trust",
 				"controls": {
 					"background_color": {
-						"rgb": [
-							15,
-							23,
-							42
-						]
+						"rgb": [15, 23, 42]
 					},
 					"colors": [
 						{
-							"rgb": [
-								46,
-								117,
-								182
-							]
+							"rgb": [46, 117, 182]
 						},
 						{
-							"rgb": [
-								255,
-								255,
-								255
-							]
+							"rgb": [255, 255, 255]
 						}
 					]
 				},
@@ -202,9 +185,7 @@
 									"type": "array"
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"type": "object"
 						},
 						"colors": {
@@ -222,9 +203,7 @@
 										"type": "array"
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"type": "object"
 							},
 							"maxItems": 5,
@@ -246,9 +225,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -259,9 +236,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

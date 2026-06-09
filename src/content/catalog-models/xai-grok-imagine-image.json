@@ -4,11 +4,7 @@
 	"name": "Grok Imagine Image",
 	"description": "xAI's Grok Imagine image model. Generates and edits images from text and reference-image inputs with configurable aspect ratio and resolution.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Image Editing",
-		"Multimodal"
-	],
+	"tags": ["Image Generation", "Image Editing", "Multimodal"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -161,9 +157,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"url"
-					],
+					"required": ["url"],
 					"type": "object"
 				},
 				"images": {
@@ -177,9 +171,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"url"
-						],
+						"required": ["url"],
 						"type": "object"
 					},
 					"maxItems": 10,
@@ -192,9 +184,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"url"
-					],
+					"required": ["url"],
 					"type": "object"
 				},
 				"n": {
@@ -206,34 +196,22 @@
 					"type": "string"
 				},
 				"quality": {
-					"enum": [
-						"low",
-						"medium",
-						"high"
-					],
+					"enum": ["low", "medium", "high"],
 					"type": "string"
 				},
 				"resolution": {
-					"enum": [
-						"1k",
-						"2k"
-					],
+					"enum": ["1k", "2k"],
 					"type": "string"
 				},
 				"response_format": {
-					"enum": [
-						"url",
-						"b64_json"
-					],
+					"enum": ["url", "b64_json"],
 					"type": "string"
 				},
 				"user": {
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -244,9 +222,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

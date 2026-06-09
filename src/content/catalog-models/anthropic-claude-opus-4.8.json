@@ -276,9 +276,7 @@
 		"Adaptive Thinking": "Yes",
 		"Architecture": "Transformer"
 	},
-	"request_formats": [
-		"anthropic-messages"
-	],
+	"request_formats": ["anthropic-messages"],
 	"created_at": "2026-05-28 17:14:04",
 	"schema": {
 		"input": {
@@ -306,10 +304,7 @@
 													"additionalProperties": false,
 													"properties": {
 														"ttl": {
-															"enum": [
-																"5m",
-																"1h"
-															],
+															"enum": ["5m", "1h"],
 															"type": "string"
 														},
 														"type": {
@@ -317,9 +312,7 @@
 															"type": "string"
 														}
 													},
-													"required": [
-														"type"
-													],
+													"required": ["type"],
 													"type": "object"
 												},
 												"source": {},
@@ -330,9 +323,7 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"type"
-											],
+											"required": ["type"],
 											"type": "object"
 										},
 										"type": "array"
@@ -340,17 +331,11 @@
 								]
 							},
 							"role": {
-								"enum": [
-									"user",
-									"assistant"
-								],
+								"enum": ["user", "assistant"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"type": "object"
 					},
 					"type": "array"
@@ -369,10 +354,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"messages",
-				"max_tokens"
-			],
+			"required": ["messages", "max_tokens"],
 			"type": "object"
 		},
 		"output": {
@@ -390,9 +372,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"type"
-						],
+						"required": ["type"],
 						"type": "object"
 					},
 					"type": "array"
@@ -431,10 +411,7 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"input_tokens",
-						"output_tokens"
-					],
+					"required": ["input_tokens", "output_tokens"],
 					"type": "object"
 				}
 			},

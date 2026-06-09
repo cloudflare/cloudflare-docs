@@ -4,11 +4,7 @@
 	"name": "Pixverse v5.6",
 	"description": "Pixverse v5.6 is a video generation model supporting text-to-video and image-to-video with audio generation, customizable aspect ratios, and up to 1080p output.",
 	"task": "Text-to-Video",
-	"tags": [
-		"Video Generation",
-		"Image-to-Video",
-		"Audio"
-	],
+	"tags": ["Video Generation", "Image-to-Video", "Audio"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -181,16 +177,7 @@
 				"aspect_ratio": {
 					"default": "16:9",
 					"description": "Video aspect ratio",
-					"enum": [
-						"16:9",
-						"4:3",
-						"1:1",
-						"3:4",
-						"9:16",
-						"2:3",
-						"3:2",
-						"21:9"
-					],
+					"enum": ["16:9", "4:3", "1:1", "3:4", "9:16", "2:3", "3:2", "21:9"],
 					"type": "string"
 				},
 				"duration": {
@@ -222,10 +209,7 @@
 				},
 				"motion_mode": {
 					"description": "Motion mode (fast only available when duration=5; 1080p does not support fast)",
-					"enum": [
-						"normal",
-						"fast"
-					],
+					"enum": ["normal", "fast"],
 					"type": "string"
 				},
 				"negative_prompt": {
@@ -241,12 +225,7 @@
 				"quality": {
 					"default": "720p",
 					"description": "Video quality",
-					"enum": [
-						"360p",
-						"540p",
-						"720p",
-						"1080p"
-					],
+					"enum": ["360p", "540p", "720p", "1080p"],
 					"type": "string"
 				},
 				"seed": {
@@ -275,9 +254,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"type": "object"
 		}
 	}

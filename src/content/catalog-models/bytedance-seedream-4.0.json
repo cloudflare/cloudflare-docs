@@ -4,11 +4,7 @@
 	"name": "Seedream 4.0",
 	"description": "Seedream 4.0 is ByteDance's image creation model that combines text-to-image generation and image editing into a single architecture, offering fast, high-resolution output up to 4K.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Image Editing",
-		"High Resolution"
-	],
+	"tags": ["Image Generation", "Image Editing", "High Resolution"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -222,12 +218,7 @@
 					"type": "string"
 				},
 				"size": {
-					"enum": [
-						"1K",
-						"2K",
-						"4K",
-						"custom"
-					],
+					"enum": ["1K", "2K", "4K", "custom"],
 					"type": "string"
 				},
 				"width": {
@@ -236,9 +227,7 @@
 					"type": "integer"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -250,9 +239,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

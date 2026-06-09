@@ -4,12 +4,7 @@
 	"name": "GPT-4o mini",
 	"description": "GPT-4o Mini is the lightweight, low-cost variant of GPT-4o, well suited to high-volume tasks with multimodal inputs.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Multimodal",
-		"Fast",
-		"Cost-Efficient"
-	],
+	"tags": ["LLM", "Multimodal", "Fast", "Cost-Efficient"],
 	"context_length": 128000,
 	"max_output_tokens": 16384,
 	"schema_version": "1.0.0",
@@ -10588,10 +10583,7 @@
 	"metadata": {
 		"Architecture": "Transformer (multimodal)"
 	},
-	"request_formats": [
-		"responses",
-		"chat-completions"
-	],
+	"request_formats": ["responses", "chat-completions"],
 	"created_at": "2026-05-22 17:53:27",
 	"schema": {
 		"input": {
@@ -10602,13 +10594,7 @@
 					"additionalProperties": false,
 					"properties": {
 						"format": {
-							"enum": [
-								"wav",
-								"mp3",
-								"flac",
-								"opus",
-								"pcm16"
-							],
+							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
 							"type": "string"
 						},
 						"voice": {
@@ -10659,30 +10645,18 @@
 								]
 							},
 							"role": {
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								],
+								"enum": ["system", "developer", "user", "assistant", "tool"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"modalities": {
 					"items": {
-						"enum": [
-							"text",
-							"audio"
-						],
+						"enum": ["text", "audio"],
 						"type": "string"
 					},
 					"type": "array"
@@ -10721,9 +10695,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"type": "object"
 		},
 		"output": {
@@ -10793,17 +10765,11 @@
 										]
 									}
 								},
-								"required": [
-									"role"
-								],
+								"required": ["role"],
 								"type": "object"
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
+						"required": ["index", "message", "finish_reason"],
 						"type": "object"
 					},
 					"type": "array"
@@ -10833,21 +10799,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
-					],
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
 					"type": "object"
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
+			"required": ["id", "object", "created", "model", "choices"],
 			"type": "object"
 		}
 	}

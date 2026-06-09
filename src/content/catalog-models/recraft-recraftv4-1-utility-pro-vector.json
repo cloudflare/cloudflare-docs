@@ -4,13 +4,7 @@
 	"name": "Recraft V4.1 Utility Pro SVG",
 	"description": "Generate detailed, high-resolution SVG vector graphics from text prompts with a general-purpose model, scalable to any size for print and large-scale design work.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"SVG",
-		"Vector",
-		"Design",
-		"High Resolution"
-	],
+	"tags": ["Image Generation", "SVG", "Vector", "Design", "High Resolution"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -118,25 +112,13 @@
 				"controls": {
 					"colors": [
 						{
-							"rgb": [
-								0,
-								122,
-								204
-							]
+							"rgb": [0, 122, 204]
 						},
 						{
-							"rgb": [
-								255,
-								165,
-								0
-							]
+							"rgb": [255, 165, 0]
 						},
 						{
-							"rgb": [
-								240,
-								240,
-								240
-							]
+							"rgb": [240, 240, 240]
 						}
 					]
 				}
@@ -203,9 +185,7 @@
 									"type": "array"
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"type": "object"
 						},
 						"colors": {
@@ -223,9 +203,7 @@
 										"type": "array"
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"type": "object"
 							},
 							"maxItems": 5,
@@ -247,9 +225,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -260,9 +236,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}
