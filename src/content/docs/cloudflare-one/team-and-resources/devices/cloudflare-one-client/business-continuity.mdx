@@ -59,7 +59,7 @@ The mechanisms below help you execute fail-open decisions when needed. Document 
         <p>Example: Cloudflare management systems unreachable; Global Disconnection unavailable but users need Internet access to maintain business operations.</p>
       </td>
       <td>
-        <p><strong><a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/">External Emergency Disconnect</a></strong></p>
+        <p><strong><a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect">External Emergency Disconnect</a></strong></p>
         <p>A customer-hosted HTTPS endpoint that clients poll for disconnect signals, operating independently of Cloudflare infrastructure.</p>
       </td>
       <td>
@@ -95,7 +95,7 @@ The mechanisms below help you execute fail-open decisions when needed. Document 
       </td>
       <td>
         <p><strong>Use when:</strong> You need immediate fleet-wide disconnection and Cloudflare's management systems are reachable.</p>
-        <p><strong>Guidance:</strong> Check the <a href="https://www.cloudflarestatus.com/">Cloudflare status page</a> first. If Cloudflare infrastructure is experiencing issues, this mechanism may be unavailable — use <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/">External Emergency Disconnect</a> instead.</p>
+        <p><strong>Guidance:</strong> Check the <a href="https://www.cloudflarestatus.com/">Cloudflare status page</a> first. If Cloudflare infrastructure is experiencing issues, this mechanism may be unavailable — use <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect">External Emergency Disconnect</a> instead.</p>
         <p><strong>Expected outcome:</strong> All clients disconnect within seconds; users have direct Internet access without filtering, threat protection, or private application connectivity.</p>
       </td>
       <td>
@@ -286,7 +286,7 @@ When you disconnect the Cloudflare One Client, the following controls are affect
 | Product documentation | [Cloudflare One Client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) |
 | API reference | [Zero Trust Devices Settings API](https://developers.cloudflare.com/api/resources/zero_trust/subresources/devices/subresources/settings/) |
 | Global Disconnection | [Global Disconnection settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-the-cloudflare-one-client-on-all-devices) |
-| External Emergency Disconnect | [External Emergency Disconnect documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/) |
+| External Emergency Disconnect | [External Emergency Disconnect documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect) |
 | Admin Override Codes | [Admin Override Codes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) |
 | MDM deployment | [MDM Deployment Guide](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/) |
 | Terraform provider | [Cloudflare Terraform Provider – Zero Trust Devices](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) |
