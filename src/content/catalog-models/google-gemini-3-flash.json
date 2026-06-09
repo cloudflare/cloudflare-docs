@@ -4,12 +4,7 @@
 	"name": "Gemini 3 Flash",
 	"description": "Gemini 3 Flash is Google's fast multimodal model with frontier intelligence, superior search, and grounding capabilities.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Fast",
-		"Multimodal",
-		"Reasoning"
-	],
+	"tags": ["LLM", "Fast", "Multimodal", "Reasoning"],
 	"context_length": 1000000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
@@ -376,16 +371,11 @@
 								"type": "array"
 							},
 							"role": {
-								"enum": [
-									"user",
-									"model"
-								],
+								"enum": ["user", "model"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"parts"
-						],
+						"required": ["parts"],
 						"type": "object"
 					},
 					"type": "array"
@@ -431,10 +421,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"category",
-							"threshold"
-						],
+						"required": ["category", "threshold"],
 						"type": "object"
 					},
 					"type": "array"
@@ -455,9 +442,7 @@
 							"type": "array"
 						}
 					},
-					"required": [
-						"parts"
-					],
+					"required": ["parts"],
 					"type": "object"
 				},
 				"toolConfig": {},
@@ -466,9 +451,7 @@
 					"type": "array"
 				}
 			},
-			"required": [
-				"contents"
-			],
+			"required": ["contents"],
 			"type": "object"
 		},
 		"output": {

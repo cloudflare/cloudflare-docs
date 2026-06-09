@@ -4,12 +4,7 @@
 	"name": "o4-mini",
 	"description": "OpenAI's fast, lightweight reasoning model optimized for multi-step problem solving at lower cost.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Reasoning",
-		"Fast",
-		"Cost-Efficient"
-	],
+	"tags": ["LLM", "Reasoning", "Fast", "Cost-Efficient"],
 	"context_length": 200000,
 	"max_output_tokens": 100000,
 	"schema_version": "1.0.0",
@@ -9798,10 +9793,7 @@
 		"Architecture": "Transformer",
 		"Reasoning": "Chain-of-thought"
 	},
-	"request_formats": [
-		"responses",
-		"chat-completions"
-	],
+	"request_formats": ["responses", "chat-completions"],
 	"created_at": "2026-05-22 17:53:42",
 	"schema": {
 		"input": {
@@ -9812,13 +9804,7 @@
 					"additionalProperties": false,
 					"properties": {
 						"format": {
-							"enum": [
-								"wav",
-								"mp3",
-								"flac",
-								"opus",
-								"pcm16"
-							],
+							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
 							"type": "string"
 						},
 						"voice": {
@@ -9869,30 +9855,18 @@
 								]
 							},
 							"role": {
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								],
+								"enum": ["system", "developer", "user", "assistant", "tool"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"modalities": {
 					"items": {
-						"enum": [
-							"text",
-							"audio"
-						],
+						"enum": ["text", "audio"],
 						"type": "string"
 					},
 					"type": "array"
@@ -9931,9 +9905,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"type": "object"
 		},
 		"output": {
@@ -10003,17 +9975,11 @@
 										]
 									}
 								},
-								"required": [
-									"role"
-								],
+								"required": ["role"],
 								"type": "object"
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
+						"required": ["index", "message", "finish_reason"],
 						"type": "object"
 					},
 					"type": "array"
@@ -10043,21 +10009,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
-					],
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
 					"type": "object"
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
+			"required": ["id", "object", "created", "model", "choices"],
 			"type": "object"
 		}
 	}

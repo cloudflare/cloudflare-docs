@@ -4,11 +4,7 @@
 	"name": "AssemblyAI Universal-3 Pro",
 	"description": "AssemblyAI's Universal 3 Pro speech recognition model for high-accuracy transcription.",
 	"task": "Automatic Speech Recognition",
-	"tags": [
-		"Speech-to-Text",
-		"Transcription",
-		"Multilingual"
-	],
+	"tags": ["Speech-to-Text", "Transcription", "Multilingual"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -943,11 +939,7 @@
 				},
 				"boost_param": {
 					"description": "How much to boost the words in word_boost.",
-					"enum": [
-						"low",
-						"default",
-						"high"
-					],
+					"enum": ["low", "default", "high"],
 					"type": "string"
 				},
 				"content_safety": {
@@ -969,10 +961,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"from",
-							"to"
-						],
+						"required": ["from", "to"],
 						"type": "object"
 					},
 					"type": "array"
@@ -983,9 +972,7 @@
 				},
 				"domain": {
 					"description": "Domain-specific transcription mode. \"medical-v1\" enables medical terminology optimization.",
-					"enum": [
-						"medical-v1"
-					],
+					"enum": ["medical-v1"],
 					"type": "string"
 				},
 				"dual_channel": {
@@ -1044,10 +1031,7 @@
 				},
 				"redact_pii_sub": {
 					"description": "Strategy for substituting redacted PII.",
-					"enum": [
-						"entity_name",
-						"hash"
-					],
+					"enum": ["entity_name", "hash"],
 					"type": "string"
 				},
 				"sentiment_analysis": {
@@ -1158,13 +1142,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"text",
-									"start",
-									"end",
-									"confidence",
-									"speaker"
-								],
+								"required": ["text", "start", "end", "confidence", "speaker"],
 								"type": "object"
 							},
 							"type": "array"
@@ -1204,12 +1182,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"text",
-									"start",
-									"end",
-									"confidence"
-								],
+								"required": ["text", "start", "end", "confidence"],
 								"type": "object"
 							},
 							"type": "array"
@@ -1221,9 +1194,7 @@
 					"description": "Word-level timestamps and confidence scores."
 				}
 			},
-			"required": [
-				"text"
-			],
+			"required": ["text"],
 			"type": "object"
 		}
 	}

@@ -191,12 +191,7 @@
 				"output_format": {
 					"default": "mp3",
 					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
-					"enum": [
-						"mp3",
-						"opus",
-						"wav",
-						"flac"
-					],
+					"enum": ["mp3", "opus", "wav", "flac"],
 					"type": "string"
 				},
 				"sample_rate": {
@@ -226,11 +221,7 @@
 				"timestamp_type": {
 					"default": "none",
 					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
-					"enum": [
-						"none",
-						"word",
-						"character"
-					],
+					"enum": ["none", "word", "character"],
 					"type": "string"
 				},
 				"voice_id": {
@@ -354,9 +345,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"type": "object"
 		}
 	}
