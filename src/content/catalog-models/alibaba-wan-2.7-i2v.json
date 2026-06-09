@@ -4,10 +4,7 @@
 	"name": "Wan 2.7 I2V",
 	"description": "Alibaba's Wan 2.7 image-to-video model that generates videos from a reference image with optional text prompts. Supports 720P and 1080P output with durations from 2 to 15 seconds.",
 	"task": "Image-to-Video",
-	"tags": [
-		"Image-to-Video",
-		"Video Generation"
-	],
+	"tags": ["Image-to-Video", "Video Generation"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -185,10 +182,7 @@
 					"type": "string"
 				},
 				"resolution": {
-					"enum": [
-						"720P",
-						"1080P"
-					],
+					"enum": ["720P", "1080P"],
 					"type": "string"
 				},
 				"seed": {
@@ -200,9 +194,7 @@
 					"type": "boolean"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		},
 		"output": {
@@ -214,9 +206,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"type": "object"
 		}
 	}

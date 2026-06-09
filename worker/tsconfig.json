@@ -4,7 +4,10 @@
 		"target": "esnext",
 		"module": "esnext",
 		"lib": ["esnext"],
-		"types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers/types"]
+		"types": [
+			"@cloudflare/workers-types",
+			"@cloudflare/vitest-pool-workers/types"
+		]
 	},
 	"include": ["*.ts"],
 	"exclude": []

@@ -4,11 +4,7 @@
 	"name": "Imagen 4",
 	"description": "Google's latest image generation model producing high-quality, photorealistic images from text prompts with support for multiple aspect ratios.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"High Quality",
-		"Photorealistic"
-	],
+	"tags": ["Image Generation", "High Quality", "Photorealistic"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -194,22 +190,12 @@
 			"properties": {
 				"aspect_ratio": {
 					"description": "Aspect ratio of the generated image",
-					"enum": [
-						"1:1",
-						"3:4",
-						"4:3",
-						"9:16",
-						"16:9"
-					],
+					"enum": ["1:1", "3:4", "4:3", "9:16", "16:9"],
 					"type": "string"
 				},
 				"person_generation": {
 					"description": "Allow the model to generate images of people. dont_allow: block people, allow_adult: adults only, allow_all: adults and children",
-					"enum": [
-						"dont_allow",
-						"allow_adult",
-						"allow_all"
-					],
+					"enum": ["dont_allow", "allow_adult", "allow_all"],
 					"type": "string"
 				},
 				"prompt": {
@@ -217,9 +203,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -232,9 +216,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

@@ -35,36 +35,38 @@ const dirs = contents.filter((ent: any) => ent.type === "dir");
 			if (!packageJson) return;
 
 			return (
-				<div>
-					<div class="flex items-center justify-between gap-4">
-						<AnchorHeading depth={3} title={dir.name} />
-						<a
-							href={`https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/${dir.path}`}
-						>
-							<img
-								src="https://deploy.workers.cloudflare.com/button"
-								alt="Deploy to Cloudflare"
-							/>
-						</a>
+				<>
+					<div>
+						<div class="flex items-center justify-between gap-4">
+							<AnchorHeading depth={3} title={dir.name} />
+							<a
+								href={`https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/${dir.path}`}
+							>
+								<img
+									src="https://deploy.workers.cloudflare.com/button"
+									alt="Deploy to Cloudflare"
+								/>
+							</a>
+						</div>
+						<p>{packageJson.description}</p>
+						<p>
+							Explore on{" "}
+							<a
+								href={`https://github.com/cloudflare/templates/tree/main/${dir.path}`}
+							>
+								GitHub ↗
+							</a>
+						</p>
+						<PackageManagers
+							type="create"
+							pkg="cloudflare@latest"
+							args={`--template=cloudflare/templates/${dir.path}`}
+						/>
 					</div>
-					<p>{packageJson.description}</p>
-					<p>
-						Explore on{" "}
-						<a
-							href={`https://github.com/cloudflare/templates/tree/main/${dir.path}`}
-						>
-							GitHub ↗
-						</a>
-					</p>
-					<PackageManagers
-						type="create"
-						pkg="cloudflare@latest"
-						args={`--template=cloudflare/templates/${dir.path}`}
-					/>
-				</div>
-				<br/>
-				<hr>
-				<br/>
+					<br />
+					<hr />
+					<br />
+				</>
 			);
 		})
 }

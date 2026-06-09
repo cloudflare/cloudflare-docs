@@ -4,11 +4,7 @@
 	"name": "Grok TTS",
 	"description": "xAI's Grok text-to-speech model. Generates high-fidelity spoken audio in 5 expressive voices (eve, ara, rex, sal, leo) with 20+ supported languages. Supports inline speech tags for laughter, whispers, and pauses.",
 	"task": "Text-to-Speech",
-	"tags": [
-		"Text-to-Speech",
-		"Audio Generation",
-		"Multilingual"
-	],
+	"tags": ["Text-to-Speech", "Audio Generation", "Multilingual"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -290,14 +286,7 @@
 						},
 						"codec": {
 							"description": "Audio codec. Defaults to \"mp3\". mp3 \u2192 audio/mpeg (general use); wav \u2192 audio/wav (lossless); pcm \u2192 audio/pcm (raw 16-bit LE, real-time pipelines); mulaw/ulaw \u2192 audio/basic (G.711 \u03bc-law, telephony); alaw \u2192 audio/alaw (G.711 A-law, telephony).",
-							"enum": [
-								"mp3",
-								"wav",
-								"pcm",
-								"mulaw",
-								"ulaw",
-								"alaw"
-							],
+							"enum": ["mp3", "wav", "pcm", "mulaw", "ulaw", "alaw"],
 							"type": "string"
 						},
 						"sample_rate": {
@@ -348,10 +337,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"text",
-				"language"
-			],
+			"required": ["text", "language"],
 			"type": "object"
 		},
 		"output": {
@@ -363,9 +349,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"type": "object"
 		}
 	}

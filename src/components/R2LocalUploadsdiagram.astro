@@ -1,32 +1,49 @@
 ---
 interface Props {
-	mode?: 'without' | 'with' | 'comparison';
+	mode?: "without" | "with" | "comparison";
 	autoPlay?: boolean;
 	loop?: boolean;
 }
 
-const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
+const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 ---
 
-<r2-local-uploads-diagram data-mode={mode} data-autoplay={autoPlay} data-loop={loop}>
+<r2-local-uploads-diagram
+	data-mode={mode}
+	data-autoplay={autoPlay}
+	data-loop={loop}
+>
 	<div class="diagram-wrapper">
-		{mode === 'comparison' && (
-			<div class="toggle-container">
-				<span class="toggle-label" id="local-uploads-label">Local uploads</span>
-				<label class="toggle-switch" aria-labelledby="local-uploads-label">
-					<input type="checkbox" class="toggle-input" aria-labelledby="local-uploads-label" />
-					<span class="toggle-slider"></span>
-				</label>
-			</div>
-		)}
+		{
+			mode === "comparison" && (
+				<div class="toggle-container">
+					<span class="toggle-label" id="local-uploads-label">
+						Local uploads
+					</span>
+					<label class="toggle-switch" aria-labelledby="local-uploads-label">
+						<input
+							type="checkbox"
+							class="toggle-input"
+							aria-labelledby="local-uploads-label"
+						/>
+						<span class="toggle-slider" />
+					</label>
+				</div>
+			)
+		}
 		<div class="diagram-container">
 			<!-- Client node -->
 			<div class="flow-node" data-step="1">
 				<div class="node-card">
 					<div class="node-badge">
-						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-							<rect x="3" y="4" width="18" height="12" rx="2"/>
-							<path d="M7 20h10M12 16v4"/>
+						<svg
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							stroke-width="2"
+						>
+							<rect x="3" y="4" width="18" height="12" rx="2"></rect>
+							<path d="M7 20h10M12 16v4"></path>
 						</svg>
 					</div>
 					<div class="node-info">
@@ -46,10 +63,15 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 				<div class="group-content edge-single">
 					<div class="bucket-component gateway-node-without">
 						<div class="component-icon gateway">
-							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-								<path d="M12 2L2 7l10 5 10-5-10-5z"/>
-								<path d="M2 17l10 5 10-5"/>
-								<path d="M2 12l10 5 10-5"/>
+							<svg
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								stroke-width="2"
+							>
+								<path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+								<path d="M2 17l10 5 10-5"></path>
+								<path d="M2 12l10 5 10-5"></path>
 							</svg>
 						</div>
 						<span class="component-name">R2 Gateway Worker</span>
@@ -61,21 +83,74 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			<div class="split-area without-local-uploads" data-connector="2-bucket">
 				<svg class="split-svg" viewBox="0 0 320 100" preserveAspectRatio="none">
 					<!-- Stem from node above -->
-					<line class="split-line stem data-path" x1="160" y1="0" x2="160" y2="20" stroke="currentColor" stroke-width="2"/>
+					<line
+						class="split-line stem data-path"
+						x1="160"
+						y1="0"
+						x2="160"
+						y2="20"
+						stroke="currentColor"
+						stroke-width="2"></line>
 					<!-- Horizontal bar - left half (metadata) -->
-					<line class="split-line horizontal-left metadata-path" x1="85" y1="20" x2="160" y2="20" stroke="currentColor" stroke-width="2"/>
+					<line
+						class="split-line horizontal-left metadata-path"
+						x1="85"
+						y1="20"
+						x2="160"
+						y2="20"
+						stroke="currentColor"
+						stroke-width="2"></line>
 					<!-- Horizontal bar - right half (object data) -->
-					<line class="split-line horizontal-right data-path" x1="160" y1="20" x2="235" y2="20" stroke="currentColor" stroke-width="2"/>
+					<line
+						class="split-line horizontal-right data-path"
+						x1="160"
+						y1="20"
+						x2="235"
+						y2="20"
+						stroke="currentColor"
+						stroke-width="2"></line>
 					<!-- Left branch (metadata) -->
-					<line class="split-line left-branch-top metadata-path" x1="85" y1="20" x2="85" y2="50" stroke="currentColor" stroke-width="2"/>
+					<line
+						class="split-line left-branch-top metadata-path"
+						x1="85"
+						y1="20"
+						x2="85"
+						y2="50"
+						stroke="currentColor"
+						stroke-width="2"></line>
 					<!-- Right branch (object data) -->
-					<line class="split-line right-branch-top data-path" x1="235" y1="20" x2="235" y2="50" stroke="currentColor" stroke-width="2"/>
+					<line
+						class="split-line right-branch-top data-path"
+						x1="235"
+						y1="20"
+						x2="235"
+						y2="50"
+						stroke="currentColor"
+						stroke-width="2"></line>
 					<!-- Labels positioned on the lines -->
-					<text x="85" y="67" text-anchor="middle" class="svg-label">Object metadata</text>
-					<text x="235" y="67" text-anchor="middle" class="svg-label">Object data</text>
+					<text x="85" y="67" text-anchor="middle" class="svg-label"
+						>Object metadata</text
+					>
+					<text x="235" y="67" text-anchor="middle" class="svg-label"
+						>Object data</text
+					>
 					<!-- Continue lines to bucket -->
-					<line class="split-line left-branch-bottom metadata-path" x1="85" y1="72" x2="85" y2="100" stroke="currentColor" stroke-width="2"/>
-					<line class="split-line right-branch-bottom data-path" x1="235" y1="72" x2="235" y2="100" stroke="currentColor" stroke-width="2"/>
+					<line
+						class="split-line left-branch-bottom metadata-path"
+						x1="85"
+						y1="72"
+						x2="85"
+						y2="100"
+						stroke="currentColor"
+						stroke-width="2"></line>
+					<line
+						class="split-line right-branch-bottom data-path"
+						x1="235"
+						y1="72"
+						x2="235"
+						y2="100"
+						stroke="currentColor"
+						stroke-width="2"></line>
 				</svg>
 			</div>
 
@@ -87,10 +162,15 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 					<!-- R2 Gateway Worker -->
 					<div class="bucket-component gateway-node-local">
 						<div class="component-icon gateway">
-							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-								<path d="M12 2L2 7l10 5 10-5-10-5z"/>
-								<path d="M2 17l10 5 10-5"/>
-								<path d="M2 12l10 5 10-5"/>
+							<svg
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								stroke-width="2"
+							>
+								<path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+								<path d="M2 17l10 5 10-5"></path>
+								<path d="M2 12l10 5 10-5"></path>
 							</svg>
 						</div>
 						<span class="component-name">R2 Gateway Worker</span>
@@ -100,10 +180,15 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 					<!-- Local Object Data Infra -->
 					<div class="bucket-component local-storage-node">
 						<div class="component-icon storage">
-							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-								<ellipse cx="12" cy="6" rx="8" ry="3"/>
-								<path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
-								<path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/>
+							<svg
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								stroke-width="2"
+							>
+								<ellipse cx="12" cy="6" rx="8" ry="3"></ellipse>
+								<path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"></path>
+								<path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"></path>
 							</svg>
 						</div>
 						<span class="component-name">Object Data Infra</span>
@@ -112,7 +197,10 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			</div>
 
 			<!-- WITH local uploads: Two lines down to bucket -->
-			<div class="local-split-columns with-local-uploads hidden" data-connector="local-split">
+			<div
+				class="local-split-columns with-local-uploads hidden"
+				data-connector="local-split"
+			>
 				<div class="split-col left-col">
 					<div class="v-connector meta-line"></div>
 					<div class="split-label-row">
@@ -124,8 +212,8 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 					<div class="v-connector replication-line"></div>
 					<div class="split-label-row">
 						<svg class="progress-ring" viewBox="0 0 20 20">
-							<circle class="progress-ring-bg" cx="10" cy="10" r="8" />
-							<circle class="progress-ring-fill" cx="10" cy="10" r="8" />
+							<circle class="progress-ring-bg" cx="10" cy="10" r="8"></circle>
+							<circle class="progress-ring-fill" cx="10" cy="10" r="8"></circle>
 						</svg>
 						<span class="split-col-label replication">Object data</span>
 					</div>
@@ -141,19 +229,31 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 					<div class="group-content">
 						<div class="bucket-component" data-component="metadata">
 							<div class="component-icon">
-								<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-									<circle cx="12" cy="12" r="10"/>
-									<path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+								<svg
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+								>
+									<circle cx="12" cy="12" r="10"></circle>
+									<path
+										d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+									></path>
 								</svg>
 							</div>
 							<span class="component-name">Metadata Service</span>
 						</div>
 						<div class="bucket-component" data-component="object-data">
 							<div class="component-icon">
-								<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-									<ellipse cx="12" cy="6" rx="8" ry="3"/>
-									<path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
-									<path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/>
+								<svg
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+								>
+									<ellipse cx="12" cy="6" rx="8" ry="3"></ellipse>
+									<path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"></path>
+									<path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"></path>
 								</svg>
 							</div>
 							<span class="component-name">Object Data Infra</span>
@@ -164,9 +264,15 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 		</div>
 		<!-- Status indicator -->
 		<div class="status-indicator">
-			<svg class="status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-				<circle cx="12" cy="12" r="10" class="status-circle" />
-				<path d="M8 12l3 3 5-5" class="status-checkmark" />
+			<svg
+				class="status-check"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2.5"
+			>
+				<circle cx="12" cy="12" r="10" class="status-circle"></circle>
+				<path d="M8 12l3 3 5-5" class="status-checkmark"></path>
 			</svg>
 			<span class="status-text">Data is uploaded and accessible</span>
 		</div>
@@ -270,8 +376,6 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 		width: 100%;
 	}
 
-
-
 	/* Vertical connector line between nodes */
 	.connector {
 		width: 2px;
@@ -303,7 +407,9 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 		border: 1px solid rgb(229 229 229);
 		width: 220px;
 		margin: 0 !important;
-		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+		transition:
+			border-color 0.3s ease,
+			box-shadow 0.3s ease;
 	}
 
 	:root[data-theme="dark"] .node-card {
@@ -366,7 +472,8 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 
 	.node-name {
 		font-size: 0.8125rem;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 		font-weight: 500;
 		color: rgb(23 23 23);
 	}
@@ -535,7 +642,9 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 		padding: 0.5rem;
 		margin: 0 !important;
 		box-sizing: border-box;
-		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+		transition:
+			border-color 0.3s ease,
+			box-shadow 0.3s ease;
 	}
 
 	:root[data-theme="dark"] .bucket-component {
@@ -571,7 +680,8 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 
 	.component-name {
 		font-size: 0.625rem;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 		font-weight: 500;
 		color: rgb(23 23 23);
 		text-align: center;
@@ -653,8 +763,6 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 	.bucket-component.active .component-icon.storage {
 		color: rgb(249 115 22);
 	}
-
-
 
 	/* Note text under component name */
 	.component-note {
@@ -883,42 +991,50 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 		private playTimeout: number | null = null;
 
 		connectedCallback() {
-			this.loop = this.dataset.loop === 'true';
-			
-			const toggleInput = this.querySelector('.toggle-input') as HTMLInputElement;
+			this.loop = this.dataset.loop === "true";
+
+			const toggleInput = this.querySelector(
+				".toggle-input",
+			) as HTMLInputElement;
 			if (toggleInput) {
-				toggleInput.addEventListener('change', () => {
+				toggleInput.addEventListener("change", () => {
 					this.localUploadsEnabled = toggleInput.checked;
-					this.setMode(toggleInput.checked ? 'with' : 'without');
+					this.setMode(toggleInput.checked ? "with" : "without");
 					this.resetAnimation();
-					if (this.dataset.autoplay === 'true') {
-						this.playTimeout = setTimeout(() => this.play(), 500) as unknown as number;
+					if (this.dataset.autoplay === "true") {
+						this.playTimeout = setTimeout(
+							() => this.play(),
+							500,
+						) as unknown as number;
 					}
 				});
 			}
 
-			if (this.dataset.autoplay === 'true') {
-				this.playTimeout = setTimeout(() => this.play(), 500) as unknown as number;
+			if (this.dataset.autoplay === "true") {
+				this.playTimeout = setTimeout(
+					() => this.play(),
+					500,
+				) as unknown as number;
 			}
 		}
 
-		private setMode(mode: 'without' | 'with') {
-			const withoutElements = this.querySelectorAll('.without-local-uploads');
-			const withElements = this.querySelectorAll('.with-local-uploads');
+		private setMode(mode: "without" | "with") {
+			const withoutElements = this.querySelectorAll(".without-local-uploads");
+			const withElements = this.querySelectorAll(".with-local-uploads");
 
-			if (mode === 'without') {
-				withoutElements.forEach(el => el.classList.remove('hidden'));
-				withElements.forEach(el => el.classList.add('hidden'));
+			if (mode === "without") {
+				withoutElements.forEach((el) => el.classList.remove("hidden"));
+				withElements.forEach((el) => el.classList.add("hidden"));
 			} else {
-				withoutElements.forEach(el => el.classList.add('hidden'));
-				withElements.forEach(el => el.classList.remove('hidden'));
+				withoutElements.forEach((el) => el.classList.add("hidden"));
+				withElements.forEach((el) => el.classList.remove("hidden"));
 			}
 		}
 
 		private resetAnimation() {
 			this.currentStep = 0;
 			this.isPlaying = false;
-			
+
 			// Clear any pending timeouts
 			if (this.stepTimeout !== null) {
 				clearTimeout(this.stepTimeout);
@@ -928,12 +1044,20 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 				clearTimeout(this.playTimeout);
 				this.playTimeout = null;
 			}
-			
+
 			// Remove all active and animating states
-			this.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
-			this.querySelectorAll('.animating').forEach(el => el.classList.remove('animating'));
-			this.querySelectorAll('.data-animating').forEach(el => el.classList.remove('data-animating'));
-			this.querySelectorAll('.metadata-active').forEach(el => el.classList.remove('metadata-active'));
+			this.querySelectorAll(".active").forEach((el) =>
+				el.classList.remove("active"),
+			);
+			this.querySelectorAll(".animating").forEach((el) =>
+				el.classList.remove("animating"),
+			);
+			this.querySelectorAll(".data-animating").forEach((el) =>
+				el.classList.remove("data-animating"),
+			);
+			this.querySelectorAll(".metadata-active").forEach((el) =>
+				el.classList.remove("metadata-active"),
+			);
 		}
 
 		private play() {
@@ -953,7 +1077,10 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 				if (this.loop) {
 					// Reset and restart
 					this.resetAnimation();
-					this.playTimeout = setTimeout(() => this.play(), 1000) as unknown as number;
+					this.playTimeout = setTimeout(
+						() => this.play(),
+						1000,
+					) as unknown as number;
 				} else {
 					this.isPlaying = false;
 				}
@@ -961,7 +1088,7 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			}
 
 			this.updateDiagram();
-			
+
 			// Duration for each step
 			let duration = 1200;
 			if (!this.localUploadsEnabled && this.currentStep === 4) {
@@ -973,12 +1100,17 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			} else if (this.localUploadsEnabled && this.currentStep === 9) {
 				duration = 2500; // Linger on final step with status indicator
 			}
-			this.stepTimeout = setTimeout(() => this.advanceStep(), duration) as unknown as number;
+			this.stepTimeout = setTimeout(
+				() => this.advanceStep(),
+				duration,
+			) as unknown as number;
 		}
 
 		private updateDiagram() {
 			// Remove all active states first
-			this.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+			this.querySelectorAll(".active").forEach((el) =>
+				el.classList.remove("active"),
+			);
 
 			if (this.localUploadsEnabled) {
 				this.updateWithLocalUploads();
@@ -991,49 +1123,53 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			// Step 1: Client node lights up
 			if (this.currentStep >= 1) {
 				const clientNode = this.querySelector('[data-step="1"].flow-node');
-				clientNode?.classList.add('active');
+				clientNode?.classList.add("active");
 			}
 
 			// Step 2: Connector from client to EDGE lights up
 			if (this.currentStep >= 2) {
 				const connector1 = this.querySelector('[data-connector="1-2"]');
-				connector1?.classList.add('active');
+				connector1?.classList.add("active");
 			}
 
 			// Step 3: EDGE box border + R2 Gateway Worker lights up
 			if (this.currentStep >= 3) {
-				const edgeBox = this.querySelector('.region-box.without-local-uploads');
-				const gatewayNode = this.querySelector('.gateway-node-without');
-				edgeBox?.classList.add('active');
-				gatewayNode?.classList.add('active');
+				const edgeBox = this.querySelector(".region-box.without-local-uploads");
+				const gatewayNode = this.querySelector(".gateway-node-without");
+				edgeBox?.classList.add("active");
+				gatewayNode?.classList.add("active");
 			}
 
 			// Step 4: Object data line starts animating
 			if (this.currentStep >= 4) {
-				const splitArea = this.querySelector('.split-area');
-				splitArea?.classList.add('data-animating');
+				const splitArea = this.querySelector(".split-area");
+				splitArea?.classList.add("data-animating");
 			}
 
 			// Step 5: Object Data Infra lights up
 			if (this.currentStep >= 5) {
-				const objectDataComponent = this.querySelector('[data-component="object-data"]');
-				objectDataComponent?.classList.add('active');
+				const objectDataComponent = this.querySelector(
+					'[data-component="object-data"]',
+				);
+				objectDataComponent?.classList.add("active");
 			}
 
 			// Step 6: Object metadata line lights up
 			if (this.currentStep >= 6) {
-				const splitArea = this.querySelector('.split-area');
-				splitArea?.classList.add('metadata-active');
+				const splitArea = this.querySelector(".split-area");
+				splitArea?.classList.add("metadata-active");
 			}
 
 			// Step 7: Metadata Service + YOUR BUCKET border + status indicator
 			if (this.currentStep >= 7) {
-				const bucketGroup = this.querySelector('.bucket-group');
-				const metadataComponent = this.querySelector('[data-component="metadata"]');
-				const statusIndicator = this.querySelector('.status-indicator');
-				bucketGroup?.classList.add('active');
-				metadataComponent?.classList.add('active');
-				statusIndicator?.classList.add('active');
+				const bucketGroup = this.querySelector(".bucket-group");
+				const metadataComponent = this.querySelector(
+					'[data-component="metadata"]',
+				);
+				const statusIndicator = this.querySelector(".status-indicator");
+				bucketGroup?.classList.add("active");
+				metadataComponent?.classList.add("active");
+				statusIndicator?.classList.add("active");
 			}
 		}
 
@@ -1041,75 +1177,83 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			// Step 1: Client lights up
 			if (this.currentStep >= 1) {
 				const clientNode = this.querySelector('[data-step="1"].flow-node');
-				clientNode?.classList.add('active');
+				clientNode?.classList.add("active");
 			}
 
 			// Step 2: Connector (client -> edge) lights up
 			if (this.currentStep >= 2) {
 				const connector1 = this.querySelector('[data-connector="1-2"]');
-				connector1?.classList.add('active');
+				connector1?.classList.add("active");
 			}
 
 			// Step 3: EDGE box + R2 Gateway Worker lights up
 			if (this.currentStep >= 3) {
-				const edgeBox = this.querySelector('.region-box.with-local-uploads');
-				const gatewayNode = this.querySelector('.gateway-node-local');
-				edgeBox?.classList.add('active');
-				gatewayNode?.classList.add('active');
+				const edgeBox = this.querySelector(".region-box.with-local-uploads");
+				const gatewayNode = this.querySelector(".gateway-node-local");
+				edgeBox?.classList.add("active");
+				gatewayNode?.classList.add("active");
 			}
 
 			// Step 4: Line from Gateway to Object Data Infra (edge)
 			if (this.currentStep >= 4) {
-				const regionLine = this.querySelector('.region-line');
-				regionLine?.classList.add('active');
+				const regionLine = this.querySelector(".region-line");
+				regionLine?.classList.add("active");
 			}
 
 			// Step 5: Object Data Infra (edge) lights up
 			if (this.currentStep >= 5) {
-				const localStorageNode = this.querySelector('.local-storage-node');
-				localStorageNode?.classList.add('active');
+				const localStorageNode = this.querySelector(".local-storage-node");
+				localStorageNode?.classList.add("active");
 			}
 
 			// Step 6: Line from Gateway to Metadata Service
 			if (this.currentStep >= 6) {
-				const metadataLines = this.querySelectorAll('.left-col .v-connector.meta-line');
-				metadataLines.forEach(el => el.classList.add('active'));
+				const metadataLines = this.querySelectorAll(
+					".left-col .v-connector.meta-line",
+				);
+				metadataLines.forEach((el) => el.classList.add("active"));
 			}
 
 			// Step 7: Metadata Service + YOUR BUCKET border + status indicator lights up
 			if (this.currentStep >= 7) {
-				const bucketGroup = this.querySelector('.bucket-group');
-				const metadataComponent = this.querySelector('[data-component="metadata"]');
-				const statusIndicator = this.querySelector('.status-indicator');
-				bucketGroup?.classList.add('active');
-				metadataComponent?.classList.add('active');
-				statusIndicator?.classList.add('active');
+				const bucketGroup = this.querySelector(".bucket-group");
+				const metadataComponent = this.querySelector(
+					'[data-component="metadata"]',
+				);
+				const statusIndicator = this.querySelector(".status-indicator");
+				bucketGroup?.classList.add("active");
+				metadataComponent?.classList.add("active");
+				statusIndicator?.classList.add("active");
 			}
 
 			// Step 8: Purple replication line animates downward + progress ring fills
 			if (this.currentStep >= 8) {
-				const replicationLines = this.querySelectorAll('.right-col .v-connector.replication-line');
-				const progressRing = this.querySelector('.progress-ring');
+				const replicationLines = this.querySelectorAll(
+					".right-col .v-connector.replication-line",
+				);
+				const progressRing = this.querySelector(".progress-ring");
 				// Force animation restart by removing class, triggering reflow, then adding class
-				replicationLines.forEach(el => {
-					el.classList.remove('animating');
+				replicationLines.forEach((el) => {
+					el.classList.remove("animating");
 					void (el as HTMLElement).offsetWidth; // Trigger reflow
-					el.classList.add('animating');
+					el.classList.add("animating");
 				});
 				if (progressRing) {
-					progressRing.classList.remove('animating');
+					progressRing.classList.remove("animating");
 					void (progressRing as HTMLElement).offsetWidth; // Trigger reflow
-					progressRing.classList.add('animating');
+					progressRing.classList.add("animating");
 				}
 			}
 
 			// Step 9: Object Data Infra (bucket) lights up
 			if (this.currentStep >= 9) {
-				const objectDataComponent = this.querySelector('[data-component="object-data"]');
-				objectDataComponent?.classList.add('active');
+				const objectDataComponent = this.querySelector(
+					'[data-component="object-data"]',
+				);
+				objectDataComponent?.classList.add("active");
 			}
 		}
 	}
 
-	customElements.define('r2-local-uploads-diagram', R2LocalUploadsDiagram);
+	customElements.define("r2-local-uploads-diagram", R2LocalUploadsDiagram);
 </script>
