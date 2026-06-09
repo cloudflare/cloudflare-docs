@@ -67,7 +67,7 @@ While in the **idle, in-memory, non-hibernateable** state, after 70-140 seconds 
 :::note[Outbound connections keep Durable Objects alive]
 Active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-sockets/) (TCP) or an outbound WebSocket prevent the Durable Object from being evicted. Eviction is deferred until both conditions are met: all outbound connections have closed, **and** the standard 70-140 second inactivity window has elapsed with no incoming requests or events.
 
-While pinned by an outbound connection, the Durable Object remains in-memory in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
+While pinned by an outbound connection, the Durable Object remains in memory in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 Each outbound connection pins the Durable Object for a maximum of 15 minutes. After 15 minutes, the connection stops pinning the object (the connection itself continues operating), and normal eviction rules resume.
 
