@@ -1,0 +1,14 @@
+---
+title: Python packages included using requirements.txt are no longer supported
+description: Support for `requirements.txt` has been removed and any running Workers using it will need to be updated to use the new package system.
+products:
+  - workers
+date: 2026-06-10
+---
+
+As part of a closed private beta, Python Workers supported a limited set of packages as built-ins via `requirements.txt`.
+
+On the path to GA, Python Workers now have package support via `pyproject.toml` and `pywrangler`, see our documentation [here](/workers/languages/python/packages/).
+This support is available to the public as part of an open Python Workers public beta.
+
+Support for `requirements.txt` has been removed and any running Workers using it will need to be updated to use the new package system.
