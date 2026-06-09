@@ -109,7 +109,7 @@ Free zones created before 2024-09-01 00:00:00 UTC have an increased limit of 1,0
 If you are an Enterprise customer and require more DNS records, contact your account team. Cloudflare can support millions of DNS records on a single zone.
 :::
 
-DNS records that other Cloudflare services create on your behalf — for example, the `TXT` and `MX` records added by [Email Routing](/email-routing/) — also count toward this limit. To avoid disrupting those services, they are enforced against your record limit with a small buffer, so a zone may occasionally hold slightly more records than its limit would otherwise allow.
+DNS records that other Cloudflare services create on your behalf — for example, the `TXT` and `MX` records added by [Email Routing](/email-service/) — also count toward this limit. To avoid disrupting those services, they are enforced against your record limit with a small buffer, so a zone may occasionally hold slightly more records than its limit would otherwise allow.
 
 To create new records yourself through the dashboard or API, your zone must still be within its record limit.
 
@@ -128,7 +128,6 @@ If changes to records with large TTLs are anticipated, it may make sense to redu
 Because of Cloudflare's many advanced DNS features like CNAME flattening, it can be complex and even impossible to give correct answers to `ANY` queries. For example, when DNS records dynamically come and go or are stored remotely, it can be taxing or even impossible to get all the results at the same time.
 
 Refer to [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) for details. The decision to block `ANY` does not affect DNS Firewall customers.
-
 
 ### How do I add ANAME records on Cloudflare?
 
