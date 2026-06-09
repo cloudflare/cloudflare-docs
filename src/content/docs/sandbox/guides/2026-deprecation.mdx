@@ -1,0 +1,41 @@
+---
+title: 2026 deprecation migration guide
+pcx_content_type: how-to
+sidebar:
+  order: 99
+description: Migrate away from Sandbox SDK features deprecated in June 2026.
+products:
+  - sandbox
+---
+
+This guide walks through migrating away from the Sandbox SDK features deprecated in June 2026.
+
+For the announcement and rationale, refer to the [deprecation changelog entry](/changelog/sandbox/2026-06-09-deprecating-sandbox-sdk-features/).
+
+:::note
+This page is a stub. Detailed migration steps will be published shortly.
+:::
+
+## HTTP and WebSocket transports
+
+Switch to the RPC transport by setting `SANDBOX_TRANSPORT=rpc` or passing `transport: "rpc"` to `getSandbox()`. For more information, refer to the [transport configuration documentation](/sandbox/configuration/transport/).
+
+## Desktop
+
+The desktop feature was removed in `0.10.2`. For browser automation, refer to [Cloudflare Browser Run](/browser-run/).
+
+## Expose ports
+
+Replace `exposePort()` with the tunnels API. For more information, refer to the [tunnels API documentation](/sandbox/api/tunnels/) and the [expose services guide](/sandbox/guides/expose-services/).
+
+## Default sessions
+
+Set `enableDefaultSession: false` on `getSandbox()` and create explicit sessions with [`sandbox.createSession()`](/sandbox/api/sessions/).
+
+## Streaming APIs
+
+The buffered `readFile`, `writeFile`, and `exec` APIs are being consolidated to stream by default. The separate streaming variants will be removed.
+
+## Agent skill
+
+An agent skill is available to assist with the migration: [SKILL.md](https://developers.cloudflare.com/sandbox/guides/2026-deprecation/SKILL.md).
