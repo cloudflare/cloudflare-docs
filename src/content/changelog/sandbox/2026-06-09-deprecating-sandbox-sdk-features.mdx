@@ -1,0 +1,41 @@
+---
+title: Deprecating Sandbox SDK features
+description: The RPC transport becomes the recommended default, and several legacy Sandbox SDK features are deprecated ahead of removal.
+products:
+  - sandbox
+date: 2026-06-09
+---
+
+Today we're announcing the deprecation of several features from the Sandbox SDK. The SDK itself has grown and matured substantially since it was first launched just over a year ago, and as agent workflows have developed we've shipped many new features and experiments so developers can take full advantage of these new capabilities.
+
+We want to ensure that the SDK continues to provide a stable foundation for agentic workflows while we iterate quickly on the codebase. As such, today we are deprecating several features that have either been superseded by newer features or seen low adoption. These will remain in the codebase for the next 30 days, at which point they will be removed.
+
+## HTTP and WebSocket transports
+
+Back in April we released the new RPC transport and deprecated the WebSocket transport. This setting governs how the sandbox container talks to the Workers ecosystem. The RPC transport removes the limitations of both the HTTP and WebSocket transports. As of today it is the recommended default. It will become the default in 30 days.
+
+To migrate your codebase today, update the `SANDBOX_TRANSPORT` variable to `rpc` or set the `transport` option when calling `getSandbox()`. See the [transport configuration documentation](/sandbox/configuration/transport/) for details.
+
+## Desktop
+
+The desktop feature landed as a technical demonstration of what can be done with the Sandbox SDK — controlling a full browser environment from within a sandbox. Now with [Cloudflare Browser Run](/browser-run/), this feature just wasn't being used. To keep things simple, we've removed it in `0.12.0`.
+
+## Expose ports
+
+We recently released support for Cloudflare Tunnel in Sandbox SDK. This provides a robust API for exposing services running in your sandbox to the public internet. It fixes issues many were facing with local development and deployment to `workers.dev` domains. To migrate from `exposePort()` to tunnels, see the [tunnels API documentation](/sandbox/api/tunnels/) and the [expose services guide](/sandbox/guides/expose-services/).
+
+## Default sessions
+
+By default, the `exec()` method in Sandbox SDK maintains a default session across all calls, so a `cd` in one call is honored in the following call. This provided convenience to developers when writing exec statements by hand, but confused agents and caused a number of hard-to-trace bugs. As of `0.12.0` we have introduced the `enableDefaultSession` flag on the `getSandbox()` interface to disable this. Default sessions as a concept — and the flag — will be removed in an upcoming release. We recommend setting `enableDefaultSession: false` today and using the [`sandbox.createSession()` API](/sandbox/api/sessions/) when you need the existing behavior.
+
+## Other changes
+
+We are also consolidating all APIs that buffer data to support streaming by default. This includes [`readFile`, `writeFile`](/sandbox/api/files/), and [`exec`](/sandbox/api/commands/) — the stream equivalents will be removed.
+
+Lastly, we are exploring moving non-core features like the [code interpreter](/sandbox/guides/code-execution/), [terminal](/sandbox/api/terminal/), and [git APIs](/sandbox/guides/git-workflows/) into helpers. We expect these to retain their existing APIs, so migration should be straightforward.
+
+## Next steps
+
+If you are using any of the above features, please consult our migration documentation. We will also be providing an Agent skill to help with the migration.
+
+For any questions, reach out in [Discord](https://discord.cloudflare.com).
