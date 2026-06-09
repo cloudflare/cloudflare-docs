@@ -282,6 +282,38 @@ The HTTPS endpoint that the Cloudflare One Client will poll for an [External Eme
 
 The URL must use `https://` and use an IPv4 or IPv6 address as host (not a domain).
 
+### `hardware_backed_registration`
+
+<Details header="Feature availability">
+
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                                                         | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2026.6.0             |
+| macOS    | ✅           | 2026.6.0             |
+| Linux    | ✅           | 2026.6.0             |
+| iOS      | ❌           | N/A                  |
+| Android  | ❌           | N/A                  |
+| ChromeOS | ❌           | N/A                  |
+
+</Details>
+
+Binds the registration to a non-exportable key stored in device hardware (Secure Enclave or TPM 2.0) and authenticates API requests with mTLS. For more information, refer to [Hardware-backed registration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/hardware-backed-registration/).
+
+**Value Type:** `boolean`
+
+**Value:**
+
+- `false` — (default) The Cloudflare One Client stores its API token in the device keystore.
+- `true` — The Cloudflare One Client generates a hardware-backed key during registration and uses mTLS for subsequent API calls.
+
+:::caution
+Changing this value after a device has registered forces the device to register again. Existing registrations are not migrated.
+:::
+
 ### `local_emergency_signal_enabled`
 
 Enables [Local Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-local-emergency-disconnect). When enabled, the Cloudflare One Client monitors a fixed-path JSON file on the device for an emergency disconnect signal.
@@ -470,6 +502,7 @@ Supported settings:
 | Key | Description |
 | --- | ----------- |
 | `environment` | Overrides the [`environment`](#environment) value for all configs belonging to this organization. |
+| `hardware_backed_registration` | Overrides the [`hardware_backed_registration`](#hardware_backed_registration) value for all configs belonging to this organization. |
 
 Use `organization_configs` when you have multiple configurations for the same organization and want to enforce a single `environment` value across all of them. Any `environment` value set inside an individual `configs` entry for that organization will be overridden by the value specified in `organization_configs`.
 
