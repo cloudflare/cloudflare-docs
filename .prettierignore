@@ -15,3 +15,8 @@ pnpm-lock.yaml
 
 # Local agent state (not committed but ignore defensively)
 .opencode/
+
+# Symlinks — prettier errors on these
+CLAUDE.md
+GEMINI.md
+.claude/CLAUDE.md

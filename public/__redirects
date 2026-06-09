@@ -228,7 +228,8 @@
 /agents/concepts/long-running-agents/ /agents/concepts/agentic-patterns/long-running-agents/ 301
 /agents/api-reference/agents-api/ /agents/runtime/agents-api/ 301
 /agents/api-reference/ /agents/runtime/ 301
-/agents/api-reference/chat-sdk/ /agents/runtime/execution/chat-sdk/ 301
+/agents/api-reference/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
+/agents/runtime/execution/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
 /agents/api-reference/agent-tools/ /agents/runtime/execution/agent-tools/ 301
 /agents/api-reference/browse-the-web/ /agents/tools/browser/ 301
 /agents/api-reference/callable-methods/ /agents/runtime/lifecycle/callable-methods/ 301

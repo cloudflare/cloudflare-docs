@@ -16,7 +16,7 @@ Spawn child agents as co-located Durable Objects with their own isolated SQLite 
 
 Use sub-agents when a single user or entity owns an open-ended set of long-lived agents, such as chats, documents, sessions, shards, or projects. Each sub-agent runs in parallel with its own state while the parent coordinates discovery, access control, and lifecycle.
 
-If you want a parent chat agent to dispatch another chat-capable agent during a single turn and render that child's progress inline, use [Agent tools](/agents/runtime/execution/agent-tools/). Agent tools are built on sub-agents, but add a parent-side run registry, streaming `agent-tool-event` frames, replay, cancellation, and cleanup.
+If you want a parent chat agent to dispatch another chat-capable agent during a single turn and render that child's progress inline, use [Agents as tools](/agents/runtime/execution/agent-tools/). Agents as tools are built on sub-agents, but add a parent-side run registry, streaming `agent-tool-event` frames, replay, cancellation, and cleanup.
 
 ## Quick start
 
@@ -519,5 +519,5 @@ Calling `this.destroy()` inside a sub-agent delegates cleanup to the parent. The
 - [Think](/agents/harnesses/think/) — `chat()` method for streaming AI turns through sub-agents
 - [Long-running agents](/agents/concepts/agentic-patterns/long-running-agents/) — sub-agent delegation in the context of multi-week agent lifetimes
 - [Callable methods](/agents/runtime/lifecycle/callable-methods/) — RPC via `@callable` and service bindings
-- [Agent tools](/agents/runtime/execution/agent-tools/) — run Think or `AIChatAgent` sub-agents as retained, streaming tools
+- [Agents as tools](/agents/runtime/execution/agent-tools/) — run Think or `AIChatAgent` sub-agents as retained, streaming tools
 - [Schedule tasks](/agents/runtime/execution/schedule-tasks/) — scheduling primitives for top-level agents and sub-agents

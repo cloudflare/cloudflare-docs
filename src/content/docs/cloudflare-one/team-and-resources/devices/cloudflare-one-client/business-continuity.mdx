@@ -1,0 +1,295 @@
+---
+pcx_content_type: solution-guide
+title: Business Continuity Guide
+description: Build a business continuity strategy for the Cloudflare One Client using available disconnection mechanisms and decision guidance for service degradation scenarios.
+products:
+  - cloudflare-one
+sidebar:
+  order: 10
+---
+
+This guide helps you build business continuity strategies for the Cloudflare One Client by documenting available disconnection mechanisms and providing decision guidance for handling service degradation or infrastructure unavailability.
+
+## Current resilience posture
+
+The Cloudflare One Client operates on Cloudflare's globally distributed network with 300+ points of presence (PoPs) worldwide. Anycast routing automatically directs client connections to the nearest healthy PoP without manual intervention. The client maintains locally cached policies and continues enforcing security controls even when unable to reach Cloudflare's management systems.
+
+For detailed architecture information, refer to the [Cloudflare One Client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and the [Cloudflare Network and Service Resilience Whitepaper](https://cf-assets.www.cloudflare.com/slt3lc6tev37/7ad0dpR3YyqxMlikPfbBgn/020b7450909f03ccf3c7dcfb0e99fc2e/Resilience_Whitepaper.pdf).
+
+## Fail-open vs. fail-closed decisions
+
+:::note
+
+**Critical decision framework**
+
+The Cloudflare One Client operates in **fail-closed mode by default**: if the client cannot reach Cloudflare, it remains connected and blocks traffic rather than failing open to unprotected Internet access. This protects your security posture but requires active decision-making during incidents.
+
+**When to fail open** (Cloudflare One Client stops trying to connect and allows network connectivity without Cloudflare One Client protections):
+
+- User productivity is critically impaired and business operations are at risk
+- Emergency access to non-protected resources is required
+- Forensic investigation requires raw traffic visibility
+
+**When to fail closed** (Cloudflare One Client blocks network connectivity until it can re-establish a tunnel to Cloudflare):
+
+- Cloudflare edge services are operational (traffic is processing normally)
+- Only management dashboard is unavailable (policies continue enforcing)
+- Regulatory/compliance requirements prohibit unfiltered Internet access
+- Security incident requires maintaining visibility and control
+
+:::
+
+The mechanisms below help you execute fail-open decisions when needed. Document your decision criteria in advance and ensure appropriate stakeholders have authorization to trigger disconnection.
+
+## Customer impact and decision guidance
+
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Mechanism</th>
+      <th>Guidance</th>
+      <th>Prerequisites and limitations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p><strong>Complete unavailability during Cloudflare infrastructure outage</strong></p>
+        <p>Example: Cloudflare management systems unreachable; Global Disconnection unavailable but users need Internet access to maintain business operations.</p>
+      </td>
+      <td>
+        <p><strong><a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/">External Emergency Disconnect</a></strong></p>
+        <p>A customer-hosted HTTPS endpoint that clients poll for disconnect signals, operating independently of Cloudflare infrastructure.</p>
+      </td>
+      <td>
+        <p><strong>Use when:</strong> Cloudflare's management systems are unreachable but you need to disconnect clients to restore Internet access.</p>
+        <p><strong>Guidance:</strong> Pre-configure this mechanism before outages occur. During an incident, update your endpoint to return <code>{'{"emergency_disconnect": true}'}</code>.</p>
+        <p><strong>Expected outcome:</strong> Clients disconnect within 1–2 polling intervals (configurable, default 60 seconds); users regain direct Internet access without security controls.</p>
+      </td>
+      <td>
+        <p><strong>Prerequisites:</strong></p>
+        <ul>
+          <li>Customer-hosted HTTPS endpoint (IPv4/IPv6 address, not domain)</li>
+          <li>SHA-256 fingerprint of TLS certificate</li>
+          <li>MDM deployment for group-differentiated responses</li>
+        </ul>
+        <p><strong>Limitations:</strong></p>
+        <ul>
+          <li><strong>Not available on iOS, Android, or ChromeOS</strong></li>
+          <li>Customer responsible for endpoint maintenance and certificate renewal</li>
+          <li>No Cloudflare logging of disconnect events</li>
+          <li>Split Tunnel configuration must not include the endpoint IP</li>
+        </ul>
+        <p><strong>Security impact:</strong> Loss of all Zero Trust controls (same as Global Disconnection).</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><strong>Complete unavailability of client connectivity</strong></p>
+        <p>Example: Client cannot establish secure tunnel; users unable to access protected applications or filtered Internet.</p>
+      </td>
+      <td>
+        <p><strong>Global Disconnection</strong></p>
+        <p>Instantly disconnect all Cloudflare One Clients from the secure tunnel via Dashboard or API.</p>
+      </td>
+      <td>
+        <p><strong>Use when:</strong> You need immediate fleet-wide disconnection and Cloudflare's management systems are reachable.</p>
+        <p><strong>Guidance:</strong> Check the <a href="https://www.cloudflarestatus.com/">Cloudflare status page</a> first. If Cloudflare infrastructure is experiencing issues, this mechanism may be unavailable — use <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/">External Emergency Disconnect</a> instead.</p>
+        <p><strong>Expected outcome:</strong> All clients disconnect within seconds; users have direct Internet access without filtering, threat protection, or private application connectivity.</p>
+      </td>
+      <td>
+        <p><strong>Prerequisites:</strong></p>
+        <ul>
+          <li>Dashboard or API access</li>
+          <li>Account administrator permissions</li>
+        </ul>
+        <p><strong>Limitations:</strong></p>
+        <ul>
+          <li>Requires connectivity to Cloudflare's management systems</li>
+          <li>Account-wide only (no group scoping)</li>
+          <li>Unavailable during complete Cloudflare outages</li>
+        </ul>
+        <p><strong>Security impact:</strong></p>
+        <ul>
+          <li>Loss of web filtering and malware protection</li>
+          <li>Loss of data loss prevention (DLP) inspection</li>
+          <li>Loss of access to private applications</li>
+          <li>Unencrypted DNS queries (potential privacy exposure)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><strong>Individual device issue requiring immediate local override</strong></p>
+        <p>Example: Single user locked out due to policy misconfiguration; client switch disabled but user needs emergency access.</p>
+      </td>
+      <td>
+        <p><strong>Admin Override Codes</strong></p>
+        <p>Time-limited, single-use codes allowing IT administrators to temporarily unlock client settings on a specific device.</p>
+      </td>
+      <td>
+        <p><strong>Use when:</strong> An individual device requires immediate attention. This is the only option for iOS and Android users when External Emergency Disconnect is unavailable.</p>
+        <p><strong>Guidance:</strong> Generate the code in the Dashboard, provide it to the user over a secure channel, and have the user enter it locally to temporarily bypass the locked switch.</p>
+        <p><strong>Expected outcome:</strong> Temporary local override allowing the user to disconnect the client for one hour.</p>
+      </td>
+      <td>
+        <p><strong>Prerequisites:</strong></p>
+        <ul>
+          <li><strong>Lock client device switch</strong> policy enabled</li>
+          <li>Dashboard access to generate codes</li>
+          <li>Direct communication with the end user</li>
+        </ul>
+        <p><strong>Limitations:</strong></p>
+        <ul>
+          <li>One code per device per hour</li>
+          <li>Manual IT intervention required</li>
+          <li>Not scalable for fleet-wide scenarios</li>
+          <li>Requires staffed IT during incidents</li>
+        </ul>
+        <p><strong>Security impact:</strong> Single device loses Zero Trust controls for one hour.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><strong>Degraded performance impacting user productivity</strong></p>
+        <p>Example: High latency through client tunnel; intermittent connection drops affecting work quality.</p>
+      </td>
+      <td>
+        <p><strong>Graduated response strategy</strong></p>
+        <p>Use a combination of mechanisms based on scope and severity. Use <a href="/cloudflare-one/insights/dex/">Digital Experience (DEX)</a> to determine scope and severity.</p>
+      </td>
+      <td>
+        <p><strong>Guidance by scope:</strong></p>
+        <ul>
+          <li><strong>Single device:</strong> Admin Override Code → manual disconnect</li>
+          <li><strong>Group or department:</strong> External Emergency Disconnect with MDM-differentiated endpoints</li>
+          <li><strong>Organization-wide:</strong> Global Disconnection (if Cloudflare reachable) or External Emergency Disconnect</li>
+        </ul>
+        <p><strong>Decision factors:</strong> Balance user productivity needs against security requirements. For regulated industries, consult your compliance team before disconnecting.</p>
+        <p><strong>Expected outcome:</strong> Restored user productivity with a documented security trade-off.</p>
+      </td>
+      <td>
+        <p><strong>Prerequisites:</strong></p>
+        <ul>
+          <li>Documented decision criteria for fail-open vs. fail-closed</li>
+          <li>Pre-configured mechanisms before incidents occur</li>
+          <li>Clear authorization matrix</li>
+        </ul>
+        <p><strong>Limitations:</strong></p>
+        <ul>
+          <li>Each mechanism has different infrastructure dependencies</li>
+          <li>Mobile platforms have limited options</li>
+        </ul>
+        <p><strong>Security impact:</strong> Scope-dependent — refer to individual mechanism entries above.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><strong>Management dashboard unavailable, traffic processing normally</strong></p>
+        <p>Example: Dashboard and API unreachable; edge services and client connections remain functional with cached policies.</p>
+      </td>
+      <td>
+        <p><strong>No action required</strong></p>
+        <p>Edge services continue operating using cached configurations. New configuration changes will be unavailable until management systems recover.</p>
+      </td>
+      <td>
+        <p><strong>Use when:</strong> Cloudflare's management systems are unavailable but user traffic continues processing normally.</p>
+        <p><strong>Guidance:</strong> Monitor the <a href="https://www.cloudflarestatus.com/">Cloudflare status page</a>. No customer action is typically required — edge services enforce cached policies until management systems recover.</p>
+        <p><strong>Expected outcome:</strong> Existing configuration continues to apply; configuration changes resume when management systems recover.</p>
+      </td>
+      <td>
+        <p><strong>Prerequisites:</strong></p>
+        <ul>
+          <li>Monitoring of the Cloudflare status page</li>
+          <li>Understanding that traffic processing and management are separate systems</li>
+        </ul>
+        <p><strong>Limitations:</strong></p>
+        <ul>
+          <li>Cannot modify policies during the outage</li>
+          <li>Cannot trigger Global Disconnection from Dashboard</li>
+          <li>Real-time logs and analytics may be delayed</li>
+        </ul>
+        <p><strong>Security impact:</strong> None — security controls remain active.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+:::caution
+
+**Mobile platform limitation**
+
+External Emergency Disconnect is **not available on iOS, Android, or ChromeOS**. For mobile users during Cloudflare infrastructure outages when Global Disconnection is also unavailable, Admin Override Codes are the only option (requires individual IT intervention).
+
+:::
+
+## Additional considerations
+
+### Prerequisites to validate before incidents
+
+- Turn on the Global Disconnection feature in the Dashboard.
+- Configure an External Emergency Disconnect endpoint and upload the certificate fingerprint.
+- Test all mechanisms in a non-production environment.
+- Document fail-open vs. fail-closed decision criteria and create an authorization matrix.
+- Validate that IT and Security staff have backup mechanisms to access critical infrastructure.
+- Practice using backup mechanisms regularly across departments and geographies.
+
+**Access and credentials needed during incidents:**
+
+- Cloudflare Dashboard administrator access
+- API token with device settings permissions (for programmatic control)
+- MDM administrator credentials (for group-differentiated responses)
+
+### Testing recommendations
+
+- Use a dedicated test organization or tenant for initial validation.
+- Test with a small pilot group before fleet-wide deployment.
+- Conduct quarterly testing of all three disconnection mechanisms.
+- Run an annual full business continuity exercise including decision-making scenarios.
+
+**Common testing issues:**
+
+- External Emergency Disconnect changes take 1–2 polling intervals to take effect (default 60 seconds).
+- Split Tunnel **Include** mode automatically excludes emergency endpoint IPs.
+- Certificate fingerprint changes require MDM re-deployment to all affected devices.
+
+### Integration dependencies
+
+When you disconnect the Cloudflare One Client, the following controls are affected:
+
+- **Web filtering and threat protection:** DNS and HTTP policies stop enforcing; users have direct, unfiltered Internet access.
+- **Data loss prevention (DLP):** Content inspection stops; sensitive data uploads and downloads occur without DLP controls.
+- **Private application access:** Connectivity to applications protected by Cloudflare Tunnel is lost. Consider alternative access methods such as a direct VPN for critical applications.
+- **Gateway logging and analytics:** No visibility into user traffic during disconnection.
+
+### When to contact Cloudflare support
+
+**Contact support immediately if:**
+
+- A suspected Cloudflare infrastructure issue is affecting multiple customers.
+- You are unable to access the Dashboard during a critical security incident.
+- An External Emergency Disconnect misconfiguration has caused a fleet-wide stuck state.
+
+**Information to provide when opening a ticket:**
+
+- Account ID and organization name
+- Affected device count and platform distribution
+- Results of your Cloudflare status page check
+- Client diagnostic logs (`warp-diag`)
+- Timeline and troubleshooting steps already taken
+
+## Related resources
+
+| Resource | Link |
+|---|---|
+| Product documentation | [Cloudflare One Client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) |
+| API reference | [Zero Trust Devices Settings API](https://developers.cloudflare.com/api/resources/zero_trust/subresources/devices/subresources/settings/) |
+| Global Disconnection | [Global Disconnection settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-the-cloudflare-one-client-on-all-devices) |
+| External Emergency Disconnect | [External Emergency Disconnect documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/) |
+| Admin Override Codes | [Admin Override Codes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) |
+| MDM deployment | [MDM Deployment Guide](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/) |
+| Terraform provider | [Cloudflare Terraform Provider – Zero Trust Devices](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) |
+| Status page | [cloudflarestatus.com](https://www.cloudflarestatus.com/) |
+| Troubleshooting | [Client Troubleshooting Guide](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/) |
+| Resilience Whitepaper | [Cloudflare Network and Service Resilience Whitepaper](https://cf-assets.www.cloudflare.com/slt3lc6tev37/7ad0dpR3YyqxMlikPfbBgn/020b7450909f03ccf3c7dcfb0e99fc2e/Resilience_Whitepaper.pdf) |
