@@ -233,9 +233,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"url"
-					],
+					"required": ["url"],
 					"type": "object"
 				},
 				"images": {
@@ -249,9 +247,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"url"
-						],
+						"required": ["url"],
 						"type": "object"
 					},
 					"maxItems": 10,
@@ -264,9 +260,7 @@
 							"type": "string"
 						}
 					},
-					"required": [
-						"url"
-					],
+					"required": ["url"],
 					"type": "object"
 				},
 				"n": {
@@ -278,34 +272,22 @@
 					"type": "string"
 				},
 				"quality": {
-					"enum": [
-						"low",
-						"medium",
-						"high"
-					],
+					"enum": ["low", "medium", "high"],
 					"type": "string"
 				},
 				"resolution": {
-					"enum": [
-						"1k",
-						"2k"
-					],
+					"enum": ["1k", "2k"],
 					"type": "string"
 				},
 				"response_format": {
-					"enum": [
-						"url",
-						"b64_json"
-					],
+					"enum": ["url", "b64_json"],
 					"type": "string"
 				},
 				"user": {
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -317,9 +299,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

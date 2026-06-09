@@ -4,12 +4,7 @@
 	"name": "Recraft V4.1 SVG",
 	"description": "Generate production-ready SVG vector graphics from text prompts with high aesthetic quality, clean geometry, structured layers, and editable paths.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"SVG",
-		"Vector",
-		"Design"
-	],
+	"tags": ["Image Generation", "SVG", "Vector", "Design"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -116,26 +111,14 @@
 				"prompt": "A badge or seal design with a star in the center, suitable for a certification mark",
 				"controls": {
 					"background_color": {
-						"rgb": [
-							255,
-							255,
-							255
-						]
+						"rgb": [255, 255, 255]
 					},
 					"colors": [
 						{
-							"rgb": [
-								0,
-								119,
-								182
-							]
+							"rgb": [0, 119, 182]
 						},
 						{
-							"rgb": [
-								255,
-								209,
-								102
-							]
+							"rgb": [255, 209, 102]
 						}
 					]
 				}
@@ -202,9 +185,7 @@
 									"type": "array"
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"type": "object"
 						},
 						"colors": {
@@ -222,9 +203,7 @@
 										"type": "array"
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"type": "object"
 							},
 							"maxItems": 5,
@@ -246,9 +225,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -259,9 +236,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

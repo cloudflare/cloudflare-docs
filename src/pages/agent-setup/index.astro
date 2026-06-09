@@ -24,29 +24,59 @@ const props = {
 
 <StarlightPage {...props}>
 	<p class="agent-setup-lede">
-		Install an agent of your choice, connect Cloudflare <a href="https://github.com/cloudflare/skills" target="_blank" rel="noopener noreferrer">Skills &nearr;</a> and <a href="https://blog.cloudflare.com/code-mode-mcp/" target="_blank" rel="noopener noreferrer">Code Mode API &nearr;</a> and <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">domain-specific &nearr;</a> MCP servers, and start deploying to Cloudflare from your editor or terminal.
+		Install an agent of your choice, connect Cloudflare <a
+			href="https://github.com/cloudflare/skills"
+			target="_blank"
+			rel="noopener noreferrer">Skills &nearr;</a
+		> and <a
+			href="https://blog.cloudflare.com/code-mode-mcp/"
+			target="_blank"
+			rel="noopener noreferrer">Code Mode API &nearr;</a
+		> and <a
+			href="https://github.com/cloudflare/mcp-server-cloudflare"
+			target="_blank"
+			rel="noopener noreferrer">domain-specific &nearr;</a
+		> MCP servers, and start deploying to Cloudflare from your editor or terminal.
 	</p>
 
 	<div class="agent-setup-paths not-content">
 		<!-- Left: quick path -->
-		<div class="agent-setup-path agent-setup-path--quick" style="flex-basis: 60%;">
+		<div
+			class="agent-setup-path agent-setup-path--quick"
+			style="flex-basis: 60%;"
+		>
 			<p class="agent-setup-path-eyebrow">Quick setup</p>
 			<p class="agent-setup-path-title">Already have an agent?</p>
-			<p class="agent-setup-path-desc">Paste this into any AI coding agent to install Cloudflare agent tooling in one step.</p>
-			<PromptCopyBlock text="Fetch https://developers.cloudflare.com/agent-setup/prompt.md" hideLabel />
+			<p class="agent-setup-path-desc">
+				Paste this into any AI coding agent to install Cloudflare agent tooling
+				in one step.
+			</p>
+			<PromptCopyBlock
+				text="Fetch https://developers.cloudflare.com/agent-setup/prompt.md"
+				hideLabel
+			/>
 		</div>
 		<!-- Right: manual path -->
 		<div class="agent-setup-path agent-setup-path--manual">
 			<p class="agent-setup-path-eyebrow">Manual setup</p>
 			<p class="agent-setup-path-title">New to AI agents?</p>
-			<p class="agent-setup-path-desc">Pick an agent, follow step-by-step setup instructions, compare capabilities, and learn about the Cloudflare tools available to you.</p>
-			<a href="#pick-your-agent" class="agent-setup-path-cta">Browse agents &darr;</a>
+			<p class="agent-setup-path-desc">
+				Pick an agent, follow step-by-step setup instructions, compare
+				capabilities, and learn about the Cloudflare tools available to you.
+			</p>
+			<a href="#pick-your-agent" class="agent-setup-path-cta"
+				>Browse agents &darr;</a
+			>
 		</div>
 	</div>
 
 	<hr />
 
-	<div class="agent-setup-section-header" style="margin-top: 3.25rem;" id="pick-your-agent">
+	<div
+		class="agent-setup-section-header"
+		style="margin-top: 3.25rem;"
+		id="pick-your-agent"
+	>
 		<h2>Pick your agent</h2>
 		<p>Select an agent to get step-by-step setup instructions.</p>
 	</div>
@@ -108,10 +138,6 @@ const props = {
 		border-color: var(--color-cl1-gray-2);
 	}
 
-
-
-
-
 	.agent-setup-path-eyebrow {
 		font-size: 0.75rem;
 		font-weight: 700;
@@ -152,5 +178,4 @@ const props = {
 		text-decoration: underline;
 		text-underline-offset: 2px;
 	}
-
 </style>

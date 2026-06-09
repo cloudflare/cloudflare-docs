@@ -4,12 +4,7 @@
 	"name": "FLUX.2 [flex]",
 	"description": "FLUX.2 [flex] is Black Forest Labs' fine-grained control variant of FLUX.2 \u2014 exposes tunable inference steps, guidance, and prompt upsampling for typography-heavy and production workflows.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Image Editing",
-		"Typography",
-		"Tunable"
-	],
+	"tags": ["Image Generation", "Image Editing", "Typography", "Tunable"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -155,11 +150,7 @@
 				},
 				"output_format": {
 					"description": "Output image format. Defaults to jpeg.",
-					"enum": [
-						"jpeg",
-						"png",
-						"webp"
-					],
+					"enum": ["jpeg", "png", "webp"],
 					"type": "string"
 				},
 				"prompt": {
@@ -195,9 +186,7 @@
 					"type": "integer"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -210,9 +199,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

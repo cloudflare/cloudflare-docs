@@ -19,8 +19,8 @@
 		"format:core:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,mjs,css}\"",
 		"format:data:check": "prettier --check \"**/*.{json,yaml,yml}\"",
 		"format:data:fix": "prettier --write \"**/*.{json,yaml,yml}\"",
-		"format:content:check": "prettier --check \"**/*.{md,astro}\"",
-		"format:content:fix": "prettier --write \"**/*.{md,astro}\"",
+		"format:content:check": "prettier --check \"**/*.astro\"",
+		"format:content:fix": "prettier --write \"**/*.astro\"",
 		"postinstall": "patch-package",
 		"preview": "astro preview",
 		"script:optimize-svgs": "tsx scripts/optimize-svgs.ts",
@@ -64,7 +64,6 @@
 		"@expressive-code/plugin-collapsible-sections": "0.42.0",
 		"@expressive-code/plugin-line-numbers": "0.42.0",
 		"@floating-ui/react": "0.27.19",
-
 		"@iarna/toml": "2.2.5",
 		"@iconify/utils": "3.1.3",
 		"@marsidev/react-turnstile": "1.5.2",
@@ -85,7 +84,6 @@
 		"@types/react-dom": "19.0.4",
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.60.1",
-
 		"algoliasearch": "5.53.0",
 		"astro": "6.4.4",
 		"astro-breadcrumbs": "3.4.0",

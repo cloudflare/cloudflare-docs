@@ -196,11 +196,10 @@ function collectRows(
 			(reg.annotations?.description as string | undefined) ??
 			nullableChildDescription;
 		// Check both validations and fragment for enum (different schema parsers put it in different places)
-		const enumValues =
-			((reg.validations?.enum as unknown[]) ??
-				((reg.fragment as Record<string, unknown>)?.enum as unknown[]))?.map(
-				String,
-			);
+		const enumValues = (
+			(reg.validations?.enum as unknown[]) ??
+			((reg.fragment as Record<string, unknown>)?.enum as unknown[])
+		)?.map(String);
 
 		// Collect all metadata from fragment and validations
 		const metadata: Record<string, string | number | boolean> = {};
@@ -429,7 +428,12 @@ const variantRows =
 				No parameters defined.
 			</p>
 		) : (
-			<SchemaTreeView rows={rows} schemaId={schemaId} hideRequired={hideRequired} client:visible />
+			<SchemaTreeView
+				rows={rows}
+				schemaId={schemaId}
+				hideRequired={hideRequired}
+				client:visible
+			/>
 		)
 	}
 </div>

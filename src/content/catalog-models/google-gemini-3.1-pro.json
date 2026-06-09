@@ -4,12 +4,7 @@
 	"name": "Gemini 3.1 Pro",
 	"description": "Google's most intelligent Gemini model with improved reasoning, a medium thinking level, and a 1M token context window.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Reasoning",
-		"Multimodal",
-		"Thinking"
-	],
+	"tags": ["LLM", "Reasoning", "Multimodal", "Thinking"],
 	"context_length": 1000000,
 	"max_output_tokens": 65536,
 	"schema_version": "1.0.0",
@@ -376,16 +371,11 @@
 								"type": "array"
 							},
 							"role": {
-								"enum": [
-									"user",
-									"model"
-								],
+								"enum": ["user", "model"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"parts"
-						],
+						"required": ["parts"],
 						"type": "object"
 					},
 					"type": "array"
@@ -431,10 +421,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"category",
-							"threshold"
-						],
+						"required": ["category", "threshold"],
 						"type": "object"
 					},
 					"type": "array"
@@ -455,9 +442,7 @@
 							"type": "array"
 						}
 					},
-					"required": [
-						"parts"
-					],
+					"required": ["parts"],
 					"type": "object"
 				},
 				"toolConfig": {},
@@ -466,9 +451,7 @@
 					"type": "array"
 				}
 			},
-			"required": [
-				"contents"
-			],
+			"required": ["contents"],
 			"type": "object"
 		},
 		"output": {

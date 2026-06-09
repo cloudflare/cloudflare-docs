@@ -4,11 +4,7 @@
 	"name": "Recraft V4.1",
 	"description": "Recraft V4.1 generates art-directed images tuned for high aesthetics, with strong composition, accurate text rendering, and refined design taste. Fast and cost-efficient at standard resolution.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Design",
-		"Text Rendering"
-	],
+	"tags": ["Image Generation", "Design", "Text Rendering"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -115,18 +111,10 @@
 				"controls": {
 					"colors": [
 						{
-							"rgb": [
-								255,
-								107,
-								53
-							]
+							"rgb": [255, 107, 53]
 						},
 						{
-							"rgb": [
-								0,
-								43,
-								91
-							]
+							"rgb": [0, 43, 91]
 						}
 					]
 				}
@@ -163,11 +151,7 @@
 				"prompt": "A clean icon of a lightning bolt",
 				"controls": {
 					"background_color": {
-						"rgb": [
-							245,
-							245,
-							245
-						]
+						"rgb": [245, 245, 245]
 					}
 				},
 				"size": "1024x1024"
@@ -234,9 +218,7 @@
 									"type": "array"
 								}
 							},
-							"required": [
-								"rgb"
-							],
+							"required": ["rgb"],
 							"type": "object"
 						},
 						"colors": {
@@ -254,9 +236,7 @@
 										"type": "array"
 									}
 								},
-								"required": [
-									"rgb"
-								],
+								"required": ["rgb"],
 								"type": "object"
 							},
 							"maxItems": 5,
@@ -278,9 +258,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -291,9 +269,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

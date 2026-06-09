@@ -199,11 +199,7 @@
 				"format": {
 					"default": "mp3",
 					"description": "Output audio format",
-					"enum": [
-						"mp3",
-						"flac",
-						"wav"
-					],
+					"enum": ["mp3", "flac", "wav"],
 					"type": "string"
 				},
 				"pitch": {
@@ -267,14 +263,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"text",
-				"voice_id",
-				"speed",
-				"volume",
-				"pitch",
-				"format"
-			],
+			"required": ["text", "voice_id", "speed", "volume", "pitch", "format"],
 			"type": "object"
 		},
 		"output": {
@@ -286,9 +275,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"audio"
-			],
+			"required": ["audio"],
 			"type": "object"
 		}
 	}
