@@ -91,6 +91,10 @@ If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-d
 
 If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned off, session management is [handled in the Cloudflare One Client](#other-non-http-applications) instead of in the browser.
 
+:::note
+If your origin uses a self-signed or otherwise untrusted certificate, create a Gateway HTTP Allow policy for the origin with the [untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) set to _Pass through_. Otherwise, Gateway will block the connection before it reaches Access.
+:::
+
 ### Plaintext HTTP applications
 
 For applications served over plaintext HTTP on port `80`, Cloudflare Access presents an in-browser login page and issues an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/), the same as HTTPS applications with Gateway TLS decryption. Gateway TLS decryption is not required because the traffic is already unencrypted.
