@@ -39,7 +39,8 @@ const starlightPageProps = {
 	frontmatter: {
 		title: field.name,
 		description: field.summary,
-		editUrl: "https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml",
+		editUrl:
+			"https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml",
 	},
 	hideTitle: true,
 } as StarlightPageProps;
@@ -92,10 +93,13 @@ const starlightPageProps = {
 		field.name.startsWith("http.request.body") &&
 			!(field.name === "http.request.body.size") && (
 				<Aside type="caution">
-					<!-- prettier-ignore-start -->
 					<p>
-						All <code>http.request.body.*</code> fields (except <a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/"> <code>http.request.body.size</code></a>)
-						handle a given maximum body size, which varies per plan. For
+						All <code>http.request.body.*</code> fields (except{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							{" "}
+							<code>http.request.body.size</code>
+						</a>
+						) handle a given maximum body size, which varies per plan. For
 						Enterprise customers, the maximum body size is 128 KB. For other
 						paid plans, the limit is lower by default — reach out to your
 						account team or to Cloudflare Support to increase the limit. For
@@ -104,14 +108,21 @@ const starlightPageProps = {
 					<p>
 						You cannot define expressions that rely on request body data beyond
 						the maximum size set for your plan. If the request body is larger,
-						the body fields will contain a truncated value and the <a href="/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/"><code>http.request.body.truncated</code></a> field will be set to <code>true</code>. The <a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/"><code>http.request.body.size</code></a> field will contain the
-						full size of the request without any truncation.
+						the body fields will contain a truncated value and the{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/">
+							<code>http.request.body.truncated</code>
+						</a>{" "}
+						field will be set to <code>true</code>. The{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							<code>http.request.body.size</code>
+						</a>{" "}
+						field will contain the full size of the request without any
+						truncation.
 					</p>
 					<p>
 						The maximum body size applies only to the values of HTTP body fields
 						— the origin server will still receive the complete request body.
 					</p>
-					<!-- prettier-ignore-end -->
 				</Aside>
 			)
 	}
