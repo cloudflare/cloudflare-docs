@@ -125,37 +125,6 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"deepseek/deepseek-v4-pro\",\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful coding assistant specializing in Python.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.3\n}'"
 				}
 			]
-		},
-		{
-			"name": "Streaming Response",
-			"description": "Enable streaming for real-time output",
-			"input": {
-				"messages": [
-					{
-						"content": "Explain the concept of recursion with a simple example.",
-						"role": "user"
-					}
-				],
-				"model": "deepseek/deepseek-v4-pro",
-				"stream": true
-			},
-			"error": {
-				"kind": "runner-failure",
-				"message": "normalizer returned empty output -- check modality vs response shape, or recapture",
-				"timestamp": "2026-06-05T22:13:47.584Z"
-			},
-			"code_snippets": [
-				{
-					"label": "typescript",
-					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'deepseek/deepseek-v4-pro',\n  {\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    model: 'deepseek/deepseek-v4-pro',\n    stream: true,\n  },\n)\nconsole.log(response)"
-				},
-				{
-					"label": "curl",
-					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"deepseek/deepseek-v4-pro\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true\n}'"
-				}
-			]
 		}
 	],
 	"default_example": null,
