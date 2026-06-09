@@ -167,7 +167,7 @@ For the full protocol specification, refer to the [WebSocket protocol section](/
 - **Always use FitAddon** — Without it, terminal dimensions do not match the container and text wraps incorrectly.
 - **Handle resize events** — Call `fitAddon.fit()` on window resize so the terminal and PTY stay in sync.
 - **Clean up on unmount** — Call `addon.disconnect()` when removing the terminal from the page.
-- **Use sessions for isolation** — If users need separate shell environments, create sessions with different working directories and environment variables.
+- **Scope terminals to a user sandbox** — Use sessions for multiple terminal contexts in the same workspace. Use separate sandboxes for separate users.
 
 ## Related resources
 

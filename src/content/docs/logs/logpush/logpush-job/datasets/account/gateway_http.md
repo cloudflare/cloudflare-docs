@@ -21,6 +21,12 @@ Type: `string`
 
 Action performed by gateway on the HTTP request.
 
+## AddedHeaders
+
+Type: `array[string]`
+
+Headers added to the HTTP request by a Gateway rule.
+
 ## AppControlInfo
 
 Type: `object`
@@ -92,6 +98,12 @@ Names of the categories that matched the HTTP request parameters.
 Type: `int or string`
 
 The date and time the corresponding HTTP request was made.
+
+## DeletedHeaders
+
+Type: `array[string]`
+
+Names of headers that were deleted from the HTTP request by a Gateway rule.
 
 ## DestinationIP
 
@@ -254,6 +266,12 @@ Cloudflare request ID. This might be empty on bypass action.
 Type: `string`
 
 Network session ID.
+
+## SetHeaders
+
+Type: `array[string]`
+
+Names of headers that were set (overwritten) on the HTTP request by a Gateway rule.
 
 ## SourceIP
 

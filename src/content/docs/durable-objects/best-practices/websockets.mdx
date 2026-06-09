@@ -335,7 +335,7 @@ Key behaviors:
 - If either side closes the connection, attachments are lost
 - Modifications to `value` after calling this method are not retained unless you call it again
 - The `value` can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
-- Maximum serialized size is 2,048 bytes
+- Maximum serialized size is 16,384 bytes
 
 For larger values or data that must persist beyond WebSocket lifetime, use the [Storage API](/durable-objects/api/sqlite-storage-api/) and store the corresponding key as an attachment.
 

@@ -218,4 +218,16 @@ Currently, changing the time frame or the applied filters while showing raw logs
 
 ## Sampling
 
-The Security Analytics dashboard uses [sampled data](/analytics/graphql-api/sampling/), except when showing raw logs. If you query Security Analytics data through the [GraphQL Analytics API](/analytics/graphql-api/), the primary underlying datasets are `httpRequestsAdaptiveGroups` and `httpRequestsAdaptive`. For more information, refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/).
+The Security Analytics dashboard uses [sampled data](/analytics/graphql-api/sampling/), except when showing raw logs.
+
+## Query using GraphQL
+
+If you query Security Analytics data through the [GraphQL Analytics API](/analytics/graphql-api/), the primary underlying datasets are `httpRequestsAdaptiveGroups` and `httpRequestsAdaptive`. For more information, refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/).
+
+## Limits
+
+The data retention (historical time) and maximum query window of the datasets supporting Security Analytics differ from the dataset that powers [Security Events](/waf/analytics/security-events/#query-using-graphql).
+
+The following tables show the different limits per Cloudflare plan:
+
+<Render file="analytics-dataset-limits" product="waf" />

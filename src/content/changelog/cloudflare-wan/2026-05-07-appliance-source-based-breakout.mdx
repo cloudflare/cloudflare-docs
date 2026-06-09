@@ -1,0 +1,17 @@
+---
+title: Source-based breakout and prioritization on Cloudflare One Appliance
+description: Define breakout and priority rules by source LAN, VLAN, or CIDR — in addition to destination application.
+date: 2026-05-07
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+Breakout and traffic prioritization rules on the Cloudflare One Appliance can now match by **source** in addition to destination application. You can pin breakout or priority behavior to:
+
+- A source LAN interface — VLANs attached to that LAN are included automatically.
+- A source IP address, range, or CIDR block.
+
+This is the natural way to break out a guest VLAN to the local Internet, or to prioritize traffic from a specific subnet, without enumerating destination applications.
+
+For details, refer to [Breakout traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/breakout-traffic/#breakout-by-source).

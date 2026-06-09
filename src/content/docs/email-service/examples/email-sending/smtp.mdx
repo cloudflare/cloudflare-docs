@@ -1,0 +1,214 @@
+---
+summary: Send transactional emails over Cloudflare Email Service SMTP using curl, Nodemailer, Python smtplib, or PHPMailer.
+pcx_content_type: example
+title: Send email over SMTP
+description: Send transactional emails through Cloudflare Email Service authenticated SMTP from curl, Node.js, Python, or PHP.
+sidebar:
+  order: 9
+products:
+  - email-service
+---
+
+import { Tabs, TabItem } from "~/components";
+
+Send transactional emails over Cloudflare Email Service [authenticated SMTP](/email-service/api/send-emails/smtp/) (`smtp.mx.cloudflare.net:465`) from any SMTP-capable language or client.
+
+## Prerequisites
+
+- A domain onboarded for [Email Sending](/email-service/configuration/domains/).
+- A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with the **Email Sending: Edit** permission. Set it as `CF_API_TOKEN` in your environment. The token is used as the SMTP password; the username is the literal string `api_token`.
+
+<Tabs syncKey="smtp-language">
+<TabItem label="curl">
+
+### Send an email
+
+```sh
+cat > mail.txt <<EOF
+From: welcome@yourdomain.com
+To: recipient@example.com
+Subject: Welcome to our service!
+
+Thanks for signing up.
+EOF
+
+curl --ssl-reqd \
+  --url "smtps://smtp.mx.cloudflare.net:465" \
+  --user "api_token:$CF_API_TOKEN" \
+  --mail-from "welcome@yourdomain.com" \
+  --mail-rcpt "recipient@example.com" \
+  --upload-file mail.txt
+```
+
+The sender domain must be onboarded for Email Sending on the account that owns the API token.
+
+</TabItem>
+<TabItem label="Node.js (Nodemailer)">
+
+Install [Nodemailer](https://nodemailer.com/) with `npm install nodemailer`.
+
+### Send an email
+
+```js
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+	host: "smtp.mx.cloudflare.net",
+	port: 465,
+	secure: true, // implicit TLS
+	auth: {
+		user: "api_token",
+		pass: process.env.CF_API_TOKEN,
+	},
+});
+
+const info = await transporter.sendMail({
+	from: '"Acme" <welcome@yourdomain.com>',
+	to: "user@example.com",
+	subject: "Welcome to Acme",
+	text: "Thanks for signing up.",
+	html: "<h1>Welcome to Acme</h1><p>Thanks for signing up.</p>",
+});
+
+console.log("Message sent:", info.messageId);
+```
+
+### Send with an attachment
+
+```js
+const info = await transporter.sendMail({
+	from: '"Acme Billing" <billing@yourdomain.com>',
+	to: "customer@example.com",
+	subject: "Your invoice",
+	text: "Please find your invoice attached.",
+	attachments: [
+		{
+			filename: "invoice-2026-04.pdf",
+			path: "./invoices/invoice-2026-04.pdf",
+			contentType: "application/pdf",
+		},
+	],
+});
+```
+
+Total message size (including base64-encoded attachments) must not exceed 5 MiB. See [Limits](/email-service/platform/limits/).
+
+### Error handling
+
+Nodemailer rejects the promise with an `Error` whose `.responseCode` reflects the SMTP reply code. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/api/send-emails/smtp/#troubleshooting).
+
+```js
+try {
+	await transporter.sendMail({
+		/* ... */
+	});
+} catch (err) {
+	console.error(err.responseCode, err.message);
+}
+```
+
+</TabItem>
+<TabItem label="Python (smtplib)">
+
+Uses the standard-library [`smtplib`](https://docs.python.org/3/library/smtplib.html) (Python 3.8 or later).
+
+### Send an email
+
+```python
+import os
+import smtplib
+from email.message import EmailMessage
+
+msg = EmailMessage()
+msg["From"] = "Acme <welcome@yourdomain.com>"
+msg["To"] = "user@example.com"
+msg["Subject"] = "Welcome to Acme"
+msg.set_content("Thanks for signing up.")
+msg.add_alternative(
+    "<h1>Welcome to Acme</h1><p>Thanks for signing up.</p>",
+    subtype="html",
+)
+
+with smtplib.SMTP_SSL("smtp.mx.cloudflare.net", 465) as s:
+    s.login("api_token", os.environ["CF_API_TOKEN"])
+    s.send_message(msg)
+```
+
+`smtplib.SMTP_SSL` opens an implicit-TLS connection on port `465`, which is what Cloudflare's SMTP endpoint requires. Do not use `smtplib.SMTP` with `starttls()`; `STARTTLS` is not supported.
+
+### Send to multiple recipients
+
+```python
+msg["To"] = ", ".join([
+    "user1@example.com",
+    "user2@example.com",
+    "user3@example.com",
+])
+```
+
+A single SMTP session can deliver to up to 50 `RCPT TO` addresses. See [Limits](/email-service/platform/limits/).
+
+### Send with an attachment
+
+```python
+from pathlib import Path
+
+pdf = Path("invoice-2026-04.pdf").read_bytes()
+msg.add_attachment(
+    pdf,
+    maintype="application",
+    subtype="pdf",
+    filename="invoice-2026-04.pdf",
+)
+```
+
+### Error handling
+
+`smtplib` raises subclasses of `smtplib.SMTPException` with the SMTP reply code attached. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/api/send-emails/smtp/#troubleshooting).
+
+```python
+try:
+    with smtplib.SMTP_SSL("smtp.mx.cloudflare.net", 465) as s:
+        s.login("api_token", os.environ["CF_API_TOKEN"])
+        s.send_message(msg)
+except smtplib.SMTPAuthenticationError as e:
+    print(f"Auth failed: {e.smtp_code} {e.smtp_error!r}")
+except smtplib.SMTPResponseException as e:
+    print(f"SMTP error: {e.smtp_code} {e.smtp_error!r}")
+```
+
+</TabItem>
+<TabItem label="PHP (PHPMailer)">
+
+### Send an email
+
+```php
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+
+require 'vendor/autoload.php';
+
+$mail = new PHPMailer(true);
+$mail->isSMTP();
+$mail->Host       = 'smtp.mx.cloudflare.net';
+$mail->Port       = 465;
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+$mail->SMTPAuth   = true;
+$mail->Username   = 'api_token';
+$mail->Password   = getenv('CF_API_TOKEN');
+
+$mail->setFrom('welcome@yourdomain.com', 'Acme');
+$mail->addAddress('recipient@example.com');
+$mail->Subject = 'Welcome to our service!';
+$mail->Body    = 'Thanks for signing up.';
+$mail->send();
+```
+
+</TabItem>
+</Tabs>
+
+## Next steps
+
+- [SMTP reference](/email-service/api/send-emails/smtp/) — connection details, authentication, response codes, and troubleshooting.
+- [Specify recipients](/email-service/examples/email-sending/recipients/) — multiple recipients, CC and BCC, and named addresses.
+- [Limits](/email-service/platform/limits/) — account, message, and session limits.

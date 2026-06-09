@@ -39,6 +39,10 @@ DLP profiles are shared at the account level with [Cloudflare One](/cloudflare-o
 
 [Guardrails](/ai-gateway/features/guardrails/) evaluates prompts and responses using [`@cf/meta/llama-guard-3-8b`](/workers-ai/models/llama-guard-3-8b/) on Workers AI. Usage is billed as [Workers AI](/workers-ai/platform/pricing/) token-based inference — cost scales with the length of the prompts and responses being evaluated.
 
+## Unified Billing
+
+A 5% fee is applied to all credits purchased through [Unified Billing](/ai-gateway/features/unified-billing/). For example, a $100 credit purchase will result in a $105 charge. Inference pricing from providers is passed through with no markup — you pay the same per-token rates as you would directly with the provider.
+
 ## Logpush
 
 Logpush is only available on the Workers Paid plan.

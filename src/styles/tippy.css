@@ -1,14 +1,69 @@
 .tippy-box {
-	background-color: #3d3d3d !important;
-	border: 1px solid #595959 !important;
-	color: #e6e6e6 !important;
-	font-size: 0.75rem !important;
+	background-color: var(--sl-color-bg) !important;
+	color: var(--sl-color-text) !important;
+	border: 1px solid var(--sl-color-hairline) !important;
+	border-radius: 6px !important;
+	font-size: 0.8125rem !important;
+	line-height: 1.4 !important;
+	box-shadow:
+		0 4px 6px -1px rgb(0 0 0 / 0.1),
+		0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+}
+
+/* Dark mode — bump the border one step (`hairline-shade`) so the tooltip
+ * edge reads more clearly against the dark page surface. */
+[data-theme="dark"] .tippy-box {
+	border-color: var(--sl-color-hairline-shade) !important;
+}
+
+[data-theme="dark"] .tippy-box[data-placement^="top"] > .tippy-arrow::before {
+	filter: drop-shadow(0 1px 0 var(--sl-color-hairline-shade));
+}
+
+[data-theme="dark"]
+	.tippy-box[data-placement^="bottom"]
+	> .tippy-arrow::before {
+	filter: drop-shadow(0 -1px 0 var(--sl-color-hairline-shade));
+}
+
+[data-theme="dark"] .tippy-box[data-placement^="left"] > .tippy-arrow::before {
+	filter: drop-shadow(1px 0 0 var(--sl-color-hairline-shade));
+}
+
+[data-theme="dark"] .tippy-box[data-placement^="right"] > .tippy-arrow::before {
+	filter: drop-shadow(-1px 0 0 var(--sl-color-hairline-shade));
 }
 
 .tippy-box .tippy-content {
-	padding: 2px 7px !important;
+	padding: 6px 10px !important;
 }
 
+/* Keep inline links inside tooltips legible against the new surface */
+.tippy-box .tippy-content a {
+	color: var(--sl-color-text-accent);
+}
+
+/* Arrow — match the popup background and pick up the hairline as a faux border */
 .tippy-box .tippy-arrow {
-	display: none !important;
+	color: var(--sl-color-bg);
+}
+
+.tippy-box[data-placement^="top"] > .tippy-arrow::before {
+	border-top-color: var(--sl-color-bg);
+	filter: drop-shadow(0 1px 0 var(--sl-color-hairline));
+}
+
+.tippy-box[data-placement^="bottom"] > .tippy-arrow::before {
+	border-bottom-color: var(--sl-color-bg);
+	filter: drop-shadow(0 -1px 0 var(--sl-color-hairline));
+}
+
+.tippy-box[data-placement^="left"] > .tippy-arrow::before {
+	border-left-color: var(--sl-color-bg);
+	filter: drop-shadow(1px 0 0 var(--sl-color-hairline));
+}
+
+.tippy-box[data-placement^="right"] > .tippy-arrow::before {
+	border-right-color: var(--sl-color-bg);
+	filter: drop-shadow(-1px 0 0 var(--sl-color-hairline));
 }

@@ -1,4 +1,3 @@
-import { track } from "~/util/zaraz";
 import type { DocSearchClientOptions } from "@astrojs/starlight-docsearch";
 import {
 	ALGOLIA_APP_ID,
@@ -26,28 +25,6 @@ export default {
 				url: url.toString(),
 			};
 		});
-	},
-	resultsFooterComponent({ state }) {
-		if (isStyleGuide) {
-			return null;
-		}
-
-		return {
-			type: "a",
-			ref: undefined,
-			constructor: undefined,
-			__v: null,
-			key: state.query,
-			props: {
-				onclick: () => {
-					track("serp from location", { value: "widget", query: state.query });
-				},
-				id: "docsearch-search-link",
-				href: `/search/?query=${state.query}`,
-				target: "_blank",
-				children: "View all results",
-			},
-		};
 	},
 	// @ts-expect-error Will be fixed with the next release of @docsearch/js
 	keyboardShortcuts: {

@@ -29,11 +29,11 @@ A VPC Service binding routes requests to a specific pre-registered host and port
 
 ### VPC Network
 
-A VPC Network binding grants access to any service reachable through the bound tunnel or Cloudflare Mesh. The URL passed to `fetch()` determines the actual destination — hostname or IP address and port.
+A VPC Network binding grants access to any service reachable through the bound Cloudflare Tunnel or through Cloudflare Mesh — including subnet and hostname routes announced through Cloudflare Tunnel or Mesh, and destinations connected through Cloudflare WAN on-ramps (GRE, IPsec, or CNI). The URL passed to `fetch()` determines the actual destination — hostname or IP address and port.
 
 ## fetch()
 
-Makes an HTTP request to the private service through the configured tunnel.
+Makes an HTTP request to the private service through the bound Cloudflare Tunnel or Cloudflare Mesh.
 
 ```js
 const response = await env.MY_BINDING.fetch(resource, options);
@@ -127,7 +127,7 @@ export default {
 
 ## Required roles
 
-To bind a VPC Service or VPC Network in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). Binding directly to a tunnel through a VPC Network binding requires `Connectivity Directory Admin`. For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
+To bind a VPC Service or VPC Network in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). Binding directly to a Cloudflare Tunnel through a VPC Network binding requires `Connectivity Directory Admin`. For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
 
 ## Next steps
 

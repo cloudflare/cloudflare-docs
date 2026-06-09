@@ -44,25 +44,9 @@ flowchart LR
 
 Please view Cloudflare's [certifications and compliance resources](https://www.cloudflare.com/trust-hub/compliance-resources/) and contact your Cloudflare enterprise account manager for more information.
 
-### What data can Cloudflare access when TURN is used with WebRTC?
-
-When Cloudflare Realtime TURN is used in conjunction with WebRTC, Cloudflare cannot access the contents of the media being relayed. This is because WebRTC employs Datagram Transport Layer Security (DTLS) encryption for all media streams, which encrypts the data end-to-end between the communicating peers before it reaches the TURN server. As a result, Cloudflare only relays encrypted packets and cannot decrypt or inspect the media content, which may include audio, video, or data channel information.
-
-From a data privacy perspective, the only information Cloudflare processes to operate the TURN service is the metadata necessary for establishing and maintaining the relay connection. This includes IP addresses of the TURN clients, port numbers, and session timing information. Cloudflare does not have access to any personally identifiable information contained within the encrypted media streams themselves.
-
-This architecture ensures that media communications relayed through Cloudflare Realtime TURN maintain end-to-end encryption between participants, with Cloudflare functioning solely as an intermediary relay service without visibility into the encrypted content.
-
-### Is Realtime TURN end-to-end encrypted?
-
-TURN protocol, [RFC 8656](https://datatracker.ietf.org/doc/html/rfc8656), does not discuss encryption beyond wrapper protocols such as TURN over TLS. If you are using TURN with WebRTC will encrypt data at the WebRTC level.
-
 ### What regions does Cloudflare Realtime TURN operate at?
 
 Cloudflare Realtime TURN server runs on [Cloudflare's global network](https://www.cloudflare.com/network) - a growing global network of thousands of machines distributed across hundreds of locations, with the notable exception of the Cloudflare's [China Network](/china-network/).
-
-### Does Cloudflare Realtime TURN use the Cloudflare Backbone or is there any "magic" Cloudflare do to speed connection up?
-
-Cloudflare Realtime TURN allocations are homed in the nearest available Cloudflare data center to the TURN client via anycast routing. If both ends of a connection are using Cloudflare Realtime TURN, Cloudflare will be able to control the routing and, if possible, route TURN packets through the Cloudflare backbone.
 
 ### What is the difference between Cloudflare Realtime TURN with a enterprise plan vs self-serve (pay with your credit card) plans?
 
@@ -75,6 +59,57 @@ Cloudflare's [China Network](/china-network/) does not participate in serving Re
 ### How long does it take for TURN activity to be available in analytics?
 
 TURN usage shows up in analytics in 30 seconds.
+
+## Architecture and use cases
+
+### What data can Cloudflare access when TURN is used with WebRTC?
+
+When Cloudflare Realtime TURN is used in conjunction with WebRTC, Cloudflare cannot access the contents of the media being relayed. This is because WebRTC employs Datagram Transport Layer Security (DTLS) encryption for all media streams, which encrypts the data end-to-end between the communicating peers before it reaches the TURN server. As a result, Cloudflare only relays encrypted packets and cannot decrypt or inspect the media content, which may include audio, video, or data channel information.
+
+From a data privacy perspective, the only information Cloudflare processes to operate the TURN service is the metadata necessary for establishing and maintaining the relay connection. This includes IP addresses of the TURN clients, port numbers, and session timing information. Cloudflare does not have access to any personally identifiable information contained within the encrypted media streams themselves.
+
+This architecture ensures that media communications relayed through Cloudflare Realtime TURN maintain end-to-end encryption between participants, with Cloudflare functioning solely as an intermediary relay service without visibility into the encrypted content.
+
+### Is Realtime TURN end-to-end encrypted?
+
+TURN protocol, [RFC 8656](https://datatracker.ietf.org/doc/html/rfc8656), does not discuss encryption beyond wrapper protocols such as TURN over TLS. If you are using TURN with WebRTC will encrypt data at the WebRTC level.
+
+### Does Cloudflare Realtime TURN use the Cloudflare Backbone or is there any "magic" Cloudflare do to speed connection up?
+
+Cloudflare Realtime TURN allocations are homed in the nearest available Cloudflare data center to the TURN client via anycast routing. If both ends of a connection are using Cloudflare Realtime TURN, Cloudflare will be able to control the routing and, if possible, route TURN packets through the Cloudflare backbone.
+
+### When should I use TURN versus SFU?
+
+TURN and SFU solve different problems and are often used together.
+
+Use TURN when you have a point-to-point connection between two peers and you need to traverse NATs or firewalls. Both peers exchange media directly through the relay without any server-side media processing.
+
+Use SFU when you need fan-out, meaning one publisher sending media to many subscribers, or many publishers exchanging media in a group. The SFU forwards selected media streams between participants and supports features like simulcast and subscriber-side track selection.
+
+If your use case is one-to-one communication, such as a teleoperation link between an operator and a remote device, TURN by itself is usually sufficient. Adding an SFU is unnecessary complexity for that topology.
+
+### Is there overhead to using SFU compared to forcing TURN relay on every connection?
+
+No. Cloudflare Realtime TURN and SFU run on the same fleet of machines on Cloudflare's global network and share the same data path. There is no meaningful latency or throughput penalty for choosing one over the other.
+
+The decision should be driven by topology, not performance:
+
+- Use TURN for point-to-point relay.
+- Use SFU when you need fan-out, group calls, or selective forwarding of tracks.
+
+### If only one peer connects through TURN, will latency be the same as when both peers relay through TURN?
+
+Not necessarily. When both peers relay through Cloudflare Realtime TURN, the traffic between the two Cloudflare edges can use the Cloudflare backbone, which means Cloudflare controls the path end to end. When only one peer uses TURN, the other leg traverses the public Internet, and latency and packet loss depend on the interconnect between that peer and the nearest Cloudflare data center.
+
+The more consistent improvement from using TURN on both ends is reliability and packet loss behavior, not raw latency. Backbone latency is typically better than the public Internet, but the size of the latency improvement varies by geography. The reduction in packet loss is generally more predictable.
+
+### Can I use Cloudflare Realtime TURN for robotics and teleoperation?
+
+Yes. Cloudflare Realtime TURN is a good fit for robotics teleoperation, remote vehicle control, and fleet management workloads that require low-latency, two-way media or data channels between an operator and a remote device.
+
+Teleoperation typically uses TURN in point-to-point mode, with one end on the operator's network and the other on the robot's cellular or wired uplink. WebRTC and DTLS provide end-to-end encryption of the media stream, and Cloudflare Realtime TURN handles NAT traversal and relay between the two endpoints. When both endpoints connect through TURN, traffic between Cloudflare edges can ride the Cloudflare backbone, which improves packet loss characteristics on long-distance links.
+
+For workloads that need to fan out a robot's telemetry or camera feed to multiple subscribers (for example, an operator, a supervisor, and a fleet dashboard), Cloudflare Realtime SFU can be used in addition to TURN. Cloudflare's Media over QUIC (MoQ) implementation is also worth evaluating for telemetry and teleoperation when you control both ends of the connection, since it gives you more explicit control over reliability and retransmission behavior than WebRTC.
 
 ## Technical
 

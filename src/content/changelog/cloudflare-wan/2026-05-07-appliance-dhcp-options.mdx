@@ -1,0 +1,14 @@
+---
+title: Custom DHCP options on Cloudflare One Appliance
+description: Configure DHCP options on the appliance's DHCP server, including options for PXE / iPXE boot.
+date: 2026-05-07
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+When the Cloudflare One Appliance is acting as the DHCP server for a LAN, you can now configure custom DHCP options on the leases it issues. This unlocks workflows such as PXE / iPXE boot, VoIP phone provisioning, and vendor-specific client configuration.
+
+Each option is defined by `option_number`, `value`, and one of four value types: `text`, `integer`, `hex`, or `ip`. Configurations are validated on the appliance before being applied — invalid configurations are rejected and the underlying error is returned to the API caller, so a bad option will not disrupt the live DHCP service.
+
+For details, refer to [DHCP server options](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-options/).

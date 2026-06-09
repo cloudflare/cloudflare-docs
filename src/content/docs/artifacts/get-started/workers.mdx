@@ -104,19 +104,14 @@ Replace `src/index.ts` with the following code:
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-interface Env {
-	ARTIFACTS: Artifacts;
-}
-
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request, env) {
 		const url = new URL(request.url);
 
 		if (request.method === "POST" && url.pathname === "/repos") {
 			// Read the repo name from the request body so the route is reusable.
-			const body = (await request.json().catch(() => ({}))) as {
-				name?: string;
-			};
+			const body = await request.json().catch(() => ({}));
+
 			const repoName = body.name ?? "starter-repo";
 
 			// Create the repo and return the remote URL plus initial write token.
@@ -134,12 +129,12 @@ export default {
 			headers: { Allow: "POST" },
 		});
 	},
-} satisfies ExportedHandler<Env>;
+};
 ```
 
 </TypeScriptExample>
 
-This Worker does one job: create an Artifacts repo and return the values your Git client needs next.
+This Worker creates an Artifacts repo and returns the remote URL and token your Git client needs to push and pull.
 
 :::caution[Protect token-issuing routes]
 This example omits authentication so it can focus on the Artifacts flow. In production, authorize the caller before creating repos or returning write tokens.
@@ -153,9 +148,7 @@ Start local development:
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-In a second terminal, choose one of the following ways to create a repo through your Worker.
-
-If you rerun this guide, use a different repo name in the request body.
+Then, open a second terminal and send a request to your Worker to create a new Artifacts repo:
 
 <Tabs>
 	<TabItem label="Manual">
@@ -168,7 +161,8 @@ curl http://localhost:8787/repos \
   }'
 ```
 
-The response resembles the following:
+Your Worker will call `env.ARTIFACTS.create()` and return three values you will need for Git operations:
+
 
 ```json
 {
@@ -177,10 +171,9 @@ The response resembles the following:
 	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 }
 ```
-
-Use the exact `remote` value from the response. The example above uses `<ACCOUNT_ID>` as a placeholder for your Cloudflare account ID.
-
-The returned token encodes its expiry directly in the `?expires=` suffix.
+- `name`: the repo name. Must be unique within the namespace.
+- `remote`: the Git remote URL for this repo. `<ACCOUNT_ID>` will be your actual Cloudflare account ID.
+- `token`: a short-lived credential for Git operations. The token encodes its expiry directly in the `?expires=` suffix as a Unix timestamp.
 
 Copy the `remote` and `token` values into local shell variables:
 
@@ -207,7 +200,8 @@ export ARTIFACTS_TOKEN=$(printf '%s' "$RESPONSE" | jq -r '.token')
 
 ## 5. Push your first commit with git
 
-Create a local repository and push it to Artifacts:
+In the previous step, your Worker created an empty Artifacts repo. Now you will create a local Git repo, add a file, and push it to Artifacts — the same way you would push to any Git remote.
+
 
 ```sh
 mkdir artifacts-demo
@@ -220,7 +214,7 @@ git remote add origin "$ARTIFACTS_REMOTE"
 git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin main
 ```
 
-This uses the recommended header-based form and keeps the token out of the remote URL.
+The `-c http.extraHeader` flag passes the token as a request header, which keeps it out of your Git config and shell history.
 
 If you need a self-contained remote URL for a short-lived command, build one from the token secret instead:
 
@@ -249,6 +243,11 @@ git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
 ```
 
 ## 7. Deploy your Worker
+
+Switch back to your Worker project directory: 
+```sh
+cd artifacts-worker
+```
 
 Deploy the Worker so you can create repos without running `wrangler dev`:
 

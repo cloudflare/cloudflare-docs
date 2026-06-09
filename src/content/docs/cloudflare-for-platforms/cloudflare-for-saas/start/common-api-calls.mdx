@@ -12,22 +12,37 @@ sidebar:
 
 As a SaaS provider, you may want to configure and manage Cloudflare for SaaS [via the API](/api/) rather than the [Cloudflare dashboard](https://dash.cloudflare.com/). Below are relevant API calls for creating, editing, and deleting custom hostnames, as well as monitoring, updating, and deleting fallback origins. Further details can be found in the [Cloudflare API documentation](/api/).
 
-***
+---
 
 ## Custom hostnames
 
-| Endpoint                                                                                                                         | Notes                                                                                                                                   |
-| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| [List custom hostnames](/api/resources/custom_hostnames/methods/list/)                                        | Use the `page` parameter to pull additional pages. Add a `hostname` parameter to search for specific hostnames.                         |
-| [Create custom hostname](/api/resources/custom_hostnames/methods/create/)                                      | In the `validation_records` object of the response, use the `txt_name` and `txt_record` listed  to validate the custom hostname.        |
-| [Custom hostname details](/api/resources/custom_hostnames/methods/get/)                                    |                                                                                                                                         |
-| [Edit custom hostname](/api/resources/custom_hostnames/methods/edit/)                                          | When sent with an `ssl` object that matches the existing value, indicates that hostname should restart domain control validation (DCV). |
+| Endpoint                                                                  | Notes                                                                                                                                   |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| [List custom hostnames](/api/resources/custom_hostnames/methods/list/)    | Use the `page` parameter to pull additional pages. Add a `hostname` parameter to search for specific hostnames.                         |
+| [Create custom hostname](/api/resources/custom_hostnames/methods/create/) | In the `validation_records` object of the response, use the `txt_name` and `txt_record` listed to validate the custom hostname.         |
+| [Custom hostname details](/api/resources/custom_hostnames/methods/get/)   | Use this endpoint to check hostname activation and certificate status.                                                                  |
+| [Edit custom hostname](/api/resources/custom_hostnames/methods/edit/)     | When sent with an `ssl` object that matches the existing value, indicates that hostname should restart domain control validation (DCV). |
 | [Delete custom hostname](/api/resources/custom_hostnames/methods/delete/) | Also deletes any associated SSL/TLS certificates.                                                                                       |
+
+### Confirm custom hostname readiness
+
+To confirm that a custom hostname is fully configured, check both status fields in the [Custom hostname details endpoint](/api/resources/custom_hostnames/methods/get/) response:
+
+| API field           | What it means                                                                                                          | Ready value |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `result.status`     | Hostname activation status. This field shows whether Cloudflare has validated and activated the custom hostname.       | `active`    |
+| `result.ssl.status` | Certificate status. This field shows whether the hostname's SSL/TLS certificate has completed issuance and deployment. | `active`    |
+
+Treat the custom hostname as ready for production HTTPS when `result.status` is `active`, `result.ssl.status` is `active`, and the customer's DNS points to your CNAME target or apex proxying target.
+
+If `result.status` is `active` but `result.ssl.status` is not `active`, the hostname is active but its certificate has not completed issuance and deployment. A successful TLS handshake alone does not mean the custom hostname certificate has finished provisioning because Cloudflare may present another matching certificate for that hostname. For more information, refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/).
+
+When you use the [Create custom hostname endpoint](/api/resources/custom_hostnames/methods/create/), choose one `ssl.method` value: `http`, `txt`, or `email`. For non-wildcard custom hostnames, Cloudflare always attempts [HTTP certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#non-wildcard-custom-hostnames) after the hostname points to your SaaS target, even if you selected **TXT** validation.
 
 ## Fallback origins
 
 Our API includes the following endpoints related to the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin) of a custom hostname:
 
-* [Get fallback origin](/api/resources/custom_hostnames/subresources/fallback_origin/methods/get/)
-* [Update fallback origin](/api/resources/custom_hostnames/subresources/fallback_origin/methods/update/)
-* [Remove fallback origin](/api/resources/custom_hostnames/subresources/fallback_origin/methods/delete/)
+- [Get fallback origin](/api/resources/custom_hostnames/subresources/fallback_origin/methods/get/)
+- [Update fallback origin](/api/resources/custom_hostnames/subresources/fallback_origin/methods/update/)
+- [Remove fallback origin](/api/resources/custom_hostnames/subresources/fallback_origin/methods/delete/)

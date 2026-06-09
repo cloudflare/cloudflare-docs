@@ -8,7 +8,10 @@ function phosphorIcon(name: string): string {
 	);
 	const svg = readFileSync(file, "utf-8");
 	// Extract inner content (strip outer <svg> wrapper — we render our own)
-	return svg.replace(/<svg[^>]*>/, "").replace(/<\/svg>/, "").trim();
+	return svg
+		.replace(/<svg[^>]*>/, "")
+		.replace(/<\/svg>/, "")
+		.trim();
 }
 
 const iconCopy = phosphorIcon("copy");
@@ -23,11 +26,24 @@ const iconScroll = phosphorIcon("scroll");
 	<button
 		class="not-content"
 		id="page-actions-copy"
-		data-tooltip="Copy Page as Markdown"
 		aria-label="Copy Page as Markdown"
 	>
-		<svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 256 256" fill="currentColor" set:html={iconCopy} />
-		<svg class="check-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 256 256" fill="currentColor" set:html={iconCheckCircle} />
+		<svg
+			class="copy-icon"
+			xmlns="http://www.w3.org/2000/svg"
+			aria-hidden="true"
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			set:html={iconCopy}
+		/>
+		<svg
+			class="check-icon"
+			xmlns="http://www.w3.org/2000/svg"
+			aria-hidden="true"
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			set:html={iconCheckCircle}
+		/>
 		<span class="label-wrap">
 			<span class="label">Copy as Markdown</span>
 			<span class="copied-label" aria-hidden="true">Copied!</span>
@@ -40,13 +56,18 @@ const iconScroll = phosphorIcon("scroll");
 	<a
 		class="not-content"
 		id="page-actions-view-md"
-		data-tooltip="View Page as Markdown"
 		aria-label="View Page as Markdown"
 		href="index.md"
 		target="_blank"
 		rel="noopener noreferrer"
 	>
-		<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 256 256" fill="currentColor" set:html={iconMarkdown} />
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			aria-hidden="true"
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			set:html={iconMarkdown}
+		/>
 		<span>View as Markdown</span>
 	</a>
 
@@ -59,7 +80,13 @@ const iconScroll = phosphorIcon("scroll");
 		data-tooltip="Setup your agent to build on Cloudflare"
 		aria-label="Setup your agent to build on Cloudflare"
 	>
-		<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 256 256" fill="currentColor" set:html={iconRobot} />
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			aria-hidden="true"
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			set:html={iconRobot}
+		/>
 		<span>Agent setup</span>
 	</button>
 
@@ -72,7 +99,13 @@ const iconScroll = phosphorIcon("scroll");
 		data-tooltip="Consume Cloudflare Docs with your agent"
 		aria-label="Consume Cloudflare Docs with your agent"
 	>
-		<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 256 256" fill="currentColor" set:html={iconScroll} />
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			aria-hidden="true"
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			set:html={iconScroll}
+		/>
 		<span>Docs for agents</span>
 	</button>
 </nav>
@@ -181,46 +214,66 @@ const iconScroll = phosphorIcon("scroll");
 
 	function init() {
 		// Wire up tooltips
-		document.querySelectorAll<HTMLElement>(".page-actions [data-tooltip]").forEach((btn) => {
-			tippy(btn, {
-				content: btn.dataset.tooltip!,
-				arrow: false,
-				appendTo: () => document.body,
+		document
+			.querySelectorAll<HTMLElement>(".page-actions [data-tooltip]")
+			.forEach((btn) => {
+				tippy(btn, {
+					content: btn.dataset.tooltip!,
+					appendTo: () => document.body,
+				});
 			});
-		});
 
 		// Copy as Markdown
-		document.getElementById("page-actions-copy")?.addEventListener("click", async () => {
-			const markdownUrl = new URL("index.md", window.location.href).toString();
-			const btn = document.getElementById("page-actions-copy") as HTMLButtonElement;
+		document
+			.getElementById("page-actions-copy")
+			?.addEventListener("click", async () => {
+				const markdownUrl = new URL(
+					"index.md",
+					window.location.href,
+				).toString();
+				const btn = document.getElementById(
+					"page-actions-copy",
+				) as HTMLButtonElement;
 
-			btn.classList.add("is-copied");
-			setTimeout(() => btn.classList.remove("is-copied"), 1500);
+				btn.classList.add("is-copied");
+				setTimeout(() => btn.classList.remove("is-copied"), 1500);
 
-			navigator.clipboard.write([new ClipboardItem({
-				"text/plain": fetch(markdownUrl)
-					.then((r) => r.text())
-					.then((t) => new Blob([t], { type: "text/plain" })),
-			})]).then(() => track("agents toolkit clicked", { value: "copy markdown" }))
-				.catch((e) => console.error("Failed to copy Markdown:", e));
-		});
+				navigator.clipboard
+					.write([
+						new ClipboardItem({
+							"text/plain": fetch(markdownUrl)
+								.then((r) => r.text())
+								.then((t) => new Blob([t], { type: "text/plain" })),
+						}),
+					])
+					.then(() =>
+						track("agents toolkit clicked", { value: "copy markdown" }),
+					)
+					.catch((e) => console.error("Failed to copy Markdown:", e));
+			});
 
 		// View as Markdown — href is a relative link; just track the click
-		document.getElementById("page-actions-view-md")?.addEventListener("click", () => {
-			track("agents toolkit clicked", { value: "view markdown" });
-		});
+		document
+			.getElementById("page-actions-view-md")
+			?.addEventListener("click", () => {
+				track("agents toolkit clicked", { value: "view markdown" });
+			});
 
 		// Agent setup
-		document.getElementById("page-actions-agent-setup")?.addEventListener("click", () => {
-			track("agents toolkit clicked", { value: "view ai options" });
-			window.open("/agent-setup/", "_blank");
-		});
+		document
+			.getElementById("page-actions-agent-setup")
+			?.addEventListener("click", () => {
+				track("agents toolkit clicked", { value: "view ai options" });
+				window.open("/agent-setup/", "_blank");
+			});
 
 		// Docs for agents
-		document.getElementById("page-actions-docs-for-agents")?.addEventListener("click", () => {
-			track("agents toolkit clicked", { value: "docs for agents" });
-			window.open("/docs-for-agents/", "_blank");
-		});
+		document
+			.getElementById("page-actions-docs-for-agents")
+			?.addEventListener("click", () => {
+				track("agents toolkit clicked", { value: "docs for agents" });
+				window.open("/docs-for-agents/", "_blank");
+			});
 	}
 
 	// Run on initial load and after Astro view transitions

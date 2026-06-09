@@ -18,3 +18,20 @@ import { Render } from "~/components";
 	whatHappensApp: "will now go directly to the Internet and bypass Cloudflare's filtering",
 	dashName: "Cloudflare WAN",
 	}} />
+
+## Breakout by source
+
+In addition to matching by destination application, you can define breakout rules that match by **source** — by source LAN interface, source VLAN, or source IP address / CIDR block. This is useful for breaking out an entire guest VLAN or a specific subnet to the local Internet without enumerating destination applications.
+
+Source-based breakout is configured via the API and Terraform.
+
+### Match criteria
+
+| Criterion             | Behavior                                                                                          |
+| --------------------- | ------------------------------------------------------------------------------------------------- |
+| Source LAN interface  | All traffic originating on the selected LAN is broken out. Any VLAN attached to that LAN is included automatically. |
+| Source CIDR / IP range| All traffic with a source IP in the specified range is broken out. Accepts a single IP, a range, or a CIDR block.   |
+
+The same criteria can be used to mark traffic as **prioritized** instead of broken out. Refer to [Prioritized traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) for details.
+
+Source-based and destination-based (managed app or custom app) rules can co-exist on the same appliance and are evaluated independently. If a flow matches both a source-based breakout rule and a destination-based breakout rule, the appliance breaks it out.

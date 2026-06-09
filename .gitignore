@@ -6,9 +6,14 @@ distllms/
 # generated types
 .astro/
 
+# Astro build cache
+.astro-cache/
+
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
 !.agents/skills/
+!.flue/.agents/
+!.flue/.agents/**
 
 # dependencies
 node_modules/
@@ -57,3 +62,13 @@ CLAUDE.md
 
 # certain versions of opencode mistakenly commit package-lock.json
 .opencode/package-lock.json
+
+# Flue agents build output, secrets, and isolated workspace artifacts
+.flue/dist/
+.flue/.env*
+.flue/.wrangler/
+.flue/.wrangler/tmp/
+.flue/.flue-vite/
+.flue/.flue-vite.wrangler.jsonc
+.flue/node_modules/
+.flue/pnpm-lock.yaml

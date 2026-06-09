@@ -111,18 +111,18 @@ if (!hideBreadcrumbs) {
 {summary && <Description set:html={marked.parse(summary)} />}
 
 {
-	component && (
-			<div class="sl-markdown-content md-ignore">
-				<ComponentUsage component={component} />
-			</div>
-	)
-}
-
-{
 	showPageActions && (
 		<div class="page-actions-wrapper">
 			<PageActions />
 		</div>
+	)
+}
+
+{
+	component && (
+			<div class="sl-markdown-content md-ignore component-usage-wrapper">
+				<ComponentUsage component={component} />
+			</div>
 	)
 }
 
@@ -133,6 +133,10 @@ if (!hideBreadcrumbs) {
 
 	.page-actions-wrapper {
 		margin-top: 1rem;
+	}
+
+	.component-usage-wrapper {
+		margin-top: 3rem;
 	}
 
 	:global(.c-breadcrumbs) {

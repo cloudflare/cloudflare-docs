@@ -126,7 +126,60 @@ If you would like to build policies based on IdP groups:
 
 ## Optional configurations
 
-SAML integrations allow you to pass additional headers or claims to applications.
+SAML integrations support additional security and configuration options.
+
+### Encrypt SAML assertions
+
+SAML assertion encryption ensures that SAML assertions sent from your identity provider to Cloudflare Access are encrypted end-to-end.
+
+Without encryption, SAML assertions are transmitted in plaintext after TLS termination, which means they could be visible to browser extensions or client-side malware. With encryption turned on, your IdP encrypts the assertion using a public certificate from Cloudflare, and only Access can decrypt it with the corresponding private key.
+
+:::note
+SAML assertion encryption is separate from [signed AuthN requests](/cloudflare-one/integrations/identity-providers/signed_authn/). Signing verifies the authenticity of SAML messages, while encryption adds an additional layer of security by protecting assertion contents. You can use both features together.
+:::
+
+To turn on SAML assertion encryption:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
+2. Select your SAML identity provider and select **Edit**.
+3. Under **SAML encryption**, turn on the **Enable SAML encryption** toggle. Access will automatically generate an encryption certificate.
+4. Copy the displayed certificate (in PEM format) or the certificate set ID.
+5. In your identity provider, upload the Cloudflare encryption certificate and turn on assertion encryption. Refer to your IdP documentation for the exact configuration steps.
+6. Select **Save**.
+
+After you turn on encryption, Access will reject any unencrypted assertions from the configured IdP. If you turn off encryption, Access will reject any encrypted assertions until encryption is turned back on.
+
+#### Supported encryption algorithms
+
+Access supports the following encryption algorithms:
+
+| Algorithm type | Supported values |
+| --- | --- |
+| Content encryption | AES-128-CBC, AES-256-CBC, AES-128-GCM, AES-256-GCM |
+| Key transport | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5 |
+
+:::caution
+RSA-1.5 is supported for compatibility but is considered insecure. Use RSA-OAEP when your identity provider supports it.
+:::
+
+:::note[FedRAMP environments]
+FedRAMP High environments enforce stricter algorithm requirements. RSA-1.5 and RSA-OAEP 1.0 (`rsa-oaep-mgf1p`) are rejected. Use RSA-OAEP 1.1 with SHA-256 for key transport and AES-256-GCM or AES-256-CBC for content encryption.
+:::
+
+#### Rotate encryption certificates
+
+Encryption certificates are valid for one year. Thirty days before a certificate expires, Access automatically generates a replacement certificate. The expiring certificate remains valid until its expiration date, giving you time to upload the new certificate to your IdP.
+
+To manually rotate a certificate:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
+2. Select your SAML identity provider and select **Edit**.
+3. Under **SAML encryption**, select **Rotate certificate**.
+4. Upload the new certificate to your identity provider.
+
+:::caution
+If you rotate again before updating your IdP with the current certificate, the previous certificate will be immediately invalidated. This may break authentication for users whose IdP is still encrypting assertions with the old certificate.
+:::
 
 ### Sign SAML authentication request
 

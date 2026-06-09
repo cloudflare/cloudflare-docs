@@ -15,7 +15,18 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 
 A collection of UI Kit addons that extend RealtimeKit's prebuilt UI Kit capabilities with additional interactive components and controls for enhanced meeting experiences.
 
-<RTKSDKSelector />
+<RTKSDKSelector
+	disabledPlatforms={[
+		"mobile-ios",
+		"mobile-android",
+		"mobile-flutter",
+		"mobile-react-native",
+	]}
+/>
+
+:::note
+UI Kit Addons are currently only available for web platforms (React, Web Components, and Angular). Mobile platform support (iOS, Android, Flutter, and React Native) is not available at this time.
+:::
 
 The UI Kit addons library provides the following categories of components:
 

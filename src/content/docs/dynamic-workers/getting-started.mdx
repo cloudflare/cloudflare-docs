@@ -17,7 +17,7 @@ Dynamic Workers support two loading modes:
 - `load(code)` creates a fresh Dynamic Worker for one-time execution.
 - `get(id, callback)` caches a Dynamic Worker by ID so it can stay warm across requests.
 
-`load()` is best for one-time code execution, for example when using [Codemode](/agents/api-reference/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
+`load()` is best for one-time code execution, for example when using [Codemode](/agents/model-context-protocol/protocol/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
 
 ### Try it out
 
@@ -144,10 +144,11 @@ const worker = env.LOADER.load({
   mainModule: "worker.py",
   modules: {
     "worker.py": `
-      from workers import Response
+from workers import Response, WorkerEntrypoint
 
-      def on_fetch(request):
-          return Response("Hello from Python!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello from Python!")
     `,
   },
 });

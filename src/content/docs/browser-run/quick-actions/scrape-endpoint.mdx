@@ -110,6 +110,23 @@ const scrapes = await client.browserRendering.scrape.create({
 console.log(scrapes);
 ```
 
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("scrape", {
+			url: "https://example.com/",
+			elements: [{ selector: "h1" }, { selector: "a" }],
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
 </TabItem> </Tabs>
 
 Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/scrape/methods/create/) for all available parameters.
@@ -124,7 +141,7 @@ Many more options exist, like setting HTTP credentials using `authenticate`, set
     - `attributes` _(array of objects)_ - List of extracted attributes such as `href` for links.
     - `height`, `width`, `top`, `left` _(number)_ - Position and dimensions of the element.
 
-## Advanced Usage
+## Advanced usage
 
 :::note[Looking for more parameters?]
 Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/scrape/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.

@@ -24,6 +24,12 @@ Bring your own CA (BYOCA) is especially useful if you already have mTLS implemen
 
 - This feature is only available on Enterprise accounts.
 - Each Enterprise account can upload up to five CAs. This quota does not apply to CAs uploaded through [Cloudflare Access](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/).
+- The CA certificate quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/).
+- To increase this quota, contact your account team.
+
+:::note
+If you exceed the CA certificate quota, the API returns error `1489` with the message "Hit maximum CA cert allocation." Contact your account team to request a quota increase.
+:::
 
 ## CA certificate requirements
 

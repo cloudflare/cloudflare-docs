@@ -24,37 +24,43 @@ if (props.toc) {
 }
 
 if (props.hasSidebar) {
-	const group = await getSidebar(Astro);
-	props.sidebar = group.entries;
+	const pathname = Astro.url.pathname;
+	const segments = pathname.split("/").filter(Boolean);
 
-	if (props.pagination) {
-		const flattened = flattenSidebar(props.sidebar);
+	// Homepage provides its own sidebar via StarlightPage props — skip getSidebar
+	if (segments.length > 0) {
+		const group = await getSidebar(Astro);
+		props.sidebar = group.entries;
 
-		const idx = flattened.findIndex((entry) => entry.isCurrent);
+		if (props.pagination) {
+			const flattened = flattenSidebar(props.sidebar);
 
-		let prev = flattened[idx - 1];
-		let next = flattened[idx + 1];
+			const idx = flattened.findIndex((entry) => entry.isCurrent);
 
-		if (prev?.attrs["data-group-label"]) {
-			prev = {
-				...prev,
-				label: prev.attrs["data-group-label"],
-			};
-		}
+			let prev = flattened[idx - 1];
+			let next = flattened[idx + 1];
 
-		if (next?.attrs["data-group-label"]) {
-			next = {
-				...next,
-				label: next.attrs["data-group-label"],
-			};
-		}
+			if (prev?.attrs["data-group-label"]) {
+				prev = {
+					...prev,
+					label: prev.attrs["data-group-label"],
+				};
+			}
 
-		if (data.prev !== false) {
-			props.pagination.prev = prev;
-		}
+			if (next?.attrs["data-group-label"]) {
+				next = {
+					...next,
+					label: next.attrs["data-group-label"],
+				};
+			}
 
-		if (data.next !== false) {
-			props.pagination.next = next;
+			if (data.prev !== false) {
+				props.pagination.prev = prev;
+			}
+
+			if (data.next !== false) {
+				props.pagination.next = next;
+			}
 		}
 	}
 }

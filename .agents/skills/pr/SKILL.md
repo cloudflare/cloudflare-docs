@@ -35,7 +35,10 @@ Run `--stat` first to understand the scope without blowing up context:
 ```bash
 git log --oneline production..HEAD
 git diff production...HEAD --stat
+git status
 ```
+
+**If `git status` shows untracked or modified files**, stop and ask the user whether those files should be committed as part of this PR before proceeding. Do not silently ignore them — they may be integral to the work being submitted.
 
 If the stat output shows more than ~20 files changed, do **not** run the full diff. Instead, read specific files that are unclear from the stat output. For smaller changesets (under ~20 files), the full diff is fine:
 
@@ -122,7 +125,9 @@ Write a short explanation covering:
 
 - What type of documentation is being changed (new page, update, fix, restructure, changelog entry)
 - Why the change is needed or what prompted it
-- Links to any relevant public context: GitHub issues, Jira tickets, related PRs, or public docs pages.
+- Links to any relevant public context: GitHub issues, related PRs, or public docs pages.
+
+This is a public repository. Do not include URLs or titles of internal resources (tickets, wiki pages, internal docs) in PR titles, descriptions, or comments. Reference internal tickets by ID only (for example, `PCX-20808`).
 
 Keep it factual. Do not repeat what the checklist items say. For small, focused PRs 1-2 sentences is enough. For larger PRs touching many files or multiple areas, a longer description is appropriate — use tables, lists, or code blocks over paragraphs of prose where it makes the summary easier to scan.
 

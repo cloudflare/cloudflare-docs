@@ -1,0 +1,117 @@
+---
+import { AGENTS, type AgentId } from "./constants";
+import Button from "./Button.astro";
+
+interface Props {
+	/**
+	 * Agent ids to feature in the icon row, in order. Defaults to a
+	 * recognizable 4-agent subset; the AgentSetup section below the hero
+	 * still surfaces all six.
+	 */
+	agentIds?: readonly AgentId[];
+	/**
+	 * Optional class hooks merged onto the underlying secondary Button.
+	 */
+	class?: string;
+	/**
+	 * Optional hover/focus tooltip shown above the button. When omitted, no
+	 * tooltip is rendered (e.g., the duplicate button in the AgentSetup
+	 * section, where the surrounding copy already provides context).
+	 */
+	tooltip?: string;
+}
+
+const {
+	agentIds = ["claude", "cursor", "codex", "opencode"] as const,
+	class: className = "",
+	tooltip,
+} = Astro.props;
+
+const featuredAgents = AGENTS.filter((a) =>
+	(agentIds as readonly string[]).includes(a.id),
+);
+---
+
+<Button
+	class:list={["copy-prompt-btn group/copy cursor-copy", className]}
+	variant="secondary"
+	size="md"
+	type="button"
+	data-tooltip={tooltip}
+>
+	<span class="inline-flex items-center gap-2.5 text-base font-medium">
+		<span
+			class="relative flex h-5 shrink-0 items-center justify-start gap-[3px]"
+			aria-hidden="true"
+		>
+			{
+				featuredAgents.map((agent) => (
+					<>
+						<img
+							src={`/icons/agents/${agent.id}/light.svg`}
+							alt=""
+							class="block h-5 w-5 dark:hidden"
+							loading="lazy"
+							decoding="async"
+						/>
+						<img
+							src={`/icons/agents/${agent.id}/dark.svg`}
+							alt=""
+							class="hidden h-5 w-5 dark:block"
+							loading="lazy"
+							decoding="async"
+						/>
+					</>
+				))
+			}
+		</span>
+		<span class="group-data-[copied=true]/copy:hidden">Copy prompt</span>
+		<span class="hidden group-data-[copied=true]/copy:inline">
+			Prompt copied!
+		</span>
+	</span>
+</Button>
+
+<script>
+	import tippy from "tippy.js";
+	import { AGENT_SETUP_PROMPT } from "./constants";
+
+	// Mirrors the CommandBlock pattern: class-based selector binds every
+	// CopyPromptButton instance on the page (in case the component ever
+	// appears more than once). On click, write the prompt to the clipboard
+	// and toggle data-copied="true" for 1500ms — the label swap is handled
+	// entirely in markup via Tailwind's group-data variant.
+	function bindCopyPromptButtons() {
+		document
+			.querySelectorAll<HTMLButtonElement>(".copy-prompt-btn")
+			.forEach((btn) => {
+				if (btn.dataset.bound === "true") return;
+				btn.dataset.bound = "true";
+
+				// Wire up the (optional) tooltip — same pattern as PageActions.
+				const tooltip = btn.dataset.tooltip;
+				if (tooltip) {
+					tippy(btn, {
+						content: tooltip,
+						placement: "top",
+						arrow: false,
+						delay: [200, 0],
+						appendTo: () => document.body,
+					});
+				}
+
+				btn.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(AGENT_SETUP_PROMPT);
+					} catch {
+						return;
+					}
+					btn.dataset.copied = "true";
+					setTimeout(() => delete btn.dataset.copied, 1500);
+				});
+			});
+	}
+
+	bindCopyPromptButtons();
+	document.addEventListener("astro:page-load", bindCopyPromptButtons);
+</script>

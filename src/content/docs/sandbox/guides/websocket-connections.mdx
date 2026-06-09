@@ -138,6 +138,10 @@ export default {
 ```
 </TypeScriptExample>
 
+:::note[Alternative: quick tunnels]
+Quick tunnels also handle WebSocket upgrades and do not require a custom domain, so they work on `.workers.dev`. Swap `sandbox.exposePort(8080, { hostname })` for `sandbox.tunnels.get(8080)` to get a `*.trycloudflare.com` URL.
+:::
+
 **Client connects to preview URL:**
 
 ```javascript
@@ -246,4 +250,5 @@ Port exposure in Dockerfile is only required for local development. In productio
 
 - [Ports API reference](/sandbox/api/ports/) - Complete API documentation
 - [Preview URLs concept](/sandbox/concepts/preview-urls/) - How preview URLs work
+- [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for WebSocket services in development
 - [Background processes guide](/sandbox/guides/background-processes/) - Managing long-running services

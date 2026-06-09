@@ -1,0 +1,54 @@
+---
+title: SSH through Wrangler is now enabled by default for Containers
+description: SSH through Wrangler is now enabled by default. Add a public key to connect, or opt out in your Container configuration.
+products:
+  - containers
+date: 2026-05-12
+---
+
+import { WranglerConfig } from "~/components";
+
+SSH through Wrangler is now enabled by default for [Containers](/containers/). Previously, you had to set `ssh.enabled` to `true` in your Container configuration before you could connect.
+
+This change does not expose any publicly accessible ports on your Container. The SSH service is reachable only through [`wrangler containers ssh`](/workers/wrangler/commands/containers/#containers-ssh), which authenticates against your Cloudflare account. You also need to add an `ssh-ed25519` public key to `authorized_keys` before anyone can connect, so enabling SSH alone does not grant access.
+
+To connect, add a public key to your Container configuration and run `wrangler containers ssh <INSTANCE_ID>`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"authorized_keys": [
+				{
+					"name": "<NAME>",
+					"public_key": "<YOUR_PUBLIC_KEY_HERE>",
+				},
+			],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+To disable SSH, set `ssh.enabled` to `false` in your Container configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"ssh": {
+				"enabled": false,
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+For more information, refer to the [SSH documentation](/containers/ssh/).

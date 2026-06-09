@@ -1,0 +1,83 @@
+---
+const LINE_TIERS = [
+	{ width: "min(1400px, 100%)", accent: false },
+	{ width: "min(1280px, calc(100% - 48px))", accent: true },
+	{ width: "min(1216px, calc(100% - 112px))", accent: false },
+	{ width: "min(720px, calc(100% - 120px))", accent: false },
+];
+
+const marks =
+	"absolute -top-0 left-1/2 -translate-x-1/2 h-full pointer-events-none";
+---
+
+<div
+	class="pointer-events-none absolute inset-0 z-1 hidden [contain:layout_style_paint] lg:block"
+	aria-hidden="true"
+>
+	{
+		LINE_TIERS.map((tier) => {
+			const stroke = tier.accent
+				? "var(--l-grid-mark-accent, var(--l-grid-mark))"
+				: "var(--l-grid-mark)";
+			const size = tier.accent ? 9 : 7;
+			const half = size / 2;
+			const offset = `-${half}px`;
+			return (
+				<div class={marks} style={`width:${tier.width}`}>
+					<svg
+						width={size}
+						height={size}
+						viewBox={`0 0 ${size} ${size}`}
+						shape-rendering="crispEdges"
+						class="absolute -top-[3px] -left-[3px]"
+						style={`margin-top:${offset};margin-left:${offset}`}
+						aria-hidden="true"
+					>
+						<line
+							x1="0"
+							y1={half}
+							x2={size}
+							y2={half}
+							stroke={stroke}
+							stroke-width="1"
+						/>
+						<line
+							x1={half}
+							y1="0"
+							x2={half}
+							y2={size}
+							stroke={stroke}
+							stroke-width="1"
+						/>
+					</svg>
+					<svg
+						width={size}
+						height={size}
+						viewBox={`0 0 ${size} ${size}`}
+						shape-rendering="crispEdges"
+						class="absolute -top-[3px] -right-[3px]"
+						style={`margin-top:${offset};margin-right:${offset}`}
+						aria-hidden="true"
+					>
+						<line
+							x1="0"
+							y1={half}
+							x2={size}
+							y2={half}
+							stroke={stroke}
+							stroke-width="1"
+						/>
+						<line
+							x1={half}
+							y1="0"
+							x2={half}
+							y2={size}
+							stroke={stroke}
+							stroke-width="1"
+						/>
+					</svg>
+				</div>
+			);
+		})
+	}
+</div>

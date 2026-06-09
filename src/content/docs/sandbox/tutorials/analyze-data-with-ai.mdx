@@ -118,12 +118,26 @@ export default {
 				);
 			}
 
+			async function streamToBase64(stream) {
+			  const blob = await new Response(stream).blob();
+			  const buffer = await blob.arrayBuffer();
+			  const bytes = new Uint8Array(buffer);
+
+			  // Convert to base64
+			  let binary = '';
+			  for (let i = 0; i < bytes.length; i++) {
+			    binary += String.fromCharCode(bytes[i]);
+			  }
+			  return btoa(binary);
+			}
+
 			// Check for generated chart
 			let chart = null;
 			try {
-				const chartFile = await sandbox.readFile("/workspace/chart.png");
-				const buffer = new Uint8Array(chartFile.content);
-				chart = `data:image/png;base64,${btoa(String.fromCharCode(...buffer))}`;
+				const { content, mimeType } = await sandbox.readFile("/workspace/chart.png", {
+					encoding: "none"
+				});
+				chart = `data:${mimeType};base64,${await streamToBase64(content)}`;
 			} catch {
 				// No chart generated
 			}
@@ -200,10 +214,12 @@ Use pandas, numpy, matplotlib.`,
 Create a `.dev.vars` file in your project root for local development:
 
 ```sh
-echo "ANTHROPIC_API_KEY=your_api_key_here" > .dev.vars
+echo "ANTHROPIC_API_KEY=your_api_key_here\nSANDBOX_TRANSPORT=rpc" > .dev.vars
 ```
 
 Replace `your_api_key_here` with your actual API key from the [Anthropic Console](https://console.anthropic.com/).
+
+The `SANDBOX_TRANSPORT` is required to use the new file streaming APIs.
 
 :::note
 The `.dev.vars` file is automatically gitignored and only used during local development with `npm run dev`.

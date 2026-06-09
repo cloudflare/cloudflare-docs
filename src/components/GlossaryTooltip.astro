@@ -41,7 +41,9 @@ definition = definition.split(/\r?\n/)[0];
 	}</span><script>
 	import { addTooltip } from "~/util/tippy";
 
-	const tooltips = document.querySelectorAll<HTMLSpanElement>("[data-tooltip]");
+	const tooltips = document.querySelectorAll<HTMLSpanElement>(
+		"[data-tooltip][data-content]",
+	);
 
 	for (const tooltip of tooltips) {
 		addTooltip(tooltip, tooltip.dataset.content as string);

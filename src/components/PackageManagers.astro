@@ -180,8 +180,6 @@ const uid = Math.random().toString(36).slice(2, 8);
 			.forEach((btn) => {
 				const tooltip: Instance = tippy(btn, {
 					content: "Copy to clipboard",
-					placement: "top",
-					arrow: false,
 					appendTo: () => document.body,
 				});
 

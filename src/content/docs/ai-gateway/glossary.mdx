@@ -16,13 +16,11 @@ AI Gateway supports a variety of headers to help you configure, customize, and m
 
 ## Configuration hierarchy
 
-Settings in AI Gateway can be configured at three levels: **Provider**, **Request**, and **Gateway**. Since the same settings can be configured in multiple locations, the following hierarchy determines which value is applied:
+Settings in AI Gateway can be configured at two levels: **Request** and **Gateway**. Since the same settings can be configured in multiple locations, the following hierarchy determines which value is applied:
 
-1. **Provider-level headers**:
-   Relevant only when using the [Universal Endpoint](/ai-gateway/usage/universal/), these headers take precedence over all other configurations.
-2. **Request-level headers**:
-   Apply if no provider-level headers are set.
-3. **Gateway-level settings**:
-   Act as the default if no headers are set at the provider or request levels.
+1. **Request-level headers**:
+   Headers included in individual requests take precedence over gateway-level settings.
+2. **Gateway-level settings**:
+   Act as the default if no headers are set at the request level.
 
-This hierarchy ensures consistent behavior, prioritizing the most specific configurations. Use provider-level and request-level headers for more fine-tuned control, and gateway settings for general defaults.
+This hierarchy ensures consistent behavior, prioritizing the most specific configurations. Use request-level headers for fine-tuned control, and gateway settings for general defaults.

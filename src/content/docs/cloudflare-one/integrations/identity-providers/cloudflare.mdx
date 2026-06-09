@@ -1,0 +1,60 @@
+---
+pcx_content_type: how-to
+description: Use Cloudflare as an identity provider for Access policies, allowing authentication based on Cloudflare account membership.
+products:
+  - cloudflare-one
+title: Cloudflare as identity provider
+sidebar:
+  order: 1
+tags:
+  - REST API
+---
+
+import { Tabs, TabItem, APIRequest } from "~/components";
+
+Cloudflare Access can use Cloudflare itself as an identity provider, allowing you to build Access policies that match on Cloudflare account membership. This is useful for scenarios where you want to restrict access to users who are members of a specific Cloudflare account, without requiring a third-party identity provider.
+
+When a user authenticates through the Cloudflare identity provider, Access verifies their Cloudflare account membership and grants or denies access based on your policy configuration.
+
+## Set up Cloudflare as an identity provider
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
+2. Under **Your identity providers**, select **Add new identity provider**.
+3. Select **Cloudflare**.
+4. (Optional) Enable **Restrict to account members** if you want to limit authentication to users who are members of your Cloudflare account. When disabled, any user with a Cloudflare account can authenticate.
+5. Select **Save**.
+
+</TabItem> <TabItem label="API">
+
+Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
+
+<APIRequest
+	path="/accounts/{account_id}/access/identity_providers"
+	method="POST"
+	json={{
+		name: "Cloudflare",
+		type: "cloudflare",
+		config: {
+			restrict_to_account_members: true,
+		},
+	}}
+/>
+
+</TabItem></Tabs>
+
+## Configuration options
+
+| Option | Description | Default |
+| --- | --- | --- |
+| **Restrict to account members** | When enabled, only users who are members of your Cloudflare account can authenticate. When disabled, any Cloudflare user can authenticate (subject to your Access policies). | Disabled |
+
+## Use Cloudflare account membership in policies
+
+After configuring Cloudflare as an identity provider, you can use the **Cloudflare Account Member** selector in your [Access policies](/cloudflare-one/access-controls/policies/). This selector matches users based on their membership in a Cloudflare account.
+
+- If you omit the account ID, the selector matches members of the current account (the account where the Access policy is configured).
+- If you specify an account ID, the selector matches members of that specific account.
+
+This is useful for cross-account access scenarios where you need to grant access to users from a different Cloudflare account.
