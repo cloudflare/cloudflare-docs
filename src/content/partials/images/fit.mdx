@@ -24,6 +24,7 @@ Fit is performed after setting the [`width`](#width) and [`height`](#height) dim
 | `contain` | Show entire image without cropping | Yes | Yes |
 | `cover` | Fill the entire requested area, cropping if needed | No | Yes |
 | `crop` | Fill the entire requested area, but never upscales | No | No |
+| `aspect-crop` | Crop to match the target aspect ratio, but never upscales | No | No |
 | `pad` | Fit within the target area, adding space for remaining area | Yes | Yes |
 | `squeeze` | Scale to exact dimensions, distorting if needed | No | Yes |
 
@@ -157,6 +158,15 @@ In the example below, the original image (1080x720) is smaller than the target a
 </table>
 
 When the original image is larger than the target area, it behaves like `cover` (fills the target area and crops the rest) instead.
+
+#### `aspect-crop`
+Crops the image to match the target aspect ratio, scaling down if needed but never upscaling.
+
+When the original image is larger than the target area, it downscales to the smallest size that still fills the target dimensions, then is cropped to match the target aspect ratio (like `cover`).
+
+When the original image is smaller than the target area, it keeps its original size but is cropped to match the target aspect ratio. Unlike `crop`, which preserves the original size and dimensions of smaller images, `aspect-crop` always enforces the target aspect ratio.
+
+For example, a 612x613 image requested at 1920x1120 will not be upscaled. Instead, it stays at its original size and is cropped to 612x357, matching the 1920:1120 aspect ratio. Use the [`gravity`](#gravity) parameter to control which part of the image is preserved during cropping.
 
 #### `pad`
 Resizes the image to be as large as possible within the dimensions. If applicable, the output area will be expanded to match the `width` and `height` dimensions exactly.

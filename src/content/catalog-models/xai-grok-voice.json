@@ -4,7 +4,12 @@
 	"name": "Grok Voice",
 	"description": "xAI's real-time voice conversation model with low-latency audio input and output streaming.",
 	"task": "websocket",
-	"tags": ["Voice", "Real-time", "Streaming", "Audio"],
+	"tags": [
+		"Voice",
+		"Real-time",
+		"Streaming",
+		"Audio"
+	],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -92,7 +97,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["url"],
+			"required": [
+				"url"
+			],
 			"type": "object"
 		}
 	}

@@ -55,12 +55,8 @@ description: Always load for any MDX file with added content lines.
 
 ---
 
-## MDX Syntax
+## File Locations
 
-- If prose, a table cell, or a heading contains unescaped `{` or `}` (not inside a code fence or backtick span, and not a valid JSX expression) → **warning**: wrap in backticks or escape as `\{` `\}`.
-- If prose, a table cell, or a heading contains unescaped `<` or `>` (not a component tag, not `&lt;`/`&gt;`) → **warning**: use `&lt;` / `&gt;` or wrap in backticks.
-- If a component is used (e.g. `<Steps>`, `<Details>`, `<TypeScriptExample>`) and the patch does not include a matching `import` → **warning**: add the import from `~/components`.
-- If an import uses a path other than `~/components` → **warning**: all components must import from `~/components`.
 - If an image file is added to `src/content/` → **warning**: images must go in `src/assets/images/{product}/`, not in `src/content/`.
 
 ---

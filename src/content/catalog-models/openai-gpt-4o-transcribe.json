@@ -4,7 +4,11 @@
 	"name": "GPT-4o Transcribe",
 	"description": "A speech-to-text model that uses GPT-4o to transcribe audio with improved word error rate and better language recognition compared to original Whisper models.",
 	"task": "Automatic Speech Recognition",
-	"tags": ["Speech-to-Text", "Transcription", "Multilingual"],
+	"tags": [
+		"Speech-to-Text",
+		"Transcription",
+		"Multilingual"
+	],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -177,7 +181,9 @@
 					"type": "number"
 				}
 			},
-			"required": ["file"],
+			"required": [
+				"file"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -189,7 +195,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["text"],
+			"required": [
+				"text"
+			],
 			"type": "object"
 		}
 	}

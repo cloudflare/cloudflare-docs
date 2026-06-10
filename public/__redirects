@@ -228,7 +228,8 @@
 /agents/concepts/long-running-agents/ /agents/concepts/agentic-patterns/long-running-agents/ 301
 /agents/api-reference/agents-api/ /agents/runtime/agents-api/ 301
 /agents/api-reference/ /agents/runtime/ 301
-/agents/api-reference/chat-sdk/ /agents/runtime/execution/chat-sdk/ 301
+/agents/api-reference/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
+/agents/runtime/execution/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
 /agents/api-reference/agent-tools/ /agents/runtime/execution/agent-tools/ 301
 /agents/api-reference/browse-the-web/ /agents/tools/browser/ 301
 /agents/api-reference/callable-methods/ /agents/runtime/lifecycle/callable-methods/ 301
@@ -784,11 +785,45 @@
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
 /durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
-# email-routing
-/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
-/email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
-/email-routing/known-limitations/ /email-routing/postmaster/ 301
-/email-routing/email-workers/demos/ /email-routing/email-workers/ 301
+# Email Routing -> Email Service (product merged)
+# Top-level
+/email-routing/ /email-service/ 301
+/email-routing/api-reference/ /email-service/api/ 301
+/email-routing/graphql-example/ /email-service/observability/metrics-analytics/ 301
+/email-routing/limits/ /email-service/platform/limits/ 301
+/email-routing/postmaster/ /email-service/reference/postmaster/ 301
+
+# Get started
+/email-routing/get-started/ /email-service/get-started/ 301
+/email-routing/get-started/enable-email-routing/ /email-service/get-started/route-emails/ 301
+/email-routing/get-started/test-email-routing/ /email-service/get-started/route-emails/#test-your-routing-rule 301
+/email-routing/get-started/audit-logs/ /email-service/observability/audit-logs/ 301
+/email-routing/get-started/email-routing-analytics/ /email-service/observability/metrics-analytics/ 301
+
+# Setup -> Configuration
+/email-routing/setup/ /email-service/configuration/ 301
+/email-routing/setup/email-routing-addresses/ /email-service/configuration/email-routing-addresses/ 301
+/email-routing/setup/email-routing-dns-records/ /email-service/configuration/domains/ 301
+/email-routing/setup/disable-email-routing/ /email-service/configuration/domains/#remove-a-domain-from-email-routing 301
+/email-routing/setup/mta-sts/ /email-service/configuration/mta-sts/ 301
+/email-routing/setup/subdomains/ /email-service/configuration/subdomains/ 301
+
+# Email Workers
+/email-routing/email-workers/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/enable-email-workers/ /email-service/get-started/route-emails/ 301
+/email-routing/email-workers/edit-email-workers/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/reply-email-workers/ /email-service/api/route-emails/email-handler/#reply-to-emails 301
+/email-routing/email-workers/send-email-workers/ /email-service/api/send-emails/workers-api/ 301
+/email-routing/email-workers/runtime-api/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/local-development/ /email-service/local-development/routing/ 301
+
+# Troubleshooting
+/email-routing/troubleshooting/ /email-service/reference/troubleshooting/ 301
+/email-routing/troubleshooting/email-routing-dns-records/ /email-service/configuration/domains/ 301
+/email-routing/troubleshooting/email-routing-spf-records/ /email-service/reference/troubleshooting/#multiple-spf-records 301
+
+# Changelog (entries moved to email-service product folder)
+/changelog/product/email-routing/ /changelog/product/email-service/ 301
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
 /firewall/api/cf-lists/endpoints/ /waf/tools/lists/lists-api/endpoints/ 301
@@ -1083,7 +1118,8 @@
 /images/transform-images/ /images/optimization/transformations/overview/ 301
 /images/transform-images/transform-via-url/ /images/optimization/features/ 301
 /images/transform-images/transform-via-workers/ /images/optimization/transformations/transform-via-workers/ 301
-/images/transform-images/bindings/ /images/optimization/transformations/bindings/ 301
+/images/transform-images/bindings/ /images/optimization/binding/ 301
+/images/optimization/transformations/bindings/ /images/optimization/binding/ 301
 /images/transform-images/control-origin-access/ /images/optimization/transformations/control-origin-access/ 301
 /images/transform-images/draw-overlays/ /images/optimization/transformations/draw-overlays/ 301
 /images/transform-images/integrate-with-frameworks/ /images/optimization/transformations/integrate-with-frameworks/ 301
@@ -1248,7 +1284,7 @@
 /learning-paths/get-started-free/other-features/redirects/ /fundamentals/reference/redirects/ 301
 /learning-paths/get-started-free/other-features/analytics/ /analytics/account-and-zone-analytics/ 301
 /learning-paths/get-started-free/other-features/account-profile/ /fundamentals/account/ 301
-/learning-paths/get-started-free/other-features/email-routing/ /email-routing/ 301
+/learning-paths/get-started-free/other-features/email-routing/ /email-service/ 301
 /learning-paths/get-started-free/other-features/resources/ /fundamentals/#additional-resources 301
 /learning-paths/get-started-free/other-features/product-lines/ /directory/ 301
 
@@ -2634,6 +2670,7 @@
 /cloudflare-one/identity/devices/service-providers/custom/ /cloudflare-one/integrations/service-providers/custom/ 301
 /cloudflare-one/identity/devices/service-providers/ /cloudflare-one/integrations/service-providers/ 301
 /cloudflare-one/data-loss-prevention/troubleshooting/ /cloudflare-one/data-loss-prevention/troubleshoot-dlp/ 301
+/cloudflare-one/data-loss-prevention/saas-apps-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
 /cloudflare-one/policies/filtering/configuring-block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-policies/dns-policies/#safe-search 301
@@ -2694,6 +2731,11 @@
 /cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 # Pub/Sub (removed product)
 /pub-sub/* / 301
+
+# Email Routing (merged into Email Service) — catch-all for any paths not
+# enumerated in the static section above
+/email-routing/* /email-service/ 301
+/changelog/product/email-routing/* /changelog/product/email-service/ 301
 
 # AI Gateway
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301

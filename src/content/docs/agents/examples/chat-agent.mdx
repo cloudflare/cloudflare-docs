@@ -130,8 +130,8 @@ export class ChatAgent extends AIChatAgent {
 						"Perform a math calculation with two numbers. " +
 						"Requires user approval for large numbers.",
 					inputSchema: z.object({
-						a: z.number().describe("First number"),
-						b: z.number().describe("Second number"),
+						a: z.coerce.number().describe("First number"),
+						b: z.coerce.number().describe("Second number"),
 						operator: z
 							.enum(["+", "-", "*", "/", "%"])
 							.describe("Arithmetic operator"),
@@ -191,7 +191,7 @@ Create `src/client.tsx`:
 
 ```ts
 import { useAgent } from "agents/react";
-import { useAgentChat } from "@cloudflare/ai-chat/react";
+import { useAgentChat, getToolApproval } from "@cloudflare/ai-chat/react";
 
 function Chat() {
 	const agent = useAgent({ agent: "ChatAgent" });
@@ -225,10 +225,9 @@ function Chat() {
 							}
 
 							// Render approval UI for tools that need confirmation
-							if (
-								part.type === "tool" &&
-								part.state === "approval-required"
-							) {
+							if (part.state === "approval-requested") {
+								const approval = getToolApproval(part);
+								if (!approval) return null;
 								return (
 									<div key={part.toolCallId}>
 										<p>
@@ -238,7 +237,7 @@ function Chat() {
 										<button
 											onClick={() =>
 												addToolApprovalResponse({
-													id: part.toolCallId,
+													id: approval.id,
 													approved: true,
 												})
 											}
@@ -248,7 +247,7 @@ function Chat() {
 										<button
 											onClick={() =>
 												addToolApprovalResponse({
-													id: part.toolCallId,
+													id: approval.id,
 													approved: false,
 												})
 											}
@@ -260,10 +259,7 @@ function Chat() {
 							}
 
 							// Show completed tool results
-							if (
-								part.type === "tool" &&
-								part.state === "output-available"
-							) {
+							if (part.state === "output-available") {
 								return (
 									<details key={part.toolCallId}>
 										<summary>{part.toolName} result</summary>

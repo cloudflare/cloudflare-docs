@@ -1,12 +1,12 @@
 ---
-title: WAF Release - Scheduled changes for 2026-05-18
-description: WAF managed ruleset changes scheduled for 2026-05-18
-date: 2026-05-11
+title: WAF Release - Scheduled changes for 2026-06-15
+description: WAF managed ruleset changes scheduled for 2026-06-15
+date: 2026-06-09
 publish_future_dated_entry: true
 ---
- 
+
 import { RuleID } from "~/components";
- 
+
 <table style="width: 100%">
 	<thead>
 		<tr>
@@ -21,19 +21,30 @@ import { RuleID } from "~/components";
 	</thead>
 	<tbody>
 		<tr>
-			<td>2026-05-11</td>
-			<td>2026-05-18</td>
-			<td>Disabled</td>
+			<td>2026-06-09</td>
+			<td>2026-06-15</td>
+			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="bcdcec3ea63a480896513dc39e9c068d" />
+				<RuleID id="439c4ef64b32447989bdf412b4c29bc6" />
 			</td>
-			<td>Sitecore - Cache Poisoning - CVE:CVE-2025-53693</td>
+			<td>Ghost CMS - SQLi - CVE:CVE-2026-26980</td>
 			<td>
-				This is a new detection. This rule will be merged into the original rule
-				"Remote Code Execution - Java Deserialization" (ID:{" "}
-				<RuleID id="d1bd7563e6254db48ce703807c5b669c" />)
+				This is a new detection.
 			</td>
-		</tr>	
+		</tr>
+		<tr>
+			<td>2026-06-09</td>
+			<td>2026-06-15</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="6c64b68ef5ed45e7a622cdaab56f403f" />
+			</td>
+			<td>SQLi - Obfuscated Boolean - URI</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
 	</tbody>
 </table>

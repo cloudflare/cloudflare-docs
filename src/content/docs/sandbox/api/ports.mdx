@@ -14,8 +14,8 @@ import { TypeScriptExample } from "~/components";
 Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/).
 :::
 
-:::note[Alternative: quick tunnels]
-For quick development or `.workers.dev` deployments, consider [`sandbox.tunnels`](/sandbox/api/tunnels/), which returns `*.trycloudflare.com` URLs without DNS setup. `exposePort()` remains the recommended option for production.
+:::note[Prefer `sandbox.tunnels` for public URLs]
+For most public-URL use cases — development, `.workers.dev` deployments, and production traffic — [`sandbox.tunnels`](/sandbox/api/tunnels/) is the recommended option. Use named tunnels for stable hostnames on a zone you control, or quick tunnels for zero-config `*.trycloudflare.com` URLs. `exposePort()` is appropriate when you want the Worker itself to front the request (for example, to inject authentication, rewrite responses, or call sandbox-only RPC methods on the same hostname).
 :::
 
 Expose services running in your sandbox via public preview URLs. See [Preview URLs concept](/sandbox/concepts/preview-urls/) for details.

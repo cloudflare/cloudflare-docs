@@ -63,16 +63,16 @@ flowchart TD
     E --> F["onClose"]
 ```
 
-| Method                                        | When it runs                                                                                                                                                                            |
-| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Method                                        | When it runs                                                                                                                                                                                    |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `onStart(props?)`                             | When the instance starts, or wakes from hibernation. Receives optional [initialization props](/agents/runtime/communication/routing/#props) passed via `getAgentByName` or `routeAgentRequest`. |
-| `onRequest(request)`                          | For each HTTP request to the instance                                                                                                                                                   |
-| `onConnect(connection, ctx)`                  | When a WebSocket connection is established                                                                                                                                              |
-| `onMessage(connection, message)`              | For each WebSocket message received                                                                                                                                                     |
-| `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                           |
-| `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                      |
-| `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                                 |
-| `onStateChanged(state, source)`               | When state changes (from server or client)                                                                                                                                              |
+| `onRequest(request)`                          | For each HTTP request to the instance                                                                                                                                                           |
+| `onConnect(connection, ctx)`                  | When a WebSocket connection is established                                                                                                                                                      |
+| `onMessage(connection, message)`              | For each WebSocket message received                                                                                                                                                             |
+| `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                                   |
+| `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                              |
+| `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                                         |
+| `onStateChanged(state, source)`               | When state changes (from server or client)                                                                                                                                                      |
 
 ## Core properties
 
@@ -85,28 +85,28 @@ flowchart TD
 
 ## Server-side API reference
 
-| Feature               | Methods                                                                                          | Documentation                                                       |
-| --------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| **State**             | `setState()`, `onStateChanged()`, `initialState`                                                 | [Store and sync state](/agents/runtime/lifecycle/state/)                     |
-| **Callable methods**  | `@callable()` decorator                                                                          | [Callable methods](/agents/runtime/lifecycle/callable-methods/)             |
-| **Scheduling**        | `schedule()`, `scheduleEvery()`, `getScheduleById()`, `listSchedules()`                          | [Schedule tasks](/agents/runtime/execution/schedule-tasks/)                 |
-| **Durable execution** | `runFiber()`, `startFiber()`, `stash()`, `onFiberRecovered()`, `keepAlive()`, `keepAliveWhile()` | [Durable execution](/agents/runtime/execution/durable-execution/)           |
-| **Queue**             | `queue()`, `dequeue()`, `dequeueAll()`, `getQueue()`                                             | [Queue tasks](/agents/runtime/execution/queue-tasks/)                       |
-| **WebSockets**        | `onConnect()`, `onMessage()`, `onClose()`, `broadcast()`                                         | [WebSockets](/agents/runtime/communication/websockets/)                     |
-| **HTTP/SSE**          | `onRequest()`                                                                                    | [HTTP and SSE](/agents/runtime/communication/http-sse/)                     |
-| **Email**             | `onEmail()`, `replyToEmail()`                                                                    | [Email routing](/agents/communication-channels/email/)                      |
-| **Workflows**         | `runWorkflow()`, `waitForApproval()`                                                             | [Run Workflows](/agents/runtime/execution/run-workflows/)                   |
-| **MCP Client**        | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`                                         | [MCP Client API](/agents/model-context-protocol/apis/client-api/)           |
-| **AI Models**         | Workers AI, OpenAI, Anthropic bindings                                                           | [Using AI models](/agents/runtime/operations/using-ai-models/)              |
-| **Protocol messages** | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`                                  | [Protocol messages](/agents/runtime/communication/protocol-messages/)       |
-| **Context**           | `getCurrentAgent()`                                                                              | [getCurrentAgent()](/agents/runtime/lifecycle/get-current-agent/)           |
-| **Observability**     | `subscribe()`, diagnostics channels, Tail Workers                                                | [Observability](/agents/runtime/operations/observability/)                  |
-| **Sub-agents**        | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                              | [Sub-agents](/agents/runtime/execution/sub-agents/)                         |
-| **Agent tools**       | `runAgentTool()`, `clearAgentToolRuns()`, `hasAgentToolRun()`                                    | [Agent tools](/agents/runtime/execution/agent-tools/)                       |
-| **Agent Skills**      | `skills` registry, bundled skill sources, script runners                                         | [Agent Skills](/agents/runtime/execution/agent-skills/)                     |
-| **Sessions**          | `Session.create()`, context blocks, compaction, search                                           | [Sessions](/agents/runtime/lifecycle/sessions/)                             |
-| **Think**             | `Think` base class, workspace tools, lifecycle hooks, extensions                                 | [Think](/agents/harnesses/think/)                                                     |
-| **Chat SDK**          | `createChatSdkState()`, `ChatSdkStateAgent`                                                      | [Chat SDK](/agents/runtime/execution/chat-sdk/)                             |
+| Feature               | Methods                                                                                          | Documentation                                                         |
+| --------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| **State**             | `setState()`, `onStateChanged()`, `initialState`                                                 | [Store and sync state](/agents/runtime/lifecycle/state/)              |
+| **Callable methods**  | `@callable()` decorator                                                                          | [Callable methods](/agents/runtime/lifecycle/callable-methods/)       |
+| **Scheduling**        | `schedule()`, `scheduleEvery()`, `getScheduleById()`, `listSchedules()`                          | [Schedule tasks](/agents/runtime/execution/schedule-tasks/)           |
+| **Durable execution** | `runFiber()`, `startFiber()`, `stash()`, `onFiberRecovered()`, `keepAlive()`, `keepAliveWhile()` | [Durable execution](/agents/runtime/execution/durable-execution/)     |
+| **Queue**             | `queue()`, `dequeue()`, `dequeueAll()`, `getQueue()`                                             | [Queue tasks](/agents/runtime/execution/queue-tasks/)                 |
+| **WebSockets**        | `onConnect()`, `onMessage()`, `onClose()`, `broadcast()`                                         | [WebSockets](/agents/runtime/communication/websockets/)               |
+| **HTTP/SSE**          | `onRequest()`                                                                                    | [HTTP and SSE](/agents/runtime/communication/http-sse/)               |
+| **Email**             | `onEmail()`, `replyToEmail()`                                                                    | [Email routing](/agents/communication-channels/email/)                |
+| **Workflows**         | `runWorkflow()`, `waitForApproval()`                                                             | [Run Workflows](/agents/runtime/execution/run-workflows/)             |
+| **MCP Client**        | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`                                         | [MCP Client API](/agents/model-context-protocol/apis/client-api/)     |
+| **AI Models**         | Workers AI, OpenAI, Anthropic bindings                                                           | [Using AI models](/agents/runtime/operations/using-ai-models/)        |
+| **Protocol messages** | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`                                  | [Protocol messages](/agents/runtime/communication/protocol-messages/) |
+| **Context**           | `getCurrentAgent()`                                                                              | [getCurrentAgent()](/agents/runtime/lifecycle/get-current-agent/)     |
+| **Observability**     | `subscribe()`, diagnostics channels, Tail Workers                                                | [Observability](/agents/runtime/operations/observability/)            |
+| **Sub-agents**        | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                              | [Sub-agents](/agents/runtime/execution/sub-agents/)                   |
+| **Agents as tools**   | `runAgentTool()`, `clearAgentToolRuns()`, `hasAgentToolRun()`                                    | [Agents as tools](/agents/runtime/execution/agent-tools/)             |
+| **Agent Skills**      | `skills` registry, bundled skill sources, script runners                                         | [Agent Skills](/agents/runtime/execution/agent-skills/)               |
+| **Sessions**          | `Session.create()`, context blocks, compaction, search                                           | [Sessions](/agents/runtime/lifecycle/sessions/)                       |
+| **Think**             | `Think` base class, workspace tools, lifecycle hooks, extensions                                 | [Think](/agents/harnesses/think/)                                     |
+| **Chat SDK**          | `createChatSdkState()`, `ChatSdkStateAgent`                                                      | [Chat SDK](/agents/runtime/communication/chat-sdk/)                   |
 
 ## SQL API
 
@@ -127,13 +127,13 @@ For state that needs to sync with clients, use the [State API](/agents/runtime/l
 
 ## Client-side API reference
 
-| Feature               | Methods                | Documentation                                                                     |
-| --------------------- | ---------------------- | --------------------------------------------------------------------------------- |
-| **WebSocket client**  | `AgentClient`          | [Client SDK](/agents/communication-channels/chat/client-sdk/)                                   |
-| **HTTP client**       | `agentFetch()`         | [Client SDK](/agents/communication-channels/chat/client-sdk/#http-requests-with-agentfetch)     |
-| **React hook**        | `useAgent()`           | [Client SDK](/agents/communication-channels/chat/client-sdk/#react)                             |
-| **Chat hook**         | `useAgentChat()`       | [Client SDK](/agents/communication-channels/chat/client-sdk/)                                   |
-| **Agent tool events** | `useAgentToolEvents()` | [Agent tools](/agents/runtime/execution/agent-tools/#render-child-timelines-in-react) |
+| Feature               | Methods                | Documentation                                                                               |
+| --------------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| **WebSocket client**  | `AgentClient`          | [Client SDK](/agents/communication-channels/chat/client-sdk/)                               |
+| **HTTP client**       | `agentFetch()`         | [Client SDK](/agents/communication-channels/chat/client-sdk/#http-requests-with-agentfetch) |
+| **React hook**        | `useAgent()`           | [Client SDK](/agents/communication-channels/chat/client-sdk/#react)                         |
+| **Chat hook**         | `useAgentChat()`       | [Client SDK](/agents/communication-channels/chat/client-sdk/)                               |
+| **Agent tool events** | `useAgentToolEvents()` | [Agents as tools](/agents/runtime/execution/agent-tools/#render-child-timelines-in-react)   |
 
 Module-level helper exports include `agentTool()` from `agents/agent-tools`, which converts a Think or `AIChatAgent` subclass into an AI SDK tool definition.
 

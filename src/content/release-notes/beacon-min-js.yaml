@@ -5,7 +5,7 @@ productLink: "/web-analytics/"
 entries:
   - publish_date: "2026-05-15"
     description: Updated Google's web-vitals library to version 4.2.4 and captured Interaction to Next Paint (INP) sub-part metrics (Input Delay, Processing Duration, Presentation Delay)
-  
+
   - publish_date: "2024-06-11"
     description: Enhanced to include reporting of Server-Timing headers.
 

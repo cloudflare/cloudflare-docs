@@ -4,7 +4,10 @@
 	"name": "DeepSeek V4 Pro",
 	"description": "DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek, served via Fireworks infrastructure for production-grade inference.",
 	"task": "Text Generation",
-	"tags": ["LLM", "Reasoning"],
+	"tags": [
+		"LLM",
+		"Reasoning"
+	],
 	"context_length": 131072,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -10958,7 +10961,9 @@
 	"metadata": {
 		"Architecture": "Mixture of Experts"
 	},
-	"request_formats": ["chat-completions"],
+	"request_formats": [
+		"chat-completions"
+	],
 	"created_at": "2026-06-08 18:17:18",
 	"schema": {
 		"input": {
@@ -10969,7 +10974,13 @@
 					"additionalProperties": false,
 					"properties": {
 						"format": {
-							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							],
 							"type": "string"
 						},
 						"voice": {
@@ -11020,18 +11031,30 @@
 								]
 							},
 							"role": {
-								"enum": ["system", "developer", "user", "assistant", "tool"],
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								],
 								"type": "string"
 							}
 						},
-						"required": ["role", "content"],
+						"required": [
+							"role",
+							"content"
+						],
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"modalities": {
 					"items": {
-						"enum": ["text", "audio"],
+						"enum": [
+							"text",
+							"audio"
+						],
 						"type": "string"
 					},
 					"type": "array"
@@ -11070,7 +11093,9 @@
 					"type": "number"
 				}
 			},
-			"required": ["messages"],
+			"required": [
+				"messages"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -11140,11 +11165,17 @@
 										]
 									}
 								},
-								"required": ["role"],
+								"required": [
+									"role"
+								],
 								"type": "object"
 							}
 						},
-						"required": ["index", "message", "finish_reason"],
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
 						"type": "object"
 					},
 					"type": "array"
@@ -11174,11 +11205,21 @@
 							"type": "number"
 						}
 					},
-					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
 					"type": "object"
 				}
 			},
-			"required": ["id", "object", "created", "model", "choices"],
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
 			"type": "object"
 		}
 	}

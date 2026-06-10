@@ -11,11 +11,9 @@ products:
 ---
 
 import {
-	Steps,
 	Tabs,
 	TabItem,
 	WranglerConfig,
-	PackageManagers,
 	DashButton,
 	Render,
 } from "~/components";
@@ -26,26 +24,35 @@ Route incoming emails sent to your domain to existing mailboxes, Workers for pro
 You must be using Cloudflare DNS to use Email Service.
 :::
 
-## Prerequisites
-
-<Render file="prereqs" product="workers" />
-
 ## Set up your domain
 
 <Render file="domain-setup-routing" product="email-service" />
 
 ## Route your first email
 
-You can route your first email by setting up forwarding rules in the dashboard, or by processing emails with Workers.
+You can route your first email by setting up routing rules in the dashboard, or by processing emails with Workers.
 
 <Tabs>
 <TabItem label="Route to email">
 
 The simplest way to route emails is forwarding them to existing email addresses.
 
-### Create a forwarding rule
+### Add a destination address
 
-1. In the Cloudflare dashboard, go to **Email Routing**.
+Before you can create a routing rule, add and verify the destination address that will receive the forwarded emails. Destination addresses are managed at the account level and can be reused across domains.
+
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing** > **Destination Addresses**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
+2. Under **Destination addresses**, enter the email address you want to use as a destination in the inline form and submit it.
+3. Open the verification email Cloudflare sends to that address and select **Verify email address**.
+
+For full details, refer to [Add a destination address](/email-service/configuration/email-routing-addresses/#add-a-destination-address).
+
+### Create a routing rule
+
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing**.
 
    <DashButton url="/?to=/:account/email-service/routing" />
 
@@ -53,20 +60,20 @@ The simplest way to route emails is forwarding them to existing email addresses.
 
 3. Select the **Routing Rules** tab.
 
-4. Select **Create Address**.
+4. Select **Create routing rule**.
 
 5. Configure your first rule (for instance, forwarding emails to `support@yourdomain.com` to your personal email address):
-   - **Custom address**: Enter the local part of the email (for example, `support` for `support@yourdomain.com`)
+   - **Email pattern**: Enter the local part of the email (for example, `support` for `support@yourdomain.com`), and select your domain
    - **Action**: Send to an email
    - **Destination**: Your personal email address (for example, `your-email@gmail.com`)
 
 6. Select **Save**.
 
-### Test your forwarding rule
+### Test your routing rule
 
 Verify that your routing rule is working:
 
-1. Send an email from another email account to your newly created address (for example, `support@yourdomain.com`).
+1. Send an email from another email account to your newly created address (for example, `support@yourdomain.com`). Send from an account that is different from the destination address. Some providers discard messages that appear to come from the same account they are being delivered to.
 
 2. Check the destination inbox for the forwarded email.
 
@@ -101,8 +108,10 @@ Use Workers to process emails with custom logic before forwarding or responding.
 
    <WranglerConfig>
 
-   ```toml
-   compatibility_flags = ["nodejs_compat"]
+   ```jsonc
+   {
+   	"compatibility_flags": ["nodejs_compat"],
+   }
    ```
 
    </WranglerConfig>
@@ -117,7 +126,7 @@ Use Workers to process emails with custom logic before forwarding or responding.
    // Configuration - Update these values
    // ============================================
    const YOUR_DOMAIN = "yourdomain.com"; // Replace with your verified domain
-   const FORWARD_TO_EMAIL = "your-team@company.com"; // Replace with where you want emails forwarded
+   const FORWARD_TO_EMAIL = "your-team@example.com"; // Replace with where you want emails forwarded
 
    export default {
    	async email(message, env, ctx): Promise<void> {
@@ -136,13 +145,14 @@ Use Workers to process emails with custom logic before forwarding or responding.
    			const messageId = message.headers.get("Message-ID");
    			if (messageId) {
    				msg.setHeader("In-Reply-To", messageId);
+   				msg.setHeader("References", messageId);
    			}
    			msg.setSender({
    				name: "Support Team",
    				addr: `support@${YOUR_DOMAIN}`,
    			});
    			msg.setRecipient(message.from);
-   			msg.setSubject("We received your message");
+   			msg.setSubject(`Re: ${subject}`);
 
    			// Add plain text version
    			msg.addMessage({
@@ -178,7 +188,7 @@ Use Workers to process emails with custom logic before forwarding or responding.
    Before deploying, update the constants at the top of the file:
    - `YOUR_DOMAIN`: Your verified domain from the Cloudflare dashboard
    - `FORWARD_TO_EMAIL`: The email address where you want to receive forwarded emails
-     :::
+   :::
 
 5. Deploy your Worker:
 
@@ -188,7 +198,7 @@ Use Workers to process emails with custom logic before forwarding or responding.
 
 ### Configure routing to Worker
 
-1. In the Cloudflare dashboard, go to **Email Routing**.
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing**.
 
    <DashButton url="/?to=/:account/email-service/routing" />
 
@@ -196,10 +206,10 @@ Use Workers to process emails with custom logic before forwarding or responding.
 
 3. Select the **Routing Rules** tab.
 
-4. Select **Create Address**.
+4. Select **Create routing rule**.
 
 5. Configure Worker routing:
-   - **Custom address**: Enter the local part of the email (for example, `support` for `support@yourdomain.com`)
+   - **Email pattern**: Enter the local part of the email (for example, `support` for `support@yourdomain.com`), and select your domain
    - **Action**: Send to a Worker
    - **Worker**: Select your `email-processor` Worker
 

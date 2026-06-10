@@ -265,11 +265,7 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 		} satisfies StyleGuideResult;
 	}
 
-	const findings = await assignFindingIds(rawData.findings);
-	const deterministicFindings = await assignFindingIds(
-		findMdxSyntaxFindings(diffResults, reviewedFiles),
-	);
-	const mergedFindings = mergeFindings([...findings, ...deterministicFindings]);
+	const mergedFindings = await assignFindingIds(rawData.findings);
 	const data: StyleGuideResult = {
 		findings: mergedFindings,
 		summary:
@@ -292,94 +288,6 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 	});
 
 	return data;
-}
-
-function mergeFindings(findings: StyleGuideFinding[]): StyleGuideFinding[] {
-	const byKey = new Map<string, StyleGuideFinding>();
-	for (const finding of findings) {
-		byKey.set(
-			`${finding.path}:${finding.line ?? ""}:${finding.rule}:${finding.evidence}`,
-			finding,
-		);
-	}
-	return [...byKey.values()];
-}
-
-function findMdxSyntaxFindings(
-	diffResults: Array<{ key: string; text: string }>,
-	reviewedFiles: string[],
-): v.InferOutput<typeof StyleGuideFindingFromModelSchema>[] {
-	const reviewed = new Set(reviewedFiles);
-	const findings: v.InferOutput<typeof StyleGuideFindingFromModelSchema>[] = [];
-	for (const { key, text } of diffResults) {
-		const path = keyToReviewedPath(key);
-		if (!path || !reviewed.has(path)) continue;
-
-		for (const addedLine of getAddedLines(text)) {
-			const unescaped = findUnescapedAngleBracket(addedLine.content);
-			if (!unescaped) continue;
-			findings.push({
-				severity: "warning",
-				path,
-				line: addedLine.line,
-				rule: "Escape angle brackets in MDX prose",
-				evidence: `Line adds unescaped \`${unescaped}\` in prose: \`${addedLine.content.trim()}\``,
-				suggestion: `Replace \`${unescaped}\` with \`${unescaped === ">" ? "&gt;" : "&lt;"}\` or wrap the text in backticks.`,
-			});
-		}
-	}
-	return findings;
-}
-
-function keyToReviewedPath(key: string): string | null {
-	const filename = key.split("/").pop();
-	if (!filename?.endsWith(".patch")) return null;
-	return filename.slice(0, -".patch".length).replace(/__/g, "/");
-}
-
-function getAddedLines(
-	patch: string,
-): Array<{ line: number; content: string }> {
-	const addedLines: Array<{ line: number; content: string }> = [];
-	let currentLine = 0;
-	for (const rawLine of patch.split("\n")) {
-		const hunkMatch = rawLine.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
-		if (hunkMatch) {
-			currentLine = Number(hunkMatch[1]) - 1;
-			continue;
-		}
-		if (rawLine.startsWith("+") && !rawLine.startsWith("+++")) {
-			currentLine += 1;
-			addedLines.push({ line: currentLine, content: rawLine.slice(1) });
-			continue;
-		}
-		if (
-			!rawLine.startsWith("-") &&
-			!rawLine.startsWith("@@") &&
-			!rawLine.startsWith("\\")
-		) {
-			currentLine += 1;
-		}
-	}
-	return addedLines;
-}
-
-function findUnescapedAngleBracket(line: string): "<" | ">" | null {
-	const withoutInlineCode = line.replace(/`[^`]*`/g, "");
-	for (let i = 0; i < withoutInlineCode.length; i += 1) {
-		const char = withoutInlineCode[i];
-		if (char !== "<" && char !== ">") continue;
-		if (withoutInlineCode.slice(i).startsWith("&lt;")) continue;
-		if (withoutInlineCode.slice(i).startsWith("&gt;")) continue;
-		if (isComponentTagAt(withoutInlineCode, i)) continue;
-		return char;
-	}
-	return null;
-}
-
-function isComponentTagAt(line: string, index: number): boolean {
-	if (line[index] !== "<") return false;
-	return /^<\/?[A-Z][A-Za-z0-9]*(\s|>|\/)/.test(line.slice(index));
 }
 
 function parsePayload(payload: unknown): StyleGuideReviewPayload {

@@ -109,6 +109,34 @@ You can review abuse reports against your zones and any mitigations taken agains
 
 You can also **Request review** of most mitigations.
 
+## Cease and Desist letters
+
+When you identify an infringing domain hosted outside of Cloudflare, you can generate a Cease and Desist (C&D) letter directly from the dashboard. The system automatically pulls registrar data and WHOIS contact information (such as the registrant or registrar abuse email) and pre-fills your custom-branded templates.
+
+When reviewing a matched domain, you have two paths to action depending on where the domain is hosted:
+
+- **Report to Cloudflare**: If the matched domain is using Cloudflare's network or registrar, trigger the integrated abuse reporting flow instantly.
+- **Generate a C&D Letter**: If the domain is hosted elsewhere, use one of the default templates or one you previously saved in the dashboard.
+
+### Generate a C&D letter
+
+1. In the Cloudflare dashboard, go to the **Brand Protection** page.
+
+   <DashButton url="/?to=/:account/security-center/brand-protection" />
+
+2. Go to **Monitor Strings** and select a query to view its matched domains.
+3. Next to the domain you want to take action on, click **Generate C&D Letter**.
+4. Choose a template. You can select from three default templates or from your own saved templates:
+   - **Exact Match**: A formal demand for identical trademark infringements.
+   - **Similar Match**: A standard notice optimized for typosquatting.
+   - **Friendly Tone**: An amicable initial outreach for potential unintentional infringements.
+5. Review and edit the pre-filled letter. The system auto-populates recipient data from WHOIS records.
+6. Click **Download** to save the finalized PDF.
+
+:::note
+Cloudflare does not represent you and cannot provide you with legal advice. Only you can decide whether your rights have been infringed, whether a cease and desist letter is appropriate, and what that letter should say.
+:::
+
 ## Brand Protection API
 
 The [Brand Protection API](/api/resources/brand_protection/) allows for programmatic management and integration with your [SOC](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-a-security-operations-center-soc/) or [SIEM](https://www.cloudflare.com/en-gb/learning/security/what-is-siem/). Using the Brand Protection API, you can:

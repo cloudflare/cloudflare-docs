@@ -4,7 +4,12 @@
 	"name": "GPT-5 Chat",
 	"description": "GPT-5 Chat is the chat-tuned variant of GPT-5, optimised for back-and-forth conversation and instruction following.",
 	"task": "Text Generation",
-	"tags": ["LLM", "Coding", "Reasoning", "Writing"],
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Writing"
+	],
 	"context_length": 128000,
 	"max_output_tokens": 16384,
 	"schema_version": "1.0.0",
@@ -9218,7 +9223,9 @@
 	"metadata": {
 		"Architecture": "Transformer"
 	},
-	"request_formats": ["chat-completions"],
+	"request_formats": [
+		"chat-completions"
+	],
 	"created_at": "2026-05-22 17:53:30",
 	"schema": {
 		"input": {
@@ -9229,7 +9236,13 @@
 					"additionalProperties": false,
 					"properties": {
 						"format": {
-							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							],
 							"type": "string"
 						},
 						"voice": {
@@ -9280,18 +9293,30 @@
 								]
 							},
 							"role": {
-								"enum": ["system", "developer", "user", "assistant", "tool"],
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								],
 								"type": "string"
 							}
 						},
-						"required": ["role", "content"],
+						"required": [
+							"role",
+							"content"
+						],
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"modalities": {
 					"items": {
-						"enum": ["text", "audio"],
+						"enum": [
+							"text",
+							"audio"
+						],
 						"type": "string"
 					},
 					"type": "array"
@@ -9330,7 +9355,9 @@
 					"type": "number"
 				}
 			},
-			"required": ["messages"],
+			"required": [
+				"messages"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -9400,11 +9427,17 @@
 										]
 									}
 								},
-								"required": ["role"],
+								"required": [
+									"role"
+								],
 								"type": "object"
 							}
 						},
-						"required": ["index", "message", "finish_reason"],
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
 						"type": "object"
 					},
 					"type": "array"
@@ -9434,11 +9467,21 @@
 							"type": "number"
 						}
 					},
-					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
 					"type": "object"
 				}
 			},
-			"required": ["id", "object", "created", "model", "choices"],
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
 			"type": "object"
 		}
 	}
