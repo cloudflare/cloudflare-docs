@@ -27,9 +27,17 @@ import { getTopLevelVariants } from "~/util/model-schema";
 interface Props {
 	schema: Record<string, unknown>;
 	title: "Input" | "Output";
+	/**
+	 * When set, render only the variant whose `title` matches (no embedded
+	 * selector). If the schema has no matching variant (e.g. the other side of
+	 * a unified selector doesn't define this branch), the full schema renders
+	 * unchanged. Used by ModelDetailPage to drive both Input and Output panels
+	 * from a single top-level variant selector.
+	 */
+	variantTitle?: string;
 }
 
-const { schema, title } = Astro.props;
+const { schema, title, variantTitle } = Astro.props;
 const hideRequired = title === "Output";
 
 // Check if schema is a flat/simple schema (no properties, no oneOf/anyOf with properties)
@@ -197,11 +205,10 @@ function collectRows(
 			(reg.annotations?.description as string | undefined) ??
 			nullableChildDescription;
 		// Check both validations and fragment for enum (different schema parsers put it in different places)
-		const enumValues =
-			((reg.validations?.enum as unknown[]) ??
-				((reg.fragment as Record<string, unknown>)?.enum as unknown[]))?.map(
-				String,
-			);
+		const enumValues = (
+			(reg.validations?.enum as unknown[]) ??
+			((reg.fragment as Record<string, unknown>)?.enum as unknown[])
+		)?.map(String);
 
 		// Collect all metadata from fragment and validations
 		const metadata: Record<string, string | number | boolean> = {};
@@ -357,7 +364,21 @@ function collectRows(
 	return rows;
 }
 
-const topLevelVariants = getTopLevelVariants(schema);
+const allVariants = getTopLevelVariants(schema);
+
+// When the parent drives variant selection (variantTitle is set), pick that
+// branch's schema if it exists. If the schema has no matching variant for the
+// requested title, fall back to rendering the full schema so this side stays
+// readable. This is the "only one side has titled variants" case.
+const matchedVariant = variantTitle
+	? allVariants?.find((v) => v.title === variantTitle)
+	: undefined;
+
+// Only show the inline variant selector when the parent isn't driving
+// selection. If variantTitle is set, we never render the inline selector.
+const topLevelVariants = variantTitle ? null : allVariants;
+
+const schemaForRendering = matchedVariant?.schema ?? schema;
 
 // Process variants or full schema
 function processSchema(schemaToProcess: Record<string, unknown>) {
@@ -375,12 +396,12 @@ function processSchema(schemaToProcess: Record<string, unknown>) {
 
 // For flat schemas, convert keys to rows directly
 // For non-variant schemas, process with tree parser
-// For variant schemas, defer to variantRows
+// For variant schemas (inline selector), defer to variantRows
 const rows = isFlat
-	? flatSchemaToRows(schema)
+	? flatSchemaToRows(schemaForRendering)
 	: topLevelVariants
 		? []
-		: processSchema(schema);
+		: processSchema(schemaForRendering);
 
 // For variant schemas, process each variant
 const variantRows =
@@ -404,7 +425,12 @@ const variantRows =
 				No parameters defined.
 			</p>
 		) : (
-			<SchemaTreeView rows={rows} schemaId={schemaId} hideRequired={hideRequired} client:visible />
+			<SchemaTreeView
+				rows={rows}
+				schemaId={schemaId}
+				hideRequired={hideRequired}
+				client:visible
+			/>
 		)
 	}
 </div>
