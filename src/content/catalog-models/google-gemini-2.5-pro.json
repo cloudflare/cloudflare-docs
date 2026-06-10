@@ -4,12 +4,7 @@
 	"name": "Gemini 2.5 Pro",
 	"description": "Google's most capable Gemini 2.5 model with strong reasoning, thinking support, and a 1M token context window.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Reasoning",
-		"Multimodal",
-		"Thinking"
-	],
+	"tags": ["LLM", "Reasoning", "Multimodal", "Thinking"],
 	"context_length": 1000000,
 	"max_output_tokens": 65536,
 	"schema_version": "1.0.0",
@@ -371,16 +366,11 @@
 								"type": "array"
 							},
 							"role": {
-								"enum": [
-									"user",
-									"model"
-								],
+								"enum": ["user", "model"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"parts"
-						],
+						"required": ["parts"],
 						"type": "object"
 					},
 					"type": "array"
@@ -426,10 +416,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"category",
-							"threshold"
-						],
+						"required": ["category", "threshold"],
 						"type": "object"
 					},
 					"type": "array"
@@ -450,9 +437,7 @@
 							"type": "array"
 						}
 					},
-					"required": [
-						"parts"
-					],
+					"required": ["parts"],
 					"type": "object"
 				},
 				"toolConfig": {},
@@ -461,9 +446,7 @@
 					"type": "array"
 				}
 			},
-			"required": [
-				"contents"
-			],
+			"required": ["contents"],
 			"type": "object"
 		},
 		"output": {

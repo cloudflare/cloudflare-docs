@@ -4,12 +4,7 @@
 	"name": "Grok 4.20 Reasoning",
 	"description": "xAI's Grok 4.20 reasoning model. Uses extended thinking to work through complex problems, returning a reasoning trace alongside the final answer.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Reasoning",
-		"Coding",
-		"Agentic"
-	],
+	"tags": ["LLM", "Reasoning", "Coding", "Agentic"],
 	"context_length": 2000000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -8371,10 +8366,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"role",
-									"content"
-								],
+								"required": ["role", "content"],
 								"type": "object"
 							},
 							{
@@ -8399,10 +8391,7 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"type",
-																"text"
-															],
+															"required": ["type", "text"],
 															"type": "object"
 														},
 														{
@@ -8412,20 +8401,14 @@
 																	"additionalProperties": false,
 																	"properties": {
 																		"detail": {
-																			"enum": [
-																				"auto",
-																				"low",
-																				"high"
-																			],
+																			"enum": ["auto", "low", "high"],
 																			"type": "string"
 																		},
 																		"url": {
 																			"type": "string"
 																		}
 																	},
-																	"required": [
-																		"url"
-																	],
+																	"required": ["url"],
 																	"type": "object"
 																},
 																"type": {
@@ -8433,10 +8416,7 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"type",
-																"image_url"
-															],
+															"required": ["type", "image_url"],
 															"type": "object"
 														}
 													]
@@ -8455,10 +8435,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"role",
-									"content"
-								],
+								"required": ["role", "content"],
 								"type": "object"
 							},
 							{
@@ -8495,10 +8472,7 @@
 															"type": "string"
 														}
 													},
-													"required": [
-														"name",
-														"arguments"
-													],
+													"required": ["name", "arguments"],
 													"type": "object"
 												},
 												"id": {
@@ -8509,20 +8483,14 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"id",
-												"type",
-												"function"
-											],
+											"required": ["id", "type", "function"],
 											"type": "object"
 										},
 										"maxItems": 128,
 										"type": "array"
 									}
 								},
-								"required": [
-									"role"
-								],
+								"required": ["role"],
 								"type": "object"
 							},
 							{
@@ -8539,11 +8507,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"role",
-									"content",
-									"tool_call_id"
-								],
+								"required": ["role", "content", "tool_call_id"],
 								"type": "object"
 							}
 						]
@@ -8589,10 +8553,7 @@
 				"reasoning_effort": {
 					"anyOf": [
 						{
-							"enum": [
-								"low",
-								"high"
-							],
+							"enum": ["low", "high"],
 							"type": "string"
 						},
 						{
@@ -8610,9 +8571,7 @@
 									"type": "string"
 								}
 							},
-							"required": [
-								"type"
-							],
+							"required": ["type"],
 							"type": "object"
 						},
 						{
@@ -8623,9 +8582,7 @@
 									"type": "string"
 								}
 							},
-							"required": [
-								"type"
-							],
+							"required": ["type"],
 							"type": "object"
 						},
 						{
@@ -8648,10 +8605,7 @@
 											"type": "boolean"
 										}
 									},
-									"required": [
-										"name",
-										"schema"
-									],
+									"required": ["name", "schema"],
 									"type": "object"
 								},
 								"type": {
@@ -8659,10 +8613,7 @@
 									"type": "string"
 								}
 							},
-							"required": [
-								"type",
-								"json_schema"
-							],
+							"required": ["type", "json_schema"],
 							"type": "object"
 						}
 					]
@@ -8695,11 +8646,7 @@
 						"mode": {
 							"anyOf": [
 								{
-									"enum": [
-										"off",
-										"on",
-										"auto"
-									],
+									"enum": ["off", "on", "auto"],
 									"type": "string"
 								},
 								{
@@ -8785,9 +8732,7 @@
 							"type": "boolean"
 						}
 					},
-					"required": [
-						"include_usage"
-					],
+					"required": ["include_usage"],
 					"type": "object"
 				},
 				"temperature": {
@@ -8817,9 +8762,7 @@
 											"type": "string"
 										}
 									},
-									"required": [
-										"name"
-									],
+									"required": ["name"],
 									"type": "object"
 								},
 								"type": {
@@ -8827,10 +8770,7 @@
 									"type": "string"
 								}
 							},
-							"required": [
-								"type",
-								"function"
-							],
+							"required": ["type", "function"],
 							"type": "object"
 						}
 					]
@@ -8861,10 +8801,7 @@
 												"type": "boolean"
 											}
 										},
-										"required": [
-											"name",
-											"parameters"
-										],
+										"required": ["name", "parameters"],
 										"type": "object"
 									},
 									"type": {
@@ -8872,10 +8809,7 @@
 										"type": "string"
 									}
 								},
-								"required": [
-									"type",
-									"function"
-								],
+								"required": ["type", "function"],
 								"type": "object"
 							},
 							"maxItems": 128,
@@ -8937,9 +8871,7 @@
 					"type": "object"
 				}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"type": "object"
 		},
 		"output": {
@@ -8980,9 +8912,7 @@
 												]
 											}
 										},
-										"required": [
-											"content"
-										],
+										"required": ["content"],
 										"type": "object"
 									},
 									{
@@ -9042,10 +8972,7 @@
 																	"type": "string"
 																}
 															},
-															"required": [
-																"name",
-																"arguments"
-															],
+															"required": ["name", "arguments"],
 															"type": "object"
 														},
 														"id": {
@@ -9055,11 +8982,7 @@
 															"type": "string"
 														}
 													},
-													"required": [
-														"id",
-														"type",
-														"function"
-													],
+													"required": ["id", "type", "function"],
 													"type": "object"
 												},
 												"type": "array"
@@ -9070,18 +8993,11 @@
 										]
 									}
 								},
-								"required": [
-									"role",
-									"content"
-								],
+								"required": ["role", "content"],
 								"type": "object"
 							}
 						},
-						"required": [
-							"index",
-							"finish_reason",
-							"message"
-						],
+						"required": ["index", "finish_reason", "message"],
 						"type": "object"
 					},
 					"type": "array"
@@ -9198,21 +9114,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
-					],
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
 					"type": "object"
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
+			"required": ["id", "object", "created", "model", "choices"],
 			"type": "object"
 		}
 	}

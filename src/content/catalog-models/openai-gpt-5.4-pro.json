@@ -4,13 +4,7 @@
 	"name": "GPT-5.4 pro",
 	"description": "GPT-5.4 pro uses OpenAI's Responses API with built-in tools, improved reasoning, and stateful context management.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Coding",
-		"Reasoning",
-		"Multimodal",
-		"Responses API"
-	],
+	"tags": ["LLM", "Coding", "Reasoning", "Multimodal", "Responses API"],
 	"context_length": 1000000,
 	"max_output_tokens": 16384,
 	"schema_version": "1.0.0",
@@ -590,12 +584,7 @@
 					"additionalProperties": {},
 					"properties": {
 						"effort": {
-							"enum": [
-								"none",
-								"low",
-								"medium",
-								"high"
-							],
+							"enum": ["none", "low", "medium", "high"],
 							"type": "string"
 						}
 					},
@@ -627,9 +616,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"input"
-			],
+			"required": ["input"],
 			"type": "object"
 		},
 		"output": {
@@ -657,12 +644,7 @@
 					"type": "string"
 				},
 				"status": {
-					"enum": [
-						"in_progress",
-						"completed",
-						"failed",
-						"incomplete"
-					],
+					"enum": ["in_progress", "completed", "failed", "incomplete"],
 					"type": "string"
 				},
 				"usage": {
@@ -678,21 +660,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"input_tokens",
-						"output_tokens",
-						"total_tokens"
-					],
+					"required": ["input_tokens", "output_tokens", "total_tokens"],
 					"type": "object"
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created_at",
-				"model",
-				"output"
-			],
+			"required": ["id", "object", "created_at", "model", "output"],
 			"type": "object"
 		}
 	}

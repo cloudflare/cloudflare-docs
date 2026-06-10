@@ -559,9 +559,7 @@
 													"type": "string"
 												}
 											},
-											"required": [
-												"type"
-											],
+											"required": ["type"],
 											"type": "object"
 										},
 										"type": "array"
@@ -569,17 +567,11 @@
 								]
 							},
 							"role": {
-								"enum": [
-									"user",
-									"assistant"
-								],
+								"enum": ["user", "assistant"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"type": "object"
 					},
 					"type": "array"
@@ -612,10 +604,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"messages",
-				"max_tokens"
-			],
+			"required": ["messages", "max_tokens"],
 			"type": "object"
 		},
 		"output": {
@@ -633,9 +622,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"type"
-						],
+						"required": ["type"],
 						"type": "object"
 					},
 					"type": "array"
@@ -674,10 +661,7 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"input_tokens",
-						"output_tokens"
-					],
+					"required": ["input_tokens", "output_tokens"],
 					"type": "object"
 				}
 			},

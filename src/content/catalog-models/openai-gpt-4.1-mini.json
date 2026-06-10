@@ -4,11 +4,7 @@
 	"name": "GPT-4.1 mini",
 	"description": "Fast, affordable version of GPT-4.1 with a million-token context window.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Fast",
-		"Cost-Efficient"
-	],
+	"tags": ["LLM", "Fast", "Cost-Efficient"],
 	"context_length": 1047576,
 	"max_output_tokens": 32768,
 	"schema_version": "1.0.0",
@@ -7174,13 +7170,7 @@
 					"additionalProperties": false,
 					"properties": {
 						"format": {
-							"enum": [
-								"wav",
-								"mp3",
-								"flac",
-								"opus",
-								"pcm16"
-							],
+							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
 							"type": "string"
 						},
 						"voice": {
@@ -7231,30 +7221,18 @@
 								]
 							},
 							"role": {
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								],
+								"enum": ["system", "developer", "user", "assistant", "tool"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"modalities": {
 					"items": {
-						"enum": [
-							"text",
-							"audio"
-						],
+						"enum": ["text", "audio"],
 						"type": "string"
 					},
 					"type": "array"
@@ -7293,9 +7271,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"type": "object"
 		},
 		"output": {
@@ -7365,17 +7341,11 @@
 										]
 									}
 								},
-								"required": [
-									"role"
-								],
+								"required": ["role"],
 								"type": "object"
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
+						"required": ["index", "message", "finish_reason"],
 						"type": "object"
 					},
 					"type": "array"
@@ -7405,21 +7375,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
-					],
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
 					"type": "object"
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
+			"required": ["id", "object", "created", "model", "choices"],
 			"type": "object"
 		}
 	}

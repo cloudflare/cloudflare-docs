@@ -4,12 +4,7 @@
 	"name": "Qwen 3.5 397B A17B",
 	"description": "Alibaba's Qwen 3.5 is a 397B-parameter mixture-of-experts model with 17B active parameters, offering strong reasoning capabilities with efficient inference.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Coding",
-		"Reasoning",
-		"MoE"
-	],
+	"tags": ["LLM", "Coding", "Reasoning", "MoE"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -4195,13 +4190,7 @@
 					"additionalProperties": false,
 					"properties": {
 						"format": {
-							"enum": [
-								"wav",
-								"mp3",
-								"flac",
-								"opus",
-								"pcm16"
-							],
+							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
 							"type": "string"
 						},
 						"voice": {
@@ -4252,30 +4241,18 @@
 								]
 							},
 							"role": {
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								],
+								"enum": ["system", "developer", "user", "assistant", "tool"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"role",
-							"content"
-						],
+						"required": ["role", "content"],
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"modalities": {
 					"items": {
-						"enum": [
-							"text",
-							"audio"
-						],
+						"enum": ["text", "audio"],
 						"type": "string"
 					},
 					"type": "array"
@@ -4314,9 +4291,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"messages"
-			],
+			"required": ["messages"],
 			"type": "object"
 		},
 		"output": {
@@ -4386,17 +4361,11 @@
 										]
 									}
 								},
-								"required": [
-									"role"
-								],
+								"required": ["role"],
 								"type": "object"
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
+						"required": ["index", "message", "finish_reason"],
 						"type": "object"
 					},
 					"type": "array"
@@ -4426,21 +4395,11 @@
 							"type": "number"
 						}
 					},
-					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
-					],
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
 					"type": "object"
 				}
 			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
+			"required": ["id", "object", "created", "model", "choices"],
 			"type": "object"
 		}
 	}
