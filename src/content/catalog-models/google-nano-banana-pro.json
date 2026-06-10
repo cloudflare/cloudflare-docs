@@ -4,10 +4,7 @@
 	"name": "Nano Banana Pro",
 	"description": "Google's higher-quality image generation model with improved detail and prompt adherence.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"High Quality"
-	],
+	"tags": ["Image Generation", "High Quality"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -186,28 +183,18 @@
 					"type": "array"
 				},
 				"image_size": {
-					"enum": [
-						"1K",
-						"2K",
-						"4K"
-					],
+					"enum": ["1K", "2K", "4K"],
 					"type": "string"
 				},
 				"output_format": {
-					"enum": [
-						"jpg",
-						"png",
-						"webp"
-					],
+					"enum": ["jpg", "png", "webp"],
 					"type": "string"
 				},
 				"prompt": {
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -219,9 +206,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}

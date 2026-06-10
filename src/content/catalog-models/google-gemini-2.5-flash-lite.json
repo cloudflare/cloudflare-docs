@@ -4,12 +4,7 @@
 	"name": "Gemini 2.5 Flash Lite",
 	"description": "Google's lightest and most cost-efficient Gemini 2.5 model for high-throughput tasks.",
 	"task": "Text Generation",
-	"tags": [
-		"LLM",
-		"Fast",
-		"Cost-Efficient",
-		"Multimodal"
-	],
+	"tags": ["LLM", "Fast", "Cost-Efficient", "Multimodal"],
 	"context_length": 1000000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
@@ -343,9 +338,7 @@
 	"metadata": {
 		"Architecture": "Transformer (multimodal)"
 	},
-	"request_formats": [
-		"chat-completions"
-	],
+	"request_formats": ["chat-completions"],
 	"created_at": "2026-05-22 17:53:08",
 	"schema": {
 		"input": {
@@ -369,16 +362,11 @@
 								"type": "array"
 							},
 							"role": {
-								"enum": [
-									"user",
-									"model"
-								],
+								"enum": ["user", "model"],
 								"type": "string"
 							}
 						},
-						"required": [
-							"parts"
-						],
+						"required": ["parts"],
 						"type": "object"
 					},
 					"type": "array"
@@ -424,10 +412,7 @@
 								"type": "string"
 							}
 						},
-						"required": [
-							"category",
-							"threshold"
-						],
+						"required": ["category", "threshold"],
 						"type": "object"
 					},
 					"type": "array"
@@ -448,9 +433,7 @@
 							"type": "array"
 						}
 					},
-					"required": [
-						"parts"
-					],
+					"required": ["parts"],
 					"type": "object"
 				},
 				"toolConfig": {},
@@ -459,9 +442,7 @@
 					"type": "array"
 				}
 			},
-			"required": [
-				"contents"
-			],
+			"required": ["contents"],
 			"type": "object"
 		},
 		"output": {

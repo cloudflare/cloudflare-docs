@@ -4,11 +4,7 @@
 	"name": "MiniMax Hailuo 2.3 Fast",
 	"description": "A lower-latency version of Hailuo 2.3 that preserves core motion quality, visual consistency, and stylization while enabling faster iteration.",
 	"task": "Text-to-Video",
-	"tags": [
-		"Video Generation",
-		"Image-to-Video",
-		"Fast"
-	],
+	"tags": ["Video Generation", "Image-to-Video", "Fast"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -177,10 +173,7 @@
 				},
 				"resolution": {
 					"default": "768P",
-					"enum": [
-						"768P",
-						"1080P"
-					],
+					"enum": ["768P", "1080P"],
 					"type": "string"
 				}
 			},
@@ -198,13 +191,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"status": {
-					"enum": [
-						"Preparing",
-						"Queueing",
-						"Processing",
-						"Success",
-						"Fail"
-					],
+					"enum": ["Preparing", "Queueing", "Processing", "Success", "Fail"],
 					"type": "string"
 				},
 				"task_id": {
@@ -215,9 +202,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"task_id"
-			],
+			"required": ["task_id"],
 			"type": "object"
 		}
 	}

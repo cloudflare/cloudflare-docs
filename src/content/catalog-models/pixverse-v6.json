@@ -4,12 +4,7 @@
 	"name": "Pixverse v6",
 	"description": "Pixverse v6 is the latest Pixverse video model with support for up to 15-second videos, customizable duration from 1 to 15 seconds, and audio generation.",
 	"task": "Text-to-Video",
-	"tags": [
-		"Video Generation",
-		"Image-to-Video",
-		"Audio",
-		"Long Form"
-	],
+	"tags": ["Video Generation", "Image-to-Video", "Audio", "Long Form"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -181,16 +176,7 @@
 				"aspect_ratio": {
 					"default": "16:9",
 					"description": "Video aspect ratio",
-					"enum": [
-						"16:9",
-						"4:3",
-						"1:1",
-						"3:4",
-						"9:16",
-						"2:3",
-						"3:2",
-						"21:9"
-					],
+					"enum": ["16:9", "4:3", "1:1", "3:4", "9:16", "2:3", "3:2", "21:9"],
 					"type": "string"
 				},
 				"duration": {
@@ -222,12 +208,7 @@
 				"quality": {
 					"default": "720p",
 					"description": "Video quality",
-					"enum": [
-						"360p",
-						"540p",
-						"720p",
-						"1080p"
-					],
+					"enum": ["360p", "540p", "720p", "1080p"],
 					"type": "string"
 				},
 				"seed": {
@@ -256,9 +237,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"video"
-			],
+			"required": ["video"],
 			"type": "object"
 		}
 	}

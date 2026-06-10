@@ -4,11 +4,7 @@
 	"name": "MiniMax Hailuo 2.3",
 	"description": "A high-fidelity video generation model optimized for realistic human motion, cinematic VFX, expressive characters, and strong prompt and style adherence across text-to-video and image-to-video workflows.",
 	"task": "Text-to-Video",
-	"tags": [
-		"Video Generation",
-		"Cinematic",
-		"Image-to-Video"
-	],
+	"tags": ["Video Generation", "Cinematic", "Image-to-Video"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -211,10 +207,7 @@
 				},
 				"resolution": {
 					"default": "768P",
-					"enum": [
-						"768P",
-						"1080P"
-					],
+					"enum": ["768P", "1080P"],
 					"type": "string"
 				}
 			},
@@ -231,13 +224,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"status": {
-					"enum": [
-						"Preparing",
-						"Queueing",
-						"Processing",
-						"Success",
-						"Fail"
-					],
+					"enum": ["Preparing", "Queueing", "Processing", "Success", "Fail"],
 					"type": "string"
 				},
 				"task_id": {
@@ -248,9 +235,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"task_id"
-			],
+			"required": ["task_id"],
 			"type": "object"
 		}
 	}

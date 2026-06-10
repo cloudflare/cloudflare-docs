@@ -4,11 +4,7 @@
 	"name": "GPT Image 2",
 	"description": "OpenAI's next-generation image model that creates and edits images from text prompts, with support for multiple quality levels, sizes, and output formats. Note: transparent backgrounds are not supported \u2014 use openai/gpt-image-1.5 for transparent PNGs.",
 	"task": "Text-to-Image",
-	"tags": [
-		"Image Generation",
-		"Image Editing",
-		"Multimodal"
-	],
+	"tags": ["Image Generation", "Image Editing", "Multimodal"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -234,11 +230,7 @@
 			"properties": {
 				"background": {
 					"description": "Background transparency setting. Use transparent for images with no background, opaque for a solid background, or auto to let the model decide.",
-					"enum": [
-						"transparent",
-						"opaque",
-						"auto"
-					],
+					"enum": ["transparent", "opaque", "auto"],
 					"type": "string"
 				},
 				"images": {
@@ -251,11 +243,7 @@
 				},
 				"output_format": {
 					"description": "Output format for the generated image",
-					"enum": [
-						"png",
-						"webp",
-						"jpeg"
-					],
+					"enum": ["png", "webp", "jpeg"],
 					"type": "string"
 				},
 				"prompt": {
@@ -264,28 +252,16 @@
 				},
 				"quality": {
 					"description": "Quality of the generated image",
-					"enum": [
-						"low",
-						"medium",
-						"high",
-						"auto"
-					],
+					"enum": ["low", "medium", "high", "auto"],
 					"type": "string"
 				},
 				"size": {
 					"description": "Size of the generated image",
-					"enum": [
-						"1024x1024",
-						"1024x1536",
-						"1536x1024",
-						"auto"
-					],
+					"enum": ["1024x1024", "1024x1536", "1536x1024", "auto"],
 					"type": "string"
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"type": "object"
 		},
 		"output": {
@@ -298,9 +274,7 @@
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"type": "object"
 		}
 	}
