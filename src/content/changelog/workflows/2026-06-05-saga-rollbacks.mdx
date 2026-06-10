@@ -1,5 +1,5 @@
 ---
-title: "Workflows now supports saga-style rollbacks"
+title: "Workflows now supports per-step failure logic via saga-style rollbacks"
 description: Workflows now lets you attach rollback handlers to step.do(), inspect rollback outcomes, and query rollback events in analytics.
 products:
   - workflows
@@ -8,7 +8,7 @@ date: 2026-06-05 15:00:00 UTC
 
 import { TypeScriptExample } from "~/components";
 
-You can now control the behavior of every `step.do()` upon a [Workflows](/workflows/) instance failure by registering a **rollback handler**, which defines the action to be taken if any step on the workflow fails. 
+You can now control the behavior of every `step.do()` when a [Workflows](/workflows/) instance fails by registering a **rollback handler**, which defines the action to be taken if any step on the workflow fails. 
 
 Upon failure, the rollback handlers will execute in reverse `step-start` order. 
 
@@ -23,36 +23,20 @@ const rollbacks: Array<() => Promise<unknown>> = [];
 
 try {
 	const debit = await step.do("debit-account-a", async () => {
-		return await bankA.debit({
-			accountId: fromAccountId,
-			amount,
-			idempotencyKey: `${transferId}:debit-account-a`,
-		});
+		return await bankA.debit({...});
 	});
 	rollbacks.push(() =>
 		step.do("rollback-debit-account-a", async () => {
-			await bankA.credit({
-				accountId: fromAccountId,
-				amount,
-				idempotencyKey: `${transferId}:rollback-debit-account-a`,
-			});
+			await bankA.credit({...});
 		}),
 	);
 
 	const credit = await step.do("credit-account-b", async () => {
-		return await bankB.credit({
-			accountId: toAccountId,
-			amount,
-			idempotencyKey: `${transferId}:credit-account-b`,
-		});
+		return await bankB.credit({...});
 	});
 	rollbacks.push(() =>
 		step.do("rollback-credit-account-b", async () => {
-			await bankB.debit({
-				accountId: toAccountId,
-				amount,
-				idempotencyKey: `${transferId}:rollback-credit-account-b`,
-			});
+			await bankB.debit({...});
 		}),
 	);
 } catch (error) {
@@ -74,19 +58,11 @@ Instead of adding this complex, top-level error handling, you can now add compen
 const debit = await step.do(
 	"debit-account-a",
 	async () => {
-		return await bankA.debit({
-			accountId: fromAccountId,
-			amount,
-			idempotencyKey: `${transferId}:debit-account-a`,
-		});
+		return await bankA.debit({...});
 	},
 	{
 		rollback: async () => {
-			await bankA.credit({
-				accountId: fromAccountId,
-				amount,
-				idempotencyKey: `${transferId}:rollback-debit-account-a`,
-			});
+			await bankA.credit({...});
 		},
 	}
 );
@@ -96,11 +72,7 @@ const debit = await step.do(
 const credit = await step.do(
 	"credit-account-b",
 	async () => {
-		return await bankB.credit({
-			accountId: toAccountId,
-			amount,
-			idempotencyKey: `${transferId}:credit-account-b`,
-		});
+		return await bankB.credit({...});
 	},
 	{
 		rollback: async ({ output }) => {
@@ -108,11 +80,7 @@ const credit = await step.do(
 				return;
 			}
 
-			await bankB.debit({
-				accountId: toAccountId,
-				amount,
-				idempotencyKey: `${transferId}:rollback-credit-account-b`,
-			});
+			await bankB.debit({...});
 		},
 	}
 );
