@@ -31,7 +31,7 @@ These examples exclude the costs for the Workers calling the Durable Objects. Wh
 
 - Inactive objects receiving no requests do not incur any duration charges.
 - The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occasionally at sparse intervals.
-- An active outbound connection (via [`connect()`](/workers/runtime-apis/tcp-sockets/) or an outbound WebSocket) keeps a Durable Object in memory and causes it to incur duration charges, even with no incoming requests. Each connection keeps the Durable Object alive for up to 15 minutes; after 15 minutes, the connection stops preventing eviction (the connection itself continues operating) and the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/) resume. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+- An active outbound connection (via [`connect()`](/workers/runtime-apis/tcp-sockets/) or an outbound WebSocket) keeps a Durable Object in memory and causes it to incur duration charges, even with no incoming requests. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
 
 ### Example 1
 
