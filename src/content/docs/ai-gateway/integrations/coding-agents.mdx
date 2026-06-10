@@ -29,7 +29,7 @@ Routing a coding agent through AI Gateway gives you:
 
 Before you start, you need:
 
-1. A gateway. To create one, refer to [Getting started](/ai-gateway/get-started/).
+1. An [authenticated gateway](/ai-gateway/configuration/authentication/) and its gateway token. The gateway token must have `Run` permissions.
 2. Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 3. Claude Code installed and updated to the latest version.
 
@@ -43,16 +43,17 @@ This configuration uses your Anthropic API key, so Anthropic bills you for model
 
 <Steps>
 
-1. Set the base URL to your gateway's Anthropic endpoint and pass your Anthropic API key.
+1. Set the base URL to your gateway's Anthropic endpoint, pass your Anthropic API key, and send your gateway token in the `cf-aig-authorization` header.
 
-   Replace `<ACCOUNT_ID>` and `<GATEWAY_ID>` with your values.
+   Replace `<ACCOUNT_ID>`, `<GATEWAY_ID>`, `<ANTHROPIC_API_KEY>`, and `<CF_AIG_TOKEN>` with your values.
 
    <Tabs syncKey="os">
    <TabItem label="macOS / Linux">
 
    ```bash
-   export ANTHROPIC_BASE_URL=https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/anthropic
-   export ANTHROPIC_API_KEY=<ANTHROPIC_API_KEY>
+   export ANTHROPIC_BASE_URL="https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/anthropic"
+   export ANTHROPIC_API_KEY="<ANTHROPIC_API_KEY>"
+   export ANTHROPIC_CUSTOM_HEADERS="cf-aig-authorization: Bearer <CF_AIG_TOKEN>"
    ```
 
    </TabItem>
@@ -61,6 +62,7 @@ This configuration uses your Anthropic API key, so Anthropic bills you for model
    ```powershell
    $env:ANTHROPIC_BASE_URL = "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/anthropic"
    $env:ANTHROPIC_API_KEY = "<ANTHROPIC_API_KEY>"
+   $env:ANTHROPIC_CUSTOM_HEADERS = "cf-aig-authorization: Bearer <CF_AIG_TOKEN>"
    ```
 
    </TabItem>
@@ -73,8 +75,6 @@ This configuration uses your Anthropic API key, so Anthropic bills you for model
    ```
 
 </Steps>
-
-If your gateway requires authentication, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/) for the header AI Gateway expects.
 
 ## Protect sensitive code and data
 
