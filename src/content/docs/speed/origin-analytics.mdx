@@ -29,7 +29,7 @@ Use this metric to spot slowdowns and catch requests approaching your timeout th
 
 Origin response time shows how long your origin takes to respond to Cloudflare, measured at the 50th, 95th, and 99th percentiles. A reference line indicates your zone's configured origin timeout.
 
-This metric is measured from the first data center that receives the request. It includes DNS resolution, TCP and TLS handshakes, request transmission, origin processing, and response receipt. If [Argo Smart Routing](/argo-smart-routing/) or [Tiered Cache](/cache/how-to/tiered-cache/) is enabled, the metric also includes time spent routing through those services.
+The clock starts when Cloudflare decides the request must go to origin (a cache miss) and stops when Cloudflare receives the response headers — not the full body — back from your origin. It includes DNS resolution, TCP and TLS handshakes, request transmission, origin processing, and response receipt. If [Argo Smart Routing](/argo-smart-routing/) or [Tiered Cache](/cache/how-to/tiered-cache/) is enabled, the metric also includes time spent routing through those services.
 
 Because this measures the full upstream round trip, Origin Analytics shows higher response times than your origin's own monitoring tools (for example, Grafana or Datadog), which measure only server-side processing time.
 
