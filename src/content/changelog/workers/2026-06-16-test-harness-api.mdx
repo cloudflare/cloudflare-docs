@@ -1,0 +1,81 @@
+---
+title: Test Workers the way they are built with createTestHarness
+description: Run integration tests against your Workers' production build output from any Node.js test runner.
+products:
+  - workers
+date: 2026-06-16
+publish_future_dated_entry: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+Wrangler now provides `createTestHarness()`, an API for running integration tests against Workers from any Node.js test runner. It works with Wrangler projects and [projects built with the Cloudflare Vite plugin](/workers/testing/test-harness/examples/#test-workers-built-by-the-cloudflare-vite-plugin).
+
+Use `createTestHarness()` when you want tests to run against Workers built by Wrangler or the Cloudflare Vite plugin. The test harness starts a local Worker server and [provides helpers for dispatching requests, resetting storage, and inspecting runtime logs](/workers/wrangler/api/#createtestharness).
+
+This is useful for tests that need to:
+
+- [Route requests across multiple Workers](/workers/testing/test-harness/examples/#test-multiple-workers-and-route-dispatch).
+- [Mock outbound `fetch()` requests](/workers/testing/test-harness/examples/#mock-outbound-requests) with Node.js request mocking libraries such as [MSW](https://mswjs.io/).
+- [Run Playwright tests against a Worker started by the test harness](/workers/testing/test-harness/examples/#use-with-playwright).
+
+For example, this test starts two Workers and mocks an upstream API:
+
+<TypeScriptExample filename="tests/vitest.test.ts">
+
+```ts
+import { afterAll, afterEach, beforeAll, test } from "vitest";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+import { createTestHarness } from "wrangler";
+
+const network = setupServer();
+const server = createTestHarness({
+	workers: [
+		/** Includes `"routes": ["example.com/*"]` */
+		{ configPath: "./workers/web/wrangler.jsonc" },
+		/** Includes `"routes": ["api.example.com/v1/*"]` */
+		{ configPath: "./workers/api/wrangler.jsonc" },
+	],
+});
+
+beforeAll(async () => {
+	network.listen({ onUnhandledRequest: "error" });
+	await server.listen();
+});
+
+afterEach(async () => {
+	network.resetHandlers();
+	await server.reset();
+});
+
+afterAll(async () => {
+	network.close();
+	await server.close();
+});
+
+test("routes requests to each Worker", async ({ expect }) => {
+	network.use(
+		http.get("http://identity.example.com/profile/:id", ({ params }) => {
+			return HttpResponse.json({ id: params.id, name: "Ada" });
+		})
+	);
+
+	const apiResponse = await server.fetch(
+		"http://api.example.com/v1/users/123"
+	);
+	expect(await apiResponse.json()).toEqual({
+		id: "123",
+		name: "Ada",
+	});
+
+	const webResponse = await server.fetch(
+		"http://example.com/users/123"
+	);
+	expect(await webResponse.text()).toBe("Profile: Ada");
+});
+```
+
+</TypeScriptExample>
+
+Refer to our [Test harness guide](/workers/testing/test-harness/) for more details.

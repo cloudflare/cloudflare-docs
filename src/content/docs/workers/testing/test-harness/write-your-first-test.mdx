@@ -1,0 +1,58 @@
+---
+title: Write your first test
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head: []
+description: Write your first integration test for a Cloudflare Worker with createTestHarness.
+products:
+  - workers
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows how to write a basic integration test for a Worker with `createTestHarness()`. The example uses Vitest as a regular Node.js test runner and exercises the production build output through Wrangler configuration.
+
+## Prerequisites
+
+Before you start, make sure that you have:
+
+- A Worker project with a [Wrangler configuration file](/workers/wrangler/configuration/).
+- A Node.js test runner such as [Vitest](https://vitest.dev/).
+- `wrangler` installed as a development dependency.
+
+## Create a test harness
+
+Import `createTestHarness()` from `wrangler` and point it at your Worker configuration file.
+
+<TypeScriptExample filename="test/index.test.ts">
+
+```ts
+import { afterAll, afterEach, beforeAll, test } from "vitest";
+import { createTestHarness } from "wrangler";
+
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+beforeAll(async () => {
+	await server.listen();
+});
+
+afterEach(async () => {
+	await server.reset();
+});
+
+afterAll(async () => {
+	await server.close();
+});
+
+test("responds", async ({ expect }) => {
+	const response = await server.fetch("/");
+	expect(await response.text()).toBe("Hello World");
+});
+```
+
+</TypeScriptExample>
+
+`server.listen()` starts the local test server. Use `server.fetch()` to send a request to the primary Worker, which is the first Worker listed in the `workers` array. Reset storage and restore Workers to the original options with `server.reset()` after each test.

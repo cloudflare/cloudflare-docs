@@ -1,0 +1,310 @@
+---
+pcx_content_type: concept
+title: Examples
+sidebar:
+  order: 2
+head: []
+description: Examples for writing integration tests with createTestHarness.
+products:
+  - workers
+---
+
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+These examples show common patterns for integration testing Workers with `createTestHarness()`. The snippets use Vitest and Playwright, but `createTestHarness()` works with any Node.js test runner. For a complete runnable project that applies these examples, see the [`create-test-harness-example`](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/create-test-harness-example) fixture.
+
+## Test Workers built by the Cloudflare Vite plugin
+
+You can start Wrangler projects directly from their Wrangler configuration files. For Workers built by the [Cloudflare Vite plugin](/workers/vite-plugin/), run the Vite build first so tests use the production build output:
+
+<PackageManagers type="exec" pkg="vite" args="build" />
+
+Then point `configPath` at the generated Wrangler configuration file:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{ configPath: "./dist/web_worker/wrangler.json" },
+	],
+});
+```
+
+</TypeScriptExample>
+
+You can also test Workers built by different tools together. Each Worker in the harness is configured independently.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{ configPath: "./workers/api/wrangler.jsonc" },
+		{ configPath: "./dist/web_worker/wrangler.json" },
+	],
+});
+```
+
+</TypeScriptExample>
+
+## Mock outbound requests
+
+Workers started by `createTestHarness()` proxy outbound `fetch()` requests through `globalThis.fetch()`. Use Node.js request mocking libraries, such as [MSW](https://mswjs.io/), to mock upstream services.
+
+<TypeScriptExample>
+
+```ts
+network.use(
+	http.get("http://identity.example.com/profile/:id", ({ params }) => {
+		return HttpResponse.json({ id: params.id, name: "Ada" });
+	})
+);
+```
+
+</TypeScriptExample>
+
+## Interact with a Worker directly
+
+Use `server.getWorker(name)` when a test should bypass route matching and call one Worker directly. Worker handles can dispatch `fetch()` events and supported non-HTTP events, such as `scheduled()`.
+
+<TypeScriptExample>
+
+```ts
+const apiWorker = server.getWorker("api-worker");
+const response = await apiWorker.fetch("http://api.example.com/v1/users/123");
+
+await apiWorker.scheduled({
+	cron: "0 0 * * *",
+	scheduledTime: new Date(),
+});
+```
+
+</TypeScriptExample>
+
+## Override variables and secrets
+
+Use test-only `vars` and `secrets` to make test inputs explicit or pass values created during test setup. These values override values from the Wrangler configuration file, `.env`, and `.dev.vars`.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{
+			configPath: "./wrangler.jsonc",
+			vars: { API_HOST: "http://identity.example.com" },
+			secrets: { API_TOKEN: "test-token" },
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+## Configure the harness after setup
+
+Call `createTestHarness()` without options when the Worker configuration depends on setup work that runs later in your test lifecycle. Use `server.update()` to configure the harness before calling `server.listen()`. When you call `server.reset()`, the harness restarts with the options used to start the current test session.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness();
+let upstream: { url: string; close(): Promise<void> };
+
+beforeAll(async () => {
+	upstream = await startLocalApi();
+
+	await server.update({
+		workers: [
+			{
+				configPath: "./wrangler.jsonc",
+				vars: { API_HOST: upstream.url },
+			},
+		],
+	});
+
+	await server.listen();
+});
+
+afterEach(async () => {
+	await server.reset();
+});
+
+afterAll(async () => {
+	await server.close();
+	await upstream.close();
+});
+```
+
+</TypeScriptExample>
+
+## Test multiple Workers and route dispatch
+
+When a test harness runs multiple Workers, `server.fetch()` matches requests against the routes defined in each Worker configuration. Add each Worker that should run in the harness to the `workers` array.
+
+Start the harness with both configuration files:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		/** Includes `"routes": ["example.com/*"]` */
+		{ configPath: "./workers/web/wrangler.jsonc" },
+		/** Includes `"routes": ["api.example.com/v1/*"]` */
+		{ configPath: "./workers/api/wrangler.jsonc" },
+	],
+});
+
+const primaryResponse = await server.fetch("/");
+const apiResponse = await server.fetch("http://api.example.com/v1/users/123");
+const webResponse = await server.fetch("http://example.com/users/123");
+```
+
+</TypeScriptExample>
+
+Relative URLs, such as `/`, resolve against the local server URL. Absolute URLs keep their hostname and path, so the request to `api.example.com/v1/users/123` matches `api-worker`, and the request to `example.com/users/123` matches `web-worker`.
+
+If no configured route matches, the request is dispatched to the primary Worker, which is the first Worker in the `workers` array.
+
+## Print debug output when tests fail
+
+Use `server.debug()` in a test runner failure or cleanup hook to print the server timeline and captured Workers runtime logs. This is useful when a test fails and you need to see which requests and runtime logs led to the failure.
+
+The exact hook depends on your test runner. For example, with Vitest:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+afterEach(({ task }) => {
+	if (task.result?.state === "fail") {
+		server.debug();
+	}
+});
+```
+
+</TypeScriptExample>
+
+## Assert against Worker logs
+
+Use `server.getLogs()` when you want to test Worker logic that writes runtime logs. Captured logs are reset when you call `server.reset()`. Use `server.clearLogs()` when one test needs to separate logs from setup work and the behavior it asserts.
+
+<TypeScriptExample>
+
+```ts
+test("runs scheduled jobs and stores the result", async ({ expect }) => {
+	const apiWorker = server.getWorker("api-worker");
+	await apiWorker.fetch("http://api.example.com/v1/users/123");
+	await apiWorker.fetch("http://api.example.com/v1/users/456");
+	server.clearLogs();
+
+	await apiWorker.scheduled({
+		cron: "0 0 * * *",
+		scheduledTime: new Date("2026-05-29T00:00:00.000Z"),
+	});
+
+	expect(server.getLogs()).toContainEqual(
+		expect.objectContaining({
+			level: "info",
+			message: "Generated daily report for 2026-05-29",
+		})
+	);
+});
+```
+
+</TypeScriptExample>
+
+## Use with Playwright
+
+Use a Playwright fixture when you want browser tests to run against a Worker started by `createTestHarness()`. Start MSW in the same Node.js process so Worker outbound requests can be mocked.
+
+The fixture can set the Playwright `baseURL`, expose MSW as `network`, expose the test harness as `server`, and reset MSW handlers and local Worker storage after each test.
+
+<TypeScriptExample filename="tests/playwright.test.ts">
+
+```ts
+import { test as base, expect } from "@playwright/test";
+import { http, HttpResponse } from "msw";
+import { setupServer, type SetupServerApi } from "msw/node";
+import { createTestHarness, type TestHarness } from "wrangler";
+
+type TestFixtures = {
+	reset: void;
+};
+
+type WorkerFixtures = {
+	network: SetupServerApi;
+	server: TestHarness;
+};
+
+const test = base.extend<TestFixtures, WorkerFixtures>({
+	network: [
+		async ({}, use) => {
+			const network = setupServer();
+			network.listen({ onUnhandledRequest: "error" });
+			await use(network);
+			network.close();
+		},
+		{ scope: "worker" },
+	],
+
+	server: [
+		async ({}, use) => {
+			const server = createTestHarness({
+				workers: [
+					{ configPath: "./dist/web_worker/wrangler.json" },
+					{ configPath: "./dist/api_worker/wrangler.json" },
+				],
+			});
+
+			await server.listen();
+
+			await use(server);
+
+			await server.close();
+		},
+		{ scope: "worker" },
+	],
+
+	baseURL: async ({ server }, use) => {
+		const { url } = await server.listen();
+		await use(url.href);
+	},
+
+	reset: [
+		async ({ network, server }, use, testInfo) => {
+			await use();
+
+			if (testInfo.status !== testInfo.expectedStatus) {
+				server.debug();
+			}
+
+			network.resetHandlers();
+			await server.reset();
+		},
+		{ auto: true },
+	],
+});
+
+test("renders a user profile", async ({ page, network }) => {
+	network.use(
+		http.get("http://identity.example.com/profile/:id", ({ params }) => {
+			return HttpResponse.json({ id: params.id, name: "Ada" });
+		})
+	);
+
+	await page.goto("/users/123");
+	await expect(page.getByText("Profile: Ada")).toBeVisible();
+});
+```
+
+</TypeScriptExample>
