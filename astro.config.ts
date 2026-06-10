@@ -1,4 +1,6 @@
 import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
+import { satteri } from "@astrojs/markdown-satteri";
 import starlight from "@astrojs/starlight";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
@@ -253,6 +255,7 @@ export default defineConfig({
 			},
 			serialize: createSitemapLastmodSerializer(),
 		}),
+		mdx({ processor: satteri(), optimize: true }),
 		react(),
 		skills(),
 	],
