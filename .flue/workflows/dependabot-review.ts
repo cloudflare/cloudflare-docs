@@ -229,16 +229,41 @@ async function postOrUpdateComment(
 // ── run() ─────────────────────────────────────────────────────────────────────
 
 export async function run({ init, payload, env, runId }: FlueContext) {
+	console.log({
+		message: `Dependabot review run() invoked`,
+		event: "dependabot_review",
+		runId,
+		action: "run_invoked",
+	});
+
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, unknown>;
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
+
+	console.log({
+		message: `Dependabot review payload parsed`,
+		event: "dependabot_review",
+		number: input.number,
+		reviewMode,
+		runId,
+		action: "payload_parsed",
+	});
+
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
 	const loader = typedEnv.LOADER as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
+
+	console.log({
+		message: `Dependabot review got installation token`,
+		event: "dependabot_review",
+		number: input.number,
+		runId,
+		action: "token_obtained",
+	});
 
 	// ── 1. Fetch PR metadata to extract packages and body ─────────────────────
 	const prRes = await fetch(
@@ -265,8 +290,25 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 		head: { sha: string };
 	};
 
+	console.log({
+		message: `Dependabot review fetched PR`,
+		event: "dependabot_review",
+		number: input.number,
+		prAuthor: pr.user.login,
+		runId,
+		action: "pr_fetched",
+	});
+
 	// Verify this is actually a Dependabot PR
 	if (pr.user.login !== "dependabot[bot]") {
+		console.log({
+			message: `Dependabot review skipped — not a dependabot PR`,
+			event: "dependabot_review",
+			number: input.number,
+			prAuthor: pr.user.login,
+			runId,
+			action: "skipped_not_dependabot",
+		});
 		return {
 			acted: false,
 			summary: `PR #${input.number} is not from dependabot[bot] (author: ${pr.user.login}).`,
@@ -276,7 +318,26 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 	const prBody = pr.body ?? "";
 	const packages = parseDependabotPackages(prBody);
 
+	console.log({
+		message: `Dependabot review parsed packages`,
+		event: "dependabot_review",
+		number: input.number,
+		packageCount: packages.length,
+		packages: packages.map((p) => `${p.name} ${p.from}→${p.to}`),
+		prBodyLength: prBody.length,
+		prBodyPrefix: prBody.slice(0, 120),
+		runId,
+		action: "packages_parsed",
+	});
+
 	if (packages.length === 0) {
+		console.log({
+			message: `Dependabot review skipped — no packages parsed`,
+			event: "dependabot_review",
+			number: input.number,
+			runId,
+			action: "skipped_no_packages",
+		});
 		return {
 			acted: false,
 			summary: `Could not parse any packages from Dependabot PR body for #${input.number}.`,
@@ -303,6 +364,15 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 				"Run `pnpm run flue:sync-agents:local` before invoking the workflow.",
 		);
 	}
+
+	console.log({
+		message: `Dependabot review skill loaded from R2`,
+		event: "dependabot_review",
+		number: input.number,
+		runId,
+		action: "skill_loaded",
+	});
+
 	await workspace.mkdir("/.agents/skills/dependabot-review", {
 		recursive: true,
 	});
@@ -319,10 +389,35 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
 		tools: repoTools,
 	}));
+	console.log({
+		message: `Dependabot review calling init()`,
+		event: "dependabot_review",
+		number: input.number,
+		runId,
+		action: "init_start",
+	});
+
 	const harness = await init(agent);
+
+	console.log({
+		message: `Dependabot review init() complete, creating session`,
+		event: "dependabot_review",
+		number: input.number,
+		runId,
+		action: "init_complete",
+	});
+
 	const session = await harness.session(
 		`dependabot-review:${input.number}:${pr.head.sha}:${runId}`,
 	);
+
+	console.log({
+		message: `Dependabot review session created`,
+		event: "dependabot_review",
+		number: input.number,
+		runId,
+		action: "session_created",
+	});
 
 	// ── 4. Post a "review in progress" placeholder if in comment mode ─────────
 	let existingComment: GitHubIssueComment | null = null;
