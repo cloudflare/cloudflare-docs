@@ -1,0 +1,31 @@
+---
+pcx_content_type: navigation
+title: Test harness
+description: Write integration tests for Cloudflare Workers with the createTestHarness API in Wrangler.
+sidebar:
+  order: 16
+products:
+  - workers
+---
+
+import { LinkButton } from "~/components";
+
+[`createTestHarness()`](/workers/wrangler/api/#createtestharness) is a Wrangler API for writing integration tests against one or more Workers from any Node.js test runner. Use it when you want tests to run against Workers built by Wrangler or the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+<LinkButton href="/workers/testing/test-harness/write-your-first-test/">
+	Write your first test
+</LinkButton>
+
+<LinkButton variant="secondary" href="/workers/testing/test-harness/examples/">
+	View examples
+</LinkButton>
+
+## Features
+
+- Runs production build output from Wrangler or the Cloudflare Vite plugin.
+- Starts one or more Workers from Wrangler configuration files.
+- Dispatches requests through configured Worker routes.
+- Calls a specific Worker's `fetch()` or `scheduled()` handler directly.
+- Overrides variables and secrets for tests.
+- Resets local storage between tests.
+- Captures runtime logs and prints debug output for failed tests.
