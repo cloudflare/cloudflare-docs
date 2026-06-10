@@ -174,7 +174,18 @@ The possible values of status are as follows:
     message: string
   };
 	output?: unknown;
+	rollback:
+		| {
+				outcome: "complete" | "failed";
+				error: {
+					name: string,
+					message: string,
+				} | null,
+		  }
+		| null;
 ```
+
+If your Workflow registers rollback handlers on `step.do()`, inspect `rollback` after the instance finishes to see whether the compensating steps completed successfully. While rollback is actively running, the Workers API continues to return `status: "running"`.
 
 ### Explicitly pause a Workflow
 

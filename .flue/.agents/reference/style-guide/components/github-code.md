@@ -6,7 +6,6 @@ description: Rules for the GitHubCode component used to embed files from GitHub.
 ## Rules
 
 - If `<GitHubCode>` uses a branch name instead of a full 40-character commit hash → **warning**: always use a full commit hash to keep the content stable.
-- If `<GitHubCode>` is missing `repo`, `file`, `commit`, or `lang` props → **warning**: all four are required.
 - If `<GitHubCode>` has `lang="ts"` and the file contains Workers-style code (imports from `cloudflare:workers`, `hono`, `@cloudflare/`, or exports a `default` handler) → **suggestion**: add `useTypeScriptExample={true}` to get an auto-generated JavaScript tab.
 
 ## Example

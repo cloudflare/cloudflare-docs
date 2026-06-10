@@ -26,7 +26,15 @@ export default [
 		...pluginReact.configs.flat["jsx-runtime"],
 	},
 	{
-		ignores: [".astro/", ".wrangler/", ".flue/dist/", "dist/", ".github/"],
+		ignores: [
+			".astro/",
+			".wrangler/",
+			".flue/dist/",
+			".flue/.flue-vite/",
+			".flue/.wrangler/",
+			"dist/",
+			".github/",
+		],
 	},
 	{
 		rules: {

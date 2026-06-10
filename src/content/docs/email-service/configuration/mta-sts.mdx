@@ -14,66 +14,76 @@ MTA Strict Transport Security ([MTA-STS](https://datatracker.ietf.org/doc/html/r
 
 Suppose that `example.com` is your domain and uses Email Service. Here is how you can enable MTA-STS for it.
 
+## Add the `_mta-sts` DNS record
+
 1. In the Cloudflare dashboard, go to the **Records** page.
 
    <DashButton url="/?to=/:account/:zone/dns/records" />
 
-2. Create a new CNAME record with the name `_mta-sts` that points to Cloudflare’s record `_mta-sts.mx.cloudflare.net`. Make sure to disable the proxy mode.
+2. Create a new CNAME record with the name `_mta-sts` that points to Cloudflare's record `_mta-sts.mx.cloudflare.net`. Make sure to disable the proxy mode.
 
-![MTA-STS CNAME record](~/assets/images/email-routing/mta-sts-record.png)
+   ![MTA-STS CNAME record](~/assets/images/email-service/mta-sts-record.png)
 
 3. Confirm that the record was created:
 
-```sh
-dig txt _mta-sts.example.com
-```
+   ```sh
+   dig txt _mta-sts.example.com
+   ```
 
-```sh output
-_mta-sts.example.com. 300 IN  CNAME _mta-sts.mx.cloudflare.net.
-_mta-sts.mx.cloudflare.net. 300 IN  TXT "v=STSv1; id=20230615T153000;"
-```
+   ```sh output
+   _mta-sts.example.com. 300 IN  CNAME _mta-sts.mx.cloudflare.net.
+   _mta-sts.mx.cloudflare.net. 300 IN  TXT "v=STSv1; id=20230615T153000;"
+   ```
 
-This tells the other end client that is trying to connect to us that we support MTA-STS.
+   This tells the other end client that is trying to connect to us that we support MTA-STS.
+
+## Serve the policy file
 
 Next you need an HTTPS endpoint at `mta-sts.example.com` to serve your policy file. This file defines the mail servers in the domain that use MTA-STS. The reason why HTTPS is used here instead of DNS is because not everyone uses DNSSEC yet, so we want to avoid another MITM attack vector.
 
-To do this you need to deploy a Worker that allows email clients to pull Cloudflare’s Email Service policy file using the “well-known” URI convention.
+To do this you need to deploy a Worker that allows email clients to pull Cloudflare's Email Service policy file using the "well-known" URI convention.
 
-4. Go to your **Account** > **Workers & Pages** and select **Create**. Pick the default "Hello World" option button, and replace the sample worker code with the following:
+1. Go to your **Account** > **Workers & Pages** and select **Create**. Pick the default "Hello World" option button, and replace the sample worker code with the following:
 
-```js
-export default {
-	async fetch(request, env, ctx) {
-		return await fetch(
-			"https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt",
-		);
-	},
-};
-```
+   ```ts
+   export default {
+   	async fetch(request, env, ctx): Promise<Response> {
+   		return await fetch(
+   			"https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt",
+   		);
+   	},
+   } satisfies ExportedHandler;
+   ```
 
-This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` to your own domain.
+   This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` to your own domain.
 
-5. After deploying it, go to the Worker configuration, then **Settings** > **Domains & Routes** > **+Add**. Type the subdomain `mta-sts.example.com`.
+2. After deploying it, go to the Worker configuration, then **Settings** > **Domains & Routes** > **+Add**. Type the subdomain `mta-sts.example.com`.
 
-![MTA-STS Worker Custom Domain](~/assets/images/email-routing/mta-sts-domain.png)
+   ![MTA-STS Worker Custom Domain](~/assets/images/email-service/mta-sts-domain.png)
 
-You can then confirm that your policy file is working with the following:
+   You can then confirm that your policy file is working with the following:
 
-```sh
-curl https://mta-sts.example.com/.well-known/mta-sts.txt
-```
+   ```sh
+   curl https://mta-sts.example.com/.well-known/mta-sts.txt
+   ```
 
-```sh output
-version: STSv1
-mode: enforce
-mx: *.mx.cloudflare.net
-max_age: 86400
-```
+   ```sh output
+   version: STSv1
+   mode: enforce
+   mx: *.mx.cloudflare.net
+   max_age: 86400
+   ```
 
-This says that you domain `example.com` enforces MTA-STS. Capable email clients will only deliver email to this domain over a secure connection to the specified MX servers. If no secure connection can be established the email will not be delivered.
+   This says that you domain `example.com` enforces MTA-STS. Capable email clients will only deliver email to this domain over a secure connection to the specified MX servers. If no secure connection can be established the email will not be delivered.
+
+   :::caution[Test before enforcing]
+   A misconfigured policy in `enforce` mode causes legitimate inbound mail to be rejected. When rolling out MTA-STS on an existing domain, start with `mode: testing` and monitor [TLS-RPT](https://datatracker.ietf.org/doc/html/rfc8460) reports for a few weeks before switching to `enforce`.
+   :::
 
 Email Service also supports MTA-STS upstream, which greatly improves security when forwarding your emails to service providers like Gmail, Microsoft, and others.
 
----
+## Next steps
 
-For more information about domain security and email authentication, refer to [Email authentication](/email-service/concepts/email-authentication/).
+- [Email authentication](/email-service/concepts/email-authentication/) — SPF, DKIM, and DMARC reference.
+- [Postmaster](/email-service/reference/postmaster/) — TLS, ARC, and SMTP details for postmasters.
+- [Domain configuration](/email-service/configuration/domains/) — review your domain's DNS records.

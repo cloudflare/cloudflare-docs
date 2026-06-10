@@ -127,7 +127,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://hailuoai.com/",
 	"terms": "https://hailuoai.com/terms",
@@ -135,6 +135,7 @@
 	"metadata": {
 		"Resolutions": "540p, 720p, 1080p"
 	},
+	"request_formats": null,
 	"created_at": "2026-05-22 17:53:18",
 	"schema": {
 		"input": {

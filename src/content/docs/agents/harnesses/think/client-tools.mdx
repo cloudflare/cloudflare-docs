@@ -75,6 +75,12 @@ After a client tool result is received, Think automatically continues the conver
 
 When a turn produces several client tool calls at once, Think waits for **all** of their results before starting a single continuation, instead of starting one continuation per result. An immediate resume request that arrives while a continuation is already pending attaches to that pending continuation rather than starting a duplicate, and server-side `needsApproval` continuations resume reliably once the approval is recorded.
 
+## Survive restarts while waiting for a human
+
+A Durable Object can be evicted at any time, including while a turn is paused on an approval prompt or a client-side tool call. Because `Think` enables [`chatRecovery`](/agents/harnesses/think/recovery/) by default, the SDK treats such a turn as waiting on the human, not stuck. It parks the turn instead of failing it, and the user's eventual approval or tool result resumes the conversation.
+
+For which interactions are exempt from recovery budgets, refer to [Turns waiting on a human are not sealed](/agents/communication-channels/chat/chat-agents/#turns-waiting-on-a-human-are-not-sealed).
+
 ## Message concurrency
 
 The `messageConcurrency` property controls how overlapping user submits behave when a chat turn is already active.

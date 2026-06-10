@@ -37,9 +37,9 @@ This page summarizes supported features, limitations, and best practices.
 | Derived tables (FROM subqueries)                         | Yes       | Can be nested and joined. `LATERAL` derived tables not supported.            |
 | Self-joins                                               | Yes       | Same table with different aliases                                            |
 | Window functions (`OVER`)                               | No        |                                                                              |
-| `SELECT DISTINCT`                                       | No        | Use `approx_distinct`                                                        |
+| `SELECT DISTINCT`                                       | Yes       |                                                                              |
 | `OFFSET`                                                | No        |                                                                              |
-| `UNION` / `INTERSECT` / `EXCEPT`                        | No        |                                                                              |
+| `UNION` / `INTERSECT` / `EXCEPT`                        | Yes       | `UNION ALL` also supported                                                   |
 | `INSERT` / `UPDATE` / `DELETE`                          | No        | Read-only                                                                    |
 | `CREATE` / `DROP` / `ALTER`                             | No        | Read-only                                                                    |
 
@@ -51,9 +51,7 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 
 | Feature                                                                       | Error                                                    |
 | :---------------------------------------------------------------------------- | :------------------------------------------------------- |
-| `SELECT DISTINCT`                                                             | `unsupported feature: SELECT DISTINCT is not supported`  |
 | `OFFSET`                                                                      | `unsupported feature: OFFSET clause is not supported`    |
-| `UNION` / `INTERSECT` / `EXCEPT`                                              | Set operations not supported                             |
 | Window functions (`OVER`)                                                     | `unsupported feature: window functions (OVER clause)`    |
 | `INSERT` / `UPDATE` / `DELETE`                                                | `only read-only queries are allowed`                     |
 | `CREATE` / `DROP` / `ALTER`                                                   | `only read-only queries are allowed`                     |

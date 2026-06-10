@@ -6,7 +6,6 @@ description: Rules for the AnchorHeading component.
 ## Rules
 
 - If `<AnchorHeading>` is used in a regular MDX file → **suggestion**: in regular MDX, headings get anchors automatically. Use an inline comment to override the anchor ID instead: `## My heading {/* custom-anchor */}`.
-- If `<AnchorHeading>` is missing `title` or `slug` → **warning**: both are required.
 
 ## Example
 

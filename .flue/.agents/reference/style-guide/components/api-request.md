@@ -6,7 +6,6 @@ description: Rules for the APIRequest component used to generate curl commands f
 ## Rules
 
 - If documenting a Cloudflare API endpoint with a raw `curl` example instead of `<APIRequest>` → **suggestion**: use `<APIRequest>` for Cloudflare API endpoints to get auto-generated auth tokens and consistent formatting.
-- If `<APIRequest>` is missing `path` or `method` → **warning**: both are required.
 
 ## Example
 

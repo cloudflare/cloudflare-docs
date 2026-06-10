@@ -45,7 +45,7 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 
 ## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via the the `wrangler` CLI or via the [Cloudflare dashboard](https://dash.cloudflare.com/). Enabling HTTP pull from a [Wrangler configuration file](/workers/wrangler/configuration/) is no longer supported.
+You can enable HTTP pull or change a queue from push-based to pull-based via the `wrangler` CLI or via the [Cloudflare dashboard](https://dash.cloudflare.com/). Enabling HTTP pull from a [Wrangler configuration file](/workers/wrangler/configuration/) is no longer supported.
 
 :::note
 If you have specified `type = "http_pull"` in your Wrangler configuration file, remove and redeploy. Your Worker will retain access to the HTTP pull endpoint, and HTTP pull will remain enabled on your queue.

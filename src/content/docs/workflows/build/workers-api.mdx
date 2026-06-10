@@ -90,11 +90,18 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 
 {/* prettier-ignore */}
 - <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable, options?: RollbackOptions): Promise&lt;T&gt;</code>
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
 	RpcSerializable): Promise&lt;T&gt;</code>
-  - `name` - the name of the step, up to 256 characters.
-  - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
-  - `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
+	- `name` - the name of the step, up to 256 characters.
+	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
+	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
+- <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
+	RpcSerializable, options?: RollbackOptions): Promise&lt;T&gt;</code>
+	- `name` - the name of the step, up to 256 characters.
+	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
+	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
+	- `options` (optional) - register rollback logic for the step. If the Workflow later fails, registered rollbacks run in reverse completion order.
 
 :::note[Returning state]
 
@@ -203,6 +210,59 @@ export type WorkflowStepConfig = {
 - A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
+
+## Rollback options
+
+```ts
+type RollbackContext = {
+	error: Error;
+	output: unknown | undefined ;
+	stepName: string;
+};
+
+type RollbackFn = (ctx: RollbackContext) => Promise<void>;
+
+type RollbackOptions = {
+	rollback: RollbackFn;
+	rollbackConfig?: WorkflowStepConfig;
+};
+```
+
+- Pass this `RollbackOptions` object as the final argument to `step.do()` to register a compensating action for a successful step.
+- `rollback` receives the error that caused the Workflow to fail, the step output returned by the forward step, and the fully-qualified step name.
+- `rollbackConfig` applies retry and timeout settings to the rollback handler itself.
+
+<TypeScriptExample>
+
+```ts
+export class BillingWorkflow extends WorkflowEntrypoint<Env> {
+	async run(_event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		await step.do(
+			"create charge",
+			async () => {
+				const charge = await createCharge();
+				return { chargeId: charge.id };
+			},
+			{
+				rollback: async ({ output, error }) => {
+					const { chargeId } = output as { chargeId: string };
+					await refundCharge(chargeId, { reason: error.message });
+				},
+				rollbackConfig: {
+					retries: {
+						limit: 3,
+						delay: "30 seconds",
+						backoff: "linear",
+					},
+					timeout: "5 minutes",
+				},
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## WorkflowStepContext
 
@@ -678,7 +738,16 @@ type InstanceStatus = {
 		message: string;
 	};
 	output?: unknown;
+	rollback: {
+		outcome: "complete" | "failed";
+		error: {
+			name: string;
+			message: string;
+		} | null;
+	} | null;
 };
 ```
+
+If a Workflow enters rollback, the Workers API continues to report `status: "running"` for compatibility while the rollback is executing. After the instance reaches a terminal state, inspect `rollback` to determine whether compensating steps completed successfully or failed.
 
 [^1]: Match pattern: `^[a-zA-Z0-9_][a-zA-Z0-9-_]*$`

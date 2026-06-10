@@ -1,0 +1,597 @@
+{
+	"model_id": "anthropic/claude-opus-4.5",
+	"provider_id": "anthropic",
+	"name": "Claude Opus 4.5",
+	"description": "Claude Opus 4.5 brings further reasoning, coding, and agentic improvements over Opus 4.1, with stronger tool use and tighter instruction following.",
+	"task": "Text Generation",
+	"tags": ["LLM", "Reasoning", "Coding", "Agentic"],
+	"context_length": 200000,
+	"max_output_tokens": 32000,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic message request",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "What are the three laws of thermodynamics?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The three laws of thermodynamics are:\n\n**First Law (Conservation of Energy):** Energy cannot be created or destroyed, only transferred or converted from one form to another. In a closed system, the change in internal energy equals heat added minus work done by the system.\n\n**Second Law (Entropy):** In any natural process, the total entropy of an isolated system always increases or remains constant; it never decreases. Heat flows spontaneously from hot to cold, not the reverse. This also establishes that no heat engine can be 100% efficient.\n\n**Third Law (Absolute Zero):** As temperature approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero. It's impossible to reach absolute zero in a finite number of steps.\n\nThere's also sometimes a **Zeroth Law** mentioned, which states that if two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other\u2014essentially establishing temperature as a transitive property."
+			},
+			"raw_response": {
+				"content": [
+					{
+						"text": "The three laws of thermodynamics are:\n\n**First Law (Conservation of Energy):** Energy cannot be created or destroyed, only transferred or converted from one form to another. In a closed system, the change in internal energy equals heat added minus work done by the system.\n\n**Second Law (Entropy):** In any natural process, the total entropy of an isolated system always increases or remains constant; it never decreases. Heat flows spontaneously from hot to cold, not the reverse. This also establishes that no heat engine can be 100% efficient.\n\n**Third Law (Absolute Zero):** As temperature approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero. It's impossible to reach absolute zero in a finite number of steps.\n\nThere's also sometimes a **Zeroth Law** mentioned, which states that if two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other\u2014essentially establishing temperature as a transitive property.",
+						"type": "text"
+					}
+				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_01KCBDSEEzS8kikdpAQHP1qf",
+				"model": "claude-opus-4-5-20251101",
+				"role": "assistant",
+				"stop_details": null,
+				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
+				"usage": {
+					"input_tokens": 17,
+					"output_tokens": 215
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'What are the three laws of thermodynamics?', role: 'user' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"What are the three laws of thermodynamics?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "How do I read a JSON file in Python?",
+						"role": "user"
+					}
+				],
+				"system": "You are a helpful coding assistant specializing in Python.",
+				"temperature": 0.3
+			},
+			"output": {
+				"text": "# Reading JSON Files in Python\n\nPython's built-in `json` module makes it easy to read JSON files.\n\n## Basic Example\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n## Common Scenarios\n\n### Reading a JSON file with error handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format\")\n```\n\n### Reading a JSON string (not a file)\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\n\nprint(data['name'])  # Output: Alice\n```\n\n### Reading with specific encoding\n\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n## Key Functions\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read from a file object |\n| `json.loads(string)` | Parse a JSON string |\n\nThe result is typically a Python dictionary or list that you can work with normally."
+			},
+			"raw_response": {
+				"content": [
+					{
+						"text": "# Reading JSON Files in Python\n\nPython's built-in `json` module makes it easy to read JSON files.\n\n## Basic Example\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n## Common Scenarios\n\n### Reading a JSON file with error handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format\")\n```\n\n### Reading a JSON string (not a file)\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\n\nprint(data['name'])  # Output: Alice\n```\n\n### Reading with specific encoding\n\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n## Key Functions\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read from a file object |\n| `json.loads(string)` | Parse a JSON string |\n\nThe result is typically a Python dictionary or list that you can work with normally.",
+						"type": "text"
+					}
+				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_013RFtndBKXc2aNHCwT6Q3cP",
+				"model": "claude-opus-4-5-20251101",
+				"role": "assistant",
+				"stop_details": null,
+				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
+				"usage": {
+					"input_tokens": 28,
+					"output_tokens": 338
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'How do I read a JSON file in Python?', role: 'user' }],\n    system: 'You are a helpful coding assistant specializing in Python.',\n    temperature: 0.3,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"system\": \"You are a helpful coding assistant specializing in Python.\",\n  \"temperature\": 0.3\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "I need help planning a road trip from San Francisco to Los Angeles.",
+						"role": "user"
+					},
+					{
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?",
+						"role": "assistant"
+					},
+					{
+						"content": "Yes, what are some good places to stop?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Here are some great stops depending on your route:\n\n**Coastal Route (Highway 1) - longer but stunning:**\n- **Half Moon Bay** - charming coastal town, good breakfast spot\n- **Santa Cruz** - boardwalk, beaches, laid-back vibe\n- **Monterey/Carmel** - Monterey Bay Aquarium, 17-Mile Drive, beautiful Carmel village\n- **Big Sur** - dramatic cliffs, Bixby Bridge, McWay Falls (allow extra time here)\n- **San Simeon** - Hearst Castle, elephant seal viewing\n- **San Luis Obispo** - cute downtown, Bubblegum Alley\n- **Santa Barbara** - Spanish architecture, wine tasting, beaches\n\n**Inland Route (I-5) - fastest:**\n- Honestly not much scenic appeal, mostly farmland\n- Good for speed, not sightseeing\n\n**Highway 101 (middle ground):**\n- Passes through Paso Robles wine country\n- Solvang - Danish-themed village\n\n**My suggestion:** If you have time, take Highway 1 down and I-5 back (or vice versa).\n\nHow much time do you have for the trip? That'll help me narrow down recommendations."
+			},
+			"raw_response": {
+				"content": [
+					{
+						"text": "Here are some great stops depending on your route:\n\n**Coastal Route (Highway 1) - longer but stunning:**\n- **Half Moon Bay** - charming coastal town, good breakfast spot\n- **Santa Cruz** - boardwalk, beaches, laid-back vibe\n- **Monterey/Carmel** - Monterey Bay Aquarium, 17-Mile Drive, beautiful Carmel village\n- **Big Sur** - dramatic cliffs, Bixby Bridge, McWay Falls (allow extra time here)\n- **San Simeon** - Hearst Castle, elephant seal viewing\n- **San Luis Obispo** - cute downtown, Bubblegum Alley\n- **Santa Barbara** - Spanish architecture, wine tasting, beaches\n\n**Inland Route (I-5) - fastest:**\n- Honestly not much scenic appeal, mostly farmland\n- Good for speed, not sightseeing\n\n**Highway 101 (middle ground):**\n- Passes through Paso Robles wine country\n- Solvang - Danish-themed village\n\n**My suggestion:** If you have time, take Highway 1 down and I-5 back (or vice versa).\n\nHow much time do you have for the trip? That'll help me narrow down recommendations.",
+						"type": "text"
+					}
+				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_014rC84VWk6CFhWNascdSZwf",
+				"model": "claude-opus-4-5-20251101",
+				"role": "assistant",
+				"stop_details": null,
+				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
+				"usage": {
+					"input_tokens": 76,
+					"output_tokens": 290
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.5',\n  {\n    max_tokens: 1024,\n    messages: [\n      {\n        content: 'I need help planning a road trip from San Francisco to Los Angeles.',\n        role: 'user',\n      },\n      {\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n        role: 'assistant',\n      },\n      { content: 'Yes, what are some good places to stop?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"I need help planning a road trip from San Francisco to Los Angeles.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"I'\\''d be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Yes, what are some good places to stop?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"max_tokens": 512,
+				"messages": [
+					{
+						"content": "Write a short story opening about a detective finding an unusual clue.",
+						"role": "user"
+					}
+				],
+				"temperature": 0.8
+			},
+			"output": {
+				"text": "# The Cartographer's Last Note\n\nDetective Sarah Chen had seen her share of strange crime scenes in fifteen years on the force, but this was the first time she'd found a victim clutching a map to a place that didn't exist.\n\nThe body lay in the cramped study, surrounded by towers of yellowed newspapers and the sour smell of old coffee. Standard enough for a recluse. But the paper gripped in Martin Voss's rigid fingers showed hand-drawn streets, elevation markers, and careful notations in faded ink\u2014all depicting a coastal town called Meridian's Rest.\n\nShe'd checked. Twice. No such place existed in any database, any historical record, any atlas published in the last two centuries.\n\nYet the map showed wear patterns from years of folding and unfolding. Coffee stains. A thumbprint in the corner, pressed there so many times it had worn the paper thin.\n\nMartin Voss had spent decades studying a town that had never been built.\n\nSarah photographed the map, then noticed something that made her breath catch. In the lower corner, nearly invisible against the aged paper, someone had written a date.\n\nTomorrow's date.\n\nAnd below it, in handwriting that definitely wasn't the victim's: *You're early. We expected the other detective.*"
+			},
+			"raw_response": {
+				"content": [
+					{
+						"text": "# The Cartographer's Last Note\n\nDetective Sarah Chen had seen her share of strange crime scenes in fifteen years on the force, but this was the first time she'd found a victim clutching a map to a place that didn't exist.\n\nThe body lay in the cramped study, surrounded by towers of yellowed newspapers and the sour smell of old coffee. Standard enough for a recluse. But the paper gripped in Martin Voss's rigid fingers showed hand-drawn streets, elevation markers, and careful notations in faded ink\u2014all depicting a coastal town called Meridian's Rest.\n\nShe'd checked. Twice. No such place existed in any database, any historical record, any atlas published in the last two centuries.\n\nYet the map showed wear patterns from years of folding and unfolding. Coffee stains. A thumbprint in the corner, pressed there so many times it had worn the paper thin.\n\nMartin Voss had spent decades studying a town that had never been built.\n\nSarah photographed the map, then noticed something that made her breath catch. In the lower corner, nearly invisible against the aged paper, someone had written a date.\n\nTomorrow's date.\n\nAnd below it, in handwriting that definitely wasn't the victim's: *You're early. We expected the other detective.*",
+						"type": "text"
+					}
+				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_01Xn7b7JzMzoHWDigjdGFniq",
+				"model": "claude-opus-4-5-20251101",
+				"role": "assistant",
+				"stop_details": null,
+				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
+				"usage": {
+					"input_tokens": 21,
+					"output_tokens": 282
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.5',\n  {\n    max_tokens: 512,\n    messages: [\n      {\n        content: 'Write a short story opening about a detective finding an unusual clue.',\n        role: 'user',\n      },\n    ],\n    temperature: 0.8,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.5\",\n  \"max_tokens\": 512,\n  \"messages\": [\n    {\n      \"content\": \"Write a short story opening about a detective finding an unusual clue.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.8\n}'"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "Explain the concept of recursion with a simple example.",
+						"role": "user"
+					}
+				],
+				"stream": true
+			},
+			"output": {
+				"text": [
+					"#",
+					" Understanding Recursion\n\n**Recursion** is when a function calls itself to solve a problem by breaking it down into smaller, similar subproblems.\n\n## Key Components\n\n1",
+					". **Base case** - The condition that stops the recursion\n2. **Recursive case** - Where the function calls itself with a simpler input",
+					"\n\n## Simple Example: Factorial\n\n```\nfactorial(5) = 5 \u00d7 4 \u00d7 3 \u00d7 2 \u00d7 1 = 120\n```\n\n```python\ndef factorial(n):",
+					"\n    # Base case\n    if n <= 1:\n        return 1\n    # Recursive case\n    return n * factorial(n - 1)\n\nprint(factorial(5))  # Output",
+					": 120\n```\n\n## How It Works\n\n```\nfactorial(5)\n  \u2192 5 \u00d7 factorial(4)\n       \u2192 4 \u00d7 factorial(3)\n            ",
+					"\u2192 3 \u00d7 factorial(2)\n                 \u2192 2 \u00d7 factorial(1)\n                      \u2192 returns 1  \u2190 base case hit\n                 \u2192 returns 2",
+					" \u00d7 1 = 2\n            \u2192 returns 3 \u00d7 2 = 6\n       \u2192 returns 4 \u00d7 6 = 24\n  \u2192 returns 5 \u00d7 24 = 120\n```\n\n## Simple",
+					" Analogy\n\nThink of Russian nesting dolls \ud83e\ude86 \u2014 you keep opening",
+					" smaller dolls until you reach the smallest one (base case), then you work your way back out",
+					".\n\n---\n\n**Remember:** Always have a base case, or your function",
+					" will call itself forever (stack overflow)!"
+				]
+			},
+			"raw_response": [
+				{
+					"message": {
+						"content": [],
+						"id": "msg_016ZKcVY6ckQdq7TF4tE5AsJ",
+						"model": "claude-opus-4-5-20251101",
+						"role": "assistant",
+						"stop_details": null,
+						"stop_reason": null,
+						"stop_sequence": null,
+						"type": "message",
+						"usage": {
+							"cache_creation": {
+								"ephemeral_1h_input_tokens": 0,
+								"ephemeral_5m_input_tokens": 0
+							},
+							"cache_creation_input_tokens": 0,
+							"cache_read_input_tokens": 0,
+							"inference_geo": "not_available",
+							"input_tokens": 19,
+							"output_tokens": 1,
+							"service_tier": "standard"
+						}
+					},
+					"type": "message_start"
+				},
+				{
+					"content_block": {
+						"text": "",
+						"type": "text"
+					},
+					"index": 0,
+					"type": "content_block_start"
+				},
+				{
+					"type": "ping"
+				},
+				{
+					"delta": {
+						"text": "#",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " Understanding Recursion\n\n**Recursion** is when a function calls itself to solve a problem by breaking it down into smaller, similar subproblems.\n\n## Key Components\n\n1",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": ". **Base case** - The condition that stops the recursion\n2. **Recursive case** - Where the function calls itself with a simpler input",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n\n## Simple Example: Factorial\n\n```\nfactorial(5) = 5 \u00d7 4 \u00d7 3 \u00d7 2 \u00d7 1 = 120\n```\n\n```python\ndef factorial(n):",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n    # Base case\n    if n <= 1:\n        return 1\n    # Recursive case\n    return n * factorial(n - 1)\n\nprint(factorial(5))  # Output",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": ": 120\n```\n\n## How It Works\n\n```\nfactorial(5)\n  \u2192 5 \u00d7 factorial(4)\n       \u2192 4 \u00d7 factorial(3)\n            ",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\u2192 3 \u00d7 factorial(2)\n                 \u2192 2 \u00d7 factorial(1)\n                      \u2192 returns 1  \u2190 base case hit\n                 \u2192 returns 2",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " \u00d7 1 = 2\n            \u2192 returns 3 \u00d7 2 = 6\n       \u2192 returns 4 \u00d7 6 = 24\n  \u2192 returns 5 \u00d7 24 = 120\n```\n\n## Simple",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " Analogy\n\nThink of Russian nesting dolls \ud83e\ude86 \u2014 you keep opening",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " smaller dolls until you reach the smallest one (base case), then you work your way back out",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": ".\n\n---\n\n**Remember:** Always have a base case, or your function",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " will call itself forever (stack overflow)!",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"index": 0,
+					"type": "content_block_stop"
+				},
+				{
+					"delta": {
+						"stop_details": null,
+						"stop_reason": "end_turn",
+						"stop_sequence": null
+					},
+					"type": "message_delta",
+					"usage": {
+						"cache_creation_input_tokens": 0,
+						"cache_read_input_tokens": 0,
+						"input_tokens": 19,
+						"output_tokens": 371
+					}
+				},
+				{
+					"type": "message_stop"
+				}
+			],
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    stream: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://www.anthropic.com/claude/opus",
+	"terms": "https://www.anthropic.com/legal/commercial-terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/anthropic/claude-opus-4.5.png",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"request_formats": ["anthropic-messages"],
+	"created_at": "2026-05-22 17:52:54",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"max_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"messages": {
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"items": {
+											"additionalProperties": {},
+											"properties": {
+												"cache_control": {
+													"additionalProperties": false,
+													"properties": {
+														"ttl": {
+															"enum": ["5m", "1h"],
+															"type": "string"
+														},
+														"type": {
+															"const": "ephemeral",
+															"type": "string"
+														}
+													},
+													"required": ["type"],
+													"type": "object"
+												},
+												"source": {},
+												"text": {
+													"type": "string"
+												},
+												"type": {
+													"type": "string"
+												}
+											},
+											"required": ["type"],
+											"type": "object"
+										},
+										"type": "array"
+									}
+								]
+							},
+							"role": {
+								"enum": ["user", "assistant"],
+								"type": "string"
+							}
+						},
+						"required": ["role", "content"],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"metadata": {
+					"additionalProperties": {},
+					"propertyNames": {
+						"type": "string"
+					},
+					"type": "object"
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"system": {
+					"type": "string"
+				},
+				"temperature": {
+					"maximum": 1,
+					"minimum": 0,
+					"type": "number"
+				},
+				"top_k": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"top_p": {
+					"maximum": 1,
+					"minimum": 0,
+					"type": "number"
+				}
+			},
+			"required": ["messages", "max_tokens"],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"content": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"text": {
+								"type": "string"
+							},
+							"type": {
+								"type": "string"
+							}
+						},
+						"required": ["type"],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"id": {
+					"type": "string"
+				},
+				"model": {
+					"type": "string"
+				},
+				"role": {
+					"const": "assistant",
+					"type": "string"
+				},
+				"stop_reason": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"type": {
+					"const": "message",
+					"type": "string"
+				},
+				"usage": {
+					"additionalProperties": false,
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						}
+					},
+					"required": ["input_tokens", "output_tokens"],
+					"type": "object"
+				}
+			},
+			"required": [
+				"id",
+				"type",
+				"role",
+				"content",
+				"model",
+				"stop_reason",
+				"usage"
+			],
+			"type": "object"
+		}
+	}
+}

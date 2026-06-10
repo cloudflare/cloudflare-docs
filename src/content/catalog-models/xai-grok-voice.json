@@ -1,0 +1,99 @@
+{
+	"model_id": "xai/grok-voice",
+	"provider_id": "xai",
+	"name": "Grok Voice",
+	"description": "xAI's real-time voice conversation model with low-latency audio input and output streaming.",
+	"task": "websocket",
+	"tags": ["Voice", "Real-time", "Streaming", "Audio"],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "WebSocket Voice Session",
+			"description": "Real-time voice conversation using WebSocket connection. This model requires a GET request with WebSocket upgrade headers instead of a POST request. The connection provides low-latency bidirectional audio streaming with server-side voice activity detection (VAD).",
+			"input": {
+				"websocket": true
+			},
+			"output": {
+				"url": "wss://api.x.ai/v1/realtime?model=grok-voice-latest",
+				"headers": {
+					"Authorization": "Bearer [ephemeral_token]"
+				}
+			},
+			"raw_response": {
+				"websocket": {
+					"url": "wss://api.x.ai/v1/realtime?model=grok-voice-latest",
+					"headers": {
+						"Authorization": "Bearer [ephemeral_token]"
+					}
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "// Establish WebSocket connection\nconst response = await fetch(\n  `https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run?model=xai/grok-voice`,\n  {\n    method: 'GET',\n    headers: {\n      'Authorization': `Bearer $CLOUDFLARE_API_TOKEN`,\n      'Upgrade': 'websocket'\n    }\n  }\n)\n\nconst ws = response.webSocket\nws.accept()\n\n// Send audio chunks\nws.send(JSON.stringify({\n  type: 'input_audio_buffer.append',\n  audio: audioBase64\n}))\n\n// Receive transcriptions and audio responses\nws.addEventListener('message', (event) => {\n  const data = JSON.parse(event.data)\n  console.log(data)\n})"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "# Note: WebSocket connections require a WebSocket client\n# curl does not support WebSocket upgrade\n# Use wscat, websocat, or a programming language WebSocket library\n\nwscat -c 'wss://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run?model=xai/grok-voice' \\\n  -H 'Authorization: Bearer $CLOUDFLARE_API_TOKEN'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.x.ai/developers/rest-api-reference/inference/voice",
+	"terms": "https://x.ai/legal/terms-of-service",
+	"cover_image_url": null,
+	"metadata": {
+		"Audio Format": "PCM16 24kHz",
+		"Latency": "Real-time",
+		"Turn Detection": "Server VAD"
+	},
+	"request_formats": null,
+	"created_at": "2026-06-08 18:08:26",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"websocket": {
+					"description": "Enable real-time WebSocket connection for voice conversations. When true, establishes a bidirectional WebSocket for speech-to-speech interaction with Grok voice models.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"headers": {
+					"additionalProperties": {
+						"type": "string"
+					},
+					"description": "Optional headers to include when establishing the WebSocket connection (e.g., Authorization)",
+					"propertyNames": {
+						"type": "string"
+					},
+					"type": "object"
+				},
+				"url": {
+					"description": "WebSocket URL for the realtime connection (e.g., wss://...)",
+					"type": "string"
+				}
+			},
+			"required": ["url"],
+			"type": "object"
+		}
+	}
+}

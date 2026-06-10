@@ -1,5 +1,4 @@
 ---
-type: example
 summary: Send welcome and verification emails during user signup with secure token-based email verification.
 pcx_content_type: example
 title: User signup flow
@@ -10,7 +9,34 @@ products:
   - email-service
 ---
 
+import { WranglerConfig } from "~/components";
+
 This example demonstrates a complete user registration system with welcome emails and email verification.
+
+Configure the email binding and KV namespaces in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"send_email": [{ "name": "EMAIL" }],
+	"kv_namespaces": [
+		{ "binding": "USERS", "id": "<USERS_KV_NAMESPACE_ID>" },
+		{
+			"binding": "VERIFICATION_TOKENS",
+			"id": "<VERIFICATION_TOKENS_KV_NAMESPACE_ID>",
+		},
+	],
+	"vars": {
+		"DOMAIN": "yourdomain.com",
+		"COMPANY_NAME": "Acme Inc.",
+	},
+}
+```
+
+</WranglerConfig>
+
+The Worker exposes two routes: `POST /signup` creates a user, stores it in KV, and sends both a welcome email and a verification email containing a tokenized link; `GET /verify` validates that token and marks the user verified. The following code implements both handlers.
 
 ```typescript
 interface Env {
@@ -147,7 +173,7 @@ async function handleVerification(
 		`
     <html>
       <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-        <h1>✅ Email Verified!</h1>
+        <h1>Email Verified!</h1>
         <p>Welcome ${user.firstName}! Your account is now active.</p>
         <a href="/" style="background: #28a745; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">Continue</a>
       </body>
@@ -163,3 +189,9 @@ function isValidEmail(email: string): boolean {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 ```
+
+## Next steps
+
+- [Magic link authentication](/email-service/examples/email-sending/magic-link/) — passwordless login flow using a similar token pattern.
+- [Send method](/email-service/api/send-emails/workers-api/) — full reference for the `send()` method.
+- [Deliverability](/email-service/concepts/deliverability/) — keep verification emails out of spam folders.

@@ -9784,7 +9784,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://openai.com/",
 	"terms": "https://openai.com/policies/",
@@ -9793,6 +9793,7 @@
 		"Architecture": "Transformer",
 		"Reasoning": "Chain-of-thought"
 	},
+	"request_formats": ["responses", "chat-completions"],
 	"created_at": "2026-05-22 17:53:42",
 	"schema": {
 		"input": {
