@@ -12,7 +12,7 @@ import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
 Coding agents send model requests to a provider on your behalf. By pointing the agent at AI Gateway instead of the provider, you observe and control that traffic without changing how you work.
 
-This page uses [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) as the worked example, then shows how to connect any tool that speaks the OpenAI chat completions format.
+This page uses [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) as the worked example.
 
 ## Why route a coding agent through AI Gateway
 
@@ -75,37 +75,6 @@ This configuration uses your Anthropic API key, so Anthropic bills you for model
 </Steps>
 
 If your gateway requires authentication, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/) for the header AI Gateway expects.
-
-## Any OpenAI-compatible coding tool
-
-Tools that speak the OpenAI chat completions format can route through AI Gateway's [REST API](/ai-gateway/usage/rest-api/). Set the tool's base URL to:
-
-```txt
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/v1
-```
-
-Most OpenAI-compatible tools append `/chat/completions` to the base URL automatically.
-
-Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has the `AI Gateway Run` permission, and pass it in the `Authorization` header. Specify the model in `author/model` format, such as `openai/gpt-4.1` or `anthropic/claude-sonnet-4-5`.
-
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/v1/chat/completions" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "model": "openai/gpt-4.1",
-    "messages": [
-      {
-        "role": "user",
-        "content": "What is Cloudflare?"
-      }
-    ]
-  }'
-```
-
-:::note
-Claude Code does not use the OpenAI chat completions format, so it cannot call this endpoint directly. Use the Claude Code configuration on this page instead.
-:::
 
 ## Protect sensitive code and data
 
