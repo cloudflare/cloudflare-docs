@@ -1,0 +1,20 @@
+---
+{}
+---
+
+Use this selector to match Gateway policies by the type of path Gateway uses to send traffic onward.
+
+
+| UI name              | API example                      |
+| -------------------- | -------------------------------- |
+| Traffic destinations | `net.offramp.type == "internet"` |
+
+| Display label         | API value           | Meaning                                                                                                                                         |
+| --------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Internet              | `internet`          | Traffic that exits to the public Internet, with or without Dedicated Egress IP. Dedicated Egress IP is not a separate traffic destination type. |
+| Cloudflare WAN        | `cloudflare_wan`    | Traffic that exits through a Cloudflare WAN connection.                                                                                         |
+| Cloudflare Tunnel     | `cloudflare_tunnel` | Traffic that exits through a `cloudflared` tunnel to a private origin.                                                                          |
+| Cloudflare One Client | `device_client`     | Traffic that exits to another device running the Cloudflare One Client.                                                                         |
+| Mesh                  | `mesh`              | Traffic that exits through any Mesh node in your Mesh network. This is type-level, not a specific node.                                         |
+
+Workers VPC is not a traffic destination value. Dedicated Egress IP is an attribute of Internet egress, not a separate traffic destination type.
