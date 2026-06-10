@@ -21,7 +21,7 @@ Examples of queries include:
 - `SELECT * FROM table WHERE (a = 1 OR b = "hello") AND c < 25.89`
 - `SELECT a, b, c FROM table WHERE d >= "GB" LIMIT 10`
 
-:::note 
+:::note
 - A default `LIMIT` of 10,000 is applied if the `LIMIT` clause is omitted.
 - The `WHERE` clause supports up to 25 predicates, which can be grouped using parentheses.
 :::
@@ -43,9 +43,9 @@ The sections that follow break down the remaining components shown in the diagra
 
 ## Functions
 
-Log Explorer supports a range of SQL functions to transform, evaluate, or summarize data. These include scalar and aggregation functions. 
+Log Explorer supports a range of SQL functions to transform, evaluate, or summarize data. These include scalar and aggregation functions.
 
-### Scalar functions 
+### Scalar functions
 
 These help manipulate or evaluate values (often strings):
 
@@ -53,7 +53,7 @@ These help manipulate or evaluate values (often strings):
 
   <Details header="Example">
   `ARRAY_CONTAINS(['US', 'CA'], ClientCountry)`
-  
+
   Returns rows where `ClientCountry` is either `US` or `CA`.
   </Details>
 
@@ -61,23 +61,23 @@ These help manipulate or evaluate values (often strings):
 
   <Details header="Example">
   `SUBSTRING(ClientRequestPath, 0, 5)`
-  
+
   Extracts the first `5` characters from `ClientRequestPath`.
   </Details>
 
 - `LOWER(string)` – Converts to lowercase.
-  
+
   <Details header="Example">
   `LOWER(ClientRequestUserAgent)`
-  
+
   Converts the user agent string to lowercase.
   </Details>
 
 - `UPPER(string)` – Converts to uppercase.
-  
+
   <Details header="Example">
   `UPPER(ClientCountry)`
-  
+
   Converts the country code to uppercase.
   </Details>
 
@@ -97,7 +97,7 @@ Used to perform calculations on sets of rows:
 
   <Details header="Example">
   `MIN(OriginResponseDurationMs)`
-  
+
   Finds the shortest response time from origin servers.
   </Details>
 
@@ -110,7 +110,7 @@ Used to perform calculations on sets of rows:
   </Details>
 
 - `COUNT(expression)` – Number of rows (can be all rows or non-null values).
-  
+
   <Details header="Example">
   `COUNT(ClientRequestUserAgent)`
 
@@ -118,7 +118,7 @@ Used to perform calculations on sets of rows:
   </Details>
 
 - `COUNT(DISTINCT expression)` – Number of distinct non-null values.
-  
+
   <Details header="Example">
   `COUNT(DISTINCT ClientIP)`
 
@@ -126,7 +126,7 @@ Used to perform calculations on sets of rows:
   </Details>
 
 - `AVG(expression)` – Average of numeric values.
-  
+
   <Details header="Example">
   `AVG(OriginResponseDurationMs)`
 

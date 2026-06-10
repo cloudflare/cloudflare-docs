@@ -41,7 +41,7 @@ This example uses [tigrisfs](https://github.com/tigrisdata/tigrisfs), which supp
 FROM alpine:3.20
 
 # Install FUSE and dependencies
-RUN apk add --no-cache \ 
+RUN apk add --no-cache \
     --repository http://dl-cdn.alpinelinux.org/alpine/v3.20/main \
     ca-certificates fuse curl bash
 

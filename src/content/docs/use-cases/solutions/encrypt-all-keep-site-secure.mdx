@@ -11,13 +11,13 @@ sidebar:
 
 import { DashButton, Render, Steps, TabItem, Tabs } from "~/components";
 
-HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, and Cloudflare to your origin server. Both must be encrypted for end-to-end security. This guide walks through five stages: 
+HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, and Cloudflare to your origin server. Both must be encrypted for end-to-end security. This guide walks through five stages:
 
 1. Configure your SSL/TLS encryption mode.
 2. Redirect all HTTP requests to HTTPS.
 3. Harden your HTTPS setup with minimum TLS versions and HSTS.
 4. Monitor third-party scripts on your pages.
-5. Verify your configuration. 
+5. Verify your configuration.
 
 The core workflow is available on Free, Pro, and Business plans.
 
@@ -115,7 +115,7 @@ If your site shows a [526 error](/support/troubleshooting/http-status-codes/clou
 
 ## Redirect all HTTP requests to HTTPS
 
-Even with an active edge certificate, visitors can still access resources over unsecured HTTP connections. Two settings work together to fix this: 
+Even with an active edge certificate, visitors can still access resources over unsecured HTTP connections. Two settings work together to fix this:
 1. Always Use HTTPS redirects HTTP requests to HTTPS
 2. Automatic HTTPS Rewrites fixes mixed content references in your page HTML
 

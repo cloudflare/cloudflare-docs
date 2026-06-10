@@ -317,6 +317,9 @@ importers:
       remark-stringify:
         specifier: 11.0.0
         version: 11.0.0
+      satteri-expressive-code:
+        specifier: 0.1.11
+        version: 0.1.11(satteri@0.8.1)
       sharp:
         specifier: 0.34.5
         version: 0.34.5
@@ -5421,6 +5424,11 @@ packages:
 
   sass-formatter@0.7.9:
     resolution: {integrity: sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw==}
+
+  satteri-expressive-code@0.1.11:
+    resolution: {integrity: sha512-8HW4pDfdmiqQKWWfAuvHlvRnc7jAmfBbK6RdCTZNZSMNmcv0IGeh8thUWKo5LRj3AHyjxkLEkS6wjhcQTMynBg==}
+    peerDependencies:
+      satteri: '>=0.4.0'
 
   satteri@0.8.1:
     resolution: {integrity: sha512-B3dPc3RsWN+CIrwJHk6KnPQjdN7cg9mnSgfs7AUEXITlIYRnSMleOZQPgpmm759pGZ/vpnsXciNfJKXKME2rrg==}
@@ -12500,6 +12508,11 @@ snapshots:
   sass-formatter@0.7.9:
     dependencies:
       suf-log: 2.5.3
+
+  satteri-expressive-code@0.1.11(satteri@0.8.1):
+    dependencies:
+      expressive-code: 0.42.0
+      satteri: 0.8.1
 
   satteri@0.8.1:
     dependencies:

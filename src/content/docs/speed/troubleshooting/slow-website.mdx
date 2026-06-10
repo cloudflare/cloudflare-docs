@@ -195,7 +195,7 @@ curl -w "\n\nDNS Lookup: %{time_namelookup}s\nTCP Connect: %{time_connect}s\nTLS
 ```powershell
 $url = "https://www.example.com/slow-asset.jpg"
 try {
-    $timing = Measure-Command { 
+    $timing = Measure-Command {
         $response = Invoke-WebRequest -Uri $url -ErrorAction Stop
     }
     Write-Host "Total Time: $($timing.TotalSeconds)s"

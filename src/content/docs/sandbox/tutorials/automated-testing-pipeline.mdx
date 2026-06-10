@@ -70,7 +70,7 @@ export default {
 				// Clone repository
 				console.log('Cloning repository...');
 				let cloneUrl = repoUrl;
-				
+
 				if (env.GITHUB_TOKEN && cloneUrl.includes('github.com')) {
 					cloneUrl = cloneUrl.replace('https://', `https://${env.GITHUB_TOKEN}@`);
 				}
@@ -91,7 +91,7 @@ export default {
 				if (installCmd) {
 					console.log('Installing dependencies...');
 					const installStream = await sandbox.execStream(`cd /workspace/repo && ${installCmd}`);
-					
+
 					let installExitCode = 0;
 					for await (const event of parseSSEStream<ExecEvent>(installStream)) {
 						if (event.type === 'stdout' || event.type === 'stderr') {
@@ -100,7 +100,7 @@ export default {
 							installExitCode = event.exitCode;
 						}
 					}
-					
+
 					if (installExitCode !== 0) {
 						return Response.json({
 							success: false,
@@ -115,7 +115,7 @@ export default {
 				console.log('Running tests...');
 				const testCmd = getTestCommand(projectType);
 				const testStream = await sandbox.execStream(`cd /workspace/repo && ${testCmd}`);
-				
+
 				let testExitCode = 0;
 				for await (const event of parseSSEStream<ExecEvent>(testStream)) {
 					if (event.type === 'stdout' || event.type === 'stderr') {

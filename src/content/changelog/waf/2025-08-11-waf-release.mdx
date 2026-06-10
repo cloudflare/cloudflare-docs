@@ -24,7 +24,7 @@ This week's update focuses on a wide range of enterprise software, from network 
 
 - Node.js (CVE-2025-27210): An incomplete fix for a previous vulnerability (CVE-2025-23084) in Node.js affects the `path.join()` API method on Windows systems. The vulnerability can be triggered using reserved Windows device names such as `CON`, `PRN`, or `AUX`.
 
-- WordPress:Plugin:Simple File List (CVE-2025-34085, CVE-2020-36847): 
+- WordPress:Plugin:Simple File List (CVE-2025-34085, CVE-2020-36847):
 This vulnerability in the Simple File List plugin for WordPress allows an unauthenticated remote attacker to upload arbitrary files to a vulnerable site. This can be exploited to achieve remote code execution on the server.<br/>
 (Note: CVE-2025-34085 has been rejected as a duplicate.)
 
@@ -37,7 +37,7 @@ This vulnerability in the Simple File List plugin for WordPress allows an unauth
 
 - Manager-IO (CVE-2025-54122): A critical unauthenticated full read Server-Side Request Forgery (SSRF) vulnerability is present in the proxy handler of both Manager Desktop and Server editions up to version 25.7.18.2519. This allows an unauthenticated attacker to bypass network isolation and access internal services.
 
-- Ingress-Nginx (CVE-2025-1974): A vulnerability in the Ingress-Nginx controller for Kubernetes allows an attacker to bypass access control rules. An unauthenticated attacker with access to the pod network can achieve arbitrary code execution in the context of the ingress-nginx controller. 
+- Ingress-Nginx (CVE-2025-1974): A vulnerability in the Ingress-Nginx controller for Kubernetes allows an attacker to bypass access control rules. An unauthenticated attacker with access to the pod network can achieve arbitrary code execution in the context of the ingress-nginx controller.
 
 - PaperCut NG/MF (CVE-2023-2533): A Cross-Site Request Forgery (CSRF) vulnerability has been identified in PaperCut NG/MF. Under specific conditions, an attacker could exploit this to alter security settings or execute arbitrary code if they can deceive an administrator with an active login session into clicking a malicious link.
 
@@ -50,7 +50,7 @@ This vulnerability in the Simple File List plugin for WordPress allows an unauth
 
 These vulnerabilities span a broad range of enterprise technologies, including network access control systems, monitoring platforms, web servers, CMS platforms, cloud services, and collaboration tools. Exploitation techniques range from remote code execution and command injection to authentication bypass, SQL injection, path traversal, and configuration weaknesses.
 
-A critical flaw in perimeter devices like Ivanti EPMM or SonicWall SMA could allow an unauthenticated attacker to gain remote code execution, completely breaching the primary network defense. A separate vulnerability within Cisco's Identity Services Engine could then be exploited to bypass network segmentation, granting an attacker widespread internal access. Insecure deserialization issues in platforms like Wazuh Server and CrushFTP could then be used to run malicious payloads or steal sensitive files from administrative consoles. Weaknesses in web delivery controllers like Ingress-Nginx or popular content management systems such as WordPress, SharePoint, and Kentico Xperience create vectors to bypass security controls, exfiltrate confidential data, or fully compromise servers. 
+A critical flaw in perimeter devices like Ivanti EPMM or SonicWall SMA could allow an unauthenticated attacker to gain remote code execution, completely breaching the primary network defense. A separate vulnerability within Cisco's Identity Services Engine could then be exploited to bypass network segmentation, granting an attacker widespread internal access. Insecure deserialization issues in platforms like Wazuh Server and CrushFTP could then be used to run malicious payloads or steal sensitive files from administrative consoles. Weaknesses in web delivery controllers like Ingress-Nginx or popular content management systems such as WordPress, SharePoint, and Kentico Xperience create vectors to bypass security controls, exfiltrate confidential data, or fully compromise servers.
 
 <table style="width: 100%">
   <thead>
@@ -171,8 +171,8 @@ A critical flaw in perimeter devices like Ivanti EPMM or SonicWall SMA could all
       <td>Cloudflare Managed Ruleset</td>
       <td>
         <RuleID id="7fdb3c7bc7b74703aeef4ab240ec2fda" />
-      </td>   
-      <td>100806</td>      
+      </td>
+      <td>100806</td>
       <td>Wazuh Server - Remote Code Execution - CVE:CVE-2025-24016</td>
       <td>Log</td>
       <td>Block</td>
@@ -186,7 +186,7 @@ A critical flaw in perimeter devices like Ivanti EPMM or SonicWall SMA could all
       <td>100824</td>
       <td>CrushFTP - Remote Code Execution - CVE:CVE-2025-54309</td>
       <td>Log</td>
-      <td>Block</td>      
+      <td>Block</td>
       <td>This is a New Detection</td>
     </tr>
     <tr>
@@ -197,7 +197,7 @@ A critical flaw in perimeter devices like Ivanti EPMM or SonicWall SMA could all
       <td>100824A</td>
       <td>CrushFTP - Remote Code Execution - CVE:CVE-2025-54309 - 2</td>
       <td>Log</td>
-      <td>Block</td>      
+      <td>Block</td>
       <td>This is a New Detection</td>
     </tr>
     <tr>
@@ -208,7 +208,7 @@ A critical flaw in perimeter devices like Ivanti EPMM or SonicWall SMA could all
       <td>100825</td>
       <td>AMI MegaRAC - Auth Bypass - CVE:CVE-2024-54085</td>
       <td>Log</td>
-      <td>Block</td> 
+      <td>Block</td>
       <td>This is a New Detection</td>
     </tr>
     <tr>

@@ -75,7 +75,7 @@ Use a specific subdomain when you want to restrict the widget to a narrower scop
     <Details header="Existing widget">
       <Steps>
           1. In the Cloudflare dashboard, go to the **Turnstile** page.
-            
+
               <DashButton url="/?to=/:account/turnstile" />
           2. Select an existing widget.
           3. Go to **Settings**.
@@ -87,7 +87,7 @@ Use a specific subdomain when you want to restrict the widget to a narrower scop
     <Details header="New widget">
       <Steps>
           1. In the Cloudflare dashboard, go to the **Turnstile** page.
-            
+
                 <DashButton url="/?to=/:account/turnstile" />
           2. Select **Add widget**.
           3. In the hostname field, enter your domain(s).
@@ -96,7 +96,7 @@ Use a specific subdomain when you want to restrict the widget to a narrower scop
     </Details>
   </TabItem>
   <TabItem label="API">
-    
+
     ```bash title="cURL command" wrap
       curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$WIDGET_ID" \
       -H "Authorization: Bearer $API_TOKEN" \
@@ -105,7 +105,7 @@ Use a specific subdomain when you want to restrict the widget to a narrower scop
       "domains": ["example.com", "app.example.com", "api.example.com"]
       }'
     ```
-    
+
   </TabItem>
 </Tabs>
 

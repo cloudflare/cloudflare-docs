@@ -32,10 +32,10 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
 
 * Extra Subgroup header field
 
-  The current implementation includes a `subscribe_id` field in Subgroup Headers which [`draft-ietf-moq-transport-07`](https://datatracker.ietf.org/doc/html/draft-ietf-moq-transport-07) omits. 
-  
+  The current implementation includes a `subscribe_id` field in Subgroup Headers which [`draft-ietf-moq-transport-07`](https://datatracker.ietf.org/doc/html/draft-ietf-moq-transport-07) omits.
+
   In section 7.3.1, `draft-ietf-moq-transport-07` [specifies](https://www.ietf.org/archive/id/draft-ietf-moq-transport-07.html#section-7.3.1):
-  
+
   ```txt
   STREAM_HEADER_SUBGROUP Message {
     Track Alias (i),
@@ -44,7 +44,7 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
     Publisher Priority (8),
   }
   ```
-  
+
   Whereas our implementation expects and produces:
   ```txt
   STREAM_HEADER_SUBGROUP Message {
@@ -55,5 +55,5 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
     Publisher Priority (8),
   }
   ```
-  
+
   This was erroroneously left over from a previous draft version and will be fixed in a future release. Thank you to [@yuki-uchida](https://github.com/yuki-uchida) for reporting.

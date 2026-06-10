@@ -60,7 +60,7 @@ When using a hardware security module (HSM) with a PKCS#11 session pool, the poo
 
 ### `keyless_requests`
 
-**Type:** Counter  
+**Type:** Counter
 **Labels:** `opcode`
 
 Counts every incoming request received over an established connection, regardless of outcome. Incremented once per request before any processing begins.
@@ -113,7 +113,7 @@ The `opcode` label uses the full constant name from the gokeyless protocol.
 
 ### `keyless_request_exec_duration_per_opcode`
 
-**Type:** Histogram  
+**Type:** Histogram
 **Labels:** `type`, `error`
 
 Measures the time to execute a single operation, from when processing begins to when a response is produced. For operations backed by a PKCS#11 HSM, this includes the full time waiting for a session from the pool plus the HSM cryptographic operation time.
@@ -161,7 +161,7 @@ For successful requests the value is `no error`. All other values indicate a fai
 
 ### `keyless_request_total_duration_per_opcode`
 
-**Type:** Histogram  
+**Type:** Histogram
 **Labels:** `type`, `error` (same values as [`keyless_request_exec_duration_per_opcode`](#keyless_request_exec_duration_per_opcode))
 
 Measures the total time to satisfy a request, from when the request packet is read off the wire to when the response bytes are written back to the client.
@@ -176,7 +176,7 @@ Both timestamps are captured after the connection semaphore is already held, so 
 
 ### `keyless_key_load_duration`
 
-**Type:** Histogram  
+**Type:** Histogram
 **Labels:** None
 
 Measures the time taken by the keystore to locate and return the private key for each request, keyed by SKI, SNI, and server IP.
@@ -192,7 +192,7 @@ It is **not** recorded for `OpPing`, `OpSeal`, `OpUnseal`, `OpRPC`, or `OpCustom
 
 ### `keyless_failed_connection`
 
-**Type:** Counter  
+**Type:** Counter
 **Labels:** None
 
 Counts connection-level transport failures. This metric reflects problems at the network or TLS layer — it does not count signing errors or key lookup failures, which are reported in the `error` label of the duration histograms.
@@ -212,7 +212,7 @@ Counts connection-level transport failures. This metric reflects problems at the
 
 ### `certificate_expiration_timestamp_seconds`
 
-**Type:** Gauge  
+**Type:** Gauge
 **Labels:** `source`, `serial_no`, `cn`, `hostnames`, `ca`, `server`, `client`
 
 Reports the expiration time (`NotAfter`) of each certificate loaded by the key server as a Unix timestamp. One time series is emitted per certificate.

@@ -338,7 +338,7 @@ Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
         * `modifyAll(fn: (m: WorkflowInstanceModifier) => Promise<void>): Promise<void>`: Applies modifications to all Workflow instances created after calling `introspectWorkflow`.
         * `get(): Promise<WorkflowInstanceIntrospector[]>`: Returns all `WorkflowInstanceIntrospector` objects from instances created after `introspectWorkflow` was called.
         * `dispose(): Promise<void>`: Disposes the Workflow introspector. All `WorkflowInstanceIntrospector` from created instances will also be disposed. This is crucial to prevent modifications and captured instances from leaking between tests. After calling this method, the `WorkflowIntrospector` should not be reused.
-        * `[Symbol.asyncDispose](): Promise<void>`: Provides automatic dispose. It's invoked by the `await using` statement, which calls `dispose()`. 
+        * `[Symbol.asyncDispose](): Promise<void>`: Provides automatic dispose. It's invoked by the `await using` statement, which calls `dispose()`.
 
 * `WorkflowInstanceModifier`
     * This object is provided to the `modify` and `modifyAll` callbacks to mock or alter the behavior of a Workflow instance's steps, events, and sleeps.
@@ -349,7 +349,7 @@ Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
         * `forceStepTimeout(step: { name: string; index?: number }, times?: number)`: Forces a `step.do()` to fail by timing out immediately. `times` is an optional number that sets how many times the step should timeout. If `times` is omitted, the step will timeout on every attempt, making the Workflow instance fail.
         * `mockEvent(event: { type: string; payload: unknown })`: Sends a mock event to the Workflow instance, causing a `step.waitForEvent()` to resolve with the provided payload. `type` must match the `waitForEvent` type.
         * `forceEventTimeout(step: { name: string; index?: number })`: Forces a `step.waitForEvent()` to time out instantly, causing the step to fail.
-        
+
         <br/>
         ```ts
         import { env } from "cloudflare:workers";
@@ -418,4 +418,3 @@ Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
         ```
 
       When targeting a step, use its `name`. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to specify the occurrence.
-    

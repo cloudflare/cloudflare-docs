@@ -1,6 +1,10 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import { satteri } from "@astrojs/markdown-satteri";
+import expressiveCode, {
+	type SatteriExpressiveCodeOptions,
+} from "satteri-expressive-code";
+import ecConfig from "./ec.config.mjs";
 import starlight from "@astrojs/starlight";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
@@ -255,7 +259,21 @@ export default defineConfig({
 			},
 			serialize: createSitemapLastmodSerializer(),
 		}),
-		mdx({ processor: satteri(), optimize: true }),
+		mdx({
+			processor: satteri({
+				hastPlugins: [
+					expressiveCode({
+						themes: ecConfig.themes,
+						plugins: ecConfig.plugins,
+						styleOverrides: ecConfig.styleOverrides,
+						frames: ecConfig.frames,
+						shiki: ecConfig.shiki,
+						defaultProps: ecConfig.defaultProps,
+					} as SatteriExpressiveCodeOptions),
+				],
+			}),
+			optimize: true,
+		}),
 		react(),
 		skills(),
 	],

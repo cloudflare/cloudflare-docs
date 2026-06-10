@@ -77,7 +77,7 @@ async function sendInvoiceWithPDF(
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1>Invoice #${invoiceData.number}</h1>
         <p>Dear ${invoiceData.customerName},</p>
-        
+
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3>Invoice Details</h3>
           <p><strong>Invoice Number:</strong> ${invoiceData.number}</p>
@@ -85,7 +85,7 @@ async function sendInvoiceWithPDF(
           <p><strong>Amount Due:</strong> $${invoiceData.total}</p>
           <p><strong>Due Date:</strong> ${new Date(invoiceData.dueDate).toLocaleDateString()}</p>
         </div>
-        
+
         <p>Please find your invoice attached. Payment is due within 30 days.</p>
         <p>Thank you for your business!</p>
       </div>
@@ -129,12 +129,12 @@ endstream
 endobj
 xref
 0 6
-0000000000 65535 f 
-0000000010 00000 n 
-0000000053 00000 n 
-0000000100 00000 n 
-0000000200 00000 n 
-0000000300 00000 n 
+0000000000 65535 f
+0000000010 00000 n
+0000000053 00000 n
+0000000100 00000 n
+0000000200 00000 n
+0000000300 00000 n
 trailer<< /Size 6 /Root 1 0 R >>
 startxref
 400
@@ -169,24 +169,24 @@ async function sendReportWithImages(
         <div style="text-align: center; margin-bottom: 30px;">
           <img src="cid:company-logo" alt="Company Logo" style="width: 200px; height: auto;">
         </div>
-        
+
         <h1 style="color: #2563eb;">${reportData.title}</h1>
         <p style="color: #666;">Period: ${reportData.period}</p>
-        
+
         <h2>Key Metrics</h2>
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <p><strong>Revenue:</strong> $${reportData.metrics.revenue.toLocaleString()}</p>
           <p><strong>New Users:</strong> ${reportData.metrics.users.toLocaleString()}</p>
           <p><strong>Growth Rate:</strong> ${reportData.metrics.growth}%</p>
         </div>
-        
+
         <h2>Performance Chart</h2>
         <!-- Inline chart image -->
         <div style="text-align: center; margin: 20px 0;">
-          <img src="cid:performance-chart" alt="Performance Chart" 
+          <img src="cid:performance-chart" alt="Performance Chart"
                style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px;">
         </div>
-        
+
         <p>For detailed analysis, please contact our team.</p>
       </div>
     `,

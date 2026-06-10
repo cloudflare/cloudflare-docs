@@ -153,7 +153,7 @@ locals {
 
 resource "cloudflare_turnstile_widget" "app_widget" {
   for_each = local.environments
-  
+
   account_id = var.account_id
   name       = "App Widget - ${each.key}"
   domains    = each.value.domains

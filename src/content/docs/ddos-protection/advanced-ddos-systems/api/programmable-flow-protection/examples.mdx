@@ -299,7 +299,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 The output PCAP file contains the same packets as the input file, but with annotations on each packet.
 The Packet Comment annotation may contain:
 
-- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`  
+- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`
 - `Ignored`: if the incoming packet is not UDP
 - `Analytics tag`: the custom network analytics tag set by the program on this packet, if any
 - `Challenge packet`: the challenge packet emitted from the program back to the client, if any

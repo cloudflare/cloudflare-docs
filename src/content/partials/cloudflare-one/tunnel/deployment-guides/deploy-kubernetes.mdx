@@ -158,18 +158,18 @@ To create a Cloudflare Tunnel:
 	{props.product === "cloudflare-one" ? (
 		<>
 			<li>
-				Open a new browser tab and log in to the{" "}
+				Open a new browser tab and log in to the
 				<a href="https://dash.cloudflare.com/">Cloudflare dashboard</a>.
 			</li>
 			<li>
-				Go to <strong>Zero Trust</strong> &gt; <strong>Networks</strong> &gt;{" "}
+				Go to <strong>Zero Trust</strong> &gt; <strong>Networks</strong> &gt;
 				<strong>Connectors</strong> &gt; <strong>Cloudflare Tunnels</strong>.
 			</li>
 			<li>
 				Select <strong>Create a tunnel</strong>.
 			</li>
 			<li>
-				Choose <strong>Cloudflared</strong> for the connector type and select{" "}
+				Choose <strong>Cloudflared</strong> for the connector type and select
 				<strong>Next</strong>.
 			</li>
 		</>
@@ -192,18 +192,18 @@ To create a Cloudflare Tunnel:
 	</li>
 	<li>
 		<p>
-			Under <strong>Choose an environment</strong>, select{" "}
+			Under <strong>Choose an environment</strong>, select
 			<strong>Docker</strong>.
 		</p>
 		<p>
 			Applications must be packaged into a containerized image before you can
-			run it in Kubernetes. Therefore, we will use the <code>cloudflared</code>{" "}
+			run it in Kubernetes. Therefore, we will use the <code>cloudflared</code>
 			Docker container image to deploy the tunnel in Kubernetes.
 		</p>
 	</li>
 	<li>
 		Instead of running the installation command, copy just the token value
-		rather than the whole command. The token value is of the form{" "}
+		rather than the whole command. The token value is of the form
 		<code>eyJhIjoiNWFiNGU5Z...</code> You will need the token for the Kubernetes
 		manifest file.
 	</li>
@@ -371,11 +371,11 @@ Now that the tunnel is up and running, we can route the httpbin service through 
 	</li>
 	<li>
 		In the <strong>Published application routes</strong> tab, enter a hostname
-		for the application (for example,{" "}
+		for the application (for example,
 		<code>httpbin.&lt;your-domain&gt;.com</code>).
 	</li>
 	<li>
-		Under <strong>Service</strong>, enter{" "}
+		Under <strong>Service</strong>, enter
 		<code>{"http://httpbin-service"}</code>. <code>httpbin-service</code> is the
 		name of the Kubernetes service defined in <code>httpbinsvc.yaml</code>.
 	</li>
@@ -391,15 +391,15 @@ Now that the tunnel is up and running, we can route the httpbin service through 
 		tunnel.
 	</li>
 	<li>
-		Under <strong>Routes</strong>, select <strong>Add route</strong> &gt;{" "}
+		Under <strong>Routes</strong>, select <strong>Add route</strong> &gt;
 		<strong>Published application</strong>.
 	</li>
 	<li>
-		Enter a hostname for the application (for example,{" "}
+		Enter a hostname for the application (for example,
 		<code>httpbin.&lt;your-domain&gt;.com</code>).
 	</li>
 	<li>
-		Under <strong>Service</strong>, enter{" "}
+		Under <strong>Service</strong>, enter
 		<code>{"http://httpbin-service"}</code>. <code>httpbin-service</code> is the
 		name of the Kubernetes service defined in <code>httpbinsvc.yaml</code>.
 	</li>

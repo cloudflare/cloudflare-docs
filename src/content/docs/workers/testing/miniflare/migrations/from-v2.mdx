@@ -134,13 +134,13 @@ open-source `workerd` runtime. See the [Getting Started guide for the new API do
               // Get the message defined outside
               const response = await env.CUSTOM.fetch("http://host/");
               const message = await response.text();
-    
+
               // Increment the count 3 times
               await env.INCREMENTER.fetch("http://host/");
               await env.INCREMENTER.fetch("http://host/");
               await env.INCREMENTER.fetch("http://host/");
               const count = await env.COUNTS.get("count");
-    
+
               return new Response(message + count);
             }
           }`,

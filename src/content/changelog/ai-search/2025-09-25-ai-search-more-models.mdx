@@ -24,7 +24,7 @@ Once configured, your AI Search instance will be able to reference models availa
 ```javascript
 export default {
   async fetch(request, env) {
-    
+
     // Query your AI Search instance with a natural language question to an OpenAI model
     const result = await env.AI.autorag("my-ai-search").aiSearch({
       query: "What's new for Cloudflare Birthday Week?",

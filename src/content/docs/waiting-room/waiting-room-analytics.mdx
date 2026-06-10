@@ -110,9 +110,9 @@ The New users per minute chart shows how many new users per minute passed throug
 
 ### Turnstile Widget Traffic
 
-The Turnstile widget traffic chart shows the number of challenges issued per minute and the distribution of traffic seen with these challenges. Traffic is categorized into three main categories: 
+The Turnstile widget traffic chart shows the number of challenges issued per minute and the distribution of traffic seen with these challenges. Traffic is categorized into three main categories:
 
-- Likely Human - This represents the number of challenges that were successfully solved. 
+- Likely Human - This represents the number of challenges that were successfully solved.
 - Likely Bots - This represents the number of unsolved challenges.
 - Bots - This represents the number of failed challenges.
 
@@ -133,7 +133,7 @@ This is a simple query to fetch metrics values. You can filter the data with the
 {
   viewer {
     zones(filter: {zoneTag: "example-zone"}) {
-      waitingRoomAnalyticsAdaptive(limit: 3, filter: {datetime_gt: "2023-03-05T19:14:30Z", datetime_lt: "2023-03-07T19:13:00Z", waitingRoomId: "example-waiting-room-id"}) { 
+      waitingRoomAnalyticsAdaptive(limit: 3, filter: {datetime_gt: "2023-03-05T19:14:30Z", datetime_lt: "2023-03-07T19:13:00Z", waitingRoomId: "example-waiting-room-id"}) {
         totalActiveUsers
           newUsersPerMinutes
       }

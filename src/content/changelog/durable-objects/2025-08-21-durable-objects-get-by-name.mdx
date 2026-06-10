@@ -10,11 +10,11 @@ date: 2025-08-21
 You can now create a client (a [Durable Object stub](/durable-objects/api/stub/)) to a Durable Object with the new `getByName` method, removing the need to convert Durable Object names to IDs and then create a stub.
 
 ```js
-// Before: (1) translate name to ID then (2) get a client 
+// Before: (1) translate name to ID then (2) get a client
 const objectId = env.MY_DURABLE_OBJECT.idFromName("foo"); // or .newUniqueId()
-const stub = env.MY_DURABLE_OBJECT.get(objectId); 
+const stub = env.MY_DURABLE_OBJECT.get(objectId);
 
-// Now: retrieve client to Durable Object directly via its name 
+// Now: retrieve client to Durable Object directly via its name
 const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 // Use client to send request to the remote Durable Object

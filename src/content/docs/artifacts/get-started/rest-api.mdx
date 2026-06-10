@@ -82,7 +82,7 @@ The response resembles the following:
 	"messages": []
 }
 ```
-The response includes two values which you will need for Git operations: 
+The response includes two values which you will need for Git operations:
 - `remote`: the Git remote URL for this repo. `<ACCOUNT_ID>` will be your actual Cloudflare account ID. Use this URL for all Git commands (git push, git clone). Note that this uses a different URL than the REST API you used to create the repo.
 - `token`: a short-lived credential for Git operations. The token encodes its expiry directly in the `?expires=` suffix as a Unix timestamp.
 

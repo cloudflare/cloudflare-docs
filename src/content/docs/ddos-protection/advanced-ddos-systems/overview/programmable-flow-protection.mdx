@@ -39,10 +39,10 @@ While in beta, Cloudflare will assist and provide guidance to users to write the
 After Programmable Flow Protection has been enabled to your account, go to **Networking** > **L3/4 DDoS Protection** > **Advanced Protection** in the Cloudflare dashboard. Within the **Programmable Flow Protection** tab:
 
 <Steps>
-1. Upload your eBPF program written in C.   
-  
+1. Upload your eBPF program written in C.
+
     The program is validated by the system and stored in your account. The API compiles the program, then runs a verifier against the compiled program to enforce memory checks and verify program termination. If the program fails compilation or verification, the Cloudflare dashboard will return a detailed error message.
-  
+
 2. Create a [rule](/ddos-protection/advanced-ddos-systems/how-to/create-rule/#create-a-programmable-flow-protection-rule)
 
 3. To observe the program's behavior, check the Network Analytics dashboard and select the **Programmable Flow Protection** tab.
@@ -154,7 +154,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 
    In the example snippet below, the program will drop any packet where the IPv6 header exists or where the UDP destination port is 66.
 
-   It will then check the application header value in the UDP payload and verify its last byte is a fixed value `0xCF`. 
+   It will then check the application header value in the UDP payload and verify its last byte is a fixed value `0xCF`.
 
    ```c
     struct ipv6hdr *ipv6_hdr;
@@ -342,7 +342,7 @@ Packets from verified source IPs are passed through without further checks.
        }
    ```
 
-6. Handle verified source IPs. 
+6. Handle verified source IPs.
 
    The Programmable Flow Protection platform will drop packets from blocklisted IPs before the program is invoked. There is no need to explicitly handle the blocklisted case.
 
@@ -640,12 +640,12 @@ For reference, the example below is the rate limiting program in its entirety:
 #define RATE_LIMIT 100         // Maximum packets allowed per window
 #define WINDOW_SECONDS 60      // Time window in seconds
 
-// The source IP table holds a mapping from source IP -> custom u64. We will make the custom u64 value in the 
+// The source IP table holds a mapping from source IP -> custom u64. We will make the custom u64 value in the
 // table hold a timestamp and a counter to accomplish a ratelimit.
-// 
-// NOTE: the source IP table is effectively a LRU cache. If it is full, old values will be evicted. 
+//
+// NOTE: the source IP table is effectively a LRU cache. If it is full, old values will be evicted.
 // Values are also garbage collected from the table every 1hr.
-// 
+//
 // The macros below pack the timestamp (upper 32 bits) and counter (lower 32 bits) into 64-bit data
 // into a value that we can store into the source IP table.
 #define PACK_STATE(ts, count) (((uint64_t)(ts) << 32) | ((uint64_t)(count) & 0xFFFFFFFF))
@@ -713,7 +713,7 @@ This program demonstrates several key concepts:
 
 ## State
 
-Each program has access to its own local state. State is local to each server and is not shared between datacenters. 
+Each program has access to its own local state. State is local to each server and is not shared between datacenters.
 
 State is tied to a specific program. If you modify a rule's mode (disabled, monitoring, or enabled), the content of the state tables persists. However, if you modify a rule's program or the contents of the program itself, the state tables are cleared.
 
@@ -807,7 +807,7 @@ With the exception of `rand`, `timestamp`, `ntohs`, `htons`, `ntohl`, `htonl`, `
 
 To upload a program, navigate to Networking > L3/4 DDoS protection > Advanced Protection in the Cloudflare dashboard. Then select the tab titled Programmable Flow Protection.
 
-Under **Programs**, click the button "Upload new program." This will prompt you to select a file to upload with your `C` source code. 
+Under **Programs**, click the button "Upload new program." This will prompt you to select a file to upload with your `C` source code.
 
 The Cloudflare API will receive the source code in the `C` file, compile it into BPF bytecode, and run the verifier against it.
 
@@ -820,7 +820,7 @@ If compilation and verification succeeds, Cloudflare will store the source code 
 
 During the development process, you may find it useful to update the same program (identified by the same program ID) instead of repeatedly creating new programs as new resources.
 
-To update the program, select the three dots next to your program. Then, select **Overwrite**. This will prompt you to choose a file to upload as your `C` source code. 
+To update the program, select the three dots next to your program. Then, select **Overwrite**. This will prompt you to choose a file to upload as your `C` source code.
 
 :::note
 It is possible to update and overwrite a program that is currently in use by one or more rules. When doing so, you will be warned that the program is currently active and will be overwritten. However, if an active program is being updated with a program that either does not compile or can not be verified, the update will fail and the old program will continue to be in use.
@@ -834,7 +834,7 @@ A link icon next to the program name indicates that the program is currently in 
 
 ### Delete a program
 
-To delete a program, select the three dots next to the program that you wish to delete. Then, select **Delete**. 
+To delete a program, select the three dots next to the program that you wish to delete. Then, select **Delete**.
 
 Note that you will not be able to delete a program that is referenced in an active Rule.
 
@@ -873,7 +873,7 @@ To delete an existing rule, navigate to the Rules section. Click the three dots 
 This API endpoint debugs a program by intaking:
 
 - A local path to the input PCAP file provided as requested data in binary format. The input PCAP file has a maximum size limit of 5 MB and will be rejected if it is too large.
-- An IP offset value provided as a query parameter. This is the number of bytes that the IP header is offset by in each packet of the input PCAP file.  
+- An IP offset value provided as a query parameter. This is the number of bytes that the IP header is offset by in each packet of the input PCAP file.
   For example, if the PCAP file captures Ethernet packets, the IP offset value would be 14\. This endpoint assumes that all packets in a PCAP have the same IP offset value and will otherwise parse packets incorrectly.
 - The program ID provided in the request path.
 
@@ -889,7 +889,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmab
 
 The Packet Comment annotation may contain:
 
-- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`  
+- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`
 - `Ignored`: if the incoming packet is not UDP
 - `Analytics tag`: the custom network analytics tag set by the program on this packet, if any
 - `Challenge packet`: the challenge packet emitted from the program back to the client, if any
@@ -962,7 +962,7 @@ struct cf_ebpf_parsed_headers {
    uint8_t        *data_end;
 };
 
-/* 
+/*
 * IPv4 header, used as field of cf_ebpf_parsed_headers */
 * source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ip.h#L87
 */
@@ -985,10 +985,10 @@ struct iphdr {
     uint32_t daddr;
 };
 
-/* 
+/*
 * IPv6 header, used as field of cf_ebpf_parsed_headers
 * source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ipv6.h#L118
-*/ 
+*/
 struct ipv6hdr {
 #if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
     uint8_t  version:4,
@@ -1005,7 +1005,7 @@ struct ipv6hdr {
     uint8_t  daddr[16];
 };
 
-/* 
+/*
 * UDP header, used as field of cf_ebpf_parsed_headers
 * source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/udp.h#L23
 */
