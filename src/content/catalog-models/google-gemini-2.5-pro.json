@@ -334,7 +334,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://deepmind.google/technologies/gemini/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
@@ -343,7 +343,7 @@
 		"Architecture": "Transformer (multimodal)",
 		"Thinking": "Yes"
 	},
-	"request_formats": null,
+	"request_formats": ["chat-completions"],
 	"created_at": "2026-05-22 17:53:08",
 	"schema": {
 		"input": {

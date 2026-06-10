@@ -1,0 +1,365 @@
+{
+	"model_id": "deepseek/deepseek-v4-pro",
+	"provider_id": "deepseek",
+	"name": "DeepSeek V4 Pro",
+	"description": "DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek, served via Fireworks infrastructure for production-grade inference.",
+	"task": "Text Generation",
+	"tags": ["LLM", "Reasoning"],
+	"context_length": 131072,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"content": "What is the capital of France?",
+						"role": "user"
+					}
+				],
+				"model": "deepseek/deepseek-v4-pro"
+			},
+			"output": {
+				"text": "The capital of France is **Paris**."
+			},
+			"raw_response": {
+				"id": "chatcmpl-130c261b00a14fffa8f3e238ad0fc2c1",
+				"object": "chat.completion",
+				"created": 1780697607,
+				"model": "deepseek/deepseek-v4-pro",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "The capital of France is **Paris**.",
+							"reasoning_content": "We are asked: \"What is the capital of France?\" This is a straightforward factual question. The answer is Paris. I should respond with just that."
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 11,
+					"completion_tokens": 41,
+					"total_tokens": 52,
+					"prompt_tokens_details": {
+						"cached_tokens": 10
+					}
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'deepseek/deepseek-v4-pro',\n  {\n    messages: [{ content: 'What is the capital of France?', role: 'user' }],\n    model: 'deepseek/deepseek-v4-pro',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"deepseek/deepseek-v4-pro\",\n  \"messages\": [\n    {\n      \"content\": \"What is the capital of France?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"content": "You are a helpful coding assistant specializing in Python.",
+						"role": "system"
+					},
+					{
+						"content": "How do I read a JSON file in Python?",
+						"role": "user"
+					}
+				],
+				"model": "deepseek/deepseek-v4-pro",
+				"temperature": 0.3
+			},
+			"output": {
+				"text": "To read a JSON file in Python, use the built-in `json` module. Here\u2019s a quick guide:\n\n## 1. Basic reading from a file\n\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)   # parse the file object directly\n\nprint(data)\n```\n\n- `json.load(file)` reads the file and converts JSON to Python objects (dict, list, str, int, float, bool, None).\n- Always use `with open(...)` to ensure the file is closed properly.\n- Specify `encoding='utf-8'` if your JSON contains non-ASCII characters (recommended).\n\n## 2. Reading from a JSON string\n\nIf you already have a JSON string (e.g., from an API response), use `json.loads()`:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)   # 's' stands for 'string'\n```\n\n## 3. Error handling\n\nJSON might be malformed. Catch exceptions:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as f:\n        data = json.load(f)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError as e:\n    print(f\"Invalid JSON: {e}\")\n```\n\n## 4. Pretty-printing the result\n\nTo see the data nicely formatted:\n\n```python\nprint(json.dumps(data, indent=2, ensure_ascii=False))\n```\n\n- `indent=2` adds indentation.\n- `ensure_ascii=False` preserves non-ASCII characters (like accented letters).\n\n## Complete example\n\n```python\nimport json\n\ndef read_json_file(filepath):\n    try:\n        with open(filepath, 'r', encoding='utf-8') as f:\n            return json.load(f)\n    except FileNotFoundError:\n        print(f\"Error: '{filepath}' not found.\")\n    except json.JSONDecodeError:\n        print(f\"Error: '{filepath}' contains invalid JSON.\")\n    return None\n\ndata = read_json_file('config.json')\nif data:\n    print(json.dumps(data, indent=2))\n```\n\nThat\u2019s all you need to get started!"
+			},
+			"raw_response": {
+				"id": "chatcmpl-8a4245b4df754a26b66d553c26b34370",
+				"object": "chat.completion",
+				"created": 1780697608,
+				"model": "deepseek/deepseek-v4-pro",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "To read a JSON file in Python, use the built-in `json` module. Here\u2019s a quick guide:\n\n## 1. Basic reading from a file\n\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)   # parse the file object directly\n\nprint(data)\n```\n\n- `json.load(file)` reads the file and converts JSON to Python objects (dict, list, str, int, float, bool, None).\n- Always use `with open(...)` to ensure the file is closed properly.\n- Specify `encoding='utf-8'` if your JSON contains non-ASCII characters (recommended).\n\n## 2. Reading from a JSON string\n\nIf you already have a JSON string (e.g., from an API response), use `json.loads()`:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)   # 's' stands for 'string'\n```\n\n## 3. Error handling\n\nJSON might be malformed. Catch exceptions:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as f:\n        data = json.load(f)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError as e:\n    print(f\"Invalid JSON: {e}\")\n```\n\n## 4. Pretty-printing the result\n\nTo see the data nicely formatted:\n\n```python\nprint(json.dumps(data, indent=2, ensure_ascii=False))\n```\n\n- `indent=2` adds indentation.\n- `ensure_ascii=False` preserves non-ASCII characters (like accented letters).\n\n## Complete example\n\n```python\nimport json\n\ndef read_json_file(filepath):\n    try:\n        with open(filepath, 'r', encoding='utf-8') as f:\n            return json.load(f)\n    except FileNotFoundError:\n        print(f\"Error: '{filepath}' not found.\")\n    except json.JSONDecodeError:\n        print(f\"Error: '{filepath}' contains invalid JSON.\")\n    return None\n\ndata = read_json_file('config.json')\nif data:\n    print(json.dumps(data, indent=2))\n```\n\nThat\u2019s all you need to get started!",
+							"reasoning_content": "We need to provide a helpful answer on how to read a JSON file in Python. The user is likely a beginner. We should explain the json module, open the file, json.load() vs json.loads(), handle errors, maybe show examples. Keep it concise but thorough. Include code snippets. Also mention reading from a string vs file. Possibly mention encoding. Provide a simple example."
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 24,
+					"completion_tokens": 566,
+					"total_tokens": 590,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					}
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'deepseek/deepseek-v4-pro',\n  {\n    messages: [\n      { content: 'You are a helpful coding assistant specializing in Python.', role: 'system' },\n      { content: 'How do I read a JSON file in Python?', role: 'user' },\n    ],\n    model: 'deepseek/deepseek-v4-pro',\n    temperature: 0.3,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"deepseek/deepseek-v4-pro\",\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful coding assistant specializing in Python.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.3\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://api-docs.deepseek.com",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Architecture": "Mixture of Experts"
+	},
+	"request_formats": ["chat-completions"],
+	"created_at": "2026-06-08 18:17:18",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"audio": {
+					"additionalProperties": false,
+					"properties": {
+						"format": {
+							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
+							"type": "string"
+						},
+						"voice": {
+							"enum": [
+								"alloy",
+								"ash",
+								"ballad",
+								"coral",
+								"echo",
+								"sage",
+								"shimmer",
+								"verse"
+							],
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"frequency_penalty": {
+					"maximum": 2,
+					"minimum": -2,
+					"type": "number"
+				},
+				"max_completion_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"max_tokens": {
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"messages": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"items": {},
+										"type": "array"
+									}
+								]
+							},
+							"role": {
+								"enum": ["system", "developer", "user", "assistant", "tool"],
+								"type": "string"
+							}
+						},
+						"required": ["role", "content"],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"modalities": {
+					"items": {
+						"enum": ["text", "audio"],
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"presence_penalty": {
+					"maximum": 2,
+					"minimum": -2,
+					"type": "number"
+				},
+				"response_format": {},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"additionalProperties": false,
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"type": "object"
+				},
+				"temperature": {
+					"maximum": 2,
+					"minimum": 0,
+					"type": "number"
+				},
+				"tool_choice": {},
+				"tools": {
+					"items": {},
+					"type": "array"
+				},
+				"top_p": {
+					"maximum": 1,
+					"minimum": 0,
+					"type": "number"
+				}
+			},
+			"required": ["messages"],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"choices": {
+					"items": {
+						"additionalProperties": {},
+						"properties": {
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							},
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"additionalProperties": {},
+								"properties": {
+									"audio": {
+										"additionalProperties": {},
+										"properties": {
+											"data": {
+												"type": "string"
+											},
+											"expires_at": {
+												"type": "number"
+											},
+											"id": {
+												"type": "string"
+											},
+											"transcript": {
+												"type": "string"
+											}
+										},
+										"type": "object"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"role": {
+										"type": "string"
+									},
+									"tool_calls": {
+										"anyOf": [
+											{
+												"items": {},
+												"type": "array"
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": ["role"],
+								"type": "object"
+							}
+						},
+						"required": ["index", "message", "finish_reason"],
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"created": {
+					"type": "number"
+				},
+				"id": {
+					"type": "string"
+				},
+				"model": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"usage": {
+					"additionalProperties": {},
+					"properties": {
+						"completion_tokens": {
+							"type": "number"
+						},
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+					"type": "object"
+				}
+			},
+			"required": ["id", "object", "created", "model", "choices"],
+			"type": "object"
+		}
+	}
+}

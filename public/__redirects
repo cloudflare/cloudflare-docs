@@ -1118,7 +1118,8 @@
 /images/transform-images/ /images/optimization/transformations/overview/ 301
 /images/transform-images/transform-via-url/ /images/optimization/features/ 301
 /images/transform-images/transform-via-workers/ /images/optimization/transformations/transform-via-workers/ 301
-/images/transform-images/bindings/ /images/optimization/transformations/bindings/ 301
+/images/transform-images/bindings/ /images/optimization/binding/ 301
+/images/optimization/transformations/bindings/ /images/optimization/binding/ 301
 /images/transform-images/control-origin-access/ /images/optimization/transformations/control-origin-access/ 301
 /images/transform-images/draw-overlays/ /images/optimization/transformations/draw-overlays/ 301
 /images/transform-images/integrate-with-frameworks/ /images/optimization/transformations/integrate-with-frameworks/ 301

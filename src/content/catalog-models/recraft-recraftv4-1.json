@@ -185,7 +185,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://www.recraft.ai/",
 	"terms": "https://www.recraft.ai/terms",
