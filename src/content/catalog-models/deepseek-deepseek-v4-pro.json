@@ -4,7 +4,10 @@
 	"name": "DeepSeek V4 Pro",
 	"description": "DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek, served via Fireworks infrastructure for production-grade inference.",
 	"task": "Text Generation",
-	"tags": ["LLM", "Reasoning"],
+	"tags": [
+		"LLM",
+		"Reasoning"
+	],
 	"context_length": 131072,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -125,6 +128,37 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"deepseek/deepseek-v4-pro\",\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful coding assistant specializing in Python.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.3\n}'"
 				}
 			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"content": "Explain the concept of recursion with a simple example.",
+						"role": "user"
+					}
+				],
+				"model": "deepseek/deepseek-v4-pro",
+				"stream": true
+			},
+			"error": {
+				"kind": "runner-failure",
+				"message": "normalizer returned empty output -- check modality vs response shape, or recapture",
+				"timestamp": "2026-06-05T22:13:47.584Z"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'deepseek/deepseek-v4-pro',\n  {\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    model: 'deepseek/deepseek-v4-pro',\n    stream: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"deepseek/deepseek-v4-pro\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -138,7 +172,9 @@
 	"metadata": {
 		"Architecture": "Mixture of Experts"
 	},
-	"request_formats": ["chat-completions"],
+	"request_formats": [
+		"chat-completions"
+	],
 	"created_at": "2026-06-08 18:17:18",
 	"schema": {
 		"input": {
@@ -149,7 +185,13 @@
 					"additionalProperties": false,
 					"properties": {
 						"format": {
-							"enum": ["wav", "mp3", "flac", "opus", "pcm16"],
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							],
 							"type": "string"
 						},
 						"voice": {
@@ -200,18 +242,30 @@
 								]
 							},
 							"role": {
-								"enum": ["system", "developer", "user", "assistant", "tool"],
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								],
 								"type": "string"
 							}
 						},
-						"required": ["role", "content"],
+						"required": [
+							"role",
+							"content"
+						],
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"modalities": {
 					"items": {
-						"enum": ["text", "audio"],
+						"enum": [
+							"text",
+							"audio"
+						],
 						"type": "string"
 					},
 					"type": "array"
@@ -250,7 +304,9 @@
 					"type": "number"
 				}
 			},
-			"required": ["messages"],
+			"required": [
+				"messages"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -320,11 +376,17 @@
 										]
 									}
 								},
-								"required": ["role"],
+								"required": [
+									"role"
+								],
 								"type": "object"
 							}
 						},
-						"required": ["index", "message", "finish_reason"],
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
 						"type": "object"
 					},
 					"type": "array"
@@ -354,11 +416,21 @@
 							"type": "number"
 						}
 					},
-					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
 					"type": "object"
 				}
 			},
-			"required": ["id", "object", "created", "model", "choices"],
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
 			"type": "object"
 		}
 	}
