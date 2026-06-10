@@ -16,11 +16,11 @@ head:
 
 You can use an external tool such as the [SSLShopper Certificate Key Matcher](https://www.sslshopper.com/certificate-key-matcher.html) to check your certificate and make sure the key matches.
 
-Alternatively, use `openssl` to verify the match by comparing the modulus hash of both files:
+Alternatively, use `openssl` to verify the match by comparing the public key hash of both files. This method works for both RSA and ECDSA certificates:
 
 ```bash
-openssl x509 -noout -modulus -in certificate.crt | openssl md5
-openssl rsa -noout -modulus -in private.key | openssl md5
+openssl x509 -noout -pubkey -in certificate.crt | openssl md5
+openssl pkey -pubout -in private.key | openssl md5
 ```
 
 If the two outputs match, the certificate and key are a valid pair.
@@ -37,13 +37,13 @@ Then, make sure all the information is correct before uploading.
 
 ### Remove password from private key
 
-Cloudflare does not accept password-protected private keys. If your private key requires a password, remove it before uploading:
+Cloudflare does not accept password-protected private keys. If your private key requires a password, remove it before uploading. The following command works for both RSA and ECDSA keys:
 
 ```bash
-openssl rsa -in protected.key -out unprotected.key
+openssl pkey -in protected.key -out unprotected.key
 ```
 
-Use the `unprotected.key` file when uploading to Cloudflare.
+Use the `unprotected.key` file when uploading to Cloudflare. For detailed instructions, refer to [Remove key file password](/ssl/edge-certificates/custom-certificates/remove-file-key-password/).
 
 ### Private key format requirements
 
@@ -215,15 +215,15 @@ Check that the certificate and private keys match before uploading the certifica
 
 **Root cause**
 
-The certificate and private key you uploaded do not form a valid pair. This can happen when uploading a self-signed leaf certificate with a key from a different certificate authority.
+The certificate and private key you uploaded do not form a valid pair. The private key does not correspond to the public key in the certificate. This can happen when the wrong key file is selected during upload.
 
 **Solution**
 
-Ensure the private key corresponds to the certificate you are uploading. You can verify this by comparing the modulus of both:
+Ensure the private key corresponds to the certificate you are uploading. You can verify this by comparing the public key hash of both files. This method works for both RSA and ECDSA certificates:
 
 ```bash
-openssl x509 -noout -modulus -in certificate.crt | openssl md5
-openssl rsa -noout -modulus -in private.key | openssl md5
+openssl x509 -noout -pubkey -in certificate.crt | openssl md5
+openssl pkey -pubout -in private.key | openssl md5
 ```
 
 If the outputs do not match, you have mismatched the certificate and key.
