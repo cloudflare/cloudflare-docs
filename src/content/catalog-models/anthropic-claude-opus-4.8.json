@@ -267,7 +267,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://www.anthropic.com/claude/opus",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
@@ -298,8 +298,23 @@
 									},
 									{
 										"items": {
-											"additionalProperties": false,
+											"additionalProperties": {},
 											"properties": {
+												"cache_control": {
+													"additionalProperties": false,
+													"properties": {
+														"ttl": {
+															"enum": ["5m", "1h"],
+															"type": "string"
+														},
+														"type": {
+															"const": "ephemeral",
+															"type": "string"
+														}
+													},
+													"required": ["type"],
+													"type": "object"
+												},
 												"source": {},
 												"text": {
 													"type": "string"

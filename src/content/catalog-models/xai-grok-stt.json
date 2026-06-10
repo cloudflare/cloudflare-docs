@@ -388,9 +388,13 @@
 					"type": "integer"
 				},
 				"url": {
-					"description": "HTTPS URL of an audio file for xAI to fetch server-side. Mutually exclusive with `file`. No gateway-side size limit applies.",
+					"description": "HTTPS URL of an audio file for xAI to fetch server-side. Mutually exclusive with `file` and `websocket`. No gateway-side size limit applies.",
 					"format": "uri",
 					"type": "string"
+				},
+				"websocket": {
+					"description": "Enable WebSocket streaming for speech-to-text. When true, establishes a bidirectional WebSocket connection for real-time audio transcription. Mutually exclusive with `file` and `url`.",
+					"type": "boolean"
 				}
 			},
 			"type": "object"

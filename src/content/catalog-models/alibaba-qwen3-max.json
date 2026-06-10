@@ -1744,7 +1744,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://www.alibabacloud.com/en/solutions/generative-ai/qwen",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
