@@ -71,7 +71,7 @@ While pinned by an outbound connection, the Durable Object remains in memory in 
 
 Each outbound connection pins the Durable Object for a maximum of 15 minutes. After 15 minutes, the connection stops pinning the object (the connection itself continues operating), and normal eviction rules resume.
 
-This applies to outbound TCP sockets and outbound WebSockets (including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`). It does not apply to plain `fetch()` subrequests — those never keep the Durable Object alive, even while the response body is still streaming.
+This applies to outbound TCP sockets and outbound WebSockets (including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`). It does not apply to plain `fetch()` subrequests. Those never keep the Durable Object alive, even while the response body is still streaming.
 :::
 
 Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides if and when to transition the object to the **inactive** state (for example deciding to move the object to a different host) thus restarting the lifecycle.

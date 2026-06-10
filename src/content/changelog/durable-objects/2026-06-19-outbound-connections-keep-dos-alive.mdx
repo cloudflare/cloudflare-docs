@@ -6,11 +6,11 @@ products:
 date: 2026-06-19
 ---
 
-Durable Objects now remain alive for the duration of active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-sockets/) or an outbound WebSocket. Previously, a Durable Object would be evicted after 70-140 seconds of no incoming traffic, even if the object had an open outbound connection — a common pattern when streaming responses from a large language model (LLM) over TCP or an outbound WebSocket.
+Durable Objects now remain alive for the duration of active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-sockets/) or an outbound WebSocket. Previously, a Durable Object would be evicted after 70-140 seconds of no incoming traffic, even if the object had an open outbound connection. This was a common pattern when streaming responses from a large language model (LLM) over TCP or an outbound WebSocket.
 
 With this change, each active outbound connection prevents eviction. Once all outbound connections close, the standard 70-140 second inactivity window applies before the Durable Object is evicted.
 
-This applies to outbound TCP sockets (`connect()`) and outbound WebSockets, including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`. Plain `fetch()` subrequests do not keep a Durable Object alive — even while the response body is still streaming. This also does not apply to connections made through bindings such as Hyperdrive; only direct `connect()` TCP sockets and outbound WebSockets are covered.
+This applies to outbound TCP sockets (`connect()`) and outbound WebSockets, including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`. Plain `fetch()` subrequests do not keep a Durable Object alive, even while the response body is still streaming. This also does not apply to connections made through bindings such as Hyperdrive; only direct `connect()` TCP sockets and outbound WebSockets are covered.
 
 **Limits:**
 
