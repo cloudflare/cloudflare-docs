@@ -214,7 +214,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["text"],
+			"required": [
+				"text"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -226,7 +228,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["audio"],
+			"required": [
+				"audio"
+			],
 			"type": "object"
 		}
 	}

@@ -4,7 +4,11 @@
 	"name": "RunwayML Gen-4.5",
 	"description": "RunwayML's video generation model supporting both text-to-video and image-to-video with customizable duration, aspect ratio, and content moderation controls.",
 	"task": "Text-to-Video",
-	"tags": ["Video Generation", "Image-to-Video", "Cinematic"],
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Cinematic"
+	],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
@@ -272,7 +276,10 @@
 					"properties": {
 						"public_figure_threshold": {
 							"description": "Content moderation strictness for public figures",
-							"enum": ["auto", "low"],
+							"enum": [
+								"auto",
+								"low"
+							],
 							"type": "string"
 						}
 					},
@@ -315,7 +322,11 @@
 					"type": "integer"
 				}
 			},
-			"required": ["prompt", "ratio", "duration"],
+			"required": [
+				"prompt",
+				"ratio",
+				"duration"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -328,7 +339,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["video"],
+			"required": [
+				"video"
+			],
 			"type": "object"
 		}
 	}

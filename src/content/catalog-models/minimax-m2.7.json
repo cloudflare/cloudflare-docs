@@ -4,7 +4,10 @@
 	"name": "MiniMax M2.7",
 	"description": "MiniMax's M2.7 language model with multilingual capabilities.",
 	"task": "Text Generation",
-	"tags": ["LLM", "Multilingual"],
+	"tags": [
+		"LLM",
+		"Multilingual"
+	],
 	"context_length": 128000,
 	"max_output_tokens": 4096,
 	"schema_version": "1.0.0",
@@ -344,7 +347,9 @@
 	"metadata": {
 		"Architecture": "Transformer"
 	},
-	"request_formats": ["chat-completions"],
+	"request_formats": [
+		"chat-completions"
+	],
 	"created_at": "2026-05-22 17:53:19",
 	"schema": {
 		"input": {
@@ -385,7 +390,10 @@
 															"type": "string"
 														}
 													},
-													"required": ["type", "text"],
+													"required": [
+														"type",
+														"text"
+													],
 													"type": "object"
 												},
 												{
@@ -398,7 +406,9 @@
 																	"type": "string"
 																}
 															},
-															"required": ["url"],
+															"required": [
+																"url"
+															],
 															"type": "object"
 														},
 														"type": {
@@ -406,7 +416,10 @@
 															"type": "string"
 														}
 													},
-													"required": ["type", "image_url"],
+													"required": [
+														"type",
+														"image_url"
+													],
 													"type": "object"
 												}
 											]
@@ -419,7 +432,12 @@
 								"type": "string"
 							},
 							"role": {
-								"enum": ["system", "user", "assistant", "tool"],
+								"enum": [
+									"system",
+									"user",
+									"assistant",
+									"tool"
+								],
 								"type": "string"
 							},
 							"tool_calls": {
@@ -436,7 +454,10 @@
 													"type": "string"
 												}
 											},
-											"required": ["name", "arguments"],
+											"required": [
+												"name",
+												"arguments"
+											],
 											"type": "object"
 										},
 										"id": {
@@ -447,13 +468,20 @@
 											"type": "string"
 										}
 									},
-									"required": ["id", "type", "function"],
+									"required": [
+										"id",
+										"type",
+										"function"
+									],
 									"type": "object"
 								},
 								"type": "array"
 							}
 						},
-						"required": ["role", "content"],
+						"required": [
+							"role",
+							"content"
+						],
 						"type": "object"
 					},
 					"type": "array"
@@ -480,11 +508,17 @@
 											"type": "string"
 										}
 									},
-									"required": ["type", "properties"],
+									"required": [
+										"type",
+										"properties"
+									],
 									"type": "object"
 								}
 							},
-							"required": ["name", "schema"],
+							"required": [
+								"name",
+								"schema"
+							],
 							"type": "object"
 						},
 						"type": {
@@ -492,7 +526,10 @@
 							"type": "string"
 						}
 					},
-					"required": ["type", "json_schema"],
+					"required": [
+						"type",
+						"json_schema"
+					],
 					"type": "object"
 				},
 				"stream": {
@@ -513,7 +550,10 @@
 					"type": "number"
 				},
 				"tool_choice": {
-					"enum": ["none", "auto"],
+					"enum": [
+						"none",
+						"auto"
+					],
 					"type": "string"
 				},
 				"tools": {
@@ -531,7 +571,11 @@
 									},
 									"parameters": {}
 								},
-								"required": ["name", "description", "parameters"],
+								"required": [
+									"name",
+									"description",
+									"parameters"
+								],
 								"type": "object"
 							},
 							"type": {
@@ -539,7 +583,10 @@
 								"type": "string"
 							}
 						},
-						"required": ["type", "function"],
+						"required": [
+							"type",
+							"function"
+						],
 						"type": "object"
 					},
 					"type": "array"
@@ -550,7 +597,9 @@
 					"type": "number"
 				}
 			},
-			"required": ["messages"],
+			"required": [
+				"messages"
+			],
 			"type": "object"
 		},
 		"output": {
@@ -567,7 +616,10 @@
 							"type": "string"
 						}
 					},
-					"required": ["status_code", "status_msg"],
+					"required": [
+						"status_code",
+						"status_msg"
+					],
 					"type": "object"
 				},
 				"choices": {
@@ -575,7 +627,11 @@
 						"additionalProperties": {},
 						"properties": {
 							"finish_reason": {
-								"enum": ["stop", "length", "tool_calls"],
+								"enum": [
+									"stop",
+									"length",
+									"tool_calls"
+								],
 								"type": "string"
 							},
 							"index": {
@@ -605,7 +661,10 @@
 															"type": "string"
 														}
 													},
-													"required": ["name", "arguments"],
+													"required": [
+														"name",
+														"arguments"
+													],
 													"type": "object"
 												},
 												"id": {
@@ -616,17 +675,28 @@
 													"type": "string"
 												}
 											},
-											"required": ["id", "type", "function"],
+											"required": [
+												"id",
+												"type",
+												"function"
+											],
 											"type": "object"
 										},
 										"type": "array"
 									}
 								},
-								"required": ["role", "content"],
+								"required": [
+									"role",
+									"content"
+								],
 								"type": "object"
 							}
 						},
-						"required": ["index", "message", "finish_reason"],
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
 						"type": "object"
 					},
 					"type": "array"
@@ -644,7 +714,10 @@
 					"type": "string"
 				},
 				"object": {
-					"enum": ["chat.completion", "chat.completion.chunk"],
+					"enum": [
+						"chat.completion",
+						"chat.completion.chunk"
+					],
 					"type": "string"
 				},
 				"output_sensitive": {
@@ -663,11 +736,21 @@
 							"type": "number"
 						}
 					},
-					"required": ["total_tokens", "prompt_tokens", "completion_tokens"],
+					"required": [
+						"total_tokens",
+						"prompt_tokens",
+						"completion_tokens"
+					],
 					"type": "object"
 				}
 			},
-			"required": ["id", "choices", "created", "model", "object"],
+			"required": [
+				"id",
+				"choices",
+				"created",
+				"model",
+				"object"
+			],
 			"type": "object"
 		}
 	}
