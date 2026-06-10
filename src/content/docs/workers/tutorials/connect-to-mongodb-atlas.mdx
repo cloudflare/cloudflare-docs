@@ -1,0 +1,290 @@
+---
+reviewed: 2025-06-10
+difficulty: Beginner
+pcx_content_type: tutorial
+title: Connect to a MongoDB database with Cloudflare Workers
+products: [workers]
+tags:
+  - MongoDB
+  - TypeScript
+  - NoSQL
+description: >-
+  This tutorial explains how to connect to a MongoDB database with Cloudflare Workers. The Workers application you create in this tutorial will query a movies database in MongoDB.
+---
+
+import { Render, PackageManagers, WranglerConfig } from "~/components";
+
+In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a MongoDB database using the native Node.js driver. You will start with a direct connection from a Worker, then use a [Durable Object](/durable-objects/) to persist connections and reduce latency.
+
+:::note
+
+[Hyperdrive](/hyperdrive/) does not support MongoDB. Hyperdrive only supports PostgreSQL and MySQL wire protocols. To reduce connection latency with MongoDB, use a Durable Object as shown in this tutorial.
+
+:::
+
+## Prerequisites
+
+To continue:
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+4. Make sure you have access to a MongoDB database. You can use [MongoDB Atlas](https://www.mongodb.com/atlas), a self-hosted MongoDB instance, or any other MongoDB-compatible host.
+
+## 1. Create a Worker application
+
+First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker application. To do this, open a terminal window and run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"mongodb-tutorial"}
+/>
+
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
+
+Now, move into the newly created directory:
+
+```sh
+cd mongodb-tutorial
+```
+
+## 2. Enable Node.js compatibility
+
+[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for the MongoDB driver, and needs to be configured for your Workers project.
+
+<Render file="nodejs_compat" product="workers" />
+
+## 3. Add the MongoDB connection library
+
+To connect to a MongoDB database, you will need the `mongodb` library. In your Worker application directory, run the following command to install the library:
+
+<PackageManagers pkg="mongodb" />
+
+:::note
+
+Make sure you are using `mongodb` version `6.15.0` or higher.
+
+:::
+
+## 4. Configure the connection to the MongoDB database
+
+Set your MongoDB connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/general/#secret) with the example variable name `MONGODB_URI`:
+
+```sh
+npx wrangler secret put MONGODB_URI
+```
+
+```sh output
+➜  wrangler secret put MONGODB_URI
+-------------------------------------------------------
+? Enter a secret value: › ********************
+✨ Success! Uploaded secret MONGODB_URI
+```
+
+Set your `MONGODB_URI` secret locally in a `.dev.vars` file as documented in [Local Development with Secrets](/workers/configuration/secrets/):
+
+```toml title=".dev.vars"
+MONGODB_URI="<ENTER YOUR MONGODB CONNECTION STRING>"
+```
+
+## 5. Connect to the MongoDB database in the Worker
+
+Open your Worker's main file (for example, `src/index.ts`) and import the `MongoClient` class from the `mongodb` library:
+
+```typescript
+import { MongoClient } from "mongodb";
+```
+
+In the `fetch` event handler, create a new `MongoClient` instance and connect to the MongoDB database.
+
+```typescript
+// create a new MongoClient instance using the connection string
+const client = new MongoClient(env.MONGODB_URI);
+// connect to the MongoDB database
+await client.connect();
+```
+
+## 6. Interact with the movies database
+
+To demonstrate how to interact with the movies database, you will fetch a document from the `movies` collection by querying the collection when a request is received.
+
+:::note
+
+If you are following along with MongoDB Atlas, you can use the `sample_mflix` sample dataset. To load this data, open the Atlas console, navigate to your cluster, and select **Load Sample Dataset**.
+
+:::
+
+Replace the existing code in your `src/index.ts` file with the following code:
+
+```typescript
+import { MongoClient } from "mongodb";
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Create a new MongoClient instance using the connection string
+		const client = new MongoClient(env.MONGODB_URI);
+		// Connect to the MongoDB database
+		await client.connect();
+
+		// Query the movies collection
+		const movie = await client
+			.db("sample_mflix")
+			.collection("movies")
+			.findOne(
+				{ title: "The Room" },
+				{ projection: { _id: 0, title: 1, imdb: 1 } },
+			);
+
+		// Return the result as JSON
+		return Response.json({ movie });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+This code establishes a connection to the MongoDB database within your Worker application and queries the `movies` collection, returning the result as a JSON response.
+
+## 7. Deploy your Worker
+
+Run the following command to deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
+
+After deploying, you can interact with your MongoDB database using your Cloudflare Worker. Whenever a request is made to your Worker's URL, it will fetch data from the `movies` collection and return it as a JSON response.
+
+## 8. Use a Durable Object to accelerate queries
+
+Each Worker invocation creates a new TCP and TLS connection to MongoDB. For low-traffic use cases, this is acceptable. For latency-sensitive applications, place the `MongoClient` inside a [Durable Object](/durable-objects/) to persist the connection between requests.
+
+Create a new file for the Durable Object class:
+
+```ts title="src/MongoDBConnection.ts"
+import { DurableObject, DurableObjectState } from "cloudflare:workers";
+import { MongoClient } from "mongodb";
+
+interface Env {
+	MONGODB_URI: string;
+}
+
+export class MongoDBConnection extends DurableObject {
+	private client: MongoClient;
+
+	constructor(state: DurableObjectState, env: Env) {
+		super(state, env);
+		this.client = new MongoClient(env.MONGODB_URI, {
+			maxPoolSize: 1,
+			minPoolSize: 0,
+			serverSelectionTimeoutMS: 5000,
+			maxIdleTimeMS: 20_000,
+		});
+	}
+
+	async getMovie() {
+		const start = Date.now();
+		await this.client.connect();
+		const movie = await this.client
+			.db("sample_mflix")
+			.collection("movies")
+			.findOne(
+				{ title: "The Room" },
+				{ projection: { _id: 0, title: 1, imdb: 1 } },
+			);
+		return { movie, queryTime: Date.now() - start };
+	}
+}
+```
+
+Update your Worker entry point to route requests to the Durable Object:
+
+```ts title="src/index.ts"
+import { MongoDBConnection } from "./MongoDBConnection";
+
+interface Env {
+	MONGODB_URI: string;
+	MONGODB_CONNECTION: DurableObjectNamespace<MongoDBConnection>;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const id = env.MONGODB_CONNECTION.idFromName("mongodb-connection");
+		const stub = env.MONGODB_CONNECTION.get(id, { locationHint: "enam" });
+		const result = await stub.getMovie();
+		return Response.json(result);
+	},
+} satisfies ExportedHandler<Env>;
+
+export { MongoDBConnection };
+```
+
+Use the `locationHint` option to place the Durable Object close to your MongoDB cluster. Available hints include `wnam`, `enam`, `sam`, `weur`, `eeur`, `apac`, `oc`, `afr`, and `me`. Match the hint to the region of your MongoDB cluster.
+
+Configure the Durable Object binding and migration in your Wrangler file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "mongodb-tutorial",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-03-21",
+	"compatibility_flags": ["nodejs_compat"],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MONGODB_CONNECTION",
+				"class_name": "MongoDBConnection"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": ["MongoDBConnection"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## 9. Redeploy your Worker
+
+Run the following command to deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Your Worker application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`, using a Durable Object to persist MongoDB connections. This reduces query latency from ~300 ms on cold requests to ~35 ms on warm requests.
+
+:::caution[Durable Object lifecycle considerations]
+
+- The Durable Object evicts after roughly 70–140 seconds of no incoming requests. The next request pays the cold start cost again.
+- TCP connections do not survive hibernation.
+- You cannot pass `MongoClient`, `Db`, or `Collection` objects back to the calling Worker via RPC. Run all database logic inside the Durable Object.
+- A single Durable Object instance has a soft limit of roughly 1,000 requests per second.
+
+:::
+
+## Next steps
+
+To build more with databases and Workers, refer to [Tutorials](/workers/tutorials) and explore the [Databases documentation](/workers/databases).
+
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with fellow developers and the Cloudflare team.
