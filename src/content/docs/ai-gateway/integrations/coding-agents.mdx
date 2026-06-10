@@ -23,7 +23,6 @@ Routing a coding agent through AI Gateway gives you:
 - **Rate limiting** — cap request volume with [rate limiting](/ai-gateway/features/rate-limiting/).
 - **Cost tracking** — attribute spend across sessions and models.
 - **Data Loss Prevention** — scan prompts and responses for secrets, credentials, and other sensitive data with [DLP](/ai-gateway/features/dlp/).
-- **Guardrails** — flag or block harmful prompts and model responses with [Guardrails](/ai-gateway/features/guardrails/).
 
 ## Prerequisites
 
@@ -76,21 +75,15 @@ This configuration uses your Anthropic API key, so Anthropic bills you for model
 
 </Steps>
 
-## Protect sensitive code and data
+## Protect sensitive code with DLP
 
 Coding agents routinely send source code, configuration files, and snippets to model providers. That traffic can include API keys, customer data, or other sensitive material. Because AI Gateway sits between the agent and the provider, you can inspect and control it without changing the agent.
-
-### Scan prompts and responses with DLP
 
 [Data Loss Prevention (DLP)](/ai-gateway/features/dlp/) scans request and response bodies against [detection profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) and either flags or blocks matches. Use it to catch secrets, credentials, or regulated data leaving (or returning to) the agent.
 
 :::note
 Claude Code streams responses by default. When DLP response scanning is enabled, AI Gateway buffers the full provider response before returning it, which increases time-to-first-token. If you need low-latency streaming, set the DLP policy **Check** to **Request** only, or use a separate gateway for latency-sensitive traffic. Refer to [streaming behavior](/ai-gateway/features/dlp/#streaming-behavior).
 :::
-
-### Moderate content with Guardrails
-
-[Guardrails](/ai-gateway/features/guardrails/) evaluate prompts and model responses against safety categories (such as violence, hate, or sexual content) and either flag or block them. This gives you a consistent moderation layer across every provider your coding agents use.
 
 ## Verify it works
 
