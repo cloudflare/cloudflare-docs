@@ -112,6 +112,7 @@ To connect to MongoDB using a Durable Object:
 
 5. Create a Durable Object class that holds the `MongoClient` instance:
 
+   <TypeScriptExample filename="src/MongoDBConnection.ts">
    ```ts title="src/MongoDBConnection.ts"
    import { DurableObject, DurableObjectState } from "cloudflare:workers";
    import { MongoClient } from "mongodb";
@@ -146,7 +147,6 @@ To connect to MongoDB using a Durable Object:
    		return { movie, queryTime: Date.now() - start };
    	}
    }
-   ```
 
    Creating the `MongoClient` in the constructor and calling `connect()` in the request handler allows the Durable Object to reuse an existing connection across requests.
 
