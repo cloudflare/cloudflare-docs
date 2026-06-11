@@ -51,6 +51,7 @@ To connect to MongoDB directly from a Worker:
 
 5. The following example shows how to query a MongoDB database from a Worker:
 
+   <TypeScriptExample filename="src/index.ts">
    ```ts
    import { MongoClient } from "mongodb";
 
@@ -74,7 +75,6 @@ To connect to MongoDB directly from a Worker:
    		return Response.json({ movie });
    	},
    } satisfies ExportedHandler<Env>;
-   ```
 
    The MongoDB driver uses the `node:net` and `node:tls` modules, which are available in Workers when `nodejs_compat` is enabled with a compatibility date of `2025-03-20` or later.
 
