@@ -2970,3 +2970,6 @@
 
 # Security Insights (moved from Security Center to Security)
 /security-center/security-insights/* /security/security-insights/:splat 301
+
+# Security Center Get Started (redundant – content already exists at /security/security-insights/)
+/security-center/get-started/ /security/security-insights/ 301

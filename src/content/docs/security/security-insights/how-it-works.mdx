@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 Cloudflare runs regular security scans on your account. These scans check your Cloudflare account settings, DNS record configurations, and product configurations — such as SSL/TLS, WAF, and Access — across all domains in your account.
 
@@ -32,4 +32,28 @@ For a full list of insight types and their descriptions, refer to [Security Insi
 
 <Render file="scan-frequency" product="security-center" />
 
-Eligible accounts (Business, Enterprise, or Teams plans) can also manually start a scan. Refer to [Get started](/security-center/get-started/) for instructions.
+Eligible accounts (Business, Enterprise, or Teams plans) can also manually start a scan.
+
+## Manage scans
+
+Security Insights scans are enabled by default. The initial scan time depends on the number of IT assets in all the domains of your Cloudflare account. When the scan is complete, the status of the page will change from **Scan in Progress** to **Last scan performed on: `<DATE_TIME>`**.
+
+### Disable scans
+
+1. In the Cloudflare dashboard, go to the **Security Insights** page.
+
+   <DashButton url="/?to=/:account/security-center" />
+
+2. Go to **Disable Security Center scans**, select **Disable scans**.
+
+### Start a new scan
+
+1. In the Cloudflare dashboard, go to the **Security Insights** page.
+
+   <DashButton url="/?to=/:account/security-center" />
+
+2. Select **Scan now**.
+
+:::note
+Only accounts with at least one Business or Enterprise zone, or accounts on the Teams Standard or Teams Enterprise plan, can start manual scans. All plans receive automatic scans.
+:::
