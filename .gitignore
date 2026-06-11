@@ -64,4 +64,3 @@ tools/relevant_changed_files.txt
 .flue/.flue-vite/
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
-.flue/pnpm-lock.yaml
