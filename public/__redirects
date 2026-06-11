@@ -2720,6 +2720,9 @@
 /cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
 /cloudflare-one/remote-browser-isolation/canvas-rendering/ /cloudflare-one/remote-browser-isolation/canvas-remoting/ 301
 
+# Security Center Get Started (redundant – content already exists at /security/security-insights/)
+/security-center/get-started/ /security/security-insights/ 301
+
 # ============================================================================
 # DYNAMIC REDIRECTS
 /agents/think/* /agents/harnesses/think/:splat 301
@@ -2970,6 +2973,3 @@
 
 # Security Insights (moved from Security Center to Security)
 /security-center/security-insights/* /security/security-insights/:splat 301
-
-# Security Center Get Started (redundant – content already exists at /security/security-insights/)
-/security-center/get-started/ /security/security-insights/ 301
