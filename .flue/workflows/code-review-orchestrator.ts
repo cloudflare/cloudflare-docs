@@ -33,6 +33,8 @@ import {
 } from "../lib/github";
 import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-review";
 
+const INTERNAL_AUTH_HEADER = "x-flue-internal-token";
+
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
 // Only review docs/partials/changelog MDX, capped before specialist fan-out.
@@ -46,10 +48,17 @@ const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
 
 // Regex to extract the previously reviewed head SHA from the bot comment
 const REVIEWED_HEAD_SHA_RE = /<!-- reviewed-head-sha: ([0-9a-f]{40}) -->/;
+const REVIEWED_AT_RE = /<!-- reviewed-at: ([^\n]+) -->/;
 
 function extractReviewedHeadSha(body: string | null): string | null {
 	if (!body) return null;
 	const m = body.match(REVIEWED_HEAD_SHA_RE);
+	return m?.[1] ?? null;
+}
+
+function extractReviewedAt(body: string | null): string | null {
+	if (!body) return null;
+	const m = body.match(REVIEWED_AT_RE);
 	return m?.[1] ?? null;
 }
 
@@ -103,14 +112,14 @@ interface CodeReviewOrchestratorPayload {
 	triggerEyesReactionId?: number | null;
 }
 
-export async function run({ id, init, payload, env, runId, req }: FlueContext) {
+export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
 
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	const loader = typedEnv.LOADER as Parameters<
+	const loader = typedEnv.LOADER as unknown as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
 	const workspace = getDefaultWorkspace();
@@ -321,12 +330,13 @@ export async function run({ id, init, payload, env, runId, req }: FlueContext) {
 	// 	action: "context_fetched",
 	// });
 
-	// PR-scoped context directory in R2 — keyed by PR number so each new commit
-	// overwrites the previous state rather than accumulating stale data.
+	// Run-scoped context directory in R2 so concurrent reviews for the same PR
+	// cannot overwrite each other's manifest, patches, or comments.
 	// Written to R2 (not the local workspace) so specialist Durable Objects,
 	// which run in separate isolates, can read the files into their own workspace.
-	const diffDir = `diffs/pr-${input.number}`;
-	const commentsPath = `diffs/pr-${input.number}/comments.json`;
+	const prDir = `diffs/pr-${input.number}`;
+	const diffDir = `${prDir}/runs/${runId}`;
+	const commentsPath = `${diffDir}/comments.json`;
 
 	// ── 2. Write diff and comments to R2, and post placeholder comment ────────
 	await Promise.all([
@@ -362,6 +372,9 @@ export async function run({ id, init, payload, env, runId, req }: FlueContext) {
 	let styleGuideResult: StyleGuideResult;
 	try {
 		const styleGuideFiles = selectStyleGuideFiles(allFiles);
+		const internalHeaders = getInternalHeaders(
+			typedEnv as Record<string, string>,
+		);
 		// console.log({
 		// 	message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
 		// 	event: "code_review_orchestrator",
@@ -376,11 +389,12 @@ export async function run({ id, init, payload, env, runId, req }: FlueContext) {
 			styleGuideFiles.map(
 				(file, index) => async () =>
 					dispatchStyleGuideReview(
-						`${id}:style-guide:${index}`,
+						`${runId}:style-guide:${index}`,
 						input.number,
 						diffDir,
 						commentsPath,
 						req,
+						internalHeaders,
 						file.filename,
 					),
 			),
@@ -488,7 +502,7 @@ export async function run({ id, init, payload, env, runId, req }: FlueContext) {
 	// ── 4. Reconcile findings with review history and human comments ───────────
 	// Load previous findings from R2 (structured) rather than parsing the comment.
 	const previousReviewKey = previousReviewedSha
-		? `${diffDir}/review-${previousReviewedSha}.json`
+		? `${prDir}/review-${previousReviewedSha}.json`
 		: null;
 	let previousFindings: StyleGuideFinding[] = [];
 	if (previousReviewKey) {
@@ -564,7 +578,7 @@ export async function run({ id, init, payload, env, runId, req }: FlueContext) {
 	}
 
 	// ── 5. Persist findings to R2 for future reconciliation ───────────────────
-	const currentReviewKey = `${diffDir}/review-${currentHeadSha}.json`;
+	const currentReviewKey = `${prDir}/review-${currentHeadSha}.json`;
 	await bucket.put(currentReviewKey, JSON.stringify(reconciled.active));
 
 	// ── 6. Render the review comment ───────────────────────────────────────────
@@ -677,7 +691,10 @@ function partitionComments(comments: GitHubIssueComment[]): {
 
 	// Human comments after the last bot review — exclude automated bots
 	// (GitHub Actions, Dependabot, etc.) since they never address review findings.
-	const botTimestamp = botComment?.created_at ?? null;
+	const botTimestamp =
+		extractReviewedAt(botComment?.body ?? null) ??
+		botComment?.created_at ??
+		null;
 	const humanCommentsAfterBot = comments.filter(
 		(c) =>
 			!c.body?.includes(BOT_COMMENT_MARKER) &&
@@ -825,6 +842,7 @@ async function dispatchStyleGuideReview(
 	diffDir: string,
 	commentsPath: string,
 	req: Request | undefined,
+	internalHeaders: HeadersInit,
 	filename?: string,
 ): Promise<StyleGuideResult> {
 	// Derive the base URL from the incoming request so this works on any port
@@ -835,7 +853,7 @@ async function dispatchStyleGuideReview(
 
 	const response = await fetch(url, {
 		method: "POST",
-		headers: { "content-type": "application/json" },
+		headers: internalHeaders,
 		body: JSON.stringify({ number: prNumber, diffDir, commentsPath, filename }),
 	});
 
@@ -936,6 +954,7 @@ function renderComment(
 	forceFullReview?: boolean,
 ): string {
 	const shortSha = reviewedHeadSha.slice(0, 7);
+	const reviewedAt = new Date().toISOString();
 	// Exclude anything acknowledged by the reviewer from active sections
 	const ignoredPaths = new Set(
 		reconciled.ignored_by_reviewer.map((f) => `${f.path}:${f.line}:${f.rule}`),
@@ -961,6 +980,7 @@ function renderComment(
 	const lines: string[] = [
 		BOT_COMMENT_MARKER,
 		`<!-- reviewed-head-sha: ${reviewedHeadSha} -->`,
+		`<!-- reviewed-at: ${reviewedAt} -->`,
 		`<!-- updated-at: ${new Date().toISOString()} -->`,
 		"",
 		"## Review",
@@ -1120,4 +1140,17 @@ async function incrementAutoReviewCount(
 ): Promise<void> {
 	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
 	await bucket.put(key, JSON.stringify({ count: current + 1 }));
+}
+
+function getInternalHeaders(env: Record<string, string>) {
+	const token = env.DOCS_FLUE_INTERNAL_TOKEN;
+	if (!token) {
+		throw new Error(
+			"DOCS_FLUE_INTERNAL_TOKEN is required for internal workflow dispatch.",
+		);
+	}
+	return {
+		"content-type": "application/json",
+		[INTERNAL_AUTH_HEADER]: token,
+	};
 }

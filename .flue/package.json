@@ -16,6 +16,7 @@
 		"@flue/cli": "0.11.0",
 		"@flue/runtime": "0.11.0",
 		"agents": "0.14.1",
+		"hono": "4.12.25",
 		"valibot": "1.4.1",
 		"wrangler": "4.97.0"
 	}
