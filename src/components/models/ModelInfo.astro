@@ -10,9 +10,8 @@ interface Props {
 const { model } = Astro.props;
 const authorId = getModelAuthor(model.name);
 const author = authorData[authorId]?.name ?? authorId;
-const hosting = model.hosting === "proxied" ? "Proxied" : "Hosted";
 ---
 
 <span class="mt-2 block! leading-5 text-gray-400">
-	{model.task.name} • {author} • {hosting}
+	{model.task.name} • {author}
 </span>
