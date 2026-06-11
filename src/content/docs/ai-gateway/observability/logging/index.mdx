@@ -36,7 +36,8 @@ In the example below, we use `cf-aig-collect-log` to bypass the default setting 
 <Render file="auth-token-hint" product="ai-gateway" />
 
 ```bash
-# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -58,15 +59,16 @@ The `cf-aig-collect-log-payload` header allows you to control whether the raw re
 
 This is useful when you want to maintain visibility into usage metrics and request metadata without persisting sensitive prompt or completion data.
 
-| Header value | Behavior |
-| ------------ | -------- |
-| `true`       | Request and response payloads are stored. |
+| Header value | Behavior                                                               |
+| ------------ | ---------------------------------------------------------------------- |
+| `true`       | Request and response payloads are stored.                              |
 | `false`      | Payload storage is skipped. Metadata-only log entries are still saved. |
 
 In the example below, we use `cf-aig-collect-log-payload` to skip storing the request and response bodies while keeping the metadata log.
 
 ```bash
-# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

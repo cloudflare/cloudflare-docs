@@ -33,7 +33,8 @@ The `cf-aig-authorization` header is used with the `gateway.ai.cloudflare.com` e
 <Render file="auth-token-hint" product="ai-gateway" />
 
 ```bash
-# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -71,7 +72,7 @@ const openai = createOpenAI({
 
 :::note
 When an AI Gateway is accessed from a Cloudflare Worker using a **binding**, the `cf-aig-authorization` header does not need to be manually included.  
-Requests made through bindings are **pre-authenticated** within the associated Cloudflare account. 
+Requests made through bindings are **pre-authenticated** within the associated Cloudflare account.
 :::
 
 The following table outlines gateway behavior based on the authentication settings and header status:

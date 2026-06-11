@@ -35,8 +35,9 @@ For a provider-specific endpoint, configure the timeout value by adding a `cf-ai
 
 <Render file="auth-token-hint" product="ai-gateway" />
 
-```bash title="Request with timeout" {4}
-# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
+```bash title="Request with timeout" {6}
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

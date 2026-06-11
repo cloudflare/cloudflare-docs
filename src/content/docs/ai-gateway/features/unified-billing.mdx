@@ -88,7 +88,8 @@ Use the Cloudflare API to call third-party models. Pass your Cloudflare API toke
 <Render file="auth-token-hint" product="ai-gateway" />
 
 ```bash
-# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -163,7 +164,8 @@ To set ZDR as the default for Unified Billing using the API:
 Use the `cf-aig-zdr` header to override the gateway default for a single Unified Billing request. Set it to `true` to force ZDR, or `false` to disable ZDR for the request.
 
 ```bash title="Unified Billing request with ZDR"
-# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
