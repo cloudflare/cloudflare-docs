@@ -1,12 +1,12 @@
 ---
-title: New formats parameter for the /snapshot endpoint
-description: The /snapshot endpoint now accepts a formats parameter to include Markdown and the accessibility tree alongside the default HTML content and screenshot.
+title: "New formats parameter for the Browser Run /snapshot endpoint"
+description: Browser Run's /snapshot endpoint now accepts a formats parameter to return Markdown and the accessibility tree alongside HTML and screenshots.
 products:
   - browser-run
-date: 2026-06-10
+date: 2026-06-11
 ---
 
-The [`/snapshot` endpoint](/browser-run/quick-actions/snapshot/) now supports a `formats` parameter that lets you return multiple page formats in a single API call. Previously, `/snapshot` returned only HTML content and a screenshot. You can now also include Markdown and the accessibility tree in the same response. Browser Run also provides individual endpoints for each format, such as [`/content`](/browser-run/quick-actions/content-endpoint/), [`/screenshot`](/browser-run/quick-actions/screenshot-endpoint/), [`/markdown`](/browser-run/quick-actions/markdown-endpoint/), and [more](/browser-run/quick-actions/).
+[Browser Run](/browser-run/)'s [`/snapshot` endpoint](/browser-run/quick-actions/snapshot/) now supports a `formats` parameter that lets you return multiple page formats in a single API call. Previously, `/snapshot` returned only HTML content and a screenshot. You can now also include Markdown and the accessibility tree in the same response. Browser Run also provides individual endpoints for each format, such as [`/content`](/browser-run/quick-actions/content-endpoint/), [`/screenshot`](/browser-run/quick-actions/screenshot-endpoint/), [`/markdown`](/browser-run/quick-actions/markdown-endpoint/), and [more](/browser-run/quick-actions/).
 
 Including these formats in a `/snapshot` response is particularly useful for AI agent workflows, where choosing the right page representation can reduce token usage and improve accuracy:
 
