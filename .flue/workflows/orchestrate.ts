@@ -19,8 +19,7 @@ import {
 	isCodeOwner,
 	verifyGitHubSignature,
 } from "../lib/github";
-
-const INTERNAL_AUTH_HEADER = "x-flue-internal-token";
+import { getInternalHeaders } from "../lib/internal-auth";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -522,17 +521,4 @@ function getIssueOrPullRequestTitle(
 
 function truncateLogValue(value: string) {
 	return value.length > 100 ? `${value.slice(0, 97)}...` : value;
-}
-
-function getInternalHeaders(env: Record<string, string>) {
-	const token = env.DOCS_FLUE_INTERNAL_TOKEN;
-	if (!token) {
-		throw new Error(
-			"DOCS_FLUE_INTERNAL_TOKEN is required for internal workflow dispatch.",
-		);
-	}
-	return {
-		"content-type": "application/json",
-		[INTERNAL_AUTH_HEADER]: token,
-	};
 }

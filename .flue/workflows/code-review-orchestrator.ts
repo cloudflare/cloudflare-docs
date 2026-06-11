@@ -31,9 +31,8 @@ import {
 	updateIssueComment,
 	type GitHubIssueComment,
 } from "../lib/github";
+import { getInternalHeaders } from "../lib/internal-auth";
 import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-review";
-
-const INTERNAL_AUTH_HEADER = "x-flue-internal-token";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -1140,17 +1139,4 @@ async function incrementAutoReviewCount(
 ): Promise<void> {
 	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
 	await bucket.put(key, JSON.stringify({ count: current + 1 }));
-}
-
-function getInternalHeaders(env: Record<string, string>) {
-	const token = env.DOCS_FLUE_INTERNAL_TOKEN;
-	if (!token) {
-		throw new Error(
-			"DOCS_FLUE_INTERNAL_TOKEN is required for internal workflow dispatch.",
-		);
-	}
-	return {
-		"content-type": "application/json",
-		[INTERNAL_AUTH_HEADER]: token,
-	};
 }

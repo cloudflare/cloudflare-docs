@@ -2,8 +2,11 @@ import { env as workerEnv } from "cloudflare:workers";
 import { registerProvider } from "@flue/runtime";
 import { flue } from "@flue/runtime/routing";
 import { Hono, type Hono as HonoApp, type MiddlewareHandler } from "hono";
-
-const INTERNAL_AUTH_HEADER = "x-flue-internal-token";
+import {
+	INTERNAL_AUTH_HEADER,
+	hasValidInternalToken,
+	normalizePathname,
+} from "./lib/internal-auth";
 
 const bindings = workerEnv as unknown as {
 	AI: Ai;
@@ -21,11 +24,12 @@ registerProvider("cloudflare", {
 });
 
 const requireInternalToken: MiddlewareHandler = async (c, next) => {
-	const expected = (c.env as Record<string, string | undefined>)
-		.DOCS_FLUE_INTERNAL_TOKEN;
-	const provided = c.req.header(INTERNAL_AUTH_HEADER);
-
-	if (!expected || provided !== expected) {
+	if (
+		!hasValidInternalToken(
+			c.env as Record<string, string | undefined>,
+			c.req.header(INTERNAL_AUTH_HEADER),
+		)
+	) {
 		return c.text("Unauthorized", 401);
 	}
 
@@ -39,7 +43,9 @@ app.get("/health", (c) => c.json({ ok: true }));
 app.use("/runs/*", requireInternalToken);
 app.use("/workflows/*", async (c, next) => {
 	// GitHub calls orchestrate directly; it verifies the webhook signature before acting.
-	if (new URL(c.req.url).pathname === "/workflows/orchestrate") {
+	if (
+		normalizePathname(new URL(c.req.url).pathname) === "/workflows/orchestrate"
+	) {
 		await next();
 		return;
 	}
