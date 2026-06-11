@@ -346,6 +346,7 @@
 /ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
 /ai-gateway/legacy-models/ /ai/models/ 301
 /ai-gateway/supported-models/ /ai/models/ 301
+/ai-gateway/integrations/worker-binding-methods/ /ai-gateway/usage/worker-binding-methods/ 301
 /ai-gateway/tutorials/deploy-aig-worker/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 
 # analytics
