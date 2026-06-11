@@ -236,31 +236,19 @@ Configure the Durable Object binding and migration in your Wrangler file:
 
 <WranglerConfig>
 
-```jsonc
-{
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "mongodb-tutorial",
-	"main": "src/index.ts",
-	"compatibility_date": "2025-03-21",
-	"compatibility_flags": ["nodejs_compat"],
-	"durable_objects": {
-		"bindings": [
-			{
-				"name": "MONGODB_CONNECTION",
-				"class_name": "MongoDBConnection"
-			}
-		]
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_classes": ["MongoDBConnection"]
-		}
-	]
-}
-```
+```toml
+name = "mongodb-tutorial"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
 
-</WranglerConfig>
+[[durable_objects.bindings]]
+name = "MONGODB_CONNECTION"
+class_name = "MongoDBConnection"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["MongoDBConnection"]
 
 ## 9. Redeploy your Worker
 
