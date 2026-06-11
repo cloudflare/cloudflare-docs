@@ -11,10 +11,10 @@
 	},
 	"dependencies": {
 		"@cloudflare/codemode": "0.3.8",
-		"@cloudflare/shell": "0.3.8",
+		"@cloudflare/shell": "0.3.9",
 		"@cloudflare/workers-types": "4.20260526.1",
-		"@flue/cli": "0.9.1",
-		"@flue/runtime": "0.9.1",
+		"@flue/cli": "0.11.0",
+		"@flue/runtime": "0.11.0",
 		"agents": "0.14.1",
 		"valibot": "1.4.1",
 		"wrangler": "4.97.0"
