@@ -1,0 +1,67 @@
+---
+title: Automatically remediate security findings with CASB Workflows
+description: CASB Workflows lets you automatically remediate posture findings and dispatch webhooks the moment a finding is detected.
+products:
+  - casb
+date: 2026-07-18
+---
+
+import { Details } from "~/components";
+
+You can now automate your security response with **CASB Workflows** in Cloudflare One. Instead of manually triaging every posture finding, you can build workflows that automatically remediate risks and notify external systems the moment a finding is detected.
+
+CASB Workflows closes the loop between detection and response. This allows security teams to spend less time monitoring findings. Instead, security posture is continuously surfaced and enforced.
+
+### Auto-remediation
+
+Auto-remediation workflows allow CASB to fix security issues directly in your SaaS applications via API. When a workflow triggers, Cloudflare revokes the external sharing configuration without human intervention.
+
+Auto-remediation is currently supported for file-sharing findings in Microsoft 365 and Google Workspace. The only available action is **Revoke External Sharing**. Support for additional remediation actions and integrations is coming soon.
+
+<Details header="Supported findings for auto-remediation">
+
+**Google Workspace:**
+- File publicly accessible with edit access
+- File publicly accessible with view access
+- File shared outside company with edit access
+- File shared outside company with view access
+- File shared company-wide with edit access
+- File shared company-wide with view access
+- File publicly accessible with edit access with DLP Profile match
+- File publicly accessible with view access with DLP Profile match
+- File shared outside company with edit access with DLP Profile match
+- File shared outside company with view access with DLP Profile match
+- File shared company-wide with edit access with DLP Profile match
+- File shared company-wide with view access with DLP Profile match
+
+**Microsoft 365:**
+- File publicly accessible with edit access
+- File publicly accessible with view access
+- File shared company-wide with edit access
+- File shared company-wide with view access
+- File publicly accessible with edit access with DLP Profile match
+- File publicly accessible with view access with DLP Profile match
+- File shared company-wide with edit access with DLP Profile match
+- File shared company-wide with view access with DLP Profile match
+
+</Details>
+
+### Custom webhooks
+
+Custom webhooks let you send posture finding data to Slack, ServiceNow, or any other webhook destination. Custom webhooks are supported for all posture finding types across all CASB integrations.
+
+A single workflow can perform both actions: automatically remediate a finding and dispatch a webhook.
+
+### Get started
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Webhooks**.
+2. Select **Create workflow**.
+3. Enter a **Name** and optional **Description**.
+4. In **Trigger**, select the posture finding type that should activate the workflow.
+5. In **Action**, choose **Auto-remediation**, **Custom webhook**, or both.
+6. Select **Save**.
+
+### Learn more
+
+- Configure [CASB webhooks](/cloudflare-one/integrations/cloud-and-saas/webhooks/) for workflow destinations.
+- Learn how to [manage findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/) in Cloudflare One.
