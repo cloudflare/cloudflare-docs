@@ -7,7 +7,7 @@ description: Outbound Data Loss Prevention (DLP) in Email Security.
 products:
   - cloudflare-one
 sidebar:
-  order: 18
+  order: 1
 ---
 
 :::note[Compatibility]
@@ -27,18 +27,19 @@ An outbound policy allows you to control outbound email flow.
 
 To create an outbound DLP policy:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Outbound DLP**.
-2. Select **Add a policy**.
-3. Name your policy.
-4. Build an expression to match specific email traffic. For example, you can create a policy that blocks outbound emails containing identifying numbers:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+2. Select **Policies & rules**, then go to **Outbound** > **Outbound DLP**.
+3. Select **Add a policy**.
+4. Name your policy.
+5. Build an expression to match specific email traffic. For example, you can create a policy that blocks outbound emails containing identifying numbers:
 
    | Selector            | Operator | Value                                                     | Logic | Action |
    | ------------------- | -------- | --------------------------------------------------------- | ----- | ------ |
    | Recipient email     | not in   | `example.com`                                             | And   | Block  |
    | Matched DLP profile | in       | _Social Security, Insurance, Tax, and Identifier Numbers_ |       |        |
 
-5. (Optional) Choose whether to use the default block message or a custom message.
-6. Select **Create policy**.
+6. (Optional) Choose whether to use the default block message or a custom message.
+7. Select **Create policy**.
 
 After creating your policy, you can modify or reorder your policies in **Email security** > **Outbound DLP**.
 
@@ -56,9 +57,10 @@ The Data Loss Prevention (DLP) Assist add-in allows Microsoft 365 users to deplo
 
 To set up DLP Assist add-in:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Outbound DLP**.
-2. Select **View Microsoft add-in instructions** > Select **Download add-in**. This downloads a `.xml` file necessary to install the add-in on the client side.
-3. Set up the add-in in Microsoft 365:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+2. Select **Policies & rules**, then go to **Outbound** > **Outbound DLP**.
+3. Select **View Microsoft add-in instructions** > Select **Download add-in**. This downloads a `.xml` file necessary to install the add-in on the client side.
+4. Set up the add-in in Microsoft 365:
    - Log in to the [Microsoft admin panel](https://security.microsoft.com/homepage) and go to **Microsoft 365 Admin Center** > **Settings** > **Integrated Apps**.
    - Choose **Upload custom apps** and select **Office Add-in** for the application type.
    - Select **Upload manifest file (.xml) from device**.
