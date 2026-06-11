@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Brand Protection
 description: Detect phishing domains and impersonation attempts targeting your brand.
 products:
-  - security-center
+  - threat-intelligence
 tags:
   - Phishing
   - AI
@@ -14,6 +14,7 @@ sidebar:
 import { AvailableNotifications, Render, DashButton } from "~/components";
 
 <Render file="brand-protection-definition" product="security-center" />
+
 
 :::note[User permission]
 Access to Brand Protection is managed through [Cloudflare RBAC](/fundamentals/manage-members/roles/).
@@ -73,16 +74,16 @@ The browser will return to the **Monitored Logos** page, where you can access yo
 
 In this section, the dashboard displays:
 
-- **Domain overview** where you can request to [change categorization](/security-center/investigate/change-categorization/) and view the resolution history of your domain for up to seven days.
+- **Domain overview** where you can request to [change categorization](/threat-intelligence/investigate-portal/change-categorization/) and view the resolution history of your domain for up to seven days.
 - **WHOIS** that provides details about the date the domain was created, registrant and nameservers.
-- **Domain history** that provides information on the domain category and when it was last changed. Refer to [Investigate threats](/security-center/investigate/investigate-threats/) for more details.
+- **Domain history** that provides information on the domain category and when it was last changed. Refer to [Investigate threats](/threat-intelligence/investigate-portal/investigate-threats/) for more details.
 - **URL Reports** that provides information on any reported URL.
 
 To investigate a string query:
 
 1. Go to the **Monitor Strings** or **Monitor Logos** section to view all your queries.
 2. Select a monitored query to inspect all the domains that matched your query.
-3. Next to the domain, select **Domain** or **URL**. This will trigger a search on the [**Investigate**](/security-center/investigate/) section in a separate tab. URL scanner will also be triggered from **Brand Protection** through **Security Center** > **Investigate**. You will also have access to a report which will be generated automatically. The report will display screenshots of the matched domain, and the registrar of your domain.
+3. Next to the domain, select **Domain** or **URL**. This will trigger a search on the [**Investigate**](/threat-intelligence/investigate-portal/) section in a separate tab. URL scanner will also be triggered from **Brand Protection** through **Threat Intelligence** > **Investigate**. You will also have access to a report which will be generated automatically. The report will display screenshots of the matched domain, and the registrar of your domain.
 
 ## Report abuse
 

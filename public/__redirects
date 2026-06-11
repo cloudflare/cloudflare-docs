@@ -2970,3 +2970,42 @@
 
 # Security Insights (moved from Security Center to Security)
 /security-center/security-insights/* /security/security-insights/:splat 301
+
+# ==========================================================================
+# Security Center deprecation – content moved to Threat Intelligence
+# and Application Security (RFC: deprecate-security-center)
+# ==========================================================================
+
+# Infrastructure → Application Security
+/security-center/infrastructure/ /application-security/infrastructure/ 301
+/security-center/infrastructure/security-file/ /application-security/infrastructure/security-file/ 301
+
+# Investigate → Threat Intelligence / Investigate Portal
+/security-center/investigate/ /threat-intelligence/investigate-portal/ 301
+/security-center/investigate/change-categorization/ /threat-intelligence/investigate-portal/change-categorization/ 301
+/security-center/investigate/investigate-threats/ /threat-intelligence/investigate-portal/investigate-threats/ 301
+/security-center/investigate/scan-limits/ /threat-intelligence/investigate-portal/scan-limits/ 301
+
+# Brand Protection → Threat Intelligence
+/security-center/brand-protection/ /threat-intelligence/brand-protection/ 301
+
+# Indicator Feeds → Threat Intelligence / Custom Indicator Feeds
+/security-center/indicator-feeds/ /threat-intelligence/custom-indicator-feeds/ 301
+
+# Intel APIs → Threat Intelligence / Threat Intelligence APIs
+/security-center/intel-apis/ /threat-intelligence/threat-intelligence-apis/ 301
+/security-center/intel-apis/limits/ /threat-intelligence/threat-intelligence-apis/limits/ 301
+/security-center/intel-apis/manage-miscategorization-reports/ /threat-intelligence/threat-intelligence-apis/manage-miscategorization-reports/ 301
+
+# Cloudforce One → Threat Intelligence / Threat Intelligence Platform
+/security-center/cloudforce-one/ /threat-intelligence/threat-intelligence-platform/ 301
+/security-center/cloudforce-one/cloudforce-one/ /threat-intelligence/threat-intelligence-platform/cloudforce-one/ 301
+/security-center/cloudforce-one/open-port-scanning/ /threat-intelligence/threat-intelligence-platform/open-port-scanning/ 301
+
+# Top-level pages
+/security-center/changelog/ /threat-intelligence/changelog/ 301
+/security-center/get-started/ /threat-intelligence/get-started/ 301
+
+# Catch-all: any remaining /security-center/ path → Threat Intelligence overview
+/security-center/ /threat-intelligence/ 301
+/security-center/* /threat-intelligence/:splat 301

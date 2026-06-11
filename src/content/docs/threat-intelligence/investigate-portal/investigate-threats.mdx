@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Investigate threats
 description: Search for IP, domain, URL, or ASN intelligence in Security Center or Radar.
 products:
-  - security-center
+  - threat-intelligence
 sidebar:
   order: 3
 
@@ -13,11 +13,11 @@ import { Render, DashButton } from "~/components"
 
 Users can investigate the details of an IP address, domain name, URL, or Autonomous System Number (ASN). You can find the Investigate feature in your Cloudflare account's Security Center and in [Cloudflare Radar](https://radar.cloudflare.com/scan).
 
-You can search with Investigate by [IP address](/security-center/investigate/investigate-threats/#ip-address), [domain](/security-center/investigate/investigate-threats/#domain), [URL](/security-center/investigate/investigate-threats/#url) and [AS number](/security-center/investigate/investigate-threats/#as-number).
+You can search with Investigate by [IP address](/threat-intelligence/investigate-portal/investigate-threats/#ip-address), [domain](/threat-intelligence/investigate-portal/investigate-threats/#domain), [URL](/threat-intelligence/investigate-portal/investigate-threats/#url) and [AS number](/threat-intelligence/investigate-portal/investigate-threats/#as-number).
 
 :::note
 
-Search methods are also available through the [API](/security-center/intel-apis/).
+Search methods are also available through the [API](/threat-intelligence/threat-intelligence-apis/).
 
 :::
 
@@ -40,7 +40,7 @@ When you search for a domain name, Cloudflare will provide an overview of the do
 
 For a detailed list of categories, refer to [Domain categories](/cloudflare-one/traffic-policies/domain-categories/).
 
-A domain can have multiple categories. Cloudflare displays both the parent category and the detailed child category. You can [request category changes](/security-center/investigate/change-categorization/) for a domain. Miscategorized domains can also request to have a category added. This request goes through an approval process with the Cloudflare team.
+A domain can have multiple categories. Cloudflare displays both the parent category and the detailed child category. You can [request category changes](/threat-intelligence/investigate-portal/change-categorization/) for a domain. Miscategorized domains can also request to have a category added. This request goes through an approval process with the Cloudflare team.
 
 As part of the domain search results, Cloudflare show the WHOIS details and a history of its category changes over time.
 
@@ -69,7 +69,7 @@ To search using a hash:
 
 When you search for a URL, Cloudflare will provide a list of recent scan reports for that specific URL, limited to the past 30 days. You can view previously generated reports or scan again to generate a new report.
 
-Different Cloudflare plans will have different [scan limitations](/security-center/investigate/scan-limits/).
+Different Cloudflare plans will have different [scan limitations](/threat-intelligence/investigate-portal/scan-limits/).
 
 If you want to scan a URL:
 
