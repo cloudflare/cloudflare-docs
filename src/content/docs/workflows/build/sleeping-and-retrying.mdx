@@ -179,7 +179,6 @@ Rollback handlers receive:
 
 - `error` - the error that caused the Workflow to fail.
 - `output` - the value returned by the forward step, or `undefined` if the step failed before returning
-- `stepName` - the fully-qualified step name, including its count suffix.
 
 You can use `rollbackConfig` to control retry behavior for the rollback handler. Throw a `NonRetryableError` from the rollback handler to stop retrying it immediately.
 
