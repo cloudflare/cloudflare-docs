@@ -29,6 +29,16 @@
 			"tag": "v2",
 			"new_sqlite_classes": ["DependabotReviewWorkflow"],
 		},
+		{
+			"tag": "v3",
+			"renamed_classes": [
+				{ "from": "OrchestrateWorkflow", "to": "FlueOrchestrateWorkflow" },
+				{ "from": "CodeReviewOrchestratorWorkflow", "to": "FlueCodeReviewOrchestratorWorkflow" },
+				{ "from": "SpamAndOffTopicFilterWorkflow", "to": "FlueSpamAndOffTopicFilterWorkflow" },
+				{ "from": "StyleGuideReviewWorkflow", "to": "FlueStyleGuideReviewWorkflow" },
+				{ "from": "DependabotReviewWorkflow", "to": "FlueDependabotReviewWorkflow" },
+			],
+		},
 	],
 	"observability": {
 		"enabled": true,
