@@ -12,7 +12,7 @@ description: >-
   This tutorial explains how to connect to a MongoDB database with Cloudflare Workers. The Workers application you create in this tutorial will query a movies database in MongoDB.
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import { Render, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a MongoDB database using the native Node.js driver. You will start with a direct connection from a Worker, then use a [Durable Object](/durable-objects/) to persist connections and reduce latency.
 
@@ -87,12 +87,6 @@ Set your MongoDB connection string as a [secret](/workers/configuration/secrets/
 npx wrangler secret put MONGODB_URI
 ```
 
-```sh output
-➜  wrangler secret put MONGODB_URI
--------------------------------------------------------
-? Enter a secret value: › ********************
-✨ Success! Uploaded secret MONGODB_URI
-```
 
 Set your `MONGODB_URI` secret locally in a `.env` file as documented in [Local Development with Secrets](/workers/configuration/secrets/):
 
@@ -129,30 +123,7 @@ If you are following along with MongoDB Atlas, you can use the `sample_mflix` sa
 
 Replace the existing code in your `src/index.ts` file with the following code:
 
-```typescript
-import { MongoClient } from "mongodb";
-
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		// Create a new MongoClient instance using the connection string
-		const client = new MongoClient(env.MONGODB_URI);
-		// Connect to the MongoDB database
-		await client.connect();
-
-		// Query the movies collection
-		const movie = await client
-			.db("sample_mflix")
-			.collection("movies")
-			.findOne(
-				{ title: "The Room" },
-				{ projection: { _id: 0, title: 1, imdb: 1 } },
-			);
-
-		// Return the result as JSON
-		return Response.json({ movie });
-	},
-} satisfies ExportedHandler<Env>;
-```
+<TypeScriptExample filename="src/index.ts">
 
 This code establishes a connection to the MongoDB database within your Worker application and queries the `movies` collection, returning the result as a JSON response.
 
@@ -172,63 +143,11 @@ Each Worker invocation creates a new TCP and TLS connection to MongoDB. For low-
 
 Create a new file for the Durable Object class:
 
-```ts title="src/MongoDBConnection.ts"
-import { DurableObject, DurableObjectState } from "cloudflare:workers";
-import { MongoClient } from "mongodb";
-
-interface Env {
-	MONGODB_URI: string;
-}
-
-export class MongoDBConnection extends DurableObject {
-	private client: MongoClient;
-
-	constructor(state: DurableObjectState, env: Env) {
-		super(state, env);
-		this.client = new MongoClient(env.MONGODB_URI, {
-			maxPoolSize: 1,
-			minPoolSize: 0,
-			serverSelectionTimeoutMS: 5000,
-			maxIdleTimeMS: 20_000,
-		});
-	}
-
-	async getMovie() {
-		const start = Date.now();
-		await this.client.connect();
-		const movie = await this.client
-			.db("sample_mflix")
-			.collection("movies")
-			.findOne(
-				{ title: "The Room" },
-				{ projection: { _id: 0, title: 1, imdb: 1 } },
-			);
-		return { movie, queryTime: Date.now() - start };
-	}
-}
-```
+<TypeScriptExample filename="src/MongoDBConnection.ts">
 
 Update your Worker entry point to route requests to the Durable Object:
 
-```ts title="src/index.ts"
-import { MongoDBConnection } from "./MongoDBConnection";
-
-interface Env {
-	MONGODB_URI: string;
-	MONGODB_CONNECTION: DurableObjectNamespace<MongoDBConnection>;
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const id = env.MONGODB_CONNECTION.idFromName("mongodb-connection");
-		const stub = env.MONGODB_CONNECTION.get(id, { locationHint: "enam" });
-		const result = await stub.getMovie();
-		return Response.json(result);
-	},
-} satisfies ExportedHandler<Env>;
-
-export { MongoDBConnection };
-```
+<TypeScriptExample filename="src/index.ts">
 
 Use the `locationHint` option to place the Durable Object close to your MongoDB cluster.
 
