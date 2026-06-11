@@ -214,28 +214,7 @@ To connect to MongoDB using a Durable Object:
 
 The following example shows a Mongoose Durable Object:
 
-```ts
-import { DurableObject } from "cloudflare:workers";
-import mongoose from "mongoose";
-
-export class MongoDBConnection extends DurableObject {
-	connection;
-
-	constructor(ctx, env) {
-		super(ctx, env);
-		this.connection = mongoose.createConnection(env.MONGODB_URI, {
-			serverSelectionTimeoutMS: 5000,
-			maxIdleTimeMS: 20_000,
-		});
-	}
-
-	async fetch(request) {
-		await this.connection.asPromise();
-		// Define models, run queries, return results
-		return new Response("OK");
-	}
-}
-```
+<TypeScriptExample filename="src/MongoDBConnection.ts">
 
 ## Next steps
 
