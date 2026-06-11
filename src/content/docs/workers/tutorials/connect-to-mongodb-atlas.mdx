@@ -28,7 +28,7 @@ To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions.
 4. Make sure you have access to a MongoDB database. You can use [MongoDB Atlas](https://www.mongodb.com/atlas), a self-hosted MongoDB instance, or any other MongoDB-compatible host.
 
 ## 1. Create a Worker application
@@ -94,9 +94,9 @@ npx wrangler secret put MONGODB_URI
 ✨ Success! Uploaded secret MONGODB_URI
 ```
 
-Set your `MONGODB_URI` secret locally in a `.dev.vars` file as documented in [Local Development with Secrets](/workers/configuration/secrets/):
+Set your `MONGODB_URI` secret locally in a `.env` file as documented in [Local Development with Secrets](/workers/configuration/secrets/):
 
-```toml title=".dev.vars"
+```toml title=".env"
 MONGODB_URI="<ENTER YOUR MONGODB CONNECTION STRING>"
 ```
 
@@ -164,8 +164,6 @@ Run the following command to deploy your Worker:
 npx wrangler deploy
 ```
 
-Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
-
 After deploying, you can interact with your MongoDB database using your Cloudflare Worker. Whenever a request is made to your Worker's URL, it will fetch data from the `movies` collection and return it as a JSON response.
 
 ## 8. Use a Durable Object to accelerate queries
@@ -232,7 +230,7 @@ export default {
 export { MongoDBConnection };
 ```
 
-Use the `locationHint` option to place the Durable Object close to your MongoDB cluster. Available hints include `wnam`, `enam`, `sam`, `weur`, `eeur`, `apac`, `oc`, `afr`, and `me`. Match the hint to the region of your MongoDB cluster.
+Use the `locationHint` option to place the Durable Object close to your MongoDB cluster.
 
 Configure the Durable Object binding and migration in your Wrangler file:
 
@@ -274,12 +272,11 @@ npx wrangler deploy
 
 Your Worker application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`, using a Durable Object to persist MongoDB connections. This reduces query latency from ~300 ms on cold requests to ~35 ms on warm requests.
 
-:::caution[Durable Object lifecycle considerations]
+:::note[Durable Object considerations]
 
-- The Durable Object evicts after roughly 70–140 seconds of no incoming requests. The next request pays the cold start cost again.
-- TCP connections do not survive hibernation.
-- You cannot pass `MongoClient`, `Db`, or `Collection` objects back to the calling Worker via RPC. Run all database logic inside the Durable Object.
-- A single Durable Object instance has a soft limit of roughly 1,000 requests per second.
+- The connection is reused only while the Durable Object stays in memory. After a minute or two without requests, the Durable Object is evicted and its connection is dropped. The next request re-establishes the connection and pays the cold start cost again. This is expected behavior — there is no shutdown hook to close the connection manually, and none is needed.
+- Run all database logic inside the Durable Object. You cannot return `MongoClient`, `Db`, or `Collection` objects to the calling Worker over RPC.
+- A single Durable Object instance handles roughly 1,000 requests per second. To scale beyond this, distribute requests across multiple instances.
 
 :::
 

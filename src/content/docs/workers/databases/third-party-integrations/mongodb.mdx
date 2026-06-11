@@ -221,25 +221,7 @@ To connect to MongoDB using a Durable Object:
 
 ## Use Mongoose
 
-[Mongoose](https://mongoosejs.com/) works on Workers but requires a patch to its `package.json` exports map. Without the patch, workerd loads the browser bundle instead of the Node.js entry point.
-
-Apply the following patch to the `mongoose` package:
-
-```json
-{
-	"exports": {
-		".": {
-			"workerd": "./index.js",
-			"node": "./index.js",
-			"browser": "./dist/browser.umd.js",
-			"types": "./types/index.d.ts",
-			"default": "./index.js"
-		}
-	}
-}
-```
-
-You can apply this patch using `pnpm patch`, `yarn patch`, or a postinstall script. This issue is tracked at [Automattic/mongoose#14613](https://github.com/Automattic/mongoose/issues/14613).
+[Mongoose](https://mongoosejs.com/) version 9 and later works on Workers with Node.js compatibility enabled. Earlier versions loaded the browser bundle instead of the Node.js entry point and required a manual patch to the `package.json` exports map. This is no longer necessary.
 
 The following example shows a Mongoose Durable Object:
 
