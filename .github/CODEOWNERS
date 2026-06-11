@@ -263,7 +263,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/smart-shield/configuration/cache-reserve/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
 /src/content/docs/smart-shield/configuration/regional-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
 /src/content/docs/smart-shield/configuration/smart-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
-/src/content/docs/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu
+/src/content/docs/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu @steve-cloudflare
+/src/content/partials/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu @steve-cloudflare
 /src/content/docs/speed/ @cloudflare/product-owners @ack-cf
 /src/content/partials/speed/ @cloudflare/product-owners @ack-cf
 /src/content/changelog/speed/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf
