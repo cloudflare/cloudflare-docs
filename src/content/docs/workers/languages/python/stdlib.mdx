@@ -57,3 +57,9 @@ The following are present but cannot be imported due to a dependency on the term
 
 - pty
 - tty
+
+## In-memory filesystem
+
+Python Workers have access to an ephemeral, in-memory filesystem. You can read and write files using standard Python file I/O (for example, `open()`, `pathlib.Path`), but all data is **lost when the Worker isolate is destroyed**. The filesystem is not shared between different isolate instances.
+
+This can be useful for temporary file operations, but should not be relied upon for persistent storage. Use [KV](/kv/), [R2](/r2/), or [Durable Objects](/durable-objects/) for durable storage.

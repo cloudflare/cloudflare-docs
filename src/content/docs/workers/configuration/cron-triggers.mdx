@@ -63,11 +63,12 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import WorkerEntrypoint, Response
+from workers import WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
     async def scheduled(self, controller, env, ctx):
-  			print("cron processed")
+        # All four parameters (self, controller, env, ctx) are required
+        print("cron processed")
 ```
 
 </TabItem></Tabs>
