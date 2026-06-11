@@ -9,6 +9,8 @@ products:
   - ai-gateway
 ---
 
+import { Render } from "~/components";
+
 AI Gateway requires a valid Cloudflare API token for each request. This prevents unauthorized access and protects against invalid requests that can inflate log storage usage.
 
 When using the [REST API](/ai-gateway/usage/rest-api/), pass your Cloudflare API token in the standard `Authorization` header. When using [provider-native endpoints](/ai-gateway/usage/providers/) at `gateway.ai.cloudflare.com`, use the `cf-aig-authorization` header instead.
@@ -28,7 +30,10 @@ The `cf-aig-authorization` header is used with the `gateway.ai.cloudflare.com` e
 
 ## Example requests
 
+<Render file="auth-token-hint" product="ai-gateway" />
+
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

@@ -36,7 +36,10 @@ Then, create a new AI Gateway.
 2. Select **Use REST API** and follow the steps to create and copy the API token and Account ID.
 3. Send a request using the [REST API](/ai-gateway/usage/rest-api/). Replace `$CLOUDFLARE_ACCOUNT_ID` and `$CLOUDFLARE_API_TOKEN` with your actual account ID and API token:
 
+   <Render file="auth-token-hint" product="ai-gateway" />
+
    ```bash
+   # Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
    curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
      --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
      --header "cf-aig-gateway-id: default" \

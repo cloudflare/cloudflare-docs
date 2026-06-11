@@ -18,7 +18,10 @@ Use AI Gateway for analytics, caching, and security on requests to [Workers AI](
 
 Use the [REST API](/ai-gateway/usage/rest-api/) to call Workers AI models. Workers AI models use the `@cf/` prefix in the model name and require the `cf-aig-gateway-id` header to specify which gateway to route through.
 
+<Render file="auth-token-hint" product="ai-gateway" />
+
 ```bash title="Request to Workers AI Kimi model"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "cf-aig-gateway-id: default" \

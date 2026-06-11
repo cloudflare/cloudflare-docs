@@ -10,6 +10,8 @@ products:
   - ai-gateway
 ---
 
+import { Render } from "~/components";
+
 The REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with all AI Gateway features — logging, caching, rate limiting, and more — applied automatically.
 
 No provider SDKs or API keys are needed. Authentication and billing are handled through your Cloudflare account. Third-party models are billed via [Unified Billing](/ai-gateway/features/unified-billing/), while Workers AI models follow [Workers AI pricing](/workers-ai/platform/pricing/).
@@ -28,6 +30,8 @@ Four endpoints are available, each suited to different use cases:
 ## Authentication
 
 Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has `AI Gateway` permission. Pass it in the `Authorization` header.
+
+<Render file="auth-token-hint" product="ai-gateway" />
 
 :::note
 Ensure your Cloudflare account has [sufficient credits loaded](/ai-gateway/features/unified-billing/#load-credits) before calling third-party models.
@@ -51,6 +55,7 @@ Browse available models in the [model catalog](/ai/models/).
 Accepts any model with its per-model schema. Model-specific parameters go inside `input`.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -73,6 +78,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 To call a Workers AI model, use the `@cf/` prefix in the model name and include the `cf-aig-gateway-id` header to specify which gateway to route through.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "cf-aig-gateway-id: default" \
@@ -93,6 +99,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 The existing Workers AI endpoint with the model ID in the URL path also continues to work:
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/moonshotai/kimi-k2.6" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -111,6 +118,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 Uses the standard OpenAI chat completions format. The `model` field uses the same `author/model` naming. This endpoint is compatible with the OpenAI SDK and other OpenAI-compatible clients.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -173,6 +181,7 @@ const response = await openai.responses.create({
 Uses the Anthropic Messages API format. Compatible with the Anthropic SDK.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -210,6 +219,7 @@ const message = await anthropic.messages.create({
 By default, third-party model requests route through your account's default AI Gateway. To use a specific gateway, include the `cf-aig-gateway-id` header. Workers AI requests always require this header.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "cf-aig-gateway-id: default" \

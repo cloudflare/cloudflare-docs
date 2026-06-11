@@ -9,7 +9,7 @@ products:
   - ai-gateway
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 ## Overview
 
@@ -54,7 +54,10 @@ To create a new custom provider using the API:
 
 2. Send a `POST` request to create a new custom provider:
 
+<Render file="auth-token-hint" product="ai-gateway" />
+
 ```bash title="Create Custom Provider"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
@@ -134,6 +137,7 @@ To create a new custom provider using the dashboard:
 Retrieve all custom providers with optional filtering and pagination:
 
 ```bash title="List all providers"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
@@ -150,12 +154,14 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custo
 
 List only enabled providers:
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers?enable=true" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 Search for specific providers:
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers?search=custom" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
@@ -205,6 +211,7 @@ To view all your custom providers:
 Retrieve details for a specific custom provider by its ID:
 
 ```bash title="Get provider by ID"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
@@ -245,6 +252,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custo
 Update an existing custom provider. All fields are optional - only include the fields you want to change:
 
 ```bash title="Update provider"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
@@ -270,6 +278,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gate
 
 Enable a provider:
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
@@ -278,6 +287,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gate
 
 Update provider URL:
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
@@ -310,6 +320,7 @@ To update an existing custom provider:
 Delete a custom provider:
 
 ```bash title="Delete provider"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
@@ -389,6 +400,7 @@ Use the **provider-specific endpoint** when your custom provider uses a non-stan
 The Unified API sends requests to the provider's chat completions endpoint using the OpenAI-compatible format. Specify the model using the format `custom-{slug}/{model-name}`.
 
 ```bash title="Request using custom provider via Unified API"
+# Run `wrangler auth token` to get an auth token to replace $CF_AIG_TOKEN for use with the API.
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
   -H "Authorization: Bearer $PROVIDER_API_KEY" \
   -H "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
@@ -404,6 +416,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/
 The provider-specific endpoint gives you full control over the upstream path. Everything after `custom-{slug}/` in the URL is appended to the `base_url`.
 
 ```bash title="Direct provider endpoint"
+# Run `wrangler auth token` to get an auth token to replace $CF_AIG_TOKEN for use with the API.
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-some-provider/v1/chat/completions \
   -H "Authorization: Bearer $PROVIDER_API_KEY" \
   -H "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \

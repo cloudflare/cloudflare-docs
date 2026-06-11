@@ -33,7 +33,10 @@ The `cf-aig-collect-log` header allows you to bypass the default log setting for
 
 In the example below, we use `cf-aig-collect-log` to bypass the default setting to avoid saving the log.
 
+<Render file="auth-token-hint" product="ai-gateway" />
+
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -63,6 +66,7 @@ This is useful when you want to maintain visibility into usage metrics and reque
 In the example below, we use `cf-aig-collect-log-payload` to skip storing the request and response bodies while keeping the metadata log.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

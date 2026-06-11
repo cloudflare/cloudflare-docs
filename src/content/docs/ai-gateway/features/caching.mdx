@@ -9,7 +9,7 @@ products:
   - ai-gateway
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 AI Gateway can cache responses from your AI model providers, serving them directly from Cloudflare's cache for identical requests.
 
@@ -95,7 +95,10 @@ You can use the header **cf-aig-skip-cache** to bypass the cached version of the
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
+<Render file="auth-token-hint" product="ai-gateway" />
+
 ```bash title="Request skipping the cache"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -120,6 +123,7 @@ For example, if you set a TTL of one hour, it means that a request is kept in th
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
 ```bash title="Request to be cached for an hour"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -144,6 +148,7 @@ When you use the **cf-aig-cache-key** header for the first time, you will receiv
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
 ```bash title="Request with custom cache key"
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN for use with the API.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
