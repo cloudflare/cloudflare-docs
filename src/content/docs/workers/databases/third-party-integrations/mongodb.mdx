@@ -178,31 +178,19 @@ To connect to MongoDB using a Durable Object:
 
    <WranglerConfig>
 
-   ```jsonc
-   {
-   	"$schema": "node_modules/wrangler/config-schema.json",
-   	"name": "workers-mongodb-demo",
-   	"main": "src/index.ts",
-   	"compatibility_date": "2025-03-21",
-   	"compatibility_flags": ["nodejs_compat"],
-   	"durable_objects": {
-   		"bindings": [
-   			{
-   				"name": "MONGODB_CONNECTION",
-   				"class_name": "MongoDBConnection"
-   			}
-   		]
-   	},
-   	"migrations": [
-   		{
-   			"tag": "v1",
-   			"new_classes": ["MongoDBConnection"]
-   		}
-   	]
-   }
-   ```
+   ```toml
+   name = "workers-mongodb-demo"
+   main = "src/index.ts"
+   compatibility_date = "$today"
+   compatibility_flags = ["nodejs_compat"]
 
-   </WranglerConfig>
+   [[durable_objects.bindings]]
+   name = "MONGODB_CONNECTION"
+   class_name = "MongoDBConnection"
+
+   [[migrations]]
+   tag = "v1"
+   new_classes = ["MongoDBConnection"]
 
 8. Deploy your Worker:
 
