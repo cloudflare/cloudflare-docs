@@ -87,8 +87,7 @@ For grids with 16 or more participants, `320×240` with simulcast keeps the sess
 
 For layouts where all participants send video but one speaker is pinned at a larger size — town halls, classrooms, or team standups — use different presets for each role.
 
-- **Speaker preset**: Set resolution to `1280×720` or `1920×1080`. The speaker tile is large and benefits from higher quality.
-- **Participant preset**: Set resolution to `320×240`. Participant tiles are small thumbnails.
+Set the speaker preset resolution to `1280×720` or `1920×1080` because the speaker tile is large and benefits from higher quality. Set the participant preset resolution to `320×240` because participant tiles are small thumbnails.
 
 The following table shows bandwidth for a town hall with one speaker at 720p and 15 participants at 240p, all at 24 FPS. Every participant sends video:
 
@@ -118,10 +117,7 @@ Simulcast encodes the sender's video at multiple resolutions simultaneously (for
 - Participants have varying network conditions (mobile and desktop mix)
 - The session is a webinar or event with audience on constrained networks
 
-**Turn off simulcast when:**
-
-- The session is a 1:1 call (one receiver, no benefit from multiple layers)
-- The session is audio-only
+**Turn off simulcast** for 1:1 calls (one receiver, no benefit from multiple layers) and for audio-only sessions.
 
 Simulcast increases CPU usage on the sender because the device encodes multiple layers. If your use case targets low-powered devices in remote regions with limited bandwidth, consider turning off simulcast and setting a single lower resolution (such as `320×240`) for all participants instead. This avoids the extra encoding cost while still keeping bandwidth low. For sessions where participants have a mix of device capabilities and network conditions, simulcast provides the best experience because the SFU delivers the appropriate layer to each receiver.
 
