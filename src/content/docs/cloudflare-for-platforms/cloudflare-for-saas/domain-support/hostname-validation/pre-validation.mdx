@@ -14,6 +14,14 @@ head:
 
 Pre-validation methods help verify domain ownership before your customer's traffic is proxying through Cloudflare.
 
+:::caution[Not supported for O2O custom hostnames]
+
+Pre-validation (TXT and HTTP token methods) is not supported when the custom hostname belongs to a zone that is already on Cloudflare — also known as an [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup.
+
+In an O2O setup, the customer's authoritative DNS is already on Cloudflare, so there is no separate cutover step from a non-Cloudflare provider to Cloudflare. Activating the custom hostname immediately routes traffic through the SaaS zone, which means pre-validation tokens cannot be used to verify ownership ahead of the cutover. For these custom hostnames, use a [real-time validation method](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/realtime-validation/) instead.
+
+:::
+
 ## Use when
 
 Use pre-validation methods when your customers cannot tolerate any downtime, which often occurs with production domains.
