@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 Logging is a fundamental building block for application development. Logs provide insights during the early stages of development and are often critical to understanding issues occurring in production.
 
-Your AI Gateway dashboard shows logs of individual requests, including the user prompt, model response, provider, timestamp, request status, token usage, cost, and duration. When [DLP](/ai-gateway/features/dlp/) policies are configured, logs for requests that trigger a DLP match also include the DLP action taken (Flag or Block), matched policy IDs, matched profile IDs, and the specific detection entries that were triggered. These logs persist, giving you the flexibility to store them for your preferred duration and do more with valuable request data.
+Your AI Gateway dashboard shows logs of individual requests, including the user prompt, model response, provider, timestamp, request status, token usage, cost, duration, and the user agent of the client that made the request. When [DLP](/ai-gateway/features/dlp/) policies are configured, logs for requests that trigger a DLP match also include the DLP action taken (Flag or Block), matched policy IDs, matched profile IDs, and the specific detection entries that were triggered. These logs persist, giving you the flexibility to store them for your preferred duration and do more with valuable request data.
 
 Each gateway has a storage limit based on your plan. You can customize this limit per gateway in your gateway settings. If your storage limit is reached, new logs will stop being saved. To continue saving logs, you must delete older logs to free up space for new logs.
 To learn more about your plan limits, refer to [Limits](/ai-gateway/reference/limits/).
@@ -55,9 +55,9 @@ The `cf-aig-collect-log-payload` header allows you to control whether the raw re
 
 This is useful when you want to maintain visibility into usage metrics and request metadata without persisting sensitive prompt or completion data.
 
-| Header value | Behavior |
-| ------------ | -------- |
-| `true`       | Request and response payloads are stored. |
+| Header value | Behavior                                                               |
+| ------------ | ---------------------------------------------------------------------- |
+| `true`       | Request and response payloads are stored.                              |
 | `false`      | Payload storage is skipped. Metadata-only log entries are still saved. |
 
 In the example below, we use `cf-aig-collect-log-payload` to skip storing the request and response bodies while keeping the metadata log.
@@ -111,22 +111,23 @@ To manually delete logs through the dashboard, navigate to the Logs tab in the d
 
 See full list of available filters and their descriptions below:
 
-| Filter category | Filter options                                               | Filter by description                     |
-| --------------- | ------------------------------------------------------------ | ----------------------------------------- |
-| Status          | error, status                                                | error type or status.                     |
-| Cache           | cached, not cached                                           | based on whether they were cached or not. |
-| Provider        | specific providers                                           | the selected AI provider.                 |
-| AI Models       | specific models                                              | the selected AI model.                    |
-| Cost            | less than, greater than                                      | cost, specifying a threshold.             |
-| Request type    | Workers AI Binding, WebSockets                               | the type of request.                      |
-| Tokens          | Total tokens, Tokens In, Tokens Out                          | token count (less than or greater than).  |
-| Duration        | less than, greater than                                      | request duration.                         |
-| Feedback        | equals, does not equal (thumbs up, thumbs down, no feedback) | feedback type.                            |
-| Metadata Key    | equals, does not equal                                       | specific metadata keys.                   |
-| Metadata Value  | equals, does not equal                                       | specific metadata values.                 |
-| Log ID          | equals, does not equal                                       | a specific Log ID.                        |
-| Event ID        | equals, does not equal                                       | a specific Event ID.                      |
-| DLP Action      | FLAG, BLOCK                                                  | the DLP action taken on the request.      |
+| Filter category | Filter options                                               | Filter by description                               |
+| --------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| Status          | error, status                                                | error type or status.                               |
+| Cache           | cached, not cached                                           | based on whether they were cached or not.           |
+| Provider        | specific providers                                           | the selected AI provider.                           |
+| AI Models       | specific models                                              | the selected AI model.                              |
+| Cost            | less than, greater than                                      | cost, specifying a threshold.                       |
+| Request type    | Workers AI Binding, WebSockets                               | the type of request.                                |
+| Tokens          | Total tokens, Tokens In, Tokens Out                          | token count (less than or greater than).            |
+| Duration        | less than, greater than                                      | request duration.                                   |
+| Feedback        | equals, does not equal (thumbs up, thumbs down, no feedback) | feedback type.                                      |
+| Metadata Key    | equals, does not equal                                       | specific metadata keys.                             |
+| Metadata Value  | equals, does not equal                                       | specific metadata values.                           |
+| Log ID          | equals, does not equal                                       | a specific Log ID.                                  |
+| Event ID        | equals, does not equal                                       | a specific Event ID.                                |
+| DLP Action      | FLAG, BLOCK                                                  | the DLP action taken on the request.                |
+| User Agent      | equals, does not equal, contains                             | the user agent of the client that made the request. |
 
 ### API deletion
 
