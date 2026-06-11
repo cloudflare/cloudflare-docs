@@ -74,7 +74,9 @@ To connect to MongoDB directly from a Worker:
 
    		return Response.json({ movie });
    	},
-   } satisfies ExportedHandler<Env>;
+   	} satisfies ExportedHandler<Env>;
+   ```
+   </TypeScriptExample>
 
    The MongoDB driver uses the `node:net` and `node:tls` modules, which are available in Workers when `nodejs_compat` is enabled with a compatibility date of `2025-03-20` or later.
 
@@ -147,6 +149,8 @@ To connect to MongoDB using a Durable Object:
    		return { movie, queryTime: Date.now() - start };
    	}
    }
+   ```
+   </TypeScriptExample>
 
    Creating the `MongoClient` in the constructor and calling `connect()` in the request handler allows the Durable Object to reuse an existing connection across requests.
 
@@ -191,6 +195,9 @@ To connect to MongoDB using a Durable Object:
    [[migrations]]
    tag = "v1"
    new_classes = ["MongoDBConnection"]
+   ```
+
+   </WranglerConfig>
 
 8. Deploy your Worker:
 
@@ -215,6 +222,42 @@ To connect to MongoDB using a Durable Object:
 The following example shows a Mongoose Durable Object:
 
 <TypeScriptExample filename="src/MongoDBConnection.ts">
+
+```ts title="src/MongoDBConnection.ts"
+import { DurableObject } from "cloudflare:workers";
+import mongoose, { Schema, Model } from "mongoose";
+
+interface Env {
+	MONGODB_URI: string;
+}
+
+const movieSchema = new Schema({
+	title: String,
+	imdb: { rating: Number, votes: Number, id: Number },
+});
+
+export class MongoDBConnection extends DurableObject<Env> {
+	private Movie: Model<any>;
+
+	constructor(state: DurableObjectState, env: Env) {
+		super(state, env);
+		this.Movie = mongoose.model("Movie", movieSchema, "movies");
+	}
+
+	async getMovie() {
+		if (mongoose.connection.readyState === 0) {
+			await mongoose.connect(this.env.MONGODB_URI, { dbName: "sample_mflix" });
+		}
+
+		return this.Movie.findOne(
+			{ title: "The Room" },
+			{ _id: 0, title: 1, imdb: 1 },
+		).lean();
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Next steps
 
