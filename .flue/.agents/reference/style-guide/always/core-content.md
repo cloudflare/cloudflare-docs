@@ -69,6 +69,7 @@ description: Always load for any MDX file with added content lines.
 - If a heading ends with `.`, `?`, `!`, or `:` → **warning**: remove trailing punctuation.
 - If a heading begins with a verb ending in `-ing` (`Installing`, `Configuring`, `Setting up`) → **warning**: use imperative form instead (`Install`, `Configure`, `Set up`).
 - If frontmatter `title:` or `sidebar.label:` contains an emoji → **warning**: remove it.
+- If a heading starts with a number or step label (`## 1. Do this`, `## Step 2 —`, `## 3:`) → **warning**: do not use numbered or step-labelled headings. Use a `Steps` component or a numbered list instead.
 
 ---
 
@@ -96,6 +97,10 @@ description: Always load for any MDX file with added content lines.
 - Valid types: `:::note`, `:::caution`, `:::tip`.
 - If a patch adds more than one admonition of the same type in the same section → **suggestion**: consolidate or integrate the content into prose.
 - If an admonition content could be integrated into surrounding prose → **suggestion**: do so rather than using an admonition.
+
+**Raw HTML**
+
+- If an added line contains a raw HTML element used for layout or styling (`<div`, `<span`, `<style`, `<table`, `<tr`, `<td`, `<th`) → **warning**: do not use raw HTML for layout or styling in MDX. Use a Cloudflare docs component or restructure the content instead.
 
 **Numbers**
 
