@@ -201,10 +201,7 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		];
 
 		// Only fetch comments + the patch file fresh.
-		diffKeysToLoad = [
-			input.commentsPath,
-			...(patchKey ? [patchKey] : []),
-		];
+		diffKeysToLoad = [input.commentsPath, ...(patchKey ? [patchKey] : [])];
 	} else {
 		const all = await bucket.list({ prefix: `${input.diffDir}/` });
 		diffKeysToLoad = all.objects.map((o) => o.key);
