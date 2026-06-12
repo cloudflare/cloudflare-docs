@@ -103,10 +103,11 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const workspace = getDefaultWorkspace();
 
 	console.log({
-		message: `Style-guide review started: PR #${input.number}`,
+		message: `Style-guide review started: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""}`,
 		event: "style_guide_review",
 		number: input.number,
 		diffDir: input.diffDir,
+		filename: input.filename ?? null,
 		runId,
 		action: "started",
 	});
@@ -119,6 +120,7 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			event: "style_guide_review",
 			number: input.number,
 			diffDir: input.diffDir,
+			filename: input.filename ?? null,
 			runId,
 			action: "no_diff_files",
 		});
@@ -159,11 +161,12 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			};
 
 	// ── 3. Populate workspace from R2 before init ─────────────────────────────
-	// Discover and load all reference files by prefix — no hardcoded list.
-	// Any new reference file added to R2 under .agents/reference/style-guide/
-	// is automatically picked up without code changes.
-	const [prObjects, referenceObjects, skillObj] = await Promise.all([
-		bucket.list({ prefix: `${input.diffDir}/` }),
+	// When a specific filename is requested, load only what that child run
+	// needs: the manifest, pr.json, comments, and the single patch file.
+	// This avoids duplicating every sibling patch into each concurrent DO.
+	// When no filename is given (full-PR mode), fall back to bulk hydration.
+
+	const [referenceObjects, skillObj] = await Promise.all([
 		bucket.list({ prefix: ".agents/reference/style-guide/" }),
 		bucket.get(".agents/skills/style-guide-review/SKILL.md"),
 	]);
@@ -174,7 +177,26 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		);
 	}
 
-	// Read all reference files and diff files in parallel
+	// Determine which diff objects to load.
+	// Targeted mode (filename set): only manifest.json, pr.json, comments.json,
+	// and the single patch_key for the requested file.
+	// Full mode (no filename): load everything under the diffDir prefix.
+	let diffKeysToLoad: string[];
+	if (input.filename) {
+		const entry = manifest.find((f) => f.filename === input.filename);
+		const patchKey = entry?.patch_key ?? null;
+		diffKeysToLoad = [
+			`${input.diffDir}/manifest.json`,
+			`${input.diffDir}/pr.json`,
+			input.commentsPath,
+			...(patchKey ? [patchKey] : []),
+		];
+	} else {
+		const all = await bucket.list({ prefix: `${input.diffDir}/` });
+		diffKeysToLoad = all.objects.map((o) => o.key);
+	}
+
+	// Read all reference files and selected diff files in parallel.
 	const [referenceResults, ...diffResults] = await Promise.all([
 		Promise.all(
 			referenceObjects.objects.map(async (obj) => ({
@@ -182,11 +204,23 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 				text: (await (await bucket.get(obj.key))?.text()) ?? "",
 			})),
 		),
-		...prObjects.objects.map(async (obj) => ({
-			key: obj.key,
-			text: (await (await bucket.get(obj.key))?.text()) ?? "",
+		...diffKeysToLoad.map(async (key) => ({
+			key,
+			text: (await (await bucket.get(key))?.text()) ?? "",
 		})),
 	]);
+
+	console.log({
+		message: `Style-guide review hydrating workspace: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""}`,
+		event: "style_guide_review",
+		number: input.number,
+		filename: input.filename ?? null,
+		diffDir: input.diffDir,
+		diffObjects: diffKeysToLoad.length,
+		referenceObjects: referenceObjects.objects.length,
+		runId,
+		action: "hydration_start",
+	});
 
 	// Pre-create common parent directories before parallel writes. Otherwise
 	// concurrent writeFile calls can race while creating the same directory rows
@@ -201,7 +235,7 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		await workspace.mkdir(dir, { recursive: true });
 	}
 
-	// Write everything to workspace in parallel
+	// Write everything to workspace in parallel.
 	await Promise.all([
 		// Skill file
 		workspace.writeFile(
@@ -212,11 +246,23 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		...referenceResults.map((r) =>
 			r.text ? workspace.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
 		),
-		// Diff files (manifest, pr.json, patches)
+		// Selected diff files (manifest, pr.json, comments, and patch)
 		...diffResults.map((r) =>
 			r.text ? workspace.writeFile(`/${r.key}`, r.text) : Promise.resolve(),
 		),
 	]);
+
+	console.log({
+		message: `Style-guide review workspace ready: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""}`,
+		event: "style_guide_review",
+		number: input.number,
+		filename: input.filename ?? null,
+		diffDir: input.diffDir,
+		diffObjects: diffKeysToLoad.length,
+		referenceObjects: referenceObjects.objects.length,
+		runId,
+		action: "hydration_complete",
+	});
 
 	// ── 4. Init harness ───────────────────────────────────────────────────────
 	const agent = createAgent(() => ({
@@ -252,9 +298,10 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 
 	if (!rawData) {
 		console.log({
-			message: `Style-guide review: no result for PR #${input.number}`,
+			message: `Style-guide review: no result for PR #${input.number}${input.filename ? ` — ${input.filename}` : ""}`,
 			event: "style_guide_review",
 			number: input.number,
+			filename: input.filename ?? null,
 			runId,
 			action: "no_result",
 		});
@@ -276,9 +323,10 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	};
 
 	console.log({
-		message: `Style-guide review complete: PR #${input.number} — ${data.findings.length} finding(s) (${data.findings.filter((f) => f.severity === "warning").length} warning(s), ${data.findings.filter((f) => f.severity === "suggestion").length} suggestion(s))`,
+		message: `Style-guide review complete: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""} — ${data.findings.length} finding(s) (${data.findings.filter((f) => f.severity === "warning").length} warning(s), ${data.findings.filter((f) => f.severity === "suggestion").length} suggestion(s))`,
 		event: "style_guide_review",
 		number: input.number,
+		filename: input.filename ?? null,
 		findings: data.findings.length,
 		warnings: data.findings.filter((f) => f.severity === "warning").length,
 		suggestions: data.findings.filter((f) => f.severity === "suggestion")

@@ -40,7 +40,7 @@ export const route: WorkflowRouteHandler = async (_c, next) => next();
 const STYLE_GUIDE_REVIEWABLE_PATH_RE =
 	/^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
 const STYLE_GUIDE_MAX_FILES = 20;
-const STYLE_GUIDE_CONCURRENCY = 10;
+const STYLE_GUIDE_CONCURRENCY = 5;
 
 // Marker embedded in every bot review comment — used to find and update it
 const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
@@ -374,15 +374,16 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 		const internalHeaders = getInternalHeaders(
 			typedEnv as Record<string, string>,
 		);
-		// console.log({
-		// 	message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
-		// 	event: "code_review_orchestrator",
-		// 	number: input.number,
-		// 	files: styleGuideFiles.length,
-		// 	concurrency: STYLE_GUIDE_CONCURRENCY,
-		// 	runId,
-		// 	action: "style_guide_fanout_start",
-		// });
+		console.log({
+			message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
+			event: "code_review_orchestrator",
+			number: input.number,
+			files: styleGuideFiles.length,
+			concurrency: STYLE_GUIDE_CONCURRENCY,
+			diffDir,
+			runId,
+			action: "style_guide_fanout_start",
+		});
 
 		const styleGuideResults = await withConcurrency(
 			styleGuideFiles.map(
@@ -400,14 +401,15 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 			STYLE_GUIDE_CONCURRENCY,
 		);
 		styleGuideResult = mergeStyleGuideResults(styleGuideResults);
-		// console.log({
-		// 	message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s)`,
-		// 	event: "code_review_orchestrator",
-		// 	number: input.number,
-		// 	findings: styleGuideResult.findings.length,
-		// 	runId,
-		// 	action: "style_guide_complete",
-		// });
+		console.log({
+			message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s) across ${styleGuideResult.reviewedFiles.length} file(s)`,
+			event: "code_review_orchestrator",
+			number: input.number,
+			findings: styleGuideResult.findings.length,
+			reviewedFiles: styleGuideResult.reviewedFiles.length,
+			runId,
+			action: "style_guide_complete",
+		});
 
 		// If the agent returned a known failure summary (e.g. model timed out
 		// and produced no output), surface a failure comment rather than
@@ -850,6 +852,16 @@ async function dispatchStyleGuideReview(
 	const url = new URL(`/workflows/style-guide-review`, baseUrl);
 	url.searchParams.set("wait", "result");
 
+	console.log({
+		message: `Style-guide child dispatch: PR #${prNumber} — ${filename ?? "(all files)"}`,
+		event: "code_review_orchestrator",
+		number: prNumber,
+		filename: filename ?? null,
+		diffDir,
+		reviewId,
+		action: "style_guide_child_dispatch_start",
+	});
+
 	const response = await fetch(url, {
 		method: "POST",
 		headers: internalHeaders,
@@ -857,19 +869,42 @@ async function dispatchStyleGuideReview(
 	});
 
 	if (!response.ok) {
+		const body = await response.text();
+		console.log({
+			message: `Style-guide child dispatch failed: PR #${prNumber} — ${filename ?? "(all files)"} — HTTP ${response.status}`,
+			event: "code_review_orchestrator",
+			number: prNumber,
+			filename: filename ?? null,
+			diffDir,
+			reviewId,
+			status: response.status,
+			error: body,
+			action: "style_guide_child_dispatch_failed",
+		});
 		throw new Error(
-			`Style-guide review dispatch failed: ${response.status} ${await response.text()}`,
+			`Style-guide review dispatch failed: ${response.status} ${body}`,
 		);
 	}
 
 	const result = (await response.json()) as { result?: StyleGuideResult };
-	return (
-		result.result ?? {
-			findings: [],
-			summary: "Style-guide review produced no result.",
-			reviewedFiles: [],
-		}
-	);
+	const childResult = result.result ?? {
+		findings: [],
+		summary: "Style-guide review produced no result.",
+		reviewedFiles: [],
+	};
+
+	console.log({
+		message: `Style-guide child dispatch complete: PR #${prNumber} — ${filename ?? "(all files)"} — ${childResult.findings.length} finding(s)`,
+		event: "code_review_orchestrator",
+		number: prNumber,
+		filename: filename ?? null,
+		diffDir,
+		reviewId,
+		findings: childResult.findings.length,
+		action: "style_guide_child_dispatch_complete",
+	});
+
+	return childResult;
 }
 
 async function postOrUpdateComment(
