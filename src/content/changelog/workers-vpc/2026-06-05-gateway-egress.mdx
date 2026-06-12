@@ -1,0 +1,42 @@
+---
+title: Filter Workers' public Internet traffic using Gateway policies
+description: Workers using cf1:network now egress to the public Internet through Cloudflare Gateway — with policies enforced and DNS, HTTP, and Network logging.
+date: 2026-06-05
+products:
+  - gateway
+  - mesh
+---
+
+import { TypeScriptExample, WranglerConfig, WorkersVPCEgressDiagram } from "~/components";
+
+Workers using a [VPC Network](/workers-vpc/configuration/vpc-networks/) binding with `network_id: "cf1:network"` now egress to public Internet destinations through [Cloudflare Gateway](/cloudflare-one/traffic-policies/). This means your existing Zero Trust traffic policies — DNS, HTTP, Network, and egress — extend to traffic that originates from your Workers, the same way they do for WARP users today.
+
+<WorkersVPCEgressDiagram />
+
+What you get by default:
+
+- **Visibility.** Worker egress shows up in Gateway [DNS](/cloudflare-one/traffic-policies/dns-policies/), [HTTP](/cloudflare-one/traffic-policies/http-policies/), and [Network](/cloudflare-one/traffic-policies/network-policies/) logs alongside your other traffic, so you can audit what your Workers are calling and when.
+- **Enforcement.** Any existing Gateway policy whose selectors match a Worker request will apply — including allow / block lists, DNS category filtering, and HTTP destination rules. If you have already blocked a category for your workforce, your Workers inherit that block.
+
+<WranglerConfig>
+```jsonc
+{
+	"vpc_networks": [
+		{
+			"binding": "EGRESS",
+			"network_id": "cf1:network",
+			"remote": true,
+		},
+	],
+}
+```
+</WranglerConfig>
+
+<TypeScriptExample>
+```ts
+// Egress to a public destination — subject to your Gateway policies and logged
+const response = await env.EGRESS.fetch("https://api.example.com/data");
+```
+</TypeScriptExample>
+
+For configuration options, refer to [VPC Networks](/workers-vpc/configuration/vpc-networks/). For policy authoring, refer to [Cloudflare Gateway traffic policies](/cloudflare-one/traffic-policies/).

@@ -217,6 +217,7 @@
 		"Multi-Reference": "Yes",
 		"Output Formats": "JPEG, PNG, WebP"
 	},
+	"request_formats": null,
 	"created_at": "2026-05-22 17:53:06",
 	"schema": {
 		"input": {

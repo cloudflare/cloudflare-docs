@@ -198,25 +198,121 @@
 /aegis/analytics/ /smart-shield/configuration/dedicated-egress-ips/ips-utilization/ 301
 
 # agents
-/agents/api-reference/think/ /agents/think/ 301
+/agents/api-reference/think/ /agents/harnesses/think/ 301
+/agents/think/ /agents/harnesses/think/ 301
 /agents/build/prompts/ /workers/get-started/prompting/ 301
-/agents/examples/browse-the-web/ /agents/api-reference/browse-the-web/ 301
-/agents/examples/manage-and-sync-state/ /agents/api-reference/store-and-sync-state/ 301
-/agents/examples/rag/ /agents/api-reference/rag/ 301
-/agents/examples/run-workflows/ /agents/api-reference/run-workflows/ 301
-/agents/examples/schedule-tasks/ /agents/api-reference/schedule-tasks/ 301
-/agents/examples/using-ai-models/ /agents/api-reference/using-ai-models/ 301
-/agents/examples/websockets/ /agents/api-reference/websockets/ 301
-/agents/examples/sdk/ /agents/api-reference/agents-api/ 301
-/agents/examples/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
-/agents/api-reference/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
-/agents/api-reference/sdk/ /agents/api-reference/ 301
-/agents/guides/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
+/agents/getting-started/build-a-chat-agent/ /agents/examples/chat-agent/ 301
+/agents/examples/browse-the-web/ /agents/tools/browser/ 301
+/agents/examples/manage-and-sync-state/ /agents/runtime/lifecycle/state/ 301
+/agents/examples/rag/ /agents/tools/ai-search/ 301
+/agents/tools/rag/ /agents/tools/ai-search/ 301
+/agents/examples/run-workflows/ /agents/runtime/execution/run-workflows/ 301
+/agents/examples/schedule-tasks/ /agents/runtime/execution/schedule-tasks/ 301
+/agents/examples/using-ai-models/ /agents/runtime/operations/using-ai-models/ 301
+/agents/examples/websockets/ /agents/runtime/communication/websockets/ 301
+/agents/examples/sdk/ /agents/runtime/agents-api/ 301
+/agents/examples/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
+/agents/api-reference/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
+/agents/api-reference/sdk/ /agents/runtime/agents-api/ 301
+/agents/guides/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
-/agents/model-context-protocol/mcp-agent-api/ /agents/api-reference/mcp-agent-api/ 301
-/agents/model-context-protocol/mcp-client-api/ /agents/api-reference/mcp-client-api/ 301
-/agents/model-context-protocol/mcp-handler-api/ /agents/api-reference/mcp-handler-api/ 301
-/agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
+/agents/model-context-protocol/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
+/agents/model-context-protocol/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
+/agents/model-context-protocol/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
+/agents/api-reference/calling-agents/ /agents/runtime/communication/routing/ 301
+/agents/community-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/community-mcp-server/ 301
+/agents/patterns/ /agents/concepts/agentic-patterns/ 301
+/agents/concepts/patterns/ /agents/concepts/agentic-patterns/ 301
+/agents/concepts/anthropic-agent-patterns/ /agents/concepts/agentic-patterns/ 301
+/agents/concepts/human-in-the-loop/ /agents/concepts/agentic-patterns/human-in-the-loop/ 301
+/agents/concepts/long-running-agents/ /agents/concepts/agentic-patterns/long-running-agents/ 301
+/agents/api-reference/agents-api/ /agents/runtime/agents-api/ 301
+/agents/api-reference/ /agents/runtime/ 301
+/agents/api-reference/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
+/agents/runtime/execution/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
+/agents/api-reference/agent-tools/ /agents/runtime/execution/agent-tools/ 301
+/agents/api-reference/browse-the-web/ /agents/tools/browser/ 301
+/agents/api-reference/callable-methods/ /agents/runtime/lifecycle/callable-methods/ 301
+/agents/api-reference/chat-agents/ /agents/communication-channels/chat/chat-agents/ 301
+/agents/api-reference/client-sdk/ /agents/communication-channels/chat/client-sdk/ 301
+/agents/api-reference/codemode/ /agents/model-context-protocol/protocol/codemode/ 301
+/agents/api-reference/configuration/ /agents/runtime/operations/configuration/ 301
+/agents/api-reference/durable-execution/ /agents/runtime/execution/durable-execution/ 301
+/agents/api-reference/email/ /agents/communication-channels/email/ 301
+/agents/api-reference/get-current-agent/ /agents/runtime/lifecycle/get-current-agent/ 301
+/agents/api-reference/http-sse/ /agents/runtime/communication/http-sse/ 301
+/agents/api-reference/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
+/agents/api-reference/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
+/agents/api-reference/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
+/agents/api-reference/observability/ /agents/runtime/operations/observability/ 301
+/agents/api-reference/protocol-messages/ /agents/runtime/communication/protocol-messages/ 301
+/agents/api-reference/queue-tasks/ /agents/runtime/execution/queue-tasks/ 301
+/agents/api-reference/rag/ /agents/tools/ai-search/ 301
+/agents/api-reference/readonly-connections/ /agents/runtime/communication/readonly-connections/ 301
+/agents/api-reference/retries/ /agents/runtime/execution/retries/ 301
+/agents/api-reference/routing/ /agents/runtime/communication/routing/ 301
+/agents/api-reference/run-workflows/ /agents/runtime/execution/run-workflows/ 301
+/agents/api-reference/schedule-tasks/ /agents/runtime/execution/schedule-tasks/ 301
+/agents/api-reference/sessions/ /agents/runtime/lifecycle/sessions/ 301
+/agents/api-reference/store-and-sync-state/ /agents/runtime/lifecycle/state/ 301
+/agents/api-reference/sub-agents/ /agents/runtime/execution/sub-agents/ 301
+/agents/api-reference/using-ai-models/ /agents/runtime/operations/using-ai-models/ 301
+/agents/api-reference/voice/ /agents/communication-channels/voice/ 301
+/agents/api-reference/websockets/ /agents/runtime/communication/websockets/ 301
+/agents/guides/anthropic-agent-patterns/ /agents/concepts/agentic-patterns/ 301
+/agents/guides/autonomous-responses/ /agents/communication-channels/chat/autonomous-responses/ 301
+/agents/guides/build-a-voice-agent/ /agents/examples/voice-agent/ 301
+/agents/guides/build-mcp-client/ /agents/model-context-protocol/guides/build-mcp-client/ 301
+/agents/guides/chatgpt-app/ /workers/demos/chatgpt-app/ 301
+/agents/communication-channels/chat/chatgpt-app/ /workers/demos/chatgpt-app/ 301
+/agents/guides/connect-mcp-client/ /agents/model-context-protocol/guides/connect-mcp-client/ 301
+/agents/guides/cross-domain-authentication/ /agents/runtime/operations/cross-domain-authentication/ 301
+/agents/guides/human-in-the-loop/ /agents/concepts/agentic-patterns/human-in-the-loop/ 301
+/agents/guides/oauth-mcp-client/ /agents/model-context-protocol/guides/oauth-mcp-client/ 301
+/agents/guides/push-notifications/ /agents/communication-channels/webhooks/push-notifications/ 301
+/agents/guides/remote-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
+/agents/guides/securing-mcp-server/ /agents/model-context-protocol/guides/securing-mcp-server/ 301
+/agents/guides/slack-agent/ /agents/examples/slack-agent/ 301
+/agents/guides/test-remote-mcp-server/ /agents/model-context-protocol/guides/test-remote-mcp-server/ 301
+/agents/guides/webhooks/ /agents/communication-channels/webhooks/ 301
+/agents/model-context-protocol/authorization/ /agents/model-context-protocol/protocol/authorization/ 301
+/agents/model-context-protocol/governance/ /agents/model-context-protocol/protocol/governance/ 301
+/agents/model-context-protocol/mcp-portal/ /agents/model-context-protocol/cloudflare/mcp-portal/ 301
+/agents/model-context-protocol/mcp-servers-for-cloudflare/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/agents/model-context-protocol/mcp-servers-for-cloudflare/community-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/community-mcp-server/ 301
+/agents/model-context-protocol/tools/ /agents/model-context-protocol/protocol/tools/ 301
+/agents/model-context-protocol/transport/ /agents/model-context-protocol/protocol/transport/ 301
+/agents/agentic-payments/ /agents/tools/payments/ 301
+/agents/agentic-payments/x402/ /agents/tools/payments/x402/ 301
+/agents/agentic-payments/x402/charge-for-http-content/ /agents/tools/payments/x402/charge-for-http-content/ 301
+/agents/agentic-payments/x402/charge-for-mcp-tools/ /agents/tools/payments/x402/charge-for-mcp-tools/ 301
+/agents/agentic-payments/x402/pay-from-agents-sdk/ /agents/tools/payments/x402/pay-from-agents-sdk/ 301
+/agents/agentic-payments/x402/pay-with-tool-plugins/ /agents/tools/payments/x402/pay-with-tool-plugins/ 301
+/agents/agentic-payments/mpp/ /agents/tools/payments/mpp/ 301
+/agents/guides/ /agents/model-context-protocol/guides/ 301
+/agents/concepts/agent-class/ /agents/runtime/lifecycle/agent-class/ 301
+/agents/concepts/memory/ /agents/concepts/conversation-state-and-memory/ 301
+/agents/getting-started/prompting/ /workers/get-started/prompting/ 301
+/agents/platform/prompting/ /workers/get-started/prompting/ 301
+/agents/platform/prompt.txt/ /workers/prompt.txt 301
+/agents/channels/chat/ /agents/communication-channels/chat/ 301
+/agents/channels/chat/chat-agents/ /agents/communication-channels/chat/chat-agents/ 301
+/agents/channels/chat/client-sdk/ /agents/communication-channels/chat/client-sdk/ 301
+/agents/channels/chat/autonomous-responses/ /agents/communication-channels/chat/autonomous-responses/ 301
+/agents/channels/chat/chatgpt-app/ /workers/demos/chatgpt-app/ 301
+/agents/channels/voice/ /agents/communication-channels/voice/ 301
+/agents/channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
+/agents/channels/email/ /agents/communication-channels/email/ 301
+/agents/channels/slack/ /agents/communication-channels/slack/ 301
+/agents/channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
+/agents/channels/webhooks/ /agents/communication-channels/webhooks/ 301
+/agents/channels/webhooks/push-notifications/ /agents/communication-channels/webhooks/push-notifications/ 301
+/agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
+/agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
+/agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
+/agents/tools/sandbox/codemode/ /agents/model-context-protocol/protocol/codemode/ 301
+/agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
+/agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 
 # ai-audit
 /ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
@@ -689,11 +785,45 @@
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
 /durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
-# email-routing
-/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
-/email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
-/email-routing/known-limitations/ /email-routing/postmaster/ 301
-/email-routing/email-workers/demos/ /email-routing/email-workers/ 301
+# Email Routing -> Email Service (product merged)
+# Top-level
+/email-routing/ /email-service/ 301
+/email-routing/api-reference/ /email-service/api/ 301
+/email-routing/graphql-example/ /email-service/observability/metrics-analytics/ 301
+/email-routing/limits/ /email-service/platform/limits/ 301
+/email-routing/postmaster/ /email-service/reference/postmaster/ 301
+
+# Get started
+/email-routing/get-started/ /email-service/get-started/ 301
+/email-routing/get-started/enable-email-routing/ /email-service/get-started/route-emails/ 301
+/email-routing/get-started/test-email-routing/ /email-service/get-started/route-emails/#test-your-routing-rule 301
+/email-routing/get-started/audit-logs/ /email-service/observability/audit-logs/ 301
+/email-routing/get-started/email-routing-analytics/ /email-service/observability/metrics-analytics/ 301
+
+# Setup -> Configuration
+/email-routing/setup/ /email-service/configuration/ 301
+/email-routing/setup/email-routing-addresses/ /email-service/configuration/email-routing-addresses/ 301
+/email-routing/setup/email-routing-dns-records/ /email-service/configuration/domains/ 301
+/email-routing/setup/disable-email-routing/ /email-service/configuration/domains/#remove-a-domain-from-email-routing 301
+/email-routing/setup/mta-sts/ /email-service/configuration/mta-sts/ 301
+/email-routing/setup/subdomains/ /email-service/configuration/subdomains/ 301
+
+# Email Workers
+/email-routing/email-workers/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/enable-email-workers/ /email-service/get-started/route-emails/ 301
+/email-routing/email-workers/edit-email-workers/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/reply-email-workers/ /email-service/api/route-emails/email-handler/#reply-to-emails 301
+/email-routing/email-workers/send-email-workers/ /email-service/api/send-emails/workers-api/ 301
+/email-routing/email-workers/runtime-api/ /email-service/api/route-emails/email-handler/ 301
+/email-routing/email-workers/local-development/ /email-service/local-development/routing/ 301
+
+# Troubleshooting
+/email-routing/troubleshooting/ /email-service/reference/troubleshooting/ 301
+/email-routing/troubleshooting/email-routing-dns-records/ /email-service/configuration/domains/ 301
+/email-routing/troubleshooting/email-routing-spf-records/ /email-service/reference/troubleshooting/#multiple-spf-records 301
+
+# Changelog (entries moved to email-service product folder)
+/changelog/product/email-routing/ /changelog/product/email-service/ 301
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
 /firewall/api/cf-lists/endpoints/ /waf/tools/lists/lists-api/endpoints/ 301
@@ -988,7 +1118,8 @@
 /images/transform-images/ /images/optimization/transformations/overview/ 301
 /images/transform-images/transform-via-url/ /images/optimization/features/ 301
 /images/transform-images/transform-via-workers/ /images/optimization/transformations/transform-via-workers/ 301
-/images/transform-images/bindings/ /images/optimization/transformations/bindings/ 301
+/images/transform-images/bindings/ /images/optimization/binding/ 301
+/images/optimization/transformations/bindings/ /images/optimization/binding/ 301
 /images/transform-images/control-origin-access/ /images/optimization/transformations/control-origin-access/ 301
 /images/transform-images/draw-overlays/ /images/optimization/transformations/draw-overlays/ 301
 /images/transform-images/integrate-with-frameworks/ /images/optimization/transformations/integrate-with-frameworks/ 301
@@ -1153,7 +1284,7 @@
 /learning-paths/get-started-free/other-features/redirects/ /fundamentals/reference/redirects/ 301
 /learning-paths/get-started-free/other-features/analytics/ /analytics/account-and-zone-analytics/ 301
 /learning-paths/get-started-free/other-features/account-profile/ /fundamentals/account/ 301
-/learning-paths/get-started-free/other-features/email-routing/ /email-routing/ 301
+/learning-paths/get-started-free/other-features/email-routing/ /email-service/ 301
 /learning-paths/get-started-free/other-features/resources/ /fundamentals/#additional-resources 301
 /learning-paths/get-started-free/other-features/product-lines/ /directory/ 301
 
@@ -2496,6 +2627,7 @@
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /warp-client/teams/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/ 301
 /cloudflare-one/integrations/identity-providers/azuread/ /cloudflare-one/integrations/identity-providers/entra-id/ 301
+/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/external-disconnect/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-external-emergency-disconnect 301
 
 # Cloudflare One nav revamp (statics)
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
@@ -2538,6 +2670,7 @@
 /cloudflare-one/identity/devices/service-providers/custom/ /cloudflare-one/integrations/service-providers/custom/ 301
 /cloudflare-one/identity/devices/service-providers/ /cloudflare-one/integrations/service-providers/ 301
 /cloudflare-one/data-loss-prevention/troubleshooting/ /cloudflare-one/data-loss-prevention/troubleshoot-dlp/ 301
+/cloudflare-one/data-loss-prevention/saas-apps-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
 /cloudflare-one/policies/filtering/configuring-block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-policies/dns-policies/#safe-search 301
@@ -2589,6 +2722,7 @@
 
 # ============================================================================
 # DYNAMIC REDIRECTS
+/agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
 
 # Agent Skills legacy discovery path
@@ -2597,6 +2731,11 @@
 /cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 # Pub/Sub (removed product)
 /pub-sub/* / 301
+
+# Email Routing (merged into Email Service) — catch-all for any paths not
+# enumerated in the static section above
+/email-routing/* /email-service/ 301
+/changelog/product/email-routing/* /changelog/product/email-service/ 301
 
 # AI Gateway
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
@@ -2819,7 +2958,7 @@
 /cloudflare-one/team-and-resources/devices/warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/:splat 301
 
 # Agents x402 (moved under agentic-payments)
-/agents/x402/* /agents/agentic-payments/x402/:splat 301
+/agents/x402/* /agents/tools/payments/x402/:splat 301
 
 # AI Gateway models (unified under /ai/models/)
 /ai-gateway/models/* /ai/models/:splat 301

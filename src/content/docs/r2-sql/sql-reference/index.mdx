@@ -76,7 +76,7 @@ DESCRIBE namespace_name.table_name;
 ### Syntax
 
 ```sql
-SELECT column_specification [, column_specification, ...]
+SELECT [DISTINCT] column_specification [, column_specification, ...]
 ```
 
 ### Column specification
@@ -86,6 +86,20 @@ SELECT column_specification [, column_specification, ...]
 - **Qualified wildcard**: `table_name.*`
 - **Column alias**: `column_name AS alias`
 - **Expressions**: arithmetic, function calls, CASE expressions, and casts
+
+### Select distinct
+
+Use `DISTINCT` to eliminate duplicate rows from the result set:
+
+```sql
+SELECT DISTINCT region, department
+FROM my_namespace.sales_data
+WHERE total_amount > 1000
+ORDER BY region, department
+LIMIT 100
+```
+
+For large datasets where approximate results are acceptable, `approx_distinct()` is a faster alternative for counting unique values.
 
 ### Examples
 
@@ -578,6 +592,64 @@ LIMIT number
 ```sql
 SELECT * FROM my_namespace.sales_data LIMIT 100
 ```
+
+---
+
+## Set operations
+
+Set operations combine the results of two or more `SELECT` statements.
+
+### Syntax
+
+```sql
+SELECT ... FROM table1
+UNION | UNION ALL | INTERSECT | EXCEPT
+SELECT ... FROM table2
+```
+
+### Supported operations
+
+| Operation     | Description                                                      |
+| :------------ | :--------------------------------------------------------------- |
+| `UNION`       | Returns all rows from both queries, removing duplicates          |
+| `UNION ALL`   | Returns all rows from both queries, including duplicates         |
+| `INTERSECT`   | Returns only rows that appear in both query results              |
+| `EXCEPT`      | Returns rows from the first query that do not appear in the second |
+
+### Examples
+
+#### Union
+
+```sql
+-- Find zones that had either firewall blocks OR high-risk requests
+SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+UNION
+SELECT zone_id FROM my_namespace.http_requests WHERE risk_score > 0.8
+```
+
+#### Intersect
+
+```sql
+-- Find zones with both firewall blocks AND entries in the zones table
+SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+INTERSECT
+SELECT zone_id FROM my_namespace.zones WHERE plan = 'enterprise'
+```
+
+#### Except
+
+```sql
+-- Find enterprise zones that have no firewall events
+SELECT zone_id FROM my_namespace.zones WHERE plan = 'enterprise'
+EXCEPT
+SELECT zone_id FROM my_namespace.firewall_events
+```
+
+### Requirements
+
+- All queries in a set operation must return the same number of columns.
+- Corresponding columns must have compatible data types.
+- Column names in the result are taken from the first query.
 
 ---
 

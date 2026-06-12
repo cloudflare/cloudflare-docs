@@ -132,7 +132,7 @@ The process to establish IPsec tunnels on Cisco IOS XE involves the following st
 - Policy-Based Routing (recommended)
 - Health Tracking - IP SLA (recommended)
 
-### Virtual Tunnel Interfaces
+### Virtual tunnel interfaces
 
 Add one Virtual Tunnel Interface per IPsec tunnel to facilitate routing to Cloudflare.
 
@@ -186,7 +186,7 @@ crypto ikev2 proposal CF_WAN_IKEV2_PROP
  exit
 ```
 
-:::note
+:::tip
 Simply add/remove `pqc mlkem768` from the proposal to enable/disable Post-Quantum Cryptography.
 :::
 
@@ -321,7 +321,7 @@ crypto ipsec profile CF_WAN_TUN_02_IPSEC_PROF
  exit
 ```
 
-### Bind IPsec Profiles to tunnel interfaces
+### Bind IPsec profiles to tunnel interfaces
 
 Bind the IPsec profiles to the corresponding Virtual Tunnel Interfaces to instantiate the IPsec tunnels:
 
@@ -466,7 +466,9 @@ track 2 ip sla 2 reachability
 
 ```txt
 show crypto ikev2 sa detailed
+```
 
+```txt
  IPv4 Crypto IKEv2  SA
 
 Tunnel-id Local                 Remote                fvrf/ivrf            Status
@@ -517,13 +519,15 @@ shutdown
 no shutdown
 ```
 
-### Policy-Based Routing
+### Policy-based routing
 
 - Display Route Map details. Ensure the counters increment to confirm whether traffic matches the policy (`CF_WAN_PBR_ALL`):
 
 ```txt
 show route-map CF_WAN_PBR_RM
+```
 
+```txt
 route-map CF_WAN_PBR_RM, permit, sequence 10
   Match clauses:
     ip address (access-lists): CF_WAN_PBR_ALL
@@ -561,17 +565,23 @@ S*    0.0.0.0/0 [1/0] via 169.254.250.0
 
 ```txt
 show ip cef vrf CF_WAN_PBR_VRF 0.0.0.0/0
+```
+
+```txt
 0.0.0.0/0
   nexthop 169.254.250.0 Tunnel1
   nexthop 169.254.250.2 Tunnel2
 ```
 
-#### Health Tracking - IP SLA
+#### Health tracking - IP SLA
 
 - Display `track` object state:
 
 ```txt
 show track brief
+```
+
+```txt
 Track Type        Instance                   Parameter        State Last Change
 1     ip sla      1                          reachability     Up    00:15:13
 2     ip sla      2                          reachability     Up    01:16:08
@@ -581,6 +591,9 @@ Track Type        Instance                   Parameter        State Last Change
 
 ```txt
 show ip sla statistics
+```
+
+```txt
 IPSLAs Latest Operation Statistics
 
 IPSLA operation id: 1

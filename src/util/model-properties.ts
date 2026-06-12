@@ -30,6 +30,7 @@ export const CAPABILITY_PROPERTIES: Record<string, PropertyDef> = {
 	function_calling: { label: "Function calling", category: "model" },
 	reasoning: { label: "Reasoning", category: "model" },
 	vision: { label: "Vision", category: "model" },
+	zdr: { label: "Zero data retention", category: "model" },
 	// Platform properties
 	lora: { label: "LoRA", category: "platform" },
 	partner: { label: "Partner", category: "platform" },

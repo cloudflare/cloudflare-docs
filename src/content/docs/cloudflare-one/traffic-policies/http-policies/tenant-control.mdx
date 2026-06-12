@@ -38,7 +38,7 @@ To verify Gateway is applying a custom header:
 
    | Selector    | Operator | Value              | Logic | Action | Untrusted certificate action |
    | ----------- | -------- | ------------------ | ----- | ------ | ---------------------------- |
-   | Application | in       | _Google Workspace_ | And   | Allow  | Block                        |
+   | Application | in       | _Google Workspace_ | Or   | Allow  | Block                        |
    | Domain      | in       | `httpbin.org`      |       |        |                              |
 
 2. On your device, go to [`httpbin.org/anything`](https://httpbin.org/anything). Your custom header will appear in the list of headers.

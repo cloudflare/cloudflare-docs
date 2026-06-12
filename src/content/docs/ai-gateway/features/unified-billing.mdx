@@ -112,7 +112,12 @@ The HTTP API supports the following providers:
 
 ### Spend limits
 
-Set spend limits to prevent unexpected charges on your loaded credits. You can define daily, weekly, or monthly limits. When a limit is reached, the AI Gateway automatically stops processing requests until the period resets or you increase the limit.
+You can set spend limits at two levels:
+
+- **Account-level** — Set a spend limit on your loaded credits on this page to cap total Unified Billing spend across all gateways.
+- **Per-gateway** — Set [granular spend limit rules](/ai-gateway/features/spend-limits/) on individual gateways, scoped by model, provider, or custom metadata dimensions like user or team.
+
+Both limits are enforced independently. Whichever one is reached first will block requests.
 
 ### Zero Data Retention (ZDR)
 

@@ -31,7 +31,7 @@ curl "http://localhost:8787/cdn-cgi/handler/scheduled?format=json"
 ```js
 export default {
 	async scheduled(controller, env, ctx) {
-		ctx.waitUntil(doSomeTaskOnASchedule());
+		await doSomeTaskOnASchedule();
 	},
 };
 ```
@@ -46,7 +46,7 @@ export default {
 		env: Env,
 		ctx: ExecutionContext,
 	) {
-		ctx.waitUntil(doSomeTaskOnASchedule());
+		await doSomeTaskOnASchedule();
 	},
 };
 ```
@@ -58,7 +58,7 @@ from workers import WorkerEntrypoint, Response, fetch
 
 class Default(WorkerEntrypoint):
     async def scheduled(self, controller, env, ctx):
-        ctx.waitUntil(doSomeTaskOnASchedule())
+        await doSomeTaskOnASchedule()
 ```
 
 </TabItem></Tabs>
@@ -103,10 +103,10 @@ export default {
 	async scheduled(controller, env, ctx) {
 		switch (controller.cron) {
 			case "*/5 * * * *":
-				ctx.waitUntil(fetch("https://example.com/api/sync"));
+				await fetch("https://example.com/api/sync");
 				break;
 			case "0 0 * * *":
-				ctx.waitUntil(env.MY_KV.put("last-cleanup", new Date().toISOString()));
+				await env.MY_KV.put("last-cleanup", new Date().toISOString());
 				break;
 		}
 	},
@@ -124,10 +124,10 @@ export default {
 	) {
 		switch (controller.cron) {
 			case "*/5 * * * *":
-				ctx.waitUntil(fetch("https://example.com/api/sync"));
+				await fetch("https://example.com/api/sync");
 				break;
 			case "0 0 * * *":
-				ctx.waitUntil(env.MY_KV.put("last-cleanup", new Date().toISOString()));
+				await env.MY_KV.put("last-cleanup", new Date().toISOString());
 				break;
 		}
 	},
@@ -142,9 +142,20 @@ The value of `controller.cron` is the exact cron expression string from your con
 
 When a Workers script is invoked by a [Cron Trigger](/workers/configuration/cron-triggers/), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the context your function runs in, and contains the following methods to control what happens next:
 
-- <code>ctx.waitUntil(promisePromise)</code> : void - Use this method to notify
-  the runtime to wait for asynchronous tasks (for example, logging, analytics to
-  third-party services, streaming and caching). The first `ctx.waitUntil` to
-  fail will be observed and recorded as the status in the [Cron
-  Trigger](/workers/configuration/cron-triggers/) Past Events table. Otherwise,
-  it will be reported as a success.
+- <code>ctx.waitUntil(promise)</code> : void - Use this method to
+  register asynchronous tasks (for example, logging, analytics to third-party
+  services, streaming and caching) that should settle before the invocation
+  completes. The first `ctx.waitUntil` to fail will be observed and recorded as
+  the status in the [Cron Trigger](/workers/configuration/cron-triggers/) Past
+  Events table. Otherwise, it will be reported as a success.
+
+:::note
+
+The runtime waits for the promise returned by the `scheduled()` handler to
+resolve (up to the 15-minute duration limit). You do not need to use
+`waitUntil()` for the runtime to wait for a single asynchronous task.
+`waitUntil()` is most useful when you need to run multiple concurrent tasks, or
+when you want the outcome of a specific promise to be recorded as the Cron
+Trigger invocation status.
+
+:::

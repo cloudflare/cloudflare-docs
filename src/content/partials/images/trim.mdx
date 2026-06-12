@@ -23,14 +23,16 @@ The `trim=border` option can be further adjusted using the following parameters:
 
 #### `top;right;bottom;left`
 
-Specifies the number of pixels to remove from the sides of an image. Accepts four integers, separated by a semicolon, to set the trim on all four sides of an image at once.
+Specifies the number of pixels to remove from the sides of an image. Accepts four values, separated by a semicolon, to set the trim on all four sides of an image at once.
+
+All trim values accept either an integer (pixel count) or a decimal between `0` and `1` representing a fraction of the image dimension. For example, `0.25` trims 25% from that side.
 
 Trim can also be applied to a specific side using the following parameters:
 
-- `trim.top` — Specifies the number of pixels to remove from the top side of the image.
-- `trim.left` — Specifies the number of pixels to remove from the left side of the image
-- `trim.height` — Sets the height, in pixels, of the image from the top edge, then trims everything below the specified value.
-- `trim.width` — Sets the width of the image from the left edge, then trims everything to the right of the specified value.
+- `trim.top` — Removes pixels from the top of the image.
+- `trim.left` — Removes pixels from the left of the image.
+- `trim.height` — Sets the height of the image from the top edge, then trims everything below.
+- `trim.width` — Sets the width of the image from the left edge, then trims everything to the right.
 
 <Tabs>
   <TabItem label="URL format">
@@ -42,11 +44,18 @@ Trim can also be applied to a specific side using the following parameters:
     trim.left=800
     // This removes 800 pixels from the left of the image
 
+    trim=0.1;0.2;0.1;0.2
+    // This trims 10% from the top and bottom, and 20% from the left and right
+
+    trim.top=0.25
+    // This trims 25% of the image height from the top
     ```
   </TabItem>
   <TabItem label="Workers">
   ```js
-  cf: {image: {trim: {top: 12,  right: 78, bottom: 34, left: 56, width:678, height:678}}}
+  cf: {image: {trim: {top: 12, right: 78, bottom: 34, left: 56, width: 678, height: 678}}}
+  // Using decimals to trim 10% from each side:
+  cf: {image: {trim: {top: 0.1, right: 0.1, bottom: 0.1, left: 0.1}}}
   ```
   </TabItem>
 </Tabs>

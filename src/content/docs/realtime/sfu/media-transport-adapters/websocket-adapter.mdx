@@ -233,7 +233,7 @@ Media uses Protocol Buffers. Audio uses PCM payloads; video uses JPEG payloads:
 - Stereo (left/right interleaved)
 - Video: JPEG image payload (one frame per message)
 
-```protobuf
+```proto
 message Packet {
     uint32 sequenceNumber = 1;  // Used in Stream mode only
     uint32 timestamp = 2;       // Used in Stream mode only

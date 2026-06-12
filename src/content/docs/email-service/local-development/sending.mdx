@@ -27,12 +27,12 @@ Configure your Wrangler file with the email binding:
 
 <WranglerConfig>
 
-```toml
-name = "email-sending-worker"
-compatibility_date = "2024-01-01"
-
-[[send_email]]
-name = "EMAIL"
+```jsonc
+{
+	"name": "email-sending-worker",
+	"compatibility_date": "$today",
+	"send_email": [{ "name": "EMAIL" }],
+}
 ```
 
 </WranglerConfig>
@@ -45,13 +45,17 @@ Set `remote: true` on the email binding in your Wrangler configuration:
 
 <WranglerConfig>
 
-```toml
-name = "email-sending-worker"
-compatibility_date = "$today"
-
-[[send_email]]
-name = "EMAIL"
-remote = true
+```jsonc
+{
+	"name": "email-sending-worker",
+	"compatibility_date": "$today",
+	"send_email": [
+		{
+			"name": "EMAIL",
+			"remote": true,
+		},
+	],
+}
 ```
 
 </WranglerConfig>
@@ -78,7 +82,7 @@ export default {
 		try {
 			const emailData = await request.json();
 
-			console.log("📤 Sending email:", {
+			console.log("Sending email:", {
 				to: emailData.to,
 				from: emailData.from,
 				subject: emailData.subject,
@@ -152,7 +156,7 @@ The email content (text and HTML) is saved to local files that you can inspect t
 
 Local development simulates the `send_email` binding locally, but `ArrayBuffer` values in attachment `content` cannot be serialized by the local simulator. If you pass an `ArrayBuffer` (for example, for image or PDF attachments), you will see an error like:
 
-```
+```txt
 Cannot serialize value: [object ArrayBuffer]
 ```
 

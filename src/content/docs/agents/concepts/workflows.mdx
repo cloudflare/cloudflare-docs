@@ -1,9 +1,9 @@
 ---
-title: Workflows
+title: Using Agents with Workflows
 description: Integrate Cloudflare Workflows with Agents for durable, multi-step background processing with automatic retries.
 pcx_content_type: concept
 sidebar:
-  order: 3
+  order: 7
 products:
   - agents
 ---
@@ -37,8 +37,7 @@ Agents can loop, branch, and interact directly with users. Workflows execute ste
 - Quick API calls and responses
 - Real-time collaborative features
 - Tasks under 30 seconds
-- One durable Think chat turn with [`submitMessages()`](/agents/think/programmatic-submissions/#submitmessages)
-
+- One durable Think chat turn with [`submitMessages()`](/agents/harnesses/think/programmatic-submissions/#submitmessages)
 **Use Agents with Workflows for:**
 
 - Data processing pipelines
@@ -187,7 +186,7 @@ A Workflow updates Agent state at key milestones using `step.updateAgentState()`
 
 <LinkCard
 	title="Run Workflows API"
-	href="/agents/api-reference/run-workflows/"
+	href="/agents/runtime/execution/run-workflows/"
 	description="Implementation details for agent workflows."
 />
 
@@ -199,6 +198,6 @@ A Workflow updates Agent state at key milestones using `step.updateAgentState()`
 
 <LinkCard
 	title="Human-in-the-loop"
-	href="/agents/concepts/human-in-the-loop/"
+	href="/agents/concepts/agentic-patterns/human-in-the-loop/"
 	description="Approval flows and manual intervention."
 />

@@ -47,7 +47,7 @@ For each selected patch:
 - Read a component reference only when the patch contains that component tag or imports that component name.
 - For component references, use the manifest `componentNames` field to match component names.
 - Do not read all component reference files by default.
-- If a component reference file does not exist in the manifest, skip it — not every component has style-guide rules beyond what the build already validates.
+- If a component reference file does not exist in the manifest, skip it.
 - Do not rely on any root-level `.agents/references/*` files. The sandbox only has access to files under `.agents/reference/style-guide/`.
 
 ## Patch Parsing
@@ -68,7 +68,7 @@ Always use the code tool to parse added lines from the patch. Never parse the di
 
 ## Severity
 
-- `warning` — clear rule violation, build validity issue, clarity issue, or correctness issue.
+- `warning` — clear rule violation, clarity issue, or correctness issue.
 - `suggestion` — improvement covered by a rule but not required.
 
 ## Result Shape
