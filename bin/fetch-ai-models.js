@@ -56,9 +56,7 @@ try {
 	// JSON files in place so docs continue to render the last known good
 	// catalog; the next successful run will sync new/removed models.
 	const message = err.message.endsWith(".") ? err.message : `${err.message}.`;
-	console.error(
-		`fetch-ai-models: ${message} Keeping existing model files.`,
-	);
+	console.error(`fetch-ai-models: ${message} Keeping existing model files.`);
 	process.exit(0);
 }
 
