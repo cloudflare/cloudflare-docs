@@ -16,7 +16,12 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Marker so the loop can tell "upstream returned 4xx we can't recover from"
 // apart from a transient network error.
-class NonRetryableHttpError extends Error {}
+class NonRetryableHttpError extends Error {
+	constructor(message) {
+		super(message);
+		this.name = "NonRetryableHttpError";
+	}
+}
 
 async function fetchModels() {
 	let lastError;
