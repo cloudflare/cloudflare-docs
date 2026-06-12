@@ -32,6 +32,6 @@
 	{
 		"deeplink": "/?to=/:account/domains/registrations",
 		"name": "Registrations",
-		"parent": ["Domains"]
+		"parent": ["Domain registration"]
 	}
 ]
