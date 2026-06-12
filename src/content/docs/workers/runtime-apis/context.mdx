@@ -256,18 +256,6 @@ The `passThroughOnException` method allows a Worker to [fail open](https://commu
 ```js
 export default {
 	async fetch(request, env, ctx) {
-		// Proxy to origin on unhandled/uncaught exceptions
-		ctx.passThroughOnException();
-		throw new Error("Oops");
-	},
-};
-```
-
-If your Worker proxies to origin in the normal request path, catch errors from the origin fetch to avoid a second fetch with a consumed request body:
-
-```js
-export default {
-	async fetch(request, env, ctx) {
 		ctx.passThroughOnException();
 
 		try {
