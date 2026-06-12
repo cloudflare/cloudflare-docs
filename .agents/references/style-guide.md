@@ -288,7 +288,7 @@ All components are imported from `~/components`. Imports must appear after the f
 - Multi-step procedures → `Steps`
 - Dashboard navigation steps → `DashButton` (not bare links)
 
-**No raw HTML elements for layout or styling.** Do not write `<div>`, `<span>`, `<table>`, `<br>`, `<style>`, or any other raw HTML element directly in MDX to achieve layout, overflow, scrolling, borders, or visual effects. Use a Cloudflare docs component instead, or restructure the content. The only permitted raw HTML is inline void elements like `<br/>` for line breaks inside code annotations where no component applies.
+**No raw HTML elements for layout or styling.** Do not write `<div>`, `<span>`, `<table>`, `<br>`, `<style>`, or any other raw HTML element directly in MDX to achieve layout, overflow, scrolling, borders, or visual effects. Use a Cloudflare docs component instead, or restructure the content.
 
 | Component                             | Purpose                                                                             |
 | ------------------------------------- | ----------------------------------------------------------------------------------- |
