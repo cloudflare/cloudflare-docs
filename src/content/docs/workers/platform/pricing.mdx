@@ -139,6 +139,8 @@ Existing Workers will not be impacted when changing the default usage model. You
 
 <Render file="workers_logs_pricing" product="workers" />
 
+You can use Workers Logs without exporting Workers Trace Events. On the Workers Paid plan, persisted log events are charged at $0.60 per million after included usage. Events exported with Workers Trace Events Logpush are charged separately at $0.05 per million after included usage. There is no combined price for these events. If an event is both persisted by Workers Logs and exported by Workers Trace Events Logpush, and both included allowances are exceeded, both overage charges apply: $0.60 per million for Workers Logs plus $0.05 per million for export.
+
 :::note[Workers Logs documentation]
 
 For more information and [examples of Workers Logs billing](/workers/observability/logs/workers-logs/#example-pricing), refer to the [Workers Logs documentation](/workers/observability/logs/workers-logs).
