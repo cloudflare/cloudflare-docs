@@ -10,7 +10,7 @@ description: Generate a domain ownership certificate (WHOIS ownership letter) fo
 
 import { Steps, DashButton } from "~/components";
 
-A domain ownership certificate is a PDF letter that certifies Cloudflare is the registrar of record for your domain and lists the domain's current registration data. You can use it as proof of ownership when a third party — such as a bank, marketplace, or legal entity — requires written confirmation that you control the domain.
+A domain ownership certificate is a PDF letter that certifies Cloudflare is the registrar of record for your domain and lists the domain's current registration data. You can use it as proof of ownership when a third party (such as a bank, marketplace, or legal entity) requires written confirmation that you control the domain.
 
 The certificate is generated on demand and is automatically populated with your domain's current WHOIS information and the date it was generated. It includes:
 
@@ -27,9 +27,9 @@ The contact details shown on the certificate reflect the authoritative contact i
 To download a domain ownership certificate:
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **Manage domains** page.
+1. In the Cloudflare dashboard, go to the **Registrations** page.
 
-   <DashButton url="/?to=/:account/registrar/domains" />
+   <DashButton url="/?to=/:account/domains/registrations" />
 
 2. Find the domain you want a certificate for, and select **Manage**.
 3. Select the **Contacts** tab.
@@ -38,7 +38,7 @@ To download a domain ownership certificate:
 
 Your browser downloads a PDF named `<domain>_ownership_letter.pdf`.
 
-## Requirements
+## Prerequisites and restrictions
 
 You can only generate a certificate when:
 
@@ -46,4 +46,8 @@ You can only generate a certificate when:
 - You have permission to view the domain's contact information.
 - The domain has registrant contact information on file.
 
-If any of these conditions are not met, the certificate cannot be generated. Domains that are pending transfer or have not yet completed registration with Cloudflare Registrar are not eligible until the registration is finalized.
+If any of these conditions are not met, the certificate cannot be generated.
+
+:::note
+Domains that are pending transfer or have not yet completed registration with Cloudflare Registrar are not eligible until the registration is finalized.
+:::

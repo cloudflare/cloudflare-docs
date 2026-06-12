@@ -28,5 +28,10 @@
 		"deeplink": "/?to=/:account/mesh",
 		"name": "Mesh",
 		"parent": ["Networking"]
+	},
+	{
+		"deeplink": "/?to=/:account/domains/registrations",
+		"name": "Registrations",
+		"parent": ["Domains"]
 	}
 ]
