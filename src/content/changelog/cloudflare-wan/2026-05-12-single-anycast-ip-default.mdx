@@ -1,0 +1,17 @@
+---
+title: New accounts assigned a single IPv4 anycast address
+description: New Magic Transit and Cloudflare WAN accounts are now assigned a single IPv4 anycast address by default
+date: 2026-05-12
+products:
+  - cloudflare-wan
+  - magic-transit
+  - cloudflare-one
+---
+
+New Magic Transit and Cloudflare WAN accounts are now assigned a single IPv4 anycast address by default.
+
+Cloudflare handles failures on its network automatically by advertising your endpoint IP from multiple nodes across many globally distributed data centers. To handle failures on your network, configure two tunnels from separate routers.
+
+To request additional anycast IP addresses for your account, contact your account team.
+
+For tunnel configuration guidance, refer to [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/) for Cloudflare WAN or [Configure tunnel endpoints](/magic-transit/how-to/configure-tunnel-endpoints/) for Magic Transit.

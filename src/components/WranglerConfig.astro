@@ -19,7 +19,7 @@ const copy = html.querySelector("div.copy > button");
 
 if (!copy) {
 	throw new Error(
-		`[WranglerConfig] Unable to find copy button in rendered code block HTML.`
+		`[WranglerConfig] Unable to find copy button in rendered code block HTML.`,
 	);
 }
 
@@ -27,7 +27,7 @@ let code = copy.attributes["data-code"];
 
 if (!code) {
 	throw new Error(
-		`[WranglerConfig] Unable to find data-code attribute on copy button.`
+		`[WranglerConfig] Unable to find data-code attribute on copy button.`,
 	);
 }
 

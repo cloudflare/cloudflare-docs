@@ -74,6 +74,23 @@ const content = await pdf.blob();
 console.log(content);
 ```
 
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("pdf", {
+			url: "https://example.com/",
+			addStyleTag: [{ content: "body { font-family: Arial; }" }],
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
 </TabItem> </Tabs>
 
 ### Convert custom HTML to PDF

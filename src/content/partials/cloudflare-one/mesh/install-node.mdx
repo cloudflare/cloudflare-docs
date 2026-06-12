@@ -22,6 +22,14 @@ sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
 </TabItem>
 <TabItem label="RedHat / CentOS">
 
+On RHEL 9 and later, enable the Extra Packages for Enterprise Linux (EPEL) repository before installing `cloudflare-warp`. EPEL provides dependencies required by the Cloudflare One Client UI:
+
+```sh
+sudo dnf install -y epel-release
+```
+
+Then install the package:
+
 ```sh
 curl -fsSl https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo &&
 sudo yum install -y cloudflare-warp &&

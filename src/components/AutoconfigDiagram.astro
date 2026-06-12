@@ -21,10 +21,15 @@ const { framework, configs } = Astro.props;
 				<div class="node-card">
 					<div class="node-icon">
 						<slot name="icon">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M12 2L2 7l10 5 10-5-10-5z"/>
-								<path d="M2 17l10 5 10-5"/>
-								<path d="M2 12l10 5 10-5"/>
+							<svg
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+								<path d="M2 17l10 5 10-5"></path>
+								<path d="M2 12l10 5 10-5"></path>
 							</svg>
 						</slot>
 					</div>
@@ -43,15 +48,17 @@ const { framework, configs } = Astro.props;
 				<div class="config-box">
 					<span class="config-title">Generated configuration</span>
 					<div class="config-items">
-						{configs.map((config, i) => (
-							<div class="config-item" data-config-index={i}>
-								<div class="config-file">{config.file}</div>
-								<div class="config-detail">
-									<span class="config-label">{config.label}:</span>
-									<span class="config-value">{config.value}</span>
+						{
+							configs.map((config, i) => (
+								<div class="config-item" data-config-index={i}>
+									<div class="config-file">{config.file}</div>
+									<div class="config-detail">
+										<span class="config-label">{config.label}:</span>
+										<span class="config-value">{config.value}</span>
+									</div>
 								</div>
-							</div>
-						))}
+							))
+						}
 					</div>
 				</div>
 			</div>
@@ -64,8 +71,12 @@ const { framework, configs } = Astro.props;
 				<div class="node-card">
 					<div class="node-icon workers-icon">
 						<svg viewBox="0 0 24 24" fill="none">
-							<path d="M16.934 8.638l-5.669-3.14a2.91 2.91 0 00-2.82.027l-5.248 3.14A2.873 2.873 0 002 11.296V16.5c0 1.063.59 2.04 1.537 2.543l5.669 3.14a2.91 2.91 0 002.82-.027l5.248-3.14A2.873 2.873 0 0018.5 16.5v-5.204c0-1.063-.59-2.04-1.566-2.658z" fill="#F6821F"/>
-							<path d="M16.934 8.638a2.873 2.873 0 011.566 2.543v5.204c0 1.063-.59 2.04-1.537 2.543L11.714 22l-1.49-7.34 6.71-5.022z" fill="#FBAD41"/>
+							<path
+								d="M16.934 8.638l-5.669-3.14a2.91 2.91 0 00-2.82.027l-5.248 3.14A2.873 2.873 0 002 11.296V16.5c0 1.063.59 2.04 1.537 2.543l5.669 3.14a2.91 2.91 0 002.82-.027l5.248-3.14A2.873 2.873 0 0018.5 16.5v-5.204c0-1.063-.59-2.04-1.566-2.658z"
+								fill="#F6821F"></path>
+							<path
+								d="M16.934 8.638a2.873 2.873 0 011.566 2.543v5.204c0 1.063-.59 2.04-1.537 2.543L11.714 22l-1.49-7.34 6.71-5.022z"
+								fill="#FBAD41"></path>
 						</svg>
 					</div>
 					<div class="node-info">
@@ -79,7 +90,9 @@ const { framework, configs } = Astro.props;
 		<!-- Status indicator -->
 		<div class="status-indicator">
 			<div class="status-dot"></div>
-			<span class="status-text">Wrangler handles configuration automatically</span>
+			<span class="status-text"
+				>Wrangler handles configuration automatically</span
+			>
 		</div>
 	</div>
 </autoconfig-diagram>
@@ -131,7 +144,9 @@ const { framework, configs } = Astro.props;
 		padding: 0.75rem 1rem;
 		border: 1px solid rgb(229 229 229);
 		min-width: 120px;
-		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+		transition:
+			border-color 0.3s ease,
+			box-shadow 0.3s ease;
 	}
 
 	:root[data-theme="dark"] .node-card {
@@ -323,7 +338,8 @@ const { framework, configs } = Astro.props;
 
 	.config-file {
 		font-size: 0.625rem;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 		color: rgb(115 115 115);
 		margin-bottom: 0.125rem;
 	}
@@ -334,7 +350,8 @@ const { framework, configs } = Astro.props;
 
 	.config-detail {
 		font-size: 0.6875rem;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 	}
 
 	.config-label {
@@ -393,8 +410,13 @@ const { framework, configs } = Astro.props;
 	}
 
 	@keyframes pulse {
-		0%, 100% { opacity: 1; }
-		50% { opacity: 0.5; }
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.5;
+		}
 	}
 
 	.status-text {
@@ -415,10 +437,10 @@ const { framework, configs } = Astro.props;
 <script>
 	class AutoconfigDiagram extends HTMLElement {
 		private isRunning = false;
-		private framework = '';
+		private framework = "";
 
 		connectedCallback() {
-			this.framework = this.dataset.framework || '';
+			this.framework = this.dataset.framework || "";
 			// Auto-start after a short delay
 			setTimeout(() => this.run(), 500);
 		}
@@ -427,87 +449,90 @@ const { framework, configs } = Astro.props;
 			if (this.isRunning) return;
 			this.isRunning = true;
 
-			const statusIndicator = this.querySelector('.status-indicator');
-			const statusText = this.querySelector('.status-text');
+			const statusIndicator = this.querySelector(".status-indicator");
+			const statusText = this.querySelector(".status-text");
 
 			// Reset state
 			this.resetState();
 
 			// Update status
-			statusIndicator?.classList.add('running');
-			if (statusText) statusText.textContent = `Detecting ${this.framework} project...`;
+			statusIndicator?.classList.add("running");
+			if (statusText)
+				statusText.textContent = `Detecting ${this.framework} project...`;
 
 			await this.delay(900);
 
 			// Step 1: Framework detected
-			const frameworkNode = this.querySelector('.framework-node');
-			frameworkNode?.classList.add('active');
+			const frameworkNode = this.querySelector(".framework-node");
+			frameworkNode?.classList.add("active");
 			if (statusText) statusText.textContent = `${this.framework} detected`;
 
 			await this.delay(1200);
 
 			// Step 2: First connector
-			const connectors = this.querySelectorAll('.connector');
-			connectors[0]?.classList.add('active');
+			const connectors = this.querySelectorAll(".connector");
+			connectors[0]?.classList.add("active");
 
 			await this.delay(600);
 
 			// Step 3: Config section
-			const configSection = this.querySelector('.config-section');
-			configSection?.classList.add('active');
-			if (statusText) statusText.textContent = 'Generating configuration...';
+			const configSection = this.querySelector(".config-section");
+			configSection?.classList.add("active");
+			if (statusText) statusText.textContent = "Generating configuration...";
 
 			await this.delay(600);
 
 			// Show config items one by one
-			const configItems = this.querySelectorAll('.config-item');
+			const configItems = this.querySelectorAll(".config-item");
 			for (let i = 0; i < configItems.length; i++) {
 				const item = configItems[i];
-				item.classList.add('visible', 'active');
-				
+				item.classList.add("visible", "active");
+
 				// Get the config value for status
-				const valueEl = item.querySelector('.config-value');
-				const labelEl = item.querySelector('.config-label');
+				const valueEl = item.querySelector(".config-value");
+				const labelEl = item.querySelector(".config-label");
 				if (valueEl && labelEl) {
-					const label = labelEl.textContent?.replace(':', '') || '';
-					const value = valueEl.textContent || '';
-					if (statusText) statusText.textContent = `Setting ${label} → ${value}`;
+					const label = labelEl.textContent?.replace(":", "") || "";
+					const value = valueEl.textContent || "";
+					if (statusText)
+						statusText.textContent = `Setting ${label} → ${value}`;
 				}
 
 				await this.delay(1400);
-				item.classList.remove('active');
+				item.classList.remove("active");
 			}
 
 			await this.delay(500);
 
 			// Step 4: Second connector
-			connectors[1]?.classList.add('active');
-			if (statusText) statusText.textContent = 'Deploying to Workers...';
+			connectors[1]?.classList.add("active");
+			if (statusText) statusText.textContent = "Deploying to Workers...";
 
 			await this.delay(900);
 
 			// Step 5: Workers node
-			const workersNode = this.querySelector('.workers-node');
-			workersNode?.classList.add('active');
+			const workersNode = this.querySelector(".workers-node");
+			workersNode?.classList.add("active");
 
 			await this.delay(600);
 
 			// Complete - keep orange theme
-			frameworkNode?.classList.remove('active');
-			frameworkNode?.classList.add('connected');
-			configSection?.classList.remove('active');
-			configSection?.classList.add('connected');
-			connectors.forEach(c => {
-				c.classList.remove('active');
-				c.classList.add('connected');
+			frameworkNode?.classList.remove("active");
+			frameworkNode?.classList.add("connected");
+			configSection?.classList.remove("active");
+			configSection?.classList.add("connected");
+			connectors.forEach((c) => {
+				c.classList.remove("active");
+				c.classList.add("connected");
 			});
-			configItems.forEach(item => item.classList.add('visible'));
-			workersNode?.classList.remove('active');
-			workersNode?.classList.add('connected');
+			configItems.forEach((item) => item.classList.add("visible"));
+			workersNode?.classList.remove("active");
+			workersNode?.classList.add("connected");
 
-			statusIndicator?.classList.remove('running');
-			statusIndicator?.classList.add('complete');
-			if (statusText) statusText.textContent = 'Deployed to Cloudflare Workers!';
+			statusIndicator?.classList.remove("running");
+			statusIndicator?.classList.add("complete");
+			if (statusText)
+				statusText.textContent = "Deployed to Cloudflare Workers!";
 
 			this.isRunning = false;
 
@@ -518,18 +543,18 @@ const { framework, configs } = Astro.props;
 
 		private resetState() {
 			// Remove all state classes
-			this.querySelectorAll('.active, .connected, .visible').forEach(el => {
-				el.classList.remove('active', 'connected', 'visible');
+			this.querySelectorAll(".active, .connected, .visible").forEach((el) => {
+				el.classList.remove("active", "connected", "visible");
 			});
-			
-			const statusIndicator = this.querySelector('.status-indicator');
-			statusIndicator?.classList.remove('running', 'complete');
+
+			const statusIndicator = this.querySelector(".status-indicator");
+			statusIndicator?.classList.remove("running", "complete");
 		}
 
 		private delay(ms: number): Promise<void> {
-			return new Promise(resolve => setTimeout(resolve, ms));
+			return new Promise((resolve) => setTimeout(resolve, ms));
 		}
 	}
 
-	customElements.define('autoconfig-diagram', AutoconfigDiagram);
+	customElements.define("autoconfig-diagram", AutoconfigDiagram);
 </script>

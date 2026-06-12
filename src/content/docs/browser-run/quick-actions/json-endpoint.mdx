@@ -46,7 +46,7 @@ And at least one of:
 - Normalize article metadata (title, author, publish date, canonical URL)
 - Convert unstructured pages into typed JSON for downstream pipelines
 
-## Basic Usage
+## Basic usage
 
 ### With a Prompt and JSON schema
 
@@ -118,6 +118,86 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 	}
 }
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+Below is an example using the TypeScript SDK:
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
+});
+
+const json = await client.browserRendering.json.create({
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://developers.cloudflare.com/",
+	prompt: "Get me the list of AI products",
+	response_format: {
+		type: "json_schema",
+		schema: {
+			type: "object",
+			properties: {
+				products: {
+					type: "array",
+					items: {
+						type: "object",
+						properties: {
+							name: {
+								type: "string",
+							},
+							link: {
+								type: "string",
+							},
+						},
+						required: ["name"],
+					},
+				},
+			},
+		},
+	},
+});
+console.log(json);
+```
+
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("json", {
+			url: "https://developers.cloudflare.com/",
+			prompt: "Get me the list of AI products",
+			response_format: {
+				type: "json_schema",
+				schema: {
+					type: "object",
+					properties: {
+						products: {
+							type: "array",
+							items: {
+								type: "object",
+								properties: {
+									name: { type: "string" },
+									link: { type: "string" },
+								},
+								required: ["name"],
+							},
+						},
+					},
+				},
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
 
 ### With only a prompt
 
@@ -254,51 +334,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
-</TabItem> <TabItem label="TypeScript SDK">
-
-Below is an example using the TypeScript SDK:
-
-```typescript
-import Cloudflare from "cloudflare";
-
-const client = new Cloudflare({
-	apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
-});
-
-const json = await client.browserRendering.json.create({
-	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
-	url: "https://developers.cloudflare.com/",
-	prompt: "Get me the list of AI products",
-	response_format: {
-		type: "json_schema",
-		schema: {
-			type: "object",
-			properties: {
-				products: {
-					type: "array",
-					items: {
-						type: "object",
-						properties: {
-							name: {
-								type: "string",
-							},
-							link: {
-								type: "string",
-							},
-						},
-						required: ["name"],
-					},
-				},
-			},
-		},
-	},
-});
-console.log(json);
-```
-
-</TabItem> </Tabs>
-
-## Advanced Usage
+## Advanced usage
 
 :::note[Looking for more parameters?]
 Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/json/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.

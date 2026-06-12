@@ -18,7 +18,6 @@ type LearningPathsData = keyof CollectionEntry<"learning-paths">["data"];
 type ResourcesData = DocsData | VideosData | LearningPathsData;
 
 const props = z.object({
-	tags: z.string().array().optional(),
 	types: z.string().array(),
 	products: reference("directory").array().optional(),
 	directory: z.string().optional(),
@@ -30,7 +29,6 @@ const props = z.object({
 });
 
 const {
-	tags,
 	types,
 	products,
 	directory,
@@ -52,7 +50,6 @@ const filteredResources = [...docs, ...videos, ...learningPaths].filter(
 		return (
 			types.includes(type ?? "") &&
 			(directory ? id.startsWith(directory) : true) &&
-			(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
 			(products
 				? data.products?.some((v) =>
 						products.some((p) => p.id === (typeof v === "object" ? v.id : v)),

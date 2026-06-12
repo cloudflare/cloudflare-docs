@@ -8,9 +8,9 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-This example demonstrates how to use a VPC Network binding with [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) to connect to any private service in your account from a Worker — without pre-registering individual hosts or specifying a tunnel UUID.
+This example demonstrates how to use a VPC Network binding with [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) to connect to any private service in your account from a Worker — without pre-registering individual hosts or specifying a Cloudflare Tunnel UUID.
 
-When you bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, or subnet route in your account.
+When you bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, subnet or hostname route announced through Cloudflare Tunnel or Cloudflare Mesh, or destination connected through a [Cloudflare WAN](/cloudflare-wan/) on-ramp (GRE, IPsec, or CNI).
 
 ## Prerequisites
 
@@ -39,7 +39,7 @@ Bind your Worker to Cloudflare Mesh using `network_id: "cf1:network"` in your Wr
 ```
 </WranglerConfig>
 
-With this single binding, your Worker can reach any service across all tunnels and Mesh nodes in your account.
+With this single binding, your Worker can reach any service across all Cloudflare Tunnels, Mesh nodes, and Cloudflare WAN on-ramps in your account.
 
 ## 2. Implement the Worker
 

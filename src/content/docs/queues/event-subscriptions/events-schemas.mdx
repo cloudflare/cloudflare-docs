@@ -21,6 +21,10 @@ This page provides a comprehensive reference of available event sources and thei
 
 <Render file="event-subscriptions/access-events" product="queues" />
 
+### Artifacts
+
+<Render file="event-subscriptions/artifacts-events" product="queues" />
+
 ### R2
 
 <Render file="event-subscriptions/r2-events" product="queues" />
@@ -53,12 +57,12 @@ This page provides a comprehensive reference of available event sources and thei
 
 All events include these common fields:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `type` | string | The event type identifier |
-| `source` | object | Contains source-specific information like IDs and names |
-| `metadata.accountId` | string | Your Cloudflare account ID |
-| `metadata.eventSubscriptionId` | string | The subscription that triggered this event |
-| `metadata.eventSchemaVersion` | number | The version of the event schema |
-| `metadata.eventTimestamp` | string | The ISO 8601 timestamp when the event occurred |
-| `payload` | object | The event-specific data containing details about what happened |
+| Field                          | Type   | Description                                                    |
+| ------------------------------ | ------ | -------------------------------------------------------------- |
+| `type`                         | string | The event type identifier                                      |
+| `source`                       | object | Contains source-specific information like IDs and names        |
+| `metadata.accountId`           | string | Your Cloudflare account ID                                     |
+| `metadata.eventSubscriptionId` | string | The subscription that triggered this event                     |
+| `metadata.eventSchemaVersion`  | number | The version of the event schema                                |
+| `metadata.eventTimestamp`      | string | The ISO 8601 timestamp when the event occurred                 |
+| `payload`                      | object | The event-specific data containing details about what happened |

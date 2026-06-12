@@ -277,9 +277,11 @@ For more information, refer to [Streams](/workers/runtime-apis/streams/).
 
 ### Use waitUntil for work after the response
 
-[`ctx.waitUntil()`](/workers/runtime-apis/context/) lets you perform work after the response is sent to the client, such as analytics, cache writes, non-critical logging, or webhook notifications. This keeps your response fast while still completing background tasks.
+[`ctx.waitUntil()`](/workers/runtime-apis/context/) lets you perform work after the response is sent to the client, such as analytics, cache writes, logging, or webhook notifications. This keeps your response fast while still completing background tasks.
 
-There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second `waitUntil` time limit after the response is sent.
+Use `ctx.waitUntil()` only for work that does not affect the response. If the response depends on the work, `await` it before returning the response or stream the response as the work completes. A Worker that is still streaming a response body remains active without `ctx.waitUntil()`.
+
+There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second `waitUntil()` time limit after the response is sent or the client disconnects.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -746,6 +748,8 @@ For more information, refer to [Workers errors](/workers/observability/errors/#c
 ### Always await or waitUntil your Promises
 
 A `Promise` that is not `await`ed, `return`ed, or passed to `ctx.waitUntil()` is a floating promise. Floating promises cause silent bugs: dropped results, swallowed errors, and unfinished work. The Workers runtime may terminate your isolate before a floating promise completes.
+
+Choose based on whether the response depends on the work. Use `await` or `return` for work that must complete before the response is correct. Use `ctx.waitUntil()` for work that can run after the response is sent and can finish within the `waitUntil()` time limit.
 
 Enable the `no-floating-promises` lint rule to catch these at development time. If you use ESLint, enable [`@typescript-eslint/no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises/). If you use oxlint, enable [`typescript/no-floating-promises`](https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-floating-promises.html).
 

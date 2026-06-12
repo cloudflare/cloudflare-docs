@@ -11,12 +11,13 @@ import { useState } from "react";
 import { PiCaretDownBold } from "react-icons/pi";
 
 const links = [
-	{ label: "Docs Directory", href: "/directory/" },
+	{ label: "Directory", href: "/directory/" },
 	{
-		label: "APIs",
-		href: "https://developers.cloudflare.com/api/",
+		label: "API",
+		href: "/api/",
 	},
 	{ label: "SDKs", href: "/fundamentals/api/reference/sdks/" },
+	{ label: "Changelog", href: "/changelog/" },
 ];
 
 const dropdowns = Object.entries({

@@ -255,15 +255,15 @@ https://hello-agent.<YOUR_SUBDOMAIN>.workers.dev
 
 ## 6. Generate a RealtimeKit token
 
-Finally, to invoke the worker, we need to generate a RealtimeKit token from the [dashboard](https://dash.realtime.cloudflare.com/dashboard):
+Finally, to invoke the worker, we need to generate a RealtimeKit token from the [dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit):
 
-1. Go to the `Meetings` tab and click on `Create Meeting`:
+1. Select the app you want to use for the agent, go to the **Meetings** tab, and select **Create Meeting**:
 
 ![Meetings Tab](public/images/realtime-agents/create-meeting.png)
 
-2. Click on `Join` next to the meeting and generate the RealtimeKit link. This contains the `meetingId` (`bbbb2fac-953c-4239-9ba8-75ba912d76fc`) and the `authToken` to be passed in the final step:
+2. Select the **Join** icon next to the meeting and generate the RealtimeKit link. This contains the `meetingId` (`bbb...`) and the `authToken` to be passed in the final step:
 
-`https://demo.realtime.cloudflare.com/v2/meeting?id=bbbb2fac-953c-4239-9ba8-75ba912d76fc&authToken=ey...`
+`https://examples.realtime.cloudflare.com/meeting/?id=bbb...&theme=preset&authToken=ey...`
 
 ![Join Flow](public/images/realtime-agents/join-meeting.png)
 

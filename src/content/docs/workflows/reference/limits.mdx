@@ -51,7 +51,7 @@ Workflows cannot be deployed to Workers for Platforms namespaces, as Workflows d
 
 [^6]: Workflows will return a HTTP 429 rate limited error if you exceed the rate of new Workflow instance creation.
 
-[^7]: Only instances with a `running` state count towards the concurrency limits. Instances in the `waiting` state are excluded from these limits.
+[^7]: Only instances with a `running` state count towards the concurrency limits. Instances in the `waiting` state are excluded from these limits. Workers Paid cron-triggered Workflow instances have a separate one-hour cron concurrency budget per firing.
 
 [^8]: Each instance created or restarted counts towards this limit
 
@@ -112,6 +112,12 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 ```
 
 While a given Workflow instance is waiting for 30 days, it will transition to the `waiting` state, allowing other `queued` instances to run if concurrency limits are reached.
+
+### Cron-triggered instances on Workers Paid
+
+On [Workers Paid](/workers/platform/pricing/#workers), Workflow instances created by `schedules` can run for up to one hour per cron firing without consuming a Workflow concurrency slot.
+
+After that budget is used, the instance yields and enters the normal concurrency queue. It resumes when a concurrency slot is available. The instance does not fail, time out, or terminate because it used this cron concurrency budget.
 
 ### Increasing Workflow step limits
 

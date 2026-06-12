@@ -34,12 +34,44 @@ const markdown = (content: any) => {
 <table class="not-content w-full text-left text-[var(--sl-color-text)]">
 	<thead>
 		<tr>
-			<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold"></th>
-			{hasFree && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Free</th>}
-			{hasPro && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Pro</th>}
-			{hasBiz && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Business</th>}
-			{hasEnt && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Enterprise</th>}
-			{hasEntPlus && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">{plan.ent_plus}</th>}
+			<th
+				class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold"
+			></th>
+			{
+				hasFree && (
+					<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">
+						Free
+					</th>
+				)
+			}
+			{
+				hasPro && (
+					<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">
+						Pro
+					</th>
+				)
+			}
+			{
+				hasBiz && (
+					<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">
+						Business
+					</th>
+				)
+			}
+			{
+				hasEnt && (
+					<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">
+						Enterprise
+					</th>
+				)
+			}
+			{
+				hasEntPlus && (
+					<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">
+						{plan.ent_plus}
+					</th>
+				)
+			}
 		</tr>
 	</thead>
 	<tbody>

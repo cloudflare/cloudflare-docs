@@ -8,7 +8,10 @@ entries:
 
   - name: Usage Based Billing
     audience: Customers who want to receive a notification when the usage of a product goes above a set level.
-    availability: Professional plans or higher.
+    availability: |-
+      Professional plans or higher.
+
+      **Note:** Usage-based billing notifications are available to Pay-as-you-go accounts only. Most Enterprise contract accounts are not supported.
     associatedProducts: Billing
     nextSteps: Review your product usage and adjust the configuration and/or increase the alerting threshold.
     otherFilters: |-

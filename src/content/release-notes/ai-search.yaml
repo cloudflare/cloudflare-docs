@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-06-10"
+    title: Manage AI Search namespaces with Wrangler CLI
+    description: |-
+      AI Search now supports namespace-level Wrangler commands to create, list, update, and delete [namespaces](/ai-search/concepts/namespaces/) from the command line. Instance-level commands also accept a `--namespace` flag to target instances within a specific namespace, and `--json` output is available for automation and agent workflows. Refer to [Wrangler commands](/ai-search/wrangler-commands/) for full usage details.
   - publish_date: "2026-05-12"
     title: Automatic migration to managed infrastructure on June 3, 2026
     description: |-

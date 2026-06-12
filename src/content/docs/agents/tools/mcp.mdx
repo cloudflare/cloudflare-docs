@@ -1,0 +1,98 @@
+---
+title: MCP
+pcx_content_type: concept
+description: Connect agents to external Model Context Protocol servers and use their tools in model calls.
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import { LinkCard, TypeScriptExample } from "~/components";
+
+Agents can use [Model Context Protocol (MCP)](/agents/model-context-protocol/) as clients. Connect an agent to external MCP servers, discover the tools those servers expose, and pass those tools into model calls.
+
+Use MCP when you want an agent to:
+
+- Call tools exposed by external MCP servers.
+- Reuse tools across agents, IDEs, and other AI clients.
+- Connect to services that already expose an MCP endpoint.
+- Add OAuth or token-based authorization around external tool access.
+
+To build an MCP server instead, refer to [Model Context Protocol (MCP)](/agents/model-context-protocol/).
+
+## Basic pattern
+
+Call `addMcpServer()` to connect to a remote MCP server, then pass `this.mcp.getAITools()` to the AI SDK.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { generateText } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+
+export class ToolAgent extends Agent<Env> {
+	async onStart() {
+		await this.addMcpServer("github", "https://mcp.github.com/mcp");
+	}
+
+	async onRequest(request: Request) {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const response = await generateText({
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			prompt: "Use available tools to summarize the latest issue activity.",
+			tools: this.mcp.getAITools(),
+		});
+
+		return new Response(response.text);
+	}
+}
+```
+
+</TypeScriptExample>
+
+If the server requires OAuth, `addMcpServer()` returns an authentication state and authorization URL. The connection is persisted in the agent's [SQL storage](/agents/runtime/lifecycle/state/).
+
+## Configuration
+
+For public MCP servers, no binding configuration is required. Store server URLs, API tokens, or OAuth settings as environment variables or secrets.
+
+For MCP servers that require bearer tokens or Cloudflare Access headers, pass custom transport headers when connecting.
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("internal", this.env.MCP_SERVER_URL, {
+	transport: {
+		headers: {
+			Authorization: `Bearer ${this.env.MCP_TOKEN}`,
+			"CF-Access-Client-Id": this.env.CF_ACCESS_CLIENT_ID,
+			"CF-Access-Client-Secret": this.env.CF_ACCESS_CLIENT_SECRET,
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+## Related resources
+
+<LinkCard
+	title="McpClient API"
+	href="/agents/model-context-protocol/apis/client-api/"
+	description="Connect Agents to external MCP servers and use their tools, resources, and prompts."
+/>
+
+<LinkCard
+	title="Connect to an MCP server"
+	href="/agents/model-context-protocol/guides/connect-mcp-client/"
+	description="Create an Agent that connects to an external MCP server and uses its tools."
+/>
+
+<LinkCard
+	title="Model Context Protocol specification"
+	href="https://modelcontextprotocol.io/"
+	description="Learn about the open protocol for connecting AI applications to external tools and data."
+/>

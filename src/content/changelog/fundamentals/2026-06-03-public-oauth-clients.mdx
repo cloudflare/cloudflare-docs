@@ -1,0 +1,50 @@
+---
+title: Introducing self-managed OAuth clients
+description: Developers can now create self-managed OAuth clients that integrate with Cloudflare.
+products:
+  - fundamentals
+date: 2026-06-03
+publish_future_dated_entry: true
+---
+
+import { DashButton } from "~/components";
+
+Today we are launching self-managed OAuth, enabling developers to build third-party applications that integrate with Cloudflare via OAuth. This provides a more secure, user-friendly, and manageable alternative to API tokens.
+
+OAuth lets third-party applications act on behalf of a user to access their Cloudflare account. For example, after a user grants consent, Wrangler can deploy Workers into that account.
+
+## What is new
+
+Cloudflare Developers can now create and manage their own OAuth applications to integrate with Cloudflare.
+
+### Create an application
+
+To create an application, go to **Manage account** > **OAuth clients** in your account on the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/oauth-clients" />
+
+### Select limited scopes
+
+If you have used an API token to call Cloudflare APIs, OAuth client scopes will look familiar. Select only the scopes your application needs during application creation, and include that scope list when sending users to Cloudflare for consent.
+
+Users can review the requested scopes before they consent.
+
+### Apps for both private and public use
+
+Applications start with `private` visibility. Private applications can only be used by members of the account where the application was created.
+
+To make an application available to any Cloudflare user, complete the prerequisites for `public` visibility.
+
+For more information, refer to [client visibility](/fundamentals/oauth/create-an-oauth-client/#private-and-public-clients).
+
+### Client domain verification
+
+Before an application can be made public, you must verify the client domain. Domain verification helps users confirm that the application owner controls the domain shown on the consent page.
+
+After verification, users see a verified badge on the consent page.
+
+For more information, refer to [domain verification](/fundamentals/oauth/create-an-oauth-client/#client-url-domain-ownership-verification).
+
+## Learn more
+
+For more information, refer to [OAuth clients](/fundamentals/oauth/).
