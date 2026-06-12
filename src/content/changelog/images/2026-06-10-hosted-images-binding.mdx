@@ -1,0 +1,37 @@
+---
+title: Manage hosted images with the Images binding
+description: >
+  Upload, list, retrieve, update, and delete hosted images directly from a Worker using the Images binding.
+date: 2026-06-10
+---
+
+Use the Images binding to upload, list, retrieve, update, and delete images stored in Images directly from your Worker without managing API tokens or making HTTP requests.
+
+The `env.IMAGES.hosted` namespace supports the following storage and management operations:
+
+- [`.upload(image, options)`](/images/storage/binding/#uploadimage-options) — Upload a new image to your account.
+- [`.list(options)`](/images/storage/binding/#listoptions) — List images with pagination.
+- [`.image(imageId).details()`](/images/storage/binding/#imageimageiddetails) — Get image metadata.
+- [`.image(imageId).bytes()`](/images/storage/binding/#imageimageidbytes) — Stream the original image bytes.
+- [`.image(imageId).update(options)`](/images/storage/binding/#imageimageidupdateoptions) — Update metadata or access controls.
+- [`.image(imageId).delete()`](/images/storage/binding/#imageimageiddelete) — Delete an image.
+
+For example, you can upload an image from a request body and return its metadata:
+
+```ts
+const image = await env.IMAGES.hosted.upload(request.body, {
+	filename: "upload.jpg",
+	metadata: { source: "worker" },
+});
+
+return Response.json(image);
+```
+
+Or retrieve and serve the original bytes of a hosted image:
+
+```ts
+const bytes = await env.IMAGES.hosted.image("IMAGE_ID").bytes();
+return new Response(bytes);
+```
+
+For more information, refer to the [Images binding](/images/storage/binding/).

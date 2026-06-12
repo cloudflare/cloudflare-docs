@@ -4,12 +4,12 @@ description: Send transactional emails and route incoming emails to Workers or e
 pcx_content_type: overview
 sidebar:
   order: 1
-  badge: Beta
 products:
   - email-service
 ---
 
 import {
+	Badge,
 	CardGrid,
 	Description,
 	Feature,
@@ -19,7 +19,6 @@ import {
 	Tabs,
 	TabItem,
 	LinkButton,
-	Badge,
 } from "~/components";
 
 <Description>
@@ -28,18 +27,16 @@ Send transactional emails and route incoming emails to Workers or email addresse
 
 </Description>
 
-<Plan type="workers-paid" />
-
-:::note
-
-Cloudflare Email Service is currently in beta. Features and APIs may change before general availability.
-
-:::
-
 Cloudflare Email Service provides powerful email capabilities:
 
-- **Email Sending** for outbound transactional emails
+- **Email Sending** <Badge text="Beta" /> for outbound transactional emails
+  <Plan type="workers-paid" />
 - **Email Routing** for handling incoming emails with Workers or routing to email addresses
+  <Plan type="workers-all" />
+
+:::note
+Sending to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account is free on all plans, even when only Email Routing is configured.
+:::
 
 Together, these two features make it possible for you to send and receive emails from your applications. For example, you can use Email Service for:
 
@@ -49,27 +46,18 @@ Together, these two features make it possible for you to send and receive emails
 - Custom email addresses (support@, contact@, orders@)
 - Emails as a mode of interaction for agents, such as send an email to create an issue in ticket tracking
 
-Access Email Service using the [REST API](/email-service/api/send-emails/rest-api/) from any platform, or directly from Cloudflare Workers using [bindings](/email-service/api/send-emails/workers-api/):
+Access Email Service directly from Cloudflare Workers using [bindings](/email-service/api/send-emails/workers-api/), from any platform using the [REST API](/email-service/api/send-emails/rest-api/), or over [authenticated SMTP](/email-service/api/send-emails/smtp/):
 
 <Tabs>
-<TabItem label="REST API (curl)">
+<TabItem label="Workers">
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "to": "user@example.com",
-    "from": "welcome@yourdomain.com",
-    "subject": "Welcome to our service!",
-    "html": "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-    "text": "Welcome! Thanks for signing up."
-  }'
-```
+Send emails with the `EMAIL` binding and handle incoming emails with the `email()` handler in `src/index.ts`:
 
-</TabItem>
-<TabItem label="index.ts (Workers)">
 ```ts
+interface Env {
+	EMAIL: SendEmail;
+}
+
 export default {
 	// Handle HTTP requests (Email Sending)
 	async fetch(request, env, ctx): Promise<Response> {
@@ -79,39 +67,38 @@ export default {
 			from: "welcome@yourdomain.com",
 			subject: "Welcome to our service!",
 			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-			text: "Welcome! Thanks for signing up."
+			text: "Welcome! Thanks for signing up.",
 		});
 
-    	return new Response("Email sent successfully");
-    },
+		return new Response("Email sent successfully");
+	},
 
-    // Handle incoming emails (Email Routing)
-    async email(message, env, ctx): Promise<void> {
-    	// Forward to support team
-    	if (message.to.includes("support@yourdomain.com")) {
-    		await message.forward("team@yourdomain.com");
-    	}
+	// Handle incoming emails (Email Routing)
+	async email(message, env, ctx): Promise<void> {
+		// Forward to support team
+		if (message.to.includes("support@yourdomain.com")) {
+			await message.forward("team@yourdomain.com");
+		}
 
-    	// Send auto-reply
-    	await env.EMAIL.send({
-    		to: message.from,
-    		from: "noreply@yourdomain.com",
-    		subject: "We received your message",
-    		html: "<h1>Thank you!</h1><p>We'll get back to you soon.</p>"
-    	});
-    }
+		// Send auto-reply
+		await env.EMAIL.send({
+			to: message.from,
+			from: "noreply@yourdomain.com",
+			subject: "We received your message",
+			html: "<h1>Thank you!</h1><p>We'll get back to you soon.</p>",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
 
-} satisfies ExportedHandler<{ EMAIL: SendEmail }>;
+Add the bindings to your Wrangler configuration file:
 
-````
-</TabItem>
-<TabItem label="wrangler.jsonc">
 ```jsonc
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
-	"compatibility_date": "2024-01-01",
+	"compatibility_date": "$today",
 
 	// Email sending
 	"send_email": [
@@ -127,12 +114,50 @@ export default {
 		}
 	]
 }
-````
+```
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "user@example.com",
+    "from": "welcome@yourdomain.com",
+    "subject": "Welcome to our service!",
+    "html": "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+    "text": "Welcome! Thanks for signing up."
+  }'
+```
+
+Cloudflare also provides official SDKs for the REST API: [Node](/api/node/), [Python](/api/python/), and [Go](/api/go/).
+
+</TabItem>
+<TabItem label="SMTP">
+
+```sh
+cat > mail.txt <<EOF
+From: welcome@yourdomain.com
+To: user@example.com
+Subject: Welcome to our service!
+
+Thanks for signing up.
+EOF
+
+curl --ssl-reqd \
+  --url "smtps://smtp.mx.cloudflare.net:465" \
+  --user "api_token:<API_TOKEN>" \
+  --mail-from "welcome@yourdomain.com" \
+  --mail-rcpt "user@example.com" \
+  --upload-file mail.txt
+```
 
 </TabItem>
 </Tabs>
 
-See the full [API reference](/email-service/api/send-emails/) for the REST API and Workers binding.
+See the full [API reference](/email-service/api/send-emails/) for the REST API, Workers binding, and SMTP.
 
 <LinkButton href="/email-service/get-started/">Get started</LinkButton>
 
@@ -161,8 +186,9 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API a
 
 <Feature header="API" href="/email-service/api/">
 	Send and route emails using the [REST
-	API](/email-service/api/send-emails/rest-api/) or [Workers
-	binding](/email-service/api/send-emails/workers-api/).
+	API](/email-service/api/send-emails/rest-api/), [Workers
+	binding](/email-service/api/send-emails/workers-api/), or
+	[SMTP](/email-service/api/send-emails/smtp/).
 </Feature>
 
 ---
@@ -187,7 +213,7 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API a
 
 ---
 
-### More resources
+## More resources
 
 <CardGrid>
 
@@ -213,7 +239,7 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API a
 
 <LinkTitleCard
 	title="Discord"
-	href="https://discord.com/channels/595317990191398933/893253103695065128"
+	href="https://discord.cloudflare.com"
 	icon="discord"
 >
 	Ask questions and discuss Email Service with other developers.

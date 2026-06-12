@@ -1,6 +1,7 @@
 {
 	"$schema": "../node_modules/wrangler/config-schema.json",
 	"name": "cloudflare-docs-flue",
+	"account_id": "b54f07a6c269ecca2fa60f1ae4920c99",
 	"compatibility_date": "2026-04-01",
 	"compatibility_flags": ["nodejs_compat"],
 	"ai": {
@@ -27,6 +28,16 @@
 		{
 			"tag": "v2",
 			"new_sqlite_classes": ["DependabotReviewWorkflow"],
+		},
+		{
+			"tag": "v3",
+			"renamed_classes": [
+				{ "from": "OrchestrateWorkflow", "to": "FlueOrchestrateWorkflow" },
+				{ "from": "CodeReviewOrchestratorWorkflow", "to": "FlueCodeReviewOrchestratorWorkflow" },
+				{ "from": "SpamAndOffTopicFilterWorkflow", "to": "FlueSpamAndOffTopicFilterWorkflow" },
+				{ "from": "StyleGuideReviewWorkflow", "to": "FlueStyleGuideReviewWorkflow" },
+				{ "from": "DependabotReviewWorkflow", "to": "FlueDependabotReviewWorkflow" },
+			],
 		},
 	],
 	"observability": {

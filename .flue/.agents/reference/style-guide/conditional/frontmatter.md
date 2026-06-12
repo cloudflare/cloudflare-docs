@@ -3,9 +3,8 @@ title: Frontmatter
 description: Rules for MDX page frontmatter fields.
 ---
 
-## Required Fields
+## Description
 
-- If a file is a new page and has no `title:` field → **warning**: `title` is required.
 - If a file has a `pcx_content_type` set and no `description:` field → **warning**: `description` is required when `pcx_content_type` is set.
 
 ## pcx_content_type
@@ -25,4 +24,3 @@ Valid values: `changelog`, `concept`, `configuration`, `design-guide`, `example`
 ## Sidebar
 
 - If `sidebar.label:` contains an emoji → **warning**: remove it.
-- If `sidebar.order:` value is not a number → **warning**: order must be numeric.

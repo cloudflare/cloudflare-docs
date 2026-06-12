@@ -20,6 +20,11 @@
 		"parent": ["Compute & AI"]
 	},
 	{
+		"deeplink": "/?to=/:account/workers/browser-run/runs",
+		"name": "Browser Run Runs",
+		"parent": ["Compute & AI"]
+	},
+	{
 		"deeplink": "/?to=/:account/mesh",
 		"name": "Mesh",
 		"parent": ["Networking"]

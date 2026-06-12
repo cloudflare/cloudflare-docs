@@ -216,8 +216,7 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 ```ts
 type RollbackContext = {
 	error: Error;
-	output: unknown | undefined ;
-	stepName: string;
+	output: unknown | undefined;
 };
 
 type RollbackFn = (ctx: RollbackContext) => Promise<void>;
@@ -229,7 +228,7 @@ type RollbackOptions = {
 ```
 
 - Pass this `RollbackOptions` object as the final argument to `step.do()` to register a compensating action for a successful step.
-- `rollback` receives the error that caused the Workflow to fail, the step output returned by the forward step, and the fully-qualified step name.
+- `rollback` receives the error that caused the Workflow to fail and the step output returned by the forward step.
 - `rollbackConfig` applies retry and timeout settings to the rollback handler itself.
 
 <TypeScriptExample>

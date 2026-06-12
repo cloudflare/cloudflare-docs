@@ -86,12 +86,7 @@ An [AAGUID](https://fidoalliance.org/specs/fido-v2.0-id-20180227/fido-registry-v
 AAGUID restrictions apply at enrollment time only. Access verifies the AAGUID when a user registers an authenticator, not when they authenticate. As a result, AAGUID restrictions are configured at the organization level.
 
 :::caution
-Some authenticators do not send an AAGUID during WebAuthn registration, including:
-
-- Apple devices using iCloud Keychain passkeys.
-- YubiKey 4 and earlier models using U2F (CTAP1).
-
-Users cannot enroll these authenticators when AAGUID restrictions are turned on. Before turning on AAGUID restrictions, confirm that your required authenticators are in the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata/).
+Some authenticators do not send an AAGUID during WebAuthn registration, such as YubiKey 4 and earlier models using U2F (CTAP1). Users cannot enroll these authenticators when AAGUID restrictions are turned on. Before turning on AAGUID restrictions, confirm that your required authenticators are in the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata/).
 :::
 
 ### 1. Create an AAGUID list
@@ -187,7 +182,7 @@ After you save, only authenticators whose AAGUIDs appear in the list can be enro
 </Tabs>
 
 :::note
-AAGUID requirements and [AMR matching](#use-identity-provider-mfa) cannot both be turned on at the organization level. If AAGUID requirements are turned on, Access skips AMR matching even when the identity provider returns a matching AMR value.
+AAGUID restrictions and [AMR matching](#use-identity-provider-mfa) can both be turned on simultaneously, but AMR matching is more permissive than independent MFA when AAGUID restrictions are configured. Most identity providers do not include AAGUID information in their AMR claims, so Access cannot verify that the authenticator used for IdP MFA is in the list of approved AAGUIDs. If the IdP returns a matching AMR value, Access will skip the independent MFA prompt regardless of which authenticator the user used at the IdP.
 :::
 
 ## Use identity provider MFA
@@ -254,7 +249,6 @@ Access ignores AMR values that do not map to a supported authenticator type (for
 
 Access does not apply AMR matching in the following cases:
 
-- [AAGUID requirements](#restrict-authenticators-by-aaguid) are turned on at the organization level. AAGUID information is not present in the IdP's AMR claim, so Access cannot verify that the IdP's MFA came from an approved device.
 - The IdP does not return an `amr` claim.
 - The IdP returns only AMR values that do not map to an [allowed authenticator type](#supported-mfa-methods) for the application or policy.
 - The user's AMR matching session has expired because they last performed MFA via their IdP longer ago than the configured AMR matching duration.

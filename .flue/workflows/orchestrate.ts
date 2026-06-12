@@ -19,6 +19,7 @@ import {
 	isCodeOwner,
 	verifyGitHubSignature,
 } from "../lib/github";
+import { getInternalHeaders } from "../lib/internal-auth";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -137,13 +138,14 @@ export async function run({ payload, env, req }: FlueContext) {
 
 	// ── 3a. Handle Dependabot PR events ─────────────────────────────────────
 	if (isDependabotReviewEvent) {
+		const internalHeaders = getInternalHeaders(env as Record<string, string>);
 		const baseUrl = new URL(req.url);
 		const dependabotUrl = new URL(baseUrl);
 		dependabotUrl.pathname = `/workflows/dependabot-review`;
 		dependabotUrl.searchParams.set("wait", "result");
 		const dependabotResponse = await fetch(dependabotUrl, {
 			method: "POST",
-			headers: { "content-type": "application/json" },
+			headers: internalHeaders,
 			body: JSON.stringify({ eventType: "pull_request", number }),
 		});
 		if (!dependabotResponse.ok) {
@@ -192,6 +194,7 @@ export async function run({ payload, env, req }: FlueContext) {
 
 		// Check if the PR is from Dependabot — if so route to dependabot-review
 		const prForSlash = await getPullRequest(token, number).catch(() => null);
+		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
 		if (prForSlash?.user?.login === "dependabot[bot]") {
@@ -199,7 +202,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			reviewUrl.searchParams.set("wait", "result");
 			const _reviewResponse = await fetch(reviewUrl, {
 				method: "POST",
-				headers: { "content-type": "application/json" },
+				headers: internalHeaders,
 				body: JSON.stringify({
 					eventType: "pull_request",
 					number,
@@ -212,7 +215,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			reviewUrl.searchParams.set("wait", "result");
 			const _reviewResponse = await fetch(reviewUrl, {
 				method: "POST",
-				headers: { "content-type": "application/json" },
+				headers: internalHeaders,
 				body: JSON.stringify({
 					eventType: "pull_request",
 					number,
@@ -269,6 +272,7 @@ export async function run({ payload, env, req }: FlueContext) {
 
 		// Check if the PR is from Dependabot — if so route to dependabot-review
 		const prForReview = await getPullRequest(token, number).catch(() => null);
+		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url);
 		const reviewUrl = new URL(baseUrl);
 		if (prForReview?.user?.login === "dependabot[bot]") {
@@ -276,7 +280,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			reviewUrl.searchParams.set("wait", "result");
 			const _reviewResponse = await fetch(reviewUrl, {
 				method: "POST",
-				headers: { "content-type": "application/json" },
+				headers: internalHeaders,
 				body: JSON.stringify({
 					eventType: "pull_request",
 					number,
@@ -289,7 +293,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			reviewUrl.searchParams.set("wait", "result");
 			const _reviewResponse = await fetch(reviewUrl, {
 				method: "POST",
-				headers: { "content-type": "application/json" },
+				headers: internalHeaders,
 				body: JSON.stringify({
 					eventType: "pull_request",
 					number,
@@ -313,6 +317,7 @@ export async function run({ payload, env, req }: FlueContext) {
 	}
 
 	const baseUrl = new URL(req.url);
+	const internalHeaders = getInternalHeaders(env as Record<string, string>);
 	const results: Record<string, unknown> = {};
 
 	// ── 5. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
@@ -345,7 +350,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			filterUrl.searchParams.set("wait", "result");
 			const filterResponse = await fetch(filterUrl, {
 				method: "POST",
-				headers: { "content-type": "application/json" },
+				headers: internalHeaders,
 				body: JSON.stringify({ eventType, number }),
 			});
 
@@ -410,7 +415,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			reviewUrl.searchParams.set("wait", "result");
 			const reviewResponse = await fetch(reviewUrl, {
 				method: "POST",
-				headers: { "content-type": "application/json" },
+				headers: internalHeaders,
 				body: JSON.stringify({ eventType: "pull_request", number }),
 			});
 

@@ -58,13 +58,6 @@
 		"when": "Patch contains `<DashButton` or imports `DashButton`."
 	},
 	{
-		"id": "component-details",
-		"file": "components/details.md",
-		"load": "component",
-		"componentNames": ["Details"],
-		"when": "Patch contains `<Details` or imports `Details`."
-	},
-	{
 		"id": "component-extra-flag-details",
 		"file": "components/extra-flag-details.md",
 		"load": "component",
@@ -100,25 +93,11 @@
 		"when": "Patch contains `<PackageManagers` or imports `PackageManagers`."
 	},
 	{
-		"id": "component-render",
-		"file": "components/render.md",
-		"load": "component",
-		"componentNames": ["Render"],
-		"when": "Patch contains `<Render` or imports `Render`."
-	},
-	{
 		"id": "component-steps",
 		"file": "components/steps.md",
 		"load": "component",
 		"componentNames": ["Steps"],
 		"when": "Patch contains `<Steps` or imports `Steps`."
-	},
-	{
-		"id": "component-stream",
-		"file": "components/stream.md",
-		"load": "component",
-		"componentNames": ["Stream"],
-		"when": "Patch contains `<Stream` or imports `Stream`."
 	},
 	{
 		"id": "component-subtract-ip-calculator",
@@ -140,13 +119,6 @@
 		"load": "component",
 		"componentNames": ["TypeScriptExample"],
 		"when": "Patch contains `<TypeScriptExample` or imports `TypeScriptExample`."
-	},
-	{
-		"id": "component-wrangler-command",
-		"file": "components/wrangler-command.md",
-		"load": "component",
-		"componentNames": ["WranglerCommand"],
-		"when": "Patch contains `<WranglerCommand` or imports `WranglerCommand`."
 	},
 	{
 		"id": "component-wrangler-config",

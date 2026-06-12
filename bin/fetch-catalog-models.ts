@@ -36,6 +36,12 @@ interface CatalogModel {
 	context_length: number | null;
 	max_output_tokens: number | null;
 	supports_async: boolean;
+	// Zero Data Retention. Optional because older catalog API responses
+	// omit the field entirely — declaring it here keeps `JSON.stringify`
+	// round-trips type-safe rather than relying on the cast hole at the
+	// JSON-write step.
+	zdr?: boolean;
+	zdr_comment?: string | null;
 	examples: Array<{
 		name: string;
 		description?: string;
