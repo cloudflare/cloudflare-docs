@@ -346,15 +346,8 @@ By using [`passThroughOnException()`](/workers/runtime-apis/context/#passthrough
 export default {
 	async fetch(request, env, ctx) {
 		ctx.passThroughOnException();
-
-		// Add logging, tracking, or other logic here.
-
-		try {
-			return await fetch(request);
-		} catch (error) {
-			console.error("Origin fetch failed", error);
-			return new Response("Bad Gateway", { status: 502 });
-		}
+		// an error here will return the origin response, as if the Worker wasn't present
+		return fetch(request);
 	},
 };
 ```
@@ -374,14 +367,9 @@ addEventListener("fetch", (event) => {
 });
 
 async function handleRequest(request) {
-	// Add logging, tracking, or other logic here.
-
-	try {
-		return await fetch(request);
-	} catch (error) {
-		console.error("Origin fetch failed", error);
-		return new Response("Bad Gateway", { status: 502 });
-	}
+	// An error here will return the origin response, as if the Worker wasn’t present.
+	// ...
+	return fetch(request);
 }
 ```
 
