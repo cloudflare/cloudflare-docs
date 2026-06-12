@@ -10,15 +10,13 @@ products:
   - ai-gateway
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/).
 
 ## REST API
 
 Use the [REST API](/ai-gateway/usage/rest-api/) to call Workers AI models. Workers AI models use the `@cf/` prefix in the model name and require the `cf-aig-gateway-id` header to specify which gateway to route through.
-
-<Render file="auth-token-hint" product="ai-gateway" />
 
 ```bash title="Request to Workers AI Kimi model"
 # Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,

@@ -10,8 +10,6 @@ products:
   - ai-gateway
 ---
 
-import { Render } from "~/components";
-
 The REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with all AI Gateway features — logging, caching, rate limiting, and more — applied automatically.
 
 No provider SDKs or API keys are needed. Authentication and billing are handled through your Cloudflare account. Third-party models are billed via [Unified Billing](/ai-gateway/features/unified-billing/), while Workers AI models follow [Workers AI pricing](/workers-ai/platform/pricing/).
@@ -30,8 +28,6 @@ Four endpoints are available, each suited to different use cases:
 ## Authentication
 
 Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has `AI Gateway` permission. Pass it in the `Authorization` header.
-
-<Render file="auth-token-hint" product="ai-gateway" />
 
 :::note
 Ensure your Cloudflare account has [sufficient credits loaded](/ai-gateway/features/unified-billing/#load-credits) before calling third-party models.
