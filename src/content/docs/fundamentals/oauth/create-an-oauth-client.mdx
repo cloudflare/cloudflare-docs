@@ -28,8 +28,8 @@ To create an OAuth client, you must have one of these roles for the associated a
 				- Grant type
 				- Token authentication method
 				- Redirect URLs
-			6. Optional: Add non-required fields.
-			7. Select **Continue** and define the scopes required for your client.
+			6. Optional: Add non-required fields, such as Client URL and Logo. These fields are optional for private clients, but you must add both before you can make a client public.
+			7. Select **Continue** and define the scopes required for your client. All clients must have at least one scope.
 			8. Select **Create client**.
 			9. Save your **Client ID** and **Client Secret** in a secure location.
 		</Steps>
@@ -121,7 +121,9 @@ New OAuth clients default to private visibility. Private clients can only be aut
 
 Before you make a client public, complete the required actions and populate the required fields.
 
-### Required fields
+### Required fields for public clients
+
+Before you can make a client public, you must populate the following fields:
 
 - Client name
 - Logo
