@@ -8,9 +8,16 @@ products:
   - agents
 ---
 
-import { InlineBadge, LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	InlineBadge,
+	LinkCard,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Agents can use [Browser Run](/browser-run/) to inspect and interact with web pages through the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/). <InlineBadge preset="beta" /> Browser tools are useful when an agent needs to understand rendered pages, capture screenshots, debug frontend behavior, or extract information that is only available after JavaScript runs.
+
+Instead of a fixed set of browser actions (click, screenshot, navigate), the model writes code that runs CDP commands against a live browser session through the `cdp` connector — accessing all domains, commands, events, and types in the protocol. Executions are recorded on a durable codemode runtime (abort-and-replay), so a run can pause for approval and resume with its browser session intact.
 
 Use browser tools when you want an agent to:
 
@@ -42,6 +49,7 @@ export class BrowserAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
 		const workersai = createWorkersAI({ binding: this.env.AI });
 		const browserTools = createBrowserTools({
+			ctx: this.ctx,
 			browser: this.env.BROWSER,
 			loader: this.env.LOADER,
 		});
@@ -61,12 +69,13 @@ export class BrowserAgent extends AIChatAgent<Env> {
 
 </TypeScriptExample>
 
-Browser tools expose two capabilities:
+Browser tools must be created from inside a Durable Object (such as an Agent) — the durable runtime facet and the session store live on its `ctx`. The tool exposes one durable capability:
 
-| Tool | Description |
-| --- | --- |
-| `browser_search` | Query the CDP specification to discover commands, events, and types. |
-| `browser_execute` | Run CDP commands against a live browser session. |
+| Tool              | Description                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| `browser_execute` | Run sandboxed code against a live browser over CDP — screenshots, DOM reads, JavaScript evaluation, and more. |
+
+To discover protocol surface, the model calls `cdp.spec()` (the live, normalized CDP protocol description) or the runtime's built-in `codemode.search` / `codemode.describe`.
 
 ## Configuration
 
@@ -89,6 +98,65 @@ Add the Browser Run and Worker Loader bindings to `wrangler.jsonc`.
 ```
 
 </WranglerConfig>
+
+The durable runtime behind the tool lives in a Durable Object facet, so your Worker entry must export it (the `@cloudflare/codemode/vite` plugin does this automatically):
+
+<TypeScriptExample>
+
+```ts
+export { CodemodeRuntime } from "agents/browser";
+```
+
+</TypeScriptExample>
+
+## Session lifecycle
+
+By default each execution gets a fresh browser session, torn down when the run ends (`one-shot`). Pass a `session` option for two more modes:
+
+<TypeScriptExample>
+
+```ts
+createBrowserTools({
+	ctx: this.ctx,
+	browser: this.env.BROWSER,
+	loader: this.env.LOADER,
+	session: { mode: "dynamic" }, // or { mode: "reuse", key: "main" }
+});
+```
+
+</TypeScriptExample>
+
+- **`one-shot`** (default) — fresh session per execution; deterministic cleanup when the execution reaches a terminal status.
+- **`reuse`** — a named shared session that persists across executions until explicitly closed or swept.
+- **`dynamic`** — starts one-shot; the model can promote the session with `cdp.startSession()` (for example, after logging in to a page) so later executions continue in the same browser.
+
+In `reuse` and `dynamic` modes the sandbox additionally gets `cdp.startSession()`, `cdp.sessionInfo()`, `cdp.closeSession()`, and `cdp.resetSession()`.
+
+Sessions are tracked durably in the Durable Object's storage, so they survive hibernation and approval pauses — a run that pauses for human approval resumes with its browser session, tabs, and cookies intact. If Browser Run expires the session while a pause waits, the resume surfaces a clear error and the model starts over.
+
+For host-side wiring (session inspection, cleanup, reclaiming stale pauses), use `createBrowserRuntime`, which returns `{ runtime, connector, tools }`. Call `connector.sweep()` from a scheduled task to reclaim expired or stale sessions, and `runtime.expirePaused()` to reject stale never-approved pauses.
+
+## CDP connector API
+
+Inside `browser_execute`, the `cdp` namespace provides the following methods. All methods take a single object argument:
+
+| Method                                                  | Description                                                                     |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `cdp.send({ method, params?, sessionId?, timeoutMs? })` | Send a CDP command and wait for the response.                                   |
+| `cdp.attachToTarget({ targetId, timeoutMs? })`          | Attach to a target; returns `{ sessionId }` for page-scoped `send` calls.       |
+| `cdp.spec()`                                            | The searchable, normalized CDP protocol spec.                                   |
+| `cdp.getDebugLog({ limit? })`                           | Recent CDP traffic (sends, receives, warnings) for this execution's connection. |
+| `cdp.clearDebugLog()`                                   | Clear the debug log buffer.                                                     |
+| `cdp.startSession()` _(reuse/dynamic)_                  | Promote or ensure the shared session; returns its info.                         |
+| `cdp.sessionInfo()` _(reuse/dynamic)_                   | Shared session info, or `null`.                                                 |
+| `cdp.closeSession()` _(reuse/dynamic)_                  | Close the shared session.                                                       |
+| `cdp.resetSession()` _(reuse/dynamic)_                  | Close and replace the shared session.                                           |
+
+Every `cdp.*` call is recorded in the runtime's durable log. If a run pauses (for approval) or the sandbox aborts, resuming replays the log and continues — so connector calls must be sequential and deterministic. Model code must not `Promise.all` CDP calls (the tool instructions enforce this), and the returned `sessionId` is a stable session handle that stays valid across pause/resume reconnects.
+
+:::note
+Using `@cloudflare/think`? The unified execute tool (`createExecuteTool(this)`) already includes `cdp.*` alongside `state.*` and `tools.*` when `env.BROWSER` is bound. Refer to [Think tools](/agents/harnesses/think/tools/).
+:::
 
 ## Build a browser agent
 
