@@ -258,6 +258,20 @@ export default {
 	async fetch(request, env, ctx) {
 		ctx.passThroughOnException();
 
+		// Add logging, tracking, or other logic here.
+
+		throw new Error("Oops");
+	},
+};
+```
+
+For a Worker that proxies requests to an origin, avoid relying on the runtime fallback when the origin `fetch()` fails. If the origin `fetch()` throws after consuming the request body, the fallback request may reach your origin without the original body and fail with an unrelated `4xx` error. Catch origin fetch errors and return a `5xx` response instead.
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		ctx.passThroughOnException();
+
 		try {
 			return await fetch(request);
 		} catch (error) {

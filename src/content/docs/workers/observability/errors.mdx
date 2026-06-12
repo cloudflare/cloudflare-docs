@@ -347,6 +347,8 @@ export default {
 	async fetch(request, env, ctx) {
 		ctx.passThroughOnException();
 
+		// Add logging, tracking, or other logic here.
+
 		try {
 			return await fetch(request);
 		} catch (error) {
@@ -372,6 +374,8 @@ addEventListener("fetch", (event) => {
 });
 
 async function handleRequest(request) {
+	// Add logging, tracking, or other logic here.
+
 	try {
 		return await fetch(request);
 	} catch (error) {
