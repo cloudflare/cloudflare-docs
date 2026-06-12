@@ -19,6 +19,8 @@ Process incoming emails using the `email()` handler in your Cloudflare Workers. 
 
 Add the `email` handler function to your Worker's exported handlers:
 
+<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
+
 ```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
@@ -27,6 +29,18 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def email(self, message, env, ctx):
+        await message.forward("destination@example.com")
+```
+
+</TabItem> </Tabs>
 
 ### Parameters
 
