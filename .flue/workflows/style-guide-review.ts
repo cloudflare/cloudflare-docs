@@ -178,16 +178,30 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	}
 
 	// Determine which diff objects to load.
-	// Targeted mode (filename set): only manifest.json, pr.json, comments.json,
-	// and the single patch_key for the requested file.
+	// Targeted mode (filename set): manifest.json and pr.json are already in
+	// memory from steps 1 and 2 — reuse their text rather than re-fetching.
+	// Only fetch comments and the single patch_key for the requested file.
 	// Full mode (no filename): load everything under the diffDir prefix.
+	//
+	// diffResults shape: { key, text }[]  (same as the full-mode path below)
 	let diffKeysToLoad: string[];
+	let cachedDiffResults: { key: string; text: string }[] = [];
 	if (input.filename) {
 		const entry = manifest.find((f) => f.filename === input.filename);
 		const patchKey = entry?.patch_key ?? null;
+
+		// Reuse already-fetched R2 objects — avoid redundant GETs.
+		const manifestText = await manifestObj.text();
+		const prText = prObj ? await prObj.text() : null;
+		cachedDiffResults = [
+			{ key: `${input.diffDir}/manifest.json`, text: manifestText },
+			...(prText !== null
+				? [{ key: `${input.diffDir}/pr.json`, text: prText }]
+				: []),
+		];
+
+		// Only fetch comments + the patch file fresh.
 		diffKeysToLoad = [
-			`${input.diffDir}/manifest.json`,
-			`${input.diffDir}/pr.json`,
 			input.commentsPath,
 			...(patchKey ? [patchKey] : []),
 		];
@@ -196,8 +210,8 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		diffKeysToLoad = all.objects.map((o) => o.key);
 	}
 
-	// Read all reference files and selected diff files in parallel.
-	const [referenceResults, ...diffResults] = await Promise.all([
+	// Read all reference files and any remaining diff files in parallel.
+	const [referenceResults, ...fetchedDiffResults] = await Promise.all([
 		Promise.all(
 			referenceObjects.objects.map(async (obj) => ({
 				key: obj.key,
@@ -210,13 +224,16 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		})),
 	]);
 
+	// Merge cached (already-fetched) entries with freshly-fetched ones.
+	const diffResults = [...cachedDiffResults, ...fetchedDiffResults];
+
 	console.log({
 		message: `Style-guide review hydrating workspace: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""}`,
 		event: "style_guide_review",
 		number: input.number,
 		filename: input.filename ?? null,
 		diffDir: input.diffDir,
-		diffObjects: diffKeysToLoad.length,
+		diffObjects: cachedDiffResults.length + diffKeysToLoad.length,
 		referenceObjects: referenceObjects.objects.length,
 		runId,
 		action: "hydration_start",
@@ -258,7 +275,7 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		number: input.number,
 		filename: input.filename ?? null,
 		diffDir: input.diffDir,
-		diffObjects: diffKeysToLoad.length,
+		diffObjects: cachedDiffResults.length + diffKeysToLoad.length,
 		referenceObjects: referenceObjects.objects.length,
 		runId,
 		action: "hydration_complete",
