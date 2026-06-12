@@ -1,0 +1,87 @@
+
+
+## DNS records
+
+DNS records are instructions that live in the authoritative DNS servers and provide information about a [zone](#zone). This includes what IP address is associated with a particular domain, but can also cover many other use cases, such as directing emails to a mail server or validating ownership of a domain.
+
+For more details about using DNS records within Cloudflare, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) and [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+
+## Zone
+
+A DNS zone is an administrative boundary that defines who controls the DNS records for a given domain and its subdomains. For example, the zone for `example.com` contains the records for `example.com` and its subdomains like `blog.example.com`. Read more in the ["What is a DNS zone?" Learning Center article](https://www.cloudflare.com/learning/dns/glossary/dns-zone/).
+
+Each domain added to a Cloudflare account is listed on the account home page as a zone. The exact properties and behaviors of your zone depend on its [DNS setup](/dns/zone-setups/).
+
+Different Cloudflare products and features are configurable at the zone level. Refer to [Fundamentals](/fundamentals/manage-domains/add-site/) for details.
+
+### Zone apex
+
+The <GlossaryTooltip term="zone apex">zone apex</GlossaryTooltip> is the highest-level domain within a zone — the starting point from which all DNS records in that zone are managed.
+
+In most cases, the zone apex is the same as the <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (for example, `example.com`). However, with [subdomain delegation](/dns/zone-setups/subdomain-setup/) (available on Enterprise plans), a subdomain like `sub.example.com` can be its own zone, making that subdomain the zone apex.
+
+<Details header="Example 1">
+<Example>
+DNS management for **example.com**:
+
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| A    | `blog` | `192.0.2.1` | Proxied      | Auto |
+
+Zone apex: `example.com`
+
+Full record name: `blog.example.com`
+
+</Example>
+</ Details>
+
+<Details header="Example 2">
+<Example>
+DNS management for **sub.example.com**:
+
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| A    | `blog` | `192.0.2.1` | Proxied      | Auto |
+
+Zone apex: `sub.example.com`
+
+Full record name: `blog.sub.example.com`
+
+</Example>
+</ Details>
+
+To create a DNS record at the zone apex, use `@` for the record **Name**. The `@` symbol is a DNS convention that represents the zone apex itself. For details, refer to [Create zone apex record](/dns/manage-dns-records/how-to/create-zone-apex/).
+
+<Details header="Record at the zone apex">
+<Example>
+DNS management for **example.com**:
+
+| Type | Name | Content     | Proxy status | TTL  |
+| ---- | ---- | ----------- | ------------ | ---- |
+| A    | `@`  | `192.0.2.1` | Proxied      | Auto |
+
+Zone apex: `example.com`
+
+Full record name: `example.com`
+
+</Example>
+
+<Example>
+DNS management for **sub.example.com**:
+
+| Type | Name | Content     | Proxy status | TTL  |
+| ---- | ---- | ----------- | ------------ | ---- |
+| A    | `@`  | `192.0.2.1` | Proxied      | Auto |
+
+Zone apex: `sub.example.com`
+
+Full record name: `sub.example.com`
+
+</Example>
+</Details>
+
+## DNSSEC
+
+Without additional protection, DNS responses can be spoofed — an attacker could return a forged response and redirect visitors to a malicious site. DNSSEC (DNS Security Extensions) addresses this by adding cryptographic signatures to DNS records. These signatures can then be checked to verify that a record came from the correct DNS server, preventing anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain. You can read more about it in the [article about DNS security](https://www.cloudflare.com/learning/dns/dns-security/).
+
+For help setting up DNSSEC in Cloudflare, refer to [Enable DNSSEC](/dns/dnssec/).
