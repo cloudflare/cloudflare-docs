@@ -45,7 +45,6 @@ async function fetchModels() {
 		);
 		await sleep(wait);
 	}
-	throw lastError;
 }
 
 let data;
