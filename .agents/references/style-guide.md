@@ -181,6 +181,7 @@ Do not use: "Learn more about...", "To read more...", "refer the [Page] page/doc
 - Do not use gerund phrases for page titles or section headings: "Install Wrangler" not "Installing Wrangler".
 - Subtitles/subheadings must be verb or noun phrases — never a question ("How do I install Wrangler?") or a call to action.
 - Do not use emojis in `title` or `sidebar.label`.
+- Do not start headings with a number or step label (`## 1. Do this`, `## Step 2 — Configure`). Sequential steps belong in a numbered list or a `Steps` component, not in headings.
 
 ---
 
@@ -286,6 +287,8 @@ All components are imported from `~/components`. Imports must appear after the f
 - Package install/exec commands → `PackageManagers`
 - Multi-step procedures → `Steps`
 - Dashboard navigation steps → `DashButton` (not bare links)
+
+**No raw HTML elements for layout or styling.** Do not write `<div>`, `<span>`, `<table>`, `<br>`, `<style>`, or any other raw HTML element directly in MDX to achieve layout, overflow, scrolling, borders, or visual effects. Use a Cloudflare docs component instead, or restructure the content. The only permitted raw HTML is inline void elements like `<br/>` for line breaks inside code annotations where no component applies.
 
 | Component                             | Purpose                                                                             |
 | ------------------------------------- | ----------------------------------------------------------------------------------- |

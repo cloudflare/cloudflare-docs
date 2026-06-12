@@ -154,6 +154,8 @@ See `.agents/references/style-guide.md` for the full rules. Quick reference:
 | ------------------------ | ---------------------------------------------------------------------------------------------------- |
 | Unescaped MDX characters | `{`, `}`, `<`, `>` in prose must be escaped or in backticks                                          |
 | Component imports        | Every component used must be imported from `~/components`                                            |
+| Numbered headings        | Headings must not start with a number or step label (`## 1. Do this`) — use `Steps` or a numbered list instead |
+| Raw HTML in MDX          | `<div>`, `<span>`, `<table>`, `<br>`, `<style>` etc. for layout/styling are not permitted — use a component or restructure the content |
 | Workers code             | Must use `TypeScriptExample`, not bare `js`/`ts` fences                                              |
 | Config blocks            | Must use `WranglerConfig` with TOML input; use `$today` for `compatibility_date`                     |
 | Package install commands | Must use `PackageManagers`, not bare `sh` fences                                                     |
