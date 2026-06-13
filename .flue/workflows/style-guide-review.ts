@@ -130,7 +130,8 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			reviewedFiles: [],
 		} satisfies StyleGuideResult;
 	}
-	const manifest = JSON.parse(await manifestObj.text()) as ManifestEntry[];
+	const manifestText = await manifestObj.text();
+	const manifest = JSON.parse(manifestText) as ManifestEntry[];
 	const reviewedFiles = input.filename
 		? manifest.some(
 				(f) =>
@@ -151,8 +152,9 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 
 	// ── 2. Read PR metadata from R2 ────────────────────────────────────────────
 	const prObj = await bucket.get(`${input.diffDir}/pr.json`);
-	const pullRequest = prObj
-		? ((await prObj.json()) as PullRequestMetadata)
+	const prText = prObj ? await prObj.text() : null;
+	const pullRequest = prText
+		? (JSON.parse(prText) as PullRequestMetadata)
 		: {
 				number: input.number,
 				title: "",
@@ -190,9 +192,7 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		const entry = manifest.find((f) => f.filename === input.filename);
 		const patchKey = entry?.patch_key ?? null;
 
-		// Reuse already-fetched R2 objects — avoid redundant GETs.
-		const manifestText = await manifestObj.text();
-		const prText = prObj ? await prObj.text() : null;
+		// Reuse already-read strings — manifestText and prText are captured above.
 		cachedDiffResults = [
 			{ key: `${input.diffDir}/manifest.json`, text: manifestText },
 			...(prText !== null
