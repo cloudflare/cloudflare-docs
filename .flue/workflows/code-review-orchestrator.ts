@@ -32,6 +32,7 @@ import {
 	type GitHubIssueComment,
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
+import { admitWorkflow, pollRun } from "../lib/poll-run";
 import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-review";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
@@ -838,25 +839,12 @@ async function writeDiffToR2(
 }
 
 // Maximum time (ms) to wait for a single style-guide child run to complete.
-// Long-poll reads block for up to 30 s each; this caps total observation time.
 const STYLE_GUIDE_RUN_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
 
-interface RunEndEvent {
-	type: "run_end";
-	isError: boolean;
-	result?: unknown;
-	error?: { name?: string; message?: string };
-	durationMs?: number;
-}
-
 /**
- * Invoke style-guide-review in accepted mode (no ?wait=result), then poll
- * /runs/:runId via Durable Streams long-poll until we get run_end or timeout.
- *
- * This avoids the single long-lived synchronous subrequest that ?wait=result
- * creates. If the result response path drops, the child can still complete and
- * we read its result from the durable stream, making the fan-out resilient to
- * intermittent connection drops.
+ * Admit a style-guide-review child workflow and poll /runs/:runId until
+ * run_end is observed. Uses the shared admitWorkflow + pollRun helpers from
+ * lib/poll-run.ts so the pattern is consistent across all orchestrators.
  */
 async function dispatchStyleGuideReview(
 	reviewId: string,
@@ -868,9 +856,10 @@ async function dispatchStyleGuideReview(
 	filename?: string,
 ): Promise<StyleGuideResult> {
 	const baseUrl = req ? new URL(req.url).origin : "http://localhost:8787";
+	const label = `PR #${prNumber} — ${filename ?? "(all files)"}`;
 
 	console.log({
-		message: `Style-guide child dispatch: PR #${prNumber} — ${filename ?? "(all files)"}`,
+		message: `Style-guide child dispatch: ${label}`,
 		event: "code_review_orchestrator",
 		number: prNumber,
 		filename: filename ?? null,
@@ -879,45 +868,32 @@ async function dispatchStyleGuideReview(
 		action: "style_guide_child_dispatch_start",
 	});
 
-	// ── 1. Admit the child workflow (accepted mode — no ?wait=result) ──────────
-	const admitUrl = new URL(`/workflows/style-guide-review`, baseUrl);
-	const admitResponse = await fetch(admitUrl, {
-		method: "POST",
-		headers: internalHeaders,
-		body: JSON.stringify({ number: prNumber, diffDir, commentsPath, filename }),
-	});
-
-	if (!admitResponse.ok) {
-		const body = await admitResponse.text();
+	// ── 1. Admit child workflow ────────────────────────────────────────────────
+	let runId: string;
+	try {
+		runId = await admitWorkflow({
+			baseUrl,
+			pathname: `/workflows/style-guide-review`,
+			headers: internalHeaders,
+			body: { number: prNumber, diffDir, commentsPath, filename },
+		});
+	} catch (err) {
+		const errMsg = err instanceof Error ? err.message : String(err);
 		console.log({
-			message: `Style-guide child dispatch failed: PR #${prNumber} — ${filename ?? "(all files)"} — HTTP ${admitResponse.status}`,
+			message: `Style-guide child dispatch failed: ${label} — ${errMsg}`,
 			event: "code_review_orchestrator",
 			number: prNumber,
 			filename: filename ?? null,
 			diffDir,
 			reviewId,
-			status: admitResponse.status,
-			error: body,
+			error: errMsg,
 			action: "style_guide_child_dispatch_failed",
 		});
-		throw new Error(
-			`Style-guide review dispatch failed: ${admitResponse.status} ${body}`,
-		);
-	}
-
-	const admitted = (await admitResponse.json()) as {
-		runId?: string;
-		status?: string;
-	};
-	const runId = admitted.runId;
-	if (!runId) {
-		throw new Error(
-			`Style-guide review dispatch returned no runId for PR #${prNumber} — ${filename ?? "(all files)"}`,
-		);
+		throw new Error(`Style-guide review dispatch failed: ${errMsg}`);
 	}
 
 	console.log({
-		message: `Style-guide child admitted: PR #${prNumber} — ${filename ?? "(all files)"} — runId: ${runId}`,
+		message: `Style-guide child admitted: ${label} — runId: ${runId}`,
 		event: "code_review_orchestrator",
 		number: prNumber,
 		filename: filename ?? null,
@@ -927,19 +903,82 @@ async function dispatchStyleGuideReview(
 		action: "style_guide_child_run_admitted",
 	});
 
-	// ── 2. Poll /runs/:runId until run_end or timeout ──────────────────────────
-	const childResult = await pollStyleGuideRun({
+	// ── 2. Poll for run_end ────────────────────────────────────────────────────
+	console.log({
+		message: `Style-guide child observe start: ${label} — runId: ${runId}`,
+		event: "code_review_orchestrator",
+		number: prNumber,
+		filename: filename ?? null,
+		diffDir,
+		reviewId,
+		runId,
+		action: "style_guide_child_run_observe_start",
+	});
+
+	const pollResult = await pollRun<StyleGuideResult>({
 		runId,
 		baseUrl,
-		internalHeaders,
-		prNumber,
-		filename,
-		reviewId,
+		headers: internalHeaders,
+		timeoutMs: STYLE_GUIDE_RUN_TIMEOUT_MS,
+		label,
+	});
+
+	if (pollResult.timedOut) {
+		console.log({
+			message: `Style-guide child observe timed out: ${label}`,
+			event: "code_review_orchestrator",
+			number: prNumber,
+			filename: filename ?? null,
+			diffDir,
+			reviewId,
+			runId,
+			action: "style_guide_child_run_observe_timeout",
+		});
+		return {
+			findings: [],
+			summary: "Style-guide review timed out waiting for result.",
+			reviewedFiles: filename ? [filename] : [],
+		};
+	}
+
+	if (pollResult.isError) {
+		const errMsg = pollResult.error?.message ?? "Unknown error";
+		console.log({
+			message: `Style-guide child run failed: ${label} — ${errMsg}`,
+			event: "code_review_orchestrator",
+			number: prNumber,
+			filename: filename ?? null,
+			diffDir,
+			reviewId,
+			runId,
+			error: errMsg,
+			durationMs: pollResult.durationMs ?? null,
+			action: "style_guide_child_run_observe_failed",
+		});
+		throw new Error(`Style-guide child run failed: ${errMsg}`);
+	}
+
+	const childResult: StyleGuideResult = pollResult.result ?? {
+		findings: [],
+		summary: "Style-guide review produced no result.",
+		reviewedFiles: [],
+	};
+
+	console.log({
+		message: `Style-guide child observe complete: ${label} — ${childResult.findings.length} finding(s)`,
+		event: "code_review_orchestrator",
+		number: prNumber,
+		filename: filename ?? null,
 		diffDir,
+		reviewId,
+		runId,
+		findings: childResult.findings.length,
+		durationMs: pollResult.durationMs ?? null,
+		action: "style_guide_child_run_observe_complete",
 	});
 
 	console.log({
-		message: `Style-guide child dispatch complete: PR #${prNumber} — ${filename ?? "(all files)"} — ${childResult.findings.length} finding(s)`,
+		message: `Style-guide child dispatch complete: ${label} — ${childResult.findings.length} finding(s)`,
 		event: "code_review_orchestrator",
 		number: prNumber,
 		filename: filename ?? null,
@@ -953,174 +992,6 @@ async function dispatchStyleGuideReview(
 	return childResult;
 }
 
-/**
- * Read /runs/:runId using Durable Streams long-poll until we see run_end.
- * Uses repeated long-poll requests rather than SSE so each subrequest has a
- * bounded lifetime (≤ 30 s per Flue long-poll semantics). Falls back to
- * an empty result on timeout or stream error rather than hanging the parent.
- */
-async function pollStyleGuideRun({
-	runId,
-	baseUrl,
-	internalHeaders,
-	prNumber,
-	filename,
-	reviewId,
-	diffDir,
-}: {
-	runId: string;
-	baseUrl: string;
-	internalHeaders: HeadersInit;
-	prNumber: number;
-	filename?: string;
-	reviewId: string;
-	diffDir: string;
-}): Promise<StyleGuideResult> {
-	const deadline = Date.now() + STYLE_GUIDE_RUN_TIMEOUT_MS;
-	let offset = "-1"; // start from beginning
-	let isClosed = false;
-
-	console.log({
-		message: `Style-guide child observe start: PR #${prNumber} — ${filename ?? "(all files)"} — runId: ${runId}`,
-		event: "code_review_orchestrator",
-		number: prNumber,
-		filename: filename ?? null,
-		diffDir,
-		reviewId,
-		runId,
-		action: "style_guide_child_run_observe_start",
-	});
-
-	while (Date.now() < deadline && !isClosed) {
-		const runsUrl = new URL(`/runs/${encodeURIComponent(runId)}`, baseUrl);
-		// Use long-poll for live reads past the initial catch-up
-		if (offset !== "-1") {
-			runsUrl.searchParams.set("offset", offset);
-			runsUrl.searchParams.set("live", "long-poll");
-		} else {
-			runsUrl.searchParams.set("offset", "-1");
-		}
-
-		let res: Response;
-		try {
-			res = await fetch(runsUrl, { headers: internalHeaders });
-		} catch (fetchErr) {
-			const errMsg =
-				fetchErr instanceof Error ? fetchErr.message : String(fetchErr);
-			console.log({
-				message: `Style-guide child observe fetch error: PR #${prNumber} — ${filename ?? "(all files)"} — ${errMsg}`,
-				event: "code_review_orchestrator",
-				number: prNumber,
-				filename: filename ?? null,
-				diffDir,
-				reviewId,
-				runId,
-				error: errMsg,
-				action: "style_guide_child_run_observe_fetch_error",
-			});
-			// Transient — retry from same offset
-			continue;
-		}
-
-		// 204 = long-poll timed out with no new events — retry
-		if (res.status === 204) {
-			continue;
-		}
-
-		if (!res.ok) {
-			const body = await res.text().catch(() => "");
-			console.log({
-				message: `Style-guide child observe error: PR #${prNumber} — ${filename ?? "(all files)"} — HTTP ${res.status}`,
-				event: "code_review_orchestrator",
-				number: prNumber,
-				filename: filename ?? null,
-				diffDir,
-				reviewId,
-				runId,
-				status: res.status,
-				error: body,
-				action: "style_guide_child_run_observe_error",
-			});
-			// Non-retryable stream error — fall through to timeout handling below
-			break;
-		}
-
-		// Advance offset from response header
-		const nextOffset = res.headers.get("Stream-Next-Offset");
-		if (nextOffset) offset = nextOffset;
-		isClosed = res.headers.get("Stream-Closed") === "true";
-
-		const events = (await res.json()) as unknown[];
-		for (const raw of events) {
-			const event = raw as { type?: string };
-			if (event.type === "run_end") {
-				const terminal = event as RunEndEvent;
-				if (terminal.isError) {
-					const errMsg = terminal.error?.message ?? "Unknown error";
-					console.log({
-						message: `Style-guide child run failed: PR #${prNumber} — ${filename ?? "(all files)"} — ${errMsg}`,
-						event: "code_review_orchestrator",
-						number: prNumber,
-						filename: filename ?? null,
-						diffDir,
-						reviewId,
-						runId,
-						error: errMsg,
-						durationMs: terminal.durationMs ?? null,
-						action: "style_guide_child_run_observe_failed",
-					});
-					// Surface as thrown error so withConcurrency/parent can handle it
-					throw new Error(`Style-guide child run failed: ${errMsg}`);
-				}
-
-				const result = terminal.result as StyleGuideResult | undefined;
-				const childResult: StyleGuideResult = result ?? {
-					findings: [],
-					summary: "Style-guide review produced no result.",
-					reviewedFiles: [],
-				};
-
-				console.log({
-					message: `Style-guide child observe complete: PR #${prNumber} — ${filename ?? "(all files)"} — ${childResult.findings.length} finding(s)`,
-					event: "code_review_orchestrator",
-					number: prNumber,
-					filename: filename ?? null,
-					diffDir,
-					reviewId,
-					runId,
-					findings: childResult.findings.length,
-					durationMs: terminal.durationMs ?? null,
-					action: "style_guide_child_run_observe_complete",
-				});
-
-				return childResult;
-			}
-		}
-	}
-
-	// Timed out or stream errored without seeing run_end
-	const elapsed = Math.round(
-		(STYLE_GUIDE_RUN_TIMEOUT_MS - (deadline - Date.now())) / 1000,
-	);
-	console.log({
-		message: `Style-guide child observe timed out: PR #${prNumber} — ${filename ?? "(all files)"} — ${elapsed}s elapsed`,
-		event: "code_review_orchestrator",
-		number: prNumber,
-		filename: filename ?? null,
-		diffDir,
-		reviewId,
-		runId,
-		elapsedSeconds: elapsed,
-		action: "style_guide_child_run_observe_timeout",
-	});
-
-	// Return empty rather than hanging the parent; the child may still finish.
-	return {
-		findings: [],
-		summary: "Style-guide review timed out waiting for result.",
-		reviewedFiles: filename ? [filename] : [],
-	};
-}
 
 async function postOrUpdateComment(
 	token: string,
