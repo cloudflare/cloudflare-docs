@@ -992,10 +992,7 @@ async function pollStyleGuideRun({
 	});
 
 	while (Date.now() < deadline && !isClosed) {
-		const runsUrl = new URL(
-			`/runs/${encodeURIComponent(runId)}`,
-			baseUrl,
-		);
+		const runsUrl = new URL(`/runs/${encodeURIComponent(runId)}`, baseUrl);
 		// Use long-poll for live reads past the initial catch-up
 		if (offset !== "-1") {
 			runsUrl.searchParams.set("offset", offset);
@@ -1073,9 +1070,7 @@ async function pollStyleGuideRun({
 						action: "style_guide_child_run_observe_failed",
 					});
 					// Surface as thrown error so withConcurrency/parent can handle it
-					throw new Error(
-						`Style-guide child run failed: ${errMsg}`,
-					);
+					throw new Error(`Style-guide child run failed: ${errMsg}`);
 				}
 
 				const result = terminal.result as StyleGuideResult | undefined;
