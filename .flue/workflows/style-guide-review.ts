@@ -113,8 +113,7 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		});
 	} catch (err) {
 		const errMsg = err instanceof Error ? err.message : String(err);
-		const errStack =
-			err instanceof Error && err.stack ? err.stack : undefined;
+		const errStack = err instanceof Error && err.stack ? err.stack : undefined;
 		console.error({
 			message: `Style-guide review failed: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""} — ${errMsg}`,
 			event: "style_guide_review",
