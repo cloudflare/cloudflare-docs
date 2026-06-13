@@ -64,7 +64,7 @@ Use namespace methods on `env.ARTIFACTS` to create, list, inspect, import, or de
 - `opts.setDefaultBranch` <Type text="string" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
-`create()` returns repo metadata including `name`, `remote`, `defaultBranch`, an initial `token`, and a parsed `tokenExpiresAt` timestamp. Save these values if you need them later.
+`create()` returns repo metadata including `name`, `remote`, `defaultBranch`, an initial `token`, and a `tokenExpiresAt` timestamp as an ISO 8601 string. Save these values if you need them later.
 
 <TypeScriptExample>
 
@@ -149,7 +149,7 @@ Import a repository from an external git remote.
 - `params.target.opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
-`import()` returns repo metadata including `name`, `remote`, `defaultBranch`, an initial `token`, and a parsed `tokenExpiresAt` timestamp. Save the `remote` and `name` values if you need them later.
+`import()` returns repo metadata including `name`, `remote`, `defaultBranch`, an initial `token`, and a `tokenExpiresAt` timestamp as an ISO 8601 string. Save the `remote` and `name` values if you need them later.
 
 <TypeScriptExample>
 
@@ -282,7 +282,7 @@ The Workers binding creates and manages repos. To read commit history, commits, 
 
 ## Errors
 
-Binding methods throw `ArtifactsError` when an operation fails. The error has a string `code` matching the values in the [REST API error reference](/artifacts/api/errors/) and a `numericCode` that matches the REST API `errors[].code` value.
+Binding methods throw `ArtifactsError` when an operation fails. The error class is generated as a global alongside the `Artifacts` type by `npx wrangler types`. The error has a string `code` matching the values in the [REST API error reference](/artifacts/api/errors/) and a `numericCode` that matches the REST API `errors[].code` value.
 
 ```ts
 async function safeCreate(artifacts: Artifacts, name: string) {
