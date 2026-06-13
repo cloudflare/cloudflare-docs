@@ -68,9 +68,7 @@ export async function admitWorkflow(opts: AdmitOptions): Promise<string> {
 
 	const admitted = (await response.json()) as { runId?: string };
 	if (!admitted.runId) {
-		throw new Error(
-			`Workflow admission returned no runId (${opts.pathname})`,
-		);
+		throw new Error(`Workflow admission returned no runId (${opts.pathname})`);
 	}
 
 	return admitted.runId;

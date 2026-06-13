@@ -992,7 +992,6 @@ async function dispatchStyleGuideReview(
 	return childResult;
 }
 
-
 async function postOrUpdateComment(
 	token: string,
 	prNumber: number,

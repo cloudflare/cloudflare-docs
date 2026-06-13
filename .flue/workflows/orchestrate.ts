@@ -213,8 +213,20 @@ export async function run({ payload, env, req }: FlueContext) {
 					: `/workflows/code-review-orchestrator`,
 				headers: internalHeaders,
 				body: isDepBot
-					? { eventType: "pull_request", number, triggerCommentId: commentId, triggerEyesReactionId: eyesReactionId }
-					: { eventType: "pull_request", number, forceFullReview: true, bypassReviewLimit: true, triggerCommentId: commentId, triggerEyesReactionId: eyesReactionId },
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							forceFullReview: true,
+							bypassReviewLimit: true,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
 			});
 			console.log({
 				message: `Full review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
@@ -282,8 +294,19 @@ export async function run({ payload, env, req }: FlueContext) {
 					: `/workflows/code-review-orchestrator`,
 				headers: internalHeaders,
 				body: isDepBot
-					? { eventType: "pull_request", number, triggerCommentId: commentId, triggerEyesReactionId: eyesReactionId }
-					: { eventType: "pull_request", number, bypassReviewLimit: true, triggerCommentId: commentId, triggerEyesReactionId: eyesReactionId },
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							bypassReviewLimit: true,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
 			});
 			console.log({
 				message: `Review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
@@ -406,7 +429,10 @@ export async function run({ payload, env, req }: FlueContext) {
 					action: "spam_filter_run_failed",
 				});
 				// Treat error as "not spam" — do not block code review
-				results.spamFilter = { result: { closed: false }, error: pollResult.error };
+				results.spamFilter = {
+					result: { closed: false },
+					error: pollResult.error,
+				};
 			} else {
 				const filterResult = pollResult.result;
 				const closed = filterResult?.closed ?? false;
