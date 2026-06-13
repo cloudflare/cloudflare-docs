@@ -64,7 +64,7 @@ Use namespace methods on `env.ARTIFACTS` to create, list, inspect, import, or de
 - `opts.setDefaultBranch` <Type text="string" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
-`create()` returns repo metadata including `name`, `remote`, `defaultBranch`, and an initial token. Save these values if you need them later.
+`create()` returns repo metadata including `name`, `remote`, `defaultBranch`, an initial `token`, and a parsed `tokenExpiresAt` timestamp. Save these values if you need them later.
 
 <TypeScriptExample>
 
@@ -81,6 +81,7 @@ async function createRepo(artifacts: Artifacts) {
 		name: created.name,
 		remote: created.remote,
 		initialToken: created.token,
+		tokenExpiresAt: created.tokenExpiresAt,
 	};
 }
 ```
@@ -113,6 +114,8 @@ async function getRepoHandle(artifacts: Artifacts) {
 - `opts.cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsRepoListResult>" />
 
+The result includes the page of repos, a `total` count for the namespace, and an optional `cursor` for the next page.
+
 <TypeScriptExample>
 
 ```ts
@@ -120,6 +123,7 @@ async function listRepos(artifacts: Artifacts) {
 	const page = await artifacts.list({ limit: 10 });
 
 	return {
+		total: page.total,
 		repos: page.repos.map((repo) => ({
 			name: repo.name,
 			status: repo.status,
@@ -145,7 +149,7 @@ Import a repository from an external git remote.
 - `params.target.opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
-`import()` returns repo metadata including `name`, `remote`, `defaultBranch`, and an initial token. Save the `remote` and `name` values if you need them later.
+`import()` returns repo metadata including `name`, `remote`, `defaultBranch`, an initial `token`, and a parsed `tokenExpiresAt` timestamp. Save the `remote` and `name` values if you need them later.
 
 <TypeScriptExample>
 
@@ -165,6 +169,7 @@ async function importFromGitHub(artifacts: Artifacts) {
 		name: imported.name,
 		remote: imported.remote,
 		token: imported.token,
+		tokenExpiresAt: imported.tokenExpiresAt,
 	};
 }
 ```
@@ -271,56 +276,29 @@ async function forkRepo(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
-### `log(opts?)`
+## Read repo content
 
-- `opts.ref` <Type text="string" /> <MetaInfo text="optional" /> — Branch, tag, or commit hash.
-- `opts.limit` <Type text="number" /> <MetaInfo text="optional" />
-- `opts.offset` <Type text="number" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<ArtifactsLogResult>" />
+The Workers binding creates and manages repos. To read commit history, commits, trees, or file contents, use the [REST API](/artifacts/api/rest-api/#repo-content) endpoints or a Git client.
 
-<TypeScriptExample>
+## Errors
 
-```ts
-async function readCommitHistory(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	const history = await repo.log({ ref: "main", limit: 10 });
-	return history;
-}
-```
-
-</TypeScriptExample>
-
-### `readCommit(hash)`
-
-- `hash` <Type text="string" /> <MetaInfo text="required" /> — Commit SHA-1 hash.
-- Returns <Type text="Promise<ArtifactsCommit>" />
-
-<TypeScriptExample>
+Binding methods throw `ArtifactsError` when an operation fails. The error has a string `code` matching the values in the [REST API error reference](/artifacts/api/errors/) and a `numericCode` that matches the REST API `errors[].code` value.
 
 ```ts
-async function readCommit(artifacts: Artifacts, hash: string) {
-	const repo = await artifacts.get("starter-repo");
-	return repo.readCommit(hash);
+async function safeCreate(artifacts: Artifacts, name: string) {
+	try {
+		return await artifacts.create(name);
+	} catch (error) {
+		if (error instanceof ArtifactsError) {
+			// Handle known errors by code.
+			if (error.code === "ALREADY_EXISTS") {
+				return artifacts.get(name);
+			}
+		}
+		throw error;
+	}
 }
 ```
-
-</TypeScriptExample>
-
-### `readTree(hash)`
-
-- `hash` <Type text="string" /> <MetaInfo text="required" /> — Tree SHA-1 hash.
-- Returns <Type text="Promise<ArtifactsTree>" />
-
-<TypeScriptExample>
-
-```ts
-async function readTree(artifacts: Artifacts, hash: string) {
-	const repo = await artifacts.get("starter-repo");
-	return repo.readTree(hash);
-}
-```
-
-</TypeScriptExample>
 
 ## Worker example
 
@@ -342,6 +320,7 @@ export default {
 			return Response.json({
 				name: created.name,
 				remote: created.remote,
+				tokenExpiresAt: created.tokenExpiresAt,
 			});
 		}
 
