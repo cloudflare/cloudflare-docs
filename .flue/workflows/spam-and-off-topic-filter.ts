@@ -101,7 +101,7 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
+		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
 	}));
 	const harness = await init(agent);
 	const session = await harness.session(

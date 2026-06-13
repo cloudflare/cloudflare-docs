@@ -1,7 +1,7 @@
 /**
  * Durable Streams run polling utility.
  *
- * Invokes a workflow in accepted mode (no ?wait=result), receives a runId,
+ * Invokes a workflow in accepted mode, receives a runId,
  * then polls /runs/:runId via long-poll until run_end is observed or the
  * deadline is reached.
  *

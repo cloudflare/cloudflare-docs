@@ -323,7 +323,7 @@ async function runImpl({
 	// ── 4. Init harness ───────────────────────────────────────────────────────
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
+		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
 		compaction: { reserveTokens: 64_000 },
 	}));
 	const harness = await init(agent);
