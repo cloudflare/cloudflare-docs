@@ -102,6 +102,49 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	>[0]["loader"];
 	const workspace = getDefaultWorkspace();
 
+	try {
+		return await runImpl({
+			runId,
+			input,
+			bucket,
+			loader,
+			workspace,
+			init,
+		});
+	} catch (err) {
+		const errMsg = err instanceof Error ? err.message : String(err);
+		const errStack =
+			err instanceof Error && err.stack ? err.stack : undefined;
+		console.error({
+			message: `Style-guide review failed: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""} — ${errMsg}`,
+			event: "style_guide_review",
+			number: input.number,
+			filename: input.filename ?? null,
+			diffDir: input.diffDir,
+			error: errMsg,
+			errorStack: errStack ?? null,
+			runId,
+			action: "failed",
+		});
+		throw err;
+	}
+}
+
+async function runImpl({
+	runId,
+	input,
+	bucket,
+	loader,
+	workspace,
+	init,
+}: {
+	runId: string;
+	input: StyleGuideReviewPayload;
+	bucket: R2Bucket;
+	loader: Parameters<typeof getShellSandbox>[0]["loader"];
+	workspace: ReturnType<typeof getDefaultWorkspace>;
+	init: FlueContext["init"];
+}): Promise<StyleGuideResult> {
 	console.log({
 		message: `Style-guide review started: PR #${input.number}${input.filename ? ` — ${input.filename}` : ""}`,
 		event: "style_guide_review",
