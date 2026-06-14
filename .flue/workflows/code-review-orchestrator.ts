@@ -32,6 +32,7 @@ import {
 	type GitHubIssueComment,
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
+import { PRIMARY_MODEL, RECONCILIATION_MODEL } from "../lib/models";
 import { admitWorkflow, pollRun } from "../lib/poll-run";
 import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-review";
 
@@ -196,7 +197,7 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+		model: PRIMARY_MODEL,
 	}));
 	const harness = await init(agent);
 
@@ -543,7 +544,7 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 		// });
 	} else {
 		const { data } = await session.skill("reconcile-code-review", {
-			model: "cloudflare/@cf/zai-org/glm-4.7-flash",
+			model: RECONCILIATION_MODEL,
 			args: {
 				pullRequest: { number: input.number },
 				currentFindings: styleGuideResult.findings,

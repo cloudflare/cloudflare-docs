@@ -12,6 +12,7 @@
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import { createAgent } from "@flue/runtime";
+import { PRIMARY_MODEL } from "../lib/models";
 import {
 	getDefaultWorkspace,
 	getShellSandbox,
@@ -323,7 +324,7 @@ async function runImpl({
 	// ── 4. Init harness ───────────────────────────────────────────────────────
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+		model: PRIMARY_MODEL,
 		compaction: { reserveTokens: 64_000 },
 	}));
 	const harness = await init(agent);
