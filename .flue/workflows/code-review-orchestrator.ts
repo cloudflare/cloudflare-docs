@@ -18,7 +18,6 @@ import {
 	getDefaultWorkspace,
 	getShellSandbox,
 } from "../connectors/cloudflare-shell";
-import * as v from "valibot";
 import {
 	addReactionToComment,
 	comparePullRequestHeads,
@@ -52,38 +51,16 @@ import {
 	incrementAutoReviewCount,
 	partitionComments,
 } from "../lib/code-review-state";
+import {
+	ReconcileResultSchema,
+	type ReconcileResult,
+	renderComment,
+	renderFailureComment,
+	renderPendingComment,
+	renderReviewLimitComment,
+} from "../lib/code-review-render";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
-
-const ReconcileResultSchema = v.object({
-	active: v.array(
-		v.object({
-			id: v.string(),
-			severity: v.picklist(["warning", "suggestion"]),
-			path: v.string(),
-			line: v.optional(v.number()),
-			rule: v.string(),
-			evidence: v.string(),
-			suggestion: v.string(),
-		}),
-	),
-	ignored_by_reviewer: v.array(
-		v.object({
-			id: v.string(),
-			severity: v.picklist(["warning", "suggestion"]),
-			path: v.string(),
-			line: v.optional(v.number()),
-			rule: v.string(),
-			evidence: v.string(),
-			suggestion: v.string(),
-			reviewer_note: v.string(),
-		}),
-	),
-	resolved: v.array(v.string()),
-	summary: v.string(),
-});
-
-type ReconcileResult = v.InferOutput<typeof ReconcileResultSchema>;
 
 interface CodeReviewOrchestratorPayload {
 	eventType: "pull_request";
@@ -678,238 +655,5 @@ async function postOrUpdateComment(
 	}
 }
 
-function renderFailureComment(headSha: string): string {
-	const shortSha = headSha.slice(0, 7);
-	return [
-		BOT_COMMENT_MARKER,
-		`<!-- reviewed-head-sha: ${headSha} -->`,
-		`<!-- updated-at: ${new Date().toISOString()} -->`,
-		"",
-		"## Review",
-		"",
-		`❌ Review failed for commit \`${shortSha}\`. This is usually a transient error — it will retry on the next push.`,
-	].join("\n");
-}
 
-function renderPendingComment(
-	headSha: string,
-	isUpdate: boolean,
-	forceFullReview?: boolean,
-	existingBody?: string,
-): string {
-	const shortSha = headSha.slice(0, 7);
-	const status = forceFullReview
-		? `Full review in progress for entire PR diff (commit \`${shortSha}\`)…`
-		: isUpdate
-			? `Reviewing new changes (commit \`${shortSha}\`)…`
-			: `Review in progress for commit \`${shortSha}\`…`;
 
-	// If there's an existing *completed* review body, preserve it below the pending notice.
-	// Don't preserve a body that was itself a pending placeholder (to avoid duplication).
-	// Strip the old header metadata lines (HTML comments + "## Review" heading).
-	const wasAlreadyPending = existingBody?.includes("<!-- status: pending -->");
-	const preservedBody =
-		existingBody && !wasAlreadyPending
-			? existingBody
-					.split("\n")
-					.filter(
-						(l) =>
-							!l.startsWith("<!-- ") &&
-							l !== "## Review" &&
-							l !== BOT_COMMENT_MARKER,
-					)
-					.join("\n")
-					.replace(/^\n+/, "")
-			: null;
-
-	const lines = [
-		BOT_COMMENT_MARKER,
-		`<!-- reviewed-head-sha: ${headSha} -->`,
-		`<!-- updated-at: ${new Date().toISOString()} -->`,
-		`<!-- status: pending -->`,
-		"",
-		"## Review",
-		"",
-		status,
-	];
-
-	if (preservedBody) {
-		lines.push("", "---", "", preservedBody);
-	}
-
-	return lines.join("\n");
-}
-
-function renderComment(
-	reconciled: ReconcileResult,
-	reviewedHeadSha: string,
-	forceFullReview?: boolean,
-): string {
-	const shortSha = reviewedHeadSha.slice(0, 7);
-	const reviewedAt = new Date().toISOString();
-	// Exclude anything acknowledged by the reviewer from active sections
-	const ignoredPaths = new Set(
-		reconciled.ignored_by_reviewer.map((f) => `${f.path}:${f.line}:${f.rule}`),
-	);
-	const activeFindings = reconciled.active.filter(
-		(f) => !ignoredPaths.has(`${f.path}:${f.line}:${f.rule}`),
-	);
-	const warnings = activeFindings.filter((f) => f.severity === "warning");
-	const suggestions = activeFindings.filter((f) => f.severity === "suggestion");
-	const totalActive = activeFindings.length;
-	const scope = forceFullReview ? "full PR diff" : `commit \`${shortSha}\``;
-
-	// Status line
-	let statusLine: string;
-	if (totalActive === 0 && reconciled.ignored_by_reviewer.length === 0) {
-		statusLine = `✅ No style-guide issues found in ${scope}.`;
-	} else if (warnings.length > 0) {
-		statusLine = `⚠️ ${warnings.length} warning${warnings.length === 1 ? "" : "s"}${suggestions.length > 0 ? ` and ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"}` : ""} found in ${scope}.`;
-	} else {
-		statusLine = `💡 ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"} found in ${scope}.`;
-	}
-
-	const lines: string[] = [
-		BOT_COMMENT_MARKER,
-		`<!-- reviewed-head-sha: ${reviewedHeadSha} -->`,
-		`<!-- reviewed-at: ${reviewedAt} -->`,
-		`<!-- updated-at: ${new Date().toISOString()} -->`,
-		"",
-		"## Review",
-		"",
-		statusLine,
-	];
-
-	// Style guide findings — warnings and suggestions each in a dropdown
-	if (warnings.length > 0) {
-		lines.push("");
-		lines.push("<details open>");
-		lines.push(`<summary><b>Warnings</b> (${warnings.length})</summary>`);
-		lines.push("<br/>");
-		lines.push("");
-		lines.push("| File | Issue |");
-		lines.push("|---|---|");
-		for (const f of warnings) {
-			lines.push(renderFindingRow(f));
-		}
-		lines.push("");
-		lines.push("</details>");
-	}
-
-	if (suggestions.length > 0) {
-		lines.push("");
-		lines.push("<details open>");
-		lines.push(`<summary><b>Suggestions</b> (${suggestions.length})</summary>`);
-		lines.push("<br/>");
-		lines.push("");
-		lines.push("| File | Issue |");
-		lines.push("|---|---|");
-		for (const f of suggestions) {
-			lines.push(renderFindingRow(f));
-		}
-		lines.push("");
-		lines.push("</details>");
-	}
-
-	if (reconciled.ignored_by_reviewer.length > 0) {
-		lines.push("");
-		lines.push("<details>");
-		lines.push(
-			`<summary>Acknowledged by author (${reconciled.ignored_by_reviewer.length})</summary>`,
-		);
-		lines.push("<br/>");
-		lines.push("");
-		lines.push("| File | Issue | Note |");
-		lines.push("|---|---|---|");
-		for (const f of reconciled.ignored_by_reviewer) {
-			const file = formatFile(f.path, f.line);
-			lines.push(
-				`| ${file} | ${sanitizeTableCell(f.rule)} | ${sanitizeTableCell(f.reviewer_note)} |`,
-			);
-		}
-		lines.push("");
-		lines.push("</details>");
-	}
-
-	// Commands section — always shown at the bottom
-	lines.push("");
-	lines.push("<details>");
-	lines.push("<summary>Commands</summary>");
-	lines.push("<br/>");
-	lines.push("");
-	lines.push(
-		"_Only codeowners can run commands. Post a comment with the command to trigger it._",
-	);
-	lines.push("");
-	lines.push("| Command | Description |");
-	lines.push("|---|---|");
-	lines.push(
-		"| `/review` | Runs a review now. Incremental if a prior review exists, full if not. |",
-	);
-	lines.push(
-		"| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase, when you want a fresh review, or if the bot gets out of sync and reports issues that no longer exist. |",
-	);
-	lines.push("");
-	lines.push("</details>");
-
-	return lines.join("\n");
-}
-
-function formatFile(path: string, line?: number): string {
-	// Shorten path: drop src/content/docs/ prefix for readability
-	const short = path
-		.replace(/^src\/content\/docs\//, "")
-		.replace(/^src\/content\//, "");
-	return line ? `\`${short}\` line ${line}` : `\`${short}\``;
-}
-
-function sanitizeTableCell(value: string): string {
-	return value
-		.replace(/\|/g, "\\|")
-		.replace(/\*/g, "\\*")
-		.replace(/\r?\n/g, " ");
-}
-
-function renderFindingRow(f: ReconcileResult["active"][number]): string {
-	const file = formatFile(f.path, f.line);
-	const rule = sanitizeTableCell(f.rule);
-	const evidence = sanitizeTableCell(f.evidence);
-	const suggestion = sanitizeTableCell(f.suggestion);
-	return `| ${file} | **${rule}** — ${evidence} Fix: ${suggestion} |`;
-}
-
-function renderReviewLimitComment(existingBody?: string): string {
-	const wasAlreadyPending = existingBody?.includes("<!-- status: pending -->");
-	const preservedBody =
-		existingBody && !wasAlreadyPending
-			? existingBody
-					.split("\n")
-					.filter(
-						(l) =>
-							!l.startsWith("<!-- ") &&
-							l !== "## Review" &&
-							l !== BOT_COMMENT_MARKER,
-					)
-					.join("\n")
-					.replace(/^\n+/, "") || null
-			: null;
-
-	const lines = [
-		BOT_COMMENT_MARKER,
-		`<!-- updated-at: ${new Date().toISOString()} -->`,
-		"",
-		"## Review",
-		"",
-		"⏸️ Automatic reviews for this PR are paused.",
-		"",
-		"This PR has already received 2 automatic reviews. To run another review, a codeowner can comment `/review` or `/full-review`.",
-		"",
-		"> **Tip:** Keep PRs in draft mode until they are ready for review — the bot skips draft PRs automatically.",
-	];
-
-	if (preservedBody) {
-		lines.push("", "---", "", preservedBody);
-	}
-
-	return lines.join("\n");
-}
