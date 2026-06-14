@@ -654,6 +654,3 @@ async function postOrUpdateComment(
 		await postComment(token, prNumber, body);
 	}
 }
-
-
-
