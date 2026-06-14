@@ -6,11 +6,7 @@
  * addLabels, postComment) remain in the workflow so they're easy to audit.
  */
 import * as v from "valibot";
-import {
-	getIssue,
-	getPullRequest,
-	getPullRequestFiles,
-} from "./github";
+import { getIssue, getPullRequest, getPullRequestFiles } from "./github";
 
 // ── Schema ─────────────────────────────────────────────────────────────────────
 
