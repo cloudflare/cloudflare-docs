@@ -21,6 +21,13 @@ import {
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow, pollRun } from "../lib/poll-run";
+import {
+	getIssueOrPullRequestLabel,
+	getIssueOrPullRequestNumber,
+	getIssueOrPullRequestTitle,
+	getIssueOrPullRequestUrl,
+	truncateLogValue,
+} from "../lib/github-webhook";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -506,71 +513,4 @@ export async function run({ payload, env, req }: FlueContext) {
 	return results;
 }
 
-function getIssueOrPullRequestNumber(
-	eventType: string,
-	body: Record<string, unknown>,
-) {
-	if (eventType === "issues" || eventType === "issue_comment") {
-		return (body.issue as Record<string, unknown> | undefined)?.number as
-			| number
-			| undefined;
-	}
-	if (eventType === "pull_request") {
-		return (body.pull_request as Record<string, unknown> | undefined)
-			?.number as number | undefined;
-	}
-}
 
-function getIssueOrPullRequestUrl(
-	eventType: string,
-	body: Record<string, unknown>,
-	number: number | undefined,
-) {
-	if (eventType === "issues") {
-		return (
-			((body.issue as Record<string, unknown> | undefined)?.html_url as
-				| string
-				| undefined) ??
-			(number
-				? `https://github.com/cloudflare/cloudflare-docs/issues/${number}`
-				: undefined)
-		);
-	}
-	if (eventType === "pull_request") {
-		return (
-			((body.pull_request as Record<string, unknown> | undefined)?.html_url as
-				| string
-				| undefined) ??
-			(number
-				? `https://github.com/cloudflare/cloudflare-docs/pull/${number}`
-				: undefined)
-		);
-	}
-}
-
-function getIssueOrPullRequestLabel(eventType: string) {
-	if (eventType === "pull_request") return "PR";
-	if (eventType === "issues") return "Issue";
-	if (eventType === "issue_comment") return "PR";
-	return "GitHub webhook";
-}
-
-function getIssueOrPullRequestTitle(
-	eventType: string,
-	body: Record<string, unknown>,
-) {
-	if (eventType === "issues" || eventType === "issue_comment") {
-		return (body.issue as Record<string, unknown> | undefined)?.title as
-			| string
-			| undefined;
-	}
-	if (eventType === "pull_request") {
-		return (body.pull_request as Record<string, unknown> | undefined)?.title as
-			| string
-			| undefined;
-	}
-}
-
-function truncateLogValue(value: string) {
-	return value.length > 100 ? `${value.slice(0, 97)}...` : value;
-}
