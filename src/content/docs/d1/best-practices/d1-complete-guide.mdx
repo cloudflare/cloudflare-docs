@@ -1,746 +1,434 @@
-# The Complete Guide to Cloudflare D1
-
-> A practical, opinionated guide for developers new to Cloudflare, Workers users ready for seamless storage, and AI agents building apps for hobbyists.
-
+---
+title: D1 for SaaS platforms with Workers for Platforms
+description: Architect multi-tenant SaaS platforms using D1 and Workers for Platforms. Implement database-per-tenant isolation, dynamic dispatch routing, and platform-scale billing controls.
+pcx_content_type: implementation-guide
+sidebar:
+  order: 10
+products:
+  - d1
+  - cloudflare-for-platforms
 ---
 
-## Quick Navigation
+import { TypeScriptExample, WranglerConfig, Steps } from "~/components";
 
-1. [Is D1 Right for You?](#is-d1-right-for-you)
-2. [What Is D1?](#what-is-d1)
-3. [How D1 Works](#how-d1-works)
-4. [Getting Started in 5 Minutes](#getting-started-in-5-minutes)
-5. [Optimization & Best Practices](#optimization--best-practices)
-6. [Location Hints & Global Placement](#location-hints--global-placement)
-7. [Read Replication & Sessions API](#read-replication--sessions-api)
-8. [Foreign Keys & Schema Migrations](#foreign-keys--schema-migrations)
-9. [Troubleshooting Common Issues](#troubleshooting-common-issues)
-10. [Quick Reference Cheat Sheet](#quick-reference-cheat-sheet)
+This guide shows how to build a multi-tenant SaaS platform using D1 and Workers for Platforms. You will learn how to provision an isolated D1 database for each tenant, bind databases dynamically to user Workers, and implement platform-level controls that protect your business from runaway usage.
 
----
+D1 is designed to scale without a practical ceiling. Standard Workers Paid plans include 50,000 databases per account, and Enterprise plans support millions to tens-of-millions of databases (or more) per account. This lets your platform adopt a true database-per-tenant model: every end-user receives their own isolated SQLite database, provisioned and bound on demand through the Cloudflare API.
 
-## Is D1 Right for You?
+## Architecture overview
 
-Before you write a single query, ask two questions:
+A SaaS platform built on Workers for Platforms can provision a unique D1 database for every end-user tenant. This database-per-tenant pattern provides strong data isolation: each tenant's tables, indexes, and rows exist in a separate SQLite file that no other tenant can access.
 
-1. **Is my workload read-heavy or write-heavy?**
-2. **Do I need strict global consistency on every read?**
+D1 supports 50,000 databases per account on standard Workers Paid plans. On Enterprise plans, that limit is raised to millions to tens-of-millions of databases (or more) per account — effectively unbounded for most platform workloads. There is no operational overhead for managing database servers, connection pools, or schema migrations across tenants.
 
-### The Decision Matrix
+The architecture consists of three layers:
 
-| Your Use Case | Good Fit? | Why |
-|---|---|---|
-| User profiles & configuration data | ✅ Excellent | Small rows, frequent reads, infrequent writes |
-| Blog posts, CMS content, documentation | ✅ Excellent | Read-heavy, globally distributed readers |
-| URL shorteners | ✅ Excellent | Lightning-fast lookups, simple schema |
-| E-commerce product catalogs | ✅ Excellent | Read-heavy catalog with occasional inventory updates |
-| IoT device states | ✅ Good | Edge-local writes, periodic sync |
-| Multiplayer game leaderboards | ⚠️ Okay | Consider if write volume is moderate |
-| High-frequency trading / real-time bidding | ❌ Poor | Too write-heavy, needs strict serializability |
-| Massive write-heavy analytics | ❌ Poor | D1 is single-threaded per database |
-| Multi-GB datasets with complex joins | ❌ Poor | 10 GB limit per DB, memory constraints on large scans |
-| Strict global serializability required | ❌ Poor | D1 uses async replication |
-| Data warehouse / OLAP | ❌ Poor | Not designed for analytical workloads |
+1. **Platform control plane**: A dynamic dispatch Worker that authenticates requests, looks up tenant mappings, and routes traffic to the correct user Worker.
+2. **User Worker**: A sandboxed Worker that contains the tenant's custom code and is bound to exactly one D1 database.
+3. **D1 database**: A serverless SQL database created and bound dynamically through the Cloudflare API.
 
-### The Rule of Thumb
+### Why database-per-tenant
 
-If you need a SQL database for a Cloudflare Worker or Pages project, and you don't need exotic PostgreSQL features like `JSONB` operators, `SERIAL` types, or stored procedures, **D1 is the path of least resistance**.
+| Requirement          | Single shared database        | Database-per-tenant                |
+| -------------------- | ----------------------------- | ---------------------------------- |
+| Data isolation       | Row-level security only       | Complete logical separation        |
+| Schema customization | Shared schema for all tenants | Per-tenant schema evolution        |
+| Query performance    | Noisy neighbor risk           | Single-threaded per tenant         |
+| Compliance scope     | Entire database in scope      | Individual database in scope       |
+| Migration risk       | One failure affects all       | Blast radius limited to one tenant |
 
----
+### Consistency model
 
-## What Is D1?
+D1 uses asynchronous replication. A write in one region reaches read replicas globally within milliseconds. For most SaaS workloads this is imperceptible, but if a tenant requires read-after-write guarantees across requests, use the [Sessions API](/d1/best-practices/read-replication/) and pass bookmarks between requests.
 
-D1 is Cloudflare's managed, serverless SQL database. It uses SQLite semantics, runs on Cloudflare's global network (300+ cities), and connects directly to Workers and Pages without connection strings.
+## Provision a tenant database and user worker
 
-### Three Concepts Every Beginner Must Know
+Provisioning a new tenant requires three operations: create a D1 database, upload a user Worker, and attach the database binding dynamically.
 
-#### 1. SQLite at the Core
+<Steps>
+1. Create a D1 database for the tenant via the REST API:
 
-D1 is built on **SQLite**, the most widely deployed database engine on earth. It lives in your phone, your browser, and likely your car.
+    ```bash
+    curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/d1/database" \
+      -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "tenant-acme-corp",
+        "location": "weur"
+      }'
+    ```
 
-Unlike PostgreSQL or MySQL, SQLite is not a client-server database. It is a library that reads and writes a single file. D1 takes that file and makes it serverless and globally distributed.
+    Store the returned `uuid` in your platform's tenant registry. This value is the `database_id` required for binding.
 
-#### 2. Serverless Means Zero Infrastructure
+2. Upload a user Worker to your dispatch namespace with the D1 binding attached in the multipart metadata:
 
-You do not rent a database server by the hour. You do not pick instance sizes. You write a query, Cloudflare runs it, and you pay for the milliseconds it took (or nothing, within free-tier limits). When nobody uses your app, the database effectively costs zero.
+    ```bash
+    curl -X PUT \
+      "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/tenant-acme-corp" \
+      -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+      -H "Content-Type: multipart/form-data" \
+      -F 'metadata={
+        "main_module": "index.js",
+        "bindings": [
+          {
+            "type": "d1",
+            "name": "TENANT_DB",
+            "id": "<database-uuid-from-step-1>"
+          }
+        ]
+      }' \
+      -F 'index.js=@/path/to/user-worker.js'
+    ```
 
-#### 3. Edge Location Means Speed
+    The user Worker accesses the database through `env.TENANT_DB`. No connection strings, TLS certificates, or connection pools are required.
 
-Traditional cloud databases live in one to three regions (for example, `us-east-1`). D1 places your data at the edge. Your application code runs in Tokyo, and your database query runs in Tokyo too. No round-trip to Virginia.
+3. Record the tenant-to-Worker mapping in your platform's routing store (for example, Workers KV or a platform-wide D1 catalog):
 
----
+    ```bash
+    curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/storage/kv/namespaces/$KV_NAMESPACE/values/tenant-acme-corp.example.com" \
+      -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+      -H "Content-Type: text/plain" \
+      -d "tenant-acme-corp"
+    ```
+</Steps>
 
-## How D1 Works
+:::note
+Bindings are defined in the `metadata` object of the multipart upload request. You cannot upload a Wrangler configuration file as a module to configure bindings for user Workers. For more details, refer to [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
 
-### Storage & Replication
+If you add new bindings to an existing user Worker later, include `keep_bindings` in the metadata to preserve existing bindings. For an example, refer to [Bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/).
+:::
 
-Your data lives in a single SQLite file. Cloudflare replicates this file across its network.
+### Location hints and jurisdictions
 
-![D1 read replication concept](https://developers.cloudflare.com/images/d1/d1-read-replication-concept.png)
+When you create a tenant database, set a `location` hint that matches the tenant's primary geography. This reduces round-trip latency for every query.
 
-*Image: Cloudflare D1 read replication architecture. Read replicas serve read traffic locally while writes flow to the primary.*
+Available location hints:
 
-### The Consistency Model
-
-D1 uses **asynchronous replication**. This is the most important concept in this guide.
-
-- **Read your writes:** A user in London writes data, then reads it back in London. It is usually there immediately.
-- **Global consistency:** A user in London writes data, and a user in Sydney reads it 10 milliseconds later. It might not be there yet.
-
-That tiny delay is called **replica lag**. For most web applications, this is imperceptible. For financial ledgers, it might be a dealbreaker.
-
-### Where D1 Runs
-
-D1 databases are backed by **Durable Objects** pinned to specific geographic regions. You can see exactly where Cloudflare's data centers live by visiting [where.durableobjects.live](https://where.durableobjects.live/colo/HYD).
-
-When you create a database without a location hint, Cloudflare places it near the request that created it. That might be your CI/CD pipeline in Oregon, even though your users are in Frankfurt. We will fix that later.
-
-### What a Single Database Can Handle
-
-Each D1 database is inherently **single-threaded**. It processes queries one at a time.
-
-| Average Query Duration | Approximate Max Throughput |
-|---|---|
-| 1 ms | ~1,000 queries/second |
-| 10 ms | ~100 queries/second |
-| 100 ms | ~10 queries/second |
-
-If a database receives too many concurrent requests, it queues them. If the queue fills up, it returns an **overloaded** error.
-
-**Key insight:** D1 is designed for horizontal scale-out across many smaller databases (for example, one per user, per tenant, or per project), not for vertical scale-up of one massive database.
-
----
-
-## Getting Started in 5 Minutes
-
-### Prerequisites
-
-You need [Node.js](https://nodejs.org/) installed. Then install Wrangler, Cloudflare's CLI:
-
-```bash
-npm install -g wrangler
-npx wrangler login
-```
-
-### Step 1: Create a Database
-
-```bash
-npx wrangler d1 create my-first-db
-```
-
-Wrangler will return a configuration block. Save it.
-
-### Step 2: Create a Schema
-
-Create a file named `schema.sql`:
-
-```sql
-DROP TABLE IF EXISTS links;
-CREATE TABLE links (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  slug TEXT UNIQUE NOT NULL,
-  url TEXT NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### Step 3: Run the Schema
-
-```bash
-npx wrangler d1 execute my-first-db --file=./schema.sql
-```
-
-### Step 4: Bind the Database to a Worker
-
-Create or edit `wrangler.toml`:
-
-```toml
-name = "my-d1-app"
-main = "src/index.js"
-compatibility_date = "2024-01-01"
-
-[[d1_databases]]
-binding = "DB"          # how you refer to it in code
-database_name = "my-first-db"
-database_id = "your-uuid-here"
-```
-
-### Step 5: Write Worker Code
-
-Create `src/index.js`:
-
-```javascript
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-    const slug = url.pathname.slice(1);
-
-    if (request.method === "POST" && slug === "create") {
-      const body = await request.json();
-      await env.DB.prepare(
-        "INSERT INTO links (slug, url) VALUES (?, ?)"
-      ).bind(body.slug, body.url).run();
-      return new Response("Created", { status: 201 });
-    }
-
-    const result = await env.DB.prepare(
-      "SELECT url FROM links WHERE slug = ?"
-    ).bind(slug).first();
-
-    if (result) {
-      return Response.redirect(result.url, 302);
-    }
-
-    return new Response("Not found", { status: 404 });
-  }
-};
-```
-
-Notice: `env.DB` is just there. No connection strings. No TLS certificates. No connection pools.
-
-### Step 6: Deploy
-
-```bash
-npx wrangler deploy
-```
-
-That is it. You have a globally distributed database-backed application in roughly 20 lines of code.
-
----
-
-## Optimization & Best Practices
-
-The following ten rules are the difference between a D1 app that flies and one that crawls.
-
-### 1. Index Every Column Used in Predicates, Joins, and Sort Keys
-
-D1 is single-threaded per database. A table scan taking 100 milliseconds limits you to roughly 10 queries per second. A point lookup on an indexed column takes less than 1 millisecond.
-
-```sql
--- Good: indexed lookup
-SELECT * FROM users WHERE email = ?;
-
--- Bad: full table scan
-SELECT * FROM users WHERE email = ?;  -- without an index on email
-```
-
-Create indexes during schema design:
-
-```sql
-CREATE INDEX idx_users_email ON users(email);
-```
-
-After creating or dropping an index, always run:
-
-```sql
-PRAGMA optimize;
-```
-
-This collects statistics so the query planner makes smart choices.
-
-**💡 Tip:** You can inspect slow queries in production using `wrangler d1 insights`, the GraphQL API, or the D1 dashboard UI.
-
-**⚠️ Warning:** Every indexed column adds at least one extra row written per `INSERT` or `UPDATE`. This is always worth it for read-heavy workloads, but be conscious of write amplification on write-heavy tables.
-
-**⚠️ Warning:** Indexes are hard to add after-the-fact on multi-gigabyte databases. Add them upfront whenever possible.
-
-### 2. Batch Related Queries with `db.batch()`
-
-All queries in a `batch()` call share a single transaction and a single round-trip. Calling `.run()` in a loop issues one round-trip per query. This is the single most impactful latency win for write-heavy operations.
-
-```javascript
-// Bad: N round-trips
-for (const user of users) {
-  await env.DB.prepare("INSERT INTO users (name) VALUES (?)").bind(user.name).run();
-}
-
-// Good: 1 round-trip
-const statements = users.map(u =>
-  env.DB.prepare("INSERT INTO users (name) VALUES (?)").bind(u.name)
-);
-await env.DB.batch(statements);
-```
-
-### 3. Implement Application-Level Retry with Exponential Backoff
-
-D1 automatically retries read-only queries (`SELECT`, `EXPLAIN`, `WITH`) up to two times on transient errors.
-
-**Write queries are never auto-retried.** Your application must implement its own retry for idempotent write operations.
-
-Mirror this pattern:
-
-- Baseline delay: ~50 ms
-- Cap: ~2 seconds
-- Strategy: full jitter
-- Max attempts: 3
-
-Only retry on `D1_ERROR` codes marked as retryable. Here is a robust TypeScript example:
-
-```typescript
-function shouldRetry(err: unknown, nextAttempt: number): boolean {
-  const errMsg = String(err);
-  const isRetryable =
-    errMsg.includes("Network connection lost") ||
-    errMsg.includes("storage caused object to be reset") ||
-    errMsg.includes("reset because its code was updated");
-  return nextAttempt <= 3 && isRetryable;
-}
-
-async function queryWithRetry(d1: D1Database, sql: string, params: unknown[]) {
-  let attempt = 0;
-  while (true) {
-    try {
-      return await d1.prepare(sql).bind(...params).run();
-    } catch (err) {
-      attempt++;
-      if (!shouldRetry(err, attempt)) throw err;
-      const delay = Math.min(50 * Math.pow(2, attempt), 2000);
-      const jitter = Math.random() * delay;
-      await new Promise(r => setTimeout(r, jitter));
-    }
-  }
-}
-```
-
-See the [error list](https://developers.cloudflare.com/d1/observability/debug-d1/#error-list) for exactly which errors are retryable.
-
-### 4. Chunk Bulk Mutations
-
-Never modify hundreds of thousands of rows in one query. A single `UPDATE` or `DELETE` over a massive table can exceed CPU or memory limits, causing a Durable Object reset. The in-flight operation is lost.
-
-Process in chunks of roughly 10,000 rows:
-
-```javascript
-const CHUNK_SIZE = 10000;
-let offset = 0;
-while (true) {
-  const result = await env.DB.prepare(
-    `DELETE FROM old_logs WHERE id IN (
-      SELECT id FROM old_logs WHERE created_at < ?
-      LIMIT ?
-    )`
-  ).bind(cutoffDate, CHUNK_SIZE).run();
-  
-  if (result.meta.changes < CHUNK_SIZE) break;
-}
-```
-
-The same applies to large imports. Partition data into files of tens of megabytes rather than hundreds.
-
-### 5. Always Use Parameterized Queries with `.bind()`
-
-Never interpolate user data into SQL strings.
-
-```javascript
-// Never do this
-const stmt = env.DB.prepare(`SELECT * FROM users WHERE email = '${email}'`);
-
-// Always do this
-const stmt = env.DB.prepare("SELECT * FROM users WHERE email = ?").bind(email);
-```
-
-Beyond SQL injection protection, bound parameters are stripped from D1 query metrics (`d1 insights`). This lets you aggregate analytics across all executions of the same query template instead of fragmenting them by every unique value.
-
-### 6. Set a Location Hint That Matches Your Primary Query Region
-
-D1 databases are backed by Durable Objects pinned to a region. Without a location hint, Cloudflare picks a region close to the request creating the database. If your CI pipeline runs in Oregon but your users are in Europe, your database lives in Oregon.
-
-Cross-region requests add significant round-trip latency to every query.
-
-Set a location hint at creation time:
-
-```bash
-npx wrangler d1 create my-db --location=weur
-```
-
-Available hints:
-
-| Hint | Region |
-|---|---|
+| Hint   | Region                |
+| ------ | --------------------- |
 | `wnam` | Western North America |
 | `enam` | Eastern North America |
-| `weur` | Western Europe |
-| `eeur` | Eastern Europe |
-| `apac` | Asia-Pacific |
-| `oc` | Oceania |
+| `weur` | Western Europe        |
+| `eeur` | Eastern Europe        |
+| `apac` | Asia-Pacific          |
+| `oc`   | Oceania               |
 
-**💡 Tip:** For a global, high-traffic property like a public blog, default to `enam` or `weur`. These regions are closest to the majority of internet users.
+If a tenant requires data residency for compliance, use a jurisdiction constraint instead of a location hint. Supported values are `eu` and `fedramp`. Jurisdictions can only be set on creation and cannot be changed later.
 
-**⚠️ Warning:** Location hints are not currently supported for South America (`sam`), Africa (`afr`), or the Middle East (`me`). D1 databases do not run in these locations. The hint will fall back to the nearest available region.
+## Dynamic dispatch routing
 
-### 7. Foreign Keys Are On by Default
+The dynamic dispatch Worker is the entry point for all tenant traffic. It looks up the target user Worker, optionally enforces custom limits, and forwards the request.
 
-Unlike vanilla SQLite, D1 enforces foreign keys in every transaction. If you are migrating a schema designed with `PRAGMA foreign_keys = off`, existing violations will surface immediately.
+### Configure the dispatch namespace binding
 
-For migrations and imports where you need to temporarily suspend enforcement, use:
+Add a dispatch namespace binding to your platform Worker's Wrangler configuration:
 
-```sql
-PRAGMA defer_foreign_keys = on;
-```
+<WranglerConfig>
 
-Do **not** use `PRAGMA foreign_keys = off`. It is silently ignored in D1 because every query runs inside an implicit transaction.
-
-```sql
--- In your migration script
-PRAGMA defer_foreign_keys = on;
-
--- Run ALTER TABLE, DROP COLUMN, etc.
-
--- Enforcement resumes at transaction end
-PRAGMA defer_foreign_keys = off;
-```
-
-If outstanding violations remain when the transaction ends, you will receive a `FOREIGN KEY constraint failed` error.
-
-### 8. Capture a Time Travel Bookmark Before Destructive Migrations
-
-[Time Travel](https://developers.cloudflare.com/d1/reference/time-travel/) is always on and costs nothing. It lets you restore a database to any minute in the last 30 days (7 days on the Free plan).
-
-Before any destructive migration, capture a bookmark:
-
-```bash
-npx wrangler d1 time-travel info my-db
-```
-
-Store that bookmark somewhere safe. If the migration goes wrong, restore in seconds:
-
-```bash
-npx wrangler d1 time-travel restore my-db --bookmark=YOUR_BOOKMARK
-```
-
-**⚠️ Warning:** Restoring is a destructive, in-place overwrite. In-flight queries are cancelled. Bookmarks older than 30 days expire and cannot be used.
-
-### 9. Use `db.withSession()` When Read Replication Is Enabled
-
-Read replicas reduce latency for read-heavy apps with global users. Even if you don't enable read replication today, design your code to use the **Sessions API** from the start. This lets you toggle replication on later without changing Worker code.
-
-The `withSession()` function returns an object with the same interface as the top-level database object.
-
-```javascript
-// Start a session
-const session = env.DB.withSession("first-unconstrained");
-
-// Use it exactly like env.DB
-const result = await session.prepare("SELECT * FROM products WHERE id = ?").bind(id).all();
-
-// Pass the bookmark to the next request for sequential consistency
-const bookmark = session.getBookmark();
-```
-
-Session types:
-
-| Parameter | Behavior |
-|---|---|
-| `first-unconstrained` (default) | First query routes to any replica for minimum latency. |
-| `first-primary` | First query routes to the primary for the latest data. |
-| `<bookmark>` | Starts from a specific previous state, guaranteeing monotonic reads. |
-
-![Sequential consistency with Sessions API](https://developers.cloudflare.com/images/d1/consistency-with-sessions-api.png)
-
-*Image: How the Sessions API uses bookmarks to ensure you never read stale data after your own writes.*
-
-**💡 Tip:** Return the bookmark to your client (for example, in an HTTP header) so subsequent requests from the same user session maintain consistency.
-
-### 10. Respect the Resource Limits of a Single Database
-
-A single D1 database has fixed resources. A common gotcha with large databases (5 GB+) is that aggregation queries scanning the entire table into memory often fail due to CPU or memory limits.
-
-Key limits to memorize:
-
-| Limit | Value |
-|---|---|
-| Max database size | 10 GB (Paid) / 500 MB (Free) |
-| Max rows read per query | Effectively limited by CPU/memory |
-| Max query duration | 30 seconds |
-| Max SQL statement length | 100 KB |
-| Max bound parameters | 100 |
-| Max string/BLOB/row size | 2 MB |
-
-If you outgrow one database, shard your data horizontally across multiple databases. D1 allows tens of thousands of databases per account at no extra management cost.
-
----
-
-## Location Hints & Global Placement
-
-### When to Use a Location Hint
-
-Provide a hint when:
-- Your team is distributed, but your users are concentrated in one region.
-- You use Infrastructure-as-Code to create databases programmatically (the creator's location may not match the users' location).
-- You are building per-tenant databases and each tenant serves a specific geography.
-
-### Jurisdictions
-
-If you need to comply with data locality regulations like GDPR or FedRAMP, use a jurisdiction constraint at creation time. This overrides location hints.
-
-```bash
-npx wrangler d1 create eu-db --jurisdiction=eu
-```
-
-Supported jurisdictions: `eu`, `fedramp`.
-
-**⚠️ Warning:** Jurisdictions can only be set on database creation and cannot be changed later.
-
----
-
-## Read Replication & Sessions API
-
-### Why Read Replication Matters
-
-Without read replication, every query, read or write, travels to the primary database instance. A user in Sydney hitting a primary in Virginia pays a 200 ms round-trip on every request.
-
-With read replication enabled, D1 creates read-only copies of your database in every supported region. The Sydney user queries the Sydney replica in single-digit milliseconds.
-
-![Without Sessions API, replicas can be inconsistent](https://developers.cloudflare.com/images/d1/consistency-without-sessions-api.png)
-
-*Image: Without the Sessions API, a read replica might serve stale data immediately after a write.*
-
-### Enabling Read Replication
-
-In the Cloudflare dashboard, go to **D1** > select your database > **Settings** > **Enable Read Replication**.
-
-Or use the REST API:
-
-```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"read_replication": {"mode": "auto"}}'
-```
-
-Read replication is built into D1 pricing. You do not pay extra for replica storage or compute. Billing is based on `rows_read` and `rows_written`, regardless of which instance serves the query.
-
-### Observability
-
-Inspect where a query was served using the `meta` object:
-
-```javascript
-const result = await env.DB.withSession().prepare("SELECT * FROM users").run();
-console.log({
-  region: result.meta.served_by_region,
-  primary: result.meta.served_by_primary
-});
-```
-
-| Field | Meaning |
-|---|---|
-| `served_by_region` | The region that processed the query |
-| `served_by_primary` | `true` if the primary served it, `false` if a replica did |
-
----
-
-## Foreign Keys & Schema Migrations
-
-### Defining Relationships
-
-D1 supports standard SQLite foreign key syntax:
-
-```sql
-CREATE TABLE users (
-    user_id INTEGER PRIMARY KEY,
-    email_address TEXT
-);
-
-CREATE TABLE orders (
-    order_id INTEGER PRIMARY KEY,
-    user_who_ordered INTEGER,
-    FOREIGN KEY(user_who_ordered) REFERENCES users(user_id) ON DELETE RESTRICT
-);
-```
-
-Available actions: `CASCADE`, `RESTRICT`, `SET DEFAULT`, `SET NULL`, `NO ACTION`.
-
-**⚠️ Warning:** `CASCADE` deletes child rows automatically. This can have unintended side effects. Double-check your application logic before using it.
-
-### Safe Migration Checklist
-
-1. Capture a Time Travel bookmark: `wrangler d1 time-travel info my-db`
-2. Test migrations in a local or staging database first: `wrangler dev --local`
-3. Use `PRAGMA defer_foreign_keys = on` if the migration temporarily violates constraints
-4. Run `PRAGMA optimize` after schema changes
-5. Verify with `EXPLAIN QUERY PLAN` that your indexes are still hit
-
----
-
-## Troubleshooting Common Issues
-
-### My Queries Are Slow
-
-**Symptom:** Requests take hundreds of milliseconds or time out.
-
-**Diagnosis:**
-- Run `EXPLAIN QUERY PLAN SELECT ...` to check for table scans.
-- Inspect `wrangler d1 insights` for slow queries in production.
-- Check if you are querying from a region far from your database's primary location.
-
-**Fix:**
-- Add indexes on columns in `WHERE`, `JOIN`, and `ORDER BY` clauses.
-- Run `PRAGMA optimize` after adding indexes.
-- Set a location hint closer to your users.
-- Enable read replication and use the Sessions API.
-
-### I Hit a `D1 DB is overloaded` Error
-
-**Symptom:** `D1 DB is overloaded. Requests queued for too long.`
-
-**Diagnosis:** Your database is receiving more concurrent requests than it can process, or individual queries are too slow.
-
-**Fix:**
-- Optimize query performance (add indexes, reduce rows scanned).
-- Batch writes to reduce round-trips.
-- Shard data across multiple databases if you have tens of thousands of users.
-- Implement client-side rate limiting or backpressure.
-
-### I Hit a `D1 DB exceeded its CPU time limit` Error
-
-**Symptom:** `D1 DB exceeded its CPU time limit and was reset.`
-
-**Diagnosis:** A query scanned too many rows or joined too many tables.
-
-**Fix:**
-- Break large `UPDATE` or `DELETE` statements into chunks of ~10,000 rows.
-- Add indexes so the query planner avoids full table scans.
-- Avoid `SELECT *` on massive tables without `LIMIT` clauses.
-
-### My Write Failed with a Transient Error
-
-**Symptom:** `Network connection lost` or `Internal error in D1 DB storage caused object to be reset.`
-
-**Diagnosis:** D1 automatically retries read-only queries, but never retries writes.
-
-**Fix:**
-- Implement application-level retry with exponential backoff and jitter.
-- Only retry idempotent operations.
-- Verify you are checking for retryable error strings as shown in [Best Practice #3](#3-implement-application-level-retry-with-exponential-backoff).
-
-### My Migration Fails with `FOREIGN KEY constraint failed`
-
-**Symptom:** A schema migration or import fails despite working in vanilla SQLite.
-
-**Diagnosis:** D1 enforces foreign keys by default. Your migration may temporarily create orphan rows.
-
-**Fix:**
-- Use `PRAGMA defer_foreign_keys = on` at the start of the migration transaction.
-- Do **not** use `PRAGMA foreign_keys = off`; it is silently ignored.
-- Resolve all violations before the transaction commits.
-
-### I Can't Connect from My Local GUI (TablePlus, DBeaver, etc.)
-
-**Symptom:** You try to connect via a standard database client and it fails.
-
-**Diagnosis:** D1 does not expose a TCP socket or standard connection string.
-
-**Fix:**
-- Use Wrangler for ad-hoc queries: `npx wrangler d1 execute my-db --command="SELECT ..."`
-- Use the Worker binding API for application queries.
-- For local development, `wrangler dev` spins up a local SQLite file you can inspect.
-
-### My Read Replica Data Is Stale
-
-**Symptom:** A user submits a form, then reloads the page and doesn't see their update.
-
-**Diagnosis:** Without the Sessions API, read replicas may serve data from before the write replicated.
-
-**Fix:**
-- Use `db.withSession()` and pass bookmarks between requests.
-- Start critical sessions with `first-primary` if the latest data is required immediately.
-
----
-
-## Quick Reference Cheat Sheet
-
-### For AI Agents and Hobbyists
-
-Use this section as a prompt-friendly reference when generating D1-powered applications.
-
-#### Schema Template
-
-```sql
--- Always include IF NOT EXISTS
-CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  email TEXT UNIQUE NOT NULL,
-  name TEXT NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- Index every queried column
-CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
-
--- Optimize after schema changes
-PRAGMA optimize;
-```
-
-#### Worker Template
-
-```javascript
-export default {
-  async fetch(request, env) {
-    const session = env.DB.withSession("first-unconstrained");
-    
-    try {
-      const result = await session
-        .prepare("SELECT * FROM users WHERE email = ?")
-        .bind(email)
-        .all();
-      
-      const response = Response.json(result.results);
-      response.headers.set("x-d1-bookmark", session.getBookmark() ?? "");
-      return response;
-    } catch (e) {
-      return Response.json({ error: e.message }, { status: 500 });
+```jsonc
+{
+  "dispatch_namespaces": [
+    {
+      "binding": "DISPATCHER",
+      "namespace": "my-saas-namespace"
     }
-  }
-};
-```
-
-#### Retry Helper
-
-```typescript
-async function runWithRetry<T>(fn: () => Promise<T>): Promise<T> {
-  let attempt = 0;
-  while (true) {
-    try {
-      return await fn();
-    } catch (err) {
-      const msg = String(err);
-      const retryable =
-        msg.includes("Network connection lost") ||
-        msg.includes("storage caused object to be reset") ||
-        msg.includes("reset because its code was updated");
-      attempt++;
-      if (!retryable || attempt > 3) throw err;
-      await new Promise(r => setTimeout(r, Math.random() * Math.min(50 * 2 ** attempt, 2000)));
-    }
-  }
+  ]
 }
 ```
 
-#### Checklist Before Shipping
+</WranglerConfig>
 
+### Route requests and enforce custom limits
+
+The dispatch Worker below performs three tasks on every request: authenticate the tenant, look up the user Worker name from KV, and enforce CPU limits based on the tenant's plan.
+
+<TypeScriptExample filename="src/dispatch.ts">
+```ts
+export interface Env {
+  DISPATCHER: DispatchNamespace;
+  TENANT_ROUTING: KVNamespace;
+  PLANS: KVNamespace;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const url = new URL(request.url);
+    const hostname = url.hostname;
+
+    // 1. Look up user Worker name from KV
+    const userWorkerName = await env.TENANT_ROUTING.get(hostname);
+    if (!userWorkerName) {
+      return new Response("Tenant not found", { status: 404 });
+    }
+
+    // 2. Look up tenant plan for limit enforcement
+    const plan = await env.PLANS.get(userWorkerName);
+    const limits = plan === "enterprise"
+      ? { cpuMs: 50, subRequests: 50 }
+      : { cpuMs: 10, subRequests: 10 };
+
+    // 3. Dispatch with custom limits
+    const userWorker = env.DISPATCHER.get(userWorkerName, {}, { limits });
+    return await userWorker.fetch(request);
+
+},
+};
+
+````
+</TypeScriptExample>
+
+For more routing patterns (subdomain-based, path-based, or custom metadata), refer to [Dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/).
+
+## Billing and limits at platform scale
+
+Operating a platform with thousands of tenant databases requires understanding how D1 limits and billing aggregate across your account.
+
+### Database and storage limits
+
+| Feature | Workers Free | Workers Paid | Enterprise |
+| --- | --- | --- | --- |
+| Databases per account | 10 | 50,000 [^1] | Unbounded [^1] |
+| Maximum database size | 500 MB | 10 GB | 10 GB |
+| Maximum storage per account | 5 GB | 1 TB [^2] | 1 TB [^2] |
+
+[^1]: The maximum number of databases per account can be increased by request on Workers Paid and Enterprise plans, with support for millions to tens-of-millions of databases (or more) per account. On Enterprise, this is effectively unbounded — there is no hard ceiling on database count. Refer to [Limits increases](/workers/platform/limits/#limit-increases) to request an increase.
+
+[^2]: The maximum storage per account can be increased by request on Workers Paid and Enterprise plans. Refer to [Limits increases](/workers/platform/limits/#limit-increases) to request an increase.
+
+### Usage-based billing
+
+D1 bills on three metrics aggregated across all databases in your account. There are no charges for compute hours, connection pools, or data transfer.
+
+| Metric | Workers Paid inclusion | Overage rate |
+| --- | --- | --- |
+| Rows read | First 25 billion per month | $0.001 per million rows |
+| Rows written | First 50 million per month | $1.00 per million rows |
+| Storage | First 5 GB per month | $0.75 per GB-month |
+
+Because billing is aggregate, a single runaway tenant can inflate your platform's bill even if 99% of tenants use negligible resources. Every query returns a `meta` object containing `rows_read` and `rows_written`. Use this object to attribute cost to individual tenants and to detect anomalies.
+
+<TypeScriptExample filename="src/user-worker.ts">
+```ts
+const result = await env.TENANT_DB.prepare(
+  "SELECT * FROM orders WHERE tenant_id = ?"
+).bind(tenantId).all();
+
+console.log({
+  tenant: tenantId,
+  rowsRead: result.meta.rows_read,
+  rowsWritten: result.meta.rows_written,
+});
+````
+
+</TypeScriptExample>
+
+### Example cost projection
+
+A platform with 10,000 active tenants might see the following monthly aggregates:
+
+| Metric       | Per-tenant average | Platform total | Billable                 |
+| ------------ | ------------------ | -------------- | ------------------------ |
+| Rows read    | 2,000,000          | 20 billion     | 0 (within 25B inclusion) |
+| Rows written | 5,000              | 50 million     | 0 (within 50M inclusion) |
+| Storage      | 40 MB              | 400 GB         | 395 GB ($296.25)         |
+
+If one tenant executes an unindexed analytical query that scans 10 billion rows, your platform incurs an additional $10.00 in read overages ($0.001 per million rows × 10,000 million rows). Without controls, a small number of tenants can generate disproportionate cost.
+
+## Platform safeguards
+
+Implement the following controls to protect your platform from unexpected usage and billing overages.
+
+### 1. Inspect query cost before executing expensive operations
+
+For analytical or administrative endpoints, check the `meta` object after the query and reject requests that exceed a per-query threshold.
+
+<TypeScriptExample filename="src/user-worker.ts">
+```ts
+const MAX_ROWS_PER_QUERY = 1_000_000;
+
+const result = await env.TENANT_DB.prepare(sql).bind(...params).all();
+
+if (result.meta.rows_read > MAX_ROWS_PER_QUERY) {
+// Log to analytics, return error, or queue for async processing
+return new Response("Query exceeded platform row limit", { status: 429 });
+}
+
+````
+</TypeScriptExample>
+
+### 2. Enforce custom CPU and subrequest limits
+
+Set [custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) in your dispatch Worker based on tenant tier. A free-tier tenant might receive 10 milliseconds of CPU time per request, while an enterprise tenant receives 50 milliseconds.
+
+If a user Worker exceeds its CPU limit, the platform receives an exception that you can catch and convert into a `429 Too Many Requests` response.
+
+### 3. Index every column used in predicates and joins
+
+D1 is single-threaded per database. A full table scan on a million-row table can consume millions of billed rows and block subsequent queries for that tenant. Enforce indexing discipline in your platform's schema requirements:
+
+```sql
+CREATE INDEX idx_orders_tenant_date ON orders(tenant_id, created_at);
+````
+
+After creating or dropping an index, run `PRAGMA optimize` to update query planner statistics.
+
+### 4. Batch writes to reduce overhead
+
+Tenant code that inserts rows in a loop issues one round-trip per insert. Use `db.batch()` to group writes into a single transaction:
+
+<TypeScriptExample filename="src/user-worker.ts">
+```ts
+const statements = records.map((r) =>
+  env.TENANT_DB.prepare(
+    "INSERT INTO events (type, payload) VALUES (?, ?)"
+  ).bind(r.type, r.payload)
+);
+await env.TENANT_DB.batch(statements);
+```
+</TypeScriptExample>
+
+### 5. Implement per-tenant rate limiting
+
+Use Workers KV or Durable Objects to track request rates per tenant. If a tenant exceeds their allotted queries per minute, return `429` from the dispatch Worker before the request reaches the user Worker or D1.
+
+### 6. Monitor aggregate platform usage
+
+Track platform-wide metrics using the [GraphQL Analytics API](/d1/observability/metrics-analytics/#query-via-the-graphql-api/) or the Cloudflare dashboard. Set up billing alerts so you are notified when aggregate rows read or rows written approach your inclusion thresholds.
+
+## Best practices for tenant isolation
+
+### Use parameterized queries
+
+Never interpolate user input into SQL strings. Parameterized queries prevent SQL injection and keep query metrics clean for analytics aggregation.
+
+<TypeScriptExample filename="src/user-worker.ts">
+```ts
+// Never do this
+const stmt = env.TENANT_DB.prepare(`SELECT * FROM users WHERE email = '${email}'`);
+
+// Always do this
+const stmt = env.TENANT_DB.prepare("SELECT \* FROM users WHERE email = ?").bind(email);
+
+````
+</TypeScriptExample>
+
+### Design for read replication
+
+If tenant workloads are read-heavy and globally distributed, enable [read replication](/d1/best-practices/read-replication/) and use the Sessions API. Even if you do not enable replication today, design user Worker code to use `withSession()` from the start.
+
+<TypeScriptExample filename="src/user-worker.ts">
+```ts
+const session = env.TENANT_DB.withSession("first-unconstrained");
+const result = await session.prepare("SELECT * FROM products WHERE id = ?").bind(id).all();
+
+// Pass bookmark to the client for sequential consistency on next request
+const bookmark = session.getBookmark();
+````
+
+</TypeScriptExample>
+
+### Chunk large mutations
+
+Never update or delete hundreds of thousands of rows in a single query. A single large mutation can exceed CPU or memory limits and trigger a Durable Object reset.
+
+<TypeScriptExample filename="src/user-worker.ts">
+```ts
+const CHUNK_SIZE = 10_000;
+while (true) {
+  const result = await env.TENANT_DB.prepare(
+    `DELETE FROM old_logs WHERE id IN (
+      SELECT id FROM old_logs WHERE created_at < ? LIMIT ?
+    )`
+  ).bind(cutoffDate, CHUNK_SIZE).run();
+
+if (result.meta.changes < CHUNK_SIZE) break;
+}
+
+````
+</TypeScriptExample>
+
+### Capture Time Travel bookmarks before migrations
+
+[Time Travel](/d1/reference/time-travel/) is always on and costs nothing. Before any destructive schema migration, capture a bookmark so you can restore the tenant database in seconds if the migration fails.
+
+```bash
+npx wrangler d1 time-travel info tenant-acme-corp
+````
+
+### Respect per-database resource ceilings
+
+A single D1 database has fixed CPU and memory resources. Warn tenants when their database approaches the 10 GB size limit, and guide them to archive old data or split large tables.
+
+| Limit                         | Value        |
+| ----------------------------- | ------------ |
+| Max database size             | 10 GB (Paid) |
+| Max query duration            | 30 seconds   |
+| Max SQL statement length      | 100 KB       |
+| Max bound parameters          | 100          |
+| Max string, BLOB, or row size | 2 MB         |
+
+## Troubleshooting
+
+### Tenant reports slow queries
+
+**Diagnosis:**
+
+- Run `EXPLAIN QUERY PLAN` on the tenant's slow query to check for table scans.
+- Inspect the query `meta` object for unexpectedly high `rows_read`.
+- Verify the database location hint matches the tenant's user geography.
+
+**Fix:**
+
+- Add indexes on columns in `WHERE`, `JOIN`, and `ORDER BY` clauses.
+- Run `PRAGMA optimize` after adding indexes.
+- Enable read replication and use the Sessions API for global traffic.
+
+### Tenant hits `D1 DB is overloaded`
+
+**Diagnosis:** The tenant database is receiving more concurrent requests than it can process, or individual queries are too slow.
+
+**Fix:**
+
+- Optimize query performance (add indexes, reduce rows scanned).
+- Batch writes to reduce round-trips.
+- Implement client-side rate limiting for that tenant.
+- If the tenant has outgrown one database, migrate them to a sharded architecture or upgrade their plan.
+
+### Unexpected billing overages
+
+**Diagnosis:** One or more tenants are executing queries with high row counts.
+
+**Fix:**
+
+- Identify the top databases by `rows_read` in the Cloudflare dashboard.
+- Contact the affected tenants and require indexes on heavily scanned columns.
+- Implement per-query row limits in your platform's user Worker template.
+- Enforce stricter custom CPU limits for the affected tenant tier.
+
+### Migration fails with `FOREIGN KEY constraint failed`
+
+**Diagnosis:** D1 enforces foreign keys by default. A migration may temporarily create orphan rows.
+
+**Fix:**
+
+- Use `PRAGMA defer_foreign_keys = on` at the start of the migration transaction.
+- Do not use `PRAGMA foreign_keys = off`; it is silently ignored in D1.
+- Resolve all violations before the transaction commits.
+
+## Quick reference checklist
+
+Before onboarding a new tenant or shipping a platform update, verify the following:
+
+- [ ] Database created with a location hint matching tenant geography
+- [ ] User Worker uploaded with D1 binding via multipart metadata
+- [ ] Tenant-to-Worker mapping stored in the routing layer
+- [ ] Custom limits configured in the dispatch Worker based on tenant plan
 - [ ] Indexes exist for all `WHERE`, `JOIN`, and `ORDER BY` columns
-- [ ] `PRAGMA optimize` run after schema changes
-- [ ] Parameterized queries with `.bind()` used everywhere
-- [ ] `db.batch()` used for bulk operations
-- [ ] Application-level retry implemented for writes
-- [ ] Location hint set at database creation
+- [ ] Parameterized queries with `.bind()` used in all user Worker templates
+- [ ] `db.batch()` used for bulk insert and update operations
+- [ ] Per-query row cost inspection implemented for analytical endpoints
+- [ ] Application-level retry with exponential backoff for idempotent writes
 - [ ] Time Travel bookmark captured before destructive migrations
 - [ ] `withSession()` used if read replication is or will be enabled
-- [ ] Chunk size for bulk mutations capped at ~10,000 rows
-- [ ] Query duration verified under 100 ms for hot paths
-
----
-
-## Additional Resources
-
-- [Cloudflare D1 Documentation](https://developers.cloudflare.com/d1/)
-- [D1 Best Practices](https://developers.cloudflare.com/d1/best-practices/)
-- [D1 Limits](https://developers.cloudflare.com/d1/platform/limits/)
-- [D1 Pricing](https://developers.cloudflare.com/d1/platform/pricing/)
-- [Read Replication Deep Dive](https://blog.cloudflare.com/d1-read-replication-beta/)
-- [Building D1: A Global Database](https://blog.cloudflare.com/building-d1-a-global-database/)
-- [Durable Objects Location Tracker](https://where.durableobjects.live/colo/HYD)
-- [Debug D1 & Error List](https://developers.cloudflare.com/d1/observability/debug-d1/)
-- [Time Travel & Backups](https://developers.cloudflare.com/d1/reference/time-travel/)
-- [Foreign Keys in D1](https://developers.cloudflare.com/d1/sql-api/foreign-keys/)
-- [Community Projects](https://developers.cloudflare.com/d1/reference/community-projects/)
+- [ ] Chunk size for bulk mutations capped at roughly 10,000 rows
+- [ ] Aggregate platform usage monitored via dashboard or GraphQL API
