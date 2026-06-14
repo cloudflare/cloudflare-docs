@@ -74,8 +74,7 @@ export async function hydrateStyleGuideWorkspace(
 	const reviewedFiles = input.filename
 		? manifest.some(
 				(f) =>
-					f.filename === input.filename &&
-					REVIEWABLE_PATH_RE.test(f.filename),
+					f.filename === input.filename && REVIEWABLE_PATH_RE.test(f.filename),
 			)
 			? [input.filename]
 			: []
@@ -111,10 +110,7 @@ export async function hydrateStyleGuideWorkspace(
 				? [{ key: `${input.diffDir}/pr.json`, text: prText }]
 				: []),
 		];
-		diffKeysToLoad = [
-			input.commentsPath,
-			...(patchKey ? [patchKey] : []),
-		];
+		diffKeysToLoad = [input.commentsPath, ...(patchKey ? [patchKey] : [])];
 	} else {
 		const all = await bucket.list({ prefix: `${input.diffDir}/` });
 		diffKeysToLoad = all.objects.map((o) => o.key);
