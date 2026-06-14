@@ -55,7 +55,6 @@ import {
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
-
 const ReconcileResultSchema = v.object({
 	active: v.array(
 		v.object({
@@ -914,5 +913,3 @@ function renderReviewLimitComment(existingBody?: string): string {
 
 	return lines.join("\n");
 }
-
-
