@@ -68,8 +68,9 @@ export function getIssueOrPullRequestTitle(
 			| undefined;
 	}
 	if (eventType === "pull_request") {
-		return (body.pull_request as Record<string, unknown> | undefined)
-			?.title as string | undefined;
+		return (body.pull_request as Record<string, unknown> | undefined)?.title as
+			| string
+			| undefined;
 	}
 }
 
