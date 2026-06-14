@@ -33,7 +33,10 @@ import {
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow, pollRun } from "../lib/poll-run";
-import type { StyleGuideFinding, StyleGuideResult } from "../lib/style-guide-results";
+import type {
+	StyleGuideFinding,
+	StyleGuideResult,
+} from "../lib/style-guide-results";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 

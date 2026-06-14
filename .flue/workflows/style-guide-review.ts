@@ -20,7 +20,10 @@ import {
 	assignFindingIds,
 	StyleGuideResultFromModelSchema,
 } from "../lib/style-guide-results";
-export type { StyleGuideFinding, StyleGuideResult } from "../lib/style-guide-results";
+export type {
+	StyleGuideFinding,
+	StyleGuideResult,
+} from "../lib/style-guide-results";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
