@@ -16,58 +16,16 @@ import {
 	getDefaultWorkspace,
 	getShellSandbox,
 } from "../connectors/cloudflare-shell";
-import * as v from "valibot";
+import {
+	assignFindingIds,
+	StyleGuideResultFromModelSchema,
+} from "../lib/style-guide-results";
+export type { StyleGuideFinding, StyleGuideResult } from "../lib/style-guide-results";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
 // Only review docs/partials/changelog MDX
 const REVIEWABLE_PATH_RE = /^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
-
-// Model returns findings without IDs — trusted code assigns them after.
-const StyleGuideFindingFromModelSchema = v.object({
-	severity: v.picklist(["warning", "suggestion"]),
-	path: v.string(),
-	line: v.optional(v.number()),
-	rule: v.string(),
-	evidence: v.string(),
-	suggestion: v.string(),
-});
-
-const StyleGuideResultFromModelSchema = v.object({
-	findings: v.array(StyleGuideFindingFromModelSchema),
-	summary: v.string(),
-});
-
-// Public types always include the trusted-code-assigned id.
-export type StyleGuideFinding = v.InferOutput<
-	typeof StyleGuideFindingFromModelSchema
-> & {
-	id: string;
-};
-export type StyleGuideResult = {
-	findings: StyleGuideFinding[];
-	summary: string;
-	/** Files the specialist actually reviewed — used by the reconciler to resolve findings. */
-	reviewedFiles: string[];
-};
-
-async function assignFindingIds(
-	findings: v.InferOutput<typeof StyleGuideFindingFromModelSchema>[],
-): Promise<StyleGuideFinding[]> {
-	const encoder = new TextEncoder();
-	return Promise.all(
-		findings.map(async (f) => {
-			// Exclude line number from the hash so IDs remain stable when surrounding
-			// lines shift after partial fixes. Rule + path + evidence is specific enough.
-			const key = `${f.rule}:${f.path}:${f.evidence.trim()}`;
-			const buf = await crypto.subtle.digest("SHA-256", encoder.encode(key));
-			const hex = Array.from(new Uint8Array(buf))
-				.map((b) => b.toString(16).padStart(2, "0"))
-				.join("");
-			return { ...f, id: `SG-${hex.slice(0, 6)}` };
-		}),
-	);
-}
 
 interface StyleGuideReviewPayload {
 	number: number;
