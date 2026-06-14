@@ -9,7 +9,10 @@
  * complete, timeout, failed). Caller logs the fan-out start/complete summary.
  */
 import { admitWorkflow, pollRun } from "./poll-run";
-import type { StyleGuideFinding, StyleGuideResult } from "./style-guide-results";
+import type {
+	StyleGuideFinding,
+	StyleGuideResult,
+} from "./style-guide-results";
 import type { getPullRequestFiles } from "./github";
 
 // Only review docs/partials/changelog MDX, capped before specialist fan-out.
