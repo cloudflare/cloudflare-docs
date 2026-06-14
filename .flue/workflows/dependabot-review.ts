@@ -145,7 +145,8 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	);
 
 	// ── 4. Post a "review in progress" placeholder if in comment mode ─────────
-	let existingComment: Awaited<ReturnType<typeof findExistingBotComment>> = null;
+	let existingComment: Awaited<ReturnType<typeof findExistingBotComment>> =
+		null;
 	if (reviewMode === "comment") {
 		existingComment = await findExistingBotComment(token, input.number);
 		await postOrUpdateComment(
