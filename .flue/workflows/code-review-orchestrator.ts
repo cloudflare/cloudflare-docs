@@ -43,34 +43,18 @@ import type {
 	StyleGuideFinding,
 	StyleGuideResult,
 } from "../lib/style-guide-results";
+import { writeDiffToR2 } from "../lib/code-review-diff";
+import {
+	BOT_COMMENT_MARKER,
+	type DiffMode,
+	extractReviewedHeadSha,
+	getAutoReviewCount,
+	incrementAutoReviewCount,
+	partitionComments,
+} from "../lib/code-review-state";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
-// Marker embedded in every bot review comment — used to find and update it
-const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
-
-// Regex to extract the previously reviewed head SHA from the bot comment
-const REVIEWED_HEAD_SHA_RE = /<!-- reviewed-head-sha: ([0-9a-f]{40}) -->/;
-const REVIEWED_AT_RE = /<!-- reviewed-at: ([^\n]+) -->/;
-
-function extractReviewedHeadSha(body: string | null): string | null {
-	if (!body) return null;
-	const m = body.match(REVIEWED_HEAD_SHA_RE);
-	return m?.[1] ?? null;
-}
-
-function extractReviewedAt(body: string | null): string | null {
-	if (!body) return null;
-	const m = body.match(REVIEWED_AT_RE);
-	return m?.[1] ?? null;
-}
-
-// Describes whether this run reviewed the full PR diff or only commits
-// since the last bot review. Passed to the reconciler so it can apply the
-// correct resolution logic.
-type DiffMode =
-	| { type: "full" }
-	| { type: "incremental"; fromSha: string; toSha: string };
 
 const ReconcileResultSchema = v.object({
 	active: v.array(
@@ -682,101 +666,6 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 	};
 }
 
-function partitionComments(comments: GitHubIssueComment[]): {
-	botComment: GitHubIssueComment | null;
-	humanCommentsAfterBot: GitHubIssueComment[];
-} {
-	// Find the latest bot review comment (last one containing the marker)
-	let botComment: GitHubIssueComment | null = null;
-	for (const c of comments) {
-		if (c.body?.includes(BOT_COMMENT_MARKER)) {
-			botComment = c;
-		}
-	}
-
-	// Human comments after the last bot review — exclude automated bots
-	// (GitHub Actions, Dependabot, etc.) since they never address review findings.
-	const botTimestamp =
-		extractReviewedAt(botComment?.body ?? null) ??
-		botComment?.created_at ??
-		null;
-	const humanCommentsAfterBot = comments.filter(
-		(c) =>
-			!c.body?.includes(BOT_COMMENT_MARKER) &&
-			c.user?.type !== "Bot" &&
-			(botTimestamp === null || c.created_at > botTimestamp),
-	);
-
-	return { botComment, humanCommentsAfterBot };
-}
-
-interface DiffManifestEntry {
-	filename: string;
-	status: string;
-	additions: number;
-	deletions: number;
-	changes: number;
-	/** R2 key for the patch file, or null if no patch is available. */
-	patch_key: string | null;
-}
-
-async function writeDiffToR2(
-	bucket: R2Bucket,
-	diffDir: string,
-	files: Awaited<ReturnType<typeof getPullRequestFiles>>,
-	pr: import("../lib/github").GitHubPullRequest,
-): Promise<void> {
-	const manifest: DiffManifestEntry[] = [];
-
-	await Promise.all(
-		files.map(async (file) => {
-			// Encode the filename into a safe flat key: replace slashes with __
-			const safeName = file.filename.replace(/\//g, "__");
-			const patchKey = file.patch ? `${diffDir}/${safeName}.patch` : null;
-
-			if (file.patch && patchKey) {
-				await bucket.put(patchKey, file.patch);
-			}
-
-			manifest.push({
-				filename: file.filename,
-				status: file.status,
-				additions: file.additions,
-				deletions: file.deletions,
-				changes: file.changes,
-				patch_key: patchKey,
-			});
-		}),
-	);
-
-	await Promise.all([
-		bucket.put(`${diffDir}/manifest.json`, JSON.stringify(manifest, null, 2)),
-		bucket.put(
-			`${diffDir}/pr.json`,
-			JSON.stringify(
-				{
-					number: pr.number,
-					title: pr.title,
-					description: pr.body ?? "",
-					author: pr.user?.login ?? "",
-					base: pr.base.ref,
-					head: pr.head.ref,
-					labels: pr.labels.map((l) => l.name),
-					files: manifest.map((f) => ({
-						filename: f.filename,
-						status: f.status,
-						additions: f.additions,
-						deletions: f.deletions,
-						changes: f.changes,
-					})),
-				},
-				null,
-				2,
-			),
-		),
-	]);
-}
-
 async function postOrUpdateComment(
 	token: string,
 	prNumber: number,
@@ -1026,22 +915,4 @@ function renderReviewLimitComment(existingBody?: string): string {
 	return lines.join("\n");
 }
 
-async function getAutoReviewCount(
-	bucket: R2Bucket,
-	prNumber: number,
-): Promise<number> {
-	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
-	const obj = await bucket.get(key);
-	if (!obj) return 0;
-	const data = (await obj.json()) as { count?: number };
-	return data.count ?? 0;
-}
 
-async function incrementAutoReviewCount(
-	bucket: R2Bucket,
-	prNumber: number,
-	current: number,
-): Promise<void> {
-	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
-	await bucket.put(key, JSON.stringify({ count: current + 1 }));
-}
