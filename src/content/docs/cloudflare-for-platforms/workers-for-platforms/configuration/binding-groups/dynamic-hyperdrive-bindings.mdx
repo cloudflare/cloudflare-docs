@@ -29,7 +29,7 @@ export class OutboundInterceptor extends WorkerEntrypoint {
     if (host === this.ctx.props.connectionString) {
       // .get() returns an RpcTarget that lives for this request only,
       // not a stored WorkerEntrypoint. Nothing to persist or revoke.
-      let hyperdriveStub = env.DYNAMIC_HYPERDRIVE.get({
+      let hyperdriveStub = this.env.DYNAMIC_HYPERDRIVE.get({
         connectionString: this.ctx.props.tenant.connectionString,
         targetRegion: this.ctx.props.tenant.cloudRegion,
         cachingEnabled: this.ctx.props.tenant.cachingEnabled,
