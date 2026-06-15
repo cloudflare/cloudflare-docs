@@ -4,7 +4,7 @@ title: Bindings
 sidebar:
   order: 5
 ---
-import { Aside } from "@astrojs/starlight/components";
+
 
 [Bindings](/workers/runtime-apis/bindings/) are resources (KV store, database, etc.) that you can attach to User Workers to enable end customers to build more powerful applications. By utilizing bindings, you can extend Cloudflare's developer platform to your end customers without needing to build the infrastructure components yourself. 
 
@@ -16,7 +16,7 @@ With bindings, your users can:
 - Gain observability via [Analytics Engine](/analytics/analytics-engine/)
 - Manage stateful coordination with [Durable Objects](/durable-objects/)
 
-#### Resource isolation
+## Resource isolation
 
 Each Worker can only access the bindings that are explicitly attached to it. For full isolation, you can attach a unique resource (like a D1 database or KV namespace) to every User Worker. If multiple Workers need to access the same data, you can reuse a shared resource, but every Worker will still have its own binding to that shared resource.
 
@@ -38,7 +38,7 @@ For every product, be sure to check product specific limits. Some resources may 
 
 #### Using the API
 
-Use the [Upload User Worker API](http://localhost:1111/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to attach bindings to a Worker. You can do this when you're first uploading the Worker script or when updating an existing Worker. 
+Use the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/subresources/content/methods/update/) to attach bindings to a Worker. You can do this when you're first uploading the Worker script or when updating an existing Worker. 
 
 Once the API request is made, the Worker will be automatically redeployed with the updated configuration, making the binding available for use.
 
@@ -94,7 +94,7 @@ curl -X PUT \
     "keep_bindings": ["kv_namespace", "d1", "ai"]
   }'
 ```
-Once the API request is made, the Worker will be redeployed with the new bindings. The bindings will then become accessable from the Worker code using `env.BINDING_NAME` (e.g., `env.USER_KV.get()`).
+Once the API request is made, the Worker will be redeployed with the new bindings. The bindings will then become accessible from the Worker code using `env.BINDING_NAME` (e.g., `env.USER_KV.get()`).
 
 #### Using Wrangler
 
@@ -140,4 +140,4 @@ Use Wrangler to deploy the User Worker with the bindings:
 npx wrangler deploy --name $SCRIPT_NAME --dispatch-namespace $NAMESPACE_NAME
 ```
 
-Once the Worker is deployed, the bindings will become accessable from the Worker code using `env.BINDING_NAME` (e.g., `env.USER_KV.get()`).
+Once the Worker is deployed, the bindings will become accessible from the Worker code using `env.BINDING_NAME` (e.g., `env.USER_KV.get()`).
