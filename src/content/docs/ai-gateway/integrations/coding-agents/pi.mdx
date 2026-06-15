@@ -16,9 +16,9 @@ import { Tabs, TabItem, Steps } from "~/components";
 
 Before you start, you need:
 
-1. An [authenticated gateway](/ai-gateway/configuration/authentication/) and its gateway token. The gateway token must have `Run` permissions.
-2. Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
-3. Pi installed and updated to the latest version.
+- An [authenticated gateway](/ai-gateway/configuration/authentication/) and its gateway token. The gateway token must have `Run` permissions.
+- Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
+- Pi installed and updated to the latest version.
 
 :::note
 The token you give Pi is your gateway token, not a model provider key. To pay for model usage, enable [unified billing](/ai-gateway/features/unified-billing/) or store provider keys in AI Gateway with [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). Either way, AI Gateway handles the provider authentication for you.
@@ -26,7 +26,7 @@ The token you give Pi is your gateway token, not a model provider key. To pay fo
 
 <Steps>
 
-1. Set your gateway token, account ID, and gateway slug as environment variables. The commands below set them for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`).
+1. Set your gateway token, account ID, and gateway slug as environment variables. The following commands set them for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`).
 
    Replace `<CF_AIG_TOKEN>`, `<ACCOUNT_ID>`, and `<GATEWAY_ID>` with your values.
 
