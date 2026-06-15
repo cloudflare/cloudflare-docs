@@ -22,12 +22,12 @@ Before you start, you need:
 4. Claude Code installed and updated to the latest version.
 
 :::note
-This configuration does not use [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). The Anthropic API key comes from the environment variable you set below, not from a key stored in AI Gateway. Anthropic bills you for model usage, and AI Gateway provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
+This configuration does not use [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). The Anthropic API key comes from the `ANTHROPIC_API_KEY` environment variable, not from a key stored in AI Gateway. Anthropic bills you for model usage, and AI Gateway provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
 :::
 
 <Steps>
 
-1. Set the base URL to your gateway's Anthropic endpoint, pass your Anthropic API key, and send your gateway token in the `cf-aig-authorization` header. The commands below set these as shell environment variables for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) or to Claude Code's [`settings.json`](https://docs.anthropic.com/en/docs/claude-code/settings#settings-files) under the `env` key.
+1. Set the base URL to your gateway's Anthropic endpoint, pass your Anthropic API key, and send your gateway token in the `cf-aig-authorization` header. The following commands set these as shell environment variables for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) or to Claude Code's [`settings.json`](https://docs.anthropic.com/en/docs/claude-code/settings#settings-files) under the `env` key.
 
    Replace `<ACCOUNT_ID>`, `<GATEWAY_ID>`, `<ANTHROPIC_API_KEY>`, and `<CF_AIG_TOKEN>` with your values.
 
