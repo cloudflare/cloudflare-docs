@@ -70,16 +70,14 @@ With these variables set, start Claude Code as usual with `claude`. Requests now
 
 [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli) supports bring-your-own-key (BYOK) model providers configured through environment variables. Route it through AI Gateway's [REST API](/ai-gateway/usage/rest-api/), an OpenAI-compatible `/chat/completions` endpoint authenticated with a Cloudflare API token. Third-party models are billed through [Unified Billing](/ai-gateway/features/unified-billing/), so no provider API keys are needed in your environment. Alternatively, you can store your own provider API keys in AI Gateway with [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/) and use the same Cloudflare API token to authenticate — AI Gateway resolves the stored key on each request.
 
+Unlike Claude Code, GitHub Copilot CLI authenticates the model provider with a single `Authorization` header and cannot send custom request headers. This is why the configuration below uses the REST API — it accepts a Cloudflare API token in the standard `Authorization` header — rather than the gateway token and `cf-aig-authorization` header flow used for Claude Code. Because Copilot CLI cannot set the `cf-aig-gateway-id` header either, requests route through your account's [default gateway](/ai-gateway/usage/rest-api/#specify-a-gateway).
+
 To configure GitHub Copilot CLI, you need:
 
 - GitHub Copilot CLI installed. To install it, refer to [Installing GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli).
 - A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with `AI Gateway` permission.
 - [Credits loaded](/ai-gateway/features/unified-billing/#load-credits) on your account for third-party models.
 - A model that supports tool calling and streaming. For best results, use a model with a context window of at least 128k tokens.
-
-:::note
-GitHub Copilot CLI authenticates the model provider with a single `Authorization` header and cannot send custom request headers. Use the REST API, which authenticates with a Cloudflare API token, rather than the gateway token and `cf-aig-authorization` header flow used for Claude Code. Because Copilot CLI cannot set the `cf-aig-gateway-id` header, requests route through your account's [default gateway](/ai-gateway/usage/rest-api/#specify-a-gateway).
-:::
 
 Set the provider environment variables. GitHub Copilot CLI reads these on startup and appends `/chat/completions` to the base URL. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`).
 
