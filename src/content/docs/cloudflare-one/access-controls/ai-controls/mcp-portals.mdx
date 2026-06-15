@@ -200,6 +200,11 @@ To create an MCP server portal:
 7. (Optional) Configure **Require user auth** for servers that support OAuth: - `Enabled`: (default) User will be prompted to utilize their own login credentials to establish a connection with the MCP server. - `Disabled`: Users who are connected to the portal will automatically have access to the MCP server via its [admin credential](#reauthenticate-the-mcp-server).
 
 8. Add [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can connect to the portal URL.
+
+   :::caution
+   MCP server portal applications do not enforce [independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa), [purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/), or [temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/). Refer to [Policy limitations](#policy-limitations) for details.
+   :::
+
 9. Select **Add an MCP server portal**.
 10. (Optional) [Customize the login experience](#customize-login-settings) for the portal.
 
@@ -913,6 +918,16 @@ MCP server portals have the following known limitations:
 - **Not all MCP servers support OAuth dynamic client registration.** MCP servers that do not support [OAuth dynamic client registration](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#dynamic-client-registration) cannot use the portal's OAuth authentication flow. For these servers, select **Custom Headers** as the authentication method and provide static credentials (for example, API keys or personal access tokens) instead.
 
 - **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync Required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
+
+## Policy limitations
+
+MCP server portals use a dedicated Access application type that does not support the following Access policy features:
+
+- **[Independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa)** — Portals do not prompt users for a second factor through Cloudflare Access. Users who connect to a portal will not be challenged for MFA, even if independent MFA is required globally or configured on a matching policy. To enforce MFA for MCP portal users, require MFA at your identity provider.
+- **[Purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/)** — Portals do not display a purpose justification screen. The `purpose_justification_required` and `purpose_justification_prompt` policy settings have no effect on portal sessions.
+- **[Temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/)** — Portals do not trigger the approval workflow for temporary authentication policies. Users are not prompted to request access, and approvers do not receive approval requests for portal logins.
+
+These limitations apply to the portal application itself. Other Access policy selectors (such as Emails, Groups, IdP groups, country, and device posture) work as expected.
 
 ## Troubleshooting
 
