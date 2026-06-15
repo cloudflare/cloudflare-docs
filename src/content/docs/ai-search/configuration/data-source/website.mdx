@@ -41,7 +41,7 @@ AI Search supports `.gz` compressed sitemaps. Both `robots.txt` and sitemaps can
 
 ### Sync and updates
 
-During scheduled or manual [sync jobs](/ai-search/configuration/indexing/syncing/), the crawler will check for changes to the `<lastmod>` attribute in your sitemap. If it has been changed to a date occurring after the last sync date, then the page will be crawled, the updated version is stored, and automatically reindexed so that your search results always reflect the latest content.
+During scheduled or manual [sync jobs](/ai-search/configuration/indexing/syncing/), the crawler will check for changes to the `<lastmod>` attribute in your sitemap. If it has been changed to a date occurring after the last sync date, then the page is crawled, the updated version is stored, and the page is automatically reindexed so that your search results always reflect the latest content.
 
 If the `<lastmod>` attribute is not defined, AI Search uses the `<changefreq>` attribute to determine how often to re-crawl the URL. If neither `<lastmod>` nor `<changefreq>` is defined, AI Search automatically crawls each link once a day.
 
@@ -93,7 +93,7 @@ You can choose how pages are parsed during crawling:
 
 ### Extra headers
 
-If your website has pages behind authentication or are only visible to logged-in users, you can configure custom HTTP headers to allow the AI Search crawler to access this protected content. You can add up to five custom HTTP headers to the requests AI Search sends when crawling your site.
+If your website has pages behind authentication or pages that are only visible to logged-in users, you can configure custom HTTP headers to allow the AI Search crawler to access this protected content. You can add up to five custom HTTP headers to the requests AI Search sends when crawling your site.
 
 #### Providing access to sites protected by Cloudflare Access
 
@@ -113,7 +113,7 @@ Service tokens bypass user authentication, so ensure your Access policies are co
 2. [Create a policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) with the following configuration:
    - Add an **Include** rule with **Selector** set to **Service token**.
    - In **Value**, select the Service Token you created in step 1.
-3. [Add your self-hosted application to Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) and with the following configuration:
+3. [Add your self-hosted application to Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) with the following configuration:
    - In Access policies, click **Select existing policies**.
    - Select the policy that you have just created and select **Confirm**.
 4. In the Cloudflare dashboard, go to the **AI Search** page.
@@ -374,7 +374,7 @@ Use these attributes to control crawling behavior:
 | `<changefreq>` | Expected change frequency     | Use when `<lastmod>` is not available. Values: `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never`. |
 | `<priority>`   | Relative importance (0.0-1.0) | Set higher values for important pages. AI Search indexes pages in priority order.                                   |
 
-You can also use a Sitemap Index to bundle other, domain specific sitemaps:
+You can also use a Sitemap Index to bundle other domain-specific sitemaps:
 
 ```xml title="sitemap-index.xml"
 <?xml version="1.0" encoding="UTF-8"?>

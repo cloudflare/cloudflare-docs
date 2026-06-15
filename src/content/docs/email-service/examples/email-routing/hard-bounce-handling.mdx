@@ -27,155 +27,165 @@ Hard bounces occur when an email cannot be delivered due to permanent reasons:
 Configure your worker to handle bounce notifications:
 
 <WranglerConfig>
-```toml
-name = "bounce-handler"
-compatibility_date = "$today"
 
-[[send_email]]
-name = "EMAIL"
+```jsonc
+{
+	"name": "bounce-handler",
+	"compatibility_date": "$today",
+	"send_email": [{ "name": "EMAIL" }],
+	"kv_namespaces": [
+		{
+			"binding": "SUPPRESSION_LIST",
+			"id": "your-kv-namespace-id",
+		},
+	],
+}
+```
 
-[[kv_namespaces]]
-binding = "SUPPRESSION_LIST"
-id = "your-kv-namespace-id"
-
-````
 </WranglerConfig>
 
 ## Hard bounce detection
 
 ```javascript
-import * as PostalMime from 'postal-mime';
+import * as PostalMime from "postal-mime";
 
 export default {
-  async email(message, env, ctx) {
-    // Parse the raw email message
-    const parser = new PostalMime.default();
-    const rawEmail = new Response(message.raw);
-    const email = await parser.parse(await rawEmail.arrayBuffer());
+	async email(message, env, ctx) {
+		// Parse the raw email message
+		const parser = new PostalMime.default();
+		const rawEmail = new Response(message.raw);
+		const email = await parser.parse(await rawEmail.arrayBuffer());
 
-    // Check if this is a bounce notification
-    if (isBounceNotification(email)) {
-      const bounceInfo = await parseBounceInfo(email);
+		// Check if this is a bounce notification
+		if (isBounceNotification(email)) {
+			const bounceInfo = await parseBounceInfo(email);
 
-      if (bounceInfo.type === 'hard') {
-        await handleHardBounce(bounceInfo, env);
-        console.log(`Hard bounce processed for: ${bounceInfo.originalRecipient}`);
-        return;
-      }
-    }
+			if (bounceInfo.type === "hard") {
+				await handleHardBounce(bounceInfo, env);
+				console.log(
+					`Hard bounce processed for: ${bounceInfo.originalRecipient}`,
+				);
+				return;
+			}
+		}
 
-    // Forward non-bounce emails normally
-    await message.forward('admin@yourdomain.com');
-  },
+		// Forward non-bounce emails normally
+		await message.forward("admin@yourdomain.com");
+	},
 };
 
 function isBounceNotification(email) {
-  // Check common bounce indicators
-  const subject = email.subject?.toLowerCase() || '';
-  const fromAddress = email.from?.address?.toLowerCase() || '';
+	// Check common bounce indicators
+	const subject = email.subject?.toLowerCase() || "";
+	const fromAddress = email.from?.address?.toLowerCase() || "";
 
-  // Common bounce indicators
-  const bounceSubjects = [
-    'mail delivery failed',
-    'undelivered mail returned to sender',
-    'delivery status notification',
-    'returned mail',
-    'mail system error'
-  ];
+	// Common bounce indicators
+	const bounceSubjects = [
+		"mail delivery failed",
+		"undelivered mail returned to sender",
+		"delivery status notification",
+		"returned mail",
+		"mail system error",
+	];
 
-  const bounceFromPatterns = [
-    'mailer-daemon',
-    'mail-daemon',
-    'postmaster',
-    'noreply',
-    'bounce'
-  ];
+	const bounceFromPatterns = [
+		"mailer-daemon",
+		"mail-daemon",
+		"postmaster",
+		"noreply",
+		"bounce",
+	];
 
-  return bounceSubjects.some(phrase => subject.includes(phrase)) ||
-         bounceFromPatterns.some(pattern => fromAddress.includes(pattern));
+	return (
+		bounceSubjects.some((phrase) => subject.includes(phrase)) ||
+		bounceFromPatterns.some((pattern) => fromAddress.includes(pattern))
+	);
 }
 
 async function parseBounceInfo(email) {
-  const text = email.text || '';
-  const html = email.html || '';
-  const content = text + ' ' + html;
+	const text = email.text || "";
+	const html = email.html || "";
+	const content = text + " " + html;
 
-  // Extract original recipient email
-  const recipientMatch = content.match(/(?:to|for|recipient):\s*([^\s<]+@[^\s>]+)/i) ||
-                        content.match(/([^\s<]+@[^\s>]+)/);
+	// Extract original recipient email
+	const recipientMatch =
+		content.match(/(?:to|for|recipient):\s*([^\s<]+@[^\s>]+)/i) ||
+		content.match(/([^\s<]+@[^\s>]+)/);
 
-  const originalRecipient = recipientMatch ? recipientMatch[1] : null;
+	const originalRecipient = recipientMatch ? recipientMatch[1] : null;
 
-  // Determine bounce type based on content
-  const hardBounceIndicators = [
-    'user unknown',
-    'no such user',
-    'invalid recipient',
-    'recipient address rejected',
-    'mailbox unavailable',
-    'domain not found',
-    '5.1.1', // SMTP error code for bad destination mailbox
-    '5.1.2', // SMTP error code for bad destination system
-    '5.4.1', // SMTP error code for no answer from host
-  ];
+	// Determine bounce type based on content
+	const hardBounceIndicators = [
+		"user unknown",
+		"no such user",
+		"invalid recipient",
+		"recipient address rejected",
+		"mailbox unavailable",
+		"domain not found",
+		"5.1.1", // SMTP error code for bad destination mailbox
+		"5.1.2", // SMTP error code for bad destination system
+		"5.4.1", // SMTP error code for no answer from host
+	];
 
-  const isHardBounce = hardBounceIndicators.some(indicator =>
-    content.toLowerCase().includes(indicator.toLowerCase())
-  );
+	const isHardBounce = hardBounceIndicators.some((indicator) =>
+		content.toLowerCase().includes(indicator.toLowerCase()),
+	);
 
-  return {
-    type: isHardBounce ? 'hard' : 'soft',
-    originalRecipient,
-    reason: extractBounceReason(content),
-    timestamp: new Date().toISOString()
-  };
+	return {
+		type: isHardBounce ? "hard" : "soft",
+		originalRecipient,
+		reason: extractBounceReason(content),
+		timestamp: new Date().toISOString(),
+	};
 }
 
 function extractBounceReason(content) {
-  // Extract the specific error message
-  const reasonPatterns = [
-    /diagnostic[- ]code:\s*(.+)/i,
-    /reason:\s*(.+)/i,
-    /error:\s*(.+)/i,
-    /(5\.\d+\.\d+[^.\n]*)/i
-  ];
+	// Extract the specific error message
+	const reasonPatterns = [
+		/diagnostic[- ]code:\s*(.+)/i,
+		/reason:\s*(.+)/i,
+		/error:\s*(.+)/i,
+		/(5\.\d+\.\d+[^.\n]*)/i,
+	];
 
-  for (const pattern of reasonPatterns) {
-    const match = content.match(pattern);
-    if (match) {
-      return match[1].trim().split('\n')[0]; // Take first line only
-    }
-  }
+	for (const pattern of reasonPatterns) {
+		const match = content.match(pattern);
+		if (match) {
+			return match[1].trim().split("\n")[0]; // Take first line only
+		}
+	}
 
-  return 'Unknown bounce reason';
+	return "Unknown bounce reason";
 }
 
 async function handleHardBounce(bounceInfo, env) {
-  if (!bounceInfo.originalRecipient) {
-    console.log('Could not extract original recipient from bounce');
-    return;
-  }
+	if (!bounceInfo.originalRecipient) {
+		console.log("Could not extract original recipient from bounce");
+		return;
+	}
 
-  // Add to suppression list in KV
-  await env.SUPPRESSION_LIST.put(
-    bounceInfo.originalRecipient,
-    JSON.stringify({
-      type: 'hard_bounce',
-      reason: bounceInfo.reason,
-      timestamp: bounceInfo.timestamp,
-      status: 'suppressed'
-    }),
-    {
-      metadata: {
-        bounceType: 'hard',
-        addedDate: bounceInfo.timestamp
-      }
-    }
-  );
+	// Add to suppression list in KV
+	await env.SUPPRESSION_LIST.put(
+		bounceInfo.originalRecipient,
+		JSON.stringify({
+			type: "hard_bounce",
+			reason: bounceInfo.reason,
+			timestamp: bounceInfo.timestamp,
+			status: "suppressed",
+		}),
+		{
+			metadata: {
+				bounceType: "hard",
+				addedDate: bounceInfo.timestamp,
+			},
+		},
+	);
 
-  console.log(`Added ${bounceInfo.originalRecipient} to suppression list: ${bounceInfo.reason}`);
+	console.log(
+		`Added ${bounceInfo.originalRecipient} to suppression list: ${bounceInfo.reason}`,
+	);
 }
-````
+```
 
 ## Testing hard bounce handling
 

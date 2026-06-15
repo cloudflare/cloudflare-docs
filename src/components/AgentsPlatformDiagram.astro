@@ -1,10 +1,30 @@
 ---
 const channels = [
-	{ type: "Chat", name: "AIChatAgent", href: "/agents/communication-channels/chat/" },
-	{ type: "Email", name: "onEmail", href: "/agents/communication-channels/email/" },
-	{ type: "Voice", name: "withVoice", href: "/agents/communication-channels/voice/" },
-	{ type: "Slack", name: "Events", href: "/agents/communication-channels/slack/" },
-	{ type: "Webhook", name: "HTTP", href: "/agents/communication-channels/webhooks/" },
+	{
+		type: "Chat",
+		name: "AIChatAgent",
+		href: "/agents/communication-channels/chat/",
+	},
+	{
+		type: "Email",
+		name: "onEmail",
+		href: "/agents/communication-channels/email/",
+	},
+	{
+		type: "Voice",
+		name: "withVoice",
+		href: "/agents/communication-channels/voice/",
+	},
+	{
+		type: "Slack",
+		name: "Events",
+		href: "/agents/communication-channels/slack/",
+	},
+	{
+		type: "Webhook",
+		name: "HTTP",
+		href: "/agents/communication-channels/webhooks/",
+	},
 ];
 
 const runtime = [
@@ -25,23 +45,38 @@ const tools = [
 ];
 ---
 
-<figure class="agents-platform-diagram" aria-label="Cloudflare Agent Platform architecture map">
+<figure
+	class="agents-platform-diagram"
+	aria-label="Cloudflare Agent Platform architecture map"
+>
 	<div class="architecture-map">
-		<svg class="connection-layer" viewBox="0 0 980 390" preserveAspectRatio="none" aria-hidden="true">
-			<path class="connection" d="M 300 154 C 360 154 360 154 420 154" />
-			<path class="connection" d="M 560 154 C 620 154 620 154 680 154" />
-			<path class="connection" d="M 490 245 C 490 285 490 295 490 326" />
+		<svg
+			class="connection-layer"
+			viewBox="0 0 980 390"
+			preserveAspectRatio="none"
+			aria-hidden="true"
+		>
+			<path class="connection" d="M 300 154 C 360 154 360 154 420 154"></path>
+			<path class="connection" d="M 560 154 C 620 154 620 154 680 154"></path>
+			<path class="connection" d="M 490 245 C 490 285 490 295 490 326"></path>
 		</svg>
 
-		<section class="resource-card inbound-card" aria-label="Communication channels">
+		<section
+			class="resource-card inbound-card"
+			aria-label="Communication channels"
+		>
 			<header class="card-header">
 				<div class="card-title">Channels</div>
 				<span class="count-badge">{channels.length}</span>
 			</header>
 			<div class="pill-stack">
-				{channels.map((item) => (
-					<a class="binding-pill" href={item.href}>{item.type}</a>
-				))}
+				{
+					channels.map((item) => (
+						<a class="binding-pill" href={item.href}>
+							{item.type}
+						</a>
+					))
+				}
 			</div>
 		</section>
 
@@ -67,9 +102,13 @@ const tools = [
 				<div class="agent-section runtime-section">
 					<div class="agent-section-copy">
 						<div class="section-title">Agents SDK runtime</div>
-						<p>Durable identity, state, connections, scheduling, and recovery.</p>
+						<p>
+							Durable identity, state, connections, scheduling, and recovery.
+						</p>
 					</div>
-					<a class="agent-class" href="/agents/runtime/agents-api/">Agent class</a>
+					<a class="agent-class" href="/agents/runtime/agents-api/"
+						>Agent class</a
+					>
 					<div class="runtime-list">
 						{runtime.map((item) => <a href={item.href}>{item.label}</a>)}
 					</div>
@@ -83,13 +122,20 @@ const tools = [
 				<span class="count-badge">{tools.length}</span>
 			</header>
 			<div class="pill-stack">
-				{tools.map((item) => (
-					<a class="binding-pill" href={item.href}>{item.type}</a>
-				))}
+				{
+					tools.map((item) => (
+						<a class="binding-pill" href={item.href}>
+							{item.type}
+						</a>
+					))
+				}
 			</div>
 		</section>
 
-		<a class="observability-card" href="/agents/runtime/operations/observability/">
+		<a
+			class="observability-card"
+			href="/agents/runtime/operations/observability/"
+		>
 			<span class="observability-title">Observability</span>
 			<span class="observability-copy">Logs · metrics · traces</span>
 		</a>
@@ -176,8 +222,12 @@ const tools = [
 		padding: 4px;
 	}
 
-	.inbound-card { grid-area: inbound; }
-	.tools-card { grid-area: tools; }
+	.inbound-card {
+		grid-area: inbound;
+	}
+	.tools-card {
+		grid-area: tools;
+	}
 
 	.inbound-card,
 	.tools-card,
@@ -202,7 +252,9 @@ const tools = [
 	.observability-title {
 		margin: 0;
 		color: var(--map-strong);
-		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 		font-size: 12px;
 		font-weight: 500;
 		letter-spacing: -0.01em;
@@ -321,7 +373,8 @@ const tools = [
 	.status-dot {
 		width: 14px;
 		height: 14px;
-		border: 3px solid color-mix(in srgb, var(--map-blue-ring) 35%, var(--map-card));
+		border: 3px solid
+			color-mix(in srgb, var(--map-blue-ring) 35%, var(--map-card));
 		border-radius: 9999px;
 		background: var(--map-blue-text);
 	}

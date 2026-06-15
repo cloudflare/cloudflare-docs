@@ -135,11 +135,11 @@ const socket = await env.MY_BINDING.connect(address);
 
 ### Parameters
 
-- `address` (string | SocketAddress) — The destination to connect to. Pass a string in `"host:port"` format (for example, `"10.0.1.50:6379"`) or a [`SocketAddress`](/workers/runtime-apis/tcp-sockets/#socketaddress) object with `hostname` and `port`.
+- `address` (string | SocketAddress) — The destination to connect to. Pass a string in `"host:port"` format (for example, `"10.0.1.50:6379"`) or a [`SocketAddress`](/workers/runtime-apis/tcp-sockets/#socketaddress/) object with `hostname` and `port`.
 
 ### Return value
 
-Returns a `Promise<Socket>` that resolves to a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket) with `readable` and `writable` streams. If the connection cannot be established, `connect()` throws an exception.
+Returns a `Promise<Socket>` that resolves to a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket/) with `readable` and `writable` streams. If `connect()` cannot establish the connection, it throws an exception.
 
 :::note
 

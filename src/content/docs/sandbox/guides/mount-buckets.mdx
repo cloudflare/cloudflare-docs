@@ -123,6 +123,38 @@ await sandbox.mountBucket('my-r2-bucket', '/data', {
 ```
 </TypeScriptExample>
 
+### Credential proxy
+
+When you mount with explicit credentials, s3fs writes those credentials to a password file on the container's disk. A compromised container process can read and exfiltrate the credentials, or use them to access storage outside the intended bucket scope.
+
+Set `credentialProxy: true` to keep credentials out of the container entirely. Instead of passing real credentials into the container, the Durable Object intercepts all outbound S3 requests at the network layer, re-signs them with the real credentials, and forwards them upstream. The container only ever holds dummy credentials that are useless outside the proxy.
+
+This works with [AWS SigV4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html) signing for S3-compatible endpoints (including R2) and HMAC signing for Google Cloud Storage. It is recommended to set `credentialProxy: true` for all endpoint mounts. The option defaults to `false` for backwards compatibility and will become the default in a future version of the Sandbox SDK.
+
+<TypeScriptExample>
+```typescript
+await sandbox.mountBucket('my-bucket', '/data', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	provider: 'r2',
+	credentials: {
+		accessKeyId: env.R2_ACCESS_KEY_ID,
+		secretAccessKey: env.R2_SECRET_ACCESS_KEY
+	},
+	credentialProxy: true
+});
+```
+</TypeScriptExample>
+
+:::caution[ContainerProxy export required]
+Credential proxy mounts use egress interception and require `ContainerProxy` to be exported from your Worker entrypoint. Without this export, the proxy cannot intercept requests and the mount will fail.
+
+```typescript
+import { ContainerProxy } from "@cloudflare/sandbox";
+
+export { ContainerProxy };
+```
+:::
+
 ## Mount bucket subdirectories
 
 Mount a specific subdirectory within a bucket using the `prefix` option. Only contents under the prefix are visible at the mount point:

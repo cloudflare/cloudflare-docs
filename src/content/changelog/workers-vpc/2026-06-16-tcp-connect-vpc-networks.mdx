@@ -1,0 +1,46 @@
+---
+title: TCP connections via connect() over VPC Networks
+description: VPC Network bindings now support the connect() Socket API for raw TCP connections, in addition to HTTP traffic via fetch(). Workers can open TCP sockets to any private destination reachable through the bound Cloudflare Tunnel, Cloudflare Mesh, or Cloudflare WAN on-ramp.
+date: 2026-06-16
+---
+
+import { WranglerConfig } from "~/components";
+
+[VPC Network](/workers-vpc/configuration/vpc-networks/) bindings now support the [`connect()`](/workers/runtime-apis/tcp-sockets/) Socket API for raw TCP connections to private destinations, in addition to HTTP traffic via `fetch()`.
+
+This means Workers can now open TCP sockets to any private service reachable through the bound Cloudflare Tunnel, Cloudflare Mesh, or Cloudflare WAN on-ramp — Redis, Memcached, MQTT, custom binary protocols, or any other TCP-based service.
+
+<WranglerConfig>
+```toml
+[[vpc_networks]]
+binding = "PRIVATE_NETWORK"
+network_id = "cf1:network"
+remote = true
+```
+</WranglerConfig>
+
+At runtime, use `connect()` on the binding to open a TCP socket to a private destination:
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		// Open a TCP connection to a private Redis instance
+		const socket = await env.PRIVATE_NETWORK.connect("10.0.1.50:6379");
+
+		// Write a Redis PING command
+		const writer = socket.writable.getWriter();
+		await writer.write(new TextEncoder().encode("PING\r\n"));
+		await writer.close();
+
+		return new Response(socket.readable);
+	},
+};
+```
+
+:::note
+
+`connect()` over VPC Networks currently supports plaintext TCP only.
+
+:::
+
+For more details, refer to [VPC Networks](/workers-vpc/configuration/vpc-networks/) and the [Workers Binding API](/workers-vpc/api/).

@@ -103,7 +103,7 @@ curl "https://developers.cloudflare.com/workers/get-started/" \
   --header "Accept: text/markdown"
 ```
 
-The response includes an `x-markdown-tokens` header with an estimated token count for the document, useful for context window planning (a context window is the maximum number of tokens an AI model can consider at once).
+The response includes `x-markdown-tokens` and `x-original-tokens` headers with estimated token counts for the Markdown document and original HTML document, useful for context window planning (a context window is the maximum number of tokens an AI model can consider at once).
 
 ### Site-wide endpoints
 

@@ -1,0 +1,22 @@
+---
+title: Filter Durable Objects metrics by object ID or name
+description: Filter the Durable Objects metrics charts to a single object by its ID or name.
+products:
+  - durable-objects
+  - workers
+date: 2026-06-12
+---
+
+import { DashButton } from "~/components";
+
+You can now filter the **Metrics** tab for a Durable Objects namespace by an individual Durable Object's [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name) in the Cloudflare dashboard. Previously, metrics charts only showed aggregate, namespace-level data, making it difficult to isolate the behavior of a specific object.
+
+<DashButton url="/?to=/:account/workers/durable-objects" />
+
+Start typing an ID or name into the filter and select a match from the autocomplete dropdown. Every chart on the page updates to reflect only the selected object. This makes it easier to identify and investigate a single Durable Object when debugging a high-traffic object, an error spike, or unexpected storage usage. Clear the filter to return to namespace-level metrics.
+
+Metrics are powered by the [GraphQL Analytics API](/analytics/graphql-api/), so standard analytics behavior such as ingestion delay and [sampling](/analytics/faq/graphql-api-inconsistent-results/) applies.
+
+For more information, refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/).
+
+![The Durable Objects Metrics tab filtered to a single object by ID, showing per-object requests and errors by invocation status.](~/assets/images/changelog/durable-objects/durable-objects-metrics-dashboard.png)

@@ -1,0 +1,46 @@
+---
+title: Track Dynamic Workers usage from the dashboard and GraphQL API
+description: View the number of billable Dynamic Workers invoked during your billing period from the dashboard or GraphQL Analytics API.
+products:
+  - workers
+date: 2026-06-11
+---
+
+![Dynamic Workers usage on the Workers overview page](~/assets/images/workers/changelog/dynamic-workers-count.png)
+
+Customers can now view the number of [Dynamic Workers](/dynamic-workers/) invoked during their billing period from the Workers overview page in the Cloudflare dashboard.
+
+This count reflects the number of Dynamic Workers that Cloudflare would bill for during the selected billing period. Dynamic Workers usage data only goes back to June 1, 2026.
+
+You can also query this count through the [GraphQL Analytics API](/analytics/graphql-api/) by using `workersInvocationsByOwnerAndScriptGroups` and selecting `distinctDynamicWorkerCount`:
+
+```graphql
+query getDynamicWorkersCount(
+	$accountTag: string!
+	$filter: AccountWorkersInvocationsByOwnerAndScriptGroupsFilter_InputObject
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			workersInvocationsByOwnerAndScriptGroups(limit: 10000, filter: $filter) {
+				uniq {
+					distinctDynamicWorkerCount
+				}
+			}
+		}
+	}
+}
+```
+
+Use variables to set the account and billing-period date range:
+
+```json
+{
+	"accountTag": "<ACCOUNT_ID>",
+	"filter": {
+		"date_geq": "2026-06-01",
+		"date_leq": "2026-06-30"
+	}
+}
+```
+
+For more information, refer to [Dynamic Workers pricing](/dynamic-workers/pricing/).

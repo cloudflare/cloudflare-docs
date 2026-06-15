@@ -457,7 +457,7 @@ Result of the check for [leaked credentials](/waf/detections/leaked-credentials/
 
 Type: `array[object]`
 
-Array of matched Cloudflare Rules product rules grouped by product. Each object contains: <em>product</em> (string, e.g. snippets, transform, redirects), <em>rulesetId</em> (string), <em>rulesetVersion</em> (int), and <em>rules</em> (array of objects, each with <em>id</em> (string) and optional <em>metadata</em> (object with string key-value pairs)).
+Array of matched Cloudflare Rules product rules grouped by product. Each object contains: <em>product</em> (string, for example snippets, transform, redirects), <em>rulesetId</em> (string), <em>rulesetVersion</em> (int), and <em>rules</em> (array of objects, each with <em>id</em> (string) and optional <em>metadata</em> (object with string key-value pairs)).
 
 ## OriginDNSResponseTimeMs
 

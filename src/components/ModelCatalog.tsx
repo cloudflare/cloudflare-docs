@@ -221,7 +221,7 @@ const providerItems: FilterItem[] = [
 
 // List of model names to pin at the top
 const pinnedModelNames = [
-	"@cf/moonshotai/kimi-k2.6",
+	"@cf/moonshotai/kimi-k2.7-code",
 	"@cf/zai-org/glm-4.7-flash",
 	"@cf/openai/gpt-oss-120b",
 	"@cf/meta/llama-4-scout-17b-16e-instruct",

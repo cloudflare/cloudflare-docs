@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-06-12"
+    title: Moonshot AI Kimi K2.7 Code now available on Workers AI
+    description: |-
+      - [`@cf/moonshotai/kimi-k2.7-code`](/workers-ai/models/kimi-k2.7-code/) now available on Workers AI. A frontier-scale 1T parameter MoE model optimized for coding, with a 262.1k context window, vision, multi-turn tool calling, and reasoning. Read [changelog](/changelog/post/2026-06-12-kimi-k2-7-code-workers-ai/) to get started.
   - publish_date: "2026-05-08"
     title: Planned model deprecations
     description: |-

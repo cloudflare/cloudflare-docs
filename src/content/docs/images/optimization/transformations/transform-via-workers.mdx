@@ -1,9 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Transform via Workers
-description: Use Cloudflare Workers to programmatically resize, format, and optimize images with custom URL schemes.
+title: Transform via fetch
+description: Use cf.image options on a fetch() subrequest in a Worker to programmatically resize, format, and optimize remote images.
 sidebar:
   order: 4
+  label: Transform via fetch
 products:
   - images
   - workers
@@ -11,7 +12,11 @@ products:
 
 import { Render } from "~/components";
 
-Using Workers to transform with a custom URL scheme gives you powerful programmatic control over every image request.
+Workers lets you optimize images with a custom URL scheme.
+
+You can set image optimization parameters on a `fetch()` subrequest in a Worker using the `cf.image` property. This is the same underlying mechanism as the [URL interface](/images/optimization/transformations/overview/#url-interface), but gives you programmatic control over every image request.
+
+To work with image bytes directly instead of URLs, use the [Images binding](/images/optimization/binding/).
 
 Here are a few examples of the flexibility that Workers give you:
 

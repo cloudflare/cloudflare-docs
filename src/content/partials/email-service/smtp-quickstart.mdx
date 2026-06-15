@@ -1,0 +1,24 @@
+---
+{}
+---
+
+Send an email with a single `curl` command. Replace `<API_TOKEN>` with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has the **Email Sending: Edit** permission, and replace the `--mail-from` and `--mail-rcpt` addresses with your own.
+
+```sh
+cat > mail.txt <<EOF
+From: welcome@yourdomain.com
+To: recipient@example.com
+Subject: Welcome to our service!
+
+Thanks for signing up.
+EOF
+
+curl --ssl-reqd \
+  --url "smtps://smtp.mx.cloudflare.net:465" \
+  --user "api_token:<API_TOKEN>" \
+  --mail-from "welcome@yourdomain.com" \
+  --mail-rcpt "recipient@example.com" \
+  --upload-file mail.txt
+```
+
+The sender domain (`welcome@yourdomain.com`) must be onboarded for [Email Sending](/email-service/configuration/domains/) on the account that owns the API token.

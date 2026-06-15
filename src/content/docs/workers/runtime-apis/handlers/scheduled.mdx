@@ -134,6 +134,20 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, fetch
+from datetime import datetime, timezone
+
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+        if controller.cron == "*/5 * * * *":
+            await fetch("https://example.com/api/sync")
+        elif controller.cron == "0 0 * * *":
+            await env.MY_KV.put("last-cleanup", datetime.now(timezone.utc).isoformat())
+```
+
 </TabItem> </Tabs>
 
 The value of `controller.cron` is the exact cron expression string from your configuration. It must match character-for-character, including spacing.
