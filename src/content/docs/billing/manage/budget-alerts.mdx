@@ -16,6 +16,16 @@ Budget alerts notify you by email when your account-wide usage-based spend cross
 Budget alerts are available to Pay-as-you-go accounts only. Enterprise contract accounts are not supported.
 :::
 
+## Default budget alert
+
+Cloudflare creates a default budget alert for every eligible Pay-as-you-go account that does not already have one. The default uses a $10 account-level threshold and activates at the turn of your next billing cycle, so it does not fire based on usage you have already incurred.
+
+The default alert behaves exactly like an alert you create yourself. When projected monthly usage-based spend reaches $10, Cloudflare sends an email notification to your account contacts. The alert is informational only. It does not cap your usage or impact your account in any way.
+
+The threshold only counts spend on usage-based products. Recurring subscription fees, such as the Workers Paid plan fee or other monthly plan charges, are not included in the calculation.
+
+You can change the threshold, add additional alerts, or delete the default alert at any time using the steps in [View and manage budget alerts](#view-and-manage-budget-alerts). If you already configured your own budget alert, nothing changes.
+
 ## Create a budget alert
 
 <Steps>
@@ -49,9 +59,11 @@ From there you can edit or delete existing alerts.
 ## How budget alerts work
 
 - Budget alerts evaluate your cumulative usage-based spend for the current billing period.
+- Only spend on usage-based products counts toward the threshold. Recurring subscription fees, such as the Workers Paid plan fee or other monthly plan charges, are excluded.
 - When spend crosses the threshold, Cloudflare sends a single email notification to all configured recipients.
 - The alert resets at the start of each new billing period.
 - Budget alerts are informational only. They do not pause or cap usage. Your monthly invoice remains the authoritative source for billing.
+- Default alerts created automatically by Cloudflare behave the same as alerts you create yourself. They can be edited or deleted at any time.
 
 ## Budget alerts compared to usage notifications
 
