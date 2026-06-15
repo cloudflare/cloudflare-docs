@@ -302,6 +302,7 @@ package.json @cloudflare/content-engineering
 # Turnstile
 
 /src/content/docs/turnstile/ @migueldemoura @punkeel @marinaelmore @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/public/turnstile/ @migueldemoura @punkeel @marinaelmore @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 
 # Waiting Room
 
