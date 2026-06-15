@@ -1,6 +1,6 @@
 ---
-title: Test Workers the way they are built with createTestHarness
-description: Run integration tests against your Workers' production build output from any Node.js test runner.
+title: Run integration tests against your Worker's production build
+description: Use Wrangler's `createTestHarness()` API to test production build output from any Node.js test runner.
 products:
   - workers
 date: 2026-06-16
@@ -9,9 +9,9 @@ publish_future_dated_entry: true
 
 import { TypeScriptExample } from "~/components";
 
-Wrangler now provides `createTestHarness()`, an API for running integration tests against Workers from any Node.js test runner. It works with Wrangler projects and [projects built with the Cloudflare Vite plugin](/workers/testing/test-harness/examples/#test-workers-built-by-the-cloudflare-vite-plugin).
+Wrangler now provides `createTestHarness()`, an API for running integration tests against Workers from any Node.js test runner. It works with Workers built with Wrangler or the [Cloudflare Vite plugin](/workers/testing/test-harness/examples/#test-workers-built-by-the-cloudflare-vite-plugin).
 
-Use `createTestHarness()` when you want tests to run against Workers built by Wrangler or the Cloudflare Vite plugin. The test harness starts a local Worker server and [provides helpers for dispatching requests, resetting storage, and inspecting runtime logs](/workers/wrangler/api/#createtestharness).
+The test harness created by `createTestHarness()` starts a local Worker server and [provides helpers for dispatching requests, resetting storage, and inspecting runtime logs](/workers/wrangler/api/#createtestharness).
 
 This is useful for tests that need to:
 
