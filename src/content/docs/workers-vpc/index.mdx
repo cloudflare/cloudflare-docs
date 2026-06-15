@@ -33,7 +33,7 @@ Workers VPC allows you to connect your Workers to your private APIs, services, a
 
 With Workers VPC, you can configure a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to establish secure, private connections from your private networks to Cloudflare. Then, you can configure a [VPC Service](/workers-vpc/configuration/vpc-services/) for each service in the external private network you need to connect to, and use [VPC Service bindings](/workers-vpc/api/) to connect from Workers. VPC Services support both HTTP and TCP service types, allowing you to connect to web APIs and databases (through [Hyperdrive](/hyperdrive/)).
 
-You can also use [VPC Network bindings](/workers-vpc/configuration/vpc-networks/) to give Workers broader access to your private infrastructure — services behind [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), subnet and hostname routes announced through Cloudflare Tunnel or Mesh, and destinations connected through [Cloudflare WAN](/cloudflare-wan/) on-ramps (GRE, IPsec, and CNI).
+You can also use [VPC Network bindings](/workers-vpc/configuration/vpc-networks/) to give Workers broader access to your private infrastructure — services behind [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), subnet and hostname routes announced through Cloudflare Tunnel or Mesh, and destinations connected through [Cloudflare WAN](/cloudflare-wan/) on-ramps (GRE, IPsec, and CNI). VPC Network bindings support both HTTP traffic via `fetch()` and raw TCP connections via [`connect()`](/workers/runtime-apis/tcp-sockets/), so Workers can reach non-HTTP services like Redis, MQTT, and custom TCP protocols over your private network.
 
 :::note
 
