@@ -93,7 +93,7 @@ interface PullRequestMetadata {
 	head: string;
 }
 
-export async function run({ init, payload, env, runId }: FlueContext) {
+export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, unknown>;
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as R2Bucket;

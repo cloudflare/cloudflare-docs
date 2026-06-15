@@ -1,7 +1,7 @@
 id: aWqrWM
 
 name: Log Explorer
- 
+
 entry:
   title: Log Explorer
   url: /log-explorer/
@@ -11,4 +11,4 @@ entry:
 meta:
   title: Cloudflare Log Explorer docs
   description: Store and explore your logs in the Cloudflare dashboard or API
-  author: '@cloudflare'
+  author: "@cloudflare"

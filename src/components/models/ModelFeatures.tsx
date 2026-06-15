@@ -121,6 +121,12 @@ const ModelFeatures = ({ model }: { model: ModelType }) => {
 									<td>Yes</td>
 								</tr>
 							)}
+							{properties.zdr && (
+								<tr>
+									<td>Zero data retention</td>
+									<td>Yes</td>
+								</tr>
+							)}
 							{properties.lora && (
 								<tr>
 									<td>LoRA</td>

@@ -1,0 +1,105 @@
+---
+title: Coding agents
+description: Route coding agents such as Claude Code through AI Gateway for observability, caching, rate limiting, and cost tracking.
+pcx_content_type: configuration
+sidebar:
+  order: 5
+products:
+  - ai-gateway
+---
+
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
+
+Coding agents send model requests to a provider on your behalf. By pointing the agent at AI Gateway instead of the provider, you observe and control that traffic without changing how you work.
+
+This page uses [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) as the worked example.
+
+## Why route a coding agent through AI Gateway
+
+Routing a coding agent through AI Gateway gives you:
+
+- **Observability** — view every request, token count, and latency in the dashboard.
+- **Caching** — return [cached responses](/ai-gateway/features/caching/) for repeated prompts.
+- **Rate limiting** — cap request volume with [rate limiting](/ai-gateway/features/rate-limiting/).
+- **Cost tracking** — attribute spend across sessions and models.
+- **Data Loss Prevention** — scan prompts and responses for secrets, credentials, and other sensitive data with [DLP](/ai-gateway/features/dlp/).
+
+## Prerequisites
+
+Before you start, you need:
+
+1. An [authenticated gateway](/ai-gateway/configuration/authentication/) and its gateway token. The gateway token must have `Run` permissions.
+2. Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
+3. An Anthropic API key. To create one, go to [Account Settings](https://platform.claude.com/settings/keys) in the Claude Console. For more information, refer to [Anthropic's API overview](https://docs.anthropic.com/en/api/overview).
+4. Claude Code installed and updated to the latest version.
+
+## Claude Code
+
+Claude Code reads its endpoint and credentials from environment variables. This configuration sends requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/) using your own Anthropic API key, passed directly in the `ANTHROPIC_API_KEY` environment variable. The Anthropic endpoint exposes the same `/v1/messages` API that Claude Code expects.
+
+:::note
+This configuration does not use [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). The Anthropic API key comes from the environment variable you set below, not from a key stored in AI Gateway. Anthropic bills you for model usage, and AI Gateway provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
+:::
+
+<Steps>
+
+1. Set the base URL to your gateway's Anthropic endpoint, pass your Anthropic API key, and send your gateway token in the `cf-aig-authorization` header. The commands below set these as shell environment variables for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) or to Claude Code's [`settings.json`](https://docs.anthropic.com/en/docs/claude-code/settings#settings-files) under the `env` key.
+
+   Replace `<ACCOUNT_ID>`, `<GATEWAY_ID>`, `<ANTHROPIC_API_KEY>`, and `<CF_AIG_TOKEN>` with your values.
+
+   <Tabs syncKey="os">
+   <TabItem label="macOS / Linux">
+
+   ```bash
+   export ANTHROPIC_BASE_URL="https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/anthropic"
+   export ANTHROPIC_API_KEY="<ANTHROPIC_API_KEY>"
+   export ANTHROPIC_CUSTOM_HEADERS="cf-aig-authorization: Bearer <CF_AIG_TOKEN>"
+   ```
+
+   </TabItem>
+   <TabItem label="Windows (PowerShell)">
+
+   ```powershell
+   $env:ANTHROPIC_BASE_URL = "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/anthropic"
+   $env:ANTHROPIC_API_KEY = "<ANTHROPIC_API_KEY>"
+   $env:ANTHROPIC_CUSTOM_HEADERS = "cf-aig-authorization: Bearer <CF_AIG_TOKEN>"
+   ```
+
+   </TabItem>
+   </Tabs>
+
+2. Start Claude Code and send a prompt. Requests now route through AI Gateway.
+
+   ```bash
+   claude
+   ```
+
+</Steps>
+
+## Protect sensitive code with DLP
+
+Coding agents routinely send source code, configuration files, and snippets to model providers. That traffic can include API keys, customer data, or other sensitive material. Because AI Gateway sits between the agent and the provider, you can inspect and control it without changing the agent.
+
+[Data Loss Prevention (DLP)](/ai-gateway/features/dlp/) scans request and response bodies against [detection profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) and either flags or blocks matches. Use it to catch secrets, credentials, or regulated data leaving (or returning to) the agent.
+
+:::note
+Claude Code streams responses by default. When DLP response scanning is enabled, AI Gateway buffers the full provider response before returning it, which increases time-to-first-token. If you need low-latency streaming, set the DLP policy **Check** to **Request** only, or use a separate gateway for latency-sensitive traffic. Refer to [streaming behavior](/ai-gateway/features/dlp/#streaming-behavior).
+:::
+
+## Verify it works
+
+After you configure a tool, confirm that traffic reaches AI Gateway.
+
+<Steps>
+
+1. Send a prompt from the coding agent.
+
+2. In the Cloudflare dashboard, go to the **AI Gateway** page.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+3. Select your gateway, then select **Logs**. Confirm that the request appears with its model, token count, and latency.
+
+</Steps>
+
+For more information on logs, refer to [Logging](/ai-gateway/observability/logging/).

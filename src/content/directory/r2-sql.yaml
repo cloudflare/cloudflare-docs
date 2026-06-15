@@ -10,4 +10,4 @@ entry:
 meta:
   title: R2 SQL docs
   description: Cloudflare's serverless, distributed query engine for data stored in R2 Data Catalog
-  author: '@cloudflare'
+  author: "@cloudflare"

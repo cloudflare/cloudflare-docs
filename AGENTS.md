@@ -244,18 +244,23 @@ New web components in this codebase should use the `cfdocs-` prefix for custom e
 
 Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `r2-local-uploads-diagram`, `animated-workflow-diagram`, `autoconfig-diagram`) are exempt from the `cfdocs-` prefix requirement and do not need to be renamed.
 
-## Agent skills
+## Agent skills, commands, and agents
 
-Repo-specific skills live in `.agents/skills/`. Each skill provides specialized instructions for a particular task. Load a skill when the task matches its description.
+Repo-specific agent config lives in `.agents/`. All subdirectories are committed. Tool-specific paths (`.opencode/commands`, `.opencode/agents`, `CLAUDE.md`) are symlinks into `.agents/`.
 
-| Skill               | When to use                                                        |
-| ------------------- | ------------------------------------------------------------------ |
-| `changelog`         | Creating, editing, or reviewing changelog entries                  |
-| `code-review`       | Reviewing Workers/platform code for type correctness and API usage |
-| `dependabot-review` | Analyzing a Dependabot PR for impact on this repo                  |
-| `docs-review`       | Reviewing documentation PRs for style, structure, and correctness  |
-| `eli5`              | Simplifying technical documentation for broader audiences          |
-| `pr`                | Creating or updating GitHub pull requests                          |
+### Skills
+
+Skills live in `.agents/skills/`. Each skill's `SKILL.md` describes what it does and when to use it. Load a skill when the task matches its description.
+
+### Commands
+
+Slash commands live in `.agents/commands/` (symlinked from `.opencode/commands/`). Each command's frontmatter describes its purpose.
+
+### Agents
+
+Custom agent definitions live in `.agents/agents/` (symlinked from `.opencode/agents/`). Each agent's frontmatter describes its role.
+
+### Reference files
 
 Shared reference files in `.agents/references/`:
 

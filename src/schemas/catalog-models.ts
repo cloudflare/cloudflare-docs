@@ -46,6 +46,13 @@ export const catalogModelsSchema = z.object({
 	max_output_tokens: z.number().nullable(),
 	supports_async: z.boolean(),
 
+	// Zero Data Retention. Optional because older catalog API responses omit
+	// the field entirely — the UI treats `undefined` the same as `false`
+	// (badge stays hidden). `zdr_comment` carries an optional supplementary
+	// note such as plan requirements when the upstream provider needs one.
+	zdr: z.boolean().optional(),
+	zdr_comment: z.string().nullable().optional(),
+
 	// Examples
 	examples: modelExampleSchema.array(),
 	default_example: defaultExampleSchema.nullable().optional(),

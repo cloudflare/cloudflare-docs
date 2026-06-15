@@ -185,7 +185,7 @@ Think has several ways to start or continue a turn. Choose based on who starts t
 
 Use `saveMessages()` when the caller owns the trigger and can wait for the turn to finish. Use [`submitMessages()`](/agents/harnesses/think/programmatic-submissions/) when timeout ambiguity would make retries unsafe.
 
-Use `chat()` for low-level parent-to-child streaming when your code owns forwarding, cancellation, and replay policy. Use [Agent tools](/agents/runtime/execution/agent-tools/) when a parent model or workflow delegates to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in.
+Use `chat()` for low-level parent-to-child streaming when your code owns forwarding, cancellation, and replay policy. Use [Agents as tools](/agents/runtime/execution/agent-tools/) when a parent model or workflow delegates to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in.
 
 Use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) outside Think when the durable unit is an application job around a turn: accepting a webhook once, restoring a serialized channel or thread target, posting a visible reply, or recording app-level recovery policy. Think submissions own conversation admission and turn serialization; managed fibers own external job acceptance, idempotent side effects, and application recovery.
 

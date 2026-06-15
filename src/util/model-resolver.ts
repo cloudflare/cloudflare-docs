@@ -48,6 +48,15 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 		properties.push({ property_id: "async_queue", value: "true" });
 	}
 
+	// Zero Data Retention. Optional on the catalog row — older API responses
+	// omit the field entirely, in which case the badge stays hidden. The
+	// supplementary `zdr_comment` flows through `zdrComment` on the resolved
+	// model rather than the properties array because `Property.value` is
+	// string-only and the badge needs the raw comment for its tooltip.
+	if (model.zdr === true) {
+		properties.push({ property_id: "zdr", value: "true" });
+	}
+
 	// Extract additional properties from metadata
 	const metadata = model.metadata || {};
 	if (metadata.lora) {
@@ -107,6 +116,7 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 		properties,
 		dataSource: "catalog",
 		hosting: "proxied",
+		zdrComment: model.zdr_comment ?? null,
 	};
 }
 
@@ -237,5 +247,6 @@ export function toModelCardData(model: ResolvedModel): ModelCardData {
 		properties: model.properties,
 		dataSource: model.dataSource,
 		hosting: model.hosting,
+		zdrComment: model.zdrComment,
 	};
 }
