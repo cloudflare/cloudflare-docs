@@ -61,7 +61,7 @@ Responses from the Images binding are not automatically cached. Workers lets you
 
 ### `.input(stream)`
 
-Creates an optimization handle for an image. All operations begin with this method. Accepts image bytes from any source, including [Images](/images/storage/upload-images/methods/), [R2](/r2/), a `fetch()` response, or a request body.
+Creates an optimization handle for an image. All operations begin with this method. Accepts image bytes up to 20 MB from any source, including [Images](/images/storage/upload-images/methods/), [R2](/r2/), a `fetch()` response, or a request body.
 
 Returns a handle that you can use to chain `.transform()`, `.draw()`, and `.output()` calls.
 
@@ -118,7 +118,7 @@ Draws an overlay image over another image.
 
 The overlay can be a stream of image bytes or another `.input()` chain. You can pass a child `.transform()` function inside this method to resize or manipulate the overlay before drawing it.
 
-Accepts `opacity`, `repeat`, and a side (`left`, `right`, `top`, `bottom`). For the full list of draw options and examples, refer to [Draw overlays and watermarks](/images/optimization/transformations/draw-overlays/#options).
+Accepts `opacity`, `repeat`, a side (`left`, `right`, `top`, `bottom`), and `composite`. For the full list of draw options and examples, refer to [Draw overlays and watermarks](/images/optimization/draw-overlays/#options).
 
 ### `.output(options)`
 
