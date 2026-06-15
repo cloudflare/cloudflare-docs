@@ -112,8 +112,19 @@ export async function hydrateStyleGuideWorkspace(
 		];
 		diffKeysToLoad = [input.commentsPath, ...(patchKey ? [patchKey] : [])];
 	} else {
+		// Full mode: manifest.json and pr.json are already in memory from steps
+		// 1 and 2 — cache them and exclude them from the fetch list to avoid
+		// redundant R2 GETs.
 		const all = await bucket.list({ prefix: `${input.diffDir}/` });
-		diffKeysToLoad = all.objects.map((o) => o.key);
+		const manifestKey = `${input.diffDir}/manifest.json`;
+		const prKey = `${input.diffDir}/pr.json`;
+		cachedDiffResults = [
+			{ key: manifestKey, text: manifestText },
+			...(prText !== null ? [{ key: prKey, text: prText }] : []),
+		];
+		diffKeysToLoad = all.objects
+			.map((o) => o.key)
+			.filter((k) => k !== manifestKey && k !== prKey);
 	}
 
 	// ── 4. Fetch reference files and skill in parallel with remaining diff ────

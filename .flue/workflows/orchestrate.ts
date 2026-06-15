@@ -163,20 +163,25 @@ export async function run({ payload, env, req }: FlueContext) {
 				runId,
 				action: "dependabot_review_admitted",
 			});
+			return {
+				acted: true,
+				summary: `Dependabot review dispatched for PR #${number}.`,
+			};
 		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
 			console.log({
 				message: `Dependabot review dispatch failed: ${webhookLabel}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
-				error: err instanceof Error ? err.message : String(err),
+				error: errMsg,
 				action: "dependabot_review_dispatch_failed",
 			});
+			return {
+				acted: false,
+				summary: `Dependabot review dispatch failed: ${errMsg}`,
+			};
 		}
-		return {
-			acted: true,
-			summary: `Dependabot review dispatched for PR #${number}.`,
-		};
 	}
 
 	// ── 3. Handle /full-review command ──────────────────────────────────────
@@ -243,21 +248,25 @@ export async function run({ payload, env, req }: FlueContext) {
 				runId,
 				action: "full_review_admitted",
 			});
+			return {
+				acted: true,
+				summary: `Full review triggered by @${senderLogin}.`,
+			};
 		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
 			console.log({
 				message: `Full review dispatch failed: PR #${number}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
-				error: err instanceof Error ? err.message : String(err),
+				error: errMsg,
 				action: "full_review_dispatch_failed",
 			});
+			return {
+				acted: false,
+				summary: `Full review dispatch failed: ${errMsg}`,
+			};
 		}
-
-		return {
-			acted: true,
-			summary: `Full review triggered by @${senderLogin}.`,
-		};
 	}
 
 	// ── 4. Handle /review command ────────────────────────────────────────────
@@ -323,18 +332,19 @@ export async function run({ payload, env, req }: FlueContext) {
 				runId,
 				action: "review_admitted",
 			});
+			return { acted: true, summary: `Review triggered by @${senderLogin}.` };
 		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
 			console.log({
 				message: `Review dispatch failed: PR #${number}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
-				error: err instanceof Error ? err.message : String(err),
+				error: errMsg,
 				action: "review_dispatch_failed",
 			});
+			return { acted: false, summary: `Review dispatch failed: ${errMsg}` };
 		}
-
-		return { acted: true, summary: `Review triggered by @${senderLogin}.` };
 	}
 
 	const baseUrl = new URL(req.url).origin;
