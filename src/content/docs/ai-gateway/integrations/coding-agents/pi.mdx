@@ -21,7 +21,7 @@ Before you start, you need:
 - Pi installed and updated to the latest version.
 
 :::note
-The token you give Pi is your gateway token, not a model provider key. To pay for model usage, enable [unified billing](/ai-gateway/features/unified-billing/) or store provider keys in AI Gateway with [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). Either way, AI Gateway handles the provider authentication for you.
+The token you give Pi is your gateway token, not a model provider key. To pay for model usage, enable [Unified Billing](/ai-gateway/features/unified-billing/) or store provider keys in AI Gateway with [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). Either way, AI Gateway handles the provider authentication for you.
 :::
 
 <Steps>
@@ -56,7 +56,7 @@ The token you give Pi is your gateway token, not a model provider key. To pay fo
 2. Start a session against a model. Requests now route through AI Gateway.
 
    ```bash
-   pi --provider cloudflare-ai-gateway --model "claude-sonnet-4.6"
+   pi --provider cloudflare-ai-gateway --model "claude-sonnet-4-6"
    ```
 
 </Steps>
