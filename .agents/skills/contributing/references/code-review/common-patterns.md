@@ -131,4 +131,4 @@ These constraints are architectural, not API-version-specific:
 - **`blockConcurrencyWhile` is for initialization only.** It blocks all concurrent requests. Flag code that calls it on every request or across external I/O.
 - **One alarm per DO instance.** Setting a new alarm replaces the previous one. Alarm handlers must be idempotent.
 - **Shard by coordination atom.** A single global DO is a bottleneck. Each DO should represent one entity (room, user, session, document).
-- **DO migrations required.** New DO classes need a migration entry in the wrangler config. See `references/wrangler-config.md`.
+- **DO migrations required.** New DO classes need a migration entry in the wrangler config. See `wrangler-config.md`.

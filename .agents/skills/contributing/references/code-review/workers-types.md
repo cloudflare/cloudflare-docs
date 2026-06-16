@@ -16,7 +16,7 @@ Search this file for the specific type, class, or interface under review. Do not
 
 - Every binding must have a specific type. Flag `any`, `unknown`, `object`, or `Record<string, unknown>` on bindings.
 - Binding types that accept generic parameters (like Durable Object namespaces, Queues, Service bindings for RPC) must include them. Read the type definition to confirm which types are generic.
-- Binding names must match the wrangler config exactly (see `references/wrangler-config.md`).
+- Binding names must match the wrangler config exactly (see `wrangler-config.md`).
 
 ### Handler and class signatures
 

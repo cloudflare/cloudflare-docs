@@ -1,7 +1,4 @@
----
-name: docs-review
-description: Reviews documentation PRs and provides GitHub PR suggestions. Load when asked to review, suggest changes, or provide feedback on docs content. Covers MDX, frontmatter, style guide, components, and content accuracy.
----
+# Reviewing Docs
 
 Review documentation changes for correctness, style, and structure.
 
@@ -161,7 +158,7 @@ See `.agents/references/style-guide.md` for the full rules. Quick reference:
 | Internal links           | Root-relative paths, trailing slash, no file extensions, no full `developers.cloudflare.com` URLs    |
 | Frontmatter              | `title` and `description` required; `pcx_content_type` must be a valid value                         |
 | Writing style            | See `.agents/references/style-guide.md` — covers voice, contractions, terminology, headings, etc.    |
-| Code correctness         | For type checking, API usage, and binding patterns, load the `code-review` skill                     |
+| Code correctness         | For type checking, API usage, and binding patterns, refer to `code-review/index.md`                  |
 | Accuracy                 | Claims must be substantiated — link to sources of truth, do not re-explain what other pages cover    |
 
 ### 3. Assess What to Flag

@@ -1,9 +1,6 @@
----
-name: pr
-description: Creates and updates GitHub pull requests for cloudflare-docs changes. Load when asked to open, create, submit, update, edit, or write a title or description for a PR. Covers title conventions, PR body structure, and the documentation checklist template.
----
+# Pull Requests
 
-Use this skill when creating a GitHub pull request for changes to this repository, or when editing an existing PR's title or description.
+Use this reference when creating a GitHub pull request for changes to this repository, or when editing an existing PR's title or description.
 
 ## `gh` CLI
 
@@ -51,6 +48,8 @@ git diff production...HEAD
 ### Branch: `production`
 
 This repo uses `production` as the default branch, not `main`. Always use `--base production` when creating PRs. Contributors from other repos often expect `main` — this is intentional.
+
+Create feature branches off an up-to-date `production` commit (`git fetch origin` then branch from `origin/production`) unless the user asked for a different base.
 
 ### Format
 
@@ -127,7 +126,7 @@ Write a short explanation covering:
 - Why the change is needed or what prompted it
 - Links to any relevant public context: GitHub issues, related PRs, or public docs pages.
 
-This is a public repository. Do not include URLs or titles of internal resources (tickets, wiki pages, internal docs) in PR titles, descriptions, or comments. Reference internal tickets by ID only (for example, `PCX-20808`).
+This is a public, open-source repository. Do not include private Cloudflare information, secrets, credentials, environment variable values, or URLs and titles of internal resources (tickets, wiki pages, internal docs) in PR titles, descriptions, or comments. Reference internal tickets by ID only (for example, `PCX-20808`). If there is any doubt about whether something is safe to publish, stop and ask the user.
 
 Keep it factual. Do not repeat what the checklist items say. For small, focused PRs 1-2 sentences is enough. For larger PRs touching many files or multiple areas, a longer description is appropriate — use tables, lists, or code blocks over paragraphs of prose where it makes the summary easier to scan.
 
