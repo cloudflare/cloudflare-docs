@@ -37,9 +37,9 @@ package.json @cloudflare/content-engineering
 /src/content/docs/agent-memory/ @lambrospetrou @rts-rob @pmesgari @cloudflare/product-owners
 
 # AI Crawl Control
-/src/content/docs/ai-crawl-control/ @cloudflare/product-owners @CameronWhiteside
-/src/content/changelog/ai-crawl-control/ @cloudflare/product-owners @CameronWhiteside
-/src/content/partials/ai-crawl-control/ @cloudflare/product-owners @CameronWhiteside
+/src/content/docs/ai-crawl-control/ @cloudflare/product-owners @CameronWhiteside @wafonso
+/src/content/changelog/ai-crawl-control/ @cloudflare/product-owners @CameronWhiteside @wafonso
+/src/content/partials/ai-crawl-control/ @cloudflare/product-owners @CameronWhiteside @wafonso
 
 # Analytics & Logs
 
