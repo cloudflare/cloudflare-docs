@@ -46,11 +46,12 @@
 		"@apidevtools/swagger-parser": "12.1.0",
 		"@astrojs/check": "0.9.9",
 		"@astrojs/markdown-remark": "7.2.0",
-		"@astrojs/mdx": "6.0.2",
+		"@astrojs/markdown-satteri": "0.3.0",
+		"@astrojs/mdx": "6.0.3",
 		"@astrojs/react": "5.0.7",
 		"@astrojs/rss": "4.0.18",
 		"@astrojs/sitemap": "3.7.3",
-		"@astrojs/starlight": "0.39.3",
+		"@astrojs/starlight": "0.40.0",
 		"@astrojs/starlight-docsearch": "0.7.0",
 		"@astrojs/starlight-tailwind": "5.0.0",
 		"@base-ui/react": "1.5.0",
@@ -82,7 +83,7 @@
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.61.0",
 		"algoliasearch": "5.53.0",
-		"astro": "6.4.4",
+		"astro": "6.4.7",
 		"astro-breadcrumbs": "3.4.0",
 		"astro-expressive-code": "0.43.0",
 		"astro-icon": "1.1.5",
@@ -144,6 +145,7 @@
 		"remark": "15.0.1",
 		"remark-gfm": "4.0.1",
 		"remark-stringify": "11.0.0",
+		"satteri": "0.8.1",
 		"sharp": "0.34.5",
 		"solarflare-theme": "0.0.6",
 		"space-separated-tokens": "2.0.2",
@@ -177,6 +179,13 @@
 			"name": "node",
 			"version": ">=24.0.0",
 			"onFail": "error"
+		}
+	},
+	"pnpm": {
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"@astrojs/starlight>@astrojs/markdown-satteri": "0.3.0"
+			}
 		}
 	}
 }

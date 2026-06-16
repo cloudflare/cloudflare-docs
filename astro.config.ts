@@ -13,14 +13,8 @@ import { readdir, readFile } from "fs/promises";
 import { join } from "path";
 import { fileURLToPath } from "url";
 
-import remarkValidateImages from "./src/plugins/remark/validate-images";
-
-import rehypeTitleFigure from "rehype-title-figure";
-import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
-import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
-import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
-import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
-import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
+import { satteri } from "@astrojs/markdown-satteri";
+import { mdastPlugins, hastPlugins } from "./src/plugins/satteri/index.ts";
 import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
 import skills from "astro-skills";
@@ -102,18 +96,11 @@ export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	cacheDir: ".astro-cache",
 	markdown: {
-		gfm: true,
-		smartypants: false,
-		remarkPlugins: [remarkValidateImages],
-		rehypePlugins: [
-			rehypeMermaid,
-			rehypeExternalLinks,
-			rehypeHeadingSlugs,
-			rehypeAutolinkHeadings,
-			// @ts-expect-error plugins types are outdated but functional
-			rehypeTitleFigure,
-			rehypeShiftHeadings,
-		],
+		processor: satteri({
+			mdastPlugins,
+			hastPlugins,
+			features: { gfm: true, smartPunctuation: false },
+		}),
 	},
 	image: {
 		service: {

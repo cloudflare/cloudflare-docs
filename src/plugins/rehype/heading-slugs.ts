@@ -29,7 +29,6 @@ export default function () {
 
 						const text = element.children.at(-2) as MdxTextExpression;
 						text.value = text.value.trimEnd();
-						element.children.with(-2, text);
 					}
 				} else {
 					if (!element.properties.id) {
