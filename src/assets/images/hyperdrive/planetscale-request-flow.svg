@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 240" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .region { font-size: 13px; font-weight: 600; fill: #555; }
+    .machine-label { font-size: 13px; font-weight: 600; fill: #555; }
+    .box { fill: #f8f9fa; stroke: #d0d5dd; stroke-width: 1.5; rx: 8; }
+    .inner-box { fill: #fff; stroke: #d0d5dd; stroke-width: 1.5; rx: 6; }
+    .box-hl { fill: #fff3e6; stroke: #f6821f; stroke-width: 1.5; rx: 8; }
+    .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+    .sub-label { font-size: 12px; font-weight: 600; fill: #555; }
+    .arrow { stroke: #d0d5dd; stroke-width: 1.5; stroke-dasharray: 6 6; fill: none; marker-end: url(#arrowhead); }
+    .arrow-small { stroke: #d0d5dd; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+    .workers-icon { fill: #f6821f; }
+    .database-icon { stroke: #f6821f; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d0d5dd" />
+    </marker>
+  </defs>
+
+  <rect width="1180" height="240" fill="#fff" />
+
+  <text class="region" x="90" y="72" text-anchor="middle">London</text>
+  <text class="machine-label" x="340" y="48" text-anchor="middle">same machine by the user</text>
+  <text class="machine-label" x="835" y="48" text-anchor="middle">same machine by the database</text>
+  <text class="region" x="1090" y="72" text-anchor="middle">us-east-1</text>
+
+  <rect class="box" x="20" y="85" width="140" height="90" />
+  <text class="label" x="90" y="135" text-anchor="middle">User</text>
+
+  <line class="arrow" x1="170" y1="130" x2="200" y2="130" />
+
+  <rect class="box-hl" x="210" y="70" width="260" height="120" />
+
+  <rect class="inner-box" x="225" y="105" width="95" height="50" />
+  <text class="label" x="272.5" y="123" text-anchor="middle">Worker</text>
+  <g class="workers-icon" transform="translate(262 127) scale(0.45)">
+    <path d="m18.63 37.418-9.645-12.9 9.592-12.533-1.852-2.527L5.917 23.595l-.015 1.808 10.86 14.542z" />
+    <path d="M21.997 6.503h-3.712l13.387 18.3-13.072 17.7h3.735L35.4 24.81z" />
+    <path d="M29.175 6.503h-3.758l13.598 18.082-13.598 17.918h3.765l12.908-17.01v-1.808z" />
+  </g>
+  <line class="arrow-small" x1="323" y1="124" x2="352" y2="124" />
+  <line class="arrow-small" x1="357" y1="136" x2="328" y2="136" />
+
+  <rect class="inner-box" x="360" y="105" width="95" height="50" />
+  <text class="label" x="407.5" y="135" text-anchor="middle">Cache</text>
+
+  <line class="arrow" x1="480" y1="130" x2="680" y2="130" />
+
+  <rect class="box-hl" x="690" y="70" width="290" height="120" />
+  <rect class="inner-box" x="720" y="105" width="95" height="50" />
+  <text class="label" x="767.5" y="135" text-anchor="middle">Cache</text>
+
+  <rect class="inner-box" x="855" y="105" width="95" height="50" />
+  <text class="label" x="902.5" y="135" text-anchor="middle">Pool</text>
+
+  <line class="arrow" x1="988" y1="130" x2="1012" y2="130" />
+
+  <rect class="box" x="1020" y="85" width="140" height="90" />
+  <text class="label" x="1090" y="112" text-anchor="middle">PlanetScale</text>
+  <text class="sub-label" x="1090" y="127" text-anchor="middle">database</text>
+  <path class="database-icon" d="M1077 145c0 4 26 4 26 0m-26 0c0-4 26-4 26 0m-26 0v20c0 4 26 4 26 0v-20m-26 10c0 4 26 4 26 0" />
+</svg>

@@ -1,0 +1,98 @@
+---
+title: PlanetScale Postgres & MySQL
+description: Create PlanetScale databases with Workers.
+pcx_content_type: overview
+sidebar:
+  order: 2.5
+products:
+  - hyperdrive
+  - workers
+---
+
+import { CardGrid, DashButton, Description, LinkTitleCard } from "~/components";
+
+<Description>
+
+Create PlanetScale Postgres or MySQL databases with globally distributed Workers applications.
+
+</Description>
+
+Cloudflare partners with [PlanetScale](https://planetscale.com/) to provide PlanetScale-hosted Postgres and MySQL (Vitess) databases to Workers. [Hyperdrive](/hyperdrive/) connects [Workers](/workers/) to PlanetScale databases with built-in database connection pooling and query caching for faster performance.
+
+Get the best of both products, build for Workers global distribution and optimize for regional data access.
+
+<DashButton url="/?to=/:account/workers/hyperdrive" />
+
+## Workers + PlanetScale
+
+With Workers, build your application to deploy anywhere across Cloudflare’s global network spanning 330+ cities. You can deploy with a single step, and users in new locations can reach your application without deploying regional infrastructure.
+
+Workers compute runs close to your users for low latency. PlanetScale Postgres provides regional databases for your application's control plane or any centralized data that doesn't fit Cloudflare's edge distribution model. Use it for records such as customers, billing, account settings, or other relational data.
+
+Hyperdrive provides the connection glue between Workers and PlanetScale. It pools database connections and uses Cloudflare's [Cache](/cache/) for eligible read queries to make your application fast even when your database is centralized.
+
+## How you benefit?
+
+![Request flow from a user request to Workers, Hyperdrive caches, connection pools, and PlanetScale.](~/assets/images/hyperdrive/planetscale-request-flow.svg)
+
+1. **Run near the user.** When a user sends a request, Cloudflare routes it to a nearby location. Your Worker runs in that location, so request handling starts close to the user.
+
+2. **Check for cached reads locally.** On the same Cloudflare server handling the Worker request, Hyperdrive performs your database driver's connection protocol in single digit milliseconds (4ms p90). If the Worker sends a cacheable read query and the result is cached there, Hyperdrive returns it without leaving that location.
+
+3. **Forward when needed with caching in-between.** If no local cached result exists, or if the query cannot be cached, Hyperdrive sends the query across Cloudflare's network to a location close to your PlanetScale database. Hyperdrive checks another cache in that location before it reaches the database; this cache is populated by multiple requests to your database.
+
+4. **Query PlanetScale only when necessary.** If neither cache has the result, Hyperdrive sends the query to PlanetScale using an already available pool of database connections. Writes and other uncacheable queries go to PlanetScale so the database remains the source of truth. Multiple layers of caching reduce overall load on your database.
+
+## PlanetScale developer experience
+
+### Postgres or MySQL
+
+Choose PlanetScale Postgres or MySQL, and keep using familiar database drivers, object-relational mapping (ORM) libraries, and SQL tooling.
+
+### Performance and reliability
+
+Run production databases on PlanetScale infrastructure with commitment to performance and reliability that power trusted [customer workloads](https://planetscale.com/).
+
+### Modern development workflow
+
+Use [development branches](https://planetscale.com/docs/postgres/branching) to test database changes, [query insights](https://planetscale.com/docs/postgres/monitoring/query-insights) to understand query performance, and the [Model Context Protocol (MCP) server](https://planetscale.com/docs/connect/ai-tooling) to give agents access to database insights data, all without needing a database administrator (DBA).
+
+### Cloudflare billing
+
+Create PlanetScale databases from Cloudflare and bill PlanetScale usage at [PlanetScale's pricing](https://planetscale.com/pricing) through your Cloudflare account.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Connect Postgres"
+	href="/hyperdrive/examples/connect-to-postgres/postgres-database-providers/planetscale-postgres/"
+	icon="document"
+>
+	Connect Hyperdrive to a PlanetScale Postgres database.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Connect MySQL"
+	href="/hyperdrive/examples/connect-to-mysql/mysql-database-providers/planetscale/"
+	icon="document"
+>
+	Connect Hyperdrive to a PlanetScale MySQL database.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Get started"
+	href="/hyperdrive/get-started/"
+	icon="seti:shell"
+>
+	Create a Hyperdrive configuration and query a database from Workers.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="How Hyperdrive works"
+	href="/hyperdrive/concepts/how-hyperdrive-works/"
+	icon="document"
+>
+	Learn how Hyperdrive pools connections and caches queries.
+</LinkTitleCard>
+
+</CardGrid>
