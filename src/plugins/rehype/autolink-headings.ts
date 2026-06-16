@@ -14,7 +14,7 @@ export const rehypeAutolinkHeadingsOptions = {
 	content: () => [AnchorLinkIcon],
 } as const satisfies Options;
 
-const AnchorLinkIcon = h(
+export const AnchorLinkIcon = h(
 	"span",
 	{
 		ariaHidden: "true",
