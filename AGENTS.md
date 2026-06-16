@@ -246,15 +246,11 @@ Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `
 
 ## Agent skills, commands, and agents
 
-Repo-specific agent config lives in `.agents/`. All subdirectories are committed. Tool-specific paths (`.opencode/commands`, `.opencode/agents`, `CLAUDE.md`) are symlinks into `.agents/`.
+Repo-specific agent config lives in `.agents/`. All subdirectories are committed. Tool-specific paths (`.opencode/agents`, `CLAUDE.md`) are symlinks into `.agents/`.
 
 ### Skills
 
 Skills live in `.agents/skills/`. Each skill's `SKILL.md` describes what it does and when to use it. Load a skill when the task matches its description.
-
-### Commands
-
-Slash commands live in `.agents/commands/` (symlinked from `.opencode/commands/`). Each command's frontmatter describes its purpose.
 
 ### Agents
 
