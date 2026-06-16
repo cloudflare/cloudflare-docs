@@ -108,12 +108,11 @@ import {
 } from "@cloudflare/codemode";
 
 export class GithubConnector extends McpConnector<Env> {
-	constructor(
-		ctx: ExecutionContext,
-		env: Env,
-		private conn: McpConnectionLike,
-	) {
+	private conn: McpConnectionLike;
+
+	constructor(ctx: ExecutionContext, env: Env, conn: McpConnectionLike) {
 		super(ctx, env);
+		this.conn = conn;
 	}
 
 	name() {
