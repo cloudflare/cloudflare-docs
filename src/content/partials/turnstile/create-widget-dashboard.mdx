@@ -1,0 +1,19 @@
+---
+{}
+---
+
+import { Steps, DashButton } from "~/components";
+
+<Steps>
+    1. In the Cloudflare dashboard, go to the **Turnstile** page.
+
+        <DashButton url="/?to=/:account/turnstile" />
+    2. Select **Add widget**.
+    3. Fill out the required information:
+        - **Widget name**: A descriptive name for your widget.
+        - **Hostname management**: Domains where the widget will be used.
+        - **Widget mode**: Choose from Managed, Non-Interactive, or Invisible.
+    4. (Optional) Configure **Pre-clearance support** for single-page applications.
+    5. Select **Create** to save your widget.
+    6. Copy your sitekey and secret key, and store the secret key securely.
+</Steps>

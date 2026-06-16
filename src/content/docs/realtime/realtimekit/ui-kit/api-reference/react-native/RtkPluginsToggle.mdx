@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: RtkPluginsToggle
+description: API reference for RtkPluginsToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to open the plugins sidebar panel. Hides if plugin permissions are not available.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `states`   | `States`                       | ❌       | -                 | UI state object                  |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant                   |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPluginsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPluginsToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPluginsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPluginsToggle meeting={meeting} size="md" variant="button" />;
+}
+```

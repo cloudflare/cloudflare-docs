@@ -16,8 +16,8 @@ npm i @cloudflare/realtimekit-react @cloudflare/realtimekit-react-ui
 _Optional:_ You can also build on top of our ready-made template:
 
 ```bash
-	git clone https://github.com/cloudflare/realtimekit-web-examples.git cd
-	realtimekit-web-examples/react-examples/examples/default-meeting-ui
+git clone https://github.com/cloudflare/realtimekit-web-examples.git
+cd realtimekit-web-examples/react-examples/examples/default-meeting-ui
 ```
 
 </RTKCodeSnippet>
@@ -55,12 +55,10 @@ cd realtimekit-web-examples/angular-examples/examples/default-meeting-ui
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-android">
-	Add the following dependencies to your `build.gradle` file:
+	Add the following dependency to your `build.gradle` file:
 
 ```java
 dependencies {
-  implementation 'com.cloudflare.realtimekit:core:1.5.5'
-  // Optional: Add UI components for Android
   implementation 'com.cloudflare.realtimekit:ui-android:0.3.0'
 }
 ```
@@ -68,15 +66,11 @@ dependencies {
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-ios">
-	Install the RealtimeKit SDK using Swift Package Manager:
+	Install the RealtimeKit UI Kit using Swift Package Manager:
 
 1. In Xcode, go to **File > Add Package Dependencies**.
-2. Enter the package URL: `https://github.com/dyte-in/RealtimeKitCoreiOS.git`.
+2. Enter the package URL: `https://github.com/dyte-in/RealtimeKitUI`.
 3. Select the version and add the package to your project.
-
-:::note[Optional]
-You can also add the RealtimeKit UI components by adding the package URL: `https://github.com/dyte-in/RealtimeKitUI`
-:::
 
 Add the following entries to the `Info.plist` file. This gives your app permissions to access the camera and microphone, access photos, and install the required fonts and icons.
 
@@ -111,26 +105,17 @@ Source: [Apple Developer Documentation: Declaring Your App's Supported Backgroun
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-flutter">
-	Install the RealtimeKit Core Flutter SDK by adding the dependency to your `pubspec.yaml` file:
-
-```bash
-flutter pub add realtimekit_core
-```
-
-Then import the package into your project:
-
-```dart
-import 'package:realtimekit_core/realtimekit_core.dart';
-```
-
-:::note[Optional]
-You can also add the RealtimeKit UI components:
+	Install the RealtimeKit UI Kit by adding the dependency to your `pubspec.yaml` file:
 
 ```bash
 flutter pub add realtimekit_ui
 ```
 
-:::
+Then import the package into your project:
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+```
 
   <Tabs syncKey="flutter-platform">
   <TabItem label="Android">
@@ -201,16 +186,10 @@ Add the following entries to the `Info.plist` file. This gives your app permissi
 	<Tabs syncKey="rn-package-manager">
 	<TabItem label="React Native">
 
-Install the core dependencies:
+Install the dependencies:
 
 ```bash
-npm install @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc
-```
-
-**Optional:** For UI components, install additional dependencies:
-
-```bash
-npm install @cloudflare/realtimekit-react-native-ui @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg
+npm install @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc @cloudflare/realtimekit-react-native-ui @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg
 ```
 
 Install `react-native-safe-area-context` based on your React Native version:
@@ -220,16 +199,10 @@ Install `react-native-safe-area-context` based on your React Native version:
 
 Refer to the [react-native-svg installation guide](https://github.com/software-mansion/react-native-svg) for setup.
 
-**Optional:** For interactive livestream functionality:
-
-```bash
-npm install amazon-ivs-react-native-player
-```
-
   </TabItem>
-  <TabItem label="Expo">
+	<TabItem label="Expo">
 
-Install the core and UI dependencies:
+Install the dependencies:
 
 ```bash
 npx expo install @cloudflare/realtimekit-react-native-ui @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg

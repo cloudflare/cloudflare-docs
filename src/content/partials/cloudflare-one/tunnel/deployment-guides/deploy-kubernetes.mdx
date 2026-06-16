@@ -27,7 +27,7 @@ As shown in the diagram, we recommend setting up `cloudflared` as an adjacent [d
 We do not recommend using `cloudflared` in autoscaling setups because downscaling (removing replicas) will break existing user connections to that replica. Additionally, `cloudflared` does not load balance across replicas; replicas are strictly for high availability. To load balance traffic to your nodes, you can use [Cloudflare Load Balancer](/load-balancing/private-network/) or a third-party load balancer.
 :::
 
-Once the cluster is connected to Cloudflare, you can configure Cloudflare Tunnel routes to control how `cloudflared` will proxy traffic to services within the cluster. For example, you may wish to publish certain Kubernetes applications to the Internet and restrict other applications to internal WARP client users.
+Once the cluster is connected to Cloudflare, you can configure Cloudflare Tunnel routes to control how `cloudflared` will proxy traffic to services within the cluster. For example, you may wish to publish certain Kubernetes applications to the Internet and restrict other applications to internal Cloudflare One Client users.
 
 ## Prerequisites
 
@@ -158,12 +158,12 @@ To create a Cloudflare Tunnel:
 	{props.product === "cloudflare-one" ? (
 		<>
 			<li>
-				Open a new browser tab and log in to{" "}
-				<a href="https://one.dash.cloudflare.com">Cloudflare One</a>.
+				Open a new browser tab and log in to the{" "}
+				<a href="https://dash.cloudflare.com/">Cloudflare dashboard</a>.
 			</li>
 			<li>
-				Go to <strong>Networks</strong> &gt; <strong>Connectors</strong> &gt;{" "}
-				<strong>Cloudflare Tunnels</strong>.
+				Go to <strong>Zero Trust</strong> &gt; <strong>Networks</strong> &gt;{" "}
+				<strong>Connectors</strong> &gt; <strong>Cloudflare Tunnels</strong>.
 			</li>
 			<li>
 				Select <strong>Create a tunnel</strong>.

@@ -1,6 +1,9 @@
 ---
 title: Available settings
 pcx_content_type: reference
+description: Available settings for Cache Rules.
+products:
+  - cache
 sidebar:
   order: 6
 head:
@@ -56,10 +59,17 @@ The operators available for Cache Rule expressions are:
 - does not end with
 - is in
 - is not in
+- is in list
+- is not in list
 
 :::note
 
 Not all operators are available for every selected field.
+:::
+
+:::note
+
+The **is in list** and **is not in list** operators are available for the Hostname field on Enterprise plans. They allow you to match requests against [custom lists](/waf/tools/lists/custom-lists/) — for example, a hostname list containing all the domains you want to apply a particular caching configuration to. Refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/) for details on using lists in rule expressions.
 :::
 
 ## Cache eligibility
@@ -178,9 +188,8 @@ Define the request components used to define a [custom Cache Key](/cache/how-to/
 
 Enterprise customers have these additional options for custom Cache Keys:
 
-- In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **No query parameters except** and enter the parameters, or **Ignore query string** (also available for pay-as-you-go customers).
+- In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **No query parameters except** and enter the parameters, or **Ignore query string** (also available for Pay-as-you-go customers).
 - In the **Headers** section, you can specify header names along with their values. For custom headers, values are optional; however, for the following restricted headers, you must include one to three specific values:
-
   - `accept`
   - `accept-charset`
   - `accept-encoding`

@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Headers
+description: Learn about default and custom headers for Workers static assets, including Cache-Control, ETag, and Content-Type behavior.
 sidebar:
   order: 4
+products:
+  - workers
 ---
 
 import { Render } from "~/components";
@@ -13,7 +16,7 @@ When serving static assets, Workers will attach some headers to the response by 
 
 - **`Content-Type`**
 
-  A `Content-Type` header is attached to the response if one is provided during [the asset upload process](/workers/static-assets/direct-upload/). [Wrangler](/workers/wrangler/commands/#deploy) automatically determines the MIME type of the file, based on its extension.
+  A `Content-Type` header is attached to the response if one is provided during [the asset upload process](/workers/static-assets/direct-upload/). [Wrangler](/workers/wrangler/commands/general/#deploy) automatically determines the MIME type of the file, based on its extension.
 
 - **`Cache-Control: public, max-age=0, must-revalidate`**
 
@@ -35,4 +38,4 @@ Cloudflare reserves the right to attach new headers to static asset responses at
 	product="workers"
 />
 
-[^1]: Due to a technical limitation that we hope to address in the future, the `CF-Cache-Status` header is not always entirely accurate. It is possible for false-positives and false-negatives to occur. This should be rare. In the meantime, this header should be considered as returning a "probablistic" result.
+[^1]: Due to a technical limitation that we hope to address in the future, the `CF-Cache-Status` header is not always entirely accurate. It is possible for false-positives and false-negatives to occur. This should be rare. In the meantime, this header should be considered as returning a "probabilistic" result.

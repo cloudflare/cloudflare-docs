@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Proxy traffic through Cloudflare on secondary zones.
+products:
+  - dns
 title: Proxy traffic
 sidebar:
   order: 2
@@ -61,6 +64,10 @@ Before you set up Secondary DNS override, make sure that you have:
    - Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
 
 </TabItem> </Tabs>
+
+:::note[Zone transfers interaction]
+Zone transfers from the primary (including content or TTL changes) do not change the proxy status of records you set to proxied. The override persists until the record is deleted on the primary.
+:::
 
 ## Proxied A and AAAA records
 

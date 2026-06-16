@@ -1,0 +1,86 @@
+---
+pcx_content_type: concept
+title: Pricing
+description: R2 Data Catalog pricing for catalog operations, compaction, and free tier details.
+sidebar:
+  order: 1
+products:
+  - r2
+---
+
+R2 Data Catalog charges based on two dimensions in addition to standard [R2 storage and operations](/r2/pricing/):
+
+1. **Catalog operations**: Metadata operations such as creating tables, reading table metadata, and updating table properties.
+2. **Compaction data processed**: The volume of data processed and objects compacted when [automatic table compaction](/r2/data-catalog/table-maintenance/) is turned on.
+
+All included usage is on a monthly basis.
+
+## R2 Data Catalog pricing
+
+|                                       | Free                          | Paid                                  |
+| ------------------------------------- | ----------------------------- | ------------------------------------- |
+| **Catalog operations**                |                               |                                       |
+| Included                              | 1 million operations / month  | 1 million operations / month          |
+| Additional                            | N/A                           | $9.00 / million operations            |
+| **Data processed (Compaction)** [^1]    |                               |                                       |
+| Included                              | 10 GB / month                 | 10 GB / month                         |
+| Additional (data processed)           | N/A                           | $0.005 / GB processed                 |
+| **Objects processed (Compaction)** [^1] |                               |                                       |
+| Included                              | 1 million objects / month     | 1 million objects / month             |
+| Additional                            | N/A                           | $2.00 / million objects               |
+
+### Catalog operations
+
+Catalog operations are metadata requests made to the Iceberg REST catalog, such as creating a table, retrieving table metadata, updating table properties, and listing tables in a namespace. These operations do not scan or move data.
+
+### Compaction
+
+When you turn on [automatic compaction](/r2/data-catalog/table-maintenance/), R2 Data Catalog periodically rewrites small data files into larger, optimized files. This improves query performance and reduces the number of files in your table. Compaction is billed on two sub-dimensions:
+
+- **Data processed**: The total bytes read and rewritten during compaction.
+- **Objects processed**: The number of data files compacted.
+
+Compaction charges only apply when compaction is turned on for a table. If you have not turned on compaction, you will not incur any compaction charges.
+
+:::note
+Current compaction pricing is based on binpacking, the simplest form of compaction. More compute-intensive compaction algorithms (such as sort or z-order) may be priced differently in the future.
+:::
+
+### Snapshot Expiration
+
+When you turn on [automatic snapshot expiration](/r2/data-catalog/table-maintenance/#why-do-i-need-snapshot-expiration), R2 Data Catalog automatically deletes old snapshots and their associated data files after a specified retention period. Snapshot expiration is free of charge and does not incur any additional costs outside of the standard R2 storage and data catalog operations charges.
+
+## Billing examples
+
+### Example 1: Low-volume analytics table
+
+A user maintains a single Iceberg table with 50 GB of data. They make 500,000 catalog operations per month and have compaction turned on, which processes 20 GB across 200,000 files.
+
+| Dimension                   | Usage              | Included          | Billable           | Cost       |
+| --------------------------- | ------------------ | ----------------- | ------------------ | ---------- |
+| Catalog operations          | 500,000            | 1,000,000         | 0                  | $0.00      |
+| Compaction (data processed) | 20 GB              | 10 GB             | 10 GB              | $0.05      |
+| Compaction (objects)        | 200,000            | 1,000,000         | 0                  | $0.00      |
+| **Total (Data Catalog)**    |                    |                   |                    | **$0.05**  |
+
+Standard R2 storage charges ($0.015 / GB-month) apply separately for the 50 GB of data stored.
+
+### Example 2: Streaming ingest at 20 MB/s
+
+A user streams data into an Iceberg table at 20 MB/s using [Pipelines](/pipelines/). Over a month (~30 days) this produces approximately 50,625 GB (~49 TB) of data, 347,000 catalog operations, and compaction processes roughly 50,625 GB across 43,200 files.
+
+| Dimension                   | Usage              | Included          | Billable           | Cost           |
+| --------------------------- | ------------------ | ----------------- | ------------------ | -------------- |
+| R2 storage                  | 50,625 GB-month    | 10 GB-month       | 50,615 GB-month    | $759.23        |
+| Catalog operations          | 347,000            | 1,000,000         | 0                  | $0.00          |
+| Compaction (data processed) | 50,625 GB          | 10 GB             | 50,615 GB          | $253.08        |
+| Compaction (objects)        | 43,200             | 1,000,000         | 0                  | $0.00          |
+| **Total**                   |                    |                   |                    | **$1,012.31**  |
+
+For large-scale use cases, storage costs are typically the largest component of the bill.
+
+## Cloudflare billing policy
+
+To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/billing/understand/billing-policy/).
+
+[^1]: Only applies when compaction is enabled for a table.

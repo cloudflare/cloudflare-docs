@@ -1,5 +1,7 @@
 ---
 pcx_content_type: concept
+products:
+  - network-interconnect
 title: Operational guidance
 description: Maintenance windows and troubleshooting guidance for CNI
 sidebar:
@@ -19,6 +21,8 @@ Regular network maintenance may impact Cloudflare Network Interconnect (CNI) con
 
 ### Notice periods
 
+For Dataplane v2 connectivity in multi-homed PoPs only:
+
 - **Routine maintenance**: Minimum two business days notice.
 - **Emergency maintenance**: Best-effort notice, which may be less than two business days.
 
@@ -26,7 +30,7 @@ To receive advance alerts, configure [CNI maintenance notifications](/network-in
 
 ### Scheduling patterns
 
-- Maintenance on redundant devices (for example, edge router one and edge router two) may occur on consecutive days with a minimum 16-hour gap between windows.
+- Maintenance on redundant devices at the same location may occur on consecutive days with a minimum 16-hour gap between windows.
 - Cloudflare does not coordinate maintenance timing between different PoP locations.
 - Routine maintenance is generally not rescheduled to accommodate customer schedule preferences.
 

@@ -8,7 +8,7 @@ releaseNotes: |-
   **Known issues**
   - The organization name is case sensitive, which could cause a device to lose registration.
 
-  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp
+  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client
 version: 2022.2.116.1
 packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.2.116.1
 packageSize: 88367104

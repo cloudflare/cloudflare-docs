@@ -1,8 +1,11 @@
 ---
 title: SQLite-backed Durable Object Storage
+description: API reference for SQLite-backed Durable Object storage, including the SQL API and key-value methods.
 pcx_content_type: concept
 sidebar:
   order: 6
+products:
+  - durable-objects
 ---
 
 import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample, Details, Tabs, TabItem } from "~/components";
@@ -130,7 +133,7 @@ class MyDurableObject(DurableObject):
 </Tabs>
 
 - SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and will return an error if called on Durable Object classes with a KV-storage backend.
-- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#index-for-sqlite-durable-objects).
+- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#indexes-in-sqlite).
 - Writing data to [SQLite virtual tables](https://www.sqlite.org/vtab.html) also counts towards rows written.
 
 <Render file="d1-do-supported-sqlite-extensions" product="d1" params={{ product: "Durable Objects support" }}/>
@@ -149,6 +152,27 @@ class MyDurableObject(DurableObject):
 #### Returns
 
 A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `SqlStorageCursor` is a JavaScript [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol), which supports iteration using `for (let row of cursor)`. `SqlStorageCursor` is also a JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol), which supports iteration using `cursor.next()`.
+
+:::caution[Consume cursors synchronously]
+Although a cursor object can technically be held across an `await`, it does not provide a stable snapshot of the query results. A cursor resumed after an `await` may observe rows inserted, updated, or deleted after the cursor was created, including writes from a later implicit transaction that has not yet committed. If that later transaction rolls back, the cursor may have already returned data from a state that never became durable.
+
+For predictable behavior, fully consume cursors synchronously before the next `await`, for example with `.toArray()` or `Array.from(cursor)`. Treat cursors that cross `await` boundaries as having no snapshot isolation guarantees.
+
+```ts
+// ✅ Safe: cursor is fully consumed before any await
+const rows = this.ctx.storage.sql.exec("SELECT * FROM users").toArray();
+const result = await fetch("https://example.com", { method: "POST", body: JSON.stringify(rows) });
+```
+
+```ts
+// ⚠️ No snapshot isolation: cursor may reflect changes made after it was created
+const cursor = this.ctx.storage.sql.exec("SELECT * FROM users");
+await fetch("https://example.com/notify");
+// Rows returned here may include writes that occurred during the await,
+// including uncommitted data from a later implicit transaction.
+const rows = cursor.toArray();
+```
+:::
 
 `SqlStorageCursor` supports the following methods:
 

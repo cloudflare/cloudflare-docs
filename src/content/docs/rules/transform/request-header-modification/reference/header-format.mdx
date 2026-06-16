@@ -1,9 +1,14 @@
 ---
 title: Format of HTTP request header names and values
 pcx_content_type: reference
+description: Supported header name and value formats for request header modifications.
+products:
+  - rules
 sidebar:
   order: 2
   label: Format of header names and values
+tags:
+  - Headers
 ---
 
 import { Render } from "~/components";
@@ -15,3 +20,5 @@ The **name** of the HTTP request header you want to set or remove can only conta
 The **value** of the HTTP request header you want to set can only contain:
 
 <Render file="transform/header-valid-values" product="rules" />
+
+The maximum length of the HTTP request header value is 4 KB (~4,096 characters).

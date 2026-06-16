@@ -1,0 +1,20 @@
+---
+title: R2 Data Catalog gets a dedicated dashboard experience
+description: A new standalone dashboard for R2 Data Catalog with a guided setup wizard, settings management, and built-in metrics.
+products:
+  - r2
+date: 2026-05-28
+---
+
+[R2 Data Catalog](/r2/data-catalog/) is a managed [Apache Iceberg](https://iceberg.apache.org/) data catalog built directly into your R2 bucket. It exposes a standard Iceberg REST catalog interface so you can connect query engines like [Spark](/r2/data-catalog/config-examples/spark-scala/), [Snowflake](/r2/data-catalog/config-examples/snowflake/), [DuckDB](/r2/data-catalog/config-examples/duckdb/), and [R2 SQL](/r2-sql/) to your data in R2.
+
+R2 Data Catalog now has a dedicated section in the Cloudflare dashboard, replacing the previous settings panel embedded in R2 bucket configuration. The new experience includes:
+
+![R2 Data Catalog dashboard overview](~/assets/images/r2/data-catalog-dashboard.png)
+
+- **Catalog overview** — View all your catalogs in one place with catalog request counts, bucket sizes, and table maintenance status at a glance.
+- **Guided setup wizard** — Create a catalog in three steps: choose or create an R2 bucket, configure table maintenance (compaction and snapshot expiration), and review. The wizard creates the bucket and generates a service credential automatically.
+- **Settings management** — A dedicated settings page for each catalog with sections for general configuration, table maintenance, service credentials, and disabling the catalog. You can now enable and configure [snapshot expiration](/r2/data-catalog/table-maintenance/) directly from the dashboard.
+- **Built-in metrics** — Five charts on each catalog's metrics tab: bytes compacted, files compacted, catalog requests, storage size, and snapshots expired.
+
+To get started, go to **R2 Data Catalog** in the Cloudflare dashboard or refer to the [getting started guide](/r2/data-catalog/get-started/) and [manage catalogs documentation](/r2/data-catalog/manage-catalogs/).

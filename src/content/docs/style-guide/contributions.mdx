@@ -1,8 +1,10 @@
 ---
 title: Contributions
-description: |
+description: Learn how to contribute to the Cloudflare Docs.
 sidebar:
     order: 1
+products:
+  - style-guide
 ---
 import { Details } from "~/components";
 
@@ -43,19 +45,19 @@ To edit and create a pull request with the [full development workflow](https://d
 1. [Log in to GitHub](https://github.com/login) and [fork the cloudflare-docs repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 2. If you are editing in your web browser (with [Codespaces](https://docs.github.com/en/codespaces)), move on to step 3.
 <br/>If you are editing on your local machine (with [Visual Studio Code](https://code.visualstudio.com/)):
-	* (Required) Install [Node.js](https://nodejs.org/en) (version 22 or later).
+	* (Required) Install [Node.js](https://nodejs.org/en) (version 24 or later).
 	* (Recommended, but not required) Install [Volta](https://volta.sh/) for easier package management.
 	* (Required) [Clone the fork to your local machine.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 3. Create a branch from your fork (or from your clone).
 3. Make your edits.
 :::note[Preview your edits]
-To preview your edits, you need to install `npm`.
+To preview your edits, you need to install `pnpm`.
  ```bash
- npm install
+ pnpm install
  ```
-Then, run `npm run dev`.
+Then, run `pnpm run dev`.
  ```bash
- npm run dev
+ pnpm run dev
  ```
 A link will appear in the terminal, `https://localhost:1111/`, where you can preview your edits. This link automatically updates with any new edits you make.
 :::
@@ -73,3 +75,19 @@ After you create an issue or PR, a member of the Cloudflare organization will re
 * If your suggestion is not approved, the Cloudflare member will respond with the reasoning and close your issue or PR.
 
 Thank you for contributing to our open-source ecosystem and being a part of the Cloudflare community.
+
+## Contribute to Cloudflare documentation with AI
+
+The `cloudflare-docs` repository includes an [`AGENTS.md`](https://github.com/cloudflare/cloudflare-docs/blob/production/AGENTS.md) file that helps AI coding agents understand the structure, tooling, and conventions of the repository so they can make correct, buildable changes when contributing to documentation.
+
+[AGENTS.md](https://agents.md/) is a simple, open format for guiding coding agents.
+
+The repository includes configuration for the following AI tools out of the box:
+
+- [OpenCode](https://opencode.ai/)
+- [Windsurf](https://windsurf.com/)
+- [Claude Code](https://claude.ai/code)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- [GitHub Copilot](https://github.com/features/copilot) (via VS Code)
+
+Agent skills, commands, and agent definitions all live in `.agents/` and are symlinked into the expected locations for each tool automatically.

@@ -1,0 +1,39 @@
+---
+pcx_content_type: reference
+title: RtkMenuList
+description: API reference for RtkMenuList component (React Native Library)
+products:
+  - realtime
+---
+
+A horizontal list container for menu items.
+
+## Properties
+
+| Property   | Type        | Required | Default | Description       |
+| ---------- | ----------- | -------- | ------- | ----------------- |
+| `children` | `ReactNode` | ✅       | -       | Menu list content |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import {
+	RtkMenuList,
+	RtkMenuItem,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMenuList>
+			<RtkMenuItem onClick={() => {}}>
+				<Text>Item 1</Text>
+			</RtkMenuItem>
+			<RtkMenuItem onClick={() => {}}>
+				<Text>Item 2</Text>
+			</RtkMenuItem>
+		</RtkMenuList>
+	);
+}
+```

@@ -1,14 +1,21 @@
 ---
 title: Ports
+description: Expose sandbox services via public preview URLs using the Sandbox SDK ports API.
 pcx_content_type: concept
 sidebar:
   order: 5
+products:
+  - sandbox
 ---
 
 import { TypeScriptExample } from "~/components";
 
 :::note[Production requires custom domain]
 Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/).
+:::
+
+:::note[Prefer `sandbox.tunnels` for public URLs]
+For most public-URL use cases — development, `.workers.dev` deployments, and production traffic — [`sandbox.tunnels`](/sandbox/api/tunnels/) is the recommended option. Use named tunnels for stable hostnames on a zone you control, or quick tunnels for zero-config `*.trycloudflare.com` URLs. `exposePort()` is appropriate when you want the Worker itself to front the request (for example, to inject authentication, rewrite responses, or call sandbox-only RPC methods on the same hostname).
 :::
 
 Expose services running in your sandbox via public preview URLs. See [Preview URLs concept](/sandbox/concepts/preview-urls/) for details.
@@ -282,3 +289,5 @@ export default {
 - [Expose Services guide](/sandbox/guides/expose-services/) - Full workflow for starting services, exposing ports, and routing requests
 - [WebSocket Connections guide](/sandbox/guides/websocket-connections/) - WebSocket routing via preview URLs
 - [Commands API](/sandbox/api/commands/) - Start background processes
+- [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for quick development
+```

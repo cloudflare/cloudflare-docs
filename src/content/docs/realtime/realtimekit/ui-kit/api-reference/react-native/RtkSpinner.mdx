@@ -1,0 +1,37 @@
+---
+pcx_content_type: reference
+title: RtkSpinner
+description: API reference for RtkSpinner component (React Native Library)
+products:
+  - realtime
+---
+
+An animated loading spinner component.
+
+## Properties
+
+| Property | Type     | Required | Default | Description                                  |
+| -------- | -------- | -------- | ------- | -------------------------------------------- |
+| `style`  | `object` | ❌       | -       | Custom styles to override spinner appearance |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSpinner } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSpinner />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSpinner } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSpinner style={{ width: 48, height: 48 }} />;
+}
+```

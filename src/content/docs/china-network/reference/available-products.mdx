@@ -1,6 +1,9 @@
 ---
 title: Available products and features
 pcx_content_type: reference
+description: Cloudflare products and features supported on the China Network operated by JD Cloud.
+products:
+  - china-network
 sidebar:
   order: 2
 ---
@@ -19,7 +22,7 @@ The following products and features are available on the Cloudflare China Networ
 | [Custom rules](/waf/custom-rules/)                                         | Custom WAF rules. Supports uploaded content scanning and managed challenges.                                                                             |
 | [Rate limiting rules](/waf/rate-limiting-rules/)                           | Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.                              |
 | [Content scanning](/waf/detections/malicious-uploads/)                     | Attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware.                                        |
-| [Page Shield](/page-shield/)                                               | Simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. |
+| [Client-side security](/client-side-security/) (formerly Page Shield)      | Simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. |
 | [Bot Management](/bots/)[^1]                                               | Provides bot identification and protection for a domain. Only supports certain Machine Learning (ML) models.                                             |
 | [Argo Smart Routing](/argo-smart-routing/)                                 | Layer 7 (application layer) traffic smart-routed more efficiently to origin.                                                                             |
 | [Rules](/rules/)[^2]                                                       | Make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.                           |
@@ -34,7 +37,7 @@ The following products and features are available on the Cloudflare China Networ
 | [R2](/r2/)[^3]                                                            | Object storage for all your data.                                                                                                                  |
 | [Assets](/workers/static-assets/)                                         | Upload static assets (HTML, CSS, images and other files) as part of your Worker — Cloudflare will handle caching and serving them to web browsers. |
 | [Environment variables](/workers/configuration/environment-variables/)    | Attach text strings or JSON values to your Worker.                                                                                                 |
-| [Images](/images/transform-images/bindings/)[^4]                          | Store, transform, optimize, and deliver images at scale.                                                                                           |
+| [Images](/images/optimization/binding/)[^4]                          | Store, transform, optimize, and deliver images at scale.                                                                                           |
 | [mTLS](/workers/runtime-apis/bindings/mtls/)                              | Securely connect to backend servers over [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).                        |
 | [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/)               | Define rate limits and write code around them in your Worker.                                                                                      |
 | [Secrets](/workers/configuration/secrets/)                                | Attach encrypted text values to your Worker.                                                                                                       |
@@ -49,7 +52,7 @@ The following products and features are available on the Cloudflare China Networ
 
 [^3]: R2 buckets cannot be created within Mainland China and [custom domains](/r2/buckets/public-buckets/#add-your-domain-to-cloudflare) are not supported within Mainland China. However, R2 can be extended into Mainland China through [Global Acceleration](/china-network/concepts/global-acceleration/).
 
-[^4]: Image Resizing works [within Workers](/images/transform-images/transform-via-workers/), but may not be available [through URL format](/images/transform-images/transform-via-url/).
+[^4]: Image Resizing works [within Workers](/images/optimization/transformations/transform-via-workers/), but may not be available [through URL format](/images/optimization/features/).
 
 ## Network Services
 

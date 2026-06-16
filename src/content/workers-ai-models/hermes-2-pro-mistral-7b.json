@@ -26,6 +26,10 @@
         {
             "property_id": "info",
             "value": "https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-05-30"
         }
     ],
     "schema": {

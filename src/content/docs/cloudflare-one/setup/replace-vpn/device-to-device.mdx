@@ -1,0 +1,83 @@
+---
+pcx_content_type: get-started
+title: "Device to device"
+sidebar:
+  order: 2
+  label: Device to device
+description: Create a secure connection between two devices using Cloudflare Mesh and Cloudflare's network.
+products:
+  - cloudflare-one
+tags:
+  - Private networks
+---
+
+import { DashButton } from "~/components";
+
+Create a secure connection between two devices so they can communicate directly through Cloudflare's network, without needing to be on the same physical network. This is useful when you need to remotely access a specific device, for example connecting to a home computer from a laptop at a coffee shop.
+
+To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-one/setup/replace-vpn/).
+
+## How it works
+
+The [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) is an app that you install on each device you want to connect. When you enroll a device in your Cloudflare account, it is assigned a [Mesh IP](/cloudflare-one/networks/routes/reserved-ips/#device-ips).
+
+Devices use their Mesh IPs to communicate with each other through Cloudflare's network. This works for most common types of network traffic, including web requests, remote desktop, file sharing, and ping.
+
+Only devices enrolled in your Cloudflare account can reach these addresses, so they are not accessible to anyone outside your organization. No tunnel infrastructure or network configuration is required, and the connection does not disrupt existing traffic on your network.
+
+For more details, refer to [Connect client devices](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/).
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- Two Linux, Windows, macOS, Android, or iOS devices you want to connect together.
+
+## Step 1: Enroll your first device
+
+Enrollment permissions control which users can connect devices to your account. In this step, you set an enrollment email and download the Cloudflare One Client. The email you provide becomes the first allowed login for your organization, and anyone with that email address can enroll a device.
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Select **Add a node**, then follow the wizard. The wizard configures enrollment permissions and Mesh connectivity automatically.
+3. Download the Cloudflare One Client on your first device from the [downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/).
+4. Open the client, enter your team name, and sign in with your email.
+
+## Step 2: Enroll your second device
+
+Both devices must be enrolled in your Cloudflare account for the connection to work.
+
+1. Download the Cloudflare One Client on your second device.
+2. Open the client, enter the same team name, and sign in.
+3. The client should show as **Connected** on both devices.
+
+## Step 3: Verify your connection
+
+Both devices are now connected through Cloudflare's network using their assigned Mesh IPs.
+
+To view your device's assigned Mesh IP:
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Your connected devices appear with their Mesh IPs.
+
+To test connectivity, `ping` the Mesh IP of one device from the other.
+
+## Recommended next steps
+
+After verifying your connection, consider securing your connected devices with policies and access controls:
+
+- **Set up Gateway policies**: By default, all enrolled devices can reach each other over the Mesh IP space. Gateway policies let you scan, filter, and log traffic between your devices. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/), [Network policies](/cloudflare-one/traffic-policies/network-policies/), and [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
+- **Create an Access application**: Restrict access to specific destinations on enrolled devices with identity-based rules. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+
+For in-depth guidance on policy design and device posture checks, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+
+## Troubleshoot
+
+If you have issues connecting, try these steps:
+
+- **Windows users**: Windows Firewall blocks device-to-device traffic by default. You may need to add a firewall rule that allows incoming traffic from `100.96.0.0/12`. For details, refer to [Connect client devices](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/).
+- [Troubleshoot the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/): resolve connection and enrollment issues.

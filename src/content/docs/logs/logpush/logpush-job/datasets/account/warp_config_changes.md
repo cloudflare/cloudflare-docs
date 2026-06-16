@@ -74,3 +74,9 @@ The device serial number.
 Type: `int or string`
 
 Time the event was ingested.
+
+## UserEmail
+
+Type: `string`
+
+The Access user email.

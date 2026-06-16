@@ -171,6 +171,12 @@ Type: `array[string]`
 
 The IPs used to correlate existing FQDN matching policy between Gateway DNS and Gateway proxy.
 
+## InternalDNSDurationMs
+
+Type: `int`
+
+The time it took for the internal DNS to respond.
+
 ## InternalDNSFallbackStrategy
 
 Type: `string`
@@ -429,6 +435,12 @@ Type: `string`
 
 String that represents the JSON array with the returned resource records (for example, '[{"name": "example.com", "type": "CNAME", "class": "IN", "ttl": 3600, "rdata": "cname.example.com."}]').
 
+## ResponseTimeMs
+
+Type: `int`
+
+Total response time of the DNS request in milliseconds.
+
 ## SrcIP
 
 Type: `string`
@@ -452,6 +464,12 @@ Country code of the source IP address making the DNS query (for example, 'US').
 Type: `int`
 
 The port used by the client when they sent the DNS request (for example, 0).
+
+## TenantID
+
+Type: `string`
+
+The tenant ID of the DNS request, if exists.
 
 ## TimeZone
 

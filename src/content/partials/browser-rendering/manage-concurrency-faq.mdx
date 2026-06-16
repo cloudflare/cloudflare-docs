@@ -1,8 +1,0 @@
-### How can I manage concurrency and session isolation with Browser Rendering?
-
-If you are hitting concurrency [limits](/browser-rendering/limits/#workers-paid), or want to optimize concurrent browser usage with the [Workers Binding method](/browser-rendering/workers-bindings/), here are a few tips:
-
-- Optimize with tabs or shared browsers: Instead of launching a new browser for each task, consider opening multiple tabs or running multiple actions within the same browser instance.
-- [Reuse sessions](/browser-rendering/workers-bindings/reuse-sessions/): You can optimize your setup and decrease startup time by reusing sessions instead of launching a new browser every time. If you are concerned about maintaining test isolation (for example, for tests that depend on a clean environment), we recommend using [incognito browser contexts](https://pptr.dev/api/puppeteer.browser.createbrowsercontext), which isolate cookies and cache with other sessions.
-
-If you are still running into concurrency limits you can [request a higher limit](https://forms.gle/CdueDKvb26mTaepa9).

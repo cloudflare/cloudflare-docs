@@ -1,0 +1,18 @@
+---
+title: Logpush — More granular timestamps
+description: Configure millisecond or nanosecond timestamp precision for Logpush jobs.
+products:
+  - logpush
+date: 2026-03-25
+---
+
+Logpush now supports higher-precision timestamp formats for log output. You can configure jobs to output timestamps at millisecond or nanosecond precision. This is available in both the Logpush UI in the Cloudflare dashboard and the [Logpush API](/api/resources/logpush/subresources/jobs/).
+
+To use the new formats, set `timestamp_format` in your Logpush job's `output_options`:
+
+- `rfc3339ms` — `2024-02-17T23:52:01.123Z`
+- `rfc3339ns` — `2024-02-17T23:52:01.123456789Z`
+
+Default timestamp formats apply unless explicitly set. The dashboard defaults to `rfc3339` and the API defaults to `unixnano`.
+
+For more information, refer to the [Log output options](/logs/logpush/logpush-job/log-output-options/) documentation.

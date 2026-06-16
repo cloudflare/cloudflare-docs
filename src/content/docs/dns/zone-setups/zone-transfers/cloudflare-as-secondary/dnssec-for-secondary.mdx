@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: DNSSEC options for secondary DNS zones.
+products:
+  - dns
 title: DNSSEC options
 sidebar:
   order: 3
@@ -35,7 +38,7 @@ Refer to [Set up multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/setup/) an
 
 If you use Cloudflare secondary nameservers as the only nameservers authoritatively responding to DNS queries (hidden primary setup), you can enable live signing DNSSEC to have Cloudflare sign the records for your zone.
 
-In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
+In this setup, DNSSEC on your primary DNS provider does not need to be enabled.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

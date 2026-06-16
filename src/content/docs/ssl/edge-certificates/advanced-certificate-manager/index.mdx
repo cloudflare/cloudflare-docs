@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Order advanced certificates with custom SANs, validity periods, and CAs.
+products:
+  - ssl
 title: Advanced certificates
 sidebar:
   order: 2
@@ -15,42 +18,85 @@ import {
 <Render file="acm-definition" product="ssl" />
 <br />
 
-To order advanced certificates you must purchase the Advanced Certificate Manager add-on, which also includes other features.
+To order advanced certificates, you must purchase the Advanced Certificate Manager add-on. This add-on also unlocks the features listed below.
 
-## Advanced Certificate Manager
+## What the add-on includes
 
 Advanced Certificate Manager allows you to:
 
 - Order advanced certificates that can:
-  - Include the zone apex and up to 50 hosts as covered hostnames.
+  - Include up to 50 hosts as covered hostnames (the zone apex must be one of these 50).
   - Cover more than one level of subdomain.
   - Be issued by the certificate authority (CA) you choose.
   - Use your preferred validation method.
   - Have the validity period you choose.
-- Use [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to delegate the <GlossaryTooltip term="domain control validation (DCV)">DCV process</GlossaryTooltip> of your partial zones (<GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME setup</GlossaryTooltip>) to Cloudflare.
+- Automate <GlossaryTooltip term="domain control validation (DCV)">domain control validation (DCV)</GlossaryTooltip> for zones on a <GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME setup</GlossaryTooltip> using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 - Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically protect proxied hostnames.
 - Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
 - Control [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
 
 :::note
-
 Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 <GlossaryTooltip term="edge certificate">edge certificates</GlossaryTooltip> per zone.
+:::
 
+:::note
+On Partial zones, Universal SSL is provisioned per proxied hostname regardless of subdomain depth. 
+If your only reason for considering an advanced certificate is to cover subdomains beyond the first level, Universal SSL may already be sufficient — though you'll need to proxy and validate each new hostname individually as it is added.
 :::
 
 ## Availability
 
 <FeatureTable id="ssl.advanced_certificates" />
 
-<Render file="non-contract-enablement" product="fundamentals" />
+<Render
+	file="non-contract-enablement-with-eligibility"
+	product="fundamentals"
+/>
 
 ## Limitations
 
-Advanced certificates are not used with [Cloudflare Pages](/pages/) nor [R2](/r2/) due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/). Both Pages and R2 custom domains use Cloudflare for SaaS certificates.
+Advanced certificates do not apply to [Cloudflare Pages](/pages/) or [R2](/r2/) custom domains. Due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/), these products use Cloudflare for SaaS certificates instead.
 
 Advanced certificates are [Domain Validated (DV)](/ssl/concepts/#validation-level). If your organization needs Organization Validated (OV) or Extended Validation (EV) certificates, refer to [Custom certificates](/ssl/edge-certificates/custom-certificates/). <br/>
 
-Advanced certificates do not cover multiple different domains. For multi-domain certificate (MDC), consider the [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) product. You can also find further guidance in [Leveraging Cloudflare for your SaaS applications](/reference-architecture/design-guides/leveraging-cloudflare-for-your-saas-applications/).
+Advanced certificates cover hostnames within a single domain. If you need a certificate that spans multiple domains (a multi-domain certificate), use [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/). For architecture guidance, refer to [Leveraging Cloudflare for your SaaS applications](/reference-architecture/design-guides/leveraging-cloudflare-for-your-saas-applications/).
+
+:::note
+
+<Render file="hpkp-not-supported" product="ssl" />
+
+:::
+
+## Multi-level subdomain support
+
+Advanced Certificate Manager supports deep, multi-level subdomains (for example, `api.staging.example.com`). There is no arbitrary limit on the number of subdomain levels, but you must consider the following constraints.
+
+:::note
+If you want to automatically issue certificates for all proxied hostnames without manually specifying each one, enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/).
+:::
+
+### Domain name length limits
+
+These limits are defined by internet standards ([RFC 1035](https://www.rfc-editor.org/rfc/rfc1035) and [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280)) and apply to all certificates, regardless of the certificate authority:
+
+- **Total domain length**: The entire domain name cannot exceed 253 characters.
+- **Label length**: Each individual level (the text between dots) cannot exceed 63 characters.
+- **Common Name (CN) length**: The Common Name field of a certificate cannot exceed 64 characters. If a hostname on your certificate exceeds 64 characters, you must order the certificate via the [API](/api/resources/ssl/subresources/certificate_packs/methods/create/) and set the `cloudflare_branding` option to `true`. This places `sni.cloudflaressl.com` in the CN field and your long hostname in the SAN field. The dashboard does not support ordering certificates with hostnames longer than 64 characters.
+
+### Wildcard coverage
+
+Wildcard certificates only cover **one subdomain level**:
+
+- A certificate for `*.example.com` covers `www.example.com` and `api.example.com` but **not** `api.staging.example.com`.
+- To cover multiple levels, you must explicitly add a wildcard for each level to your certificate (for example, `*.example.com`, `*.staging.example.com`).
+
+### Hostnames per certificate
+
+A single advanced certificate can include up to **50 hosts** (SANs) total. The zone apex must be one of these 50, leaving room for up to 49 additional hostnames or wildcards.
+
+### Consistency across certificate authorities
+
+The character-length limits above (253-character total, 63-character label, 64-character CN) are defined by IETF standards ([RFC 1035](https://www.rfc-editor.org/rfc/rfc1035), [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280)) and apply uniformly across all CAs. Other constraints, such as the per-certificate SAN count and supported validity periods, are Cloudflare advanced certificates limits or vary by CA. Refer to [Certificate authorities](/ssl/reference/certificate-authorities/) for CA-specific details.
 
 ## Related resources
 

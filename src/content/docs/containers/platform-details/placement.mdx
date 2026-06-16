@@ -1,0 +1,62 @@
+---
+pcx_content_type: concept
+title: Placement
+sidebar:
+  order: 2
+description: Control where your containers run with regional and jurisdictional constraints.
+products:
+  - containers
+---
+
+import { WranglerConfig } from "~/components";
+
+By default, containers run in the location nearest to the incoming request with a pre-fetched image. Use placement constraints to restrict where your containers run for data residency, compliance, or latency requirements.
+
+## Regional constraints
+
+Use the `regions` constraint to limit container placement to specific geographic areas:
+
+| Region | Description           | Notes            |
+| ------ | --------------------- | ---------------- |
+| `ENAM` | Eastern North America |                  |
+| `WNAM` | Western North America |                  |
+| `EEUR` | Eastern Europe        |                  |
+| `WEUR` | Western Europe        |                  |
+| `APAC` | Asia Pacific          |                  |
+| `SAM`  | South America         |                  |
+| `ME`   | Middle East           | Limited capacity |
+| `OC`   | Oceania               | Limited capacity |
+| `AFR`  | Africa                | Limited capacity |
+
+Limited capacity regions (ME, OC, AFR) cannot be used exclusively. Include at least one other region, or contact support for dedicated access.
+
+## Jurisdictional constraints
+
+Use the `jurisdiction` constraint to restrict containers to compliance boundaries:
+
+| Jurisdiction | Regions    | Use case           |
+| ------------ | ---------- | ------------------ |
+| `eu`         | EEUR, WEUR | EU data residency  |
+| `fedramp`    | ENAM, WNAM | FedRAMP regions    |
+
+When you specify both `jurisdiction` and `regions`, the regions must be valid for that jurisdiction. For example, specifying `jurisdiction: "eu"` with `regions: ["ENAM"]` is invalid.
+
+## Configure placement
+
+Set placement constraints in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[[containers]]
+name = "my-container"
+image = "docker.io/my-org/my-image:latest"
+
+[containers.constraints]
+regions = ["ENAM", "WNAM"]
+jurisdiction = "fedramp"
+```
+
+</WranglerConfig>
+
+Refer to [Lifecycle of a Container](/containers/platform-details/architecture/) for more details on how placement affects container startup and routing.

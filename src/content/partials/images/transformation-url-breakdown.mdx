@@ -1,0 +1,10 @@
+---
+{}
+---
+
+| Part | Description |
+| --- | --- |
+| `<ZONE>` | Your domain name at Cloudflare. Transformations can be requested on every Cloudflare zone that has transformations enabled. |
+| `/cdn-cgi/image/` | A fixed prefix that identifies that this path is a request to optimize an image. To hide this part, you can set up [Transform Rules](/images/optimization/transformations/rewrite-rules/) to serve images from a custom path. |
+| `<OPTIONS>` | A list of optimization parameters, separated by a comma. A valid URL must specify at least one parameter. |
+| `<SOURCE-IMAGE>` | The original image that you want to transform. You can use an absolute path on the origin server or an absolute URL (that starts with `https://` or `http://`). |

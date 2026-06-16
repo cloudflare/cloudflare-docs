@@ -1,11 +1,16 @@
 ---
 title: Concepts
 pcx_content_type: concept
+description: Key concepts for Advanced DDoS Protection, including prefixes, allowlists, and rules.
+products:
+  - ddos-protection
 sidebar:
   order: 2
 head:
   - tag: title
     content: Create an Advanced TCP Protection filter
+tags:
+  - TCP
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
@@ -51,6 +56,8 @@ Advanced TCP Protection rules can have one of the following scopes:
 
 The rule scope allows you to adjust the system's tolerance for out-of-state packets in locations where you may have more or less traffic than usual, or due to any other networking reasons.
 
+When multiple rules with different scopes apply to a data center, the rule with the most specific scope takes precedence. For example, if you have both a region rule (such as Western Europe) and a data center rule (such as Marseille), traffic through Marseille will be processed according to the data center rule.
+
 Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
 
 #### Mode
@@ -95,7 +102,7 @@ The sensitivity to DNS queries that have not been recently seen.
 - A higher sensitivity level means that the mitigation system will begin mitigating faster.
 - A lower sensitivity provides more tolerance for potentially suspicious DNS queries.
 
-The default rate sensitivity and recommended setting is _Low_. You should only increase sensitivity if it is needed based on observed attacks.
+The default profile sensitivity and recommended setting is _Low_. You should only increase sensitivity if it is needed based on observed attacks.
 
 ## Filter
 

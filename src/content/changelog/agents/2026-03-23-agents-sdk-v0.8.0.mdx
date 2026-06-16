@@ -1,0 +1,163 @@
+---
+title: "Agents SDK v0.8.0: readable state, idempotent schedules, typed AgentClient, and Zod 4"
+description: "Agents SDK v0.8.0 exposes a readable state property on useAgent and AgentClient, makes schedule() idempotent for cron and opt-in for other types, adds full TypeScript inference to AgentClient, and drops Zod v3 in favor of Zod v4."
+products:
+  - agents
+  - workers
+date: 2026-03-23
+---
+
+import { TypeScriptExample } from "~/components";
+
+The latest release of the [Agents SDK](https://github.com/cloudflare/agents) exposes agent state as a readable property, prevents duplicate schedule rows across Durable Object restarts, brings full TypeScript inference to `AgentClient`, and migrates to Zod 4.
+
+## Readable `state` on `useAgent` and `AgentClient`
+
+Both `useAgent` (React) and `AgentClient` (vanilla JS) now expose a `state` property that reflects the current agent state. Previously, reading state required manually tracking it through the `onStateUpdate` callback.
+
+**React (`useAgent`)**
+
+<TypeScriptExample>
+
+```tsx
+const agent = useAgent<GameAgent, GameState>({
+	agent: "game-agent",
+	name: "room-123",
+});
+
+// Read state directly — no separate useState + onStateUpdate needed
+return <div>Score: {agent.state?.score}</div>;
+
+// Spread for partial updates
+agent.setState({ ...agent.state, score: (agent.state?.score ?? 0) + 10 });
+```
+
+</TypeScriptExample>
+
+`agent.state` is reactive — the component re-renders when state changes from either the server or a client-side `setState()` call.
+
+**Vanilla JS (`AgentClient`)**
+
+<TypeScriptExample>
+
+```ts
+const client = new AgentClient<GameAgent>({
+	agent: "game-agent",
+	name: "room-123",
+	host: "your-worker.workers.dev",
+});
+
+client.setState({ score: 100 });
+console.log(client.state); // { score: 100 }
+```
+
+</TypeScriptExample>
+
+State starts as `undefined` and is populated when the server sends the initial state on connect (from `initialState`) or when `setState()` is called. Use optional chaining (`agent.state?.field`) for safe access. The `onStateUpdate` callback continues to work as before — the new `state` property is additive.
+
+## Idempotent `schedule()`
+
+`schedule()` now supports an `idempotent` option that deduplicates by `(type, callback, payload)`, preventing duplicate rows from accumulating when called in places that run on every Durable Object restart such as `onStart()`.
+
+**Cron schedules are idempotent by default.** Calling `schedule("0 * * * *", "tick")` multiple times with the same callback, expression, and payload returns the existing schedule row instead of creating a new one. Pass `{ idempotent: false }` to override.
+
+Delayed and date-scheduled types support opt-in idempotency:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+class MyAgent extends Agent {
+	async onStart() {
+		// Safe across restarts — only one row is created
+		await this.schedule(60, "maintenance", undefined, { idempotent: true });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Two new warnings help catch common foot-guns:
+
+- Calling `schedule()` inside `onStart()` without `{ idempotent: true }` emits a `console.warn` with actionable guidance (once per callback; skipped for cron and when `idempotent` is set explicitly).
+- If an alarm cycle processes 10 or more stale one-shot rows for the same callback, the SDK emits a `console.warn` and a `schedule:duplicate_warning` diagnostics channel event.
+
+## Typed `AgentClient` with `call` inference and `stub` proxy
+
+`AgentClient` now accepts an optional agent type parameter for full type inference on RPC calls, matching the typed experience already available with `useAgent`.
+
+<TypeScriptExample>
+
+```ts
+const client = new AgentClient<MyAgent>({
+	agent: "my-agent",
+	host: window.location.host,
+});
+
+// Typed call — method name autocompletes, args and return type inferred
+const value = await client.call("getValue");
+
+// Typed stub — direct RPC-style proxy
+await client.stub.getValue();
+await client.stub.add(1, 2);
+```
+
+</TypeScriptExample>
+
+State is automatically inferred from the agent type, so `onStateUpdate` is also typed:
+
+<TypeScriptExample>
+
+```ts
+const client = new AgentClient<MyAgent>({
+	agent: "my-agent",
+	host: window.location.host,
+	onStateUpdate: (state) => {
+		// state is typed as MyAgent's state type
+	},
+});
+```
+
+</TypeScriptExample>
+
+Existing untyped usage continues to work without changes. The RPC type utilities (`AgentMethods`, `AgentStub`, `RPCMethods`) are now exported from `agents/client` for advanced typing scenarios.
+`agents`, `@cloudflare/ai-chat`, and `@cloudflare/codemode` now require `zod ^4.0.0`. Zod v3 is no longer supported.
+
+## `@cloudflare/ai-chat` fixes
+
+- **Turn serialization** — `onChatMessage()` and `_reply()` work is now queued so user requests, tool continuations, and `saveMessages()` never stream concurrently.
+- **Duplicate messages on stop** — Clicking stop during an active stream no longer splits the assistant message into two entries.
+- **Duplicate messages after tool calls** — Orphaned client IDs no longer leak into persistent storage.
+
+## `keepAlive()` and `keepAliveWhile()` are no longer experimental
+
+`keepAlive()` now uses a lightweight in-memory ref count instead of schedule rows. Multiple concurrent callers share a single alarm cycle. The `@experimental` tag has been removed from both `keepAlive()` and `keepAliveWhile()`.
+
+## `@cloudflare/codemode`: TanStack AI integration
+
+A new entry point `@cloudflare/codemode/tanstack-ai` adds support for [TanStack AI's](https://tanstack.com/ai) `chat()` as an alternative to the Vercel AI SDK's `streamText()`:
+
+<TypeScriptExample>
+
+```ts
+import { createCodeTool, tanstackTools } from "@cloudflare/codemode/tanstack-ai";
+import { chat } from "@tanstack/ai";
+
+const codeTool = createCodeTool({
+	tools: [tanstackTools(myServerTools)],
+	executor,
+});
+
+const stream = chat({ adapter, tools: [codeTool], messages });
+```
+
+</TypeScriptExample>
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i agents@latest @cloudflare/ai-chat@latest
+```

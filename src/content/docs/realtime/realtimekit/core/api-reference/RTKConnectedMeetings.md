@@ -8,7 +8,7 @@ web_core_version: 1.2.4
 
 <a name="module_RTKConnectedMeetings"></a>
 
-This consists of the methods to faciliate connected meetings
+This consists of the methods to facilitate connected meetings
 
 
 * [RTKConnectedMeetings](#module_RTKConnectedMeetings)

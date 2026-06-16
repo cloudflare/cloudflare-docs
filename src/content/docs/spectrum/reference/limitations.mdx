@@ -1,8 +1,10 @@
 ---
 pcx_content_type: reference
 title: Limitations
+description: Protocol-specific limitations for Spectrum applications.
+products:
+  - spectrum
 weight: 0
-
 ---
 
 The following limitations apply to different protocols supported by Spectrum.
@@ -36,7 +38,13 @@ To correctly route traffic from Spectrum through a Cloudflare Tunnel, you must:
 1.  Configure your Spectrum application with the type set to **HTTP** or **HTTPS**.
 2.  Point the Spectrum application's origin to a hostname that is already [routing traffic](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) through your Cloudflare Tunnel (for example, via a [DNS record](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) or [Cloudflare Load Balancer](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/)).
 
-Using a Spectrum application of any other type (for example, TCP) with a Cloudflare Tunnel origin is not supported. Pointing a Spectrum application's origin directly to your Tunnel's subdomain (`<UUID>.cfargotunnel.com`) is also not a valid configuration and will not work.
+Using a Spectrum application of any other type (for example, TCP) with a Cloudflare Tunnel origin directly is not supported. Pointing a Spectrum application's origin directly to your Tunnel's subdomain (`<UUID>.cfargotunnel.com`) is also not a valid configuration and will not work.
+
+:::tip[Alternative L4 routing]
+To route non-HTTP (TCP or UDP) traffic from a public Spectrum application to a private endpoint via Cloudflare Tunnel, configure a [Cloudflare Load Balancer with Private Network Load Balancing (LTM)](/load-balancing/private-network/) in between.
+
+By defining private IP addresses as origins inside your Load Balancer pool and associating them with your tunnel's Virtual Network ID (`virtual_network_id`), the Load Balancer will receive the L4 traffic from Spectrum and route it to your private origin over the Cloudflare Tunnel.
+:::
 
 ## Listen on ports configuration
 
@@ -45,3 +53,9 @@ By default, Spectrum is configured to listen on all ports, which can raise conce
 When a TCP handshake is initiated to any port for a Spectrum IP, the handshake will always be completed. If there is a Spectrum application configured for the port, the connection will be proxied to origin. If no application is configured, the connection is immediately terminated and no origin connection will be opened.
 
 Spectrum will only ever proxy traffic to an origin if there is a Spectrum application configured for that port.
+
+## IP access control
+
+Currently, [custom rules](/waf/custom-rules/) do not work with Spectrum applications. Use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist, block, and challenge traffic for Spectrum applications based on the request's IP address, Autonomous System Number (ASN), or country.
+
+Refer to [Configuration options](/spectrum/reference/configuration-options/#ip-access-rules) for more information.

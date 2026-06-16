@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
-
+description: Automatically learn API schema parameters from traffic and export in OpenAPI format.
+products:
+  - api-shield
 title: Schema learning
 sidebar:
   order: 2
@@ -8,13 +10,11 @@ sidebar:
 
 import { Steps, Tabs, TabItem, DashButton } from "~/components";
 
-Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export the learned schema in OpenAPI `v3.0.0` format by hostname.
+Schema learning observes live API traffic to automatically discover the parameters, headers, and body formats your endpoints accept. For all endpoints saved to Endpoint Management, you can export the learned schema in OpenAPI `v3.0.0` format by hostname.
 
 To protect your API with a learned schema, refer to [Schema validation](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname).
 
 ## Export a schema
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
@@ -38,8 +38,6 @@ To protect your API with a learned schema, refer to [Schema validation](/api-shi
     </Steps>
   </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 :::note
 The schema is saved as a JSON file in OpenAPI `v3.0.0` format.

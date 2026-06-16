@@ -4,7 +4,7 @@ releaseNotes: |-
   WARP client version 2025.8.779.0 introduced an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com).
 
   **Changes and improvements**
-  - Fixed an issue causing failure of the [local network exclusion](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-users-to-enable-local-network-exclusion) feature when configured with a timeout of `0`.
+  - Fixed an issue causing failure of the [local network exclusion](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-users-to-enable-local-network-exclusion) feature when configured with a timeout of `0`.
   - Improvement for more accurate reporting of device colocation information in the Cloudflare One dashboard.
   - Fixed an issue where misconfigured DEX HTTP tests prevented new registrations.
   - Fixed issues causing DNS requests to fail with clients in Traffic and DNS mode or DNS only mode.

@@ -1,7 +1,7 @@
 ---
 params:
- - pre_existing_product
- - added_product
+  - pre_existing_product
+  - added_product
 ---
 
 import { Details } from "~/components";
@@ -30,5 +30,5 @@ Add one discrete {props.added_product} service binding for `203.0.113.16` with a
 Once a service binding is created (or deleted), it will take **four to six hours** to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 
 :::note
-This guide assumes that the prefix is tied to a single Cloudflare account that has both {props.pre_existing_product} and {props.added_product} properties. If you are using [prefix delegations](/byoip/concepts/prefix-delegations/), the service bindings must be [created](#2-create-service-binding) on the parent account.
+This guide assumes that the prefix is tied to a single Cloudflare account that has both {props.pre_existing_product} and {props.added_product} properties. If you are using [prefix delegations](/byoip/concepts/prefix-delegations/), the service bindings must be [created](#2-create-service-bindings) on the parent account.
 :::

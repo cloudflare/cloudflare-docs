@@ -2,7 +2,7 @@ releaseNotes: |-
   This release contains minor fixes and improvements.
 
   **Changes and improvements**
-  - Fixed an issue causing failure of the [local network exclusion](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-users-to-enable-local-network-exclusion) feature when configured with a timeout of `0`.
+  - Fixed an issue causing failure of the [local network exclusion](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-users-to-enable-local-network-exclusion) feature when configured with a timeout of `0`.
   - Improvement for more accurate reporting of device colocation information in the Cloudflare One dashboard.
   - Fixed an issue with DNS server configuration failures that caused tunnel connection delays.
   - Fixed an issue where misconfigured DEX HTTP tests prevented new registrations.

@@ -1,11 +1,10 @@
 ---
 {}
-
 ---
 
 import { APIRequest } from "~/components";
 
-## Forward a client certificate
+## Forward a client certificate (legacy)
 
 In addition to enforcing mTLS authentication for your host, you can also forward a client certificate to your origin server as an HTTP header. This setup is often helpful for server logging.
 
@@ -20,26 +19,30 @@ This process is only available on accounts with [Cloudflare Access](/cloudflare-
 The most common approach to forwarding a certificate is to use the Cloudflare API to [update an mTLS certificate's hostname settings](/api/resources/zero_trust/subresources/access/subresources/certificates/subresources/settings/methods/update/).
 
 <APIRequest
-  path="/zones/{zone_id}/access/certificates/settings"
-  method="PUT"
-  json={{
-		  "settings": [
-    {
-      "hostname": "<HOSTNAME>",
-      "china_network": false,
-      "client_certificate_forwarding": true
-    }
-  ]
+	path="/zones/{zone_id}/access/certificates/settings"
+	method="PUT"
+	json={{
+		settings: [
+			{
+				hostname: "<HOSTNAME>",
+				china_network: false,
+				client_certificate_forwarding: true,
+			},
+		],
 	}}
 	code={{
-		mark: [10]
+		mark: [10],
 	}}
 />
 
 Once `client_certificate_forwarding` is set to `true`, every request within an mTLS connection will now include the following headers:
 
-* `Cf-Client-Cert-Der-Base64`
-* `Cf-Client-Cert-Sha256`
+- `Cf-Client-Cert-Der-Base64`
+- `Cf-Client-Cert-Sha256`
+
+:::note
+The `Cf-Client-Cert-Der-Base64` and `Cf-Client-Cert-Sha256` headers are a Cloudflare-proprietary mechanism. For a standardized approach, use [RFC 9440 `Client-Cert` and `Client-Cert-Chain` headers](/ssl/client-certificates/forward-a-client-certificate/#add-client-cert-and-client-cert-chain-headers-rfc-9440).
+:::
 
 ### Managed Transforms
 
@@ -51,14 +54,14 @@ Additionally, Workers can provide details around the [client certificate](/worke
 
 ```js
 const tlsHeaders = {
-    'X-CERT-ISSUER-DN': request.cf.tlsClientAuth.certIssuerDN,
-    'X-CERT-SUBJECT-DN': request.cf.tlsClientAuth.certSubjectDN,
-    'X-CERT-ISSUER-DN-L': request.cf.tlsClientAuth.certIssuerDNLegacy,
-    'X-CERT-SUBJECT-DN-L': request.cf.tlsClientAuth.certSubjectDNLegacy,
-    'X-CERT-SERIAL': request.cf.tlsClientAuth.certSerial,
-    'X-CERT-FINGER': request.cf.tlsClientAuth.certFingerprintSHA1,
-    'X-CERT-VERIFY': request.cf.tlsClientAuth.certVerify,
-    'X-CERT-NOTBE': request.cf.tlsClientAuth.certNotBefore,
-    'X-CERT-NOTAF': request.cf.tlsClientAuth.certNotAfter
+	"X-CERT-ISSUER-DN": request.cf.tlsClientAuth.certIssuerDN,
+	"X-CERT-SUBJECT-DN": request.cf.tlsClientAuth.certSubjectDN,
+	"X-CERT-ISSUER-DN-L": request.cf.tlsClientAuth.certIssuerDNLegacy,
+	"X-CERT-SUBJECT-DN-L": request.cf.tlsClientAuth.certSubjectDNLegacy,
+	"X-CERT-SERIAL": request.cf.tlsClientAuth.certSerial,
+	"X-CERT-FINGER": request.cf.tlsClientAuth.certFingerprintSHA1,
+	"X-CERT-VERIFY": request.cf.tlsClientAuth.certVerify,
+	"X-CERT-NOTBE": request.cf.tlsClientAuth.certNotBefore,
+	"X-CERT-NOTAF": request.cf.tlsClientAuth.certNotAfter,
 };
 ```

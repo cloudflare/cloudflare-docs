@@ -1,0 +1,23 @@
+---
+pcx_content_type: how-to
+products:
+  - cloudflare-wan
+title: Run traceroute
+sidebar:
+  order: 5
+head: []
+description: Learn what settings you need to change to perform a useful
+  `traceroute` to an endpoint behind a Cloudflare Tunnel.
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="routing/traceroute"
+	product="networking-services"
+	params={{
+		greIpsecURL: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+		warpURL: "/cloudflare-wan/zero-trust/cloudflare-one-client/",
+		cfTunnelURL: "/cloudflare-wan/zero-trust/cloudflare-tunnel/"
+	}}
+/>

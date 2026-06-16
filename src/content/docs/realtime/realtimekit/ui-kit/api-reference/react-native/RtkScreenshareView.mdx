@@ -1,0 +1,52 @@
+---
+pcx_content_type: reference
+title: RtkScreenshareView
+description: API reference for RtkScreenshareView component (React Native Library)
+products:
+  - realtime
+---
+
+Renders a participant's screen share with fullscreen toggle, name tag, and audio indicator.
+
+## Properties
+
+| Property               | Type                                                                                              | Required | Default           | Description                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------- | -------- | ----------------- | ------------------------------------ |
+| `participant`          | `RTKParticipant`                                                                                  | ✅       | -                 | The participant sharing their screen |
+| `meeting`              | `RealtimeKitClient`                                                                               | ✅       | -                 | The RealtimeKit meeting instance     |
+| `hideFullScreenButton` | `boolean`                                                                                         | ❌       | `false`           | Hide the fullscreen toggle button    |
+| `iconPack`             | `IconPack`                                                                                        | ❌       | `defaultIconPack` | Custom icon pack                     |
+| `nameTagPosition`      | `'bottom-center' \| 'bottom-left' \| 'bottom-right' \| 'top-center' \| 'top-left' \| 'top-right'` | ❌       | `'bottom-left'`   | Position of the name tag overlay     |
+| `size`                 | `'lg' \| 'md' \| 'sm' \| 'xl'`                                                                    | ❌       | `'sm'`            | Size variant                         |
+| `variant`              | `'gradient' \| 'solid'`                                                                           | ❌       | `'solid'`         | Visual style variant                 |
+| `t`                    | `RtkI18n`                                                                                         | ❌       | -                 | i18n translation function            |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkScreenshareView } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkScreenshareView participant={participant} meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkScreenshareView } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkScreenshareView
+			participant={participant}
+			meeting={meeting}
+			nameTagPosition="bottom-left"
+			variant="solid"
+			size="md"
+		/>
+	);
+}
+```

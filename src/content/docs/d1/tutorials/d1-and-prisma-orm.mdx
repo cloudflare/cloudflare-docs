@@ -17,6 +17,8 @@ import {
 	FileTree,
 	PackageManagers,
 	GitHubCode,
+	Tabs,
+	TabItem,
 } from "~/components";
 
 ## What is Prisma ORM?
@@ -212,10 +214,23 @@ Open the `schema.prisma` file and add the following `User` model to your schema:
 
 Now, run the following command in your terminal to generate the SQL statement that creates a `User` table equivalent to the `User` model above:
 
+<Tabs syncKey="prisma">
+<TabItem label="Prisma (v7)">
+
+```sh
+npx prisma migrate diff --from-empty --to-schema ./prisma/schema.prisma --script --output migrations/0001_create_user_table.sql
+```
+
+</TabItem>
+<TabItem label="Prisma (v6)">
+
 ```sh
 npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script --output migrations/0001_create_user_table.sql
 ```
 
+</TabItem>
+</Tabs>
+ 
 This stores a SQL statement to create a new `User` table in your migration file from before, here is what it looks like:
 
 <GitHubCode

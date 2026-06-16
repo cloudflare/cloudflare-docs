@@ -1,4 +1,4 @@
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 export const notificationsSchema = z
 	.object({

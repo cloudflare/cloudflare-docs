@@ -1,0 +1,49 @@
+---
+pcx_content_type: concept
+title: Syncing
+description: Understand how AI Search automatically syncs and indexes content from connected data sources.
+sidebar:
+  order: 4
+products:
+  - ai-search
+---
+
+AI Search automatically indexes your content for search. How indexing works depends on your data source.
+
+## External data sources
+
+For instances connected to a [website](/ai-search/configuration/data-source/website/) or [R2 bucket](/ai-search/configuration/data-source/r2/), AI Search creates jobs to sync your data source. Jobs run automatically every 6 hours and process new, modified, or deleted files to keep your search index up to date.
+
+You can view job status and history in the **Jobs** tab in the dashboard or using the [Instances API](/ai-search/api/instances/rest-api/).
+
+## Built-in storage
+
+Files uploaded to [built-in storage](/ai-search/configuration/data-source/built-in-storage/) are indexed immediately. There are no sync jobs. Each file is processed individually as it is uploaded.
+
+## Controls
+
+| Action               | Description                                                                                                 |
+| -------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Trigger sync         | Manually start a sync job to scan your external data source for changes. Can be triggered every 30 seconds. |
+| Cancel job           | Cancel a running sync job.                                                                                  |
+| Pause indexing       | Temporarily stop all scheduled sync jobs.                                                                   |
+| Resume indexing      | Resume scheduled sync jobs.                                                                                 |
+| Sync individual file | Re-index a specific file.                                                                                   |
+
+You can perform these actions from the dashboard, the [REST API](/ai-search/api/instances/rest-api/), or the [Workers binding](/ai-search/api/instances/workers-binding/).
+
+## Performance
+
+The total time to index depends on the number and type of files. Factors that affect performance include:
+
+- Total number of files and their sizes
+- File formats (for example, images take longer than plain text)
+- Latency of Workers AI models used for embedding and image processing
+
+## Best practices
+
+To ensure smooth and reliable indexing:
+
+- Make sure your files are within the [size limit](/ai-search/configuration/data-source/#file-limits) and in a [supported format](/ai-search/configuration/data-source/#supported-file-types) to avoid being skipped.
+- For R2-backed instances, keep your [service API token](/ai-search/configuration/indexing/service-api-token/) valid to prevent indexing failures.
+- Regularly clean up outdated or unnecessary content to stay within [instance limits](/ai-search/platform/limits-pricing/).

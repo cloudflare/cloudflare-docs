@@ -1,0 +1,13 @@
+id: kj7Wuc
+name: Agent Lee
+entry:
+  title: Agent Lee
+  url: /agent-lee/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Agent Lee docs
+  description: An AI co-pilot built into the Cloudflare dashboard that helps you navigate, configure, and take actions on Cloudflare services
+  author: "@cloudflare"

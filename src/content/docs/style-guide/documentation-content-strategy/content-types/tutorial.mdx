@@ -3,18 +3,24 @@ pcx_content_type: concept
 title: Tutorial
 meta:
   title: Content type - Tutorial
+description: Write step-by-step tutorial documentation.
+products:
+  - style-guide
 ---
 
 import { GlossaryDefinition, Render } from "~/components";
 
 <GlossaryDefinition term="tutorial" />
 
-<Render file="howto-vs-tutorial" product="style-guide" />
+<Render file="content-type-disambiguation" product="style-guide" />
+
+If you are unsure which content type to use, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
 
 ## Guidelines
 
 **A tutorial is:**
 
+- For users who have already chosen a Cloudflare product to work with
 - User-focused
 - Aligned to a user's goal or job-to-be-done
 - Descriptive and guiding
@@ -40,6 +46,10 @@ Guiding, straightforward, educational, authoritative
 
 ```yaml
 pcx_content_type: tutorial
+products:
+  - product-a
+  - product-b
+  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
@@ -72,6 +82,32 @@ For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-
 [**Links**](/style-guide/documentation-content-strategy/component-attributes/links/)
 
 **Boundaries**
+
+## Template
+
+```
+
+---
+pcx_content_type: tutorial
+title: Second-person imperative verb phrase
+products:
+  - <product>
+description: Build <what the tutorial produces> with <Cloudflare product>. Covers <key technologies or steps involved>.
+difficulty: Beginner
+---
+
+# Second-person imperative verb phrase
+
+Context paragraph describing the user's goal and how the tutorial accomplishes it.
+
+## Prerequisites
+
+## 1. First step
+
+## 2. Second step
+
+## Next steps
+```
 
 ## Examples
 

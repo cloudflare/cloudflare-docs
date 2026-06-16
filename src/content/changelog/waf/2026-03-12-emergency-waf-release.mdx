@@ -1,0 +1,56 @@
+---
+title: "WAF Release - 2026-03-12 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-03-12 emergency release
+date: 2026-03-12
+---
+
+import { RuleID } from "~/components";
+
+This week's release introduces new detections for vulnerabilities in Ivanti Endpoint Manager Mobile (CVE-2026-1281 and CVE-2026-1340), alongside a new generic detection rule designed to identify and block Cross-Site Scripting (XSS) injection attempts within the `Content-Security-Policy` (CSP) HTTP request header.
+
+**Key Findings**
+
+- CVE-2026-1281 & CVE-2026-1340: Ivanti Endpoint Manager Mobile processes HTTP requests through Apache RevwriteMap directives that pass user-controlled input to Bash scripts (`/mi/bin/map-appstore-url` and `/mi/bin/map-aft-store-url`). Bash scripts do not sanitize user input and are vulnerable to shell arithmetic expansion thereby allowing attackers to achieve unauthenticated remote code execution.
+- Generic XSS in CSP Header: This rule identifies malicious payloads embedded within the request's `Content-Security-Policy` header. It specifically targets scenarios where web frameworks or applications trust and extract values directly from the CSP header in the incoming request without sufficient validation. Attackers can provide crafted header values to inject scripts or malicious directives that are subsequently processed by the server.
+
+**Impact**
+
+Successful exploitation of Ivanti EPMM vulnerability allows unauthenticated remote code execution and generic XSS in CSP header allows attackers to inject malicious scripts during page rendering. In environments using server-side caching, this poisoned XSS content can subsequently be cached and automatically served to all visitors.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="5ae86a9bda0c41dbb905132f796ea2f6" />
+			</td>
+			<td>N/A</td>
+			<td>Ivanti EPMM - Code Injection - CVE:CVE-2026-1281 CVE:CVE-2026-1340</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr> 
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="35978af68e374a059e397bf5ee964a8c" />
+			</td>
+			<td>N/A</td>
+			<td>Anomaly:Header:Content-Security-Policy</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

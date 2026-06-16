@@ -1,7 +1,9 @@
 ---
 title: Zone holds
+description: Prevent other teams from adding your active Cloudflare zones to a different account by enabling zone holds.
 pcx_content_type: how-to
-
+products:
+  - fundamentals
 ---
 
 import { FeatureTable } from "~/components"
@@ -9,6 +11,10 @@ import { FeatureTable } from "~/components"
 Zone holds prevent other teams in your organization from adding zones that are already active in another account.
 
 For example, you might already have an active Cloudflare zone for `example.com`. If another team does not realize this, they could add and activate `example.com` in another Cloudflare account, which may cause downtimes or security issues until the original zone could be re-activated.
+
+:::note
+Zone holds are enabled by default for all Enterprise zones.
+:::
 
 ## Availability
 

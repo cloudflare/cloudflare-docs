@@ -111,6 +111,12 @@ Type: `string`
 
 The unique ID for the device registration.
 
+## DeviceRegistrationProfileID
+
+Type: `string`
+
+The ID for the Device Profile used for the device registration.
+
 ## DiskReadBPS
 
 Type: `int`
@@ -134,6 +140,12 @@ The number of disk bytes written per second.
 Type: `string`
 
 The WARP client's DoH subdomain.
+
+## ExperimentalExtra
+
+Type: `object`
+
+Additional unstructured data sent by the WARP client. This field may change at any time.
 
 ## FirewallEnabled
 
@@ -271,7 +283,7 @@ The public IPv6 postal code of the device assigned by the ISP, for example `9000
 
 Type: `string`
 
-The WARP client connection mode, e.g. `warp+doh`, `proxy`.
+The WARP client connection mode, for example, `warp+doh`, `proxy`.
 
 ## NetworkReceivedBPS
 
@@ -313,7 +325,7 @@ The top applications by percentage of RAM used, for example `[{"name": "app0", "
 
 Type: `string`
 
-The WARP client connection status, e.g. `connected`, `paused`.
+The WARP client connection status, for example, `connected`, `paused`.
 
 ## SwitchLocked
 
@@ -349,7 +361,7 @@ The tunnel type the device uses to establish a connection to the edge, if any. C
 
 Type: `string`
 
-The colo code where the client is connected to our API. e.g. `DFW` or `none`.
+The colo code where the client is connected to our API, for example, `DFW` or `none`.
 
 ## WiFiStrengthDBM
 

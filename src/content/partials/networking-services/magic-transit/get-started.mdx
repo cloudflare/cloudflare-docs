@@ -146,6 +146,14 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 	<AnchorHeading title="Advertise prefixes" depth={2} />
 	<Render file="magic-transit/advertise-prefixes"	product="networking-services" />
 
+	<AnchorHeading title="Next steps" depth={2} />
+	<Markdown text={`
+After your prefixes are advertised, configure your DDoS protection settings:
+
+1. Review and customize your [DDoS protection](/magic-transit/ddos/) settings, including [network-layer DDoS managed rulesets](/ddos-protection/managed-rulesets/network/).
+2. If your network handles TCP traffic, enable [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/). If your network receives DNS over UDP traffic, enable [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/). These systems provide stateful analysis beyond the managed rulesets.
+	`} inline={false} />
+
   </>
   )
 }

@@ -1,17 +1,21 @@
 ---
 title: Cloudflare for SaaS
 pcx_content_type: how-to
+description: Configure Cloudflare for SaaS with Regional Services and Customer Metadata Boundary.
+products:
+  - data-localization
+  - cloudflare-for-saas
 sidebar:
   order: 5
 ---
 
 import { TabItem, Tabs, DashButton } from "~/components";
 
-In the following sections, we will give you some details about how to configure Cloudflare for SaaS with Regional Services and Customer Metadata Boundary.
+The following sections describe how to configure Cloudflare for SaaS with Regional Services and Customer Metadata Boundary to control where your custom hostnames are processed and where logs are stored.
 
 ## Regional Services
 
-To configure Regional Services for both hostnames [proxied](/dns/proxy-status/) through Cloudflare and the fallback origin, follow these steps for the dashboard or API configuration:
+To configure Regional Services for both hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and the fallback origin, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

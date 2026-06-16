@@ -2,15 +2,13 @@
 {}
 ---
 
-Network Flow (formerly Magic Network Monitoring) customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. Network Flow uses the same DDoS attack detection rules that protect Cloudflare's global network to generate these alerts.
+An sFlow DDoS attack rule (beta) alerts you when a DDoS attack is detected in your network traffic. Network Flow (formerly Magic Network Monitoring) uses the same DDoS detection rules that protect Cloudflare's global network to identify these attacks.
 
-Only customers that send sFlow data to Cloudflare can configure a sFlow DDoS attack rule.
-
-You can only configure an sFlow DDoS attack rule via Cloudflare's API. The Cloudflare dashboard does not currently support configuring sFlow DDoS attack rules.
+To use sFlow DDoS attack rules, you must send sFlow data to Cloudflare. You can only configure these rules through the [Network Flow Rules API](/api/resources/magic_network_monitoring/subresources/rules/) — they are not available in the dashboard.
 
 ## Send sFlow data from your network to Cloudflare
 
-You can export sFlow data of your network traffic to Cloudflare via Network Flow. There are [specific brands and models](/network-flow/routers/supported-routers/) of routers that are capable of generating sFlow data. Make sure to check the router specifications to ensure that it is able to export sFlow data. To configure sFlow exports to Network Flow, refer to [Configure sFlow](/network-flow/routers/sflow-config/).
+To send sFlow data to Cloudflare, your router must support sFlow exports. Refer to [Supported routers](/network-flow/routers/supported-routers/) to verify compatibility, and [Configure sFlow](/network-flow/routers/sflow-config/) for setup instructions.
 
 ## Rule configuration fields
 
@@ -20,7 +18,7 @@ You can export sFlow data of your network traffic to Cloudflare via Network Flow
 | **Rule type** | advanced_ddos |
 | **Prefix Match** | The field `prefix_match` determines how IP matches are handled. <br/><br/>**Subnet** (recommended): Automatically advertise if the attacked IPs are within a subnet of a public IP prefix that can be advertised by Magic Transit.<br/><br/>**Exact**: Automatically advertise if the attacked IPs are an exact match with a public IP prefix that can be advertised by Magic Transit.<br/><br/>**Supernet**: Automatically advertise if the attacked IPs are a supernet of a public IP prefix that can be advertised by Magic Transit. |
 | **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. To learn more, refer to [Auto-advertisement](/network-flow/rules/#rule-auto-advertisement). |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a Classless Inter-Domain Routing (CIDR) range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and see an example, refer to [Rule IP prefixes](/network-flow/rules/#rule-ip-prefixes). |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and see an example, refer to [Rule IP prefixes](/network-flow/rules/#rule-ip-prefixes). |
 
 ## API documentation
 

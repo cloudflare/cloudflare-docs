@@ -1,0 +1,52 @@
+---
+pcx_content_type: reference
+title: RtkNavigationBar
+description: API reference for RtkNavigationBar component (iOS Library)
+products:
+  - realtime
+---
+
+A navigation bar with a title label and a close or back button.
+Used for modal screens such as chat, polls, and participant lists.
+
+## Initializer parameters
+
+| Parameter | Type     | Required | Default | Description                                    |
+| --------- | -------- | -------- | ------- | ---------------------------------------------- |
+| `title`   | `String` | ✅       | -       | The title text displayed in the navigation bar |
+
+## Properties
+
+| Property     | Type                  | Required | Default | Description                                               |
+| ------------ | --------------------- | -------- | ------- | --------------------------------------------------------- |
+| `titleLabel` | `RtkLabel`            | -        | -       | The label displaying the navigation bar title (read-only) |
+| `leftButton` | `RtkControlBarButton` | -        | -       | The close or back button on the left side (read-only)     |
+
+## Methods
+
+| Method                          | Return Type | Description                                       |
+| ------------------------------- | ----------- | ------------------------------------------------- |
+| `setBackButtonClick(callBack:)` | `Void`      | Sets the tap handler for the back or close button |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let navBar = RtkNavigationBar(title: "Participants")
+view.addSubview(navBar)
+```
+
+### With back button handler
+
+```swift
+import RealtimeKitUI
+
+let navBar = RtkNavigationBar(title: "Chat")
+navBar.setBackButtonClick {
+    self.dismiss(animated: true)
+}
+view.addSubview(navBar)
+```

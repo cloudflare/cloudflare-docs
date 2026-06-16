@@ -35,6 +35,10 @@
             "value": "https://llama.meta.com"
         },
         {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-05-30"
+        },
+        {
             "property_id": "terms",
             "value": "https://llama.meta.com/llama3/license/#"
         }

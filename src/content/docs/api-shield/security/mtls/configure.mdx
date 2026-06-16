@@ -1,11 +1,16 @@
 ---
 title: Configure mTLS
 pcx_content_type: how-to
+description: Set up mTLS authentication rules to require client certificates for API hosts.
+products:
+  - api-shield
 sidebar:
   order: 2
 head:
   - tag: title
     content: Configure mTLS
+tags:
+  - mTLS
 ---
 
 import { Render } from "~/components";
@@ -25,7 +30,7 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 :::caution
 
-By default, API Shield mTLS uses client certificates issued by a Cloudflare-managed CA. If you need to use certificates issued by another CA, you can use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
+By default, API Shield mTLS uses client certificates issued by a Cloudflare-managed CA. If you need to use certificates issued by another CA, refer to [Bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
 :::
 
 ## Create an mTLS rule via the Cloudflare dashboard
@@ -44,7 +49,7 @@ The second expression uses the `http.request.uri.path` field, combined with the 
 
 Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
 
-For enhanced security, Cloudflare recommends that you validate the issuer Subject Key Identifier (SKI) hash alongside the verified certificate field. This ensures that only requests presenting a valid client certificate with a specific issuer are allowed.
+Cloudflare recommends also validating the issuer Subject Key Identifier (SKI) hash. Without this check, any valid client certificate is accepted regardless of which certificate authority (CA) issued it. Adding the SKI hash restricts access to certificates from a specific CA.
 
 You can implement this by using an expression similar to the following:
 
@@ -74,5 +79,5 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 
 :::caution
 
-This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/).
+This check only applies to client certificates issued by the Cloudflare-managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/).
 :::

@@ -2,13 +2,15 @@
 pcx_content_type: configuration
 title: R2 Data Catalog
 description: Write data as Apache Iceberg tables to R2 Data Catalog
+products:
+  - pipelines
 sidebar:
   order: 2
 ---
 
 R2 Data Catalog sinks write processed data from pipelines as [Apache Iceberg](https://iceberg.apache.org/) tables to [R2 Data Catalog](/r2/data-catalog/). Iceberg tables provide ACID transactions, schema evolution, and time travel capabilities for analytics workloads.
 
-To create an R2 Data Catalog sink, run the [`pipelines sinks create`](/workers/wrangler/commands/#pipelines-sinks-create) command and specify the sink type, target bucket, namespace, and table name:
+To create an R2 Data Catalog sink, run the [`pipelines sinks create`](/workers/wrangler/commands/pipelines/#pipelines-sinks-create) command and specify the sink type, target bucket, namespace, and table name:
 
 ```bash
 npx wrangler pipelines sinks create my-sink \
@@ -58,11 +60,13 @@ Control when data is written to Iceberg tables. Configure based on your needs:
 
 ### Roll interval
 
-Set how often files are written (default: 300 seconds):
+Set how often files are written (default: 300 seconds, minimum: 60 seconds):
 
 ```bash
 --roll-interval 60  # Write files every 60 seconds
 ```
+
+The minimum interval for R2 Data Catalog sinks is 60 seconds to prevent compaction issues. Iceberg tables require periodic compaction to merge small files into larger ones for optimal query performance. Writing too often creates merge conflicts with the compaction process.
 
 ### Roll size
 

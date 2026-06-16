@@ -1,0 +1,57 @@
+---
+pcx_content_type: reference
+title: Types
+description: TypeScript type definitions for the Flagship binding, including Flagship, FlagshipEvaluationContext, and FlagshipEvaluationDetails.
+sidebar:
+  order: 1
+products:
+  - flagship
+---
+
+The Flagship binding uses the following TypeScript types. These are available from the `@cloudflare/workers-types` package after running `npx wrangler types`.
+
+## `Flagship`
+
+The binding type. Each Flagship binding in your Wrangler configuration is typed as `Flagship` on the `Env` interface.
+
+```ts
+interface Env {
+	FLAGS: Flagship;
+}
+```
+
+Refer to the [methods reference](/flagship/binding/methods/) for the full list of evaluation methods available on the binding.
+
+## `FlagshipEvaluationContext`
+
+A record of attribute names to values passed for [targeting rules](/flagship/targeting/). Use this to provide user attributes such as user ID, country, or plan type.
+
+```ts
+type FlagshipEvaluationContext = Record<string, string | number | boolean>;
+```
+
+## `FlagshipEvaluationDetails`
+
+Returned by the `*Details` methods. Contains the evaluated value and metadata about how Flagship resolved the flag.
+
+```ts
+interface FlagshipEvaluationDetails<T> {
+	flagKey: string;
+	value: T;
+	variant?: string;
+	reason?: string;
+	errorCode?: string;
+	errorMessage?: string;
+}
+```
+
+| Property       | Type     | Description                                                                            |
+| -------------- | -------- | -------------------------------------------------------------------------------------- |
+| `flagKey`      | `string` | The key of the evaluated flag.                                                         |
+| `value`        | `T`      | The resolved flag value.                                                               |
+| `variant`      | `string` | The name of the matched variation, if any.                                             |
+| `reason`       | `string` | Why the flag resolved to this value (for example, `"TARGETING_MATCH"` or `"DEFAULT"`). |
+| `errorCode`    | `string` | An error code if evaluation failed (for example, `"TYPE_MISMATCH"` or `"GENERAL"`).    |
+| `errorMessage` | `string` | A human-readable description of the error.                                             |
+
+Refer to [evaluation reasons and error codes](/flagship/reference/evaluation-reasons/) for the full list of possible values.

@@ -56,3 +56,9 @@ Time the event was ingested.
 Type: `bool`
 
 Indicates whether the device was toggled or not.
+
+## UserEmail
+
+Type: `string`
+
+The Access user email.

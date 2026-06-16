@@ -2,14 +2,29 @@
 dist/
 distmd/
 distllms/
+
 # generated types
 .astro/
 
+# Astro build cache
+.astro-cache/
+
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
+!.agents/skills/
+!.agents/commands/
+!.agents/agents/
+!.flue/.agents/
+!.flue/.agents/**
 
 # dependencies
 node_modules/
+
+# lockfiles from other package managers
+yarn.lock
+package-lock.json
+bun.lockb
+bun.lock
 
 # logs
 npm-debug.log*
@@ -18,11 +33,12 @@ yarn-error.log*
 pnpm-debug.log*
 
 # environment variables
-.env
+.env*
 .env.production
 
 # macOS-specific files
 .DS_Store
+
 /test-results/
 /playwright-report/
 /blob-report/
@@ -33,14 +49,18 @@ pnpm-debug.log*
 /worker/functions/
 
 .idea
+.ignore
 
 tools/relevant_changed_files.txt
 
-# Configuration of AI tools we don't directly support in this repo (generated via rulesync)
-.rulesync/
-.claude/
-CLAUDE.md
-.cursor/
-.github/prompts/
-.github/agents/
-agents/
+# certain versions of opencode mistakenly commit package-lock.json
+.opencode/package-lock.json
+
+# Flue agents build output, secrets, and isolated workspace artifacts
+.flue/dist/
+.flue/.env*
+.flue/.wrangler/
+.flue/.wrangler/tmp/
+.flue/.flue-vite/
+.flue/.flue-vite.wrangler.jsonc
+.flue/node_modules/

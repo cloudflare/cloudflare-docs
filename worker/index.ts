@@ -2,77 +2,164 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 
-import { htmlToMarkdown } from "../src/util/markdown";
-
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
 	maxStaticRules: 10_000, // Usually 2_000
 	maxDynamicRules: 2_000, // Usually 100
 });
 
+const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
+
+// RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
+// extension. The Cloudflare ASSETS binding cannot serve extensionless files
+// from dot-prefixed directories, so this must be handled directly in the worker.
+const API_CATALOG = JSON.stringify({
+	linkset: [
+		{
+			anchor: "https://developers.cloudflare.com/api/",
+			"service-desc": [
+				{
+					href: "https://developers.cloudflare.com/openapi.json",
+					type: "application/json",
+				},
+			],
+			"service-doc": [
+				{
+					href: "https://developers.cloudflare.com/api/index.md",
+					type: "text/markdown",
+				},
+				{
+					href: "https://developers.cloudflare.com/api/",
+					type: "text/html",
+				},
+			],
+			status: [
+				{
+					href: "https://www.cloudflarestatus.com/api/v2/status.json",
+					type: "application/json",
+				},
+			],
+		},
+	],
+});
+
+/**
+ * When a redirect response is returned for an index.md request, rewrite the
+ * Location header so the agent stays in Markdown land instead of landing on
+ * an HTML page.
+ *
+ * Only rewrites relative (same-origin) Location values — external redirects
+ * (e.g. to GitHub) are left untouched because appending index.md to a
+ * non-docs URL would be nonsensical.
+ */
+function rewriteRedirectForMarkdown(
+	redirect: Response,
+	requestUrl: URL,
+): Response {
+	const location = redirect.headers.get("Location");
+	if (!location) return redirect;
+
+	try {
+		const dest = new URL(location, requestUrl.origin);
+
+		// Only rewrite same-origin redirects that point to a docs path (trailing /)
+		if (dest.origin !== requestUrl.origin) return redirect;
+		if (!dest.pathname.endsWith("/")) return redirect;
+
+		dest.pathname += "index.md";
+
+		const headers = new Headers(redirect.headers);
+		headers.set("Location", dest.pathname + dest.search + dest.hash);
+		return new Response(redirect.body, {
+			status: redirect.status,
+			headers,
+		});
+	} catch {
+		return redirect;
+	}
+}
+
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		if (request.url.endsWith("/llms-full.txt")) {
-			const { pathname } = new URL(request.url);
-			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
+		const url = new URL(request.url);
+		const { pathname } = url;
 
-			return new Response(res?.body, {
+		if (pathname === "/.well-known/api-catalog") {
+			return new Response(API_CATALOG, {
+				headers: {
+					"Content-Type":
+						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+				},
+			});
+		}
+
+		if (pathname === "/.well-known/mcp/server-card.json") {
+			const object = await this.env.MIDDLECACHE.get(
+				"v1/cloudflare-mcps/server-card.json",
+			);
+			if (!object) {
+				return new Response("server-card.json not found", { status: 404 });
+			}
+			return new Response(object.body, {
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+				},
+			});
+		}
+
+		if (pathname === "/openapi.json") {
+			const object = await this.env.MIDDLECACHE.get(
+				"v1/cloudflare-api-schemas/openapi.json",
+			);
+			if (!object) {
+				return new Response("openapi.json not found", { status: 404 });
+			}
+			return new Response(object.body, {
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+				},
+			});
+		}
+
+		if (pathname.endsWith("/llms-full.txt")) {
+			// pathname is e.g. "/llms-full.txt" or "/workers/llms-full.txt"
+			// R2 key: "v1/cloudflare-docs-llms-full/llms-full.txt" or
+			//         "v1/cloudflare-docs-llms-full/workers/llms-full.txt"
+			const r2Key = `${LLMS_FULL_R2_PREFIX}${pathname}`;
+			const object = await this.env.MIDDLECACHE.get(r2Key);
+
+			if (!object) {
+				return new Response("llms-full.txt not found", { status: 404 });
+			}
+
+			return new Response(object.body, {
 				headers: {
 					"Content-Type": "text/markdown; charset=utf-8",
 				},
 			});
 		}
 
-		if (request.url.endsWith("/index.md")) {
-			const htmlUrl = request.url.replace("index.md", "");
-			const res = await this.env.ASSETS.fetch(htmlUrl, request);
-
-			if (res.status === 404) {
-				const redirect = await redirectsEvaluator(
-					new Request(htmlUrl, request),
-					this.env.ASSETS,
-				);
-
-				if (redirect) {
-					const location = redirect.headers.get("location");
-
-					return new Response(null, {
-						status: redirect.status,
-						headers: {
-							Location: location + "index.md",
-						},
-					});
-				}
-
-				return res;
-			}
-
-			if (
-				res.status === 200 &&
-				res.headers.get("content-type")?.startsWith("text/html")
-			) {
-				const html = await res.text();
-
-				const markdown = await htmlToMarkdown(html, request.url);
-
-				if (!markdown) {
-					return new Response("Not Found", { status: 404 });
-				}
-
-				return new Response(markdown, {
-					headers: {
-						"content-type": "text/markdown; charset=utf-8",
-						"x-robots-tag": "noindex",
-					},
-				});
-			}
-		}
+		const isMarkdownRequest = url.pathname.endsWith("/index.md");
 
 		try {
 			try {
-				const redirect = await redirectsEvaluator(request, this.env.ASSETS);
+				// For index.md requests, evaluate redirects against the base path
+				// (without the index.md suffix) so that redirect rules written for
+				// the HTML path (e.g. /learning-paths/ → /resources/) still fire.
+				const evalRequest = isMarkdownRequest
+					? new Request(
+							url.origin +
+								url.pathname.slice(0, -"index.md".length) +
+								url.search,
+							request,
+						)
+					: request;
+
+				const redirect = await redirectsEvaluator(evalRequest, this.env.ASSETS);
 				if (redirect) {
-					return redirect;
+					return isMarkdownRequest
+						? rewriteRedirectForMarkdown(redirect, url)
+						: redirect;
 				}
 			} catch (error) {
 				console.error("Could not evaluate redirects", error);
@@ -88,7 +175,9 @@ export default class extends WorkerEntrypoint<Env> {
 					this.env.ASSETS,
 				);
 				if (redirect) {
-					return redirect;
+					return isMarkdownRequest
+						? rewriteRedirectForMarkdown(redirect, url)
+						: redirect;
 				}
 			} catch (error) {
 				console.error(

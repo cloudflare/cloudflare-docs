@@ -1,6 +1,8 @@
 ---
 title: Cloudflare origin CA
 pcx_content_type: how-to
+products:
+  - ssl
 sidebar:
   order: 3
   label: Setup
@@ -8,7 +10,15 @@ head: []
 description: Encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
 ---
 
-import { Details, FeatureTable, Render, TabItem, Tabs, DashButton, GlossaryTooltip } from "~/components";
+import {
+	Details,
+	FeatureTable,
+	Render,
+	TabItem,
+	Tabs,
+	DashButton,
+	GlossaryTooltip,
+} from "~/components";
 
 If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
@@ -27,6 +37,10 @@ Refer to [Troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/#
 Using Cloudflare origin CA certificates does not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 :::
 
+:::note[Known limitation]
+Cloudflare does not currently send expiration notifications for origin CA certificates. If you rely on long-lived origin CA certificates, track their expiration in your own certificate inventory or monitoring system.
+:::
+
 ---
 
 ## Deploy an Origin CA certificate
@@ -35,11 +49,11 @@ Using Cloudflare origin CA certificates does not prevent you from using [delegat
 
 To create an Origin CA certificate in the dashboard:
 
-1. In the Cloudflare dashboard, go to the **Origin Server** page.
+1. Go to the **Origin Server** page.
 
    <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
 
-2. Select **Create Certificate**.
+2. On the **Origin Certificates** tab, select **Create Certificate**.
 
 3. Choose either:
    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
@@ -66,12 +80,12 @@ To add an Origin CA certificate to your origin web server
 
 - [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
 - [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
-- [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
-- [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
+- [Microsoft IIS 7](https://knowledge.digicert.com/tutorials/iis7-create-csr-install-ssl-certificate)
+- [Microsoft IIS 8 and 8.5](https://knowledge.digicert.com/tutorials/iis-8-create-csr-install-ssl-certificate)
 - [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
 - [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
-- [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
-- [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
+- [Apache Tomcat](https://knowledge.digicert.com/tutorials/tomcat-install-your-ssl-certificate-on-a-tomcat-server)
+- [Amazon Web Services](https://knowledge.digicert.com/tutorials/amazon-aws-create-csr-install-ssl-certificate)
 - [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
 - [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
 
@@ -88,7 +102,10 @@ After you have installed the Origin CA certificate on your origin web server, up
 
 If all your origin hosts are protected by Origin CA certificates or publicly trusted certificates:
 
-1. Go to **SSL/TLS**.
+1. Go to the **SSL/TLS** overview page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls" />
+
 2. For **SSL/TLS encryption mode**, select **Full (strict)**.
 
 If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](/rules/page-rules/).
@@ -106,11 +123,11 @@ To prevent visitors from seeing warnings about an insecure certificate, you may 
 
 To revoke a certificate:
 
-1. In the Cloudflare dashboard, go to the **Origin Server** page.
+1. Go to the **Origin Server** page.
 
    <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
 
-2. In **Origin Certificates**, choose a certificate.
+2. On the **Origin Certificates** tab, choose a certificate.
 3. Select **Revoke**.
 
 ## Additional details
@@ -130,7 +147,7 @@ Wildcards may only cover one level, but can be used multiple times on the same c
 
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls. To authenticate, use either [Origin CA Keys](/fundamentals/api/get-started/ca-keys/) or an [API token](/fundamentals/api/get-started/create-token/) with **Permissions** that include `Zone`-`SSL and Certificates`-`Edit`.
+To automate processes involving Origin CA certificates, use the following API calls. To authenticate, use an [API token](/fundamentals/api/get-started/create-token/) with **Permissions** that include `Zone`-`SSL and Certificates`-`Edit`.
 
 | Operation                                                                   | Method   | Endpoint                           |
 | --------------------------------------------------------------------------- | -------- | ---------------------------------- |

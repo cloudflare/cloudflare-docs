@@ -1,6 +1,9 @@
 ---
 pcx_content_type: reference
 title: Workers API reference
+description: Complete reference for the R2 in-Worker API, including bucket and object operations.
+products:
+  - r2
 ---
 
 import { Type, MetaInfo, WranglerConfig, TabItem, Tabs } from "~/components";
@@ -216,7 +219,7 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
 - `text` <Type text="(): Promise<string>" />
 
-  - Returns a Promise that resolves to an string containing the object's value.
+  - Returns a Promise that resolves to a string containing the object's value.
 
 - `json` <Type text="<T>() : Promise<T>" />
 

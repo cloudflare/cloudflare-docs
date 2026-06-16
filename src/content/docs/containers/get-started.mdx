@@ -1,8 +1,11 @@
 ---
 pcx_content_type: get-started
 title: Getting started
+description: Deploy your first Container on Cloudflare by building an image, configuring a Worker, and routing requests to container instances.
 sidebar:
   order: 2
+products:
+  - containers
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
@@ -56,7 +59,7 @@ During this time, requests are sent to the Worker, but calls to the Container wi
 
 ### Check deployment status
 
-After deploying, run the following command to show a list of containers containers in your Cloudflare account, and their deployment status:
+After deploying, run the following command to show a list of containers in your Cloudflare account, and their deployment status:
 
 <PackageManagers type="exec" pkg="wrangler" args="containers list" />
 
@@ -66,40 +69,18 @@ And see images deployed to the Cloudflare Registry with the following command:
 
 ### Make requests to Containers
 
-Now, open the URL for your Worker. It should look something like `https://hello-containers.YOUR_ACCOUNT_NAME.workers.dev`.
+Now, open the URL for your Worker. It should look something like `https://hello-containers.<YOUR_WORKERS_SUBDOMAIN>.workers.dev`.
 
 If you make requests to the paths `/container/1` or `/container/2`, your Worker routes requests to specific containers.
 Each different path after "/container/" routes to a unique container.
 
-If you make requests to `/lb`, you will load balanace requests to one of 3 containers chosen at random.
+If you make requests to `/lb`, you will load balance requests to one of 3 containers chosen at random.
 
 You can confirm this behavior by reading the output of each request.
 
 ## Understanding the Code
 
 Now that you've deployed your first container, let's explain what is happening in your Worker's code, in your configuration file, in your container's code, and how requests are routed.
-
-## Each Container is backed by its own Durable Object
-
-Incoming requests are initially handled by the Worker, then passed to a container-enabled [Durable Object](/durable-objects).
-To simplify and reduce boilerplate code, Cloudflare provides a [`Container` class](https://github.com/cloudflare/containers) as part of the `@cloudflare/containers` NPM package.
-
-You don't have to be familiar with Durable Objects to use Containers, but it may be helpful
-to understand the basics.
-
-Each Durable Object runs alongside an individual container instance, manages starting and stopping it, and
-can interact with the container through its ports. Containers will likely run near the Worker instance
-requesting them, but not necessarily. Refer to ["How Locations are Selected"](/containers/platform-details/#how-are-locations-are-selected)
-for details.
-
-In a simple app, the Durable Object may just boot the container and proxy requests to it.
-
-In a more complex app, having container-enabled Durable Objects allows you to route requests to individual stateful container
-instances, manage the container lifecycle, pass in custom starting commands and environment variables to containers, run hooks
-on container status changes, and more.
-
-See the [documentation for Durable Object container methods](/durable-objects/api/container/) and the
-[`Container` class repository](https://github.com/cloudflare/containers) for more details.
 
 ### Configuration
 
@@ -113,25 +94,23 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 		{
 			"max_instances": 10,
 			"class_name": "MyContainer",
-			"image": "./Dockerfile"
-		}
+			"image": "./Dockerfile",
+		},
 	],
 	"durable_objects": {
 		"bindings": [
 			{
 				"name": "MY_CONTAINER",
-				"class_name": "MyContainer"
-			}
-		]
+				"class_name": "MyContainer",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"MyContainer"
-			]
-		}
-	]
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
 }
 ```
 
@@ -139,7 +118,7 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 
 Important points about this config:
 
-- `image` points to a Dockerfile or to a directory containing a Dockerfile.
+- `image` points to a Dockerfile, to a directory containing a Dockerfile, or to a fully qualified image reference such as `registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>:<TAG>`.
 - `class_name` must be a [Durable Object class name](/durable-objects/api/base/).
 - `max_instances` declares the maximum number of simultaneously running container instances
   that will run.
@@ -202,7 +181,9 @@ This defines basic configuration for the container:
 - `envVars` sets environment variables that will be passed to the container when it starts.
 - `onStart`, `onStop`, and `onError` are hooks that run when the container starts, stops, or errors, respectively.
 
-See the [Container class documentation](/containers/container-package) for more details and configuration options.
+The `Container` class itself extends [`DurableObject`](/durable-objects/), so your subclass has access to the full Durable Object API. The Durable Object handles routing, lifecycle, and persistent state, while the container process runs your image inside a Linux VM. This means you can use [`this.ctx.storage`](/durable-objects/api/sqlite-storage-api/) to persist data that survives container restarts and resides close to the container itself.
+
+Refer to the [Container class reference](/containers/container-class/) and the [low-level Durable Object container API](/durable-objects/api/container/) for more details.
 
 #### Routing to Containers
 
@@ -243,29 +224,28 @@ This allows for multiple ways of using Containers:
   Container instances.
 
 :::note
-Currently, routing requests to one of many interchangeable Container instances is accomplished
-with the `getRandom` helper.
+Today, routing requests to one of many interchangeable Container instances uses the
+`getRandom` helper.
 
-This is temporary — we plan to add native support for latency-aware autoscaling and load balancing in the coming months.
+It randomly selects one of a fixed number of instances for each request.
 :::
 
 ## View Containers in your Dashboard
 
-The [Containers Dashboard](http://dash.cloudflare.com/?to=/:account/workers/containers) shows you helpful
+The [Containers Dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers) shows you helpful
 information about your Containers, including:
 
 - Status and Health
 - Metrics
 - Logs
-- A link to associated Workers and Durable Objects
 
-After launching your Worker, navigate to the Containers Dashboard
-by clicking on "Containers" under "Workers & Pages" in your sidebar.
+After launching your Worker, go to the Containers Dashboard by selecting
+**Workers & Pages** > **Containers** in the dashboard sidebar.
 
 ## Next Steps
 
 To do more:
 
 - Modify the image by changing the Dockerfile and calling `wrangler deploy`
-- Review our [examples](/containers/examples) for more inspiration
-- Get [more information on the Containers Beta](/containers/beta-info)
+- Review our [examples](/containers/examples/) for more inspiration
+- Review the [Frequently Asked Questions](/containers/faq/) for current platform behavior and limitations

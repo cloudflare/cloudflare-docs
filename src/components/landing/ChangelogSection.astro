@@ -1,0 +1,166 @@
+---
+import { getChangelogs } from "~/util/changelog";
+import { getEntries } from "astro:content";
+import { format } from "date-fns";
+import CornerMarks from "./CornerMarks.astro";
+import HalftoneBackground from "./HalftoneBackground.astro";
+import RightArrow from "./RightArrow.astro";
+import SectionHeading from "./SectionHeading.astro";
+import ViewAllLink from "./ViewAllLink.astro";
+
+const COMPUTE = new Set([
+	"workers",
+	"pages",
+	"containers",
+	"workflows",
+	"durable-objects",
+	"queues",
+	"pipelines",
+	"cloudflare-for-platforms",
+	"workers-vpc",
+]);
+const STORAGE = new Set(["r2", "d1", "kv", "hyperdrive"]);
+const AI = new Set([
+	"workers-ai",
+	"ai-gateway",
+	"ai-search",
+	"agents",
+	"vectorize",
+	"browser-rendering",
+	"ai-crawl-control",
+]);
+const MEDIA = new Set(["images", "stream", "realtime"]);
+
+function catColor(id: string) {
+	if (COMPUTE.has(id)) return "#0a95ff";
+	if (STORAGE.has(id)) return "#ee0ddb";
+	if (AI.has(id)) return "#19e306";
+	if (MEDIA.has(id)) return "#9616ff";
+	return "#f56500";
+}
+
+const all = await getChangelogs({
+	filter: (e) => !e.data.hidden,
+});
+
+const entries = await Promise.all(
+	all.slice(0, 8).map(async (entry) => {
+		const products = await getEntries(entry.data.products);
+		return {
+			title: entry.data.title,
+			description: entry.data.description,
+			dateFormatted: format(entry.data.date, "MMM dd, yyyy"),
+			dateShort: format(entry.data.date, "MMM dd"),
+			products: products.map((p) => ({
+				name: p.data.name,
+				id: p.id,
+				color: catColor(p.id),
+			})),
+			url: `/changelog/post/${entry.id}/`,
+		};
+	}),
+);
+
+const featured = entries[0];
+const grid = entries.slice(1);
+---
+
+{
+	entries.length > 0 && (
+		<section
+			id="changelog"
+			class="pt-10 pb-10 lg:pt-14 lg:pb-12"
+			aria-labelledby="changelog-heading"
+		>
+			<div class="mb-6 flex items-center justify-between sm:mb-8">
+				<div>
+					<SectionHeading id="changelog-heading" class="mb-2">
+						What's new
+					</SectionHeading>
+					<p class="text-foreground-muted max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg">
+						The latest features and improvements shipping across Cloudflare.
+					</p>
+				</div>
+				<ViewAllLink href="/changelog/">View Changelog</ViewAllLink>
+			</div>
+			<div class="border-border-100 bg-border-100 relative grid grid-cols-1 gap-px overflow-visible border md:grid-cols-2 xl:grid-cols-[5fr_3fr_3fr]">
+				<CornerMarks />
+
+				{featured && (
+					<a
+						href={featured.url}
+						class="group/card bg-background relative flex flex-col overflow-hidden p-6 no-underline md:col-span-full xl:col-auto xl:row-span-2"
+					>
+						<HalftoneBackground />
+
+						<div class="relative z-10 mb-4 flex items-center justify-between">
+							<div class="flex items-center gap-2.5">
+								<span
+									class="relative inline-flex size-3 shrink-0 items-center justify-center"
+									aria-hidden="true"
+								>
+									<span class="border-accent-100 animate-cl-pulse absolute size-3 rounded-full border will-change-[transform,opacity] motion-reduce:animate-none motion-reduce:opacity-25" />
+									<span class="border-accent-100 animate-cl-pulse absolute size-3 rounded-full border will-change-[transform,opacity] [animation-delay:1.5s] motion-reduce:animate-none motion-reduce:opacity-25" />
+									<span class="bg-accent-100 absolute size-[5px] rounded-full" />
+								</span>
+								<time class="text-foreground-muted font-mono text-xs tabular-nums">
+									{featured.dateFormatted}
+								</time>
+							</div>
+							{featured.products[0] && (
+								<span class="text-accent-100 font-mono text-xs tracking-widest uppercase">
+									{featured.products[0].name}
+								</span>
+							)}
+						</div>
+
+						<div class="relative z-10 mb-9 flex-1 pt-4">
+							<h3 class="text-foreground mb-2 text-xl leading-snug font-medium md:text-2xl">
+								{featured.title}
+							</h3>
+
+							<p class="text-foreground-muted max-w-[480px] text-sm leading-relaxed md:text-base">
+								{featured.description}
+							</p>
+						</div>
+
+						<span class="text-foreground-muted relative z-10 inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-focus-within/card:underline group-hover/card:underline">
+							Read update
+							<RightArrow class="transition-transform duration-150 group-hover/card:translate-x-0.5" />
+						</span>
+					</a>
+				)}
+
+				{grid.map((entry) => (
+					<a
+						href={entry.url}
+						class="group/card bg-background flex flex-col p-6 no-underline"
+					>
+						<div class="mb-4 flex items-center justify-between">
+							<time class="text-foreground-muted font-mono text-xs tabular-nums">
+								{entry.dateShort}
+							</time>
+							<span class="text-accent-100 font-mono text-xs tracking-widest uppercase">
+								{entry.products[0]?.name}
+							</span>
+						</div>
+						<div class="mb-6 flex-1">
+							<p class="text-foreground mb-2 line-clamp-2 text-base leading-snug font-medium md:text-lg">
+								{entry.title}
+							</p>
+
+							<p class="text-foreground-muted line-clamp-2 text-sm leading-relaxed md:text-base">
+								{entry.description}
+							</p>
+						</div>
+
+						<span class="text-foreground-muted inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-focus-within/card:underline group-hover/card:underline">
+							Read more
+							<RightArrow class="transition-transform duration-150 group-hover/card:translate-x-0.5" />
+						</span>
+					</a>
+				))}
+			</div>
+		</section>
+	)
+}

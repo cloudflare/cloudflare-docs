@@ -47,9 +47,9 @@ traceroute to 10.3.0.100 (10.3.0.100), 30 hops max, 60 byte packets
  5  10.3.0.100 (10.3.0.100)  370.519 ms  370.541 ms  518.152 ms
 ```
 
-## WARP client
+## Cloudflare One Client
 
-Some Linux distributions default to a very strict setting for [reverse path filtering](https://sysctl-explorer.net/net/ipv4/rp_filter/). This strict setting attempts to drop fake traffic as a security measure. Performing a `traceroute` with this setting on can unintentionally drop `traceroute` packets. If you use WARP on Linux, set a less strict policy before attempting to perform a `traceroute`:
+Some Linux distributions default to a very strict setting for [reverse path filtering](https://sysctl-explorer.net/net/ipv4/rp_filter/). This strict setting attempts to drop fake traffic as a security measure. Performing a `traceroute` with this setting on can unintentionally drop `traceroute` packets. If you use the Cloudflare One Client on Linux, set a less strict policy before attempting to perform a `traceroute`:
 
 ```sh
 sudo sysctl -w net.ipv4.conf.CloudflareWARP.rp_filter=2

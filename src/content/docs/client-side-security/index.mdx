@@ -1,0 +1,85 @@
+---
+title: Client-side security
+pcx_content_type: overview
+products:
+  - client-side-security
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Overview
+description: Cloudflare's client-side security is a comprehensive client-side
+  security and privacy solution that allows you to ensure the safety
+  of your website visitors' browsing environment.
+---
+
+import { Description, Feature, FeatureTable, Plan } from "~/components";
+
+<Description>
+
+Ensures the safety and privacy of your website visitors' browsing environment.
+
+</Description>
+
+<Plan type="all" />
+
+Websites load third-party scripts for analytics, ads, chat widgets, and payment forms. If an attacker compromises one of these scripts, they can steal visitor data directly from the browser, an attack known as a [client-side supply chain attack](https://www.cloudflare.com/learning/security/what-is-a-supply-chain-attack/). Client-side security (formerly Page Shield) gives you visibility into these resources and alerts you when something changes or looks malicious.
+
+Client-side security monitors scripts, connections, and cookies loaded by your website visitors. You can set up alert notifications and create content security rules to control which resources are allowed on your pages.
+
+Learn how to [get started](/client-side-security/get-started/).
+
+---
+
+## Features
+
+<Feature
+	header="Resource monitoring"
+	href="/client-side-security/detection/monitor-connections-scripts/"
+	cta="Monitor client-side resources"
+>
+	Displays information about client-side resources loaded in your domain's
+	pages.
+</Feature>
+
+<Feature
+	header="Page attribution"
+	href="/client-side-security/detection/monitor-connections-scripts/#view-details"
+	cta="Find resource occurrences"
+>
+	Find in which page a resource first appeared, and view a list of the latest
+	occurrences of the resource in your pages.
+</Feature>
+
+<Feature
+	header="Malicious script detection"
+	href="/client-side-security/detection/review-malicious-scripts/"
+	cta="Review malicious scripts"
+>
+	Detects malicious scripts in your pages using threat intelligence and machine
+	learning.
+</Feature>
+
+<Feature
+	header="Code change detection"
+	href="/client-side-security/detection/review-changed-scripts/"
+	cta="Review changed scripts"
+>
+	Detects any changes in the scripts loaded in your pages.
+</Feature>
+
+<Feature header="Alerts" href="/client-side-security/alerts/">
+	Receive notifications about newly detected scripts, scripts loaded from
+	unknown domains, new scripts considered malicious, or code changes in your
+	existing scripts.
+</Feature>
+
+<Feature header="Content security rules" href="/client-side-security/rules/">
+	Content security rules define allowed resources on your websites. Use content
+	security rules to enforce an allowlist of resources, effectively blocking
+	resources not included in your rules.
+</Feature>
+
+## Availability
+
+<FeatureTable id="security.page_shield" />

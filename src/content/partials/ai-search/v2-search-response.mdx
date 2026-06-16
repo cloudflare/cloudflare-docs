@@ -1,0 +1,25 @@
+---
+{}
+---
+
+The response contains the following fields:
+
+| Field                                      | Type   | Description                                                                          |
+| ------------------------------------------ | ------ | ------------------------------------------------------------------------------------ |
+| `search_query`                             | string | The query used for the search, which may be rewritten if query rewriting is enabled. |
+| `chunks`                                   | array  | An array of matching content chunks.                                                 |
+| `chunks[].id`                              | string | The unique identifier for the chunk.                                                 |
+| `chunks[].type`                            | string | The type of content, typically `text`.                                               |
+| `chunks[].score`                           | number | The overall match score between 0 and 1.                                             |
+| `chunks[].text`                            | string | The text content of the chunk.                                                       |
+| `chunks[].item`                            | object | Information about the source item.                                                   |
+| `chunks[].item.key`                        | string | The file path or URL of the source document.                                         |
+| `chunks[].item.timestamp`                  | number | Unix timestamp of when the item was last modified.                                   |
+| `chunks[].item.metadata`                   | object | Custom metadata associated with the source item.                                     |
+| `chunks[].scoring_details`                 | object | Breakdown of how the chunk was scored.                                               |
+| `chunks[].scoring_details.vector_score`    | number | The semantic similarity score (0 to 1).                                              |
+| `chunks[].scoring_details.keyword_score`   | number | The keyword (BM25) match score. Present when using hybrid or keyword retrieval.      |
+| `chunks[].scoring_details.keyword_rank`    | number | The keyword rank position.                                                           |
+| `chunks[].scoring_details.vector_rank`     | number | The vector rank position.                                                            |
+| `chunks[].scoring_details.reranking_score` | number | The reranking score (0 to 1). Present when reranking is enabled.                     |
+| `chunks[].scoring_details.fusion_method`   | string | The fusion method used (`rrf` or `max`). Present when using hybrid retrieval.        |

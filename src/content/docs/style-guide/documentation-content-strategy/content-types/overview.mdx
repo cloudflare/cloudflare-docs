@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Overview
+description: Write product overview pages.
+products:
+  - style-guide
 ---
 
 import { Render } from "~/components";
@@ -17,6 +20,10 @@ Accessible, welcoming, conversational, outspoken
 
 ```yaml
 pcx_content_type: overview
+products:
+  - product-a
+  - product-b
+  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
@@ -62,6 +69,11 @@ title: Overview
 weight: xx
 layout: overview
 pcx_content_type: overview
+description: <Cloudflare product> <what it does in one sentence>. Available on <plan types>.
+products:
+  - product-a
+  - product-b
+  - product-c
 ---
 
 # Cloudflare <product name> (or {{</*beta*/>}}Cloudflare <product name>{{</*/beta*/>}} for products in beta)

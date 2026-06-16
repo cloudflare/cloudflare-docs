@@ -1,0 +1,317 @@
+---
+title: "WAF Release - 2026-04-21"
+description: Cloudflare WAF managed rulesets 2026-04-21 release
+date: 2026-04-21
+---
+
+import { RuleID } from "~/components";
+
+This week's release introduces a new detection for a Remote Code Execution (RCE) vulnerability in Apache ActiveMQ (CVE-2026-34197) and an updated signature for Magento 2 - Unrestricted File Upload. Alongside these detections, we are continuing our work on rule refinements to provide deeper security insights for our customers.
+
+**Key Findings**
+
+- Apache ActiveMQ (CVE-2026-34197): A vulnerability in Apache ActiveMQ allows an unauthenticated, remote attacker to execute arbitrary code. This flaw occurs during the processing of specially crafted network packets, leading to potential full system compromise.
+
+- Magento 2 - Unrestricted File Upload - 2: This is a follow-up enhancement to our existing protections for Magento and Adobe Commerce.
+
+**Impact**
+
+Successful exploitation of these vulnerabilities could allow unauthenticated attackers to execute arbitrary code or gain full administrative control over affected servers. We strongly recommend applying official vendor patches for Apache ActiveMQ and Magento to address the underlying vulnerabilities.
+
+**Continuous Rule Improvements**
+
+We are continuously refining our managed rules to provide more resilient protection and deeper insights into attack patterns. To ensure an optimal security posture, we recommend consistently monitoring the Security Events dashboard and adjusting rule actions as these enhancements are deployed.
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="ff8df24181aa4573a81be531ee159e2e" />
+			</td>
+      <td>N/A</td>
+			<td>Command Injection - Generic 8 - uri</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a new detection. Previous description was "Command Injection - Generic 8 - uri - Beta"</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="9429b63c137247faadeb8a29a15308cf" />
+			</td>
+      <td>N/A</td>
+			<td>Command Injection - Generic 8 - body - Beta</td>
+      <td>Disabled</td>
+      <td>Disabled</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"Command Injection - Generic 8 - body" (ID:{" "}
+				<RuleID id="5b3ce84c099040c6a25cee2d413592e2" />). The rule previously known as "Command Injection - Generic 8" is now renamed to "Command Injection - Generic 8 - body".
+			</td>
+    </tr>		
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="85aaf5db9e0c4237b87e837e958047ed" />
+			</td>
+      <td>N/A</td>
+			<td>MySQL - SQLi - Executable Comment - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"MySQL - SQLi - Executable Comment - Body" (ID:{" "}
+				<RuleID id="8629bb58defe4193ab4d493c7bd2d8fa" />) The rule previously known as "MySQL - SQLi - Executable Comment" is now renamed to "MySQL - SQLi - Executable Comment - Body".
+			</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d19cd574c4644952881a6f3a582cc559" />
+			</td>
+      <td>N/A</td>
+			<td>MySQL - SQLi - Executable Comment - Headers</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+    </tr>  
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="407f9ec8a17348dfba3b9450a16639d3" />
+			</td>
+      <td>N/A</td>
+			<td>MySQL - SQLi - Executable Comment - URI</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+    </tr> 
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d07e6dbf15664b99b37b0d2544f24211" />
+			</td>
+      <td>N/A</td>
+			<td>Magento 2 - Unrestricted file upload - 2</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+    </tr>     
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="26ef21cb197b44fc8a98b7cebf170a17" />
+			</td>
+      <td>N/A</td>
+			<td>Apache ActiveMQ - Remote Code Execution - CVE:CVE-2026-34197</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+    </tr> 
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="7f7bc3d28a8e43bf97bd15d68c2ac1a7" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - Sleep Function - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - Sleep Function" (ID:{" "}
+				<RuleID id="2c333735f7b24566b17cb64ef77e8d54" />)
+			</td>
+    </tr>  
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="3872e5638bdf4bf0943a80394dacaeb8" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - Sleep Function - Headers</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>   
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="bebce8fadfa94ccab09eb74fed4c9ece" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - Sleep Function - URI</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>  
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="7a40eed5a8654a50a2598a821dfa64df" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - Probing - uri</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>  
+      <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="15c6b2ce033949b2a1a9f9454c62e2e7" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - Probing - header</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>  
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="fc9d800b7a724181af8d5650aab28ea1" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - Probing - body</td>
+      <td>Disabled</td>
+      <td>Disabled</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - Probing" (ID: <RuleID id="2c20b5e8684043f48620ff77b4026c88" />)
+			</td>
+    </tr>  
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="945c5aa9f45141dd872d7ec920999be0" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - Probing 2 </td>
+      <td>Disabled</td>
+      <td>Disabled</td>
+			<td>
+				This rule had duplicate detection logic and has been deprecated.
+			</td>
+    </tr> 
+    <tr>
+	      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f1771273700342758e73cf16d7aa0008" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - UNION in MSSQL - Body</td>
+      <td>Disabled</td>
+      <td>Disabled</td>
+			<td>
+				This rule has been renamed to differentiate from "SQLi - UNION in MSSQL" (ID: <RuleID id="ef7db598c7654c729d9db56fee5e35fd" />) and contains updated rule logic.
+			</td>
+    </tr> 
+    <tr> 
+	      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="3ffd242b4ba242ca965022d3a67d8561" />
+			</td>
+      <td>N/A</td>
+			<td>SQLi - UNION - 3</td>
+      <td>Disabled</td>
+      <td>Disabled</td>
+			<td>
+				This rule had duplicate detection logic and has been deprecated.
+			</td>
+    </tr> 
+      <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="5e69d599ad634c81abe36a5f0af34bba" />
+			</td>
+      <td>N/A</td>
+			<td>XSS, HTML Injection - Embed Tag  - URI</td>
+      <td>Disabled</td>
+      <td>Disabled</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>  
+      <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="2635275641bf44d4bad6a2e170282f38" />
+			</td>
+      <td>N/A</td>
+			<td>XSS, HTML Injection - Embed Tag - Headers</td>
+      <td>Log</td>
+      <td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+    </tr>  
+      <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="b3d033ea9f364574b0a2ec4223f4d718" />
+			</td>
+      <td>N/A</td>
+			<td>XSS, HTML Injection - IFrame Tag - Src and Srcdoc Attributes - Headers</td>
+      <td>Log</td>
+      <td>Disabled</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>  
+      <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="76c37816ef5c4997ab2080a36978def1" />
+			</td>
+      <td>N/A</td>
+			<td>XSS, HTML Injection - Link Tag - Headers</td>
+      <td>Log</td>
+      <td>Disabled</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>  
+      <tr>
+      <td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="7d6757e8a28f4853a72b4ce6ebd81645" />
+			</td>
+      <td>N/A</td>
+			<td>XSS, HTML Injection - Link Tag - URI</td>
+      <td>Disabled</td>
+      <td>Disabled</td>
+			<td>
+				This is a new detection. 
+			</td>
+    </tr>           
+</tbody>
+</table>

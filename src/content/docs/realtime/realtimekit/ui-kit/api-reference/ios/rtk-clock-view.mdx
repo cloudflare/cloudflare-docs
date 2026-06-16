@@ -1,0 +1,44 @@
+---
+pcx_content_type: reference
+title: RtkClockView
+description: API reference for RtkClockView component (iOS Library)
+products:
+  - realtime
+---
+
+A label that displays the elapsed meeting time in `HH:MM:SS` format.
+Updates every second while the meeting is active.
+
+## Initializer parameters
+
+| Parameter    | Type                | Required | Default                               | Description                                            |
+| ------------ | ------------------- | -------- | ------------------------------------- | ------------------------------------------------------ |
+| `meeting`    | `RealtimeKitClient` | ✅       | -                                     | The RealtimeKit client instance for the active meeting |
+| `appearance` | `RtkTextAppearance` | ❌       | `AppTheme.shared.clockViewAppearance` | Text appearance configuration for font and color       |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let clockView = RtkClockView(meeting: rtkClient)
+view.addSubview(clockView)
+```
+
+### With custom appearance
+
+```swift
+import RealtimeKitUI
+
+let appearance = RtkTextAppearance(
+    font: UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular),
+    textColor: .white
+)
+let clockView = RtkClockView(
+    meeting: rtkClient,
+    appearance: appearance
+)
+view.addSubview(clockView)
+```

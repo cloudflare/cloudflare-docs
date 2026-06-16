@@ -1,12 +1,15 @@
 ---
-title: Apache Trino
+title: Trino
+description: Connect Trino to R2 Data Catalog using the Iceberg REST catalog connector.
 pcx_content_type: example
 reviewed: 2025-09-05
+products:
+  - r2
 ---
 
 import { Steps } from "~/components";
 
-Below is an example of using [Apache Trino](https://trino.io/) to connect to R2 Data Catalog. For more information on connecting to R2 Data Catalog with Trino, refer to [Trino documentation](https://trino.io/docs/current/connector/iceberg.html).
+Below is an example of using [Trino](https://trino.io/) to connect to R2 Data Catalog. For more information on connecting to R2 Data Catalog with Trino, refer to [Trino documentation](https://trino.io/docs/current/connector/iceberg.html).
 
 ## Prerequisites
 
@@ -16,7 +19,9 @@ Below is an example of using [Apache Trino](https://trino.io/) to connect to R2 
 - Install [Docker](https://docs.docker.com/get-docker/) to run the Trino container.
 
 ## Setup
+
 Create a local directory for the catalog configuration and change directories to it
+
 ```bash
 mkdir -p trino-catalog && cd trino-catalog/
 ```

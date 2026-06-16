@@ -1,0 +1,151 @@
+---
+pcx_content_type: reference
+title: Custom dashboards
+sidebar:
+  order: 4
+description: Create custom dashboards to monitor log data.
+products:
+  - log-explorer
+---
+
+import { DashButton } from "~/components";
+
+Custom dashboards allow you to build personalized views that highlight the metrics most critical to your infrastructure and security posture. Move beyond standard product dashboards and consolidate data from multiple Cloudflare products into a single, unified view.
+
+<DashButton url="/?to=/:account/analytics/dashboards" />
+
+## What you can do
+
+Monitor security threats by tracking WAF blocks, bot scores, and threat patterns across your zones. Combine HTTP traffic data with security events to correlate attack patterns with traffic spikes.
+
+Analyze application performance by visualizing origin response times, cache hit ratios, and error rates. Identify slow endpoints and understand how latency varies by region or device type.
+
+Track business metrics by monitoring API usage, bandwidth consumption, and traffic patterns. Build executive dashboards that surface the KPIs that matter to your organization.
+
+Investigate incidents so that when something goes wrong, you can create focused dashboards that combine the specific signals relevant to your investigation. Log Explorer customers can turn log queries directly into dashboard charts for ongoing monitoring.
+
+## Availability
+
+Custom Dashboards are available to all Cloudflare customers.
+
+| Customer type | Dashboard limit |
+|---------------|-----------------|
+| All Cloudflare customers | Up to 25 dashboards |
+| Log Explorer customers | Up to 100 dashboards |
+
+## Get started
+
+### Start from a template
+
+Templates are the fastest way to get value from Custom Dashboards. Each template is designed around a specific use case and includes pre-configured charts that surface the most relevant metrics.
+
+| Template | Use case |
+|----------|----------|
+| **Bot monitoring** | Understand what automated traffic is hitting your site — distinguish good bots (search engines, monitoring) from bad actors |
+| **API Security** | Monitor your API endpoints for anomalies, track data transfer volumes, and identify unexpected access patterns |
+| **Account takeover** | Watch for credential stuffing attacks by tracking failed login attempts, leaked credential usage, and suspicious authentication patterns |
+| **API Performance** | Identify slow API endpoints, track error rates by endpoint, and monitor latency percentiles to catch regressions before users complain |
+| **Performance monitoring** | Find bottlenecks in your origin infrastructure — which hosts are slow, which paths have high TTFB, and how performance trends over time |
+
+After selecting a template, you can customize it by adding, removing, or modifying charts to fit your specific needs.
+
+### Build from scratch
+
+For specialized monitoring needs, create a blank dashboard and add charts that query exactly the data you need.
+
+Custom Dashboards support over 100 datasets available via the Cloudflare GraphQL API, including HTTP traffic, security events, Workers analytics, R2 Storage metrics, Load Balancing health, Zero Trust logs, DNS queries, and more.
+
+## Create charts
+
+### Natural language prompts
+
+Describe what you want to see in plain English, and AI will construct the appropriate visualization:
+
+- "Show me error rates by country for the last 24 hours."
+- "Compare cached vs uncached requests over time."
+- "What are my top 10 paths by request volume?"
+- "Display WAF blocks grouped by rule ID."
+
+This is the fastest way to explore your data when you have a question but are not sure which dataset or metric to use.
+
+### Manual configuration
+
+For precise control, configure each element of your chart:
+
+- **Dataset** — The data source to query (HTTP requests, security events, Workers metrics, etc.)
+- **Metrics** — What to measure (requests, bytes, duration) and how to aggregate it (sum, average, percentiles)
+- **Dimensions** — How to break down the data (by country, status code, hostname, etc.)
+- **Filters** — Conditions to narrow the data (specific paths, IP ranges, user agents, etc.)
+
+### Chart types
+
+Choose the visualization that best fits your data:
+
+| Chart type | Best for |
+|------------|----------|
+| **Timeseries** | Trends and patterns over time — traffic spikes, latency changes, error rate fluctuations |
+| **Bar** | Comparing values across categories — requests by country, errors by status code |
+| **Donut** | Understanding proportions — cache hit ratio, traffic distribution by content type |
+| **Map** | Geographic patterns — where your traffic originates, regional performance differences |
+| **Stat** | Single important numbers — total requests today, current error rate, p99 latency |
+| **Percentage** | Ratios and rates — cache hit percentage, bot traffic proportion |
+| **Top N** | Rankings — busiest endpoints, most blocked IPs, top user agents |
+
+#### Example: Build a security overview chart
+
+To track blocked requests by WAF rule:
+
+1. Select the **Security Events** dataset.
+2. Choose **Events** as the metric with **Total** aggregation.
+3. Add **Rule ID** as a dimension to group by rule.
+4. Filter to **Action equals Block** to focus on blocked traffic.
+5. Select **Bar** chart to compare rule effectiveness.
+
+The result shows which WAF rules are triggering most frequently, helping you understand your threat landscape and tune your security configuration.
+
+## Dashboard filters
+
+Dashboard filters apply to all charts at once, making it easy to focus your entire dashboard on a specific segment of traffic.
+
+Common uses:
+
+- **Time range** — Zoom into a specific incident window across all charts
+- **Hostname** — Focus on a single domain when you manage multiple properties
+- **Country** — Analyze traffic patterns for a specific region
+- **Status code** — Investigate error spikes by filtering to `5xx` responses
+
+When you add a filter, every chart on the dashboard updates to reflect the narrowed scope.
+
+## Log Explorer data
+
+:::note
+This feature is available to Log Explorer customers only.
+:::
+
+Log Explorer customers can create charts and dashboards using their raw, unsampled log data. This is useful when precision matters — for example, when monitoring for specific error conditions, tracking exact request counts for compliance reporting, or analyzing low-volume but high-impact events that might be missed in sampled data.
+
+Standard analytics datasets use sampled data, which provides fast, accurate trends for high-volume metrics. But for use cases like:
+
+- **Exact counts** — "How many requests from this specific IP hit our API today?"
+- **Rare events** — Monitoring for specific error codes or attack signatures that occur infrequently
+- **Compliance and auditing** — When you need precise numbers, not estimates
+- **Low-traffic endpoints** — Analyzing paths that do not generate enough volume for reliable sampling
+
+Log Explorer data gives you charts built from every logged event, not a statistical sample.
+
+When creating a chart, Log Explorer customers can select from Log Explorer datasets alongside the standard GraphQL analytics datasets.
+
+## Manage dashboards
+
+Dashboards are organized in a list view where you can see all dashboards in your account. From any dashboard, you can add, remove, or rearrange charts, and changes are saved automatically when you exit edit mode.
+
+Each chart has a menu with options to edit its configuration, duplicate it, or drill down into related data in Security Analytics or Log Search.
+
+## Further analysis
+
+Custom Dashboards are designed to work alongside other Cloudflare analytics tools:
+
+- **Security Analytics** — When a chart reveals suspicious traffic, drill down to investigate individual requests and see full request details
+- **Log Search** — Move from aggregated metrics to raw logs when you need to understand exactly what happened during an incident
+
+This workflow supports the typical investigation pattern: start with high-level dashboards to identify anomalies, then drill into detailed logs to understand root cause.

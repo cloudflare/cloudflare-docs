@@ -3,6 +3,9 @@ pcx_content_type: concept
 title: Reference architecture
 meta:
   title: Content type - Reference architecture
+description: Write reference architecture documentation.
+products:
+  - style-guide
 ---
 
 import { Render } from "~/components";
@@ -15,7 +18,7 @@ Reference architectures are typically very detailed. To describe a single archit
 
 :::note[Disambiguation]
 
-This page describes the content strategy for a reference architecture. For help with Cloudflare products, refer to [Reference archiectures](/reference-architecture/).
+This page describes the content strategy for a reference architecture. For help with Cloudflare products, refer to [Reference architectures](/reference-architecture/).
 
 :::
 
@@ -27,6 +30,10 @@ guiding, straightforward
 
 ```yaml
 pcx_content_type: reference-architecture
+products:
+  - product-a
+  - product-b
+  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
@@ -75,6 +82,11 @@ For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-
 ---
 title: Cloudflare Reference Architecture
 pcx_content_type: reference-architecture
+description: Reference architecture for <Cloudflare solution>, showing how <products> fit into existing infrastructure for <use case>. Designed for IT and security professionals.
+products:
+  - cloudflare-one
+  - cloudflare-wan
+  - cloudflare-network-firewall
 weight: 1
 meta:
     title: "Reference Architecture: An example Cloudflare solution"

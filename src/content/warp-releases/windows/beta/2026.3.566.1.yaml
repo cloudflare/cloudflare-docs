@@ -1,0 +1,35 @@
+releaseNotes: |-
+  This release contains minor fixes and introduces a brand new visual style for the client interface. The new Cloudflare One Client interface changes connectivity management from a toggle to a button and brings useful connectivity settings to the home screen. The redesign also introduces a collapsible navigation bar. When expanded, more client information can be accessed including connectivity, settings, and device profile information. If you have any feedback or questions, visit the [Cloudflare Community forum](https://community.cloudflare.com/t/introducing-the-new-cloudflare-one-client-interface/901362) and let us know.
+
+  **Changes and improvements**
+  - Consumer-only CLI commands are now clearly distinguished from Zero Trust commands.
+  - Added detailed QUIC connection metrics to diagnostic logs for better troubleshooting.
+  - Added monitoring for tunnel statistics collection timeouts.
+  - Switched tunnel congestion control algorithm to Cubic for improved reliability across platforms.
+  - Fixed packet capture failing on tunnel interface when the tunnel interface is renamed by SCCM VPN boundary support.
+  - Fixed unnecessary registration deletion caused by RDP connections in multi-user mode.
+  - Fixed increased tunnel interface start-up time due to a race between duplicate address detection (DAD) and disabling NetBT.
+  - Fixed tunnel failing to connect when the system DNS search list contains unexpected characters.
+  - Empty MDM files are now rejected instead of being incorrectly accepted as a single MDM config.
+  - Fixed an issue in proxy mode where the client could become unresponsive due to upstream connection timeouts.
+  - Fixed emergency disconnect state from a previous organization incorrectly persisting after switching organizations.
+  - Fixed initiating managed network detection checks when no network is available, which caused device profile flapping.
+
+  **Known issues**
+  - The client may unexpectedly terminate during captive portal login. To work around this issue, use a web browser to authenticate with the captive portal and then re-launch the client.
+  - An error indicating that Microsoft Edge can't read and write to its data directory may be displayed during captive portal login; this error is benign and can be dismissed.
+  - The client may become stuck in a `Connecting` state. To resolve this issue, reconnect the client by selecting **Disconnect** and then **Connect** in the client user interface. Alternatively, change the client's operation mode.
+  - The client may display an empty white screen upon the device waking from sleep. To resolve this issue, exit and then open the client to re-launch it.
+  - Canceling login during a single MDM configuration setup results in an empty page with no way to resume authentication. To work around this issue, exit and relaunch the client.
+  - For Windows 11 24H2 users, Microsoft has confirmed a regression that may lead to performance issues like mouse lag, audio cracking, or other slowdowns. Cloudflare recommends users experiencing these issues upgrade to a minimum [Windows 11 24H2 version KB5062553](https://support.microsoft.com/en-us/topic/july-8-2025-kb5062553-os-build-26100-4652-523e69cb-051b-43c6-8376-6a76d6caeefd) or higher for resolution.
+  - Devices with KB5055523 installed may receive a warning about `Win32/ClickFix.ABA` being present in the installer. To resolve this false positive, update Microsoft Security Intelligence to [version 1.429.19.0](https://www.microsoft.com/en-us/wdsi/definitions/antimalware-definition-release-notes?requestVersion=1.429.19.0) or later. This warning will be omitted from future release notes. This Microsoft Security Intelligence update was released in May 2025.
+  - DNS resolution may be broken when the following conditions are all true:
+    - The client is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while the client is connected.
+    To work around this issue, reconnect the client by selecting **Disconnect** and then **Connect** in the client user interface.
+version: 2026.3.566.1
+releaseDate: 2026-03-10T17:10:37.779Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2026.3.566.1
+packageSize: 51367936
+platformName: Windows

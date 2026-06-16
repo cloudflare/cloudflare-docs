@@ -1,33 +1,248 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { Combobox } from "@base-ui/react/combobox";
+import { Select } from "@base-ui/react/select";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
-import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ModelCardData } from "~/util/model-types";
+import { getModelAuthor } from "~/util/model-helpers";
 import { setSearchParams } from "~/util/url";
+import {
+	getCapabilities,
+	getLabelsByCategory,
+	hasProperty,
+} from "~/util/model-properties";
 
 type Filters = {
 	search: string;
 	authors: string[];
 	tasks: string[];
 	capabilities: string[];
+	providers: string[];
 };
 
-const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
+// URL/filter values are slugged (e.g. "cloudflare-hosted") while the underlying
+// model.hosting field stays "hosted" | "proxied". This map bridges the two.
+const PROVIDER_TO_HOSTING: Record<string, "hosted" | "proxied"> = {
+	"cloudflare-hosted": "hosted",
+	"third-party": "proxied",
+};
+
+type SortOrder = "newest" | "oldest";
+
+interface FilterItem {
+	value: string;
+	label: string;
+}
+
+function FilterDropdown({
+	label,
+	items,
+	selected,
+	onChange,
+}: {
+	label: string;
+	items: FilterItem[];
+	selected: string[];
+	onChange: (selected: string[]) => void;
+}) {
+	const hasSelection = selected.length > 0;
+	const triggerContent = (
+		<span className="inline-flex items-center gap-1.5">
+			{label}
+			{hasSelection && (
+				<span className="sl-badge default">{selected.length}</span>
+			)}
+		</span>
+	);
+
+	const selectedItems = items.filter((item) => selected.includes(item.value));
+
+	return (
+		<Combobox.Root
+			multiple
+			value={selectedItems}
+			onValueChange={(value) =>
+				onChange((value as FilterItem[]).map((item) => item.value))
+			}
+			items={items}
+			isItemEqualToValue={(a, b) => a.value === b.value}
+		>
+			<Combobox.Trigger
+				className={`flex cursor-pointer items-center gap-1.5 rounded-lg border bg-white px-3 py-2 text-sm whitespace-nowrap transition-colors select-none dark:bg-gray-800 ${
+					hasSelection
+						? "border-blue-300 text-blue-700 dark:border-blue-600 dark:text-blue-300"
+						: "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+				}`}
+			>
+				<Combobox.Value placeholder={triggerContent}>
+					{() => triggerContent}
+				</Combobox.Value>
+				<Combobox.Icon className="flex">
+					<ChevronUpDownIcon />
+				</Combobox.Icon>
+			</Combobox.Trigger>
+			<Combobox.Portal>
+				<Combobox.Positioner
+					className="z-50 outline-hidden"
+					align="start"
+					sideOffset={8}
+				>
+					<Combobox.Popup
+						className="max-h-[24rem] max-w-[var(--available-width)] origin-[var(--transform-origin)] rounded-lg border border-gray-200 bg-white shadow-lg transition-[transform,scale,opacity] [--input-height:2.75rem] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0 dark:border-gray-600 dark:bg-gray-800"
+						aria-label={label}
+					>
+						<div className="w-64 p-2">
+							<Combobox.Input
+								placeholder={`Search ${label.toLowerCase()}...`}
+								className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm font-normal text-gray-900 outline-none focus:border-blue-300 focus:ring-1 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+							/>
+						</div>
+						<Combobox.Empty>
+							<div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+								No results found.
+							</div>
+						</Combobox.Empty>
+						<Combobox.List className="max-h-[min(calc(24rem-var(--input-height)),calc(var(--available-height)-var(--input-height)))] scroll-py-1 overflow-y-auto overscroll-contain py-1">
+							{(item: FilterItem) => (
+								<Combobox.Item
+									key={item.value}
+									value={item}
+									className="group grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none data-[highlighted]:bg-gray-100 dark:data-[highlighted]:bg-gray-700"
+								>
+									<span className="col-start-1 flex h-4 w-4 items-center justify-center rounded border border-gray-300 group-data-[selected]:border-blue-600 group-data-[selected]:bg-blue-600 group-data-[selected]:text-white dark:border-gray-500 dark:group-data-[selected]:border-blue-500 dark:group-data-[selected]:bg-blue-500">
+										<Combobox.ItemIndicator>
+											<CheckIcon />
+										</Combobox.ItemIndicator>
+									</span>
+									<span className="col-start-2 text-gray-700 dark:text-gray-200">
+										{item.label}
+									</span>
+								</Combobox.Item>
+							)}
+						</Combobox.List>
+					</Combobox.Popup>
+				</Combobox.Positioner>
+			</Combobox.Portal>
+		</Combobox.Root>
+	);
+}
+
+const sortOptions = [
+	{ value: "newest", label: "Newest first" },
+	{ value: "oldest", label: "Oldest first" },
+];
+
+function SortSelect({
+	sortOrder,
+	onChange,
+}: {
+	sortOrder: SortOrder;
+	onChange: (value: SortOrder) => void;
+}) {
+	return (
+		<Select.Root
+			value={sortOrder}
+			onValueChange={(value) => onChange(value as SortOrder)}
+			items={sortOptions}
+		>
+			<Select.Trigger className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm whitespace-nowrap text-gray-700 transition-colors select-none hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+				<Select.Value>
+					{() =>
+						sortOptions.find((o) => o.value === sortOrder)?.label ??
+						"Newest first"
+					}
+				</Select.Value>
+				<Select.Icon className="flex">
+					<ChevronUpDownIcon />
+				</Select.Icon>
+			</Select.Trigger>
+			<Select.Portal>
+				<Select.Positioner
+					className="z-50 outline-hidden"
+					sideOffset={8}
+					align="start"
+					alignItemWithTrigger={false}
+				>
+					<Select.Popup className="min-w-[var(--anchor-width)] origin-[var(--transform-origin)] rounded-lg border border-gray-200 bg-white py-1 shadow-lg transition-[transform,scale,opacity] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0 dark:border-gray-600 dark:bg-gray-800">
+						{sortOptions.map((option) => (
+							<Select.Item
+								key={option.value}
+								value={option.value}
+								className="grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none data-[highlighted]:bg-gray-100 dark:data-[highlighted]:bg-gray-700"
+							>
+								<Select.ItemIndicator className="col-start-1">
+									<CheckIcon />
+								</Select.ItemIndicator>
+								<Select.ItemText className="col-start-2 text-gray-700 dark:text-gray-200">
+									{option.label}
+								</Select.ItemText>
+							</Select.Item>
+						))}
+					</Select.Popup>
+				</Select.Positioner>
+			</Select.Portal>
+		</Select.Root>
+	);
+}
+
+function ChevronUpDownIcon() {
+	return (
+		<svg
+			width="8"
+			height="12"
+			viewBox="0 0 8 12"
+			fill="none"
+			stroke="currentcolor"
+			strokeWidth="1.5"
+		>
+			<path d="M0.5 4.5L4 1.5L7.5 4.5" />
+			<path d="M0.5 7.5L4 10.5L7.5 7.5" />
+		</svg>
+	);
+}
+
+function CheckIcon() {
+	return (
+		<svg fill="currentcolor" width="10" height="10" viewBox="0 0 10 10">
+			<path d="M9.1603 1.12218C9.50684 1.34873 9.60427 1.81354 9.37792 2.16038L5.13603 8.66012C5.01614 8.8438 4.82192 8.96576 4.60451 8.99384C4.3871 9.02194 4.1683 8.95335 4.00574 8.80615L1.24664 6.30769C0.939709 6.02975 0.916013 5.55541 1.19372 5.24822C1.47142 4.94102 1.94536 4.91731 2.2523 5.19524L4.36085 7.10461L8.12299 1.33999C8.34934 0.993152 8.81376 0.895638 9.1603 1.12218Z" />
+		</svg>
+	);
+}
+
+// Two-option facet that surfaces the existing ModelCardData.hosting field.
+// Labels match the "Cloudflare-hosted" / "Third-party" badge text rendered by
+// ModelBadges.tsx so the filter chip vocabulary lines up with each card's
+// provider badge. Slug values double as URL query string values.
+const providerItems: FilterItem[] = [
+	{ value: "cloudflare-hosted", label: "Cloudflare-hosted" },
+	{ value: "third-party", label: "Third-party" },
+];
+
+// List of model names to pin at the top
+const pinnedModelNames = [
+	"@cf/moonshotai/kimi-k2.7-code",
+	"@cf/zai-org/glm-4.7-flash",
+	"@cf/openai/gpt-oss-120b",
+	"@cf/meta/llama-4-scout-17b-16e-instruct",
+];
+
+const ModelCatalog = ({
+	models,
+	basePath = "/ai/models",
+}: {
+	models: ModelCardData[];
+	basePath?: string;
+}) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		authors: [],
 		tasks: [],
 		capabilities: [],
+		providers: [],
 	});
-
-	// List of model names to pin at the top
-	const pinnedModelNames = [
-		"@cf/openai/gpt-oss-120b",
-		"@cf/openai/gpt-oss-20b",
-		"@cf/meta/llama-4-scout-17b-16e-instruct",
-		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-		"@cf/meta/llama-3.1-8b-instruct-fast",
-	];
+	const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+	const initializedRef = useRef(false);
 
 	// Sort models by pinned status first, then by created_at date
 	const sortedModels = useMemo(() => {
@@ -47,12 +262,14 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 				);
 			}
 
-			// If neither is pinned, sort by created_at date (newest first)
+			// If neither is pinned, sort by created_at date
 			const dateA = a.created_at ? new Date(a.created_at) : new Date(0);
 			const dateB = b.created_at ? new Date(b.created_at) : new Date(0);
-			return dateB.getTime() - dateA.getTime();
+			return sortOrder === "newest"
+				? dateB.getTime() - dateA.getTime()
+				: dateA.getTime() - dateB.getTime();
 		});
-	}, [models]);
+	}, [models, sortOrder]);
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
@@ -61,16 +278,23 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		const authors = params.getAll("authors");
 		const tasks = params.getAll("tasks");
 		const capabilities = params.getAll("capabilities");
+		const providers = params
+			.getAll("providers")
+			.filter((p) => p in PROVIDER_TO_HOSTING);
 
 		setFilters({
 			search,
 			authors,
 			tasks,
 			capabilities,
+			providers,
 		});
+		initializedRef.current = true;
 	}, []);
 
 	useEffect(() => {
+		if (!initializedRef.current) return;
+
 		const params = new URLSearchParams();
 
 		if (filters.search) {
@@ -91,62 +315,73 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 			);
 		}
 
+		if (filters.providers.length > 0) {
+			filters.providers.forEach((provider) =>
+				params.append("providers", provider),
+			);
+		}
+
 		setSearchParams(params);
 	}, [filters]);
 
 	const mapped = sortedModels.map((model) => ({
 		model: {
 			...model,
-			capabilities: model.properties
-				.flatMap(({ property_id, value }) => {
-					if (property_id === "lora" && value === "true") {
-						return "LoRA";
-					}
-
-					if (property_id === "function_calling" && value === "true") {
-						return "Function calling";
-					}
-
-					if (property_id === "async_queue" && value === "true") {
-						return "Batch";
-					}
-
-					return [];
-				})
-				.filter((p) => Boolean(p)),
+			capabilities: getCapabilities(model.properties),
 		},
 		model_display_name: model.name.split("/").at(-1),
 	}));
 
-	const tasks = [...new Set(models.map((model) => model.task.name))];
-	const authors = [...new Set(models.map((model) => model.name.split("/")[1]))];
-	const capabilities = [
-		...new Set(
-			models.flatMap((model) =>
-				model.properties
-					.flatMap(({ property_id, value }) => {
-						if (property_id === "lora" && value === "true") {
-							return "LoRA";
-						}
+	const getAuthorDisplayName = (id: string) => authorData[id]?.name ?? id;
 
-						if (property_id === "function_calling" && value === "true") {
-							return "Function calling";
-						}
+	const taskItems: FilterItem[] = useMemo(
+		() =>
+			[...new Set(models.map((model) => model.task.name))]
+				.sort()
+				.map((t) => ({ value: t, label: t })),
+		[models],
+	);
 
-						if (property_id === "async_queue" && value === "true") {
-							return "Batch";
-						}
+	const authorItems: FilterItem[] = useMemo(
+		() =>
+			[
+				...new Map(
+					models
+						.map((model) => getModelAuthor(model.name))
+						.map((id) => [getAuthorDisplayName(id), id] as const),
+				).values(),
+			]
+				.sort((a, b) =>
+					getAuthorDisplayName(a).localeCompare(getAuthorDisplayName(b)),
+				)
+				.map((a) => ({ value: a, label: getAuthorDisplayName(a) })),
+		[models],
+	);
 
-						return [];
-					})
-					.filter((p) => Boolean(p)),
-			),
-		),
-	];
+	const capabilityItems: FilterItem[] = useMemo(
+		() =>
+			[
+				...getLabelsByCategory(models, "model"),
+				...getLabelsByCategory(models, "platform"),
+			].map((c) => ({ value: c, label: c })),
+		[models],
+	);
+
+	// Hide the Hosting facet when the incoming list is uniform on that axis
+	// (e.g. /workers-ai/models/ is 100% hosted). Future-proofs for when the
+	// hosting field moves to the Deus CMS and may diverge from data source.
+	const showHostingFilter = useMemo(
+		() => new Set(models.map((m) => m.hosting)).size > 1,
+		[models],
+	);
 
 	const modelList = mapped.filter(({ model }) => {
 		if (filters.authors.length > 0) {
-			if (!filters.authors.includes(model.name.split("/")[1])) {
+			const selectedAuthorNames = new Set(
+				filters.authors.map(getAuthorDisplayName),
+			);
+			const modelAuthorName = getAuthorDisplayName(getModelAuthor(model.name));
+			if (!selectedAuthorNames.has(modelAuthorName)) {
 				return false;
 			}
 		}
@@ -163,6 +398,13 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 			}
 		}
 
+		if (filters.providers.length > 0) {
+			const allowed = filters.providers.map((p) => PROVIDER_TO_HOSTING[p]);
+			if (!allowed.includes(model.hosting)) {
+				return false;
+			}
+		}
+
 		if (filters.search) {
 			if (!model.name.toLowerCase().includes(filters.search.toLowerCase())) {
 				return false;
@@ -172,124 +414,107 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		return true;
 	});
 
+	const hasActiveFilters =
+		filters.authors.length > 0 ||
+		filters.tasks.length > 0 ||
+		filters.capabilities.length > 0 ||
+		filters.providers.length > 0;
+
 	return (
-		<div className="md:flex">
-			<div className="mr-8 w-full md:w-1/4">
-				<input
-					type="text"
-					className="mb-8 w-full rounded-md border-2 border-gray-200 bg-white px-2 py-2 dark:border-gray-700 dark:bg-gray-800"
-					placeholder="Search models"
-					value={filters.search}
-					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-				/>
-
-				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						Tasks
-					</span>
-
-					{tasks.map((task) => (
-						<label key={task} className="my-2! block">
-							<input
-								type="checkbox"
-								className="mr-2"
-								value={task}
-								checked={filters.tasks.includes(task)}
-								onChange={(e) => {
-									const target = e.target as HTMLInputElement;
-
-									if (target.checked) {
-										setFilters({
-											...filters,
-											tasks: [...filters.tasks, target.value],
-										});
-									} else {
-										setFilters({
-											...filters,
-											tasks: filters.tasks.filter((f) => f !== target.value),
-										});
-									}
-								}}
-							/>{" "}
-							{task}
-						</label>
-					))}
+		<div className="not-content">
+			{/* Toolbar */}
+			<div className="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
+				{/* Search input */}
+				<div className="relative flex-1 md:min-w-[300px]">
+					<svg
+						className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						strokeWidth={2}
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+						/>
+					</svg>
+					<input
+						type="text"
+						className="w-full rounded-lg border border-gray-200 bg-white py-2 pr-3 pl-9 text-sm outline-none focus:border-blue-300 focus:ring-1 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+						placeholder="Search models"
+						value={filters.search}
+						onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+					/>
 				</div>
 
-				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						Capabilities
-					</span>
-
-					{capabilities.map((capability) => (
-						<label key={capability} className="my-2! block">
-							<input
-								type="checkbox"
-								value={capability}
-								checked={filters.capabilities.includes(capability)}
-								className="mr-2"
-								onChange={(e) => {
-									const target = e.target as HTMLInputElement;
-
-									if (target.checked) {
-										setFilters({
-											...filters,
-											capabilities: [...filters.capabilities, target.value],
-										});
-									} else {
-										setFilters({
-											...filters,
-											capabilities: filters.capabilities.filter(
-												(f) => f !== target.value,
-											),
-										});
-									}
-								}}
-							/>{" "}
-							{capability}
-						</label>
-					))}
-				</div>
-
-				<div className="hidden md:block">
-					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						Authors
-					</span>
-
-					{authors.map((author) => (
-						<label key={author} className="my-2! block">
-							<input
-								type="checkbox"
-								className="mr-2"
-								value={author}
-								checked={filters.authors.includes(author)}
-								onChange={(e) => {
-									const target = e.target as HTMLInputElement;
-
-									if (target.checked) {
-										setFilters({
-											...filters,
-											authors: [...filters.authors, target.value],
-										});
-									} else {
-										setFilters({
-											...filters,
-											authors: filters.authors.filter(
-												(f) => f !== target.value,
-											),
-										});
-									}
-								}}
-							/>{" "}
-							{authorData[author] ? authorData[author].name : author}
-						</label>
-					))}
+				{/* Filter dropdowns */}
+				<div className="flex flex-wrap items-center gap-2">
+					<FilterDropdown
+						label="Task Types"
+						items={taskItems}
+						selected={filters.tasks}
+						onChange={(tasks) => setFilters({ ...filters, tasks })}
+					/>
+					<FilterDropdown
+						label="Capabilities"
+						items={capabilityItems}
+						selected={filters.capabilities}
+						onChange={(capabilities) =>
+							setFilters({ ...filters, capabilities })
+						}
+					/>
+					{showHostingFilter && (
+						<FilterDropdown
+							label="Providers"
+							items={providerItems}
+							selected={filters.providers}
+							onChange={(providers) => setFilters({ ...filters, providers })}
+						/>
+					)}
+					<FilterDropdown
+						label="Authors"
+						items={authorItems}
+						selected={filters.authors}
+						onChange={(authors) => setFilters({ ...filters, authors })}
+					/>
+					<SortSelect sortOrder={sortOrder} onChange={setSortOrder} />
 				</div>
 			</div>
-			<div className="mt-0! flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
+
+			{/* Active filters + count */}
+			<div className="mb-4 flex items-center gap-3">
+				<span className="text-sm text-gray-600 dark:text-gray-400">
+					We found{" "}
+					<span className="font-semibold text-gray-900 dark:text-gray-100">
+						{modelList.length}
+					</span>{" "}
+					{modelList.length === 1 ? "model" : "models"}
+				</span>
+				{hasActiveFilters && (
+					<button
+						type="button"
+						onClick={() =>
+							setFilters({
+								...filters,
+								authors: [],
+								tasks: [],
+								capabilities: [],
+								providers: [],
+							})
+						}
+						className="cursor-pointer text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+					>
+						Clear filters
+					</button>
+				)}
+			</div>
+
+			{/* Model cards grid */}
+			<div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
 				{modelList.length === 0 && (
-					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
-						<span className="text-lg font-bold!">No models found</span>
+					<div className="col-span-full flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
+						<span className="text-lg font-bold">No models found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
 							filters.
@@ -297,20 +522,17 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					</div>
 				)}
 				{modelList.map((model) => {
-					const isBeta = model.model.properties.find(
-						({ property_id, value }) =>
-							property_id === "beta" && value === "true",
-					);
+					const isBeta = hasProperty(model.model.properties, "beta");
 
-					const author = model.model.name.split("/")[1];
+					const author = getModelAuthor(model.model.name);
 					const authorInfo = authorData[author];
 					const isPinned = pinnedModelNames.includes(model.model.name);
 
 					return (
 						<a
 							key={model.model.id}
-							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
-							href={`/workers-ai/models/${model.model_display_name}`}
+							className="relative flex flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+							href={`${basePath}/${basePath === "/workers-ai/models" ? model.model.name.split("/").at(-1) : model.model.name}/`}
 						>
 							{isPinned && (
 								<span className="absolute top-1 right-2" title="Pinned model">
@@ -320,7 +542,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 							<div className="-mb-1 flex items-center">
 								{authorInfo?.logo ? (
 									<img
-										className="mr-2 block w-6"
+										className="mr-2 block w-6 rounded-xs p-0.5 dark:bg-gray-200 dark:ring-2 dark:ring-gray-200"
 										src={authorInfo.logo}
 										alt={`${authorInfo.name} logo`}
 									/>
@@ -334,13 +556,13 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 								</span>
 								{isBeta && <span className="sl-badge caution ml-1">Beta</span>}
 							</div>
-							<div className="m-0! text-xs">
+							<div className="text-xs">
 								<ModelInfo model={model.model} />
 							</div>
-							<p className="mt-2! line-clamp-2 text-sm leading-6">
+							<p className="mt-2 line-clamp-2 flex-1 text-sm leading-6">
 								{model.model.description}
 							</p>
-							<div className="mt-2! text-xs">
+							<div className="mt-2 min-h-6 text-xs">
 								<ModelBadges model={model.model} />
 							</div>
 						</a>

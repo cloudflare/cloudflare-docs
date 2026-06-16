@@ -1,10 +1,15 @@
 ---
 pcx_content_type: how-to
+products:
+  - cloudflare-one
 title: Tunnel permissions
 description: |
   Manage tunnel tokens and control who can run your remotely-managed tunnels.
 sidebar:
   order: 10
+tags:
+  - CLI
+  - Terraform
 ---
 
 import { TabItem, Tabs, Render, APIRequest } from "~/components";
@@ -17,7 +22,7 @@ To get the token for a remotely-managed tunnel:
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
 2. Select a `cloudflared` tunnel and select **Edit**.
 3. Copy the `cloudflared` installation command into a text editor (do not run the command). The token is the `eyJ...` string.
 
@@ -62,7 +67,7 @@ To rotate a tunnel token:
 
 	<Tabs syncKey="dashPlusAPI">
 	<TabItem label="Dashboard">
-	1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
+	1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
 	2. Select a `cloudflared` tunnel and select **Edit**.
 	3. Select **Refresh token**.
 	4. Copy the `cloudflared` installation command for your operating system. This command contains the new token.
@@ -172,3 +177,7 @@ The tunnel token is now fully rotated. The old token is no longer in use.
 ## Account-scoped roles
 
 <Render file="tunnel/account-scoped-roles" product="cloudflare-one" />
+
+## Resource-scoped permissions
+
+You can also scope permissions to individual [Cloudflare Tunnel](/tunnel/) instances instead of granting account-wide access. Refer to [Granular permissions for Tunnels and Mesh nodes](/cloudflare-one/networks/connectors/granular-permissions/).

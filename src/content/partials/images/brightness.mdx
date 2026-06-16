@@ -1,9 +1,45 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import brightnessLowImg from "~/assets/images/images/examples/brightness-0.5.jpg";
+import brightnessHighImg from "~/assets/images/images/examples/brightness-2.jpg";
 
-Increase brightness by a factor. A value of `1.0` equals no change, a value of `0.5` equals half brightness, and a value of `2.0` equals twice as bright. `0` is ignored.
+### `brightness`
+
+Adjusts the image's overall luminance using a multiplier.
+
+- `1` (default) — No change to the original brightness.
+- `< 1.0` — Darkens the image, e.g. `0.5` is half as bright.
+- `> 1.0` — Lightens the image, e.g. `2` is twice as bright.
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={brightnessLowImg.src} alt="brightness=0.5 output" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={brightnessHighImg.src} alt="brightness=2 output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>brightness=0.5</code>
+    </td>
+    <td style="border:none;">
+      
+      <code>brightness=2</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">

@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: APIs
+description: Integrate Cloudflare Workers with third-party APIs using the Fetch API.
+products:
+  - workers
 ---
 
 To integrate with third party APIs from Cloudflare Workers, use the [fetch API](/workers/runtime-apis/fetch/) to make HTTP requests to the API endpoint. Then use the response data to modify or manipulate your content as needed.
@@ -29,7 +32,7 @@ async function handleRequest(request) {
 
 ## Authentication
 
-If your API requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
+If your API requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/general/#secret) command:
 
 ```sh
 wrangler secret put SECRET_NAME

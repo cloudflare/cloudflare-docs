@@ -4,8 +4,8 @@ url: warp-1-basics
 title: WARP - Understand Cloudflare WARP basics
 description: In this episode, we explain the core features of the Cloudflare WARP client and how to troubleshoot common issues. After watching, you will have an understanding of the GUI, the differences between the consumer and corporate WARP, device profiles, the various operating modes of WARP, split tunneling, and more.
 pcx_content_type: video
-products: 
-  - zero-trust-warp
+products:
+  - cloudflare-one-client
   - cloudflare-one
 thumbnail:
   url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Understand-Cloudflare-WARP-Basics%20thumbnail.png

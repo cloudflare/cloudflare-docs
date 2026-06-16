@@ -1,0 +1,61 @@
+---
+pcx_content_type: reference
+title: RtkSpotlightGrid
+description: API reference for RtkSpotlightGrid component (React Native Library)
+products:
+  - realtime
+---
+
+A grid layout that highlights pinned participants in a larger view with other participants in a smaller strip. Handles livestream player display for off-stage viewers.
+
+## Properties
+
+| Property             | Type                           | Required | Default           | Description                               |
+| -------------------- | ------------------------------ | -------- | ----------------- | ----------------------------------------- |
+| `meeting`            | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance          |
+| `participants`       | `Peer[]`                       | ✅       | -                 | Array of active participants              |
+| `pinnedParticipants` | `Peer[]`                       | ✅       | -                 | Array of pinned participants to spotlight |
+| `aspectRatio`        | `string`                       | ❌       | `'3:4'`           | Aspect ratio for grid tiles               |
+| `config`             | `UIConfig`                     | ❌       | `defaultConfig`   | UI configuration object                   |
+| `gap`                | `number`                       | ❌       | `4`               | Gap between grid tiles in pixels          |
+| `iconPack`           | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                          |
+| `size`               | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                              |
+| `states`             | `States`                       | ❌       | -                 | UI state object                           |
+| `t`                  | `RtkI18n`                      | ❌       | -                 | i18n translation function                 |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSpotlightGrid } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkSpotlightGrid
+			meeting={meeting}
+			participants={participants}
+			pinnedParticipants={pinned}
+		/>
+	);
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSpotlightGrid } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkSpotlightGrid
+			meeting={meeting}
+			participants={participants}
+			pinnedParticipants={pinned}
+			aspectRatio="16:9"
+			gap={8}
+			size="md"
+		/>
+	);
+}
+```

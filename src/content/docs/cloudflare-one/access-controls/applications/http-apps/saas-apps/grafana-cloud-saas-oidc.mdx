@@ -1,9 +1,14 @@
 ---
 pcx_content_type: integration-guide
+description: Integrate Grafana Cloud with Access.
+products:
+  - cloudflare-one
 title: Grafana Cloud
 reviewed: 2024-07-18
 sidebar:
   order: 14
+tags:
+- SSO
 ---
 
 This guide covers how to configure [Grafana Cloud](https://grafana.com/docs/grafana-cloud/account-management/authentication-and-permissions/authorization/#configure-oauth-20-with-generic-oauth) as an OIDC application in Cloudflare One.
@@ -15,9 +20,9 @@ This guide covers how to configure [Grafana Cloud](https://grafana.com/docs/graf
 
 ## 1. Add a SaaS application to Cloudflare One
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
-2. Select **Add an application**.
-3. Select **SaaS**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Select **Create new application**.
+3. Select **SaaS application**.
 4. For **Application**, enter `Grafana Cloud` and select the corresponding textbox that appears.
 5. For the authentication protocol, select **OIDC**.
 6. Select **Add application**.

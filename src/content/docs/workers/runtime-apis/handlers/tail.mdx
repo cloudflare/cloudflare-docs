@@ -1,8 +1,12 @@
 ---
 pcx_content_type: concept
 title: Tail Handler
-
+description: Process real-time logs from producer Workers using the tail() handler in Tail Workers.
+products:
+  - workers
 ---
+
+import { Tabs, TabItem } from "~/components";
 
 ## Background
 
@@ -14,6 +18,8 @@ To configure a Tail Worker, refer to [Tail Workers documentation](/workers/obser
 
 ## Syntax
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 export default {
   async tail(events, env, ctx) {
@@ -24,6 +30,19 @@ export default {
   }
 }
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, fetch
+import json
+
+class Default(WorkerEntrypoint):
+    async def tail(self, events, env, ctx):
+        await fetch("<YOUR_ENDPOINT>", method="POST", body=json.dumps(events))
+```
+
+</TabItem> </Tabs>
 
 ### Parameters
 

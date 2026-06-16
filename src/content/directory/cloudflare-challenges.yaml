@@ -7,7 +7,6 @@ entry:
   url: /cloudflare-challenges/
   preview_tryout: true
 
-
 meta:
   title: Cloudflare challenges docs
   description: Verify visitors are not bots with lightweight challenges

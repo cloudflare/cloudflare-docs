@@ -1,0 +1,14 @@
+---
+title: DANE Support for MX Deployments
+description: DNSSEC-backed TLSA records now available on regional MX hostnames for verified encrypted email delivery
+date: 2026-04-06T09:00:00Z
+---
+Cloudflare Email Security now supports DANE (DNS-based Authentication of Named Entities) for MX deployments. This enhancement strengthens email transport security by enabling DNSSEC-backed certificate verification for our regional MX records.
+
+* Regional MX hostnames now publish DANE TLSA records backed by DNSSEC, enabling DANE-capable SMTP senders to cryptographically validate certificate identities before establishing TLS connections—moving beyond opportunistic encryption to verified encrypted delivery.
+* DANE support is automatically available for all customers using regional MX deployments. No additional configuration is required; DANE-capable mail infrastructure will automatically validate MX certificates using the published records.
+
+This applies to all Email Security packages:
+-   **Advantage**
+-   **Enterprise**
+-   **Enterprise + PhishGuard**

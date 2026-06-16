@@ -3,10 +3,12 @@ pcx_content_type: how-to
 title: Register a new domain
 sidebar:
   order: 1
-
+products:
+  - registrar
+description: Register a new domain with Cloudflare.
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Render } from "~/components";
 
 
 ## Prerequisites and restrictions
@@ -18,7 +20,7 @@ All domains acquired via Cloudflare Registrar use Cloudflare nameservers, automa
 * Cloudflare Registrar does not currently support internationalized domain names (IDNs), also known as Unicode.
 * You must have a [verified account email address](/fundamentals/user-profiles/verify-email-address/), to transfer or register domains.
 
-***
+<Render file="icann-unverified-email" product="registrar" />
 
 ## How to register a new domain
 

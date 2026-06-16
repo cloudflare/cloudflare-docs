@@ -1,0 +1,106 @@
+---
+title: Threshold billing
+pcx_content_type: concept
+sidebar:
+  order: 11
+  description: Automatic mid-cycle invoicing for usage-based products
+description: Understand threshold-based billing for Cloudflare services.
+products:
+  - billing
+---
+
+import { DashButton } from "~/components";
+
+Threshold billing is an automatic payment collection mechanism for Cloudflare's usage-based products. When your combined usage charges across all usage-based products reach a certain level during a billing cycle, Cloudflare generates a mid-cycle invoice and charges your payment method on file.
+
+## How threshold billing works
+
+1. **Usage accumulates** - As you use Cloudflare's usage-based products (R2, Stream, Images, Workers), charges accrue throughout your billing cycle across all these products combined.
+2. **Threshold reached** - When your total accumulated usage charges reach the threshold, Cloudflare automatically generates a mid-cycle invoice.
+3. **Payment collected** - Your payment method on file is charged for the threshold invoice amount.
+4. **One-time trigger** - The threshold fires once per account. After a threshold invoice is generated, your account returns to standard end-of-cycle billing.
+5. **End-of-cycle invoice** - At the end of your billing cycle, you receive your regular invoice which includes only the remaining usage charges not already covered by the threshold invoice.
+
+:::note
+You will never be double-charged. The threshold invoice and end-of-cycle invoice together equal your total usage for the billing period.
+:::
+
+### Example
+
+| Event | Charge |
+| --- | --- |
+| Combined usage reaches threshold mid-cycle | Threshold invoice charged (for example, $127.50) |
+| End of billing cycle (total usage was $180) | End-of-cycle invoice charged (for example, $52.50) |
+| **Total charged** | **$180** |
+
+## Products subject to threshold billing
+
+Threshold billing applies to combined usage across the following products:
+
+- [R2](/r2/)
+- [Stream](/stream/)
+- [Cloudflare Images](/images/)
+- [Workers](/workers/) (usage-based pricing)
+
+The threshold is based on your total combined usage across all of these products, not each product individually.
+
+## Who is affected
+
+Threshold billing applies to self-serve accounts using the products listed above.
+
+:::note
+Enterprise accounts and startup program participants are not subject to threshold billing.
+:::
+
+## What happens if payment fails
+
+If the payment for a threshold invoice fails:
+
+1. **Automatic retries** - Cloudflare will automatically retry the payment over a 5-day period.
+2. **Email notification** - You will receive an email notifying you of the failed payment with a link to pay the invoice or update your payment method.
+3. **Manual payment** - You can pay the invoice directly at any time during the retry period through your Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/billing" />
+
+4. **After retries exhausted** - If all payment retries fail, the invoice is marked as uncollectable and your account may be restricted.
+
+To avoid service interruption, ensure your payment method on file is current and has sufficient funds.
+
+## Viewing your invoices
+
+All threshold invoices appear in your billing history alongside your regular invoices.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to **Manage Account** > **Billing**.
+
+   <DashButton url="/?to=/:account/billing" />
+
+3. Select **Invoices** to view your invoice history.
+
+Threshold invoices are labeled to distinguish them from regular end-of-cycle invoices.
+
+## FAQ
+
+### Why did I receive a mid-cycle charge?
+
+Your combined usage-based charges across R2, Stream, Images, and Workers reached the billing threshold before the end of your billing cycle. This is expected behavior for accounts with high usage.
+
+### Will I be charged twice for the same usage?
+
+No. The threshold invoice covers usage up to the point when the threshold was reached. Your end-of-cycle invoice includes only the remaining usage after that point. The two invoices together equal your total usage for the billing period.
+
+### Can I change the threshold amount?
+
+The threshold is automatically set by Cloudflare and cannot be modified.
+
+### Will I get another threshold invoice next month?
+
+The threshold can fire once per account. After the first threshold invoice, your account returns to standard end-of-cycle billing for future cycles.
+
+### How do I avoid threshold invoices?
+
+Threshold invoices are triggered by usage. If you prefer not to receive mid-cycle invoices, you can monitor your usage and adjust your product consumption accordingly. However, threshold billing is designed to help you pay as you go rather than receiving a large bill at the end of the month.
+
+### What if I think I was charged incorrectly?
+
+If you believe there is an error with your threshold invoice, [contact Cloudflare support](/support/contacting-cloudflare-support/) with your invoice details.

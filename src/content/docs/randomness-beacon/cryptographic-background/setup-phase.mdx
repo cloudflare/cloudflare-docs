@@ -3,7 +3,9 @@ pcx_content_type: concept
 title: Setup Phase
 sidebar:
   order: 1
-
+products:
+  - randomness-beacon
+description: Learn about the distributed key generation phase.
 ---
 
 In the drand setup phase, you create a collective private and public key pair shared among *𝑛* participants. This is done through a `𝑡-of-𝑛` Distributed Key Generation (DKG) process and results in each participant receiving a copy of the collective public key plus a private key share of the collective private key — no individual node knows the collective **private** key. Each private key share can then be used to perform cryptographic threshold computations, such as generating threshold signatures, where at least `𝑡` contributions produced using the individual private key shares are required to successfully finish the collective operation.

@@ -1,0 +1,136 @@
+---
+{}
+---
+
+import { Example } from "~/components";
+
+## Add Client-Cert and Client-Cert-Chain headers (RFC 9440)
+
+[RFC 9440](https://datatracker.ietf.org/doc/html/rfc9440) defines the `Client-Cert` and `Client-Cert-Chain` HTTP header fields for passing client certificate information to origin servers. You can construct these headers using [request header modification rules](/rules/transform/request-header-modification/) with the following Ruleset Engine fields:
+
+- [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/) — The client leaf certificate encoded in RFC 9440 formatting (see reference).
+- [`cf.tls_client_auth.cert_chain_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440/) — The certificate chain (excluding the leaf certificate) encoded in RFC 9440 formatting (see reference).
+
+As indicated in field definitions, the fields may be set to either an empty string or a valid RFC 9440 encoding. Proper usage depends on a couple of factors discussed in the following sections.
+
+### Security considerations
+
+:::caution[Important]
+Before constructing `Client-Cert` or `Client-Cert-Chain` headers, you must address the following security concerns. Failing to do so can expose your origin server to forged or unverified certificate data.
+:::
+
+The `cert_rfc9440` and `cert_chain_rfc9440` fields are populated **regardless of the certificate validation result**. This means a client can present an invalid, expired, or self-signed certificate, and the fields will still contain the encoded certificate data. Always check the following fields before trusting the values:
+
+- [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) — Returns `true` when the client certificate is valid.
+- [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/) — Returns `true` when the client certificate has been revoked.
+
+A client can also include its own `Client-Cert` or `Client-Cert-Chain` headers on a request to inject arbitrary values. As described in the [RFC 9440 security considerations](https://datatracker.ietf.org/doc/html/rfc9440#name-security-considerations), you must unconditionally remove any existing `Client-Cert` and `Client-Cert-Chain` headers from incoming requests, regardless of certificate validity. This prevents a client from injecting forged certificate data that your origin would trust.
+
+See [Enable mTLS](/ssl/client-certificates/enable-mtls/) for details on how to configure mTLS and certificate validation.
+
+### Size limits
+
+The encoded leaf certificate is limited to 10 KiB and the encoded chain is limited to 16 KiB. If the encoded value exceeds the limit, the corresponding field contains an empty string. Use the following fields to check for this condition:
+
+- [`cf.tls_client_auth.cert_rfc9440_too_large`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440_too_large/) — Returns `true` when the encoded certificate exceeds 10 KiB.
+- [`cf.tls_client_auth.cert_chain_rfc9440_too_large`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440_too_large/) — Returns `true` when the encoded chain exceeds 16 KiB.
+
+### Example Transform Rules
+
+Here we provide an example on how to securely use these fields to construct trusted `Client-Cert` and `Client-Cert-Chain` headers to be forwarded to your origin.
+The origin can then rely on the presence of the headers to be certain the client presented a valid certificate.
+Note: the `Client-Cert-Chain` header may be omitted when the client did not present any intermediates (only a leaf certificate).
+
+You need to create the following request header modification rules.
+The **Remove** rules must be placed before the **Set dynamic** rules
+so that client-injected headers are stripped on every request before the validated values are set.
+
+#### Rule 1 — Remove Client-Cert header
+
+This rule unconditionally removes any `Client-Cert` header sent by the client.
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+true
+```
+
+Selected operation under **Modify request header**: _Remove_
+
+**Header name**: `Client-Cert`
+
+</Example>
+
+#### Rule 2 — Remove Client-Cert-Chain header
+
+This rule unconditionally removes any `Client-Cert-Chain` header sent by the client.
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+true
+```
+
+Selected operation under **Modify request header**: _Remove_
+
+**Header name**: `Client-Cert-Chain`
+
+</Example>
+
+#### Rule 3 — Set Client-Cert header
+
+This rule sets the `Client-Cert` header only when the client presented a valid, non-revoked certificate that is within the size limit.
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+cf.tls_client_auth.cert_verified
+and not cf.tls_client_auth.cert_revoked
+and not cf.tls_client_auth.cert_rfc9440_too_large
+```
+
+Selected operation under **Modify request header**: _Set dynamic_
+
+**Header name**: `Client-Cert`
+
+**Value**: `cf.tls_client_auth.cert_rfc9440`
+
+</Example>
+
+#### Rule 4 — Set Client-Cert-Chain header
+
+This rule sets the `Client-Cert-Chain` header only when the client presented a valid, non-revoked certificate
+and the chain is non-empty and within the size limit.
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+cf.tls_client_auth.cert_verified
+and not cf.tls_client_auth.cert_revoked
+and cf.tls_client_auth.cert_chain_rfc9440 ne ""
+and not cf.tls_client_auth.cert_chain_rfc9440_too_large
+```
+
+Selected operation under **Modify request header**: _Set dynamic_
+
+**Header name**: `Client-Cert-Chain`
+
+**Value**: `cf.tls_client_auth.cert_chain_rfc9440`
+
+</Example>
+
+### Cloudflare Workers
+
+You can also construct RFC 9440 headers in a [Cloudflare Worker](/workers/)
+using the [`tlsClientAuth`](/ssl/client-certificates/client-certificate-variables/#workers-variables)
+properties on the incoming request.
+
+The same security considerations mentioned above apply.

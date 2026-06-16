@@ -1,8 +1,11 @@
 ---
 title: Security model
+description: Sandbox SDK uses VM-level isolation, input validation, and network controls to run untrusted code safely.
 pcx_content_type: concept
 sidebar:
   order: 6
+products:
+  - sandbox
 ---
 
 The Sandbox SDK is built on [Containers](/containers/), which run each sandbox in its own VM for strong isolation.
@@ -89,6 +92,16 @@ To revoke access, unexpose the port:
 await sandbox.unexposePort(8080);
 ```
 
+### Quick tunnel URLs
+
+Quick tunnels (`sandbox.tunnels.get(port)`) return a `*.trycloudflare.com` URL with a random hostname assigned by Cloudflare — there is no separate access token. The hostname itself is the access control: anyone who knows the URL can reach the service. To revoke access, destroy the tunnel:
+
+```typescript
+await sandbox.tunnels.destroy(8080);
+```
+
+URLs do not survive a container restart, so a restart effectively rotates the hostname. As with preview URLs, add application-level authentication for any sensitive service. See the [Tunnels API](/sandbox/api/tunnels/) for details.
+
 ```python
 from flask import Flask, request, abort
 import os
@@ -134,6 +147,20 @@ try {
   await sandbox.deleteFile('/tmp/sensitive.txt');
 }
 ```
+
+## Proxying external API requests
+
+Passing credentials directly to a sandbox — via environment variables or files — means the sandbox process holds a live credential that any code running inside it can read. A Worker proxy removes that exposure by keeping credentials exclusively in the Worker and giving the sandbox a short-lived JWT instead.
+
+The flow works as follows:
+
+```
+Sandbox (short-lived JWT) → Worker proxy (validates JWT, injects real credentials) → External API
+```
+
+The sandbox never sees the real credential. If the JWT is compromised, it expires after a short window and cannot be reused.
+
+This pattern is useful when accessing GitHub for private repository operations, AI services, or object storage where you want to keep credentials out of the container entirely. Refer to [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) for a complete implementation.
 
 ## What the SDK protects against
 

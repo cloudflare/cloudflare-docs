@@ -6,6 +6,8 @@ sidebar:
   order: 2
 description: Run multiple instances across Cloudflare's network
 reviewed: 2025-06-24
+products:
+  - containers
 ---
 
 To simply proxy requests to one of multiple instances of a container, you can use the `getRandom` function:
@@ -22,7 +24,6 @@ class Backend extends Container {
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		// note: "getRandom" to be replaced with latency-aware routing in the near future
 		const containerInstance = await getRandom(env.BACKEND, INSTANCE_COUNT);
 		return containerInstance.fetch(request);
 	},
@@ -30,8 +31,8 @@ export default {
 ```
 
 :::note
-This example uses the `getRandom` function, which is a temporary helper that will randomly
-select one of N instances of a Container to route requests to.
+This example uses `getRandom`, which randomly selects one of a fixed number of Container
+instances for each request.
 
 In the future, we will provide improved latency-aware load balancing and autoscaling.
 

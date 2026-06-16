@@ -1,0 +1,31 @@
+---
+title: DNS Analytics for Customer Metadata Boundary set to EU region
+description: DNS Analytics and DNS Firewall Analytics now support accounts with Customer Metadata Boundary set to EU.
+date: 2026-03-20
+---
+
+import { DashButton } from "~/components";
+
+DNS Analytics is now available for customers with [Customer Metadata Boundary](/data-localization/metadata-boundary/) (CMB) set to EU. Query your DNS analytics data while keeping metadata stored in the EU region.
+
+This update includes:
+
+- **DNS Analytics** — Access the same DNS analytics experience for zones in CMB=EU accounts.
+- **EU data residency** — Analytics data is stored and queried from the EU region, meeting data localization requirements.
+- **DNS Firewall Analytics** — DNS Firewall analytics is now supported for CMB=EU customers.
+
+## Availability
+
+Available to customers with the [Data Localization Suite](/data-localization/) who have Customer Metadata Boundary configured for the EU region.
+
+## Where to find it
+
+- **Authoritative DNS:** In the Cloudflare dashboard, select your zone and go to the **Analytics** page.
+
+  <DashButton url="/?to=/:account/:zone/dns/analytics" />
+
+- **DNS Firewall:** In the Cloudflare dashboard, go to the **DNS Firewall Analytics** page.
+
+  <DashButton url="/?to=/:account/dns-firewall/analytics" />
+
+For more information, refer to [DNS Analytics](/dns/additional-options/analytics/) and [DNS Firewall Analytics](/dns/dns-firewall/analytics/).

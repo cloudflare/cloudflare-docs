@@ -1,9 +1,11 @@
 ---
 title: Metrics and analytics
+description: View Durable Objects namespace-level and request-level metrics, analytics, and logs via the Cloudflare dashboard or GraphQL API.
 pcx_content_type: concept
 sidebar:
   order: 6
-
+products:
+  - durable-objects
 ---
 
 import { GlossaryTooltip, DashButton, Steps, WranglerConfig, Render } from "~/components";
@@ -31,6 +33,8 @@ Per-namespace analytics for Durable Objects are available in the Cloudflare dash
 </Steps>
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
+
+You can also filter the charts to a single Durable Object by entering its [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name) and selecting a match. Clear the filter to return to namespace-level metrics.
 
 ## View logs
 
@@ -80,7 +84,7 @@ Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspect
 Durable Objects using [WebSockets](/durable-objects/best-practices/websockets/) will see request metrics across several GraphQL datasets because WebSockets have different types of requests.
 
 * Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often do not terminate until the Durable Object terminates.
-* Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [WebSocket Hibernation](/durable-objects/best-practices/websockets/#websocket-hibernation-api), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
+* Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [WebSocket Hibernation](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
 
 ## Example GraphQL query for Durable Objects
 

@@ -1,0 +1,25 @@
+# Minimum age (in minutes) a package version must be published before pnpm will install it.
+# 1440 minutes = 24 hours. Reduces risk from newly-published compromised packages.
+minimumReleaseAge: 1440
+
+# Prevent transitive dependencies from using exotic sources (git repos, direct tarball URLs).
+# Only direct dependencies may use exotic sources.
+blockExoticSubdeps: true
+
+# Explicit allowlist of packages permitted to run install scripts.
+# These are well-known packages that require build scripts to download platform-specific binaries.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  tldjs: true
+  workerd: true
+  # Transitive deps of @flue/runtime and agents — native binaries not needed by this repo
+  "@google/genai": false
+  "@mongodb-js/zstd": false
+  core-js-pure: false
+  node-liblzma: false
+  protobufjs: false
+
+# Always save dependencies as exact versions and to devDependencies by default.
+saveExact: true
+saveDev: true

@@ -1,0 +1,158 @@
+---
+pcx_content_type: concept
+title: Service API token
+description: Create a service API token to grant AI Search read access to R2 buckets for indexing.
+sidebar:
+  order: 10
+products:
+  - ai-search
+---
+
+import { DashButton } from "~/components";
+
+A service API token grants AI Search permission to access [R2](/r2/) buckets in your account. This token is only required if you connect an R2 bucket as a data source. If you use a website or upload files directly through the [Items API](/ai-search/api/items/workers-binding/), you do not need a service API token.
+
+## When you need a service API token
+
+You need a service API token when you create an AI Search instance with `type: "r2"`. The token authorizes AI Search to read objects from your R2 bucket for indexing.
+
+## Create via the dashboard or Wrangler
+
+The simplest way to get a service API token is to create an R2-backed AI Search instance through the [dashboard](/ai-search/get-started/dashboard/) or [Wrangler CLI](/ai-search/get-started/wrangler/) at least once. Cloudflare creates and registers a service token for you automatically during the setup flow.
+
+Once created, the token is saved to your account and reused across all AI Search instances. You do not need to create a new token for each instance.
+
+## Create via the API
+
+If you need to create a service API token programmatically, follow these steps.
+
+### 1. Create an API token with token creation permissions
+
+You need an [API token](/fundamentals/api/get-started/create-token/) with permission to create other tokens.
+
+1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
+
+   <DashButton url="/profile/api-tokens" />
+
+2. Select **Create Token**.
+3. Select **Create Custom Token**.
+4. Enter a **Token name**, for example `Token Creator`.
+5. Under **Permissions**, select **User** > **API Tokens** > **Edit**.
+6. Select **Continue to summary**, then select **Create Token**.
+7. Copy and save the token value. This is your `CREATOR_TOKEN`.
+
+### 2. Create the service token
+
+Use the [Create token API](/api/resources/user/subresources/tokens/methods/create/) to create a service token with the AI Search Index Engine permission. Replace `<CREATOR_TOKEN>` with the token from step 1 and `<ACCOUNT_ID>` with your [account ID](/fundamentals/account/find-account-and-zone-ids/).
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/user/tokens" \
+  -H "Authorization: Bearer <CREATOR_TOKEN>" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "name": "AI Search Service API Token",
+    "policies": [
+      {
+        "effect": "allow",
+        "resources": {
+          "com.cloudflare.api.account.<ACCOUNT_ID>": "*"
+        },
+        "permission_groups": [
+          { "id": "9e9b428a0bcd46fd80e580b46a69963c" }
+        ]
+      }
+    ]
+  }'
+```
+
+Save the `id` and `value` from the response:
+
+```json
+{
+	"result": {
+		"id": "<CF_API_ID>",
+		"name": "AI Search Service API Token",
+		"status": "active",
+		"value": "<CF_API_KEY>"
+	},
+	"success": true
+}
+```
+
+### 3. Register the token with AI Search
+
+Use the [AI Search tokens API](/api/resources/ai_search/subresources/tokens/methods/create/) to register the service token. Replace `<API_TOKEN>` with an API token that has AI Search Edit permissions.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/tokens" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "cf_api_id": "<CF_API_ID>",
+    "cf_api_key": "<CF_API_KEY>",
+    "name": "AI Search Service Token"
+  }'
+```
+
+Save the `id` from the response. This is your `token_id` to pass when creating R2-backed instances:
+
+```json
+{
+	"success": true,
+	"result": {
+		"id": "<TOKEN_ID>",
+		"name": "AI Search Service Token",
+		"cf_api_id": "<CF_API_ID>",
+		"created_at": "2025-12-25 01:52:28",
+		"enabled": true
+	}
+}
+```
+
+### 4. Use the token when creating an instance
+
+Pass the `token_id` when creating an R2-backed instance:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "id": "my-r2-docs",
+    "type": "r2",
+    "source": "<R2_BUCKET_NAME>",
+    "token_id": "<TOKEN_ID>"
+  }'
+```
+
+## Manage your token
+
+Once registered, the service API token is stored securely and reused across all AI Search instances in your account.
+
+:::caution
+Do not delete your service API token. If you revoke or delete the token, any R2-backed AI Search instances will lose access to their data source and stop indexing.
+:::
+
+### Rotate your token
+
+To create a new service API token from the dashboard:
+
+1. Go to an existing AI Search instance in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+2. Select **Settings**.
+3. Under **General**, find **Service API Token** and select the edit icon.
+4. Select **Create a new token**.
+5. Select **Save**.
+
+To create a new token via the API, follow [steps 1 through 3](#1-create-an-api-token-with-token-creation-permissions) above.
+
+### View registered tokens
+
+List the service API tokens registered with AI Search in your account:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/tokens \
+  -H "Authorization: Bearer <API_TOKEN>"
+```

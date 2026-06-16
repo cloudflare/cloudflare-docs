@@ -2,10 +2,9 @@
 pcx_content_type: configuration
 title: Preview URLs
 head: []
-sidebar:
-  badge:
-    text: Beta
 description: Preview URLs allow you to preview new versions of your project without deploying it to production.
+products:
+  - workers
 ---
 
 import { Render, WranglerConfig, DashButton } from "~/components";
@@ -27,7 +26,7 @@ Preview URLs can be:
 - Used for collaboration between teams to test code changes in a live environment and verify updates.
 - Used to test new API endpoints, validate data formats, and ensure backward compatibility with existing services.
 
-When testing zone level performance or security features for a version, we recommend using [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) so that your zone's performance and security settings apply.
+When testing zone level performance or security features for a version, we recommend using [version overrides](/workers/configuration/versions-and-deployments/version-overrides/) so that your zone's performance and security settings apply.
 
 :::note
 Preview URLs are only available for Worker versions uploaded after 2024-09-25.
@@ -41,8 +40,8 @@ Every time you create a new [version](/workers/configuration/versions-and-deploy
 
 New versions of a Worker are created when you run:
 
-- [`wrangler deploy`](/workers/wrangler/commands/#deploy)
-- [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload)
+- [`wrangler deploy`](/workers/wrangler/commands/general/#deploy)
+- [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload)
 - Or when you make edits via the Cloudflare dashboard
 
 If Preview URLs have been enabled, they are public and available immediately after version creation.
@@ -53,7 +52,7 @@ Minimum required Wrangler version: 3.74.0. Check your version by running `wrangl
 
 #### View versioned preview URLs using Wrangler
 
-The [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) command uploads a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker and returns a preview URL for each version uploaded.
+The [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload) command uploads a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker and returns a preview URL for each version uploaded.
 
 #### View versioned preview URLs on the Workers dashboard
 

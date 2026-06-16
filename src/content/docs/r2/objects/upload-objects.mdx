@@ -1,24 +1,35 @@
 ---
 title: Upload objects
+description: Upload objects to R2 using single-part or multipart uploads via the dashboard, Workers API, or S3 API.
 pcx_content_type: how-to
 sidebar:
   order: 2
+products:
+  - r2
 ---
 
-import { Steps, Tabs, TabItem, Render, DashButton, LinkCard, TypeScriptExample } from "~/components"
+import {
+	Steps,
+	Tabs,
+	TabItem,
+	Render,
+	DashButton,
+	LinkCard,
+	TypeScriptExample,
+} from "~/components";
 
 There are several ways to upload objects to R2. Which approach you choose depends on the size of your objects and your performance requirements.
 
 ## Choose an upload method
 
-| | Single upload (`PUT`) | Multipart upload |
-|---|---|---|
-| **Best for** | Small to medium files (under ~100 MB) | Large files, or when you need parallelism and resumability |
-| **Maximum object size** | 5 GiB | 5 TiB (up to 10,000 parts) |
-| **Part size** | N/A | 5 MiB – 5 GiB per part |
-| **Resumable** | No — must restart the entire upload | Yes — only failed parts need to be retried |
-| **Parallel upload** | No | Yes — parts can be uploaded concurrently |
-| **When to use** | Quick, simple uploads of small objects | Video, backups, datasets, or any file where reliability matters |
+|                         | Single upload (`PUT`)                  | Multipart upload                                                |
+| ----------------------- | -------------------------------------- | --------------------------------------------------------------- |
+| **Best for**            | Small to medium files (under ~100 MB)  | Large files, or when you need parallelism and resumability      |
+| **Maximum object size** | 5 GiB                                  | 5 TiB (up to 10,000 parts)                                      |
+| **Part size**           | N/A                                    | 5 MiB – 5 GiB per part                                          |
+| **Resumable**           | No — must restart the entire upload    | Yes — only failed parts need to be retried                      |
+| **Parallel upload**     | No                                     | Yes — parts can be uploaded concurrently                        |
+| **When to use**         | Quick, simple uploads of small objects | Video, backups, datasets, or any file where reliability matters |
 
 :::note
 Most S3-compatible SDKs and tools (such as `rclone`) automatically choose multipart upload for large files based on a configurable threshold. You do not typically need to implement multipart logic yourself when using the S3 API.
@@ -38,6 +49,10 @@ To upload objects to your bucket from the Cloudflare dashboard:
 </Steps>
 
 You will receive a confirmation message after a successful upload.
+
+### Create a folder
+
+You can also create folders from the dashboard by selecting **Create folder**. This creates a zero-byte object with a key ending in `/` that acts as a placeholder. For more information on how folders work in R2, refer to [Prefixes and folders](/r2/objects/#prefixes-and-folders).
 
 ## Upload via Workers API
 
@@ -60,7 +75,9 @@ export default {
 			});
 
 			if (object === null) {
-				return new Response("Precondition failed or upload returned null", { status: 412 });
+				return new Response("Precondition failed or upload returned null", {
+					status: 412,
+				});
 			}
 
 			return Response.json({
@@ -145,7 +162,9 @@ export default {
 				const uploadId = url.searchParams.get("uploadId");
 				const partNumber = Number(url.searchParams.get("partNumber"));
 				if (!uploadId || !partNumber || !request.body) {
-					return new Response("Missing uploadId, partNumber, or body", { status: 400 });
+					return new Response("Missing uploadId, partNumber, or body", {
+						status: 400,
+					});
 				}
 				const upload = env.MY_BUCKET.resumeMultipartUpload(key, uploadId);
 				try {
@@ -227,10 +246,9 @@ export default {
 		);
 		url.searchParams.set("X-Amz-Expires", "3600");
 
-		const signed = await r2.sign(
-			new Request(url, { method: "PUT" }),
-			{ aws: { signQuery: true } },
-		);
+		const signed = await r2.sign(new Request(url, { method: "PUT" }), {
+			aws: { signQuery: true },
+		});
 
 		// Return the signed URL to the client — they can PUT directly to R2
 		return Response.json({ url: signed.url });
@@ -426,7 +444,8 @@ s3 = boto3.client(
     region_name="auto",
 )
 
-# upload_file automatically uses multipart for large files
+# upload_file automatically uses multipart for large files.
+# For better throughput with large objects, use the manual multipart example below.
 s3.upload_file(
     Filename="./large-file.bin",
     Bucket="my-bucket",
@@ -601,6 +620,7 @@ try {
 import boto3
 import math
 import os
+from concurrent.futures import ThreadPoolExecutor
 
 s3 = boto3.client(
     service_name="s3",
@@ -613,29 +633,37 @@ s3 = boto3.client(
 bucket = "my-bucket"
 key = "large-file.bin"
 file_path = "./large-file.bin"
-part_size = 10 * 1024 * 1024  # 10 MiB per part
+part_size = 16 * 1024 * 1024  # 16 MiB per part
+max_workers = 10  # Number of parallel upload threads
 
 # Step 1: Create the multipart upload
+upload_id = None
 mpu = s3.create_multipart_upload(Bucket=bucket, Key=key)
 upload_id = mpu["UploadId"]
+
+def upload_part(part_number, data):
+    response = s3.upload_part(
+        Bucket=bucket,
+        Key=key,
+        UploadId=upload_id,
+        PartNumber=part_number,
+        Body=data,
+    )
+    return {"PartNumber": part_number, "ETag": response["ETag"]}
 
 try:
     file_size = os.path.getsize(file_path)
     part_count = math.ceil(file_size / part_size)
-    parts = []
 
-    # Step 2: Upload each part
-    with open(file_path, "rb") as f:
-        for i in range(part_count):
-            data = f.read(part_size)
-            response = s3.upload_part(
-                Bucket=bucket,
-                Key=key,
-                UploadId=upload_id,
-                PartNumber=i + 1,
-                Body=data,
-            )
-            parts.append({"PartNumber": i + 1, "ETag": response["ETag"]})
+    # Step 2: Upload parts in parallel
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = []
+        with open(file_path, "rb") as f:
+            for i in range(part_count):
+                data = f.read(part_size)
+                futures.append(pool.submit(upload_part, i + 1, data))
+
+        parts = [future.result() for future in futures]
 
     # Step 3: Complete the upload
     s3.complete_multipart_upload(
@@ -647,10 +675,11 @@ try:
     print("Multipart upload complete.")
 except Exception:
     # Abort on failure to clean up incomplete parts
-    try:
-        s3.abort_multipart_upload(Bucket=bucket, Key=key, UploadId=upload_id)
-    except Exception:
-        pass  # Best-effort cleanup — the original error is more important
+    if upload_id:
+        try:
+            s3.abort_multipart_upload(Bucket=bucket, Key=key, UploadId=upload_id)
+        except Exception:
+            pass  # Best-effort cleanup — the original error is more important
     raise
 ```
 

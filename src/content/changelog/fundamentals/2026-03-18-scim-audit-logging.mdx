@@ -1,0 +1,25 @@
+---
+title: SCIM audit logging Support
+description: Track user and group provisioning events from your identity provider.
+products:
+  - fundamentals
+date: 2026-03-18
+---
+
+Cloudflare dashboard SCIM provisioning operations are now captured in [Audit Logs v2](/fundamentals/account/account-security/audit-logs/), giving you visibility into user and group changes made by your identity provider.
+
+![SCIM audit logging](~/assets/images/changelog/fundamentals/2026-03-18-scim-audit-logging.png)
+
+**Logged actions:**
+
+| Action Type       | Description                             |
+| ----------------- | --------------------------------------- |
+| Create SCIM User  | User provisioned from IdP               |
+| Replace SCIM User | User fully replaced (PUT)               |
+| Update SCIM User  | User attributes modified (PATCH)        |
+| Delete SCIM User  | Member deprovisioned                      |
+| Create SCIM Group | Group provisioned from IdP              |
+| Update SCIM Group | Group membership or attributes modified |
+| Delete SCIM Group | Group deprovisioned                           |
+
+For more details, refer to the [Audit Logs v2 documentation](/fundamentals/account/account-security/audit-logs/).

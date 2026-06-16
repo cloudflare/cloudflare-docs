@@ -3,7 +3,9 @@ pcx_content_type: how-to
 title: Manage Logpush with cURL
 sidebar:
   order: 88
-
+description: Create and manage Logpush jobs using cURL.
+products:
+  - logpush
 ---
 
 import { APIRequest } from "~/components";
@@ -115,6 +117,7 @@ In the response, you get a newly-created job ID. For example:
   "result": {
     "id": <JOB_ID>,
     "dataset": "http_requests",
+    "kind": "",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
     "output_options": {
@@ -148,6 +151,7 @@ Start by retrieving information about a specific job, using a job ID:
   "result": {
     "id": <JOB_ID>,
     "dataset": "http_requests",
+    "kind": "",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
     "output_options": {
@@ -191,6 +195,7 @@ Next, to enable the job, send an update request:
   "result": {
     "id": <JOB_ID>,
     "dataset": "http_requests",
+    "kind": "",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
     "output_options": {
@@ -228,6 +233,7 @@ Once a job has been enabled and has started executing, the **last\_complete** fi
   "result": {
     "id": <JOB_ID>,
     "dataset": "http_requests",
+    "kind": "",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
     "output_options": {
@@ -282,6 +288,7 @@ Retrieve a specific job, using the job ID:
     {
       "id": <JOB_ID>,
       "dataset": "http_requests",
+      "kind": "",
       "enabled": true,
       "name": "<DOMAIN_NAME>",
       "output_options": {
@@ -315,6 +322,7 @@ Retrieve all jobs for all datasets:
     {
       "id": <JOB_ID>,
       "dataset": "spectrum_events",
+      "kind": "",
       "enabled": true,
       "name": "<DOMAIN_NAME>",
       "output_options": {
@@ -328,6 +336,7 @@ Retrieve all jobs for all datasets:
     {
       "id": <JOB_ID>,
       "dataset": "http_requests",
+      "kind": "",
       "enabled": false,
       "name": "<DOMAIN_NAME>",
       "output_options": {

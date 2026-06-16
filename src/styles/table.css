@@ -1,13 +1,100 @@
 /*
-	Override the default `overflow-wrap: anywhere` when inside a table.
+	Table styles — aligned with kumo-ui's Table component.
+
+	Applies to all tables inside Starlight markdown content
+	(.sl-markdown-content) but respects the .not-content escape hatch.
+
+	Token reference (defined in tailwind.css @theme):
+	  --color-table-base     → page background        (kumo: bg-kumo-base)
+	  --color-table-fill     → border / divider        (kumo: border-kumo-fill → neutral-200/800)
+	  --color-table-tint     → alternating row stripe  (kumo: bg-kumo-tint → neutral-75/800)
+	  --color-table-elevated → header background       (kumo: bg-kumo-elevated → neutral-25/950)
+
+	Starlight's gray scale auto-inverts between light and dark, so a single
+	:root declaration in tailwind.css covers both themes with no overrides here.
 */
+
+/* ── Reset ───────────────────────────────────────────────────────── */
+
 table * {
 	overflow-wrap: normal;
 }
 
-/*
-	First and last row padding
-*/
+rule-id button {
+	background-color: color-mix(
+		in srgb,
+		var(--sl-color-gray-5) 8%,
+		var(--sl-color-gray-6)
+	);
+	border-color: color-mix(
+		in srgb,
+		var(--sl-color-gray-5) 30%,
+		var(--sl-color-gray-6)
+	);
+}
+
+:root[data-theme="dark"] rule-id button {
+	background-color: var(--sl-color-gray-5);
+	border-color: var(--sl-color-gray-4);
+}
+
+/* Inline code inside table cells — uses the same prominent-surface token
+   as <Type /> so it stays legible on both plain and striped rows. */
+.sl-markdown-content :is(td, th) code:not(:where(.not-content *)) {
+	background-color: var(--sl-color-gray-6);
+	border: 1px solid var(--color-table-fill);
+	border-radius: 0.375rem;
+	padding: 0.125rem 0.375rem;
+}
+
+/* ── Table shell ─────────────────────────────────────────────────── */
+
+.sl-markdown-content table:not(:where(.not-content *)) {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+	font-size: 0.875rem;
+	line-height: 1.4;
+	color: var(--sl-color-text);
+	display: block;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* ── Header cells ────────────────────────────────────────────────── */
+
+.sl-markdown-content :is(th, thead td):not(:where(.not-content *)) {
+	background-color: var(--color-table-base);
+	border-bottom: 1px solid var(--color-table-fill);
+	padding: 0.75rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+}
+
+/* ── Body cells ──────────────────────────────────────────────────── */
+
+.sl-markdown-content td:not(:where(.not-content *)) {
+	border-bottom: 1px solid var(--color-table-fill);
+	padding: 0.75rem;
+	vertical-align: top;
+}
+
+/* Alternating row stripe — only when tbody has more than 4 rows.
+   tbody:has(tr:nth-child(5)) matches any tbody with a 5th row, i.e. >4 rows. */
+.sl-markdown-content
+	tbody:has(tr:nth-child(5))
+	tr:nth-child(even)
+	td:not(:where(.not-content *)) {
+	background-color: var(--color-table-tint);
+}
+
+/* Last row: no bottom border */
+.sl-markdown-content tr:last-child td:not(:where(.not-content *)) {
+	border-bottom: none;
+}
+
+/* ── Edge padding ────────────────────────────────────────────────── */
+
 .sl-markdown-content
 	:is(th:first-child, td:first-child):not(:where(.not-content *)) {
 	padding-inline-start: 1rem;
@@ -16,11 +103,4 @@ table * {
 .sl-markdown-content
 	:is(th:last-child, td:last-child):not(:where(.not-content *)) {
 	padding-inline-end: 1rem;
-}
-
-/*
-	Alternating row shading
-*/
-.sl-markdown-content tr:nth-child(2n):not(:where(.not-content *)) {
-	background-color: var(--sl-color-gray-7, #1f1f1f);
 }

@@ -1,11 +1,19 @@
 ---
 title: Extended ruleset
 pcx_content_type: configuration
+description: Configure Extended ruleset in Gateway.
+products:
+  - cloudflare-one
 sidebar:
   order: 3
 head:
   - tag: title
     content: Extended suggested ruleset
+tags:
+  - TCP
+  - UDP
+  - ICMP
+  - IPsec
 ---
 
 The extended ruleset builds on the [Minimal ruleset](/cloudflare-one/traffic-policies/packet-filtering/best-practices/minimal-ruleset/) by creating targeted rules for different types of systems on your network. Before creating these rules, you must [create IP lists](/waf/tools/lists/custom-lists/#ip-lists) for each category.

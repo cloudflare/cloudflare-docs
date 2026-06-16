@@ -24,11 +24,11 @@ The FortiGate configuration was tested on two different FortiGate firewalls:
 
 To set up Cloudflare WAN, add IPsec tunnels and static routes to your Cloudflare account using the dashboard or API.
 
-Before proceeding, ensure that you have the anycast IPs assigned to your account. You can find them in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
+Before proceeding, ensure that you have the IPv4 anycast address assigned to your account. You can find it in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 
-### IPsec Tunnels
+### IPsec tunnels
 
-Cloudflare recommends customers configure two IPsec tunnels per firewall/router - one to each of the two anycast IP addresses.
+Cloudflare handles failures on its network automatically by advertising your endpoint IP from multiple nodes across many globally distributed data centers. To handle failures on your network, configure two IPsec tunnels from separate routers.
 
 1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
    - **Health check type**: Change to _Request_.
@@ -67,7 +67,11 @@ end
 
 ### Configure NAT-T (optional)
 
-If you have Network Address Translation Traversal (NAT-T) on your network, you need to enable this feature and initiate Internet Key Exchange (IKE) communications on port `4500`.
+:::note
+This configuration is no longer required. Cloudflare now supports NAT-T starting on UDP port `500`, so devices can negotiate the standard NAT-T flow without forcing port `4500`. Refer to the [changelog entry](/changelog/2026-05-11-nat-t-port-500/) for details. This guide has not been re-tested since the change.
+:::
+
+If you have Network Address Translation Traversal (NAT-T) on your network, you can enable this feature and initiate Internet Key Exchange (IKE) communications on port `4500`.
 
 To set the IKE port, add the following to your system settings:
 
