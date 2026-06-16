@@ -564,6 +564,8 @@
 /realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
+/realtime/agents/ /realtime/ 301
+/realtime/agents/getting-started/ /realtime/ 301
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
 /realtime/static/calls-api-2024-05-21.yaml /realtime/static/realtime-api-2024-05-21.yaml 301
 
