@@ -351,7 +351,10 @@ const _jsonLd: Record<string, unknown> = {
 		<script
 			is:inline
 			type="application/ld+json"
-			set:html={JSON.stringify(_jsonLd)}
+			set:html={
+				// Escape < to prevent </script> in user content from closing the tag.
+				JSON.stringify(_jsonLd).replace(/</g, "\\u003c")
+			}
 		/>
 	)
 }
