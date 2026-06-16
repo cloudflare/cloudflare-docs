@@ -20,9 +20,9 @@ To verify that a request originated from Cloudflare Browser Run specifically, us
 
 Requests can be identified by the [automatic headers](/browser-run/reference/automatic-request-headers/) that Cloudflare attaches:
 
-- [User-Agent](/browser-run/reference/automatic-request-headers/#user-agent): Each Browser Run method has a different default User-Agent, which you can use to write targeted `robots.txt` rules.
-- `cf-brapi-request-id`: Unique identifier for Quick Actions requests.
-- `Signature-agent`: Pointer to Cloudflare's bot verification keys.
+- [User-Agent](/browser-run/reference/automatic-request-headers/#user-agent): Each Browser Run method has a different default User-Agent, which you can use to write targeted `robots.txt` rules
+- `cf-brapi-request-id`: Unique identifier for Quick Actions requests
+- `Signature-agent`: Pointer to Cloudflare's bot verification keys
 
 To allow or block Browser Run traffic using WAF rules instead of `robots.txt`, use the [bot detection IDs](/browser-run/reference/automatic-request-headers/#bot-detection) on the automatic request headers page.
 
