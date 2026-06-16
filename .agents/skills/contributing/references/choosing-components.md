@@ -11,49 +11,49 @@ Two rules first:
 
 ## Reverse lookup: the data you have → the component
 
-| You have…                                                  | Use                                          | Mandatory? |
-| ---------------------------------------------------------- | -------------------------------------------- | ---------- |
-| A Workers JavaScript/TypeScript code sample                | `TypeScriptExample`                          | Yes        |
-| A Wrangler configuration                                   | `WranglerConfig` (TOML input, `$today`)      | Yes        |
-| A package install or exec command (npm/yarn/pnpm)          | `PackageManagers`                            | Yes        |
-| A multi-step procedure                                     | `Steps`                                      | Yes        |
-| A step that navigates the dashboard                        | `DashButton`                                 | Yes        |
-| A Cloudflare API endpoint to call                          | `APIRequest`                                 | —          |
-| A non-Cloudflare curl command                              | `CURL`                                       | —          |
-| Code that lives in a Cloudflare GitHub repo                | `GitHubCode` (pin a full commit hash)        | —          |
-| A full Wrangler command or namespace reference             | `WranglerCommand` / `WranglerNamespace`      | —          |
-| A parameter/field data type or constraint                  | `Type` / `MetaInfo`                          | —          |
-| Mutually exclusive paths (Dashboard vs API, languages)     | `Tabs` / `TabItem`                           | —          |
-| Supplementary detail that would clutter the main flow      | `Details`                                    | —          |
-| A directory/file layout                                    | `FileTree`                                   | —          |
-| A sample to set apart in a styled box                      | `Example`                                    | —          |
-| Content constrained to a narrower width                    | `Width`                                      | —          |
-| A heading with a custom anchor (inside a component)        | `AnchorHeading`                              | —          |
-| Reusable content shared across pages                       | `Render` (a partial)                         | —          |
-| A formatted Markdown string inside JSX                     | `Markdown`                                   | —          |
-| Plan availability for a feature                            | `Plan`, `FeatureTable`, or `ProductFeatures` | —          |
-| Lifecycle status (Beta/Alpha) inline or in a heading       | `ProductAvailabilityText`, `Badge`           | —          |
-| A small inline status pill                                 | `InlineBadge` (avoid; prefer `Badge`)        | —          |
-| Inline changelog entries for a product                     | `ProductChangelog`                           | —          |
-| Relational data (fields, limits, comparisons)              | a Markdown table                             | —          |
-| A glossary term inline                                     | `GlossaryTooltip` / `GlossaryDefinition`     | —          |
-| A full product glossary table                              | `Glossary`                                   | —          |
-| Links/cards routing to other pages                         | `LinkCard` / `CardGrid`, `Card`              | —          |
-| A primary call-to-action link                              | `LinkButton`                                 | —          |
-| A product feature highlight on an overview                 | `Feature`                                    | —          |
-| A related Cloudflare product reference                     | `RelatedProduct`                             | —          |
-| An auto-generated child-page list                          | `DirectoryListing`                           | —          |
-| A filterable list of examples/resources                   | `ResourcesBySelector`                        | —          |
-| An auto-generated tutorial table                           | `ListTutorials`                              | —          |
-| A description block below the page title                   | `Description`                                | —          |
-| A link to an RSS/changelog feed                            | `RSSButton`                                  | —          |
-| A YouTube or Cloudflare Stream video                       | `YouTube` / `Stream`                         | —          |
-| A product or UI icon                                       | `AstroIcon` / `StarlightIcon`                | —          |
-| A live statistic in prose                                  | `PublicStats`                                | —          |
-| A copyable WAF/security rule ID                            | `RuleID`                                     | —          |
-| Available notification types for a product                 | `AvailableNotifications`                     | —          |
-| Pages framework build-preset details                       | `PagesBuildPreset`                           | —          |
-| An interactive IP-range subtraction calculator             | `SubtractIPCalculator`                       | —          |
+| You have…                                              | Use                                          | Mandatory? |
+| ------------------------------------------------------ | -------------------------------------------- | ---------- |
+| A Workers JavaScript/TypeScript code sample            | `TypeScriptExample`                          | Yes        |
+| A Wrangler configuration                               | `WranglerConfig` (TOML input, `$today`)      | Yes        |
+| A package install or exec command (npm/yarn/pnpm)      | `PackageManagers`                            | Yes        |
+| A multi-step procedure                                 | `Steps`                                      | Yes        |
+| A step that navigates the dashboard                    | `DashButton`                                 | Yes        |
+| A Cloudflare API endpoint to call                      | `APIRequest`                                 | —          |
+| A non-Cloudflare curl command                          | `CURL`                                       | —          |
+| Code that lives in a Cloudflare GitHub repo            | `GitHubCode` (pin a full commit hash)        | —          |
+| A full Wrangler command or namespace reference         | `WranglerCommand` / `WranglerNamespace`      | —          |
+| A parameter/field data type or constraint              | `Type` / `MetaInfo`                          | —          |
+| Mutually exclusive paths (Dashboard vs API, languages) | `Tabs` / `TabItem`                           | —          |
+| Supplementary detail that would clutter the main flow  | `Details`                                    | —          |
+| A directory/file layout                                | `FileTree`                                   | —          |
+| A sample to set apart in a styled box                  | `Example`                                    | —          |
+| Content constrained to a narrower width                | `Width`                                      | —          |
+| A heading with a custom anchor (inside a component)    | `AnchorHeading`                              | —          |
+| Reusable content shared across pages                   | `Render` (a partial)                         | —          |
+| A formatted Markdown string inside JSX                 | `Markdown`                                   | —          |
+| Plan availability for a feature                        | `Plan`, `FeatureTable`, or `ProductFeatures` | —          |
+| Lifecycle status (Beta/Alpha) inline or in a heading   | `ProductAvailabilityText`, `Badge`           | —          |
+| A small inline status pill                             | `InlineBadge` (avoid; prefer `Badge`)        | —          |
+| Inline changelog entries for a product                 | `ProductChangelog`                           | —          |
+| Relational data (fields, limits, comparisons)          | a Markdown table                             | —          |
+| A glossary term inline                                 | `GlossaryTooltip` / `GlossaryDefinition`     | —          |
+| A full product glossary table                          | `Glossary`                                   | —          |
+| Links/cards routing to other pages                     | `LinkCard` / `CardGrid`, `Card`              | —          |
+| A primary call-to-action link                          | `LinkButton`                                 | —          |
+| A product feature highlight on an overview             | `Feature`                                    | —          |
+| A related Cloudflare product reference                 | `RelatedProduct`                             | —          |
+| An auto-generated child-page list                      | `DirectoryListing`                           | —          |
+| A filterable list of examples/resources                | `ResourcesBySelector`                        | —          |
+| An auto-generated tutorial table                       | `ListTutorials`                              | —          |
+| A description block below the page title               | `Description`                                | —          |
+| A link to an RSS/changelog feed                        | `RSSButton`                                  | —          |
+| A YouTube or Cloudflare Stream video                   | `YouTube` / `Stream`                         | —          |
+| A product or UI icon                                   | `AstroIcon` / `StarlightIcon`                | —          |
+| A live statistic in prose                              | `PublicStats`                                | —          |
+| A copyable WAF/security rule ID                        | `RuleID`                                     | —          |
+| Available notification types for a product             | `AvailableNotifications`                     | —          |
+| Pages framework build-preset details                   | `PagesBuildPreset`                           | —          |
+| An interactive IP-range subtraction calculator         | `SubtractIPCalculator`                       | —          |
 
 ## By intent
 

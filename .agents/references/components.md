@@ -901,7 +901,11 @@ Two icon components pulling from different icon sets.
 import { AstroIcon, StarlightIcon } from "~/components";
 
 <AstroIcon name="workers" class="text-5xl text-orange-400" />
-<StarlightIcon name="seti:shell" color="var(--sl-color-text-accent)" size="3rem" />
+<StarlightIcon
+	name="seti:shell"
+	color="var(--sl-color-text-accent)"
+	size="3rem"
+/>
 ```
 
 ---
