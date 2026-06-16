@@ -450,7 +450,7 @@ Each snippet records the connector names its source execution ran with. `codemod
 | `runtime.approve({ executionId })`                   | Approve the pending action and continue via replay.                                |
 | `runtime.reject({ seq, executionId })`               | Reject a pending action; ends the execution.                                       |
 | `runtime.rollback({ executionId })`                  | Revert applied actions in reverse order via each tool's `revert`.                  |
-| `runtime.expirePaused({ maxAgeMs? })`                | Expire stale awaiting-approval runs and reclaim their resources (default 24h).     |
+| `runtime.expirePaused({ maxAgeMs? })`                | Expire stale awaiting-approval runs and reclaim their resources (default 24 h).    |
 | `runtime.executions(limit?)`                         | All executions, newest first — the audit trail for developer UIs.                  |
 | `runtime.deleteExecution(id)` / `pruneExecutions(n)` | Drop one execution, or keep only the newest N terminal ones.                       |
 | `runtime.saveSnippet(name, opts?)`                   | Promote an execution's script to a reusable snippet.                               |
