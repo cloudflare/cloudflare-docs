@@ -153,7 +153,7 @@ You will be redirected to log in to your OAuth provider. The account used to aut
 
 ### Synchronize the MCP server
 
-Cloudflare Access automatically synchronizes tools and prompts from your MCP server approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting. 
+Cloudflare Access automatically synchronizes tools and prompts from your MCP server approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
 
 :::note
 Synchronization uses the admin credential, not individual user credentials. If the admin credential's refresh token has expired or been revoked, the [server status](#server-status) will change to **Sync Required** and you will need to [reauthenticate the server](#reauthenticate-the-mcp-server). This will not impact end users' ability to connect to the MCP server. It will impact the ability to fetch tool and prompt information or additions and removals.
@@ -202,7 +202,7 @@ To create an MCP server portal:
 8. Add [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can connect to the portal URL.
 
    :::caution
-   MCP server portal applications do not enforce [independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa), [purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/), or [temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/). Refer to [Policy limitations](#policy-limitations) for details.
+   [Independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa), [purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/), and [temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/) will not be enforced for MCP servers that are authorized through an MCP portal. For example, if independent MFA is enabled on a policy assigned to a server, users will not be prompted to perform MFA to authorize the server after authenticating to the portal. Refer to [Policy limitations](#policy-limitations) for details.
    :::
 
 9. Select **Add an MCP server portal**.
@@ -921,13 +921,15 @@ MCP server portals have the following known limitations:
 
 ## Policy limitations
 
-MCP server portals use a dedicated Access application type that does not support the following Access policy features:
+MCP servers use a dedicated Access application type (*mcp*) that does not support the following Access policy features when the server is through a portal.
 
-- **[Independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa)** — Portals do not prompt users for a second factor through Cloudflare Access. Users who connect to a portal will not be challenged for MFA, even if independent MFA is required globally or configured on a matching policy. To enforce MFA for MCP portal users, require MFA at your identity provider.
-- **[Purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/)** — Portals do not display a purpose justification screen. The `purpose_justification_required` and `purpose_justification_prompt` policy settings have no effect on portal sessions.
-- **[Temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/)** — Portals do not trigger the approval workflow for temporary authentication policies. Users are not prompted to request access, and approvers do not receive approval requests for portal logins.
+- **[Independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa)** — Users will not be prompted to perform MFA through Cloudflare Access when authorizing a server, regardless of whether MFA global enforcement is enabled or whether an MFA policy is assigned to the server.
+- **[Purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/)** — Users will not be prompted to provide a purpose justification when authorizing a server.
+- **[Temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/)** — Users will not be prompted to request access and approvers will not receive approval requests when a user authorizes a server.
 
-These limitations apply to the portal application itself. Other Access policy selectors (such as Emails, Groups, IdP groups, country, and device posture) work as expected.
+These limitations only apply to servers that are being authorized through a portal. Access policy selectors such as Emails, Groups, Country, and Device Posture Checks will be enforced.
+
+Independent MFA, purpose justification, and temporary authentication will be enforced for servers that are not authorized through a portal.
 
 ## Troubleshooting
 
