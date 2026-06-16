@@ -307,8 +307,9 @@ const _dateModified = _modifiedDate
 	: undefined;
 
 // datePublished: changelog entries only, sourced from the entry's date field.
-const _changelogEntry = Astro.locals.starlightRoute
-	.originalEntry as CollectionEntry<"changelog"> | undefined;
+const _changelogEntry = Astro.locals.starlightRoute.originalEntry as
+	| CollectionEntry<"changelog">
+	| undefined;
 const _datePublished =
 	_isChangelog && _changelogEntry?.data.date
 		? _changelogEntry.data.date.toISOString().slice(0, 10)
@@ -319,9 +320,7 @@ const _jsonLd: Record<string, unknown> = {
 	"@type": schemaType,
 	"@id": `${_canonicalUrl}#page`,
 	headline: _headline,
-	...(frontmatter.description
-		? { description: frontmatter.description }
-		: {}),
+	...(frontmatter.description ? { description: frontmatter.description } : {}),
 	url: _canonicalUrl,
 	inLanguage: "en",
 	image: ogImageUrl,
@@ -347,7 +346,13 @@ const _jsonLd: Record<string, unknown> = {
 <script src="src/scripts/analytics.ts"></script>
 <script src="src/scripts/explain-code.ts"></script>
 <script src="src/scripts/webmcp.ts"></script>
-{!shouldNoIndex && (
-	<script is:inline type="application/ld+json" set:html={JSON.stringify(_jsonLd)} />
-)}
+{
+	!shouldNoIndex && (
+		<script
+			is:inline
+			type="application/ld+json"
+			set:html={JSON.stringify(_jsonLd)}
+		/>
+	)
+}
 <Default><slot /></Default>
