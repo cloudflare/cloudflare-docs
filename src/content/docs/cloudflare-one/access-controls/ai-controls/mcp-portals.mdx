@@ -129,7 +129,7 @@ The MCP server status indicates the synchronization status of the MCP server to 
 
 #### Error details
 
-When an MCP server is in the **Error** state, the API returns an `error_details` object with structured information to help you diagnose the issue:
+When an MCP server is in the **Error** or **Sync Required** state, Cloudflare Access surfaces structured information to help you diagnose the issue. In the dashboard, hover over the server's status to view the error message, the error category (upstream or connection), the HTTP status code, and the MCP protocol error code (if applicable). The same details are returned by the API as an `error_details` object:
 
 | Field | Description |
 | --- | --- |
