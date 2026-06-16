@@ -1,7 +1,7 @@
 import { defineHastPlugin } from "satteri";
 import type { Element } from "hast";
 
-import { externalLinkArrow } from "../rehype/external-links";
+import { externalLinkArrow } from "../shared";
 
 function hasImgChild(node: Element): boolean {
 	return node.children.some(

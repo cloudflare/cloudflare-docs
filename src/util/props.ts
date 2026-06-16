@@ -3,7 +3,7 @@ import { parse } from "node-html-parser";
 import he from "he";
 import { remark } from "remark";
 import strip from "strip-markdown";
-import { externalLinkArrow } from "~/plugins/rehype/external-links";
+import { externalLinkArrow } from "~/plugins/shared";
 
 type TableOfContentsItems = NonNullable<StarlightRouteData["toc"]>["items"];
 
