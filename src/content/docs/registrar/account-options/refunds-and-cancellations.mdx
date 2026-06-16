@@ -1,0 +1,61 @@
+---
+pcx_content_type: reference
+title: Refunds and cancellations
+sidebar:
+  order: 9
+products:
+  - registrar
+description: Understand the refund and cancellation policy for Cloudflare Registrar domain registrations.
+---
+
+import { DashButton } from "~/components";
+
+## Refund policy
+
+Domain registrations, renewals, transfers, and restorations through Cloudflare Registrar are **non-refundable**. When you register, renew, transfer, or restore a domain, Cloudflare pays the registry fee on your behalf, and that payment cannot be reversed.
+
+This applies to all of the following:
+
+- New domain registrations.
+- Manual and automatic renewals.
+- Domain transfers (which include a one-year registration extension).
+- Domain restorations during the Redemption Period.
+
+Cloudflare does not issue refunds for these charges, including registrations made in error (for example, a typo in the domain name).
+
+## Cancelling a domain
+
+You can delete a domain registration at any time, but deleting a domain does not generate a refund. Deletion starts an irreversible process — once complete, the domain becomes available for anyone to register.
+
+To delete a domain, refer to [Delete a domain registration](/registrar/account-options/domain-management/#delete-a-domain-registration).
+
+## Avoid unwanted renewal charges
+
+Because renewals are non-refundable, turn off auto-renew before the renewal window if you no longer want a domain.
+
+1. In the Cloudflare dashboard, go to the **Manage domains** page.
+
+   <DashButton url="/?to=/:account/registrar/domains" />
+
+2. Find the domain and turn off the **Auto-renew** toggle.
+
+:::caution
+
+Turn off auto-renew at least 30 days before the expiration date. Cloudflare begins auto-renewal attempts approximately 30 days prior to expiration.
+
+:::
+
+## Failed registrations and duplicate charges
+
+A non-refundable policy applies to completed registrations. The following cases are different, because no successful registration occurred:
+
+| Scenario | What happens |
+| --- | --- |
+| Registration failed but payment was captured | The charge is typically voided automatically within 5 to 7 business days. If it is not reversed after 7 business days, contact Cloudflare support. |
+| Duplicate charge for the same domain | A temporary preauthorization hold may appear as a second charge and is released automatically. If you see two settled charges for the same domain, contact Cloudflare support with both invoice numbers. |
+
+## Tips to avoid unwanted charges
+
+- **Double-check the domain name** before confirming your purchase. Typos in domain names cannot be corrected after registration, and registrations are non-refundable.
+- **Review auto-renew settings** periodically, especially for domains you no longer need.
+- **Set calendar reminders** for domains approaching their renewal date if you want to make a decision before auto-renew triggers.

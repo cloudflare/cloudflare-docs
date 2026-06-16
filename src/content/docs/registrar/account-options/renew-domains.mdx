@@ -93,3 +93,45 @@ When renewing a domain, additional years are always added to the current expirat
 
 
 :::
+
+## Troubleshoot auto-renewal failures
+
+If you receive an email stating that your domain failed to auto-renew, check the following:
+
+### Authorization failed
+
+The most common auto-renewal failure is `authorization failed`, which means the payment method on file was declined. To resolve this:
+
+1. Go to **Billing** in the Cloudflare dashboard and verify your primary payment method is valid and not expired.
+2. If the card was recently replaced, update the payment method with the new card details.
+3. Contact your bank to confirm they are not blocking the Cloudflare charge.
+
+After updating your payment method, Cloudflare will retry the renewal automatically. You can also [manually renew](#renew-a-domain-manually) at any time.
+
+### Renewal link in email returns a 404
+
+Renewal notification emails contain a link to the domain management page. If that link returns a 404 error, go to the dashboard directly:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. Go to **Domain Registration** &gt; **Manage Domains**.
+3. Find the domain and select **Manage** &gt; **Renew/Extend Domain**.
+
+### What happens when auto-renewal fails repeatedly
+
+If all auto-renewal attempts fail, the domain follows this timeline after expiration on standard TLDs:
+
+* **Grace Period — Day 1 to 30**: Domain resolves normally. You can renew at the standard fee.
+* **Suspension Period — Day 31 to 40**: Domain may resolve to a suspension page. You can still renew at the standard fee.
+* **Redemption Period — Day 41 to 70**: Domain enters `redemptionPeriod`. Self-serve restoration through the dashboard is available while the zone is not yet deleted, with a restoration fee on top of the renewal fee.
+* **Pending Delete — Day 71 to 75**: Domain enters `pendingDelete` and cannot be recovered through Cloudflare. It is released for public registration about 5 to 7 days later.
+
+Some TLDs do not follow the standard timeline:
+
+* `.uk` does not use a Redemption Period. Recovery is governed by zone state and a T+90 boundary instead.
+* `.co` has an accelerated registry nameserver change around T+5 that can move the zone earlier than the standard timeline.
+
+For more details on restoration during the Redemption Period, refer to the [FAQ](/registrar/faq/#domain-restoration).
+
+### Billing page shows no unpaid invoices but renewal emails continue
+
+Renewal failure emails may continue for a few days after you update your payment method, because the retry schedule is based on when the failure originally occurred. If your billing page shows all invoices as paid and your payment method is current, the domain will renew on the next automatic retry. No action is needed.
