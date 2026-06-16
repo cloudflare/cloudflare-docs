@@ -26,6 +26,14 @@ The `cf-aig-authorization` header is used with the `gateway.ai.cloudflare.com` e
    - If using [provider-native endpoints](/ai-gateway/usage/providers/) at `gateway.ai.cloudflare.com`, use the `cf-aig-authorization` header.
 4. Return to the settings page and toggle on Authenticated Gateway.
 
+:::caution[AI Gateway API tokens are account-scoped]
+The `AI Gateway Read`, `Run`, and `Write` permissions cannot be restricted to a single gateway — unlike R2, which supports per-bucket scoping. Any token with `AI Gateway Run` can call every gateway in the account and spend through any [BYOK](/ai-gateway/configuration/bring-your-own-keys/) budget.
+
+For isolation between gateways or tenants, use separate Cloudflare accounts or a Worker-side [AI Gateway binding](/ai-gateway/integrations/aig-workers-ai-binding/) rather than relying on token scope.
+
+Per-gateway token scoping is tracked as a [feature request](https://community.cloudflare.com/t/scope-api-tokens-to-a-specific-ai-gateway-matching-the-per-bucket-scoping-r2-alrea/930329).
+:::
+
 ## Example requests
 
 ```bash
