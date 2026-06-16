@@ -870,3 +870,65 @@ import { AvailableNotifications } from "~/components";
 ```
 
 Props: `product` (required, product name or slug), `notificationFilter` (optional, filter to a specific notification type by name).
+
+---
+
+## Type / MetaInfo
+
+Inline annotations for documenting parameters, fields, and properties — used heavily on API and reference pages. `Type` renders a pill-shaped data-type badge; `MetaInfo` renders a metadata annotation (constraints, defaults).
+
+```mdx
+import { Type, MetaInfo } from "~/components";
+
+- `name` <Type text="string" />
+  - The name of your service.
+- `local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - If the service should run locally or not.
+```
+
+Props: both take a single `text` string. Use `Type` for data types (`string`, `boolean`, `Promise<T>`); use `MetaInfo` for constraints and defaults (`required`, `optional`, `read-only`, `(default: false)`).
+
+---
+
+## Icon (AstroIcon / StarlightIcon)
+
+Two icon components pulling from different icon sets.
+
+- `AstroIcon` — Cloudflare product icons from `src/icons/*.svg` (via the `astro-icon` package).
+- `StarlightIcon` — the Starlight icon set, for use alongside `Tabs`, `Card`, and other Starlight components.
+
+```mdx
+import { AstroIcon, StarlightIcon } from "~/components";
+
+<AstroIcon name="workers" class="text-5xl text-orange-400" />
+<StarlightIcon name="seti:shell" color="var(--sl-color-text-accent)" size="3rem" />
+```
+
+---
+
+## RSSButton
+
+A button linking to an RSS feed. Use it to point readers at a changelog feed.
+
+```mdx
+import { RSSButton } from "~/components";
+
+<RSSButton changelog="Workers" />
+<RSSButton href="/custom/feed.xml" text="Custom Feed" icon="external" />
+```
+
+Props: provide exactly one of `changelog` (a changelog name, transformed into `/changelog/rss/{changelog}.xml`) or `href` (a custom feed URL). `text` (default `"Subscribe to RSS"`) and `icon` (Starlight icon, default `"rss"`) are optional.
+
+---
+
+## Example
+
+Wraps content in a styled box to set it apart from the surrounding prose — useful for showcasing a sample without it blending into the page.
+
+```mdx
+import { Example } from "~/components";
+
+<Example title="Hello world">Hello, world!</Example>
+```
+
+Props: `title` (optional string, customizes the box's title).
