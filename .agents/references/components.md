@@ -890,41 +890,6 @@ Props: both take a single `text` string. Use `Type` for data types (`string`, `b
 
 ---
 
-## Icon (AstroIcon / StarlightIcon)
-
-Two icon components pulling from different icon sets.
-
-- `AstroIcon` — Cloudflare product icons from `src/icons/*.svg` (via the `astro-icon` package).
-- `StarlightIcon` — the Starlight icon set, for use alongside `Tabs`, `Card`, and other Starlight components.
-
-```mdx
-import { AstroIcon, StarlightIcon } from "~/components";
-
-<AstroIcon name="workers" class="text-5xl text-orange-400" />
-<StarlightIcon
-	name="seti:shell"
-	color="var(--sl-color-text-accent)"
-	size="3rem"
-/>
-```
-
----
-
-## RSSButton
-
-A button linking to an RSS feed. Use it to point readers at a changelog feed.
-
-```mdx
-import { RSSButton } from "~/components";
-
-<RSSButton changelog="Workers" />
-<RSSButton href="/custom/feed.xml" text="Custom Feed" icon="external" />
-```
-
-Props: provide exactly one of `changelog` (a changelog name, transformed into `/changelog/rss/{changelog}.xml`) or `href` (a custom feed URL). `text` (default `"Subscribe to RSS"`) and `icon` (Starlight icon, default `"rss"`) are optional.
-
----
-
 ## Example
 
 Wraps content in a styled box to set it apart from the surrounding prose — useful for showcasing a sample without it blending into the page.

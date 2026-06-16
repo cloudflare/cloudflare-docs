@@ -2,7 +2,7 @@
 
 Start from the content you have and pick the component that presents it correctly. This file is about _when_ and _why_ to reach for each component. For props, syntax, and full examples, read `.agents/references/components.md`. The authoritative live list with rendered examples is at https://developers.cloudflare.com/style-guide/components/.
 
-This covers the full set of author-facing components. Diagram, homepage, and layout-internal components exported from `~/components` are omitted — they are not general authoring tools.
+This covers the components in the synced catalog (`.agents/references/components.md`). Diagram, homepage, and layout-internal exports from `~/components` are omitted as non-authoring tools. A few utility components documented only in the live style guide (for example, the icon components and `RSSButton`) sit outside this list — check https://developers.cloudflare.com/style-guide/components/ if you need one that is not here.
 
 Two rules first:
 
@@ -46,9 +46,7 @@ Two rules first:
 | A filterable list of examples/resources                | `ResourcesBySelector`                        | —          |
 | An auto-generated tutorial table                       | `ListTutorials`                              | —          |
 | A description block below the page title               | `Description`                                | —          |
-| A link to an RSS/changelog feed                        | `RSSButton`                                  | —          |
 | A YouTube or Cloudflare Stream video                   | `YouTube` / `Stream`                         | —          |
-| A product or UI icon                                   | `AstroIcon` / `StarlightIcon`                | —          |
 | A live statistic in prose                              | `PublicStats`                                | —          |
 | A copyable WAF/security rule ID                        | `RuleID`                                     | —          |
 | Available notification types for a product             | `AvailableNotifications`                     | —          |
@@ -107,7 +105,6 @@ Two rules first:
 - **`LinkButton`** — primary call-to-action link on overview/get-started pages.
 - **`ResourcesBySelector` / `ListTutorials`** — filterable/auto-generated listings for examples and tutorial indexes.
 - **`Description`** — a description block rendered below the page title. Prefer the `summary` frontmatter field unless you need it conditionally or inside a component.
-- **`RSSButton`** — a button linking to a changelog or custom RSS feed.
 
 ### Glossary and media
 
@@ -117,10 +114,8 @@ Two rules first:
 - **`YouTube`** — embed a YouTube video by ID.
 - **`Stream`** — embed a Cloudflare Stream video.
 
-### Icons, stats, and product-specific helpers
+### Stats and product-specific helpers
 
-- **`AstroIcon`** — Cloudflare product icons from `src/icons/`.
-- **`StarlightIcon`** — the Starlight icon set, for use with `Tabs`, `Card`, and similar.
 - **`PublicStats`** — a live statistic (data centers, bandwidth) inline in prose.
 - **`DashButton`** — a button to a validated dashboard deeplink; use it for in-procedure dashboard navigation instead of a bare link.
 - **`RuleID`** — a copyable WAF/security rule ID.
