@@ -1,6 +1,6 @@
 ---
 name: contributing
-description: Use when making any change to the cloudflare-docs repository — writing or updating MDX pages, adding changelog entries, choosing components, structuring information, or opening a pull request. Covers the full contribution workflow for developers.cloudflare.com.
+description: The entry point for ANY contribution to the Cloudflare Docs repository (developers.cloudflare.com). Load this whenever working on the docs repo: creating, editing, or adding documentation pages, partials, images, or changelog entries; choosing a content type or component; deciding where content belongs; reviewing docs or code examples; or learning how to contribute. ALSO load this for ANY pull request action — creating, opening, submitting, updating, or editing a PR, or writing a PR title or description. This skill is a router that dispatches to task-specific references (writing docs, PRs, changelogs, reviews, components, style).
 ---
 
 # Contributing to Cloudflare Docs
@@ -13,7 +13,7 @@ Do not guess at conventions. The references below are the source of truth for ho
 
 These apply to every task below.
 
-- **This is an open-source, public repository.** Never put private Cloudflare information, secrets, credentials, internal URLs, or environment variable values into pages, code examples, commits, pull requests, comments, or anywhere else in this repository. If there is any doubt — even slight — about whether something is safe to publish, stop and ask the user.
+- **This is an open-source, public repository.** Never put private Cloudflare information, secrets, credentials, internal URLs, or environment variable values into pages, code examples, commits, pull requests, or comments. Reference internal tickets by ID only (for example, `PCX-20808`). If there is any doubt — even slight — about whether something is safe to publish, stop and ask the user.
 - **Branch off the latest `production`.** Before starting work, create your branch from an up-to-date `production` commit (`git fetch origin` then branch from `origin/production`), unless the user asks for a different base. This repo's default branch is `production`, not `main`.
 - **Never commit or push automatically.** Make the file changes, then ask the user whether they want to commit and push. Do not run `git commit` or `git push` unprompted.
 
@@ -67,3 +67,14 @@ pnpm exec tsm bin/validate-redirects.ts
 ```
 
 Always run `pnpm run format` on files you touched — CI fails on unformatted content.
+
+## Common mistakes to avoid
+
+1. Unescaped `{`, `}`, `<`, `>` in MDX prose — the top build failure. Wrap in backticks or escape.
+2. Using a component without importing it from `~/components` after the frontmatter.
+3. Bare code fences where a component is mandatory — Workers TS → `TypeScriptExample`, Wrangler config → `WranglerConfig`, install commands → `PackageManagers`.
+4. Capitalized or unsupported code-block languages — use `json` not `JSON`; use `txt` for generic output.
+5. Full URLs or missing trailing slashes in internal links — use `/workers/get-started/`, not the full domain and not `./page`.
+6. Images placed under `src/content/` — they belong in `src/assets/images/{product}/`.
+7. Renaming, moving, or deleting a page without adding a redirect to `public/__redirects`.
+8. Skipping heading levels (H2 → H4) or using gerund/question headings.
