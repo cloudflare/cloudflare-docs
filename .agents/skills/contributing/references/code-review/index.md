@@ -51,18 +51,18 @@ See `workers-types.md` for type system rules, `wrangler-config.md` for config va
 
 **Quick-reference rules:**
 
-| Rule                    | Detail                                                                                                                                   |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Binding access          | `env.X` in module export handlers; `this.env.X` in classes extending platform base classes. See `common-patterns.md`.                    |
-| No `any`                | Never use `any` for binding types, handler params, or API responses. Use proper generics.                                                |
-| No type-system cheats   | Flag `as unknown as T`, unjustified `@ts-ignore`, unsafe assertions. See `workers-types.md`.                                            |
-| Config-code consistency | Binding names in wrangler config must match `env.X` usage in code. See `wrangler-config.md`.                                            |
-| Required config fields  | Verify against the wrangler config schema — do not assume which fields are required.                                                     |
-| Concise examples        | Examples should focus on core logic. Minimize boilerplate that distracts from what the code teaches.                                     |
-| Floating promises       | Every `Promise` must be `await`ed, `return`ed, `void`ed, or passed to `ctx.waitUntil()`. See `common-patterns.md`.                       |
-| Serialization           | Data crossing Queue, Workflow step, or DO storage boundaries must be structured-clone serializable. See `common-patterns.md`.            |
-| Streaming               | Large/unknown payloads must stream, not buffer. Flag `await response.text()` on unbounded data.                                          |
-| Error handling          | Minimal but present — null checks on nullable returns, basic fetch error handling. Do not distract with verbose try/catch.               |
+| Rule                    | Detail                                                                                                                        |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Binding access          | `env.X` in module export handlers; `this.env.X` in classes extending platform base classes. See `common-patterns.md`.         |
+| No `any`                | Never use `any` for binding types, handler params, or API responses. Use proper generics.                                     |
+| No type-system cheats   | Flag `as unknown as T`, unjustified `@ts-ignore`, unsafe assertions. See `workers-types.md`.                                  |
+| Config-code consistency | Binding names in wrangler config must match `env.X` usage in code. See `wrangler-config.md`.                                  |
+| Required config fields  | Verify against the wrangler config schema — do not assume which fields are required.                                          |
+| Concise examples        | Examples should focus on core logic. Minimize boilerplate that distracts from what the code teaches.                          |
+| Floating promises       | Every `Promise` must be `await`ed, `return`ed, `void`ed, or passed to `ctx.waitUntil()`. See `common-patterns.md`.            |
+| Serialization           | Data crossing Queue, Workflow step, or DO storage boundaries must be structured-clone serializable. See `common-patterns.md`. |
+| Streaming               | Large/unknown payloads must stream, not buffer. Flag `await response.text()` on unbounded data.                               |
+| Error handling          | Minimal but present — null checks on nullable returns, basic fetch error handling. Do not distract with verbose try/catch.    |
 
 ### 5. Assess Risk
 

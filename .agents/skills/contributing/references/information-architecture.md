@@ -4,15 +4,15 @@ Decide where a change lives before you write it. Putting content in the right pl
 
 ## File locations
 
-| Content            | Location                                |
-| ------------------ | --------------------------------------- |
-| Documentation page | `src/content/docs/{product}/`           |
-| Reusable partial   | `src/content/partials/{product}/`       |
-| Image / asset      | `src/assets/images/{product}/`          |
-| Changelog entry    | `src/content/changelog/{product}/`      |
-| Glossary terms     | `src/content/glossary/{product}.yaml`   |
-| Product metadata   | `src/content/products/{product}.yaml`   |
-| Directory entry    | `src/content/directory/{slug}.yaml`     |
+| Content            | Location                              |
+| ------------------ | ------------------------------------- |
+| Documentation page | `src/content/docs/{product}/`         |
+| Reusable partial   | `src/content/partials/{product}/`     |
+| Image / asset      | `src/assets/images/{product}/`        |
+| Changelog entry    | `src/content/changelog/{product}/`    |
+| Glossary terms     | `src/content/glossary/{product}.yaml` |
+| Product metadata   | `src/content/products/{product}.yaml` |
+| Directory entry    | `src/content/directory/{slug}.yaml`   |
 
 Rules:
 

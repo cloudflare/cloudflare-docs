@@ -33,18 +33,18 @@ If the user already provided a clear spec or PR, proceed without interrogating t
 
 Find your task and read the listed reference(s). Paths are relative to this skill directory unless prefixed with `.agents/`.
 
-| Your task                                      | Read                                                                                                       |
-| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Write or edit a documentation page             | `references/writing-docs.md` (the authoring workflow — start here)                                         |
-| Decide which `pcx_content_type` and page shape | `references/content-types.md`                                                                              |
-| Decide how to present data / which component   | `references/choosing-components.md`                                                                        |
-| Decide where a page belongs, redirects, reuse  | `references/information-architecture.md`                                                                   |
-| Look up writing and formatting rules           | `.agents/references/style-guide.md` (canonical) and `.agents/references/procedures.md` for step-by-steps   |
-| Look up a component's props and examples       | `.agents/references/components.md`                                                                         |
-| Add or edit a changelog entry                  | `references/changelog.md`                                                                                  |
-| Review docs / post PR suggestions              | `references/reviewing-docs.md`                                                                             |
-| Review the code examples in docs               | `references/code-review/index.md`                                                                          |
-| Create or edit a pull request                  | `references/pr.md`                                                                                         |
+| Your task                                      | Read                                                                                                     |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Write or edit a documentation page             | `references/writing-docs.md` (the authoring workflow — start here)                                       |
+| Decide which `pcx_content_type` and page shape | `references/content-types.md`                                                                            |
+| Decide how to present data / which component   | `references/choosing-components.md`                                                                      |
+| Decide where a page belongs, redirects, reuse  | `references/information-architecture.md`                                                                 |
+| Look up writing and formatting rules           | `.agents/references/style-guide.md` (canonical) and `.agents/references/procedures.md` for step-by-steps |
+| Look up a component's props and examples       | `.agents/references/components.md`                                                                       |
+| Add or edit a changelog entry                  | `references/changelog.md`                                                                                |
+| Review docs / post PR suggestions              | `references/reviewing-docs.md`                                                                           |
+| Review the code examples in docs               | `references/code-review/index.md`                                                                        |
+| Create or edit a pull request                  | `references/pr.md`                                                                                       |
 
 The authoring workflow in `references/writing-docs.md` ties these together: gather context → locate where the page belongs → pick a content type → draft against the style guide → choose components for each piece of data → validate → open a PR.
 

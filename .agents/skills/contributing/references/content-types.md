@@ -6,19 +6,19 @@ When unsure, look at sibling pages in the same product area and match the type t
 
 ## Pick the type
 
-| The reader wants to…                                       | Use                            |
-| ---------------------------------------------------------- | ------------------------------ |
-| Understand what a product is and where to go next          | `overview`                     |
-| Get from zero to a first working result fast               | `get-started`                  |
-| Accomplish one specific task                               | `how-to`                       |
-| Follow a longer, end-to-end build with a finished artifact | `tutorial`                     |
-| Understand a concept or how something works                | `concept`                      |
-| Look up exact values — fields, limits, flags, API shapes   | `reference`                    |
-| Configure a feature's settings                             | `configuration`                |
-| Solve an error or unexpected behavior                      | `troubleshooting`              |
-| Get answers to recurring discrete questions                | `faq`                          |
-| See a focused, copyable code sample                        | `example`                      |
-| Land on a page that only routes to child pages             | `navigation`                   |
+| The reader wants to…                                       | Use                              |
+| ---------------------------------------------------------- | -------------------------------- |
+| Understand what a product is and where to go next          | `overview`                       |
+| Get from zero to a first working result fast               | `get-started`                    |
+| Accomplish one specific task                               | `how-to`                         |
+| Follow a longer, end-to-end build with a finished artifact | `tutorial`                       |
+| Understand a concept or how something works                | `concept`                        |
+| Look up exact values — fields, limits, flags, API shapes   | `reference`                      |
+| Configure a feature's settings                             | `configuration`                  |
+| Solve an error or unexpected behavior                      | `troubleshooting`                |
+| Get answers to recurring discrete questions                | `faq`                            |
+| See a focused, copyable code sample                        | `example`                        |
+| Land on a page that only routes to child pages             | `navigation`                     |
 | Announce a product change                                  | `changelog` (see `changelog.md`) |
 
 Other valid values exist for specialized content: `design-guide`, `integration-guide`, `implementation-guide`, `learning-unit`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `video`. Use them only when a page clearly fits — otherwise prefer the common types above.

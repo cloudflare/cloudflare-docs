@@ -9,28 +9,28 @@ Two rules first:
 
 ## Reverse lookup: the data you have → the component
 
-| You have…                                                  | Use                                          | Mandatory? |
-| ---------------------------------------------------------- | -------------------------------------------- | ---------- |
-| A Workers JavaScript/TypeScript code sample                | `TypeScriptExample`                          | Yes        |
-| A Wrangler configuration                                   | `WranglerConfig` (TOML input, `$today`)      | Yes        |
-| A package install or exec command (npm/yarn/pnpm)          | `PackageManagers`                            | Yes        |
-| A multi-step procedure                                     | `Steps`                                      | Yes        |
-| A step that navigates the dashboard                        | `DashButton`                                 | Yes        |
-| A Cloudflare API endpoint to call                          | `APIRequest`                                 | —          |
-| A non-Cloudflare curl command                              | `CURL`                                       | —          |
-| Code that lives in a Cloudflare GitHub repo                | `GitHubCode` (pin a full commit hash)        | —          |
-| Mutually exclusive paths (Dashboard vs API, languages)     | `Tabs` / `TabItem`                           | —          |
-| Reusable content shared across pages                       | `Render` (a partial)                         | —          |
-| Supplementary detail that would clutter the main flow      | `Details`                                    | —          |
-| A directory/file layout                                    | `FileTree`                                   | —          |
-| Plan availability for a feature                            | `Plan`, or `FeatureTable` / `ProductFeatures` | —          |
-| Lifecycle status (Beta/Alpha) inline or in a heading       | `ProductAvailabilityText`, `Badge`           | —          |
-| Relational data (fields, limits, comparisons)              | a Markdown table                             | —          |
-| A glossary term inline                                     | `GlossaryTooltip` / `GlossaryDefinition`     | —          |
-| Links/cards routing to other pages                         | `LinkCard` / `CardGrid`, `Feature`, `RelatedProduct` | —    |
-| A Wrangler command or namespace reference                  | `WranglerCommand` / `WranglerNamespace`      | —          |
-| A video                                                    | `YouTube` or `Stream`                        | —          |
-| A live statistic in prose                                  | `PublicStats`                                | —          |
+| You have…                                              | Use                                                  | Mandatory? |
+| ------------------------------------------------------ | ---------------------------------------------------- | ---------- |
+| A Workers JavaScript/TypeScript code sample            | `TypeScriptExample`                                  | Yes        |
+| A Wrangler configuration                               | `WranglerConfig` (TOML input, `$today`)              | Yes        |
+| A package install or exec command (npm/yarn/pnpm)      | `PackageManagers`                                    | Yes        |
+| A multi-step procedure                                 | `Steps`                                              | Yes        |
+| A step that navigates the dashboard                    | `DashButton`                                         | Yes        |
+| A Cloudflare API endpoint to call                      | `APIRequest`                                         | —          |
+| A non-Cloudflare curl command                          | `CURL`                                               | —          |
+| Code that lives in a Cloudflare GitHub repo            | `GitHubCode` (pin a full commit hash)                | —          |
+| Mutually exclusive paths (Dashboard vs API, languages) | `Tabs` / `TabItem`                                   | —          |
+| Reusable content shared across pages                   | `Render` (a partial)                                 | —          |
+| Supplementary detail that would clutter the main flow  | `Details`                                            | —          |
+| A directory/file layout                                | `FileTree`                                           | —          |
+| Plan availability for a feature                        | `Plan`, or `FeatureTable` / `ProductFeatures`        | —          |
+| Lifecycle status (Beta/Alpha) inline or in a heading   | `ProductAvailabilityText`, `Badge`                   | —          |
+| Relational data (fields, limits, comparisons)          | a Markdown table                                     | —          |
+| A glossary term inline                                 | `GlossaryTooltip` / `GlossaryDefinition`             | —          |
+| Links/cards routing to other pages                     | `LinkCard` / `CardGrid`, `Feature`, `RelatedProduct` | —          |
+| A Wrangler command or namespace reference              | `WranglerCommand` / `WranglerNamespace`              | —          |
+| A video                                                | `YouTube` or `Stream`                                | —          |
+| A live statistic in prose                              | `PublicStats`                                        | —          |
 
 ## By intent
 
