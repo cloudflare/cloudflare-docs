@@ -10,7 +10,7 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-Bindings let you control what a Dynamic Worker can access. When you create a Dynamic Worker, you decide exactly what resources and operations it can use.
+Bindings let you control what a Dynamic Worker can access. When you create a Dynamic Worker, you decide exactly what resources and operations it can use. 
 
 This allows you to:
 
@@ -21,7 +21,7 @@ This allows you to:
 ## Custom Bindings with Dynamic Workers
 
 With custom bindings, you:
-- **Define the binding implementation in your loader Worker**: You create a class with methods. Because this runs in your loader Worker, that's where you can add authentication, logging, scope access per customer.
+- **Define the binding implementation in your loader Worker**: You create a class with methods. Because this runs in your loader Worker, that's where you can add authentication, logging, scope access per customer. 
 - **Pass it to the Dynamic Worker as a binding**: It just calls methods like `this.env.CHAT_ROOM.post("Hello!")` without knowing anything about the implementation behind it.
 
 ### How it works
@@ -39,7 +39,7 @@ export class ChatRoom extends WorkerEntrypoint {
 }
 ```
 #### Step 2: Pass it to the Dynamic Worker
-Your loader Worker will then create an instance of the exported class, called a stub, and pass it into the Dynamic Worker's `env`.
+Your loader Worker will then create an instance of the exported class, called a stub, and pass it into the Dynamic Worker's `env`. 
 
 ```ts
 let chatRoom = ctx.exports.ChatRoom({ props: { roomName: "#bot-chat" } });
@@ -50,13 +50,13 @@ let worker = env.LOADER.load({
 });
 ```
 
-From the Dynamic Worker's perspective, `CHAT_ROOM` just looks like a regular binding with methods it can call:
+From the Dynamic Worker's perspective, `CHAT_ROOM` just looks like a regular binding with methods it can call: 
 ```ts
 // Inside the Dynamic Worker
 await this.env.CHAT_ROOM.post("Hello!");
 ```
 #### Step 3: Customize per user with props
-One class can serve many different Dynamic Workers. Instead of defining a separate class for each user, you pass in `props` when creating the stub, which contains information specific to that user.
+One class can serve many different Dynamic Workers. Instead of defining a separate class for each user, you pass in `props` when creating the stub, which contains information specific to that user. 
 
 ```ts
 // Same class, different props per user
@@ -136,7 +136,7 @@ let worker = env.LOADER.load({
 
 return worker.getEntrypoint("Agent").run();
 ```
-The agent just calls `this.env.CHAT_ROOM.post("Hello!")`. It has no way to post to a different room, see or use the API key, or change the bot name attached to its messages.
+The agent just calls `this.env.CHAT_ROOM.post("Hello!")`. It has no way to post to a different room, see or use the API key, or change the bot name attached to its messages. 
 
 ### Tip: Tell your agent about the types
 
@@ -146,7 +146,7 @@ Make sure your `WorkerEntrypoint` class extends the TypeScript type so the decla
 
 ## Passing normal Workers bindings
 
-To pass resources like a [KV](/kv/) namespace or [R2](/r2/) bucket to a Dynamic Worker, you need to bind the resource to your loader Worker and create a custom binding that wraps it. You can scope access per customer by prefixing keys and defining only the methods you want to expose.
+To pass resources like a [KV](/kv/) namespace or [R2](/r2/) bucket to a Dynamic Worker, you need to bind the resource to your loader Worker and create a custom binding that wraps it. You can scope access per customer by prefixing keys and defining only the methods you want to expose. 
 
 ### Example: Scoping a KV namespace per customer
 
@@ -197,7 +197,7 @@ For persistent storage that lives with each Dynamic Worker, see [Durable Object 
 
 ## Capability-based Sandboxing
 
-Custom bindings follow a capability-based security model — a Dynamic Worker can only access what you explicitly give it.  If it hasn't received a stub for something, it can't access it.
+Custom bindings follow a capability-based security model — a Dynamic Worker can only access what you explicitly give it.  If it hasn't received a stub for something, it can't access it. 
 
 This is powered by Workers RPC, also known as [Cap'n Web](https://github.com/cloudflare/capnweb), an RPC system designed to pass object references across security boundaries. When a Dynamic Worker receives a stub, it can call that object's methods and each call is an RPC back to the original object in your loader Worker. Stubs have no global identifier and cannot be forged, the only way to obtain one is to receive it.
 

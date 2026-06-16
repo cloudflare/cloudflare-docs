@@ -27,13 +27,13 @@ Challenges are not supported by Microsoft Internet Explorer. If you are currentl
 
 ### Referer header
 
-Your visitor's HTTP request contains a referer header set to the website that they came from. When they encounter and solve a Challenge Page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will not be accurate.
+Your visitor's HTTP request contains a referer header set to the website that they came from. When they encounter and solve a Challenge Page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will not be accurate. 
 
-For example, a visitor coming from a given website is challenged by a [WAF rule](/waf/custom-rules/) via an interstitial Challenge Page served by your domain. Once the visitor loads the website's home page, the `document.referer` value is your domain, not the origin website.
+For example, a visitor coming from a given website is challenged by a [WAF rule](/waf/custom-rules/) via an interstitial Challenge Page served by your domain. Once the visitor loads the website's home page, the `document.referer` value is your domain, not the origin website. 
 
 This affects tools like Google Analytics, which reads the referer from JavaScript, since it replaces the previous website that visitors came from.
 
-You can add tracking scripts, such as the Google Tag Manager Javascript, within an existing [Challenge Page](/rules/custom-errors/) to capture the correct referer header on the initial request.
+You can add tracking scripts, such as the Google Tag Manager Javascript, within an existing [Challenge Page](/rules/custom-errors/) to capture the correct referer header on the initial request. 
 
 ```js title="Example JavaScript"
 <script>

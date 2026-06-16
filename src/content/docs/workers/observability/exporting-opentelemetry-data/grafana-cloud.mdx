@@ -36,18 +36,18 @@ Before you begin, ensure you have:
 9. Copy and Save the value for `OTEL_EXPORTER_OTLP_ENDPOINT` and `OTEL_EXPORTER_OTLP_HEADERS` in the `Environment variables` code block as the OTel endpoint and as the Auth header value respectively
 
 
-## Step 2: Set up destination
+## Step 2: Set up destination 
 1. Navigate to your Cloudflare account's [Workers Observability](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/pipelines) section
 2. Click **Add destination** and configure a destination name (e.g. `grafana-tracing`)
-3. From Grafana, copy your Otel endpoint, auth header, and auth value
-  * Your OTEL endpoint will look like `https://otlp-gateway-prod-us-east-2.grafana.net/otlp` (append `/v1/traces` for traces and `/v1/logs` for logs)
-  * Your custom header should include:
+3. From Grafana, copy your Otel endpoint, auth header, and auth value 
+  * Your OTEL endpoint will look like `https://otlp-gateway-prod-us-east-2.grafana.net/otlp` (append `/v1/traces` for traces and `/v1/logs` for logs) 
+  * Your custom header should include: 
       * Your auth header name `Authorization`
       * Your auth header value `Basic MTMxxx...`
 
 ## Step 3: Configure your Worker
 
-With your destination created in the Cloudflare dashboard, update your Worker's configuration to enable telemetry export.
+With your destination created in the Cloudflare dashboard, update your Worker's configuration to enable telemetry export. 
 
 <WranglerConfig>
 
@@ -70,8 +70,8 @@ With your destination created in the Cloudflare dashboard, update your Worker's 
 
 </WranglerConfig>
 
-After updating your configuration, deploy your Worker for the changes to take effect.
+After updating your configuration, deploy your Worker for the changes to take effect. 
 
 :::note
-It may take a few minutes after deployment for data to appear in Grafana Cloud.
+It may take a few minutes after deployment for data to appear in Grafana Cloud. 
 :::

@@ -22,7 +22,7 @@ Turnstile widgets can be implemented using implicit or explicit rendering.
 	<TabItem label="Implicit rendering">
 		Implicit rendering automatically scans your HTML for elements with the `cf-turnstile` class and renders the widget when the page loads. It is best used for simple implementations, static websites, or when you want widgets to appear immediately on page load.
 
-		**How it works**
+		**How it works** 
 		<Steps>
 			1. Add the Turnstile script to your page.
 			2. Include `<div class="cf-turnstile" data-sitekey="your-key"></div>` elements.
@@ -49,7 +49,7 @@ Turnstile widgets can be implemented using implicit or explicit rendering.
 		```html title="Example" wrap
 			<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 			<div id="my-widget"></div>
-
+			
 			<script>
 			window.onload = function() {
 				turnstile.render('#my-widget', {
@@ -216,7 +216,7 @@ Control when the challenge runs and a token is generated.
 
 - `render` (default): The challenge runs automatically after calling the `render()` function and provides immediate protection as soon as the widget loads. The challenge runs in the background while the page loads, ensuring the token is ready when the visitor submits data.
 - `execute`: The challenge runs after calling the `turnstile.execute()` function separately and gives you precise control over when verification occurs. This option is useful for multi-step forms, conditional verification, or when you want to defer the challenge until the visitor actually attempts to submit data. This can improve page load performance and visitor experience by only running verification when needed.
-
+	
 	**Common scenarios**
 	- Multi-step forms: Run verification only on the final step.
 	- Conditional protection: Only verify visitors who meet certain criteria.
@@ -449,7 +449,7 @@ When enabled, Turnstile automatically creates a hidden `<input>` element with th
 
 #### Benefits
 
-- Automatic form integration means that the token is included when the form is submitted, requiring no additional JavaScript.
+- Automatic form integration means that the token is included when the form is submitted, requiring no additional JavaScript. 
 - Custom field names helps avoid conflicts with existing form fields.
 - Disabled response fields give you full control over token handling for complex form scenarios.
 

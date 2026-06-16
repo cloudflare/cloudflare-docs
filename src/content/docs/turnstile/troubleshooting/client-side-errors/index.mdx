@@ -14,17 +14,17 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-There are instances where Turnstile may encounter problems, invoking the `error-callback`.
+There are instances where Turnstile may encounter problems, invoking the `error-callback`. 
 
-These problems can range from network connectivity issues and browser compatibility problems to configuration errors and challenge failures.
+These problems can range from network connectivity issues and browser compatibility problems to configuration errors and challenge failures. 
 
-When errors occur, implementing proper error handling ensures your visitors receive helpful feedback and your application can recover from temporary issues.
+When errors occur, implementing proper error handling ensures your visitors receive helpful feedback and your application can recover from temporary issues. 
 
 Refer to the [Error codes](/turnstile/troubleshooting/client-side-errors/error-codes/) for troubleshooting guidance to address specific error conditions.
 
 ## Error handling
 
-The `error-callback` option for explicitly rendering widgets and the `data-error-callback` attribute for implicit rendering provides a JavaScript callback to handle potential errors that occur.
+The `error-callback` option for explicitly rendering widgets and the `data-error-callback` attribute for implicit rendering provides a JavaScript callback to handle potential errors that occur. 
 
 This callback mechanism gives you complete control over how errors are presented to visitors and allows you to implement custom recovery strategies tailored to your application's needs.
 
@@ -43,8 +43,8 @@ turnstile.render('#my-widget', {
 </TabItem>
 <TabItem label="Implicit rendering with error callback">
 ```html wrap title="HTML"
-<div class="cf-turnstile"
-     data-sitekey="your-sitekey"
+<div class="cf-turnstile" 
+     data-sitekey="your-sitekey" 
      data-error-callback="onTurnstileError"></div>
 ```
 </TabItem>
@@ -59,7 +59,7 @@ An error callback will retrieve an error code as its first parameter. This error
 ```js wrap
 function handleTurnstileError(errorCode) {
   const errorFamily = Math.floor(errorCode / 1000);
-
+  
   switch(errorFamily) {
     case 100:
       showMessage('Please refresh the page and try again.');
@@ -79,7 +79,7 @@ function handleTurnstileError(errorCode) {
 
 ## Retry
 
-By default, Turnstile will automatically retry upon encountering a problem, which helps handle transient network issues or temporary service disruptions without requiring user intervention.
+By default, Turnstile will automatically retry upon encountering a problem, which helps handle transient network issues or temporary service disruptions without requiring user intervention. 
 
 This automatic retry mechanism is useful for [mobile visitors](/turnstile/get-started/mobile-implementation/) who may experience intermittent connectivity or visitors on networks with occasional stability issues.
 
@@ -92,7 +92,7 @@ turnstile.render('#my-widget', {
   sitekey: 'your-sitekey',
   'error-callback': function(errorCode) {
     retryCount++;
-
+    
     if (retryCount <= 2) {
       console.log(`Turnstile retry attempt ${retryCount}`);
       return false; // Let Turnstile handle the retry
@@ -148,15 +148,15 @@ turnstile.render('#my-widget', {
   },
   'timeout-callback': function() {
     console.log('Challenge timed out - user action required');
-    document.getElementById('challenge-notice').textContent =
+    document.getElementById('challenge-notice').textContent = 
       'Please complete the security check above to continue.';
-
+    
     // Optionally highlight the widget
     document.getElementById('my-widget').style.border = '2px solid orange';
   },
   'expired-callback': function() {
     console.log('Token expired - challenge needs refresh');
-    document.getElementById('challenge-notice').textContent =
+    document.getElementById('challenge-notice').textContent = 
       'Security check expired. Please try again.';
   }
 });

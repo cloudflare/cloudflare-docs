@@ -7,15 +7,15 @@ products:
 date: 2026-05-01
 ---
 
-You can now use [`@cloudflare/dynamic-workflows`](https://github.com/cloudflare/dynamic-workflows) to run a [Workflow](/workflows/) inside a [Dynamic Worker](/dynamic-workers/), ensuring durable execution for code that is loaded at runtime.
+You can now use [`@cloudflare/dynamic-workflows`](https://github.com/cloudflare/dynamic-workflows) to run a [Workflow](/workflows/) inside a [Dynamic Worker](/dynamic-workers/), ensuring durable execution for code that is loaded at runtime. 
 
 The Worker Loader loads Dynamic Workers on demand, which previously made durability challenging. Even within a Dynamic Worker, a Workflow might sleep for hours or days between steps, and by the time it resumes, the original Dynamic Worker code would no longer be in memory.
 
-The library solves this by tagging each Workflow instance with metadata that identifies which Dynamic Worker to load — for example, a tenant ID — then reloading the matching Dynamic Worker through the Worker Loader whenever a Workflow awakens.
+The library solves this by tagging each Workflow instance with metadata that identifies which Dynamic Worker to load — for example, a tenant ID — then reloading the matching Dynamic Worker through the Worker Loader whenever a Workflow awakens. 
 
 Because Dynamic Workers are created on-demand, you do not have to register each Workflow up front or manage them individually. Load the Workflow code in the Dynamic Worker when it is needed, and the Workflows engine handles persistence and retries behind the scenes. Your Workflow code itself is unaffected by the routing and behaves as normal.
 
-This unlocks patterns where the Workflow code itself is dynamic. For example, this is useful with:
+This unlocks patterns where the Workflow code itself is dynamic. For example, this is useful with: 
 
 - **SaaS platforms** where each tenant defines their own automation, such as onboarding sequences, approval chains, or billing retry logic.
 - **AI agent frameworks** where agents generate and execute multi-step plans at runtime, surviving restarts and waiting for human approval between tool calls.

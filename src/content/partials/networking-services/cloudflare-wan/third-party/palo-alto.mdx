@@ -639,10 +639,10 @@ Gateway ID      Peer-Address       Gateway Name       Role SN    Algorithm      
 
 ```txt
 IKEv2 IPSec Child SAs
-Gateway Name                   TnID     Tunnel                     ID       Parent   Role SPI(in)  SPI(out) MsgID    ST
-------------                   ----     ------                     --       ------   ---- -------  -------- -----    --
-cf-wan-ike-gw-01               1        cf-wan-ipsec-tun-01        452741   97       Init B7D055D3 4CB26B43 00000001 Mature
-cf-wan-ike-gw-02               2        cf-wan-ipsec-tun-02        452742   98       Init B4629A07 165D416C 00000001 Mature
+Gateway Name                   TnID     Tunnel                     ID       Parent   Role SPI(in)  SPI(out) MsgID    ST              
+------------                   ----     ------                     --       ------   ---- -------  -------- -----    --              
+cf-wan-ike-gw-01               1        cf-wan-ipsec-tun-01        452741   97       Init B7D055D3 4CB26B43 00000001 Mature           
+cf-wan-ike-gw-02               2        cf-wan-ipsec-tun-02        452742   98       Init B4629A07 165D416C 00000001 Mature           
 
 Show IKEv2 SA: Total 2 gateways found. 2 ike sa found.
 ```
@@ -652,7 +652,7 @@ Show IKEv2 SA: Total 2 gateways found. 2 ike sa found.
 Use [test](https://docs.paloaltonetworks.com/network-security/ipsec-vpn/administration/troubleshooting/troubleshooting-site-to-site-vpn-issues-using-cli) commands to force Phase 1 and Phase 2 security associations:
 
 ```txt
-admin@panfw01> test vpn ike-sa gateway cf-wan-ike-gw-01
+admin@panfw01> test vpn ike-sa gateway cf-wan-ike-gw-01 
 
 Start time: Mar.30 21:23:23
 Initiate 1 IKE SA.
@@ -664,7 +664,7 @@ Initiate 1 IKE SA.
 ```
 
 ```txt
-admin@panfw01> test vpn ipsec-sa tunnel cf-wan-ipsec-tun-01
+admin@panfw01> test vpn ipsec-sa tunnel cf-wan-ipsec-tun-01 
 
 Start time: Mar.30 21:26:50
 Initiate 1 IPSec SA for tunnel cf-wan-ipsec-tun-01.

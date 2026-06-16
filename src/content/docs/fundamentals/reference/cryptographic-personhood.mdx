@@ -24,7 +24,7 @@ The answer to most privacy concerns are summarized in this table:
 | Collect biometrics (fingerprints or face pictures)    | No                                               | N/A                 |
 | Collect information about your hardware authenticator | Yes, limited to the number of keys in your batch | Yes, when available |
 
-No, Cloudflare cannot collect biometrics. Our CAP process uses the WebAuthn API, which prevents the collection of [biometrics by default](https://www.w3.org/TR/webauthn-2/#sctn-biometric-privacy). When your device asks for a biometric authentication — such as via a fingerprint sensor — it all happens locally.
+No, Cloudflare cannot collect biometrics. Our CAP process uses the WebAuthn API, which prevents the collection of [biometrics by default](https://www.w3.org/TR/webauthn-2/#sctn-biometric-privacy). When your device asks for a biometric authentication — such as via a fingerprint sensor — it all happens locally. 
 
 As such, we never see your biometric data: that remains on your device. Once your device confirms a match, it sends only a basic attestation message. In effect, your device sends a message proving “yes, someone correctly entered a fingerprint on this trustworthy device” and never sends the fingerprint itself.
 

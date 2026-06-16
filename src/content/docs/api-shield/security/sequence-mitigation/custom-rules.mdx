@@ -41,30 +41,30 @@ Each saved endpoint will have an endpoint ID visible in its details page in Endp
 The visitor must wait more than 2 seconds after requesting endpoint `aaaaaaaa` before requesting endpoint `bbbbbbbb`:
 
 ```txt
-cf.sequence.current_op eq "bbbbbbbb" and
+cf.sequence.current_op eq "bbbbbbbb" and 
 cf.sequence.msec_since_op["aaaaaaaa"] ge 2000
 ```
 
 The visitor must request endpoints `aaaaaaaa`, then `bbbbbbbb`, then `cccccccc` in that exact order:
 
 ```txt
-cf.sequence.current_op eq "cccccccc" and
-cf.sequence.previous_ops[0] == "bbbbbbbb" and
+cf.sequence.current_op eq "cccccccc" and 
+cf.sequence.previous_ops[0] == "bbbbbbbb" and 
 cf.sequence.previous_ops[1] == "aaaaaaaa"
 ```
 
 The visitor must request endpoint `aaaaaaaa` before endpoint `bbbbbbbb`, but endpoint `aaaaaaaa` can be anywhere in the previous 10 requests:
 
 ```txt
-cf.sequence.current_op eq "bbbbbbbb" and
+cf.sequence.current_op eq "bbbbbbbb" and 
 any(cf.sequence.previous_ops[*] == "aaaaaaaa")
 ```
 
 The visitor must request either endpoint `aaaaaaaa` before endpoint `bbbbbbbb`, or endpoint `cccccccc` before endpoint `bbbbbbbb`:
 
 ```txt
-(cf.sequence.current_op eq "bbbbbbbb" and
-any(cf.sequence.previous_ops[*] == "aaaaaaaa")) or
-(cf.sequence.current_op eq "bbbbbbbb" and
+(cf.sequence.current_op eq "bbbbbbbb" and 
+any(cf.sequence.previous_ops[*] == "aaaaaaaa")) or 
+(cf.sequence.current_op eq "bbbbbbbb" and 
 any(cf.sequence.previous_ops[*] == "cccccccc"))
 ```

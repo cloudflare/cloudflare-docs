@@ -7,13 +7,13 @@ date: 2026-04-16T12:00:00Z
 publish_future_dated_entry: true
 ---
 
-New [AI Search](/ai-search/) instances created after today will work differently. New instances come with built-in storage and a vector index, so you can upload a file, have it indexed immediately, and search it right away.
+New [AI Search](/ai-search/) instances created after today will work differently. New instances come with built-in storage and a vector index, so you can upload a file, have it indexed immediately, and search it right away. 
 
 Additionally new Workers Bindings are now available to use with AI Search. The new namespace binding lets you create and manage instances at runtime, and cross-instance search API lets you query across multiple instances in one call.
 
 ## Built-in storage and vector index
 
-All new instances now comes with built-in storage which allows you to upload files directly to it using the [Items API](/ai-search/api/items/workers-binding/) or the dashboard. No R2 buckets to set up, no external data sources to connect first.
+All new instances now comes with built-in storage which allows you to upload files directly to it using the [Items API](/ai-search/api/items/workers-binding/) or the dashboard. No R2 buckets to set up, no external data sources to connect first. 
 
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");

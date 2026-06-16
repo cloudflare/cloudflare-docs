@@ -181,23 +181,23 @@ const isValid = await sandbox.validatePortToken(port: number, token: string): Pr
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-
+    
     // Extract token from custom header or query param
     const customToken = request.headers.get('x-access-token');
-
+    
     if (customToken) {
       const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
       const isValid = await sandbox.validatePortToken(8080, customToken);
-
+      
       if (!isValid) {
         return new Response('Invalid token', { status: 403 });
       }
     }
-
+    
     // Handle preview URL routing
     const proxyResponse = await proxyToSandbox(request, env);
     if (proxyResponse) return proxyResponse;
-
+    
     // Your application routes
     return new Response('Not found', { status: 404 });
   }

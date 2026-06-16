@@ -24,7 +24,7 @@ The last mile is the path from a user to the first point of ingress to the resou
 
 ## How NEL affects requests
 
-The Report-To header is present in all requests to Cloudflare zones that have NEL enabled:
+The Report-To header is present in all requests to Cloudflare zones that have NEL enabled:  
 
 ```txt
 report-to: {"group":"cf-nel","max_age":31536000,"endpoints":[{"url":"`[`https://a.nel.cloudflare.com/report?lkg-colo=lhr&lkg-time=1600338181`](https://gcp.nel.cloudflare.com/report?lkg-colo=lhr&lkg-time=1600338181&lkg-ip=1.1.1.1)`"}]}

@@ -4,7 +4,7 @@ description: Partnering with Black Forest Labs to bring their latest FLUX.2 mode
 date: 2025-11-25
 ---
 
-We've partnered with Black Forest Labs (BFL) to bring their latest FLUX.2 [dev] model to Workers AI! This model excels in generating high-fidelity images with physical world grounding, multi-language support, and digital asset creation. You can also create specific super images with granular controls like JSON prompting.
+We've partnered with Black Forest Labs (BFL) to bring their latest FLUX.2 [dev] model to Workers AI! This model excels in generating high-fidelity images with physical world grounding, multi-language support, and digital asset creation. You can also create specific super images with granular controls like JSON prompting. 
 
 Read the [BFL blog](https://bfl.ai/flux2) to learn more about the model itself. Read our [Cloudflare blog](https://blog.cloudflare.com/flux-2-workers-ai) to see the model in action, or try it out yourself on our [multi modal playground](https://multi-modal.ai.cloudflare.com/).
 
@@ -106,20 +106,20 @@ Through Workers AI Binding:
 async function streamToBlob(stream: ReadableStream, contentType: string): Promise<Blob> {
   const reader = stream.getReader();
   const chunks = [];
-
+ 
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
     chunks.push(value);
   }
-
+ 
   return new Blob(chunks, { type: contentType });
 }
 
 const image0 = await fetch("http://image-url");
 const image1 = await fetch("http://image-url");
 const form = new FormData();
-
+ 
 const image_blob0 = await streamToBlob(image0.body, "image/png");
 const image_blob1 = await streamToBlob(image1.body, "image/png");
 form.append('input_image_0', image_blob0)
@@ -134,7 +134,7 @@ const formRequest = new Request('http://dummy', {
 });
 const formStream = formRequest.body;
 const formContentType = formRequest.headers.get('content-type') || 'multipart/form-data';
-
+ 
 const resp = await env.AI.run("@cf/black-forest-labs/flux-2-dev", {
     multipart: {
         body: form,
@@ -164,19 +164,19 @@ The model supports prompting in JSON to get more granular control over images. Y
       "items": {
         "type": "object",
         "properties": {
-          "type": {
-            "type": "string",
-            "description": "Type of subject (e.g., desert nomad, blacksmith, DJ, falcon)"
+          "type": { 
+            "type": "string", 
+            "description": "Type of subject (e.g., desert nomad, blacksmith, DJ, falcon)" 
           },
-          "description": {
-            "type": "string",
-            "description": "Physical attributes, clothing, accessories"
+          "description": { 
+            "type": "string", 
+            "description": "Physical attributes, clothing, accessories" 
           },
-          "pose": {
-            "type": "string",
-            "description": "Action or stance"
+          "pose": { 
+            "type": "string", 
+            "description": "Action or stance" 
           },
-          "position": {
+          "position": { 
             "type": "string",
             "enum": ["foreground", "midground", "background"],
             "description": "Depth placement in scene"
@@ -229,33 +229,33 @@ The model supports prompting in JSON to get more granular control over images. Y
     "camera": {
       "type": "object",
       "properties": {
-        "angle": {
+        "angle": { 
           "type": "string",
           "enum": ["eye level", "low angle", "slightly low", "bird's-eye", "worm's-eye", "over-the-shoulder", "isometric"],
           "description": "Camera perspective"
         },
-        "distance": {
+        "distance": { 
           "type": "string",
           "enum": ["close-up", "medium close-up", "medium shot", "medium wide", "wide shot", "extreme wide"],
           "description": "Framing distance"
         },
-        "focus": {
+        "focus": { 
           "type": "string",
           "enum": ["deep focus", "macro focus", "selective focus", "sharp on subject", "soft background"],
           "description": "Focus type"
         },
-        "lens": {
+        "lens": { 
           "type": "string",
           "enum": ["14mm", "24mm", "35mm", "50mm", "70mm", "85mm"],
           "description": "Focal length (wide to telephoto)"
         },
-        "f-number": {
-          "type": "string",
-          "description": "Aperture (e.g., f/2.8, the smaller the number the more blurry the background)"
+        "f-number": { 
+          "type": "string", 
+          "description": "Aperture (e.g., f/2.8, the smaller the number the more blurry the background)" 
         },
-        "ISO": {
-          "type": "number",
-          "description": "Light sensitivity value (comfortable range between 100 & 6400, lower = less sensitivity)"
+        "ISO": { 
+          "type": "number", 
+          "description": "Light sensitivity value (comfortable range between 100 & 6400, lower = less sensitivity)" 
         }
       }
     },

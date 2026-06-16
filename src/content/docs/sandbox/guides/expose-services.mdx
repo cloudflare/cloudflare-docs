@@ -108,9 +108,9 @@ const exposed = await sandbox.exposePort(8080, { hostname });
 // https://8080-sandbox-id-random16chars12.yourdomain.com
 
 // With custom token - URL stays the same across restarts
-const stable = await sandbox.exposePort(8080, {
-  hostname,
-  token: 'api-v1'
+const stable = await sandbox.exposePort(8080, { 
+  hostname, 
+  token: 'api-v1' 
 });
 // https://8080-sandbox-id-api-v1.yourdomain.com
 // Same URL after container restart ✓
@@ -145,8 +145,8 @@ const { hostname } = new URL(request.url);
 // Start and expose API server with stable token
 await sandbox.startProcess('node api.js', { env: { PORT: '8080' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const api = await sandbox.exposePort(8080, {
-  hostname,
+const api = await sandbox.exposePort(8080, { 
+  hostname, 
   name: 'api',
   token: 'api-prod'
 });
@@ -154,8 +154,8 @@ const api = await sandbox.exposePort(8080, {
 // Start and expose frontend with stable token
 await sandbox.startProcess('npm run dev', { env: { PORT: '5173' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const frontend = await sandbox.exposePort(5173, {
-  hostname,
+const frontend = await sandbox.exposePort(5173, { 
+  hostname, 
   name: 'frontend',
   token: 'web-app'
 });

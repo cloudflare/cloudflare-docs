@@ -78,8 +78,8 @@ Replace your production secret key with a test secret key.
 
 ```js
 // Environment-based configuration
-const SECRET_KEY = process.env.NODE_ENV === 'production'
-  ? process.env.TURNSTILE_SECRET_KEY
+const SECRET_KEY = process.env.NODE_ENV === 'production' 
+  ? process.env.TURNSTILE_SECRET_KEY 
   : '1x0000000000000000000000000000000AA';
 
 // Use in validation
@@ -96,7 +96,7 @@ Set up different keys for different environments.
 TURNSTILE_SITEKEY=1x00000000000000000000AA
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 
-# .env.test
+# .env.test  
 TURNSTILE_SITEKEY=2x00000000000000000000AB
 TURNSTILE_SECRET_KEY=2x0000000000000000000000000000000AA
 

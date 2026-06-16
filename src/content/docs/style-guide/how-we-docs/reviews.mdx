@@ -68,7 +68,7 @@ We have a specific part of [CI](https://github.com/cloudflare/cloudflare-docs/bl
 
 ### What changed?
 
-We use a [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/publish-preview.yml) to publish preview builds for every commit on a pull request (and [comment those links](https://github.com/cloudflare/cloudflare-docs/tree/production/bin/post-preview-url-comment) on the pull request). This action ensures that reviewers can see exactly what the site and content will look like when they're rendered (and not just look at the changed markdown in GitHub).
+We use a [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/publish-preview.yml) to publish preview builds for every commit on a pull request (and [comment those links](https://github.com/cloudflare/cloudflare-docs/tree/production/bin/post-preview-url-comment) on the pull request). This action ensures that reviewers can see exactly what the site and content will look like when they're rendered (and not just look at the changed markdown in GitHub). 
 
 We are in the process of migrating to [Workers Builds](/workers/ci-cd/builds/git-integration/github-integration/), which provides that functionality natively.
 

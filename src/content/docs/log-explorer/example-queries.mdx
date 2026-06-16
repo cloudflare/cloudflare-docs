@@ -131,5 +131,5 @@ FROM http_requests
 WHERE {{ timeFilter }}
 GROUP BY ClientRequestPath
 ORDER BY avg_ttfb DESC
-LIMIT 10
+LIMIT 10 
 ```

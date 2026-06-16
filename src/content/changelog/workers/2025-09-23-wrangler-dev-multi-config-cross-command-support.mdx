@@ -13,7 +13,7 @@ wrangler dev --config ./web/wrangler.jsonc --config ./api/wrangler.jsonc
 ```
 
 Previously, if you ran the command above and then also ran wrangler dev for a different Worker, the Workers running in separate wrangler dev sessions could not communicate with each other. This prevented you from being able to use [Service Bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/) and [Tail Workers](https://developers.cloudflare.com/workers/observability/logs/tail-workers/) in local development, when running separate wrangler dev sessions.
-
+	
 Now, the following works as expected:
 
 ```sh

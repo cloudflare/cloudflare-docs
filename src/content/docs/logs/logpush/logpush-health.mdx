@@ -20,17 +20,17 @@ Health notifications work alongside the Health Dashboard to provide both real-ti
 
 ## Access Health Dashboards
 
-1. In the **Cloudflare dashboard**, go to the **Logpush** page at either the account or domain (zone) level.
-2. Go to the **Health** tab.
-3. Select the job you want to analyze.
-4. Specify the time range you want to review.
-5. *(Optional)* From the **Jobs** tab, locate the job you want to analyze.
-6. Hover over the **Job Health (24h)** column for that job and select **View Health**.
+1. In the **Cloudflare dashboard**, go to the **Logpush** page at either the account or domain (zone) level.  
+2. Go to the **Health** tab.  
+3. Select the job you want to analyze.  
+4. Specify the time range you want to review.  
+5. *(Optional)* From the **Jobs** tab, locate the job you want to analyze.  
+6. Hover over the **Job Health (24h)** column for that job and select **View Health**.  
 7. You will be redirected to the **Health** tab, where you can select the desired time range for analysis.
 
 ### Data availability and API access
 
-- The **Health Dashboard** displays up to **30 days** of health metrics for each Logpush job in the Cloudflare dashboard.
+- The **Health Dashboard** displays up to **30 days** of health metrics for each Logpush job in the Cloudflare dashboard.  
 - The raw health metrics can be queried via the `logpushHealthAdaptiveGroups` dataset in the GraphQL API.
 - You can explore or test queries using the [Cloudflare GraphQL Explorer](https://graphql.cloudflare.com/explorer).
 
@@ -62,7 +62,7 @@ Indicates that all upload attempts for a batch were exhausted without success. W
 
 ## Health dashboard flow
 
-The **Logpush Health Dashboard** provides two complementary views that help you monitor and troubleshoot log delivery: **Upload Health** and **Upload Reliability**.
+The **Logpush Health Dashboard** provides two complementary views that help you monitor and troubleshoot log delivery: **Upload Health** and **Upload Reliability**.  
 
 Each view highlights a different aspect of job performance — what was delivered and how reliably it was delivered.
 
@@ -72,23 +72,23 @@ Each view highlights a different aspect of job performance — what was delivere
 
 #### Charts and metrics
 
-- **Batch Upload Success vs. Failure**: Displays the number of batches that were successfully uploaded versus those that failed.
-    - **Successful Uploads** - Total number of batches successfully uploaded.
+- **Batch Upload Success vs. Failure**: Displays the number of batches that were successfully uploaded versus those that failed.  
+    - **Successful Uploads** - Total number of batches successfully uploaded.  
     - **Failed Uploads** - Total number of batches that failed to upload due to connection or destination issues.
 
-- **Log Lines Uploaded**: Tracks the total number of log lines successfully uploaded to your destination.
-    - **Uploaded Log Lines** - Total number of log lines successfully delivered.
+- **Log Lines Uploaded**: Tracks the total number of log lines successfully uploaded to your destination.  
+    - **Uploaded Log Lines** - Total number of log lines successfully delivered.  
     - **Dropped Log Lines** - Total number of log lines that could not be delivered after all retry attempts.
 
-- **Data Volume**: Shows the total volume of log data uploaded (in bytes), both compressed and uncompressed.
-    - **Uncompressed Data (raw)** - Total size of log data before compression.
+- **Data Volume**: Shows the total volume of log data uploaded (in bytes), both compressed and uncompressed.  
+    - **Uncompressed Data (raw)** - Total size of log data before compression.  
     - **Compressed Data (uploaded)** - Total size of log data after compression, representing the actual bytes transmitted.
 
 #### When to use
 
 Start here to assess overall data delivery health:
 
-- High upload success and stable data volume indicate a healthy Logpush job.
+- High upload success and stable data volume indicate a healthy Logpush job.  
 - Drops, spikes, or failed uploads suggest delivery issues — proceed to **Upload Reliability** to investigate root causes.
 
 ### Upload Reliability
@@ -97,22 +97,22 @@ Upload Reliability helps you identify factors affecting reliability, stability, 
 
 #### Charts and metrics
 
-- **Uploaded Logs by Status Code** Shows the number of batches that were successful, failed, or retried, categorized by status code.
-    - **Success Rate** - Percentage of batches successfully uploaded.
+- **Uploaded Logs by Status Code** Shows the number of batches that were successful, failed, or retried, categorized by status code.  
+    - **Success Rate** - Percentage of batches successfully uploaded.  
     - **Successful Uploads** - Total number of batches successfully completed.
 
-- **Upload Duration**: Shows the average time taken to complete each batch upload, broken down by status code.
-    - **Destination Availability** - How often Cloudflare successfully connected to your destination and completed uploads.
+- **Upload Duration**: Shows the average time taken to complete each batch upload, broken down by status code.  
+    - **Destination Availability** - How often Cloudflare successfully connected to your destination and completed uploads.  
     - **Average Upload Duration** - Average time taken to upload logs after they are generated.
 
-- **Retry Attempts**: Displays the number of retries made after failed uploads, broken down by status code.
+- **Retry Attempts**: Displays the number of retries made after failed uploads, broken down by status code.  
     - **Retry Attempts** - Total number of upload attempts made after previous failures (includes the first failed attempt).
 
 #### When to use
 
 Use this view to troubleshoot reliability issues:
 
-- High latency, frequent retries, or low destination availability indicate potential instability in the destination endpoint or network.
+- High latency, frequent retries, or low destination availability indicate potential instability in the destination endpoint or network.  
 - Combine with **Upload Health** metrics to correlate delivery success with underlying reliability patterns.
 
 ## Troubleshooting guide

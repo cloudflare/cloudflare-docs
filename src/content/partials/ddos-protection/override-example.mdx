@@ -22,11 +22,11 @@ The following ruleset overrides have been configured:
 - **Ruleset override C**
    - **Managed rule 3** is set to `log`
 
-### Use case
+### Use case 
 
 A DDoS attack was detected on **managed rules 1**, **2**, and **3**, and has generated a mitigation rule.
 
-- Since **managed rule 1** matches **ruleset override A**, Cloudflare will `block` the attacks and not proceed with the rest of the rules.
+- Since **managed rule 1** matches **ruleset override A**, Cloudflare will `block` the attacks and not proceed with the rest of the rules. 
 
 - **Managed rule 2** does not match **ruleset override A**, so Cloudflare proceeds to **ruleset override B**. <br /> **Ruleset override B** matches both all managed rules and **managed rule 2**, but specificity takes precedence. It does not `challenge` and instead proceeds with `log` since it matches the most specific managed rule.
 
@@ -42,5 +42,5 @@ An additional dimension to take into account is Cloudflare’s DDoS systems will
 
 You receive a small attack below the threshold for low sensitivity, but above the threshold for high sensitivity on **managed rule 1**.
 
-- **Rule override A** does not meet the low sensitivity threshold. Therefore, we do not match the override and do not mitigate the attack, but proceed to evaluate the next managed rule in case the rule override instructs DoS to mitigate.
+- **Rule override A** does not meet the low sensitivity threshold. Therefore, we do not match the override and do not mitigate the attack, but proceed to evaluate the next managed rule in case the rule override instructs DoS to mitigate. 
 - **Rule override B** sets `log` at default visibility, which matches the condition. So, the defined action is applied and attack traffic is logged.

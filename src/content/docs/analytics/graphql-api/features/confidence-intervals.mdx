@@ -9,14 +9,14 @@ products:
   - graphql-api
 ---
 
-Confidence intervals help assess accuracy and quantify uncertainty in results from sampled datasets. When querying sum or count fields on adaptive datasets, you can request a confidence interval to understand the possible range around an estimate. For example, specifying a confidence level of `0.95` returns the estimate, along with the range of values that likely contains the true value 95% of the time.
+Confidence intervals help assess accuracy and quantify uncertainty in results from sampled datasets. When querying sum or count fields on adaptive datasets, you can request a confidence interval to understand the possible range around an estimate. For example, specifying a confidence level of `0.95` returns the estimate, along with the range of values that likely contains the true value 95% of the time. 
 
 ## Availability
 
 - **Supported datasets**: Adaptive (sampled) datasets only.
 - **Supported fields**: All `sum` and `count` fields.
-- **Usage**: Confidence `level` must be provided as a decimal between 0 and 1 (for example,`0.90`, `0.95`, `0.99`).
-- **Default**: If no confidence level is specified, intervals are not returned.
+- **Usage**: Confidence `level` must be provided as a decimal between 0 and 1 (for example,`0.90`, `0.95`, `0.99`). 
+- **Default**: If no confidence level is specified, intervals are not returned. 
 
 ## Usage example
 
@@ -54,9 +54,9 @@ query SingleDatasetWithConfidence($zoneTag: string, $start: Time, $end: Time) {
 
 ### Response
 
-The response includes the following values:
+The response includes the following values: 
 
-- `estimate`: The estimated value, based on sampled data.
+- `estimate`: The estimated value, based on sampled data. 
 - `lower`: The lower bound of the confidence interval.
 - `sampleSize`: The number of sampled data points used to calculate the estimate.
 - `upper`: The upper bound of the confidence interval.

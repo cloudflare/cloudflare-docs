@@ -41,10 +41,10 @@ async function validateTurnstileWithHostname(token, expectedHostnames = []) {
 
   // Additional hostname validation when using Any Hostname
   if (expectedHostnames.length > 0 && !expectedHostnames.includes(result.hostname)) {
-    return {
-      valid: false,
+    return { 
+      valid: false, 
       error: 'Hostname not in allowed list',
-      hostname: result.hostname
+      hostname: result.hostname 
     };
   }
 
@@ -58,7 +58,7 @@ Use `action` and `cData` parameters to track widget usage sources.
 
 ```html
 <!-- Widget with tracking information -->
-<div class="cf-turnstile"
+<div class="cf-turnstile" 
      data-sitekey="your-site-key"
      data-action="customer-portal"
      data-cdata="tenant-123"></div>
