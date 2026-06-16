@@ -1,0 +1,39 @@
+---
+title: Workflows rollback handlers now include step context
+description: Workflows rollback handlers now receive the original step context, and rollbackConfig is limited to retry and timeout settings.
+products:
+  - workflows
+date: 2026-06-16 15:00:00 UTC
+---
+
+[Workflows](/workflows/) makes it easier to build reliable multi-step applications that can recover when downstream systems fail. Rollback handlers now receive the original step context for the step being rolled back, so you can write compensating logic that knows which step failed, which attempt ran, and which retry or timeout configuration applied.
+
+This is useful when a Workflow coordinates external side effects, such as payments, inventory reservations, user provisioning, or infrastructure changes, and needs to undo earlier work safely after a later step fails.
+
+The `rollback` handler now receives a `ctx` object with the original step context, including `ctx.step.name`, `ctx.step.count`, `ctx.attempt`, and the resolved step `config`.
+
+`rollbackConfig` is now limited to retry and timeout settings, matching the behavior supported by rollback handlers.
+
+```ts
+await step.do(
+	"create charge",
+	async () => {
+		const charge = await createCharge();
+		return { chargeId: charge.id };
+	},
+	{
+		rollback: async ({ ctx, output, error }) => {
+			const { chargeId } = output as { chargeId: string };
+			await refundCharge(chargeId, {
+				reason: `${ctx.step.name}: ${error.message}`,
+			});
+		},
+		rollbackConfig: {
+			retries: { limit: 3, delay: "30 seconds", backoff: "linear" },
+			timeout: "5 minutes",
+		},
+	},
+);
+```
+
+Refer to [rollback options](/workflows/build/workers-api/#rollback-options) to learn more.
