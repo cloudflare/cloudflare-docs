@@ -1,9 +1,3 @@
-/**
- * Port of the rehype "pre-mermaid" transform (src/plugins/rehype/mermaid.ts):
- * turn `<pre><code class="language-mermaid">…</code></pre>` into
- * `<pre class="mermaid">…</pre>` for client-side rendering.
- */
-
 import { defineHastPlugin } from "satteri";
 import { parse } from "space-separated-tokens";
 import type { Element, ElementContent } from "hast";

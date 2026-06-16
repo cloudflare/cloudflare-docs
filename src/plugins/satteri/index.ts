@@ -8,12 +8,9 @@ import autolinkHeadings from "./autolink-headings";
 import titleFigure from "./title-figure";
 import shiftHeadings from "./shift-headings";
 
-// The plugins are authored as factories (`() => …PluginDefinition`) so that
-// per-document state — most importantly the heading slugger — resets between
-// pages. Sätteri's core `markdownToHtml` accepts these factories
-// (`*PluginInput`) and invokes them once per compile, but
-// `@astrojs/markdown-satteri` only re-exports the resolved `*PluginDefinition`
-// shape, so the factory arrays are asserted to that type here.
+// Authored as factories so per-document state (the heading slugger) resets per
+// page; Sätteri invokes them once per compile. `@astrojs/markdown-satteri` types
+// only the resolved definition shape, hence the cast.
 export const mdastPlugins = [
 	validateImages,
 ] as unknown as MdastPluginDefinition[];

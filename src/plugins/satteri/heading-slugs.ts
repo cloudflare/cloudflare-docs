@@ -1,7 +1,7 @@
 import GithubSlugger from "github-slugger";
 import { defineHastPlugin } from "satteri";
 
-import { externalLinkArrow } from "../rehype/external-links";
+import { externalLinkArrow } from "../shared";
 
 const HEADINGS = ["h1", "h2", "h3", "h4", "h5", "h6"];
 

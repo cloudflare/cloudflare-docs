@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { generateDescription } from "./props";
-import { externalLinkArrow } from "~/plugins/rehype/external-links";
+import { externalLinkArrow } from "~/plugins/shared";
 
 describe("description", () => {
 	describe("markdown", () => {

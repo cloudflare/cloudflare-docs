@@ -1,7 +1,7 @@
 import { toString } from "hast-util-to-string";
 import { visit } from "unist-util-visit";
 import GithubSlugger from "github-slugger";
-import { externalLinkArrow } from "./external-links";
+import { externalLinkArrow } from "../shared";
 import type { Root } from "hast";
 import type { MdxTextExpression } from "mdast-util-mdx-expression";
 

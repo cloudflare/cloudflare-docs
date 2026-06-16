@@ -2,7 +2,7 @@ import type { AstroGlobal } from "astro";
 import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 
 import { getEntry, getCollection } from "astro:content";
-import { externalLinkArrow } from "~/plugins/rehype/external-links";
+import { externalLinkArrow } from "~/plugins/shared";
 
 type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 	order?: number;

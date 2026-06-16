@@ -1,7 +1,7 @@
 import { h } from "hastscript";
 import { defineHastPlugin } from "satteri";
 
-import { AnchorLinkIcon } from "../rehype/autolink-headings";
+import { AnchorLinkIcon } from "../shared";
 
 const HEADINGS = ["h1", "h2", "h3", "h4", "h5", "h6"];
 
@@ -26,8 +26,7 @@ export default function autolinkHeadings() {
 					[anchor],
 				);
 
-				// `wrapNode` makes the heading the wrapper's first child, keeping the
-				// declared anchor after it: div > [heading, anchor].
+				// wrapNode keeps the wrapper's declared children after the heading: div > [heading, anchor].
 				ctx.wrapNode(node, wrapper);
 			},
 		},
