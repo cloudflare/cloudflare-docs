@@ -21,6 +21,16 @@ When asked to update or edit an existing PR description (or title), follow these
    - **Title**: `gh pr edit <number> --title "..."`
    - **Body**: Write the updated body to a temp file using the Write tool, then run `gh pr edit <number> --body-file /tmp/pr-body.md` and clean up with `rm /tmp/pr-body.md`. Do not use `--body "..."` — shell quoting mangles backticks and other Markdown formatting.
 
+## After pushing to a branch with an open PR
+
+Whenever you push new commits to a branch that already has an open PR, check whether the PR title and description still accurately describe what the branch now does. New commits often add scope the original description does not mention.
+
+1. Check for an open PR on the branch: `gh pr view --json number,title,body`.
+2. Compare the title and body against the full branch diff (`git diff production...HEAD --stat`), not just the latest commit.
+3. If they are now inaccurate or incomplete, update them following the "Editing an existing PR" rules above — preserve the author's structure and make the minimum edit needed to reflect the new changes. If they still describe the branch correctly, leave them unchanged.
+
+Do this proactively after a push; you do not need to be asked separately to keep the PR in sync.
+
 ## Creating a new PR
 
 Follow Steps 1–4 below only when creating a new PR (or when an existing PR has an empty description).
