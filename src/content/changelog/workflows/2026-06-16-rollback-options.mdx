@@ -12,7 +12,6 @@ The [step configuration](/workflows/build/workers-api/#workflowstepconfig) conta
 
 This is useful when a Workflow coordinates external side effects, such as payments, inventory reservations, user provisioning, or infrastructure changes, and needs to undo earlier work safely after a later step fails.
 
-The `rollback` handler now receives a `ctx` object with the original step context, including `ctx.step.name`, `ctx.step.count`, `ctx.attempt`, and the resolved step `config`.
 
 `rollbackConfig` is now limited to retry and timeout settings, matching the behavior supported by rollback handlers.
 
