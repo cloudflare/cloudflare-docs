@@ -16,7 +16,7 @@ import { Tabs, TabItem, Steps } from "~/components";
 
 Before you start, you need:
 
-- An [authenticated gateway](/ai-gateway/configuration/authentication/) and its gateway token. The gateway token must have `Run` permissions.
+- An [authenticated gateway](/ai-gateway/configuration/authentication/) and its [gateway token](/ai-gateway/configuration/authentication/#setting-up-authenticated-gateway-using-the-dashboard). The gateway token must have `Run` permissions.
 - Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 - Pi installed and updated to the latest version.
 
@@ -28,24 +28,30 @@ The token you give Pi is your gateway token, not a model provider key. To pay fo
 
 1. Set your gateway token, account ID, and gateway slug as environment variables. The following commands set them for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`).
 
-   Replace `<CF_AIG_TOKEN>`, `<ACCOUNT_ID>`, and `<GATEWAY_ID>` with your values.
+   Replace `<CLOUDFLARE_API_KEY>` and `<CLOUDFLARE_ACCOUNT_ID>` with your values. You can leave `CLOUDFLARE_GATEWAY_ID` as `default` to route through your account's default gateway, or change it to another gateway slug.
 
    <Tabs syncKey="os">
    <TabItem label="macOS / Linux">
 
    ```bash
-   export CLOUDFLARE_API_KEY="<CF_AIG_TOKEN>"
-   export CLOUDFLARE_ACCOUNT_ID="<ACCOUNT_ID>"
-   export CLOUDFLARE_GATEWAY_ID="<GATEWAY_ID>"
+   # Run `wrangler auth token` to get an auth token.
+   export CLOUDFLARE_API_KEY="<CLOUDFLARE_API_KEY>"
+   # Run `wrangler whoami` to get your account ID.
+   export CLOUDFLARE_ACCOUNT_ID="<CLOUDFLARE_ACCOUNT_ID>"
+   # Use `default` to route through your account's default gateway.
+   export CLOUDFLARE_GATEWAY_ID="default"
    ```
 
    </TabItem>
    <TabItem label="Windows (PowerShell)">
 
    ```powershell
-   $env:CLOUDFLARE_API_KEY = "<CF_AIG_TOKEN>"
-   $env:CLOUDFLARE_ACCOUNT_ID = "<ACCOUNT_ID>"
-   $env:CLOUDFLARE_GATEWAY_ID = "<GATEWAY_ID>"
+   # Run `wrangler auth token` to get an auth token.
+   $env:CLOUDFLARE_API_KEY = "<CLOUDFLARE_API_KEY>"
+   # Run `wrangler whoami` to get your account ID.
+   $env:CLOUDFLARE_ACCOUNT_ID = "<CLOUDFLARE_ACCOUNT_ID>"
+   # Use `default` to route through your account's default gateway.
+   $env:CLOUDFLARE_GATEWAY_ID = "default"
    ```
 
    </TabItem>
