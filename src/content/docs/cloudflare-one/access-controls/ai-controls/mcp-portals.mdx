@@ -650,6 +650,12 @@ Because portal traffic routes through Gateway, it also respects [Gateway egress 
 Gateway routing only applies to real-time tool calls made by users through the portal. Background operations such as [admin credential synchronization](#synchronize-the-mcp-server) do not route through Gateway and will not use your egress policy IPs.
 :::
 
+### TLS decryption
+
+You do not need to turn on [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) for DLP to inspect portal traffic. The portal terminates the connection from the MCP client and re-originates the request through Gateway, so Gateway inspects the payload inline regardless of your account's TLS decryption setting.
+
+This applies only to traffic that flows through the portal. To inspect MCP traffic that does not pass through the portal — for example, an agent on a [device running the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) connecting directly to an upstream MCP server — you must turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) as you would for any other [HTTP policy](/cloudflare-one/traffic-policies/http-policies/).
+
 ### Supported transports
 
 Gateway routing supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) connections only. If an upstream MCP server is configured with a Server-Sent Events (SSE) endpoint (a URL ending in `/sse`), the portal will automatically attempt to connect using Streamable HTTP instead. If the upstream server does not support Streamable HTTP, the connection will fail when Gateway routing is turned on.
@@ -677,6 +683,15 @@ For example, the following policy blocks traffic that contains [credentials and 
 | ----------- | -------- | -------------------------------------------------- | ----- | ------ |
 | Host        | in       | `example-mcp-server.example.workers.dev`           | And   | Block  |
 | DLP Profile | in       | _Credentials and Secrets_, _Financial Information_ |       |        |
+
+### What happens when a request is blocked
+
+When a tool call matches a Block DLP policy, Gateway blocks it and the portal surfaces the block to the MCP client as an error rather than completing the tool call. This applies in both directions:
+
+- **Tool call requests**: If the data the agent sends to a tool matches a DLP profile, Gateway blocks the outbound request and the agent receives an error indicating the request was blocked.
+- **Tool call responses**: If the data the upstream server returns matches a DLP profile, Gateway blocks the response and the portal returns an error instead of the matched content.
+
+The agent can retry the request, but it will continue to be blocked until the content no longer matches the policy.
 
 ### Limitations
 
