@@ -1,7 +1,4 @@
----
-name: code-review
-description: Reviews Workers and Cloudflare Developer Platform code for type correctness, API usage, and configuration validity. Load when reviewing TypeScript/JavaScript using Workers APIs, wrangler.jsonc/toml config, or Cloudflare bindings (KV, R2, D1, Durable Objects, Queues, Vectorize, AI, Hyperdrive).
----
+# Reviewing Code Examples
 
 Your knowledge of Cloudflare Workers APIs, types, and wrangler configuration may be outdated. **Prefer retrieval over pre-training** for any Workers code review task.
 
@@ -15,7 +12,7 @@ Use the repo's local copies — do **not** run `npm pack` or install packages to
 | Workers types          | `node_modules/@cloudflare/workers-types/index.d.ts`              | API usage, handler signatures, binding types           |
 | Cloudflare docs search | Use the `cloudflare-docs` search tool or read files in this repo | API reference, compatibility dates/flags, binding docs |
 
-Read these files directly when you need to verify a type, config field, or API signature. The reference guides in `references/` describe what to validate — not how to fetch packages.
+Read these files directly when you need to verify a type, config field, or API signature. The guides in this folder describe what to validate — not how to fetch packages.
 
 ## Review Process
 
@@ -46,26 +43,26 @@ npx tsc --noEmit                    # TypeScript errors
 npx eslint <files>                  # Lint issues
 ```
 
-For config files, validate against the latest wrangler config schema (see `references/wrangler-config.md` for retrieval) and check that all fields, binding types, and values conform.
+For config files, validate against the latest wrangler config schema (see `wrangler-config.md` for retrieval) and check that all fields, binding types, and values conform.
 
 ### 4. Check Against Rules
 
-See `references/workers-types.md` for type system rules, `references/wrangler-config.md` for config validation, and `references/common-patterns.md` for correct API patterns.
+See `workers-types.md` for type system rules, `wrangler-config.md` for config validation, and `common-patterns.md` for correct API patterns.
 
 **Quick-reference rules:**
 
-| Rule                    | Detail                                                                                                                                   |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Binding access          | `env.X` in module export handlers; `this.env.X` in classes extending platform base classes. See `references/common-patterns.md`.         |
-| No `any`                | Never use `any` for binding types, handler params, or API responses. Use proper generics.                                                |
-| No type-system cheats   | Flag `as unknown as T`, unjustified `@ts-ignore`, unsafe assertions. See `references/workers-types.md`.                                  |
-| Config-code consistency | Binding names in wrangler config must match `env.X` usage in code. See `references/wrangler-config.md`.                                  |
-| Required config fields  | Verify against the wrangler config schema — do not assume which fields are required.                                                     |
-| Concise examples        | Examples should focus on core logic. Minimize boilerplate that distracts from what the code teaches.                                     |
-| Floating promises       | Every `Promise` must be `await`ed, `return`ed, `void`ed, or passed to `ctx.waitUntil()`. See `references/common-patterns.md`.            |
-| Serialization           | Data crossing Queue, Workflow step, or DO storage boundaries must be structured-clone serializable. See `references/common-patterns.md`. |
-| Streaming               | Large/unknown payloads must stream, not buffer. Flag `await response.text()` on unbounded data.                                          |
-| Error handling          | Minimal but present — null checks on nullable returns, basic fetch error handling. Do not distract with verbose try/catch.               |
+| Rule                    | Detail                                                                                                                        |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Binding access          | `env.X` in module export handlers; `this.env.X` in classes extending platform base classes. See `common-patterns.md`.         |
+| No `any`                | Never use `any` for binding types, handler params, or API responses. Use proper generics.                                     |
+| No type-system cheats   | Flag `as unknown as T`, unjustified `@ts-ignore`, unsafe assertions. See `workers-types.md`.                                  |
+| Config-code consistency | Binding names in wrangler config must match `env.X` usage in code. See `wrangler-config.md`.                                  |
+| Required config fields  | Verify against the wrangler config schema — do not assume which fields are required.                                          |
+| Concise examples        | Examples should focus on core logic. Minimize boilerplate that distracts from what the code teaches.                          |
+| Floating promises       | Every `Promise` must be `await`ed, `return`ed, `void`ed, or passed to `ctx.waitUntil()`. See `common-patterns.md`.            |
+| Serialization           | Data crossing Queue, Workflow step, or DO storage boundaries must be structured-clone serializable. See `common-patterns.md`. |
+| Streaming               | Large/unknown payloads must stream, not buffer. Flag `await response.text()` on unbounded data.                               |
+| Error handling          | Minimal but present — null checks on nullable returns, basic fetch error handling. Do not distract with verbose try/catch.    |
 
 ### 5. Assess Risk
 
@@ -77,7 +74,7 @@ See `references/workers-types.md` for type system rules, `references/wrangler-co
 
 Focus deeper analysis on HIGH risk. For critical paths, check blast radius: how many other files reference this code?
 
-**Security logic escalation**: for crypto, auth, and timing-sensitive code, do not stop at verifying API calls are correct. Examine the surrounding logic for flaws that undermine the security property (e.g., correct `timingSafeEqual` call but early return on length mismatch). See `references/common-patterns.md` Security section.
+**Security logic escalation**: for crypto, auth, and timing-sensitive code, do not stop at verifying API calls are correct. Examine the surrounding logic for flaws that undermine the security property (e.g., correct `timingSafeEqual` call but early return on length mismatch). See `common-patterns.md` Security section.
 
 ## Anti-patterns to Flag
 

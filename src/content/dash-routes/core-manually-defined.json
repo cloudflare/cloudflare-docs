@@ -33,5 +33,10 @@
 		"deeplink": "/?to=/:account/domains/registrations",
 		"name": "Registrations",
 		"parent": ["Domain registration"]
+	},
+	{
+		"deeplink": "/?to=/:account/:zone/speed/origin-analytics",
+		"name": "Origin Analytics",
+		"parent": ["Speed"]
 	}
 ]

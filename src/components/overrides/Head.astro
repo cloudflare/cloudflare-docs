@@ -270,6 +270,75 @@ metaTags.map((attrs) => {
 		attrs,
 	});
 });
+
+// --- Page-entity JSON-LD ---
+// Map pcx_content_type to schema.org @type.
+// changelog / changelog-entry → BlogPosting
+// navigation / overview / reference-architecture-diagram → WebPage
+// everything else (including unset) → TechArticle
+const _contentType = frontmatter.pcx_content_type ?? "";
+const _isChangelog =
+	_contentType === "changelog" ||
+	_contentType === "changelog-entry" ||
+	currentSection === "changelog";
+const _isWebPage =
+	_contentType === "navigation" ||
+	_contentType === "overview" ||
+	_contentType === "reference-architecture-diagram";
+const schemaType = _isChangelog
+	? "BlogPosting"
+	: _isWebPage
+		? "WebPage"
+		: "TechArticle";
+
+// Canonical URL for the page entity.
+const _canonicalUrl = frontmatter.canonical
+	? new URL(frontmatter.canonical, Astro.site).toString()
+	: new URL(Astro.url.pathname, Astro.site).toString();
+
+// Prefer the enriched title already computed for the <title> tag.
+const _titleTag = head.find((x) => x.tag === "title");
+const _headline = _titleTag?.content ?? frontmatter.title;
+
+// dateModified: prefer git last-updated, fall back to manually reviewed date.
+const _modifiedDate = lastUpdated ?? frontmatter.reviewed;
+const _dateModified = _modifiedDate
+	? _modifiedDate.toISOString().slice(0, 10)
+	: undefined;
+
+// datePublished: changelog entries only, sourced from the entry's date field.
+const _changelogEntry = Astro.locals.starlightRoute.originalEntry as
+	| CollectionEntry<"changelog">
+	| undefined;
+const _datePublished =
+	_isChangelog && _changelogEntry?.data.date
+		? _changelogEntry.data.date.toISOString().slice(0, 10)
+		: undefined;
+
+const _jsonLd: Record<string, unknown> = {
+	"@context": "https://schema.org",
+	"@type": schemaType,
+	"@id": `${_canonicalUrl}#page`,
+	headline: _headline,
+	...(frontmatter.description ? { description: frontmatter.description } : {}),
+	url: _canonicalUrl,
+	inLanguage: "en",
+	image: ogImageUrl,
+	...(_dateModified ? { dateModified: _dateModified } : {}),
+	...(_datePublished ? { datePublished: _datePublished } : {}),
+	publisher: {
+		"@type": "Organization",
+		name: "Cloudflare",
+		url: "https://www.cloudflare.com/",
+	},
+	isPartOf: {
+		"@type": "WebSite",
+		"@id": "https://developers.cloudflare.com/#website",
+		name: "Cloudflare Docs",
+		url: "https://developers.cloudflare.com/",
+	},
+	...(frontmatter.tags?.length ? { keywords: frontmatter.tags } : {}),
+};
 ---
 
 <script src="src/scripts/footnotes.ts"></script>
@@ -277,4 +346,16 @@ metaTags.map((attrs) => {
 <script src="src/scripts/analytics.ts"></script>
 <script src="src/scripts/explain-code.ts"></script>
 <script src="src/scripts/webmcp.ts"></script>
+{
+	!shouldNoIndex && (
+		<script
+			is:inline
+			type="application/ld+json"
+			set:html={
+				// Escape < to prevent </script> in user content from closing the tag.
+				JSON.stringify(_jsonLd).replace(/</g, "\\u003c")
+			}
+		/>
+	)
+}
 <Default><slot /></Default>

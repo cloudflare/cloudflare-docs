@@ -1,7 +1,4 @@
----
-name: docs-review
-description: Reviews documentation PRs and provides GitHub PR suggestions. Load when asked to review, suggest changes, or provide feedback on docs content. Covers MDX, frontmatter, style guide, components, and content accuracy.
----
+# Reviewing Docs
 
 Review documentation changes for correctness, style, and structure.
 
@@ -150,19 +147,19 @@ Read full files for context — code that looks wrong in a diff may be correct i
 
 See `.agents/references/style-guide.md` for the full rules. Quick reference:
 
-| Rule                     | Detail                                                                                               |
-| ------------------------ | ---------------------------------------------------------------------------------------------------- |
-| Unescaped MDX characters | `{`, `}`, `<`, `>` in prose must be escaped or in backticks                                          |
-| Component imports        | Every component used must be imported from `~/components`                                            |
-| Workers code             | Must use `TypeScriptExample`, not bare `js`/`ts` fences                                              |
-| Config blocks            | Must use `WranglerConfig` with TOML input; use `$today` for `compatibility_date`                     |
-| Package install commands | Must use `PackageManagers`, not bare `sh` fences                                                     |
-| Code block languages     | Lowercase, from the supported set — see `.agents/references/style-guide.md`                          |
-| Internal links           | Root-relative paths, trailing slash, no file extensions, no full `developers.cloudflare.com` URLs    |
-| Frontmatter              | `title` and `description` required; `pcx_content_type` must be a valid value                         |
-| Writing style            | See `.agents/references/style-guide.md` — covers voice, contractions, terminology, headings, etc.    |
-| Code correctness         | For type checking, API usage, and binding patterns, load the `code-review` skill                     |
-| Accuracy                 | Claims must be substantiated — link to sources of truth, do not re-explain what other pages cover    |
+| Rule                     | Detail                                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------------------- |
+| Unescaped MDX characters | `{`, `}`, `<`, `>` in prose must be escaped or in backticks                                       |
+| Component imports        | Every component used must be imported from `~/components`                                         |
+| Workers code             | Must use `TypeScriptExample`, not bare `js`/`ts` fences                                           |
+| Config blocks            | Must use `WranglerConfig` with TOML input; use `$today` for `compatibility_date`                  |
+| Package install commands | Must use `PackageManagers`, not bare `sh` fences                                                  |
+| Code block languages     | Lowercase, from the supported set — see `.agents/references/style-guide.md`                       |
+| Internal links           | Root-relative paths, trailing slash, no file extensions, no full `developers.cloudflare.com` URLs |
+| Frontmatter              | `title` and `description` required; `pcx_content_type` must be a valid value                      |
+| Writing style            | See `.agents/references/style-guide.md` — covers voice, contractions, terminology, headings, etc. |
+| Code correctness         | For type checking, API usage, and binding patterns, refer to `code-review/index.md`               |
+| Accuracy                 | Claims must be substantiated — link to sources of truth, do not re-explain what other pages cover |
 
 ### 3. Assess What to Flag
 

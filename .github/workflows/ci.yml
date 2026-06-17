@@ -108,7 +108,7 @@ jobs:
           git fetch --depth=1 origin "$BASE_SHA"
           mapfile -t files < <(
             git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
-            | grep -E '\.(js|jsx|ts|tsx|mjs|css)$' || true
+            | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|astro)$' || true
           )
           if [ "${#files[@]}" -eq 0 ]; then
             echo "No prettier-scoped files changed."

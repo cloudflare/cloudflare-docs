@@ -91,7 +91,7 @@ export default {
 
 ## Shared instance with metadata filtering
 
-Use a single AI Search instance and organize content by tenant using folder paths. This approach works with both [R2 buckets](/ai-search/configuration/data-source/r2/) and [built-in storage](/ai-search/configuration/data-source/built-in-storage/). Apply [metadata filters](/ai-search/configuration/indexing/metadata/) at query time to ensure each tenant only retrieves their own documents.
+Use a single AI Search instance and organize content by tenant using folder paths. This approach works with both [R2 buckets](/ai-search/configuration/data-source/r2/) and [built-in storage](/ai-search/configuration/data-source/built-in-storage/). Apply [metadata filters](/ai-search/configuration/retrieval/filtering/) at query time to ensure each tenant only retrieves their own documents.
 
 <WranglerConfig>
 
@@ -131,4 +131,4 @@ const results = await env.SHARED_INSTANCE.search({
 });
 ```
 
-This example uses a ["starts with" filter](/ai-search/configuration/indexing/metadata/#starts-with-filter-for-folders) to match all files under `customer-a/` including subfolders.
+This example uses a ["starts with" filter](/ai-search/configuration/retrieval/filtering/#starts-with-filter-for-folders) to match all files under `customer-a/` including subfolders.

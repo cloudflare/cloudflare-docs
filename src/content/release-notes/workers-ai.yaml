@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-06-16"
+    title: GLM-5.2 now available on Workers AI
+    description: |-
+      - [`@cf/zai-org/glm-5.2`](/workers-ai/models/glm-5.2/) is now available on Workers AI. Z.ai's flagship agentic coding model with a 262,144 token context window, function calling, and reasoning support. Read [changelog](/changelog/2026-06-16-glm-5.2-workers-ai/) to get started.
   - publish_date: "2026-06-12"
     title: Moonshot AI Kimi K2.7 Code now available on Workers AI
     description: |-

@@ -1,9 +1,6 @@
----
-name: changelog
-description: Creates, updates, and reviews product changelog entries for the Cloudflare documentation site. Load when generating changelog MDX files, editing existing entries, reviewing changelog style, or validating frontmatter.
----
+# Changelog Entries
 
-Use this skill when creating, editing, or reviewing changelog entries under `src/content/changelog/`.
+Use this reference when creating, editing, or reviewing changelog entries under `src/content/changelog/`.
 
 **Style reference:** `.agents/references/style-guide.md` contains the canonical rules for writing style, formatting, links, code blocks, and frontmatter. The changelog-specific additions below extend those rules — they do not replace them.
 

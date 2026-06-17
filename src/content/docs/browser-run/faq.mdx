@@ -81,6 +81,16 @@ For a complete reference, see [Quick Actions timeouts](/browser-run/reference/ti
 
 ## Getting started & Development
 
+### Why run browsers in the cloud instead of locally?
+
+Running a browser locally works for development and small-scale tasks, but has practical limits for production workloads.
+
+With Browser Run, browser sessions run on Cloudflare's infrastructure, so your automation runs without a local machine. There is no Chrome installation to maintain, no VM to keep running, and sessions launch on demand and shut down when done.
+
+You can also use [Cloudflare Queues](/queues/tutorials/web-crawler-with-browser-run/) to process batches of URLs asynchronously, allowing you to crawl at scale without managing queue infrastructure yourself.
+
+Browser sessions open on Cloudflare's global network, close to the incoming request. Browser Run is a [Workers binding](/browser-run/reference/wrangler/#bindings), so it integrates directly with [Durable Objects](/browser-run/how-to/browser-run-with-do/), Queues, and the rest of the Cloudflare developer platform.
+
 ### Does local development support all Browser Run features?
 
 Not yet. Local development currently has the following limitation(s):
