@@ -46,6 +46,10 @@ Cloudflare will also crawl your site in other, specific situations:
 
 ## Developer product crawlers
 
-[Browser Run](/browser-run/) is a Cloudflare developer product that can crawl third-party websites on behalf of Cloudflare customers. Unlike the crawlers in the Crawling situations section, it does not crawl your site as part of a Cloudflare service you have enabled. It is used by developers building applications with Cloudflare's platform.
+[**Browser Run**](/browser-run/) is a Cloudflare developer product that can crawl third-party websites on behalf of Cloudflare customers. Unlike the crawlers in the Crawling situations section, it does not crawl your site as part of a Cloudflare service you have enabled. It is used by developers building applications with Cloudflare's platform.
 
 The [**Browser Run /crawl endpoint**](/browser-run/quick-actions/crawl-endpoint/) uses a _User-Agent_ of `CloudflareBrowserRenderingCrawler/1.0`. For non-configurable headers, bot detection IDs, and cryptographic verification methods you can use to identify or block Browser Run traffic, refer to [Automatic request headers](/browser-run/reference/automatic-request-headers/).
+
+[**AI Search**](/ai-search/) is a Cloudflare developer product that indexes your website content so it can be searched. The AI Search crawler only crawls a website you own (the domain must exist in the same Cloudflare account) that you select as your data source in AI Search.
+
+The crawler uses a _User-Agent_ of `Cloudflare-AI-Search`. You can allow or block it with WAF rules using its [bot detection ID](/ai-search/configuration/data-source/website/#allow-the-ai-search-crawler-through-waf).

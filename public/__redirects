@@ -418,8 +418,9 @@
 /ai-search/configuration/indexing/ /ai-search/configuration/indexing/syncing/ 301
 /ai-search/configuration/keyword-search/ /ai-search/configuration/indexing/keyword-search/ 301
 /ai-search/configuration/service-api-token/ /ai-search/configuration/indexing/service-api-token/ 301
-/ai-search/configuration/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
-/ai-search/configuration/retrieval/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
+/ai-search/configuration/retrieval-configuration/ /ai-search/configuration/retrieval/result-controls/ 301
+/ai-search/configuration/retrieval/retrieval-configuration/ /ai-search/configuration/retrieval/result-controls/ 301
+/ai-search/configuration/retrieval/result-filtering/ /ai-search/configuration/retrieval/result-controls/ 301
 /ai-search/configuration/hybrid-search/ /ai-search/configuration/indexing/hybrid-search/ 301
 /ai-search/configuration/metadata/ /ai-search/configuration/indexing/metadata/ 301
 /ai-search/configuration/retrieval/metadata/ /ai-search/configuration/indexing/metadata/ 301
