@@ -23,14 +23,7 @@ interface Env {
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const tenantId = request.headers.get("x-tenant-id") || "default";
-    
-    const tenantData = await env.KV.get(tenantId);
-    if (!tenantData) {
-      return new Response("Tenant configuration not found", { status: 404 });
-    }
-    
-    const tenant = JSON.parse(tenantData);
+    let tenant = JSON.parse(await env.KV.get("tenant-id"));
 
     return new Response(`Configured dynamic connection`, {
       headers: { "x-connection-string": tenant.connectionString }
@@ -46,30 +39,30 @@ export default {
 
 ### FAQ
 
-### How does the dynamic design work under the hood?
+### Dynamic design under the hood
 
 Hyperdrive automatically spins up its connection pools in the data center closest to your origin database using your runtime `targetRegion` parameter. When a user makes a request, the `OutboundInterceptor` handles it at the edge; if the query is cached, it is served instantly from the global node closest to that user, bypassing your database entirely. If it misses the cache, it travels over Cloudflare's backbone via pre-warmed, persistent TCP sockets, eliminating long-distance handshake penalties.
 
-### Are host URLs unique or reused?
+### Host URL uniqueness
 
 Host URLs are unique. Single hosts are not reused across different database names. Every individual tenant database receives its own unique Hyperdrive ID under the hood, completely decoupled from your front-end preview URLs or custom domains. Your infrastructure maps incoming app requests to the tenant's connection string, and `DYNAMIC_HYPERDRIVE.get()` fetches the correct pool instantly at runtime with zero configuration cold starts.
 
-### Will multiple pools spin up for a single connection string globally, and how does that affect our database connection limits?
+### Pool allocation per connection string
 
 Each individual connection string has its own pool. Any multi-pool routing under the hood is an internal implementation detail. To ensure reliability, Hyperdrive currently shards your available connections across multiple pools for redundancy. This sharding mechanism may evolve in the future as routing is optimized, but protecting your database limits remains a core priority.
 
-### How does `maxConnections` actually apply across these instances?
+### `maxConnections` behavior across instances
 
 The `maxConnections` parameter does not restrict the number of inbound client requests hitting the edge. Instead, it defines the hard ceiling of outbound database sockets that one single dynamic Hyperdrive instance maintains directly to your origin database. Hyperdrive multiplexes thousands of incoming edge hits down into a highly optimized number of persistent connections up to that configured maximum, protecting your multi-tenant databases from connection exhaustion during sudden traffic spikes. This is a soft limit, and Hyperdrive may occasionally exceed it in unusual traffic situations.
 
-### What is the inactivity timeout for a pool?
+### Pool inactivity timeout
 
 When the last active connection closes, the pool stays alive for an additional 15 minutes before shutting down to ensure subsequent traffic does not hit a cold start. This 15-minute window is an internal implementation detail and may change in the future as platform performance is optimized.
 
-### Are there account-level configuration limits on the total number of unique dynamic Hyperdrive pools as we scale from 5M to 50M apps?
+### Account-level configuration limits at scale
 
 Utilizing Dynamic Hyperdrive to generate parameters via code at runtime completely bypasses static configuration limitations. For this dynamic execution plane, configuration capacities are a soft limit.
 
-### How do we pull per-tenant metrics for our users?
+### Per-tenant metrics retrieval
 
 You can programmatically query the GraphQL Analytics API by `hyperdriveId` to pull live data on connection counts, query latency, error rates, and cache hit ratios. You can pipe this data straight into your own customer-facing dashboards.
