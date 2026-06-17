@@ -1,6 +1,6 @@
 ---
 name: contributing
-description: The entry point for ANY contribution to the Cloudflare Docs repository (developers.cloudflare.com). Load this whenever working on the docs repo: creating, editing, or adding documentation pages, partials, images, or changelog entries; choosing a content type or component; deciding where content belongs; reviewing docs or code examples; or learning how to contribute. ALSO load this for ANY pull request action — creating, opening, submitting, updating, or editing a PR, or writing a PR title or description. This skill is a router that dispatches to task-specific references (writing docs, PRs, changelogs, reviews, components, style).
+description: Use when making any change to the cloudflare-docs repository — writing or updating MDX pages, adding changelog entries, choosing components, structuring information, or opening a pull request. Covers the full contribution workflow for developers.cloudflare.com.
 ---
 
 # Contributing to Cloudflare Docs
