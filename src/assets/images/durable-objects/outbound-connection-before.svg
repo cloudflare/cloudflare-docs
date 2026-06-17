@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .phase { font-size: 11px; font-weight: 600; fill: #fff; }
+    .phase-body { font-size: 11px; fill: #0369a1; }
+    .annotation { font-size: 10px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="time-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d1d5db"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="360" fill="#fafafa" rx="8"/>
+
+  <!-- Time axis -->
+  <line x1="200" y1="48" x2="720" y2="48" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#time-arrow)"/>
+  <text x="735" y="52" class="sublabel">time</text>
+
+  <!-- Lane 1: Incoming request -->
+  <text x="40" y="95" class="label">Incoming request</text>
+  <rect x="200" y="76" width="140" height="36" rx="4" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <text x="270" y="99" text-anchor="middle" class="phase">processing</text>
+
+  <!-- Lane 2: Outbound LLM stream -->
+  <text x="40" y="155" class="label">Outbound LLM stream</text>
+  <!-- streaming bar, cut off at eviction (x=470) -->
+  <path d="M244,136 h226 v36 h-226 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="355" y="159" text-anchor="middle" class="phase-body">streaming tokens</text>
+  <!-- cut-off marker -->
+  <text x="478" y="152" class="label" style="fill: #dc2626;">✗</text>
+  <text x="496" y="152" class="sublabel" style="fill: #dc2626;">stream cut off</text>
+
+  <!-- Lane 3: Durable Object lifetime -->
+  <text x="40" y="215" class="label">Durable Object</text>
+  <!-- alive while processing + idle window -->
+  <path d="M204,196 h266 v36 h-266 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#16a34a" stroke="#15803d" stroke-width="1"/>
+  <text x="270" y="219" text-anchor="middle" class="phase">alive</text>
+  <!-- idle window (dashed) overlay from end of incoming (340) to eviction (470) -->
+  <rect x="340" y="196" width="130" height="36" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="405" y="219" text-anchor="middle" style="font-size: 11px; font-weight: 600; fill: #dc2626;">70-140s idle</text>
+
+  <!-- Eviction marker: vertical dashed line through all lanes -->
+  <line x1="470" y1="68" x2="470" y2="244" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="470" y="262" text-anchor="middle" class="sublabel" style="fill: #dc2626;">evicted</text>
+
+  <!-- Annotation -->
+  <text x="40" y="295" class="sublabel">The Durable Object is evicted 70-140 seconds after the last incoming request,</text>
+  <text x="40" y="310" class="sublabel">cutting off the in-flight LLM stream even though the outbound connection is still open.</text>
+
+  <!-- Legend -->
+  <rect x="40" y="318" width="740" height="32" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="58" y="327" width="24" height="14" rx="3" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <text x="89" y="338" class="sublabel">Incoming request (keeps object alive)</text>
+  <rect x="320" y="327" width="24" height="14" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="351" y="338" class="sublabel">Outbound stream (ignored)</text>
+  <rect x="540" y="327" width="24" height="14" rx="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="571" y="338" class="sublabel">Idle window until eviction</text>
+</svg>

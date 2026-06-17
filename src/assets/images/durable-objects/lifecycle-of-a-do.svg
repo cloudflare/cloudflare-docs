@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1010" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .title-lg  { font-size: 20px; font-weight: 700; fill: #1a1a1a; }
+    .node-bold { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub  { font-size: 11px; font-style: italic; fill: #4b5563; }
+    .edge-lbl  { font-size: 11px; fill: #374151; }
+    .edge-bold { font-size: 11px; font-weight: 700; fill: #374151; }
+    .diamond-lbl { font-size: 10.5px; font-style: italic; fill: #374151; text-anchor: middle; }
+    .start-lbl { font-size: 14px; font-weight: 700; fill: #2563eb; }
+    .section-lbl { font-size: 12px; font-style: italic; font-weight: 700; fill: #6b7280; }
+    .yn        { font-size: 11px; font-weight: 700; fill: #374151; }
+    .note-15   { font-size: 10.5px; fill: #1d4ed8; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#6b7280"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#2563eb"/>
+    </marker>
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#d1d5db"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1500" height="1010" fill="#f9fafb" rx="12"/>
+  <rect width="1500" height="1010" fill="url(#dots)" rx="12"/>
+
+  <!-- ══════════════════ EDGES ══════════════════ -->
+
+  <!-- Start → Inactive -->
+  <line x1="640" y1="56" x2="640" y2="106" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Inactive → Active -->
+  <line x1="640" y1="172" x2="640" y2="308" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Hibernated → Active -->
+  <line x1="230" y1="338" x2="520" y2="338" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Active → condition block -->
+  <line x1="640" y1="368" x2="640" y2="473" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- YES: diamond 4 → Idle-nonhib -->
+  <line x1="1018" y1="620" x2="1118" y2="620" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- NO: condition block → Idle-hib -->
+  <line x1="640" y1="770" x2="640" y2="866" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Idle-nonhib → Active (loop back: up then left) — line broken for label -->
+  <path d="M1190,588 L1190,486" stroke="#6b7280" stroke-width="1.5" fill="none"/>
+  <path d="M1190,448 L1190,338 L758,338" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Idle-nonhib → Inactive (eviction: right, up, left along top) — line broken for label -->
+  <path d="M1340,620 L1440,620 L1440,140 L1244,140" stroke="#6b7280" stroke-width="1.5" fill="none"/>
+  <path d="M946,140 L752,140" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Idle-hib → Hibernated (left then up) — line broken for clock -->
+  <path d="M500,885 L130,885 L130,646" stroke="#6b7280" stroke-width="1.5" fill="none"/>
+  <path d="M130,614 L130,382" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Idle-hib → Active (left, up, right) — line broken for label -->
+  <path d="M500,915 L466,915" stroke="#6b7280" stroke-width="1.5" fill="none"/>
+  <path d="M294,915 L260,915 L260,348 L522,348" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+  <!-- ══════════════════ DASHED CONDITION BLOCK ══════════════════ -->
+  <rect x="300" y="475" width="840" height="295" rx="6" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="700" y="500" class="section-lbl" text-anchor="middle">— Is any true? —</text>
+
+  <!-- connectors between diamonds -->
+  <line x1="478" y1="620" x2="522" y2="620" stroke="#9ca3af" stroke-width="1.5"/>
+  <line x1="658" y1="620" x2="702" y2="620" stroke="#9ca3af" stroke-width="1.5"/>
+  <line x1="838" y1="620" x2="882" y2="620" stroke="#9ca3af" stroke-width="1.5"/>
+
+  <!-- Diamond 1 -->
+  <polygon points="410,552 478,620 410,688 342,620" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="410" y="611" class="diamond-lbl">setTimeout() or</text>
+  <text x="410" y="625" class="diamond-lbl">setInterval()</text>
+  <text x="410" y="639" class="diamond-lbl">used?</text>
+
+  <!-- Diamond 2 -->
+  <polygon points="590,552 658,620 590,688 522,620" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="590" y="604" class="diamond-lbl">standard</text>
+  <text x="590" y="618" class="diamond-lbl">WebSocket</text>
+  <text x="590" y="632" class="diamond-lbl">connections</text>
+  <text x="590" y="646" class="diamond-lbl">used?</text>
+
+  <!-- Diamond 3 -->
+  <polygon points="770,552 838,620 770,688 702,620" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="770" y="611" class="diamond-lbl">waiting on a</text>
+  <text x="770" y="625" class="diamond-lbl">fetch()?</text>
+
+  <!-- Diamond 4: outbound TCP/WebSocket -->
+  <polygon points="950,552 1018,620 950,688 882,620" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="950" y="604" class="diamond-lbl">outbound TCP</text>
+  <text x="950" y="618" class="diamond-lbl">socket or outbound</text>
+  <text x="950" y="632" class="diamond-lbl">WebSocket</text>
+  <text x="950" y="646" class="diamond-lbl">open?</text>
+
+  <!-- 15-minute annotation, anchored to diamond 4 -->
+  <line x1="950" y1="688" x2="950" y2="708" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="950" y="722" class="note-15">Each outbound connection keeps the</text>
+  <text x="950" y="737" class="note-15">object alive for up to 15 minutes</text>
+
+  <!-- ══════════════════ NODES ══════════════════ -->
+
+  <text x="640" y="50" class="start-lbl" text-anchor="middle">Start</text>
+
+  <rect x="530" y="108" width="220" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="640" y="137" class="node-bold" text-anchor="middle">Inactive</text>
+  <text x="640" y="155" class="node-sub"  text-anchor="middle">Object not in-memory</text>
+
+  <rect x="524" y="312" width="232" height="56" rx="8" fill="#a7e3c0" stroke="#7cc9a3" stroke-width="1.5"/>
+  <text x="640" y="346" class="node-bold" text-anchor="middle">Active, in-memory</text>
+
+  <rect x="30" y="280" width="200" height="100" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="130" y="312" class="node-bold" text-anchor="middle">Hibernated</text>
+  <text x="130" y="332" class="node-sub"  text-anchor="middle">Object memory state</text>
+  <text x="130" y="348" class="node-sub"  text-anchor="middle">is discarded</text>
+  <text x="130" y="364" class="node-sub"  text-anchor="middle">Hibernated WebSockets</text>
+  <text x="130" y="380" class="node-sub"  text-anchor="middle">stay connected</text>
+
+  <rect x="1120" y="588" width="220" height="64" rx="8" fill="#a7e3c0" stroke="#7cc9a3" stroke-width="1.5"/>
+  <text x="1230" y="616" class="node-bold" text-anchor="middle">Idle, in-memory &amp;</text>
+  <text x="1230" y="634" class="node-bold" text-anchor="middle">non-hibernateable</text>
+
+  <rect x="500" y="868" width="280" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="640" y="897" class="node-bold" text-anchor="middle">Idle, in-memory &amp;</text>
+  <text x="640" y="915" class="node-bold" text-anchor="middle">hibernateable</text>
+
+  <!-- ══════════════════ EDGE LABELS (in-line with arrows) ══════════════════ -->
+
+  <!-- Inactive → Active : right of the vertical arrow, centered on it -->
+  <text x="650" y="218" class="edge-lbl">Incoming request = fetch, RPC, WebSocket</text>
+  <text x="650" y="234" class="edge-lbl">event, or alarm</text>
+  <text x="650" y="250" class="edge-lbl">DO constructor() runs</text>
+
+  <!-- Hibernated → Active : above the horizontal arrow, centered on it -->
+  <text x="375" y="322" class="edge-lbl" text-anchor="middle">Incoming request</text>
+  <text x="375" y="336" class="edge-lbl" text-anchor="middle">DO constructor() runs</text>
+
+  <!-- Active → condition : right of the vertical arrow -->
+  <text x="650" y="410" class="edge-lbl">After completely processing a fetch, RPC,</text>
+  <text x="650" y="426" class="edge-lbl">WebSocket message, or alarm</text>
+
+  <!-- YES / NO : on their arrows -->
+  <text x="1046" y="610" class="yn">YES</text>
+  <text x="650" y="822" class="yn">NO</text>
+
+  <!-- Eviction : centered in the gap of the top horizontal segment (y=140) -->
+  <circle cx="1095" cy="114" r="11" stroke="#6b7280" stroke-width="1.5" fill="none"/>
+  <line x1="1095" y1="107" x2="1095" y2="114" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="1095" y1="114" x2="1100" y2="119" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="1095" y="144" class="edge-lbl"  text-anchor="middle">No incoming request for 70-140 seconds</text>
+  <text x="1095" y="160" class="edge-lbl"  text-anchor="middle">No clients connected</text>
+  <text x="1095" y="176" class="edge-lbl"  text-anchor="middle">No open outbound connection</text>
+  <text x="1095" y="192" class="edge-bold" text-anchor="middle">Object is evicted</text>
+
+  <!-- Idle-nonhib → Active loop : centered in the gap of the vertical segment (x=1190) -->
+  <text x="1190" y="461" class="edge-lbl" text-anchor="middle">Incoming request</text>
+  <text x="1190" y="477" class="edge-lbl" text-anchor="middle">Reuse existing DO instance</text>
+
+  <!-- Idle-hib → Hibernated : clock centered in the gap of the vertical segment (x=130) -->
+  <circle cx="130" cy="630" r="11" stroke="#6b7280" stroke-width="1.5" fill="none"/>
+  <line x1="130" y1="623" x2="130" y2="630" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="130" y1="630" x2="135" y2="635" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="150" y="626" class="edge-lbl">No incoming request</text>
+  <text x="150" y="642" class="edge-lbl">for 10 seconds</text>
+
+  <!-- Idle-hib → Active : centered in the gap of the bottom horizontal segment (y=915) -->
+  <text x="380" y="911" class="edge-lbl" text-anchor="middle">Incoming request</text>
+  <text x="380" y="927" class="edge-lbl" text-anchor="middle">Reuse existing DO instance</text>
+
+  <!-- ══════════════════ TITLE + LOGO ══════════════════ -->
+  <text x="40" y="980" class="title-lg">A Durable Object (DO) Lifecycle</text>
+
+  <g transform="translate(1400,944)">
+    <path d="M56,26 C56,18 49,12 40,12 C38,12 36,12.6 34,13.6 C32,8 26,4 19,4 C10,4 3,11 3,20 C3,20.4 3,20.8 3.1,21.2 C1,22.4 0,24.4 0,26.6 C0,31 3.8,34 8.2,34 L52,34 C54,34 56,31 56,26Z" fill="#f97316"/>
+    <path d="M12,28 Q20,23 28,28 Q36,33 44,28" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

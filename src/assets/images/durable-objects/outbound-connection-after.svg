@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .phase { font-size: 11px; font-weight: 600; fill: #fff; }
+    .phase-body { font-size: 11px; fill: #0369a1; }
+    .annotation { font-size: 10px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="time-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d1d5db"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="360" fill="#fafafa" rx="8"/>
+
+  <!-- Time axis -->
+  <line x1="200" y1="48" x2="720" y2="48" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#time-arrow)"/>
+  <text x="735" y="52" class="sublabel">time</text>
+
+  <!-- Lane 1: Incoming request -->
+  <text x="40" y="95" class="label">Incoming request</text>
+  <rect x="200" y="76" width="140" height="36" rx="4" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <text x="270" y="99" text-anchor="middle" class="phase">processing</text>
+
+  <!-- Lane 2: Outbound LLM stream -->
+  <text x="40" y="155" class="label">Outbound LLM stream</text>
+  <!-- streaming bar runs to completion at x=560 -->
+  <path d="M244,136 h316 q4,0 4,4 v28 q0,4 -4,4 h-316 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="400" y="159" text-anchor="middle" class="phase-body">streaming tokens</text>
+  <!-- completes marker -->
+  <text x="570" y="159" class="label" style="fill: #16a34a;">✓</text>
+  <text x="588" y="159" class="sublabel" style="fill: #16a34a;">stream completes</text>
+
+  <!-- Lane 3: Durable Object lifetime -->
+  <text x="40" y="215" class="label">Durable Object</text>
+  <!-- alive for the full stream duration -->
+  <path d="M204,196 h356 v36 h-356 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#16a34a" stroke="#15803d" stroke-width="1"/>
+  <text x="380" y="219" text-anchor="middle" class="phase">kept alive by outbound connection</text>
+  <!-- idle window starts only after stream closes (560 onward), dashed -->
+  <path d="M560,196 h126 q4,0 4,4 v28 q0,4 -4,4 h-126 v-36z" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="623" y="219" text-anchor="middle" class="sublabel">70-140s idle</text>
+
+  <!-- Stream-close marker: vertical dashed line -->
+  <line x1="560" y1="68" x2="560" y2="244" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="560" y="262" text-anchor="middle" class="sublabel" style="fill: #16a34a;">connection closes</text>
+
+  <!-- Annotation -->
+  <text x="40" y="295" class="sublabel">The active outbound connection keeps the Durable Object alive until the stream completes</text>
+  <text x="40" y="310" class="sublabel">(up to 15 minutes). The inactivity window starts only after the connection closes.</text>
+
+  <!-- Legend -->
+  <rect x="40" y="318" width="740" height="32" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="58" y="327" width="24" height="14" rx="3" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <text x="89" y="338" class="sublabel">Incoming request</text>
+  <rect x="240" y="327" width="24" height="14" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="271" y="338" class="sublabel">Outbound stream (keeps object alive)</text>
+  <rect x="500" y="327" width="24" height="14" rx="3" fill="#16a34a" stroke="#15803d" stroke-width="1"/>
+  <text x="531" y="338" class="sublabel">Durable Object alive</text>
+</svg>
