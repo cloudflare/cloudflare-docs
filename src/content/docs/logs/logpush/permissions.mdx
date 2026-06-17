@@ -22,6 +22,14 @@ Below is a description of the available permissions for tokens and roles as they
 - **Account-scoped datasets** require an **account-scoped token**.
 
 Permissions must be explicitly configured at the appropriate level (zone or account) to ensure access to the desired API endpoints.
+A token with only **Zone Read** or **Account Settings Read** permission cannot access Logpush endpoints. Logpush requires one of the following permissions, scoped to the appropriate level:
+
+- **Zone Logs Read** — Required to read zone-scoped Logpush jobs.
+- **Zone Logs Write** — Required to create, update, or delete zone-scoped Logpush jobs.
+- **Account Logs Read** — Required to read account-scoped Logpush jobs.
+- **Account Logs Write** — Required to create, update, or delete account-scoped Logpush jobs.
+
+If you receive an `Authentication error` (code `10000`) when calling Logpush endpoints, verify that the token has the correct **Logs** permission at the correct scope.
 
 :::
 
