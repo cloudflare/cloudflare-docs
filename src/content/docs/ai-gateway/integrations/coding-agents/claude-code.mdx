@@ -16,10 +16,10 @@ import { Tabs, TabItem, Steps } from "~/components";
 
 Before you start, you need:
 
-- An [authenticated gateway](/ai-gateway/configuration/authentication/) and its gateway token. The gateway token must have `Run` permissions.
+- An [authenticated gateway](/ai-gateway/configuration/authentication/) and its [gateway token](/ai-gateway/configuration/authentication/#setting-up-authenticated-gateway-using-the-dashboard). The gateway token must have `Run` permissions.
 - Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 - An Anthropic API key. To create one, go to [Account Settings](https://platform.claude.com/settings/keys) in the Claude Console. For more information, refer to [Anthropic's API overview](https://docs.anthropic.com/en/api/overview).
-- Claude Code installed and updated to the latest version.
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup) installed and updated to the latest version.
 
 :::note
 This configuration does not use [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). The Anthropic API key comes from the `ANTHROPIC_API_KEY` environment variable, not from a key stored in AI Gateway. Anthropic bills you for model usage, and AI Gateway provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
