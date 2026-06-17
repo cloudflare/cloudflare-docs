@@ -16,7 +16,7 @@ Turns the prompt "set up Turnstile" into a working end-to-end integration: a wid
 
 You are the agent. Run the wizard below by invoking the scripts under `scripts/` and branching on their JSON output. The scripts hold the deterministic logic (API calls, retry/error handling); your job is orchestration, codebase reading, confirmation, and the frontend edits.
 
-Canonical instructions live at [`developers.cloudflare.com/turnstile/spin`](https://developers.cloudflare.com/turnstile/spin/). If the docs page and this file disagree, trust the docs page.
+Canonical instructions live at [`developers.cloudflare.com/turnstile/spin`](/turnstile/spin/). If the docs page and this file disagree, trust the docs page.
 
 ## When to load this skill
 
@@ -39,13 +39,13 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
 3. **Auth + scope probe (FIRST irreversible action).** Run `scripts/auth-probe.sh`. Branch on `status`:
    - `ok`: continue to Step 4. The script already picked the account (single-account token, or one matching `$CLOUDFLARE_ACCOUNT_ID`).
-   - `missing_token`, `missing_scope`, or `missing_workers_scope`: ask the user to create a token at https://dash.cloudflare.com/profile/api-tokens → Custom token → permissions `Account.Turnstile:Edit` **and** `Account.Workers Scripts:Edit` → include the target account in Account Resources. **Do NOT direct them to `wrangler login`**. Its OAuth scope doesn't include `Account.Turnstile:Edit` or `Account.Workers Scripts:Edit`. Offer three ways to hand the token over, cleanest first:
+   - `missing_token`, `missing_scope`, or `missing_workers_scope`: ask the user to create a token at https://dash.cloudflare.com/profile/api-tokens → Custom token → permissions `Account.Turnstile:Edit` **and** `Account.Workers Scripts:Edit` → include the target account in Account Resources. **Do NOT direct them to `wrangler login`**. Its OAuth scope does not include `Account.Turnstile:Edit` or `Account.Workers Scripts:Edit`. Offer three ways to hand the token over, cleanest first:
      1. **Export + relaunch** (token never enters chat): `export CLOUDFLARE_API_TOKEN=<token>` then restart the agent from that terminal.
      2. **Save to file** (token in file with user-only perms, not in chat): `umask 077 && printf '%s' '<token>' > ~/.cf-turnstile-token`, then read with `TOKEN=$(cat ~/.cf-turnstile-token)`.
      3. **Paste in chat** (fastest, but token lands in conversation log; user should rotate it after if the log is ever shared).
         If the user picks option 3 (paste in chat), you can use the wait to run Steps 5, 6, 7 (Domain, Codebase scan, Insertion plan). Options 1 and 2 will restart your session, so do not pre-fetch state in those cases. When auth is established, re-run `auth-probe.sh`, then continue to Step 8.
    - `multiple_accounts`: the token covers more than one account and `$CLOUDFLARE_ACCOUNT_ID` is unset. Present the numbered `accounts` list. **[wait for user]** Then export `CLOUDFLARE_ACCOUNT_ID=<chosen>` and re-run `auth-probe.sh`.
-   - `account_mismatch`: `$CLOUDFLARE_ACCOUNT_ID` is set but isn't one of the token's accounts. Show the `accounts` list and ask the user to either `unset CLOUDFLARE_ACCOUNT_ID` or set it to one of those IDs.
+   - `account_mismatch`: `$CLOUDFLARE_ACCOUNT_ID` is set but is not one of the token's accounts. Show the `accounts` list and ask the user to either `unset CLOUDFLARE_ACCOUNT_ID` or set it to one of those IDs.
 
 4. **Account selection.** If `auth-probe.sh` returned `ok` after a `multiple_accounts` round-trip, this is already done. Otherwise the script picked the single account silently and you continue to Step 5.
 
@@ -80,12 +80,12 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
 Spin validates the Turnstile token via a managed Worker before the user's existing form handler runs. Everything else is out of scope:
 
-- **Email / SMS / notification delivery.** Leave the existing submit handler alone (just gate it on `success === true`). Don't propose Resend, Mailchannels, SMTP, mailto.
-- **Custom Worker code.** Deploy the stock Worker template bundled at `templates/worker/`. Don't write a new Worker. Don't add features (rate limiting, custom routing, third-party integrations).
+- **Email / SMS / notification delivery.** Leave the existing submit handler alone (just gate it on `success === true`). Do not propose Resend, Mailchannels, SMTP, mailto.
+- **Custom Worker code.** Deploy the stock Worker template bundled at `templates/worker/`. Do not write a new Worker. Do not add features (rate limiting, custom routing, third-party integrations).
 - **Database / payment / OAuth / form persistence.** Out of scope.
-- **Frontend framework migration, refactoring, or styling.** Edit only what's needed.
+- **Frontend framework migration, refactoring, or styling.** Edit only what is needed.
 - **reCAPTCHA v3 score thresholds.** Turnstile returns `success: true/false`.
-- **Pre-clearance-only setups.** If `clearance_level !== no_clearance`, siteverify is optional and Spin doesn't apply. Redirect the user and exit.
+- **Pre-clearance-only setups.** If `clearance_level !== no_clearance`, siteverify is optional and Spin does not apply. Redirect the user and exit.
 
 ### Recovery flow: respect existing widget configuration
 
@@ -99,11 +99,11 @@ If the user tells you they already have a Turnstile widget set up and want to wi
    - `no_clearance`: standard recovery (deploy Worker, wire siteverify).
    - anything else: ask whether they want siteverify on top of pre-clearance, or exit per the scope boundary.
 4. Continue from Step 9 (Worker deploy). Site key does not change. Dashboard's `Deployment` column flips from `Manual` to `Spin` on the first request carrying `data-action="turnstile-spin-v1"`.
-5. Never recreate the widget to get a fresh secret. That breaks the existing sitekey everywhere it's deployed.
+5. Never recreate the widget to get a fresh secret. That breaks the existing sitekey everywhere it is deployed.
 
 ### The frontend-edit contract
 
-When wiring an existing form to the Worker (Step 10), the contract is: **gate, don't replace.** The user's existing submit handler keeps doing what it did. Spin only adds a validation step before it.
+When wiring an existing form to the Worker (Step 10), the contract is: **gate, do not replace.** The user's existing submit handler keeps doing what it did. Spin only adds a validation step before it.
 
 ```js
 form.addEventListener("submit", async (e) => {
@@ -116,9 +116,9 @@ form.addEventListener("submit", async (e) => {
 });
 ```
 
-If the existing handler was a stub, Spin leaves it a stub gated on success. The user can replace the stub later; that's not Spin's job.
+If the existing handler was a stub, Spin leaves it a stub gated on success. The user can replace the stub later; that is not Spin's job.
 
-## Migrating from another CAPTCHA
+## Migrate from another CAPTCHA
 
 During the Step 6 codebase scan, also look for existing reCAPTCHA or hCaptcha. If found, switch Step 7 to a migration plan.
 
@@ -137,7 +137,7 @@ Substitution:
 Edge cases to surface to the user:
 
 - **reCAPTCHA v3 score thresholds.** Turnstile has no score. Tell the user explicitly that migrated code will reject on `success === false`.
-- **reCAPTCHA Enterprise.** Don't auto-migrate. Point at [developers.cloudflare.com/turnstile/migration/recaptcha/](https://developers.cloudflare.com/turnstile/migration/recaptcha/).
+- **reCAPTCHA Enterprise.** Do not auto-migrate. Point at [the Cloudflare migration guide for reCAPTCHA](/turnstile/migration/recaptcha/).
 - **Custom `action=` values.** Preserve any custom action the user passed to `grecaptcha.execute` as `data-action` on the widget. Use `turnstile-spin-v1` only when no custom action exists.
 
 ## Edge cases
@@ -146,7 +146,7 @@ Edge cases to surface to the user:
 | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `wrangler` not installed                       | Install path: `npm install --save-dev wrangler` (Node project) or `npm install -g wrangler` (other)                                                                                                                                                                                     |
 | Multiple Cloudflare accounts                   | `scripts/auth-probe.sh` returns all accounts; ask the user to choose, export `CLOUDFLARE_ACCOUNT_ID`                                                                                                                                                                                    |
-| Cloudflare Pages project                       | Deploy the managed Worker anyway, OR suggest the [Pages Plugin](https://developers.cloudflare.com/pages/functions/plugins/turnstile/)                                                                                                                                                   |
+| Cloudflare Pages project                       | Deploy the managed Worker anyway, OR suggest the [Pages Plugin](/pages/functions/plugins/turnstile/)                                                                                                                                                                                    |
 | `EXPECTED_HOSTNAME` mismatch                   | Update widget domains via PUT, not PATCH (PATCH returns `10405 Method not allowed`): `curl -X PUT .../widgets/$SITEKEY -d '{"name":"...","mode":"managed","domains":[...]}'`                                                                                                            |
 | Worker name conflict                           | `worker-deploy.sh` retries automatically with a hash suffix                                                                                                                                                                                                                             |
 | Token expired mid-flow                         | Stop, re-run `scripts/auth-probe.sh`, prompt for fresh credentials                                                                                                                                                                                                                      |
