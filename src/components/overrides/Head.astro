@@ -264,9 +264,7 @@ if (frontmatter.canonical) {
 	}
 }
 
-// The Workers Static Assets binding 307-redirects URLs with bare `@` in the
-// path to their percent-encoded form (e.g. `/@cf/...` → `/%40cf/...`). Ensure
-// the canonical href matches by encoding any bare `@` in the path.
+// `@` in URL paths (e.g. AI model pages) must be encoded as `%40`.
 const canonicalIdx = head.findIndex(
 	({ tag, attrs }) => tag === "link" && attrs?.rel === "canonical",
 );
