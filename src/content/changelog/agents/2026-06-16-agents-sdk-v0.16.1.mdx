@@ -1,6 +1,6 @@
 ---
 title: Agents SDK improves browser automation, code execution, and recovery
-description: "Agents SDK v0.16.1 adds the Codemode runtime and connector model, rebuilds browser automation on durable CDP sessions, improves Think orchestration, and adds Voice output-device selection."
+description: "Agents SDK v0.16.1 adds the Code Mode runtime and connector model, rebuilds browser automation on durable CDP sessions, improves Think orchestration, and adds Voice output-device selection."
 products:
   - agents
   - workers
@@ -11,7 +11,7 @@ import { PackageManagers, TypeScriptExample } from "~/components";
 
 The latest release of the [Agents SDK](https://github.com/cloudflare/agents) makes it easier to build agents that can safely interact with real systems and keep working through interruptions.
 
-Agents can now browse websites through Browser Run, write code against external tools through Codemode, use client-provided tools when delegating to Think sub-agents, and recover more reliably from deploys, Durable Object evictions, and connection churn.
+Agents can now browse websites through Browser Run, write code against external tools through Code Mode, use client-provided tools when delegating to Think sub-agents, and recover more reliably from deploys, Durable Object evictions, and connection churn.
 
 ## Safer browser automation
 
@@ -36,7 +36,7 @@ The browser tools also add Live View URLs, optional session recording, and quick
 
 ## Resumable code execution with approvals
 
-Codemode now uses `createCodemodeRuntime`, connectors, and a durable execution log. This lets you give a model one `codemode` tool instead of a large prompt full of tool definitions. The model can discover the capabilities it needs, write code against typed globals, and reuse saved snippets.
+Code Mode now uses `createCodemodeRuntime`, connectors, and a durable execution log. This lets you give a model one `codemode` tool instead of a large prompt full of tool definitions. The model can discover the capabilities it needs, write code against typed globals, and reuse saved snippets.
 
 <TypeScriptExample>
 
@@ -119,4 +119,4 @@ To update to the latest version:
 
 <PackageManagers pkg="agents@latest @cloudflare/think@latest @cloudflare/codemode@latest @cloudflare/ai-chat@latest @cloudflare/voice@latest" />
 
-Refer to the [Codemode documentation](/agents/model-context-protocol/protocol/codemode/), [Browser tools documentation](/agents/tools/browser/), [Think tools documentation](/agents/harnesses/think/tools/), and [Voice documentation](/agents/communication-channels/voice/) for more information.
+Refer to the [Code Mode documentation](/agents/model-context-protocol/protocol/codemode/), [Browser tools documentation](/agents/tools/browser/), [Think tools documentation](/agents/harnesses/think/tools/), and [Voice documentation](/agents/communication-channels/voice/) for more information.

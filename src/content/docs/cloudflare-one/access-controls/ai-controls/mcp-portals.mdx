@@ -33,7 +33,7 @@ MCP server portals provide the following capabilities:
 
 - **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect. You can also connect using [Access service tokens](#connect-with-a-service-token) for machine-to-machine access.
 
-- **Code mode**: Code mode is available by default on all portals. It collapses all upstream tools into a single `code` tool. The AI agent writes JavaScript that calls typed methods for each tool, and the code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This keeps context window usage fixed regardless of how many tools are available. Refer to [code mode](#code-mode) for connection instructions.
+- **Code Mode**: Code Mode is available by default on all portals. It collapses all upstream tools into a single `code` tool. The AI agent writes JavaScript that calls typed methods for each tool, and the code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This keeps context window usage fixed regardless of how many tools are available. Refer to [Code Mode](#code-mode) for connection instructions.
 
 - **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal. You can optionally route portal traffic through [Cloudflare Gateway](#route-portal-traffic-through-gateway) for richer HTTP logging and data loss prevention (DLP) scanning.
 
@@ -403,11 +403,11 @@ If you [rename a tool with an alias](#rename-tools-and-prompts-with-aliases), th
 
 For example, if you alias the tool `list_issues` to `issues` on a server with ID `github`, the namespaced name becomes `github_issues`.
 
-#### Namespacing in code mode
+#### Namespacing in Code Mode
 
-When [code mode](#code-mode) is active, the portal applies an additional transformation to make namespaced tool names safe for use as JavaScript identifiers. Hyphens and dots in the namespaced name are replaced with underscores, names that start with a digit get a `_` prefix, and JavaScript reserved words get a `_` suffix. For example, a server with ID `my-server` and a tool named `get-data` would appear as `my_server_get_data` in the code mode sandbox.
+When [Code Mode](#code-mode) is active, the portal applies an additional transformation to make namespaced tool names safe for use as JavaScript identifiers. Hyphens and dots in the namespaced name are replaced with underscores, names that start with a digit get a `_` prefix, and JavaScript reserved words get a `_` suffix. For example, a server with ID `my-server` and a tool named `get-data` would appear as `my_server_get_data` in the Code Mode sandbox.
 
-This sanitization happens automatically. You do not need to call any helper functions when using code mode as an end user.
+This sanitization happens automatically. You do not need to call any helper functions when using Code Mode as an end user.
 
 #### Helper functions in the Agents SDK
 
@@ -415,7 +415,7 @@ If you are building an MCP client with the [Agents SDK](/agents/model-context-pr
 
 - **`normalizeServerId`** (exported from `agents/mcp/client`) normalizes a caller-supplied server ID into a safe string. For example, `"GitHub MCP!"` becomes `"github-mcp"`. The SDK calls this automatically when you pass an `id` option to `addMcpServer()`.
 
-- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in code mode contexts. Refer to the [code mode SDK reference](/agents/model-context-protocol/protocol/codemode/#sanitizetoolnamename) for details.
+- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in Code Mode contexts. Refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/#sanitizetoolnamename) for details.
 
 :::note
 The Agents SDK uses a `tool_{server_id}_{tool_name}` format (with a `tool_` prefix) when returning tools from `getAITools()`. This differs from the portal format, which uses `{server_id}_{tool_name}` without the prefix.
@@ -446,16 +446,16 @@ When you connect with the [`optimize_context`](#optimize-context) query paramete
 | `portal_query_tools` | `minimize_tools`, `search_and_execute` | Searches upstream tools by name, description, or schema using a regex pattern. Returns full tool definitions so the agent can call them. Required in `minimize_tools` mode because upstream tool schemas are stripped to reduce context size. |
 | `portal_execute` | `search_and_execute` | Calls an upstream tool by name with the provided arguments. In `search_and_execute` mode, upstream tools are hidden from the tool list entirely, so agents must use `portal_query_tools` to discover them and `portal_execute` to call them. |
 
-#### Code mode tools
+#### Code Mode tools
 
-When you connect with [code mode](#code-mode) enabled, the portal replaces all upstream tools with two code execution tools:
+When you connect with [Code Mode](#code-mode) enabled, the portal replaces all upstream tools with two code execution tools:
 
 | Tool | Description |
 | --- | --- |
 | `portal_codemode_search` | Searches available tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode.tools()` function that returns all upstream tool definitions with sanitized names. |
 | `portal_codemode_execute` | Calls upstream tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode` proxy object where each property maps to an upstream tool. Supports `Promise.all()` for parallel tool calls. |
 
-Refer to the [code mode SDK reference](/agents/model-context-protocol/protocol/codemode/) for details on writing code for these tools.
+Refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/) for details on writing code for these tools.
 
 ## Manage portals via API
 
@@ -564,17 +564,17 @@ resource "cloudflare_dns_record" "mcp_portal" {
 
 For the full list of supported resource arguments, refer to the [Terraform provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
-## Code mode
+## Code Mode
 
-[Code mode](/agents/model-context-protocol/protocol/codemode/) is turned on by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
+[Code Mode](/agents/model-context-protocol/protocol/codemode/) is turned on by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
 
-To use code mode, the MCP client must request it when connecting to the portal URL. Refer to [Connect with code mode](#connect-with-code-mode) for the required query parameter.
+To use Code Mode, the MCP client must request it when connecting to the portal URL. Refer to [Connect with Code Mode](#connect-with-code-mode) for the required query parameter.
 
-Code mode is useful for portals that aggregate many MCP servers or servers that expose a large number of tools. Context window usage stays fixed regardless of how many tools are available through the portal.
+Code Mode is useful for portals that aggregate many MCP servers or servers that expose a large number of tools. Context window usage stays fixed regardless of how many tools are available through the portal.
 
-### Connect with code mode
+### Connect with Code Mode
 
-To use code mode, append the `?codemode=search_and_execute` query string parameter to your portal URL when [connecting](#connect-to-a-portal) from an MCP client.
+To use Code Mode, append the `?codemode=search_and_execute` query string parameter to your portal URL when [connecting](#connect-to-a-portal) from an MCP client.
 
 For example, if your portal URL is `https://<subdomain>.<domain>/mcp`, connect to:
 
@@ -584,7 +584,7 @@ https://<subdomain>.<domain>/mcp?codemode=search_and_execute
 
 For MCP clients with server configuration files, use the portal URL with the query string parameter:
 
-```json title="MCP client configuration with code mode"
+```json title="MCP client configuration with Code Mode"
 {
 	"mcpServers": {
 		"example-portal": {
@@ -599,19 +599,19 @@ For MCP clients with server configuration files, use the portal URL with the que
 }
 ```
 
-When code mode is active, the portal advertises a single `code` tool to connected MCP clients. The AI agent discovers available tools by inspecting the typed method signatures in the Dynamic Worker environment and composes multiple tool calls into a single code execution.
+When Code Mode is active, the portal advertises a single `code` tool to connected MCP clients. The AI agent discovers available tools by inspecting the typed method signatures in the Dynamic Worker environment and composes multiple tool calls into a single code execution.
 
-For more information on building with code mode, refer to the [code mode SDK reference](/agents/model-context-protocol/protocol/codemode/).
+For more information on building with Code Mode, refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/).
 
-### Turn off code mode
+### Turn off Code Mode
 
-To turn off code mode for a portal:
+To turn off Code Mode for a portal:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
 2. Find the portal you want to configure, then select the three dots > **Edit**.
-3. Under **Basic information**, turn off **Code mode**.
+3. Under **Basic information**, turn off **Code Mode**.
 
 </TabItem> <TabItem label="API">
 
@@ -826,7 +826,7 @@ For MCP clients with server configuration files:
 }
 ```
 
-For more information on the code mode pattern behind `search_and_execute`, refer to the [Code mode SDK reference](/agents/model-context-protocol/protocol/codemode/).
+For more information on the Code Mode pattern behind `search_and_execute`, refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/).
 
 ## Manage portal sessions
 
