@@ -79,4 +79,6 @@ test("routes requests to each Worker", async ({ expect }) => {
 
 </TypeScriptExample>
 
-Refer to our [Test harness guide](/workers/testing/test-harness/) for more details.
+Cloudflare now recommends `createTestHarness()` for integration tests instead of [`unstable_startWorker()`](/workers/testing/unstable_startworker/) or [`unstable_dev()`](/workers/wrangler/api/#unstable_dev). If you need to start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the Cloudflare Vite plugin.
+
+Follow the [Test harness guide](/workers/testing/test-harness/) to write your first test with `createTestHarness()`.
