@@ -50,7 +50,9 @@ Also, as this record is <GlossaryTooltip term="proxy status" link="/dns/proxy-st
 
 Cloudflare limits the number of DNS records you can create. Depending on your plan, this limit is enforced either per zone or per account — not both.
 
-DNS records that other Cloudflare services create on your behalf also count toward your quota.
+DNS records that other Cloudflare services create on your behalf — for example, the `TXT` and `MX` records added by [Email Routing](/email-service/) — also count toward your quota. To avoid disrupting those services, they are enforced against your record limit with a small buffer, so a zone may occasionally hold slightly more records than its limit would otherwise allow.
+
+To create new records yourself through the dashboard or API, your zone must still be within its record limit.
 
 ### Per-zone quota
 

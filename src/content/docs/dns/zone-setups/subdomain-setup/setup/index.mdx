@@ -40,6 +40,10 @@ Subdomain setup is only available for Enterprise accounts. If you only want to c
 
 <Render file="subdomain-setup-matrix" product="dns" />
 
+:::note
+For a **Secondary DNS** parent zone with a **Full setup** child zone: this combination can work if you add the Cloudflare-assigned nameservers for the child zone as `NS` records in your primary nameserver. These `NS` records will transfer into the secondary zone via AXFR and serve proper referrals to the child zone.
+:::
+
 :::caution[Subdomain zones in partial setup are not delegated]
 
 Subdomains using a CNAME setup (partial) represent an exception in the sense that delegation does not apply in this context. As explained in the dedicated [CNAME setup (Partial) section](/dns/zone-setups/partial-setup/), this setup is intended to simply proxy individual subdomains through Cloudflare. For completeness, however, this is listed as an option in this table and the [how-to guide](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) has detailed explanation on how to achieve a subdomain zone using a CNAME setup (partial).
