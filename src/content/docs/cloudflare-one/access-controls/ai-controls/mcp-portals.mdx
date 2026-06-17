@@ -114,7 +114,11 @@ To add an MCP server:
 8. Select **Save and connect server**.
 9. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the admin credential for that MCP server. You can [configure an MCP portal](#create-a-portal) to use this admin credential to make requests.
 
-Cloudflare Access will validate the server connection and fetch a list of tools and prompts. Once the server is successfully connected, the [server status](#server-status) will change to **Ready**. You can now add the MCP server to an [MCP server portal](#create-a-portal).
+Cloudflare Access will validate the server connection and retrieve a list of resources, prompts, and tools. Once the server is successfully connected, the [server status](#server-status) will change to **Ready**. You can now add the MCP server to an [MCP server portal](#create-a-portal).
+
+:::note
+[MCP Apps](https://modelcontextprotocol.io/extensions/apps/overview) — tools that declare a UI resource in their description — will also be available after successfully connecting to an MCP server. A list of MCP clients that support MCP Apps is available in the [Extension Support Matrix](https://modelcontextprotocol.io/extensions/client-matrix).
+:::
 
 ### Server status
 
@@ -921,7 +925,7 @@ MCP server portals have the following known limitations:
 
 ## Policy limitations
 
-MCP servers use a dedicated Access application type (*mcp*) that does not support the following Access policy features when the server is through a portal.
+MCP servers use a dedicated Access application type (*mcp*) that does not support the following Access policy features when the server is authorized through a portal.
 
 - **[Independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa)** — Users will not be prompted to perform MFA through Cloudflare Access when authorizing a server, regardless of whether MFA global enforcement is enabled or whether an MFA policy is assigned to the server.
 - **[Purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/)** — Users will not be prompted to provide a purpose justification when authorizing a server.
