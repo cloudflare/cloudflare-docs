@@ -3,10 +3,10 @@ pcx_content_type: configuration
 title: Version overrides
 description: Send requests to a specific version of your Worker in a gradual deployment using version overrides.
 sidebar:
-  order: 3
+  order: 4
 ---
 
-You can use version overrides to send a request to a specific version of your Worker in your [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/).
+You can use version overrides to send a request to a specific version of your Worker in your [gradual deployment](/workers/versions-and-deployments/gradual-deployments/).
 
 To specify a version override in your request, set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
 
@@ -65,9 +65,9 @@ If you forward the original request object, the override header carries through 
 ```js
 // The override header from the inbound request is forwarded to the downstream Worker.
 export default {
-  async fetch(request, env) {
-    return env.MY_SERVICE.fetch(request);
-  },
+	async fetch(request, env) {
+		return env.MY_SERVICE.fetch(request);
+	},
 };
 ```
 
@@ -76,15 +76,15 @@ Alternatively, you can set an override header explicitly:
 ```js
 // Replace the version ID with the target version from `wrangler versions list`.
 export default {
-  async fetch(request, env) {
-    const response = await env.MY_SERVICE.fetch("https://example.com/", {
-      headers: {
-        "Cloudflare-Workers-Version-Overrides":
-          'my-downstream-worker="dc8dcd28-271b-4367-9840-6c244f84cb40"',
-      },
-    });
-    return response;
-  },
+	async fetch(request, env) {
+		const response = await env.MY_SERVICE.fetch("https://example.com/", {
+			headers: {
+				"Cloudflare-Workers-Version-Overrides":
+					'my-downstream-worker="dc8dcd28-271b-4367-9840-6c244f84cb40"',
+			},
+		});
+		return response;
+	},
 };
 ```
 
@@ -94,6 +94,6 @@ Version overrides only apply to `fetch()`-based service binding calls. There is 
 
 ## Related resources
 
-- [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works, including version affinity and observability.
+- [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works, including version affinity and observability.
 - [Service bindings](/workers/runtime-apis/bindings/service-bindings/) — How Workers communicate with each other.
 - [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) — Access version ID and tag from within your Worker.
