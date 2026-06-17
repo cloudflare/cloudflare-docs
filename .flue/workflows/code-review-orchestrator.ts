@@ -14,6 +14,7 @@
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import { createAgent } from "@flue/runtime";
+import reconcileSkill from "../.agents/skills/reconcile-code-review/SKILL.md" with { type: "skill" };
 import {
 	getDefaultWorkspace,
 	getShellSandbox,
@@ -39,7 +40,7 @@ import type {
 	StyleGuideFinding,
 	StyleGuideResult,
 } from "../lib/style-guide-results";
-import { writeDiffToR2 } from "../lib/code-review-diff";
+import { writeDiffToWorkspace } from "../lib/code-review-diff";
 import {
 	BOT_COMMENT_MARKER,
 	type DiffMode,
@@ -134,29 +135,10 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
-	// Write reconciler skill from R2 into workspace at request time
-	const reconcileSkillObj = await bucket.get(
-		".agents/skills/reconcile-code-review/SKILL.md",
-	);
-	if (!reconcileSkillObj) {
-		throw new Error(
-			"Missing .agents/skills/reconcile-code-review/SKILL.md in DOCS_FLUE_BUCKET. " +
-				"For local dev, run `pnpm run flue:sync-agents:local` before invoking the workflow.",
-		);
-	}
-	if (reconcileSkillObj) {
-		await workspace.mkdir("/.agents/skills/reconcile-code-review", {
-			recursive: true,
-		});
-		await workspace.writeFile(
-			"/.agents/skills/reconcile-code-review/SKILL.md",
-			await reconcileSkillObj.text(),
-		);
-	}
-
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+		skills: [reconcileSkill],
 	}));
 	const harness = await init(agent);
 
@@ -290,18 +272,16 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	// 	action: "context_fetched",
 	// });
 
-	// Run-scoped context directory in R2 so concurrent reviews for the same PR
-	// cannot overwrite each other's manifest, patches, or comments.
-	// Written to R2 (not the local workspace) so specialist Durable Objects,
-	// which run in separate isolates, can read the files into their own workspace.
+	// Run-scoped diff directory in the shared Workspace. The style-guide review
+	// sessions run in this same Durable Object, so the diff is staged directly
+	// in the Workspace (read by the `code` tool) — no R2 round-trip. prDir stays
+	// the R2 key prefix for the cross-run review-state objects.
 	const prDir = `diffs/pr-${input.number}`;
 	const diffDir = `${prDir}/runs/${runId}`;
-	const commentsPath = `${diffDir}/comments.json`;
 
-	// ── 2. Write diff and comments to R2, and post placeholder comment ────────
+	// ── 2. Stage the diff in the Workspace, and post the placeholder comment ──
 	await Promise.all([
-		writeDiffToR2(bucket, diffDir, allFiles, pr),
-		bucket.put(commentsPath, JSON.stringify(allComments, null, 2)),
+		writeDiffToWorkspace(workspace, diffDir, allFiles, pr),
 		// In comment mode, immediately post/update with a "review in progress"
 		// message so the reviewer sees something right away.
 		reviewMode === "comment"
@@ -318,16 +298,6 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 				)
 			: Promise.resolve(),
 	]);
-
-	// console.log({
-	// 	message: `Code review context written to R2: PR #${input.number}`,
-	// 	event: "code_review_orchestrator",
-	// 	number: input.number,
-	// 	diffDir,
-	// 	commentsPath,
-	// 	runId,
-	// 	action: "r2_written",
-	// });
 
 	let styleGuideResult: StyleGuideResult;
 	try {
@@ -349,11 +319,15 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		styleGuideResult = await runStyleGuideReviewInProcess({
 			init,
 			workspace,
-			bucket,
 			loader,
 			prNumber: input.number,
+			pullRequest: {
+				number: pr.number,
+				title: pr.title,
+				base: pr.base.ref,
+				head: pr.head.ref,
+			},
 			diffDir,
-			commentsPath,
 			files: styleGuideFiles,
 			runId,
 			concurrency: STYLE_GUIDE_CONCURRENCY,

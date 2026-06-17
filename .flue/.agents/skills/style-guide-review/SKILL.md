@@ -18,14 +18,22 @@ Do not add comments to code tool calls. Write minimal code with no inline commen
 
 ## Data Files
 
+There are two distinct sources, each read with a different tool.
+
+**Diff data** — lives in the workspace; read it with the `code` tool (`state.readFile`):
+
 - PR metadata: `args.diffDir + "/pr.json"`
 - Diff manifest: `args.diffDir + "/manifest.json"`
-- Style guide manifest: `.agents/reference/style-guide/manifest.json`
-- Style guide references: files listed by the style guide manifest
+- Patch files: the `patch_key` values listed in the diff manifest, under `args.diffDir`
+
+**Style guide references** — packaged skill resources; read them with the `read` tool. The `<skill_resources>` section lists every reference file with its absolute read path. To read one, find its entry there and read the absolute path shown after `→ read`:
+
+- Reference manifest: `reference/manifest.json`
+- Reference rule files: the `file` values listed in the reference manifest
 
 ## File Selection
 
-- Read `pr.json` and `manifest.json`.
+- Read `pr.json` and `manifest.json` from the workspace with the `code` tool.
 - If `args.filename` is set, review only that file and skip all other file selection.
 - Select up to 20 files.
 - Only select `src/content/docs/**/*.mdx`, `src/content/partials/**/*.mdx`, and `src/content/changelog/**/*.mdx`.
@@ -35,20 +43,23 @@ Do not add comments to code tool calls. Write minimal code with no inline commen
 
 ## Reference Selection
 
-Read `.agents/reference/style-guide/manifest.json` first. Use it as the source of truth for reference file names.
+Reference files are packaged skill resources, not workspace files. Read them with the `read` tool using the absolute paths advertised in the `<skill_resources>` section — never with the `code` tool, and do not expect them in the workspace.
+
+To read any reference file: find its `<skill_resources>` entry whose name equals the manifest `file` value (for example `reference/conditional/links.md`) and read the absolute path shown after `→ read`.
+
+Read `reference/manifest.json` first. Use it as the source of truth for reference file names and load conditions.
 
 For each selected patch:
 
 - Always read every manifest entry with `load: "always"`.
-- Read `conditional/links.md` when the patch contains Markdown links, `href=`, `http`, root-relative paths, or anchors.
-- Read `conditional/code-blocks.md` when the patch contains fenced code blocks.
-- Read `conditional/imports.md` when the patch contains `import` statements or JSX component tags.
-- Read `conditional/frontmatter.md` when the patch changes frontmatter fields at the top of the file.
+- Read `reference/conditional/links.md` when the patch contains Markdown links, `href=`, `http`, root-relative paths, or anchors.
+- Read `reference/conditional/code-blocks.md` when the patch contains fenced code blocks.
+- Read `reference/conditional/imports.md` when the patch contains `import` statements or JSX component tags.
+- Read `reference/conditional/frontmatter.md` when the patch changes frontmatter fields at the top of the file.
 - Read a component reference only when the patch contains that component tag or imports that component name.
 - For component references, use the manifest `componentNames` field to match component names.
 - Do not read all component reference files by default.
 - If a component reference file does not exist in the manifest, skip it.
-- Do not rely on any root-level `.agents/references/*` files. The sandbox only has access to files under `.agents/reference/style-guide/`.
 
 ## Patch Parsing
 

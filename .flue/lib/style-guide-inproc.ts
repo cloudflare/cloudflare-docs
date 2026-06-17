@@ -22,9 +22,9 @@
  */
 import type { FlueContext } from "@flue/runtime";
 import { createAgent } from "@flue/runtime";
+import styleGuideSkill from "../.agents/skills/style-guide-review/SKILL.md" with { type: "skill" };
 import { getShellSandbox } from "../connectors/cloudflare-shell";
 import type { getDefaultWorkspace } from "../connectors/cloudflare-shell";
-import { hydrateStyleGuideWorkspace } from "./style-guide-hydration";
 import {
 	assignFindingIds,
 	StyleGuideResultFromModelSchema,
@@ -32,6 +32,14 @@ import {
 	type StyleGuideResult,
 } from "./style-guide-results";
 import type { getPullRequestFiles } from "./github";
+
+/** PR metadata passed to the style-guide skill as `args.pullRequest`. */
+export interface StyleGuidePullRequest {
+	number: number;
+	title: string;
+	base: string;
+	head: string;
+}
 
 // Only review docs/partials/changelog MDX, capped before fan-out.
 export const STYLE_GUIDE_REVIEWABLE_PATH_RE =
@@ -124,17 +132,19 @@ export function mergeStyleGuideResults(
 export interface RunStyleGuideReviewInProcessOptions {
 	init: FlueContext["init"];
 	/**
-	 * The shared DO workspace. The orchestrator already creates this via
-	 * `getDefaultWorkspace()` and initializes its own default harness over it;
-	 * we reuse the same workspace and init a separate named harness so the two
-	 * do not collide on the single per-context default harness name.
+	 * The shared DO workspace. The orchestrator creates this via
+	 * `getDefaultWorkspace()`, writes the PR diff into it, and initializes its
+	 * own default harness over it; we reuse the same workspace and init a
+	 * separate named harness so the two do not collide on the single
+	 * per-context default harness name.
 	 */
 	workspace: ReturnType<typeof getDefaultWorkspace>;
-	bucket: R2Bucket;
 	loader: Parameters<typeof getShellSandbox>[0]["loader"];
 	prNumber: number;
+	/** PR metadata for the skill's `args.pullRequest`. */
+	pullRequest: StyleGuidePullRequest;
+	/** Run-scoped workspace directory holding the diff (already written). */
 	diffDir: string;
-	commentsPath: string;
 	/** Reviewable files selected by `selectStyleGuideFiles`. */
 	files: PullRequestFiles;
 	runId: string;
@@ -142,8 +152,10 @@ export interface RunStyleGuideReviewInProcessOptions {
 }
 
 /**
- * Hydrate one shared workspace and run the style-guide-review skill once per
- * file across concurrent sessions. Returns a single merged result.
+ * Run the style-guide-review skill once per file across concurrent sessions
+ * over the shared workspace (the diff is already staged there by the
+ * orchestrator). The skill and its reference rules are bundled in the build
+ * and registered on the agent; references are read as packaged resources.
  *
  * Replaces `dispatchStyleGuideReview` fan-out across child workflows.
  */
@@ -153,28 +165,18 @@ export async function runStyleGuideReviewInProcess(
 	const {
 		init,
 		workspace,
-		bucket,
 		loader,
 		prNumber,
+		pullRequest,
 		diffDir,
-		commentsPath,
 		runId,
 		concurrency = STYLE_GUIDE_CONCURRENCY,
 	} = options;
 
-	// ── 1. Hydrate the shared workspace once (full mode loads every patch,
-	//        reference file, and the skill). ──────────────────────────────────
-	const hydration = await hydrateStyleGuideWorkspace(bucket, workspace, {
-		diffDir,
-		commentsPath,
-		prNumber,
-	});
-
 	// The per-file review list is the orchestrator's selection (additions > 0,
-	// has a patch, capped, largest-first) — not the full manifest. Full-mode
-	// hydration only needs to populate the workspace and yield PR metadata.
+	// has a patch, capped, largest-first).
 	const reviewFilenames = options.files.map((f) => f.filename);
-	if (!hydration || reviewFilenames.length === 0) {
+	if (reviewFilenames.length === 0) {
 		return {
 			findings: [],
 			summary: "No reviewable documentation files changed.",
@@ -182,20 +184,21 @@ export async function runStyleGuideReviewInProcess(
 		};
 	}
 
-	const { pullRequest } = hydration;
-
-	// ── 2. Init a separate named harness over the shared workspace. The
-	//        orchestrator owns the default harness for reconciliation, so this
-	//        fan-out uses a distinct name to satisfy the once-per-name rule. ───
+	// ── Init a separate named harness over the shared workspace. The
+	//    orchestrator owns the default harness for reconciliation, so this
+	//    fan-out uses a distinct name to satisfy the once-per-name rule.
+	//    The skill is registered here; its reference rules ship as packaged
+	//    resources read via the `read` tool. ────────────────────────────────
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
 		compaction: { reserveTokens: 64_000 },
+		skills: [styleGuideSkill],
 	}));
 	const harness = await init(agent, { name: "style-guide" });
 
-	// ── 3. One detached session per file, fired concurrently. Each file's
-	//        failure is caught and degraded so it cannot abort the others. ─────
+	// ── One detached session per file, fired concurrently. Each file's
+	//    failure is caught and degraded so it cannot abort the others. ───────
 	const tasks = reviewFilenames.map(
 		(filename, index) => async (): Promise<StyleGuideResult> => {
 			try {
@@ -204,7 +207,6 @@ export async function runStyleGuideReviewInProcess(
 					sessionName: `sg:${index}`,
 					pullRequest,
 					diffDir,
-					commentsPath,
 					filename,
 				});
 			} catch (err) {
@@ -244,14 +246,12 @@ async function reviewSingleFile({
 	sessionName,
 	pullRequest,
 	diffDir,
-	commentsPath,
 	filename,
 }: {
 	harness: Awaited<ReturnType<FlueContext["init"]>>;
 	sessionName: string;
-	pullRequest: { number: number; title: string; base: string; head: string };
+	pullRequest: StyleGuidePullRequest;
 	diffDir: string;
-	commentsPath: string;
 	filename: string;
 }): Promise<StyleGuideResult> {
 	const session = await harness.session(sessionName);
@@ -263,7 +263,6 @@ async function reviewSingleFile({
 		args: {
 			pullRequest,
 			diffDir,
-			commentsPath,
 			filename,
 		},
 	});

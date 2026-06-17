@@ -32,10 +32,7 @@
 		"flue:dev": "pnpm --dir .flue exec flue dev --env .env.local",
 		"flue:dev:wrangler": "pnpm --dir .flue exec flue build && cp -f .flue/.env.local .flue/dist/cloudflare_docs_flue/.dev.vars && pnpm --dir .flue exec wrangler dev --config dist/cloudflare_docs_flue/wrangler.json --remote",
 		"flue:build": "pnpm --dir .flue exec flue build",
-		"flue:deploy": "pnpm run flue:build && pnpm run flue:sync-agents && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json --secrets-file .env",
-		"flue:sync-agents": "pnpm run flue:sync-agents:remote",
-		"flue:sync-agents:local": "tsx .flue/bin/sync-agents.ts --local",
-		"flue:sync-agents:remote": "tsx .flue/bin/sync-agents.ts",
+		"flue:deploy": "pnpm run flue:build && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json --secrets-file .env",
 		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
 		"lint": "eslint",
 		"prepare": "husky"

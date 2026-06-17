@@ -15,6 +15,7 @@
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import { createAgent } from "@flue/runtime";
+import dependabotSkill from "../.agents/skills/dependabot-review/SKILL.md" with { type: "skill" };
 import {
 	getDefaultWorkspace,
 	getShellSandbox,
@@ -53,7 +54,6 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const typedEnv = env as Record<string, unknown>;
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
-	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
 	const loader = typedEnv.LOADER as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
@@ -112,32 +112,15 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		action: "started",
 	});
 
-	// ── 2. Hydrate the skill before init() ────────────────────────────────────
+	// ── 2. Create agent with GitHub repo tools ────────────────────────────────
 	const workspace = getDefaultWorkspace();
-	const skillObj = await bucket.get(
-		".agents/skills/dependabot-review/SKILL.md",
-	);
-	if (!skillObj) {
-		throw new Error(
-			"Missing .agents/skills/dependabot-review/SKILL.md in DOCS_FLUE_BUCKET. " +
-				"Run `pnpm run flue:sync-agents:local` before invoking the workflow.",
-		);
-	}
-	await workspace.mkdir("/.agents/skills/dependabot-review", {
-		recursive: true,
-	});
-	await workspace.writeFile(
-		"/.agents/skills/dependabot-review/SKILL.md",
-		await skillObj.text(),
-	);
-
-	// ── 3. Create agent with GitHub repo tools ────────────────────────────────
 	const repoTools = makeDependabotReviewTools(token, input.number);
 
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
 		tools: repoTools,
+		skills: [dependabotSkill],
 	}));
 	const harness = await init(agent);
 	const session = await harness.session(
