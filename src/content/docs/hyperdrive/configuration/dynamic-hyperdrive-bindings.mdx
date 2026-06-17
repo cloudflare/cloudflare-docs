@@ -1,82 +1,43 @@
 ---
 title: Dynamic Hyperdrive Bindings
-pcx_content_type: how-to
-description: Learn how to dynamically provision and resolve database connections at runtime using Dynamic Hyperdrive bindings and Workers for Platforms.
+pcx_content_type: configuration
 sidebar:
-  order: 3
-products:
-  - hyperdrive
-  - workers
+  order: 5
 ---
 
-import { Details } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 Dynamic Hyperdrive bindings allow SaaS platforms to provision and resolve database connections at runtime for thousands of unique tenant databases, eliminating the static configuration limits inherent to traditional bindings.
 
-Unlike static bindings, which require a pre-declared resource ID at deploy time, a Dynamic Hyperdrive binding is explicitly created as part of a [Binding Group](/cloudflare-for-platforms/workers-for-platforms/configuration/binding-groups/) and must be configured dynamically before use. Your platform provisions the binding during customer onboarding via `.create()`, and resolves it per-request at runtime via `.get()`. This model decouples your tenant database infrastructure from static Workers configuration, enabling true multi-tenant database connectivity at scale.
-
-## How it works
-
-Dynamic Hyperdrive bindings behave as explicitly created resources that require upstream configuration before they can be consumed.
-
-1. **Dynamic instantiation** — During tenant onboarding, your platform calls `.create()` with the tenant-specific database parameters (connection string, target region, caching settings, connection limits, and optional mTLS certificates). This generates a binding scoped to that tenant.
-2. **Request-scoped resolution** — At runtime, the platform's dynamic dispatch Worker calls `.get()` with the tenant's parameters. The returned object is an `RpcTarget` that exists only for the duration of the current request. It is not a persistent Worker entrypoint and requires no explicit cleanup or revocation.
-3. **Request isolation** — Each invocation receives its own resolved binding instance. Hyperdrive manages connection pooling and query routing independently per tenant, ensuring that one tenant's traffic does not interfere with another's.
+Unlike static bindings, which require a pre-declared resource ID at deploy time, a Dynamic Hyperdrive binding can be resolved dynamically per-request at runtime. This model decouples your tenant database infrastructure from static Workers configuration, enabling true multi-tenant database connectivity at scale.
 
 Because the binding is resolved dynamically, there are no static limits on the total number of unique Hyperdrive configurations your platform can create. Configuration capacity is a soft limit for this dynamic execution plane.
 
-![Dynamic Hyperdrive bindings architecture showing a tenant request flowing through a dynamic dispatch Worker, which loads a tenant-specific user Worker and intercepts outbound database connections via an OutboundInterceptor that resolves a request-scoped Hyperdrive pool.](~/assets/images/hyperdrive/configuration/dynamic-hyperdrive-bindings.svg)
+The following example demonstrates an outbound interception pattern that intercepts database connections, resolves tenant-specific parameters from KV, and dynamically configures the Hyperdrive binding for each request.
 
-## Implementation
-
-The following example demonstrates an `OutboundInterceptor` that intercepts database connections, resolves tenant-specific parameters from KV, and dynamically fetches the correct Hyperdrive binding for each request.
-
-```typescript
-export class OutboundInterceptor extends WorkerEntrypoint {
-  async connect(host) {
-    if (host === this.ctx.props.connectionString) {
-      // .get() returns an RpcTarget that lives for this request only,
-      // not a stored WorkerEntrypoint. Nothing to persist or revoke.
-      let hyperdriveStub = this.env.DYNAMIC_HYPERDRIVE.get({
-        connectionString: this.ctx.props.tenant.connectionString,
-        targetRegion: this.ctx.props.tenant.cloudRegion,
-        cachingEnabled: this.ctx.props.tenant.cachingEnabled,
-        maxConnections: this.ctx.props.tenant.maxConnections,
-        mtlsCertificateId: this.ctx.props.tenant.customCertId
-      });
-      return hyperdriveStub.connect(host); // calls hyperdrive connect
-    }
-    return connect(host); // general tcp connect
-  }
+<TypeScriptExample>
+```ts
+interface Env {
+  KV: KVNamespace;
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    let tenant = await env.KV.get("tenant-id");
-    const worker = env.LOADER.load({
-      compatibilityDate: "2026-06-04",
-      mainModule: "src/index.js",
-      modules: { // what a real user writes
-        "src/index.js": `
-import { Client } from "pg";
-export default {
-  async fetch(request, env) {
-    const client = new Client({ connectionString: env.CONNECTION_STRING });
-    await client.connect();
-    const result = await client.query("SELECT * FROM pg_tables");
-    return Response.json({ success: true, result: result.rows });
-  },
-};`,
-      },
-      env: { CONNECTION_STRING: connectionString },
-      globalOutbound: ctx.exports.OutboundInterceptor({
-        props: { tenant },
-      }),
-    });
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const tenantId = request.headers.get("x-tenant-id") || "default";
+    
+    const tenantData = await env.KV.get(tenantId);
+    if (!tenantData) {
+      return new Response("Tenant configuration not found", { status: 404 });
+    }
+    
+    const tenant = JSON.parse(tenantData);
 
-    return worker.getEntrypoint().fetch(request);
+    return new Response(`Configured dynamic connection`, {
+      headers: { "x-connection-string": tenant.connectionString }
+    });
   },
 };
+
 ```
 
 ## FAQ
