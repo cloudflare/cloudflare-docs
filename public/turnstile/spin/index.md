@@ -16,7 +16,7 @@ Turns the prompt "set up Turnstile" into a working end-to-end integration: a wid
 
 You are the agent. Run the wizard below by invoking the scripts under `scripts/` and branching on their JSON output. The scripts hold the deterministic logic (API calls, retry/error handling); your job is orchestration, codebase reading, confirmation, and the frontend edits.
 
-Canonical instructions live at [`developers.cloudflare.com/turnstile/spin`](https://developers.cloudflare.com/turnstile/spin/). If the docs page and this file disagree, trust the docs page.
+Canonical instructions live at [`developers.cloudflare.com/turnstile/spin`](/turnstile/spin/). If the docs page and this file disagree, trust the docs page.
 
 ## When to load this skill
 
@@ -118,7 +118,7 @@ form.addEventListener("submit", async (e) => {
 
 If the existing handler was a stub, Spin leaves it a stub gated on success. The user can replace the stub later; that's not Spin's job.
 
-## Migrating from another CAPTCHA
+## Migrate from another CAPTCHA
 
 During the Step 6 codebase scan, also look for existing reCAPTCHA or hCaptcha. If found, switch Step 7 to a migration plan.
 
@@ -137,7 +137,7 @@ Substitution:
 Edge cases to surface to the user:
 
 - **reCAPTCHA v3 score thresholds.** Turnstile has no score. Tell the user explicitly that migrated code will reject on `success === false`.
-- **reCAPTCHA Enterprise.** Don't auto-migrate. Point at [developers.cloudflare.com/turnstile/migration/recaptcha/](https://developers.cloudflare.com/turnstile/migration/recaptcha/).
+- **reCAPTCHA Enterprise.** Do not auto-migrate. Point at [the Cloudflare migration guide for reCAPTCHA](/turnstile/migration/recaptcha/).
 - **Custom `action=` values.** Preserve any custom action the user passed to `grecaptcha.execute` as `data-action` on the widget. Use `turnstile-spin-v1` only when no custom action exists.
 
 ## Edge cases
@@ -146,7 +146,7 @@ Edge cases to surface to the user:
 | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `wrangler` not installed                       | Install path: `npm install --save-dev wrangler` (Node project) or `npm install -g wrangler` (other)                                                                                                                                                                                     |
 | Multiple Cloudflare accounts                   | `scripts/auth-probe.sh` returns all accounts; ask the user to choose, export `CLOUDFLARE_ACCOUNT_ID`                                                                                                                                                                                    |
-| Cloudflare Pages project                       | Deploy the managed Worker anyway, OR suggest the [Pages Plugin](https://developers.cloudflare.com/pages/functions/plugins/turnstile/)                                                                                                                                                   |
+| Cloudflare Pages project                       | Deploy the managed Worker anyway, OR suggest the [Pages Plugin](/pages/functions/plugins/turnstile/)                                                                                                                                                                                    |
 | `EXPECTED_HOSTNAME` mismatch                   | Update widget domains via PUT, not PATCH (PATCH returns `10405 Method not allowed`): `curl -X PUT .../widgets/$SITEKEY -d '{"name":"...","mode":"managed","domains":[...]}'`                                                                                                            |
 | Worker name conflict                           | `worker-deploy.sh` retries automatically with a hash suffix                                                                                                                                                                                                                             |
 | Token expired mid-flow                         | Stop, re-run `scripts/auth-probe.sh`, prompt for fresh credentials                                                                                                                                                                                                                      |
