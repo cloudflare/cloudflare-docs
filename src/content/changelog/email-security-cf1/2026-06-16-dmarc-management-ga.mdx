@@ -1,19 +1,25 @@
 ---
 title: DMARC Management is now generally available
 description: Cloudflare DMARC Management exits beta with redesigned reporting, email authentication record analysis, SPF lookup audits, and source investigation — free for every Cloudflare customer.
-date: 2026-06-16T00:00:00Z
+date: 2026-06-16
 ---
 
-**Cloudflare DMARC Management is now generally available**, with a redesigned experience built to help you reach full DMARC enforcement as easily as possible. DMARC Management remains free for every Cloudflare customer with their domain's DNS on Cloudflare.
+![DMARC Management dashboard](https://cf-assets.www.cloudflare.com/zkvhlag99gkb/21kY8sOalAKFMFwjyzCard/9f59d1c68b939c8937dffb46abf08078/image6.png)
+
+**[Cloudflare DMARC Management](https://developers.cloudflare.com/dmarc-management/) is now generally available**, with a redesigned experience built to help you reach full DMARC enforcement as easily as possible. DMARC Management remains free for every Cloudflare customer with their domain's DNS on Cloudflare.
 
 This release includes several major improvements:
 
 - **Deeper report visibility with source investigation**: DMARC reports now surface the source IP address alongside the sending service. You can open any IP address directly in the Investigate tab, which surfaces Cloudflare threat intelligence including reputation data, geolocation, ASN details, and known associations with malicious activity.
 
+  ![Source investigation in DMARC reports](https://cf-assets.www.cloudflare.com/zkvhlag99gkb/21kY8sOalAKFMFwjyzCard/9f59d1c68b939c8937dffb46abf08078/image6.png)
+
 - **Email authentication record status**: See the status of every email authentication record (DMARC, DKIM, SPF, and BIMI) in a single view. Each record type gets a clear pass, warning, or fail status based on automated analysis, with actionable recommendations written in plain language.
 
-- **SPF lookup audit**: Audit your SPF record to see exactly how many DNS lookups it incurs against the 10-lookup limit imposed by RFC 7208. Drill into every mechanism to identify where to consolidate or flatten your record.
+  ![Email authentication record status cards](https://cf-assets.www.cloudflare.com/zkvhlag99gkb/21kY8sOalAKFMFwjyzCard/9f59d1c68b939c8937dffb46abf08078/image6.png)
 
-To get started, navigate to your domain in the Cloudflare dashboard and go to **Email > DMARC Management**. Follow the setup wizard to start receiving DMARC reports, review your record analysis, and work toward `p=reject` at your own pace.
+- **[SPF](https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/#spf) lookup audit**: Audit your SPF record to see exactly how many DNS lookups it incurs against the 10-lookup limit imposed by RFC 7208. Drill into every mechanism to identify where to consolidate or flatten your record.
+
+To get started, go to your domain in the Cloudflare dashboard and go to **[Email > DMARC Management](https://dash.cloudflare.com/?to=/:account/:zone/email/dmarc-management)**. Follow the setup wizard to start receiving DMARC reports, review your record analysis, and work toward `p=reject` at your own pace.
 
 For more details, read the [full blog post](https://blog.cloudflare.com/dmarc-management-ga/).
