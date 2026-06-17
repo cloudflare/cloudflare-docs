@@ -61,7 +61,7 @@ If you do not see the **Set up with Spin** button in your dashboard, or you pref
 	```txt title="Spin prompt"
 	Set up Cloudflare Turnstile in this project end to end. Plan insertion points, create the widget, deploy the managed backend Worker, write the frontend code, and validate the integration.
 
-	The full Turnstile Spin skill is at https://developers.cloudflare.com/turnstile/spin/index.md. Fetch it now if you do not already have it loaded.
+	The full Turnstile Spin skill is at https://developers.cloudflare.com/turnstile/spin/prompt.md. Fetch it now if you do not already have it loaded.
 
 	Domains: <DOMAINS>
 	Insertion preference: <every form | only specific form>
@@ -80,17 +80,17 @@ If you would rather install the skill locally first so the agent has it on disk:
 ```sh title="One-line install per agent"
 # Claude Code
 mkdir -p .claude/skills/turnstile-spin && \
-  curl -sSL https://developers.cloudflare.com/turnstile/spin/index.md \
+  curl -sSL https://developers.cloudflare.com/turnstile/spin/prompt.md \
   -o .claude/skills/turnstile-spin/SKILL.md
 
 # Cursor
 mkdir -p .cursor/rules && \
-  curl -sSL https://developers.cloudflare.com/turnstile/spin/index.md \
+  curl -sSL https://developers.cloudflare.com/turnstile/spin/prompt.md \
   -o .cursor/rules/turnstile-spin.md
 
 # OpenCode
 mkdir -p .opencode/skills/turnstile-spin && \
-  curl -sSL https://developers.cloudflare.com/turnstile/spin/index.md \
+  curl -sSL https://developers.cloudflare.com/turnstile/spin/prompt.md \
   -o .opencode/skills/turnstile-spin/SKILL.md
 ```
 
