@@ -1,0 +1,177 @@
+---
+title: 2026 deprecation migration guide
+pcx_content_type: how-to
+sidebar:
+  order: 99
+description: Migrate away from Sandbox SDK features deprecated in June 2026.
+products:
+  - sandbox
+---
+
+import { WranglerConfig } from "~/components";
+
+This guide walks through migrating away from the Sandbox SDK features deprecated in June 2026. These features will no longer be present in future Sandbox SDK versions after July 9, 2026.
+
+For the announcement and rationale, refer to the [deprecation changelog entry](/changelog/sandbox/2026-06-09-deprecating-sandbox-sdk-features/).
+
+## Before you migrate
+
+Update to the latest Sandbox SDK release before changing transport or session configuration. If your project uses a version earlier than `0.9.1`, deploy the newer `@cloudflare/sandbox` package and container image before switching to RPC transport.
+
+Search your codebase for deprecated configuration and APIs:
+
+```sh
+rg 'SANDBOX_TRANSPORT|transport:|exposePort\(|enableDefaultSession|execStream\(|readFileStream|writeFileStream'
+```
+
+Also review any code that uses stream-specific file helpers or depends on shell state carrying across separate `exec()` calls.
+
+## HTTP and WebSocket transports
+
+HTTP and WebSocket transports will no longer be present in Sandbox SDK versions released after July 9, 2026. Switch to the RPC transport before that date.
+
+To configure RPC transport for every sandbox in your Worker, set `SANDBOX_TRANSPORT` in your Worker's configuration:
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_TRANSPORT": "rpc"
+	}
+}
+```
+</WranglerConfig>
+
+To configure RPC transport for a specific sandbox, pass `transport: "rpc"` to `getSandbox()`:
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "user-123", {
+	transport: "rpc",
+});
+```
+
+For more information, refer to [Transport modes](/sandbox/configuration/transport/).
+
+## Desktop
+
+The desktop feature was removed in `0.10.2`. If your application used Sandbox SDK desktop APIs for browser automation, move that browser automation to [Cloudflare Browser Run](/browser-run/).
+
+Keep Sandbox SDK for isolated command execution, file operations, and runtime workflows that do not require a full remote browser environment.
+
+## Expose ports
+
+Replace `exposePort()` with the tunnels API for public URLs. The tunnels API requires RPC transport.
+
+Use quick tunnels for development, demos, and short-lived URLs. Use named tunnels for production traffic, webhook receivers, OAuth callbacks, and stable hostnames on a zone you control.
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox", {
+	transport: "rpc",
+});
+
+const server = await sandbox.startProcess("python -m http.server 8080");
+await server.waitForPort(8080);
+
+const tunnel = await sandbox.tunnels.get(8080);
+return Response.json({ url: tunnel.url });
+```
+
+If your `exposePort()` flow used `proxyToSandbox()` to inject authentication or rewrite responses, account for that behavior before moving the public URL to a tunnel.
+
+For more information, refer to [Tunnels](/sandbox/api/tunnels/) and [Expose services](/sandbox/guides/expose-services/).
+
+## Default sessions
+
+Set `enableDefaultSession: false` on `getSandbox()`. Operations without an explicit session will then run in isolation and will not inherit shell state from earlier calls.
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "user-123", {
+	enableDefaultSession: false,
+	transport: "rpc",
+});
+```
+
+If your code expects commands like `cd /workspace/app` to affect later `exec()` calls, create an explicit session and run related commands through that session:
+
+```ts
+const buildSession = await sandbox.createSession({
+	id: "build",
+	cwd: "/workspace/app",
+});
+
+await buildSession.exec("npm install");
+await buildSession.exec("npm test");
+```
+
+For one-off commands, pass `cwd` or `env` directly to `exec()` instead of relying on persisted shell state:
+
+```ts
+await sandbox.exec("npm test", {
+	cwd: "/workspace/app",
+	env: {
+		NODE_ENV: "test",
+	},
+});
+```
+
+For more information, refer to [Sandbox options](/sandbox/configuration/sandbox-options/#enabledefaultsession) and [Sessions](/sandbox/api/sessions/).
+
+## Streaming APIs
+
+The Sandbox SDK is consolidating separate streaming APIs into the base `exec()`, `readFile()`, and `writeFile()` methods. Audit code that depends on stream-specific helpers and move to the base APIs where they support streaming behavior.
+
+For command output, use `exec()` with streaming callbacks:
+
+```ts
+await sandbox.exec("npm install", {
+	stream: true,
+	onOutput: (stream, data) => {
+		console.log(`[${stream}] ${data}`);
+	},
+});
+```
+
+For large or binary files, use the base file APIs with RPC transport. Pass a `ReadableStream` to `writeFile()`, or read a file as a stream with `encoding: "none"`:
+
+```ts
+const request = await fetch("https://example.com/archive.tar.gz");
+
+if (!request.body) {
+	throw new Error("Expected archive response body");
+}
+
+await sandbox.writeFile("/workspace/archive.tar.gz", request.body);
+
+const file = await sandbox.readFile("/workspace/archive.tar.gz", {
+	encoding: "none",
+});
+
+return new Response(file.content, {
+	headers: { "Content-Type": file.mimeType },
+});
+```
+
+For more information, refer to [Commands](/sandbox/api/commands/) and [Files](/sandbox/api/files/).
+
+## Verify the migration
+
+Use this checklist before upgrading to a Sandbox SDK version released after July 9, 2026:
+
+- RPC transport is configured with `SANDBOX_TRANSPORT=rpc` or `transport: "rpc"`.
+- No `websocket` or `http` transport configuration remains.
+- No `exposePort()` usage remains in the migrated path.
+- `enableDefaultSession` is set to `false`.
+- Stateful command workflows use `sandbox.createSession()`.
+- One-off commands pass `cwd` and `env` directly.
+- Streaming file and command code uses the base APIs.
+- Your Worker has been deployed and smoke-tested.
+
+## Agent skill
+
+An agent skill is available to assist with the migration: [SKILL.md](/sandbox/guides/2026-deprecation/SKILL.md).

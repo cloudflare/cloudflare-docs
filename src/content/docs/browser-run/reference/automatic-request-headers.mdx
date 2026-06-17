@@ -21,7 +21,7 @@ The default User-Agent depends on how you access Browser Run:
 | [CDP](/browser-run/cdp/) ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/)) | The default User-Agent of the underlying Chrome version                                                           | Yes, via Puppeteer/Playwright configuration |
 
 :::note
-Because the User-Agent is configurable for most methods and the Chrome version may change as Browser Run updates its underlying browser engine, destination servers should use the non-configurable headers below to identify Browser Run requests rather than relying on the User-Agent string.
+The User-Agent header is not a reliable way to identify Browser Run requests. It is configurable for most Browser Run methods, changes when the underlying Chrome version updates, and any HTTP client can send any User-Agent string. Destination servers should use the [non-configurable headers](#non-configurable-headers) and [Web Bot Auth](#about-web-bot-auth) signatures below, which provide cryptographic proof that a request originated from Cloudflare Browser Run.
 :::
 
 ## Non-configurable headers

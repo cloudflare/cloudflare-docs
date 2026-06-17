@@ -1,0 +1,85 @@
+import {
+	Render,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+#### 1. Create a Worker project
+
+Create a new Worker project named `browser-quick-action` by running:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"browser-quick-action"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+#### 2. Configure the browser binding
+
+Update your [Wrangler configuration file](/workers/wrangler/configuration/) with a browser [binding](/browser-run/reference/wrangler/#bindings):
+
+<WranglerConfig>
+
+```toml
+name = "browser-quick-action"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[browser]
+binding = "BROWSER"
+```
+
+</WranglerConfig>
+
+:::caution
+
+Using the `.quickAction()` method requires a `compatibility_date` of `2026-03-24` or later.
+
+:::
+
+#### 3. Write the Worker code
+
+Replace the contents of `src/index.ts` with the following:
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("screenshot", {
+			url: "https://example.com",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+This Worker uses the browser binding to take a screenshot of `example.com` and returns the image directly in the response.
+
+#### 4. Test
+
+Run `npx wrangler dev --remote` to test your Worker locally.
+
+<Render file="remote-binding-note" product="workers" />
+
+Visit your local URL to see the screenshot.
+
+#### 5. Deploy
+
+Run `npx wrangler deploy` to deploy your Worker to the Cloudflare global network.

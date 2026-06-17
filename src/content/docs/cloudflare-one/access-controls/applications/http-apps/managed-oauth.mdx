@@ -119,6 +119,16 @@ Configure these settings in the **Advanced settings** tab of your [self-hosted a
 - **Grant session duration**: How long the OAuth refresh token remains valid.
 - **Access token lifetime**: How long an OIDC Access token can be used to authenticate with your application. Cloudflare recommends configuring a short **Access token lifetime** (default 15 minutes) in conjunction with a longer **Grant session duration**. When the access token expires, Cloudflare uses the refresh token to issue a new one after re-evaluating the user against your Access policies. When the refresh token expires, the user must re-authenticate with the identity provider.
 
+:::note[Recommended configuration for CLI and agent use cases]
+For CLI tools, AI agents, and other non-browser clients, set a short access token lifetime (5–15 minutes) with a longer grant session duration (1–2 weeks). With this configuration:
+
+- The client refreshes tokens silently in the background using the refresh token — no user interaction required.
+- Access policies are re-evaluated on each token refresh, maintaining continuous identity verification.
+- The user only sees the authorization prompt when the grant session (refresh token) expires.
+
+For example, with a 15-minute access token and a 2-week grant session, a user authenticates once via the browser and then works uninterrupted for up to two weeks before needing to re-authenticate.
+:::
+
 </TabItem>
 <TabItem label="API">
 
@@ -183,6 +193,24 @@ The authorization flow proceeds as follows:
 2. The client initiates an authorization code flow. It opens the user's browser to the Access authorization endpoint, where the user logs in to their IdP as usual.
 
 3. Access issues an OAuth access token to the client. The client uses this token in subsequent requests to the protected application.
+
+### Token format
+
+Managed OAuth issues **opaque** access tokens (for example, `oauth:CvNoo...`), not JSON Web Tokens (JWTs). This is by design — the OAuth flow gives clients the ability to make requests on a user's behalf without exposing identity information to the client.
+
+When a client presents an opaque token to your application, Cloudflare resolves the token into the user's identity on the backend and forwards a signed assertion to your origin. From your origin's perspective, the request looks the same as a browser-authenticated request.
+
+Because the token is opaque, the client cannot decode it or forward it directly as a JWT to other applications. To make authenticated requests to downstream Access applications, use the [Linked App Token](/cloudflare-one/access-controls/applications/linked-app-token/) pattern — your origin reads the `Cf-Access-Jwt-Assertion` header and forwards it to downstream apps as `Cf-Access-Token`.
+
+### Multi-domain applications
+
+If your Access application is configured with [multiple domains](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#multi-domain-applications), an OAuth token obtained through any one domain is valid for all domains in the same application. The user authenticates once and can use the same token to access all domains without additional prompts.
+
+This is useful when you have multiple internal services that share a common trust boundary. Instead of configuring separate Access applications with [Linked App Token](/cloudflare-one/access-controls/applications/linked-app-token/) policies, you can add all domains to a single application and authenticate once via Managed OAuth.
+
+:::note
+Consolidating domains into a single Access application means all domains share the same Access policies. If you need per-domain policy separation, use separate applications with the [Linked App Token](/cloudflare-one/access-controls/applications/linked-app-token/) pattern instead.
+:::
 
 ## Managed OAuth vs service tokens
 

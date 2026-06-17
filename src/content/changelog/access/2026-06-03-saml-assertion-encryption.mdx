@@ -1,0 +1,21 @@
+---
+title: SAML assertion encryption for identity providers
+description: Encrypt SAML assertions from your identity provider to Cloudflare Access for enhanced security.
+date: 2026-06-03
+products:
+  - access
+---
+
+Cloudflare Access now supports SAML assertion encryption for identity provider integrations. When turned on, your identity provider encrypts SAML assertions using a Cloudflare-managed certificate before sending them through the user's browser. Only Access can decrypt these assertions, protecting sensitive identity data even after TLS termination.
+
+Without encryption, SAML assertions are transmitted in plaintext and could be visible to browser extensions or client-side malware.
+
+![SAML encryption toggle in the identity provider configuration](~/assets/images/changelog/access/saml-encryption.png)
+
+SAML encryption includes built-in certificate lifecycle management:
+
+- **Automatic certificate generation**: Access generates an encryption certificate when you turn on SAML encryption for an identity provider.
+- **Certificate rotation**: Rotate certificates without downtime. The previous certificate remains valid until expiration, giving you time to update your IdP.
+- **PEM export**: Copy the certificate in PEM format for manual upload to your IdP, or point your IdP to the SAML metadata endpoint for automatic retrieval.
+
+To get started, refer to [Encrypt SAML assertions](/cloudflare-one/integrations/identity-providers/generic-saml/#encrypt-saml-assertions).

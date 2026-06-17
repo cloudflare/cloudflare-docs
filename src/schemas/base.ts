@@ -16,7 +16,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			.array()
 			.optional()
 			.describe(
-				"A group of related keywords relating to the purpose of the page. Refer to [Tags](/style-guide/frontmatter/tags/).",
+				"A group of related keywords relating to the purpose of the page.",
 			),
 		external_link: z
 			.string()

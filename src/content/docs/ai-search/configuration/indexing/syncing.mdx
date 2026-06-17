@@ -27,7 +27,7 @@ Files uploaded to [built-in storage](/ai-search/configuration/data-source/built-
 | Trigger sync         | Manually start a sync job to scan your external data source for changes. Can be triggered every 30 seconds. |
 | Cancel job           | Cancel a running sync job.                                                                                  |
 | Pause indexing       | Temporarily stop all scheduled sync jobs.                                                                   |
-| Resume indexing      | Resume scheduled sync jobs.                                                                                 |
+| Resume indexing      | Resume scheduled sync jobs, including jobs paused automatically after inactivity.                           |
 | Sync individual file | Re-index a specific file.                                                                                   |
 
 You can perform these actions from the dashboard, the [REST API](/ai-search/api/instances/rest-api/), or the [Workers binding](/ai-search/api/instances/workers-binding/).
@@ -39,6 +39,12 @@ The total time to index depends on the number and type of files. Factors that af
 - Total number of files and their sizes
 - File formats (for example, images take longer than plain text)
 - Latency of Workers AI models used for embedding and image processing
+
+## Automatic pausing for inactive instances
+
+If an instance receives no search request for 31 days, AI Search automatically pauses its scheduled sync jobs. This applies only to [external data sources](#external-data-sources) (website or R2), since [built-in storage](#built-in-storage) has no sync jobs. This avoids unnecessary requests to your data source to rescan and sync your instance when it is not being used.
+
+A paused instance stays fully searchable, but source changes are not picked up until you resume. To resume monitoring, use the **Resume indexing** control (see [Controls](#controls)). Searching alone does not resume syncing.
 
 ## Best practices
 

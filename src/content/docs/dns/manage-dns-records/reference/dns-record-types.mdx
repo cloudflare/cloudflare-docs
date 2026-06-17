@@ -335,6 +335,45 @@ Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a 
 
 If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [proxied DNS records](/dns/proxy-status/), and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
+#### Proxied vs DNS-only names
+For [proxied (orange cloud)](/dns/proxy-status/) names, Cloudflare synthesizes HTTPS records automatically when Universal SSL is enabled. Manually-added HTTPS records on proxied names are not served — Cloudflare uses the auto-generated records instead.
+
+If you have disabled Universal SSL (for example, because you use [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) exclusively), Cloudflare will not generate HTTPS records for proxied names.
+
+For [DNS-only (grey cloud)](/dns/proxy-status/) names, you can manually add HTTPS records and Cloudflare will serve them. However, **all records with the same name must be DNS-only** for the manual HTTPS record to be served.
+
+<Details header="Example: Manual HTTPS records and proxy status">
+
+For Cloudflare to serve a manually-added HTTPS record, every record with the same name must be DNS-only (grey cloud).
+
+<Example>
+
+**Will work** — All records with the same name are DNS-only:
+
+| Type  | Name        | Content         | Proxy status |
+| ----- | ----------- | --------------- | ------------ |
+| A     | example.com | `192.0.2.1`     | DNS only     |
+| HTTPS | example.com | `1 . alpn="h3"` | -            |
+
+The HTTPS record will be served because the A record is DNS-only.
+
+</Example>
+
+<Example>
+
+**Will not work** — Mixed proxy status for the same name:
+
+| Type  | Name        | Content         | Proxy status |
+| ----- | ----------- | --------------- | ------------ |
+| AAAA  | example.com | `2001:db8::1`   | Proxied      |
+| HTTPS | example.com | `1 . alpn="h3"` | -            |
+
+The HTTPS record will **not** be served because the AAAA record with the same name is proxied.
+
+</Example>
+
+</Details>
+
 For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
 
 <Render file="api-field-definitions" product="dns" />
@@ -357,10 +396,6 @@ With Enterprise accounts, you also have the option to change the SOA record valu
 
 - As a DNS zone default: Define the SOA record values that Cloudflare will use for all new zones added to your account. Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for step-by-step guidance.
 - For existing zones: Override the defaults or Cloudflare-generated values under **DNS record options** on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page.
-
-:::note
-If you are an Enterprise customer and these options are not displayed on your Cloudflare dashboard, reach out to your account team.
-:::
 
 Refer to the following list for information about each SOA record field:
 
@@ -408,6 +443,10 @@ Refer to the following list for information about each SOA record field:
   | `1800`  | `60`    | `86400` |
 
 </Details>
+
+:::note
+When you query the SOA record itself, the TTL in the response is the smaller of the `Record TTL` and the `Minimum TTL` values. For example, if `Record TTL` is `3600` and `Minimum TTL` is `1800`, the SOA record is returned with a TTL of `1800`.
+:::
 
 ### NS
 

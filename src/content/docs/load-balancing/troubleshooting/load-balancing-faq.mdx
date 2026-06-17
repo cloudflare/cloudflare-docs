@@ -49,7 +49,7 @@ If you know that your endpoint is healthy but load balancing is reporting it as 
 * If your endpoint responds with a `301` or `302` status code, make sure **Follow Redirects** is selected.
 * Try increasing the **Timeout** value.
 * Review the **Host Header** for the health monitor.
-* If you are using [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/), [Argo Smart Routing](/argo-smart-routing/), make sure that you entered a zone value for **Simulate Zone**.
+* If you are using [Authenticated Origin Pulls (mTLS)](/ssl/origin-configuration/authenticated-origin-pull/), [Argo Smart Routing](/argo-smart-routing/), [Bring your own CA (mTLS)](/ssl/client-certificates/byo-ca/), [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), or require [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/), make sure that you entered a zone value for **Simulate Zone** corresponding to the zone with these features configured.
 
 ***
 

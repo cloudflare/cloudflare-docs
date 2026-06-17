@@ -4,7 +4,7 @@ products:
   - ssl
 source: https://support.cloudflare.com/hc/en-us/articles/4667724478349--You-have-reached-your-quota-for-the-requested-resource-Code-2005-
 title: Troubleshooting
-description: Troubleshoot issues with Client certificates
+description: Troubleshoot issues with custom certificates.
 head:
   - tag: title
     content: Troubleshooting | Custom certificates
@@ -16,6 +16,15 @@ head:
 
 You can use an external tool such as the [SSLShopper Certificate Key Matcher](https://www.sslshopper.com/certificate-key-matcher.html) to check your certificate and make sure the key matches.
 
+Alternatively, use `openssl` to verify the match by comparing the public key hash of both files. This method works for both RSA and ECDSA certificates:
+
+```bash
+openssl x509 -noout -pubkey -in certificate.crt | openssl md5
+openssl pkey -pubout -in private.key | openssl md5
+```
+
+If the two outputs match, the certificate and key are a valid pair.
+
 ### Check the certificate details
 
 You can use `openssl` to check all the details of your certificate:
@@ -25,6 +34,23 @@ openssl x509 -in certificate.crt -noout -text
 ```
 
 Then, make sure all the information is correct before uploading.
+
+### Remove password from private key
+
+Cloudflare does not accept password-protected private keys. If your private key requires a password, remove it before uploading. The following command works for both RSA and ECDSA keys:
+
+```bash
+openssl pkey -in protected.key -out unprotected.key
+```
+
+Use the `unprotected.key` file when uploading to Cloudflare. For detailed instructions, refer to [Remove key file password](/ssl/edge-certificates/custom-certificates/remove-file-key-password/).
+
+### Private key format requirements
+
+Private keys must be in one of the following unencrypted formats:
+- PKCS#8
+- PKCS#1
+- Elliptic Curve
 
 ## Moved domains
 
@@ -80,6 +106,36 @@ You are trying to upload a custom certificate that you have already uploaded.
 **Solution**
 
 Delete the existing one and try again.
+
+### You already have a certificate of this signature type. (Code: 1228)
+
+**Root cause**
+
+A custom certificate pack can only have one certificate per signature algorithm (for example, one RSA and one ECDSA certificate).
+
+**Solution**
+
+Instead of uploading a new certificate, update the existing certificate using the edit option in the dashboard or the [PATCH API endpoint](/api/resources/custom_certificates/methods/edit/).
+
+### This certificate cannot be deleted at this time. (Code: 1305)
+
+**Root cause**
+
+This error occurs when there is an issue with the certificate pack structure. You must delete other certificates in the pack before deleting this one.
+
+**Solution**
+
+Delete the other certificates in the certificate pack first, then delete this certificate. If the issue persists, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### Only root CA certificate is allowed. (Code: 1411)
+
+**Root cause**
+
+You are trying to upload a certificate to the [custom origin trust store](/ssl/origin-configuration/origin-ca/#custom-origin-trust-store), but the certificate is not a valid root CA certificate.
+
+**Solution**
+
+When creating a self-signed root CA certificate, ensure you use the `-extensions v3_ca` option with OpenSSL. Refer to [this community post](https://community.cloudflare.com/t/only-root-ca-certificate-is-allowed-code-1411/505318) for more details.
 
 ### The SSL attribute is invalid. Please refer to the API documentation, check your input and try again. (Code: 1434)
 
@@ -154,3 +210,30 @@ Contact your Certificate Authority (CA) to confirm whether your current certific
 Make sure your certificate complies with these [requirements](/ssl/edge-certificates/custom-certificates/uploading/#certificate-requirements).
 
 Check that the certificate and private keys match before uploading the certificate in the Cloudflare dashboard. This [external resource](https://www.sslshopper.com/article-most-common-openssl-commands.html) might help.
+
+### The certificate and private key pair you uploaded is invalid. (Code: 2200)
+
+**Root cause**
+
+The certificate and private key you uploaded do not form a valid pair. The private key does not correspond to the public key in the certificate. This can happen when the wrong key file is selected during upload.
+
+**Solution**
+
+Ensure the private key corresponds to the certificate you are uploading. You can verify this by comparing the public key hash of both files. This method works for both RSA and ECDSA certificates:
+
+```bash
+openssl x509 -noout -pubkey -in certificate.crt | openssl md5
+openssl pkey -pubout -in private.key | openssl md5
+```
+
+If the outputs do not match, you have mismatched the certificate and key.
+
+### An unknown error has occurred. (Code: 2000)
+
+**Root cause**
+
+An internal error occurred while processing your request.
+
+**Solution**
+
+Wait a few minutes and try again. If the issue persists, [contact Cloudflare Support](/support/contacting-cloudflare-support/) with a [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) capturing the failed upload attempt.

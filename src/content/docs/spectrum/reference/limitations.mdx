@@ -38,7 +38,13 @@ To correctly route traffic from Spectrum through a Cloudflare Tunnel, you must:
 1.  Configure your Spectrum application with the type set to **HTTP** or **HTTPS**.
 2.  Point the Spectrum application's origin to a hostname that is already [routing traffic](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) through your Cloudflare Tunnel (for example, via a [DNS record](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) or [Cloudflare Load Balancer](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/)).
 
-Using a Spectrum application of any other type (for example, TCP) with a Cloudflare Tunnel origin is not supported. Pointing a Spectrum application's origin directly to your Tunnel's subdomain (`<UUID>.cfargotunnel.com`) is also not a valid configuration and will not work.
+Using a Spectrum application of any other type (for example, TCP) with a Cloudflare Tunnel origin directly is not supported. Pointing a Spectrum application's origin directly to your Tunnel's subdomain (`<UUID>.cfargotunnel.com`) is also not a valid configuration and will not work.
+
+:::tip[Alternative L4 routing]
+To route non-HTTP (TCP or UDP) traffic from a public Spectrum application to a private endpoint via Cloudflare Tunnel, configure a [Cloudflare Load Balancer with Private Network Load Balancing (LTM)](/load-balancing/private-network/) in between.
+
+By defining private IP addresses as origins inside your Load Balancer pool and associating them with your tunnel's Virtual Network ID (`virtual_network_id`), the Load Balancer will receive the L4 traffic from Spectrum and route it to your private origin over the Cloudflare Tunnel.
+:::
 
 ## Listen on ports configuration
 

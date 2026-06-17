@@ -43,7 +43,7 @@ The destination port number.
 
 Type: `string`
 
-If the flow is routed through a WARP device, the device ID.
+The ID of the network device (such as a router or switch) that originated the flow.
 
 ## EgressBits
 
@@ -61,19 +61,19 @@ The number of egress packets transmitted.
 
 Type: `int`
 
-The ethertype of the packet (2048 for IPv4, 34525 for IPv6, etc.).
+The ethertype of the packet (for example, 2048 for IPv4, 34525 for IPv6).
 
 ## FlowProtocol
 
 Type: `string`
 
-The flow protocol (e.g., 'AWS_VPC', 'IPFIX', 'SFLOW_5', 'NETFLOW_V9', etc.).
+The flow protocol (for example, 'AWS_VPC', 'IPFIX', 'SFLOW_5', 'NETFLOW_V9').
 
 ## FlowTimestamp
 
 Type: `int or string`
 
-The timestamp of the flow.
+The timestamp of the flow. To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).
 
 ## NumFlows
 
@@ -97,13 +97,13 @@ The number of packets transmitted.
 
 Type: `int`
 
-The protocol number (e.g., 6 for TCP, 17 for UDP).
+The protocol number (for example, 6 for TCP, 17 for UDP).
 
 ## RuleIDs
 
 Type: `string`
 
-Comma-separated list of rule IDs associated with the flow if any.
+Comma-separated list of Magic Network Monitoring rule IDs associated with the flow, if any.
 
 ## SampleRate
 
@@ -115,7 +115,7 @@ The sample rate of the flow set by the sampler (1, 100, 1000, 1024, 2000 are com
 
 Type: `string`
 
-The type of sample rate (e.g. 'flow', 'default', 'propagated').
+The type of sample rate (for example, 'flow', 'default', 'propagated').
 
 ## SamplerAddress
 
@@ -151,4 +151,4 @@ The TCP flags.
 
 Type: `int or string`
 
-The date and time of the event.
+The date and time of the event. To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).

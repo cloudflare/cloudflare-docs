@@ -58,10 +58,14 @@ Note that it is also possible to specify a jurisdiction by creating an individua
 
 ### Supported locations
 
-| Parameter | Location                     |
-| --------- | ---------------------------- |
-| eu        | The European Union           |
+| Parameter | Location                       |
+| --------- | ------------------------------ |
+| eu        | The European Union             |
 | fedramp   | FedRAMP-compliant data centers |
+
+### Read the jurisdiction from inside a Durable Object
+
+The jurisdiction of a Durable Object is available inside the object via [`ctx.id.jurisdiction`](/durable-objects/api/id/#jurisdiction). The value is preserved across `toString()` and `idFromString()` round-trips and is also available inside [alarm handlers](/durable-objects/api/alarms/) for alarms scheduled on 2026-03-15 or later, which makes it suitable for region-aware logic inside the Durable Object.
 
 ## Provide a location hint
 
@@ -102,9 +106,13 @@ Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable 
 | afr       | Africa <sup>2</sup>        |
 | me        | Middle East <sup>2</sup>   |
 
-<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the
+future.
 
-<sup>2</sup> Durable Objects currently do not spawn in this location. Instead, the Durable Object will spawn in a nearby location which does support Durable Objects. For example, Durable Objects hinted to South America spawn in Eastern North America instead.
+<sup>2</sup> Durable Objects currently do not spawn in this location. Instead,
+the Durable Object will spawn in a nearby location which does support Durable
+Objects. For example, Durable Objects hinted to South America spawn in Eastern
+North America instead.
 
 ## Additional resources
 

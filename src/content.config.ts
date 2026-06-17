@@ -3,7 +3,7 @@ import { defineCollection } from "astro:content";
 import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
-import { glob, file } from "astro/loaders";
+import { glob } from "astro/loaders";
 import { skillsLoader } from "astro-skills";
 
 import { productAvailabilityCollectionConfig } from "./content/collections/product-availability";
@@ -12,7 +12,6 @@ import { granularControlApplicationsCollectionConfig } from "./content/collectio
 import { middlecacheLoader } from "./util/custom-loaders";
 
 import {
-	appsSchema,
 	catalogModelsSchema,
 	changelogSchema,
 	baseSchema,
@@ -22,7 +21,6 @@ import {
 	compatibilityFlagsSchema,
 	glossarySchema,
 	learningPathsSchema,
-	videosSchema,
 	workersAiModelsSchema,
 	warpReleasesSchema,
 	releaseNotesSchema,
@@ -108,14 +106,6 @@ export const collections = {
 	"catalog-models": defineCollection({
 		loader: dataLoader("catalog-models"),
 		schema: catalogModelsSchema,
-	}),
-	videos: defineCollection({
-		loader: file("src/content/videos/index.yaml"),
-		schema: videosSchema,
-	}),
-	apps: defineCollection({
-		loader: file("src/content/apps/index.yaml"),
-		schema: appsSchema,
 	}),
 	"warp-releases": defineCollection({
 		loader: dataLoader("warp-releases"),

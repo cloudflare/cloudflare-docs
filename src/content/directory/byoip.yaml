@@ -9,6 +9,5 @@ entry:
 
 meta:
   title: Cloudflare BYOIP docs
-  description:
-    Get Cloudflare's security and performance while using your own IPs
+  description: Get Cloudflare's security and performance while using your own IPs
   author: "@cloudflare"

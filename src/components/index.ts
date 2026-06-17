@@ -6,6 +6,7 @@ export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
 export { default as AnimatedWorkflowDiagram } from "./AnimatedWorkflowDiagram.astro";
+export { default as AgentsPlatformDiagram } from "./AgentsPlatformDiagram.astro";
 export { default as APIRequest } from "./APIRequest.astro";
 export { default as AutoconfigDiagram } from "./AutoconfigDiagram.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
@@ -19,7 +20,6 @@ export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
 export { default as DirectoryListing } from "./DirectoryListing.astro";
 export { default as Example } from "./Example.astro";
-export { default as ExternalResources } from "./ExternalResources.astro";
 export { default as ExtraFlagDetails } from "./ExtraFlagDetails.astro";
 export { default as Feature } from "./Feature.astro";
 export { default as FeatureTable } from "./FeatureTable.astro";
@@ -44,7 +44,6 @@ export { default as PagesBuildEnvironmentTools } from "./PagesBuildEnvironmentTo
 export { default as PagesBuildPreset } from "./PagesBuildPreset.astro";
 export { default as PagesBuildPresetsTable } from "./PagesBuildPresetsTable.astro";
 export { default as PagesLanguageSupport } from "./PagesLanguageSupport.astro";
-export { default as PartialsUsage } from "./PartialsUsage.astro";
 export { default as Plan } from "./Plan.astro";
 export { default as ProductChangelog } from "./ProductChangelog.astro";
 export { default as ProductReleaseNotes } from "./ProductReleaseNotes.astro";
@@ -58,7 +57,6 @@ export { default as ResourcesBySelector } from "./ResourcesBySelector.astro";
 export { default as RSSButton } from "./RSSButton.astro";
 export { default as RuleID } from "./RuleID.astro";
 export { default as Stream } from "./Stream.astro";
-export { default as TagsUsage } from "./TagsUsage.astro";
 export { default as TunnelCalculator } from "./TunnelCalculator.astro";
 export { default as Type } from "./Type.astro";
 export { default as TypeScriptExample } from "./TypeScriptExample.astro";
@@ -70,8 +68,9 @@ export { default as Width } from "./Width.astro";
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkersTemplates } from "./WorkersTemplates.astro";
+export { default as WorkersVPCEgressDiagram } from "./WorkersVPCEgressDiagram.astro";
+export { default as WorkersVPCOverviewDiagram } from "./WorkersVPCOverviewDiagram.astro";
 export { default as YouTube } from "./YouTube.astro";
-export { default as YouTubeVideos } from "./YouTubeVideos.astro";
 
 // Taken from Astro
 export { default as ListCard } from "./astro/ListCard.astro";
