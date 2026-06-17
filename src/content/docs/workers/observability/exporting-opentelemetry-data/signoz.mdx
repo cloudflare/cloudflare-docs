@@ -1,0 +1,128 @@
+---
+pcx_content_type: how-to
+title: Export to SigNoz
+description: Send OpenTelemetry traces and logs from Cloudflare Workers to SigNoz.
+sidebar:
+  order: 7
+products:
+  - workers
+---
+
+import { WranglerConfig } from "~/components";
+
+[SigNoz](https://signoz.io/docs/what-is-signoz) is an open-source observability platform that provides distributed tracing, metrics, and logs in a single application. By exporting your Cloudflare Workers telemetry to SigNoz, you can:
+
+- Visualize distributed traces to understand request flows and identify performance bottlenecks
+- Query and analyze logs alongside traces with full context
+- Monitor your Workers with custom dashboards and alerts
+
+![Trace view showing distributed trace with POST request, fetch operations, and timing information on timeline](~/assets/images/workers-observability/signoz-example.png)
+
+This guide will walk you through configuring your Cloudflare Worker to export OpenTelemetry-compliant traces and logs to SigNoz.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- A [SigNoz Cloud account](https://signoz.io/teams/) or a self-hosted SigNoz instance (free)
+- A deployed Worker that you want to monitor
+
+## Step 1: Get your SigNoz connection details
+
+### For SigNoz Cloud
+
+1. Log in to your [SigNoz Cloud account](https://signoz.io/teams/)
+2. Navigate to **Settings** in the sidebar
+3. Select the **Ingestion Settings** tab
+4. Click **New Ingestion Key**
+5. Configure your key:
+   - **Name**: Enter a descriptive name (e.g., `cloudflare-workers`)
+   - **Expiration** (Optional): Set an expiration date
+   - **Tags** (Optional): Add tags to organize your keys
+6. Click **Create new Ingestion key**
+7. **Important**: Copy the ingestion key immediately and store it securely
+
+Your SigNoz Cloud endpoint will be: `https://ingest.<region>.signoz.cloud:443` where `<region>` is `us`, `eu`, or `in` based on your account region.
+
+### For Self-Hosted SigNoz
+
+If you're running a self-hosted SigNoz instance, your endpoint will be: `http://<otel-collector-host>:4318`
+
+No ingestion key is required for self-hosted installations.
+
+See [Cloud vs Self-Hosted comparison](https://signoz.io/docs/ingestion/cloud-vs-self-hosted/#cloud-to-self-hosted) for more details.
+
+## Step 2: Configure Cloudflare destinations
+
+Now you'll create destinations in the Cloudflare dashboard that point to SigNoz.
+
+### SigNoz OTLP endpoints
+
+SigNoz provides separate OTLP endpoints for traces and logs:
+
+- **Traces**: `/v1/traces`
+- **Logs**: `/v1/logs`
+
+See [SigNoz ingestion overview](https://signoz.io/docs/ingestion/signoz-cloud/overview/) for more details.
+
+### Configure trace destination
+
+1. Navigate to your Cloudflare account's [Workers Observability](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/pipelines) section
+2. Click **Add destination**
+3. Configure your trace destination:
+   - **Destination Name**: `signoz-traces` (or any descriptive name)
+   - **Destination Type**: Select **Traces**
+   - **OTLP Endpoint**:
+     - SigNoz Cloud: `https://ingest.<region>.signoz.cloud:443/v1/traces`
+     - Self-Hosted: `http://<otel-collector-host>:4318/v1/traces`
+   - **Custom Headers** (SigNoz Cloud only):
+     - Header name: `signoz-ingestion-key`
+     - Header value: Your ingestion key from Step 1
+4. Click **Save**
+
+### Configure logs destination
+
+Repeat the process for logs:
+
+1. Click **Add destination** again
+2. Configure your logs destination:
+   - **Destination Name**: `signoz-logs` (or any descriptive name)
+   - **Destination Type**: Select **Logs**
+   - **OTLP Endpoint**:
+     - SigNoz Cloud: `https://ingest.<region>.signoz.cloud:443/v1/logs`
+     - Self-Hosted: `http://<otel-collector-host>:4318/v1/logs`
+   - **Custom Headers** (SigNoz Cloud only):
+     - Header name: `signoz-ingestion-key`
+     - Header value: Your ingestion key from Step 1
+3. Click **Save**
+
+## Step 3: Configure your Worker
+
+With your destinations created in the Cloudflare dashboard, update your Worker's configuration to enable telemetry export.
+
+<WranglerConfig>
+
+```json
+{
+	"observability": {
+		"traces": {
+			"enabled": true,
+			// Must match the destination name in the dashboard
+			"destinations": ["signoz-traces"]
+		},
+		"logs": {
+			"enabled": true,
+			// Must match the destination name in the dashboard
+			"destinations": ["signoz-logs"]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+After updating your configuration, deploy your Worker for the changes to take effect.
+
+:::note
+It may take a few minutes after deployment for data to appear in SigNoz.
+:::
