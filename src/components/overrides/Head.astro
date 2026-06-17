@@ -264,9 +264,9 @@ if (frontmatter.canonical) {
 	}
 }
 
-// Cloudflare's edge encodes `@` → `%40` in URL paths and 307-redirects the
-// decoded form, so `/@cf/...` is always served as `/%40cf/...`. Ensure the
-// canonical href matches by encoding any bare `@` in the path.
+// The Workers Static Assets binding 307-redirects URLs with bare `@` in the
+// path to their percent-encoded form (e.g. `/@cf/...` → `/%40cf/...`). Ensure
+// the canonical href matches by encoding any bare `@` in the path.
 const canonicalIdx = head.findIndex(
 	({ tag, attrs }) => tag === "link" && attrs?.rel === "canonical",
 );
