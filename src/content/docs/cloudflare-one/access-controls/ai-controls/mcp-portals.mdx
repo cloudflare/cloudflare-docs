@@ -293,6 +293,8 @@ When multiple names exist, the portal resolves them in this order: `portal_alias
 
 If no alias is set, the portal uses the original name and description from the upstream server.
 
+Custom descriptions follow the same precedence. Set a description by including the `description` field on an entry in `updated_tools` or `updated_prompts`. In API responses, server-level descriptions are returned as `server_description` and portal-level descriptions are returned as `portal_description`. Portal-level descriptions take precedence over server-level descriptions when both are set.
+
 #### Set aliases in the dashboard
 
 <Tabs syncKey="aliasLevel"> <TabItem label="Portal-level alias">
