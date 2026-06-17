@@ -160,14 +160,13 @@ The `data-action="turnstile-spin-v2"` attribute is the telemetry marker for dash
 
 ## Recover an existing widget
 
-If you already have a Turnstile widget without a deployed siteverify Worker, two recovery paths exist:
+If you already have a Turnstile widget without a deployed siteverify Worker, recover it from the dashboard. A banner appears above the widgets table when a widget has no matching Worker; select **Fix with Spin** to deploy the managed siteverify Worker against the existing widget and validate end-to-end. No terminal, no `wrangler`.
 
-- **From the dashboard.** A banner appears above the widgets table when a widget has no matching Worker. Select **Fix all with Spin** to open the recovery dialog.
-- **From your AI coding agent.** Paste:
+If you do not see the **Fix with Spin** banner in your dashboard, drive the same recovery from your AI coding agent instead. Paste this prompt:
 
-  ```txt title="Recovery prompt"
-  I already have a Turnstile widget. The site key is <SITEKEY>. Use the turnstile-spin skill to recover from step 5 onward: deploy the managed siteverify Worker into my account, write the frontend snippets, and validate.
-  ```
+```txt title="Recovery prompt"
+I already have a Turnstile widget. The site key is <SITEKEY>. Use the turnstile-spin skill to recover from step 5 onward: deploy the managed siteverify Worker into my account, write the frontend snippets, and validate.
+```
 
 The sitekey does not change. Your existing widget keeps working throughout. The dashboard's `Deployment` column flips from `Manual` to `Spin` once the first request carrying `data-action="turnstile-spin-v1"` or `data-action="turnstile-spin-v2"` lands.
 
