@@ -52,13 +52,13 @@
   <path d="M1190,588 L1190,486" stroke="#6b7280" stroke-width="1.5" fill="none"/>
   <path d="M1190,448 L1190,338 L758,338" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
 
-  <!-- Idle-nonhib → Inactive (eviction: right, up, left along top) — line broken for label -->
-  <path d="M1340,620 L1440,620 L1440,140 L1244,140" stroke="#6b7280" stroke-width="1.5" fill="none"/>
-  <path d="M946,140 L752,140" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <!-- Idle-nonhib → Inactive (eviction: right, up to y=260, left to x=752, up into Inactive node right side) — clock+label at y=260 -->
+  <path d="M1340,620 L1440,620 L1440,260 L1244,260" stroke="#6b7280" stroke-width="1.5" fill="none"/>
+  <path d="M946,260 L752,260 L752,140 L752,110" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
 
   <!-- Idle-hib → Hibernated (left then up) — line broken for clock -->
   <path d="M500,885 L130,885 L130,646" stroke="#6b7280" stroke-width="1.5" fill="none"/>
-  <path d="M130,614 L130,382" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <path d="M130,614 L130,412" stroke="#6b7280" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
 
   <!-- Idle-hib → Active (left, up, right) — line broken for label -->
   <path d="M500,915 L466,915" stroke="#6b7280" stroke-width="1.5" fill="none"/>
@@ -114,12 +114,12 @@
   <rect x="524" y="312" width="232" height="56" rx="8" fill="#a7e3c0" stroke="#7cc9a3" stroke-width="1.5"/>
   <text x="640" y="346" class="node-bold" text-anchor="middle">Active, in-memory</text>
 
-  <rect x="30" y="280" width="200" height="100" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <rect x="30" y="280" width="200" height="130" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
   <text x="130" y="312" class="node-bold" text-anchor="middle">Hibernated</text>
   <text x="130" y="332" class="node-sub"  text-anchor="middle">Object memory state</text>
   <text x="130" y="348" class="node-sub"  text-anchor="middle">is discarded</text>
-  <text x="130" y="364" class="node-sub"  text-anchor="middle">Hibernated WebSockets</text>
-  <text x="130" y="380" class="node-sub"  text-anchor="middle">stay connected</text>
+  <text x="130" y="368" class="node-sub"  text-anchor="middle">Hibernated WebSockets</text>
+  <text x="130" y="388" class="node-sub"  text-anchor="middle">stay connected</text>
 
   <rect x="1120" y="588" width="220" height="64" rx="8" fill="#a7e3c0" stroke="#7cc9a3" stroke-width="1.5"/>
   <text x="1230" y="616" class="node-bold" text-anchor="middle">Idle, in-memory &amp;</text>
@@ -148,14 +148,14 @@
   <text x="1046" y="610" class="yn">YES</text>
   <text x="650" y="822" class="yn">NO</text>
 
-  <!-- Eviction : centered in the gap of the top horizontal segment (y=140) -->
-  <circle cx="1095" cy="114" r="11" stroke="#6b7280" stroke-width="1.5" fill="none"/>
-  <line x1="1095" y1="107" x2="1095" y2="114" stroke="#6b7280" stroke-width="1.5"/>
-  <line x1="1095" y1="114" x2="1100" y2="119" stroke="#6b7280" stroke-width="1.5"/>
-  <text x="1095" y="144" class="edge-lbl"  text-anchor="middle">No incoming request for 70-140 seconds</text>
-  <text x="1095" y="160" class="edge-lbl"  text-anchor="middle">No clients connected</text>
-  <text x="1095" y="176" class="edge-lbl"  text-anchor="middle">No open outbound connection</text>
-  <text x="1095" y="192" class="edge-bold" text-anchor="middle">Object is evicted</text>
+  <!-- Eviction : clock sits on the y=260 arrow, text above it -->
+  <circle cx="1095" cy="260" r="11" stroke="#6b7280" stroke-width="1.5" fill="white"/>
+  <line x1="1095" y1="253" x2="1095" y2="260" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="1095" y1="260" x2="1100" y2="265" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="1095" y="196" class="edge-lbl"  text-anchor="middle">No incoming request for 70-140 seconds</text>
+  <text x="1095" y="212" class="edge-lbl"  text-anchor="middle">No clients connected</text>
+  <text x="1095" y="228" class="edge-lbl"  text-anchor="middle">No open outbound connection</text>
+  <text x="1095" y="244" class="edge-bold" text-anchor="middle">Object is evicted</text>
 
   <!-- Idle-nonhib → Active loop : centered in the gap of the vertical segment (x=1190) -->
   <text x="1190" y="461" class="edge-lbl" text-anchor="middle">Incoming request</text>

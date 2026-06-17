@@ -69,7 +69,7 @@ Active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-
 
 While kept alive by an outbound connection, the Durable Object remains in memory in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
-Each outbound connection keeps the Durable Object alive for a maximum of 15 minutes. After 15 minutes, the connection stops preventing eviction (the connection itself continues operating), and the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/) resume.
+Each outbound connection keeps the Durable Object alive for a maximum of 15 minutes. After 15 minutes, the connection stops preventing eviction (the connection itself continues operating), and the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/#durable-object-lifecycle-state-transitions) resume.
 
 This applies to outbound TCP sockets and outbound WebSockets (including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`). It does not apply to plain `fetch()` subrequests. Those never keep the Durable Object alive, even while the response body is still streaming.
 :::
