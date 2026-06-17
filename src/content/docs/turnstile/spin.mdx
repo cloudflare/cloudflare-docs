@@ -156,7 +156,7 @@ form.addEventListener("submit", async (e) => {
 });
 ```
 
-The `data-action="turnstile-spin-v2"` attribute is the telemetry marker for dashboard-deployed widgets. See [Telemetry marker](#telemetry-marker) for the marker convention.
+The `data-action="turnstile-spin-v2"` attribute is the telemetry marker for dashboard-deployed widgets. Refer to [Telemetry marker](#telemetry-marker) for the marker convention.
 
 ## Recover an existing widget
 
@@ -181,10 +181,7 @@ Use the command-line setup for migrations. The agent detects reCAPTCHA or hCaptc
 - Backend siteverify URL points at the Spin-deployed Worker. Drop `RECAPTCHA_SECRET` or `HCAPTCHA_SECRET` environment variables (the Worker holds the secret).
 - The Spin Worker accepts `{ token }`, `{ "cf-turnstile-response": ... }`, or `{ response }` in JSON or form-encoded bodies. Response shape is identical: `success`, `error-codes`.
 
-Edge cases to flag to the agent:
-
-- **reCAPTCHA v3 score thresholds.** Turnstile has no score. Migrated code rejects on `success === false` rather than a score threshold.
-- **reCAPTCHA Enterprise.** Do not auto-migrate. Refer to [the Cloudflare migration guide for reCAPTCHA](/turnstile/migration/recaptcha/).
+Two edge cases to flag to the agent. First, reCAPTCHA v3 score thresholds do not translate: Turnstile has no score, so migrated code rejects on `success === false` rather than a numeric threshold. Second, do not auto-migrate reCAPTCHA Enterprise; refer to [the Cloudflare migration guide for reCAPTCHA](/turnstile/migration/recaptcha/) instead.
 
 ## Frameworks
 
@@ -236,7 +233,7 @@ The marker takes one of two values, depending on which setup path created the wi
 | `turnstile-spin-v1` | Command-line setup (AI agent runs `wrangler` locally) |
 | `turnstile-spin-v2` | Dashboard setup (**Set up with Spin** button)         |
 
-Both markers are applied automatically by the respective setup path. If you customize the widget snippet by hand, you do not need to add the marker yourself.
+Each setup path applies its own marker automatically. If you customize the widget snippet by hand, you do not need to add the marker yourself.
 
 ### Related
 
