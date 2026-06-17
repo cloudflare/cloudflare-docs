@@ -30,14 +30,11 @@ import {
 	updateIssueComment,
 	type GitHubIssueComment,
 } from "../lib/github";
-import { getInternalHeaders } from "../lib/internal-auth";
 import {
-	dispatchStyleGuideReview,
-	mergeStyleGuideResults,
+	runStyleGuideReviewInProcess,
 	selectStyleGuideFiles,
 	STYLE_GUIDE_CONCURRENCY,
-	withConcurrency,
-} from "../lib/style-guide-fanout";
+} from "../lib/style-guide-inproc";
 import type {
 	StyleGuideFinding,
 	StyleGuideResult,
@@ -75,7 +72,7 @@ interface CodeReviewOrchestratorPayload {
 	triggerEyesReactionId?: number | null;
 }
 
-export async function run({ id: runId, init, payload, env, req }: FlueContext) {
+export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
 
@@ -335,9 +332,6 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 	let styleGuideResult: StyleGuideResult;
 	try {
 		const styleGuideFiles = selectStyleGuideFiles(allFiles);
-		const internalHeaders = getInternalHeaders(
-			typedEnv as Record<string, string>,
-		);
 		console.log({
 			message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
 			event: "code_review_orchestrator",
@@ -349,22 +343,21 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 			action: "style_guide_fanout_start",
 		});
 
-		const styleGuideResults = await withConcurrency(
-			styleGuideFiles.map(
-				(file, index) => async () =>
-					dispatchStyleGuideReview(
-						`${runId}:style-guide:${index}`,
-						input.number,
-						diffDir,
-						commentsPath,
-						req,
-						internalHeaders,
-						file.filename,
-					),
-			),
-			STYLE_GUIDE_CONCURRENCY,
-		);
-		styleGuideResult = mergeStyleGuideResults(styleGuideResults);
+		// In-process fan-out: one harness over a single shared workspace,
+		// hydrated once, with one concurrent session per file. A single file's
+		// failure degrades to an empty result rather than aborting the review.
+		styleGuideResult = await runStyleGuideReviewInProcess({
+			init,
+			workspace,
+			bucket,
+			loader,
+			prNumber: input.number,
+			diffDir,
+			commentsPath,
+			files: styleGuideFiles,
+			runId,
+			concurrency: STYLE_GUIDE_CONCURRENCY,
+		});
 		console.log({
 			message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s) across ${styleGuideResult.reviewedFiles.length} file(s)`,
 			event: "code_review_orchestrator",
