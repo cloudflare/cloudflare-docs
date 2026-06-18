@@ -62,7 +62,7 @@ Run the validation commands from `SKILL.md` (`check`, local `build`, `format`, p
 
 ## 8. Open a pull request
 
-When the change is ready, follow `pr.md` to create the PR (drafts only, `[Product]` title convention, body from the repo template).
+When the change is ready, load the `pr` skill to create the PR (drafts only, `[Product]` title convention, body from the repo template).
 
 ## Editing existing pages
 

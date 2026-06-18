@@ -1,6 +1,6 @@
 ---
 name: contributing
-description: The entry point for ANY contribution to the Cloudflare Docs repository (developers.cloudflare.com). Load this whenever working on the docs repo: creating, editing, or adding documentation pages, partials, images, or changelog entries; choosing a content type or component; deciding where content belongs; reviewing docs or code examples; or learning how to contribute. ALSO load this for ANY pull request action — creating, opening, submitting, updating, or editing a PR, or writing a PR title or description. This skill is a router that dispatches to task-specific references (writing docs, PRs, changelogs, reviews, components, style).
+description: Use when contributing to the Cloudflare Docs repository — writing or editing documentation pages, choosing content types or components, adding changelog entries, reviewing docs, or learning how to contribute.
 ---
 
 # Contributing to Cloudflare Docs
@@ -43,10 +43,8 @@ Find your task and read the listed reference(s). Paths are relative to this skil
 | Look up a component's props and examples       | `.agents/references/components.md`                                                                       |
 | Add or edit a changelog entry                  | `references/changelog.md`                                                                                |
 | Review docs / post PR suggestions              | `references/reviewing-docs.md`                                                                           |
-| Review the code examples in docs               | `references/code-review/index.md`                                                                        |
-| Create or edit a pull request                  | `references/pr.md`                                                                                       |
 
-The authoring workflow in `references/writing-docs.md` ties these together: gather context → locate where the page belongs → pick a content type → draft against the style guide → choose components for each piece of data → validate → open a PR.
+The authoring workflow in `references/writing-docs.md` ties these together: gather context → locate where the page belongs → pick a content type → draft against the style guide → choose components for each piece of data → validate.
 
 ## Validate before you finish
 
