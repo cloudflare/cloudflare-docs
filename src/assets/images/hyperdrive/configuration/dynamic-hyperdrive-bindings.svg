@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" fill="none">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
@@ -6,15 +6,16 @@
     .sublabel { font-size: 11px; fill: #6b7280; }
     .code { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
     .box { rx: 10; stroke-width: 1.5; }
-    .box-tenant { fill: #f9fafb; stroke: #d1d5db; }
-    .box-platform { fill: #fff7ed; stroke: #f6821f; }
+    .box-client { fill: #f9fafb; stroke: #d1d5db; }
+    .box-host { fill: #fff7ed; stroke: #f6821f; }
+    .box-loader { fill: #fef3c7; stroke: #d97706; }
+    .box-dynamic { fill: #fce7f3; stroke: #db2777; }
     .box-db { fill: #f0f9ff; stroke: #0ea5e9; }
-    .box-kv { fill: #f3f4f6; stroke: #9ca3af; }
     .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
     .arrow-orange { stroke: #f6821f; stroke-width: 2; fill: none; marker-end: url(#arr-orange); }
     .arrow-blue { stroke: #0ea5e9; stroke-width: 2; fill: none; marker-end: url(#arr-blue); }
+    .arrow-pink { stroke: #db2777; stroke-width: 2; fill: none; marker-end: url(#arr-pink); }
     .dashed { stroke-dasharray: 6,4; }
-    .section-label { font-size: 12px; font-weight: 700; fill: #9ca3af; text-transform: uppercase; letter-spacing: 0.08em; }
   </style>
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -26,129 +27,109 @@
     <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
       <polygon points="0 0, 8 3, 0 6" fill="#0ea5e9"/>
     </marker>
+    <marker id="arr-pink" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#db2777"/>
+    </marker>
+    <marker id="arr-return" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
   </defs>
 
   <!-- Title -->
-  <text x="450" y="28" text-anchor="middle" class="title">Dynamic Hyperdrive Binding Resolution</text>
+  <text x="450" y="28" text-anchor="middle" class="title">Dynamic Hyperdrive with Dynamic Workers</text>
 
   <!-- ==================== -->
-  <!-- COLUMN LABELS        -->
-  <!-- ==================== -->
-  <text x="160" y="56" text-anchor="middle" class="section-label">Tenant Request</text>
-  <text x="450" y="56" text-anchor="middle" class="section-label">Cloudflare Edge</text>
-  <text x="740" y="56" text-anchor="middle" class="section-label">Origin Infrastructure</text>
-
-  <!-- ==================== -->
-  <!-- TENANT COLUMN        -->
+  <!-- ROW 1: Main flow     -->
   <!-- ==================== -->
 
-  <!-- Tenant Request -->
-  <rect x="60" y="72" width="200" height="64" class="box box-tenant"/>
-  <text x="160" y="94" text-anchor="middle" class="label">Incoming Request</text>
-  <text x="160" y="110" text-anchor="middle" class="sublabel">Tenant ID in headers or path</text>
-  <text x="160" y="126" text-anchor="middle" class="code">GET /api/tenant-42/data</text>
+  <!-- Client Request -->
+  <rect x="20" y="60" width="140" height="70" class="box box-client"/>
+  <text x="90" y="86" text-anchor="middle" class="label">Client</text>
+  <text x="90" y="102" text-anchor="middle" class="sublabel">HTTP request with</text>
+  <text x="90" y="116" text-anchor="middle" class="sublabel">tenant identifier</text>
 
-  <!-- Arrow: Tenant → Dispatch Worker -->
-  <line x1="260" y1="104" x2="300" y2="104" class="arrow-orange"/>
+  <!-- Arrow: Client to Host Worker -->
+  <line x1="160" y1="95" x2="195" y2="95" class="arrow-orange"/>
+
+  <!-- Host Worker -->
+  <rect x="195" y="60" width="160" height="70" class="box box-host"/>
+  <text x="275" y="82" text-anchor="middle" class="label">Host Worker</text>
+  <text x="275" y="98" text-anchor="middle" class="sublabel">Resolves tenant config</text>
+  <text x="275" y="112" text-anchor="middle" class="code">env.KV.get("tenant-id")</text>
+
+  <!-- Arrow: Host Worker to Worker Loader -->
+  <line x1="355" y1="95" x2="390" y2="95" class="arrow-orange"/>
+  <text x="373" y="87" text-anchor="middle" class="sublabel" style="font-size:9px">code as</text>
+  <text x="373" y="96" text-anchor="middle" class="sublabel" style="font-size:9px">payload</text>
+
+  <!-- Worker Loader API -->
+  <rect x="390" y="60" width="150" height="70" class="box box-loader"/>
+  <text x="465" y="82" text-anchor="middle" class="label">Worker Loader API</text>
+  <text x="465" y="98" text-anchor="middle" class="sublabel">Compiles and loads</text>
+  <text x="465" y="112" text-anchor="middle" class="code">env.LOADER.load()</text>
+
+  <!-- Arrow: Worker Loader to Dynamic Worker -->
+  <line x1="540" y1="95" x2="575" y2="95" class="arrow-pink"/>
+
+  <!-- Dynamic Worker -->
+  <rect x="575" y="60" width="150" height="70" class="box box-dynamic"/>
+  <text x="650" y="82" text-anchor="middle" class="label">Dynamic Worker</text>
+  <text x="650" y="98" text-anchor="middle" class="sublabel">Executes tenant code</text>
+  <text x="650" y="112" text-anchor="middle" class="sublabel">Temporary sandbox</text>
 
   <!-- ==================== -->
-  <!-- PLATFORM COLUMN      -->
+  <!-- ROW 2: DB connection -->
   <!-- ==================== -->
 
-  <!-- Dispatch Worker -->
-  <rect x="300" y="72" width="200" height="64" class="box box-platform"/>
-  <text x="400" y="94" text-anchor="middle" class="label">Dynamic Dispatch Worker</text>
-  <text x="400" y="110" text-anchor="middle" class="sublabel">Resolves tenant from KV</text>
-  <text x="400" y="126" text-anchor="middle" class="code">env.KV.get("tenant-id")</text>
-
-  <!-- Arrow: Dispatch → KV (down) -->
-  <line x1="400" y1="136" x2="400" y2="156" class="arrow"/>
-
-  <!-- KV Store -->
-  <rect x="340" y="156" width="120" height="40" class="box box-kv"/>
-  <text x="400" y="174" text-anchor="middle" class="label">KV Store</text>
-  <text x="400" y="188" text-anchor="middle" class="sublabel">Tenant config lookup</text>
-
-  <!-- Arrow: KV → Worker Loader (down) -->
-  <line x1="400" y1="196" x2="400" y2="216" class="arrow"/>
-
-  <!-- Worker Loader -->
-  <rect x="300" y="216" width="200" height="64" class="box box-platform"/>
-  <text x="400" y="238" text-anchor="middle" class="label">Worker Loader</text>
-  <text x="400" y="254" text-anchor="middle" class="sublabel">Loads tenant-specific Worker</text>
-  <text x="400" y="270" text-anchor="middle" class="code">env.LOADER.load({ ... })</text>
-
-  <!-- Arrow: Worker Loader → User Worker (down) -->
-  <line x1="400" y1="280" x2="400" y2="300" class="arrow-orange"/>
-
-  <!-- User Worker -->
-  <rect x="300" y="300" width="200" height="64" class="box box-platform"/>
-  <text x="400" y="322" text-anchor="middle" class="label">Tenant User Worker</text>
-  <text x="400" y="338" text-anchor="middle" class="sublabel">Plain pg driver code</text>
-  <text x="400" y="354" text-anchor="middle" class="code">new Client({ connectionString })</text>
-
-  <!-- Arrow: User Worker → OutboundInterceptor (down) -->
-  <line x1="400" y1="364" x2="400" y2="384" class="arrow-orange"/>
+  <!-- Arrow: Dynamic Worker down to Interceptor -->
+  <line x1="650" y1="130" x2="650" y2="165" class="arrow-pink"/>
+  <text x="690" y="150" class="sublabel" style="font-size:9px">connect()</text>
 
   <!-- OutboundInterceptor -->
-  <rect x="300" y="384" width="200" height="64" class="box box-platform"/>
-  <text x="400" y="406" text-anchor="middle" class="label">OutboundInterceptor</text>
-  <text x="400" y="422" text-anchor="middle" class="sublabel">Intercepts connect() calls</text>
-  <text x="400" y="438" text-anchor="middle" class="code">this.env.DYNAMIC_HYPERDRIVE.get()</text>
+  <rect x="390" y="165" width="175" height="65" class="box box-host"/>
+  <text x="478" y="187" text-anchor="middle" class="label">OutboundInterceptor</text>
+  <text x="478" y="203" text-anchor="middle" class="sublabel">Intercepts connect() calls</text>
+  <text x="478" y="217" text-anchor="middle" class="code">DYNAMIC_HYPERDRIVE.get()</text>
 
-  <!-- ==================== -->
-  <!-- ORIGIN COLUMN        -->
-  <!-- ==================== -->
+  <!-- Arrow: Dynamic Worker left to Interceptor -->
+  <line x1="650" y1="197" x2="565" y2="197" class="arrow-pink"/>
 
-  <!-- Arrow: OutboundInterceptor → Hyperdrive (right) -->
-  <line x1="500" y1="416" x2="540" y2="416" class="arrow-blue"/>
+  <!-- Arrow: Interceptor to Hyperdrive -->
+  <line x1="478" y1="230" x2="478" y2="260" class="arrow-blue"/>
 
   <!-- Hyperdrive Pool -->
-  <rect x="540" y="384" width="200" height="64" class="box box-db"/>
-  <text x="640" y="406" text-anchor="middle" class="label">Hyperdrive Pool</text>
-  <text x="640" y="422" text-anchor="middle" class="sublabel">Request-scoped RpcTarget</text>
-  <text x="640" y="438" text-anchor="middle" class="code">Pooled TCP socket returned</text>
+  <rect x="390" y="260" width="175" height="55" class="box box-db"/>
+  <text x="478" y="282" text-anchor="middle" class="label">Hyperdrive Pool</text>
+  <text x="478" y="298" text-anchor="middle" class="sublabel">Request-scoped connection</text>
 
-  <!-- Arrow: Hyperdrive → Origin DB (right) -->
-  <line x1="740" y1="416" x2="780" y2="416" class="arrow-blue"/>
+  <!-- Arrow: Hyperdrive to Database -->
+  <line x1="565" y1="287" x2="630" y2="287" class="arrow-blue"/>
 
   <!-- Origin Database -->
-  <rect x="780" y="384" width="120" height="64" class="box box-db"/>
-  <text x="840" y="406" text-anchor="middle" class="label">Origin Database</text>
-  <text x="840" y="422" text-anchor="middle" class="sublabel">Tenant-specific</text>
-  <text x="840" y="438" text-anchor="middle" class="code">PostgreSQL / MySQL</text>
+  <rect x="630" y="260" width="140" height="55" class="box box-db"/>
+  <text x="700" y="282" text-anchor="middle" class="label">Origin Database</text>
+  <text x="700" y="298" text-anchor="middle" class="sublabel">Tenant-specific</text>
 
   <!-- ==================== -->
   <!-- RETURN PATH          -->
   <!-- ==================== -->
 
-  <!-- Return arrow: Hyperdrive → OutboundInterceptor (lower path, dashed) -->
-  <line x1="640" y1="448" x2="640" y2="472" class="arrow dashed"/>
-  <line x1="640" y1="472" x2="400" y2="472" class="arrow dashed"/>
-  <line x1="400" y1="472" x2="400" y2="448" class="arrow dashed"/>
-
-  <!-- Response label -->
-  <text x="520" y="466" text-anchor="middle" class="sublabel">Pooled socket returned to User Worker</text>
-
-  <!-- ==================== -->
-  /* RESPONSE FLOW BACK   */
-  <!-- ==================== -->
-
-  <!-- Return arrow: User Worker → Tenant (left) -->
-  <line x1="300" y1="332" x2="260" y2="332" class="arrow-orange"/>
-
-  <!-- Tenant Response -->
-  <rect x="60" y="300" width="200" height="64" class="box box-tenant"/>
-  <text x="160" y="322" text-anchor="middle" class="label">Tenant Response</text>
-  <text x="160" y="338" text-anchor="middle" class="sublabel">Query results returned</text>
-  <text x="160" y="354" text-anchor="middle" class="code">Response.json({ result })</text>
+  <!-- Return arrow: Host Worker back to Client -->
+  <line x1="195" y1="105" x2="160" y2="105" class="arrow dashed"/>
+  <text x="178" y="120" text-anchor="middle" class="sublabel" style="font-size:9px">response</text>
 
   <!-- ==================== -->
   <!-- LEGEND               -->
   <!-- ==================== -->
-  <rect x="60" y="484" width="200" height="28" rx="4" fill="#fff7ed" stroke="#f6821f" stroke-width="1"/>
-  <text x="160" y="502" text-anchor="middle" class="sublabel" style="fill: #c2410c; font-weight: 600;">Platform-managed components</text>
+  <rect x="195" y="330" width="12" height="6" rx="2" fill="#fff7ed" stroke="#f6821f" stroke-width="1"/>
+  <text x="213" y="337" class="sublabel" style="font-size:10px; fill: #c2410c;">Host Worker</text>
 
-  <rect x="300" y="484" width="200" height="28" rx="4" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
-  <text x="400" y="502" text-anchor="middle" class="sublabel" style="fill: #0369a1; font-weight: 600;">Request-scoped, auto-disposed</text>
+  <rect x="310" y="330" width="12" height="6" rx="2" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="328" y="337" class="sublabel" style="font-size:10px; fill: #92400e;">Worker Loader</text>
+
+  <rect x="440" y="330" width="12" height="6" rx="2" fill="#fce7f3" stroke="#db2777" stroke-width="1"/>
+  <text x="458" y="337" class="sublabel" style="font-size:10px; fill: #9d174d;">Dynamic Worker (temporary)</text>
+
+  <rect x="620" y="330" width="12" height="6" rx="2" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="638" y="337" class="sublabel" style="font-size:10px; fill: #0369a1;">Hyperdrive / Database</text>
 </svg>
