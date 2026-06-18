@@ -8,9 +8,9 @@ entries:
     description: |-
       **Compatibility:** Works best with RealtimeKit Web UI Kit 2.0.0 or later.
 
-      This is a major breaking release. Several deprecated APIs have been removed and the Plugin SDK has been completely redesigned. Review the migration guide below carefully before upgrading.
+      This is a major breaking release. Several deprecated APIs have been removed and the plugin APIs have been completely redesigned. Review the migration guide below carefully before upgrading.
 
-      **Plugin SDK — complete redesign**
+      **Plugin APIs — complete redesign**
 
       Plugins are no longer fetched from the server automatically. You now provide plugin configurations at SDK init time via `defaults.plugins`.
 
