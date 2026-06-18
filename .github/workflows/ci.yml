@@ -94,9 +94,7 @@ jobs:
 
       - name: Check formatting
         # The codebase is always fully formatted, so checking all
-        # prettier-scoped files is equivalent to checking only changed
-        # files — but simpler and without the shallow-clone / base-SHA
-        # gymnastics required by a diff-scoped approach.
+        # prettier-scoped files is equivalent to checking only changed files.
         run: pnpm run format:check
 
       - name: Validate redirects
