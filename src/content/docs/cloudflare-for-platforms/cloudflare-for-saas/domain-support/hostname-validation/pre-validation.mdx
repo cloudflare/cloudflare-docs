@@ -114,3 +114,18 @@ To get and use the `ownership_verification` record:
 4. After a few minutes, you will see the hostname status become **Active** in the UI.
 
 5. Once the hostname is active, your customer can remove the token from their origin server.
+
+## Zero-downtime migration with HTTP DCV
+
+When onboarding a customer whose hostname is already live with another provider, you can use pre-validation combined with manual HTTP DCV to achieve zero-downtime migration:
+
+1. Create the custom hostname with `"ssl": {"method": "http", "type": "dv"}`.
+2. Complete [hostname ownership pre-validation](#pre-validate-with-a-txt-record) using a TXT record so the hostname reaches `status: active`.
+3. Wait for the `ssl.validation_records` to populate with the HTTP DCV token (an `http_url` and `http_body` pair).
+4. Ask your customer to serve the DCV token at the `http_url` path on their current live origin. The certificate authority will validate it against the current DNS target.
+5. Once `ssl.status` reaches `active`, the hostname and certificate are both ready.
+6. Your customer can now update their DNS CNAME to point to your SaaS target with no interruption — the certificate is already issued.
+
+:::note
+The HTTP DCV token is single-use and must be served before it expires. Refer to [DCV tokens validity](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/#dcv-tokens-validity) for expiration periods by certificate authority.
+:::
