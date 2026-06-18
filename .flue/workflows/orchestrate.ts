@@ -21,6 +21,7 @@ import {
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow, pollRun } from "../lib/poll-run";
+import { setReviewLimitIgnored } from "../lib/code-review-state";
 import {
 	getIssueOrPullRequestLabel,
 	getIssueOrPullRequestNumber,
@@ -128,6 +129,8 @@ export async function run({ payload, env, req }: FlueContext) {
 	const isFullReviewCommand =
 		isOnPullRequest && trimmedComment === "/full-review";
 	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
+	const isIgnoreReviewLimitCommand =
+		isOnPullRequest && trimmedComment === "/ignore-review-limit";
 
 	if (
 		!req ||
@@ -135,7 +138,8 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isCodeReviewEvent &&
 			!isDependabotReviewEvent &&
 			!isFullReviewCommand &&
-			!isReviewCommand)
+			!isReviewCommand &&
+			!isIgnoreReviewLimitCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -347,11 +351,56 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 	}
 
+	// ── 5. Handle /ignore-review-limit command ──────────────────────────────
+	if (isIgnoreReviewLimitCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `Ignore review limit command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "ignore_review_limit_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
+		await setReviewLimitIgnored(bucket, number, senderLogin as string);
+
+		// Acknowledge with 👍
+		await addReactionToComment(token, commentId, "+1");
+
+		console.log({
+			message: `Review limit permanently ignored by ${senderLogin}: PR #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			number,
+			action: "ignore_review_limit_set",
+		});
+
+		return {
+			acted: true,
+			summary: `Review limit permanently ignored by @${senderLogin}.`,
+		};
+	}
+
 	const baseUrl = new URL(req.url).origin;
 	const internalHeaders = getInternalHeaders(env as Record<string, string>);
 	const results: Record<string, unknown> = {};
 
-	// ── 5. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
+	// ── 6. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
 	if (isSpamFilterEvent) {
 		// Skip spam filter for codeowners — their issues and PRs are never spam.
 		let skipSpamFilter = false;
@@ -477,7 +526,7 @@ export async function run({ payload, env, req }: FlueContext) {
 		} // end else (not skipSpamFilter)
 	}
 
-	// ── 6. Dispatch code-review-orchestrator (PRs only) ─────────────────────
+	// ── 7. Dispatch code-review-orchestrator (PRs only) ─────────────────────
 	// The code review orchestrator posts its own GitHub comment when done, so
 	// we don't need to wait for the result here — fire-and-forget.
 	if (isCodeReviewEvent) {

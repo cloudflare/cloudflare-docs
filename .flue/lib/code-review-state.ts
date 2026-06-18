@@ -105,3 +105,34 @@ export async function incrementAutoReviewCount(
 	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
 	await bucket.put(key, JSON.stringify({ count: current + 1 }));
 }
+
+/**
+ * Check whether the review limit has been permanently ignored for a PR.
+ * Returns false if no ignore flag exists.
+ */
+export async function isReviewLimitIgnored(
+	bucket: R2Bucket,
+	prNumber: number,
+): Promise<boolean> {
+	const key = `diffs/pr-${prNumber}/ignore-review-limit.json`;
+	const obj = await bucket.get(key);
+	if (!obj) return false;
+	const data = (await obj.json()) as { ignored?: boolean };
+	return data.ignored === true;
+}
+
+/**
+ * Permanently ignore the review limit for a PR in R2.
+ * Records the actor who set the flag for auditability.
+ */
+export async function setReviewLimitIgnored(
+	bucket: R2Bucket,
+	prNumber: number,
+	actor: string,
+): Promise<void> {
+	const key = `diffs/pr-${prNumber}/ignore-review-limit.json`;
+	await bucket.put(
+		key,
+		JSON.stringify({ ignored: true, actor, setAt: new Date().toISOString() }),
+	);
+}

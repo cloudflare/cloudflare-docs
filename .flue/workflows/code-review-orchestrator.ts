@@ -47,6 +47,7 @@ import {
 	extractReviewedHeadSha,
 	getAutoReviewCount,
 	incrementAutoReviewCount,
+	isReviewLimitIgnored,
 	partitionComments,
 } from "../lib/code-review-state";
 import {
@@ -86,10 +87,14 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const workspace = getDefaultWorkspace();
 
 	// ── Auto-review limit check ────────────────────────────────────────────────
-	// Automatic reviews are capped at 2 per PR. Codeowner commands bypass this.
+	// Automatic reviews are capped at 2 per PR. Codeowner commands bypass this,
+	// and the /ignore-review-limit command permanently lifts the cap for the PR.
 	if (!input.bypassReviewLimit) {
-		const autoReviewCount = await getAutoReviewCount(bucket, input.number);
-		if (autoReviewCount >= 2) {
+		const [autoReviewCount, limitIgnored] = await Promise.all([
+			getAutoReviewCount(bucket, input.number),
+			isReviewLimitIgnored(bucket, input.number),
+		]);
+		if (autoReviewCount >= 2 && !limitIgnored) {
 			console.log({
 				message: `Auto-review limit reached: PR #${input.number} — ${autoReviewCount} reviews already run`,
 				event: "code_review_orchestrator",
