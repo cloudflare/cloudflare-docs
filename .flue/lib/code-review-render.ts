@@ -20,7 +20,7 @@ export const ReconcileResultSchema = v.object({
 	active: v.array(
 		v.object({
 			id: v.string(),
-			severity: v.picklist(["warning", "suggestion"]),
+			severity: v.picklist(["critical", "warning", "suggestion"]),
 			path: v.string(),
 			line: v.optional(v.number()),
 			rule: v.string(),
@@ -31,7 +31,7 @@ export const ReconcileResultSchema = v.object({
 	ignored_by_reviewer: v.array(
 		v.object({
 			id: v.string(),
-			severity: v.picklist(["warning", "suggestion"]),
+			severity: v.picklist(["critical", "warning", "suggestion"]),
 			path: v.string(),
 			line: v.optional(v.number()),
 			rule: v.string(),
@@ -45,6 +45,12 @@ export const ReconcileResultSchema = v.object({
 });
 
 export type ReconcileResult = v.InferOutput<typeof ReconcileResultSchema>;
+
+/** The two reconciled review streams rendered into one comment. */
+export interface RenderReviewInput {
+	code: ReconcileResult;
+	style: ReconcileResult;
+}
 
 // ── Rendering helpers ─────────────────────────────────────────────────────────
 
@@ -140,34 +146,110 @@ export function renderFailureComment(headSha: string): string {
 	].join("\n");
 }
 
-/** Render the final review comment from reconciled findings. */
-export function renderComment(
+/** Active findings (ignored ones removed) split by severity, for one section. */
+function activeBySeverity(reconciled: ReconcileResult) {
+	const ignoredKeys = new Set(
+		reconciled.ignored_by_reviewer.map((f) => `${f.path}:${f.line}:${f.rule}`),
+	);
+	const active = reconciled.active.filter(
+		(f) => !ignoredKeys.has(`${f.path}:${f.line}:${f.rule}`),
+	);
+	return {
+		active,
+		critical: active.filter((f) => f.severity === "critical"),
+		warnings: active.filter((f) => f.severity === "warning"),
+		suggestions: active.filter((f) => f.severity === "suggestion"),
+	};
+}
+
+/** Render a `<details>` block with a severity table, when non-empty. */
+function renderSeverityTable(
+	lines: string[],
+	label: string,
+	findings: ReconcileResult["active"],
+): void {
+	if (findings.length === 0) return;
+	lines.push("");
+	lines.push("<details open>");
+	lines.push(`<summary><b>${label}</b> (${findings.length})</summary>`);
+	lines.push("<br/>");
+	lines.push("");
+	lines.push("| File | Issue |");
+	lines.push("|---|---|");
+	for (const f of findings) {
+		lines.push(renderFindingRow(f));
+	}
+	lines.push("");
+	lines.push("</details>");
+}
+
+/**
+ * Render one review section (### heading + status + severity tables).
+ * `includeCritical` is true for the code review, false for the style guide
+ * (whose specialist never emits critical findings).
+ */
+function renderSection(
+	lines: string[],
+	heading: string,
+	noneMessage: string,
 	reconciled: ReconcileResult,
+	includeCritical: boolean,
+): void {
+	const { active, critical, warnings, suggestions } =
+		activeBySeverity(reconciled);
+
+	lines.push("");
+	lines.push(`### ${heading}`);
+
+	if (active.length === 0) {
+		lines.push("");
+		lines.push(noneMessage);
+		return;
+	}
+
+	if (includeCritical) {
+		renderSeverityTable(lines, "Critical", critical);
+	}
+	renderSeverityTable(lines, "Warnings", warnings);
+	renderSeverityTable(lines, "Suggestions", suggestions);
+}
+
+/** Render the final review comment from both reconciled finding streams. */
+export function renderComment(
+	reviews: RenderReviewInput,
 	reviewedHeadSha: string,
 	forceFullReview?: boolean,
 ): string {
 	const shortSha = reviewedHeadSha.slice(0, 7);
 	const reviewedAt = new Date().toISOString();
-
-	// Exclude anything acknowledged by the reviewer from active sections.
-	const ignoredPaths = new Set(
-		reconciled.ignored_by_reviewer.map((f) => `${f.path}:${f.line}:${f.rule}`),
-	);
-	const activeFindings = reconciled.active.filter(
-		(f) => !ignoredPaths.has(`${f.path}:${f.line}:${f.rule}`),
-	);
-	const warnings = activeFindings.filter((f) => f.severity === "warning");
-	const suggestions = activeFindings.filter((f) => f.severity === "suggestion");
-	const totalActive = activeFindings.length;
 	const scope = forceFullReview ? "full PR diff" : `commit \`${shortSha}\``;
 
+	const code = activeBySeverity(reviews.code);
+	const style = activeBySeverity(reviews.style);
+
+	const criticalCount = code.critical.length;
+	const warningCount = code.warnings.length + style.warnings.length;
+	const suggestionCount = code.suggestions.length + style.suggestions.length;
+	const totalActive = criticalCount + warningCount + suggestionCount;
+	const ignoredCount =
+		reviews.code.ignored_by_reviewer.length +
+		reviews.style.ignored_by_reviewer.length;
+
 	let statusLine: string;
-	if (totalActive === 0 && reconciled.ignored_by_reviewer.length === 0) {
-		statusLine = `✅ No style-guide issues found in ${scope}.`;
-	} else if (warnings.length > 0) {
-		statusLine = `⚠️ ${warnings.length} warning${warnings.length === 1 ? "" : "s"}${suggestions.length > 0 ? ` and ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"}` : ""} found in ${scope}.`;
+	if (totalActive === 0 && ignoredCount === 0) {
+		statusLine = `✅ No issues found in ${scope}.`;
+	} else if (totalActive === 0) {
+		statusLine = `✅ No outstanding issues in ${scope}.`;
 	} else {
-		statusLine = `💡 ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"} found in ${scope}.`;
+		const pieces: string[] = [];
+		if (criticalCount > 0) pieces.push(`🚨 ${criticalCount} critical`);
+		if (warningCount > 0)
+			pieces.push(`⚠️ ${warningCount} warning${warningCount === 1 ? "" : "s"}`);
+		if (suggestionCount > 0)
+			pieces.push(
+				`💡 ${suggestionCount} suggestion${suggestionCount === 1 ? "" : "s"}`,
+			);
+		statusLine = `${pieces.join(", ")} found in ${scope}.`;
 	}
 
 	const lines: string[] = [
@@ -181,50 +263,45 @@ export function renderComment(
 		statusLine,
 	];
 
-	if (warnings.length > 0) {
-		lines.push("");
-		lines.push("<details open>");
-		lines.push(`<summary><b>Warnings</b> (${warnings.length})</summary>`);
-		lines.push("<br/>");
-		lines.push("");
-		lines.push("| File | Issue |");
-		lines.push("|---|---|");
-		for (const f of warnings) {
-			lines.push(renderFindingRow(f));
-		}
-		lines.push("");
-		lines.push("</details>");
-	}
+	renderSection(
+		lines,
+		"Code Review",
+		"✅ No code review issues found.",
+		reviews.code,
+		true,
+	);
 
-	if (suggestions.length > 0) {
-		lines.push("");
-		lines.push("<details open>");
-		lines.push(`<summary><b>Suggestions</b> (${suggestions.length})</summary>`);
-		lines.push("<br/>");
-		lines.push("");
-		lines.push("| File | Issue |");
-		lines.push("|---|---|");
-		for (const f of suggestions) {
-			lines.push(renderFindingRow(f));
-		}
-		lines.push("");
-		lines.push("</details>");
-	}
+	renderSection(
+		lines,
+		"Style Guide Review",
+		"✅ No style-guide issues found.",
+		reviews.style,
+		false,
+	);
 
-	if (reconciled.ignored_by_reviewer.length > 0) {
+	// Combined "acknowledged by author" block across both review streams.
+	const ignored = [
+		...reviews.code.ignored_by_reviewer.map((f) => ({
+			f,
+			kind: "Code" as const,
+		})),
+		...reviews.style.ignored_by_reviewer.map((f) => ({
+			f,
+			kind: "Style" as const,
+		})),
+	];
+	if (ignored.length > 0) {
 		lines.push("");
 		lines.push("<details>");
-		lines.push(
-			`<summary>Acknowledged by author (${reconciled.ignored_by_reviewer.length})</summary>`,
-		);
+		lines.push(`<summary>Acknowledged by author (${ignored.length})</summary>`);
 		lines.push("<br/>");
 		lines.push("");
-		lines.push("| File | Issue | Note |");
-		lines.push("|---|---|---|");
-		for (const f of reconciled.ignored_by_reviewer) {
+		lines.push("| Review | File | Issue | Note |");
+		lines.push("|---|---|---|---|");
+		for (const { f, kind } of ignored) {
 			const file = formatFile(f.path, f.line);
 			lines.push(
-				`| ${file} | ${sanitizeTableCell(f.rule)} | ${sanitizeTableCell(f.reviewer_note)} |`,
+				`| ${kind} | ${file} | ${sanitizeTableCell(f.rule)} | ${sanitizeTableCell(f.reviewer_note)} |`,
 			);
 		}
 		lines.push("");

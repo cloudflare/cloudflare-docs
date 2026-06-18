@@ -139,6 +139,31 @@ export async function getPullRequest(
 	return (await res.json()) as GitHubPullRequest;
 }
 
+/**
+ * Fetch the decoded text content of a repo file at a given ref via the
+ * GitHub contents API. Returns null when the file is missing or not text.
+ * Used to load repo-level context (e.g. the root AGENTS.md) into agents.
+ */
+export async function getRepoFileContent(
+	token: string,
+	path: string,
+	ref: string,
+): Promise<string | null> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) return null;
+	const data = (await res.json()) as {
+		encoding?: string;
+		content?: string;
+	};
+	if (data.encoding !== "base64" || typeof data.content !== "string") {
+		return null;
+	}
+	return atob(data.content.replace(/\n/g, ""));
+}
+
 export async function getPullRequestFiles(
 	token: string,
 	pullNumber: number,

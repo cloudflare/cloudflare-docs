@@ -26,6 +26,7 @@ import {
 	getIssueComments,
 	getPullRequest,
 	getPullRequestFiles,
+	getRepoFileContent,
 	postComment,
 	removeReactionFromComment,
 	updateIssueComment,
@@ -40,6 +41,15 @@ import type {
 	StyleGuideFinding,
 	StyleGuideResult,
 } from "../lib/style-guide-results";
+import {
+	runCodeReviewInProcess,
+	selectCodeReviewFiles,
+	CODE_REVIEW_CONCURRENCY,
+} from "../lib/code-review-inproc";
+import type {
+	CodeReviewFinding,
+	CodeReviewResult,
+} from "../lib/code-review-results";
 import { writeDiffToWorkspace } from "../lib/code-review-diff";
 import {
 	BOT_COMMENT_MARKER,
@@ -304,99 +314,130 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			: Promise.resolve(),
 	]);
 
-	let styleGuideResult: StyleGuideResult;
-	try {
-		const styleGuideFiles = selectStyleGuideFiles(allFiles);
-		console.log({
-			message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			files: styleGuideFiles.length,
-			concurrency: STYLE_GUIDE_CONCURRENCY,
-			diffDir,
-			runId,
-			action: "style_guide_fanout_start",
-		});
+	// ── 3. Run both review fan-outs concurrently ───────────────────────────────
+	// The generic code review and the style-guide review run over the same
+	// shared workspace + staged diff, each in its own named harness. They are
+	// independent: one failing degrades that section to an empty result rather
+	// than aborting the whole review. Only a double failure surfaces an error.
+	const styleGuideFiles = selectStyleGuideFiles(allFiles);
+	const codeReviewFiles = selectCodeReviewFiles(allFiles);
 
-		// In-process fan-out: one harness over a single shared workspace,
-		// hydrated once, with one concurrent session per file. A single file's
-		// failure degrades to an empty result rather than aborting the review.
-		styleGuideResult = await runStyleGuideReviewInProcess({
+	console.log({
+		message: `Review fan-out: PR #${input.number} — code-review ${codeReviewFiles.length} file(s), style-guide ${styleGuideFiles.length} file(s)`,
+		event: "code_review_orchestrator",
+		number: input.number,
+		codeReviewFiles: codeReviewFiles.length,
+		styleGuideFiles: styleGuideFiles.length,
+		codeReviewConcurrency: CODE_REVIEW_CONCURRENCY,
+		styleGuideConcurrency: STYLE_GUIDE_CONCURRENCY,
+		diffDir,
+		runId,
+		action: "review_fanout_start",
+	});
+
+	const prMeta = {
+		number: pr.number,
+		title: pr.title,
+		base: pr.base.ref,
+		head: pr.head.ref,
+	};
+
+	// Load the repo's root AGENTS.md at the PR head SHA so the code-review agent
+	// has the repository conventions in context every run. Best-effort: the
+	// review still runs (without that context) if the fetch fails. Skipped when
+	// there are no code files to review.
+	const repoAgentsMd =
+		codeReviewFiles.length > 0
+			? ((await getRepoFileContent(token, "AGENTS.md", currentHeadSha).catch(
+					() => null,
+				)) ?? undefined)
+			: undefined;
+
+	const [codeOutcome, styleOutcome] = await Promise.all([
+		runCodeReviewInProcess({
+			init,
+			workspace,
+			loader,
+			token,
+			headSha: currentHeadSha,
+			repoAgentsMd,
+			prNumber: input.number,
+			pullRequest: prMeta,
+			diffDir,
+			files: codeReviewFiles,
+			runId,
+			concurrency: CODE_REVIEW_CONCURRENCY,
+		}).then(
+			(result) => ({ ok: true as const, result }),
+			(err) => ({ ok: false as const, err }),
+		),
+		runStyleGuideReviewInProcess({
 			init,
 			workspace,
 			loader,
 			prNumber: input.number,
-			pullRequest: {
-				number: pr.number,
-				title: pr.title,
-				base: pr.base.ref,
-				head: pr.head.ref,
-			},
+			pullRequest: prMeta,
 			diffDir,
 			files: styleGuideFiles,
 			runId,
 			concurrency: STYLE_GUIDE_CONCURRENCY,
-		});
+		}).then(
+			(result) => ({ ok: true as const, result }),
+			(err) => ({ ok: false as const, err }),
+		),
+	]);
+
+	if (codeOutcome.ok) {
 		console.log({
-			message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s) across ${styleGuideResult.reviewedFiles.length} file(s)`,
+			message: `Code review returned: PR #${input.number} — ${codeOutcome.result.findings.length} finding(s) across ${codeOutcome.result.reviewedFiles.length} file(s)`,
 			event: "code_review_orchestrator",
 			number: input.number,
-			findings: styleGuideResult.findings.length,
-			reviewedFiles: styleGuideResult.reviewedFiles.length,
+			findings: codeOutcome.result.findings.length,
+			reviewedFiles: codeOutcome.result.reviewedFiles.length,
+			runId,
+			action: "code_review_complete",
+		});
+	} else {
+		console.log({
+			message: `Code review failed: PR #${input.number} — ${codeOutcome.err instanceof Error ? codeOutcome.err.message : String(codeOutcome.err)}`,
+			event: "code_review_orchestrator",
+			number: input.number,
+			error:
+				codeOutcome.err instanceof Error
+					? codeOutcome.err.message
+					: String(codeOutcome.err),
+			runId,
+			action: "code_review_failed",
+		});
+	}
+
+	if (styleOutcome.ok) {
+		console.log({
+			message: `Style-guide review returned: PR #${input.number} — ${styleOutcome.result.findings.length} finding(s) across ${styleOutcome.result.reviewedFiles.length} file(s)`,
+			event: "code_review_orchestrator",
+			number: input.number,
+			findings: styleOutcome.result.findings.length,
+			reviewedFiles: styleOutcome.result.reviewedFiles.length,
 			runId,
 			action: "style_guide_complete",
 		});
-
-		// If the agent returned a known failure summary (e.g. model timed out
-		// and produced no output), surface a failure comment rather than
-		// falsely claiming no issues were found.
-		const FAILURE_SUMMARIES = [
-			"Style-guide review produced no result.",
-			"Style-guide review failed.",
-		];
-		if (
-			styleGuideResult.findings.length === 0 &&
-			FAILURE_SUMMARIES.includes(styleGuideResult.summary)
-		) {
-			if (reviewMode === "comment") {
-				const failureComment = renderFailureComment(currentHeadSha);
-				let targetComment = botComment;
-				if (targetComment === null) {
-					const freshComments = await getIssueComments(token, input.number);
-					targetComment =
-						freshComments.findLast((c) =>
-							c.body?.includes(BOT_COMMENT_MARKER),
-						) ?? null;
-				}
-				await postOrUpdateComment(
-					token,
-					input.number,
-					targetComment,
-					failureComment,
-				).catch(() => {});
-			}
-			return {
-				mode: reviewMode,
-				active: 0,
-				ignored: 0,
-				resolved: 0,
-				summary: styleGuideResult.summary,
-				commentBody: null,
-			};
-		}
-	} catch (err) {
-		const errMsg = err instanceof Error ? err.message : String(err);
+	} else {
 		console.log({
-			message: `Style-guide review failed: PR #${input.number} — ${errMsg}`,
+			message: `Style-guide review failed: PR #${input.number} — ${styleOutcome.err instanceof Error ? styleOutcome.err.message : String(styleOutcome.err)}`,
 			event: "code_review_orchestrator",
 			number: input.number,
-			error: errMsg,
+			error:
+				styleOutcome.err instanceof Error
+					? styleOutcome.err.message
+					: String(styleOutcome.err),
 			runId,
 			action: "style_guide_failed",
 		});
+	}
 
-		// Update the placeholder comment to show failure rather than leaving
-		// it stuck on "Review in progress".
+	// Both reviews failed — surface a failure comment rather than falsely
+	// claiming no issues were found, and stop.
+	if (!codeOutcome.ok && !styleOutcome.ok) {
 		if (reviewMode === "comment") {
 			const failureComment = renderFailureComment(currentHeadSha);
 			try {
@@ -425,64 +466,83 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 				});
 			}
 		}
-
 		return {
 			mode: reviewMode,
 			active: 0,
 			ignored: 0,
 			resolved: 0,
-			summary: "Style-guide review failed.",
+			summary: "Review failed.",
 			commentBody: null,
 		};
 	}
 
+	// A failed review degrades to an empty result with no reviewedFiles, so the
+	// reconciler will not falsely resolve its prior findings.
+	const codeReviewResult: CodeReviewResult = codeOutcome.ok
+		? codeOutcome.result
+		: { findings: [], summary: "Code review failed.", reviewedFiles: [] };
+	const styleGuideResult: StyleGuideResult = styleOutcome.ok
+		? styleOutcome.result
+		: {
+				findings: [],
+				summary: "Style-guide review failed.",
+				reviewedFiles: [],
+			};
+
 	// ── 4. Reconcile findings with review history and human comments ───────────
-	// Load previous findings from R2 (structured) rather than parsing the comment.
+	// Load previous findings from R2 (structured) rather than parsing the
+	// comment. The stored shape is `{ code, style }`; legacy keys hold a bare
+	// array (style-guide findings only) and are still honored.
 	const previousReviewKey = previousReviewedSha
 		? `${prDir}/review-${previousReviewedSha}.json`
 		: null;
-	let previousFindings: StyleGuideFinding[] = [];
+	let previousCodeFindings: CodeReviewFinding[] = [];
+	let previousStyleFindings: StyleGuideFinding[] = [];
 	if (previousReviewKey) {
 		try {
 			const obj = await bucket.get(previousReviewKey);
 			if (obj) {
-				previousFindings = JSON.parse(await obj.text()) as StyleGuideFinding[];
+				const parsed = JSON.parse(await obj.text());
+				if (Array.isArray(parsed)) {
+					previousStyleFindings = parsed as StyleGuideFinding[];
+				} else {
+					previousCodeFindings = (parsed.code ?? []) as CodeReviewFinding[];
+					previousStyleFindings = (parsed.style ?? []) as StyleGuideFinding[];
+				}
 			}
 		} catch {
 			// Non-fatal — fall back to empty previous findings
 		}
 	}
 
-	let reconciled: ReconcileResult;
+	// Reconcile one review stream (code or style) against its own previous
+	// findings. Both streams see the same human comments. When there is nothing
+	// to reconcile against, pass the findings through deterministically.
+	const reconcileStream = async (
+		streamLabel: "code" | "style",
+		currentFindings: (CodeReviewFinding | StyleGuideFinding)[],
+		reviewedFiles: string[],
+		previousFindings: (CodeReviewFinding | StyleGuideFinding)[],
+		fallbackSummary: string,
+	): Promise<ReconcileResult> => {
+		const needsReconciliation =
+			previousFindings.length > 0 || humanCommentsAfterBot.length > 0;
 
-	const needsReconciliation =
-		previousFindings.length > 0 || humanCommentsAfterBot.length > 0;
+		if (!needsReconciliation) {
+			return {
+				active: currentFindings,
+				ignored_by_reviewer: [],
+				resolved: [],
+				summary: fallbackSummary,
+			};
+		}
 
-	if (!needsReconciliation) {
-		reconciled = {
-			active: styleGuideResult.findings,
-			ignored_by_reviewer: [],
-			resolved: [],
-			summary:
-				styleGuideResult.findings.length === 0
-					? "No style-guide issues found."
-					: `${styleGuideResult.findings.length} finding(s); no prior review to reconcile against.`,
-		};
-		// console.log({
-		// 	message: `Reconciliation skipped (deterministic): PR #${input.number} — no prior findings and no human comments`,
-		// 	event: "code_review_orchestrator",
-		// 	number: input.number,
-		// 	active: reconciled.active.length,
-		// 	runId,
-		// 	action: "reconciliation_skipped",
-		// });
-	} else {
 		const { data } = await session.skill("reconcile-code-review", {
 			model: "cloudflare/@cf/zai-org/glm-4.7-flash",
 			args: {
 				pullRequest: { number: input.number },
-				currentFindings: styleGuideResult.findings,
-				reviewedFiles: styleGuideResult.reviewedFiles,
+				currentFindings,
+				reviewedFiles,
 				previousFindings,
 				humanComments: humanCommentsAfterBot.map((c) => ({
 					author: c.user?.login ?? "unknown",
@@ -494,17 +554,18 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			result: ReconcileResultSchema,
 		});
 
-		reconciled = data ?? {
-			active: styleGuideResult.findings,
+		const reconciled = data ?? {
+			active: currentFindings,
 			ignored_by_reviewer: [],
 			resolved: [],
-			summary: styleGuideResult.summary,
+			summary: fallbackSummary,
 		};
 
 		console.log({
-			message: `Reconciliation complete: PR #${input.number} — ${reconciled.active.length} active, ${reconciled.ignored_by_reviewer.length} ignored, ${reconciled.resolved.length} resolved`,
+			message: `Reconciliation complete (${streamLabel}): PR #${input.number} — ${reconciled.active.length} active, ${reconciled.ignored_by_reviewer.length} ignored, ${reconciled.resolved.length} resolved`,
 			event: "code_review_orchestrator",
 			number: input.number,
+			stream: streamLabel,
 			active: reconciled.active.length,
 			ignored: reconciled.ignored_by_reviewer.length,
 			resolved: reconciled.resolved.length,
@@ -512,29 +573,67 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			runId,
 			action: "reconciliation_complete",
 		});
-	}
+
+		return reconciled;
+	};
+
+	const reconciledCode = await reconcileStream(
+		"code",
+		codeReviewResult.findings,
+		codeReviewResult.reviewedFiles,
+		previousCodeFindings,
+		codeReviewResult.findings.length === 0
+			? "No code review issues found."
+			: `${codeReviewResult.findings.length} finding(s); no prior review to reconcile against.`,
+	);
+	const reconciledStyle = await reconcileStream(
+		"style",
+		styleGuideResult.findings,
+		styleGuideResult.reviewedFiles,
+		previousStyleFindings,
+		styleGuideResult.findings.length === 0
+			? "No style-guide issues found."
+			: `${styleGuideResult.findings.length} finding(s); no prior review to reconcile against.`,
+	);
 
 	// ── 5. Persist findings to R2 for future reconciliation ───────────────────
 	const currentReviewKey = `${prDir}/review-${currentHeadSha}.json`;
-	await bucket.put(currentReviewKey, JSON.stringify(reconciled.active));
+	await bucket.put(
+		currentReviewKey,
+		JSON.stringify({
+			code: reconciledCode.active,
+			style: reconciledStyle.active,
+		}),
+	);
 
 	// ── 6. Render the review comment ───────────────────────────────────────────
 	const commentBody = renderComment(
-		reconciled,
+		{ code: reconciledCode, style: reconciledStyle },
 		currentHeadSha,
 		input.forceFullReview,
 	);
 
 	// ── 7. Log or post ─────────────────────────────────────────────────────────
+	const totalActive =
+		reconciledCode.active.length + reconciledStyle.active.length;
+	const totalIgnored =
+		reconciledCode.ignored_by_reviewer.length +
+		reconciledStyle.ignored_by_reviewer.length;
+	const totalResolved =
+		reconciledCode.resolved.length + reconciledStyle.resolved.length;
+	const combinedSummary = `Code review: ${reconciledCode.summary} Style guide: ${reconciledStyle.summary}`;
+
 	if (reviewMode === "log") {
 		console.log({
-			message: `Code review complete (log mode): PR #${input.number} — ${reconciled.active.length} active, ${reconciled.ignored_by_reviewer.length} ignored, ${reconciled.resolved.length} resolved`,
+			message: `Review complete (log mode): PR #${input.number} — ${totalActive} active, ${totalIgnored} ignored, ${totalResolved} resolved`,
 			event: "code_review_orchestrator",
 			number: input.number,
 			mode: reviewMode,
-			active: reconciled.active.length,
-			ignored: reconciled.ignored_by_reviewer.length,
-			resolved: reconciled.resolved.length,
+			active: totalActive,
+			ignored: totalIgnored,
+			resolved: totalResolved,
+			codeActive: reconciledCode.active.length,
+			styleActive: reconciledStyle.active.length,
 			runId,
 			action: "complete_log_mode",
 			commentBody,
@@ -567,13 +666,13 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		}
 
 		console.log({
-			message: `Code review comment updated with final review: PR #${input.number}`,
+			message: `Review comment updated with final review: PR #${input.number}`,
 			event: "code_review_orchestrator",
 			number: input.number,
 			mode: reviewMode,
-			active: reconciled.active.length,
-			ignored: reconciled.ignored_by_reviewer.length,
-			resolved: reconciled.resolved.length,
+			active: totalActive,
+			ignored: totalIgnored,
+			resolved: totalResolved,
 			runId,
 			action: "complete_comment_posted",
 		});
@@ -581,10 +680,10 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 
 	return {
 		mode: reviewMode,
-		active: reconciled.active.length,
-		ignored: reconciled.ignored_by_reviewer.length,
-		resolved: reconciled.resolved.length,
-		summary: reconciled.summary,
+		active: totalActive,
+		ignored: totalIgnored,
+		resolved: totalResolved,
+		summary: combinedSummary,
 		commentBody,
 	};
 }

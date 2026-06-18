@@ -89,22 +89,25 @@ export function makeGetPrFilesTool(
 
 // ── Tool: read_repo_file ──────────────────────────────────────────────────────
 
-export function makeReadRepoFileTool(token: string): ToolDefinition {
+export function makeReadRepoFileTool(
+	token: string,
+	defaultRef: string = DEFAULT_REF,
+): ToolDefinition {
 	return {
 		name: "read_repo_file",
-		description: `Read any text file from the cloudflare/cloudflare-docs repo. Use for package.json, tsconfig, source files, etc. The default ref is "${DEFAULT_REF}".`,
+		description: `Read any text file from the cloudflare/cloudflare-docs repo. Use for package.json, tsconfig, source files, etc. The default ref is "${defaultRef}".`,
 		parameters: Type.Object({
 			path: Type.String({
 				description:
 					"File path relative to repo root, e.g. 'package.json' or 'src/util/algolia.ts'",
 			}),
 			ref: Type.Optional(
-				Type.String({ description: `Git ref. Defaults to "${DEFAULT_REF}".` }),
+				Type.String({ description: `Git ref. Defaults to "${defaultRef}".` }),
 			),
 		}),
 		async execute(args) {
 			const path = String(args.path ?? "");
-			const ref = String(args.ref ?? DEFAULT_REF);
+			const ref = String(args.ref ?? defaultRef);
 			const res = await fetch(
 				`https://api.github.com/repos/${REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`,
 				{ headers: apiHeaders(token) },
@@ -139,7 +142,7 @@ export function makeReadRepoFileTool(token: string): ToolDefinition {
 export function makeSearchRepoTool(token: string): ToolDefinition {
 	return {
 		name: "search_repo",
-		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippets. Use to find import sites, usages, and configuration for a package. Limited to 20 results. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
+		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippets. Use to find import sites, usages, and callers. Limited to 20 results. Note: code search indexes the default branch, so results may not reflect changes on the PR branch — use read_repo_file for exact current content. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
 		parameters: Type.Object({
 			query: Type.String({
 				description:
@@ -340,4 +343,18 @@ export function makeDependabotReviewTools(
 		makeTraceDependencyTool(token),
 		makeGetNpmPackageInfoTool(),
 	];
+}
+
+// ── Factory: code-review tools ────────────────────────────────────────────────
+//
+// Tools for the generic code-review specialist. `read_repo_file` defaults to
+// the PR head SHA so the agent reads post-change file content for full context
+// (the diff patch alone is staged in the workspace). `search_repo` indexes the
+// default branch only, so it is best-effort for finding usages/callers.
+
+export function makeCodeReviewTools(
+	token: string,
+	headSha: string,
+): ToolDefinition[] {
+	return [makeReadRepoFileTool(token, headSha), makeSearchRepoTool(token)];
 }
