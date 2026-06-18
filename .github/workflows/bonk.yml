@@ -8,7 +8,7 @@ on:
   pull_request_review:
     types: [submitted]
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
 
 concurrency:
   # intentionally hardcoded so that all Bonk workflows coexist peacefully
