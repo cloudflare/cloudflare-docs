@@ -7,11 +7,22 @@ products:
 date: 2026-06-18
 ---
 
-You can create PlanetScale Postgres and MySQL databases from Cloudflare and bill PlanetScale database usage through your Cloudflare account as a pay-as-you-go customer. PlanetScale usage appears on your Cloudflare invoice each billing period as a dollar total at PlanetScale's standard [pricing](https://planetscale.com/pricing). You can introspect per-database billing usage via PlanetScale's [dashboard](https://planetscale.com/docs/billing#organization-usage-and-billing-page).
+import { DashButton } from "~/components";
+
+You can create PlanetScale Postgres and MySQL databases from Cloudflare and bill PlanetScale database usage through your Cloudflare account as a pay-as-you-go customer. 
+
+Create a PlanetScale database from the Cloudflare dashboard to check out globally distirbuted Workers optimized for regional data access.
+
+<DashButton
+	url="/?to=/:account/workers/hyperdrive"
+	buttonName="Create a PlanetScale database"
+/>
 
 ![Request flow from a user to Workers, Hyperdrive caches, connection pools, and PlanetScale.](~/assets/images/hyperdrive/planetscale-request-flow.svg)
 
 PlanetScale databases created from Cloudflare work with [Workers](/workers/) through [Hyperdrive](/hyperdrive/). Hyperdrive manages database connection pools and query caching, so you can use PlanetScale as a centralized relational database for Workers applications without changing your database drivers, object-relational mapping (ORM) libraries, or SQL tooling.
+
+PlanetScale usage appears on your Cloudflare invoice each billing period as a dollar total at PlanetScale's standard [pricing](https://planetscale.com/pricing). You can introspect per-database billing usage via PlanetScale's [dashboard](https://planetscale.com/docs/billing#organization-usage-and-billing-page).
 
 When you create a PlanetScale database from the Cloudflare dashboard, you receive the same PlanetScale developer experience, including development branches, query insights, and Model Context Protocol (MCP) server support for agents.
 
