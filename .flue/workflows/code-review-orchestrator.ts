@@ -285,7 +285,10 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 			runId: specialistRunId,
 			baseUrl,
 			headers: internalHeaders,
-			timeoutMs: 10 * 60 * 1000,
+			// Generous: a large code review is many multi-turn agent sessions with
+			// slow model calls (p90 ~45s/call). Specialists run in their own DO via
+			// durable execution, so a long poll only holds this lightweight loop.
+			timeoutMs: 20 * 60 * 1000,
 			label: `${label} PR #${input.number}`,
 		});
 

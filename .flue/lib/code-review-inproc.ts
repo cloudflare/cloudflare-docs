@@ -40,7 +40,12 @@ export interface CodeReviewPullRequest {
 	head: string;
 }
 
-export const CODE_REVIEW_MAX_FILES = 20;
+// Capped at 10 (below the style-guide fan-out's 20): each code-review file is a
+// multi-turn agent session (parse patch, read the full file, review), so large
+// PRs otherwise blow both the specialist DO's 128 MB isolate and the
+// orchestrator's poll deadline. 10 covers virtually all docs PRs; the rare
+// larger PR is reviewed for its 10 largest changed files.
+export const CODE_REVIEW_MAX_FILES = 10;
 // Capped at 3 (below the style-guide fan-out's 5): code-review sessions are
 // heavier — each reads full file content and carries the injected AGENTS.md —
 // so 5 concurrent sessions exceeded the specialist Durable Object's 128 MB
