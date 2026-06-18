@@ -91,6 +91,8 @@ Wrangler prompts for the secret and stores it in [Secrets Store](/secrets-store)
 
 Use `--secret-name` to name or reuse a secret, `--secret-store-id` to target a specific Secrets Store store, and `--skip-confirmation` for non-interactive runs. In CI or scripts, pass the secret through `stdin`.
 
+If the `--secret-name` you provide already exists in Secrets Store, Wrangler reuses that secret and does not prompt for the credential. Supply only the public credential (for example `--dockerhub-username` or `--aws-access-key-id`) and `--secret-name`. Use this when you have already stored the credential in Secrets Store yourself.
+
 ### Use private Docker Hub images
 
 Configure Docker Hub in Wrangler using these values:
