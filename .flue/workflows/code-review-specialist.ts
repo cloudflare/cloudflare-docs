@@ -23,7 +23,6 @@ import {
 	getRepoFileContent,
 } from "../lib/github";
 import { writeDiffToWorkspace } from "../lib/code-review-diff";
-import type { DiffMode } from "../lib/code-review-state";
 import {
 	CODE_REVIEW_CONCURRENCY,
 	runCodeReviewInProcess,
