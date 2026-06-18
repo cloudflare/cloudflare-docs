@@ -7,7 +7,7 @@ entries:
     title: RealtimeKit React Native Core 1.1.0
     description: |-
       **Features**
-      
+
       - Added a dedicated error code `0014` for media (WebRTC) connection failures during room join, making it easier to distinguish media failures from socket and signaling failures.
 
       **Enhancements**
