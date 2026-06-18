@@ -268,8 +268,12 @@ package.json @cloudflare/content-engineering
 
 # Radar
 
-/src/content/docs/radar/ @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners
-/src/content/release-notes/radar.yaml @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners
+/src/content/changelog/radar/ @cloudflare/pm-changelogs @cloudflare/product-owners @laiyi-ohlsen
+/src/content/docs/radar/ @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners @laiyi-ohlsen
+/src/content/release-notes/radar.yaml @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners @laiyi-ohlsen
+/src/assets/images/radar/ @cloudflare/pm-changelogs @cloudflare/product-owners @laiyi-ohlsen
+/src/content/directory/radar.yaml @cloudflare/product-owners @laiyi-ohlsen
+/src/icons/radar.svg @cloudflare/product-owners @laiyi-ohlsen
 
 # Reference architecture
 
