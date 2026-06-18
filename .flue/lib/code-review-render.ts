@@ -50,7 +50,14 @@ export type ReconcileResult = v.InferOutput<typeof ReconcileResultSchema>;
 export interface RenderReviewInput {
 	code: ReconcileResult;
 	style: ReconcileResult;
+	/** True when the code review degraded (its findings may be incomplete). */
+	codeFailed?: boolean;
+	/** True when the style-guide review degraded (its findings may be incomplete). */
+	styleFailed?: boolean;
 }
+
+const SECTION_FAILURE_NOTE =
+	"❌ This review could not complete this run; results may be incomplete. It will retry on the next push.";
 
 // ── Rendering helpers ─────────────────────────────────────────────────────────
 
@@ -148,12 +155,10 @@ export function renderFailureComment(headSha: string): string {
 
 /** Active findings (ignored ones removed) split by severity, for one section. */
 function activeBySeverity(reconciled: ReconcileResult) {
-	const ignoredKeys = new Set(
-		reconciled.ignored_by_reviewer.map((f) => `${f.path}:${f.line}:${f.rule}`),
-	);
-	const active = reconciled.active.filter(
-		(f) => !ignoredKeys.has(`${f.path}:${f.line}:${f.rule}`),
-	);
+	// Match by stable id so two findings sharing path/line/rule are not both
+	// dropped when only one is acknowledged.
+	const ignoredIds = new Set(reconciled.ignored_by_reviewer.map((f) => f.id));
+	const active = reconciled.active.filter((f) => !ignoredIds.has(f.id));
 	return {
 		active,
 		critical: active.filter((f) => f.severity === "critical"),
@@ -194,6 +199,7 @@ function renderSection(
 	noneMessage: string,
 	reconciled: ReconcileResult,
 	includeCritical: boolean,
+	failed: boolean,
 ): void {
 	const { active, critical, warnings, suggestions } =
 		activeBySeverity(reconciled);
@@ -201,9 +207,18 @@ function renderSection(
 	lines.push("");
 	lines.push(`### ${heading}`);
 
-	if (active.length === 0) {
+	// A degraded review must not claim "no issues" — surface the failure. Any
+	// findings carried forward from a prior review are still shown below it.
+	if (failed) {
 		lines.push("");
-		lines.push(noneMessage);
+		lines.push(SECTION_FAILURE_NOTE);
+	}
+
+	if (active.length === 0) {
+		if (!failed) {
+			lines.push("");
+			lines.push(noneMessage);
+		}
 		return;
 	}
 
@@ -235,11 +250,19 @@ export function renderComment(
 		reviews.code.ignored_by_reviewer.length +
 		reviews.style.ignored_by_reviewer.length;
 
+	const anyFailed = Boolean(reviews.codeFailed || reviews.styleFailed);
+	const failureSuffix =
+		" ⚠️ Part of the review could not complete and will retry on the next push.";
+
 	let statusLine: string;
 	if (totalActive === 0 && ignoredCount === 0) {
-		statusLine = `✅ No issues found in ${scope}.`;
+		statusLine = anyFailed
+			? `⚠️ Part of the review could not complete in ${scope} — it will retry on the next push.`
+			: `✅ No issues found in ${scope}.`;
 	} else if (totalActive === 0) {
-		statusLine = `✅ No outstanding issues in ${scope}.`;
+		statusLine =
+			`✅ No outstanding issues in ${scope}.` +
+			(anyFailed ? failureSuffix : "");
 	} else {
 		const pieces: string[] = [];
 		if (criticalCount > 0) pieces.push(`🚨 ${criticalCount} critical`);
@@ -249,7 +272,9 @@ export function renderComment(
 			pieces.push(
 				`💡 ${suggestionCount} suggestion${suggestionCount === 1 ? "" : "s"}`,
 			);
-		statusLine = `${pieces.join(", ")} found in ${scope}.`;
+		statusLine =
+			`${pieces.join(", ")} found in ${scope}.` +
+			(anyFailed ? failureSuffix : "");
 	}
 
 	const lines: string[] = [
@@ -269,6 +294,7 @@ export function renderComment(
 		"✅ No code review issues found.",
 		reviews.code,
 		true,
+		Boolean(reviews.codeFailed),
 	);
 
 	renderSection(
@@ -277,6 +303,7 @@ export function renderComment(
 		"✅ No style-guide issues found.",
 		reviews.style,
 		false,
+		Boolean(reviews.styleFailed),
 	);
 
 	// Combined "acknowledged by author" block across both review streams.

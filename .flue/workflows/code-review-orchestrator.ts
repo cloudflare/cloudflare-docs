@@ -342,13 +342,16 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		head: pr.head.ref,
 	};
 
-	// Load the repo's root AGENTS.md at the PR head SHA so the code-review agent
-	// has the repository conventions in context every run. Best-effort: the
-	// review still runs (without that context) if the fetch fails. Skipped when
-	// there are no code files to review.
+	// Load the repo's root AGENTS.md so the code-review agent has the repository
+	// conventions in context every run. Fetched from the PR base ref (trusted),
+	// NOT the PR head — the content is injected into the agent's instructions,
+	// so reading it from the head would let a PR modify AGENTS.md to inject
+	// adversarial instructions into the review agent. Best-effort: the review
+	// still runs (without that context) if the fetch fails. Skipped when there
+	// are no code files to review.
 	const repoAgentsMd =
 		codeReviewFiles.length > 0
-			? ((await getRepoFileContent(token, "AGENTS.md", currentHeadSha).catch(
+			? ((await getRepoFileContent(token, "AGENTS.md", pr.base.ref).catch(
 					() => null,
 				)) ?? undefined)
 			: undefined;
@@ -608,7 +611,12 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 
 	// ── 6. Render the review comment ───────────────────────────────────────────
 	const commentBody = renderComment(
-		{ code: reconciledCode, style: reconciledStyle },
+		{
+			code: reconciledCode,
+			style: reconciledStyle,
+			codeFailed: !codeOutcome.ok,
+			styleFailed: !styleOutcome.ok,
+		},
 		currentHeadSha,
 		input.forceFullReview,
 	);

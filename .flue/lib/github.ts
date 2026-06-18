@@ -141,19 +141,28 @@ export async function getPullRequest(
 
 /**
  * Fetch the decoded text content of a repo file at a given ref via the
- * GitHub contents API. Returns null when the file is missing or not text.
- * Used to load repo-level context (e.g. the root AGENTS.md) into agents.
+ * GitHub contents API. Returns null when the file is missing (404) or not
+ * base64 text; throws on other non-2xx responses (rate limit, auth, 5xx) so
+ * callers can distinguish "absent" from "failed to load". Used to load
+ * repo-level context (e.g. the root AGENTS.md) into agents.
  */
 export async function getRepoFileContent(
 	token: string,
 	path: string,
 	ref: string,
 ): Promise<string | null> {
+	// Encode each path segment but preserve the slashes the contents API needs.
+	const encodedPath = path.split("/").map(encodeURIComponent).join("/");
 	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`,
+		`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
 		{ headers: apiHeaders(token) },
 	);
-	if (!res.ok) return null;
+	if (res.status === 404) return null;
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get repo file ${path}@${ref} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
 	const data = (await res.json()) as {
 		encoding?: string;
 		content?: string;
@@ -161,7 +170,11 @@ export async function getRepoFileContent(
 	if (data.encoding !== "base64" || typeof data.content !== "string") {
 		return null;
 	}
-	return atob(data.content.replace(/\n/g, ""));
+	// atob yields a Latin-1 byte string; decode those bytes as UTF-8 so
+	// non-ASCII content (e.g. em dashes in AGENTS.md) is not mojibake.
+	const binary = atob(data.content.replace(/\n/g, ""));
+	const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+	return new TextDecoder().decode(bytes);
 }
 
 export async function getPullRequestFiles(

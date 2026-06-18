@@ -1,5 +1,5 @@
 /**
- * GitHub API-backed Flue tools for the Dependabot review agent.
+ * GitHub API-backed Flue tools for the Dependabot and code-review agents.
  *
  * These tools expose repo access to the model as structured tool calls,
  * using a GitHub App installation token from trusted workflow code.
