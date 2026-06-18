@@ -47,7 +47,7 @@ wrangler login [OPTIONS]
 - `--callback-port` <Type text="string" /> <MetaInfo text="optional" />
   - Defaults to `8976`. Sets the port where Wrangler should listen for the OAuth callback.
 - `--use-keyring` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Store the OAuth credentials in your operating system's keychain instead of the default plaintext TOML file. Refer to [Storing OAuth credentials in the OS keychain](#storing-oauth-credentials-in-the-os-keychain) for details. Use `--no-use-keyring` to opt back out. The choice is persisted across Wrangler invocations.
+  - Stores the OAuth credentials in your operating system keychain instead of the default plaintext TOML file. Refer to [Storing OAuth credentials in the OS keychain](#storing-oauth-credentials-in-the-os-keychain) for details. Use `--no-use-keyring` to opt back out. The choice is persisted across Wrangler invocations.
 
 :::note
 
@@ -115,7 +115,7 @@ npx wrangler login --callback-host=0.0.0.0 --callback-port=9000
 
 ### Storing OAuth credentials in the OS keychain
 
-By default, Wrangler stores the OAuth access token and refresh token returned by `wrangler login` in a plaintext TOML file under the global Wrangler config directory (typically `~/.config/.wrangler/config/default.toml`). Pass `--use-keyring` to opt in to a more secure storage path that uses your operating system's keychain:
+By default, Wrangler stores the OAuth access token and refresh token returned by `wrangler login` in a plaintext TOML file under the global Wrangler config directory (typically `~/.config/.wrangler/config/default.toml`). Pass `--use-keyring` to opt in to a more secure storage path that uses your operating system keychain:
 
 ```sh
 npx wrangler login --use-keyring
