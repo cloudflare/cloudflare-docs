@@ -96,9 +96,17 @@ export type GetChangelogsOptions = {
 	filter?: (entry: CollectionEntry<"changelog">) => boolean;
 };
 
-export async function getChangelogs({
-	filter,
-}: GetChangelogsOptions): Promise<Array<CollectionEntry<"changelog">>> {
+// The normalized + sorted set of changelog entries is identical across every
+// feed; only the caller-supplied `filter` differs. Building it involves a full
+// `getCollection` scan plus a `getEntry` validation per entry plus loading the
+// WARP releases, so we compute it once and reuse it. Without this, the ~190
+// changelog feeds (global, per-product, per-area) each re-ran the entire scan.
+let changelogBasePromise: Promise<Array<CollectionEntry<"changelog">>> | null =
+	null;
+
+async function getChangelogBase(): Promise<
+	Array<CollectionEntry<"changelog">>
+> {
 	let entries = await getCollection("changelog");
 
 	entries = await Promise.all(
@@ -128,10 +136,6 @@ export async function getChangelogs({
 
 	entries = entries.concat(await getWARPReleases());
 
-	if (filter) {
-		entries = entries.filter((e) => filter(e));
-	}
-
 	// Exclude entries with a date in the future so that changelog posts
 	// merged ahead of time do not appear until their publish date.
 	const now = new Date();
@@ -142,6 +146,19 @@ export async function getChangelogs({
 	);
 
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}
+
+export async function getChangelogs({
+	filter,
+}: GetChangelogsOptions): Promise<Array<CollectionEntry<"changelog">>> {
+	if (!changelogBasePromise) {
+		changelogBasePromise = getChangelogBase();
+	}
+
+	const entries = await changelogBasePromise;
+
+	// Always return a new array so callers can't mutate the cached base.
+	return filter ? entries.filter((e) => filter(e)) : [...entries];
 }
 
 // Pre-computed set of all product IDs that have at least one visible changelog
