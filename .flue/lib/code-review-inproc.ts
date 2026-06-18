@@ -41,7 +41,11 @@ export interface CodeReviewPullRequest {
 }
 
 export const CODE_REVIEW_MAX_FILES = 20;
-export const CODE_REVIEW_CONCURRENCY = 5;
+// Capped at 3 (below the style-guide fan-out's 5): code-review sessions are
+// heavier — each reads full file content and carries the injected AGENTS.md —
+// so 5 concurrent sessions exceeded the specialist Durable Object's 128 MB
+// isolate limit and triggered resets. 3 keeps peak heap under the limit.
+export const CODE_REVIEW_CONCURRENCY = 3;
 
 /**
  * Paths excluded from code review: lockfiles, generated output, vendored
