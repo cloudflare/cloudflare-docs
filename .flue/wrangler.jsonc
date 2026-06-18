@@ -59,6 +59,17 @@
 			"tag": "v4",
 			"deleted_classes": ["FlueStyleGuideReviewWorkflow"],
 		},
+		{
+			// The code review and style-guide fan-outs were split back out of the
+			// orchestrator into their own specialist workflows, so each runs in its
+			// own Durable Object isolate (own memory budget) instead of competing
+			// for the orchestrator DO's. See workflows/{code-review,style-guide}-specialist.ts.
+			"tag": "v5",
+			"new_sqlite_classes": [
+				"FlueCodeReviewSpecialistWorkflow",
+				"FlueStyleGuideSpecialistWorkflow",
+			],
+		},
 	],
 	"observability": {
 		"enabled": true,

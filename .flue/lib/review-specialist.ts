@@ -1,0 +1,93 @@
+/**
+ * Shared contract between the code-review orchestrator and the review
+ * specialist workflows (code-review-specialist, style-guide-specialist).
+ *
+ * The orchestrator decides the diff mode and passes a small PR descriptor;
+ * each specialist self-fetches its own files and stages its own diff. No diff
+ * data is sent in the payload or staged in R2 — only this lightweight metadata.
+ */
+import type { DiffMode } from "./code-review-state";
+import type { DiffPullRequest } from "./code-review-diff";
+
+/** PR descriptor carried in the specialist admit payload (small, JSON-safe). */
+export interface ReviewSpecialistPrMeta {
+	number: number;
+	title: string;
+	body: string;
+	author: string;
+	base: string;
+	head: string;
+	labels: string[];
+}
+
+export interface ReviewSpecialistPayload {
+	eventType: "pull_request";
+	/** PR number. */
+	number: number;
+	/** PR head SHA — specialists read post-change file content at this ref. */
+	headSha: string;
+	/** Diff mode decided by the orchestrator (specialists self-heal on force-push). */
+	diffMode: DiffMode;
+	/** PR metadata needed to stage the diff context. */
+	pr: ReviewSpecialistPrMeta;
+}
+
+/** Build the orchestrator->specialist payload PR descriptor from a full PR. */
+export function toReviewSpecialistPrMeta(pr: {
+	number: number;
+	title: string;
+	body: string | null;
+	user?: { login?: string } | null;
+	base: { ref: string };
+	head: { ref: string };
+	labels: { name: string }[];
+}): ReviewSpecialistPrMeta {
+	return {
+		number: pr.number,
+		title: pr.title,
+		body: pr.body ?? "",
+		author: pr.user?.login ?? "",
+		base: pr.base.ref,
+		head: pr.head.ref,
+		labels: pr.labels.map((l) => l.name),
+	};
+}
+
+/** Adapt the payload PR descriptor into the shape `writeDiffToWorkspace` wants. */
+export function toDiffPullRequest(pr: ReviewSpecialistPrMeta): DiffPullRequest {
+	return {
+		number: pr.number,
+		title: pr.title,
+		body: pr.body,
+		user: { login: pr.author },
+		base: { ref: pr.base },
+		head: { ref: pr.head },
+		labels: pr.labels.map((name) => ({ name })),
+	};
+}
+
+/** Validate and normalize an incoming specialist payload. */
+export function parseReviewSpecialistPayload(
+	payload: unknown,
+	workflowName: string,
+): ReviewSpecialistPayload {
+	const input = payload as Partial<ReviewSpecialistPayload>;
+	if (
+		input.eventType !== "pull_request" ||
+		typeof input.number !== "number" ||
+		typeof input.headSha !== "string" ||
+		!input.diffMode ||
+		!input.pr
+	) {
+		throw new Error(
+			`[flue] ${workflowName} requires payload { eventType: "pull_request", number, headSha, diffMode, pr }.`,
+		);
+	}
+	return {
+		eventType: input.eventType,
+		number: input.number,
+		headSha: input.headSha,
+		diffMode: input.diffMode,
+		pr: input.pr,
+	};
+}

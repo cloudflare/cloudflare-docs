@@ -41,10 +41,7 @@ export interface CodeReviewPullRequest {
 }
 
 export const CODE_REVIEW_MAX_FILES = 20;
-// Lower than the style-guide fan-out (5): code-review sessions are heavier
-// (full-file reads + injected AGENTS.md), so fewer run at once to keep the
-// Durable Object isolate under its memory limit.
-export const CODE_REVIEW_CONCURRENCY = 3;
+export const CODE_REVIEW_CONCURRENCY = 5;
 
 /**
  * Paths excluded from code review: lockfiles, generated output, vendored

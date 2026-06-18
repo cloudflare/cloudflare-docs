@@ -6,7 +6,21 @@
  * Durable Object — can read the context with the `code` tool. No R2 round-trip.
  */
 import type { getDefaultWorkspace } from "../connectors/cloudflare-shell";
-import type { getPullRequestFiles, GitHubPullRequest } from "./github";
+import type { getPullRequestFiles } from "./github";
+
+/**
+ * Minimal PR shape needed to stage the diff context. A full `GitHubPullRequest`
+ * is assignable to this, and specialists can also construct it from a payload.
+ */
+export interface DiffPullRequest {
+	number: number;
+	title: string;
+	body: string | null;
+	user?: { login?: string } | null;
+	base: { ref: string };
+	head: { ref: string };
+	labels: { name: string }[];
+}
 
 export interface DiffManifestEntry {
 	filename: string;
@@ -33,7 +47,7 @@ export async function writeDiffToWorkspace(
 	workspace: ReturnType<typeof getDefaultWorkspace>,
 	diffDir: string,
 	files: Awaited<ReturnType<typeof getPullRequestFiles>>,
-	pr: GitHubPullRequest,
+	pr: DiffPullRequest,
 ): Promise<void> {
 	const manifest: DiffManifestEntry[] = files.map((file) => {
 		const safeName = file.filename.replace(/\//g, "__");

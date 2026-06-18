@@ -21,36 +21,25 @@ import {
 } from "../connectors/cloudflare-shell";
 import {
 	addReactionToComment,
-	comparePullRequestHeads,
 	getInstallationToken,
 	getIssueComments,
 	getPullRequest,
-	getPullRequestFiles,
-	getRepoFileContent,
 	postComment,
 	removeReactionFromComment,
 	updateIssueComment,
 	type GitHubIssueComment,
 } from "../lib/github";
-import {
-	runStyleGuideReviewInProcess,
-	selectStyleGuideFiles,
-	STYLE_GUIDE_CONCURRENCY,
-} from "../lib/style-guide-inproc";
 import type {
 	StyleGuideFinding,
 	StyleGuideResult,
 } from "../lib/style-guide-results";
-import {
-	runCodeReviewInProcess,
-	selectCodeReviewFiles,
-	CODE_REVIEW_CONCURRENCY,
-} from "../lib/code-review-inproc";
 import type {
 	CodeReviewFinding,
 	CodeReviewResult,
 } from "../lib/code-review-results";
-import { writeDiffToWorkspace } from "../lib/code-review-diff";
+import { getInternalHeaders } from "../lib/internal-auth";
+import { admitWorkflow, pollRun } from "../lib/poll-run";
+import { toReviewSpecialistPrMeta } from "../lib/review-specialist";
 import {
 	BOT_COMMENT_MARKER,
 	type DiffMode,
@@ -84,7 +73,7 @@ interface CodeReviewOrchestratorPayload {
 	triggerEyesReactionId?: number | null;
 }
 
-export async function run({ id: runId, init, payload, env }: FlueContext) {
+export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
 
@@ -208,196 +197,116 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		: extractReviewedHeadSha(botComment?.body ?? null);
 
 	// Determine diff mode: incremental if we have a prior reviewed SHA that
-	// differs from the current head; full otherwise.
-	let diffMode: DiffMode;
-	let allFiles: Awaited<ReturnType<typeof getPullRequestFiles>>;
-
-	if (
+	// differs from the current head; full otherwise. The orchestrator no longer
+	// fetches the file list — each specialist self-fetches its own diff from
+	// this descriptor and self-heals to a full diff if the base SHA is gone.
+	const diffMode: DiffMode =
 		!input.forceFullReview &&
 		previousReviewedSha &&
 		previousReviewedSha !== currentHeadSha
-	) {
-		// Attempt incremental diff — commits since last review
-		const compare = await comparePullRequestHeads(
-			token,
-			previousReviewedSha,
-			currentHeadSha,
-		);
+			? {
+					type: "incremental",
+					fromSha: previousReviewedSha,
+					toSha: currentHeadSha,
+				}
+			: { type: "full" };
 
-		if (compare) {
-			diffMode = {
-				type: "incremental",
-				fromSha: previousReviewedSha,
-				toSha: currentHeadSha,
-			};
-			allFiles = compare.files;
-			// console.log({
-			// 	message: `Code review using incremental diff: PR #${input.number} — ${previousReviewedSha.slice(0, 7)}...${currentHeadSha.slice(0, 7)}, ${allFiles.length} file(s) changed`,
-			// 	event: "code_review_orchestrator",
-			// 	number: input.number,
-			// 	diff_mode: "incremental",
-			// 	from_sha: previousReviewedSha,
-			// 	to_sha: currentHeadSha,
-			// 	files: allFiles.length,
-			// 	runId,
-			// 	action: "diff_mode_resolved",
-			// });
-		} else {
-			// Base SHA gone (force-push) — fall back to full PR diff
-			diffMode = { type: "full" };
-			allFiles = await getPullRequestFiles(token, input.number);
-			// console.log({
-			// 	message: `Code review falling back to full diff (base SHA not found): PR #${input.number}`,
-			// 	event: "code_review_orchestrator",
-			// 	number: input.number,
-			// 	diff_mode: "full",
-			// 	fallback_reason: "base_sha_not_found",
-			// 	to_sha: currentHeadSha,
-			// 	files: allFiles.length,
-			// 	runId,
-			// 	action: "diff_mode_resolved",
-			// });
-		}
-	} else {
-		// No previous review or SHA unchanged — full PR diff
-		diffMode = { type: "full" };
-		allFiles = await getPullRequestFiles(token, input.number);
-		// console.log({
-		// 	message: `Code review using full diff: PR #${input.number} — ${allFiles.length} file(s)`,
-		// 	event: "code_review_orchestrator",
-		// 	number: input.number,
-		// 	diff_mode: "full",
-		// 	to_sha: currentHeadSha,
-		// 	had_previous_review: previousReviewedSha !== null,
-		// 	files: allFiles.length,
-		// 	runId,
-		// 	action: "diff_mode_resolved",
-		// });
+	// prDir is the R2 key prefix for the cross-run review-state objects.
+	const prDir = `diffs/pr-${input.number}`;
+
+	// ── 2. Post the placeholder comment ───────────────────────────────────────
+	// In comment mode, immediately post/update with a "review in progress"
+	// message so the reviewer sees something right away.
+	if (reviewMode === "comment") {
+		await postOrUpdateComment(
+			token,
+			input.number,
+			botComment,
+			renderPendingComment(
+				currentHeadSha,
+				botComment !== null,
+				input.forceFullReview,
+				botComment?.body ?? undefined,
+			),
+		);
 	}
 
-	// console.log({
-	// 	message: `Code review context fetched: PR #${input.number} — ${allFiles.length} file(s) in diff, ${allComments.length} comment(s), prior bot review: ${botComment ? "yes" : "no"}, human replies: ${humanCommentsAfterBot.length}`,
-	// 	event: "code_review_orchestrator",
-	// 	number: input.number,
-	// 	files: allFiles.length,
-	// 	comments: allComments.length,
-	// 	has_prior_bot_review: botComment !== null,
-	// 	human_replies: humanCommentsAfterBot.length,
-	// 	runId,
-	// 	action: "context_fetched",
-	// });
-
-	// Run-scoped diff directory in the shared Workspace. The style-guide review
-	// sessions run in this same Durable Object, so the diff is staged directly
-	// in the Workspace (read by the `code` tool) — no R2 round-trip. prDir stays
-	// the R2 key prefix for the cross-run review-state objects.
-	const prDir = `diffs/pr-${input.number}`;
-	const diffDir = `${prDir}/runs/${runId}`;
-
-	// ── 2. Stage the diff in the Workspace, and post the placeholder comment ──
-	await Promise.all([
-		writeDiffToWorkspace(workspace, diffDir, allFiles, pr),
-		// In comment mode, immediately post/update with a "review in progress"
-		// message so the reviewer sees something right away.
-		reviewMode === "comment"
-			? postOrUpdateComment(
-					token,
-					input.number,
-					botComment,
-					renderPendingComment(
-						currentHeadSha,
-						botComment !== null,
-						input.forceFullReview,
-						botComment?.body ?? undefined,
-					),
-				)
-			: Promise.resolve(),
-	]);
-
-	// ── 3. Run both review fan-outs concurrently ───────────────────────────────
-	// The generic code review and the style-guide review run over the same
-	// shared workspace + staged diff, each in its own named harness. They are
-	// independent: one failing degrades that section to an empty result rather
-	// than aborting the whole review. Only a double failure surfaces an error.
-	const styleGuideFiles = selectStyleGuideFiles(allFiles);
-	const codeReviewFiles = selectCodeReviewFiles(allFiles);
-
-	console.log({
-		message: `Review fan-out: PR #${input.number} — code-review ${codeReviewFiles.length} file(s), style-guide ${styleGuideFiles.length} file(s)`,
-		event: "code_review_orchestrator",
+	// ── 3. Dispatch both specialist workflows and poll them in parallel ────────
+	// Each specialist runs in its own Durable Object (its own isolate and memory
+	// budget), so the two heavy fan-outs never share one isolate. They run
+	// concurrently here; one failing degrades that section to an empty result
+	// rather than aborting the whole review. Only a double failure surfaces an
+	// error. Specialists self-fetch their own diff — no diff is sent in the
+	// payload or staged in R2.
+	const baseUrl = new URL(req!.url).origin;
+	const internalHeaders = getInternalHeaders(
+		typedEnv as Record<string, string>,
+	);
+	const specialistPayloadPr = toReviewSpecialistPrMeta(pr);
+	const specialistBody = {
+		eventType: "pull_request" as const,
 		number: input.number,
-		codeReviewFiles: codeReviewFiles.length,
-		styleGuideFiles: styleGuideFiles.length,
-		codeReviewConcurrency: CODE_REVIEW_CONCURRENCY,
-		styleGuideConcurrency: STYLE_GUIDE_CONCURRENCY,
-		diffDir,
-		runId,
-		action: "review_fanout_start",
-	});
-
-	const prMeta = {
-		number: pr.number,
-		title: pr.title,
-		base: pr.base.ref,
-		head: pr.head.ref,
+		headSha: currentHeadSha,
+		diffMode,
+		pr: specialistPayloadPr,
 	};
 
-	// Load the repo's root AGENTS.md so the code-review agent has the repository
-	// conventions in context every run. Fetched from the PR base ref (trusted),
-	// NOT the PR head — the content is injected into the agent's instructions,
-	// so reading it from the head would let a PR modify AGENTS.md to inject
-	// adversarial instructions into the review agent. Best-effort: the review
-	// still runs (without that context) if the fetch fails. Skipped when there
-	// are no code files to review.
-	const repoAgentsMd =
-		codeReviewFiles.length > 0
-			? ((await getRepoFileContent(token, "AGENTS.md", pr.base.ref).catch(
-					() => null,
-				)) ?? undefined)
-			: undefined;
+	console.log({
+		message: `Review dispatch: PR #${input.number} — admitting code-review and style-guide specialists (${diffMode.type} diff)`,
+		event: "code_review_orchestrator",
+		number: input.number,
+		diffMode: diffMode.type,
+		runId,
+		action: "specialists_dispatch",
+	});
 
-	const wrapOutcome = <T>(p: Promise<T>) =>
-		p.then(
-			(result) => ({ ok: true as const, result }),
-			(err) => ({ ok: false as const, err }),
-		);
+	// Admit a specialist workflow and poll it to completion. Never throws —
+	// returns an ok/result outcome the caller maps to a review section.
+	const runSpecialist = async <T>(
+		pathname: string,
+		label: string,
+	): Promise<{ ok: true; result: T } | { ok: false; reason: string }> => {
+		let specialistRunId: string;
+		try {
+			specialistRunId = await admitWorkflow({
+				baseUrl,
+				pathname,
+				headers: internalHeaders,
+				body: specialistBody,
+			});
+		} catch (err) {
+			return {
+				ok: false,
+				reason: err instanceof Error ? err.message : String(err),
+			};
+		}
 
-	// Run the two fan-outs SEQUENTIALLY, not concurrently. Running both at once
-	// kept ~10 model sessions live in a single Durable Object isolate and
-	// over-ran its 128 MB memory limit, triggering "isolate exceeded its memory
-	// limit and was reset" cascades. Sequencing lets one fan-out's sessions be
-	// reclaimed before the next starts, roughly halving peak heap. Wall-clock
-	// becomes the sum of the two rather than the max — acceptable for a review
-	// bot. Per-stream failure isolation is preserved by wrapOutcome.
-	const codeOutcome = await wrapOutcome(
-		runCodeReviewInProcess({
-			init,
-			workspace,
-			loader,
-			token,
-			headSha: currentHeadSha,
-			repoAgentsMd,
-			prNumber: input.number,
-			pullRequest: prMeta,
-			diffDir,
-			files: codeReviewFiles,
-			runId,
-			concurrency: CODE_REVIEW_CONCURRENCY,
-		}),
-	);
-	const styleOutcome = await wrapOutcome(
-		runStyleGuideReviewInProcess({
-			init,
-			workspace,
-			loader,
-			prNumber: input.number,
-			pullRequest: prMeta,
-			diffDir,
-			files: styleGuideFiles,
-			runId,
-			concurrency: STYLE_GUIDE_CONCURRENCY,
-		}),
-	);
+		const poll = await pollRun<T>({
+			runId: specialistRunId,
+			baseUrl,
+			headers: internalHeaders,
+			timeoutMs: 10 * 60 * 1000,
+			label: `${label} PR #${input.number}`,
+		});
+
+		if (poll.timedOut) return { ok: false, reason: "specialist timed out" };
+		if (poll.isError)
+			return { ok: false, reason: poll.error?.message ?? "specialist errored" };
+		if (poll.result === undefined)
+			return { ok: false, reason: "specialist returned no result" };
+		return { ok: true, result: poll.result };
+	};
+
+	const [codeOutcome, styleOutcome] = await Promise.all([
+		runSpecialist<CodeReviewResult>(
+			"/workflows/code-review-specialist",
+			"code-review",
+		),
+		runSpecialist<StyleGuideResult>(
+			"/workflows/style-guide-specialist",
+			"style-guide",
+		),
+	]);
 
 	if (codeOutcome.ok) {
 		console.log({
@@ -411,13 +320,10 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		});
 	} else {
 		console.log({
-			message: `Code review failed: PR #${input.number} — ${codeOutcome.err instanceof Error ? codeOutcome.err.message : String(codeOutcome.err)}`,
+			message: `Code review failed: PR #${input.number} — ${codeOutcome.reason}`,
 			event: "code_review_orchestrator",
 			number: input.number,
-			error:
-				codeOutcome.err instanceof Error
-					? codeOutcome.err.message
-					: String(codeOutcome.err),
+			error: codeOutcome.reason,
 			runId,
 			action: "code_review_failed",
 		});
@@ -435,13 +341,10 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 		});
 	} else {
 		console.log({
-			message: `Style-guide review failed: PR #${input.number} — ${styleOutcome.err instanceof Error ? styleOutcome.err.message : String(styleOutcome.err)}`,
+			message: `Style-guide review failed: PR #${input.number} — ${styleOutcome.reason}`,
 			event: "code_review_orchestrator",
 			number: input.number,
-			error:
-				styleOutcome.err instanceof Error
-					? styleOutcome.err.message
-					: String(styleOutcome.err),
+			error: styleOutcome.reason,
 			runId,
 			action: "style_guide_failed",
 		});
