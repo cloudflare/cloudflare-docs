@@ -266,7 +266,7 @@ class Default(WorkerEntrypoint):
                     return Response("Missing uploadId", status=400)
                 multipart_upload = bucket.resumeMultipartUpload(key, upload_id)
                 try:
-                    multipart_upload.abort()
+                    await multipart_upload.abort()
                 except Exception as error:
                     return Response(str(error), status=400)
                 return Response(None, status=204)
