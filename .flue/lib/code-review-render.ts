@@ -200,12 +200,18 @@ function renderSection(
 	reconciled: ReconcileResult,
 	includeCritical: boolean,
 	failed: boolean,
+	note?: string,
 ): void {
 	const { active, critical, warnings, suggestions } =
 		activeBySeverity(reconciled);
 
 	lines.push("");
 	lines.push(`### ${heading}`);
+
+	if (note) {
+		lines.push("");
+		lines.push(note);
+	}
 
 	// A degraded review must not claim "no issues" — surface the failure. Any
 	// findings carried forward from a prior review are still shown below it.
@@ -295,6 +301,7 @@ export function renderComment(
 		reviews.code,
 		true,
 		Boolean(reviews.codeFailed),
+		"_This code review is in beta and may not always be helpful — use your judgment._",
 	);
 
 	renderSection(
