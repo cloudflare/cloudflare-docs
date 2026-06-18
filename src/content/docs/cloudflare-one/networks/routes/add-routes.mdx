@@ -10,13 +10,15 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 A route maps an IP address or hostname to a [Cloudflare One connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/#connectors) installed on your private network. When a user connects to that IP or hostname through Cloudflare's network, Cloudflare will route their traffic down a secure tunnel to the corresponding resource in your private network.
 
+The dashboard **Routes** page is the single place to view and manage the routes for all of your connectors — Cloudflare Tunnel, Cloudflare Mesh, Cloudflare WAN, and Magic Transit — in one table. When you create a route, you choose its type, which determines the connector it uses.
+
 ## Add a CIDR route
 
-CIDR routes define the IP network segments (such as `10.0.0.0/24`) that are reachable via a Cloudflare Tunnel.
+CIDR routes define the IP network segments (such as `10.0.0.0/24`) that are reachable via a Cloudflare Tunnel or a Cloudflare Mesh node.
 
 :::note[Prerequisites]
 Before you add a CIDR route, ensure you have created a Cloudflare Tunnel using [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) or a [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) node.
@@ -24,15 +26,18 @@ Before you add a CIDR route, ensure you have created a Cloudflare Tunnel using [
 
 To add a CIDR route:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes** > **CIDR**.
-2. Select **Add CIDR route**.
-3. In **CIDR**, enter the IP address or CIDR range that you wish to route through the tunnel (for example, `10.0.0.1` or `10.0.0.0/24`). This can be a private or public IP.
-4. For **Tunnel**, select the Cloudflare Tunnel that is being used to connect your private network to Cloudflare.
-5. (Optional) Under **Additional settings**, select a [virtual network](/cloudflare-one/networks/virtual-networks/) for this tunnel route. A virtual network is a private routing domain that provides routing isolation within your account. This step is only needed if the route's IP/CIDR range overlaps with another route in your account. If you do not select a virtual network, the IP route will be assigned to the `default` network.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. From the **Routes** tab, select **Create route**, then choose **Tunnel CIDR** (for a `cloudflared` tunnel) or **Mesh CIDR** (for a Cloudflare Mesh node) as the route type.
+3. For the connector, select the Cloudflare Tunnel or Cloudflare Mesh node that connects your private network to Cloudflare.
+4. Enter the IP address or CIDR range that you wish to route through the connector (for example, `10.0.0.1` or `10.0.0.0/24`). This can be a private or public IP.
+5. (Optional) Select a [virtual network](/cloudflare-one/networks/virtual-networks/) for this route. A virtual network is a private routing domain that provides routing isolation within your account. This step is only needed if the route's IP/CIDR range overlaps with another route in your account. If you do not select a virtual network, the route will be assigned to the `default` network.
 		:::note
 		Virtual networks are only supported for `cloudflared` tunnels.
 		:::
-6. Select **Create**.
+6. Select **Create route**.
 
 Cloudflare will now route requests to your private network. However, the route does not automatically capture traffic from end users. To enable client-side connectivity, refer to the [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) or
 [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) setup guides.
@@ -47,11 +52,14 @@ Before you add a hostname route, ensure you have created a Cloudflare Tunnel usi
 
 To add a hostname route:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes** > **Hostname routes**.
-2. Select **Create hostname route**.
-3. In **Hostname**, enter the private or public hostname that represents your application (for example, `wiki.internal.local` or `app.bank.com`).
-4. For **Tunnel**, select the Cloudflare Tunnel that is being used to connect your private network to Cloudflare.
-5. Select **Create**.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. From the **Routes** tab, select **Create route**, then choose **Tunnel Hostname** as the route type.
+3. For the connector, select the Cloudflare Tunnel that connects your private network to Cloudflare.
+4. In **Hostname**, enter the private or public hostname that represents your application (for example, `wiki.internal.local` or `app.bank.com`).
+5. Select **Create route**.
 
 Cloudflare will now route requests to your private network. However, the route does not automatically capture traffic from end users. To enable client-side connectivity, refer to the [private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [public hostname](/cloudflare-one/traffic-policies/egress-policies/egress-cloudflared/#3-route-network-traffic-through-the-cloudflare-one-client) setup guides.
 
@@ -67,7 +75,9 @@ Before you publish an application, ensure you have:
 
 To add a published application route to an existing tunnel:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
 
 2. Select your tunnel and select **Edit**.
 
@@ -91,4 +101,3 @@ Anyone on the Internet can now access the application at the specified hostname.
 ## Add a WAN route
 
 WAN routes define the IP network segments (such as `10.0.0.0/24`) that are reachable via a GRE or IPsec tunnel. To add a WAN route, refer to the [WAN Connectors documentation](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-routes/).
-
