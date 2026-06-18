@@ -356,7 +356,20 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 				)) ?? undefined)
 			: undefined;
 
-	const [codeOutcome, styleOutcome] = await Promise.all([
+	const wrapOutcome = <T>(p: Promise<T>) =>
+		p.then(
+			(result) => ({ ok: true as const, result }),
+			(err) => ({ ok: false as const, err }),
+		);
+
+	// Run the two fan-outs SEQUENTIALLY, not concurrently. Running both at once
+	// kept ~10 model sessions live in a single Durable Object isolate and
+	// over-ran its 128 MB memory limit, triggering "isolate exceeded its memory
+	// limit and was reset" cascades. Sequencing lets one fan-out's sessions be
+	// reclaimed before the next starts, roughly halving peak heap. Wall-clock
+	// becomes the sum of the two rather than the max — acceptable for a review
+	// bot. Per-stream failure isolation is preserved by wrapOutcome.
+	const codeOutcome = await wrapOutcome(
 		runCodeReviewInProcess({
 			init,
 			workspace,
@@ -370,10 +383,9 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			files: codeReviewFiles,
 			runId,
 			concurrency: CODE_REVIEW_CONCURRENCY,
-		}).then(
-			(result) => ({ ok: true as const, result }),
-			(err) => ({ ok: false as const, err }),
-		),
+		}),
+	);
+	const styleOutcome = await wrapOutcome(
 		runStyleGuideReviewInProcess({
 			init,
 			workspace,
@@ -384,11 +396,8 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			files: styleGuideFiles,
 			runId,
 			concurrency: STYLE_GUIDE_CONCURRENCY,
-		}).then(
-			(result) => ({ ok: true as const, result }),
-			(err) => ({ ok: false as const, err }),
-		),
-	]);
+		}),
+	);
 
 	if (codeOutcome.ok) {
 		console.log({
