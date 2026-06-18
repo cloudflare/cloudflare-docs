@@ -63,9 +63,7 @@ In your `brand-kit` directory, install Cloudflare's fork of Puppeteer:
 
 Extracting a brand kit drives a full browser session, so you want to cache the result and avoid re-running the browser for repeat lookups of the same URL. Create a [KV](/kv/) namespace for the cache:
 
-```sh
-npx wrangler kv namespace create CACHE
-```
+<PackageManagers type="exec" pkg="wrangler" args="kv namespace create CACHE" />
 
 Copy the namespace `id` from the command output. You will add it to your Wrangler configuration in the next step.
 
@@ -75,25 +73,20 @@ Add a Browser Run binding, the KV namespace, and the [Node.js compatibility flag
 
 <WranglerConfig>
 
-```jsonc
-{
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "brand-kit",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"compatibility_flags": ["nodejs_compat"],
-	// Browser Run binding — driven by Puppeteer.
-	"browser": {
-		"binding": "BROWSER",
-	},
-	// KV cache for extracted brand kits.
-	"kv_namespaces": [
-		{
-			"binding": "CACHE",
-			"id": "<YOUR_KV_NAMESPACE_ID>",
-		},
-	],
-}
+```toml
+name = "brand-kit"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+# Browser Run binding — driven by Puppeteer.
+[browser]
+binding = "BROWSER"
+
+# KV cache for extracted brand kits.
+[[kv_namespaces]]
+binding = "CACHE"
+id = "<YOUR_KV_NAMESPACE_ID>"
 ```
 
 </WranglerConfig>
@@ -118,7 +111,7 @@ Create `src/extract.ts`:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 export type BrandColor = { name: string; hex: string };
 export type BrandFont = { name: string; usage: string };
 
@@ -288,7 +281,7 @@ Replace the contents of `src/index.ts` with the following Worker:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 import puppeteer from "@cloudflare/puppeteer";
 import { BRAND_SCRIPT, type BrandKit } from "./extract";
 
@@ -419,7 +412,7 @@ Because everything is read from real computed styles, the values reflect what th
 
 - **Guard user-supplied URLs.** If the URL comes from untrusted input, block private and link-local addresses (`localhost`, `10.0.0.0/8`, `192.168.0.0/16`, `169.254.0.0/16`) to avoid [server-side request forgery](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery), and only allow `http:` and `https:` schemes.
 - **Reuse browser sessions under load.** Instead of `puppeteer.launch()` on every request, reuse idle sessions with [`puppeteer.sessions()`](/browser-run/puppeteer/) and `puppeteer.connect()`, and call `disconnect()` (not `close()`) to keep the session warm for the next request. This avoids cold-start time and helps you stay within [concurrency limits](/browser-run/limits/).
-- **Cache aggressively.** Extraction is the expensive step. Keying the KV cache by normalized URL, as shown above, makes repeat lookups instant and keeps you within Browser Run limits.
+- **Cache aggressively.** Extraction is the expensive step. Keying the KV cache by normalized URL with the `cacheKeyFor` function makes repeat lookups instant and keeps you within Browser Run limits.
 
 :::note
 
