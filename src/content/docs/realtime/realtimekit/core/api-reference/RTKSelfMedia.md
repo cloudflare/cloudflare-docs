@@ -1,7 +1,7 @@
 ---
 title: RTKSelfMedia
 sidebar_position: 16
-web_core_version: 1.2.4
+web_core_version: 2.0.0-staging.1
 ---
 
 <!-- Auto Generated Below -->
