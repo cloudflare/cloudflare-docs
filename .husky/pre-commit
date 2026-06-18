@@ -3,8 +3,6 @@
 # 2. Convert CRLF to LF in all staged files before committing.
 #    This guards against AI tooling and Windows environments introducing CRLF.
 
-# The glob in the lint-staged config (package.json) must match the extensions
-# covered by the format:* scripts. Keep them in sync when adding file types.
 pnpm exec lint-staged
 
 STAGED=$(git diff --cached --name-only)
