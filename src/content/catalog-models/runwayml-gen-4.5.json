@@ -264,6 +264,7 @@
 		"Resolutions": "1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672"
 	},
 	"request_formats": null,
+	"banner": null,
 	"created_at": "2026-05-22 17:53:58",
 	"schema": {
 		"input": {

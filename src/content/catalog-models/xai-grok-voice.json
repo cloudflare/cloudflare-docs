@@ -65,6 +65,7 @@
 		"Turn Detection": "Server VAD"
 	},
 	"request_formats": null,
+	"banner": null,
 	"created_at": "2026-06-08 18:08:26",
 	"schema": {
 		"input": {

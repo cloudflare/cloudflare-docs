@@ -98,7 +98,13 @@
 		"Output Formats": "jpg, png, webp"
 	},
 	"request_formats": null,
-	"banner": null,
+	"banner": {
+		"id": "97503cbc-cf25-4782-b55e-03aa37f6c7e3",
+		"title": "70% off P-Image-Try-On",
+		"text": "Save 70% on all inference with P-Image-Try-On until Sunday, 21 June at 11:59 PM CEST",
+		"severity": "info",
+		"dismissible": false
+	},
 	"created_at": "2026-06-18 15:52:42",
 	"schema": {
 		"input": {

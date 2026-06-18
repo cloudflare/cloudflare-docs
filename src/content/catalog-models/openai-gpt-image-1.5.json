@@ -188,11 +188,12 @@
 		"Styles": "vivid, natural"
 	},
 	"request_formats": null,
+	"banner": null,
 	"created_at": "2026-05-22 17:53:38",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"additionalProperties": {},
 			"properties": {
 				"images": {
 					"description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
