@@ -25,6 +25,11 @@
 		"parent": ["Compute & AI"]
 	},
 	{
+		"deeplink": "/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1",
+		"name": "Create a PlanetScale database",
+		"parent": ["Storage & databases", "Hyperdrive"]
+	},
+	{
 		"deeplink": "/?to=/:account/mesh",
 		"name": "Mesh",
 		"parent": ["Networking"]
