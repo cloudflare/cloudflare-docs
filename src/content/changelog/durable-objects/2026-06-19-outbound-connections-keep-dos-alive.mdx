@@ -20,8 +20,6 @@ With this change, each active outbound connection prevents eviction. Once all ou
 
 If you are [building agents on Cloudflare](/agents/), this is especially relevant. An agent that streams tokens from an LLM while [calling models](/agents/concepts/calling-llms/), or that performs [long-running tasks](/agents/concepts/agentic-patterns/long-running-agents/) over an outbound connection, now stays alive for the duration of that connection instead of being evicted mid-stream.
 
-This applies to outbound TCP sockets (`connect()`) and outbound WebSockets, including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`. Plain `fetch()` subrequests do not keep a Durable Object alive, even while the response body is still streaming. For example, streaming responses from LLM APIs called over HTTPS are not covered. This also does not apply to connections made through bindings such as Hyperdrive.
-
 **Limits:**
 
 - Each outbound connection keeps the Durable Object alive for a maximum of **15 minutes**. After 15 minutes, the connection stops preventing eviction (the connection itself continues operating), and the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/) resume.
