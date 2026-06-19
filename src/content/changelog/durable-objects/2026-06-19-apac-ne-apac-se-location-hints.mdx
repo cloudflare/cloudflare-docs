@@ -3,6 +3,7 @@ title: New Asia-Pacific location hints: apac-ne and apac-se
 description: Durable Objects now supports two new location hints for Northeast and Southeast Asia-Pacific, giving you finer-grained control within the `apac` region.
 products:
   - durable-objects
+  - workers
 date: 2026-06-19
 ---
 
@@ -18,7 +19,7 @@ const stubNE = env.MY_DURABLE_OBJECT.get(id, { locationHint: "apac-ne" });
 const stubSE = env.MY_DURABLE_OBJECT.get(id, { locationHint: "apac-se" });
 ```
 
-If your users are spread across all of Asia-Pacific, the existing `apac` hint remains the right choice. Only reach for `apac-ne` or `apac-se` when your traffic is clearly concentrated in one sub-region and you want to minimize round-trip time to that audience.
+If your users are spread across all of Asia-Pacific, the existing `apac` hint remains the right choice. Only reach for `apac-ne` or `apac-se` when your traffic is clearly concentrated in one sub-region and you want to minimize round-trip time to that audience. The default behavior and what we generally recommended is not adding a location hint unless absolutely needed, this will create the Durable Object as close to the initializing request as possible to reduce latency. 
 
 As with all location hints, these are best-effort suggestions. Cloudflare will place the Durable Object in a nearby data center, not necessarily the exact hinted location.
 
