@@ -6,7 +6,7 @@ entries:
   - publish_date: "2026-06-18"
     title: Migration to managed infrastructure complete
     description: |-
-      All AI Search instances have finished migrating to managed infrastructure. Every instance now includes built-in storage, a built-in vector index, and built-in web crawling, so the [current limits](/ai-search/platform/limits-pricing/#limits) apply across all instances. Storage, vector indexing, and Browser Run usage for crawling are now included; [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) are still billed separately. 
+      All AI Search instances have finished migrating to managed infrastructure. Every instance now includes built-in storage, a built-in vector index, and built-in web crawling, so the [current limits](/ai-search/platform/limits-pricing/#limits) apply across all instances. Storage, vector indexing, and Browser Run usage for crawling are now included; [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) are still billed separately.
       If your instance previously crawled a website, the dedicated R2 bucket AI Search created in your account is no longer used and can be deleted.
   - publish_date: "2026-06-10"
     title: Manage AI Search namespaces with Wrangler CLI
