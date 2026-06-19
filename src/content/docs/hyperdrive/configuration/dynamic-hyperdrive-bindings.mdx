@@ -18,28 +18,28 @@ This model decouples your tenant database infrastructure from deploy-time config
 
 ## How it works
 
-Dynamic Hyperdrive bindings run on [Dynamic Workers](/dynamic-workers/). A Dynamic Worker is a temporary, sandboxed Worker that executes code on demand. A host Worker passes raw code as a payload to the Worker Loader API, which spins up a Dynamic Worker to execute it. After the Dynamic Worker returns a result, it dissolves. The host Worker returns the response to the client.
+Dynamic Hyperdrive bindings run on [Dynamic Workers](/dynamic-workers/). A Dynamic Worker is a sandboxed Worker that executes code on demand. A loader Worker passes raw code as a payload to the Worker Loader API, which spins up a Dynamic Worker to execute it.
 
 The dynamic Hyperdrive flow works as follows:
 
-1. A tenant request arrives at the host Worker.
-2. The host Worker resolves tenant configuration from [KV](/kv/) (connection string, region, caching preferences).
-3. The host Worker calls `env.LOADER.load()` to spin up a Dynamic Worker loaded with the tenant's database code.
-4. The host Worker attaches an `OutboundInterceptor` to the Dynamic Worker through the `globalOutbound` option.
+1. A tenant request arrives at the loader Worker.
+2. The loader Worker resolves tenant configuration (connection string, region, caching preferences).
+3. The loader Worker calls `env.LOADER.load()` to spin up a Dynamic Worker loaded with the tenant's database code.
+4. The loader Worker attaches an `OutboundInterceptor` to the Dynamic Worker through the `globalOutbound` option.
 5. When the Dynamic Worker opens a database connection, the `OutboundInterceptor` intercepts the `connect()` call and calls `DYNAMIC_HYPERDRIVE.get()` with the tenant's parameters.
-6. Hyperdrive creates a temporary, request-scoped connection pool in the data center closest to the origin database. If a cached result exists for the query, Hyperdrive returns it from the edge without contacting the database.
-7. The Dynamic Worker receives a standard database response. After the request completes, the Dynamic Worker dissolves.
+6. Hyperdrive creates a request-scoped connection pool in the data center closest to the origin database. If a cached result exists for the query, Hyperdrive returns it from the edge without contacting the database.
+7. The Dynamic Worker receives a standard database response.
 
 <figure>
-	![Dynamic Hyperdrive bindings architecture showing a host Worker passing
+	![Dynamic Hyperdrive bindings architecture showing a loader Worker passing
 	tenant code to the Worker Loader API, which spins up a Dynamic Worker that
 	connects through Hyperdrive to the origin
 	database.](~/assets/images/hyperdrive/configuration/dynamic-hyperdrive-bindings.svg)
 	<figcaption>
-		A tenant request arrives at the host Worker, which passes code to the Worker
+		A tenant request arrives at the loader Worker, which passes code to the Worker
 		Loader API. The Dynamic Worker executes the code, and the
 		OutboundInterceptor intercepts database connections to route them through
-		Hyperdrive. After the response, the Dynamic Worker dissolves.
+		Hyperdrive.
 	</figcaption>
 </figure>
 
@@ -52,11 +52,10 @@ This section walks through the prerequisites, configuration, and code required t
 Before you begin, ensure you have the following:
 
 1. A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) with access to [Dynamic Workers](/dynamic-workers/).
-2. A [KV namespace](/kv/) (or another data store) containing tenant configuration. Each tenant record should include the database connection string, target region, and any optional parameters (caching, max connections, mTLS certificate ID).
-3. A publicly accessible PostgreSQL (or PostgreSQL-compatible) database for each tenant. Hyperdrive supports PostgreSQL-compatible databases such as CockroachDB, Neon, and Supabase. For the full list, refer to [Supported databases and features](/hyperdrive/reference/supported-databases-and-features/).
-4. A `DYNAMIC_HYPERDRIVE` binding configured on your host Worker. This is the dynamic Hyperdrive namespace binding that exposes the `.get()` method.
-5. A `LOADER` binding for the [Worker Loader](/dynamic-workers/getting-started/#configure-worker-loader) that loads Dynamic Workers.
-6. [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) version 16.17.0 or later, and [Wrangler](/workers/wrangler/install-and-update/) installed.
+2. A publicly accessible PostgreSQL, MySQL, or compatible database for each tenant. Hyperdrive supports PostgreSQL-compatible databases such as CockroachDB, Neon, and Supabase. For the full list, refer to [Supported databases and features](/hyperdrive/reference/supported-databases-and-features/).
+3. A `DYNAMIC_HYPERDRIVE` binding configured on your loader Worker. This is the dynamic Hyperdrive namespace binding that exposes the `.get()` method.
+4. A `LOADER` binding for the [Worker Loader](/dynamic-workers/getting-started/#configure-worker-loader) that loads Dynamic Workers.
+5. [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) version 16.17.0 or later, and [Wrangler](/workers/wrangler/install-and-update/) installed.
 
 :::note
 
@@ -66,7 +65,7 @@ If your tenant databases require client certificate authentication (mTLS), uploa
 
 ### Define tenant configuration
 
-Store each tenant's database parameters in KV (or your preferred data store). At minimum, each tenant record needs a `connectionString` and a `cloudRegion`. Optional fields control caching, connection limits, and mTLS.
+Each tenant's database parameters are passed to `DYNAMIC_HYPERDRIVE.get()` at runtime. The following table describes the available parameters.
 
 | Parameter          | Required | Description                                                                                                                                                                                                |
 | ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -76,9 +75,9 @@ Store each tenant's database parameters in KV (or your preferred data store). At
 | `maxConnections`   | No       | Maximum number of outbound database sockets for this tenant. Defaults to the platform-level limit.                                                                                                         |
 | `customCertId`     | No       | mTLS certificate ID for databases that require client certificate authentication. Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) for upload instructions. |
 
-### Write the host Worker
+### Write the loader Worker
 
-The host Worker has two parts: an `OutboundInterceptor` that intercepts database connections, and a `fetch` handler that resolves tenant configuration and loads the tenant's Dynamic Worker.
+The loader Worker has two parts: an `OutboundInterceptor` that intercepts database connections, and a `fetch` handler that resolves tenant configuration and loads the tenant's Dynamic Worker.
 
 ```js
 // OutboundInterceptor — intercepts all outbound connect() calls
@@ -109,9 +108,9 @@ export class OutboundInterceptor extends WorkerEntrypoint {
 	}
 }
 
-// Host Worker entrypoint — handles incoming requests, resolves
-// tenant config from KV, and uses the Worker Loader API to spin
-// up a Dynamic Worker with the tenant's database code.
+// Loader Worker entrypoint — handles incoming requests, resolves
+// tenant config, and uses the Worker Loader API to spin up a
+// Dynamic Worker with the tenant's database code.
 export default {
 	async fetch(request, env, ctx) {
 		let tenant = await env.KV.get("tenant-id");
@@ -122,8 +121,8 @@ export default {
 			mainModule: "src/index.js",
 			modules: {
 				// This string is the Dynamic Worker's code.
-				// It executes inside a temporary sandbox, not on
-				// the host Worker. It uses a standard pg driver
+				// It executes inside a sandboxed environment, not
+				// on the loader Worker. It uses a standard pg driver
 				// with no Hyperdrive-specific code.
 				"src/index.js": `
 import { Client } from "pg";
@@ -151,11 +150,11 @@ The key parts of this code:
 
 - **`OutboundInterceptor`** — Extends `WorkerEntrypoint` and overrides `connect()`. When the Dynamic Worker opens a database connection, this interceptor checks if the host matches the tenant's connection string. If it does, it calls `DYNAMIC_HYPERDRIVE.get()` with the tenant's parameters to create a request-scoped Hyperdrive pool. If the required `connectionString` prop is missing, the interceptor throws an error. All other outbound connections pass through unchanged.
 - **`DYNAMIC_HYPERDRIVE.get()`** — Accepts an object with the tenant's connection string, region, caching preferences, connection limit, and optional mTLS certificate ID. It returns an `RpcTarget` scoped to the current request. There is nothing to persist, revoke, or clean up after the request ends.
-- **`env.LOADER.load()`** — Creates a [Dynamic Worker](/dynamic-workers/) from the code defined in `modules`. The Dynamic Worker is temporary — it executes the tenant's code in an isolated sandbox and dissolves after the request completes. The tenant code uses a standard `pg` driver and has no awareness of Hyperdrive. The `globalOutbound` option wires the `OutboundInterceptor` so that all outbound `connect()` calls from the Dynamic Worker pass through it.
+- **`env.LOADER.load()`** — Creates a [Dynamic Worker](/dynamic-workers/) from the code defined in `modules`. The Dynamic Worker executes the tenant's code in an isolated sandbox. The tenant code uses a standard `pg` driver and has no awareness of Hyperdrive. The `globalOutbound` option wires the `OutboundInterceptor` so that all outbound `connect()` calls from the Dynamic Worker pass through it.
 
 ### Verify the connection
 
-Deploy your host Worker and send a request with a valid tenant identifier. If the tenant configuration in KV contains a valid connection string and the origin database is reachable, the response contains the query results from the tenant's database.
+Deploy your loader Worker and send a request with a valid tenant identifier. If the tenant configuration contains a valid connection string and the origin database is reachable, the response contains the query results from the tenant's database.
 
 You can confirm that Hyperdrive is active by checking the `cf-hyperdrive` response header, or by querying the [GraphQL Analytics API](/analytics/graphql-api/) filtered by `hyperdriveId` to verify connection counts and cache hit ratios for the tenant.
 
@@ -203,13 +202,5 @@ curl https://api.cloudflare.com/client/v4/graphql \
 ```
 
 You can pipe this data into your own customer-facing dashboards.
-
-</Details>
-
-<Details header="Can I use databases in a private network?">
-
-Dynamic Hyperdrive bindings require a publicly accessible database. If your databases are in a private network, you must expose them through a secure tunnel or gateway before using them with dynamic Hyperdrive.
-
-For static Hyperdrive configurations, refer to [Connect to a private database using Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/).
 
 </Details>
