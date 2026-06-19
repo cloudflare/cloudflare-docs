@@ -25,6 +25,8 @@ JavaScript is injected only in response to requests for HTML pages or page views
 
 JavaScript Detections has a lifespan of 15 minutes. However, the code is injected again before the session expires. After page load, the script is deferred and utilizes a separate thread (where available) to ensure that performance impact is minimal. The snippets of JavaScript will contain a source pointing to the Challenge Platform, with paths that start with `/cdn-cgi/challenge-platform/…`
 
+JavaScript Detections runs in the visitor's browser. On performance-sensitive pages, test the impact on metrics such as First Contentful Paint (FCP), Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Total Blocking Time (TBT). If you need deterministic control over when JavaScript Detections loads or runs, use the [JavaScript Detections API](#api) instead of the dashboard injection.
+
 Once JavaScript Detections is injected on the HTML page, the visitor's browser will run the JavaScript code snippet and a `cf_clearance` cookie is issued to the visitor. The information in JavaScript Detections is stored in the `cf_clearance` cookie and is used to populate `js_detection.passed`.
 
 - If the visitor is verified and a `cf_clearance` cookie is issued, it will contain the outcome: `cf.bot_management.js_detection.passed` = `true`
@@ -118,27 +120,192 @@ You can explicitly add a script reference to `/cdn-cgi/challenge-platform/script
 It is not recommended to combine both approaches (zone-wide toggle and the manual injection). If you want to selectively deploy JavaScript Detections only on certain pages, disable JavaScript Detections via the Cloudflare dashboard and use the JavaScript Detections API exclusively.
 :::
 
-The following script must be added to every page that you wish to have JavaScript Detections enabled:
+For performance-sensitive pages, the recommended approach is to disable dashboard injection and load the API script yourself. This lets you run JavaScript Detections after your critical content renders, or only when a protected action requires it.
+
+### Basic API usage
+
+Add the following script to every page that you wish to have JavaScript Detections enabled:
 
 ```html wrap
 <script>
-
-function jsdOnload(){
-  window.cloudflare.jsd.executeOnce(
-    {
-      callback: function(result){
-        console.log('jsd outcome', result);
-      }
-    }
-  );
-}
+	function jsdOnload() {
+		window.cloudflare.jsd.executeOnce({
+			callback: function (result) {
+				console.log("jsd outcome", result);
+			},
+		});
+	}
 </script>
-<script src="/cdn-cgi/challenge-platform/scripts/jsd/api.js?onload=jsdOnload" async>
+<script
+	src="/cdn-cgi/challenge-platform/scripts/jsd/api.js?onload=jsdOnload"
+	async
+></script>
 ```
 
 :::note
 `result` = `success` or `error` only refers to the execution of JavaScript Detections. It does not indicate whether a visitor is a human or a bot.
 :::
+
+### Performance-sensitive pages
+
+On pages where FCP or LCP is critical, avoid loading the JavaScript Detections API script in the initial HTML. Instead, load the API script after the critical content has rendered.
+
+Use a shared helper so that the API script is loaded once and concurrent callers wait for the same execution:
+
+```js
+let jsdApiPromise;
+let jsdExecutionPromise;
+const jsdTimeoutMs = 5000;
+
+function withTimeout(promise, message) {
+	let timeoutId;
+
+	const timeout = new Promise((_, reject) => {
+		timeoutId = setTimeout(() => reject(new Error(message)), jsdTimeoutMs);
+	});
+
+	return Promise.race([promise, timeout]).finally(() =>
+		clearTimeout(timeoutId),
+	);
+}
+
+function loadJsdApi() {
+	if (window.cloudflare?.jsd) {
+		return Promise.resolve();
+	}
+
+	if (jsdApiPromise) {
+		return jsdApiPromise;
+	}
+
+	jsdApiPromise = withTimeout(
+		new Promise((resolve, reject) => {
+			window.jsdOnload = resolve;
+
+			const script = document.createElement("script");
+			script.async = true;
+			script.src =
+				"/cdn-cgi/challenge-platform/scripts/jsd/api.js?onload=jsdOnload";
+			script.onerror = () => {
+				reject(new Error("Failed to load JavaScript Detections API"));
+			};
+			document.head.append(script);
+		}),
+		"Timed out loading JavaScript Detections API",
+	).catch((error) => {
+		jsdApiPromise = undefined;
+		throw error;
+	});
+
+	return jsdApiPromise;
+}
+
+async function executeJsdOnce() {
+	if (jsdExecutionPromise) {
+		return jsdExecutionPromise;
+	}
+
+	jsdExecutionPromise = loadJsdApi()
+		.then(() =>
+			withTimeout(
+				new Promise((resolve, reject) => {
+					window.cloudflare.jsd.executeOnce({
+						callback: (result) => {
+							if (result === "success") {
+								resolve(result);
+								return;
+							}
+
+							reject(new Error("JavaScript Detections execution failed"));
+						},
+					});
+				}),
+				"Timed out executing JavaScript Detections",
+			),
+		)
+		.catch((error) => {
+			jsdExecutionPromise = undefined;
+			throw error;
+		});
+
+	return jsdExecutionPromise;
+}
+```
+
+To avoid competing with LCP, wait until the browser reports an LCP candidate and that candidate has not changed for a short interval. This is a best-effort scheduling pattern, because the final LCP value is only known after user interaction or page hide. Tune the timeout for your page, or use an application-specific signal that confirms your critical content has rendered.
+
+```js
+function runWhenIdle(callback) {
+	if ("requestIdleCallback" in window) {
+		requestIdleCallback(callback, { timeout: 5000 });
+		return;
+	}
+
+	setTimeout(callback, 1000);
+}
+
+function runAfterLcp(callback) {
+	let hasRun = false;
+	let observer;
+	let timerId;
+
+	function run() {
+		if (hasRun) {
+			return;
+		}
+
+		hasRun = true;
+		observer?.disconnect();
+		clearTimeout(timerId);
+		runWhenIdle(callback);
+	}
+
+	if (
+		"PerformanceObserver" in window &&
+		PerformanceObserver.supportedEntryTypes?.includes(
+			"largest-contentful-paint",
+		)
+	) {
+		observer = new PerformanceObserver(() => {
+			clearTimeout(timerId);
+			timerId = setTimeout(run, 1000);
+		});
+
+		observer.observe({ type: "largest-contentful-paint", buffered: true });
+		timerId = setTimeout(run, 5000);
+		return;
+	}
+
+	if (document.readyState === "complete") {
+		run();
+		return;
+	}
+
+	window.addEventListener("load", run, { once: true });
+}
+
+runAfterLcp(() => {
+	executeJsdOnce().catch(() => {
+		// Allow your WAF rule to decide how to handle requests without this signal.
+	});
+});
+```
+
+If a page needs JavaScript Detections before a protected API request, execute JavaScript Detections on demand and wait for it before making the request:
+
+```js
+async function fetchProtected(input, init) {
+	await executeJsdOnce().catch(() => {
+		// Continue and let Cloudflare evaluate the request without a JavaScript Detections result.
+	});
+
+	return fetch(input, init);
+}
+
+await fetchProtected("/api/protected-action", { method: "POST" });
+```
+
+If you delay JavaScript Detections, early requests can have `cf.bot_management.js_detection.passed` set to `false` or `missing`. Scope your WAF custom rules so that critical rendering requests, first HTML requests, and pre-execution API requests are not challenged solely because JavaScript Detections has not run yet.
 
 ## Considerations
 
