@@ -25,7 +25,7 @@ JavaScript is injected only in response to requests for HTML pages or page views
 
 JavaScript Detections has a lifespan of 15 minutes. However, the code is injected again before the session expires. After page load, the script is deferred and utilizes a separate thread (where available) to ensure that performance impact is minimal. The snippets of JavaScript will contain a source pointing to the Challenge Platform, with paths that start with `/cdn-cgi/challenge-platform/…`
 
-JavaScript Detections runs in the visitor's browser. On performance-sensitive pages, test the impact on metrics such as First Contentful Paint (FCP), Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Total Blocking Time (TBT). If you need deterministic control over when JavaScript Detections loads or runs, use the [JavaScript Detections API](#api) instead of the dashboard injection.
+JavaScript Detections run in the visitor's browser. On performance-sensitive pages, test the impact on metrics such as First Contentful Paint (FCP) and Largest Contentful Paint (LCP). If you need deterministic control over when JavaScript Detections loads or runs, use the [JavaScript Detections API](#api) instead of the dashboard injection.
 
 Once JavaScript Detections is injected on the HTML page, the visitor's browser will run the JavaScript code snippet and a `cf_clearance` cookie is issued to the visitor. The information in JavaScript Detections is stored in the `cf_clearance` cookie and is used to populate `js_detection.passed`.
 
