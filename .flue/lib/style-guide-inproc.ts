@@ -192,7 +192,6 @@ export async function runStyleGuideReviewInProcess(
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
-		compaction: { reserveTokens: 64_000 },
 		skills: [styleGuideSkill],
 	}));
 	const harness = await init(agent, { name: "style-guide" });
@@ -256,30 +255,37 @@ async function reviewSingleFile({
 }): Promise<StyleGuideResult> {
 	const session = await harness.session(sessionName);
 
-	// Structured result mode: flue injects finish/give_up tools and loops until
-	// the model calls finish — reliable across models that don't self-terminate.
-	const skillResult = await session.skill("style-guide-review", {
-		result: StyleGuideResultFromModelSchema,
-		args: {
-			pullRequest,
-			diffDir,
-			filename,
-		},
-	});
+	try {
+		// Structured result mode: flue injects finish/give_up tools and loops until
+		// the model calls finish — reliable across models that don't self-terminate.
+		const skillResult = await session.skill("style-guide-review", {
+			result: StyleGuideResultFromModelSchema,
+			args: {
+				pullRequest,
+				diffDir,
+				filename,
+			},
+		});
 
-	const rawData = skillResult.data;
-	if (!rawData) {
+		const rawData = skillResult.data;
+		if (!rawData) {
+			return {
+				findings: [],
+				summary: "Style-guide review produced no result.",
+				reviewedFiles: [filename],
+			};
+		}
+
+		const findings = await assignFindingIds(rawData.findings);
 		return {
-			findings: [],
-			summary: "Style-guide review produced no result.",
+			findings,
+			summary: rawData.summary,
 			reviewedFiles: [filename],
 		};
+	} finally {
+		// Release this file's session immediately so its accumulated context is
+		// not retained for the whole run, keeping peak heap bounded to
+		// ~concurrency live sessions.
+		await session.delete().catch(() => {});
 	}
-
-	const findings = await assignFindingIds(rawData.findings);
-	return {
-		findings,
-		summary: rawData.summary,
-		reviewedFiles: [filename],
-	};
 }

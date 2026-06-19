@@ -40,17 +40,12 @@ export interface CodeReviewPullRequest {
 	head: string;
 }
 
-// Capped at 10 (below the style-guide fan-out's 20): each code-review file is a
-// multi-turn agent session (parse patch, read the full file, review), so large
-// PRs otherwise blow both the specialist DO's 128 MB isolate and the
-// orchestrator's poll deadline. 10 covers virtually all docs PRs; the rare
-// larger PR is reviewed for its 10 largest changed files.
-export const CODE_REVIEW_MAX_FILES = 10;
-// Capped at 3 (below the style-guide fan-out's 5): code-review sessions are
-// heavier — each reads full file content and carries the injected AGENTS.md —
-// so 5 concurrent sessions exceeded the specialist Durable Object's 128 MB
-// isolate limit and triggered resets. 3 keeps peak heap under the limit.
-export const CODE_REVIEW_CONCURRENCY = 3;
+export const CODE_REVIEW_MAX_FILES = 20;
+// Each per-file session is deleted as soon as it finishes (see reviewSingleFile),
+// so peak heap is bounded to ~CODE_REVIEW_CONCURRENCY live sessions rather than
+// growing with the file count. That fixed the isolate OOM, so concurrency can
+// stay at 5.
+export const CODE_REVIEW_CONCURRENCY = 5;
 
 /**
  * Paths excluded from code review: lockfiles, generated output, vendored
@@ -223,7 +218,6 @@ export async function runCodeReviewInProcess(
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
-		compaction: { reserveTokens: 64_000 },
 		tools: makeCodeReviewTools(token, headSha),
 		skills: [codeReviewSkill],
 		...(instructions ? { instructions } : {}),
@@ -286,28 +280,36 @@ async function reviewSingleFile({
 }): Promise<CodeReviewResult> {
 	const session = await harness.session(sessionName);
 
-	const skillResult = await session.skill("code-review", {
-		result: CodeReviewResultFromModelSchema,
-		args: {
-			pullRequest,
-			diffDir,
-			filename,
-		},
-	});
+	try {
+		const skillResult = await session.skill("code-review", {
+			result: CodeReviewResultFromModelSchema,
+			args: {
+				pullRequest,
+				diffDir,
+				filename,
+			},
+		});
 
-	const rawData = skillResult.data;
-	if (!rawData) {
+		const rawData = skillResult.data;
+		if (!rawData) {
+			return {
+				findings: [],
+				summary: "Code review produced no result.",
+				reviewedFiles: [filename],
+			};
+		}
+
+		const findings = await assignCodeReviewFindingIds(rawData.findings);
 		return {
-			findings: [],
-			summary: "Code review produced no result.",
+			findings,
+			summary: rawData.summary,
 			reviewedFiles: [filename],
 		};
+	} finally {
+		// Release this file's session immediately so its accumulated context
+		// (full file body, injected AGENTS.md, tool results, model history) is
+		// not retained for the whole run. Without this, harness memory grows
+		// with the file count and the isolate OOMs on large PRs.
+		await session.delete().catch(() => {});
 	}
-
-	const findings = await assignCodeReviewFindingIds(rawData.findings);
-	return {
-		findings,
-		summary: rawData.summary,
-		reviewedFiles: [filename],
-	};
 }
