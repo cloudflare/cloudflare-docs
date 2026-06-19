@@ -8,6 +8,8 @@ date: 2026-06-19
 
 AI agents can now deploy Workers to Cloudflare without first requiring a user to sign up, open a browser-based OAuth flow, click through the dashboard, or create an API token. When an agent tries to deploy without Cloudflare credentials, Wrangler can tell it to rerun with `--temporary`, then deploy the Worker to a temporary preview account.
 
+To use this flow from your agent, update to Wrangler 4.102.0 or later, then ask the agent to deploy with Wrangler. If no credentials are available, the agent can follow Wrangler's output and rerun the deploy with `--temporary`.
+
 ![Diagram showing an AI agent deploying, verifying, and redeploying a Worker to a temporary account, then claiming it after authentication and moving it to a permanent account](~/assets/images/workers/claim-deployments-flow.png)
 
 ```sh
