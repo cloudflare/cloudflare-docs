@@ -1,0 +1,123 @@
+---
+title: Claim deployments
+description: Deploy Workers from AI agents with wrangler deploy --temporary, then claim the deployment and temporary preview account.
+pcx_content_type: how-to
+sidebar:
+  order: 5.5
+products:
+  - workers
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+Use claim deployments when an AI agent or other tool needs to deploy a Worker before you authenticate Wrangler to a Cloudflare account.
+
+`wrangler deploy --temporary` creates or reuses a temporary preview account, deploys your Worker to a `workers.dev` URL, and prints a claim URL. Claim the temporary preview account within 60 minutes to keep the deployment and the Cloudflare resources created for it.
+
+This is Cloudflare's claim flow for AI-generated Workers deployments.
+
+## Use cases
+
+- AI-generated deployments
+- Background agent sessions
+- Throwaway preview deployments
+- First-time Workers evaluations
+
+For production and continuous integration and continuous deployment (CI/CD), use a permanent Cloudflare account with [`wrangler login`](/workers/wrangler/commands/general/#login) or a [Cloudflare API token](/fundamentals/api/get-started/create-token/). Do not use `--temporary` when Wrangler is already authenticated.
+
+## How temporary deploys work
+
+When you run `wrangler deploy --temporary`, Wrangler:
+
+1. Checks that no Cloudflare credentials are already available.
+2. Handles Cloudflare's Terms of Service and Privacy Policy acceptance.
+3. Provisions or reuses a temporary preview account.
+4. Deploys your Worker to that temporary preview account.
+5. Prints a live Worker URL.
+6. Prints a claim URL for the temporary preview account.
+
+In an interactive terminal, Wrangler asks you to type `yes` before it creates the temporary preview account. In a non-interactive shell, Wrangler prints a Terms of Service and Privacy Policy notice and continues.
+
+Wrangler caches the temporary preview account and reuses it while both the account and claim URL are valid. The output shows whether the account was created or reused. Wrangler clears the cached temporary preview account when you run `wrangler login` or `wrangler logout`.
+
+You can keep deploying changes with `wrangler deploy --temporary` while the temporary preview account remains active. If you do not claim the temporary preview account within 60 minutes, Cloudflare deletes it and its deployments.
+
+## Deploy with a temporary preview account
+
+<Steps>
+
+1. Install or update Wrangler.
+
+   For more information, refer to [Install and update Wrangler](/workers/wrangler/install-and-update/).
+
+2. In your Worker project directory, run `wrangler deploy --temporary`:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy --temporary" />
+
+3. Save the Worker URL and claim URL from the output.
+
+   Wrangler prints output similar to the following:
+
+   ```txt
+   Continuing means you accept Cloudflare's Terms of Service (https://www.cloudflare.com/terms/) and Privacy Policy (https://www.cloudflare.com/privacypolicy/).
+
+   Temporary account ready:
+     Account:        example-name (created)
+     Claim within:   60 minutes
+     Claim URL:      https://dash.cloudflare.com/claim-preview?claimToken=<TOKEN>
+
+   Uploaded example-worker
+   Deployed example-worker triggers
+     https://example-worker.example-name.workers.dev
+   ```
+
+4. Test the deployed Worker.
+
+   ```sh
+   curl https://example-worker.example-name.workers.dev
+   ```
+
+5. To deploy another change before the temporary preview account expires, run the same command again:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy --temporary" />
+
+</Steps>
+
+## Claim the deployment
+
+To keep the deployment, open the claim URL within 60 minutes. Sign in to Cloudflare or create an account, then follow the dashboard prompts to claim the temporary preview account.
+
+After you claim the temporary preview account, the Worker and Cloudflare resources created in that account remain available to you. To continue using Wrangler with the claimed account, run [`wrangler login`](/workers/wrangler/commands/general/#login), then deploy without `--temporary`.
+
+## Agent discovery
+
+Wrangler surfaces this flow to agents and automation. If `wrangler whoami` runs without credentials, Wrangler suggests `wrangler deploy --temporary`. If a non-interactive command fails because `CLOUDFLARE_API_TOKEN` is not set, Wrangler suggests rerunning the command with `--temporary`.
+
+## Give instructions to an AI agent
+
+Use the following instruction when you want an AI agent to deploy to Cloudflare without stopping for account setup:
+
+```txt
+Deploy this Worker to Cloudflare. First run `wrangler whoami`. If Wrangler is not authenticated, run `wrangler deploy --temporary`. Return the live Worker URL and the claim URL. Tell me that I must claim the temporary preview account within 60 minutes to keep the deployment.
+```
+
+Agents should return both URLs:
+
+- **Worker URL**: The live deployed Worker, usually ending in `.workers.dev`.
+- **Claim URL**: The Cloudflare dashboard URL used to claim the temporary preview account.
+
+## Limits
+
+- Temporary preview accounts expire after 60 minutes if they are not claimed.
+- `--temporary` is only for unauthenticated use. If Wrangler can already use OAuth, `CLOUDFLARE_API_TOKEN`, or a global API key, `--temporary` returns an error.
+- `--temporary` is not a global Wrangler flag. It is available only on commands that can use the short-lived temporary preview account token, including `wrangler deploy`, `wrangler versions upload`, and supported KV, D1, Hyperdrive, Queues, and certificate commands.
+- Claim URLs grant ownership of the temporary preview account. Treat them as sensitive.
+- Temporary preview accounts have restrictions and rate limits for abuse prevention.
+- Use a permanent Cloudflare account for production deployments and recurring automation.
+
+## Related resources
+
+- [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy)
+- [Prompting](/workers/get-started/prompting/)
+- [Deploy an existing project](/workers/framework-guides/automatic-configuration/)
+- [CI/CD](/workers/ci-cd/)

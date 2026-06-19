@@ -30,6 +30,7 @@ export const SHARED_PROMPTS = [
 	"Optimize my Worker to serve WebP images with responsive resizing using Cloudflare Images.",
 	// Observability & DevOps
 	"Check my Workers deployment logs for errors and suggest fixes.",
+	"Deploy this Worker with `wrangler deploy --temporary` if no Cloudflare account is authenticated, then return the live URL and claim URL for the temporary preview account.",
 	"Set up GitHub Actions to deploy this Worker to staging and production on Cloudflare.",
 	"Create a Logpush job to stream Workers analytics to my data warehouse.",
 ];
