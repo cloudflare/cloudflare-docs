@@ -1,0 +1,39 @@
+---
+title: Configure observability per container application
+description: Set observability for individual container applications in Wrangler.
+products:
+  - containers
+date: 2026-06-19
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now configure observability for each container application when you deploy [Containers](/containers/) with [Wrangler](/workers/wrangler/). This lets you change logging for one container without changing the rest of your Worker.
+
+If you omit `containers[].observability`, Wrangler uses the top-level `observability` setting for that container. If you set it, the container setting overrides the top-level setting.
+
+Use `target_instance_percentage` or `target_instance_count` to apply an observability change to a subset of running instances.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"observability": {
+		"enabled": false,
+	},
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"observability": {
+				"enabled": true,
+				"target_instance_percentage": 25,
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+For more information about Workers Logs, refer to [Workers Logs](/workers/observability/logs/workers-logs/).

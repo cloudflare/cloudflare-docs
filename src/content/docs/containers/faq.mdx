@@ -12,12 +12,14 @@ import { Render, WranglerConfig } from "~/components";
 
 ## How do Container logs work?
 
-To get logs in the Dashboard, including live tailing of logs, toggle `observability` to true
-in your Worker's wrangler config:
+To get logs in the Dashboard, including live tailing of logs, enable observability in
+your Wrangler config.
+
+You can enable it at the Worker level, which applies to containers by default:
 
 <WranglerConfig>
 
-```json
+```jsonc
 {
 	"observability": {
 		"enabled": true
@@ -26,6 +28,29 @@ in your Worker's wrangler config:
 ```
 
 </WranglerConfig>
+
+You can also configure observability per container:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"observability": {
+				"enabled": true
+			}
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+If a container sets `containers[].observability`, it overrides the top-level
+`observability` setting for that container.
 
 Logs are subject to the same [limits as Worker logs](/workers/observability/logs/workers-logs/#limits), which means that they are
 retained for 3 days on Free plans and 7 days on Paid plans.

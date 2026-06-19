@@ -1354,6 +1354,29 @@ The following options are available:
 - `constraints.jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - Restrict containers to compliance boundaries. Valid values: `"eu"`, `"fedramp"`.
 
+- `observability` <Type text="object" /> <MetaInfo text="optional" />
+  - Configures observability for this container application when deploying with `wrangler deploy`.
+  - If omitted, Wrangler uses the top-level [`observability`](#observability) setting as a fallback for that container.
+  - If set, it overrides the top-level `observability` setting for that container.
+
+- `observability.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Shorthand for `observability.logs.enabled`.
+
+- `observability.logs.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether logs for this container are persisted to Cloudflare's observability platform.
+
+- `observability.target_instance_percentage` <Type text="number" /> <MetaInfo text="optional" />
+  - Apply application-level observability changes to this percentage of running instances.
+  - Must be an integer from `1` to `99`.
+  - Cannot be used with `observability.target_instance_count`.
+  - Requires observability to be enabled for the container.
+
+- `observability.target_instance_count` <Type text="number" /> <MetaInfo text="optional" />
+  - Apply application-level observability changes to this many running instances.
+  - Must be a positive integer.
+  - Cannot be used with `observability.target_instance_percentage`.
+  - Requires observability to be enabled for the container.
+
 <WranglerConfig>
 
 ```jsonc
@@ -1364,6 +1387,10 @@ The following options are available:
 			"image": "./Dockerfile",
 			"max_instances": 10,
 			"instance_type": "basic", // Optional, defaults to "lite"
+			"observability": {
+				"enabled": true,
+				"target_instance_percentage": 25,
+			},
 			"image_vars": {
 				"FOO": "BAR",
 			},
