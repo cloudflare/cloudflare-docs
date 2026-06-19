@@ -8,6 +8,8 @@ date: 2026-06-19
 
 Wrangler now supports temporary Cloudflare accounts for AI agent deployments. When an agent tries to deploy without Cloudflare credentials, Wrangler can tell it to rerun with `--temporary`, then deploy the Worker to a temporary preview account without requiring browser login, dashboard setup, or API token creation first.
 
+![Diagram showing an AI agent deploying, verifying, and redeploying a Worker to a temporary account, then claiming it after authentication and moving it to a permanent account](~/assets/images/workers/claim-deployments-flow.png)
+
 ```sh
 wrangler deploy --temporary
 ```
@@ -15,3 +17,5 @@ wrangler deploy --temporary
 The temporary deployment stays live for 60 minutes. During that window, the agent can verify the Worker, redeploy changes, and return both the live Worker URL and claim URL. Opening the claim URL lets you sign in to or create a Cloudflare account and make the temporary account permanent.
 
 Temporary preview accounts currently support a limited set of products, including Workers, Workers Static Assets, Workers KV, D1, Hyperdrive, Queues, and SSL/TLS certificates. For supported products, limits, and claim behavior, refer to [Claim deployments (temporary accounts)](/workers/platform/claim-deployments/).
+
+For more context, refer to [Temporary Cloudflare Accounts for Agents](https://blog.cloudflare.com/temporary-accounts/).
