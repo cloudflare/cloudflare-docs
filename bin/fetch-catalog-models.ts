@@ -42,6 +42,18 @@ interface CatalogModel {
 	// JSON-write step.
 	zdr?: boolean;
 	zdr_comment?: string | null;
+	// In-page notice surfaced on the model detail page. Same round-trip
+	// rationale as `zdr` above — declaring the shape here keeps the
+	// JSON-write path type-checked rather than relying on the cast hole.
+	banner?: {
+		title?: string;
+		text: string;
+		severity: string;
+		dismissible?: boolean;
+		link?: { url: string; label: string };
+	} | null;
+	// Request-format identifiers the model accepts at the API layer.
+	request_formats?: string[] | null;
 	examples: Array<{
 		name: string;
 		description?: string;
