@@ -75,26 +75,20 @@ Before you publish an application, ensure you have:
 
 To add a published application route to an existing tunnel:
 
-1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**, then select your tunnel.
 
    <DashButton url="/?to=/:account/tunnels" />
 
-2. Select your tunnel and select **Edit**.
+2. On the **Routes** tab, select **Add route**, then select **Published application**.
 
-3. Go to the **Published application routes** tab and select **Add a published application route**.
-
-4. Enter a subdomain and select a **Domain** from the drop-down menu. Specify any subdomain or path information.
+3. Enter a subdomain and select a **Domain** from the drop-down menu. Specify any subdomain or path information.
 	:::note
 	If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#i-see-this-site-cant-provide-a-secure-connection).
 	:::
 
-5. Under **Service**, choose a [service type](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/protocols/) and specify its URL. For example:
-	- **Type**: _HTTP_
-	- **URL**: `localhost:8000`
+4. In **Service URL**, enter the protocol and address of your application (for example, `http://localhost:8000`). Refer to [supported protocols](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/protocols/) for available options.
 
-6. Under **Additional application settings**, specify any [parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/) you would like to add to your tunnel configuration.
-
-7. Select **Save**.
+5. Select **Save**.
 
 Anyone on the Internet can now access the application at the specified hostname. To allow or block specific users, [create an Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
 

@@ -155,44 +155,22 @@ A pod represents an instance of a running process in the cluster. In this exampl
 To create a Cloudflare Tunnel:
 
 <ol>
-	{props.product === "cloudflare-one" ? (
-		<>
-			<li>
-				Open a new browser tab and log in to the{" "}
-				<a href="https://dash.cloudflare.com/">Cloudflare dashboard</a>.
-			</li>
-			<li>
-				Go to <strong>Zero Trust</strong> &gt; <strong>Networks</strong> &gt;{" "}
-				<strong>Connectors</strong> &gt; <strong>Cloudflare Tunnels</strong>.
-			</li>
-			<li>
-				Select <strong>Create a tunnel</strong>.
-			</li>
-			<li>
-				Choose <strong>Cloudflared</strong> for the connector type and select{" "}
-				<strong>Next</strong>.
-			</li>
-		</>
-	) : (
-		<>
-			<li>
-				In the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a>,
-				go to <strong>Networking</strong> &gt; <strong>Tunnels</strong>.
-			</li>
-			<li>
-				Select <strong>Create Tunnel</strong>.
-			</li>
-		</>
-	)}
+	<li>
+		In the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a>,
+		go to <strong>Networking</strong> &gt; <strong>Tunnels</strong>.
+	</li>
+	<li>
+		Select <strong>Create a tunnel</strong>.
+	</li>
 	<li>
 		Enter a name for your tunnel (for example, <code>gke-tunnel</code>).
 	</li>
 	<li>
-		Select <strong>Save tunnel</strong>.
+		Select <strong>Create Tunnel</strong>.
 	</li>
 	<li>
 		<p>
-			Under <strong>Choose an environment</strong>, select{" "}
+			Choose your operating system and select{" "}
 			<strong>Docker</strong>.
 		</p>
 		<p>
@@ -360,30 +338,6 @@ kubectl logs pod/cloudflared-deployment-6d5f9f9666-85l5w
 
 Now that the tunnel is up and running, we can route the httpbin service through the tunnel.
 
-{props.product === "cloudflare-one" ? (
-
-<ol>
-	<li>
-		Switch to the browser tab where you were configuring Cloudflare Tunnel.
-	</li>
-	<li>
-		Go to the <strong>Configuration page</strong> for your Cloudflared Tunnel.
-	</li>
-	<li>
-		In the <strong>Published application routes</strong> tab, enter a hostname
-		for the application (for example,{" "}
-		<code>httpbin.&lt;your-domain&gt;.com</code>).
-	</li>
-	<li>
-		Under <strong>Service</strong>, enter{" "}
-		<code>{"http://httpbin-service"}</code>. <code>httpbin-service</code> is the
-		name of the Kubernetes service defined in <code>httpbinsvc.yaml</code>.
-	</li>
-	<li>
-		Select <strong>Complete setup</strong>.
-	</li>
-</ol>
-) : (
 <ol>
 	<li>
 		In the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a>, go
@@ -391,7 +345,7 @@ Now that the tunnel is up and running, we can route the httpbin service through 
 		tunnel.
 	</li>
 	<li>
-		Under <strong>Routes</strong>, select <strong>Add route</strong> &gt;{" "}
+		On the <strong>Routes</strong> tab, select <strong>Add route</strong> &gt;{" "}
 		<strong>Published application</strong>.
 	</li>
 	<li>
@@ -407,7 +361,6 @@ Now that the tunnel is up and running, we can route the httpbin service through 
 		Select <strong>Add route</strong>.
 	</li>
 </ol>
-)}
 
 ## 8. Test the connection
 

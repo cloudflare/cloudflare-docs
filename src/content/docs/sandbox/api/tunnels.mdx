@@ -322,7 +322,7 @@ For each `(sandbox, name)` pair, the SDK creates:
 
 | Resource                | Name / location                                                | Identifier              |
 | ----------------------- | -------------------------------------------------------------- | ----------------------- |
-| Cloudflare Tunnel       | **Zero Trust** > **Networks** > **Tunnels**                    | `sandbox-<sandbox-id>-<name>` |
+| Cloudflare Tunnel       | **Networking** > **Tunnels**                    | `sandbox-<sandbox-id>-<name>` |
 | Proxied DNS record      | Your zone, **DNS** > **Records**                               | `CNAME <name>.<zone> → <tunnel-id>.cfargotunnel.com` |
 
 Both resources are tagged so you can audit, query, and bulk-clean them from the dashboard or API:
