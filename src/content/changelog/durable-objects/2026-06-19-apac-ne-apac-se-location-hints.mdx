@@ -15,7 +15,7 @@ Use the new hints the same way as any other `locationHint`:
 const stubNE = env.MY_DURABLE_OBJECT.get(id, { locationHint: "apac-ne" });
 
 // Southeast Asia-Pacific (Singapore, Indonesia, etc.)
-const stub = env.MY_DURABLE_OBJECT.get(id, { locationHint: "apac-se" });
+const stubSE = env.MY_DURABLE_OBJECT.get(id, { locationHint: "apac-se" });
 ```
 
 If your users are spread across all of Asia-Pacific, the existing `apac` hint remains the right choice. Only reach for `apac-ne` or `apac-se` when your traffic is clearly concentrated in one sub-region and you want to minimize round-trip time to that audience.
