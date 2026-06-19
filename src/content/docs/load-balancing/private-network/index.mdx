@@ -18,10 +18,18 @@ Private Network Load Balancing enables you to load balance traffic between serve
 
 Private Network Load Balancing supports not only public IPs but also virtual IPs and private IPs as endpoint values.
 
+---
+
 :::note
 
 This page assumes a certain level of familiarity with how the Cloudflare Load Balancing solution works. For an introductory overview refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
 :::
+
+---
+
+## Public load balancer with Tunnel off-ramp
+
+You can use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) as an off-ramp for public-facing load balancers. This allows you to load balance traffic from the public internet to origins behind Tunnel without exposing origin IP addresses. Configure the tunnel connector on your origin servers and add the tunnel hostnames as pool endpoints.
 
 ---
 

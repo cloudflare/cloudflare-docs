@@ -9,6 +9,7 @@ sidebar:
 head:
   - tag: title
     content: Custom rules
+
 ---
 
 import { Render } from "~/components";
@@ -27,8 +28,15 @@ When building expressions for Load Balancing rules, refer to [Supported fields a
 
 By default, non-Enterprise customers have **one** Load Balancing rule **per load balancer hostname**. For more rules, upgrade to [Enterprise](https://www.cloudflare.com/enterprise/).
 
+## Pool override failover behavior
+
+When a custom rule overrides the pool selection, the override replaces the entire default pool list. If the overridden pool is disabled or unhealthy, traffic falls to the fallback pool — not to other pools in the original list.
+
+
 ## Limitations
 
 At the moment, you cannot use Load Balancing rules with [Cloudflare Spectrum](/spectrum/about/load-balancer/).
 
 Custom load balancing rules are incompatible with [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/). As a result, any custom rule applied to Geo-steered load balancers will not function as expected.
+
+Custom rules that reference HTTP-layer fields (such as URI path, headers, or cookies) require the load balancer to be [proxied](/load-balancing/understand-basics/proxy-modes/). If you add such a rule to a DNS-only load balancer, traffic will be proxied through Cloudflare even though the load balancer may display as DNS-only.

@@ -32,6 +32,12 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 ---
 
+## Endpoint address uniqueness
+
+Within a single pool, each endpoint must have a unique address. You cannot add multiple endpoints with the same IP address but different ports to the same pool. If you need to load balance across different ports on the same origin, place each port in a separate pool.
+
+---
+
 ## Create a pool
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
