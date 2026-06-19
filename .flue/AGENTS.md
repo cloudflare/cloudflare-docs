@@ -2,6 +2,74 @@
 
 This directory contains the Flue-powered docs bot for `cloudflare-docs`, deployed as a Cloudflare Worker.
 
+## Architecture
+
+The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull requests on `cloudflare/cloudflare-docs`. It runs two independent reviews — a generic engineering **code review** and a **style-guide review** — and posts both as one GitHub comment with `### Code Review` and `### Style Guide Review` sections.
+
+### Entry point and routing (`app.ts`)
+
+- A Hono app mounts `flue()` at `/`. `registerProvider("cloudflare", …)` runs at module scope so the Workers AI binding + AI Gateway are configured in every isolate, including the per-agent Durable Objects that make model calls.
+- `GET /health` is public.
+- `requireInternalToken` guards `/runs/*` and `/workflows/*`. The one exception is `/workflows/orchestrate`, which GitHub calls directly — it verifies the webhook HMAC signature itself before doing any work.
+- The internal auth header and helpers live in `lib/internal-auth.ts`; `getInternalHeaders` mints the header for worker-to-worker admits.
+
+### Workflows (each is a Durable Object)
+
+| Workflow (`workflows/`)        | DO class                             | Role                                                              |
+| ------------------------------ | ------------------------------------ | ----------------------------------------------------------------- |
+| `orchestrate.ts`               | `FlueOrchestrateWorkflow`            | Webhook entry. Verifies signature, classifies the event, routes.  |
+| `spam-and-off-topic-filter.ts` | `FlueSpamAndOffTopicFilterWorkflow`  | Spam/off-topic gate for issues + PRs.                             |
+| `code-review-orchestrator.ts`  | `FlueCodeReviewOrchestratorWorkflow` | Coordinates the two specialists, reconciles, renders the comment. |
+| `code-review-specialist.ts`    | `FlueCodeReviewSpecialistWorkflow`   | Generic code-review fan-out (its own isolate).                    |
+| `style-guide-specialist.ts`    | `FlueStyleGuideSpecialistWorkflow`   | Style-guide fan-out (its own isolate).                            |
+| `dependabot-review.ts`         | `FlueDependabotReviewWorkflow`       | Separate review path for Dependabot PRs.                          |
+
+Workflows are invoked in **accepted mode** and coordinated with `admitWorkflow` + `pollRun` (`lib/poll-run.ts`): the caller admits a child, gets a `runId`, then long-polls `/runs/:runId` until `run_end`. This avoids holding one long synchronous subrequest open across a child DO, and the result is still readable from the durable stream if the response path drops.
+
+### Request flow
+
+1. GitHub → `POST /workflows/orchestrate`. Signature verified, then routed:
+   - **Dependabot PR** (opened/reopened/synchronize/ready_for_review) → admit `dependabot-review` (skips the spam filter).
+   - **Issue/PR opened/reopened/synchronize** (+ PR `ready_for_review`), non-Dependabot → admit `spam-and-off-topic-filter` and **poll** for its `closed` verdict. Codeowners skip the filter. If it closed the item, stop.
+   - **PR** events that survive the filter → admit `code-review-orchestrator` **fire-and-forget** (no poll; it posts its own comment). Draft PRs are skipped unless the action is `ready_for_review`.
+2. `code-review-orchestrator`:
+   - Enforces the **auto-review limit** (max 2 automatic reviews per PR, tracked in R2; `/ignore-review-limit` lifts it; codeowner commands bypass it).
+   - Posts a "review in progress" placeholder comment (comment mode only).
+   - Decides the **diff mode**: `incremental` (from the last reviewed head SHA to the current head) when a prior review exists, else `full`. It does **not** fetch the file list itself.
+   - Admits **both specialists** with a small PR descriptor (`lib/review-specialist.ts`) and polls them **in parallel** (20-minute timeout each). One specialist failing degrades only its section to an empty result; a double failure surfaces a failure comment.
+   - **Reconciles** each stream (code, style) separately against that stream's previous findings (loaded from R2) and the human comments posted since the last bot comment, persists the new active findings to R2, then renders one comment.
+3. Each specialist runs in its **own DO** (own ~128 MB isolate, which is what keeps the two heavy fan-outs from sharing one isolate):
+   - Self-fetches its diff for the requested mode. Incremental is SHA-pinned via `comparePullRequestHeads`; if the base SHA is gone (force-push since the orchestrator decided), it self-heals to the full PR diff.
+   - Selects eligible files, stages the diff (per-file patches + `manifest.json` + `pr.json`) into its own Workspace under a **run-scoped** path (`diffs/pr-<n>/runs/<runId>`), runs the per-file fan-out, and returns `{ findings, summary, reviewedFiles }` as its run result.
+
+### Per-file fan-out (`lib/code-review-inproc.ts`, `lib/style-guide-inproc.ts`)
+
+- One named harness over the shell-sandbox Workspace (`connectors/cloudflare-shell.ts`), then one **detached session per changed file**, run with bounded concurrency (`withConcurrency`).
+- **Each session is deleted in a `finally` as soon as its file finishes** (`session.delete()`), so peak heap is bounded to ~concurrency live sessions instead of growing with the file count. This is what fixed the specialist DO OOM.
+- Caps: both fan-outs review at most **20** files (largest-diff-first) at **concurrency 5**. A single file's failure is caught and degraded to an empty result — it never aborts the pool. Per-file results are merged and deduped by finding id.
+- **Code review** reviews _all_ changed text files (excluding lockfiles, `dist`/`skills`/`node_modules`, `.wrangler`, `src/assets`, and binary/image types). It emits `critical`/`warning`/`suggestion` severities with `CR-` ids and gives the model GitHub-API-backed tools (`read_repo_file` pinned to the PR head SHA, `search_repo`) so it can read full post-change file content for context — the diff patch alone is staged, but correctness review needs the surrounding code. The token stays in trusted code; only tool results cross into the sandbox. The repo's root `AGENTS.md` is fetched from the **PR base ref** (trusted, not head) and injected as agent `instructions`.
+- **Style guide** reviews only `src/content/(docs|partials|changelog)/**.mdx`, emits `warning`/`suggestion` only, and uses the bundled `style-guide-review` skill and its reference tree.
+
+### State, comment, and rendering
+
+- **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […] }`; a legacy bare array means style-only), `auto-review-count.json`, and `ignore-review-limit.json`. The staged diff lives in the specialist DO's Workspace filesystem, not R2.
+- The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
+- `lib/code-review-render.ts` renders the single comment: a status line, then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables) and `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
+- **Models**: reviews use `cloudflare/@cf/moonshotai/kimi-k2.7-code`; reconciliation uses `cloudflare/@cf/zai-org/glm-4.7-flash`.
+- **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
+
+### Slash commands (codeowner-only, commented on a PR)
+
+- `/review` — run now (incremental if a prior review exists, else full); bypasses the auto-review limit.
+- `/full-review` — re-review the entire diff from scratch (clears prior review JSONs); bypasses the limit. Acknowledged with 👀 → 👍 when done.
+- `/ignore-review-limit` — permanently lift the 2-review automatic cap for the PR.
+- On Dependabot PRs, `/review` and `/full-review` route to `dependabot-review` instead.
+
+### Bindings & migrations (`wrangler.jsonc`)
+
+- Bindings: `AI` (Workers AI), `LOADER` (`worker_loaders`, backs the shell sandbox), `DOCS_FLUE_BUCKET` (R2). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`.
+- DO migrations: v1 initial classes; v2 Dependabot; v3 `Flue…`-prefix renames; v4 deleted the standalone style-guide workflow (its fan-out had moved in-process); v5 added the two specialist classes (the fan-outs split back into their own DOs for isolated memory budgets).
+
 ## Reading Flue documentation
 
 Use the installed Flue CLI for docs so guidance matches the version in `.flue/package.json`:
