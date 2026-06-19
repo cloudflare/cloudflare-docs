@@ -5,6 +5,11 @@
 		"parent": ["Networking"]
 	},
 	{
+		"deeplink": "/?to=/:account/magic-networks/routes/virtual-networks",
+		"name": "Virtual networks",
+		"parent": ["Networking", "Routes"]
+	},
+	{
 		"deeplink": "/?to=/:account/data-catalog/overview",
 		"name": "R2 Data Catalog",
 		"parent": ["Storage & databases", "R2 object storage"]
