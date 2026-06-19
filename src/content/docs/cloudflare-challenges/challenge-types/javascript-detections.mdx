@@ -11,7 +11,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 JavaScript Detections is a type of challenge separate from Cloudflare’s Challenge Pages or Turnstile. JavaScript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
 
@@ -44,7 +44,7 @@ You must enable JavaScript Detections and then create a custom WAF rule using th
 
 When the visitor encounters a WAF custom rule on your website, the rule will check the outcome of the `cf_clearance` cookie. The outcome of the `cf_clearance` cookie determines whether the request passes, or is blocked or challenged.
 
-Refer to the steps below to enable and enforce JavaScript Detections.
+Refer to the following steps to enable and enforce JavaScript Detections.
 
 ## 1. Enable JavaScript Detections
 
@@ -120,7 +120,7 @@ You can explicitly add a script reference to `/cdn-cgi/challenge-platform/script
 It is not recommended to combine both approaches (zone-wide toggle and the manual injection). If you want to selectively deploy JavaScript Detections only on certain pages, disable JavaScript Detections via the Cloudflare dashboard and use the JavaScript Detections API exclusively.
 :::
 
-For performance-sensitive pages, the recommended approach is to disable dashboard injection and load the API script yourself. This lets you run JavaScript Detections after your critical content renders, or only when a protected action requires it.
+For performance-sensitive pages, disable dashboard injection and load the API script yourself. This lets you run JavaScript Detections after your critical content renders, or only when a protected action requires it.
 
 ### Basic API usage
 
@@ -232,7 +232,7 @@ async function executeJsdOnce() {
 }
 ```
 
-To avoid competing with LCP, wait until the browser reports an LCP candidate and that candidate has not changed for a short interval. This is a best-effort scheduling pattern, because the final LCP value is only known after user interaction or page hide. Tune the timeout for your page, or use an application-specific signal that confirms your critical content has rendered.
+To avoid competing with LCP, wait until the browser reports an LCP candidate and that candidate has not changed for a short interval. This is a best-effort scheduling pattern, because the final LCP value is only known after user interaction or when the page is hidden. Tune the timeout for your page, or use an application-specific signal that confirms your critical content has rendered.
 
 ```js
 function runWhenIdle(callback) {
@@ -286,7 +286,7 @@ function runAfterLcp(callback) {
 
 runAfterLcp(() => {
 	executeJsdOnce().catch(() => {
-		// If JavaScript Detections fails, continue; later requests may be evaluated without this signal.
+		// If JavaScript Detections fails, continue. Later requests may be evaluated without this signal.
 	});
 });
 ```
