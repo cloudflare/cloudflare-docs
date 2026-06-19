@@ -33,8 +33,6 @@ Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attem
 
 If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
 
-For AI agents and other first-time deployments where you do not want to create an API token yet, use [`wrangler deploy --temporary`](/workers/platform/claim-deployments/) before authenticating Wrangler.
-
 ```txt
 wrangler login [OPTIONS]
 ```
@@ -175,8 +173,6 @@ An error is returned if no authentication method is available, or if API key/ema
 ---
 
 <WranglerCommand command="whoami" />
-
-When `wrangler whoami` runs without credentials, Wrangler suggests `wrangler deploy --temporary` as a way to deploy with a temporary preview account.
 
 ---
 
