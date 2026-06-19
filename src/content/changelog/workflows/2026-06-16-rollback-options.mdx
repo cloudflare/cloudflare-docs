@@ -6,12 +6,9 @@ products:
 date: 2026-06-16 15:00:00 UTC
 ---
 
-[Workflows](/workflows/) makes it easier to build reliable multi-step applications that can recover when downstream systems fail. Rollback handlers now receive the original [step context](/workflows/build/step-context/) via a `ctx` object for the step being rolled back. This includes `ctx.step.name`, `ctx.step.count`, `ctx.attempt`, and the resolved step `config`. 
+[Workflows](/workflows/) makes it easier to build reliable multi-step applications that can recover when downstream systems fail. Rollback handlers now receive the original [step context](/workflows/build/step-context/) via a `ctx` object for the step being rolled back. This includes `ctx.step.name`, `ctx.step.count`, `ctx.attempt`, and the step `config` with defaults applied.
 
-The [step configuration](/workflows/build/workers-api/#workflowstepconfig) contains the resolved retry and timeout configurations, so you can customize your compensating logic according to any of these fields.
-
-
-
+The [step configuration](/workflows/build/workers-api/#workflowstepconfig) includes the retry and timeout settings used for that step, so you can customize your step recovery logic according to those fields.
 
 ```ts
 await step.do(
