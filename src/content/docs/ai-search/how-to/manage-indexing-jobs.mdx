@@ -1,0 +1,62 @@
+---
+pcx_content_type: how-to
+title: Manage indexing jobs
+description: List, trigger, inspect, cancel, and view logs for AI Search indexing jobs using Wrangler.
+sidebar:
+  order: 7
+products:
+  - ai-search
+---
+
+Indexing jobs scan an AI Search instance's data source and reindex new, modified, or deleted content. For how scheduled jobs run, refer to [Syncing](/ai-search/configuration/indexing/syncing/).
+
+Use the [Wrangler](/workers/wrangler/) `ai-search jobs` commands to manage these jobs from the command line. These commands wrap the AI Search [Jobs API](/ai-search/api/instances/rest-api/#jobs); for the full flags of each command, refer to [Wrangler commands](/ai-search/wrangler-commands/).
+
+:::note
+All `wrangler ai-search jobs` commands accept `-n, --namespace` (defaults to `default`) to target a [namespace](/ai-search/concepts/namespaces/), and `--json` to return machine-readable output.
+:::
+
+## List jobs
+
+List the indexing jobs for an instance. Use `--page` and `--per-page` to page through results.
+
+```sh
+# List indexing jobs for an instance
+npx wrangler ai-search jobs list my-instance
+```
+
+## Trigger a job
+
+Trigger a new indexing job. Use `--description` to label the job.
+
+```sh
+# Trigger a new indexing job (optionally describe it)
+npx wrangler ai-search jobs create my-instance --description "manual reindex"
+```
+
+## Get job details
+
+Show the details of a single job by its ID.
+
+```sh
+# Inspect a specific job
+npx wrangler ai-search jobs get my-instance <job-id>
+```
+
+## Cancel a job
+
+Cancel a running job. Add `-y, --force` to skip the confirmation prompt.
+
+```sh
+# Cancel a running job (skip the prompt with -y)
+npx wrangler ai-search jobs cancel my-instance <job-id>
+```
+
+## View job logs
+
+List the log entries for a job. Use `--page` and `--per-page` to page through entries.
+
+```sh
+# View a job's logs
+npx wrangler ai-search jobs logs my-instance <job-id>
+```
