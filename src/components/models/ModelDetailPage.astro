@@ -147,12 +147,16 @@ const description = model.description;
 const isBeta = hasProperty(model.properties, "beta");
 
 // Catalog `banner` is rendered as a Starlight `Aside`. Map the upstream
-// `severity` (currently observed: "warning") onto the four Aside types;
+// `severity` (observed today: "warning", "info") onto the four Aside types;
 // unknown severities fall back to the neutral "note" style so a new
-// upstream value never breaks the build.
+// upstream value never breaks the build. Defined as a function so the
+// switch only evaluates inside the `banner && (...)` JSX block on pages
+// that actually carry a banner — most model pages have `banner: null`.
 const banner = model.banner ?? null;
-const bannerAsideType = ((): "note" | "tip" | "caution" | "danger" => {
-	switch (banner?.severity?.toLowerCase()) {
+function bannerAsideType(
+	severity: string,
+): "note" | "tip" | "caution" | "danger" {
+	switch (severity.toLowerCase()) {
 		case "info":
 			return "tip";
 		case "warning":
@@ -163,7 +167,7 @@ const bannerAsideType = ((): "note" | "tip" | "caution" | "danger" => {
 		default:
 			return "note";
 	}
-})();
+}
 
 let hasPlayground =
 	model.task.name === "Text Generation" && model.hosting === "hosted";
@@ -252,7 +256,7 @@ const starlightPageProps = {
 
 	{
 		banner && (
-			<Aside type={bannerAsideType}>
+			<Aside type={bannerAsideType(banner.severity)}>
 				<p>
 					{banner.title && <strong>{banner.title}: </strong>}
 					{banner.text}

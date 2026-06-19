@@ -40,6 +40,17 @@ export const defaultExampleSchema = z.object({
 // the schema for round-trip fidelity with the upstream API but is not yet
 // honored at render time — the docs site renders banners statically and
 // never hides them. Adding client-side dismissal is a follow-up.
+//
+// `link.url` is validated via Zod 4's `z.httpUrl()`, which rejects any
+// well-formed URL whose scheme is not `http`/`https` (case-insensitive,
+// per RFC 3986) and also rejects bareword hostnames / IP literals such as
+// `localhost` and `127.0.0.1`. Without this guard a compromised or
+// malformed catalog row could inject `javascript:` (or other unsafe
+// scheme) hrefs into the rendered <a>; `target="_blank" rel="noopener
+// noreferrer"` does not block non-http(s) schemes from executing. The
+// protocol enforcement lives at the schema layer so a bad URL fails the
+// content-collection load loudly rather than silently shipping an unsafe
+// link.
 export const catalogBannerSchema = z.object({
 	title: z.string().optional(),
 	text: z.string(),
@@ -47,7 +58,7 @@ export const catalogBannerSchema = z.object({
 	dismissible: z.boolean().optional(),
 	link: z
 		.object({
-			url: z.string(),
+			url: z.httpUrl(),
 			label: z.string(),
 		})
 		.optional(),

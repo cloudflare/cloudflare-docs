@@ -126,4 +126,75 @@ describe("catalogModelsSchema", () => {
 		);
 		expect(result.success).toBe(false);
 	});
+
+	// `link.url` is the only attacker-controlled field that gets rendered
+	// straight into an `<a href={...}>`. The schema MUST reject any URL that
+	// is not well-formed or that uses a scheme other than http(s) — without
+	// this guard a compromised catalog row could inject dangerous-scheme
+	// hrefs that browsers happily execute. The parameterised list locks in
+	// rejection for both the obvious payloads (javascript:, data:) and the
+	// less-obvious ones (vbscript:, file:, blob:, mailto:, ftp:) plus the
+	// canonical bypass shapes against naive `.startsWith` validators
+	// (leading whitespace, mixed-case scheme). Each entry also pins the
+	// failure path to `banner.link.url` so an unrelated rejection (e.g.
+	// missing `examples`) does not silently pass the test.
+	test.each([
+		["javascript:alert(1)"],
+		[" javascript:alert(1)"], // leading space
+		["\tjavascript:alert(1)"], // leading tab
+		["Javascript:alert(1)"], // mixed-case scheme
+		["data:text/html,<script>alert(1)</script>"],
+		["vbscript:msgbox(1)"],
+		["file:///etc/passwd"],
+		["blob:https://example.com/abc"],
+		["mailto:user@example.com"],
+		["ftp://example.com"],
+		["not a url"],
+		[""],
+		["//example.com/protocol-relative"],
+		["/relative/path"],
+		["http://localhost"], // z.httpUrl rejects bareword hostnames
+		["http://127.0.0.1"], // z.httpUrl rejects IP literals
+	])("rejects a banner link with an unsafe or malformed URL: %j", (url) => {
+		const result = catalogModelsSchema.safeParse(
+			makeMinimalModel({
+				banner: {
+					text: "Heads up.",
+					severity: "warning",
+					link: { url, label: "Click me" },
+				},
+			}),
+		);
+		expect(result.success).toBe(false);
+		if (!result.success) {
+			expect(
+				result.error.issues.some(
+					(issue) => issue.path.join(".") === "banner.link.url",
+				),
+			).toBe(true);
+		}
+	});
+
+	// Positive cases. The mixed-case scheme test guards specifically
+	// against regressing to a case-sensitive `.startsWith` check — URI
+	// schemes are case-insensitive per RFC 3986 §3.1, so a benign
+	// `HTTPS://...` URL must continue to parse. Removing this case
+	// silently re-introduces the old bug.
+	test.each([
+		"https://example.com/notice",
+		"http://example.com/notice",
+		"HTTPS://example.com/notice",
+		"Http://example.com/notice",
+	])("accepts a banner link with a safe URL: %j", (url) => {
+		const parsed = catalogModelsSchema.parse(
+			makeMinimalModel({
+				banner: {
+					text: "Heads up.",
+					severity: "warning",
+					link: { url, label: "More info" },
+				},
+			}),
+		);
+		expect(parsed.banner?.link?.url).toBe(url);
+	});
 });
