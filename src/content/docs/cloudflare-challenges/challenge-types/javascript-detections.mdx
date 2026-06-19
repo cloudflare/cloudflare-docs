@@ -286,7 +286,7 @@ function runAfterLcp(callback) {
 
 runAfterLcp(() => {
 	executeJsdOnce().catch(() => {
-		// Allow your WAF rule to decide how to handle requests without this signal.
+		// If JavaScript Detections fails, continue; later requests may be evaluated without this signal.
 	});
 });
 ```
