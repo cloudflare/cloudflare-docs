@@ -23,7 +23,7 @@ Note that some Node.js APIs are only enabled when your Worker's compatibility da
 
 Some Node.js modules are available in Workers only as non-functional stubs. These modules can be imported or required, but do not provide working implementations of the corresponding Node.js APIs. Stubs exist for compatibility with packages that check whether a module exists, and should not be used directly in application code.
 
-The following stubs require `nodejs_compat`. They are enabled automatically when your Worker has a compatibility date on or after the date shown:
+The following stubs are enabled automatically only when `nodejs_compat` is enabled and your Worker's compatibility date is on or after the date shown:
 
 | Stub module           | Enabled with `nodejs_compat` on or after | Enable flag                           | Disable flag                           |
 | --------------------- | ---------------------------------------- | ------------------------------------- | -------------------------------------- |

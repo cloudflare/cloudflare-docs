@@ -83,7 +83,7 @@ If an API you wish to use is missing and you want to suggest that Workers suppor
 
 Some Node.js modules are available as non-functional stubs. A stub can be imported or required, but does not provide a working implementation of the underlying Node.js API. These stubs exist so packages that check for the presence of a module can load in Workers, but they are not suitable for direct use in application code.
 
-The following stubs require the `nodejs_compat` compatibility flag. They are enabled automatically when your Worker has a compatibility date on or after the date shown. To enable one earlier, add the corresponding enable flag. To keep one unavailable after that date, add the corresponding disable flag.
+The following stubs are enabled automatically only when the `nodejs_compat` compatibility flag is enabled and your Worker's compatibility date is on or after the date shown. To enable one earlier, add the corresponding enable flag. To keep one unavailable after that date, add the corresponding disable flag.
 
 | Stub module           | Enabled with `nodejs_compat` on or after | Enable flag                           | Disable flag                           |
 | --------------------- | ---------------------------------------- | ------------------------------------- | -------------------------------------- |
