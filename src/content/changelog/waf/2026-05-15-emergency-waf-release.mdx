@@ -1,0 +1,59 @@
+---
+title: "WAF Release - 2026-05-15 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-05-15 emergency release
+date: 2026-05-15
+---
+
+import { RuleID } from "~/components";
+
+This emergency release introduces two new rules to detect nginx heap buffer overflow and heap spray exploitation attempts targeting the rewrite module's `is_args` stale-state bug (CVE-2026-42945).
+
+**Key Findings**
+
+CVE-2026-42945: nginx Heap Buffer Overflow via Stale `is_args` in Rewrite Module
+
+Successful exploitation allows remote attackers to trigger a heap buffer overflow in nginx's rewrite module by sending crafted URIs containing escapable characters. A length/copy pass mismatch in `ngx_http_script_copy_capture_code()` causes the copy pass to write escaped data into an undersized buffer, leading to heap corruption. This enables denial of service (worker process crash) and, with heap feng shui techniques, potential remote code execution.
+
+We strongly recommend upgrading to nginx 1.30.1 (or later) immediately to address the underlying vulnerability. If you cannot upgrade immediately, avoid `rewrite` directives with `?` in the replacement string followed by `set` or `if` referencing capture groups.
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="2013e3e58efe4b79a26e214f7e52be73" />
+			</td>
+			<td>N/A</td>
+			<td>nginx - Remote Code Execution - Buffer Overread - CVE:CVE-2026-42945</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="68226e83a4d14ee9a9c878469df0ee6c" />
+			</td>
+			<td>N/A</td>
+			<td>nginx - Remote Code Execution - Heap Spray - CVE:CVE-2026-42945</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+	</tbody>
+</table>

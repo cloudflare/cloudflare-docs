@@ -3,6 +3,30 @@ link: "/realtime/realtimekit/release-notes/ios-core/"
 productName: RealtimeKit iOS Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-05-08"
+    title: RealtimeKit iOS Core 2.1.0
+    description: |-
+      **Breaking changes**
+
+      - `RtkParticipants.activeSpeaker` → `RtkParticipants.lastActiveSpeaker`. The old `activeSpeaker` property is deprecated and will be removed in a future release.
+      - `RtkSelfParticipant.enableScreenShare()` → `enableScreenShare(onResult:)`. The old no-callback version is deprecated and will be removed in a future release.
+      - `RtkSelfParticipant.disableScreenShare()` → `disableScreenShare(onResult:)`. The old no-callback version is deprecated and will be removed in a future release.
+      - `RtkStore.subscribe(key, (key, value) → Unit)` → `subscribe(key, (value) → Unit)`. The old two-argument callback signature is deprecated but remains functional via a backward-compatible shim.
+      - `RtkStore.unsubscribe(key, (key, value) → Unit)` → `unsubscribe(key, (value) → Unit)`. The old two-argument callback signature is deprecated but remains functional via a backward-compatible shim.
+
+      **Features**
+
+      - Added `RtkChat.pin()` and `RtkChat.unpin()` methods to pin and unpin chat messages
+      - Added `RtkChat.getMessagesByUser()` to filter messages by sender and `RtkChat.getMessagesByType()` to filter messages by type
+      - Added `SelfPermissions.canPinMessage()` to check whether the local participant has permission to pin messages
+
+      **Fixes**
+
+      - Fixed recording state getting stuck as "recording" when stopping a recording that was started by another participant
+      - Fixed "ghost" participants appearing on the grid when a user was on the setup screen but had not yet joined the socket room
+      - Fixed webinar host being invisible to other participants when joining late
+      - Fixed recording bots and other hidden participants incorrectly appearing on the participant grid
+      - Fixed waitlisted participants appearing in the participant list before being admitted to the meeting
   - publish_date: "2026-04-20"
     title: RealtimeKit iOS Core 2.0.0
     description: |-

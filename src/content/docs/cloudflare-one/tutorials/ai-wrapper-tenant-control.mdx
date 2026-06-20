@@ -409,13 +409,11 @@ The Worker is now behind an addressable public hostname. Make sure to turn off b
 To secure the AI agent wrapper to ensure that only trusted users can access it:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Add an application**.
-3. Choose **Self-hosted**.
-4. Enter a name for your AI agent wrapper application.
-5. In **Session Duration**, choose when the user's application token should expire.
-6. Select **Add public hostname** and enter the custom domain you set for your Worker.
-7. [Configure your Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for your Worker.
-8. Add [Access policies](/cloudflare-one/access-controls/policies/policy-management/) to control who can connect to your application.
+2. Select **Create new application**.
+3. Select **Self-hosted and private**.
+4. Select **Add public hostname** and enter the custom domain you set for your Worker.
+5. [Configure your Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for your Worker.
+6. Add [Access policies](/cloudflare-one/access-controls/policies/policy-management/) to control who can connect to your application.
 
 Now your AI wrapper can only be accessed by your users that successfully match your Access policies.
 
@@ -476,7 +474,7 @@ Once the Access policy has been created, you can attach it to your wrapper.
 2. Choose your wrapper application, then select **Configure**.
 3. In **Policies**, select **Select existing policies**.
 4. Choose the Access policy you previously created.
-5. Select **Confirm**, then select **Save application**.
+5. Select **Confirm**, then select **Save**.
 
 Because Clientless Web Isolation traffic applies your Gateway HTTP policies, your configured DLP profiles will apply to isolated sessions.
 

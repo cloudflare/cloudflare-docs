@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, Tabs, TabItem, Markdown } from "~/components";
+import { Details, Markdown, Render, Tabs, TabItem } from "~/components";
 
 export const availableActions =
 	"The available actions are: _Block_, _Log_, _Non-Interactive Challenge_, _Managed Challenge_, and _Interactive Challenge_.";
@@ -167,12 +167,55 @@ To deploy the Cloudflare Managed Ruleset for a given zone via API, create a rule
 
 The following example deploys the Cloudflare Managed Ruleset for a zone and overrides the action and status of a specific rule.
 
-<Render file="v4-code-snippets" product="terraform" />
+<Tabs syncKey="terraformVersion">
+<TabItem label="Terraform (v5)">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Zone WAF Write`
+
+</Details>
+
+Configure the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) resource:
 
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
 resource "cloudflare_ruleset" "zone_level_managed_waf" {
-  zone_id     = "<ZONE_ID>"
+  zone_id     = var.cloudflare_zone_id
+  name        = "Managed WAF entry point ruleset"
+  description = "Zone-level WAF Managed Rules config"
+  kind        = "zone"
+  phase       = "http_request_firewall_managed"
+
+  # Execute Cloudflare Managed Ruleset
+  rules = [{
+    ref         = "execute_cloudflare_managed_ruleset"
+    description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
+    expression  = "true"
+    action      = "execute"
+    action_parameters = {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+      overrides = {
+        rules = [{
+          id      = "5de7edfa648c4d6891dc3e7f84534ffa"
+          action  = "log"
+          enabled = true
+        }]
+      }
+    }
+  }]
+}
+```
+
+</TabItem>
+<TabItem label="Terraform (v4)">
+
+```tf
+# Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
+resource "cloudflare_ruleset" "zone_level_managed_waf" {
+  zone_id     = var.cloudflare_zone_id
   name        = "Managed WAF entry point ruleset"
   description = "Zone-level WAF Managed Rules config"
   kind        = "zone"
@@ -197,5 +240,8 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
   }
 }
 ```
+
+</TabItem>
+</Tabs>
 
 For more information, refer to [WAF Managed Rules configuration using Terraform](/terraform/additional-configurations/waf-managed-rulesets/).

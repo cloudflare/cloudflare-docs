@@ -1,0 +1,57 @@
+---
+title: R2 SQL now supports UNION, INTERSECT, EXCEPT, and SELECT DISTINCT
+description: Combine query results with set operations and eliminate duplicates with SELECT DISTINCT.
+products:
+  - r2-sql
+date: 2026-06-08
+---
+
+[R2 SQL](/r2-sql/) now supports set operations (`UNION`, `INTERSECT`, `EXCEPT`) and `SELECT DISTINCT`, expanding the range of analytical queries you can run directly on [Apache Iceberg](https://iceberg.apache.org/) tables in [R2 Data Catalog](/r2/data-catalog/).
+
+## Set operations
+
+Combine the results of multiple `SELECT` statements:
+
+- **`UNION`** — returns all rows from both queries, removing duplicates
+- **`UNION ALL`** — returns all rows from both queries, including duplicates
+- **`INTERSECT`** — returns only rows that appear in both queries
+- **`EXCEPT`** — returns rows from the first query that do not appear in the second
+
+```sql
+-- Find zones that had either firewall blocks OR high-risk requests
+SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+UNION
+SELECT zone_id FROM my_namespace.http_requests WHERE risk_score > 0.8
+```
+
+```sql
+-- Find zones with both firewall blocks AND high traffic
+SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+INTERSECT
+SELECT zone_id FROM my_namespace.http_requests
+GROUP BY zone_id
+HAVING COUNT(*) > 10000
+```
+
+```sql
+-- Find enterprise zones that have not been compacted
+SELECT zone_id FROM my_namespace.zones WHERE plan = 'enterprise'
+EXCEPT
+SELECT zone_id FROM my_namespace.compaction_history
+```
+
+## Select distinct
+
+Eliminate duplicate rows from query results:
+
+```sql
+SELECT DISTINCT region, department
+FROM my_namespace.sales_data
+WHERE total_amount > 1000
+ORDER BY region, department
+LIMIT 100
+```
+
+For large datasets where approximate results are acceptable, `approx_distinct()` remains a faster alternative for counting unique values.
+
+For the full syntax reference, refer to the [SQL reference](/r2-sql/sql-reference/). For performance guidance, refer to [Limitations and best practices](/r2-sql/reference/limitations-best-practices/).

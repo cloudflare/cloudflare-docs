@@ -4,6 +4,9 @@ title: Additional configuration
 description: Customize challenge pages with multi-language support, branding, and text options.
 products:
   - cloudflare-challenges
+tags:
+  - CSP
+  - Headers
 sidebar:
   order: 6
 ---
@@ -30,17 +33,19 @@ You can customize your favicon by using the HTML snippet below.
 
 ## Custom Content Security Policy (CSP) and error pages
 
-Cloudflare-served Challenge Pages operate in a strictly controlled environment to maximize security and ensure the challenge mechanism functions correctly. Because of this, you cannot set your own Content Security Policy (CSP) or Referer-Policy using `<meta>` tags or Transform Rules on Challenge Pages. Origin headers can be modified within the Challenge Page context and are not immutable, but they may cause issues.
+A Content Security Policy (CSP) controls which scripts and resources a browser is allowed to load on a page. Challenge pages depend on specific Cloudflare scripts, so custom CSP configurations can prevent challenges from working.
 
-If you have an active Transform Rule configured to modify HTTP response headers globally across your website, such as adding custom CSP headers, this rule will interfere with and cause the Challenge Page to fail.
+You cannot set your own CSP or Referer-Policy on challenge pages using `<meta>` tags or [Transform Rules](/rules/transform/). Origin response headers can still be modified in a challenge page context, but doing so may cause the challenge to break.
 
-To prevent this conflict, you must modify your Transform Rule expression to explicitly exclude Challenge Page error types. Prefix your Transform Rule expression with the following logical exclusion:
+If you have a [Transform Rule](/rules/transform/) that modifies HTTP response headers across your website (for example, adding custom CSP headers), the rule will interfere with challenge pages and cause them to fail.
+
+To prevent this, modify your Transform Rule expression to exclude challenge page responses. Add the following condition to the beginning of your expression:
 
 ```txt wrap
 not cf.response.error_type in {"managed_challenge" "iuam" "legacy_challenge" "country_challenge"}
 ```
 
-This exclusion ensures that your custom header modification logic is only applied to traffic destined for your origin, allowing Cloudflare's Challenge Platform to function without being impacted by conflicting response headers.
+This expression skips your header modifications when Cloudflare serves a challenge page, so the challenge scripts load correctly.
 
 ---
 
@@ -52,9 +57,7 @@ Refer to [Design your custom error page](/rules/custom-errors/edit-error-pages/#
 
 ### How it works
 
-When a zone has a custom Challenge Page configured, your uploaded HTML is fetched from the Custom Pages Worker (KV-backed). 
-
-Cloudflare replaces the `::CF_WIDGET_BOX::` placeholder token with the full challenge bootstrap `<script>` block.
+When you configure a custom challenge page, Cloudflare fetches your uploaded HTML template and replaces the `::CF_WIDGET_BOX::` placeholder with the challenge script.
 
 ### Placeholder tokens
 
@@ -191,7 +194,7 @@ The custom error token provides diagnostic information or specific functionality
         </noscript>
         <!--
           REQUIRED: One of the following placeholders must appear exactly once.
-          FL2 will replace it with the Cloudflare challenge bootstrap <script>.
+          Cloudflare will replace it with the challenge bootstrap <script>.
           Use ::CF_WIDGET_BOX:: for all challenge types (recommended).
           Older alternatives:
             ::CAPTCHA_BOX::          — managed / interactive challenges

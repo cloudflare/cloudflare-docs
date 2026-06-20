@@ -103,23 +103,23 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
 <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Add an application**.
-3. Select **Self-hosted**.
-4. Enter a name for your application (for example, `MCP server`).
-5. In **Application domain**, enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
-6. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
-7. <Render
+2. Select **Create new application**.
+3. Select **Self-hosted and private**.
+4. Select **Add public hostname** and enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
+5. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
+6. <Render
    	file="access/access-choose-idps"
    	product="cloudflare-one"
    	params={{ appType: "self-hosted" }}
    />
-8. Save the application.
-9. On the application details page, copy the **AUD tag** value from **Basic information**. You will need this value to configure your MCP server.
+7. Select **Create**.
+8. On the application details page, go to **Advanced settings** and turn on **Managed OAuth**. This allows non-browser MCP clients to authenticate using a standard OAuth 2.0 flow instead of receiving a browser redirect. For more information, refer to [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
+9. Copy the **AUD tag** value shown in **Additional settings**. You will need this value to configure your MCP server.
 
 </TabItem>
 <TabItem label="API">
 
-1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint with `oauth_configuration.enabled` set to `true`:
 
    <APIRequest
    	path="/accounts/{account_id}/access/apps"
@@ -130,6 +130,9 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
    		domain: "mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev",
    		policies: ["f174e90a-fafe-4643-bbbc-4a0ed4fc8415"],
    		allowed_idps: [],
+   		oauth_configuration: {
+   			enabled: true,
+   		},
    	}}
    />
 
@@ -183,7 +186,7 @@ To configure the environment variables for our [example MCP server](#1-deploy-an
 
 ### 4. Test the connection
 
-You can now connect to your MCP server at `https://mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+You can now connect to your MCP server at `https://mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
 
 To test in Workers AI Playground:
 
@@ -306,8 +309,8 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Add an application**.
-3. Select **SaaS**.
+2. Select **Create new application**.
+3. Select **SaaS application**.
 4. In **Application**, enter a custom name (for example, `MCP server`) and select the textbox that appears below.
 5. Select **OIDC** as the authentication protocol.
 6. Select **Add application**.
@@ -327,7 +330,7 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
     	product="cloudflare-one"
     	params={{ appType: "saas" }}
     />
-12. Save the application.
+12. Select **Create**.
 
 </TabItem>
 <TabItem label="API">
@@ -448,7 +451,7 @@ To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-
 
 ### 4. Test the connection
 
-You can now connect to your MCP server at `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+You can now connect to your MCP server at `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
 
 To test in Workers AI Playground:
 

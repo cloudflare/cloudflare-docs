@@ -6,11 +6,15 @@ products:
   - waf
 sidebar:
   order: 2
+tags:
+  - Logging
+  - SIEM
 ---
 
 import {
 	FeatureTable,
 	GlossaryTooltip,
+	Render,
 	Steps,
 	Tabs,
 	TabItem,
@@ -118,7 +122,7 @@ In **Top events by source** you can find details of the traffic flagged or actio
 You can adjust the scope of Security Events to one of the listed source values by selecting **Filter** or **Exclude** when hovering the value.
 
 :::note
-A deleted custom rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account/account-security/review-audit-logs/).
+A deleted custom rule or rate limiting rule will show as `Rule unavailable` under **Custom rules** or **Rate limiting rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account/account-security/review-audit-logs/).
 :::
 
 ## Sampled logs
@@ -179,8 +183,26 @@ The generated report will reflect all applied filters.
 
 Security Events currently has these limitations:
 
-- Security Events may use sampled data to improve performance. If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame (a narrower time range reduces the volume of data, which reduces or eliminates sampling).
+- Security Events may use sampled data to improve performance. Refer to [Sampling](#sampling) for more information.
 
 - The Cloudflare dashboard may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work because the source data may have been sampled. The GraphQL Analytics API does not have this pagination issue.
 
 - Triggered [OWASP rules](/waf/managed-rules/reference/owasp-core-ruleset/) appear in the Security Events page under **Additional logs**, but they are not included in exported JSON files.
+
+## Sampling
+
+Security Events may use [sampled data](/analytics/graphql-api/sampling/). If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame (a narrower time range reduces the volume of data, which reduces or eliminates sampling).
+
+## Query using GraphQL
+
+If you query Security Events data through the [GraphQL Analytics API](/analytics/graphql-api/), the underlying dataset is `firewallEventsAdaptive`. For more information, refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/).
+
+For more information on querying the `firewallEventsAdaptive` dataset, refer to [Querying Firewall Events with GraphQL](/analytics/graphql-api/tutorials/querying-firewall-events/).
+
+## Limits
+
+The retention and query window for the `firewallEventsAdaptive` dataset differ from the datasets that power [Security Analytics](/waf/analytics/security-analytics/#sampling).
+
+The following tables show the different limits per Cloudflare plan:
+
+<Render file="analytics-dataset-limits" product="waf" />

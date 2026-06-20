@@ -1,5 +1,6 @@
 ---
 pcx_content_type: tutorial
+difficulty: Intermediate
 
 title: Connect to 1.1.1.1 using DoH clients
 slug: 1.1.1.1/encryption/dns-over-https/dns-over-https-client
@@ -8,7 +9,7 @@ products:
   - 1.1.1.1
 ---
 
-Several DoH clients are available for connecting to 1.1.1.1.
+A DoH client is a software that runs on your device and sends DNS queries to a resolver like 1.1.1.1 over an encrypted HTTPS connection. Once configured, the client handles DNS resolution for your device or network.
 
 ## Cloudflare WARP client
 
@@ -16,7 +17,7 @@ Refer to [WARP client](/warp-client/) for guidance on WARP modes and get-started
 
 ## DNSCrypt-Proxy
 
-The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1 and other services. It also includes more advanced features, such as load balancing and local filtering.
+[DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1 and other services. It also includes more advanced features, such as load balancing and local filtering.
 
 1. [Install DNSCrypt-Proxy](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
 
@@ -36,7 +37,7 @@ The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
    server_names = ['cloudflare', 'cloudflare-ipv6']
    ```
 
-4. Make sure that nothing else is running on `localhost:53`, and check that everything works as expected:
+4. Make sure that nothing else is running on `localhost:53` (port `53` is the standard DNS port on your local machine), and check that everything works as expected:
 
    ```sh
    dnscrypt-proxy -resolve cloudflare-dns.com
@@ -52,4 +53,4 @@ The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
    Resolver IP:    172.68.140.217
    ```
 
-5. Register it as a system service according to the [DNSCrypt-Proxy installation instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
+5. Register it as a system service so that it starts automatically when your device boots. Follow the [DNSCrypt-Proxy installation instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).

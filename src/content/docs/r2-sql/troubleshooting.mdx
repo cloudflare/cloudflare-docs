@@ -38,45 +38,90 @@ WHERE status = 200 AND timestamp BETWEEN '2025-09-24T01:00:00Z' AND '2025-09-25T
 
 ## FROM clause issues
 
-### Multiple tables
+### Join performance issues
 
-<div className="error-box">
-	**Error**: `unsupported feature: JOIN operations are not supported`
-</div>
+**Symptom**: Query returns 502 Bad Gateway or times out.
 
-**Problem**: R2 SQL queries reference exactly one table. JOINs and multiple tables are not supported.
+**Problem**: Multi-way joins across large tables can exceed resource limits, especially with `COUNT(DISTINCT)` or other memory-intensive aggregations.
 
 ```sql
--- Invalid - Multiple tables not supported
-SELECT a.*, b.* FROM my_namespace.table1 a, my_namespace.table2 b WHERE a.id = b.id
-SELECT * FROM my_namespace.events JOIN my_namespace.users ON events.user_id = users.id
-
--- Valid - Separate queries
-SELECT * FROM my_namespace.table1 WHERE id IN ('id1', 'id2', 'id3') LIMIT 100
--- Then query the second table separately in your application
-SELECT * FROM my_namespace.table2 WHERE id IN ('id1', 'id2', 'id3') LIMIT 100
+-- May timeout: cross-joining two large fact tables
+SELECT COUNT(DISTINCT h.ray_id), COUNT(DISTINCT f.event_id)
+FROM my_namespace.http_requests h
+INNER JOIN my_namespace.firewall_events f ON h.zone_id = f.zone_id
 ```
 
 **Solution**:
 
-- Denormalize your data by including necessary fields in a single table.
-- Perform multiple queries and join data in your application.
-
-### Subqueries
-
-<div className="error-box">**Error**: `unsupported feature: subqueries`</div>
-
-**Problem**: Subqueries in `FROM`, `WHERE`, and scalar positions are not supported.
+- Add `WHERE` filters to reduce intermediate result sizes.
+- Join through dimension tables instead of directly joining fact tables.
+- Use `approx_distinct()` instead of `COUNT(DISTINCT)` for approximate counts.
+- Break complex multi-way joins into smaller queries using CTEs or sequential queries.
 
 ```sql
--- Invalid - Subqueries not supported
-SELECT * FROM (SELECT user_id FROM my_namespace.events WHERE status = 200)
-
--- Valid - Use direct query with appropriate filters
-SELECT user_id FROM my_namespace.events WHERE status = 200 LIMIT 100
+-- Better: filter both sides and use approx_distinct
+SELECT z.plan,
+       approx_distinct(h.ray_id) AS unique_requests
+FROM my_namespace.zones z
+INNER JOIN my_namespace.http_requests h ON z.zone_id = h.zone_id
+WHERE z.plan = 'enterprise'
+  AND h.status_code >= 400
+GROUP BY z.plan
 ```
 
-**Solution**: Flatten your query logic or use multiple sequential queries.
+### `NOT IN` on nullable columns
+
+**Symptom**: `NOT IN` subquery returns unexpected results or errors.
+
+**Problem**: `NOT IN` subqueries are not supported when the subquery column can contain `NULL` values.
+
+```sql
+-- Fails: nullable_col may contain NULLs
+SELECT zone_id
+FROM my_namespace.http_requests
+WHERE zone_id NOT IN (
+    SELECT nullable_col FROM my_namespace.other_table
+)
+LIMIT 20
+```
+
+**Solution**: Use `NOT EXISTS` with a correlated subquery instead.
+
+```sql
+-- Works: NOT EXISTS handles NULLs correctly
+SELECT h.zone_id
+FROM my_namespace.http_requests h
+WHERE NOT EXISTS (
+    SELECT 1 FROM my_namespace.other_table o
+    WHERE o.nullable_col = h.zone_id
+)
+LIMIT 20
+```
+
+### Correlated subquery performance
+
+**Symptom**: `EXISTS` or `NOT EXISTS` subquery runs slowly.
+
+**Problem**: Correlated subqueries with complex conditions can be slow because the inner query is evaluated for each row of the outer query.
+
+```sql
+-- Slower: multiple filter conditions in correlated subquery
+SELECT z.domain
+FROM my_namespace.zones z
+WHERE EXISTS (
+    SELECT 1 FROM my_namespace.firewall_events f
+    WHERE f.zone_id = z.zone_id
+      AND f.risk_score > 0.9
+      AND f.colo = 'SJC'
+)
+LIMIT 20
+```
+
+**Solution**:
+
+- Simplify correlated conditions where possible.
+- Consider rewriting as a `JOIN` with `GROUP BY` instead of `EXISTS`.
+- Use an `IN` subquery with pre-aggregated results instead of `EXISTS`.
 
 ---
 

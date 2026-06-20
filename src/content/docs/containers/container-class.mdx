@@ -10,11 +10,9 @@ products:
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-The [`Container` class](https://github.com/cloudflare/containers) from [`@cloudflare/containers`](https://www.npmjs.com/package/@cloudflare/containers) is the standard way to interact with container instances from a Worker. It wraps the underlying [Durable Object interface](/containers/platform-details/durable-object-methods) and provides a higher-level API for common container behaviors.
+The [`Container` class](https://github.com/cloudflare/containers) from [`@cloudflare/containers`](https://www.npmjs.com/package/@cloudflare/containers) is the most common way to interact with container instances from a Worker.
 
-:::note
-If you are using containers to run sandboxed code execution — for example, inside an AI agent — consider the [Sandbox SDK](/sandbox/) instead. It builds on top of Containers and provides a higher-level API for common sandbox workflows.
-:::
+**`Container` extends [`DurableObject`](/durable-objects/api/base/).** The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM. Because your subclass is a Durable Object, you have access to the full Durable Object API — including [`this.ctx.storage`](/durable-objects/api/sqlite-storage-api/) for persistent SQLite-backed storage and [`this.ctx.id`](/durable-objects/api/id/) for the unique instance identifier. Use Durable Object storage to persist state that should survive container restarts, such as configuration, user data, or task results.
 
 <PackageManagers pkg="@cloudflare/containers" />
 
@@ -45,7 +43,27 @@ export default {
 ```
 </TypeScriptExample>
 
-The `Container` class extends `DurableObject`, so all [Durable Object](/durable-objects) functionality is available.
+The `Container` class extends `DurableObject`, so all [Durable Object](/durable-objects/) functionality is available — including [SQLite storage](/durable-objects/api/sqlite-storage-api/), [alarms](/durable-objects/api/alarms/), and [RPC methods](/durable-objects/api/base/#rpc-methods). Container disk is ephemeral by default, but Durable Object storage persists across container restarts.
+
+<TypeScriptExample>
+```
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	defaultPort = 8080;
+
+	async runAndPersist() {
+		const res = await this.fetch("/run-task");
+		const body = await res.text();
+		await this.ctx.storage.sql.exec(
+			"INSERT OR REPLACE INTO results (value) VALUES (?)",
+			body,
+		);
+		return body;
+	}
+}
+```
+</TypeScriptExample>
 
 ## Properties
 

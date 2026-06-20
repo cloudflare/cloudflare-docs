@@ -1,0 +1,110 @@
+---
+title: Cloudflare TypeScript SDK v6.0.0 Released
+description: Major release with 11 new API resources, SDK infrastructure improvements, 179 return type changes, and breaking changes across the generated API surface.
+products:
+  - sdk
+date: 2026-04-30
+---
+
+Full Changelog: [v6.0.0-beta.2...v6.0.0](https://github.com/cloudflare/cloudflare-typescript/compare/v6.0.0-beta.2...v6.0.0)
+
+This is a major version release of the Cloudflare TypeScript SDK. It includes 11 entirely new top-level API resources, new sub-resources and methods across 50+ existing resources, SDK infrastructure improvements, and breaking changes to the generated API surface from the v5.x line.
+
+**Please ensure you read through the list of changes below before moving to this version** - this will help you understand any down or upstream issues it may cause to your environments.
+
+## Breaking Changes
+
+### SDK Infrastructure
+
+- **Retry-After handling changed**: The SDK now respects any server-specified `Retry-After` value for rate-limited requests. Previously, values over 60 seconds were ignored and a default backoff was used instead.
+- **Empty response handling**: Responses with `content-length: 0` now return `undefined` instead of attempting to parse the body.
+- **Environment variable reading**: Empty string env vars (for example, `CLOUDFLARE_API_TOKEN=""`) are now treated as unset.
+- **Path query parameter merging**: URL search params embedded in endpoint paths are now extracted and merged into the query object.
+
+### Removed Endpoints (17)
+
+17 HTTP endpoints were removed from the SDK, affecting `abuse-reports`, `cloudforce-one`, `dlp/profiles/predefined`, `email-security/investigate`, `email-security/settings`, and `intel/ip-list`.
+
+### Method Signature Changes
+
+- `client.ai.toMarkdown.transform(file, \{ ...params \})` -> `client.ai.toMarkdown.transform(\{ ...params \})` -- `file` moved from positional arg into params body
+- `client.radar.ai.toMarkdown.create(body, \{ ...params \})` -> `client.radar.ai.toMarkdown.create(\{ ...params \})` -- `body` moved from positional arg into params
+- `client.abuseReports.create(reportType, \{ ...params \})` -> `client.abuseReports.create(reportParam, \{ ...params \})` -- positional arg renamed
+- `client.iam.userGroups.members.create(userGroupId, [ ...body ])` -> `client.iam.userGroups.members.create(userGroupId, [ ...members ])` -- body array param renamed
+
+### Renamed Client Paths
+
+- `client.originTLSClientAuth.hostnames.certificates` -> `client.originTLSClientAuth.zoneCertificates`
+- `client.radar.netflows` -> `client.radar.netFlows` (casing change)
+
+### Return Type Changes (179)
+
+- **133 methods now return `null`** instead of a typed response object. This primarily affects delete operations across `accounts`, `cache`, `d1`, `filters`, `firewall`, `hyperdrive`, `iam`, `kv`, `logpush`, `logs`, `r2`, `stream`, `workers`, `zero-trust`, `zones`, and others.
+- **17 methods changed pagination type** (for example, `KeysCursorPaginationAfter` -> `KeysCursorLimitPagination`).
+- **29 methods changed to a different named type** (for example, `CloudflaredCreateResponse` -> `CloudflareTunnel`).
+
+### Removed Types (43)
+
+24 shared types removed from root namespace (`ASN`, `AuditLog`, `Member`, `Permission`, `Role`, `Subscription`, `Token`, etc.). 19 response types consolidated or renamed.
+
+### Resource Restructuring
+
+19 resources were restructured from single files to directories. Public API client paths are unchanged, but deep imports may break.
+
+## New Top-Level Resources
+
+11 entirely new resources added to the client:
+
+| Resource              | Client Path                   | Methods | Description                              |
+| --------------------- | ----------------------------- | ------- | ---------------------------------------- |
+| AI Search             | `client.aiSearch`             | 46      | Instances, namespaces, tokens, and items |
+| Connectivity          | `client.connectivity`         | 5       | Directory service APIs                   |
+| Email Sending         | `client.emailSending`         | 7       | Send and send_raw endpoints              |
+| Fraud                 | `client.fraud`                | 2       | Fraud detection API                      |
+| Google Tag Gateway    | `client.googleTagGateway`     | 2       | Google Tag Gateway management            |
+| Organizations         | `client.organizations`        | 8       | Organization profiles and audit logs     |
+| R2 Data Catalog       | `client.r2DataCatalog`        | 11      | R2 Data Catalog routes                   |
+| Realtime Kit          | `client.realtimeKit`          | 54      | Realtime Kit APIs                        |
+| Resource Tagging      | `client.resourceTagging`      | 9       | Resource tagging routes                  |
+| Token Validation      | `client.tokenValidation`      | 13      | Token validation rules                   |
+| Vulnerability Scanner | `client.vulnerabilityScanner` | 21      | Vulnerability scanning                   |
+
+## New Sub-Resources on Existing Resources
+
+- **browser-rendering**: `crawl`, `devtools` - Crawl endpoints and DevTools methods
+- **cache**: `origin-cloud-regions` - Origin cloud regions resource
+- **dns**: `usage` - DNS records usage endpoints
+- **d1**: `time-travel` - Time travel get_bookmark and restore
+- **email-security**: `phishguard` - Phishguard reports endpoint
+- **pipelines**: `sinks`, `streams` - Pipelines restructure
+- **radar**: `agent-readiness`, `geolocations`, `post-quantum` - New analytics endpoints
+- **workers**: `observability` - Observability destinations
+- **zones**: `environments` - Zone environments endpoints
+- **api-gateway**: `labels` - Labels endpoints
+- **brand-protection**: `v2` - V2 endpoints
+- **alerting**: `silences` - Alert silencing API
+- **billing**: `usage` - Billable usage PayGo endpoint
+- **iam**: `sso` - SSO Connectors resource
+- **queues**: `getMetrics` method - Queues metrics endpoint
+- **registrar**: `registration-status`, `update-status` - Registrar API convergence
+- **zero-trust**: DLP settings, DEX rules, Access Users, WARP Connector, WARP Subnets, Gateway PAC files, Gateway tenants
+
+## Bug Fixes
+
+- Resolved type errors from codegen overwriting manual fixes
+- Fixed `post()` usage for to-markdown endpoints to resolve async type error
+- Added least-privilege permissions to all workflow jobs
+- Reverted erroneous removal of rulesets resource methods and types
+- Resolved prettier formatting errors in codegen output
+
+## Deprecations
+
+The following resources now include `@deprecated` annotations on some methods:
+
+`accounts`, `addressing`, `ai-gateway`, `aisearch`, `api-gateway`, `billing`, `cloudforce-one`, `custom-nameservers`, `dns`, `email-routing`, `email-security`, `filters`, `firewall`, `images`, `intel`, `keyless-certificates`, `kv`, `logpush`, `origin-tls-client-auth`, `page-shield`, `pages`, `pipelines`, `radar`, `rate-limits`, `registrar`, `rulesets`, `ssl`, `user`, `workers`, `workers-for-platforms`, `zero-trust`, `zones`
+
+## Get started
+
+- [Download TypeScript SDK v6.0.0](https://github.com/cloudflare/cloudflare-typescript/releases/tag/v6.0.0)
+- [TypeScript SDK documentation](https://developers.cloudflare.com/api/sdks/typescript/)
+- [Full Changelog](https://github.com/cloudflare/cloudflare-typescript/blob/main/CHANGELOG.md)

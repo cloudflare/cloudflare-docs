@@ -1,0 +1,20 @@
+---
+title: Integrate your OAuth client with Cloudflare
+pcx_content_type: how-to
+description: After registering an application, use these endpoints to integrate your OAuth client with Cloudflare.
+sidebar:
+  order: 5
+products:
+  - fundamentals
+  - oauth
+---
+
+After [registering an application](/fundamentals/oauth/create-an-oauth-client/), use these endpoints to integrate your OAuth client with Cloudflare.
+
+- Jwks: `https://dash.cloudflare.com/.well-known/jwks.json`
+- Open ID config: `https://dash.cloudflare.com/.well-known/openid-configuration`
+- Authorization: `https://dash.cloudflare.com/oauth2/auth`
+- Token: `https://dash.cloudflare.com/oauth2/token`
+- Revoke: `https://dash.cloudflare.com/oauth2/revoke`
+- Session logout: `https://dash.cloudflare.com/oauth2/logout`
+- User info: `https://dash.cloudflare.com/oauth2/userinfo`

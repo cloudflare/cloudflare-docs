@@ -20,7 +20,7 @@ https://cloudflare-dns.com/dns-query
 
 ## HTTP method
 
-Cloudflare's DNS-over-HTTPS (DOH) endpoint supports `POST` and `GET` for DNS wireformat, and `GET` for JSON format.
+Cloudflare's DNS over HTTPS (DoH) endpoint supports `POST` and `GET` for DNS wireformat, and `GET` for JSON format.
 
 When making requests using `POST`, the DNS query is included as the message body of the HTTP request, and the MIME type (`application/dns-message`) is sent in the `Content-Type` request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
 
@@ -34,9 +34,9 @@ Refer to [DNS wireformat](/1.1.1.1/encryption/dns-over-https/make-api-requests/d
 
 ## Send multiple questions in a query
 
-Sending more than one question when making requests depends on the HTTP version used, as each DNS query maps to exactly one HTTP request. HTTP/2 and HTTP/3 have multiplexing capabilities, allowing multiple requests to start concurrently. HTTP/2 is, in fact, the minimum recommended version of HTTP for use with DNS over HTTPS (DoH). This behavior is not specific to 1.1.1.1, but rather how DoH operates.
+Each DNS query maps to exactly one HTTP request. To send multiple queries concurrently, use HTTP/2 or HTTP/3, which supports multiplexing multiple requests over a single connection.
 
-You can learn more about how DoH works in RFC 8484, more specifically [the HTTP layer requirements](https://datatracker.ietf.org/doc/html/rfc8484#section-5.2).
+HTTP/2 is the minimum recommended version of HTTP for use with DoH. This is not specific to 1.1.1.1, but rather how DoH operates per [RFC 8484](https://datatracker.ietf.org/doc/html/rfc8484#section-5.2).
 
 Example request:
 

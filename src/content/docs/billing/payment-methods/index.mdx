@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: Payment methods
+sidebar:
+  order: 4
+  group:
+    hideIndex: true
+description: Payment methods available for Cloudflare services.
+products:
+  - billing
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Use these pages to understand payment method behavior and payment options for Cloudflare services.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Additional payment method auto-retry"
+	href="/billing/payment-methods/additional-payment-method-auto-retry/"
+>
+	Understand how Cloudflare retries failed payments with an additional payment
+	method.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Instant Bank Payments via Link"
+	href="/billing/payment-methods/instant-bank-payments-link/"
+>
+	Use Stripe Link to pay for Cloudflare services directly from a bank account.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Update billing information"
+	href="/billing/get-started/update-billing-info/"
+>
+	Add, edit, or remove payment methods from your account.
+</LinkTitleCard>
+
+</CardGrid>

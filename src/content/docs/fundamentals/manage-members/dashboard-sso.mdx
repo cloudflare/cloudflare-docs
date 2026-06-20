@@ -227,14 +227,14 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 9. Select **Next** > **Finish** to save the integration.
 10. Test the integration by going to your Okta User Dashboard, locating the new app tile, and selecting it to verify the SSO flow.
 
-**(Optional) Enforce single IdP login with Instant Auth**
+**(Optional) Enforce single IdP login with instant authentication**
 
 If you use only one IdP (for example, Okta) for Cloudflare SSO and want users to skip the identity provider selection prompt:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications** > select your **SSO App**.
-2. Go to **Login methods**.
+2. Go to **Authentication**.
 3. Disable **Accept all available identity providers** and ensure only Okta is selected as the login method.
-4. Enable **Instant Auth** to allow users to skip identity provider selection.
+4. Enable **Apply instant authentication** to allow users to skip identity provider selection.
 
 ## Bypass dashboard SSO
 

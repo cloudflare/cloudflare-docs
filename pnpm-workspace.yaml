@@ -8,8 +8,18 @@ blockExoticSubdeps: true
 
 # Explicit allowlist of packages permitted to run install scripts.
 # These are well-known packages that require build scripts to download platform-specific binaries.
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
-  - tldjs
-  - workerd
+allowBuilds:
+  esbuild: true
+  sharp: true
+  tldjs: true
+  workerd: true
+  # Transitive deps of @flue/runtime and agents — native binaries not needed by this repo
+  "@google/genai": false
+  "@mongodb-js/zstd": false
+  core-js-pure: false
+  node-liblzma: false
+  protobufjs: false
+
+# Always save dependencies as exact versions and to devDependencies by default.
+saveExact: true
+saveDev: true

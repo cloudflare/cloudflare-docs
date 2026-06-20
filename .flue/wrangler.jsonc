@@ -1,0 +1,78 @@
+{
+	"$schema": "../node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-docs-flue",
+	"account_id": "b54f07a6c269ecca2fa60f1ae4920c99",
+	"compatibility_date": "2026-04-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": {
+		"binding": "AI",
+	},
+	"worker_loaders": [{ "binding": "LOADER" }],
+	"r2_buckets": [
+		{
+			"binding": "DOCS_FLUE_BUCKET",
+			"bucket_name": "docs-flue-bucket",
+		},
+	],
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"FlueRegistry",
+				"OrchestrateWorkflow",
+				"CodeReviewOrchestratorWorkflow",
+				"SpamAndOffTopicFilterWorkflow",
+				"StyleGuideReviewWorkflow",
+			],
+		},
+		{
+			"tag": "v2",
+			"new_sqlite_classes": ["DependabotReviewWorkflow"],
+		},
+		{
+			"tag": "v3",
+			"renamed_classes": [
+				{ "from": "OrchestrateWorkflow", "to": "FlueOrchestrateWorkflow" },
+				{
+					"from": "CodeReviewOrchestratorWorkflow",
+					"to": "FlueCodeReviewOrchestratorWorkflow",
+				},
+				{
+					"from": "SpamAndOffTopicFilterWorkflow",
+					"to": "FlueSpamAndOffTopicFilterWorkflow",
+				},
+				{
+					"from": "StyleGuideReviewWorkflow",
+					"to": "FlueStyleGuideReviewWorkflow",
+				},
+				{
+					"from": "DependabotReviewWorkflow",
+					"to": "FlueDependabotReviewWorkflow",
+				},
+			],
+		},
+		{
+			// The style-guide-review workflow was retired: its per-file review now
+			// runs in-process inside the code-review orchestrator via concurrent
+			// sessions (lib/style-guide-inproc.ts), so the standalone workflow's
+			// Durable Object class is no longer generated.
+			"tag": "v4",
+			"deleted_classes": ["FlueStyleGuideReviewWorkflow"],
+		},
+	],
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"persist": true,
+			"invocation_logs": false,
+		},
+		"traces": {
+			"enabled": false,
+			"persist": true,
+			"head_sampling_rate": 1,
+		},
+	},
+}

@@ -6,6 +6,9 @@ products:
   - smart-shield
 sidebar:
   order: 4
+tags:
+  - TCP
+  - TLS
 ---
 
 Smart Shield reduces the number of connections between Cloudflare and your origin server by batching multiple requests through shared connections. When requests from an [upper-tier data center](/smart-shield/configuration/smart-tiered-cache/) — the layer of Cloudflare's cache that sits closest to your origin — need to reach your server, Smart Shield sends them over a single connection instead of opening a new connection for each request. This reduces overall connections to your origin by 30% on average, which lowers resource consumption on your origin and reduces the risk of connection exhaustion under high traffic.

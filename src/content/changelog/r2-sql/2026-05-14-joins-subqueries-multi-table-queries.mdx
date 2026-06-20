@@ -1,0 +1,71 @@
+---
+title: R2 SQL now supports JOINs, subqueries, and multi-table queries
+description: Join multiple Iceberg tables, use subqueries, and write multi-table CTEs in R2 SQL.
+products:
+  - r2-sql
+date: 2026-05-15
+---
+
+[R2 SQL](/r2-sql/) is Cloudflare's serverless, distributed SQL engine for querying [Apache Iceberg](https://iceberg.apache.org/) tables stored in [R2 Data Catalog](/r2/data-catalog/). R2 SQL runs directly on Cloudflare's global network with no infrastructure to manage, so you can analyze data in R2 without exporting it to an external warehouse.
+
+R2 SQL now supports joining multiple Iceberg tables in a single query. You can combine tables with JOINs, filter with subqueries, and define multi-table CTEs to build complex analytical queries.
+
+## New capabilities
+
+- **JOINs** — `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `FULL OUTER JOIN`, `CROSS JOIN`, and implicit joins (comma-separated `FROM` with conditions in `WHERE`)
+- **Subqueries** — `IN` / `NOT IN`, `EXISTS` / `NOT EXISTS`, scalar subqueries in `SELECT` / `WHERE` / `HAVING`, and derived tables (subqueries in `FROM`)
+- **Multi-table CTEs** — `WITH` clauses can reference different tables and include JOINs
+- **Self-joins** — join a table with itself using different aliases
+- **Multi-way joins** — join three or more tables in a single query
+
+## Examples
+
+### Two-table JOIN with aggregation
+
+```sql
+SELECT z.domain, z.plan, COUNT(*) AS request_count
+FROM my_namespace.zones z
+INNER JOIN my_namespace.http_requests h ON z.zone_id = h.zone_id
+WHERE z.plan = 'enterprise'
+GROUP BY z.domain, z.plan
+ORDER BY request_count DESC
+LIMIT 20
+```
+
+### `EXISTS` subquery
+
+```sql
+SELECT z.domain, z.plan
+FROM my_namespace.zones z
+WHERE EXISTS (
+    SELECT 1 FROM my_namespace.firewall_events f
+    WHERE f.zone_id = z.zone_id AND f.action = 'block'
+)
+ORDER BY z.domain
+LIMIT 20
+```
+
+### Multi-table CTE with JOIN
+
+```sql
+WITH top_zones AS (
+    SELECT zone_id, COUNT(*) AS req_count
+    FROM my_namespace.http_requests
+    GROUP BY zone_id
+    ORDER BY req_count DESC
+    LIMIT 50
+),
+zone_threats AS (
+    SELECT zone_id, COUNT(*) AS threat_count
+    FROM my_namespace.firewall_events
+    WHERE risk_score > 0.5
+    GROUP BY zone_id
+)
+SELECT tz.zone_id, tz.req_count, COALESCE(zt.threat_count, 0) AS threat_count
+FROM top_zones tz
+LEFT JOIN zone_threats zt ON tz.zone_id = zt.zone_id
+ORDER BY tz.req_count DESC
+LIMIT 20
+```
+
+For the full syntax reference, refer to the [SQL reference](/r2-sql/sql-reference/). For performance guidance with joins, refer to [Limitations and best practices](/r2-sql/reference/limitations-best-practices/).

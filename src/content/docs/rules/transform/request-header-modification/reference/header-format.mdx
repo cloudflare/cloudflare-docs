@@ -7,6 +7,8 @@ products:
 sidebar:
   order: 2
   label: Format of header names and values
+tags:
+  - Headers
 ---
 
 import { Render } from "~/components";
@@ -19,4 +21,4 @@ The **value** of the HTTP request header you want to set can only contain:
 
 <Render file="transform/header-valid-values" product="rules" />
 
-The **length** of the HTTP request header can be a maximum of 4 KB (~4,096 characters).
+The maximum length of the HTTP request header value is 4 KB (~4,096 characters).

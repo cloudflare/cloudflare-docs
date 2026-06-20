@@ -1543,6 +1543,27 @@ Add your extension to an app group:
 3. Add App Groups
 4. Add App Groups to your main app as well, ensuring the App Group identifier is the same for both
 
+
+### Add RealtimeKitCore Pod to Broadcast Extension
+
+You need to add the `RealtimeKitCore` pod to your Broadcast Upload Extension target in your `Podfile` so the extension can access the screen share handler. Add the following to your `Podfile`:
+
+```ruby
+target '<YourScreenShareExtensionTarget>' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :hermes_enabled => true,
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+  # Add this line to include the RealtimeKitCore pod in Broadcast Extension
+  pod 'RealtimeKitCore', :path => '../node_modules/@cloudflare/realtimekit-react-native'
+end
+```
+
+Replace `<YourScreenShareExtensionTarget>` with the name of the Broadcast Upload Extension target you created in Xcode.
+
 ### Configure SampleHandler
 
 Edit your SampleHandler class:

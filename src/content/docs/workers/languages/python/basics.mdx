@@ -48,7 +48,8 @@ from hello import hello
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        name = (await request.json()).name
+        body = await request.json()
+        name = body["name"]
         return Response(hello(name))
 ```
 
@@ -69,6 +70,19 @@ curl --header "Content-Type: application/json" \
 
 ```bash output
 Hello, Python!
+```
+
+## Return JSON responses
+
+To return JSON from a Python Worker, use `Response.json()`:
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        data = {"message": "Hello", "status": "ok"}
+        return Response.json(data)
 ```
 
 ## The `env` Attribute

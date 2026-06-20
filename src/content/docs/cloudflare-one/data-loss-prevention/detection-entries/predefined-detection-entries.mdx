@@ -12,15 +12,29 @@ tags:
 
 Predefined detection entries are Cloudflare-managed detections for specific types of sensitive content. You can review these entries from the **Predefined** view in **Detection entries**.
 
-You can add any predefined detection entry directly to a custom DLP profile or data class. Use the following reference to review all predefined detection entries currently supported by Cloudflare DLP.
+You can add any predefined detection entry directly to a custom [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile) or [data class](/cloudflare-one/data-loss-prevention/data-classification/build-a-data-class/). Use the following reference to review all predefined detection entries currently supported by Cloudflare DLP.
 
 | Detection entry | Description |
 | --- | --- |
+| AI Prompt Content: Credentials and Secrets | Prompt contains API keys, passwords, or other sensitive credentials |
+| AI Prompt Content: Customer data | Prompt contains customer names, projects, business activities, or confidential customer contexts |
+| AI Prompt Content: Financial Information | Prompt contains actual financial numbers or confidential business data |
+| AI Prompt Content: PII | Prompt contains personal information (names, SSNs, emails, etc.) |
+| AI Prompt Content: Source code | Prompt contains source code, code snippets, or proprietary algorithms |
+| AI Prompt Intent: Code Abuse and Malicious Code | Malicious code or attempts to exploit vulnerabilities |
+| AI Prompt Intent: Jailbreak | Prompt attempts to circumvent security policies |
+| AI Prompt Intent: PII | Prompt requests specific personal information about individuals |
+| Amazon AWS Access Key ID | Detects Amazon AWS access key IDs such as `AKIA<ACCESS_KEY_ID>`. |
+| Amazon AWS Secret Access Key | Detects potential Amazon AWS secret access keys such as `<AWS_SECRET_ACCESS_KEY>`. |
+| American Express Card Number | Detects American Express credit card numbers such as "378282246310005". |
+| American Express Text | Detects mentions of the American Express brand name such as "American Express". |
+| AU Passport Number | Detects Australian passport numbers such as "L1234567". |
 | Australia Address | Detects Australian street addresses with state and postcode such as "100 George St, Sydney NSW 2000". |
 | Australia Business (ABN) | Detects Australian Business Numbers (ABN) such as "51 824 753 556". |
 | Australia Company (ACN) | Detects Australian Company Numbers (ACN) such as "001 000 004". |
 | Australia Medicare | Detects Australian Medicare card numbers such as "2000000006". |
 | Australia Passport | Detects Australian passport numbers such as "L1234567". |
+| Australia Tax File Number | Detects Australian Tax File Numbers (TFN) such as "85 655 734". |
 | Austria SSN (SV-Nummer) | Detects Austrian social security numbers (SV-Nummer) such as "1018 010180". |
 | Austria Tax ID | Detects Austrian tax identification numbers (Steuernummer) such as "12 345/6789". |
 | Austria VAT (UID) | Detects Austrian VAT numbers (UID-Nummer) such as "ATU12345678". |
@@ -30,32 +44,54 @@ You can add any predefined detection entry directly to a custom DLP profile or d
 | Brazil CNPJ | Detects Brazilian corporate taxpayer registry numbers (CNPJ) such as "11.222.333/0001-81". |
 | Brazil CPF (Tax ID) | Detects Brazilian individual taxpayer registry numbers (CPF) such as "529.982.247-25". |
 | Bulgaria Uniform Civil (EGN) | Detects Bulgarian Uniform Civil Numbers (EGN) such as "2405500007". |
+| C | Detects C source code. |
+| C# | Detects C# source code. |
+| C++ | Detects C++ source code. |
 | Canada Bank Account Number | Detects Canadian bank account numbers (institution + transit + account) such as "12345-678 1234567". |
 | Canada Health Number | Detects Canadian provincial health card numbers such as "1234-567-897". |
-| Canada PHIN (Manitoba) | Detects Manitoba Personal Health Identification Numbers (PHIN) such as "100000009". |
 | Canada Passport | Detects Canadian passport numbers such as "AB123456". |
+| Canada PHIN (Manitoba) | Detects Manitoba Personal Health Identification Numbers (PHIN) such as "100000009". |
 | Canada Physical Address | Detects Canadian street addresses with postal code such as "100 Main St, Ottawa, ON K1A 0B1". |
+| Canada Social Insurance Number | Detects Canadian Social Insurance Numbers (SIN) such as "114 905 474". |
 | Chile National ID (RUT) | Detects Chilean national identification numbers (RUT / Rol Único Tributario) such as "12.345.678-5". |
 | China ID Card | Detects Chinese resident identity card numbers such as "11010519491231002X". |
+| Cloudflare Account Owned API Token | Detects Cloudflare account-owned API tokens such as `cfat_<ACCOUNT_OWNED_API_TOKEN>`. |
+| Cloudflare User API Key | Detects Cloudflare user API keys such as `cfk_<USER_API_KEY>`. |
+| Cloudflare User API Token | Detects Cloudflare user API tokens such as `cfut_<USER_API_TOKEN>`. |
 | Croatia Personal ID (OIB) | Detects Croatian personal identification numbers (OIB) such as "10000000005". |
 | Denmark Tax (CPR) | Detects Danish personal identification numbers (CPR-nummer) such as "010180-0008". |
+| Diners Club Card Number | Detects Diners Club credit card numbers such as "30121690374838". |
 | Discord Webhook | Detects Discord webhook URLs such as a webhook URL under `discord.com/api/webhooks/`. |
-| EU Passport | Detects EU member state passport numbers such as "AB1234567". |
+| Email Address | Detects email addresses such as "test@example.com". |
 | Ethereum Wallet | Detects Ethereum wallet addresses such as "0x71C7656EC7ab88b098defB751B7401B5f6d8976F". |
+| EU Passport | Detects EU member state passport numbers such as "AB1234567". |
+| FDA Active Ingredients | Detects FDA-registered drug active ingredient names such as "ABEMACICLIB". |
+| FDA Drug Names | Detects FDA-registered drug names such as "ABACAVIR". |
 | Finland Tax ID | Detects Finnish personal identity codes (Henkilötunnus / HETU) such as "311280-888Y". |
 | France CNI (National ID) | Detects French national identity card numbers (Carte nationale d'identité) such as "12345678901". |
 | France Passport | Detects French passport numbers such as "12AB34567". |
+| France Social Security Number | Detects French social security (INSEE) numbers such as "145081849670637". |
 | France Tax ID (SPI) | Detects French tax identification numbers (Numéro fiscal SPI) such as "1234567890123". |
 | France VAT | Detects French VAT numbers such as "FR12000000000". |
+| Full Name | Detects personal full names. |
+| Generic CVV Card Number | Detects credit card CVV/CVC verification codes in context of the "cvv" keyword, such as "cvv: 033". |
 | Germany Tax ID | Detects German tax identification numbers (Steueridentifikationsnummer) such as "10000000005". |
 | Germany VAT | Detects German VAT numbers (USt-IdNr) such as "DE100000003". |
 | GitHub PAT | Detects GitHub personal access tokens such as a token beginning with `ghp_`. |
+| Go | Detects Go source code. |
+| Google GCP API Key | Detects Google Cloud Platform API keys such as `AIza<API_KEY>`. |
 | Greece Tax (AFM) | Detects Greek tax identification numbers (AFM) such as "100000003". |
+| Haskell | Detects Haskell source code. |
+| Hong Kong Identity Card Number | Detects Hong Kong identity card (HKID) numbers such as "F543210(A)". |
 | Hungary Tax | Detects Hungarian tax identification numbers (Adóazonosító jel) such as "8000000008". |
+| IBAN | Detects International Bank Account Numbers (IBAN) such as "GB94 BARC 1020 1530 0934 59". |
+| ICD-10 FY2023 Short Description | Detects ICD-10 FY2023 medical diagnosis terms such as "Typhoid fever, unspecified". |
+| ICD-11 Short Description | Detects ICD-11 medical diagnosis terms such as "ABDOMINAL ACTINOMYCOSIS". |
 | India Aadhaar | Detects Indian Aadhaar national identification numbers such as "2345 6789 0124". |
 | India GST (GSTIN) | Detects Indian Goods and Services Tax identification numbers (GSTIN) such as "22AAAAA0000A1Z5". |
 | India PAN Card | Detects Indian Permanent Account Number (PAN) card identifiers such as "ABCDE1234F". |
 | India Voter ID | Detects Indian Voter ID (EPIC) numbers such as "ABC1234567". |
+| Indonesia Identity Card Number | Detects Indonesian identity card (KTP/NIK) numbers such as "3203012503770011". |
 | Indonesia Tax (NPWP) | Detects Indonesian taxpayer identification numbers (NPWP) such as "12.345.678.9-012.345". |
 | Ireland Tax (PPS) | Detects Irish Personal Public Service numbers (PPS) such as "1234567FA". |
 | Ireland VAT | Detects Ireland VAT numbers such as "IE1234567T". |
@@ -65,33 +101,64 @@ You can add any predefined detection entry directly to a custom DLP profile or d
 | Japan My Number (Person) | Detects Japanese individual My Number identifiers (Kojin Bango) such as "100000000005". |
 | Japan Names (Kanji) | Detects Japanese personal names written in kanji and labeled in context such as "氏名: 田中太郎". |
 | Japan Passport | Detects Japanese passport numbers such as "TZ1234567". |
+| Java | Detects Java source code. |
+| JavaScript | Detects JavaScript source code. |
 | Korea Resident Number (RRN) | Detects South Korean Resident Registration Numbers (RRN) such as "850515-1234567". |
+| Lua | Detects Lua source code. |
 | Luxembourg Tax | Detects Luxembourg national identification numbers (Matricule) such as "1985010112345". |
 | Luxembourg VAT | Detects Luxembourg VAT numbers such as "LU10000053". |
+| Malaysian National Identity Card Number | Detects Malaysian national identity card (MyKad) numbers such as "560224-10-8354". |
+| Mastercard Card Number | Detects Mastercard credit card numbers such as "5252 5971 4219 4116". |
+| Mastercard Text | Detects mentions of the Mastercard brand name such as "Mastercard". |
+| Microsoft Azure Client Secret | Detects Microsoft Azure client secrets such as `<AZURE_CLIENT_SECRET>`. |
 | MX CLABE (Bank) | Detects Mexican CLABE bank account numbers such as "032180000118359719". |
 | MX CURP | Detects Mexican CURP codes such as "GOMC850515HJCRRR05". |
+| Netherlands BSN | Detects Dutch citizen service numbers (Burgerservicenummer / BSN) such as "123456782". |
+| Netherlands VAT | Detects Dutch VAT numbers (Btw-nummer) such as "NL123456782B01". |
 | NPM Token | Detects npm registry access tokens such as a token beginning with `npm_`. |
 | NZ NHI Number | Detects New Zealand National Health Index (NHI) numbers such as "ZZZ0016". |
 | NZ Tax (IRD) | Detects New Zealand Inland Revenue Department (IRD) tax numbers such as "49-091-850". |
-| Names (CA/US) | Detects personal names labeled with English or French keywords such as "Name: John Smith". |
-| Netherlands BSN | Detects Dutch citizen service numbers (Burgerservicenummer / BSN) such as "123456782". |
-| Netherlands VAT | Detects Dutch VAT numbers (Btw-nummer) such as "NL123456782B01". |
 | OpenAI API Key | Detects OpenAI API keys such as a key beginning with `sk-proj-`. |
 | Peru Tax (RUC) | Detects Peruvian taxpayer identification numbers (RUC) such as "20000000001". |
 | Peru Unique ID (DNI) | Detects Peruvian national identity numbers (DNI) such as "12345678". |
+| Philippines Unified Multi-Purpose ID Identity Number | Detects Philippines Unified Multi-Purpose ID (UMID) numbers such as "2460-1501400-1". |
 | Poland National ID (PESEL) | Detects Polish national identification numbers (PESEL) such as "85051500006". |
 | Poland REGON | Detects Polish National Business Registry numbers (REGON) such as "100000008". |
 | Poland Tax (NIP) | Detects Polish tax identification numbers (NIP) such as "123-456-32-18". |
 | Portugal Tax (NIF) | Detects Portuguese tax identification numbers (NIF / Número de Contribuinte) such as "100000002". |
 | PyPI Token | Detects PyPI package upload tokens such as a token beginning with `pypi-`. |
+| Python | Detects Python source code. |
+| R | Detects R source code. |
+| Rust | Detects Rust source code. |
+| Singapore National Registration Identity Card Number | Detects Singapore NRIC/FIN identity card numbers such as "S6792120H". |
 | Slack API Token | Detects Slack API tokens such as a token beginning with `xoxb-`. |
 | Slack Webhook | Detects Slack incoming webhook URLs such as a webhook URL under `hooks.slack.com/services/`. |
 | Spain DNI/NIF | Detects Spanish national identity numbers (DNI/NIF) such as "12345678Z". |
 | Spain SSN | Detects Spanish Social Security affiliation numbers (NAF) such as "28 1234567890". |
 | Spain Tax (CIF) | Detects Spanish corporate tax identification codes (CIF) such as "A58818501". |
+| SSH Private Key | Detects SSH private key material such as "-----BEGIN OPENSSH PRIVATE KEY-----". |
 | Stripe Granular Restricted Key | Detects Stripe live-mode restricted API keys such as a key beginning with `rk_live_`. |
 | Stripe Standard Secret Key | Detects Stripe live-mode secret API keys such as a key beginning with `sk_live_`. |
 | Sweden Tax | Detects Swedish personal identity numbers (Personnummer) such as "811228-9874". |
+| SWIFT | Detects SWIFT/BIC business identifier codes such as "PMFAUS66". |
+| Swift | Detects Swift source code. |
+| Taiwan National Identification Number | Detects Taiwan national identification numbers such as "W171845961". |
+| Thai Identity Card Number | Detects Thai national identity card numbers such as "4-8547-01245-28-9". |
 | UAE Passport | Detects United Arab Emirates passport numbers such as "A1234567". |
-| US Physical Address | Detects US street addresses with state and ZIP code such as "100 First St, Chicago, IL 60601". |
+| Union Pay Card Number | Detects UnionPay credit card numbers such as "6250941006528599". |
+| Union Pay Text | Detects mentions of the UnionPay brand name such as "Union Pay". |
+| United Kingdom National Insurance Number | Detects UK National Insurance Numbers (NINO) such as "OC 66 31 85 C". |
+| United Kingdom NHS Number | Detects UK NHS patient identification numbers such as "485-585-0454". |
+| United States ABA Routing Number | Detects US ABA bank routing numbers such as "021000021". |
+| United States SSN Numeric Detection | Detects US Social Security Numbers such as "123-45-6789". |
+| United States SSN Text | Detects mentions of "SSN" or "social security" as a keyword, such as "social security". |
+| Unsanitized HAR File | Detects HAR (HTTP Archive) files that may contain unsanitized authentication tokens or session data, such as a HAR file containing `Authorization: Bearer <USER_API_TOKEN>`. |
 | Uruguay ID (CI) | Detects Uruguayan national identity numbers (Cédula de Identidad) such as "1.234.500-8". |
+| US Driver's License Number | Detects US driver's license numbers such as "CA License: A1234567". |
+| US Individual Tax Identification Number (ITIN) | Detects US Individual Taxpayer Identification Numbers (ITIN) such as "934-78-5678". |
+| US Mailing Address | Detects US mailing addresses such as "100 First St, Chicago, IL 60601". |
+| US Passport Number | Detects US passport numbers such as "A12345678". |
+| US Phone Number | Detects US phone numbers such as "555-555-5555". |
+| US Physical Address | Detects US street addresses with state and ZIP code such as "100 First St, Chicago, IL 60601". |
+| Visa Card Number | Detects Visa credit card numbers such as "4111 1111 1111 1111". |
+| Visa Text | Detects mentions of the Visa brand name such as "Visa". |

@@ -36,6 +36,24 @@ interface CatalogModel {
 	context_length: number | null;
 	max_output_tokens: number | null;
 	supports_async: boolean;
+	// Zero Data Retention. Optional because older catalog API responses
+	// omit the field entirely — declaring it here keeps `JSON.stringify`
+	// round-trips type-safe rather than relying on the cast hole at the
+	// JSON-write step.
+	zdr?: boolean;
+	zdr_comment?: string | null;
+	// In-page notice surfaced on the model detail page. Same round-trip
+	// rationale as `zdr` above — declaring the shape here keeps the
+	// JSON-write path type-checked rather than relying on the cast hole.
+	banner?: {
+		title?: string;
+		text: string;
+		severity: string;
+		dismissible?: boolean;
+		link?: { url: string; label: string };
+	} | null;
+	// Request-format identifiers the model accepts at the API layer.
+	request_formats?: string[] | null;
 	examples: Array<{
 		name: string;
 		description?: string;
@@ -91,6 +109,22 @@ const API_BASE_URL =
 const PER_PAGE = 100;
 const CONCURRENCY = 5;
 
+function getPlannedDeprecationDate(model: CatalogModel): string | undefined {
+	const metadata = model.metadata as Record<string, unknown> | undefined;
+	const value = metadata?.planned_deprecation_date;
+	return typeof value === "string" ? value : undefined;
+}
+
+function isDeprecated(model: CatalogModel): boolean {
+	const plannedDeprecationDate = getPlannedDeprecationDate(model);
+	if (!plannedDeprecationDate) {
+		return false;
+	}
+
+	const timestamp = new Date(plannedDeprecationDate).getTime();
+	return !Number.isNaN(timestamp) && Date.now() > timestamp;
+}
+
 function parseArgs(): { file?: string } {
 	const args = process.argv.slice(2);
 	const fileIndex = args.indexOf("--file");
@@ -125,11 +159,19 @@ async function loadFromFile(filePath: string): Promise<CatalogModel[]> {
 	}
 
 	const publicModels = models.filter((m) => !m.private);
-	const skipped = models.length - publicModels.length;
+	const activeModels = publicModels.filter((m) => !isDeprecated(m));
+	const skippedPrivate = models.length - publicModels.length;
+	const skippedDeprecated = publicModels.length - activeModels.length;
+	const skippedNotes = [
+		skippedPrivate > 0 ? `${skippedPrivate} private skipped` : null,
+		skippedDeprecated > 0 ? `${skippedDeprecated} deprecated skipped` : null,
+	]
+		.filter(Boolean)
+		.join(", ");
 	console.log(
-		`  Loaded ${models.length} models${skipped > 0 ? ` (${skipped} private skipped)` : ""}`,
+		`  Loaded ${models.length} models${skippedNotes ? ` (${skippedNotes})` : ""}`,
 	);
-	return publicModels;
+	return activeModels;
 }
 
 function getApiHeaders(token: string): Record<string, string> {
@@ -373,11 +415,17 @@ function writeModels(models: CatalogModel[]): void {
 	// Write each model to a JSON file
 	let written = 0;
 	const skipped: string[] = [];
+	const skippedDeprecated: string[] = [];
 
 	for (const model of models) {
 		// Skip private models
 		if (model.private) {
 			skipped.push(model.model_id);
+			continue;
+		}
+
+		if (isDeprecated(model)) {
+			skippedDeprecated.push(model.model_id);
 			continue;
 		}
 
@@ -407,6 +455,9 @@ function writeModels(models: CatalogModel[]): void {
 	console.log(`  Written: ${written} models`);
 	if (skipped.length > 0) {
 		console.log(`  Skipped (private): ${skipped.length}`);
+	}
+	if (skippedDeprecated.length > 0) {
+		console.log(`  Skipped (deprecated): ${skippedDeprecated.length}`);
 	}
 	console.log(`  Output: ${OUTPUT_DIR}`);
 }

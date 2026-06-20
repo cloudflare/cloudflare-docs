@@ -20,6 +20,37 @@ import { getSandbox } from '@cloudflare/sandbox';
 const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
 ```
 
+### enableDefaultSession
+
+**Type**: `boolean`
+**Default**: `true`
+
+Controls what happens when you call sandbox methods without an explicit `sessionId`. When `true`, implicit operations use the sandbox's default session and preserve shell state between calls. When `false`, implicit operations run in isolation and do not inherit shell state from prior calls unless you explicitly target a session.
+
+Use `enableDefaultSession: true` for interactive or stateful workflows where commands should share working directory and exported variables. Use `enableDefaultSession: false` for stateless request handling where one call should not affect the next one. It is recommended to set this to `false` — default session support will be removed in a future version of the Sandbox SDK, and using `createSession()` explicitly is the preferred pattern going forward.
+
+<TypeScriptExample>
+```ts
+// Default behavior: implicit operations use the default session
+const statefulSandbox = getSandbox(env.Sandbox, 'user-123');
+
+await statefulSandbox.exec('cd /workspace/app');
+const statefulResult = await statefulSandbox.exec('pwd');
+// statefulResult.stdout: "/workspace/app"
+// The second exec inherited the working directory from the first.
+
+// Sessionless behavior: implicit operations do not share shell state
+const statelessSandbox = getSandbox(env.Sandbox, 'api-worker', {
+  enableDefaultSession: false
+});
+
+await statelessSandbox.exec('cd /workspace/app');
+const statelessResult = await statelessSandbox.exec('pwd');
+// statelessResult.stdout: "/workspace"
+// The second exec did not inherit shell state from the first.
+```
+</TypeScriptExample>
+
 ### keepAlive
 
 **Type**: `boolean`
@@ -206,7 +237,7 @@ The default 10-minute timeout works well for most applications. Adjust based on 
 Use `keepAlive: true` for:
 
 - **Long-running builds** - CI/CD pipelines that may have idle periods between steps
-- **Batch processing** - Jobs that process data in waves with gaps between batches  
+- **Batch processing** - Jobs that process data in waves with gaps between batches
 - **Monitoring tasks** - Processes that periodically check external services
 - **Interactive sessions** - User-driven workflows where the container should remain available
 
@@ -215,7 +246,7 @@ With `keepAlive`, containers send automatic heartbeat pings every 30 seconds to 
 ## Related resources
 
 - [Expose services guide](/sandbox/guides/expose-services/) - Using `normalizeId` with preview URLs
-- [Preview URLs concept](/sandbox/concepts/preview-urls/) - Understanding DNS case-insensitivity  
+- [Preview URLs concept](/sandbox/concepts/preview-urls/) - Understanding DNS case-insensitivity
 - [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
-- [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes with `setKeepAlive()` 
+- [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes with `setKeepAlive()`
 - [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle

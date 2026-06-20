@@ -7,7 +7,7 @@ entries:
 
   - term: cf-aig-step
     general_definition: |-
-      [cf-aig-step](/ai-gateway/configuration/fallbacks/#response-headercf-aig-step) identifies the processing step in the AI Gateway flow for better tracking and debugging.
+      The cf-aig-step response header identifies which step in a request flow successfully processed the request, useful for tracking and debugging.
 
   - term: cf-aig-log-id
     general_definition: |-
@@ -43,7 +43,7 @@ entries:
 
   - term: cf-aig-request-timeout
     general_definition: |-
-      Header to trigger a fallback provider based on a [predetermined response time](/ai-gateway/configuration/fallbacks/#request-timeouts) (measured in milliseconds).
+      Header to set a [request timeout](/ai-gateway/configuration/request-handling/#request-timeouts) (measured in milliseconds). If the provider does not respond within this time, the request returns an error.
 
   - term: cf-aig-max-attempts
     general_definition: |-

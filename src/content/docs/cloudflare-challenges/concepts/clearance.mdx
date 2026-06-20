@@ -4,6 +4,8 @@ title: Clearance
 description: How cf_clearance cookies prove a visitor passed a Cloudflare challenge.
 products:
   - cloudflare-challenges
+tags:
+  - Cookies
 sidebar:
   order: 2
 ---
@@ -34,7 +36,7 @@ The original `cf_clearance` cookie that was issued to the visitor from a lower s
 
 ## Pre-clearance support in Turnstile
 
-Pre-clearance in [Turnstile](/turnstile/) allows websites to streamline user experiences by using `cf_clearance` cookies. The `cf_clearance` cookie enables visitors to bypass WAF Challenges downstream, based on the security clearance level set by the customer. This can be particularly useful for trusted visitors, enhancing usability while maintaining security.
+Pre-clearance in [Turnstile](/turnstile/) allows websites to streamline user experiences by using `cf_clearance` cookies. The `cf_clearance` cookie enables visitors to bypass WAF Challenges on all subsequent requests on the zone, including API requests, based on the security clearance level set by the customer. This can be particularly useful for trusted visitors, enhancing usability while maintaining security.
 
 By default, Turnstile issues a one-time use token to the visitor when they solve a challenge via the widget. You must [validate the token](/turnstile/get-started/server-side-validation/) by making a server-side call to the Siteverify API.
 

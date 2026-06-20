@@ -28,20 +28,20 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 
 ## Add your application to Access
 
-<Render
-	file="access/self-hosted-app/create-app"
-	product="cloudflare-one"
-	params={{ private: true }}
-/>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
-6.  To add an application using its private IP:
+2. Select **Create new application**.
+
+3. Select **Self-hosted and private**.
+
+4.  To add an application using its private IP:
 		1. Select **Add private IP**.
 		2. In **IP address**, enter the private IP or CIDR range that represents the application (for example, `10.0.0.1` or `172.16.0.0/12`).
 		3. In **Port**, enter a single port or a port range used by your application (for example, `22` or `8000-8099`).
 
 			Comma-separated lists of ports (such as `80, 443`) are not supported. To add multiple ports for a specific IP, you can select **Add private IP** and repeat the IP address with the other port. Alternatively, create a new Access application for the other port.
 
-7. To add an application using its private hostname:
+5. To add an application using its private hostname:
 	1. Select **Add private hostname**.
 	2. In **Hostname**, enter the private hostname of the application (for example, `wiki.internal.local`). You can use [wildcards](/cloudflare-one/access-controls/policies/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
 	3. In **Port**, enter a single port or a port range used by your application (for example, `22` or `8000-8099`).
@@ -54,38 +54,30 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 
 		For more details on private hostname routing, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#prerequisites)
 
-8.  <Render file="access/add-access-policies" product="cloudflare-one" />
+6.  <Render file="access/add-access-policies" product="cloudflare-one" />
+7.  <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "private" }}/>
 
-9.  Configure how users will authenticate:
+8. <Render file="access/configure-independent-mfa" product="cloudflare-one" />
 
-        1. Select the [**Identity providers**](/cloudflare-one/integrations/identity-providers/) you want to enable for your application.
-        2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
-        3. (Recommended) Turn on **Device authentication identity** to allow users to authenticate to the application using their [Cloudflare One Client session identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
+9. <Render file="access/session-duration" product="cloudflare-one" />
 
-10.  Select **Next**.
+   If the application is non-HTTPS or you do not have TLS decryption turned on, the session is tracked by the Cloudflare One Client per application.
 
-11. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
+10. (Optional) Go to the **Additional settings** tab to customize the application experience:
 
-12. <Render file="access/configure-independent-mfa" product="cloudflare-one" />
+	- **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/).
+	- **Allow clientless access**: Allow users to access this private hostname or IP without the Cloudflare One Client. Users who pass your Access policies will see a tile in their App Launcher which points to a prefixed URL such as `https://<your-teamname>.cloudflareaccess.com/browser/https://wiki.internal.local/`. The link will route traffic to the application through [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/). This setting is useful for users on unmanaged devices or contractors who cannot install a device client.
 
-13. (Optional) Turn on **Allow clientless access** to allow users to access this private hostname or IP without the Cloudflare One Client. Users who pass your Access policies will see a tile in their App Launcher which points to a prefixed URL such as `https://<your-teamname>.cloudflareaccess.com/browser/https://wiki.internal.local/`. The link will route traffic to the application through [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/). This setting is useful for users on unmanaged devices or contractors who cannot install a device client.
+		:::note
+		Ensure your [remote browser permissions](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) allow users of this application to open Clientless Web Isolation links.
+		:::
 
-	:::note
-	Ensure your [remote browser permissions](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) allow users of this application to open Clientless Web Isolation links.
-	:::
+	- <Render file="access/access-block-page" product="cloudflare-one" />
+	- The following settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/):
+		<Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
 
-14. <Render file="access/access-block-page" product="cloudflare-one" />
 
-15. Select **Next**.
-
-16. <Render
-    	file="access/self-hosted-app/advanced-settings"
-    	product="cloudflare-one"
-    />
-
-        These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
-
-17. Select **Save**.
+11. Select **Create**.
 
 Users can now connect to your private application after authenticating with Cloudflare Access.
 

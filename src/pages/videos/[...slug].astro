@@ -29,7 +29,7 @@ const props = {
 		title: entry.title,
 		description: entry.description,
 		template: "splash",
-		pcx_content_type: "video"
+		pcx_content_type: "video",
 	},
 	hideBreadcrumbs: true,
 } as StarlightPageProps;
@@ -57,15 +57,17 @@ if (entry.transcript) {
 	<p>{entry.description}</p>
 	<Width size="large" center={true}>
 		<Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
-			{
-				parts && (
-					<br/>
+		{
+			parts && (
+				<>
+					<br />
 					<Details header="Transcript">
 						{parts.map((part) => (
 							<p>{part}</p>
 						))}
 					</Details>
-				)
-			}
+				</>
+			)
+		}
 	</Width>
 </StarlightPage>

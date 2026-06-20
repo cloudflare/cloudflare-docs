@@ -12,7 +12,7 @@ products:
   - workers
 ---
 
-import { DirectoryListing, Render, TypeScriptExample, WranglerConfig } from "~/components"
+import { DirectoryListing, Render, Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components"
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
 
@@ -37,6 +37,8 @@ You do not need to learn, implement, or think about special protocols to use the
 
 To provide RPC methods from your Worker, you must extend the `WorkerEntrypoint` class, as shown in the example below:
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
@@ -44,6 +46,18 @@ export default class extends WorkerEntrypoint {
   async add(a, b) { return a + b; }
 }
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def add(self, a, b):
+        return a + b
+```
+
+</TabItem> </Tabs>
 
 A new instance of the class is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless — the class instance only lasts for the duration of the invocation. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
 
@@ -69,6 +83,8 @@ For example, a Worker that declares a binding to the [environment variable](/wor
 
 Can access it by calling `this.env.GREETING`:
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
@@ -81,6 +97,21 @@ export default class extends WorkerEntrypoint {
 }
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello from my-worker")
+
+    async def greet(self, name):
+        return self.env.GREETING + name
+```
+
+</TabItem> </Tabs>
+
 You can use any type of [binding](/workers/runtime-apis/bindings) this way.
 
 ### Lifecycle methods (`ctx`)
@@ -88,6 +119,8 @@ You can use any type of [binding](/workers/runtime-apis/bindings) this way.
 The [`ctx`](/workers/runtime-apis/context) object is exposed as a class property of the `WorkerEntrypoint` class.
 
 For example, you can extend the lifetime of the invocation context by calling the `waitUntil()` method:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -107,6 +140,28 @@ export default class extends WorkerEntrypoint {
   }
 }
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello from my-worker")
+
+    async def signup(self, email, name):
+        # _send_event() will continue running, even after this method returns a value to the caller
+        self.ctx.waitUntil(self._send_event("signup", email))
+        # Perform any other work
+        return "Success"
+
+    async def _send_event(self, event_name, email):
+        # ...
+        pass
+```
+
+</TabItem> </Tabs>
 
 ### Fetching static assets
 
@@ -168,6 +223,8 @@ You can use this to group multiple pieces of compute together. For example, you 
 
 </WranglerConfig>
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
@@ -210,6 +267,32 @@ export default class extends WorkerEntrypoint {
 }
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class AdminEntrypoint(WorkerEntrypoint):
+    async def create_user(self, username):
+        await self.env.D1.prepare("INSERT INTO users (username) VALUES (?)").bind(username).run()
+
+    async def delete_user(self, username):
+        await self.env.D1.prepare("DELETE FROM users WHERE username = ?").bind(username).run()
+
+class UserEntrypoint(WorkerEntrypoint):
+    async def get_tasks(self, user_id):
+        return await self.env.D1.prepare("SELECT title FROM tasks WHERE user_id = ?").bind(user_id).run()
+
+    async def create_task(self, user_id, title):
+        await self.env.D1.prepare("INSERT INTO tasks (user_id, title) VALUES (?, ?)").bind(user_id, title).run()
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello from my to do app")
+```
+
+</TabItem> </Tabs>
+
 You can then declare a Service binding directly to `AdminEntrypoint` in another Worker:
 
 
@@ -232,6 +315,8 @@ You can then declare a Service binding directly to `AdminEntrypoint` in another 
 
 </WranglerConfig>
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 export default {
   async fetch(request, env) {
@@ -240,6 +325,19 @@ export default {
   },
 };
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        await self.env.ADMIN.create_user("aNewUser")
+        return Response("Hello from admin app")
+```
+
+</TabItem> </Tabs>
 
 You can learn more about how to configure D1 in the [D1 documentation](/d1/get-started/#3-bind-your-worker-to-your-d1-database).
 

@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Draw overlays and watermarks
 description: Add watermarks, logos, and overlay images on top of transformed images using Cloudflare Workers.
 sidebar:
-  order: 6
+  order: 7
 products:
   - images
   - workers
@@ -43,7 +43,7 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
   - Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing watermarks or non-rectangular overlays, Cloudflare recommends that you use PNG or WebP images.
 
 - `width` and `height`
-  - Maximum size of the overlay image, in pixels. It must be an integer.
+  - Maximum size of the overlay image. Accepts an integer (pixels) or a decimal between `0` and `1` representing a fraction of the original image's dimension. For example, `height: 0.25` sets the overlay height to 25% of the parent image's height.
 
 - `fit` and `gravity`
   - Affects interpretation of `width` and `height`. Same as [for the main image](/images/optimization/features/).
@@ -71,7 +71,7 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
 
 ## Draw using the Images binding
 
-When [interacting with Images through a binding](/images/optimization/transformations/bindings/), the Images API supports a `.draw()` method.
+When [interacting with Images through a binding](/images/optimization/binding/), the Images API supports a `.draw()` method.
 
 The accepted options for the overlaid image are `opacity`, `repeat`, `top`, `left`, `bottom`, and `right`.
 

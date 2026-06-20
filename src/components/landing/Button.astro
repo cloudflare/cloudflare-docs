@@ -1,0 +1,94 @@
+---
+type Variant = "primary" | "secondary" | "ghost";
+type Size = "lg" | "md" | "sm";
+
+interface Props {
+	href?: string;
+	variant?: Variant;
+	size?: Size;
+	id?: string;
+	type?: "button" | "submit" | "reset";
+	class?: string;
+	target?: string;
+	rel?: string;
+	"aria-label"?: string;
+	"data-tooltip"?: string;
+}
+
+const {
+	href,
+	variant = "primary",
+	size = "md",
+	id,
+	type = "button",
+	class: className = "",
+	target,
+	rel,
+	"aria-label": ariaLabel,
+	"data-tooltip": dataTooltip,
+} = Astro.props;
+
+const base = [
+	"relative shrink-0 isolate inline-flex items-center justify-center",
+	"origin-center gap-2 whitespace-nowrap font-medium no-underline",
+	"outline-1 outline-transparent outline-offset-2",
+	"transition-[scale,translate] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] duration-[160ms]",
+	"focus-visible:ring-[3px] focus-visible:ring-accent-100/50",
+	"disabled:pointer-events-none disabled:opacity-50",
+	"before:content-[''] before:absolute before:-inset-[1px] before:opacity-0 before:rounded-[inherit] before:pointer-events-none before:z-[3]",
+	"before:bg-current before:transition-opacity before:duration-[160ms] before:ease-[cubic-bezier(0.55,0.085,0.68,0.53)]",
+	"after:content-[''] after:absolute after:-inset-[1px] after:opacity-0 after:rounded-[inherit] after:pointer-events-none after:z-[2]",
+	"after:border after:border-current",
+	"after:transition-opacity after:duration-[600ms] after:delay-[100ms] after:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+	"active:after:transition-none",
+	"active:translate-y-[1px] active:scale-[0.98]",
+	"hover:opacity-95",
+	"[&>*]:relative [&>*]:z-[4]",
+	"rounded-full",
+];
+
+const variantClasses: Record<Variant, string> = {
+	primary: [
+		"bg-accent-100 text-light-foreground",
+		"hover:bg-accent-100 hover:text-light-foreground",
+		"hover:before:opacity-[0.18] focus-visible:before:opacity-[0.18]",
+	].join(" "),
+	secondary: [
+		"text-foreground border-border-100 bg-background",
+		"border border-zinc-200 dark:border-[#2a2a2a]",
+		"hover:before:opacity-[0.04] focus-visible:before:opacity-[0.04]",
+	].join(" "),
+	ghost: [
+		"bg-transparent text-foreground-muted border-transparent",
+		"hover:text-foreground",
+	].join(" "),
+};
+
+const sizeClasses: Record<Size, string> = {
+	lg: "px-6 py-3 md:text-lg",
+	md: "px-4 py-2 text-sm",
+	sm: "px-3 py-1.5 text-xs",
+};
+
+const cls = [
+	...base,
+	variantClasses[variant],
+	sizeClasses[size],
+	className,
+].join(" ");
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+	href={href}
+	id={id}
+	class={cls}
+	target={target}
+	rel={rel}
+	aria-label={ariaLabel}
+	data-tooltip={dataTooltip}
+	type={href ? undefined : type}
+>
+	<slot />
+</Tag>

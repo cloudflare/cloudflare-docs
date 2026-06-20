@@ -1,0 +1,18 @@
+---
+title: R2 Data Catalog now exposes metrics via the GraphQL Analytics API
+description: Monitor Iceberg REST API operations and table maintenance jobs for your R2 Data Catalog warehouses using the GraphQL Analytics API.
+products:
+  - r2
+date: 2026-05-12
+---
+
+[R2 Data Catalog](/r2/data-catalog/) is a managed Apache Iceberg data catalog built directly into your R2 bucket that allows you to connect query engines like [R2 SQL](/r2-sql/), Spark, Snowflake, and DuckDB to your data in R2.
+
+You can now query analytics for your R2 Data Catalog warehouses via Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). Two new datasets are available:
+
+- **`r2CatalogDataOperationsAdaptiveGroups`** tracks Iceberg REST API requests made to your catalog, including operation type, request duration, HTTP status, and request body bytes. Use this to monitor request volume and latency across warehouses, namespaces, and tables.
+- **`r2CatalogTableMaintenanceAdaptiveGroups`** tracks table maintenance jobs such as compaction and snapshot expiration. Use this to monitor job success rates, files processed, bytes read and written, and job duration.
+
+Both datasets support filtering by warehouse name, namespace, table name, and time range. They also include percentile aggregations for duration metrics.
+
+For detailed schema information and example queries, refer to the [R2 Data Catalog metrics and analytics documentation](/r2/data-catalog/observability/metrics/).

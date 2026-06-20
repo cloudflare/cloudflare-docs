@@ -6,6 +6,8 @@ products:
   - api-shield
 sidebar:
   order: 7
+tags:
+  - mTLS
 
 ---
 
@@ -15,9 +17,11 @@ import { GlossaryDefinition, Render } from "~/components";
 
 <GlossaryDefinition term="mTLS (mutual TLS)" />
 
+Use mTLS when you need to verify the identity of API clients, such as mobile applications, IoT devices, or services that connect to your API.
+
 ![mTLS sequence diagram](~/assets/images/api-shield/api-shield-call-sequence.png)
 
-Support includes [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based APIs, which use binary formats such as protocol buffers rather than JSON.
+mTLS also supports [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based APIs, which use binary formats such as protocol buffers rather than JSON.
 
 ## Setup
 

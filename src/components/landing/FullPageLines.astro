@@ -1,0 +1,33 @@
+---
+const CONTAINERS = [1400, 1280, 720, 400];
+
+const MIN_MARGINS = [0, 48, 120, 200];
+function rw(w: number): string {
+	const i = CONTAINERS.indexOf(w);
+	const margin = i >= 0 ? MIN_MARGINS[i] : 0;
+	if (margin === 0) return `min(${w}px, 100%)`;
+	return `min(${w}px, calc(100% - ${margin}px))`;
+}
+
+const lineBase = "absolute top-0 left-1/2 -translate-x-1/2";
+---
+
+<div
+	class="pointer-events-none absolute inset-x-0 top-0 z-0 hidden lg:block"
+	style="height: calc(100% + 25rem)"
+	aria-hidden="true"
+>
+	<div
+		class="absolute top-0 left-1/2 h-full w-0 border-l border-dotted border-black/[0.03] dark:border-white/[0.02]"
+	>
+	</div>
+
+	{
+		CONTAINERS.map((w) => (
+			<div
+				class={`${lineBase} h-full border-r border-black/[0.03] dark:border-white/[0.02]`}
+				style={`width:${rw(w)}`}
+			/>
+		))
+	}
+</div>

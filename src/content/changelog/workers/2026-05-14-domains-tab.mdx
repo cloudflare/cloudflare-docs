@@ -1,0 +1,19 @@
+---
+title: New Domains tab in the Workers dashboard
+description: A dedicated Domains tab lets you purchase a new domain, add an existing one, manage your workers.dev subdomain, Preview URLs, and Cloudflare Access controls.
+products:
+  - workers
+date: 2026-05-14
+---
+
+import { DashButton } from "~/components";
+
+In your Worker's dashboard, there is now a dedicated **Domains** tab where you can purchase a new domain through Cloudflare Registrar and have it automatically connected, add an [existing domain](/workers/configuration/routing/custom-domains/), and manage all of your Worker's routing in one place.
+
+![The new Domains tab in the Workers dashboard](~/assets/images/workers/changelog/domains-tab.png)
+
+You can also enable or disable your [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/) and [Preview URLs](/workers/configuration/previews/), put them behind [Cloudflare Access](/cloudflare-one/access-controls/) to require sign-in, and jump directly to [analytics](/analytics/) or domain overview for any connected domain.
+
+To get started, go to **Workers & Pages**, select a Worker, and open the **Domains** tab.
+
+<DashButton url="/?to=/:account/workers-and-pages" />

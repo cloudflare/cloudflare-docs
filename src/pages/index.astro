@@ -1,512 +1,390 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { Image } from "astro:assets";
+import type { StarlightPageProps } from "@astrojs/starlight/props";
+import StructuralGrid from "~/components/landing/StructuralGrid.astro";
+import FullPageLines from "~/components/landing/FullPageLines.astro";
+import Hero from "~/components/landing/Hero.astro";
+import BuildFromScratch from "~/components/landing/BuildFromScratch.astro";
+import SecureSection from "~/components/landing/SecureSection.astro";
+import AccelerateSection from "~/components/landing/AccelerateSection.astro";
+import AgentSetup from "~/components/landing/AgentSetup.astro";
+import ChangelogSection from "~/components/landing/ChangelogSection.astro";
+import CommunityGrid from "~/components/landing/CommunityGrid.astro";
+import "../styles/landing.css";
 
-import AgentsIllustration from "~/assets/agents.svg";
+const heading = (icon: string) => ({
+	text: icon,
+	variant: "default" as const,
+	class: "sidebar-heading",
+});
 
-import HeroImageDark from "~/assets/Dev-Docs-Header-Illustration-Dark-Mode-cropped.svg";
-import HeroImageLight from "~/assets/Dev-Docs-Header-Illustration-Light-Mode-cropped.svg";
+const groupIcon = (icon: string) => ({
+	text: icon,
+	variant: "default" as const,
+	class: "sidebar-group-icon",
+});
 
-import SectionImageDeveloperPlatformDark from "~/assets/developer-platform-dark.svg";
-import SectionImageDeveloperPlatformLight from "~/assets/developer-platform-light.svg";
-import SectionImageZeroTrustDark from "~/assets/zero-trust-dark.svg";
-import SectionImageZeroTrustLight from "~/assets/zero-trust-light.svg";
-import PromptCopyBlock from "~/components/agent-setup/PromptCopyBlock.astro";
-
-import {
-	FourCardGrid,
-	ListCard,
-	TryItSection,
-	FeaturedContentSection,
-	RecommendedContentSection,
-	FooterHeroBlock,
-} from "~/components";
-
-const frontmatter = {
-	title: "Welcome to Cloudflare",
-	description:
-		"Explore guides and tutorials to start building on Cloudflare's platform",
-	template: "splash",
-	hero: {
-		title: "Welcome to Cloudflare",
-		tagline:
-			"Explore guides and tutorials to start building on Cloudflare's platform",
-		image: {
-			dark: HeroImageDark,
-			light: HeroImageLight,
-		},
-	},
-} as const;
-
-const topCards = [
+const sidebar = [
 	{
-		title: "Featured",
-		links: [
-			{ text: "Docs for agents", href: "/docs-for-agents/" },
+		label: "Get started",
+		collapsed: false,
+		badge: heading("heading-get-started"),
+		items: [
+			{ label: "Overview", link: "/" },
+			{ label: "API", link: "/api/" },
+			{ label: "Agent Setup", link: "/agent-setup/" },
+			{ label: "Directory", link: "/directory/" },
+			{ label: "Changelog", link: "/changelog/" },
 			{
-				text: "Troubleshoot errors",
-				href: "/support/troubleshooting/http-status-codes/",
+				label: "Resources",
+				collapsed: true,
+				items: [
+					{
+						label: "Learning paths",
+						link: "/resources/?filter-pcx_content_type=learning-path",
+					},
+					{ label: "Use cases", link: "/use-cases/" },
+					{ label: "Reference architecture", link: "/reference-architecture/" },
+				],
 			},
-			{ text: "Register a domain", href: "/registrar/" },
-			{ text: "Setup 1.1.1.1", href: "/1.1.1.1/setup/" },
 			{
-				text: "Get started with Cloudflare",
-				href: "/learning-paths/get-started/concepts/",
+				label: "API & IaC",
+				collapsed: true,
+				items: [
+					{ label: "API reference", link: "/api/" },
+					{ label: "Terraform", link: "/terraform/" },
+					{ label: "Pulumi", link: "/pulumi/" },
+					{ label: "SDKs", link: "/fundamentals/api/reference/sdks/" },
+				],
 			},
+			{ label: "Support", link: "/support/" },
 		],
-		cta: {
-			text: "View all docs",
-			href: "/directory/",
-		},
-	},
-	{
-		title: "Developer Products",
-		links: [
-			{ text: "Workers", href: "/workers/" },
-			{ text: "Pages", href: "/pages/" },
-			{ text: "R2", href: "/r2/" },
-			{ text: "Images", href: "/images/" },
-			{ text: "Stream", href: "/stream/" },
-		],
-		cta: {
-			text: "View all developer products",
-			href: "/directory/?product-group=Developer+platform",
-		},
 	},
 	{
-		title: "AI Products",
-		links: [
-			{ text: "AI Search", href: "/ai-search/" },
-			{ text: "Workers AI", href: "/workers-ai/" },
-			{ text: "AI Crawl Control", href: "/ai-crawl-control/" },
-			{ text: "AI Gateway", href: "/ai-gateway/" },
-			{ text: "AI Agents", href: "/agents/" },
+		label: "Build",
+		collapsed: false,
+		badge: heading("heading-build"),
+		items: [
+			{
+				label: "Compute",
+				collapsed: true,
+				badge: groupIcon("workers"),
+				items: [
+					{ label: "Workers", link: "/workers/" },
+					{ label: "Containers", link: "/containers/" },
+					{ label: "Durable Objects", link: "/durable-objects/" },
+					{ label: "Queues", link: "/queues/" },
+					{ label: "Workflows", link: "/workflows/" },
+					{ label: "Browser Run", link: "/browser-run/" },
+					{ label: "Workers VPC", link: "/workers-vpc/" },
+					{
+						label: "Cloudflare for Platforms",
+						link: "/cloudflare-for-platforms/",
+					},
+					{ label: "Email Service", link: "/email-service/" },
+				],
+			},
+			{
+				label: "AI",
+				collapsed: true,
+				badge: groupIcon("workers-ai"),
+				items: [
+					{ label: "Models", link: "/ai/models/" },
+					{ label: "Workers AI", link: "/workers-ai/" },
+					{ label: "AI Gateway", link: "/ai-gateway/" },
+					{ label: "Agents", link: "/agents/" },
+					{ label: "Agent Memory", link: "/agent-memory/" },
+					{ label: "Sandbox SDK", link: "/sandbox/" },
+					{ label: "Vectorize", link: "/vectorize/" },
+					{ label: "AI Search", link: "/ai-search/" },
+					{ label: "AI Crawl Control", link: "/ai-crawl-control/" },
+				],
+			},
+			{
+				label: "Storage & Database",
+				collapsed: true,
+				badge: groupIcon("kv"),
+				items: [
+					{ label: "R2", link: "/r2/" },
+					{ label: "R2 Data Catalog", link: "/r2/data-catalog/" },
+					{ label: "R2 SQL", link: "/r2-sql/" },
+					{ label: "Pipelines", link: "/pipelines/" },
+					{ label: "D1", link: "/d1/" },
+					{ label: "KV", link: "/kv/" },
+					{ label: "Hyperdrive", link: "/hyperdrive/" },
+				],
+			},
+			{
+				label: "Media",
+				collapsed: true,
+				badge: groupIcon("images"),
+				items: [
+					{ label: "Images", link: "/images/" },
+					{ label: "Stream", link: "/stream/" },
+					{ label: "Realtime", link: "/realtime/" },
+				],
+			},
 		],
-		cta: {
-			text: "View all AI products",
-			href: "/directory/?product-group=AI",
-		},
 	},
 	{
-		title: "Zero Trust",
-		links: [
-			{ text: "Access", href: "/cloudflare-one/access-controls/policies/" },
+		label: "Protect & Connect",
+		collapsed: false,
+		badge: heading("heading-protect-connect"),
+		items: [
 			{
-				text: "Tunnel",
-				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
+				label: "Application Security",
+				collapsed: true,
+				badge: groupIcon("waf"),
+				items: [
+					{ label: "WAF", link: "/waf/" },
+					{ label: "DDoS Protection", link: "/ddos-protection/" },
+					{ label: "SSL/TLS", link: "/ssl/" },
+					{ label: "Bots", link: "/bots/" },
+					{ label: "API Shield", link: "/api-shield/" },
+					{ label: "Page Shield", link: "/page-shield/" },
+					{ label: "Turnstile", link: "/turnstile/" },
+					{ label: "Security Center", link: "/security-center/" },
+				],
 			},
-			{ text: "Gateway", href: "/cloudflare-one/traffic-policies/" },
 			{
-				text: "Browser Isolation",
-				href: "/cloudflare-one/remote-browser-isolation/",
+				label: "Cloudflare One",
+				collapsed: true,
+				badge: groupIcon("cloudflare-one"),
+				items: [
+					{ label: "Overview", link: "/cloudflare-one/" },
+					{ label: "Insights & Logs", link: "/cloudflare-one/insights/" },
+					{
+						label: "Team & Resources",
+						link: "/cloudflare-one/team-and-resources/",
+					},
+					{ label: "Networks", link: "/cloudflare-one/networks/" },
+					{
+						label: "Access controls",
+						link: "/cloudflare-one/access-controls/",
+					},
+					{
+						label: "Traffic policies",
+						link: "/cloudflare-one/traffic-policies/",
+					},
+					{
+						label: "Cloud & SaaS findings",
+						link: "/cloudflare-one/cloud-and-saas-findings/",
+					},
+					{
+						label: "Email security",
+						link: "/cloudflare-one/email-security/",
+					},
+					{
+						label: "Data loss prevention",
+						link: "/cloudflare-one/data-loss-prevention/",
+					},
+					{
+						label: "Browser isolation",
+						link: "/cloudflare-one/remote-browser-isolation/",
+					},
+					{
+						label: "Reusable components",
+						link: "/cloudflare-one/reusable-components/",
+					},
+					{ label: "Integrations", link: "/cloudflare-one/integrations/" },
+				],
 			},
 			{
-				text: "Replace your VPN",
-				href: "/learning-paths/replace-vpn/concepts/",
+				label: "Domains & DNS",
+				collapsed: true,
+				badge: groupIcon("dns"),
+				items: [
+					{ label: "DNS", link: "/dns/" },
+					{ label: "1.1.1.1", link: "/1.1.1.1/" },
+					{ label: "Registrar", link: "/registrar/" },
+					{ label: "Email Routing", link: "/email-service/" },
+					{ label: "DMARC Management", link: "/dmarc-management/" },
+				],
+			},
+			{
+				label: "Networking",
+				collapsed: true,
+				badge: groupIcon("network"),
+				items: [
+					{ label: "Tunnel", link: "/tunnel/" },
+					{ label: "Mesh", link: "/mesh/" },
+					{ label: "Magic Transit", link: "/magic-transit/" },
+					{ label: "Magic WAN", link: "/cloudflare-wan/" },
+					{ label: "Network Interconnect", link: "/network-interconnect/" },
+					{ label: "Spectrum", link: "/spectrum/" },
+					{ label: "BYOIP", link: "/byoip/" },
+				],
+			},
+			{
+				label: "Delivery & Performance",
+				collapsed: true,
+				badge: groupIcon("speed"),
+				items: [
+					{ label: "Cache", link: "/cache/" },
+					{ label: "Speed", link: "/speed/" },
+					{ label: "Load Balancing", link: "/load-balancing/" },
+					{ label: "Waiting Room", link: "/waiting-room/" },
+					{ label: "Argo Smart Routing", link: "/argo-smart-routing/" },
+					{ label: "Zaraz", link: "/zaraz/" },
+				],
 			},
 		],
-		cta: {
-			text: "View all Cloudflare One products",
-			href: "/directory/?product-group=Cloudflare+One",
-		},
+	},
+	{
+		label: "Manage & Observe",
+		collapsed: false,
+		badge: heading("heading-other"),
+		items: [
+			{
+				label: "Observe",
+				collapsed: true,
+				badge: groupIcon("analytics"),
+				items: [
+					{ label: "Analytics", link: "/analytics/" },
+					{ label: "Web Analytics", link: "/web-analytics/" },
+					{ label: "Logs", link: "/logs/" },
+					{ label: "Log Explorer", link: "/log-explorer/" },
+					{ label: "Health Checks", link: "/health-checks/" },
+				],
+			},
+		],
 	},
 ];
 
-const featuredSections = [
-	{
-		title: "Developer Platform",
-		text: "The Cloudflare Developer Platform provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.",
-		image: {
-			light: SectionImageDeveloperPlatformLight,
-			dark: SectionImageDeveloperPlatformDark,
-		},
-		imagePosition: "before",
-		cards: [
-			// Currently unused.
-			// {
-			// 	title: "Create API Tokens",
-			// 	text: "If you are going to be using the Cloudflare API, you first need an API token to authenticate your requests.",
-			// 	cta: {
-			// 		title: "Create Tokens",
-			// 		href: "/fundamentals/api/get-started/create-token/",
-			// 	},
-			// },
-			// {
-			// 	title: "View Workers Examples",
-			// 	text: "Review fully functional sample scripts to get started with Workers.",
-			// 	cta: {
-			// 		title: "View Examples",
-			// 		href: "/workers/examples/",
-			// 	},
-			// },
-		],
+const props = {
+	frontmatter: {
+		title: "Cloudflare Developer Docs",
+		description: "Connect, protect, and build everywhere.",
+		template: "doc",
+		tableOfContents: false,
 	},
-	{
-		title: "Zero Trust",
-		text: "Cloudflare Zero Trust replaces legacy security perimeters with our global network, making the Internet faster and safer for teams around the world.",
-		image: {
-			light: SectionImageZeroTrustLight,
-			dark: SectionImageZeroTrustDark,
-		},
-		imagePosition: "after",
-		cards: [
-			{
-				title: "Install the WARP Client",
-				text: "The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.",
-				cta: {
-					title: "Get started",
-					href: "/cloudflare-one/team-and-resources/devices/warp/",
-				},
-			},
-			{
-				title: "Set up a tunnel",
-				text: "Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.",
-				cta: {
-					title: "Set up a tunnel",
-					href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-				},
-			},
-		],
-	},
-];
-
-const recommendedSection = {
-	title: "Other docs you might also like",
-	cards: [
-		{
-			title: "Install an Origin CA certificate",
-			text: "Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth.",
-			cta: {
-				title: "Install Origin CA",
-				href: "/ssl/origin-configuration/origin-ca/",
-			},
-		},
-		{
-			title: "Change your nameservers",
-			text: "Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.",
-			cta: {
-				title: "Update nameservers",
-				href: "/dns/zone-setups/full-setup/setup/",
-			},
-		},
-		{
-			title: "SSL/TLS Encryption mode",
-			text: "Your domain's encryption mode controls how Cloudflare connects to your origin server and how SSL certificates at your origin will be validated.",
-			cta: {
-				title: "Set encryption mode",
-				href: "/ssl/origin-configuration/ssl-modes/",
-			},
-		},
-		{
-			title: "Allow traffic from specific countries only",
-			text: "Block requests based on a list of allowed countries by configuring a custom rule in the Web Application Firewall (WAF).",
-			cta: {
-				title: "Allow traffic from specific countries only",
-				href: "/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/",
-			},
-		},
-	],
-};
+	sidebar,
+	hasSidebar: true,
+	hideBreadcrumbs: true,
+	hideTitle: true,
+	headings: [],
+} as StarlightPageProps;
 ---
 
-<StarlightPage frontmatter={frontmatter}>
-	<FourCardGrid>
-		{
-			topCards.map((card) => (
-				<ListCard title={card.title}>
-					<ul>
-						{card.links.map((link) => (
-							<li>
-								<a
-									href={link.href}
-									class="hover:text-accent! dark:text-accent-high! text-black! dark:hover:text-black!"
-								>
-									{link.text}
-								</a>
-							</li>
-						))}
-					</ul>
-					<p>
-						<strong>
-							<a href={card.cta.href}>{card.cta.text}</a>
-						</strong>
-					</p>
-				</ListCard>
-			))
-		}
-	</FourCardGrid>
+<StarlightPage {...props}>
+	<div class="landing-root">
+		<div class="relative">
+			<FullPageLines />
+			<StructuralGrid />
+			<main
+				class="relative z-10 mx-auto max-w-[1280px]"
+				id="main-content"
+				style="padding-inline: var(--l-section-pad); padding-top: var(--l-pad-top);"
+			>
+				<Hero />
 
-	<div class="hidden md:block">
-		<hr />
-		<!-- Agent Setup -->
-		<section class="agent-hero">
-			<div class="agent-hero-illustration">
-				<Image src={AgentsIllustration} alt="AI agents illustration" />
-			</div>
-			<div class="agent-hero-content">
-				<h2 class="agent-hero-title">Build with your favorite AI agent</h2>
-				<PromptCopyBlock
-					text="Fetch https://developers.cloudflare.com/agent-setup/prompt.md"
-				/>
-				<p class="agent-hero-secondary">
-					Or <a href="/agent-setup/"
-						>read more about Cloudflare agent tools and setup guides &rarr;</a
-					>
-				</p>
-				<div class="agent-hero-logos">
-					<a
-						href="/agent-setup/claude-code/"
-						title="Claude Code"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/claude/light.svg"
-							alt="Claude Code"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/claude/dark.svg"
-							alt="Claude Code"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a href="/agent-setup/codex/" title="Codex" class="agent-hero-logo">
-						<img
-							src="/icons/agents/codex/light.svg"
-							alt="Codex"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/codex/dark.svg"
-							alt="Codex"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a href="/agent-setup/cursor/" title="Cursor" class="agent-hero-logo">
-						<img
-							src="/icons/agents/cursor/light.svg"
-							alt="Cursor"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/cursor/dark.svg"
-							alt="Cursor"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a
-						href="/agent-setup/opencode/"
-						title="OpenCode"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/opencode/light.svg"
-							alt="OpenCode"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/opencode/dark.svg"
-							alt="OpenCode"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a
-						href="/agent-setup/github-copilot/"
-						title="GitHub Copilot"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/copilot/light.svg"
-							alt="GitHub Copilot"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/copilot/dark.svg"
-							alt="GitHub Copilot"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a
-						href="/agent-setup/windsurf/"
-						title="Windsurf"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/windsurf/light.svg"
-							alt="Windsurf"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/windsurf/dark.svg"
-							alt="Windsurf"
-							class="agent-icon-dark"
-						/>
-					</a>
-				</div>
-			</div>
-		</section>
-		<hr />
+				<BuildFromScratch />
 
-		{
-			featuredSections.map((section) => (
-				<>
-					<FeaturedContentSection
-						title={section.title}
-						text={section.text}
-						image={section.image}
-						imagePosition={section.imagePosition}
-						cards={section.cards}
-					/>
-					<hr />
-				</>
-			))
-		}
+				<AgentSetup />
 
-		<TryItSection />
-		<hr />
+				<ChangelogSection />
 
-		<RecommendedContentSection
-			title={recommendedSection.title}
-			cards={recommendedSection.cards}
-		/>
-		<hr />
-		<FooterHeroBlock />
+				<SecureSection />
+
+				<AccelerateSection />
+
+				<CommunityGrid />
+			</main>
+		</div>
 	</div>
 </StarlightPage>
 
-<style>
-	.agent-hero {
-		display: flex;
-		align-items: center;
-		gap: 3rem;
-		margin: 2.75rem 0;
-	}
-
-	.agent-hero-content {
-		flex: 1 1 70%;
-		min-width: 0;
-	}
-
-	.agent-hero-content :global(.pcb-root) {
-		margin-bottom: 0;
-	}
-
-	.agent-hero-illustration {
-		flex: 1 1 30%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.agent-hero-illustration :global(img) {
-		width: 266px;
-		height: auto;
-	}
-
-	@media (max-width: 900px) {
-		.agent-hero {
-			flex-direction: column;
-			gap: 2rem;
-		}
-
-		.agent-hero-illustration {
-			display: none;
+<script>
+	// Instant scroll to hash target on page load (no smooth animation).
+	// Subsequent in-page clicks use CSS scroll-behavior: smooth.
+	{
+		const hash = window.location.hash;
+		if (hash.length > 1) {
+			let target: Element | null = null;
+			let id = hash.slice(1);
+			try {
+				id = decodeURIComponent(id);
+			} catch {
+				// keep raw id when hash is malformed
+			}
+			target = document.getElementById(id);
+			if (!target) {
+				try {
+					target = document.querySelector(hash);
+				} catch {
+					target = null;
+				}
+			}
+			if (target) {
+				// Temporarily disable smooth scrolling for the initial jump
+				const html = document.documentElement;
+				const prev = html.style.scrollBehavior;
+				html.style.scrollBehavior = "auto";
+				requestAnimationFrame(() => {
+					target.scrollIntoView();
+					// Restore after the frame so future clicks are smooth again
+					requestAnimationFrame(() => {
+						html.style.scrollBehavior = prev;
+					});
+				});
+			}
 		}
 	}
+</script>
 
-	.agent-hero-logos {
-		display: flex;
-		align-items: center;
-
-		gap: 1.25rem;
-		margin: 2.25rem 0 0;
-		flex-wrap: wrap;
+<style is:global>
+	/* Starlight layout overrides */
+	.right-sidebar-container,
+	mobile-starlight-toc {
+		display: none;
 	}
 
-	.agent-hero-logo {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 60px;
-		height: 60px;
-		line-height: 0;
-		border-radius: 12px;
-		overflow: hidden;
-		transition: transform 0.2s ease;
-		position: relative;
-		flex-shrink: 0;
+	.main-frame {
+		padding-top: var(--sl-nav-height);
 	}
-
-	.agent-hero-logo:hover {
-		transform: scale(1.08);
+	.main-pane {
+		padding: 0;
+		gap: 0;
+		isolation: isolate;
+		z-index: 0;
 	}
-
-	.agent-hero-logo img {
+	.content-panel {
+		padding: 0;
 		margin: 0;
-		width: 60px;
-		height: 60px;
-		max-width: 60px;
-		max-height: 60px;
-		object-fit: contain;
-		display: block;
+		overflow: visible;
+	}
+	.sl-container {
+		max-width: none;
+		margin: 0;
+		padding: 0;
+		overflow: visible;
+	}
+	.sl-markdown-content {
+		margin: 0;
+		padding: 0;
+		overflow: visible;
+	}
+	.sl-markdown-content > :first-child {
+		margin-top: 0;
+	}
+	.sl-markdown-content
+		:not(a, strong, em, del, span, input, code, br)
+		+ :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+		margin-top: 0;
 	}
 
-	.agent-hero-title {
-		font-size: 2rem !important;
-		font-weight: 700 !important;
-		letter-spacing: -0.02em;
-		line-height: 1.15 !important;
-		margin: 0 0 1rem !important;
-		max-width: 720px;
-		border: none !important;
-		padding: 0 !important;
+	/* Restore footer spacing — scoped to the landing page only */
+	body:has(.landing-root) footer {
+		margin-top: 0;
 	}
-
-	.agent-hero-secondary {
-		margin: 1rem 0 0;
-	}
-
-	.agent-hero-secondary a {
-		color: var(--color-cl1-brand-orange) !important;
-		text-decoration: underline;
-		text-underline-offset: 2px;
-		text-decoration-color: color-mix(
-			in srgb,
-			var(--color-cl1-brand-orange) 40%,
-			transparent
-		);
-		transition: text-decoration-color 0.15s ease;
-	}
-
-	.agent-hero-secondary a:hover {
-		text-decoration-color: var(--color-cl1-brand-orange);
-	}
-
-	img.agent-icon-dark {
-		display: none !important;
-	}
-
-	:root[data-theme="dark"] img.agent-icon-light {
-		display: none !important;
-	}
-
-	:root[data-theme="dark"] img.agent-icon-dark {
-		display: block !important;
-	}
-
-	@media (max-width: 640px) {
-		.agent-hero-logos {
-			gap: 0.5rem;
-		}
-		.agent-hero-logo,
-		.agent-hero-logo img {
-			width: 40px;
-			height: 40px;
-			max-width: 40px;
-			max-height: 40px;
-		}
-		.agent-hero-title {
-			font-size: 1.5rem !important;
-		}
+	body:has(.landing-root) footer .custom-footer-section {
+		position: relative;
+		z-index: 1;
+		max-width: 1280px;
+		margin-inline: auto;
+		padding-inline: var(--l-section-pad, 1.5rem);
+		padding-bottom: 1.5rem;
+		border-top: 1px solid var(--sl-color-gray-6);
+		background-color: var(--sl-color-bg);
 	}
 </style>

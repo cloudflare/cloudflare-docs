@@ -49,3 +49,7 @@ Here are some other actions you can take on the Cloudflare side:
 Note that you may observe a 1 second difference between the timeout you have set and the actual time at which the Error `524` is returned. This is expected, it is due to the current work on implementing our proxy - [Pingora](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
 As a workaround, you can simply set the timeout to one second more (121 seconds instead of 120 seconds, for example).
 :::
+
+### Diagnose with Origin Analytics
+
+Use [Origin Analytics](/speed/origin-analytics/) to monitor origin response times and catch requests approaching your timeout threshold before they result in `524` errors. If P95 response times are near the [Proxy Read Timeout](/fundamentals/reference/connection-limits/), identify the slow paths in the **Top endpoints** table and optimize them — or increase the timeout for Enterprise zones.

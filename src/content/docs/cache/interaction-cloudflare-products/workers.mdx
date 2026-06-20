@@ -12,36 +12,38 @@ head:
 
 ---
 
-You can use [Workers](/workers/) to customize cache behavior on Cloudflare's CDN. Cloudflare Workers provide flexibility in handling assets and responses by running both before and after the cache. A Worker can be configured to run before a request reaches the cache, allowing for modifications to the request, and it can also be used to modify assets once they are returned from the cache.
+You can use [Workers](/workers/) to customize cache behavior on Cloudflare's network. Workers run as middleware in the request lifecycle — a single Worker handles both the request and response phases. When a request arrives, it hits the Worker before the cache is checked. The Worker can modify the incoming request (for example, rewrite the URL or add headers), then call `fetch()` to continue the request through the cache. When the response comes back — whether from cache or from the origin server — the Worker can also modify the response before it is sent to the visitor.
 
 The diagram below illustrates a common interaction flow between Workers and Cache.
 
 ![Workers and cache flow example flow diagram.](~/assets/images/cache/workers-cache-flow.png)
 
-1. A User (a) Requests a URI, and this request is directed to a Worker. The Worker can then interact with the request, either requesting the content further upstream using (b) fetch() or sending a (f) Response back to the User.
-2. If the content is cached, the Cache will send a (e) Response back to the Worker which can now interact with the response before sending a (f) Response back to the user.
-3. When using cache rules with Workers, the cache rule should not be set based on the user URL/host (a). Instead, the rule must match the properties of the URL in the fetch() (b) request — such as headers, hostname, or URL path — otherwise, the rule will not be applied.
+1. A visitor (a) requests a URL, and this request is directed to a Worker. The Worker can then interact with the request, either requesting the content from the origin server using (b) `fetch()` or sending a (f) response back to the visitor.
+2. If the content is cached, the cache sends a (e) response back to the Worker, which can modify the response before sending a (f) response back to the visitor.
+3. When using [cache rules](/cache/how-to/cache-rules/) with Workers, the cache rule must match the properties of the URL in the `fetch()` (b) request — such as headers, hostname, or URL path — not the original visitor URL/host (a). Otherwise, the rule will not be applied.
 
 Here are a few examples of how Workers can be used to customize cache behavior:
 
 - **Modify Response**: Adjust or enhance content after it is retrieved from the cache, ensuring that responses are up-to-date or tailored to specific needs.
 
-- **Signed URLs**: Generate URLs that are valid for a specific duration (for example, minutes, hours, days) to control access and enhance security.
+- **Signed URLs**: Generate time-limited signed URLs to control access and enhance security.
 
-- **Personalized Response**: Deliver personalized content based on user data while leveraging cached resources to reduce the load on the origin.
+- **Personalized Response**: Deliver personalized content based on user data while using cached resources to reduce the load on the origin server.
 
-- **Reduce Latency**: Serve content from a location close to the user, decreasing load times and improving the user experience.
+- **Reduce Latency**: Serve content from a data center close to the visitor, decreasing load times and improving the user experience.
 
-You can also use [Snippets](/rules/snippets/) as a free alternative for simple modifications and logic, bypassing the need for full Worker scripts. These lightweight scripts enable quick adjustments and optimizations, offering an efficient way to enhance your Cloudflare setup without the complexity and overhead of more extensive code deployments.
+You can also use [Snippets](/rules/snippets/) for lightweight modifications like header changes, redirects, and JWT validation without deploying a full Worker script. Snippets are included at no additional cost on all paid plans but have stricter resource limits (5 ms execution time, 32 KB package size).
 
 :::note
-When using Workers and [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/), some caveats and limitations may apply.
+When using Workers and [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) (a traffic routing configuration where requests pass through two Cloudflare zones), some caveats and limitations may apply.
 :::
 
 ## Cache features in Workers
 
-- **fetch()**: Allows interaction with Cloudflare's Cache and Tiered Cache, providing control over how requests are handled. To optimize caching behavior, you can set TTLs, define custom cache keys, and configure cache headers directly within a fetch request. For more details on these configurations, refer to [Cache using fetch](/workers/examples/cache-using-fetch/).
+Workers offer two ways to interact with the cache. Use `fetch()` when your Worker makes subrequests to an origin. Use the Cache API when your Worker generates responses without a backend origin.
 
-- **Cache API**: Enables storing and retrieving responses from Cloudflare's cache, limited to the cache in the local data center and excluding content stored in the Tiered Cache. To use the Cache API to store responses in Cloudflare's cache, refer to [Using the Cache API](/workers/examples/cache-api/).
+- **fetch()**: When a Worker calls `fetch()`, the request passes through Cloudflare's cache and [Tiered Cache](/cache/how-to/tiered-cache/) (if enabled). You can control caching behavior by setting properties on the request's [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) — including time-to-live (TTL) values, custom cache keys, and cache headers. For more details, refer to [Cache using fetch](/workers/examples/cache-using-fetch/).
 
-To understand more about how Cache and Workers interact refer to [Cache in Workers](/workers/reference/how-the-cache-works/).
+- **Cache API**: Allows you to programmatically store, retrieve, and delete responses in Cloudflare's cache using `caches.default` or `caches.open()`. Unlike `fetch()`, the Cache API only operates on the cache in the data center handling the current request — it does not interact with Tiered Cache. Use the Cache API when you need to cache responses that did not come from an origin. For more details, refer to [Using the Cache API](/workers/examples/cache-api/).
+
+To understand more about how Cache and Workers interact, refer to [Cache in Workers](/workers/reference/how-the-cache-works/).

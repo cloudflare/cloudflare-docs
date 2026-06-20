@@ -17,7 +17,7 @@ Pricing is dependent on which features you use. The table below shows which metr
 | Use case                                              | Metrics                         | Availability        |
 | ----------------------------------------------------- | ------------------------------- | ------------------- |
 | Optimize images stored outside of Images              | Images Transformed              | Free and Paid plans |
-| Optimized images that are stored in Cloudflare Images | Images Stored, Images Delivered | Only Paid plans     |
+| Optimize images that are stored in Cloudflare Images | Images Stored, Images Delivered | Only Paid plans     |
 
 ## Images Free
 
@@ -43,14 +43,14 @@ When you purchase an Images Paid plan, you can choose your own storage or add st
 
 If you optimize an image stored outside of Images, then you will be billed only for Images Transformed.
 
-Alternatively, Images Stored and Images Delivered apply only to images that are stored in your Images bucket. When you optimize an image that is stored in Images, then this counts toward Images Delivered — not Images Transformed.
+Images Stored and Images Delivered apply only to images that are stored in your Images bucket. When you optimize a hosted image through the image delivery URL, then this counts toward Images Delivered — not Images Transformed. However, if you optimize a hosted image through the Images binding, then this counts toward Images Transformed.
 
 ## Metrics
 
 ### Images Transformed
 
-A unique transformation is a request to transform an original image based on a set of [supported parameters](/images/optimization/features/). This metric is used only when optimizing images that are stored outside of Images.
-When using the [Images binding](/images/optimization/transformations/bindings/) in Workers, every call to the binding counts as a transformation, regardless of whether the image or parameters are unique.
+A unique transformation is a request to transform an original image based on a set of [supported parameters](/images/optimization/features/). This metric is used when using the Images binding or optimizing images that are stored outside of Images.
+When using the [Images binding](/images/optimization/binding/) in Workers, every call to the binding counts as a transformation, regardless of whether the image or parameters are unique.
 
 For example, if you transform `thumbnail.jpg` as 100x100, then this counts as one unique transformation. If you transform the same `thumbnail.jpg` as 200x200, then this counts as a separate unique transformation.
 
