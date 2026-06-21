@@ -116,7 +116,6 @@ sequenceDiagram
     participant Platform
     participant User
     participant Cloudflare API
-    participant Workers API
     participant Dashboard
     Platform->>User: Show Cloudflare Terms of Service and Privacy Policy
     User-->>Platform: Accept terms
@@ -125,20 +124,10 @@ sequenceDiagram
     Platform->>Platform: Solve SHA-256 checkpoint challenge
     Platform->>Cloudflare API: POST /client/v4/provisioning/previews
     Cloudflare API-->>Platform: account.id, account.apiToken, claim.url
-    Platform->>Workers API: Deploy with Authorization: Bearer account.apiToken
+    Platform->>Cloudflare API: Deploy with Authorization: Bearer account.apiToken
     Platform-->>User: Show deployment URL and claim.url
     User->>Dashboard: Open claim.url and claim account
 ```
-
-The flow uses these API calls:
-
-| Call | Endpoint                                          | Authorization               | Purpose                                 |
-| ---- | ------------------------------------------------- | --------------------------- | --------------------------------------- |
-| 1    | `POST /client/v4/provisioning/previews/challenge` | None                        | Request a proof-of-work challenge.      |
-| 2    | `POST /client/v4/provisioning/previews`           | None                        | Create the temporary preview account.   |
-| 3    | Workers API endpoints                             | `Bearer {account.apiToken}` | Deploy Workers and supported resources. |
-
-Temporary preview accounts are available only through the public Cloudflare API region.
 
 ### Step 1: Request a challenge
 
@@ -283,7 +272,7 @@ The response includes the temporary account credentials and claim URL:
 
 Request a new challenge and account if either `account.expiresAt` or `claim.expiresAt` expires.
 
-Use `account.id` as the account identifier and `account.apiToken` as a Bearer token for supported Workers API calls. For example, you can upload and immediately deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
+Use `account.id` as the account identifier and `account.apiToken` as a Bearer token for supported Workers endpoints in the Cloudflare API. For example, you can upload and immediately deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME" \
