@@ -160,16 +160,6 @@ The response includes the challenge token, seed, and difficulty parameters:
 
 Solve the challenge by computing a sequential SHA-256 checkpoint chain.
 
-```mermaid
-flowchart LR
-    Seed[seed] --> H0[SHA-256 seed]
-    H0 --> S1[g SHA-256 hashes]
-    S1 --> C1[checkpoint 1]
-    C1 --> S2[g SHA-256 hashes]
-    S2 --> C2[checkpoint 2]
-    C2 --> More[repeat until k checkpoints]
-```
-
 Use this algorithm:
 
 1. Decode `seed` as Base64URL. It must decode to 32 bytes.
