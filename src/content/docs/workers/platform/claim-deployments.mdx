@@ -83,6 +83,27 @@ Use the following flow to let an AI agent discover and use temporary deploys. Th
 
 </Steps>
 
+## Claim the deployment
+
+To keep the deployment, open the claim URL within 60 minutes. Sign in to Cloudflare or create an account, then follow the dashboard prompts to claim the temporary preview account.
+
+After you claim the temporary preview account, the Worker and Cloudflare resources created in that account remain available to you. To continue using the [Wrangler CLI](/workers/wrangler/) with the claimed account, run [`wrangler login`](/workers/wrangler/commands/general/#login), then deploy without `--temporary`.
+
+## Supported products and limits
+
+Temporary preview accounts currently support the following Cloudflare products and limits only. Cloudflare will add support for more products over time.
+
+| Supported product or resource                    | Temporary preview account limit                               |
+| ------------------------------------------------ | ------------------------------------------------------------- |
+| [Workers](/workers/)                             | Deployments on `workers.dev`                                  |
+| [Workers Static Assets](/workers/static-assets/) | Up to 1,000 files, with each asset up to 5 MiB                |
+| [Workers KV](/kv/)                               | Commands that use temporary credentials                       |
+| [D1](/d1/)                                       | One database, with up to 100 MB per database and 100 MB total |
+| [Durable Objects](/durable-objects/)             | Commands that use temporary credentials                       |
+| [Hyperdrive](/hyperdrive/)                       | Up to two database configurations and 10 connections          |
+| [Queues](/queues/)                               | Up to 10 queues                                               |
+| [SSL/TLS certificates](/ssl/)                    | Commands that use temporary credentials                       |
+
 ## Use the REST API directly
 
 Use the REST API flow when your platform controls the deployment experience and needs to provision a temporary preview account before the user authenticates with Cloudflare.
@@ -111,7 +132,7 @@ sequenceDiagram
 
 The flow uses these API calls:
 
-| Step | Endpoint                                          | Authorization               | Purpose                                 |
+| Call | Endpoint                                          | Authorization               | Purpose                                 |
 | ---- | ------------------------------------------------- | --------------------------- | --------------------------------------- |
 | 1    | `POST /client/v4/provisioning/previews/challenge` | None                        | Request a proof-of-work challenge.      |
 | 2    | `POST /client/v4/provisioning/previews`           | None                        | Create the temporary preview account.   |
@@ -119,7 +140,7 @@ The flow uses these API calls:
 
 Temporary preview accounts are available only through the public Cloudflare API region.
 
-### Request a challenge
+### Step 1: Request a challenge
 
 Request a proof-of-work challenge before you create the temporary preview account:
 
@@ -146,7 +167,7 @@ The response includes the challenge token, seed, and difficulty parameters:
 }
 ```
 
-### Solve the proof of work
+### Step 2: Solve the proof of work
 
 Solve the challenge by computing a sequential SHA-256 checkpoint chain.
 
@@ -202,7 +223,7 @@ export function solvePreviewChallenge({ challengeToken, seed, k, g }) {
 }
 ```
 
-### Create a temporary preview account
+### Step 3: Create a temporary preview account, deploy, and show the claim URL
 
 Before you create the account, require the user to accept Cloudflare's [Terms of Service](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/). Then send the proof-of-work solution with the required terms fields:
 
@@ -246,9 +267,7 @@ The response includes the temporary account credentials and claim URL:
 }
 ```
 
-Persist the response server-side only while both `account.expiresAt` and `claim.expiresAt` are in the future. Request a new challenge and account if either timestamp expires.
-
-### Deploy and show the claim URL
+Request a new challenge and account if either `account.expiresAt` or `claim.expiresAt` expires.
 
 Use `account.id` as the account identifier and `account.apiToken` as a Bearer token for supported Workers API calls. For example, you can upload and immediately deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
 
@@ -279,27 +298,6 @@ Use these API references for common temporary account deployments:
 Show `claim.url` to the user with the deployment URL. The claim URL lets the user sign in to Cloudflare or create an account, then claim the temporary preview account and its resources.
 
 After the user claims the account, continue future deployments through your normal authenticated Cloudflare account flow. Do not rely on the temporary account API token after it expires.
-
-## Claim the deployment
-
-To keep the deployment, open the claim URL within 60 minutes. Sign in to Cloudflare or create an account, then follow the dashboard prompts to claim the temporary preview account.
-
-After you claim the temporary preview account, the Worker and Cloudflare resources created in that account remain available to you. To continue using the [Wrangler CLI](/workers/wrangler/) with the claimed account, run [`wrangler login`](/workers/wrangler/commands/general/#login), then deploy without `--temporary`.
-
-## Supported products and limits
-
-Temporary preview accounts currently support the following Cloudflare products and limits only. Cloudflare will add support for more products over time.
-
-| Supported product or resource                    | Temporary preview account limit                               |
-| ------------------------------------------------ | ------------------------------------------------------------- |
-| [Workers](/workers/)                             | Deployments on `workers.dev`                                  |
-| [Workers Static Assets](/workers/static-assets/) | Up to 1,000 files, with each asset up to 5 MiB                |
-| [Workers KV](/kv/)                               | Commands that use temporary credentials                       |
-| [D1](/d1/)                                       | One database, with up to 100 MB per database and 100 MB total |
-| [Durable Objects](/durable-objects/)             | Commands that use temporary credentials                       |
-| [Hyperdrive](/hyperdrive/)                       | Up to two database configurations and 10 connections          |
-| [Queues](/queues/)                               | Up to 10 queues                                               |
-| [SSL/TLS certificates](/ssl/)                    | Commands that use temporary credentials                       |
 
 ## Limits
 
