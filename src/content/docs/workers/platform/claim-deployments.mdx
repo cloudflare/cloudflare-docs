@@ -262,10 +262,24 @@ The response includes the temporary account credentials and claim URL:
 
 Request a new challenge and account if either `account.expiresAt` or `claim.expiresAt` expires.
 
-Use `account.id` as the account identifier and `account.apiToken` as a Bearer token for supported Workers endpoints in the Cloudflare API. For example, you can upload and immediately deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
+#### Deploy with Wrangler
+
+If your platform runs Wrangler for the user, pass the temporary account credentials to the Wrangler process. Set `CLOUDFLARE_ACCOUNT_ID` to `account.id` and `CLOUDFLARE_API_TOKEN` to `account.apiToken`:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME" \
+CLOUDFLARE_ACCOUNT_ID="<TEMPORARY_ACCOUNT_ID>" \
+CLOUDFLARE_API_TOKEN="<TEMPORARY_ACCOUNT_API_TOKEN>" \
+npx wrangler deploy
+```
+
+Use the same environment variables for other supported Wrangler commands that create or deploy resources in the temporary account. Keep the temporary token in the execution environment, and do not write it to browser responses, client-side logs, or analytics.
+
+#### Deploy with the Cloudflare API
+
+You can also call supported Workers endpoints in the Cloudflare API directly. For example, you can upload and immediately deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$SCRIPT_NAME" \
   -X PUT \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -F 'metadata={"main_module":"worker.mjs","compatibility_date":"<YYYY-MM-DD>"};type=application/json' \
@@ -273,20 +287,6 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/
 ```
 
 To deploy static assets, bindings, versions, or other supported resources, use the same Cloudflare API calls that you use with a permanent account. Replace the account ID and API token with the temporary values returned by the provisioning response.
-
-Use these API references for common temporary account deployments:
-
-| Resource              | API reference                                                                                                                                                                                                                           |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Workers scripts       | [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)                                                                                                                                                |
-| Workers versions      | [Workers Versions API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/)                                                                                                                               |
-| Workers deployments   | [Workers Deployments API](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/)                                                                                                                         |
-| Bindings              | [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/) and [Workers Versions API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/)                                  |
-| Workers Static Assets | [Create Assets Upload Session](/api/resources/workers/subresources/scripts/subresources/assets/subresources/upload/methods/create/) and [Upload Assets](/api/resources/workers/subresources/assets/subresources/upload/methods/create/) |
-| Workers KV            | [Workers KV API](/api/resources/kv/)                                                                                                                                                                                                    |
-| D1                    | [D1 API](/api/resources/d1/subresources/database/methods/create/)                                                                                                                                                                       |
-| Hyperdrive            | [Hyperdrive API](/api/resources/hyperdrive/subresources/configs/methods/list/)                                                                                                                                                          |
-| Queues                | [Queues API](/api/resources/queues/methods/create/)                                                                                                                                                                                     |
 
 Show `claim.url` to the user with the deployment URL. The claim URL lets the user sign in to Cloudflare or create an account, then claim the temporary preview account and its resources.
 
