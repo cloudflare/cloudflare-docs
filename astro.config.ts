@@ -252,7 +252,14 @@ export default defineConfig({
 			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
-		skills(),
+		skills({
+			mcp: {
+				prefix: "/.well-known/mcp/skills",
+				resourceBase: "skill://",
+				directoryManifest: true,
+				archives: true,
+			},
+		}),
 	],
 	vite: {
 		resolve: {

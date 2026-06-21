@@ -83,7 +83,7 @@
 		"astro-breadcrumbs": "3.4.0",
 		"astro-expressive-code": "0.43.1",
 		"astro-icon": "1.1.5",
-		"astro-skills": "0.1.0",
+		"astro-skills": "github:irvinebroque/astro-skills#codex/sep-2640-mcp-skills",
 		"cidr-tools": "12.0.3",
 		"codeowners-utils": "1.0.2",
 		"date-fns": "4.4.0",

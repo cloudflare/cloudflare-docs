@@ -144,8 +144,8 @@ importers:
         specifier: 1.1.5
         version: 1.1.5
       astro-skills:
-        specifier: 0.1.0
-        version: 0.1.0(astro@6.4.7(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0)(tsx@4.22.4)(yaml@2.9.0))(typescript@5.9.3)
+        specifier: github:irvinebroque/astro-skills#codex/sep-2640-mcp-skills
+        version: https://codeload.github.com/irvinebroque/astro-skills/tar.gz/04e47a6d9eed19f2243bf0f857ebdacd98e6de6d(astro@6.4.7(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0)(tsx@4.22.4)(yaml@2.9.0))(typescript@5.9.3)
       cidr-tools:
         specifier: 12.0.3
         version: 12.0.3
@@ -2805,8 +2805,9 @@ packages:
   astro-icon@1.1.5:
     resolution: {integrity: sha512-CJYS5nWOw9jz4RpGWmzNQY7D0y2ZZacH7atL2K9DeJXJVaz7/5WrxeyIxO8KASk1jCM96Q4LjRx/F3R+InjJrw==}
 
-  astro-skills@0.1.0:
-    resolution: {integrity: sha512-Xa+sltSMMZEoJB4L3kn8fqRbQMogApQOIMq+P9Fi2lX/CTvComvplFgm/O+zPbIpdrCz3KGs9bdiZkHfzxApqQ==}
+  astro-skills@https://codeload.github.com/irvinebroque/astro-skills/tar.gz/04e47a6d9eed19f2243bf0f857ebdacd98e6de6d:
+    resolution: {gitHosted: true, integrity: sha512-ZToEc2KlJTi5SnN4bKZhg9M5KqPOGkNTuP8F0M70jXjn5egu5vW2CIKq2pC6FQlurF2qC1fUJtPUhnXg90sbtg==, tarball: https://codeload.github.com/irvinebroque/astro-skills/tar.gz/04e47a6d9eed19f2243bf0f857ebdacd98e6de6d}
+    version: 0.1.0
     peerDependencies:
       astro: '*'
       typescript: ^5.9.3
@@ -9069,7 +9070,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  astro-skills@0.1.0(astro@6.4.7(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0)(tsx@4.22.4)(yaml@2.9.0))(typescript@5.9.3):
+  astro-skills@https://codeload.github.com/irvinebroque/astro-skills/tar.gz/04e47a6d9eed19f2243bf0f857ebdacd98e6de6d(astro@6.4.7(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0)(tsx@4.22.4)(yaml@2.9.0))(typescript@5.9.3):
     dependencies:
       astro: 6.4.7(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0)(tsx@4.22.4)(yaml@2.9.0)
       gray-matter: 4.0.3

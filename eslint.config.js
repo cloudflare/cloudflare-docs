@@ -34,6 +34,7 @@ export default [
 			".flue/.wrangler/",
 			"dist/",
 			".github/",
+			"skills/",
 		],
 	},
 	{

@@ -18,6 +18,8 @@ These MCP servers allow your MCP client to read configurations from your account
 
 The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product — through just two tools: `search()` and `execute()`.
 
+For most Cloudflare automation and account-management tasks, use the Cloudflare API MCP server. It can reach the full Cloudflare API from one connection, so you usually do not need to configure product-specific MCP servers.
+
 It uses [Code Mode](/agents/model-context-protocol/protocol/codemode/), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) sandbox.
 
 This approach uses approximately 1,000 tokens regardless of how many API endpoints exist. An equivalent MCP server that exposed every endpoint as a native tool would consume over 1 million tokens — more than the entire context window of most foundation models.
@@ -86,7 +88,11 @@ Clone the [cloudflare/skills](https://github.com/cloudflare/skills) repository a
 
 ## Product-specific MCP servers
 
-In addition to the Cloudflare API MCP server, Cloudflare provides product-specific MCP servers for targeted use cases:
+Cloudflare also provides product-specific MCP servers for targeted use cases:
+
+:::note[Use the Cloudflare API MCP server by default]
+For most use cases, connect to the [Cloudflare API MCP server](#cloudflare-api-mcp-server). Use the product-specific MCP servers below only when you need a specialized workflow, non-API data source, or server-specific behavior.
+:::
 
 | Server Name                                                                                                             | Description                                                                                     | Server URL                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
