@@ -6,9 +6,26 @@ products:
 date: 2026-06-22
 ---
 
-Platforms can now create temporary preview accounts directly through the Cloudflare REST API. This lets AI agents and other deployment platforms create a live Worker before the user signs in to Cloudflare, then return a claim URL so the user can keep the deployment.
+Platforms can now create temporary preview accounts directly through the Cloudflare REST API. This lets your platform deploy a live Worker before the user signs in to Cloudflare, then return a claim URL so they can keep the deployment.
 
-This expands the temporary account flow beyond `wrangler deploy --temporary`. Instead of invoking Wrangler, your backend can request a proof-of-work challenge, create a temporary preview account, deploy with the returned account ID and API token, and show the claim URL to the user.
+This is useful for platforms that create Workers on behalf of users, including:
+
+- AI app builders
+- Cloud development environments
+- Code sandboxes
+- Template marketplaces
+- Internal developer portals
+- Tutorial environments
+
+Your platform can keep users in your onboarding flow, deploy their generated Worker to a temporary account, and hand off ownership only when the user is ready to claim it.
+
+This expands the temporary account flow beyond `wrangler deploy --temporary`. Instead of invoking Wrangler, your backend can integrate with the REST API directly:
+
+1. Show Cloudflare's Terms of Service and Privacy Policy in your product.
+2. Request and solve a proof-of-work challenge.
+3. Create a temporary preview account.
+4. Deploy with the returned temporary account ID and API token.
+5. Show the deployed Worker URL and claim URL to the user.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/provisioning/previews/challenge" \
@@ -30,6 +47,6 @@ curl "https://api.cloudflare.com/client/v4/provisioning/previews" \
   }'
 ```
 
-The API response includes `account.id`, `account.apiToken`, and `claim.url`. Use the temporary account ID and API token with supported Workers API endpoints, then show the claim URL to the user. Claim URLs must be opened within 60 minutes.
+The API response includes `account.id`, `account.apiToken`, and `claim.url`. Keep `account.apiToken` on your server, use it with supported Workers API endpoints, and show only the deployed Worker URL and claim URL to the user. Claim URLs must be opened within 60 minutes.
 
 For the full API flow, proof-of-work requirements, supported products, and limits, refer to [Claim deployments (temporary accounts)](/workers/platform/claim-deployments/#use-the-rest-api-directly). For the original Wrangler announcement, refer to [Temporary accounts for AI agent deployments](/changelog/post/2026-06-19-temporary-accounts-for-agents/).
