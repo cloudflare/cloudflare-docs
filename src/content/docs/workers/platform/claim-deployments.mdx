@@ -201,8 +201,22 @@ function sha256(value) {
 }
 
 export function solvePreviewChallenge({ challengeToken, seed, k, g }) {
+	const seedBytes = Buffer.from(seed, "base64url");
+	if (seedBytes.length !== 32) {
+		throw new Error("seed must decode to 32 bytes");
+	}
+	if (!Number.isInteger(k) || k <= 0) {
+		throw new Error("k must be a positive integer");
+	}
+	if (!Number.isInteger(g) || g <= 0) {
+		throw new Error("g must be a positive integer");
+	}
+	if (k * g > 64_000_000) {
+		throw new Error("k * g must not exceed 64,000,000");
+	}
+
 	const checkpoints = [];
-	let hash = sha256(Buffer.from(seed, "base64url"));
+	let hash = sha256(seedBytes);
 
 	checkpoints.push(hash);
 
@@ -272,9 +286,9 @@ Request a new challenge and account if either `account.expiresAt` or `claim.expi
 Use `account.id` as the account identifier and `account.apiToken` as a Bearer token for supported Workers API calls. For example, you can upload and immediately deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME" \
   -X PUT \
-  -H "Authorization: Bearer {api_token}" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -F 'metadata={"main_module":"worker.mjs","compatibility_date":"<YYYY-MM-DD>"};type=application/json' \
   -F 'worker.mjs=@worker.mjs;type=application/javascript+module'
 ```
