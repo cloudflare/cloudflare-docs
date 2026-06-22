@@ -1,0 +1,156 @@
+---
+pcx_content_type: concept
+title: Version URLs
+description: Test a specific Worker version uploaded with wrangler versions upload.
+products:
+  - workers
+---
+
+import { DashButton, WranglerConfig } from "~/components";
+
+Version URLs let you open a specific Worker version before that version is deployed to production traffic.
+
+Use Version URLs when you are working with [Workers Versions and Deployments](/workers/configuration/versions-and-deployments/) and want to test one uploaded version. Use [Worker Previews](/workers/previews/) when you want a branch or pull request to get its own URL, settings, and deployments.
+
+:::caution[Version URLs use production resources]
+
+A Version URL runs a version of your production Worker. It uses the bindings, environment variables, secrets, routes, and resources configured for that Worker version. It does not create isolated branch resources.
+
+If you need a branch to use test KV namespaces, D1 databases, R2 buckets, or Preview-specific secrets, use [Worker Previews](/workers/previews/) instead.
+
+:::
+
+## Action guide
+
+| Desired action | Use this |
+| --- | --- |
+| Test one uploaded Worker version before deploying it | Version URL. |
+| Share a stable link for a branch or pull request | [Worker Preview URL](/workers/previews/). |
+| Test with separate Preview variables, secrets, and bindings | [Worker Previews](/workers/previews/configuration/). |
+| Run a persistent staging Worker | [Wrangler environment](/workers/wrangler/environments/). |
+
+## URL format
+
+Version URLs use this format:
+
+```txt
+<version-prefix>-<worker-name>.<subdomain>.workers.dev
+```
+
+Aliased Version URLs use this format:
+
+```txt
+<alias>-<worker-name>.<subdomain>.workers.dev
+```
+
+## Version URLs
+
+Every time you create a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker, Cloudflare can generate a unique Version URL for that version.
+
+New versions are created when you run:
+
+- [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy)
+- [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions-upload)
+- Dashboard code edits that save a new version
+
+If Version URLs are enabled, the URL is public and available after version creation.
+
+### View Version URLs with Wrangler
+
+The [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions-upload) command uploads a new version of your Worker and returns a Version URL for that version.
+
+```sh
+npx wrangler versions upload
+```
+
+### View Version URLs in the dashboard
+
+1. In the Cloudflare dashboard, go to **Workers & Pages**.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker.
+3. Go to **Deployments**.
+4. Find the version you want to test.
+
+## Aliased Version URLs
+
+Aliased Version URLs let you assign a readable alias to a specific Worker version. This can be useful when you want a stable URL for a manually uploaded version.
+
+Create an alias during version upload with `--preview-alias`:
+
+```sh
+npx wrangler versions upload --preview-alias staging
+```
+
+The alias points at the version uploaded by that command:
+
+```txt
+staging-<worker-name>.<subdomain>.workers.dev
+```
+
+Aliases may only be created during version upload.
+
+## Enable or disable Version URLs
+
+Version URLs follow the same default as your `workers.dev` route:
+
+- If `workers_dev` is enabled, Version URLs are enabled by default.
+- If `workers_dev` is disabled, Version URLs are disabled by default.
+- Disabling Version URLs disables routing to Version URLs and aliased Version URLs.
+
+### From the dashboard
+
+1. In the Cloudflare dashboard, go to **Workers & Pages**.
+2. Select your Worker.
+3. Go to **Settings** > **Domains & Routes**.
+4. Find **Version URLs**.
+5. Select **Enable** or **Disable**.
+
+### From Wrangler config
+
+To enable Version URLs, add `preview_urls` to your Wrangler config:
+
+:::note
+
+The Wrangler configuration field is still named `preview_urls`.
+
+:::
+
+<WranglerConfig>
+
+```jsonc
+{
+  "preview_urls": true
+}
+```
+
+</WranglerConfig>
+
+To disable Version URLs:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "preview_urls": false
+}
+```
+
+</WranglerConfig>
+
+If `preview_urls` is not specified, it defaults to the value of `workers_dev`.
+
+## Limits
+
+- Aliases may only be created during version upload.
+- Aliases must use only lowercase letters, numbers, and dashes.
+- Aliases must begin with a lowercase letter.
+- The alias and Worker name combined with a dash must not exceed 63 characters due to DNS label limits.
+- Only the 1000 most recently deployed aliases are retained. When a new alias is created beyond this limit, the least recently deployed alias is deleted.
+
+## Use Worker Previews for branch testing
+
+Version URLs are tied to Worker versions. They are not branch environments, and they do not isolate resources from production.
+
+For pull request review, branch-specific settings, custom domain Previews, or test resources, use [Worker Previews](/workers/previews/).

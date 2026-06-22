@@ -1,0 +1,56 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+description: Common Worker Previews configuration and routing questions.
+sidebar:
+  order: 6
+products:
+  - workers
+---
+
+## A setting did not show up in my Preview
+
+Check which object you changed:
+
+- Shared preview settings affect new Previews.
+- This Preview's settings affect one existing Preview.
+
+If you changed shared preview settings after the Preview already existed, the existing Preview keeps its own settings unless you apply the change to existing Previews.
+
+## My Preview is using production data
+
+Account-level resources are shared unless you configure Preview-specific resources. Check bindings for KV, D1, R2, Queues, Vectorize, Hyperdrive, and service bindings.
+
+For safer testing, point Preview bindings at staging or test resources.
+
+## My service binding calls production
+
+This is expected unless you configured the Preview differently. A service binding calls the Worker named in the binding. A Preview does not automatically find another Worker's matching branch Preview.
+
+For example, if `frontend` has a service binding to `api`, then a Preview of `frontend` calls the production `api` Worker by default. If you want it to call a test version of `api`, configure the Preview binding to point at that test Worker.
+
+If the service binding points back to another entrypoint in the same Worker, use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead. `ctx.exports` keeps the call inside the same Preview.
+
+## My Preview URL changed
+
+The Preview URL should stay stable for the Preview name. Deployment URLs change for every deployment.
+
+Use the Preview URL for pull request comments and team review. Use a Deployment URL when you need an exact deployment.
+
+## My route, cron trigger, or queue consumer does not hit my Preview
+
+Routes, cron triggers, and queue consumers target production Workers. They do not target Previews.
+
+Send HTTP traffic to the Preview URL or a custom domain Preview URL.
+
+## My old Preview or deployment disappeared
+
+Each Worker can have up to 100 active Previews, and each Preview can have up to 100 deployments.
+
+When a Worker reaches the Preview limit, Cloudflare deletes the least recently deployed Preview. When a Preview reaches the deployment limit, Cloudflare deletes the oldest deployments first.
+
+## Wrangler and Dashboard disagree
+
+If both surfaces changed the same setting, review the warning or diff before applying the change.
+
+To reduce conflicts, choose where each category of settings lives. For example, keep non-secret Preview bindings in Wrangler config and manage Preview secrets through the dashboard or Wrangler secret commands.

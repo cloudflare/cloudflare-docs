@@ -1,0 +1,68 @@
+---
+pcx_content_type: how-to
+title: Custom domains
+description: Serve Worker Previews from custom domains instead of workers.dev URLs.
+sidebar:
+  order: 4
+products:
+  - workers
+---
+
+By default, Previews are served from your `workers.dev` subdomain. You can also serve Previews from your own custom domain.
+
+Custom domains help when your application depends on domain-specific cookies, authentication, CORS behavior, or branch-based hostnames.
+
+## URL format
+
+| Host type | Preview URL | Deployment URL |
+| --- | --- | --- |
+| `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
+| Custom domain | `<preview-name>.app.example.com` | `<deployment-id>-<preview-name>.app.example.com` |
+
+On `workers.dev`, the Preview name and Worker name share one DNS label. On custom domains, the Preview name is its own subdomain.
+
+## Enable custom domain Previews
+
+When you enable Previews on a custom domain, Cloudflare provisions:
+
+- A wildcard DNS record such as `*.app.example.com`.
+- A wildcard SSL certificate for Preview subdomains.
+
+SSL certificates for Preview custom domains can take time to issue after the first Preview is created.
+
+### Dashboard
+
+To enable Previews on a custom domain:
+
+1. In the Cloudflare dashboard, go to **Workers & Pages**.
+2. Select your Worker.
+3. Go to **Settings** > **Domains & Routes**.
+4. Select the custom domain.
+5. Enable **Previews**.
+
+### API
+
+To enable Previews on a custom domain through the API, attach a domain with `previews_enabled` set to `true`.
+
+```bash
+curl --request PUT \
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains" \
+  --header "Authorization: Bearer {api_token}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "zone_id": "{zone_id}",
+    "hostname": "app.example.com",
+    "service": "my-worker",
+    "previews_enabled": true
+  }'
+```
+
+## Access control
+
+Preview custom domain URLs are public by default. Use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require authentication.
+
+Production and Preview URLs can be protected independently.
+
+## Limitations
+
+Custom domains control how users reach Preview URLs. They do not make routes, cron triggers, queue consumers, or other user-managed triggers target Previews.

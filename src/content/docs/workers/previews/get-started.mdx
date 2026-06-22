@@ -1,0 +1,109 @@
+---
+pcx_content_type: get-started
+title: Get started
+description: Create Worker Previews with Workers Builds, Wrangler, external CI, or the API.
+sidebar:
+  order: 1
+products:
+  - workers
+---
+
+Start with the workflow that matches how you already ship code. If your Worker is connected to Git, Workers Builds can create Previews automatically. If you are testing locally or using your own CI, run `wrangler preview`.
+
+## Pick a workflow
+
+| Desired action | Do this |
+| --- | --- |
+| Get a URL automatically when I open or update a pull request | Use [Workers Builds](#workers-builds). |
+| Create a Preview manually from my machine | Use [Wrangler](#wrangler). |
+| Create Previews from GitHub Actions or another CI system | Use [External CI](#external-ci). |
+| Create Previews from custom automation | Use the [API](#api). |
+
+## Before you create a Preview
+
+Decide what your branch needs at runtime.
+
+| Desired action | Use this |
+| --- | --- |
+| Give every future Preview the same setting | [Shared preview settings](/workers/previews/configuration/#shared-preview-settings). |
+| Change one branch only | [This Preview's settings](/workers/previews/configuration/#this-previews-settings). |
+| Keep settings in Git | A `previews` block in your Wrangler config. |
+| Add a secret to one branch | `wrangler preview secret put --name <preview-name>`. |
+
+## Workers Builds
+
+Use Workers Builds when you want Cloudflare to create or update a Preview every time someone pushes to a branch that is not your production branch.
+
+1. Connect your Worker to a GitHub or GitLab repository.
+2. Enable [preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds).
+3. Set the Preview command to run `wrangler preview`.
+4. Push a branch or open a pull request.
+
+Workers Builds creates or updates the Preview for that branch. The pull request comment includes the stable Preview URL and the Deployment URL for the latest deployment.
+
+On later pushes to the same branch, the Preview URL stays the same and serves the newest deployment. Each deployment also gets its own immutable Deployment URL.
+
+## Wrangler
+
+Use Wrangler when you want to create a Preview from your local machine.
+
+```sh
+npx wrangler preview --name feature-branch
+```
+
+The `--name` value identifies the branch Preview. Use a branch-like name so the Preview URL is easy to recognize.
+
+If the Preview does not exist yet, Wrangler creates it from shared preview settings and then deploys your code. If it already exists, Wrangler creates a new deployment for that Preview.
+
+## External CI
+
+You can create Previews from CI providers outside Workers Builds by running Wrangler in your workflow.
+
+```yaml
+name: Preview
+
+on:
+  pull_request:
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Normalize Preview name
+        run: |
+          PREVIEW_NAME="$(printf '%s' "${{ github.head_ref }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-' | tr -cd 'a-z0-9-')"
+          echo "PREVIEW_NAME=${PREVIEW_NAME}" >> "$GITHUB_ENV"
+      - run: npx wrangler preview --name "$PREVIEW_NAME"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+```
+
+Use a CI-safe Preview name. Branch names may contain characters that cannot be used in a Preview URL, so normalize them before passing them to `wrangler preview`.
+
+## API
+
+Use the API for custom automation, bots, or dashboards that need to create Previews directly.
+
+Wrangler and the Cloudflare dashboard use the same underlying API. If you need behavior that is not covered by a first-party surface, build against the API directly.
+
+At a high level, API-based workflows usually:
+
+1. Create or find the Preview for a branch.
+2. Configure that Preview's settings when needed.
+3. Create a deployment for the Preview.
+4. Share the Preview URL or Deployment URL with reviewers.
+
+For API details, refer to the [Cloudflare API documentation](/api/).
+
+## Next steps
+
+- Configure [Preview settings](/workers/previews/configuration/).
+- Review [resource isolation](/workers/previews/resources/).
+- Enable [custom domain Previews](/workers/previews/custom-domains/).
+- Learn the [Wrangler commands](/workers/previews/commands/).
