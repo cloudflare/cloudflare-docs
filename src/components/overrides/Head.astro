@@ -11,7 +11,6 @@ import type { CollectionEntry } from "astro:content";
 
 const DEFAULT_TITLE_DELIMITER = "|";
 const NOINDEX_PRODUCTS = ["email-security"];
-const CHATBOT_DEPRIORITIZE_PRODUCTS = ["firewall", "style-guide"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 
@@ -24,12 +23,6 @@ const shouldNoIndex =
 	NOINDEX_PRODUCTS.includes(currentSection) ||
 	frontmatter.noindex ||
 	frontmatter.external_link;
-
-const shouldChatbotDeprioritize =
-	CHATBOT_DEPRIORITIZE_PRODUCTS.includes(currentSection) ||
-	frontmatter.sidebar.group?.hideIndex ||
-	frontmatter.sidebar.hidden ||
-	frontmatter.chatbot_deprioritize;
 
 // URL path prefixes that are not backed by a `directory` collection entry.
 // For these sections, skip the `getEntry("directory", ...)` lookup to avoid
@@ -114,16 +107,6 @@ if (shouldNoIndex) {
 	metaTags.push({
 		name: "robots",
 		content: "noindex",
-	});
-}
-
-if (shouldChatbotDeprioritize) {
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_chatbot_deprioritize",
-			content: true,
-		},
 	});
 }
 
