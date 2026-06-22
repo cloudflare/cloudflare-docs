@@ -1,7 +1,6 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
-import { CLOUDFLARE_API_OAUTH_SCOPES } from "./oauth-scopes";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -17,7 +16,6 @@ const OAUTH_PROTECTED_RESOURCE = JSON.stringify({
 	resource: "https://developers.cloudflare.com",
 	authorization_servers: [CLOUDFLARE_OAUTH_ISSUER],
 	bearer_methods_supported: ["header"],
-	scopes_supported: CLOUDFLARE_API_OAUTH_SCOPES,
 	resource_name: "Cloudflare API documentation",
 	resource_documentation: "https://developers.cloudflare.com/api/",
 });

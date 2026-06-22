@@ -53,14 +53,7 @@ describe("Cloudflare Docs", () => {
 				"https://dash.cloudflare.com",
 			]);
 			expect(json.bearer_methods_supported).toContain("header");
-			expect(json.scopes_supported.length).toBeGreaterThan(400);
-			expect(json.scopes_supported).toContain("dns.read");
-			expect(json.scopes_supported).toContain("workers:write");
-			expect(json.scopes_supported).toContain("flagship:write");
-			expect(json.scopes_supported).toContain("account:read");
-			expect(json.scopes_supported).not.toContain("iot.read");
-			expect(json.scopes_supported).not.toContain("tenant:read");
-			expect(json.scopes_supported).not.toContain("web3-hostnames.read");
+			expect(json.scopes_supported).toBeUndefined();
 			expect(json.resource_documentation).toBe(
 				"https://developers.cloudflare.com/api/",
 			);
