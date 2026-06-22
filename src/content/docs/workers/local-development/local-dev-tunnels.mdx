@@ -87,7 +87,7 @@ export default defineConfig({
 Anyone with the tunnel URL can reach your dev server, so review what your app exposes before enabling a tunnel.
 
 - Pay special attention to ungated preview or admin endpoints.
-- Review any [remote bindings](/workers/development-testing/#remote-bindings) connected to real resources.
+- Review any [remote bindings](/workers/local-development/#remote-bindings) connected to real resources.
 - Review any code that proxies requests to private or internal services.
 - If you are using the Cloudflare Vite plugin with `vite dev`, HMR and module serving may expose source files, file paths, or project structure over the tunnel. If you only need to share a built preview, prefer `vite preview` for public sharing.
 - Local dev-related routes, such as `/cdn-cgi/*`, remain restricted and are not exposed over the tunnel.

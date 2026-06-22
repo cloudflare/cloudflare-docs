@@ -321,7 +321,7 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 
 ### Routes with `wrangler dev --remote` {/* routes-remote-dev */}
 
-When you run a [remote development](/workers/development-testing/#remote-bindings) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
+When you run a [remote development](/workers/local-development/#remote-bindings) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
 
 If your zone has more than 50 routes, you cannot run a remote session until you remove routes to get under the limit.
 

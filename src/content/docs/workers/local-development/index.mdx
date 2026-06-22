@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Development & testing
+title: Local development
 sidebar:
   order: 6
 head: []
@@ -25,7 +25,7 @@ import {
 
 You can build, run, and test your Worker code on your own local machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code using the same runtime used in production, [`workerd`](https://github.com/cloudflare/workerd).
 
-[By default](/workers/development-testing/#defaults), your Worker's bindings [connect to locally simulated resources](/workers/development-testing/#bindings-during-local-development), but can be configured to interact with the real, production resource with [remote bindings](/workers/development-testing/#remote-bindings).
+[By default](/workers/local-development/#defaults), your Worker's bindings [connect to locally simulated resources](/workers/local-development/#bindings-during-local-development), but can be configured to interact with the real, production resource with [remote bindings](/workers/local-development/#remote-bindings).
 
 ## Core concepts
 
@@ -37,9 +37,9 @@ When developing Workers, it's important to understand two distinct concepts:
 
 - [**Bindings**](/workers/runtime-apis/bindings/): How your Worker interacts with Cloudflare resources (like [KV namespaces](/kv), [R2 buckets](/r2), [D1 databases](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), etc). In your Worker code, these are accessed via the `env` object (such as `env.MY_KV`).
 
-## Local development
+## Start a local development server
 
-**You can start a local development server using:**
+You can start a local development server using:
 
 1. The Cloudflare Workers CLI [**Wrangler**](/workers/wrangler/), using the built-in [`wrangler dev`](/workers/wrangler/commands/general/#dev) command.
 
@@ -49,7 +49,7 @@ When developing Workers, it's important to understand two distinct concepts:
 
 <PackageManagers type="exec" pkg="vite" args="dev" />
 
-Both Wrangler and the Cloudflare Vite plugin use [Miniflare](/workers/testing/miniflare/) under the hood, and are developed and maintained by the Cloudflare team. For guidance on choosing when to use Wrangler versus Vite, see our guide [Choosing between Wrangler & Vite](/workers/development-testing/wrangler-vs-vite/).
+Both Wrangler and the Cloudflare Vite plugin use [Miniflare](/workers/testing/miniflare/) under the hood, and are developed and maintained by the Cloudflare team. For guidance on choosing when to use Wrangler versus Vite, see our guide [Choosing between Wrangler & Vite](/workers/local-development/wrangler-vs-vite/).
 
 - [Get started with Wrangler](/workers/wrangler/install-and-update/)
 - [Get started with the Cloudflare Vite plugin](/workers/vite-plugin/get-started/)
@@ -66,11 +66,11 @@ By default, running `wrangler dev` / `vite dev` (when using the [Vite plugin](/w
 
 [Bindings](/workers/runtime-apis/bindings/) are interfaces that allow your Worker to interact with various Cloudflare resources (like [KV namespaces](/kv), [R2 buckets](/r2), [D1 databases](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), etc). In your Worker code, these are accessed via the `env` object (such as `env.MY_KV`).
 
-During local development, your Worker code interacts with these bindings using the exact same API calls (such as `env.MY_KV.put()`) as it would in a deployed environment. These local resources are initially empty, but you can populate them with data, as documented in [Adding local data](/workers/development-testing/local-data/).
+During local development, your Worker code interacts with these bindings using the exact same API calls (such as `env.MY_KV.put()`) as it would in a deployed environment. These local resources are initially empty, but you can populate them with data, as documented in [Adding local data](/workers/local-development/local-data/).
 
 - By default, bindings connect to **local resource simulations** (except for [AI bindings](/workers-ai/configuration/bindings/), as AI models always run remotely).
-- You can override this default behavior and **connect to the remote resource** on a per-binding basis with [remote bindings](/workers/development-testing/#remote-bindings). This lets you connect to real, production resources while still running your Worker code locally.
-- When using `wrangler dev`, you can temporarily disable all [remote bindings](/workers/development-testing/#remote-bindings) (and connect only to local resources) by providing the `--local` flag (i.e. `wrangler dev --local`)
+- You can override this default behavior and **connect to the remote resource** on a per-binding basis with [remote bindings](/workers/local-development/#remote-bindings). This lets you connect to real, production resources while still running your Worker code locally.
+- When using `wrangler dev`, you can temporarily disable all [remote bindings](/workers/local-development/#remote-bindings) (and connect only to local resources) by providing the `--local` flag (i.e. `wrangler dev --local`)
 
 ## Remote bindings
 
@@ -260,7 +260,7 @@ This allows you to run your [dynamic dispatch Worker](/cloudflare-for-platforms/
 
 Certain bindings are not supported for remote connections (i.e. with `remote: true`) during local development. These will always use local simulations or local values.
 
-If `remote: true` is specified in Wrangler configuration for any of the following unsupported binding types, Cloudflare **will issue an error**. See [all supported and unsupported bindings for remote bindings](/workers/development-testing/bindings-per-env/).
+If `remote: true` is specified in Wrangler configuration for any of the following unsupported binding types, Cloudflare **will issue an error**. See [all supported and unsupported bindings for remote bindings](/workers/local-development/bindings-per-env/).
 
 - [**Durable Objects**](/workers/wrangler/configuration/#durable-objects): Enabling remote connections for Durable Objects may be supported in the future, but currently will always run locally. However, using Durable Objects in combination with remote bindings is possible. Refer to [Using remote resources with Durable Objects and Workflows](#using-remote-resources-with-durable-objects-and-workflows) below.
 
@@ -460,7 +460,7 @@ async function startOrUpdateDevSession() {
 
 ## `wrangler dev --remote` (Legacy)
 
-Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/general/#dev). Remote development is [**not** supported in the Vite plugin](/workers/development-testing/wrangler-vs-vite/).
+Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/general/#dev). Remote development is [**not** supported in the Vite plugin](/workers/local-development/wrangler-vs-vite/).
 
 <PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
@@ -470,7 +470,7 @@ When using remote development, all bindings automatically connect to their remot
 
 ### When to use Remote development
 
-- For most development tasks, the most efficient and productive experience will be local development along with [remote bindings](/workers/development-testing/#remote-bindings) when needed.
+- For most development tasks, the most efficient and productive experience will be local development along with [remote bindings](/workers/local-development/#remote-bindings) when needed.
 - You may want to use `wrangler dev --remote` for testing features or behaviors that are highly specific to Cloudflare's network and cannot be adequately simulated locally or tested via remote bindings.
 
 ### Considerations

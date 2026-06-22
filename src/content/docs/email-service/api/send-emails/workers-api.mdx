@@ -79,7 +79,7 @@ interface EmailSendResult {
 ```
 
 :::note[Local development with binary attachments]
-When using `wrangler dev` without [remote bindings](/workers/development-testing/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations).
+When using `wrangler dev` without [remote bindings](/workers/local-development/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations).
 :::
 
 ### Basic usage
