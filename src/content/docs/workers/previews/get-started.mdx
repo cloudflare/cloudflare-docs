@@ -8,7 +8,11 @@ products:
   - workers
 ---
 
+import { WorkerPreviewsDiagram } from "~/components";
+
 Start with the workflow that matches how you already ship code. If your Worker is connected to Git, Workers Builds can create Previews automatically. If you are testing locally or using your own CI, run `wrangler preview`.
+
+<WorkerPreviewsDiagram variant="paths" />
 
 ## Pick a workflow
 

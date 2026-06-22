@@ -1,0 +1,530 @@
+---
+interface Props {
+	variant?: "overview" | "paths";
+}
+
+const { variant = "overview" } = Astro.props;
+
+const paths = [
+	{
+		label: "Git-connected Worker",
+		meta: "Workers Builds",
+		detail:
+			"Enable preview builds, then set the Preview command to run Wrangler.",
+		command: "npx wrangler preview",
+		href: "/workers/previews/get-started/#workers-builds",
+		cta: "Use Workers Builds",
+	},
+	{
+		label: "Local branch test",
+		meta: "Wrangler",
+		detail: "Create or update one branch Preview from your terminal.",
+		command: "npx wrangler preview --name feature-branch",
+		href: "/workers/previews/get-started/#wrangler",
+		cta: "Use Wrangler",
+	},
+	{
+		label: "External CI",
+		meta: "GitHub Actions, Buildkite, or other CI",
+		detail:
+			"Run Wrangler in your pull request workflow with a CI-safe Preview name.",
+		command: 'npx wrangler preview --name "$PREVIEW_NAME"',
+		href: "/workers/previews/get-started/#external-ci",
+		cta: "Use external CI",
+	},
+	{
+		label: "Custom automation",
+		meta: "API",
+		detail:
+			"Create Previews and deployments from bots, dashboards, or custom release tooling.",
+		command: "Create Preview -> deploy -> share URL",
+		href: "/workers/previews/get-started/#api",
+		cta: "Use the API",
+	},
+];
+---
+
+{
+	variant === "paths" ? (
+		<figure class="worker-previews-diagram worker-previews-paths">
+			<div class="diagram-shell">
+				<header class="diagram-header">
+					<p class="eyebrow">Choose your path</p>
+					<div class="diagram-title">Start from how you already ship code</div>
+					<p>
+						Worker Previews can be created by Workers Builds, Wrangler, external
+						CI, or direct API calls. Pick one path, then configure Preview
+						settings only when the branch needs runtime differences.
+					</p>
+				</header>
+
+				<div class="path-grid">
+					{paths.map((path) => (
+						<a class="path-card" href={path.href}>
+							<span class="path-meta">{path.meta}</span>
+							<strong>{path.label}</strong>
+							<span class="path-detail">{path.detail}</span>
+							<code>{path.command}</code>
+							<span class="path-cta">{path.cta}</span>
+						</a>
+					))}
+				</div>
+			</div>
+		</figure>
+	) : (
+		<figure
+			class="worker-previews-diagram worker-previews-overview"
+			aria-label="Worker Previews branch workflow and resource isolation map"
+		>
+			<div class="diagram-shell">
+				<div class="flow-map">
+					<div class="flow-row source-row">
+						<div class="flow-node source-node production-node">
+							<span>Production branch</span>
+							<strong>main</strong>
+						</div>
+						<div class="flow-node source-node preview-node">
+							<span>Feature branch or PR</span>
+							<strong>feature/login</strong>
+						</div>
+					</div>
+
+					<div class="flow-row arrow-row" aria-hidden="true">
+						<div class="flow-arrow" />
+						<div class="flow-arrow" />
+					</div>
+
+					<div class="flow-row command-row">
+						<div class="flow-node command-node production-node">
+							<span>Command</span>
+							<code>wrangler deploy</code>
+						</div>
+						<div class="flow-node command-node preview-node accent-node">
+							<span>Command</span>
+							<code>wrangler preview</code>
+						</div>
+					</div>
+
+					<div class="flow-row arrow-row" aria-hidden="true">
+						<div class="flow-arrow" />
+						<div class="flow-arrow" />
+					</div>
+
+					<div class="flow-row result-row">
+						<a
+							class="flow-node destination-node production-node"
+							href="/workers/configuration/versions-and-deployments/"
+						>
+							<span>Result</span>
+							<strong>Production deployment</strong>
+							<small>Active Worker version</small>
+						</a>
+						<a
+							class="flow-node destination-node preview-node accent-node"
+							href="/workers/previews/get-started/"
+						>
+							<span>Result</span>
+							<strong>Worker Preview</strong>
+							<small>Isolated branch copy</small>
+						</a>
+					</div>
+				</div>
+
+				<div class="info-grid">
+					<section class="info-card url-card">
+						<p class="eyebrow">URLs</p>
+						<p>
+							<strong>Preview URL:</strong> Stable branch link. Always serves
+							the latest deployment.
+						</p>
+						<p>
+							<strong>Deployment URL:</strong> Immutable link. Serves one exact
+							Preview deployment.
+						</p>
+					</section>
+
+					<section class="info-card settings-card">
+						<p class="eyebrow">Settings</p>
+						<a href="/workers/previews/configuration/#shared-preview-settings">
+							Shared preview settings seed new Previews.
+						</a>
+						<a href="/workers/previews/configuration/#this-previews-settings">
+							This Preview's settings affect one branch only.
+						</a>
+					</section>
+
+					<section class="info-card resources-card">
+						<p class="eyebrow">Resources</p>
+						<a href="/workers/previews/resources/#automatically-isolated-resources">
+							Durable Objects, Workflows, and Containers isolate automatically.
+						</a>
+						<a href="/workers/previews/resources/#shared-account-level-resources">
+							KV, D1, R2, Queues, Vectorize, Hyperdrive, and service bindings
+							need explicit Preview settings.
+						</a>
+					</section>
+				</div>
+			</div>
+		</figure>
+	)
+}
+
+<style>
+	.worker-previews-diagram {
+		--preview-bg: light-dark(#fafafa, #0f0f10);
+		--preview-card: light-dark(#ffffff, #171719);
+		--preview-muted: light-dark(#737373, #a3a3a3);
+		--preview-text: light-dark(#171717, #f5f5f5);
+		--preview-border: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--preview-soft: light-dark(#f5f5f5, #222226);
+		--preview-brand: #f6821f;
+		--preview-brand-soft: light-dark(#fff7ed, #431407);
+		margin: 1.25rem 0 1.75rem;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		letter-spacing: -0.01em;
+	}
+
+	.worker-previews-diagram a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.diagram-shell {
+		position: relative;
+		padding: 16px;
+		border: 1px solid var(--preview-border);
+		border-radius: 14px;
+		background:
+			radial-gradient(circle, var(--preview-border) 1px, transparent 1px),
+			var(--preview-bg);
+		background-size: 14px 14px;
+		overflow: hidden;
+	}
+
+	.flow-map {
+		display: grid;
+		gap: 14px;
+	}
+
+	.flow-row {
+		display: flex;
+		gap: 14px;
+		align-items: stretch;
+		margin: 0;
+		width: 100%;
+	}
+
+	.source-row > .flow-node,
+	.command-row > .flow-node,
+	.result-row > .flow-node {
+		flex: 1 1 0;
+		margin: 0;
+		min-width: 0;
+	}
+
+	.source-row,
+	.command-row {
+		height: 124px;
+	}
+
+	.result-row {
+		height: 156px;
+	}
+
+	.arrow-row {
+		height: 34px;
+	}
+
+	.flow-node,
+	.info-card,
+	.path-card {
+		position: relative;
+		box-sizing: border-box;
+		border: 1px solid var(--preview-border);
+		border-radius: 12px;
+		background: var(--preview-card);
+		box-shadow: 0 10px 28px rgb(0 0 0 / 6%);
+	}
+
+	.flow-node {
+		display: grid;
+		gap: 5px;
+		align-content: start;
+		align-self: stretch;
+		flex: 1 1 0;
+		min-width: 0;
+		min-height: 0;
+		width: 100%;
+		height: 100%;
+		padding: 16px 18px;
+	}
+
+	.source-row > .flow-node,
+	.command-row > .flow-node {
+		height: 124px;
+	}
+
+	.result-row > .flow-node {
+		height: 156px;
+	}
+
+	.source-node {
+		padding-top: 22px;
+	}
+
+	.command-node {
+		padding-top: 24px;
+	}
+
+	.destination-node {
+		padding-top: 24px;
+	}
+
+	.flow-arrow {
+		position: relative;
+		flex: 0 0 2px;
+		width: 2px;
+		height: 100%;
+		margin: 0 auto;
+		border-radius: 999px;
+		background: var(--preview-border);
+	}
+
+	.flow-arrow::after {
+		content: "";
+		position: absolute;
+		bottom: -1px;
+		left: -3px;
+		display: block;
+		width: 8px;
+		height: 8px;
+		border-right: 2px solid var(--preview-border);
+		border-bottom: 2px solid var(--preview-border);
+		transform: rotate(45deg);
+	}
+
+	.accent-node {
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 45%,
+			var(--preview-border)
+		);
+		background: linear-gradient(
+			135deg,
+			var(--preview-brand-soft),
+			var(--preview-card) 72%
+		);
+	}
+
+	.flow-node span,
+	.flow-node small,
+	.path-meta,
+	.path-detail,
+	.info-card p,
+	.diagram-header p {
+		color: var(--preview-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	.flow-node strong,
+	.path-card strong,
+	.diagram-title {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.flow-node code,
+	.path-card code {
+		display: inline-flex;
+		width: fit-content;
+		max-width: 100%;
+		padding: 3px 7px;
+		border-radius: 7px;
+		background: var(--preview-soft);
+		color: var(--preview-text);
+		font-size: 0.75rem;
+		white-space: normal;
+	}
+
+	.info-grid {
+		display: flex;
+		gap: 12px;
+		align-items: stretch;
+		height: 260px;
+		width: 100%;
+		margin-top: 14px;
+	}
+
+	.info-grid > * {
+		flex: 1 1 0;
+		margin: 0;
+		min-width: 0;
+	}
+
+	.info-card {
+		display: grid;
+		grid-template-rows: auto 1fr 1fr;
+		gap: 10px;
+		align-content: start;
+		align-self: stretch;
+		min-width: 0;
+		min-height: 0;
+		width: 100%;
+		height: 100%;
+		padding: 12px;
+	}
+
+	.info-grid > .info-card {
+		height: 100%;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: var(--preview-brand);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.info-card p {
+		margin: 0;
+	}
+
+	.info-card p strong {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.info-card a,
+	.path-cta {
+		color: var(--preview-text);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	.info-card a:hover,
+	.path-card:hover .path-cta,
+	.flow-node[href]:hover strong {
+		color: var(--preview-brand);
+	}
+
+	.diagram-header {
+		max-width: 720px;
+		margin-bottom: 14px;
+	}
+
+	.diagram-title {
+		margin: 0.15rem 0 0.35rem;
+		font-size: clamp(1.125rem, 2vw, 1.45rem);
+	}
+
+	.diagram-header p:last-child {
+		margin: 0;
+	}
+
+	.path-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.path-card {
+		display: flex;
+		flex-direction: column;
+		gap: 9px;
+		min-width: 0;
+		padding: 13px;
+	}
+
+	.path-card:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 42%,
+			var(--preview-border)
+		);
+		transform: translateY(-1px);
+		transition:
+			border-color 150ms ease,
+			transform 150ms ease;
+	}
+
+	.path-meta {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.7rem;
+	}
+
+	.path-detail {
+		flex: 1;
+	}
+
+	.path-cta {
+		font-weight: 650;
+	}
+
+	@media (max-width: 900px) {
+		.info-grid,
+		.path-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.diagram-shell {
+			padding: 12px;
+		}
+
+		.flow-map {
+			gap: 12px;
+		}
+
+		.flow-row {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
+
+		.source-row,
+		.command-row,
+		.result-row {
+			height: auto;
+		}
+
+		.source-row > .flow-node,
+		.command-row > .flow-node,
+		.result-row > .flow-node {
+			height: auto;
+		}
+
+		.arrow-row {
+			display: none;
+		}
+
+		.info-grid,
+		.path-grid {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
+
+		.info-card {
+			height: auto;
+		}
+
+		.info-grid {
+			height: auto;
+		}
+
+		.info-grid > .info-card {
+			height: auto;
+		}
+
+		.info-grid {
+			grid-auto-rows: auto;
+		}
+	}
+</style>
