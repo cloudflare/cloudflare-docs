@@ -182,6 +182,8 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 Cache keys refer to the criteria that Cloudflare uses to determine how to store resources in our cache. Customizing the Cache Key allows you to determine how Cloudflare can reuse particular cache entries across requests or share the cache entries for more granularity for end users.
 
+There is no explicit length limit for cache keys. However, the total request size (including headers used in the cache key) must not exceed Cloudflare's [request limits](/fundamentals/reference/connection-limits/#request-limits). Including large values (such as cookies) in the cache key may increase per-request latency. The maximum number of query string parameters in a custom cache key configuration is 100.
+
 Define the request components used to define a [custom Cache Key](/cache/how-to/cache-keys/), customizing the following options:
 
 - You can switch on or off [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
