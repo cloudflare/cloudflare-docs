@@ -42,14 +42,16 @@ Search finds relevant connectors, methods, and saved snippets. Describe returns 
 
 ## Choose between Code Mode and direct tool calls
 
-Code Mode does not replace direct tool calls. Direct calls remain the simpler choice for a single, predictable operation.
+With direct tool calls, each result returns to the model before it chooses the next operation. Intermediate data consumes context, even when the model only needs a small part of it for the final answer.
 
-Use each pattern based on the work the model must perform:
+Code Mode keeps that work inside one sandbox execution. Generated code can pass results between tools, filter intermediate data, and return only the final value the model needs. This makes multi-tool tasks more efficient and easier to generalize or repeat.
 
-| Pattern           | Best suited for                                                                                   |
-| ----------------- | ------------------------------------------------------------------------------------------------- |
-| Direct tool calls | One operation, small tool sets, or simple model-directed sequences                                |
-| Code Mode         | Dependent calls, loops, filtering, branching, result shaping, or large discoverable tool catalogs |
+Use direct tool calls for a small, fixed tool set and one or two independent operations. Use Code Mode when a task needs composition, dependent calls, progressive discovery, reusable logic, or control flow:
+
+| Pattern           | Best suited for                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Direct tool calls | One or two independent operations from a small, known tool set                                                   |
+| Code Mode         | Composed or dependent calls, large tool catalogs, loops, branching, filtering, result shaping, or reusable logic |
 
 ## Choose an integration
 
