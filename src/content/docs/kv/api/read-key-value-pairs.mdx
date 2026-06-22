@@ -23,10 +23,10 @@ env.NAMESPACE.get(keys);
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
 # Read individual key
-await self.env.NAMESPACE.get(key)
+self.env.NAMESPACE.get(key)
 
 # Read multiple keys
-await self.env.NAMESPACE.get(keys)
+self.env.NAMESPACE.get(keys)
 ```
 </TabItem> </Tabs>
 
@@ -129,9 +129,9 @@ env.NAMESPACE.get(key, options?);
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-await self.env.NAMESPACE.get(key, type)
+self.env.NAMESPACE.get(key, type)
 # OR
-await self.env.NAMESPACE.get(key, options)
+self.env.NAMESPACE.get(key, options)
 ```
 </TabItem> </Tabs>
 
@@ -168,9 +168,9 @@ env.NAMESPACE.get(keys, options?);
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-await self.env.NAMESPACE.get(keys, type)
+self.env.NAMESPACE.get(keys, type)
 # OR
-await self.env.NAMESPACE.get(keys, options)
+self.env.NAMESPACE.get(keys, options)
 ```
 </TabItem> </Tabs>
 
@@ -220,9 +220,9 @@ env.NAMESPACE.getWithMetadata(key, options?);
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-await self.env.NAMESPACE.getWithMetadata(key, type)
+self.env.NAMESPACE.getWithMetadata(key, type)
 # OR
-await self.env.NAMESPACE.getWithMetadata(key, options)
+self.env.NAMESPACE.getWithMetadata(key, options)
 ```
 </TabItem> </Tabs>
 
@@ -267,9 +267,9 @@ env.NAMESPACE.getWithMetadata(keys, options?);
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-await self.env.NAMESPACE.getWithMetadata(keys, type)
+self.env.NAMESPACE.getWithMetadata(keys, type)
 # OR
-await self.env.NAMESPACE.getWithMetadata(keys, options)
+self.env.NAMESPACE.getWithMetadata(keys, options)
 ```
 </TabItem> </Tabs>
 

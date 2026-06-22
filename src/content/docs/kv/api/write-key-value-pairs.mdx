@@ -18,7 +18,7 @@ env.NAMESPACE.put(key, value);
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-await self.env.NAMESPACE.put(key, value)
+self.env.NAMESPACE.put(key, value)
 ```
 </TabItem> </Tabs>
 
@@ -73,7 +73,7 @@ env.NAMESPACE.put(key, value, options?);
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-await self.env.NAMESPACE.put(key, value, options)
+self.env.NAMESPACE.put(key, value, options)
 ```
 </TabItem> </Tabs>
 
@@ -267,6 +267,22 @@ class Default(WorkerEntrypoint):
         results = await asyncio.gather(
             *[attempt_write(i + 1) for i in range(parallel_writes_count)]
         )
+
+        # Results will look like:
+        # [
+        #     {
+        #         "attempt": 1,
+        #         "success": True
+        #     },
+        #     {
+        #         "attempt": 2,
+        #         "success": False,
+        #         "error": {
+        #             "message": "KV PUT failed: 429 Too Many Requests"
+        #         }
+        #     },
+        #     ...
+        # ]
 
         return Response.json(list(results))
 ```
