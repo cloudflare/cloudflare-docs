@@ -1,0 +1,189 @@
+{
+	"model_id": "pruna/p-video",
+	"provider_id": "pruna",
+	"name": "P-Video",
+	"description": "Pruna's P-Video is a premium video generation model supporting text-to-video, image-to-video, and audio-conditioned generation up to 1080p at 24 or 48 fps, with configurable duration up to 20 seconds.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Text-to-Video",
+		"Image-to-Video"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Neon City Drift",
+			"description": "Generate a short cinematic clip from a text prompt in draft mode for fast, low-cost previews.",
+			"input": {
+				"prompt": "A sports car drifting through a neon-lit city at night, cinematic aerial shot",
+				"duration": 5,
+				"resolution": "720p",
+				"aspect_ratio": "16:9",
+				"draft": true
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/pruna/p-video/neon-city-drift.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/pruna/p-video/neon-city-drift.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pruna/p-video',\n  {\n    prompt: 'A sports car drifting through a neon-lit city at night, cinematic aerial shot',\n    duration: 5,\n    resolution: '720p',\n    aspect_ratio: '16:9',\n    draft: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pruna/p-video\",\n  \"input\": {\n    \"prompt\": \"A sports car drifting through a neon-lit city at night, cinematic aerial shot\",\n    \"duration\": 5,\n    \"resolution\": \"720p\",\n    \"aspect_ratio\": \"16:9\",\n    \"draft\": true\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.api.pruna.ai/guides/quickstart",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Resolutions": "720p, 1080p",
+		"Frame Rates": "24, 48 fps",
+		"Max Duration": "20s"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-18 16:10:42",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"aspect_ratio": {
+					"default": "16:9",
+					"description": "Aspect ratio of the video. Ignored when an input image is provided.",
+					"enum": [
+						"16:9",
+						"9:16",
+						"4:3",
+						"3:4",
+						"3:2",
+						"2:3",
+						"1:1"
+					],
+					"type": "string"
+				},
+				"audio": {
+					"description": "Input audio to condition video generation. HTTP(S) URL or data URI. Supports flac, mp3, wav. When provided, duration is ignored.",
+					"type": "string"
+				},
+				"disable_safety_filter": {
+					"default": true,
+					"description": "Disable safety filter for prompts and input images.",
+					"type": "boolean"
+				},
+				"draft": {
+					"default": false,
+					"description": "Draft mode. Generates a lower-quality preview of the video.",
+					"type": "boolean"
+				},
+				"duration": {
+					"default": 5,
+					"description": "Duration of the video in seconds (1-20). Ignored when audio is provided.",
+					"maximum": 20,
+					"minimum": 1,
+					"type": "integer"
+				},
+				"fps": {
+					"anyOf": [
+						{
+							"const": 24,
+							"type": "number"
+						},
+						{
+							"const": 48,
+							"type": "number"
+						}
+					],
+					"default": 24,
+					"description": "Frames per second: 24 or 48."
+				},
+				"image": {
+					"description": "Input image to generate video from (image-to-video). HTTP(S) URL or data URI. Supports jpg, jpeg, png, webp. When provided, aspect_ratio is ignored.",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Reference image for the last frame of the video. HTTP(S) URL or data URI.",
+					"type": "string"
+				},
+				"prompt": {
+					"description": "Text prompt for video generation.",
+					"type": "string"
+				},
+				"prompt_upsampling": {
+					"default": true,
+					"description": "Use prompt upsampling to enhance the prompt.",
+					"type": "boolean"
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Video resolution.",
+					"enum": [
+						"720p",
+						"1080p"
+					],
+					"type": "string"
+				},
+				"save_audio": {
+					"default": true,
+					"description": "Save the video with audio.",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation.",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
+					"type": "integer"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"resolution",
+				"fps",
+				"aspect_ratio",
+				"draft",
+				"save_audio",
+				"prompt_upsampling",
+				"disable_safety_filter"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"video": {
+					"description": "Presigned URL for the generated video.",
+					"format": "uri",
+					"type": "string"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"type": "object"
+		}
+	}
+}

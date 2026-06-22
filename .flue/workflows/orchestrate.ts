@@ -19,6 +19,16 @@ import {
 	isCodeOwner,
 	verifyGitHubSignature,
 } from "../lib/github";
+import { getInternalHeaders } from "../lib/internal-auth";
+import { admitWorkflow, pollRun } from "../lib/poll-run";
+import { setReviewLimitIgnored } from "../lib/code-review-state";
+import {
+	getIssueOrPullRequestLabel,
+	getIssueOrPullRequestNumber,
+	getIssueOrPullRequestTitle,
+	getIssueOrPullRequestUrl,
+	truncateLogValue,
+} from "../lib/github-webhook";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -119,6 +129,8 @@ export async function run({ payload, env, req }: FlueContext) {
 	const isFullReviewCommand =
 		isOnPullRequest && trimmedComment === "/full-review";
 	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
+	const isIgnoreReviewLimitCommand =
+		isOnPullRequest && trimmedComment === "/ignore-review-limit";
 
 	if (
 		!req ||
@@ -126,7 +138,8 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isCodeReviewEvent &&
 			!isDependabotReviewEvent &&
 			!isFullReviewCommand &&
-			!isReviewCommand)
+			!isReviewCommand &&
+			!isIgnoreReviewLimitCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -137,29 +150,42 @@ export async function run({ payload, env, req }: FlueContext) {
 
 	// ── 3a. Handle Dependabot PR events ─────────────────────────────────────
 	if (isDependabotReviewEvent) {
-		const baseUrl = new URL(req.url);
-		const dependabotUrl = new URL(baseUrl);
-		dependabotUrl.pathname = `/workflows/dependabot-review`;
-		dependabotUrl.searchParams.set("wait", "result");
-		const dependabotResponse = await fetch(dependabotUrl, {
-			method: "POST",
-			headers: { "content-type": "application/json" },
-			body: JSON.stringify({ eventType: "pull_request", number }),
-		});
-		if (!dependabotResponse.ok) {
+		const internalHeaders = getInternalHeaders(env as Record<string, string>);
+		const baseUrl = new URL(req.url).origin;
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: `/workflows/dependabot-review`,
+				headers: internalHeaders,
+				body: { eventType: "pull_request", number },
+			});
+			console.log({
+				message: `Dependabot review admitted: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "dependabot_review_admitted",
+			});
+			return {
+				acted: true,
+				summary: `Dependabot review dispatched for PR #${number}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
 			console.log({
 				message: `Dependabot review dispatch failed: ${webhookLabel}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
+				error: errMsg,
 				action: "dependabot_review_dispatch_failed",
-				status: dependabotResponse.status,
 			});
+			return {
+				acted: false,
+				summary: `Dependabot review dispatch failed: ${errMsg}`,
+			};
 		}
-		return {
-			acted: true,
-			summary: `Dependabot review dispatched for PR #${number}.`,
-		};
 	}
 
 	// ── 3. Handle /full-review command ──────────────────────────────────────
@@ -192,51 +218,59 @@ export async function run({ payload, env, req }: FlueContext) {
 
 		// Check if the PR is from Dependabot — if so route to dependabot-review
 		const prForSlash = await getPullRequest(token, number).catch(() => null);
-		const baseUrl = new URL(req.url);
-		const reviewUrl = new URL(baseUrl);
-		if (prForSlash?.user?.login === "dependabot[bot]") {
-			reviewUrl.pathname = `/workflows/dependabot-review`;
-			reviewUrl.searchParams.set("wait", "result");
-			const _reviewResponse = await fetch(reviewUrl, {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({
-					eventType: "pull_request",
-					number,
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyesReactionId,
-				}),
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+		const isDepBot = prForSlash?.user?.login === "dependabot[bot]";
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: isDepBot
+					? `/workflows/dependabot-review`
+					: `/workflows/code-review-orchestrator`,
+				headers: internalHeaders,
+				body: isDepBot
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							forceFullReview: true,
+							bypassReviewLimit: true,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
 			});
-		} else {
-			reviewUrl.pathname = `/workflows/code-review-orchestrator`;
-			reviewUrl.searchParams.set("wait", "result");
-			const _reviewResponse = await fetch(reviewUrl, {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({
-					eventType: "pull_request",
-					number,
-					forceFullReview: true,
-					bypassReviewLimit: true,
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyesReactionId,
-				}),
+			console.log({
+				message: `Full review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "full_review_admitted",
 			});
+			return {
+				acted: true,
+				summary: `Full review triggered by @${senderLogin}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `Full review dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: "full_review_dispatch_failed",
+			});
+			return {
+				acted: false,
+				summary: `Full review dispatch failed: ${errMsg}`,
+			};
 		}
-
-		// console.log({
-		// 	message: `Full review dispatched by ${senderLogin}: PR #${number}`,
-		// 	event: "github_webhook_orchestrator",
-		// 	delivery,
-		// 	number,
-		// 	action: "full_review_dispatched",
-		// 	ok: reviewResponse.ok,
-		// });
-
-		return {
-			acted: true,
-			summary: `Full review triggered by @${senderLogin}.`,
-		};
 	}
 
 	// ── 4. Handle /review command ────────────────────────────────────────────
@@ -269,53 +303,104 @@ export async function run({ payload, env, req }: FlueContext) {
 
 		// Check if the PR is from Dependabot — if so route to dependabot-review
 		const prForReview = await getPullRequest(token, number).catch(() => null);
-		const baseUrl = new URL(req.url);
-		const reviewUrl = new URL(baseUrl);
-		if (prForReview?.user?.login === "dependabot[bot]") {
-			reviewUrl.pathname = `/workflows/dependabot-review`;
-			reviewUrl.searchParams.set("wait", "result");
-			const _reviewResponse = await fetch(reviewUrl, {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({
-					eventType: "pull_request",
-					number,
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyesReactionId,
-				}),
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+		const isDepBot = prForReview?.user?.login === "dependabot[bot]";
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: isDepBot
+					? `/workflows/dependabot-review`
+					: `/workflows/code-review-orchestrator`,
+				headers: internalHeaders,
+				body: isDepBot
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							bypassReviewLimit: true,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
 			});
-		} else {
-			reviewUrl.pathname = `/workflows/code-review-orchestrator`;
-			reviewUrl.searchParams.set("wait", "result");
-			const _reviewResponse = await fetch(reviewUrl, {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({
-					eventType: "pull_request",
-					number,
-					bypassReviewLimit: true,
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyesReactionId,
-				}),
+			console.log({
+				message: `Review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "review_admitted",
 			});
+			return { acted: true, summary: `Review triggered by @${senderLogin}.` };
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `Review dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: "review_dispatch_failed",
+			});
+			return { acted: false, summary: `Review dispatch failed: ${errMsg}` };
 		}
-
-		// console.log({
-		// 	message: `Review dispatched by ${senderLogin}: PR #${number}`,
-		// 	event: "github_webhook_orchestrator",
-		// 	delivery,
-		// 	number,
-		// 	action: "review_dispatched",
-		// 	ok: reviewResponse.ok,
-		// });
-
-		return { acted: true, summary: `Review triggered by @${senderLogin}.` };
 	}
 
-	const baseUrl = new URL(req.url);
+	// ── 5. Handle /ignore-review-limit command ──────────────────────────────
+	if (isIgnoreReviewLimitCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `Ignore review limit command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "ignore_review_limit_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
+		await setReviewLimitIgnored(bucket, number, senderLogin as string);
+
+		// Acknowledge with 👍
+		await addReactionToComment(token, commentId, "+1");
+
+		console.log({
+			message: `Review limit permanently ignored by ${senderLogin}: PR #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			number,
+			action: "ignore_review_limit_set",
+		});
+
+		return {
+			acted: true,
+			summary: `Review limit permanently ignored by @${senderLogin}.`,
+		};
+	}
+
+	const baseUrl = new URL(req.url).origin;
+	const internalHeaders = getInternalHeaders(env as Record<string, string>);
 	const results: Record<string, unknown> = {};
 
-	// ── 5. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
+	// ── 6. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
 	if (isSpamFilterEvent) {
 		// Skip spam filter for codeowners — their issues and PRs are never spam.
 		let skipSpamFilter = false;
@@ -331,25 +416,19 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 
 		if (skipSpamFilter) {
-			// console.log({
-			// 	message: `Spam filter skipped — ${senderLogin} is a codeowner: ${itemLabel}`,
-			// 	event: "github_webhook_orchestrator",
-			// 	delivery,
-			// 	number,
-			// 	action: "spam_filter_skipped_codeowner",
-			// });
 			results.spamFilter = { result: { closed: false }, skipped: true };
 		} else {
-			const filterUrl = new URL(baseUrl);
-			filterUrl.pathname = `/workflows/spam-and-off-topic-filter`;
-			filterUrl.searchParams.set("wait", "result");
-			const filterResponse = await fetch(filterUrl, {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({ eventType, number }),
-			});
-
-			if (!filterResponse.ok) {
+			// Admit the spam filter workflow and poll for its result, since we need
+			// the `closed` boolean before deciding whether to run code review.
+			let runId: string;
+			try {
+				runId = await admitWorkflow({
+					baseUrl,
+					pathname: `/workflows/spam-and-off-topic-filter`,
+					headers: internalHeaders,
+					body: { eventType, number },
+				});
+			} catch (err) {
 				console.log({
 					message: `Spam filter dispatch failed: ${webhookLabel}`,
 					event: "github_webhook_orchestrator",
@@ -357,64 +436,124 @@ export async function run({ payload, env, req }: FlueContext) {
 					eventType,
 					webhookAction,
 					number,
+					error: err instanceof Error ? err.message : String(err),
 					action: "spam_filter_dispatch_failed",
-					status: filterResponse.status,
 				});
 				throw new Error(
-					`Spam and off-topic filter failed: ${filterResponse.status} ${await filterResponse.text()}`,
+					`Spam and off-topic filter failed: ${err instanceof Error ? err.message : String(err)}`,
 				);
 			}
 
-			const filterResult = (await filterResponse.json()) as {
-				result?: {
-					closed?: boolean;
-					is_spam?: boolean;
-					confidence?: string;
-					reason?: string;
-				};
-				_meta?: { runId?: string };
-			};
-			const closed = filterResult.result?.closed ?? false;
-			// console.log({
-			// 	message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
-			// 	event: "github_webhook_orchestrator",
-			// 	delivery,
-			// 	eventType,
-			// 	webhookAction,
-			// 	number,
-			// 	action: "spam_filter_dispatched",
-			// 	filterRunId: filterResult._meta?.runId,
-			// 	closed,
-			// 	is_spam: filterResult.result?.is_spam,
-			// 	confidence: filterResult.result?.confidence,
-			// 	reason: filterResult.result?.reason,
-			// });
-			results.spamFilter = filterResult;
+			console.log({
+				message: `Spam filter admitted: ${webhookLabel} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				eventType,
+				webhookAction,
+				number,
+				runId,
+				action: "spam_filter_admitted",
+			});
 
-			// If spam filter closed the item, skip code review
-			if (closed) {
-				return results;
+			// Spam filter is fast (< 30s usually); 3 minute timeout is generous.
+			const pollResult = await pollRun<{
+				closed?: boolean;
+				is_spam?: boolean;
+				confidence?: string;
+				reason?: string;
+			}>({
+				runId,
+				baseUrl,
+				headers: internalHeaders,
+				timeoutMs: 3 * 60 * 1000,
+				label: `spam-filter PR #${number}`,
+			});
+
+			if (pollResult.timedOut) {
+				console.log({
+					message: `Spam filter timed out: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					action: "spam_filter_timeout",
+				});
+				// Treat timeout as "not spam" — do not block code review
+				results.spamFilter = { result: { closed: false }, timedOut: true };
+			} else if (pollResult.isError) {
+				console.log({
+					message: `Spam filter run failed: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					error: pollResult.error?.message,
+					action: "spam_filter_run_failed",
+				});
+				// Treat error as "not spam" — do not block code review
+				results.spamFilter = {
+					result: { closed: false },
+					error: pollResult.error,
+				};
+			} else {
+				const filterResult = pollResult.result;
+				const closed = filterResult?.closed ?? false;
+				console.log({
+					message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					closed,
+					is_spam: filterResult?.is_spam,
+					confidence: filterResult?.confidence,
+					reason: filterResult?.reason,
+					action: "spam_filter_complete",
+				});
+				results.spamFilter = { result: filterResult };
+
+				// If spam filter closed the item, skip code review
+				if (closed) {
+					return results;
+				}
 			}
 		} // end else (not skipSpamFilter)
 	}
 
-	// ── 6. Dispatch code-review-orchestrator (PRs only) ─────────────────────
+	// ── 7. Dispatch code-review-orchestrator (PRs only) ─────────────────────
+	// The code review orchestrator posts its own GitHub comment when done, so
+	// we don't need to wait for the result here — fire-and-forget.
 	if (isCodeReviewEvent) {
 		// Suppress code review on draft PRs unless the action is ready_for_review
 		const isDraft =
 			(body.pull_request as Record<string, unknown> | undefined)?.draft ===
 			true;
 		if (!isDraft || webhookAction === "ready_for_review") {
-			const reviewUrl = new URL(baseUrl);
-			reviewUrl.pathname = `/workflows/code-review-orchestrator`;
-			reviewUrl.searchParams.set("wait", "result");
-			const reviewResponse = await fetch(reviewUrl, {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({ eventType: "pull_request", number }),
-			});
-
-			if (!reviewResponse.ok) {
+			try {
+				const runId = await admitWorkflow({
+					baseUrl,
+					pathname: `/workflows/code-review-orchestrator`,
+					headers: internalHeaders,
+					body: { eventType: "pull_request", number },
+				});
+				console.log({
+					message: `Code review admitted: ${webhookLabel} — runId: ${runId}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					action: "code_review_admitted",
+				});
+				results.codeReview = { runId };
+			} catch (err) {
 				// Code review failure is non-fatal — log and continue
 				console.log({
 					message: `Code review dispatch failed: ${webhookLabel}`,
@@ -423,97 +562,12 @@ export async function run({ payload, env, req }: FlueContext) {
 					eventType,
 					webhookAction,
 					number,
+					error: err instanceof Error ? err.message : String(err),
 					action: "code_review_dispatch_failed",
-					status: reviewResponse.status,
 				});
-			} else {
-				const reviewResult = (await reviewResponse.json()) as {
-					result?: unknown;
-					_meta?: { runId?: string };
-				};
-				// console.log({
-				// 	message: `Code review dispatched: ${itemLabel}`,
-				// 	event: "github_webhook_orchestrator",
-				// 	delivery,
-				// 	eventType,
-				// 	webhookAction,
-				// 	number,
-				// 	action: "code_review_dispatched",
-				// 	reviewRunId: reviewResult._meta?.runId,
-				// });
-				results.codeReview = reviewResult;
 			}
 		}
 	}
 
 	return results;
-}
-
-function getIssueOrPullRequestNumber(
-	eventType: string,
-	body: Record<string, unknown>,
-) {
-	if (eventType === "issues" || eventType === "issue_comment") {
-		return (body.issue as Record<string, unknown> | undefined)?.number as
-			| number
-			| undefined;
-	}
-	if (eventType === "pull_request") {
-		return (body.pull_request as Record<string, unknown> | undefined)
-			?.number as number | undefined;
-	}
-}
-
-function getIssueOrPullRequestUrl(
-	eventType: string,
-	body: Record<string, unknown>,
-	number: number | undefined,
-) {
-	if (eventType === "issues") {
-		return (
-			((body.issue as Record<string, unknown> | undefined)?.html_url as
-				| string
-				| undefined) ??
-			(number
-				? `https://github.com/cloudflare/cloudflare-docs/issues/${number}`
-				: undefined)
-		);
-	}
-	if (eventType === "pull_request") {
-		return (
-			((body.pull_request as Record<string, unknown> | undefined)?.html_url as
-				| string
-				| undefined) ??
-			(number
-				? `https://github.com/cloudflare/cloudflare-docs/pull/${number}`
-				: undefined)
-		);
-	}
-}
-
-function getIssueOrPullRequestLabel(eventType: string) {
-	if (eventType === "pull_request") return "PR";
-	if (eventType === "issues") return "Issue";
-	if (eventType === "issue_comment") return "PR";
-	return "GitHub webhook";
-}
-
-function getIssueOrPullRequestTitle(
-	eventType: string,
-	body: Record<string, unknown>,
-) {
-	if (eventType === "issues" || eventType === "issue_comment") {
-		return (body.issue as Record<string, unknown> | undefined)?.title as
-			| string
-			| undefined;
-	}
-	if (eventType === "pull_request") {
-		return (body.pull_request as Record<string, unknown> | undefined)?.title as
-			| string
-			| undefined;
-	}
-}
-
-function truncateLogValue(value: string) {
-	return value.length > 100 ? `${value.slice(0, 97)}...` : value;
 }

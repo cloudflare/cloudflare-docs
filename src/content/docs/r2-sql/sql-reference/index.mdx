@@ -79,7 +79,7 @@ DESCRIBE namespace_name.table_name;
 ### Syntax
 
 ```sql
-SELECT column_specification [, column_specification, ...]
+SELECT [DISTINCT] column_specification [, column_specification, ...]
 ```
 
 ### Column specification
@@ -111,6 +111,8 @@ SELECT DISTINCT ON (region) region, customer_id, total_amount
 FROM my_namespace.sales_data
 ORDER BY region, total_amount DESC
 ```
+
+For counting unique values on large datasets, `approx_distinct()` is a faster alternative.
 
 ---
 
@@ -681,28 +683,59 @@ QUALIFY ROW_NUMBER() OVER (PARTITION BY region ORDER BY total_amount DESC) <= 3
 
 ## Set operations
 
-Set operations combine the results of two or more `SELECT` queries. Each query must return the same number of columns with compatible types.
+Set operations combine the results of two or more `SELECT` statements.
 
-| Operator    | Description                                            |
-| :---------- | :----------------------------------------------------- |
-| `UNION`     | Combines rows from both queries and removes duplicates |
-| `UNION ALL` | Combines rows from both queries and keeps duplicates   |
-| `INTERSECT` | Returns rows present in both queries                   |
-| `EXCEPT`    | Returns rows in the first query but not the second     |
+### Syntax
+
+```sql
+SELECT ... FROM table1
+UNION | UNION ALL | INTERSECT | EXCEPT
+SELECT ... FROM table2
+```
+
+### Supported operations
+
+| Operation   | Description                                                        |
+| :---------- | :----------------------------------------------------------------- |
+| `UNION`     | Returns all rows from both queries, removing duplicates            |
+| `UNION ALL` | Returns all rows from both queries, including duplicates           |
+| `INTERSECT` | Returns only rows that appear in both query results                |
+| `EXCEPT`    | Returns rows from the first query that do not appear in the second |
 
 ### Examples
 
-```sql
--- Distinct regions across two tables
-SELECT region FROM my_namespace.sales_data
-UNION
-SELECT region FROM my_namespace.archived_sales
+#### Union
 
--- Customers with current orders but no archived orders
-SELECT customer_id FROM my_namespace.sales_data
-EXCEPT
-SELECT customer_id FROM my_namespace.archived_sales
+```sql
+-- Find zones that had either firewall blocks OR high-risk requests
+SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+UNION
+SELECT zone_id FROM my_namespace.http_requests WHERE risk_score > 0.8
 ```
+
+#### Intersect
+
+```sql
+-- Find zones with both firewall blocks AND entries in the zones table
+SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+INTERSECT
+SELECT zone_id FROM my_namespace.zones WHERE plan = 'enterprise'
+```
+
+#### Except
+
+```sql
+-- Find enterprise zones that have no firewall events
+SELECT zone_id FROM my_namespace.zones WHERE plan = 'enterprise'
+EXCEPT
+SELECT zone_id FROM my_namespace.firewall_events
+```
+
+### Requirements
+
+- All queries in a set operation must return the same number of columns.
+- Corresponding columns must have compatible data types.
+- Column names in the result are taken from the first query.
 
 :::note
 A `LIMIT` placed directly before a set operator is not valid. Wrap each query in a subquery if you need to limit its rows, or apply a single `LIMIT` to the combined result.

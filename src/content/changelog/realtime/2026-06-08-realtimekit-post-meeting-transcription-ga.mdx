@@ -1,0 +1,77 @@
+---
+title: Post-meeting transcriptions are now Generally Available in RealtimeKit
+description: RealtimeKit post-meeting transcription is now Generally Available for generating transcript files and AI summaries after meetings end.
+products:
+  - realtime
+date: 2026-06-08
+---
+
+[RealtimeKit](/realtime/realtimekit/) lets you build products where people meet over live audio and video — such as HealthTech, EdTech, proctoring, and other real-time platforms — on Cloudflare's [global WebRTC infrastructure](/realtime/sfu/calls-vs-sfus/).
+
+[Post-meeting transcription](/realtime/realtimekit/ai/transcription/#post-meeting-transcription) is now Generally Available, so completed RealtimeKit meetings can automatically produce full transcript files after they end. Those transcripts can also power [AI-generated summaries](/realtime/realtimekit/ai/summary/) for meeting notes, review workflows, and follow-up tasks after the transcript is available.
+
+Post-meeting transcription is a managed service powered by [Workers AI](/workers-ai/) using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). RealtimeKit handles transcription processing and can return transcript and summary files through [webhooks](/realtime/realtimekit/webhooks/) or the REST API, so you do not need to run your own transcription infrastructure.
+
+## Generate transcripts and summaries
+
+To generate a transcript after a meeting ends, set `transcribe_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/). To also generate an AI summary automatically after the transcript is available, set `summarize_on_end: true`:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Weekly product review",
+    "transcribe_on_end": true,
+    "summarize_on_end": true,
+    "ai_config": {
+      "transcription": {
+        "language": "en"
+      },
+      "summarization": {
+        "word_limit": 500,
+        "text_format": "markdown",
+        "summary_type": "team_meeting"
+      }
+    }
+  }'
+```
+
+## Consume results
+
+When RealtimeKit finishes processing a meeting, it creates download URLs for the transcript and, if `summarize_on_end` is set, the summary. You can receive those URLs automatically with [webhooks](/realtime/realtimekit/webhooks/), or fetch them later for a specific session with the [REST API](/realtime/realtimekit/ai/summary/#rest-api).
+
+To receive results as soon as they are ready, configure the `meeting.transcript` and `meeting.summary` webhook events:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/webhooks" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "AI results webhook",
+    "url": "https://example.com/webhook",
+    "events": ["meeting.transcript", "meeting.summary"],
+    "enabled": true
+  }'
+```
+
+To fetch results later, call the [transcript](/api/resources/realtime_kit/subresources/sessions/methods/get_session_transcripts/) or [summary](/api/resources/realtime_kit/subresources/sessions/methods/get_session_summary/) endpoint for the session:
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/transcript" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/summary" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Use the [Generate summary of transcripts for the session](/api/resources/realtime_kit/subresources/sessions/methods/generate_summary_of_transcripts/) API only if `summarize_on_end` was not set and you want to generate a summary manually after the transcript is available:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/sessions/$SESSION_ID/summary" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Post-meeting transcription supports [CSV, JSON, SRT, and VTT transcript outputs](/realtime/realtimekit/ai/transcription/#output-formats), [automatic language detection and Whisper language codes](/realtime/realtimekit/ai/transcription/#post-meeting-supported-languages). RealtimeKit also supports [real-time transcription](/realtime/realtimekit/ai/transcription/#real-time-transcription) with [Deepgram Nova-3](/workers-ai/models/nova-3/) for live captions, in-meeting accessibility, and real-time note-taking.
+
+Learn more in the [RealtimeKit transcription docs](/realtime/realtimekit/ai/transcription/) and [summary docs](/realtime/realtimekit/ai/summary/).

@@ -20,13 +20,11 @@ import {
 
 ## Description
 
-When using a [Container-enabled Durable Object](/containers), you can access the Durable Object's associated container via
-the `container` object which is on the `ctx` property. This allows you to start, stop, and interact with the container.
+Each [container](/containers/) is managed by a Durable Object. The [`Container` class](/containers/container-class/) from `@cloudflare/containers` extends `DurableObject` and handles lifecycle management, port readiness, and sleep timeouts for you. The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM.
 
-:::note
-It is likely preferable to use the official `Container` class, which provides helper methods and
-a more idiomatic API for working with containers on top of Durable Objects.
-:::
+The low-level API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it when you need direct control over the container process or cannot use the `Container` class.
+
+Because the `Container` class extends `DurableObject`, you also have access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) via `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -259,5 +257,8 @@ this.ctx.container.interceptOutboundHttps("*", worker);
 
 ## Related resources
 
-- [Containers](/containers)
-- [Get Started With Containers](/containers/get-started)
+- [Container class reference](/containers/container-class/) — the recommended high-level API built on top of this interface
+- [Containers overview](/containers/)
+- [Get started with Containers](/containers/get-started/)
+- [SQLite storage API](/durable-objects/api/sqlite-storage-api/) — persist state across container restarts
+- [Durable Objects](/durable-objects/) — the underlying platform that powers Containers

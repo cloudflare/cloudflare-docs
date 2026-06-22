@@ -74,43 +74,30 @@ For security fixes: note what the vulnerability affects and whether usage is in 
 
 ### 5. Output format
 
-Produce a Markdown block for each package. All packages must be covered.
+Return structured data matching the workflow schema. Do not write Markdown. All packages must be covered in `packageReviews`.
 
-```markdown
-## `<package-name>`: <old> → <new>
-
-**Type:** [security fix | bug fix | feature | breaking change | dependency bump]
-**Dependency type:** [direct | transitive (via <package>)]
-
-### What changed
-
-- <specific API/behavior change>
-- ...
-
-### Usage in this repo
-
-<"Not used directly — transitive only" OR specific import sites and callsites>
-
-### Impact: <None | Very Low | Low | Medium | High>
-
-<1–2 sentence explanation>
-```
-
-End with a summary table and one overall recommendation:
-
-```markdown
-## Summary
-
-| Package | Impact | Recommendation |
-| ------- | ------ | -------------- |
-| `pkg`   | Low    | ✅ Merge       |
-| `pkg`   | High   | ⚠️ Verify      |
-
-**Overall:** [✅ Merge | ✅ Merge + spot-check listed pages | ⚠️ Investigate before merging]
+```json
+{
+	"summary": "One concise paragraph summarizing the overall risk and what, if anything, should be verified.",
+	"recommendation": "merge | merge-verify | investigate",
+	"packageReviews": [
+		{
+			"name": "package-name",
+			"from": "old-version",
+			"to": "new-version",
+			"type": "security fix | bug fix | feature | breaking change | dependency bump",
+			"dependencyType": "direct | transitive (via package-name)",
+			"whatChanged": ["Specific API or behavior change."],
+			"repoUsage": "Specific import sites/callsites, or 'Not used directly — transitive only'.",
+			"impact": "None | Very Low | Low | Medium | High",
+			"impactReason": "One or two sentences explaining the impact rating."
+		}
+	]
+}
 ```
 
 Recommendation values:
 
-- **✅ Merge** — no action needed
-- **✅ Merge + spot-check** — merge, then manually verify the listed pages/areas
-- **⚠️ Investigate** — high-impact change, needs manual testing before merging
+- `merge` — no action needed
+- `merge-verify` — merge is likely safe, but manually spot-check the listed pages/areas
+- `investigate` — high-impact change, needs manual testing before merging

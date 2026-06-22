@@ -271,6 +271,57 @@ async function forkRepo(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
+### `log(opts?)`
+
+- `opts.ref` <Type text="string" /> <MetaInfo text="optional" /> — Branch, tag, or commit hash.
+- `opts.limit` <Type text="number" /> <MetaInfo text="optional" />
+- `opts.offset` <Type text="number" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsLogResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function readCommitHistory(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	const history = await repo.log({ ref: "main", limit: 10 });
+	return history;
+}
+```
+
+</TypeScriptExample>
+
+### `readCommit(hash)`
+
+- `hash` <Type text="string" /> <MetaInfo text="required" /> — Commit SHA-1 hash.
+- Returns <Type text="Promise<ArtifactsCommit>" />
+
+<TypeScriptExample>
+
+```ts
+async function readCommit(artifacts: Artifacts, hash: string) {
+	const repo = await artifacts.get("starter-repo");
+	return repo.readCommit(hash);
+}
+```
+
+</TypeScriptExample>
+
+### `readTree(hash)`
+
+- `hash` <Type text="string" /> <MetaInfo text="required" /> — Tree SHA-1 hash.
+- Returns <Type text="Promise<ArtifactsTree>" />
+
+<TypeScriptExample>
+
+```ts
+async function readTree(artifacts: Artifacts, hash: string) {
+	const repo = await artifacts.get("starter-repo");
+	return repo.readTree(hash);
+}
+```
+
+</TypeScriptExample>
+
 ## Worker example
 
 This example combines the binding methods in one Worker route.

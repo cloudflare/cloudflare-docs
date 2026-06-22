@@ -1,0 +1,41 @@
+---
+title: Manage AI Search namespaces with Wrangler CLI
+description: Use new namespace-level Wrangler commands to create, list, update, and delete AI Search namespaces from the CLI.
+products:
+  - ai-search
+date: 2026-06-10
+---
+
+[AI Search](/ai-search/) now supports namespace-level Wrangler commands, making it easier to manage [namespaces](/ai-search/concepts/namespaces/) from your terminal, scripts, and agent workflows.
+
+The following commands are available:
+
+| Command                               | Description                      |
+| ------------------------------------- | -------------------------------- |
+| `wrangler ai-search namespace list`   | List AI Search namespaces        |
+| `wrangler ai-search namespace create` | Create a new AI Search namespace |
+| `wrangler ai-search namespace get`    | Get details for a namespace      |
+| `wrangler ai-search namespace update` | Update a namespace description   |
+| `wrangler ai-search namespace delete` | Delete an AI Search namespace    |
+
+Create a namespace for a new application or tenant directly from the CLI:
+
+```sh
+wrangler ai-search namespace create docs-production --description "Production documentation search"
+```
+
+List namespaces with pagination or filter by name or description:
+
+```sh
+wrangler ai-search namespace list --search docs --page 1 --per-page 10
+```
+
+Use `--json` with `list`, `create`, `get`, and `update` to return structured output that automation and AI agents can parse directly.
+
+Instance-level commands also now support a `--namespace` flag, so you can interact with instances inside a specific namespace from the CLI:
+
+```sh
+wrangler ai-search list --namespace docs-production
+```
+
+For full usage details, refer to the [AI Search Wrangler commands documentation](/ai-search/wrangler-commands/).

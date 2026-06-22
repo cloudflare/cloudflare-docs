@@ -959,7 +959,7 @@
 		"title": "Email",
 		"email_routing": {
 			"title": "Email Routing",
-			"link": "/email-routing/",
+			"link": "/email-service/",
 			"properties": {
 				"availability": {
 					"title": "Availability",

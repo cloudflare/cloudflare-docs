@@ -156,6 +156,8 @@ Deploy your Worker to Cloudflare.
 
 When you run `wrangler deploy` in a project directory without a Wrangler configuration file, Wrangler will [automatically detect your framework](/workers/framework-guides/automatic-configuration/) and configure your project for Cloudflare Workers. This command will prompt you to confirm the detected settings before applying changes. Confirm that you would like to proceed, and your project will be configured and deployed.
 
+To deploy from an AI agent or another environment before Cloudflare authentication is available, use `wrangler deploy --temporary`. This flow requires Wrangler 4.102.0 or later. Wrangler creates or reuses a temporary preview account, deploys to that account, and prints a claim URL. For more information, refer to [Claim deployments](/workers/platform/claim-deployments/).
+
 To configure your project without deploying, use [`wrangler setup`](#setup) instead.
 
 ```txt
@@ -248,6 +250,8 @@ None of the options for this command are required. Also, many can be set in your
   - A descriptive message for this Worker version and deployment. Matches the behavior of `wrangler versions upload --message`. The message is also applied to the deployment.
 - `--yes` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip confirmation prompts and run [automatic project configuration](/workers/framework-guides/automatic-configuration/) non-interactively using detected settings. Only applicable when no Wrangler configuration file exists in your project.
+- `--temporary` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Deploy with a temporary preview account when no Cloudflare credentials are available. Requires Wrangler 4.102.0 or later. Wrangler prints a claim URL that lets you claim the deployment within 60 minutes. This is intended for AI agents and other first-time deployment flows. If Wrangler can already use OAuth, `CLOUDFLARE_API_TOKEN`, or a global API key, this flag returns an error. For more information, refer to [Claim deployments](/workers/platform/claim-deployments/).
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -327,7 +331,11 @@ npx wrangler secret list
 
 ---
 
-<WranglerCommand command="secret bulk" headingLevel={3} description="Create, update, or delete multiple secrets for a Worker in a single request, with up to 100 secrets per command." />
+<WranglerCommand
+	command="secret bulk"
+	headingLevel={3}
+	description="Create, update, or delete multiple secrets for a Worker in a single request, with up to 100 secrets per command."
+/>
 
 :::note
 Deleting secrets by setting a key to `null` requires wrangler version 4.97.0 or later and JSON format. Deletion is not supported with `.env` files.

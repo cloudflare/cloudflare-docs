@@ -1,0 +1,245 @@
+{
+	"model_id": "krea/krea-2-large",
+	"provider_id": "krea",
+	"name": "Krea 2 Large",
+	"description": "More than 2x the size of Medium, with softer post-training. Outputs are rawer, more textured, and more flexible \u2014 at its best, Large produces results Medium can't match. Strongest on photorealism, raw looks (motion blur, grain, low dynamic range), and expressive and artistic styles.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Text to Image",
+		"Photorealism",
+		"Style Transfer"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Default",
+			"description": "Official Krea 2 Large example from https://docs.krea.ai/developers/krea-2/overview.",
+			"input": {
+				"prompt": "a cinematic glass cabin beside a frozen lake at sunrise",
+				"aspect_ratio": "16:9",
+				"resolution": "1K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/krea/krea-2-large/default.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/krea/krea-2-large/default.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'krea/krea-2-large',\n  {\n    prompt: 'a cinematic glass cabin beside a frozen lake at sunrise',\n    aspect_ratio: '16:9',\n    resolution: '1K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"krea/krea-2-large\",\n  \"input\": {\n    \"prompt\": \"a cinematic glass cabin beside a frozen lake at sunrise\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"1K\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.krea.ai/api-reference/krea/krea-2-large",
+	"terms": "https://www.krea.ai/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Max Resolution": "1K",
+		"Max Style References": "10",
+		"Moodboards": "Yes",
+		"Style Transfer": "Yes",
+		"Price (text-to-image)": "$0.060",
+		"Price (with style references)": "$0.065",
+		"Price (with moodboards)": "$0.070"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-17 14:18:34",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"aspect_ratio": {
+					"description": "Aspect ratio of the generated image.",
+					"enum": [
+						"1:1",
+						"4:3",
+						"3:2",
+						"16:9",
+						"2.35:1",
+						"4:5",
+						"2:3",
+						"9:16"
+					],
+					"type": "string"
+				},
+				"complexity": {
+					"default": 0,
+					"description": "K2 Complexity slider (-100 to 100). 0 disables the slider LoRA.",
+					"maximum": 100,
+					"minimum": -100,
+					"type": "integer"
+				},
+				"creativity": {
+					"default": "low",
+					"description": "Prompt expansion mode. `raw` disables expansion; `low`, `medium`, `high` control strength. Does not affect the K2 Intensity, Complexity, or Movement slider LoRAs.",
+					"enum": [
+						"raw",
+						"low",
+						"medium",
+						"high"
+					],
+					"type": "string"
+				},
+				"image_style_references": {
+					"description": "Reference images to drive the visual style (up to 10).",
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"strength": {
+								"default": 0.5,
+								"description": "Style influence (0 = no influence, 1 = maximum). Default 0.5.",
+								"maximum": 1,
+								"minimum": 0,
+								"type": "number"
+							},
+							"url": {
+								"description": "URL of the reference image (max 1024 chars).",
+								"format": "uri",
+								"type": "string"
+							}
+						},
+						"required": [
+							"url"
+						],
+						"type": "object"
+					},
+					"maxItems": 10,
+					"type": "array"
+				},
+				"intensity": {
+					"default": 0,
+					"description": "K2 Intensity slider (-100 to 100). 0 disables the slider LoRA.",
+					"maximum": 100,
+					"minimum": -100,
+					"type": "integer"
+				},
+				"moodboards": {
+					"description": "Moodboard references (currently limited to one).",
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"id": {
+								"description": "Moodboard identifier.",
+								"format": "uuid",
+								"pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+								"type": "string"
+							},
+							"strength": {
+								"default": 0.23,
+								"description": "Moodboard influence (0 = no influence, 1 = maximum). Default 0.23.",
+								"maximum": 1,
+								"minimum": 0,
+								"type": "number"
+							}
+						},
+						"required": [
+							"id"
+						],
+						"type": "object"
+					},
+					"maxItems": 1,
+					"type": "array"
+				},
+				"movement": {
+					"default": 0,
+					"description": "K2 Movement slider (-100 to 100). 0 disables the slider LoRA.",
+					"maximum": 100,
+					"minimum": -100,
+					"type": "integer"
+				},
+				"prompt": {
+					"description": "Text prompt describing the image to generate.",
+					"type": "string"
+				},
+				"resolution": {
+					"description": "Resolution scale.",
+					"enum": [
+						"1K"
+					],
+					"type": "string"
+				},
+				"seed": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					],
+					"description": "Random seed for reproducible generations. Pass null or omit for a random seed."
+				},
+				"styles": {
+					"description": "Styles (typically LoRAs) to apply to the generation.",
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"id": {
+								"description": "Style (typically LoRA) identifier.",
+								"type": "string"
+							},
+							"strength": {
+								"description": "Style strength, between -2 and 2.",
+								"maximum": 2,
+								"minimum": -2,
+								"type": "number"
+							}
+						},
+						"required": [
+							"id",
+							"strength"
+						],
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"required": [
+				"prompt",
+				"aspect_ratio",
+				"resolution"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"image": {
+					"description": "Presigned URL for the generated image.",
+					"format": "uri",
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"type": "object"
+		}
+	}
+}

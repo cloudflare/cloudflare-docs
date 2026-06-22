@@ -26,8 +26,11 @@ In this example, each request is routed based on the HTTP method and the action 
 
 The following example Worker includes any new information about the state of the multipart upload in the response to each request. For the request which creates the multipart upload, the `uploadId` is returned. For requests uploading a part, the part number and `etag` are returned. In turn, the client keeps track of this state, and includes the uploadId in subsequent requests, and the `etag` and part number of each part when completing a multipart upload.
 
+import { Tabs, TabItem } from "~/components";
+
 Add the following code to your project's `index.js` file and replace `MY_BUCKET` with your bucket's name:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 interface Env {
   MY_BUCKET: R2Bucket;
@@ -183,6 +186,104 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse, parse_qs
+import json
+
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        bucket = self.env.MY_BUCKET
+
+        url = urlparse(request.url)
+        key = url.path[1:]
+        params = parse_qs(url.query)
+        action = params.get("action", [None])[0]
+
+        if action is None:
+            return Response("Missing action type", status=400)
+
+        if request.method == "POST":
+            if action == "mpu-create":
+                multipart_upload = await bucket.createMultipartUpload(key)
+                return Response.json({
+                    "key": multipart_upload.key,
+                    "uploadId": multipart_upload.uploadId,
+                })
+            elif action == "mpu-complete":
+                upload_id = params.get("uploadId", [None])[0]
+                if upload_id is None:
+                    return Response("Missing uploadId", status=400)
+
+                multipart_upload = bucket.resumeMultipartUpload(key, upload_id)
+                complete_body = await request.json()
+                if complete_body is None:
+                    return Response("Missing or incomplete body", status=400)
+
+                try:
+                    obj = await multipart_upload.complete(complete_body.parts)
+                    return Response(None, headers={"etag": obj.httpEtag})
+                except Exception as error:
+                    return Response(str(error), status=400)
+            else:
+                return Response(f"Unknown action {action} for POST", status=400)
+
+        elif request.method == "PUT":
+            if action == "mpu-uploadpart":
+                upload_id = params.get("uploadId", [None])[0]
+                part_number_str = params.get("partNumber", [None])[0]
+                if part_number_str is None or upload_id is None:
+                    return Response("Missing partNumber or uploadId", status=400)
+                if request.body is None:
+                    return Response("Missing request body", status=400)
+
+                part_number = int(part_number_str)
+                multipart_upload = bucket.resumeMultipartUpload(key, upload_id)
+                try:
+                    uploaded_part = await multipart_upload.uploadPart(part_number, request.body)
+                    return Response.json(uploaded_part)
+                except Exception as error:
+                    return Response(str(error), status=400)
+            else:
+                return Response(f"Unknown action {action} for PUT", status=400)
+
+        elif request.method == "GET":
+            if action != "get":
+                return Response(f"Unknown action {action} for GET", status=400)
+            obj = await bucket.get(key)
+            if obj is None:
+                return Response("Object Not Found", status=404)
+            body = await obj.text()
+            headers = {"etag": obj.httpEtag}
+            return Response(body, headers=headers)
+
+        elif request.method == "DELETE":
+            if action == "mpu-abort":
+                upload_id = params.get("uploadId", [None])[0]
+                if upload_id is None:
+                    return Response("Missing uploadId", status=400)
+                multipart_upload = bucket.resumeMultipartUpload(key, upload_id)
+                try:
+                    await multipart_upload.abort()
+                except Exception as error:
+                    return Response(str(error), status=400)
+                return Response(None, status=204)
+            elif action == "delete":
+                await bucket.delete(key)
+                return Response(None, status=204)
+            else:
+                return Response(f"Unknown action {action} for DELETE", status=400)
+
+        else:
+            return Response(
+                "Method Not Allowed",
+                status=405,
+                headers={"Allow": "PUT, POST, GET, DELETE"},
+            )
+```
+</TabItem> </Tabs>
 
 After you have updated your Worker with the above code, run `npx wrangler deploy`.
 

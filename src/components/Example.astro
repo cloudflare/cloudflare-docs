@@ -1,25 +1,24 @@
 ---
 import { z } from "astro/zod";
-import { Card } from "@astrojs/starlight/components"
+import { Card } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	title: z.string().default("")
+	title: z.string().default(""),
 });
 
 const { title } = props.parse(Astro.props);
 ---
 
-<Card title={title}>
-	<slot />
-</Card>
+<div class:list={[{ "example--no-title": title === "" }]}>
+	<Card title={title}>
+		<slot />
+	</Card>
+</div>
 
-{
-	title === "" &&
-	<style>
-	.card {
+<style>
+	.example--no-title :global(.card) {
 		gap: 0 !important;
 	}
-	</style>	
-}
+</style>

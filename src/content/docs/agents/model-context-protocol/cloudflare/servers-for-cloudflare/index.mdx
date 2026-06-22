@@ -18,7 +18,7 @@ These MCP servers allow your MCP client to read configurations from your account
 
 The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product — through just two tools: `search()` and `execute()`.
 
-It uses [Codemode](/agents/model-context-protocol/protocol/codemode/), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) sandbox.
+It uses [Code Mode](/agents/model-context-protocol/protocol/codemode/), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) sandbox.
 
 This approach uses approximately 1,000 tokens regardless of how many API endpoints exist. An equivalent MCP server that exposed every endpoint as a native tool would consume over 1 million tokens — more than the entire context window of most foundation models.
 
@@ -26,7 +26,7 @@ This approach uses approximately 1,000 tokens regardless of how many API endpoin
 | --------------------------------- | ----- | ---------- |
 | Native MCP (full schemas)         | 2,594 | ~1,170,000 |
 | Native MCP (required params only) | 2,594 | ~244,000   |
-| Codemode                          | 2     | ~1,000     |
+| Code Mode                         | 2     | ~1,000     |
 
 ### Connect to the Cloudflare API MCP server
 

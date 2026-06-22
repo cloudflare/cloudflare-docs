@@ -3,6 +3,49 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-06-18"
+    title: RealtimeKit Web UI Kit 2.0.0
+    description: |-
+      **Compatibility:** Requires RealtimeKit Web Core 2.0.0 or later.
+
+      This is a major breaking release to align with the Core SDK v2.0.0 plugin redesign and removal of deprecated APIs.
+
+      **Plugin components — redesigned**
+
+      The `rtk-plugin-main` and `rtk-plugins` components have been updated for the new plugin model.
+
+      Key changes:
+      - `rtk-plugin-main` no longer renders an `<iframe>`. Instead, it uses a `<slot>` to project the `plugin.component` (any `HTMLElement`) you provide in the plugin config.
+      - Plugin permission checks now use `plugin.permissions.canActivate` and `plugin.permissions.canDeactivate` instead of the old `meeting.self.permissions.plugins.canStart` / `canClose`.
+      - Plugin list (`rtk-plugins`) now shows `plugin.icon` instead of `plugin.picture`.
+      - Added an empty state message ("No plugins available") when no plugins are registered.
+      - Removed iframe interaction checks (`canInteractWithPlugin`, `viewModeEnabled`) and the `block-inputs` overlay. These are no longer applicable without iframes.
+
+      **Removed deprecated API usages**
+
+      - `meeting.leaveRoom()` — use `meeting.leave()`.
+      - `meeting.connectedMeetings.supportsConnectedMeetings` — removed. Breakout room checks use `meeting.connectedMeetings.isActive` and permission checks directly.
+      - `participant.clientSpecificId` — use `participant.customParticipantId`.
+
+      **Enhancements**
+
+      - AI Transcriptions UI: Rewrote the search UI for transcriptions. Search now covers both participant names and transcript content. Added dedicated search placeholder and "no results" states.
+      - AI Transcriptions header: Fixed typo "MeetingAI" to "Meeting AI".
+      - Chat message spacing: Reduced line height in `rtk-message-view` for better vertical spacing.
+      - Audio track handling: `RTKAudio.addTrack()` now removes any existing track with the same ID before adding, preventing stale tracks from accumulating (fixes double audio on reconnect).
+
+      **New localization keys**
+
+      - `plugins.empty` — "No plugins available"
+      - `ai.transcriptions.search_placeholder` — "Search by participant name or transcript"
+      - `ai.transcriptions.no_transcripts_found` — "No transcripts found. Try searching for a different participant or transcript."
+      - `ai.transcriptions.no_transcripts_yet` — "No transcripts yet."
+
+      **Fixes**
+
+      - Fixed abrupt disconnection screen appearing incorrectly during media reconnection.
+      - Fixed missing audio after reconnection due to stale tracks not being replaced.
+
   - publish_date: "2026-05-28"
     title: RealtimeKit Web UI Kit 1.2.0
     description: |-

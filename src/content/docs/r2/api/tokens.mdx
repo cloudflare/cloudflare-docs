@@ -23,6 +23,7 @@ To create an API token:
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Under the **Account Details** section, select **Manage** next to **API Tokens**.
 3. Choose to create either:
    - **Create Account API token** - These tokens are tied to the Cloudflare account itself and can be used by any authorized system or user. Only users with the Super Administrator role can view or create them. These tokens remain valid until manually revoked.
@@ -63,12 +64,11 @@ Jurisdictional buckets can only be accessed via the corresponding jurisdictional
 | Object Read & Write | Allows the ability to read, write, and list objects in specific buckets.                                                                                                             |
 | Object Read only    | Allows the ability to read and list objects in specific buckets.                                                                                                                     |
 
-:::note
+:::note[Considerations]
 
-Currently **Admin Read & Write** or **Admin Read only** permission is required to use [R2 Data Catalog](/r2/data-catalog/).
-
+- Currently **Admin Read & Write** or **Admin Read only** permission is required to use [R2 Data Catalog](/r2/data-catalog/).
+- The **Object Read & Write** and **Object Read only** permissions are only supported by the [S3-compatible API](/r2/api/s3/api/), not the [Cloudflare REST API](/api/resources/r2/).
 :::
-
 ## Create API tokens via API
 
 You can create API tokens via the API and use them to generate corresponding Access Key ID and Secret Access Key values. To get started, refer to [Create API tokens via the API](/fundamentals/api/how-to/create-via-api/). Below are the specifics for R2.

@@ -73,11 +73,13 @@ function generateRandomAudio() {
   return buffer;
 }
 `;
-
 ---
 
 <>
-	<Details header="Step 1: Create a Worker that establishes a WebSocket connection" open>
+	<Details
+		header="Step 1: Create a Worker that establishes a WebSocket connection"
+		open
+	>
 		<Code code={worker} lang="ts" />
 	</Details>
 
@@ -85,7 +87,10 @@ function generateRandomAudio() {
 		<Code code={deployWorker} lang="sh" />
 	</Details>
 
-  <Details header="Step 3: Write a client script to connect to your Worker and send audio" open>
-    <Code code={clientScript} lang="js" />
-  </Details>
+	<Details
+		header="Step 3: Write a client script to connect to your Worker and send audio"
+		open
+	>
+		<Code code={clientScript} lang="js" />
+	</Details>
 </>

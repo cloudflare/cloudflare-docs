@@ -15,7 +15,7 @@
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import { createAgent } from "@flue/runtime";
-import * as v from "valibot";
+import dependabotSkill from "../.agents/skills/dependabot-review/SKILL.md" with { type: "skill" };
 import {
 	getDefaultWorkspace,
 	getShellSandbox,
@@ -23,26 +23,20 @@ import {
 import {
 	addReactionToComment,
 	getInstallationToken,
-	getIssueComments,
-	postComment,
 	removeReactionFromComment,
-	updateIssueComment,
-	type GitHubIssueComment,
 } from "../lib/github";
 import { makeDependabotReviewTools } from "../lib/github-repo-tools";
+import {
+	BOT_COMMENT_MARKER,
+	DependabotReviewResultSchema,
+	type DependabotReviewResult,
+	findExistingBotComment,
+	parseDependabotPackages,
+	postOrUpdateComment,
+	renderComment,
+} from "../lib/dependabot-review";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
-
-// ── Marker / schema ───────────────────────────────────────────────────────────
-
-const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-dependabot-review -->";
-
-interface DependabotPackage {
-	name: string;
-	from: string;
-	to: string;
-	repoUrl?: string;
-}
 
 interface DependabotReviewPayload {
 	eventType: "pull_request";
@@ -53,166 +47,13 @@ interface DependabotReviewPayload {
 	triggerEyesReactionId?: number | null;
 }
 
-const DependabotReviewResultSchema = v.object({
-	summary: v.string(),
-	recommendation: v.picklist(["merge", "merge-verify", "investigate"]),
-	packageReviews: v.array(
-		v.object({
-			name: v.string(),
-			from: v.string(),
-			to: v.string(),
-			type: v.string(),
-			dependencyType: v.string(),
-			whatChanged: v.array(v.string()),
-			repoUsage: v.string(),
-			impact: v.picklist(["None", "Very Low", "Low", "Medium", "High"]),
-			impactReason: v.string(),
-		}),
-	),
-});
-
-type DependabotReviewResult = v.InferOutput<
-	typeof DependabotReviewResultSchema
->;
-
-// ── Dependabot PR body parser ─────────────────────────────────────────────────
-
-/**
- * Parse the Dependabot PR body for the package bump table.
- * Dependabot always includes a markdown table of the form:
- *   | Package | From | To |
- *   | --- | --- | --- |
- *   | [name](url) | `old` | `new` |
- */
-function parseDependabotPackages(body: string): DependabotPackage[] {
-	const packages: DependabotPackage[] = [];
-	const tableRowRe =
-		/^\|\s*\[([^\]]+)\]\(([^)]+)\)\s*\|\s*`([^`]+)`\s*\|\s*`([^`]+)`\s*\|/gm;
-	let m: RegExpExecArray | null;
-	while ((m = tableRowRe.exec(body)) !== null) {
-		packages.push({
-			name: m[1],
-			repoUrl: m[2],
-			from: m[3],
-			to: m[4],
-		});
-	}
-	return packages;
-}
-
-// ── Render comment ────────────────────────────────────────────────────────────
-
-function renderComment(
-	result: DependabotReviewResult,
-	prNumber: number,
-): string {
-	const recLabel = {
-		merge: "✅ Merge",
-		"merge-verify": "✅ Merge + spot-check",
-		investigate: "⚠️ Investigate before merging",
-	}[result.recommendation];
-
-	const impactEmoji: Record<string, string> = {
-		None: "⬜",
-		"Very Low": "🟢",
-		Low: "🟡",
-		Medium: "🟠",
-		High: "🔴",
-	};
-
-	const lines: string[] = [
-		BOT_COMMENT_MARKER,
-		`<!-- pr: ${prNumber} -->`,
-		`<!-- updated-at: ${new Date().toISOString()} -->`,
-		"",
-		"## Dependabot review",
-		"",
-	];
-
-	// ── Summary table (always visible) ───────────────────────────────────────
-	lines.push("| Package | Impact | Recommendation |");
-	lines.push("|---------|--------|----------------|");
-	for (const pkg of result.packageReviews) {
-		const emoji = impactEmoji[pkg.impact] ?? "⬜";
-		const pkgRec =
-			pkg.impact === "High" || pkg.impact === "Medium"
-				? "⚠️ Verify"
-				: "✅ Merge";
-		lines.push(
-			`| \`${pkg.name}\` ${pkg.from} → ${pkg.to} | ${emoji} ${pkg.impact} | ${pkgRec} |`,
-		);
-	}
-	lines.push("");
-	lines.push(`**Overall:** ${recLabel}`);
-	if (result.summary) {
-		lines.push("");
-		lines.push(result.summary);
-	}
-	lines.push("");
-
-	// ── Per-package detail blocks (collapsed) ─────────────────────────────────
-	lines.push("<details>");
-	lines.push("<summary>Package details</summary>");
-	lines.push("<br/>");
-	lines.push("");
-	for (const pkg of result.packageReviews) {
-		const emoji = impactEmoji[pkg.impact] ?? "⬜";
-		lines.push(`### \`${pkg.name}\`: ${pkg.from} → ${pkg.to}`);
-		lines.push("");
-		lines.push(`**Type:** ${pkg.type}`);
-		lines.push(`**Dependency type:** ${pkg.dependencyType}`);
-		lines.push("");
-		if (pkg.whatChanged.length > 0) {
-			lines.push("**What changed**");
-			for (const change of pkg.whatChanged) {
-				lines.push(`- ${change}`);
-			}
-			lines.push("");
-		}
-		lines.push("**Usage in this repo**");
-		lines.push(pkg.repoUsage);
-		lines.push("");
-		lines.push(`**Impact:** ${emoji} ${pkg.impact} — ${pkg.impactReason}`);
-		lines.push("");
-		lines.push("---");
-		lines.push("");
-	}
-	lines.push("</details>");
-
-	return lines.join("\n");
-}
-
-// ── Comment helpers ───────────────────────────────────────────────────────────
-
-async function findExistingBotComment(
-	token: string,
-	prNumber: number,
-): Promise<GitHubIssueComment | null> {
-	const comments = await getIssueComments(token, prNumber);
-	return comments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ?? null;
-}
-
-async function postOrUpdateComment(
-	token: string,
-	prNumber: number,
-	existing: GitHubIssueComment | null,
-	body: string,
-): Promise<void> {
-	if (existing) {
-		await updateIssueComment(token, existing.id, body);
-	} else {
-		await postComment(token, prNumber, body);
-	}
-}
-
 // ── run() ─────────────────────────────────────────────────────────────────────
 
-export async function run({ init, payload, env, runId }: FlueContext) {
+export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, unknown>;
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
-	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
 	const loader = typedEnv.LOADER as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
@@ -271,32 +112,15 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 		action: "started",
 	});
 
-	// ── 2. Hydrate the skill before init() ────────────────────────────────────
+	// ── 2. Create agent with GitHub repo tools ────────────────────────────────
 	const workspace = getDefaultWorkspace();
-	const skillObj = await bucket.get(
-		".agents/skills/dependabot-review/SKILL.md",
-	);
-	if (!skillObj) {
-		throw new Error(
-			"Missing .agents/skills/dependabot-review/SKILL.md in DOCS_FLUE_BUCKET. " +
-				"Run `pnpm run flue:sync-agents:local` before invoking the workflow.",
-		);
-	}
-	await workspace.mkdir("/.agents/skills/dependabot-review", {
-		recursive: true,
-	});
-	await workspace.writeFile(
-		"/.agents/skills/dependabot-review/SKILL.md",
-		await skillObj.text(),
-	);
-
-	// ── 3. Create agent with GitHub repo tools ────────────────────────────────
 	const repoTools = makeDependabotReviewTools(token, input.number);
 
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
+		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
 		tools: repoTools,
+		skills: [dependabotSkill],
 	}));
 	const harness = await init(agent);
 	const session = await harness.session(
@@ -304,7 +128,8 @@ export async function run({ init, payload, env, runId }: FlueContext) {
 	);
 
 	// ── 4. Post a "review in progress" placeholder if in comment mode ─────────
-	let existingComment: GitHubIssueComment | null = null;
+	let existingComment: Awaited<ReturnType<typeof findExistingBotComment>> =
+		null;
 	if (reviewMode === "comment") {
 		existingComment = await findExistingBotComment(token, input.number);
 		await postOrUpdateComment(

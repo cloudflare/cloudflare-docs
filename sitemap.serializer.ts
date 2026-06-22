@@ -121,6 +121,7 @@ export function createSitemapLastmodSerializer() {
 		} else {
 			item.lastmod = currentDateString;
 		}
+		item.url = item.url.replace(/@/g, "%40");
 		return item;
 	};
 }

@@ -244,18 +244,21 @@ New web components in this codebase should use the `cfdocs-` prefix for custom e
 
 Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `r2-local-uploads-diagram`, `animated-workflow-diagram`, `autoconfig-diagram`) are exempt from the `cfdocs-` prefix requirement and do not need to be renamed.
 
-## Agent skills
+## Agent skills, commands, and agents
 
-Repo-specific skills live in `.agents/skills/`. Each skill provides specialized instructions for a particular task. Load a skill when the task matches its description.
+Repo-specific agent config lives in `.agents/`. All subdirectories are committed. Tool-specific paths (`.opencode/agents`, `CLAUDE.md`) are symlinks into `.agents/`.
 
-| Skill               | When to use                                                        |
-| ------------------- | ------------------------------------------------------------------ |
-| `changelog`         | Creating, editing, or reviewing changelog entries                  |
-| `code-review`       | Reviewing Workers/platform code for type correctness and API usage |
-| `dependabot-review` | Analyzing a Dependabot PR for impact on this repo                  |
-| `docs-review`       | Reviewing documentation PRs for style, structure, and correctness  |
-| `eli5`              | Simplifying technical documentation for broader audiences          |
-| `pr`                | Creating or updating GitHub pull requests                          |
+### Skills
+
+Skills live in `.agents/skills/`. Each skill's `SKILL.md` describes what it does and when to use it. Load a skill when the task matches its description.
+
+The `contributing` skill is the entry point for any change to the docs — writing or editing pages, choosing content types and components, reviewing docs or code examples, adding changelog entries, and opening pull requests. It is a router that dispatches to task-specific files under `.agents/skills/contributing/references/`. Load it first for contribution tasks.
+
+### Agents
+
+Custom agent definitions live in `.agents/agents/` (symlinked from `.opencode/agents/`). Each agent's frontmatter describes its role.
+
+### Reference files
 
 Shared reference files in `.agents/references/`:
 

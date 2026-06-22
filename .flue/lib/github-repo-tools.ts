@@ -102,7 +102,9 @@ export function makeReadRepoFileTool(token: string): ToolDefinition {
 				Type.String({ description: `Git ref. Defaults to "${DEFAULT_REF}".` }),
 			),
 		}),
-		async execute({ path, ref = DEFAULT_REF }: { path: string; ref?: string }) {
+		async execute(args) {
+			const path = String(args.path ?? "");
+			const ref = String(args.ref ?? DEFAULT_REF);
 			const res = await fetch(
 				`https://api.github.com/repos/${REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`,
 				{ headers: apiHeaders(token) },
@@ -150,7 +152,9 @@ export function makeSearchRepoTool(token: string): ToolDefinition {
 				}),
 			),
 		}),
-		async execute({ query, path }: { query: string; path?: string }) {
+		async execute(args) {
+			const query = String(args.query ?? "");
+			const path = typeof args.path === "string" ? args.path : undefined;
 			const q = `${query} repo:${REPO}${path ? ` path:${path}` : ""}`;
 			const res = await fetch(
 				`https://api.github.com/search/code?q=${encodeURIComponent(q)}&per_page=20`,
@@ -206,13 +210,10 @@ export function makeGetNpmPackageInfoTool(): ToolDefinition {
 				}),
 			),
 		}),
-		async execute({
-			packageName,
-			version,
-		}: {
-			packageName: string;
-			version?: string;
-		}) {
+		async execute(args) {
+			const packageName = String(args.packageName ?? "");
+			const version =
+				typeof args.version === "string" ? args.version : undefined;
 			const encoded = encodeURIComponent(packageName);
 			const url = version
 				? `https://registry.npmjs.org/${encoded}/${encodeURIComponent(version)}`
@@ -254,7 +255,8 @@ export function makeTraceDependencyTool(token: string): ToolDefinition {
 					"npm package name, e.g. 'algoliasearch' or '@astrojs/react'",
 			}),
 		}),
-		async execute({ packageName }: { packageName: string }) {
+		async execute(args) {
+			const packageName = String(args.packageName ?? "");
 			// 1. Check package.json for direct dep
 			const pkgRes = await fetch(
 				`https://api.github.com/repos/${REPO}/contents/package.json?ref=${DEFAULT_REF}`,
