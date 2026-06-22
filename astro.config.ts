@@ -2,7 +2,6 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
-import liveCode from "astro-live-code";
 import starlightLinksValidator from "starlight-links-validator";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
@@ -102,6 +101,7 @@ export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	cacheDir: ".astro-cache",
 	markdown: {
+		gfm: true,
 		smartypants: false,
 		remarkPlugins: [remarkValidateImages],
 		rehypePlugins: [
@@ -224,7 +224,6 @@ export default defineConfig({
 			},
 			disable404Route: true,
 		}),
-		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {

@@ -18,10 +18,43 @@ const iconCopy = phosphorIcon("copy");
 const iconMarkdown = phosphorIcon("markdown-logo");
 const iconCheckCircle = phosphorIcon("check-circle");
 const iconRobot = phosphorIcon("robot");
-const iconScroll = phosphorIcon("scroll");
+const iconClock = phosphorIcon("clock-counter-clockwise");
+
+const { lastUpdated, lang } = Astro.locals.starlightRoute;
+const lastUpdatedDate = lastUpdated
+	? lastUpdated.toLocaleDateString(lang, {
+			dateStyle: "medium",
+			timeZone: "UTC",
+		})
+	: null;
+const lastUpdatedISO = lastUpdated?.toISOString();
 ---
 
 <nav class="page-actions" aria-label="Page actions">
+	{
+		lastUpdatedDate && (
+			<>
+				<span class="not-content last-updated" id="page-actions-last-updated">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						aria-hidden="true"
+						viewBox="0 0 256 256"
+						fill="currentColor"
+						set:html={iconClock}
+					/>
+					<span>
+						Last updated{" "}
+						<time datetime={lastUpdatedISO}>{lastUpdatedDate}</time>
+					</span>
+				</span>
+
+				<span class="sep sep-last-updated" aria-hidden="true">
+					|
+				</span>
+			</>
+		)
+	}
+
 	<!-- Copy as Markdown -->
 	<button
 		class="not-content"
@@ -89,25 +122,6 @@ const iconScroll = phosphorIcon("scroll");
 		/>
 		<span>Agent setup</span>
 	</button>
-
-	<span class="sep sep-docs-for-agents" aria-hidden="true">|</span>
-
-	<!-- Docs for agents -->
-	<button
-		class="not-content"
-		id="page-actions-docs-for-agents"
-		data-tooltip="Consume Cloudflare Docs with your agent"
-		aria-label="Consume Cloudflare Docs with your agent"
-	>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			aria-hidden="true"
-			viewBox="0 0 256 256"
-			fill="currentColor"
-			set:html={iconScroll}
-		/>
-		<span>Docs for agents</span>
-	</button>
 </nav>
 
 <style>
@@ -120,8 +134,8 @@ const iconScroll = phosphorIcon("scroll");
 	}
 
 	@media (max-width: 900px) {
-		#page-actions-docs-for-agents,
-		.sep-docs-for-agents {
+		#page-actions-last-updated,
+		.sep-last-updated {
 			display: none;
 		}
 	}
@@ -134,7 +148,8 @@ const iconScroll = phosphorIcon("scroll");
 	}
 
 	.page-actions button,
-	.page-actions a {
+	.page-actions a,
+	.page-actions .last-updated {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.375rem;
@@ -150,6 +165,10 @@ const iconScroll = phosphorIcon("scroll");
 		white-space: nowrap;
 	}
 
+	.page-actions .last-updated {
+		cursor: default;
+	}
+
 	.page-actions button:hover,
 	.page-actions a:hover {
 		color: var(--sl-color-white);
@@ -162,7 +181,8 @@ const iconScroll = phosphorIcon("scroll");
 	}
 
 	.page-actions button svg,
-	.page-actions a svg {
+	.page-actions a svg,
+	.page-actions .last-updated svg {
 		width: 1rem;
 		height: 1rem;
 		flex-shrink: 0;
@@ -265,14 +285,6 @@ const iconScroll = phosphorIcon("scroll");
 			?.addEventListener("click", () => {
 				track("agents toolkit clicked", { value: "view ai options" });
 				window.open("/agent-setup/", "_blank");
-			});
-
-		// Docs for agents
-		document
-			.getElementById("page-actions-docs-for-agents")
-			?.addEventListener("click", () => {
-				track("agents toolkit clicked", { value: "docs for agents" });
-				window.open("/docs-for-agents/", "_blank");
 			});
 	}
 

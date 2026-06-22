@@ -22,7 +22,9 @@ The Cloudflare One Client connects to Cloudflare via a standard HTTPS connection
 
 <Render file="warp/client-orchestration-ips" product="cloudflare-one" />
 
-Even though `zero-trust-client.cloudflareclient.com` and `notifications.cloudflareclient.com` may resolve to different IP addresses, the Cloudflare One Client overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, ensure that the above IPs are permitted through your firewall.
+Cloudflare One Client version 2026.6.0 and later uses `api.devices.cloudflare.com`. Versions earlier than 2026.6.0 use `zero-trust-client.cloudflareclient.com` and `notifications.cloudflareclient.com`.
+
+These domains may resolve to different IP addresses. The Cloudflare One Client overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, allow those IPs through your firewall.
 
 <Details header="FedRAMP High requirements">
 

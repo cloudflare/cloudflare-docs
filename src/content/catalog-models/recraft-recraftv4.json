@@ -201,7 +201,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://www.recraft.ai/",
 	"terms": "https://www.recraft.ai/terms",
@@ -211,6 +211,7 @@
 		"Text Rendering": "Yes"
 	},
 	"request_formats": null,
+	"banner": null,
 	"created_at": "2026-05-22 17:53:50",
 	"schema": {
 		"input": {

@@ -113,12 +113,13 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
    	params={{ appType: "self-hosted" }}
    />
 7. Select **Create**.
-8. On the application details page, go to **Additional settings** > **AUD tag** and copy the value. You will need this value to configure your MCP server.
+8. On the application details page, go to **Advanced settings** and turn on **Managed OAuth**. This allows non-browser MCP clients to authenticate using a standard OAuth 2.0 flow instead of receiving a browser redirect. For more information, refer to [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
+9. Copy the **AUD tag** value shown in **Additional settings**. You will need this value to configure your MCP server.
 
 </TabItem>
 <TabItem label="API">
 
-1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint with `oauth_configuration.enabled` set to `true`:
 
    <APIRequest
    	path="/accounts/{account_id}/access/apps"
@@ -129,6 +130,9 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
    		domain: "mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev",
    		policies: ["f174e90a-fafe-4643-bbbc-4a0ed4fc8415"],
    		allowed_idps: [],
+   		oauth_configuration: {
+   			enabled: true,
+   		},
    	}}
    />
 

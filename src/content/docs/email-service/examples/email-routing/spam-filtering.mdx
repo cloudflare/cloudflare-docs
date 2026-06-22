@@ -40,10 +40,10 @@ class SimpleSpamFilter implements SpamFilter {
 		"winner",
 		"congratulations",
 		"inheritance",
-		"lottery"
+		"lottery",
 	];
 
-	private trustedDomains = ["company.com", "trusted-partner.com", "vendor.net"];
+	private trustedDomains = ["example.com", "trusted-partner.com", "vendor.net"];
 
 	async checkSpam(
 		message,
@@ -83,7 +83,10 @@ class SimpleSpamFilter implements SpamFilter {
 		}
 
 		// Check for suspicious sender patterns
-		if (sender.includes("noreply") && subject.toLowerCase().includes("urgent")) {
+		if (
+			sender.includes("noreply") &&
+			subject.toLowerCase().includes("urgent")
+		) {
 			score += 2;
 			reasons.push("Suspicious noreply + urgent combination");
 		}
@@ -101,31 +104,33 @@ const spamFilter = new SimpleSpamFilter();
 export default {
 	async email(message, env, ctx): Promise<void> {
 		const startTime = Date.now();
-		
+
 		// Check for spam
 		const spamCheck = await spamFilter.checkSpam(message);
 
 		// Track spam check metrics
 		env.EMAIL_ANALYTICS?.writeDataPoint({
 			blobs: [
-				'spam_check_completed',
+				"spam_check_completed",
 				message.from,
 				message.to,
-				spamCheck.isSpam ? 'spam' : 'legitimate'
+				spamCheck.isSpam ? "spam" : "legitimate",
 			],
 			doubles: [
 				1, // Count
 				spamCheck.score,
-				Date.now() - startTime
+				Date.now() - startTime,
 			],
 			indexes: [
 				`spam_detected:${spamCheck.isSpam}`,
-				`score_range:${getScoreRange(spamCheck.score)}`
-			]
+				`score_range:${getScoreRange(spamCheck.score)}`,
+			],
 		});
 
 		if (spamCheck.isSpam) {
-			console.log(`🚫 Rejected spam email from ${message.from}: ${spamCheck.reasons.join(", ")}`);
+			console.log(
+				`Rejected spam email from ${message.from}: ${spamCheck.reasons.join(", ")}`,
+			);
 			message.setReject(`Message rejected: ${spamCheck.reasons[0]}`);
 			return;
 		}
@@ -136,18 +141,24 @@ export default {
 		headers.set("X-Spam-Reasons", spamCheck.reasons.join(", "));
 		headers.set("X-Spam-Check-Time", (Date.now() - startTime).toString());
 
-		await message.forward("inbox@company.com", headers);
+		await message.forward("inbox@example.com", headers);
 	},
 };
 
 function getScoreRange(score: number): string {
-	if (score < 0) return 'trusted';
-	if (score === 0) return 'neutral';
-	if (score === 1) return 'suspicious';
-	return 'spam';
+	if (score < 0) return "trusted";
+	if (score === 0) return "neutral";
+	if (score === 1) return "suspicious";
+	return "spam";
 }
 ```
 
 ## Advanced spam detection with AI
 
-For more sophisticated spam detection, you can enhance the basic filter using [Workers AI](/workers-ai) to analyze email content with machine learning models. This approach can identify subtle spam patterns that keyword-based filters might miss.
+For more sophisticated spam detection, you can enhance the basic filter using [Workers AI](/workers-ai/) to analyze email content with machine learning models. This approach can identify subtle spam patterns that keyword-based filters might miss.
+
+## Next steps
+
+- [Email handler](/email-service/api/route-emails/email-handler/) — reference for `setReject()` and `forward()` actions used here.
+- [Hard bounce handling](/email-service/examples/email-routing/hard-bounce-handling/) — detect bounce notifications that often originate from spam infrastructure.
+- [Email storage and processing](/email-service/examples/email-routing/email-storage/) — log filtered emails to KV for later review.

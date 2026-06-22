@@ -671,6 +671,7 @@
 	"request_formats": [
 		"responses"
 	],
+	"banner": null,
 	"created_at": "2026-05-22 17:54:02",
 	"schema": {
 		"input": {

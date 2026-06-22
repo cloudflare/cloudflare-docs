@@ -63,11 +63,12 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import WorkerEntrypoint, Response
+from workers import WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
     async def scheduled(self, controller, env, ctx):
-  			print("cron processed")
+        # All four parameters (self, controller, env, ctx) are required
+        print("cron processed")
 ```
 
 </TabItem></Tabs>
@@ -192,7 +193,7 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers locally
 
-Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/general/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This exposes a `/cdn-cgi/handler/scheduled` route, which can be used to test using an HTTP request.
+Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/general/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This exposes a `/cdn-cgi/handler/scheduled` route, which can be used to test using an HTTP request. If you are using the Cloudflare Vite Plugin, ensure that you use the correct vite port for the following commands (Vite defaults to 5173).
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/handler/scheduled"

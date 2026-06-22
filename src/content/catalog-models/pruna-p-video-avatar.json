@@ -1,0 +1,217 @@
+{
+	"model_id": "pruna/p-video-avatar",
+	"provider_id": "pruna",
+	"name": "P-Video-Avatar",
+	"description": "Pruna's P-Video-Avatar generates talking-head videos from a single portrait image driven by a text script or audio file, with multiple voices, languages, and output resolutions.",
+	"task": "Image-to-Video",
+	"tags": [
+		"Video Generation",
+		"Talking Head",
+		"Avatar"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Product Demo Greeting",
+			"description": "Generate a talking-head video from a portrait and a short voice script.",
+			"input": {
+				"image": "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg",
+				"voice_script": "Hello, welcome to our product demo!",
+				"voice": "Zephyr (Female)",
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/pruna/p-video-avatar/product-demo-greeting.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/pruna/p-video-avatar/product-demo-greeting.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pruna/p-video-avatar',\n  {\n    image: 'https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg',\n    voice_script: 'Hello, welcome to our product demo!',\n    voice: 'Zephyr (Female)',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pruna/p-video-avatar\",\n  \"input\": {\n    \"image\": \"https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg\",\n    \"voice_script\": \"Hello, welcome to our product demo!\",\n    \"voice\": \"Zephyr (Female)\",\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.api.pruna.ai/guides/quickstart",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Resolutions": "720p, 1080p",
+		"Input Modalities": "Image + (script or audio)"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-18 15:52:58",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"audio": {
+					"description": "URL of uploaded audio to drive speech. HTTP(S) URL or data URI. If both audio and voice_script are provided, audio takes priority.",
+					"type": "string"
+				},
+				"disable_prompt_upsampling": {
+					"default": false,
+					"description": "When true, skip the prompt upsampler and pass the raw user prompt.",
+					"type": "boolean"
+				},
+				"disable_safety_filter": {
+					"default": true,
+					"description": "Disable safety filter for prompts and input image.",
+					"type": "boolean"
+				},
+				"image": {
+					"description": "Input portrait image (first frame). HTTP(S) URL or data URI. Supports jpg, jpeg, png, webp.",
+					"type": "string"
+				},
+				"negative_prompt": {
+					"default": "",
+					"description": "Mention what you do NOT want in the video. Disabled if empty.",
+					"type": "string"
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Resolution of the video.",
+					"enum": [
+						"720p",
+						"1080p"
+					],
+					"type": "string"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation.",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
+					"type": "integer"
+				},
+				"strength_negative_prompt": {
+					"default": 0.5,
+					"description": "Strength of the negative prompt (0-4).",
+					"maximum": 4,
+					"minimum": 0,
+					"type": "number"
+				},
+				"video_prompt": {
+					"default": "The person is talking.",
+					"description": "Optional prompt for the video.",
+					"type": "string"
+				},
+				"voice": {
+					"default": "Zephyr (Female)",
+					"description": "Voice for generated speech.",
+					"enum": [
+						"Zephyr (Female)",
+						"Puck (Male)",
+						"Charon (Male)",
+						"Kore (Female)",
+						"Fenrir (Male)",
+						"Leda (Female)",
+						"Orus (Male)",
+						"Aoede (Female)",
+						"Callirrhoe (Female)",
+						"Autonoe (Female)",
+						"Enceladus (Male)",
+						"Iapetus (Male)",
+						"Umbriel (Male)",
+						"Algenib (Male)",
+						"Despina (Female)",
+						"Erinome (Female)",
+						"Laomedeia (Female)",
+						"Achernar (Female)",
+						"Algieba (Male)",
+						"Schedar (Male)",
+						"Gacrux (Female)",
+						"Pulcherrima (Female)",
+						"Achird (Male)",
+						"Zubenelgenubi (Male)",
+						"Vindemiatrix (Female)",
+						"Sadachbia (Male)",
+						"Sadaltager (Male)",
+						"Sulafat (Female)",
+						"Alnilam (Male)",
+						"Rasalgethi (Male)"
+					],
+					"type": "string"
+				},
+				"voice_language": {
+					"default": "English (US)",
+					"description": "Output language.",
+					"enum": [
+						"English (US)",
+						"English (UK)",
+						"Spanish",
+						"French",
+						"German",
+						"Italian",
+						"Portuguese (Brazil)",
+						"Japanese",
+						"Korean",
+						"Hindi"
+					],
+					"type": "string"
+				},
+				"voice_prompt": {
+					"default": "Say the following.",
+					"description": "Optional speaking style, tone, pacing or emotion instructions.",
+					"type": "string"
+				},
+				"voice_script": {
+					"default": "",
+					"description": "Script for the person to say when no audio is uploaded.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"image",
+				"voice",
+				"voice_script",
+				"voice_language",
+				"resolution",
+				"video_prompt",
+				"voice_prompt",
+				"negative_prompt",
+				"strength_negative_prompt",
+				"disable_safety_filter",
+				"disable_prompt_upsampling"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"video": {
+					"description": "Presigned URL for the generated avatar video.",
+					"format": "uri",
+					"type": "string"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"type": "object"
+		}
+	}
+}

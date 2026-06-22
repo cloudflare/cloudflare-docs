@@ -28,14 +28,15 @@ You can customize how your AI Search instance indexes your data, retrieves resul
 | [Syncing](/ai-search/configuration/indexing/syncing/)                     | yes                     | Sync jobs and indexing controls                                 |
 | [Keyword search](/ai-search/configuration/indexing/keyword-search/)       | yes                     | Enable keyword (BM25) search for exact term matching            |
 | [Hybrid search](/ai-search/configuration/indexing/hybrid-search/)         | yes                     | Combine vector and keyword search with configurable fusion      |
-| [Metadata](/ai-search/configuration/indexing/metadata/)                   | yes                     | Custom metadata fields for filtering                            |
+| [Metadata attributes](/ai-search/configuration/indexing/metadata/)        | yes                     | Define built-in and custom metadata fields                      |
 | [Service API token](/ai-search/configuration/indexing/service-api-token/) | yes                     | API token that grants AI Search permission to access R2 buckets |
 
 ## Retrieval
 
 | Configuration                                                            | Editable after creation | Description                                                   |
 | ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------------------- |
-| [Result filtering](/ai-search/configuration/retrieval/result-filtering/) | yes                     | Match threshold and maximum number of results                 |
+| [Result controls](/ai-search/configuration/retrieval/result-controls/)   | yes                     | Match threshold and maximum number of results                 |
+| [Filtering](/ai-search/configuration/retrieval/filtering/)               | yes                     | Filter results by metadata attributes                         |
 | [Relevance boosting](/ai-search/configuration/retrieval/boosting/)       | yes                     | Bias results by metadata characteristics                      |
 | [Reranking](/ai-search/configuration/retrieval/reranking/)               | yes                     | Reorder results by semantic relevance using a reranking model |
 | [Query rewriting](/ai-search/configuration/retrieval/query-rewriting/)   | yes                     | Rewrite follow-up queries using conversation context          |

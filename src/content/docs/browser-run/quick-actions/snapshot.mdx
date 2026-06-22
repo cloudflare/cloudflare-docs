@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
-title: /snapshot - Take a webpage snapshot
-description: Capture both HTML content and a screenshot of a webpage in a single Browser Run /snapshot request.
+title: /snapshot - Capture multiple page formats
+description: Capture HTML, screenshots, Markdown, and the accessibility tree from a webpage in a single Browser Run /snapshot request.
 sidebar:
   order: 6
 products:
@@ -10,7 +10,7 @@ products:
 
 import { Tabs, TabItem, Render } from "~/components";
 
-The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
+Browser Run provides individual endpoints for [HTML content](/browser-run/quick-actions/content-endpoint/), [screenshots](/browser-run/quick-actions/screenshot-endpoint/), [Markdown](/browser-run/quick-actions/markdown-endpoint/), and more. The `/snapshot` endpoint combines multiple formats into a single request, so you do not need to call each endpoint separately. By default, it returns HTML content and a screenshot. You can use the `formats` parameter to customize which formats are included, such as adding Markdown and the accessibility tree to the response.
 
 <Render file="rest-api-token-permissions" product="browser-run" />
 
@@ -84,7 +84,7 @@ const snapshot = await client.browserRendering.snapshot.create({
 console.log(snapshot.content);
 ```
 
-</TabItem> <TabItem label="Workers binding">
+</TabItem> <TabItem label="Workers Bindings">
 
 ```typescript
 interface Env {
@@ -111,7 +111,7 @@ Visit the [Browser Run API reference](/api/resources/browser_rendering/subresour
 
 ### Create a snapshot from custom HTML
 
-The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:
+This example uses the `html` property to render `<html><body>Advanced Snapshot</body></html>` and does the following:
 
 1. Disable JavaScript.
 2. Sets the screenshot to `fullPage`.
@@ -144,11 +144,102 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 {
 	"success": true,
 	"result": {
-		"screenshot": "AdvancedBase64Screenshot",
+		"screenshot": "Base64EncodedScreenshotString",
 		"content": "<html><body>Advanced Snapshot</body></html>"
 	}
 }
 ```
+
+### Choose which formats to return
+
+Use the `formats` parameter to control which representations of the page are included in the response. Accepted values are `"content"`, `"screenshot"`, `"markdown"`, and `"accessibilityTree"`. If omitted, the default is `["content", "screenshot"]`.
+
+You must request at least two formats. If you only need a single format, use the corresponding single-format endpoint instead: [`/content`](/browser-run/quick-actions/content-endpoint/), [`/screenshot`](/browser-run/quick-actions/screenshot-endpoint/), or [`/markdown`](/browser-run/quick-actions/markdown-endpoint/). A single-format endpoint for the accessibility tree is not yet available.
+
+The following example requests a screenshot, Markdown, and the accessibility tree in one call:
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "formats": ["screenshot", "markdown", "accessibilityTree"]
+  }'
+```
+
+```json output
+{
+	"success": true,
+	"result": {
+		"accessibilityTree": {
+			"role": "RootWebArea",
+			"name": "Example Domain",
+			"children": [
+				{
+					"role": "heading",
+					"name": "Example Domain",
+					"level": 1
+				},
+				{
+					"role": "StaticText",
+					"name": "This domain is for use in documentation examples without needing permission. Avoid use in operations."
+				},
+				{
+					"role": "link",
+					"name": "Learn more"
+				}
+			]
+		},
+		"screenshot": "iVBORw0KGgoAAAANSUhEUgAAB4AAAAQ4CAIAAAB...",
+		"markdown": "# Example Domain\n\nThis domain is for use in documentation examples without needing permission. Avoid use in operations.\n\n[Learn more](https://iana.org/domains/example)"
+	},
+	"meta": {
+		"status": 200,
+		"title": "Example Domain"
+	}
+}
+```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
+});
+
+const snapshot = await client.browserRendering.snapshot.create({
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://example.com/",
+	formats: ["screenshot", "markdown", "accessibilityTree"],
+});
+
+console.log(snapshot.markdown);
+console.log(snapshot.accessibilityTree);
+```
+
+</TabItem> <TabItem label="Workers Bindings">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("snapshot", {
+			url: "https://example.com/",
+			formats: ["screenshot", "markdown", "accessibilityTree"],
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
 
 <Render file="improve-blurry-screenshot-resolution" product="browser-run" />
 

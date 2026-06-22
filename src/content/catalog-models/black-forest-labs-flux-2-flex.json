@@ -127,6 +127,7 @@
 		"Steps Range": "1 \u2013 50"
 	},
 	"request_formats": null,
+	"banner": null,
 	"created_at": "2026-05-27 23:12:22",
 	"schema": {
 		"input": {
