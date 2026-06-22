@@ -235,7 +235,7 @@
 /agents/api-reference/callable-methods/ /agents/runtime/lifecycle/callable-methods/ 301
 /agents/api-reference/chat-agents/ /agents/communication-channels/chat/chat-agents/ 301
 /agents/api-reference/client-sdk/ /agents/communication-channels/chat/client-sdk/ 301
-/agents/api-reference/codemode/ /agents/model-context-protocol/protocol/codemode/ 301
+/agents/api-reference/codemode/ /agents/tools/codemode/api-reference/ 301
 /agents/api-reference/configuration/ /agents/runtime/operations/configuration/ 301
 /agents/api-reference/durable-execution/ /agents/runtime/execution/durable-execution/ 301
 /agents/api-reference/email/ /agents/communication-channels/email/ 301
@@ -276,6 +276,7 @@
 /agents/guides/test-remote-mcp-server/ /agents/model-context-protocol/guides/test-remote-mcp-server/ 301
 /agents/guides/webhooks/ /agents/communication-channels/webhooks/ 301
 /agents/model-context-protocol/authorization/ /agents/model-context-protocol/protocol/authorization/ 301
+/agents/model-context-protocol/protocol/codemode/ /agents/tools/codemode/ 301
 /agents/model-context-protocol/governance/ /agents/model-context-protocol/protocol/governance/ 301
 /agents/model-context-protocol/mcp-portal/ /agents/model-context-protocol/cloudflare/mcp-portal/ 301
 /agents/model-context-protocol/mcp-servers-for-cloudflare/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
@@ -310,7 +311,7 @@
 /agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
-/agents/tools/sandbox/codemode/ /agents/model-context-protocol/protocol/codemode/ 301
+/agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 
