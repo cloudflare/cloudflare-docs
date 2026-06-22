@@ -8,26 +8,11 @@ products:
   - workers
 ---
 
+import { WorkerPreviewsDiagram } from "~/components";
+
 Worker Previews let you push a branch and get a URL. Every branch gets its own isolated Worker -- with its own variables, secrets, bindings, and resources -- before anything touches production.
 
-```
-                        ┌──────────────────────────┐
-                        │      Git repository       │
-                        └────────┬─────────┬────────┘
-                                 │         │
-                          push main    push feature/login
-                                 │         │
-                                 ▼         ▼
-                        ┌────────────┐ ┌────────────────┐
-                        │ Production │ │    Preview      │
-                        │            │ │ feature/login   │
-                        │ wrangler   │ │ wrangler        │
-                        │ deploy     │ │ preview         │
-                        └────────────┘ └────────────────┘
-                              │               │
-                              ▼               ▼
-                        app.example.com  feature-login-app.example.com
-```
+<WorkerPreviewsDiagram />
 
 Durable Objects, Workflows, and Containers are isolated automatically. KV, D1, and R2 can point at test resources when you [configure Preview bindings](/workers/previews/resources/).
 
