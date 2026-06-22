@@ -80,95 +80,156 @@ const paths = [
 	) : (
 		<figure
 			class="worker-previews-diagram worker-previews-overview"
-			aria-label="Worker Previews branch workflow and resource isolation map"
+			aria-label="Worker Previews repository model"
 		>
 			<div class="diagram-shell">
-				<div class="flow-map">
-					<div class="flow-row source-row">
-						<div class="flow-node source-node production-node">
-							<span>Production branch</span>
-							<strong>main</strong>
-						</div>
-						<div class="flow-node source-node preview-node">
-							<span>Feature branch or PR</span>
-							<strong>feature/login</strong>
-						</div>
+				<div class="repo-diagram">
+					<input
+						class="mode-input"
+						type="radio"
+						name="worker-preview-mode"
+						id="worker-preview-production"
+						checked
+					/>
+					<input
+						class="mode-input"
+						type="radio"
+						name="worker-preview-mode"
+						id="worker-preview-previews"
+					/>
+
+					<div class="mode-tabs" aria-label="Worker Preview mode selector">
+						<label for="worker-preview-production">Production</label>
+						<label for="worker-preview-previews">Previews</label>
 					</div>
 
-					<div class="flow-row arrow-row" aria-hidden="true">
-						<div class="flow-arrow" />
-						<div class="flow-arrow" />
-					</div>
-
-					<div class="flow-row command-row">
-						<div class="flow-node command-node production-node">
-							<span>Command</span>
-							<code>wrangler deploy</code>
-						</div>
-						<div class="flow-node command-node preview-node accent-node">
-							<span>Command</span>
-							<code>wrangler preview</code>
-						</div>
-					</div>
-
-					<div class="flow-row arrow-row" aria-hidden="true">
-						<div class="flow-arrow" />
-						<div class="flow-arrow" />
-					</div>
-
-					<div class="flow-row result-row">
-						<a
-							class="flow-node destination-node production-node"
-							href="/workers/configuration/versions-and-deployments/"
+					<div class="repo-stage production-stage">
+						<section
+							class="repo-window"
+							aria-label="Production repository branch"
 						>
-							<span>Result</span>
-							<strong>Production deployment</strong>
-							<small>Active Worker version</small>
-						</a>
+							<header class="repo-titlebar">
+								<span class="repo-dot" />
+								<span class="repo-dot" />
+								<span class="repo-dot" />
+								<strong>Repository</strong>
+							</header>
+							<label class="branch-selector">
+								<span>Branch</span>
+								<select aria-label="Production branch">
+									<option>main</option>
+								</select>
+							</label>
+							<ul class="file-list" aria-label="Repository files">
+								<li>wrangler.jsonc</li>
+								<li>src/index.ts</li>
+								<li>package.json</li>
+							</ul>
+						</section>
+
 						<a
-							class="flow-node destination-node preview-node accent-node"
-							href="/workers/previews/get-started/"
+							class="app-card production-app"
+							href="/workers/configuration/routing/custom-domains/"
 						>
-							<span>Result</span>
-							<strong>Worker Preview</strong>
-							<small>Isolated branch copy</small>
+							<p class="eyebrow">Live app</p>
+							<strong>app.example.com</strong>
+							<span>
+								Production variables, secrets, bindings, and custom domain.
+							</span>
 						</a>
+
+						<div class="repo-summary production-summary">
+							<a href="/workers/wrangler/commands/workers/#deploy">
+								<strong>Command:</strong> wrangler deploy
+							</a>
+							<a href="/workers/configuration/routing/custom-domains/">
+								<strong>URL:</strong> app.example.com
+							</a>
+							<a href="/workers/configuration/versions-and-deployments/">
+								<strong>Traffic:</strong> where live requests go
+							</a>
+						</div>
 					</div>
-				</div>
 
-				<div class="info-grid">
-					<section class="info-card url-card">
-						<p class="eyebrow">URLs</p>
-						<p>
-							<strong>Preview URL:</strong> Stable branch link. Always serves
-							the latest deployment.
-						</p>
-						<p>
-							<strong>Deployment URL:</strong> Immutable link. Serves one exact
-							Preview deployment.
-						</p>
-					</section>
+					<div class="repo-stage previews-stage">
+						<section
+							class="repo-window"
+							aria-label="Preview repository branches"
+						>
+							<header class="repo-titlebar">
+								<span class="repo-dot" />
+								<span class="repo-dot" />
+								<span class="repo-dot" />
+								<strong>Repository</strong>
+							</header>
+							<label class="branch-selector preview-branch-selector">
+								<span>Branch</span>
+								<select
+									class="preview-branch-select"
+									aria-label="Preview branch"
+								>
+									<option
+										value="feature/login"
+										data-href="/workers/previews/configuration/"
+										data-detail="Preview variables, secrets, bindings, and custom domain"
+										data-url="feature-login.app.example.com"
+									>
+										feature/login
+									</option>
+									<option
+										value="redesign"
+										data-href="/workers/previews/resources/"
+										data-detail="Preview variables, secrets, bindings, and custom domain"
+										data-url="redesign.app.example.com"
+									>
+										redesign
+									</option>
+									<option
+										value="fix-api"
+										data-href="/workers/previews/custom-domains/"
+										data-detail="Preview variables, secrets, bindings, and custom domain"
+										data-url="fix-api.app.example.com"
+									>
+										fix-api
+									</option>
+								</select>
+							</label>
+							<ul class="file-list" aria-label="Repository files">
+								<li>wrangler.jsonc</li>
+								<li>src/index.ts</li>
+								<li>package.json</li>
+							</ul>
+						</section>
 
-					<section class="info-card settings-card">
-						<p class="eyebrow">Settings</p>
-						<a href="/workers/previews/configuration/#shared-preview-settings">
-							Shared preview settings seed new Previews.
-						</a>
-						<a href="/workers/previews/configuration/#this-previews-settings">
-							This Preview's settings affect one branch only.
-						</a>
-					</section>
+						<section class="preview-copies" aria-label="Preview copies">
+							<a
+								class="preview-copy preview-copy-single"
+								href="/workers/previews/configuration/"
+							>
+								<span data-preview-branch>feature/login</span>
+								<strong>Preview URL</strong>
+								<small data-preview-detail>
+									Preview variables, secrets, bindings, and custom domain
+								</small>
+								<code data-preview-url>feature-login.app.example.com</code>
+							</a>
+						</section>
 
-					<section class="info-card resources-card">
-						<p class="eyebrow">Resources</p>
-						<a href="/workers/previews/resources/#automatically-isolated-resources">
-							Durable Objects, Workflows, and Containers isolate automatically.
-						</a>
-						<a href="/workers/previews/resources/#shared-account-level-resources">
-							KV, D1, R2, Queues, Vectorize, Hyperdrive, and service bindings
-							need explicit Preview settings.
-						</a>
-					</section>
+						<div class="repo-summary preview-summary">
+							<a href="/workers/previews/commands/">
+								<strong>Command:</strong> wrangler preview
+							</a>
+							<a href="/workers/previews/custom-domains/">
+								<strong>URL:</strong>{" "}
+								<span data-preview-summary-url>
+									feature-login.app.example.com
+								</span>
+							</a>
+							<a href="/workers/previews/resources/">
+								<strong>Preview:</strong> branch code with preview settings
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</figure>
@@ -205,6 +266,313 @@ const paths = [
 			var(--preview-bg);
 		background-size: 14px 14px;
 		overflow: hidden;
+	}
+
+	.repo-diagram {
+		display: grid;
+		gap: 14px;
+	}
+
+	.mode-input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.mode-tabs {
+		display: inline-flex;
+		align-items: center;
+		width: fit-content;
+		padding: 4px;
+		border: 1px solid var(--preview-border);
+		border-radius: 999px;
+		background: var(--preview-card);
+		box-shadow: 0 10px 28px rgb(0 0 0 / 6%);
+	}
+
+	.mode-tabs label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		cursor: pointer;
+		margin: 0;
+		min-width: 112px;
+		height: 36px;
+		padding: 0 12px;
+		border-radius: 999px;
+		color: var(--preview-muted);
+		font-size: 0.8125rem;
+		font-weight: 650;
+		line-height: 1;
+		text-align: center;
+	}
+
+	#worker-preview-production:checked
+		~ .mode-tabs
+		label[for="worker-preview-production"],
+	#worker-preview-previews:checked
+		~ .mode-tabs
+		label[for="worker-preview-previews"] {
+		background: var(--preview-brand-soft);
+		color: var(--preview-text);
+	}
+
+	.repo-stage {
+		display: none;
+		grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.2fr);
+		gap: 14px;
+		align-items: stretch;
+	}
+
+	#worker-preview-production:checked ~ .production-stage,
+	#worker-preview-previews:checked ~ .previews-stage {
+		display: grid;
+	}
+
+	.repo-window,
+	.app-card,
+	.preview-copy,
+	.repo-summary {
+		box-sizing: border-box;
+		border: 1px solid var(--preview-border);
+		border-radius: 12px;
+		background: var(--preview-card);
+		box-shadow: 0 10px 28px rgb(0 0 0 / 6%);
+	}
+
+	.repo-window {
+		display: grid;
+		grid-template-rows: auto auto 1fr;
+		min-height: 258px;
+		overflow: hidden;
+	}
+
+	.repo-titlebar {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		padding: 10px 12px;
+		border-bottom: 1px solid var(--preview-border);
+		color: var(--preview-muted);
+		font-size: 0.75rem;
+	}
+
+	.repo-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 999px;
+		background: var(--preview-border);
+	}
+
+	.repo-titlebar strong {
+		margin-left: 4px;
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.branch-selector {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 8px;
+		align-items: center;
+		margin: 12px;
+		padding: 10px 11px;
+		border: 1px solid var(--preview-border);
+		border-radius: 9px;
+		background: var(--preview-soft);
+		font-size: 0.8125rem;
+	}
+
+	.branch-selector span {
+		color: var(--preview-muted);
+	}
+
+	.branch-selector select {
+		appearance: none;
+		cursor: pointer;
+		width: 100%;
+		margin: 0;
+		padding: 0 22px 0 0;
+		border: 0;
+		background:
+			linear-gradient(45deg, transparent 50%, var(--preview-muted) 50%) right
+				8px center / 6px 6px no-repeat,
+			linear-gradient(135deg, var(--preview-muted) 50%, transparent 50%) right
+				4px center / 6px 6px no-repeat;
+		color: var(--preview-text);
+		font: inherit;
+		font-weight: 650;
+		line-height: 1.45;
+	}
+
+	.branch-selector select:focus,
+	.branch-selector select:focus-visible {
+		outline: none;
+		box-shadow: none;
+	}
+
+	.branch-selector strong {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.preview-branch-selector {
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 42%,
+			var(--preview-border)
+		);
+		background: var(--preview-brand-soft);
+	}
+
+	.file-list {
+		display: grid;
+		gap: 7px;
+		align-content: start;
+		margin: 0;
+		padding: 0 12px 12px;
+		list-style: none;
+	}
+
+	.file-list li {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 10px;
+		border: 1px solid var(--preview-border);
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--preview-card) 70%, transparent);
+		color: var(--preview-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.75rem;
+	}
+
+	.file-list li::before {
+		content: "";
+		width: 8px;
+		height: 10px;
+		border: 1px solid var(--preview-muted);
+		border-radius: 2px;
+		opacity: 0.65;
+	}
+
+	.app-card {
+		display: grid;
+		align-content: center;
+		gap: 12px;
+		min-height: 258px;
+		padding: 18px;
+		background: linear-gradient(
+			135deg,
+			var(--preview-brand-soft),
+			var(--preview-card) 72%
+		);
+	}
+
+	.app-card strong,
+	.preview-copy strong,
+	.repo-summary strong {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.app-card > strong {
+		font-size: 1.15rem;
+	}
+
+	.app-card span,
+	.preview-copy span,
+	.preview-copy small,
+	.preview-copy code,
+	.repo-summary a {
+		color: var(--preview-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	.app-card code {
+		display: inline-flex;
+		width: fit-content;
+		padding: 3px 7px;
+		border-radius: 7px;
+		background: var(--preview-soft);
+		color: var(--preview-text);
+		font-size: 0.75rem;
+	}
+
+	.preview-copies {
+		display: flex;
+		align-items: flex-start;
+		justify-content: stretch;
+		gap: 12px;
+		align-self: stretch;
+		min-width: 0;
+		transform: translateY(-12px);
+	}
+
+	.preview-copy {
+		position: relative;
+		isolation: isolate;
+		display: grid;
+		align-content: start;
+		gap: 12px;
+		width: 100%;
+		min-height: 258px;
+		margin-top: 0;
+		padding: 64px 24px 18px;
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 35%,
+			var(--preview-border)
+		);
+		background: linear-gradient(
+			135deg,
+			var(--preview-brand-soft),
+			var(--preview-card) 74%
+		);
+	}
+
+	.preview-copy::before,
+	.preview-copy::after {
+		content: "";
+		position: absolute;
+		inset: 5px -5px -5px 5px;
+		z-index: -1;
+		border: 1px solid var(--preview-border);
+		border-radius: 12px;
+		background: var(--preview-card);
+	}
+
+	.preview-copy::after {
+		inset: 10px -10px -10px 10px;
+		opacity: 0.65;
+	}
+
+	.preview-copy code {
+		margin-top: 4px;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		word-break: break-word;
+	}
+
+	.repo-summary {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0;
+		overflow: hidden;
+	}
+
+	.repo-summary a {
+		padding: 11px 12px;
+	}
+
+	.repo-summary a + a {
+		border-left: 1px solid var(--preview-border);
 	}
 
 	.flow-map {
@@ -533,6 +901,10 @@ const paths = [
 			grid-template-columns: 1fr;
 		}
 
+		.preview-copies {
+			transform: none;
+		}
+
 		.info-card {
 			min-height: 0;
 		}
@@ -542,3 +914,43 @@ const paths = [
 		}
 	}
 </style>
+
+<script>
+	for (const diagram of document.querySelectorAll(
+		".worker-previews-overview",
+	)) {
+		const select = diagram.querySelector(".preview-branch-select");
+		const card = diagram.querySelector(".preview-copy-single");
+		const branch = diagram.querySelector("[data-preview-branch]");
+		const detail = diagram.querySelector("[data-preview-detail]");
+		const url = diagram.querySelector("[data-preview-url]");
+		const summaryUrl = diagram.querySelector("[data-preview-summary-url]");
+
+		if (
+			!(select instanceof HTMLSelectElement) ||
+			!(card instanceof HTMLAnchorElement)
+		) {
+			continue;
+		}
+
+		const updatePreviewCopy = () => {
+			const option = select.selectedOptions[0];
+			if (!option) return;
+
+			const previewUrl = option.dataset.url || "feature-login.app.example.com";
+			card.href = option.dataset.href || "/workers/previews/configuration/";
+
+			if (branch) branch.textContent = option.value;
+			if (detail) {
+				detail.textContent =
+					option.dataset.detail ||
+					"Preview variables, secrets, bindings, and custom domain";
+			}
+			if (url) url.textContent = previewUrl;
+			if (summaryUrl) summaryUrl.textContent = previewUrl;
+		};
+
+		select.addEventListener("change", updatePreviewCopy);
+		updatePreviewCopy();
+	}
+</script>

@@ -10,40 +10,28 @@ products:
 
 import { WorkerPreviewsDiagram } from "~/components";
 
-Worker Previews let you push a branch and get a URL. Every branch gets its own isolated Worker -- with its own variables, secrets, bindings, and resources -- before anything touches production.
+Worker Previews let you test branch changes at a URL before merging them into production.
+
+Each Preview URL runs a branch's code with Preview-specific variables, secrets, bindings, and resources. This lets the branch behave like a copy of your live app for review and QA, without touching production resources, settings, or traffic.
 
 <WorkerPreviewsDiagram />
 
-Durable Objects, Workflows, and Containers are isolated automatically. KV, D1, and R2 can point at test resources when you [configure Preview bindings](/workers/previews/resources/).
-
-## Get started
-
-| I want to... | Do this |
-| --- | --- |
-| Get a Preview URL for every pull request | [Connect Git with Workers Builds](/workers/previews/get-started/#workers-builds) |
-| Preview a branch from my terminal | [`wrangler preview --name my-branch`](/workers/previews/get-started/#wrangler) |
-| Give a branch its own test variables, secrets, or bindings | [Configure Preview settings](/workers/previews/configuration/) |
-| Point a branch at test data instead of production | [Set up resource isolation](/workers/previews/resources/) |
-| Use `preview.example.com` instead of `workers.dev` | [Enable custom domains](/workers/previews/custom-domains/) |
-| Protect Preview URLs with sign-in | [Enable Cloudflare Access](#access-control) |
-| Understand Previews vs Version URLs vs Wrangler environments | [Compare workflows](/workers/configuration/compare-preview-workflows/) |
-
 ## How it works
 
-Your production branch runs `wrangler deploy`. Every other branch runs `wrangler preview`.
+Use `wrangler deploy` for production and `wrangler preview` for branch previews.
 
 | Branch | Command | What happens |
 | --- | --- | --- |
-| `main` | `wrangler deploy` | Deploys to production. |
-| `feature/login` | `wrangler preview` | Creates or updates a Preview with its own URL, settings, and isolated resources. |
+| `main` | `wrangler deploy` | Deploys your Worker to production with its production variables, secrets, bindings, resources, and custom domains. |
+| `feature/login` | `wrangler preview` | Creates or updates a Preview URL for that branch with Preview-specific variables, secrets, bindings, resources, and custom domains. |
 
 Each Preview has its own settings. [Shared preview settings](/workers/previews/configuration/#shared-preview-settings) are what new Previews start with. After a Preview exists, you can change that branch's settings without touching production or other Previews.
 
-:::caution[Previews are not production deployments]
+:::caution[Previews do not receive production traffic]
 
-Previews are not Worker versions, active deployments, or gradual deployments. A production branch build creates a version and can promote it to the active deployment. A preview build creates or updates a Preview for a branch that is not your production branch.
+Previews are not [active deployments](/workers/configuration/versions-and-deployments/#deployments), [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), or [Worker versions](/workers/configuration/versions-and-deployments/#versions). [Routes](/workers/configuration/routing/routes/), [cron triggers](/workers/configuration/cron-triggers/), and [queue consumers](/queues/configuration/javascript-apis/#consumer) target production Workers, not Previews.
 
-Routes, cron triggers, and queue consumers do not target Previews.
+Use a Preview URL or [custom domain Preview URL](/workers/previews/custom-domains/) to send HTTP traffic to a Preview.
 
 :::
 
@@ -56,7 +44,22 @@ Previews can be served on `workers.dev` or on a [custom domain](/workers/preview
 | `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
 | Custom domain | `<preview-name>.app.example.com` | `<deployment-id>-<preview-name>.app.example.com` |
 
-The Preview URL is the stable link for a branch or pull request. It always serves the latest deployment for that branch. The Deployment URL points at one exact deployment, which is useful when you need to compare or debug a specific deploy.
+The Preview URL is the stable URL for a branch or pull request. Share this URL with your team for review and QA. When you push a new commit to the branch and create a new Preview deployment, the same Preview URL serves the latest deployment for that branch.
+
+The Deployment URL points to one exact Preview deployment. Use a Deployment URL when you need to compare behavior between deployments, debug a specific deploy, or keep a link to a known version of a branch Preview.
+
+## Get started
+
+| I want to... | Do this |
+| --- | --- |
+| Give a branch its own test variables, secrets, or bindings | [Configure Preview settings](/workers/previews/configuration/) |
+| Point a branch at test data instead of production | [Set up resource isolation](/workers/previews/resources/) |
+| Get Preview URLs from Cloudflare-managed builds | [Use Workers Builds](/workers/previews/get-started/#workers-builds) |
+| Get Preview URLs from external CI | [Run `wrangler preview` in your CI workflow](/workers/previews/get-started/#external-ci) |
+| Preview a branch from my terminal | [Run `wrangler preview`](/workers/previews/get-started/#wrangler) |
+| Use `preview.example.com` instead of `workers.dev` | [Enable custom domains](/workers/previews/custom-domains/) |
+| Make Preview URLs private with sign-in | [Enable Cloudflare Access](#access-control) |
+| Understand Previews vs Version URLs vs Wrangler environments | [Compare workflows](/workers/configuration/compare-preview-workflows/) |
 
 ## Ways to create Previews
 
