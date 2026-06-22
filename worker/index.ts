@@ -1,6 +1,7 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
+import { CLOUDFLARE_API_OAUTH_SCOPES } from "./oauth-scopes";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -9,6 +10,17 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 });
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
+
+const CLOUDFLARE_OAUTH_ISSUER = "https://dash.cloudflare.com";
+
+const OAUTH_PROTECTED_RESOURCE = JSON.stringify({
+	resource: "https://developers.cloudflare.com",
+	authorization_servers: [CLOUDFLARE_OAUTH_ISSUER],
+	bearer_methods_supported: ["header"],
+	scopes_supported: CLOUDFLARE_API_OAUTH_SCOPES,
+	resource_name: "Cloudflare API documentation",
+	resource_documentation: "https://developers.cloudflare.com/api/",
+});
 
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
@@ -89,6 +101,14 @@ export default class extends WorkerEntrypoint<Env> {
 				headers: {
 					"Content-Type":
 						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+				},
+			});
+		}
+
+		if (pathname === "/.well-known/oauth-protected-resource") {
+			return new Response(OAUTH_PROTECTED_RESOURCE, {
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
 				},
 			});
 		}

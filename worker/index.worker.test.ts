@@ -36,6 +36,36 @@ describe("Cloudflare Docs", () => {
 	});
 
 	describe("json endpoints", () => {
+		it("OAuth protected resource metadata", async () => {
+			const request = new Request(
+				"http://fakehost/.well-known/oauth-protected-resource",
+			);
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(200);
+			expect(response.headers.get("Content-Type")).toBe(
+				"application/json; charset=utf-8",
+			);
+
+			const json: any = await response.json();
+
+			expect(json.resource).toBe("https://developers.cloudflare.com");
+			expect(json.authorization_servers).toEqual([
+				"https://dash.cloudflare.com",
+			]);
+			expect(json.bearer_methods_supported).toContain("header");
+			expect(json.scopes_supported.length).toBeGreaterThan(400);
+			expect(json.scopes_supported).toContain("dns.read");
+			expect(json.scopes_supported).toContain("workers:write");
+			expect(json.scopes_supported).toContain("flagship:write");
+			expect(json.scopes_supported).toContain("account:read");
+			expect(json.scopes_supported).not.toContain("iot.read");
+			expect(json.scopes_supported).not.toContain("tenant:read");
+			expect(json.scopes_supported).not.toContain("web3-hostnames.read");
+			expect(json.resource_documentation).toBe(
+				"https://developers.cloudflare.com/api/",
+			);
+		});
+
 		it("compatibility flags", async () => {
 			const request = new Request(
 				"http://fakehost/workers/platform/compatibility-flags.json",
