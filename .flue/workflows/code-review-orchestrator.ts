@@ -14,6 +14,7 @@
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import { createAgent } from "@flue/runtime";
+import reconcileSkill from "../.agents/skills/reconcile-code-review/SKILL.md" with { type: "skill" };
 import {
 	getDefaultWorkspace,
 	getShellSandbox,
@@ -30,25 +31,23 @@ import {
 	updateIssueComment,
 	type GitHubIssueComment,
 } from "../lib/github";
-import { getInternalHeaders } from "../lib/internal-auth";
 import {
-	dispatchStyleGuideReview,
-	mergeStyleGuideResults,
+	runStyleGuideReviewInProcess,
 	selectStyleGuideFiles,
 	STYLE_GUIDE_CONCURRENCY,
-	withConcurrency,
-} from "../lib/style-guide-fanout";
+} from "../lib/style-guide-inproc";
 import type {
 	StyleGuideFinding,
 	StyleGuideResult,
 } from "../lib/style-guide-results";
-import { writeDiffToR2 } from "../lib/code-review-diff";
+import { writeDiffToWorkspace } from "../lib/code-review-diff";
 import {
 	BOT_COMMENT_MARKER,
 	type DiffMode,
 	extractReviewedHeadSha,
 	getAutoReviewCount,
 	incrementAutoReviewCount,
+	isReviewLimitIgnored,
 	partitionComments,
 } from "../lib/code-review-state";
 import {
@@ -75,7 +74,7 @@ interface CodeReviewOrchestratorPayload {
 	triggerEyesReactionId?: number | null;
 }
 
-export async function run({ id: runId, init, payload, env, req }: FlueContext) {
+export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
 
@@ -88,10 +87,14 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 	const workspace = getDefaultWorkspace();
 
 	// ── Auto-review limit check ────────────────────────────────────────────────
-	// Automatic reviews are capped at 2 per PR. Codeowner commands bypass this.
+	// Automatic reviews are capped at 2 per PR. Codeowner commands bypass this,
+	// and the /ignore-review-limit command permanently lifts the cap for the PR.
 	if (!input.bypassReviewLimit) {
-		const autoReviewCount = await getAutoReviewCount(bucket, input.number);
-		if (autoReviewCount >= 2) {
+		const [autoReviewCount, limitIgnored] = await Promise.all([
+			getAutoReviewCount(bucket, input.number),
+			isReviewLimitIgnored(bucket, input.number),
+		]);
+		if (autoReviewCount >= 2 && !limitIgnored) {
 			console.log({
 				message: `Auto-review limit reached: PR #${input.number} — ${autoReviewCount} reviews already run`,
 				event: "code_review_orchestrator",
@@ -137,29 +140,10 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
-	// Write reconciler skill from R2 into workspace at request time
-	const reconcileSkillObj = await bucket.get(
-		".agents/skills/reconcile-code-review/SKILL.md",
-	);
-	if (!reconcileSkillObj) {
-		throw new Error(
-			"Missing .agents/skills/reconcile-code-review/SKILL.md in DOCS_FLUE_BUCKET. " +
-				"For local dev, run `pnpm run flue:sync-agents:local` before invoking the workflow.",
-		);
-	}
-	if (reconcileSkillObj) {
-		await workspace.mkdir("/.agents/skills/reconcile-code-review", {
-			recursive: true,
-		});
-		await workspace.writeFile(
-			"/.agents/skills/reconcile-code-review/SKILL.md",
-			await reconcileSkillObj.text(),
-		);
-	}
-
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+		skills: [reconcileSkill],
 	}));
 	const harness = await init(agent);
 
@@ -293,18 +277,16 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 	// 	action: "context_fetched",
 	// });
 
-	// Run-scoped context directory in R2 so concurrent reviews for the same PR
-	// cannot overwrite each other's manifest, patches, or comments.
-	// Written to R2 (not the local workspace) so specialist Durable Objects,
-	// which run in separate isolates, can read the files into their own workspace.
+	// Run-scoped diff directory in the shared Workspace. The style-guide review
+	// sessions run in this same Durable Object, so the diff is staged directly
+	// in the Workspace (read by the `code` tool) — no R2 round-trip. prDir stays
+	// the R2 key prefix for the cross-run review-state objects.
 	const prDir = `diffs/pr-${input.number}`;
 	const diffDir = `${prDir}/runs/${runId}`;
-	const commentsPath = `${diffDir}/comments.json`;
 
-	// ── 2. Write diff and comments to R2, and post placeholder comment ────────
+	// ── 2. Stage the diff in the Workspace, and post the placeholder comment ──
 	await Promise.all([
-		writeDiffToR2(bucket, diffDir, allFiles, pr),
-		bucket.put(commentsPath, JSON.stringify(allComments, null, 2)),
+		writeDiffToWorkspace(workspace, diffDir, allFiles, pr),
 		// In comment mode, immediately post/update with a "review in progress"
 		// message so the reviewer sees something right away.
 		reviewMode === "comment"
@@ -322,22 +304,9 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 			: Promise.resolve(),
 	]);
 
-	// console.log({
-	// 	message: `Code review context written to R2: PR #${input.number}`,
-	// 	event: "code_review_orchestrator",
-	// 	number: input.number,
-	// 	diffDir,
-	// 	commentsPath,
-	// 	runId,
-	// 	action: "r2_written",
-	// });
-
 	let styleGuideResult: StyleGuideResult;
 	try {
 		const styleGuideFiles = selectStyleGuideFiles(allFiles);
-		const internalHeaders = getInternalHeaders(
-			typedEnv as Record<string, string>,
-		);
 		console.log({
 			message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
 			event: "code_review_orchestrator",
@@ -349,22 +318,25 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 			action: "style_guide_fanout_start",
 		});
 
-		const styleGuideResults = await withConcurrency(
-			styleGuideFiles.map(
-				(file, index) => async () =>
-					dispatchStyleGuideReview(
-						`${runId}:style-guide:${index}`,
-						input.number,
-						diffDir,
-						commentsPath,
-						req,
-						internalHeaders,
-						file.filename,
-					),
-			),
-			STYLE_GUIDE_CONCURRENCY,
-		);
-		styleGuideResult = mergeStyleGuideResults(styleGuideResults);
+		// In-process fan-out: one harness over a single shared workspace,
+		// hydrated once, with one concurrent session per file. A single file's
+		// failure degrades to an empty result rather than aborting the review.
+		styleGuideResult = await runStyleGuideReviewInProcess({
+			init,
+			workspace,
+			loader,
+			prNumber: input.number,
+			pullRequest: {
+				number: pr.number,
+				title: pr.title,
+				base: pr.base.ref,
+				head: pr.head.ref,
+			},
+			diffDir,
+			files: styleGuideFiles,
+			runId,
+			concurrency: STYLE_GUIDE_CONCURRENCY,
+		});
 		console.log({
 			message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s) across ${styleGuideResult.reviewedFiles.length} file(s)`,
 			event: "code_review_orchestrator",

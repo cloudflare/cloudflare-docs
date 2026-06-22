@@ -28,6 +28,19 @@ To use a custom origin server, you need to meet the following requirements:
 
 To use a custom origin, select that option when [creating a new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](/api/resources/custom_hostnames/methods/create/).
 
+## Cloud provider origins (Azure, AWS, GCP)
+
+When using a cloud provider endpoint as a custom origin (for example, Azure App Service, AWS ALB, or GCP Cloud Run), the provider may reject requests with a `404` or `400` error if the `Host` header does not match a domain configured on that endpoint.
+
+By default, Cloudflare sends the original custom hostname as the `Host` header. If your cloud provider expects a different hostname:
+
+1. Configure the cloud provider to accept the custom hostname as a valid domain, or
+2. Use an [Origin Rule](/rules/origin-rules/) to override the `Host` header to match the hostname your cloud provider expects.
+
+:::note
+This is a common issue with Azure App Service, where the platform returns a default parking page (404) when the incoming `Host` header does not match any configured custom domain.
+:::
+
 ## SNI rewrites
 
 <Render

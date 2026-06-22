@@ -85,6 +85,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
+          opencode_version: "1.17.7"
           agent: docs
           mentions: "/bonk"
           permissions: write
@@ -140,6 +141,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
+          opencode_version: "1.17.7"
           agent: docs
           permissions: write
           token_permissions: NO_PUSH

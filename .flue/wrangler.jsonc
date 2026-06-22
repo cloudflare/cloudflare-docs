@@ -33,11 +33,31 @@
 			"tag": "v3",
 			"renamed_classes": [
 				{ "from": "OrchestrateWorkflow", "to": "FlueOrchestrateWorkflow" },
-				{ "from": "CodeReviewOrchestratorWorkflow", "to": "FlueCodeReviewOrchestratorWorkflow" },
-				{ "from": "SpamAndOffTopicFilterWorkflow", "to": "FlueSpamAndOffTopicFilterWorkflow" },
-				{ "from": "StyleGuideReviewWorkflow", "to": "FlueStyleGuideReviewWorkflow" },
-				{ "from": "DependabotReviewWorkflow", "to": "FlueDependabotReviewWorkflow" },
+				{
+					"from": "CodeReviewOrchestratorWorkflow",
+					"to": "FlueCodeReviewOrchestratorWorkflow",
+				},
+				{
+					"from": "SpamAndOffTopicFilterWorkflow",
+					"to": "FlueSpamAndOffTopicFilterWorkflow",
+				},
+				{
+					"from": "StyleGuideReviewWorkflow",
+					"to": "FlueStyleGuideReviewWorkflow",
+				},
+				{
+					"from": "DependabotReviewWorkflow",
+					"to": "FlueDependabotReviewWorkflow",
+				},
 			],
+		},
+		{
+			// The style-guide-review workflow was retired: its per-file review now
+			// runs in-process inside the code-review orchestrator via concurrent
+			// sessions (lib/style-guide-inproc.ts), so the standalone workflow's
+			// Durable Object class is no longer generated.
+			"tag": "v4",
+			"deleted_classes": ["FlueStyleGuideReviewWorkflow"],
 		},
 	],
 	"observability": {

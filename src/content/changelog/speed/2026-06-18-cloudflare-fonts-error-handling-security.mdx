@@ -1,0 +1,9 @@
+---
+title: Cloudflare Fonts error handling and security improvements
+description: Cloudflare Fonts now passes `/cf-fonts` requests through to the origin on errors and includes additional input validation for security.
+products:
+  - speed
+date: 2026-06-18
+---
+
+Cloudflare Fonts now forwards `/cf-fonts` requests to your origin server when it encounters invalid paths or unexpected runtime errors, instead of returning 4xx or 5xx responses directly. This update also adds additional input validation to enhance security.

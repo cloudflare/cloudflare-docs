@@ -1,128 +1,128 @@
 [
 	{
 		"id": "core-content",
-		"file": "always/core-content.md",
+		"file": "reference/always/core-content.md",
 		"load": "always",
 		"when": "Always load for any selected MDX file with added content lines."
 	},
 	{
 		"id": "links",
-		"file": "conditional/links.md",
+		"file": "reference/conditional/links.md",
 		"load": "conditional",
 		"when": "Patch contains Markdown links, href=, http, root-relative paths, or anchors."
 	},
 	{
 		"id": "code-blocks",
-		"file": "conditional/code-blocks.md",
+		"file": "reference/conditional/code-blocks.md",
 		"load": "conditional",
 		"when": "Patch contains fenced code blocks."
 	},
 	{
 		"id": "imports",
-		"file": "conditional/imports.md",
+		"file": "reference/conditional/imports.md",
 		"load": "conditional",
 		"when": "Patch contains import statements or JSX component tags."
 	},
 	{
 		"id": "frontmatter",
-		"file": "conditional/frontmatter.md",
+		"file": "reference/conditional/frontmatter.md",
 		"load": "conditional",
 		"when": "Patch changes frontmatter fields at the top of the file."
 	},
 	{
 		"id": "component-anchor-heading",
-		"file": "components/anchor-heading.md",
+		"file": "reference/components/anchor-heading.md",
 		"load": "component",
 		"componentNames": ["AnchorHeading"],
 		"when": "Patch contains `<AnchorHeading` or imports `AnchorHeading`."
 	},
 	{
 		"id": "component-api-request",
-		"file": "components/api-request.md",
+		"file": "reference/components/api-request.md",
 		"load": "component",
 		"componentNames": ["APIRequest"],
 		"when": "Patch contains `<APIRequest` or imports `APIRequest`."
 	},
 	{
 		"id": "component-curl",
-		"file": "components/curl.md",
+		"file": "reference/components/curl.md",
 		"load": "component",
 		"componentNames": ["CURL"],
 		"when": "Patch contains `<CURL` or imports `CURL`."
 	},
 	{
 		"id": "component-dash-button",
-		"file": "components/dash-button.md",
+		"file": "reference/components/dash-button.md",
 		"load": "component",
 		"componentNames": ["DashButton"],
 		"when": "Patch contains `<DashButton` or imports `DashButton`."
 	},
 	{
 		"id": "component-extra-flag-details",
-		"file": "components/extra-flag-details.md",
+		"file": "reference/components/extra-flag-details.md",
 		"load": "component",
 		"componentNames": ["ExtraFlagDetails"],
 		"when": "Patch contains `<ExtraFlagDetails` or imports `ExtraFlagDetails`."
 	},
 	{
 		"id": "component-file-tree",
-		"file": "components/file-tree.md",
+		"file": "reference/components/file-tree.md",
 		"load": "component",
 		"componentNames": ["FileTree"],
 		"when": "Patch contains `<FileTree` or imports `FileTree`."
 	},
 	{
 		"id": "component-github-code",
-		"file": "components/github-code.md",
+		"file": "reference/components/github-code.md",
 		"load": "component",
 		"componentNames": ["GitHubCode"],
 		"when": "Patch contains `<GitHubCode` or imports `GitHubCode`."
 	},
 	{
 		"id": "component-markdown",
-		"file": "components/markdown.md",
+		"file": "reference/components/markdown.md",
 		"load": "component",
 		"componentNames": ["Markdown"],
 		"when": "Patch contains `<Markdown` or imports `Markdown`."
 	},
 	{
 		"id": "component-package-managers",
-		"file": "components/package-managers.md",
+		"file": "reference/components/package-managers.md",
 		"load": "component",
 		"componentNames": ["PackageManagers"],
 		"when": "Patch contains `<PackageManagers` or imports `PackageManagers`."
 	},
 	{
 		"id": "component-steps",
-		"file": "components/steps.md",
+		"file": "reference/components/steps.md",
 		"load": "component",
 		"componentNames": ["Steps"],
 		"when": "Patch contains `<Steps` or imports `Steps`."
 	},
 	{
 		"id": "component-subtract-ip-calculator",
-		"file": "components/subtract-ip-calculator.md",
+		"file": "reference/components/subtract-ip-calculator.md",
 		"load": "component",
 		"componentNames": ["SubtractIPCalculator"],
 		"when": "Patch contains `<SubtractIPCalculator` or imports `SubtractIPCalculator`."
 	},
 	{
 		"id": "component-tabs",
-		"file": "components/tabs.md",
+		"file": "reference/components/tabs.md",
 		"load": "component",
 		"componentNames": ["Tabs"],
 		"when": "Patch contains `<Tabs` or imports `Tabs`."
 	},
 	{
 		"id": "component-typescript-example",
-		"file": "components/typescript-example.md",
+		"file": "reference/components/typescript-example.md",
 		"load": "component",
 		"componentNames": ["TypeScriptExample"],
 		"when": "Patch contains `<TypeScriptExample` or imports `TypeScriptExample`."
 	},
 	{
 		"id": "component-wrangler-config",
-		"file": "components/wrangler-config.md",
+		"file": "reference/components/wrangler-config.md",
 		"load": "component",
 		"componentNames": ["WranglerConfig"],
 		"when": "Patch contains `<WranglerConfig` or imports `WranglerConfig`."

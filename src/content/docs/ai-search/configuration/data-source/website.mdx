@@ -47,13 +47,9 @@ If the `<lastmod>` attribute is not defined, AI Search uses the `<changefreq>` a
 
 ## Storage
 
-For instances with [built-in storage](/ai-search/configuration/data-source/built-in-storage/), crawled pages are stored in managed storage automatically.
+Crawled pages are stored in built-in storage automatically.
 
-For older instances created before **April 16, 2026**, AI Search creates a dedicated R2 bucket in your account to store crawled pages. This bucket is automatically managed and is used only for content discovered by the crawler.
-
-:::note
-For instances with a dedicated R2 bucket, do not modify the bucket directly as it may disrupt the indexing flow and cause content to not be updated properly.
-:::
+To see the items parsed from your website, [list the instance's items](/ai-search/api/items/workers-binding/#itemslist) with the Items API, or open the **Items** tab in the dashboard (**AI** > **AI Search** > your instance > **Items**).
 
 ## Configuration
 
@@ -89,7 +85,7 @@ When custom sitemap URLs are configured, AI Search uses those sitemap URLs inste
 You can choose how pages are parsed during crawling:
 
 - **Static sites**: Downloads the raw HTML for each page.
-- **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content. For instances with [built-in storage](/ai-search/configuration/data-source/built-in-storage/), Browser Run is included. For older instances, [Browser Run](/browser-run/pricing/) limits and billing apply.
+- **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content.
 
 ### Extra headers
 
@@ -294,7 +290,7 @@ If a CSS selector does not match any elements on a page, the resulting Markdown 
 ### Interaction with other features
 
 - **Path filtering**: [Path filtering](/ai-search/configuration/indexing/path-filtering/) takes priority over content selectors. Pages excluded by path filters are never crawled, so content selectors do not apply to them.
-- **Browser Run**: Content selectors apply to the HTML that AI Search receives. For sites that render content with JavaScript, turn on [Browser Run](#rendering-mode) so that selectors can target the fully rendered DOM.
+- **Rendering mode**: Content selectors apply to the HTML that AI Search receives. For sites that render content with JavaScript, use [Rendered sites](#rendering-mode) mode so that selectors can target the fully rendered DOM.
 - **Automatic re-indexing**: Updating content selectors triggers a new [sync job](/ai-search/configuration/indexing/) immediately, so changes are applied to all indexed pages.
 
 ### Limits
@@ -425,4 +421,4 @@ The regular AI Search [limits](/ai-search/platform/limits-pricing/) apply when u
 
 The crawler will download and index pages only up to the maximum object limit supported for an AI Search instance, and it processes the first set of pages it visits until that limit is reached. In addition, any files that are downloaded but exceed the file size limit will not be indexed.
 
-For instances with [built-in storage](/ai-search/configuration/data-source/built-in-storage/), Browser Run and storage are included. For older instances, [R2](/r2/pricing/), [Vectorize](/vectorize/platform/pricing/), and [Browser Run](/browser-run/pricing/) are billed separately.
+Browser Run and storage are included for AI Search crawling. For full pricing details, refer to [Limits and pricing](/ai-search/platform/limits-pricing/).

@@ -24,6 +24,19 @@ const ModelFeatures = ({ model }: { model: ModelType }) => {
 		? `https://dash.cloudflare.com/?to=/:account/ai/models/${(model as ResolvedModel).modelId}`
 		: null;
 
+	// `requestFormats` lives directly on ResolvedModel (catalog-only) rather
+	// than the legacy `properties` array because Property.value is a string
+	// and we need to preserve the original list. Format identifiers like
+	// "chat-completions" are title-cased for display.
+	const requestFormats = isCatalog
+		? ((model as ResolvedModel).requestFormats ?? null)
+		: null;
+	const formatRequestFormat = (format: string) =>
+		format
+			.split(/[-_]/)
+			.map((part) => (part ? part[0].toUpperCase() + part.slice(1) : part))
+			.join(" ");
+
 	return (
 		<>
 			{Object.keys(properties).length ? (
@@ -143,6 +156,12 @@ const ModelFeatures = ({ model }: { model: ModelType }) => {
 								<tr>
 									<td>Batch</td>
 									<td>Yes</td>
+								</tr>
+							)}
+							{requestFormats && requestFormats.length > 0 && (
+								<tr>
+									<td>Request formats</td>
+									<td>{requestFormats.map(formatRequestFormat).join(", ")}</td>
 								</tr>
 							)}
 							{properties.partner && (

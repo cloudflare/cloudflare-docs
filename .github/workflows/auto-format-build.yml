@@ -16,7 +16,6 @@ on:
       - "**/*.json"
       - "**/*.yaml"
       - "**/*.yml"
-      - "**/*.md"
       - "**/*.astro"
 
 permissions:
@@ -70,7 +69,7 @@ jobs:
           git fetch --depth=1 origin "$BASE_SHA"
           mapfile -t files < <(
             git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
-            | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$' \
+            | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|astro)$' \
             | while IFS= read -r f; do [[ -L "$f" ]] || echo "$f"; done \
             || true
           )

@@ -146,6 +146,29 @@ const hasRemainingExamples = remainingExamples.length > 0;
 const description = model.description;
 const isBeta = hasProperty(model.properties, "beta");
 
+// Catalog `banner` is rendered as a Starlight `Aside`. Map the upstream
+// `severity` (observed today: "warning", "info") onto the four Aside types;
+// unknown severities fall back to the neutral "note" style so a new
+// upstream value never breaks the build. Defined as a function so the
+// switch only evaluates inside the `banner && (...)` JSX block on pages
+// that actually carry a banner — most model pages have `banner: null`.
+const banner = model.banner ?? null;
+function bannerAsideType(
+	severity: string,
+): "note" | "tip" | "caution" | "danger" {
+	switch (severity.toLowerCase()) {
+		case "info":
+			return "tip";
+		case "warning":
+			return "caution";
+		case "danger":
+		case "error":
+			return "danger";
+		default:
+			return "note";
+	}
+}
+
 let hasPlayground =
 	model.task.name === "Text Generation" && model.hosting === "hosted";
 if (model.name.includes("@cf/openai/gpt-oss")) {
@@ -230,6 +253,31 @@ const starlightPageProps = {
 	</div>
 
 	<p class="mt-3 mb-2!">{description}</p>
+
+	{
+		banner && (
+			<Aside type={bannerAsideType(banner.severity)}>
+				<p>
+					{banner.title && <strong>{banner.title}: </strong>}
+					{banner.text}
+					{banner.link && (
+						<>
+							{" "}
+							<a
+								href={banner.link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={`${banner.link.label} (${displayName})`}
+							>
+								{banner.link.label}
+								<span class="external-link"> ↗</span>
+							</a>
+						</>
+					)}
+				</p>
+			</Aside>
+		)
+	}
 
 	{
 		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (

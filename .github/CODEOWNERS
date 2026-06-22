@@ -23,17 +23,18 @@ package.json @cloudflare/content-engineering
 /src/content/docs/agent-lee/ @asomaiah-cf @kczajkowski @dmmulroy @Brayden @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @thomasgauvin @cloudflare/product-owners
-/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
-/src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
+/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @adriandlam @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
+/src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @zeke @superhighfives @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/product-owners
 /src/content/partials/vectorize/ @elithrar @mchenco @sejoker @cloudflare/product-owners
-/src/content/partials/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
-/src/content/release-notes/workers-ai.yaml @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
-/src/content/release-notes/ai-gateway.yaml @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
+/src/content/partials/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @adriandlam @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
+/src/content/release-notes/workers-ai.yaml @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
+/src/content/release-notes/ai-gateway.yaml @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @adriandlam @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/product-owners
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @G4brym @mchenco @digizeph @cloudflare/product-owners
-/src/content/catalog-models/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners
-/bin/fetch-catalog-models.ts @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners @kodster28
+/src/content/release-notes/ai-search.yaml @rita3ko @irvinebroque @aninibread @G4brym @mchenco @digizeph @cloudflare/product-owners
+/src/content/catalog-models/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners
+/bin/fetch-catalog-models.ts @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners @kodster28
 /src/content/docs/agent-memory/ @lambrospetrou @rts-rob @pmesgari @cloudflare/product-owners
 
 # AI Crawl Control
@@ -69,6 +70,7 @@ package.json @cloudflare/content-engineering
 # Changelogs
 
 /src/content/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/ai-search/ @cloudflare/pm-changelogs @rita3ko @irvinebroque @aninibread @mchenco @digizeph @cloudflare/product-owners
 /src/content/changelog/dns/ @cloudflare/pm-changelogs @cloudflare/product-owners @hannes-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
 /src/content/changelog/waf/ @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF @danielegm @ay-cf
 /src/content/changelog/waiting-room/ @angelampcosta @dcpena @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @hsaxenaCF @danielegm @cloudflare/product-owners
@@ -266,8 +268,12 @@ package.json @cloudflare/content-engineering
 
 # Radar
 
-/src/content/docs/radar/ @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners
-/src/content/release-notes/radar.yaml @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners
+/src/content/changelog/radar/ @cloudflare/pm-changelogs @cloudflare/product-owners @laiyi-ohlsen
+/src/content/docs/radar/ @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners @laiyi-ohlsen
+/src/content/release-notes/radar.yaml @cdeath @rubenalex @cloudflare/radar @cloudflare/product-owners @laiyi-ohlsen
+/src/assets/images/radar/ @cloudflare/pm-changelogs @cloudflare/product-owners @laiyi-ohlsen
+/src/content/directory/radar.yaml @cloudflare/product-owners @laiyi-ohlsen
+/src/icons/radar.svg @cloudflare/product-owners @laiyi-ohlsen
 
 # Reference architecture
 

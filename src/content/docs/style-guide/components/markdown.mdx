@@ -19,7 +19,7 @@ Code blocks should not be used with this component, as they will not receive syn
 
 :::
 
-```mdx live
+```mdx
 import { Markdown } from "~/components";
 
 <Markdown text="**foo** <br/> [bar](/style-guide/components/markdown/)" />
@@ -41,7 +41,7 @@ The Markdown component uses the [`dedent`](https://www.npmjs.com/package/dedent)
 
 This is because the [CommonMark spec](https://spec.commonmark.org/0.22/#indented-code-blocks) treats indented text as code blocks, unlike [MDX](https://mdxjs.com/docs/what-is-mdx/#:~:text=Indented%20code%20does%20not%20work%20in%20MDX%3A).
 
-```mdx live
+```mdx
 import { Markdown } from "~/components";
 
 <>

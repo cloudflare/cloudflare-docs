@@ -1,0 +1,363 @@
+{
+	"model_id": "runwayml/aleph-2",
+	"provider_id": "runwayml",
+	"name": "RunwayML Aleph 2",
+	"description": "RunwayML's video editing model. Edit one frame to update your whole video, make changes across multiple shots, and work with up to 30 seconds of video. Supports keyframe-guided editing for precise control over specific moments in the clip.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Editing",
+		"Video-to-Video",
+		"Keyframe Control",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Video Edit",
+			"description": "Apply a text-only edit to an existing video",
+			"input": {
+				"prompt": "Transform the scene into a golden-hour sunset with warm lighting",
+				"video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4"
+			},
+			"output": {
+				"video": "https://dnznrvs05pmza.cloudfront.net/7449093b-e574-41a5-8308-05e4692fa652.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://dnznrvs05pmza.cloudfront.net/7449093b-e574-41a5-8308-05e4692fa652.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/aleph-2',\n  {\n    prompt: 'Transform the scene into a golden-hour sunset with warm lighting',\n    video_uri: 'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"runwayml/aleph-2\",\n  \"input\": {\n    \"prompt\": \"Transform the scene into a golden-hour sunset with warm lighting\",\n    \"video_uri\": \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Keyframe-Guided Edit",
+			"description": "Edit a video using a reference image anchored to the first frame of the output",
+			"input": {
+				"prompt": "Edit the video to match the provided reference frame",
+				"video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/nature-close-up.mp4",
+				"prompt_images": [
+					{
+						"uri": "https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg",
+						"position": "first"
+					}
+				]
+			},
+			"output": {
+				"video": "https://dnznrvs05pmza.cloudfront.net/cd7388fe-09d6-4b16-afc5-24bb315eaf14.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://dnznrvs05pmza.cloudfront.net/cd7388fe-09d6-4b16-afc5-24bb315eaf14.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/aleph-2',\n  {\n    prompt: 'Edit the video to match the provided reference frame',\n    video_uri: 'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/nature-close-up.mp4',\n    prompt_images: [\n      {\n        uri: 'https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg',\n        position: 'first',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"runwayml/aleph-2\",\n  \"input\": {\n    \"prompt\": \"Edit the video to match the provided reference frame\",\n    \"video_uri\": \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/nature-close-up.mp4\",\n    \"prompt_images\": [\n      {\n        \"uri\": \"https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg\",\n        \"position\": \"first\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Timed Keyframe Edit",
+			"description": "Place a guidance image at a specific timestamp within the input video using keyframes[].seconds",
+			"input": {
+				"prompt": "Change the background to a futuristic cityscape at night",
+				"video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/simple-text-to-video.mp4",
+				"keyframes": [
+					{
+						"uri": "https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg",
+						"seconds": 2
+					}
+				]
+			},
+			"output": {
+				"video": "https://dnznrvs05pmza.cloudfront.net/a7e054fa-1cf2-4265-a35c-518b8c4d6a1a.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://dnznrvs05pmza.cloudfront.net/a7e054fa-1cf2-4265-a35c-518b8c4d6a1a.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/aleph-2',\n  {\n    prompt: 'Change the background to a futuristic cityscape at night',\n    video_uri: 'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/simple-text-to-video.mp4',\n    keyframes: [\n      {\n        uri: 'https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg',\n        seconds: 2.0,\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"runwayml/aleph-2\",\n  \"input\": {\n    \"prompt\": \"Change the background to a futuristic cityscape at night\",\n    \"video_uri\": \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/simple-text-to-video.mp4\",\n    \"keyframes\": [\n      {\n        \"uri\": \"https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg\",\n        \"seconds\": 2.0\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Content Moderation Override",
+			"description": "Edit a video featuring public figures with relaxed content moderation",
+			"input": {
+				"prompt": "Make the background a dramatic stormy sky",
+				"video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4",
+				"content_moderation": {
+					"public_figure_threshold": "low"
+				}
+			},
+			"output": {
+				"video": "https://dnznrvs05pmza.cloudfront.net/ea5b1ccd-3dd6-43c3-86e3-5ed720849e92.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://dnznrvs05pmza.cloudfront.net/ea5b1ccd-3dd6-43c3-86e3-5ed720849e92.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/aleph-2',\n  {\n    prompt: 'Make the background a dramatic stormy sky',\n    video_uri: 'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4',\n    content_moderation: {\n      public_figure_threshold: 'low',\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"runwayml/aleph-2\",\n  \"input\": {\n    \"prompt\": \"Make the background a dramatic stormy sky\",\n    \"video_uri\": \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4\",\n    \"content_moderation\": {\n      \"public_figure_threshold\": \"low\"\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://runwayml.com/",
+	"terms": "https://runwayml.com/terms-of-use",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/runwayml/aleph-2.png",
+	"metadata": {
+		"Input Modalities": "Text, Image, Video",
+		"Max Input Duration": "30 seconds",
+		"Max Keyframes": "5",
+		"Operation": "Video-to-Video Editing"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-15 19:47:34",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"content_moderation": {
+					"additionalProperties": false,
+					"description": "Settings that affect the behavior of the content moderation system",
+					"properties": {
+						"public_figure_threshold": {
+							"description": "When set to \"low\", content moderation is less strict about recognizable public figures",
+							"enum": [
+								"auto",
+								"low"
+							],
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"duration": {
+					"description": "Duration of the source video in seconds. Used for billing only \u2014 not sent to RunwayML. Provide this so the gateway can compute per-second video cost accurately.",
+					"exclusiveMinimum": 0,
+					"type": "number"
+				},
+				"keyframes": {
+					"description": "Timed guidance images placed at specific points in the input video. Each entry has a uri and either seconds (absolute timestamp) or at (fractional position). Up to 5.",
+					"items": {
+						"anyOf": [
+							{
+								"additionalProperties": false,
+								"properties": {
+									"seconds": {
+										"description": "Absolute timestamp in seconds from the start of the input video",
+										"maximum": 30,
+										"minimum": 0,
+										"type": "number"
+									},
+									"uri": {
+										"description": "HTTPS URL, Runway URI, or data URI of the guidance image",
+										"type": "string"
+									}
+								},
+								"required": [
+									"uri",
+									"seconds"
+								],
+								"type": "object"
+							},
+							{
+								"additionalProperties": false,
+								"properties": {
+									"at": {
+										"description": "Position as a fraction [0.0, 1.0] of the input video duration",
+										"maximum": 1,
+										"minimum": 0,
+										"type": "number"
+									},
+									"uri": {
+										"description": "HTTPS URL, Runway URI, or data URI of the guidance image",
+										"type": "string"
+									}
+								},
+								"required": [
+									"uri",
+									"at"
+								],
+								"type": "object"
+							}
+						]
+					},
+					"maxItems": 5,
+					"minItems": 1,
+					"type": "array"
+				},
+				"prompt": {
+					"description": "Text prompt describing the edit to apply to the input video",
+					"maxLength": 1000,
+					"minLength": 1,
+					"type": "string"
+				},
+				"prompt_images": {
+					"description": "Image keyframes for guiding the edit at specific points in the output video. Up to 5.",
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"position": {
+								"anyOf": [
+									{
+										"enum": [
+											"first",
+											"last"
+										],
+										"type": "string"
+									},
+									{
+										"additionalProperties": false,
+										"properties": {
+											"timestampSeconds": {
+												"description": "Absolute timestamp in seconds from the start of the output video",
+												"minimum": 0,
+												"type": "number"
+											},
+											"type": {
+												"const": "timestamp",
+												"type": "string"
+											}
+										},
+										"required": [
+											"type",
+											"timestampSeconds"
+										],
+										"type": "object"
+									},
+									{
+										"additionalProperties": false,
+										"properties": {
+											"positionPercentage": {
+												"description": "Position as a fraction [0.0, 1.0] of the total video duration",
+												"maximum": 1,
+												"minimum": 0,
+												"type": "number"
+											},
+											"type": {
+												"const": "position",
+												"type": "string"
+											}
+										},
+										"required": [
+											"type",
+											"positionPercentage"
+										],
+										"type": "object"
+									}
+								],
+								"description": "Where in the output video this image applies: \"first\", \"last\", { type: \"timestamp\", timestampSeconds }, or { type: \"position\", positionPercentage }"
+							},
+							"uri": {
+								"description": "HTTPS URL, Runway URI, or data URI of the keyframe image",
+								"type": "string"
+							}
+						},
+						"required": [
+							"uri",
+							"position"
+						],
+						"type": "object"
+					},
+					"maxItems": 5,
+					"minItems": 1,
+					"type": "array"
+				},
+				"seed": {
+					"description": "Random seed for reproducible results",
+					"maximum": 4294967295,
+					"minimum": 0,
+					"type": "integer"
+				},
+				"video_uri": {
+					"description": "HTTPS URL, Runway URI, or data URI of the source video to edit (\u226430 seconds)",
+					"type": "string"
+				}
+			},
+			"required": [
+				"prompt",
+				"video_uri"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": false,
+			"properties": {
+				"video": {
+					"description": "URL to the edited video",
+					"format": "uri",
+					"type": "string"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"type": "object"
+		}
+	}
+}

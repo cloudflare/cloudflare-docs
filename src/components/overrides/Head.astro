@@ -264,6 +264,17 @@ if (frontmatter.canonical) {
 	}
 }
 
+// `@` in URL paths (e.g. AI model pages) must be encoded as `%40`.
+const canonicalIdx = head.findIndex(
+	({ tag, attrs }) => tag === "link" && attrs?.rel === "canonical",
+);
+if (canonicalIdx !== -1) {
+	const href = head[canonicalIdx].attrs!.href;
+	if (typeof href === "string") {
+		head[canonicalIdx].attrs!.href = href.replace(/@/g, "%40");
+	}
+}
+
 metaTags.map((attrs) => {
 	head.push({
 		tag: "meta",
@@ -292,9 +303,11 @@ const schemaType = _isChangelog
 		: "TechArticle";
 
 // Canonical URL for the page entity.
-const _canonicalUrl = frontmatter.canonical
-	? new URL(frontmatter.canonical, Astro.site).toString()
-	: new URL(Astro.url.pathname, Astro.site).toString();
+const _canonicalUrl = (
+	frontmatter.canonical
+		? new URL(frontmatter.canonical, Astro.site).toString()
+		: new URL(Astro.url.pathname, Astro.site).toString()
+).replace(/@/g, "%40");
 
 // Prefer the enriched title already computed for the <title> tag.
 const _titleTag = head.find((x) => x.tag === "title");

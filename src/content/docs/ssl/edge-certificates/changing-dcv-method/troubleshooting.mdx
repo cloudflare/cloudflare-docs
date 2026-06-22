@@ -37,6 +37,8 @@ If you have issues while HTTP DCV is in place, review the following settings:
 
 - **Anything affecting `/.well-known/*`**: Review [WAF custom rules](/waf/custom-rules/), [IP Access Rules](/waf/tools/ip-access-rules/), and other [configuration rules](/rules/configuration-rules/) to make sure that your rules _do not_ enable interactive challenge on the validation URL.
 
+- **Workers routes**: If you have [Workers routes](/workers/configuration/routing/routes/) matching `*/*` or paths that include `/.well-known/pki-validation/*` or `/.well-known/acme-challenge/*`, your Worker may intercept DCV requests from the certificate authority. Make sure your Worker either passes through requests to these paths or does not match them. This is especially relevant for [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) zones that use a [Worker as the fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/).
+
 - **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](/fundamentals/reference/under-attack-mode/), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](/rules/page-rules/) to ensure you have not enabled Under Attack mode on the validation URL.
 
   :::caution

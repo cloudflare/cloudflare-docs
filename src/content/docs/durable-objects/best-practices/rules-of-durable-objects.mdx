@@ -1441,8 +1441,6 @@ export class ChatRoom extends DurableObject<Env> {
 
 ### Design for unexpected shutdowns
 
-Durable Objects may shut down at any time due to deployments, inactivity, or runtime decisions. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
-
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
 
 ## Anti-patterns to avoid

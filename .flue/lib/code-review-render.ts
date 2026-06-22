@@ -248,6 +248,9 @@ export function renderComment(
 	lines.push(
 		"| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase, when you want a fresh review, or if the bot gets out of sync and reports issues that no longer exist. |",
 	);
+	lines.push(
+		"| `/ignore-review-limit` | Permanently lifts the 2-review automatic limit for this PR. Future pushes will trigger reviews as normal. |",
+	);
 	lines.push("");
 	lines.push("</details>");
 
@@ -279,7 +282,7 @@ export function renderReviewLimitComment(existingBody?: string): string {
 		"",
 		"⏸️ Automatic reviews for this PR are paused.",
 		"",
-		"This PR has already received 2 automatic reviews. To run another review, a codeowner can comment `/review` or `/full-review`.",
+		"This PR has already received 2 automatic reviews. To run another review, a codeowner can comment `/review` or `/full-review`. To permanently lift the limit for this PR, a codeowner can comment `/ignore-review-limit`.",
 		"",
 		"> **Tip:** Keep PRs in draft mode until they are ready for review — the bot skips draft PRs automatically.",
 	];

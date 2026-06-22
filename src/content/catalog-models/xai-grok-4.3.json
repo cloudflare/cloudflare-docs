@@ -7930,6 +7930,7 @@
 	"request_formats": [
 		"chat-completions"
 	],
+	"banner": null,
 	"created_at": "2026-05-22 17:54:03",
 	"schema": {
 		"input": {

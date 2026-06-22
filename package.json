@@ -32,10 +32,7 @@
 		"flue:dev": "pnpm --dir .flue exec flue dev --env .env.local",
 		"flue:dev:wrangler": "pnpm --dir .flue exec flue build && cp -f .flue/.env.local .flue/dist/cloudflare_docs_flue/.dev.vars && pnpm --dir .flue exec wrangler dev --config dist/cloudflare_docs_flue/wrangler.json --remote",
 		"flue:build": "pnpm --dir .flue exec flue build",
-		"flue:deploy": "pnpm run flue:build && pnpm run flue:sync-agents && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json --secrets-file .env",
-		"flue:sync-agents": "pnpm run flue:sync-agents:remote",
-		"flue:sync-agents:local": "tsx .flue/bin/sync-agents.ts --local",
-		"flue:sync-agents:remote": "tsx .flue/bin/sync-agents.ts",
+		"flue:deploy": "pnpm run flue:build && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json --secrets-file .env",
 		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
 		"lint": "eslint",
 		"prepare": "husky"
@@ -86,7 +83,6 @@
 		"astro-breadcrumbs": "3.4.0",
 		"astro-expressive-code": "0.43.1",
 		"astro-icon": "1.1.5",
-		"astro-live-code": "0.0.6",
 		"astro-skills": "0.1.0",
 		"cidr-tools": "12.0.3",
 		"codeowners-utils": "1.0.2",
@@ -112,6 +108,7 @@
 		"jsonc-parser": "3.3.1",
 		"just-bash": "3.0.1",
 		"kleur": "4.1.5",
+		"lint-staged": "17.0.7",
 		"lz-string": "1.5.0",
 		"marked": "18.0.5",
 		"mdast-util-from-markdown": "2.0.3",
@@ -171,6 +168,9 @@
 		"vitest": "4.1.9",
 		"wrangler": "4.100.0",
 		"zod": "4.4.3"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,mjs,css,json,yaml,yml,astro}": "prettier --write"
 	},
 	"devEngines": {
 		"runtime": {

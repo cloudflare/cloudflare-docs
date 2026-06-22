@@ -3,6 +3,11 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-06-18"
+    title: Migration to managed infrastructure complete
+    description: |-
+      All AI Search instances have finished migrating to managed infrastructure. Every instance now includes built-in storage, a built-in vector index, and built-in web crawling, so the [current limits](/ai-search/platform/limits-pricing/#limits) apply across all instances. Storage, vector indexing, and Browser Run usage for crawling are now included; [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) are still billed separately.
+      If your instance previously crawled a website, the dedicated R2 bucket AI Search created in your account is no longer used and can be deleted.
   - publish_date: "2026-06-10"
     title: Manage AI Search namespaces with Wrangler CLI
     description: |-
@@ -10,7 +15,7 @@ entries:
   - publish_date: "2026-05-12"
     title: Automatic migration to managed infrastructure on June 3, 2026
     description: |-
-      Instances created before April 16, 2026 will be automatically migrated to managed infrastructure on **June 3, 2026**. The migration may take up to three days with no service downtime expected. No action is required. After migration, instances will include built-in storage, a built-in vector index, and built-in web crawling, and [new limits](/ai-search/platform/limits-pricing/#new-instances) will apply. For full migration details, refer to [Limits & pricing](/ai-search/platform/limits-pricing/#previous-instances).
+      Instances created before April 16, 2026 will be automatically migrated to managed infrastructure on **June 3, 2026**. The migration may take up to three days with no service downtime expected. No action is required. After migration, instances will include built-in storage, a built-in vector index, and built-in web crawling, and [new limits](/ai-search/platform/limits-pricing/#limits) will apply. For full migration details, refer to [Limits & pricing](/ai-search/platform/limits-pricing/#historical-billing).
   - publish_date: "2026-04-16"
     title: Hybrid search
     description: |-

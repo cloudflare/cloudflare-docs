@@ -1,0 +1,26 @@
+---
+title: Create PlanetScale Postgres and MySQL databases, billed to your Cloudflare account
+description: Cloudflare partners with PlanetScale to provide Postgres and MySQL databases for Workers applications with unified billing through your Cloudflare account.
+products:
+  - hyperdrive
+  - workers
+date: 2026-06-18
+---
+
+import { DashButton } from "~/components";
+
+You can create PlanetScale Postgres and MySQL databases from Cloudflare and bill PlanetScale database usage through your Cloudflare account as a pay-as-you-go customer. Cloudflare contract customers will be able to add PlanetScale usage to their contract in July so reach out to your Cloudflare account team if interested.
+
+Create a PlanetScale database from the Cloudflare dashboard to check out globally distirbuted Workers optimized for regional data access.
+
+<DashButton url="/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1"/>
+
+![Request flow from a user to Workers, Hyperdrive caches, connection pools, and PlanetScale.](~/assets/images/hyperdrive/planetscale-request-flow.svg)
+
+PlanetScale databases created from Cloudflare work with [Workers](/workers/) through [Hyperdrive](/hyperdrive/). Hyperdrive manages database connection pools and query caching, so you can use PlanetScale as a centralized relational database for Workers applications without changing your database drivers, object-relational mapping (ORM) libraries, or SQL tooling.
+
+PlanetScale usage appears on your Cloudflare invoice each billing period as a dollar total at PlanetScale's standard [pricing](https://planetscale.com/pricing). You can introspect per-database billing usage via PlanetScale's [dashboard](https://planetscale.com/docs/billing#organization-usage-and-billing-page).
+
+When you create a PlanetScale database from the Cloudflare dashboard, you receive the same PlanetScale developer experience, including development branches, query insights, and Model Context Protocol (MCP) server support for agents.
+
+To get started, refer to [PlanetScale Postgres and MySQL with Hyperdrive](/hyperdrive/planetscale/).

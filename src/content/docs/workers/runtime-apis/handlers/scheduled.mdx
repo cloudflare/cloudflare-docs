@@ -54,11 +54,13 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import WorkerEntrypoint, Response, fetch
+from workers import WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
     async def scheduled(self, controller, env, ctx):
-        await doSomeTaskOnASchedule()
+        # controller.cron contains the cron pattern that triggered this event
+        # controller.scheduledTime contains the scheduled time in ms since epoch
+        print(f"Cron triggered: {controller.cron}")
 ```
 
 </TabItem></Tabs>

@@ -1,0 +1,166 @@
+{
+	"model_id": "pruna/p-video-replace",
+	"provider_id": "pruna",
+	"name": "P-Video-Replace",
+	"description": "Pruna's P-Video-Replace takes a source video and one or more identity reference images, then places the referenced person or people into the video while preserving the source motion and audio.",
+	"task": "Image-to-Video",
+	"tags": [
+		"Video Generation",
+		"Character Replacement",
+		"Identity"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Character Swap",
+			"description": "Replace the person in a source video with an identity reference image, preserving motion and audio.",
+			"input": {
+				"video": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4",
+				"images": [
+					"https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg"
+				],
+				"resolution": "720p",
+				"target_fps": "original"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/pruna/p-video-replace/character-swap.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/pruna/p-video-replace/character-swap.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pruna/p-video-replace',\n  {\n    video: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4',\n    images: ['https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg'],\n    resolution: '720p',\n    target_fps: 'original',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pruna/p-video-replace\",\n  \"input\": {\n    \"video\": \"https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4\",\n    \"images\": [\n      \"https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg\"\n    ],\n    \"resolution\": \"720p\",\n    \"target_fps\": \"original\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.api.pruna.ai/guides/quickstart",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Resolutions": "720p, 1080p",
+		"Reference Images": "1-3"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-18 15:53:11",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"disable_safety_checker": {
+					"default": false,
+					"description": "Disable safety checker for generated videos.",
+					"type": "boolean"
+				},
+				"ignore_audio": {
+					"default": false,
+					"description": "Ignore source audio during generation.",
+					"type": "boolean"
+				},
+				"images": {
+					"description": "Identity reference image(s), 1 to 3, to place into the video. Each entry is an HTTP(S) URL or a data URI.",
+					"items": {
+						"type": "string"
+					},
+					"maxItems": 3,
+					"minItems": 1,
+					"type": "array"
+				},
+				"instruction_prompt": {
+					"default": "",
+					"description": "Further instruction on how to place people from the reference images into the scene.",
+					"type": "string"
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Target resolution.",
+					"enum": [
+						"720p",
+						"1080p"
+					],
+					"type": "string"
+				},
+				"save_audio": {
+					"default": true,
+					"description": "Save the video with audio.",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation.",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
+					"type": "integer"
+				},
+				"target_fps": {
+					"default": "original",
+					"description": "Target FPS for the working video.",
+					"enum": [
+						"24",
+						"48",
+						"original"
+					],
+					"type": "string"
+				},
+				"turbo": {
+					"default": false,
+					"description": "Turbo mode: faster generation for slightly lower quality.",
+					"type": "boolean"
+				},
+				"video": {
+					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"video",
+				"images",
+				"turbo",
+				"resolution",
+				"save_audio",
+				"ignore_audio",
+				"target_fps",
+				"instruction_prompt",
+				"disable_safety_checker"
+			],
+			"type": "object"
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"additionalProperties": {},
+			"properties": {
+				"video": {
+					"description": "Presigned URL for the replacement video.",
+					"format": "uri",
+					"type": "string"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"type": "object"
+		}
+	}
+}
