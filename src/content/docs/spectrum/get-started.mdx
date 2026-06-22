@@ -189,7 +189,7 @@ To prevent issues with DNS resolution for a Spectrum application, do not use the
 
 To proxy TCP or UDP traffic to an origin on your private network, attach a Cloudflare Tunnel [virtual network](/cloudflare-one/networks/virtual-networks/) to a Spectrum application. Spectrum routes traffic through the connector (Cloudflare Tunnel or Cloudflare WAN connection) associated with that virtual network. This provides an alternative to the previous pattern of putting a load balancer in front of a private origin.
 
-Virtual network origins are only supported for TCP and UDP applications. The origin must be a single private IP routable within the specified virtual network. Port ranges, hostname origins (`origin_dns`), and multiple addresses in `origin_direct` are not supported. For details on validation errors, refer to [Error codes](/spectrum/reference/error-codes/).
+Virtual network origins are only supported for TCP and UDP applications. The origin must be a single private IP routable within the specified virtual network. Port ranges, hostname origins (`origin_dns`), and multiple addresses in `origin_direct` are not supported. [Proxy Protocol](/spectrum/how-to/enable-proxy-protocol/) is not currently supported, so `proxy_protocol` must be set to `off`. For details on validation errors, refer to [Error codes](/spectrum/reference/error-codes/).
 
 For a primer on virtual networks, refer to [Virtual networks](/cloudflare-one/networks/virtual-networks/).
 
