@@ -11,6 +11,7 @@ For example, if Worker B implements the public method `add(a, b)`:
 ```jsonc
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
+	"compatibility_date": "2025-02-04",
 	"name": "worker_b",
 	"main": "./src/workerB.js"
 }
@@ -62,6 +63,7 @@ Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 ```jsonc
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
+	"compatibility_date": "2025-02-04",
 	"name": "worker_a",
 	"main": "./src/workerA.js",
 	"services": [
@@ -102,7 +104,7 @@ from workers import WorkerEntrypoint, Response
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
         result = await self.env.WORKER_B.add(1, 2)
-		return Response(f"Result: {result}")
+        return Response(f"Result: {result}")
 ```
 
 </TabItem>
