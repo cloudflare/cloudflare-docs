@@ -7,11 +7,12 @@
  *
  * Differences from the style-guide fan-out:
  *   - Reviews ALL changed text files (not just MDX docs/partials/changelog).
- *   - The agent is given GitHub-API-backed tools (`read_repo_file`,
- *     `search_repo`) so it can read full file content at the PR head SHA for
- *     context — the diff patch alone is staged in the workspace, but correctness
- *     review needs the surrounding code. The token stays in trusted code; only
- *     tool results cross into the agent.
+ *   - Added lines and full file content are pre-extracted in trusted TypeScript
+ *     before the skill runs, eliminating the manifest-read / patch-parse /
+ *     read_repo_file round-trips the model previously had to make. The agent is
+ *     still given GitHub-API-backed tools (`read_repo_file`, `search_repo`) for
+ *     optional cross-file lookups (callers, import sites, etc.). The token stays
+ *     in trusted code; only tool results cross into the agent.
  *   - Findings carry a `critical` severity above warning/suggestion and use the
  *     `CR-` ID namespace.
  *
@@ -30,7 +31,53 @@ import {
 	type CodeReviewFinding,
 	type CodeReviewResult,
 } from "./code-review-results";
+import { getRepoFileContent } from "./github";
 import type { getPullRequestFiles } from "./github";
+
+/** A single added or changed line extracted from a unified diff patch. */
+export interface AddedLine {
+	/** New-file line number (1-indexed). */
+	line: number;
+	/** Line content, without the leading `+`. */
+	content: string;
+}
+
+/**
+ * Parse a unified diff patch string and return the added lines with their
+ * new-file line numbers. Line numbers are computed by tracking hunk headers
+ * (`@@ -old[,count] +new[,count] @@`) and advancing for added and context
+ * lines. Returns an empty array for an empty or addition-free patch.
+ *
+ * This runs in trusted TypeScript — the model never has to parse the diff
+ * format itself, which eliminates ~2 mandatory setup turns per file.
+ */
+export function parseAddedLines(patch: string): AddedLine[] {
+	const result: AddedLine[] = [];
+	let newLine = 0;
+
+	for (const raw of patch.split("\n")) {
+		// Hunk header: @@ -old[,count] +new[,count] @@
+		const hunkMatch = raw.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
+		if (hunkMatch) {
+			newLine = parseInt(hunkMatch[1], 10);
+			continue;
+		}
+		// Skip file headers (--- / +++)
+		if (raw.startsWith("+++") || raw.startsWith("---")) continue;
+
+		if (raw.startsWith("+")) {
+			result.push({ line: newLine, content: raw.slice(1) });
+			newLine++;
+		} else if (raw.startsWith("-")) {
+			// Deleted line — do not advance the new-file line counter.
+		} else {
+			// Context line (space-prefixed or empty trailing line) — advance.
+			newLine++;
+		}
+	}
+
+	return result;
+}
 
 /** PR metadata passed to the code-review skill as `args.pullRequest`. */
 export interface CodeReviewPullRequest {
@@ -41,11 +88,27 @@ export interface CodeReviewPullRequest {
 }
 
 export const CODE_REVIEW_MAX_FILES = 20;
-// Each per-file session is deleted as soon as it finishes (see reviewSingleFile),
-// so peak heap is bounded to ~CODE_REVIEW_CONCURRENCY live sessions rather than
-// growing with the file count. That fixed the isolate OOM, so concurrency can
-// stay at 5.
+// Default concurrency, overridable per-environment via the CODE_REVIEW_CONCURRENCY
+// env var (see code-review-specialist.ts). Each per-file session is deleted as
+// soon as it finishes (see reviewSingleFile), so peak heap is bounded to
+// ~concurrency live sessions rather than growing with the file count. 5 keeps a
+// large PR (up to CODE_REVIEW_MAX_FILES) inside the orchestrator's 20-minute poll
+// in prod (each specialist has its own isolate); lower it locally — where every
+// Durable Object shares one process — via the env var.
 export const CODE_REVIEW_CONCURRENCY = 5;
+
+/**
+ * Default per-file hard timeout, overridable via CODE_REVIEW_FILE_TIMEOUT_MS. A
+ * single file's agent session is multi-turn with slow model calls (p90 ~45s/call,
+ * occasionally over 2 minutes), so it is bounded. This is single-wedged-file
+ * protection: on timeout the file's operation is aborted and its session deleted
+ * (see reviewSingleFile), degrading that file to an empty result and freeing the
+ * slot. 10 min comfortably covers a complex file while still being well under the
+ * orchestrator's 20-minute poll, which remains the overall bound — a PR where
+ * many files are simultaneously slow can still exceed the poll, in which case the
+ * section degrades and the watchdog re-drives it.
+ */
+export const CODE_REVIEW_FILE_TIMEOUT_MS = 10 * 60 * 1000;
 
 /**
  * Paths excluded from code review: lockfiles, generated output, vendored
@@ -53,6 +116,9 @@ export const CODE_REVIEW_CONCURRENCY = 5;
  */
 const CODE_REVIEW_IGNORE_PATH_RE =
 	/(^|\/)(pnpm-lock\.yaml|bun\.lock|package-lock\.json|yarn\.lock)$|\.lock$|^(dist|skills|node_modules)\/|(^|\/)\.wrangler\/|^src\/assets\/|\.(png|jpe?g|gif|svg|webp|ico|avif|woff2?|ttf|eot|mp4|webm|mov|pdf|zip|gz|tar|wasm|lockb)$/i;
+
+/** Maximum file content size passed to the skill. Matches read_repo_file cap. */
+const FILE_CONTENT_MAX_BYTES = 32768;
 
 type PullRequestFiles = Awaited<ReturnType<typeof getPullRequestFiles>>;
 
@@ -140,12 +206,12 @@ export function mergeCodeReviewResults(
 
 export interface RunCodeReviewInProcessOptions {
 	init: FlueContext["init"];
-	/** Shared DO workspace (same one the orchestrator stages the diff into). */
+	/** Shared DO workspace (used by the sandbox — no diff is staged here). */
 	workspace: ReturnType<typeof getDefaultWorkspace>;
 	loader: Parameters<typeof getShellSandbox>[0]["loader"];
 	/** GitHub installation token — stays in trusted code, backs the repo tools. */
 	token: string;
-	/** PR head SHA — `read_repo_file` defaults to this so the agent sees post-change content. */
+	/** PR head SHA — used to fetch full file content and by `read_repo_file`. */
 	headSha: string;
 	/**
 	 * The repository's root AGENTS.md content, loaded by the orchestrator and
@@ -157,18 +223,21 @@ export interface RunCodeReviewInProcessOptions {
 	prNumber: number;
 	/** PR metadata for the skill's `args.pullRequest`. */
 	pullRequest: CodeReviewPullRequest;
-	/** Run-scoped workspace directory holding the diff (already written). */
-	diffDir: string;
-	/** Reviewable files selected by `selectCodeReviewFiles`. */
+	/** Reviewable files selected by `selectCodeReviewFiles`. Patch strings are read here in trusted code. */
 	files: PullRequestFiles;
 	runId: string;
 	concurrency?: number;
+	/** Per-file hard timeout in ms. Defaults to CODE_REVIEW_FILE_TIMEOUT_MS. */
+	fileTimeoutMs?: number;
 }
 
 /**
  * Run the code-review skill once per file across concurrent sessions over the
- * shared workspace (the diff is already staged there by the orchestrator). The
- * skill is bundled in the build; repo access is via the GitHub-API-backed tools.
+ * shared workspace. For each file, added lines are parsed from the patch in
+ * trusted TypeScript and full file content is fetched at the head SHA before
+ * the skill runs — eliminating the manifest-read / patch-parse / read_repo_file
+ * turns the model previously spent on setup. Cross-file tools (read_repo_file,
+ * search_repo) remain available for optional caller/usage lookups.
  */
 export async function runCodeReviewInProcess(
 	options: RunCodeReviewInProcessOptions,
@@ -182,13 +251,12 @@ export async function runCodeReviewInProcess(
 		repoAgentsMd,
 		prNumber,
 		pullRequest,
-		diffDir,
 		runId,
 		concurrency = CODE_REVIEW_CONCURRENCY,
+		fileTimeoutMs = CODE_REVIEW_FILE_TIMEOUT_MS,
 	} = options;
 
-	const reviewFilenames = options.files.map((f) => f.filename);
-	if (reviewFilenames.length === 0) {
+	if (options.files.length === 0) {
 		return {
 			findings: [],
 			summary: "No reviewable code files changed.",
@@ -224,24 +292,47 @@ export async function runCodeReviewInProcess(
 	}));
 	const harness = await init(agent, { name: "code-review" });
 
-	const tasks = reviewFilenames.map(
-		(filename, index) => async (): Promise<CodeReviewResult> => {
+	const tasks = options.files.map(
+		(file, index) => async (): Promise<CodeReviewResult> => {
 			try {
+				// Parse added lines from the patch in trusted code — the model
+				// receives pre-computed { line, content } objects and never has to
+				// parse the diff format itself.
+				const addedLines = file.patch ? parseAddedLines(file.patch) : [];
+
+				// Fetch the full file at the head SHA for context. Best-effort:
+				// a missing or oversized file degrades to empty string rather than
+				// aborting the review. Capped at FILE_CONTENT_MAX_BYTES to match
+				// the read_repo_file tool behaviour and avoid bloating the context.
+				const raw = await getRepoFileContent(
+					token,
+					file.filename,
+					headSha,
+				).catch(() => null);
+				const fileContent =
+					raw === null
+						? ""
+						: raw.length > FILE_CONTENT_MAX_BYTES
+							? raw.slice(0, FILE_CONTENT_MAX_BYTES) +
+								`\n\n[...truncated at ${FILE_CONTENT_MAX_BYTES / 1024} KB — file is ${raw.length} bytes total]`
+							: raw;
+
 				return await reviewSingleFile({
 					harness,
 					sessionName: `cr:${index}`,
 					pullRequest,
-					diffDir,
-					filename,
+					filename: file.filename,
+					addedLines,
+					fileContent,
+					fileTimeoutMs,
 				});
 			} catch (err) {
 				const errMsg = err instanceof Error ? err.message : String(err);
 				console.error({
-					message: `Code review file review failed (degraded): PR #${prNumber} — ${filename} — ${errMsg}`,
+					message: `Code review file review failed (degraded): PR #${prNumber} — ${file.filename} — ${errMsg}`,
 					event: "code_review_orchestrator",
 					number: prNumber,
-					filename,
-					diffDir,
+					filename: file.filename,
 					runId,
 					error: errMsg,
 					action: "code_review_file_degraded",
@@ -264,31 +355,51 @@ export async function runCodeReviewInProcess(
 
 /**
  * Run the code-review skill for a single file in its own session.
+ * Added lines and full file content are passed directly in args — the skill
+ * does not need to read the workspace or call read_repo_file for setup.
  */
 async function reviewSingleFile({
 	harness,
 	sessionName,
 	pullRequest,
-	diffDir,
 	filename,
+	addedLines,
+	fileContent,
+	fileTimeoutMs,
 }: {
 	harness: Awaited<ReturnType<FlueContext["init"]>>;
 	sessionName: string;
 	pullRequest: CodeReviewPullRequest;
-	diffDir: string;
 	filename: string;
+	addedLines: AddedLine[];
+	fileContent: string;
+	fileTimeoutMs: number;
 }): Promise<CodeReviewResult> {
 	const session = await harness.session(sessionName);
 
+	// Bound the per-file session so one wedged file cannot hold a concurrency
+	// slot for the orchestrator's whole poll. On timeout we ABORT the operation
+	// (not just race it) — otherwise the model loop keeps running and the
+	// session.delete() below would reject ("rejects while an operation is
+	// active"), leaking the session and its work. Aborting settles the operation
+	// so delete() succeeds and the slot is freed.
+	let timedOut = false;
+	const handle = session.skill("code-review", {
+		result: CodeReviewResultFromModelSchema,
+		args: {
+			pullRequest,
+			filename,
+			addedLines,
+			fileContent,
+		},
+	});
+	const timer = setTimeout(() => {
+		timedOut = true;
+		handle.abort();
+	}, fileTimeoutMs);
+
 	try {
-		const skillResult = await session.skill("code-review", {
-			result: CodeReviewResultFromModelSchema,
-			args: {
-				pullRequest,
-				diffDir,
-				filename,
-			},
-		});
+		const skillResult = await handle;
 
 		const rawData = skillResult.data;
 		if (!rawData) {
@@ -305,11 +416,21 @@ async function reviewSingleFile({
 			summary: rawData.summary,
 			reviewedFiles: [filename],
 		};
+	} catch (err) {
+		// Normalize the abort into a clear timeout message for the degraded log;
+		// rethrow any other error unchanged. Either way the caller degrades this
+		// file to an empty result.
+		throw timedOut
+			? new Error(`Per-file review timed out after ${fileTimeoutMs}ms`)
+			: err;
 	} finally {
-		// Release this file's session immediately so its accumulated context
-		// (full file body, injected AGENTS.md, tool results, model history) is
-		// not retained for the whole run. Without this, harness memory grows
-		// with the file count and the isolate OOMs on large PRs.
+		// Clear the timeout (no-op if it already fired), then release this file's
+		// session immediately so its accumulated context (full file body, injected
+		// AGENTS.md, tool results, model history) is not retained for the whole
+		// run. The operation has settled (completed or aborted) by here, so
+		// delete() succeeds. Without this, harness memory grows with the file
+		// count and the isolate OOMs on large PRs.
+		clearTimeout(timer);
 		await session.delete().catch(() => {});
 	}
 }

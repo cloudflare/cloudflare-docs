@@ -3,8 +3,8 @@
  *
  * A stateless specialist dispatched by the code-review orchestrator. It runs in
  * its own Durable Object (its own isolate and memory budget), self-fetches the
- * PR diff for the requested mode, stages it into its own workspace, runs the
- * per-file code-review fan-out, and returns the findings as its run result.
+ * PR diff for the requested mode, runs the per-file code-review fan-out, and
+ * returns the findings as its run result.
  *
  * Isolating each specialist in its own DO is what keeps the orchestrator DO
  * from over-running its memory limit when both reviews run at once.
@@ -22,17 +22,17 @@ import {
 	getPullRequestFiles,
 	getRepoFileContent,
 } from "../lib/github";
-import { writeDiffToWorkspace } from "../lib/code-review-diff";
 import {
 	CODE_REVIEW_CONCURRENCY,
+	CODE_REVIEW_FILE_TIMEOUT_MS,
 	runCodeReviewInProcess,
 	selectCodeReviewFiles,
 } from "../lib/code-review-inproc";
+import { envPositiveInt } from "../lib/env";
 import type { CodeReviewResult } from "../lib/code-review-results";
 import {
 	type ReviewSpecialistPayload,
 	parseReviewSpecialistPayload,
-	toDiffPullRequest,
 } from "../lib/review-specialist";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
@@ -53,6 +53,17 @@ export async function run({
 	>[0]["loader"];
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
+	// Per-environment tuning: default to the prod-safe constants, lower locally
+	// (single shared process) via env vars in .env.local.
+	const concurrency = envPositiveInt(
+		typedEnv.CODE_REVIEW_CONCURRENCY,
+		CODE_REVIEW_CONCURRENCY,
+	);
+	const fileTimeoutMs = envPositiveInt(
+		typedEnv.CODE_REVIEW_FILE_TIMEOUT_MS,
+		CODE_REVIEW_FILE_TIMEOUT_MS,
+	);
+
 	// Self-fetch the diff for the requested mode. Incremental is SHA-pinned;
 	// if the base SHA is gone (force-push since the orchestrator decided),
 	// self-heal to the full PR diff.
@@ -72,14 +83,6 @@ export async function run({
 
 	const selected = selectCodeReviewFiles(files);
 	const workspace = getDefaultWorkspace();
-	const diffDir = `diffs/pr-${input.number}/runs/${runId}`;
-
-	await writeDiffToWorkspace(
-		workspace,
-		diffDir,
-		selected,
-		toDiffPullRequest(input.pr),
-	);
 
 	// Load the repo's root AGENTS.md from the PR base ref (trusted, not the PR
 	// head — the content is injected into agent instructions). Best-effort.
@@ -91,7 +94,7 @@ export async function run({
 			: undefined;
 
 	console.log({
-		message: `Code review specialist started: PR #${input.number} — ${selected.length} file(s), concurrency ${CODE_REVIEW_CONCURRENCY}`,
+		message: `Code review specialist started: PR #${input.number} — ${selected.length} file(s), concurrency ${concurrency}`,
 		event: "code_review_specialist",
 		number: input.number,
 		files: selected.length,
@@ -114,10 +117,10 @@ export async function run({
 			base: input.pr.base,
 			head: input.pr.head,
 		},
-		diffDir,
 		files: selected,
 		runId,
-		concurrency: CODE_REVIEW_CONCURRENCY,
+		concurrency,
+		fileTimeoutMs,
 	});
 
 	console.log({

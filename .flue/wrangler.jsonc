@@ -86,4 +86,15 @@
 			"head_sampling_rate": 1,
 		},
 	},
+	// Cron trigger for the code-review watchdog (lib/review-watchdog.ts). Runs
+	// every 2 minutes to re-drive reviews whose orchestrator Durable Object was
+	// interrupted (Flue does not resume interrupted workflows).
+	"triggers": {
+		"crons": ["*/2 * * * *"],
+	},
+	"vars": {
+		// Origin the scheduled handler uses to self-admit recovery runs. A
+		// scheduled invocation has no inbound request to derive the origin from.
+		"DOCS_FLUE_BASE_URL": "https://cloudflare-docs-flue.cloudflare-docs.workers.dev",
+	},
 }

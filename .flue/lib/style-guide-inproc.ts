@@ -45,7 +45,19 @@ export interface StyleGuidePullRequest {
 export const STYLE_GUIDE_REVIEWABLE_PATH_RE =
 	/^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
 export const STYLE_GUIDE_MAX_FILES = 20;
+// Default concurrency, overridable via the STYLE_GUIDE_CONCURRENCY env var (see
+// style-guide-specialist.ts). Lower it locally where every Durable Object shares
+// one process.
 export const STYLE_GUIDE_CONCURRENCY = 5;
+
+/**
+ * Default per-file hard timeout, overridable via STYLE_GUIDE_FILE_TIMEOUT_MS.
+ * Single-wedged-file protection: on timeout the file's operation is aborted and
+ * its session deleted (see reviewSingleFile), so one slow file cannot hold a
+ * concurrency slot for the orchestrator's whole 20-minute poll. 10 min covers a
+ * complex file while staying under the poll, which remains the overall bound.
+ */
+export const STYLE_GUIDE_FILE_TIMEOUT_MS = 10 * 60 * 1000;
 
 type PullRequestFiles = Awaited<ReturnType<typeof getPullRequestFiles>>;
 
@@ -149,6 +161,8 @@ export interface RunStyleGuideReviewInProcessOptions {
 	files: PullRequestFiles;
 	runId: string;
 	concurrency?: number;
+	/** Per-file hard timeout in ms. Defaults to STYLE_GUIDE_FILE_TIMEOUT_MS. */
+	fileTimeoutMs?: number;
 }
 
 /**
@@ -171,6 +185,7 @@ export async function runStyleGuideReviewInProcess(
 		diffDir,
 		runId,
 		concurrency = STYLE_GUIDE_CONCURRENCY,
+		fileTimeoutMs = STYLE_GUIDE_FILE_TIMEOUT_MS,
 	} = options;
 
 	// The per-file review list is the orchestrator's selection (additions > 0,
@@ -207,6 +222,7 @@ export async function runStyleGuideReviewInProcess(
 					pullRequest,
 					diffDir,
 					filename,
+					fileTimeoutMs,
 				});
 			} catch (err) {
 				const errMsg = err instanceof Error ? err.message : String(err);
@@ -246,26 +262,42 @@ async function reviewSingleFile({
 	pullRequest,
 	diffDir,
 	filename,
+	fileTimeoutMs,
 }: {
 	harness: Awaited<ReturnType<FlueContext["init"]>>;
 	sessionName: string;
 	pullRequest: StyleGuidePullRequest;
 	diffDir: string;
 	filename: string;
+	fileTimeoutMs: number;
 }): Promise<StyleGuideResult> {
 	const session = await harness.session(sessionName);
 
+	// Bound the per-file session so one wedged file cannot hold a concurrency
+	// slot for the orchestrator's whole poll. On timeout we ABORT the operation
+	// (not just race it) — otherwise the model loop keeps running and the
+	// session.delete() below would reject ("rejects while an operation is
+	// active"), leaking the session and its work. Aborting settles the operation
+	// so delete() succeeds and the slot is freed.
+	//
+	// Structured result mode: flue injects finish/give_up tools and loops until
+	// the model calls finish — reliable across models that don't self-terminate.
+	let timedOut = false;
+	const handle = session.skill("style-guide-review", {
+		result: StyleGuideResultFromModelSchema,
+		args: {
+			pullRequest,
+			diffDir,
+			filename,
+		},
+	});
+	const timer = setTimeout(() => {
+		timedOut = true;
+		handle.abort();
+	}, fileTimeoutMs);
+
 	try {
-		// Structured result mode: flue injects finish/give_up tools and loops until
-		// the model calls finish — reliable across models that don't self-terminate.
-		const skillResult = await session.skill("style-guide-review", {
-			result: StyleGuideResultFromModelSchema,
-			args: {
-				pullRequest,
-				diffDir,
-				filename,
-			},
-		});
+		const skillResult = await handle;
 
 		const rawData = skillResult.data;
 		if (!rawData) {
@@ -282,10 +314,19 @@ async function reviewSingleFile({
 			summary: rawData.summary,
 			reviewedFiles: [filename],
 		};
+	} catch (err) {
+		// Normalize the abort into a clear timeout message for the degraded log;
+		// rethrow any other error unchanged. Either way the caller degrades this
+		// file to an empty result.
+		throw timedOut
+			? new Error(`Per-file review timed out after ${fileTimeoutMs}ms`)
+			: err;
 	} finally {
-		// Release this file's session immediately so its accumulated context is
-		// not retained for the whole run, keeping peak heap bounded to
-		// ~concurrency live sessions.
+		// Clear the timeout (no-op if it already fired), then release this file's
+		// session immediately so its accumulated context is not retained for the
+		// whole run. The operation has settled (completed or aborted) by here, so
+		// delete() succeeds, keeping peak heap bounded to ~concurrency sessions.
+		clearTimeout(timer);
 		await session.delete().catch(() => {});
 	}
 }

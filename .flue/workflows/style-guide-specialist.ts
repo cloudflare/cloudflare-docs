@@ -10,7 +10,10 @@
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import { getShellSandbox } from "../connectors/cloudflare-shell";
-import { getDefaultWorkspace } from "../connectors/cloudflare-shell";
+import {
+	getDefaultWorkspace,
+	removeWorkspacePath,
+} from "../connectors/cloudflare-shell";
 import {
 	comparePullRequestHeads,
 	getInstallationToken,
@@ -21,7 +24,9 @@ import {
 	runStyleGuideReviewInProcess,
 	selectStyleGuideFiles,
 	STYLE_GUIDE_CONCURRENCY,
+	STYLE_GUIDE_FILE_TIMEOUT_MS,
 } from "../lib/style-guide-inproc";
+import { envPositiveInt } from "../lib/env";
 import type { StyleGuideResult } from "../lib/style-guide-results";
 import {
 	type ReviewSpecialistPayload,
@@ -47,6 +52,17 @@ export async function run({
 	>[0]["loader"];
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
+	// Per-environment tuning: default to the prod-safe constants, lower locally
+	// (single shared process) via env vars in .env.local.
+	const concurrency = envPositiveInt(
+		typedEnv.STYLE_GUIDE_CONCURRENCY,
+		STYLE_GUIDE_CONCURRENCY,
+	);
+	const fileTimeoutMs = envPositiveInt(
+		typedEnv.STYLE_GUIDE_FILE_TIMEOUT_MS,
+		STYLE_GUIDE_FILE_TIMEOUT_MS,
+	);
+
 	let files: Awaited<ReturnType<typeof getPullRequestFiles>>;
 	if (input.diffMode.type === "incremental") {
 		const compare = await comparePullRequestHeads(
@@ -65,49 +81,60 @@ export async function run({
 	const workspace = getDefaultWorkspace();
 	const diffDir = `diffs/pr-${input.number}/runs/${runId}`;
 
-	await writeDiffToWorkspace(
-		workspace,
-		diffDir,
-		selected,
-		toDiffPullRequest(input.pr),
-	);
+	try {
+		await writeDiffToWorkspace(
+			workspace,
+			diffDir,
+			selected,
+			toDiffPullRequest(input.pr),
+		);
 
-	console.log({
-		message: `Style-guide specialist started: PR #${input.number} — ${selected.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
-		event: "style_guide_specialist",
-		number: input.number,
-		files: selected.length,
-		diffMode: input.diffMode.type,
-		runId,
-		action: "started",
-	});
+		console.log({
+			message: `Style-guide specialist started: PR #${input.number} — ${selected.length} file(s), concurrency ${concurrency}`,
+			event: "style_guide_specialist",
+			number: input.number,
+			files: selected.length,
+			diffMode: input.diffMode.type,
+			runId,
+			action: "started",
+		});
 
-	const result = await runStyleGuideReviewInProcess({
-		init,
-		workspace,
-		loader,
-		prNumber: input.number,
-		pullRequest: {
-			number: input.pr.number,
-			title: input.pr.title,
-			base: input.pr.base,
-			head: input.pr.head,
-		},
-		diffDir,
-		files: selected,
-		runId,
-		concurrency: STYLE_GUIDE_CONCURRENCY,
-	});
+		const result = await runStyleGuideReviewInProcess({
+			init,
+			workspace,
+			loader,
+			prNumber: input.number,
+			pullRequest: {
+				number: input.pr.number,
+				title: input.pr.title,
+				base: input.pr.base,
+				head: input.pr.head,
+			},
+			diffDir,
+			files: selected,
+			runId,
+			concurrency,
+			fileTimeoutMs,
+		});
 
-	console.log({
-		message: `Style-guide specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s)`,
-		event: "style_guide_specialist",
-		number: input.number,
-		findings: result.findings.length,
-		reviewedFiles: result.reviewedFiles.length,
-		runId,
-		action: "complete",
-	});
+		console.log({
+			message: `Style-guide specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s)`,
+			event: "style_guide_specialist",
+			number: input.number,
+			findings: result.findings.length,
+			reviewedFiles: result.reviewedFiles.length,
+			runId,
+			action: "complete",
+		});
 
-	return result;
+		return result;
+	} finally {
+		// Clean up the run-scoped staged diff so the specialist DO's SQLite does
+		// not grow with every run. Safe: the diff is run-scoped scratch, re-fetched
+		// each run; cross-run review state lives in R2 + the comment marker.
+		await removeWorkspacePath(workspace, `/${diffDir}`, {
+			recursive: true,
+			force: true,
+		}).catch(() => {});
+	}
 }
