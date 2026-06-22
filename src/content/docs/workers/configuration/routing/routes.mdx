@@ -215,7 +215,7 @@ There is a well-known bug associated with path matching concerning wildcards (`*
 
 #### Domains and subdomains must have a DNS Record
 
-All domains and subdomains must have a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
+All domains and subdomains must have a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) to be [proxied](/dns/proxy-status/) on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
 :::caution
 
