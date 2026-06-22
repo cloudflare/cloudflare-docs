@@ -2187,6 +2187,7 @@
 /workers/platform/changelog/wrangler/index.xml https://github.com/cloudflare/workers-sdk/releases.atom 301
 /workers/platform/scripts/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
+/workers/configuration/previews/ /workers/configuration/version-urls/ 301
 /workers/platform/web-assembly/ /workers/runtime-apis/webassembly/ 301
 /workers/quickstart/ /workers/get-started/quickstarts/ 301
 /workers/recipes/ /workers/get-started/quickstarts/ 301

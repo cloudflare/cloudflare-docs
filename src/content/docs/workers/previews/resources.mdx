@@ -1,0 +1,143 @@
+---
+pcx_content_type: concept
+title: Resources and isolation
+description: Understand which resources are isolated automatically and which resources need explicit Preview settings.
+sidebar:
+  order: 3
+products:
+  - workers
+---
+
+Use Preview resource settings to control what data and services a branch can access before it lands in production.
+
+Previews are isolated from production Worker deployments, but not every resource is copied automatically. Some resources are isolated per Preview. Other account-level resources are shared unless you configure different resources for Previews.
+
+## Action guide
+
+| Desired action | Do this |
+| --- | --- |
+| Keep Durable Object, Workflow, or Container state separate per branch | No extra setup is needed. These resources are isolated automatically. |
+| Point a branch at test KV, D1, or R2 data | Configure Preview bindings for test resources. |
+| Let Wrangler create test KV, D1, or R2 resources | Omit the resource identifier in the `previews` block. |
+| Prevent a Preview from writing to production data | Check every account-level binding before sharing the Preview URL. |
+| Make one Worker Preview call a test version of another Worker | Configure that service binding explicitly. Service bindings do not branch-match automatically. |
+
+## Resource behavior
+
+| Resource type | Preview behavior |
+| --- | --- |
+| Durable Objects | Isolated automatically per Preview. |
+| Workflows | Isolated automatically per Preview. |
+| Containers | Isolated automatically per Preview. |
+| KV | Shared unless you configure a Preview namespace. |
+| D1 | Shared unless you configure a Preview database. |
+| R2 | Shared unless you configure a Preview bucket. |
+| Queues | Shared unless you configure Preview queues. |
+| Vectorize | Shared unless you configure a Preview index. |
+| Hyperdrive | Shared unless you configure a Preview Hyperdrive config. |
+| Service bindings | Call the Worker named in the binding unless configured otherwise. |
+
+Use [Preview settings](/workers/previews/configuration/) to decide when a resource choice applies: new Previews only, this Preview, or existing Previews.
+
+Changing a resource in shared preview settings affects new Previews. To change a resource for a Preview that already exists, edit that Preview's settings or explicitly apply the shared change to existing Previews.
+
+## Automatically isolated resources
+
+Durable Objects, Workflows, and Containers are provisioned separately for each Preview.
+
+For Durable Objects, each Preview gets its own namespace and storage for the same Durable Object class. Production, Preview A, and Preview B do not share Durable Object storage.
+
+You do not need to create separate Durable Object namespaces for each Preview.
+
+## Shared account-level resources
+
+Resources such as KV, D1, R2, Queues, Vectorize, Hyperdrive, Analytics Engine, Secrets Store, mTLS, and Dispatch namespaces are account-level resources. If a Preview points at the same resource ID as production, the Preview can read or write the same resource as production.
+
+To isolate a branch, point its Preview binding at a test resource.
+
+```jsonc
+{
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "prod-kv-id"
+    }
+  ],
+  "previews": {
+    "kv_namespaces": [
+      {
+        "binding": "CACHE",
+        "id": "preview-kv-id"
+      }
+    ]
+  }
+}
+```
+
+Your Worker code still uses `env.CACHE`. The Preview receives a different namespace.
+
+## Auto-provisioned resources
+
+Use auto-provisioning when you want Wrangler to create a test resource for your branch instead of manually creating one first.
+
+Wrangler can create Preview resources for KV, D1, and R2 when you omit the resource identifier in the `previews` block.
+
+| Binding | Omit this field | Created resource |
+| --- | --- | --- |
+| `kv_namespaces` | `id` | KV namespace. |
+| `d1_databases` | `database_name` | D1 database. |
+| `r2_buckets` | `bucket_name` | R2 bucket. |
+
+After creating the resource, Wrangler writes the identifier back to your config file.
+
+## Service bindings
+
+If your Worker calls another Worker through a service binding, the Preview still calls the Worker named in that binding. It does not automatically switch to a Preview of the other Worker.
+
+For example, if `frontend` has a service binding to `api`, then a Preview of `frontend` calls the production `api` Worker by default. If you want the `frontend` Preview to call a test version of `api`, configure the Preview binding to point at that test Worker.
+
+### Same-Worker entrypoints
+
+If you use [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) inside the same Worker, avoid creating a service binding to your own Worker for Preview traffic. A self-service binding still calls the Worker named in the binding, which can send Preview traffic to production.
+
+Use [`ctx.exports`](/workers/runtime-apis/context/#exports) for same-Worker calls instead. This keeps the call inside the same Preview, so it uses the Preview's code, variables, secrets, and bindings.
+
+For example, suppose your Worker exports an `EngineService` entrypoint and your default handler needs to call it:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class EngineService extends WorkerEntrypoint {
+  async fetch() {
+    return Response.json({ environment: this.env.ENVIRONMENT });
+  }
+}
+
+export default {
+  async fetch(request, env, ctx) {
+    // Avoid this in Previews if ENGINE is a service binding to this Worker.
+    // const response = await env.ENGINE.fetch(request);
+
+    // Use ctx.exports for same-Worker entrypoints.
+    const response = await ctx.exports.EngineService.fetch(request);
+    return response;
+  },
+};
+```
+
+| Same-Worker call method | What the Preview calls |
+| --- | --- |
+| `env.ENGINE` service binding to the same Worker | The Worker named in the binding, which may be production. |
+| `ctx.exports.EngineService` | The `EngineService` entrypoint in the same Preview. |
+
+`ctx.exports` requires the [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports).
+
+## User-managed triggers
+
+Routes, cron triggers, and queue consumers target production Workers. They do not target Previews.
+
+Use a Preview URL or custom domain Preview URL when you want to send HTTP traffic to a Preview.
+
+## External state
+
+Previews can still affect external systems if you configure them with production credentials, URLs, or resource IDs. Before sharing a Preview, verify that its settings point at safe test resources.

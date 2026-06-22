@@ -323,7 +323,7 @@ Pages automatically creates a preview environment for each project, and can be i
 
 To get a similar experience in Workers, you must:
 
-1. Ensure [preview URLs](/workers/versions-and-deployments/preview-urls/) are enabled (they are on by default).
+1. Ensure [Preview URLs](/workers/previews/) are enabled (they are on by default).
 
    <WranglerConfig>
 
@@ -341,13 +341,15 @@ To get a similar experience in Workers, you must:
 
    </WranglerConfig>
 
-1. [Enable non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds) in Workers Builds.
+1. [Enable preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds) in Workers Builds.
 
-Optionally, you can also [protect these preview URLs with Cloudflare Access](/workers/configuration/cloudflare-access/).
+Optionally, you can also [protect these Preview URLs with Cloudflare Access](/workers/previews/#access-control).
 
 :::note
 
-Unlike Pages, Workers does not natively support defining different bindings in production vs. non-production builds. This is something we are actively exploring, but in the meantime, you may wish to consider using [Wrangler Environments](/workers/wrangler/environments/) and an [appropriate Workers Build configuration](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) to achieve this.
+Worker Previews support different runtime settings for preview builds and production builds. Use [Preview settings](/workers/previews/configuration/) or the `previews` block in your Wrangler configuration to point preview builds at test bindings, variables, secrets, and resources.
+
+For new Workers created with Workers Builds, preview builds use `wrangler preview` by default. Existing projects may need to update their [Preview command](/workers/ci-cd/builds/configuration/#preview-command) to `npx wrangler preview`.
 
 :::
 
@@ -412,9 +414,9 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | ----------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | **Writing, Testing, and Deploying Code**                                                                    |         |         |
 | [Cloudflare Vite plugin](/workers/vite-plugin/)                                                             | ✅      | ❌      |
-| [Rollbacks](/workers/versions-and-deployments/rollbacks/)                                     | ✅      | ✅      |
-| [Gradual Deployments](/workers/versions-and-deployments/)                                     | ✅      | ❌      |
-| [Preview URLs](/workers/versions-and-deployments/preview-urls/)                                             | ✅      | ✅      |
+| [Rollbacks](/workers/versions-and-deployments/rollbacks/)                                                   | ✅      | ✅      |
+| [Gradual Deployments](/workers/versions-and-deployments/)                                                   | ✅      | ❌      |
+| [Preview URLs](/workers/previews/)                                                                          | ✅      | ✅      |
 | [Testing tools](/workers/testing)                                                                           | ✅      | ✅      |
 | [Local Development](/workers/local-development/)                                                          | ✅      | ✅      |
 | [Remote Development (`--remote`)](/workers/wrangler/commands/)                                              | ✅      | ❌      |
@@ -477,7 +479,7 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 
 [^3]: To [use Durable Objects with your Cloudflare Pages project](/pages/functions/bindings/#durable-objects), you must create a separate Worker with a Durable Object and then declare a binding to it in both your Production and Preview environments. Using Durable Objects with Workers is simpler and recommended.
 
-[^4]: Workers Builds supports enabling [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds), though does not yet have the same level of configurability as Pages does.
+[^4]: Workers Builds supports enabling [preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds), though does not yet have the same level of configurability as Pages does.
 
 [^5]: Workers [supports popular frameworks](/workers/framework-guides/), many of which implement file-based routing. Additionally, you can use Wrangler to [compile your folder of `functions/`](#pages-functions-with-a-functions-folder) into a Worker to help ease the migration from Pages to Workers.
 
