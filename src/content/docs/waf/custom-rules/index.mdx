@@ -35,6 +35,7 @@ The maximum number of custom rules applies to all rules in the `http_request_fir
 - Zone: All custom rules plus all the rules across custom rulesets defined at the zone level.
 - Account: All the rules across custom rulesets defined at the account level.
 
+The **number of custom rulesets** limit counts only [custom rulesets](/waf/custom-rules/custom-rulesets/) (`kind: "custom"`) created at the zone level. Custom rules added directly to the zone (which are stored in the zone's entry point ruleset) do not count toward this limit. Each custom ruleset must be [deployed](/waf/custom-rules/custom-rulesets/#deploy-a-custom-ruleset-via-api) via an `execute` rule in the entry point ruleset to take effect.
 ---
 
 ## Next steps
