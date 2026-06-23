@@ -215,6 +215,10 @@ const message = await anthropic.messages.create({
 });
 ```
 
+## Provider tools and web search
+
+Some providers expose native tools — including server-side web search — through these endpoints. See [Web Search](/ai-gateway/usage/web-search/) for the supported models per provider and the request shape each one uses.
+
 ## Specify a gateway
 
 By default, third-party model requests route through your account's default AI Gateway. To use a specific gateway, include the `cf-aig-gateway-id` header. Workers AI requests always require this header.
