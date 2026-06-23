@@ -86,8 +86,6 @@ export default class extends WorkerEntrypoint<Env> {
 			const response = await this.handleFetch(request);
 			status = response.status;
 			return response;
-		} catch (err) {
-			throw err;
 		} finally {
 			// Emit metrics regardless of success or unhandled exception.
 			// ctx.waitUntil ensures the flush completes after the response is sent.
