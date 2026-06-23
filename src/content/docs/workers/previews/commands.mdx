@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Wrangler commands
-description: Command targets for Worker Previews and shared preview settings.
+description: Commands for Worker Previews and Shared Preview Settings.
 sidebar:
   order: 5
 products:
@@ -10,36 +10,23 @@ products:
 
 Use Preview commands for branch and pull request work. Use `wrangler deploy` for production.
 
-## Action guide
-
-| Desired action | Run this |
-| --- | --- |
-| Create or update a Preview for my branch | `wrangler preview --name <preview-name>` |
-| Delete a Preview and its deployments | `wrangler preview delete --name <preview-name>` |
-| Put a secret on one branch | `wrangler preview secret put --name <preview-name>` |
-| Remove a secret from one branch | `wrangler preview secret delete --name <preview-name>` |
-| List secrets for one branch | `wrangler preview secret list --name <preview-name>` |
-| Make future Previews start with my config settings | `wrangler preview-defaults push` |
-| Add a secret that future Previews start with | `wrangler preview-defaults secret put` |
-| List secrets that future Previews start with | `wrangler preview-defaults secret list` |
-
-Check whether the command changes one Preview or shared preview settings before running it.
+Preview commands change either one Preview branch or Shared Preview Settings for future Preview branches. Check the target before running a command.
 
 ## Command targets
 
-| Command | Target | Meaning |
-| --- | --- | --- |
-| `wrangler preview --name <preview-name>` | One Preview | Create or update a branch Preview. |
-| `wrangler preview delete --name <preview-name>` | One Preview | Delete that Preview and its deployments. |
-| `wrangler preview secret put --name <preview-name>` | One Preview | Add or update a secret for one Preview. |
-| `wrangler preview secret delete --name <preview-name>` | One Preview | Delete a secret from one Preview. |
-| `wrangler preview secret list --name <preview-name>` | One Preview | List secrets configured for one Preview. |
-| `wrangler preview-defaults push` | Shared preview settings | Update settings that new Previews start with from your Wrangler `previews` block. |
-| `wrangler preview-defaults secret put` | Shared preview settings | Add or update a secret that new Previews start with. |
-| `wrangler preview-defaults secret delete` | Shared preview settings | Delete a secret from shared preview settings. |
-| `wrangler preview-defaults secret list` | Shared preview settings | List secrets in shared preview settings. |
+| Command                                                | Changes                 | Meaning                                                                                          |
+| ------------------------------------------------------ | ----------------------- | ------------------------------------------------------------------------------------------------ |
+| `wrangler preview --name <preview-name>`               | One Preview branch      | Create or update a branch Preview.                                                               |
+| `wrangler preview delete --name <preview-name>`        | One Preview branch      | Delete one Preview and its deployments.                                                          |
+| `wrangler preview secret put --name <preview-name>`    | One Preview branch      | Add or update a secret for one Preview branch.                                                   |
+| `wrangler preview secret delete --name <preview-name>` | One Preview branch      | Delete a secret from one Preview branch.                                                         |
+| `wrangler preview secret list --name <preview-name>`   | One Preview branch      | List secrets configured for one Preview branch.                                                  |
+| `wrangler preview-defaults push`                       | Shared Preview Settings | Update the shared settings pool from your Wrangler `previews` block for future Preview branches. |
+| `wrangler preview-defaults secret put`                 | Shared Preview Settings | Add or update a secret in the shared settings pool for future Preview branches.                  |
+| `wrangler preview-defaults secret delete`              | Shared Preview Settings | Delete a secret from Shared Preview Settings.                                                    |
+| `wrangler preview-defaults secret list`                | Shared Preview Settings | List secrets in Shared Preview Settings.                                                         |
 
-## One Preview
+## One Preview branch
 
 Use `wrangler preview` commands when one branch or pull request needs a change.
 
@@ -47,15 +34,11 @@ Use `wrangler preview` commands when one branch or pull request needs a change.
 npx wrangler preview --name feature-branch
 ```
 
-```sh
-npx wrangler preview secret put API_TOKEN --name feature-branch
-```
+Other Preview branches are not affected.
 
-Other Previews are not affected.
+## Shared Preview Settings
 
-## Shared preview settings
-
-Use `wrangler preview-defaults` commands when future Previews should start with a setting or secret.
+Use `wrangler preview-defaults` commands when future Preview branches should receive a setting or secret.
 
 ```sh
 npx wrangler preview-defaults push
@@ -65,7 +48,7 @@ npx wrangler preview-defaults push
 npx wrangler preview-defaults secret put API_TOKEN
 ```
 
-Existing Previews keep their own settings unless you choose to apply the change to existing Previews.
+Existing Preview branches keep their own settings unless you also apply the change to existing Previews.
 
 ## Production deploys
 

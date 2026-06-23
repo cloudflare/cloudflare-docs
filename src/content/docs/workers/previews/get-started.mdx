@@ -10,29 +10,25 @@ products:
 
 import { WorkerPreviewsDiagram } from "~/components";
 
-Start with the workflow that matches how you already ship code. If your Worker is connected to Git, Workers Builds can create Previews automatically. If you are testing locally or using your own CI, run `wrangler preview`.
+Create or update a Preview with the workflow that matches how you already ship code. If your Worker is connected to Git, Workers Builds can create Previews automatically. If you are testing locally or using your own CI, run `wrangler preview`.
 
 <WorkerPreviewsDiagram variant="paths" />
 
-## Pick a workflow
-
-| Desired action | Do this |
-| --- | --- |
-| Get a URL automatically when I open or update a pull request | Use [Workers Builds](#workers-builds). |
-| Create a Preview manually from my machine | Use [Wrangler](#wrangler). |
-| Create Previews from GitHub Actions or another CI system | Use [External CI](#external-ci). |
-| Create Previews from custom automation | Use the [API](#api). |
-
 ## Before you create a Preview
 
-Decide what your branch needs at runtime.
+Configure the variables, secrets, bindings, and resources the branch should use.
 
-| Desired action | Use this |
-| --- | --- |
-| Give every future Preview the same setting | [Shared preview settings](/workers/previews/configuration/#shared-preview-settings). |
-| Change one branch only | [This Preview's settings](/workers/previews/configuration/#this-previews-settings). |
-| Keep settings in Git | A `previews` block in your Wrangler config. |
-| Add a secret to one branch | `wrangler preview secret put --name <preview-name>`. |
+For a new Worker, choose where each setting belongs as you add it: production, Shared Preview Settings for future Preview branches, or one Preview branch.
+
+For an existing Worker, set up Shared Preview Settings before you rely on your first Preview. Production settings are for live traffic. Shared Preview Settings are copied into new Preview branches.
+
+Put common Preview settings in Shared Preview Settings so new Preview branches start with them automatically, then change only the branches that need something different.
+
+Workers Builds, Wrangler, external CI, and the API all create or update the same kind of Preview. After a Preview has settings, it receives those settings no matter how you created it.
+
+Use [Configuration](/workers/previews/configuration/) to set variables, secrets, bindings, and Preview URL routing. Use [Resources and isolation](/workers/previews/resources/) to connect the Preview to test resources such as D1 databases or R2 buckets.
+
+If the branch can start from Shared Preview Settings without changes, create it directly with one of the workflows below.
 
 ## Workers Builds
 
@@ -57,7 +53,7 @@ npx wrangler preview --name feature-branch
 
 The `--name` value identifies the branch Preview. Use a branch-like name so the Preview URL is easy to recognize.
 
-If the Preview does not exist yet, Wrangler creates it from shared preview settings and then deploys your code. If it already exists, Wrangler creates a new deployment for that Preview.
+If the Preview does not exist yet, Wrangler creates it from Shared Preview Settings and then deploys your code. If it already exists, Wrangler creates a new deployment for that Preview.
 
 ## External CI
 
@@ -94,7 +90,11 @@ Use a CI-safe Preview name. Branch names may contain characters that cannot be u
 
 Use the API for custom automation, bots, or dashboards that need to create Previews directly.
 
-Wrangler and the Cloudflare dashboard use the same underlying API. If you need behavior that is not covered by a first-party surface, build against the API directly.
+Wrangler and the Cloudflare dashboard use the same API. API workflows should choose the same place to change settings: Shared Preview Settings for future Preview branches, or one Preview branch when only that branch should change.
+
+Changing Shared Preview Settings does not change existing Preview branches unless the request also targets existing Preview branches.
+
+If the dashboard or Wrangler does not support the workflow you need, build against the API directly.
 
 At a high level, API-based workflows usually:
 

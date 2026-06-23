@@ -13,7 +13,6 @@ const paths = [
 			"Enable preview builds, then set the Preview command to run Wrangler.",
 		command: "npx wrangler preview",
 		href: "/workers/previews/get-started/#workers-builds",
-		cta: "Use Workers Builds",
 	},
 	{
 		label: "Local branch test",
@@ -21,7 +20,6 @@ const paths = [
 		detail: "Create or update one branch Preview from your terminal.",
 		command: "npx wrangler preview --name feature-branch",
 		href: "/workers/previews/get-started/#wrangler",
-		cta: "Use Wrangler",
 	},
 	{
 		label: "External CI",
@@ -30,7 +28,6 @@ const paths = [
 			"Run Wrangler in your pull request workflow with a CI-safe Preview name.",
 		command: 'npx wrangler preview --name "$PREVIEW_NAME"',
 		href: "/workers/previews/get-started/#external-ci",
-		cta: "Use external CI",
 	},
 	{
 		label: "Custom automation",
@@ -39,7 +36,6 @@ const paths = [
 			"Create Previews and deployments from bots, dashboards, or custom release tooling.",
 		command: "Create Preview -> deploy -> share URL",
 		href: "/workers/previews/get-started/#api",
-		cta: "Use the API",
 	},
 ];
 ---
@@ -51,11 +47,6 @@ const paths = [
 				<header class="diagram-header">
 					<p class="eyebrow">Choose your path</p>
 					<div class="diagram-title">Start from how you already ship code</div>
-					<p>
-						Worker Previews can be created by Workers Builds, Wrangler, external
-						CI, or direct API calls. Pick one path, then configure Preview
-						settings only when the branch needs runtime differences.
-					</p>
 				</header>
 
 				<div class="path-grid">
@@ -65,15 +56,14 @@ const paths = [
 							<strong>{path.label}</strong>
 							<span class="path-detail">{path.detail}</span>
 							<code>{path.command}</code>
-							<span class="path-cta">{path.cta}</span>
 						</a>
 					))}
 				</div>
 
 				<div class="path-outcome" aria-label="Shared Preview result">
 					<span aria-hidden="true">-&gt;</span>
-					<strong>Worker Preview</strong>
-					<small>Each path creates or updates a Preview URL for review.</small>
+					<strong>Preview URL</strong>
+					<code>preview.app.example.com</code>
 				</div>
 			</div>
 		</figure>
@@ -700,7 +690,8 @@ const paths = [
 	}
 
 	.flow-node code,
-	.path-card code {
+	.path-card code,
+	.path-outcome code {
 		display: inline-flex;
 		width: fit-content;
 		max-width: 100%;
@@ -760,15 +751,13 @@ const paths = [
 		font-weight: 650;
 	}
 
-	.info-card a,
-	.path-cta {
+	.info-card a {
 		color: var(--preview-text);
 		font-size: 0.8125rem;
 		line-height: 1.45;
 	}
 
 	.info-card a:hover,
-	.path-card:hover .path-cta,
 	.flow-node[href]:hover strong {
 		color: var(--preview-brand);
 	}
@@ -824,10 +813,6 @@ const paths = [
 		flex: 1;
 	}
 
-	.path-cta {
-		font-weight: 650;
-	}
-
 	.path-outcome {
 		display: flex;
 		align-items: center;
@@ -853,10 +838,6 @@ const paths = [
 			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 			monospace;
 		font-weight: 600;
-	}
-
-	.path-outcome small {
-		color: var(--preview-muted);
 	}
 
 	@media (max-width: 900px) {
