@@ -19,8 +19,10 @@ await step.do(
 	},
 	{
 		rollback: async ({ ctx, output, error }) => {
+			// Use the original step output to undo work in the external system.
 			const { chargeId } = output as { chargeId: string };
 			await refundCharge(chargeId, {
+				// Add the source step to logs or audit records for this recovery action.
 				reason: `${ctx.step.name}: ${error.message}`,
 			});
 		},
