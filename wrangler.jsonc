@@ -23,4 +23,13 @@
 	"observability": {
 		"enabled": true,
 	},
+	"unsafe": {
+		"bindings": [
+			{
+				"name": "WSHIM_SOCKET",
+				"type": "internal_service_http",
+				"service": "wshim",
+			},
+		],
+	},
 }

@@ -3,6 +3,8 @@
 interface Env {
 	ASSETS: Fetcher;
 	MIDDLECACHE: R2Bucket;
+	WSHIM_SOCKET: Fetcher;
+	WSHIM_TOKEN: string;
 }
 declare module "*/__redirects" {
 	const value: string;

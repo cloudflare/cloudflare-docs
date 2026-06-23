@@ -1,0 +1,37 @@
+apiVersion: openslo/v1
+kind: SLO
+metadata:
+  name: cloudflare-docs-availability-slo
+  displayName: Cloudflare Docs Availability SLO
+spec:
+  service: component:default/cf-account-b54f07a6c269ecca2fa60f1ae4920c99
+  description: |
+    Measures the percentage of requests to developers.cloudflare.com
+    that succeed (non-5xx responses).
+  indicator:
+    metadata:
+      name: cloudflare-docs-availability-slo
+      displayName: Cloudflare Docs Availability Rate
+      annotations:
+        release-manager.cfdata.org/hmd: "false"
+        openslo.cfdata.org/sli-type: availability
+    spec:
+      ratioMetric:
+        counter: true
+        good:
+          metricSource:
+            metricSourceRef: thanos
+            spec:
+              query: cloudflare_docs_requests_total{status!~"5.*"}
+        total:
+          metricSource:
+            metricSourceRef: thanos
+            spec:
+              query: cloudflare_docs_requests_total
+  objectives:
+    - displayName: Availability > 99.95%
+      target: 0.9995
+  budgetingMethod: Occurrences
+  timeWindow:
+    - duration: 30d
+      isRolling: true
