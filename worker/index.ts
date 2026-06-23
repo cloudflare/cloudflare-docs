@@ -219,6 +219,9 @@ export default class extends WorkerEntrypoint<Env> {
 	}
 
 	private async emitMetrics(status: number): Promise<void> {
+		// WSHIM_TOKEN is only set on the production Worker, not on preview
+		// deployments in the dispatch namespace — skip silently if absent.
+		if (!this.env.WSHIM_TOKEN) return;
 		try {
 			const registry = prom();
 			const requests = registry.create(
