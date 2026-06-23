@@ -227,19 +227,16 @@ export default class extends WorkerEntrypoint<Env> {
 		// deployments in the dispatch namespace — skip silently if absent.
 		if (!this.env.WSHIM_TOKEN) return;
 		try {
-			await this.env.WSHIM_SOCKET.fetch(
-				"http://workers-logging.cfdata.org/prometheus",
-				{
-					method: "POST",
-					headers: { Authorization: `Bearer ${this.env.WSHIM_TOKEN}` },
-					body: this.prometheusCounter(
-						"requests_total",
-						"Total request count by status code",
-						{ status: String(status) },
-						1,
-					),
-				},
-			);
+			await fetch("https://workers-logging.cfdata.org/prometheus", {
+				method: "POST",
+				headers: { Authorization: `Bearer ${this.env.WSHIM_TOKEN}` },
+				body: this.prometheusCounter(
+					"requests_total",
+					"Total request count by status code",
+					{ status: String(status) },
+					1,
+				),
+			});
 		} catch {
 			// Never let metric emission fail a request
 		}
