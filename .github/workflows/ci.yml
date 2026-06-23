@@ -342,8 +342,8 @@ jobs:
 
           echo "branch_slug=$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
 
-          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
-          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
+          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA --env preview
+          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG --env preview
 
       - name: Post preview URL on PR
         env:
