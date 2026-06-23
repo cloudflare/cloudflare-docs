@@ -8,14 +8,16 @@ products:
   - workers
 ---
 
+Use these checks when a Preview exists but does not behave as expected. Most issues come from settings, resource bindings, or Preview URL routing.
+
 ## A setting did not show up in my Preview
 
 Check which object you changed:
 
-- Shared preview settings affect new Previews.
-- This Preview's settings affect one existing Preview.
+- Shared Preview Settings affect future Preview branches.
+- The specific Preview branch's own settings affect that Preview branch.
 
-If you changed shared preview settings after the Preview already existed, the existing Preview keeps its own settings unless you apply the change to existing Previews.
+If you changed Shared Preview Settings after the Preview branch already existed, the existing Preview branch keeps its own settings. Update that Preview branch directly if it needs the same change.
 
 ## My Preview is using production data
 
@@ -25,11 +27,11 @@ For safer testing, point Preview bindings at staging or test resources.
 
 ## My service binding calls production
 
-This is expected unless you configured the Preview differently. A service binding calls the Worker named in the binding. A Preview does not automatically find another Worker's matching branch Preview.
+A service binding calls the Worker configured in the binding. It does not automatically find another Worker's matching branch Preview.
 
-For example, if `frontend` has a service binding to `api`, then a Preview of `frontend` calls the production `api` Worker by default. If you want it to call a test version of `api`, configure the Preview binding to point at that test Worker.
+If a Preview should call a test Worker, configure that Preview's service binding to point at the test Worker.
 
-If the service binding points back to another entrypoint in the same Worker, use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead. `ctx.exports` keeps the call inside the same Preview.
+If the call should stay inside the same Worker, use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a self-service binding.
 
 ## My Preview URL changed
 
@@ -51,6 +53,6 @@ When a Worker reaches the Preview limit, Cloudflare deletes the least recently d
 
 ## Wrangler and Dashboard disagree
 
-If both surfaces changed the same setting, review the warning or diff before applying the change.
+If the dashboard, Wrangler, or API changed the same setting, review the warning or diff before applying the change.
 
 To reduce conflicts, choose where each category of settings lives. For example, keep non-secret Preview bindings in Wrangler config and manage Preview secrets through the dashboard or Wrangler secret commands.

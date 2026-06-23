@@ -8,16 +8,20 @@ products:
   - workers
 ---
 
-By default, Previews are served from your `workers.dev` subdomain. You can also serve Previews from your own custom domain.
+import { WranglerConfig } from "~/components";
+
+Previews can be served from your `workers.dev` subdomain or from your own custom domain.
 
 Custom domains help when your application depends on domain-specific cookies, authentication, CORS behavior, or branch-based hostnames.
 
+Custom domains only change the Preview URL. To change variables, secrets, bindings, or resources for that Preview, use [Preview settings](/workers/previews/configuration/).
+
 ## URL format
 
-| Host type | Preview URL | Deployment URL |
-| --- | --- | --- |
+| Host type     | Preview URL                                            | Deployment URL                                          |
+| ------------- | ------------------------------------------------------ | ------------------------------------------------------- |
 | `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
-| Custom domain | `<preview-name>.app.example.com` | `<deployment-id>-<preview-name>.app.example.com` |
+| Custom domain | `<preview-name>.app.example.com`                       | `<deployment-id>-<preview-name>.app.example.com`        |
 
 On `workers.dev`, the Preview name and Worker name share one DNS label. On custom domains, the Preview name is its own subdomain.
 
@@ -40,6 +44,38 @@ To enable Previews on a custom domain:
 4. Select the custom domain.
 5. Enable **Previews**.
 
+### Wrangler
+
+To enable Previews on a custom domain in your Wrangler configuration, set `previews_enabled` on the custom domain route:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "routes": [
+    {
+      "pattern": "app.example.com",
+      "custom_domain": true,
+      "previews_enabled": true
+    }
+  ]
+}
+```
+
+</WranglerConfig>
+
+Then, redeploy your Worker with `wrangler deploy`.
+
+:::caution[Keep custom domain settings in one place]
+
+If Wrangler manages your custom domain route, each `wrangler deploy` applies the custom domain settings from your Wrangler file. Add `previews_enabled` to the route in your Wrangler file so a later deploy does not turn off custom domain Previews.
+
+The top-level `preview_urls` setting controls `workers.dev` Preview URLs. Custom domain Preview URLs use the separate `previews_enabled` setting on the custom domain route.
+
+If Terraform manages the Worker custom domain, configure the equivalent `previews_enabled` setting in Terraform instead of relying on a dashboard-only change.
+
+:::
+
 ### API
 
 To enable Previews on a custom domain through the API, attach a domain with `previews_enabled` set to `true`.
@@ -59,7 +95,7 @@ curl --request PUT \
 
 ## Access control
 
-Preview custom domain URLs are public by default. Use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require authentication.
+Preview custom domain URLs are public unless you add an access control layer. Use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require authentication.
 
 Production and Preview URLs can be protected independently.
 
