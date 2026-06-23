@@ -11,7 +11,7 @@ head:
     content: Subdomain delegation and available setups
 ---
 
-import { DirectoryListing, GlossaryTooltip, Render } from "~/components";
+import { DirectoryListing, GlossaryTooltip, Render, Steps } from "~/components";
 
 :::note[Availability]
 Subdomain setup is only available for Enterprise accounts. If you only want to create a subdomain for your site in Cloudflare, refer to [Create a subdomain record](/dns/manage-dns-records/how-to/create-subdomain/).
@@ -68,3 +68,18 @@ If a certificate is already active on the child zone for a specific hostname (`s
 ## Access applications
 
 <Render file="subdomain-setup-access-apps" product="dns" />
+
+## Decommission a subdomain setup
+
+To stop delegating a subdomain to Cloudflare, you must delete the child zone from your Cloudflare account. Removing the `NS` records from the parent zone does not stop the delegation.
+
+This is because Cloudflare automatically serves `NS` delegation for active child zones based on the zone's status, not based on `NS` records configured in the parent zone.
+
+To decommission a subdomain setup:
+
+<Steps>
+1. Go to the child zone in the Cloudflare dashboard.
+2. Delete the zone entirely.
+3. Remove the `NS` records from the parent zone to clean up your DNS configuration.
+4. (Optional) Configure the subdomain as a hostname with an `A` or `CNAME` record in the parent zone.
+</Steps>
