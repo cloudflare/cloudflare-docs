@@ -1,0 +1,108 @@
+---
+pcx_content_type: concept
+title: Precursor
+description: Client-side, session-based verification that continuously evaluates visitor behavior to identify automation.
+products:
+  - cloudflare-challenges
+sidebar:
+  order: 4
+---
+
+Precursor is a client-side, session-based verification system that continuously evaluates a visitor’s behavior over time. Instead of relying on a single challenge event, Precursor runs ongoing verification in the browser to detect automation that appears legitimate in individual requests but exhibits non-human patterns across a session.
+
+Precursor maintains session state in the `cf_clearance` cookie, enabling Cloudflare to build a timeline to detect drifts in client behavior.
+
+## How it works
+
+Precursor operates as a continuous client-side verification loop:
+
+- A client-side script is injected into the browser
+- The script executes verification challenges at a configured interval
+- Each execution produces signals that are evaluated by Cloudflare
+- Results are used to update session state stored in the `cf_clearance` cookie
+- The process repeats throughout the session
+
+This model allows Cloudflare to move from one-time verification to continuous verification.
+
+## Get started
+
+Enable Precursor for your zone:
+
+1. In the Cloudflare dashboard, select your zone.
+2. Go to **Security** → **Settings**.
+3. Locate **Precursor**.
+4. Toggle Precursor **On**.
+
+<img
+	src="/images/precursor-settings.png"
+	alt="Precursor settings in the Cloudflare dashboard"
+	style="border:1px solid #e5e7eb;border-radius:6px;display:block;margin:2px 0;"
+/>
+
+5. **Choose a mode:**
+   Establishing and verifying the full user session requires showing customers a challenge page. However, because some customers do not want to interrupt their users with challenges, Precursor has two modes:
+
+   - **Minimize Friction (default)**
+     Does not present a Challenge, instead attempting to establish session state in the background. As a result, it cannot guarantee full session verification.
+
+   - **Maximize Security (recommended)**
+     Precursor presents challenges to the visitor if they do not already have a valid session. This allows Cloudflare to fully enforce session verification.
+
+<img
+	src="/images/precursor-rules.png"
+	alt="Precursor rules configuration"
+	style="border:1px solid #e5e7eb;border-radius:6px;display:block;margin:0;margin-top:-50px;"
+/>
+
+For most customers, selecting a mode is the only configuration required.
+
+### Precursor rules (optional)
+
+Precursor runs across your zone by default. Rules do not enable or disable Precursor — they determine which mode applies to each request.
+
+For example:
+
+- Run **Minimize Friction** across your site, but run **Maximize Security** to enforce a valid session on `/checkout`.
+- Run **Maximize Security** on all pages, except your homepage.
+
+ 
+
+## Relationship to JavaScript Detections
+
+Precursor supersedes JavaScript Detections (JSD):
+
+- moves from one-time execution to continuous verification
+- introduces session-based state
+- enables dynamic runtime control
+
+## Relationship to Challenges
+
+Precursor and Challenges serve different roles:
+
+- Challenges provide point-in-time verification
+- Precursor provides continuous, session-level verification
+
+Precursor does not replace Challenges. Instead, it strengthens them by:
+
+- determining when additional Challenges should be required
+- re-evaluating visitors after they have already passed a Challenge
+- identifying automation that emerges over time
+
+## Relationship to `cf_clearance`
+
+Precursor is tightly integrated with `cf_clearance`:
+
+- Precursor continuously updates session state stored in the cookie
+- Clearance is no longer static for the duration of the cookie
+- Session behavior can affect whether clearance remains valid
+
+If a session becomes suspicious:
+
+- effective clearance may be reduced or invalidated
+- additional Challenges may be triggered
+- the visitor may be re-verified during the same session
+
+This creates an adaptive clearance model that combines:
+
+- point-in-time challenge outcomes
+- continuous behavioral verification
