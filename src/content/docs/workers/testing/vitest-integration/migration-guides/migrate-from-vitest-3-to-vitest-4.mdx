@@ -31,6 +31,8 @@ Install Vitest 4 and the latest version of `@cloudflare/vitest-pool-workers`:
 
 <PackageManagers pkg="vitest@^4.1.0 @cloudflare/vitest-pool-workers" dev />
 
+`@cloudflare/vitest-pool-workers` also requires `@vitest/runner` and `@vitest/snapshot` at `^4.1.0`. Both ship as dependencies of `vitest`, so installing `vitest@^4.1.0` satisfies them.
+
 ## Update your configuration with the codemod
 
 A codemod updates your `vitest.config.ts` to the new plugin API automatically. After installing the package, run:
@@ -50,12 +52,14 @@ To run the codemod without installing the package first, point it at the publish
 />
 
 :::note
-The codemod only updates `vitest.config.ts`. Changes to your test files, including `cloudflare:test` import replacements, must be made manually. The remaining sections describe those changes.
+The codemod only updates `vitest.config.ts`, and it does not remove options that are no longer supported. Changes to your test files, including `cloudflare:test` import updates, must be made manually. The remaining sections describe those changes.
 :::
 
 ## Review the configuration changes
 
-The codemod replaces `defineWorkersProject` and `defineWorkersConfig` from `@cloudflare/vitest-pool-workers/config` with a `cloudflareTest()` Vite plugin exported from `@cloudflare/vitest-pool-workers`. Options previously nested under `test.poolOptions.workers` are now passed directly to `cloudflareTest()`.
+`defineWorkersProject` and `defineWorkersConfig` from `@cloudflare/vitest-pool-workers/config` have both been removed. They are replaced by a `cloudflareTest()` Vite plugin exported from `@cloudflare/vitest-pool-workers`, with options previously nested under `test.poolOptions.workers` passed directly to `cloudflareTest()`.
+
+The codemod migrates configurations that use `defineWorkersProject`. If your configuration uses `defineWorkersConfig`, or calls `defineWorkersProject` with a function instead of an object, the codemod cannot transform it and you must apply the change manually using the example below.
 
 Before:
 
@@ -88,17 +92,17 @@ export default defineConfig({
 });
 ```
 
+### Remove `isolatedStorage` and `singleWorker`
+
+The `isolatedStorage` and `singleWorker` options have been removed. Storage isolation is now per test file, matching Vitest's own isolation model. The codemod copies your existing `test.poolOptions.workers` options into `cloudflareTest()`, so if you previously set either option, remove it from the `cloudflareTest()` call. To make test files share the same storage instead, pass the `--max-workers=1 --no-isolate` flags to the Vitest command in your `package.json`.
+
 ## Update your test files
 
 The following changes must be made manually to your test files.
 
-### Replace removed isolation options
+### Update deprecated `cloudflare:test` imports
 
-The `isolatedStorage` and `singleWorker` options have been removed. Storage isolation is now per test file, matching Vitest's own isolation model. To make test files share the same storage, pass the `--max-workers=1 --no-isolate` flags to the Vitest command in your `package.json`.
-
-### Replace cloudflare:test imports
-
-The `import { env, SELF } from "cloudflare:test"` import has been removed. Use `import { env, exports } from "cloudflare:workers"` instead. `exports.default.fetch()` behaves the same as `SELF.fetch()`, except that it does not expose Assets. To test Assets, write an integration test using [`startDevWorker()`](/workers/testing/unstable_startworker/).
+The `env` and `SELF` exports from `cloudflare:test` are deprecated in favor of `cloudflare:workers`. Replace `import { env, SELF } from "cloudflare:test"` with `import { env, exports } from "cloudflare:workers"`. `exports.default.fetch()` behaves the same as `SELF.fetch()`, except that it does not expose Assets. To test Assets, use the `env.ASSETS` binding or write an integration test using [`startDevWorker()`](/workers/testing/unstable_startworker/). The deprecated exports still work, so this change is recommended rather than required.
 
 ```diff
 - import { env, SELF } from "cloudflare:test";
@@ -124,7 +128,7 @@ Migrate my @cloudflare/vitest-pool-workers tests from v0.12.x to v0.13.x (Vitest
 1. Run the codemod to update vitest.config.ts: `npx jscodeshift -t https://unpkg.com/@cloudflare/vitest-pool-workers/dist/codemods/vitest-v3-to-v4.mjs --parser=ts vitest.config.ts`
 2. Replace all `import { env, SELF } from "cloudflare:test"` with `import { env, exports } from "cloudflare:workers"`. Replace uses of `SELF.fetch()` with `exports.default.fetch()`.
 3. Remove all uses of `fetchMock` imported from `cloudflare:test`. Replace with direct mocks on `globalThis.fetch`, or with MSW if the project already uses it.
-4. Remove the `isolatedStorage` and `singleWorker` options from any test-level configuration. If tests relied on shared storage across files, add `--max-workers=1 --no-isolate` to the Vitest command in package.json.
+4. Remove the `isolatedStorage` and `singleWorker` options from the `cloudflareTest()` configuration in vitest.config.ts (the codemod copies them over from the old config). If tests relied on shared storage across files, add `--max-workers=1 --no-isolate` to the Vitest command in package.json.
 5. Update any test files affected by upstream Vitest 4 breaking changes. Refer to the migration guide at https://vitest.dev/guide/migration#vitest-4 for the full list of changes.
 ```
 
