@@ -19,7 +19,7 @@ Version 0.13.0 rearchitects the integration around a Vite plugin model. This cha
 - Library imports that previously required SSR optimizer workarounds, such as Stripe, now resolve without extra configuration.
 - Bare Node.js specifiers such as `node:url` now resolve in test files.
 - `nodejs_compat_v2` and Node.js module flags are enabled automatically during tests, matching production behavior.
-- The `provide` data channel no longer has the previous ~8 KB size limit. It now uses WebSocket messages.
+- The `provide` data channel is no longer limited to ~8 KB. It now uses WebSocket messages.
 - Storage is isolated per test file instead of per test, consistent with standard Vitest behavior.
 - The Vitest UI works correctly with Workers tests.
 
@@ -59,7 +59,7 @@ The codemod only updates `vitest.config.ts`, and it does not remove options that
 
 `defineWorkersProject` and `defineWorkersConfig` from `@cloudflare/vitest-pool-workers/config` have both been removed. They are replaced by a `cloudflareTest()` Vite plugin exported from `@cloudflare/vitest-pool-workers`, with options previously nested under `test.poolOptions.workers` passed directly to `cloudflareTest()`.
 
-The codemod migrates configurations that use `defineWorkersProject`. If your configuration uses `defineWorkersConfig`, or calls `defineWorkersProject` with a function instead of an object, the codemod cannot transform it and you must apply the change manually using the example below.
+The codemod migrates configurations that use `defineWorkersProject`. If your configuration uses `defineWorkersConfig`, or calls `defineWorkersProject` with a function instead of an object, the codemod cannot transform it. Apply the change manually using the following example.
 
 Before:
 
@@ -116,7 +116,7 @@ The `env` and `SELF` exports from `cloudflare:test` are deprecated in favor of `
 
 ### Replace fetchMock
 
-The `import { fetchMock } from "cloudflare:test"` import has been removed. Mock `globalThis.fetch` directly or use ecosystem libraries such as [MSW](https://mswjs.io/). Refer to the [request mocking example](https://github.com/cloudflare/workers-sdk/blob/main/fixtures/vitest-pool-workers-examples/request-mocking/test/imperative.test.ts) for a complete example.
+The `import { fetchMock } from "cloudflare:test"` import has been removed. Mock `globalThis.fetch` directly or use ecosystem libraries such as [MSW](https://mswjs.io/). Refer to the [request mocking example](https://github.com/cloudflare/workers-sdk/blob/1aee99059d6025c7ea8ef88b3ea421922eee6354/fixtures/vitest-pool-workers-examples/request-mocking/test/imperative.test.ts) for a complete example.
 
 ## Migrate test files with a coding agent
 
