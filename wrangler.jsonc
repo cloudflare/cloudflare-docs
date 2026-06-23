@@ -34,6 +34,7 @@
 	},
 	"env": {
 		"preview": {
+			"r2_buckets": [{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" }],
 			"unsafe": {
 				"bindings": [],
 			},
