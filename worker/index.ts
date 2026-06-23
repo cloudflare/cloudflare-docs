@@ -1,7 +1,6 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
-import prom from "promjs";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -82,11 +81,18 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		const response = await this.handleFetch(request);
-		// Emit metrics after the response is determined, without blocking it.
-		// ctx.waitUntil ensures the flush completes even after the response is sent.
-		this.ctx.waitUntil(this.emitMetrics(response.status));
-		return response;
+		let status = 500;
+		try {
+			const response = await this.handleFetch(request);
+			status = response.status;
+			return response;
+		} catch (err) {
+			throw err;
+		} finally {
+			// Emit metrics regardless of success or unhandled exception.
+			// ctx.waitUntil ensures the flush completes after the response is sent.
+			this.ctx.waitUntil(this.emitMetrics(status));
+		}
 	}
 
 	private async handleFetch(request: Request): Promise<Response> {
@@ -223,24 +229,42 @@ export default class extends WorkerEntrypoint<Env> {
 		// deployments in the dispatch namespace — skip silently if absent.
 		if (!this.env.WSHIM_TOKEN) return;
 		try {
-			const registry = prom();
-			const requests = registry.create(
-				"counter",
-				"requests_total",
-				"Total request count by status code",
-			);
-			requests.inc({ status: String(status) });
-
 			await this.env.WSHIM_SOCKET.fetch(
 				"http://workers-logging.cfdata.org/prometheus",
 				{
 					method: "POST",
 					headers: { Authorization: `Bearer ${this.env.WSHIM_TOKEN}` },
-					body: registry.metrics(),
+					body: this.prometheusCounter(
+						"requests_total",
+						"Total request count by status code",
+						{ status: String(status) },
+						1,
+					),
 				},
 			);
 		} catch {
 			// Never let metric emission fail a request
 		}
+	}
+
+	private prometheusCounter(
+		name: string,
+		help: string,
+		labels: Record<string, string>,
+		value: number,
+	): string {
+		const labelPairs = Object.entries(labels)
+			.map(
+				([k, v]) => `${k}="${v.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`,
+			)
+			.join(",");
+		const labelsStr = labelPairs ? `{${labelPairs}}` : "";
+		return (
+			[
+				`# HELP ${name} ${help}`,
+				`# TYPE ${name} counter`,
+				`${name}${labelsStr} ${value}`,
+			].join("\n") + "\n"
+		);
 	}
 }

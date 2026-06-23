@@ -269,9 +269,6 @@ importers:
       pretty-bytes:
         specifier: 7.1.0
         version: 7.1.0
-      promjs:
-        specifier: 0.4.2
-        version: 0.4.2
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -5273,9 +5270,6 @@ packages:
   prismjs@1.30.0:
     resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
     engines: {node: '>=6'}
-
-  promjs@0.4.2:
-    resolution: {integrity: sha512-qvHcTU9xwEieFOf2Qnf5JYPKkdJU2lRbJfJvJspw6XpnoH7VPmNfnJJnOLPfN8ODJMBLRt8wEPVjxyyn0Or6RQ==}
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -12228,8 +12222,6 @@ snapshots:
       react-is: 17.0.2
 
   prismjs@1.30.0: {}
-
-  promjs@0.4.2: {}
 
   prop-types@15.8.1:
     dependencies:
