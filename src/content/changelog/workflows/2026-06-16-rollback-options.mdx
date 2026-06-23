@@ -19,14 +19,15 @@ await step.do(
 	},
 	{
 		rollback: async ({ ctx, output, error }) => {
-			// Use the original step output to undo work in the external system.
+			// `output` is the value returned by the step being rolled back.
 			const { chargeId } = output as { chargeId: string };
 			await refundCharge(chargeId, {
-				// Add the source step to logs or audit records for this recovery action.
+				// `ctx` is the original step context, including step name, count, attempt, and config.
 				reason: `${ctx.step.name}: ${error.message}`,
 			});
 		},
 		rollbackConfig: {
+			// `rollbackConfig` controls retries and timeout for the rollback handler.
 			retries: { limit: 3, delay: "30 seconds", backoff: "linear" },
 			timeout: "5 minutes",
 		},
