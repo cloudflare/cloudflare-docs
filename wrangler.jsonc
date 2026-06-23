@@ -23,4 +23,18 @@
 	"observability": {
 		"enabled": true,
 	},
+	"env": {
+		"production": {
+			"name": "cloudflare-docs",
+			"unsafe": {
+				"bindings": [
+					{
+						"name": "WSHIM_SOCKET",
+						"type": "internal_service_http",
+						"service": "wshim",
+					},
+				],
+			},
+		},
+	},
 }
