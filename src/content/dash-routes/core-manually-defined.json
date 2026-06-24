@@ -48,5 +48,10 @@
 		"deeplink": "/?to=/:account/:zone/speed/origin-analytics",
 		"name": "Origin Analytics",
 		"parent": ["Speed"]
+	},
+	{
+		"deeplink": "/?to=/:organization/audit-log",
+		"name": "Organization Audit Logs",
+		"parent": ["Organizations"]
 	}
 ]

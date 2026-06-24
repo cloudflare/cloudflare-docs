@@ -1,0 +1,27 @@
+---
+title: Organization audit logs are now available in the dashboard
+description: Organization Super Administrators can now view organization-level audit logs directly in the Cloudflare dashboard.
+products:
+  - audit-logs
+date: 2026-06-24
+---
+
+import { DashButton } from "~/components";
+
+You can now, as an [Organization Super Administrator](/fundamentals/organizations/), view organization-level audit logs in the Cloudflare dashboard, in addition to the existing API access.
+
+Organization audit logs help you monitor activity across your organization. You can see who performed an action, what changed, when it happened, how it was performed, and whether it succeeded or failed.
+
+You can filter and search logs by actor, action, result, resource, request details, and timestamp. Use these logs to troubleshoot changes, investigate unexpected access, and support security or compliance workflows.
+
+![Organization audit logs in the Cloudflare dashboard](~/assets/images/changelog/audit-logs/Audit_logs_v2_organization_dashboard.png)
+
+If you are viewing account-level audit logs and the account belongs to an organization where you are an Organization Super Administrator, select **View Organization Audit Logs** to open the parent organization's audit logs.
+
+![View Organization Audit Logs button](~/assets/images/changelog/audit-logs/Audit_logs_v2_view_organization_button.png)
+
+To get started, go to **Organizations**, select your organization, then go to **Manage Organization** > **Audit Logs**.
+
+<DashButton url="/?to=/:organization/audit-log" />
+
+For more information, refer to the [Audit Logs documentation](/fundamentals/account/account-security/audit-logs/).
