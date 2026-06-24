@@ -15,7 +15,7 @@ entries:
     description: |-
       The `http.host` field contains the `Host` header from the original client request.
 
-      If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, this change is not reflected in the `http.host` value seen by other rule phases (such as custom rules, cache rules, or transform rules), [Cloudflare Workers](/workers/), or the [`request.cf`](/workers/runtime-apis/request/#incomingrequestcfproperties) object. All rule phases and Workers evaluate against the original, unmodified host.
+      If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, this change is not reflected in the `http.host` value seen by other rule phases (such as custom rules, cache rules, or transform rules) or [Cloudflare Workers](/workers/). All rule phases and Workers evaluate against the original, unmodified host.
     example_value: |-
       "www.example.org"
 
