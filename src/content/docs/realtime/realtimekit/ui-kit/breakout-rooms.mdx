@@ -56,17 +56,14 @@ To assign participants manually:
 1. In your RealtimeKit meeting, tap **Breakout Rooms**
 2. In the Create Breakout dialog, add the number of rooms you want and tap **Create**
 
-Once you have created breakout rooms, assign participants to the rooms. You can either:
-
-- **Assign participants automatically** - RealtimeKit splits participants evenly across rooms
-- **Assign participants manually** - Select which participants you want in each room
+Once you have created breakout rooms, assign participants to the rooms. You can assign participants automatically (RealtimeKit splits them evenly) or manually (you choose who goes where).
 
 #### Assign participants automatically
 
 To assign participants automatically:
 
 1. In the Assign Participants dialog, tap the shuffle button
-2. Participants are assigned to the rooms
+2. RealtimeKit assigns participants to the rooms
 3. Edit room names by tapping the pencil icon beside the room name (optional)
 4. Move participants to different rooms if needed
 5. Tap **Start Breakout**
@@ -89,17 +86,14 @@ To assign participants manually:
 1. In your RealtimeKit meeting, tap **Breakout Rooms**
 2. In the Create Breakout dialog, add the number of rooms you want and tap **Create**
 
-Once you have created breakout rooms, assign participants to the rooms. You can either:
-
-- **Assign participants automatically** - RealtimeKit splits participants evenly across rooms
-- **Assign participants manually** - Select which participants you want in each room
+Once you have created breakout rooms, assign participants to the rooms. You can assign participants automatically (RealtimeKit splits them evenly) or manually (you choose who goes where).
 
 #### Assign participants automatically
 
 To assign participants automatically:
 
 1. In the Assign Participants dialog, tap the shuffle button
-2. Participants are assigned to the rooms
+2. RealtimeKit assigns participants to the rooms
 3. Edit room names by tapping the pencil icon beside the room name (optional)
 4. Move participants to different rooms if needed
 5. Tap **Start Breakout**
@@ -258,9 +252,9 @@ listener.onMeetingChanged = { error in
         showErrorAlert(message: error.message)
     } else {
         // Re-register all feature event listeners — the SDK clears them during the room switch
-        rtkClient.addSelfEventListener(selfEventListener: self)
-        rtkClient.addParticipantsEventListener(participantsEventListener: self)
-        // … other listeners
+        // Re-register your listener instances, for example:
+        // rtkClient.addSelfEventListener(selfEventListener: mySelfListener)
+        // rtkClient.addParticipantsEventListener(participantsEventListener: myParticipantsListener)
     }
 }
 
@@ -456,9 +450,9 @@ import RealtimeKitUI
 let meetingInfo = RtkMeetingInfo(authToken: "<participant_auth_token>")
 let rtkUI = RealtimeKitUI(meetingInfo: meetingInfo)
 
-let setupVC = rtkUI.startMeeting {
+let setupVC = rtkUI.startMeeting { [weak self] in
     // Called when the participant leaves or ends the meeting
-    self.dismiss(animated: true)
+    self?.dismiss(animated: true)
 }
 present(setupVC, animated: true)
 ```
@@ -495,7 +489,7 @@ rtkUIKit.startMeeting()
 
 :::
 
-Built-in breakout room support is handled automatically by `RtkMeetingActivity`. When participants are moved between rooms, a transition overlay is displayed with a localized message. The host can manage breakout rooms via the `RtkBreakoutRoomsBottomSheet`, which is shown automatically when the Breakout Rooms control bar button is tapped.
+Built-in breakout room support is handled automatically by `RtkMeetingActivity`. When the SDK moves participants between rooms, it displays a transition overlay with a localized message. The host can manage breakout rooms via the `RtkBreakoutRoomsBottomSheet`, which is shown automatically when the Breakout Rooms control bar button is tapped.
 
 </RTKCodeSnippet>
 
