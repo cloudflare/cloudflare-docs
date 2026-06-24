@@ -14,6 +14,10 @@ import { WranglerConfig } from "~/components";
 
 Configure how the Sandbox SDK communicates with containers using transport modes.
 
+:::note[Sandbox SDK 1.0]
+HTTP and WebSocket transports are removed in `@cloudflare/sandbox@next`. Move existing projects to RPC before migrating. For more information, refer to [Migrate to Sandbox SDK 1.0](/sandbox/guides/migrating-to-1-0/).
+:::
+
 ## Overview
 
 The Sandbox SDK supports three transport modes for communication between the Durable Object and the container:

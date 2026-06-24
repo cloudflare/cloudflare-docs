@@ -12,6 +12,10 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Configure sandbox behavior by passing options when creating a sandbox instance with `getSandbox()`.
 
+:::note[Sandbox SDK 1.0]
+The `enableDefaultSession` option is removed in `@cloudflare/sandbox@next`. Top-level operations run sessionlessly by default. For more information, refer to [Migrate to Sandbox SDK 1.0](/sandbox/guides/migrating-to-1-0/).
+:::
+
 ## Available options
 
 ```ts

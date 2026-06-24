@@ -1,0 +1,26 @@
+---
+title: Announcing the Sandbox SDK 1.0 preview
+description: A new preview package introduces a consolidated exec() command interface and an extensions API ahead of the 1.0.0 release.
+products:
+  - sandbox
+date: 2026-07-01
+---
+
+import { PackageManagers } from "~/components";
+
+Following on from our [recent deprecation announcement](/changelog/post/2026-06-09-deprecating-sandbox-sdk-features/), we are announcing a new preview package that contains the replacement APIs.
+
+Install the `1.0` preview with:
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+The preview includes:
+
+- A revised command interface that consolidates `exec()`, `execStream()`, and `startProcess()` into a single `exec()` function, aligning with the Containers `container.exec()` model.
+- A new extensions API for adding reusable Sandbox capabilities outside the core SDK, including the Code Interpreter, Git, and PTY features that are moving into plugins.
+
+We are aiming to ship this preview as `1.0.0` on July 31, 2026.
+
+To get started, refer to [Migrate to Sandbox SDK 1.0](/sandbox/guides/migrating-to-1-0/). We also provide an [agent skill](/sandbox/guides/migrating-to-1-0/SKILL.md) to help with the migration.
+
+For any questions, ask in the [Cloudflare Developers Discord](https://discord.gg/cloudflaredev).

@@ -16,6 +16,10 @@ Create shell sessions within a sandbox. Each session maintains its own shell sta
 By default, for backwards compatibility, every sandbox has a default session that maintains shell state. It is recommended to set `enableDefaultSession` to `false` on `getSandbox()` so operations without an explicit `sessionId` run in isolation. Create additional sessions for separate workflows inside the same user workspace, such as development and runtime processes using the `createSession()` method. Use separate sandboxes for separate users. For sandbox-level operations like creating containers or destroying the entire sandbox, refer to the [Lifecycle API](/sandbox/api/lifecycle/).
 :::
 
+:::note[Sandbox SDK 1.0]
+In `@cloudflare/sandbox@next`, hidden default sessions and the `enableDefaultSession` flag are removed. Top-level operations run sessionlessly by default. Use the `createSession()` method when shell state must persist across calls. For more information, refer to [Migrate to Sandbox SDK 1.0](/sandbox/guides/migrating-to-1-0/).
+:::
+
 ## Methods
 
 ### `createSession()`

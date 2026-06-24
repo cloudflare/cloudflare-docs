@@ -10,6 +10,10 @@ products:
 
 Terminal connections let browser-based UIs interact directly with sandbox shells. Instead of executing discrete commands with `exec()`, a terminal connection opens a persistent, bidirectional channel to a bash shell — the same model as SSH or a local terminal emulator.
 
+:::note[Sandbox SDK 1.0]
+In `@cloudflare/sandbox@next`, PTY support moves from the core SDK into a plugin. For more information, refer to [Migrate to Sandbox SDK 1.0](/sandbox/guides/migrating-to-1-0/).
+:::
+
 ## How terminal connections work
 
 Terminal connections use WebSockets to stream raw bytes between a browser terminal (like [xterm.js](https://xtermjs.org/)) and a pseudo-terminal (PTY) process running inside the sandbox container.

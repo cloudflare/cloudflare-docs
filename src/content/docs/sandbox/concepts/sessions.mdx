@@ -15,6 +15,10 @@ Sessions are bash shell execution contexts within a sandbox. Think of them as te
 
 Sessions are useful for organizing work inside one sandbox. They are not a security boundary between users because sessions share the same filesystem and process space.
 
+:::note[Sandbox SDK 1.0]
+In `@cloudflare/sandbox@next`, hidden default sessions and the `enableDefaultSession` flag are removed. Top-level operations run sessionlessly by default. Use explicit sessions when shell state must persist. For more information, refer to [Migrate to Sandbox SDK 1.0](/sandbox/guides/migrating-to-1-0/).
+:::
+
 ## Default session
 
 By default, every sandbox has a default session that maintains shell state between commands while the container is active:

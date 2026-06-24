@@ -12,6 +12,10 @@ import { TypeScriptExample } from "~/components";
 
 Connect browser-based terminal UIs to sandbox shells via WebSocket. The server-side `terminal()` method proxies WebSocket connections to the container, and the client-side `SandboxAddon` integrates with xterm.js for terminal rendering.
 
+:::note[Sandbox SDK 1.0]
+In `@cloudflare/sandbox@next`, PTY support moves from the core SDK into a plugin. The public interface remains available through a plugin namespace. For more information, refer to [Migrate to Sandbox SDK 1.0](/sandbox/guides/migrating-to-1-0/).
+:::
+
 ## Server-side methods
 
 ### `terminal()`
