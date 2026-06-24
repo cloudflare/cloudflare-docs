@@ -1,0 +1,90 @@
+---
+title: Permissions and access
+description: Learn how Developer Platform permissions apply across platform, product, and resource scopes.
+pcx_content_type: concept
+sidebar:
+  order: 8.5
+products:
+  - workers
+---
+
+You can control who can access your Developer Platform resources and what they can do with them by assigning [roles](/fundamentals/manage-members/roles/) and [scopes](/fundamentals/manage-members/scope/) through [permission policies](/fundamentals/manage-members/policies/). Each policy combines a role, which defines the actions allowed, with a scope, which defines where those actions apply.
+
+For Developer Platform products, scopes can be set at three levels:
+
+| Level    | Scope                         | Use when                                                                                                                                                 |
+| -------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platform | All products on an account    | You want to grant access across Workers, R2, D1, KV, Durable Objects, Queues, Workers AI, Vectorize, Hyperdrive, and other Developer Platform resources. |
+| Product  | All resources in one product  | You want to grant access to all Workers, all R2 buckets, or all D1 databases, without granting access to other products.                                 |
+| Resource | One resource inside a product | You want to grant access to a specific resource, such as an individual Worker or R2 bucket.                                                              |
+
+## Roles
+
+Assign one of these roles to define the level of permission you want to grant:
+
+| Role               | What it allows                                                                                                                         |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Metadata Read-Only | View resource lists, settings, metrics, logs, and traces. Cannot view product content such as code, data, or stored objects.           |
+| Content Read-Only  | Everything in Metadata Read-Only, plus read product content such as Worker code, D1 database rows, or R2 objects. Cannot make changes. |
+| Editor             | Everything in Content Read-Only, plus update product content and settings. Cannot create, delete, or rename resources.                 |
+| Admin              | Full control, including creating, deleting, and renaming resources.                                                                    |
+
+## Members, User Groups, and API tokens
+
+Developer Platform permissions can be granted in two ways:
+
+| Grant type                                                                                                   | Best for                                         | How it works                                                                                              |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| [Members](/fundamentals/manage-members/manage/) and [User Groups](/fundamentals/manage-members/user-groups/) | People using the dashboard, Wrangler, or the API | Permissions are inherited when the member signs in to the Cloudflare dashboard or authenticates Wrangler. |
+| [API tokens](/fundamentals/api/get-started/create-token/)                                                    | CI/CD systems, automation, and service accounts  | The token receives only the product and resource permissions selected when the token is created.          |
+
+### Members and User Groups
+
+When you assign a [role](/fundamentals/manage-members/roles/) to a [member](/fundamentals/manage-members/manage/) or [User Group](/fundamentals/manage-members/user-groups/), that permission applies whenever the user uses the Cloudflare dashboard, Wrangler, or the API.
+
+For example, if you assign a member **Metadata Read-Only** at the platform level, they can view settings, metrics, logs, and traces for all Developer Platform products on the account — Workers, R2, D1, and everything else — but cannot view product content like code, data, or stored objects.
+
+If you assign **Metadata Read-Only** at the Workers product level, they can view settings and observability data for all Workers on the account, but have no visibility into R2, D1, or other products.
+
+If you assign **Metadata Read-Only** for a single Worker, they can only see settings and observability data for that one Worker. They will not see any other Workers or any other products.
+
+### API tokens
+
+Use [API tokens](/fundamentals/api/get-started/create-token/) for CI/CD pipelines, agents, scripts, and other automated systems that need to access Developer Platform resources programmatically.
+
+For example, create an API token with **Workers Editor** for a deployment pipeline that needs to update and deploy Worker code.
+
+API tokens support product-level and, where available, resource-level permissions. They do not support platform-level permissions. To grant an API token broad Developer Platform access, select the product-level permissions for each product the token needs.
+
+### Use API tokens with Wrangler
+
+If you have an agent or automated system that uses [Wrangler](/workers/wrangler/), you can control what it has access to by authenticating it with a scoped API token.
+
+Create an API token with only the permissions the system needs, then set these environment variables before running Wrangler:
+
+```bash
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
+export CLOUDFLARE_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+```
+
+Wrangler uses the token's permissions. If the token is scoped to a specific Worker, Wrangler can only operate on that Worker.
+
+For example, if you have an agent that deploys code with Wrangler, you can create an API token with Editor scoped to a single Worker. The agent can update and deploy that Worker, but cannot see or modify any other Worker on the account.
+
+## Bindings
+
+To deploy a Worker that has [bindings](/workers/runtime-apis/bindings/) to resources like [Workers KV](/kv/), [R2](/r2/), or [D1](/d1/), you need **Editor** access to the Worker. You do not need separate permissions on the bound resources to deploy the Worker.
+
+Permissions on bound resources are only required if you need to access those resources directly, for example, reading KV keys, querying a D1 database, or listing R2 objects.
+
+## Common access patterns
+
+| Use case                                                | Scope                                                                                                                                         | Role               |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| View settings, logs, and metrics across all products    | Platform                                                                                                                                      | Metadata Read-Only |
+| Read Worker code without modifying it                   | Workers product                                                                                                                               | Content Read-Only  |
+| Deploy any existing Worker, no access to other products | Workers product                                                                                                                               | Editor             |
+| Deploy a Worker that uses routes                        | Workers product and [domain-level permissions](/fundamentals/manage-members/scope/#specific-domains) for each domain referenced by the routes | Editor             |
+| Create or delete Workers                                | Workers product                                                                                                                               | Admin              |
+| Automated deployments from CI/CD or agents              | API token with Workers product                                                                                                                | Editor             |
+| Automated deployments to one specific Worker            | API token with individual Worker                                                                                                              | Editor             |
