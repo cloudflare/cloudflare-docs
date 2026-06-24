@@ -10,7 +10,7 @@ sidebar:
   order: 5
 ---
 
-import { Details, Render, Tabs, TabItem } from "~/components";
+import { Details, Render, Tabs, TabItem, DashButton } from "~/components";
 
 <Details header="Feature availability">
 
@@ -55,22 +55,26 @@ In this example, "private network" refers to a distinct environment (such as sta
       To route overlapping IPs over virtual networks:
 
       1. Create two unique virtual networks:
-         1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes** > **Virtual networks**.
-				 :::note
-				 The **Virtual networks** card will only appear if a CIDR route exists in your account. If you do not already have a route, you can navigate to **Virtual networks** using this [direct link](https://dash.cloudflare.com/?to=/:account/one/networks/routes/cidr/vnets).
-				 :::
+         1. In the Cloudflare dashboard, go to **Networking** > **Routes** > **Virtual networks**.
+
+            <DashButton url="/?to=/:account/magic-networks/routes/virtual-networks" />
+
          2. Select **Create virtual network**.
          3. Name your virtual network `staging-vnet` and select **Save**.
          4. Repeat Steps 1a-1d to create another virtual network called `production-vnet`.
       2. Create a Cloudflare Tunnel for each private network with overlapping IPs (one tunnel per isolated environment, for example staging and production):
-         1. Go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
+         1. Go to **Networking** > **Tunnels**.
          2. Select **Create a tunnel**.
-         3. Name your tunnel `Staging tunnel` and select **Save tunnel**.
+         3. Name your tunnel `Staging tunnel` and select **Create**.
          4. Install the connector within your staging environment.
-         5. In the **CIDR** tab, add `10.128.0.1/32`.
-         6. Select **Additional settings**. Under **Virtual networks**, select *staging-vnet*.
-         7. Save the tunnel.
-         8. Repeat Steps 2a-2g to create another tunnel called `Production tunnel`. Be sure to install the connector within your production environment and assign the route to *production-vnet*.
+         5. Go to **Networking** > **Routes**.
+
+            <DashButton url="/?to=/:account/magic-networks/routes" />
+
+         6. Select **Create route** > **Tunnel CIDR**.
+         7. Select `Staging tunnel`, enter `10.128.0.1/32` as the network, and select *staging-vnet* as the virtual network. Select **Create route**.
+         8. Repeat Steps 2a-2d to create another tunnel called `Production tunnel`. Be sure to install the connector within your production environment.
+         9. Repeat Steps 2e-2g to create a route for `Production tunnel` with `10.128.0.1/32` assigned to *production-vnet*.
 
       We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively. You can use the Cloudflare One Client to [switch between virtual networks](#connect-to-a-virtual-network).
 
@@ -233,11 +237,13 @@ In this example, "private network" refers to a distinct environment (such as sta
   <TabItem label="Dashboard">
       To delete a virtual network:
 
-      1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels** and ensure that no IP routes are assigned to the virtual network you are trying to delete. If your virtual network is in use, delete the route or reassign it to a different virtual network.
+      1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
 
-      2. Next, go to **Networks** > **Routes**.
+         <DashButton url="/?to=/:account/magic-networks/routes" />
 
-      3. In **Virtual networks**, find your virtual network.
+      2. On the **Routes** tab, check that no routes are assigned to the virtual network you are trying to delete. If the virtual network is in use, delete those routes or reassign them to a different virtual network first.
+
+      3. Go to the **Virtual networks** tab and find your virtual network.
 
       4. Select the three-dot menu and choose **Delete**.
 

@@ -3,6 +3,11 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-05-29"
+    title: Add TLS bug detection to the Radar post-quantum TLS support checker
+    description: |-
+      * The [post-quantum TLS support checker](https://radar.cloudflare.com/post-quantum) now reports TLS bugs detected during the handshake test (Split ClientHello, HRR Failure, Unknown Keyshare) with user-facing descriptions and remediation guidance. The bugs section only appears for hosts where issues are detected.
+      * Bug detection data is returned by the existing [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) endpoint.
   - publish_date: "2026-05-04"
     title: Add new routing widgets to Cloudflare Radar
     description: |-

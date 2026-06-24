@@ -1,0 +1,19 @@
+---
+title: Share local dev servers through Cloudflare Tunnel in Wrangler and Vite
+description: You can now share local dev servers through Cloudflare Tunnel from Wrangler and the Cloudflare Vite plugin, with support for quick tunnels and named tunnels.
+products:
+  - workers
+date: 2026-05-18
+publish_future_dated_entry: true
+---
+
+You can now share local dev sessions through [Cloudflare Tunnel](/tunnel/) and get a public URL when using either [Wrangler](/workers/wrangler/) or the [Cloudflare Vite plugin](/workers/vite-plugin/). This is useful when you need to share a preview, test a webhook, or access your app from another device.
+
+![Vite local dev tunnel demo](~/assets/images/changelog/workers/vite-local-dev-tunnel.gif)
+
+This lets you either:
+
+- start a temporary [Quick tunnel](/tunnel/setup/#quick-tunnels-development) with a random `*.trycloudflare.com` hostname, or
+- use an existing [named tunnel](/tunnel/setup/#create-a-tunnel) for a stable hostname and to restrict access with [Cloudflare Access](/cloudflare-one/access-controls/).
+
+To start a tunnel, press `t` in Wrangler or `t + Enter` in Vite while your dev server is running. For details on setting up a named tunnel, refer to [Share a local dev server](/workers/development-testing/local-dev-tunnels/).

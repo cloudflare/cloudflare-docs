@@ -11,7 +11,7 @@ sidebar:
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
+import { Tabs, TabItem, Badge, Render, APIRequest, DashButton } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. Like the [self-managed SSH keys](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/) method, it uses the Cloudflare One Client on user devices and Cloudflare Tunnel on the server to create a secure, private connection through Cloudflare's network. Access for Infrastructure adds application-level policies with per-target and per-username controls, as well as SSH command logging.
 
@@ -272,14 +272,17 @@ If the end user cannot connect to the target, the tunnel you set up in [step 1: 
 
 To check the status of your tunnel:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes**.
-2. Search your IP to find the tunnel associated with the IP.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. Search your IP to find the route and its associated tunnel.
 
    This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.
 
-3. Copy the tunnel name.
-4. Go to **Networks** > **Connectors** > **Cloudflare Tunnels** and search by your tunnel name.
-5. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
+3. Select the tunnel name in the **Connector** column to open the tunnel detail page.
+
+4. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />
 

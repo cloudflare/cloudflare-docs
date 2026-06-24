@@ -1,0 +1,45 @@
+---
+type Corner = "tl" | "tr" | "bl" | "br";
+type Tone = "neutral" | "accent";
+
+interface Props {
+	corners?: Corner[];
+	size?: number;
+	offset?: number;
+	tone?: Tone;
+	class?: string;
+}
+
+const {
+	corners = ["tl", "tr", "bl", "br"] as Corner[],
+	size = 14,
+	offset = -7,
+	tone = "neutral",
+	class: className = "",
+} = Astro.props;
+
+const positions: Record<Corner, string> = {
+	tl: `left:${offset}px;top:${offset}px;`,
+	tr: `right:${offset}px;top:${offset}px;`,
+	bl: `left:${offset}px;bottom:${offset}px;`,
+	br: `right:${offset}px;bottom:${offset}px;`,
+};
+
+const borderColor =
+	tone === "accent" ? "rgba(255, 251, 245, 0.32)" : "var(--color-border-100)";
+
+const baseStyle = `width:${size}px;height:${size}px;border:1px solid ${borderColor};border-radius:3px;`;
+
+const fillClasses =
+	tone === "accent" ? "bg-accent-100" : "bg-background dark:bg-background";
+---
+
+{
+	corners.map((c) => (
+		<div
+			class={`pointer-events-none absolute z-30 ${fillClasses} ${className}`}
+			style={`${baseStyle}${positions[c]}`}
+			aria-hidden="true"
+		/>
+	))
+}

@@ -12,19 +12,23 @@ tags:
 
 import { Render } from "~/components";
 
-Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection accuracy. Others use profile-specific matching logic to reduce false positives. You can also configure [advanced settings](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) for predefined profiles.
+Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data, such as credit card numbers, national identifiers, and credentials. Each predefined profile groups related [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/) which can be turned on or off individually.
+
+To use a predefined profile, [enable the detection entries you want](/cloudflare-one/data-loss-prevention/dlp-profiles/#configure-a-predefined-profile) and add the profile to a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/). You can tune accuracy with [confidence thresholds](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#confidence-thresholds) and other [profile settings](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/).
+
+Most profiles match when any enabled detection entry matches. Some add validation checks to improve accuracy, and a few use profile-specific matching logic to reduce false positives — for example, the [PII Record](#personally-identifiable-information-pii-record) profile requires multiple entries in close proximity.
 
 ## AI Prompt
 
-DLP provides AI prompt protection with the following predefined profiles:
+DLP provides AI prompt protection profiles that detect sensitive prompts submitted to generative AI tools such as ChatGPT, Google Gemini, Perplexity, and Claude. Each profile evaluates prompts for **Content** (sensitive data within the prompt) and **Intent** (what the user wants the model to do):
 
-- AI Prompt: AI Security
-- AI Prompt: Customer
-- AI Prompt: Financial Information
-- AI Prompt: PII
-- AI Prompt: Technical
+- **AI Prompt: AI Security** — Prompts that attempt to circumvent AI security policies or request malicious code.
+- **AI Prompt: Customer** — Prompts that contain customer names, projects, business activities, or confidential customer contexts.
+- **AI Prompt: Financial Information** — Prompts that contain financial numbers or confidential business data.
+- **AI Prompt: PII** — Prompts that contain or request personal information such as names, SSNs, or email addresses.
+- **AI Prompt: Technical** — Prompts that contain source code, code snippets, proprietary algorithms, or credentials such as API keys and passwords.
 
-For more information on included detection entries, refer to [AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/#ai-prompt-topics).
+For the full list of underlying topics, refer to [AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/#ai-prompt-topics).
 
 ## Credentials and Secrets
 
@@ -70,7 +74,16 @@ In the table below, entries use one of three validation methods. [Luhn's algorit
 | United States ABA Routing Number | Validated algorithmically with checksum.                                          |
 | IBAN                             | Validated with checksum.                                                          |
 
-## HTTP Archive
+## Health Information
+
+The following diagnosis and medication names are checked for surrounding ASCII characters to prevent false positives.
+
+- FDA active ingredients
+- FDA drug names
+- ICD-10 FY2023 short descriptions
+- ICD-11 short descriptions
+
+## HTTP Archive (HAR) files
 
 The **Unsanitized HAR** predefined profile detects HTTP Archive (HAR) files in traffic that have not been processed by Cloudflare's HAR sanitizer. HAR files frequently contain sensitive data such as session cookies, authorization headers, and other credentials.
 
@@ -79,14 +92,6 @@ The **Unsanitized HAR** predefined profile detects HTTP Archive (HAR) files in t
 | Unsanitized HAR file  | Detects HAR files that do not carry a Cloudflare sanitized marker. Files processed by the Cloudflare HAR sanitizer and unmodified since will not match this entry. |
 
 You can use this profile in a Gateway HTTP policy to block HAR file uploads or redirect users to `https://har-sanitizer.pages.dev/` to sanitize the file before uploading. For more information, refer to [common DLP policies](/cloudflare-one/data-loss-prevention/dlp-policies/common-policies/).
-
-## Health Information
-
-The following diagnosis and medication names are checked for surrounding ASCII characters to prevent false positives.
-
-- FDA active ingredients
-- FDA drug names
-- ICD-10 FY2023 short descriptions
 
 ## Personally Identifiable Information (PII) Record
 
@@ -138,6 +143,8 @@ The following national identifier detections are validated algorithmically when 
 | United Kingdom National Insurance Number             | Validated with regex.                                                                                                                                                                                                               |
 
 ## Source Code
+
+The **Source Code** profile detects source code in common programming languages.
 
 <Render
 	file="data-loss-prevention/programming-language-list"

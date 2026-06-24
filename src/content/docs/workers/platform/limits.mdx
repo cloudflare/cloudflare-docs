@@ -9,7 +9,12 @@ products:
   - workers
 ---
 
-import { Render, WranglerConfig, DashButton, TypeScriptExample } from "~/components";
+import {
+	Render,
+	WranglerConfig,
+	DashButton,
+	TypeScriptExample,
+} from "~/components";
 
 ## Account plan limits
 
@@ -146,7 +151,7 @@ To view memory errors in the dashboard:
 
 ## Duration
 
-Duration measures wall-clock time from start to end of a Worker invocation. There is no hard limit on duration for HTTP-triggered Workers. As long as the client remains connected, the Worker can continue processing, making subrequests, and setting timeouts.
+Duration measures wall-clock time from start to end of a Worker invocation.
 
 | Trigger type                                                      | Duration limit |
 | ----------------------------------------------------------------- | -------------- |
@@ -155,7 +160,7 @@ Duration measures wall-clock time from start to end of a Worker invocation. Ther
 | [Durable Object Alarm](/durable-objects/api/alarms/)              | 15 min         |
 | [Queue Consumer](/queues/configuration/javascript-apis/#consumer) | 15 min         |
 
-When the client disconnects, all tasks associated with that request are canceled. Use [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/) to delay cancellation for another 30 seconds or until the promise you pass to `waitUntil()` completes.
+There is no hard limit on duration for HTTP-triggered Workers. As long as the client remains connected, the Worker can continue processing, making subrequests, and streaming a response body. When the client disconnects or the response is complete, tasks associated with that request may be canceled. Use [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil) to perform work after returning a response. `waitUntil()` can extend execution for up to 30 seconds after the response is sent or the client disconnects.
 
 :::note
 
@@ -183,14 +188,14 @@ You can configure the fail mode by toggling the corresponding [route](/workers/c
 
 A subrequest is any request a Worker makes using the [Fetch API](/workers/runtime-apis/fetch/) or to Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
-| Limit                            | Workers Free | Workers Paid           |
-| -------------------------------- | ------------ | ---------------------- |
-| Subrequests per invocation       | 50           | 10,000 (up to 10M)    |
+| Limit                            | Workers Free | Workers Paid                              |
+| -------------------------------- | ------------ | ----------------------------------------- |
+| Subrequests per invocation       | 50           | 10,000 (up to 10M)                        |
 | Subrequests to internal services | 1,000        | Matches configured limit (default 10,000) |
 
 Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code. You can change the subrequest limit per Worker using the [`limits` configuration](/workers/wrangler/configuration/#limits) in your Wrangler configuration file.
 
-There is no set time limit on individual subrequests. As long as the client remains connected, the Worker can continue making subrequests. When the client disconnects, all tasks are canceled. Use [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/) to delay cancellation for up to 30 seconds.
+There is no set time limit on individual subrequests. As long as the client remains connected, the Worker can continue making subrequests. When the client disconnects or the response is complete, outstanding work may be canceled unless it is passed to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil), which can extend execution for up to 30 seconds.
 
 ### Worker-to-Worker subrequests
 

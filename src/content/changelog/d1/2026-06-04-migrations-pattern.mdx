@@ -1,0 +1,27 @@
+---
+title: D1 migrations support nested layouts via `migrations_pattern`
+description: Configure `wrangler d1 migrations apply` to discover migrations in nested layouts produced by ORMs like Drizzle.
+products:
+  - d1
+date: 2026-05-29
+---
+
+You can now point `wrangler d1 migrations apply` at a nested migrations layout — such as the one produced by [Drizzle](https://orm.drizzle.team/) (`migrations/0001_init/migration.sql`) — using the new `migrations_pattern` D1 binding config:
+
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "my-database",
+			"database_id": "<UUID>",
+			"migrations_dir": "migrations",
+			"migrations_pattern": "migrations/*/migration.sql",
+		},
+	],
+}
+```
+
+`migrations_pattern` is a glob (relative to your Wrangler config file) used to discover migration files. It defaults to `${migrations_dir}/*.sql`, so existing projects keep working unchanged. Each migration's name is recorded in the migrations table as a path relative to `migrations_dir`.
+
+To learn more, visit D1's [migrations documentation](/d1/reference/migrations/#nested-migration-layouts).

@@ -1,0 +1,101 @@
+---
+import { Icon } from "astro-icon/components";
+
+type Category = "compute" | "ai" | "storage" | "media" | "zero-trust";
+
+interface Props {
+	icon: string;
+	product: string;
+	scenario: string;
+	detail: string;
+	href: string;
+	cta?: string;
+	category?: Category;
+}
+
+const {
+	icon,
+	product,
+	scenario,
+	detail,
+	href,
+	cta = "Get started",
+	category,
+} = Astro.props;
+
+const CATEGORY_COLOR: Record<Category, string> = {
+	compute: "#0a95ff",
+	ai: "#19e306",
+	storage: "#ee0ddb",
+	media: "#9616ff",
+	"zero-trust": "#009788",
+};
+
+// Per-card accent: category color when set, otherwise the brand accent.
+// Flows into hover + cross-highlight states via the `--card-color` custom
+// property — collapses ~50 lines of permuted Tailwind classes into one rule.
+const cardColor = category
+	? CATEGORY_COLOR[category]
+	: "var(--color-accent-100)";
+---
+
+<a
+	href={href}
+	style={`--card-color: ${cardColor};`}
+	class="group/product-card bg-background hover:bg-background/90 focus-visible:outline-accent-100 relative flex flex-1 flex-col p-6 no-underline focus-visible:outline-2 focus-visible:-outline-offset-2"
+>
+	<div class="mb-4 flex items-center justify-between">
+		<span
+			class="pc-icon-shell border-border-100 bg-background-muted text-foreground-subtle relative flex size-11 items-center justify-center rounded-md border transition-[background-color,border-color,color] duration-200"
+		>
+			<Icon
+				name={icon}
+				size="24px"
+				class="pc-icon transition-colors duration-200"
+			/>
+		</span>
+		<span
+			class="text-accent-100 text-right font-mono text-xs tracking-widest uppercase"
+		>
+			{product}
+		</span>
+	</div>
+
+	<p class="text-foreground mb-2 text-base leading-snug font-medium md:text-lg">
+		{scenario}
+	</p>
+	<p
+		class="text-foreground-muted mb-6 flex-1 text-sm leading-relaxed md:text-base"
+	>
+		{detail}
+	</p>
+
+	<span
+		class="pc-cta text-foreground-muted inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/product-card:underline"
+	>
+		{cta}
+		<svg
+			width="14"
+			height="14"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="transition-transform duration-150 group-hover/product-card:translate-x-0.5"
+			aria-hidden="true"
+		>
+			<line x1="5" y1="12" x2="19" y2="12"></line>
+			<polyline points="12 5 19 12 12 19"></polyline>
+		</svg>
+	</span>
+</a>
+
+<style>
+	.group\/product-card:hover .pc-icon-shell {
+		border-color: color-mix(in srgb, var(--card-color) 30%, transparent);
+		background-color: color-mix(in srgb, var(--card-color) 5%, transparent);
+		color: var(--card-color);
+	}
+</style>

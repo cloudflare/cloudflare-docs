@@ -36,7 +36,7 @@ A Durable Object can be in one of the following states at any moment:
 
 This is how a Durable Object transitions among these states (each state is in a rounded rectangle).
 
-![Lifecycle of a Durable Object](~/assets/images/durable-objects/lifecycle-of-a-do.png)
+![Lifecycle of a Durable Object](~/assets/images/durable-objects/durable-object-lifecycle.png)
 
 Assuming a Durable Object does not run, the first incoming request or event (like an alarm) will execute the `constructor()` of the Durable Object class, then run the corresponding function invoked.
 
@@ -50,6 +50,7 @@ Hibernation can only occur if **all** of the conditions below are true:
 - No in-progress awaited `fetch()` exists, since it is considered to be waiting for I/O.
 - No WebSocket standard API is used.
 - No request/event is still being processed, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
+- No active outbound TCP socket (`connect()`) or outbound WebSocket connection exists.
 
 After 10 seconds of no incoming request or event, and all the above conditions satisfied, the Durable Object will transition into the **hibernated** state.
 
@@ -62,6 +63,16 @@ If any of the above conditions is false, the Durable Object remains in-memory, i
 In case of an incoming request or event while in the **hibernated** state, the `constructor()` will run again, and the Durable Object will transition to the **active, in-memory** state and execute the invoked function.
 
 While in the **idle, in-memory, non-hibernateable** state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the **inactive** state.
+
+:::note[Outbound connections keep Durable Objects alive]
+Active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-sockets/) (TCP) or an outbound WebSocket prevent the Durable Object from being evicted. Eviction is deferred until both conditions are met: all outbound connections have closed, **and** the standard 70-140 second inactivity window has elapsed with no incoming requests or events.
+
+While kept alive by an outbound connection, the Durable Object remains in memory in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
+
+Each outbound connection keeps the Durable Object alive for a maximum of 15 minutes. After 15 minutes, the connection stops preventing eviction (the connection itself continues operating), and the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/#durable-object-lifecycle-state-transitions) resume.
+
+This applies to outbound TCP sockets and outbound WebSockets (including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`). It does not apply to plain `fetch()` subrequests. Those never keep the Durable Object alive, even while the response body is still streaming.
+:::
 
 Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides if and when to transition the object to the **inactive** state (for example deciding to move the object to a different host) thus restarting the lifecycle.
 

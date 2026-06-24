@@ -8,6 +8,36 @@ products:
   - sandbox
 ---
 
+# Quick deployment
+
+For quick preview deployments we recommend using [Cloudflare Tunnel](https://developers.cloudflare.com/tunnel/) to generate preview URLs to your web services. These work across local development, workers.dev and production usage.
+
+```ts
+await sandbox.startProcess("python -m http.server 8000");
+const tunnel = await sandbox.tunnels.get(8000);
+console.log(tunnel.url);
+// https://acute-llama-dancing-roundly.trycloudflare.app
+
+// Request will be routed directly to the webserver running on the sandbox.
+const req = await fetch(`${tunnel.url}/api/users`); // => GET http://localhost:8000/api/users
+```
+
+Cloudflare Tunnel support currently has the following limitations:
+
+ - No control over generated URL.
+ - No authentication mechanism beyond randomly generated URL.
+ - Each URL uses an additional `cloudflared` process on the sandbox.
+
+:::note[Production requires custom domain]
+We are working on production deployments, custom hostnames and authentication for Cloudflare Tunnel support. In the mean time we recommend using `exposePort()` and `proxyToSandbox()` documented below under [Production usage, stable URLs and custom domains](#).
+:::
+
+See the [tunnels API reference](/sandbox/api/tunnels/) for the full API and feature set.
+
+# Production usage, stable URLs & custom domains
+
+For production use we recommend using the `exposePort()` API and routing traffic through your worker.
+
 :::note[Production requires custom domain]
 Preview URLs work in local development without configuration. For production, you need a custom domain with wildcard DNS routing. See [Production Deployment](/sandbox/guides/production-deployment/).
 :::
@@ -53,20 +83,22 @@ URLs with auto-generated tokens change when you unexpose and re-expose a port.
 For production deployments or shared URLs, specify a custom token to maintain consistency across container restarts:
 
 ```typescript
-const stable = await sandbox.exposePort(8000, { 
-  hostname, 
-  token: 'api_v1' 
+const stable = await sandbox.exposePort(8000, {
+	hostname,
+	token: "api_v1",
 });
 // https://8000-sandbox-id-api_v1.yourdomain.com
 // Same URL every time ✓
 ```
 
 **Token requirements:**
+
 - 1-16 characters long
-- Lowercase letters (a-z), numbers (0-9), and underscores (_) only
+- Lowercase letters (a-z), numbers (0-9), and underscores (\_) only
 - Must be unique within each sandbox
 
 **Use cases for custom tokens:**
+
 - Production APIs with stable endpoints
 - Sharing demo URLs with external users
 - Documentation with consistent examples
@@ -80,7 +112,7 @@ Preview URLs extract the sandbox ID from the hostname to route requests. Since h
 
 ```typescript
 // Problem scenario
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
+const sandbox = getSandbox(env.Sandbox, "MyProject-123");
 // Durable Object ID: "MyProject-123"
 await sandbox.exposePort(8080, { hostname });
 // Preview URL: 8080-myproject-123-token123.yourdomain.com
@@ -90,8 +122,8 @@ await sandbox.exposePort(8080, { hostname });
 **The solution**: Use `normalizeId: true` to lowercase IDs when creating sandboxes:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
-  normalizeId: true
+const sandbox = getSandbox(env.Sandbox, "MyProject-123", {
+	normalizeId: true,
 });
 // Durable Object ID: "myproject-123" (lowercased)
 // Preview URL: 8080-myproject-123-token123.yourdomain.com
@@ -266,4 +298,5 @@ This is **only required for local development**. In production, all container po
 - [Production Deployment](/sandbox/guides/production-deployment/) - Set up custom domains for production
 - [Expose Services](/sandbox/guides/expose-services/) - Practical patterns for exposing ports
 - [Ports API](/sandbox/api/ports/) - Complete API reference
+- [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs as an alternative for development
 - [Security Model](/sandbox/concepts/security/) - Security best practices

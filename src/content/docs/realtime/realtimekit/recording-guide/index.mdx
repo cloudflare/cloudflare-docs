@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Recording
-description: Record audio and video from RealtimeKit meetings using composite recording mode.
+description: Record RealtimeKit meetings as composite recordings or separate participant audio tracks.
 sidebar:
   order: 8
   label: Overview
@@ -11,18 +11,17 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-Learn how RealtimeKit records the audio and video of multiple users in a meeting, as well as interacts with RealtimeKit plugins, in a single file using composite recording mode.
+Learn how RealtimeKit records meetings as a single composite file or as separate participant audio tracks.
 
 Visit the following pages to learn more about recording meetings:
 
 <DirectoryListing />
 
-RealtimeKit records the audio and video of multiple users in a meeting, as well as
-interactions with RealtimeKit plugins, in a single file using composite recording mode.
+RealtimeKit can record the audio and video of multiple users in a meeting, as well as interactions with RealtimeKit plugins, in a single file using composite recording mode. RealtimeKit can also record separate participant audio tracks using [track recording](/realtime/realtimekit/recording-guide/track-recording/).
 
-## How does RealtimeKit recording work?
+## How composite recording works
 
-RealtimeKit recordings are powered by anonymous virtual bot users who join your
+Composite recordings are powered by anonymous virtual bot users who join your
 meeting, record it, and then upload it to RealtimeKit's Cloudflare R2 bucket. For video files,
 we currently support the
 [H.264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) and
@@ -60,3 +59,5 @@ A typical workflow for recording a meeting involves the following steps:
 1. Start a recording using the [Start Recording API](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) or client side SDK.
 2. Manage the recording using the [Pause, resume, or stop recording API](/api/resources/realtime_kit/subresources/recordings/methods/pause_resume_stop_recording/) or client side SDK.
 3. Fetch the download URL for downloading the recording using the [Fetch details of a recording API](/api/resources/realtime_kit/subresources/recordings/methods/get_one_recording/), webhook, or from the Developer Portal.
+
+For separate participant audio files, refer to [Track recording](/realtime/realtimekit/recording-guide/track-recording/).

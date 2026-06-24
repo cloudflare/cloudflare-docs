@@ -19,46 +19,46 @@ Test email routing behavior locally using `wrangler dev` to simulate incoming em
 
 ## Configuration
 
-Configure your Wrangler file with the email binding:
+Configure your Wrangler file:
 
 <WranglerConfig>
-```toml
-name = "email-routing-worker"
-compatibility_date = "$today"
 
-[[send_email]]
-name = "EMAIL"
+```jsonc
+{
+	"name": "email-routing-worker",
+	"compatibility_date": "$today",
+}
+```
 
-````
 </WranglerConfig>
 
 ## Basic routing worker
 
 ```javascript
-import * as PostalMime from 'postal-mime';
+import * as PostalMime from "postal-mime";
 
 export default {
-  async email(message, env, ctx) {
-    // Parse the raw email message
-    const parser = new PostalMime.default();
-    const rawEmail = new Response(message.raw);
-    const email = await parser.parse(await rawEmail.arrayBuffer());
+	async email(message, env, ctx) {
+		// Parse the raw email message
+		const parser = new PostalMime.default();
+		const rawEmail = new Response(message.raw);
+		const email = await parser.parse(await rawEmail.arrayBuffer());
 
-    console.log('Received email:', {
-      from: message.from,
-      to: message.to,
-      subject: email.subject,
-      text: email.text,
-      html: email.html
-    });
+		console.log("Received email:", {
+			from: message.from,
+			to: message.to,
+			subject: email.subject,
+			text: email.text,
+			html: email.html,
+		});
 
-    // Route based on recipient
-    if (message.to.includes('support@')) {
-      await message.forward('support-team@company.com');
-    } else {
-      await message.forward('general@company.com');
-    }
-  },
+		// Route based on recipient
+		if (message.to.includes("support@")) {
+			await message.forward("support-team@example.com");
+		} else {
+			await message.forward("general@example.com");
+		}
+	},
 };
 ```
 

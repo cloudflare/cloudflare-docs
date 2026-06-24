@@ -103,7 +103,7 @@ assembly / assemblyMergeStrategy := {
     case x => MergeStrategy.first
 }
 
-// For Java  17 Compatability
+// For Java  17 Compatibility
 Compile / javacOptions ++= Seq("--release", "17")
 ```
 
@@ -134,11 +134,11 @@ To run the application, you will use `spark-submit`. Below is an example shell s
 ```
 # We need to set these "--add-opens" so that Spark can run on Java 17 (it needs access to
 # parts of the JVM which have been modularized and made internal).
-JAVA_17_COMPATABILITY="--add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED"
+JAVA_17_COMPATIBILITY="--add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED"
 
 spark-submit \
---conf "spark.driver.extraJavaOptions=$JAVA_17_COMPATABILITY" \
---conf "spark.executor.extraJavaOptions=$JAVA_17_COMPATABILITY" \
+--conf "spark.driver.extraJavaOptions=$JAVA_17_COMPATIBILITY" \
+--conf "spark.executor.extraJavaOptions=$JAVA_17_COMPATIBILITY" \
 --class com.example.R2DataCatalogDemo target/scala-2.12/R2DataCatalogDemo-assembly-1.0.jar
 ```
 

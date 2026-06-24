@@ -1,0 +1,107 @@
+---
+import ProductCard from "./ProductCard.astro";
+import ProductCardGrid from "./ProductCardGrid.astro";
+import SectionHeading from "./SectionHeading.astro";
+
+const categories = [
+	{
+		label: "Public websites & apps",
+		threats: [
+			{
+				scenario: "Protect your applications without sacrificing performance",
+				product: "WAF",
+				href: "/waf/",
+				icon: "ddos-protection",
+				detail:
+					"Identify and block malicious payloads before they can compromise your application.",
+				cta: "Harden your app with WAF",
+			},
+			{
+				scenario: "Encrypt your site in minutes",
+				product: "SSL/TLS",
+				href: "/ssl/",
+				icon: "ssl",
+				detail: "Streamline TLS Certificate Management.",
+				cta: "Set up SSL/TLS",
+			},
+			{
+				scenario: "Verify visitors without CAPTCHA",
+				product: "Turnstile",
+				href: "/turnstile/",
+				icon: "turnstile",
+				detail:
+					"Confirm web visitors are real and block unwanted bots without slowing down web experiences for real users.",
+				cta: "Add Turnstile protection",
+			},
+		],
+	},
+	{
+		label: "Corporate and home networks",
+		category: "zero-trust" as const,
+		threats: [
+			{
+				scenario:
+					"Securely connect origins with post-quantum encrypted tunnels",
+				product: "Tunnel",
+				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
+				icon: "tunnel",
+				detail: "Outbound-only encrypted tunnels, no open ports.",
+				cta: "Create a secure Tunnel",
+			},
+			{
+				scenario: "Secure internal applications with Cloudflare Access",
+				product: "Access",
+				href: "/cloudflare-one/access-controls/",
+				icon: "access",
+				detail:
+					"Identity-first, quantum-safe access to private applications and infrastructure.",
+				cta: "Set up Cloudflare Access",
+			},
+			{
+				scenario: "Secure Internet browsing without disruptions",
+				product: "Gateway",
+				href: "/cloudflare-one/traffic-policies/",
+				icon: "gateway",
+				detail:
+					"Cloud-native Secure Web Gateway (SWG) that inspects browser traffic without disruption.",
+				cta: "Create Gateway policies",
+			},
+		],
+	},
+];
+---
+
+<section
+	class="pt-10 pb-10 lg:pt-14 lg:pb-12"
+	aria-labelledby="secure-heading"
+	id="secure"
+>
+	<SectionHeading id="secure-heading" class="mb-2">
+		Security that scales
+	</SectionHeading>
+	<p
+		class="text-foreground-muted mb-8 max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
+	>
+		Everything you need to secure applications, APIs, and infrastructure.
+	</p>
+
+	<div class="space-y-8">
+		{
+			categories.map((cat) => (
+				<ProductCardGrid label={cat.label}>
+					{cat.threats.map((t) => (
+						<ProductCard
+							icon={t.icon}
+							product={t.product}
+							scenario={t.scenario}
+							detail={t.detail}
+							href={t.href}
+							cta={t.cta}
+							category={"category" in cat ? cat.category : undefined}
+						/>
+					))}
+				</ProductCardGrid>
+			))
+		}
+	</div>
+</section>

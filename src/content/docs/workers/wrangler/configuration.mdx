@@ -569,6 +569,11 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
   - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files (for example, if you have a mono-repo setup, and want to use a single D1 instance across your apps/packages).
   - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/d1/#d1-migrations-create) and [D1 migrations](/d1/reference/migrations/).
 
+- `migrations_pattern` <Type text="string" /> <MetaInfo text="optional" />
+  - A glob pattern (relative to your Wrangler config file) used to discover migration files. Defaults to `migrations/*.sql`.
+  - Use this to opt in to nested layouts produced by ORMs like Drizzle (for example, `migrations/*/migration.sql`).
+  - When `migrations_pattern` is set, `migrations_dir` must also be set, and `migrations_pattern` must start with whatever `migrations_dir` is set to. Each migration is recorded in the migrations table as a path relative to `migrations_dir`.
+
 :::note
 
 When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/development-testing/) for more details.
@@ -727,10 +732,10 @@ Example:
   - The binding name.
 
 - `destination_address` <Type text="string" /> <MetaInfo text="optional" />
-  - The [chosen email address](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
+  - The [chosen email address](/email-service/configuration/send-bindings/#binding-types) you send emails to.
 
 - `allowed_destination_addresses` <Type text="string[]" /> <MetaInfo text="optional" />
-  - The [allowlist of email addresses](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
+  - The [allowlist of email addresses](/email-service/configuration/send-bindings/#binding-types) you send emails to.
 
 <Render file="types-bindings" product="email-routing" />
 
@@ -1194,6 +1199,11 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
 - `script_name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the Worker script where the Workflow class is defined. Only required if the Workflow is defined in a different Worker than the one the binding is configured on.
 
+- `schedules` <Type text="string[]" /> <MetaInfo text="optional" />
+  - A list of cron schedules that create new instances of this Workflow automatically.
+  - Use this when you want to run a Workflow on a recurring interval without defining top-level `triggers.crons` and a separate `scheduled` handler.
+  - Use a Wrangler release that supports Workflow schedules. If your local schema does not recognize `schedules`, update Wrangler first.
+
 Example:
 
 <WranglerConfig>
@@ -1563,7 +1573,6 @@ You can configure various aspects of local development, such as the local protoc
 
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
   - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
-    Example:
 
 - `generate_types` <Type text="boolean" /> <MetaInfo text="optional" />
   - Generate types from your Worker configuration. Defaults to `false`.

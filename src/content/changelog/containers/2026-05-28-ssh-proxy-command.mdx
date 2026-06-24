@@ -1,0 +1,17 @@
+---
+title: Wrangler supports SSH ProxyCommand for Containers
+description: Use OpenSSH ProxyCommand with wrangler containers ssh.
+products:
+  - containers
+date: 2026-05-28
+---
+
+[Wrangler](/workers/wrangler/) supports using `wrangler containers ssh` as an OpenSSH `ProxyCommand` for [Containers](/containers/). This lets your local SSH client connect to a running Container through Wrangler.
+
+```sh
+ssh -o ProxyCommand="wrangler containers ssh %h" cloudchamber@<INSTANCE_ID>
+```
+
+When standard input and output are piped, Wrangler forwards data to the SSH server in the Container. You can also pass `--stdio` to force this mode.
+
+For more information, refer to the [SSH documentation](/containers/ssh/).

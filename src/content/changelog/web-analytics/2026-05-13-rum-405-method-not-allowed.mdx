@@ -1,0 +1,15 @@
+---
+title: "/cdn-cgi/rum endpoint now returns 405 for non-POST requests"
+description: The /cdn-cgi/rum beacon endpoint now returns 405 Method Not Allowed instead of 404 when called with an unsupported HTTP method.
+date: 2026-05-13
+products:
+  - web-analytics
+---
+
+The `/cdn-cgi/rum` beacon endpoint now returns `405 Method Not Allowed` for non-POST requests instead of `404 Not Found`. The response includes an `Allow: POST, OPTIONS` header per [RFC 9110 §15.5.6](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.6).
+
+Previously, sending a `GET` or other non-POST request to this endpoint returned a `404`, which was misleading because it suggested the endpoint did not exist. The new `405` response clearly indicates that the endpoint exists but only accepts `POST` requests.
+
+The Web Analytics beacon (`beacon.min.js`) already uses `POST` for all metric submissions, so this change does not affect normal beacon operation. `OPTIONS` requests for CORS preflight continue to work as before.
+
+For more information, refer to the [Web Analytics FAQ](/web-analytics/faq/#why-am-i-getting-a-405-method-not-allowed-error-from-cdn-cgirum).

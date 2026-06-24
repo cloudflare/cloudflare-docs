@@ -8,15 +8,11 @@ type ModelType = WorkersAIModelsSchema | ResolvedModel | ModelCardData;
 const ModelInfo = ({ model }: { model: ModelType }) => {
 	const authorId = getModelAuthor(model.name);
 	const author = authorData[authorId]?.name ?? authorId;
-	const hosting =
-		"hosting" in model
-			? model.hosting === "proxied"
-				? "Proxied"
-				: "Hosted"
-			: "Hosted";
+	// Hosting is now surfaced as a badge by ModelBadges, so it is intentionally
+	// omitted here to avoid duplicating the same string on every card.
 	return (
 		<span className="mt-2 block! leading-5 text-gray-400">
-			{model.task.name} • {author} • {hosting}
+			{model.task.name} • {author}
 		</span>
 	);
 };

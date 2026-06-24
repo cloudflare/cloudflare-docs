@@ -3,6 +3,18 @@ link: "/realtime/realtimekit/release-notes/android-ui-kit/"
 productName: RealtimeKit Android UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-06-24"
+    title: RealtimeKit Android UI Kit 2.0.0
+    description: |-
+      **Breaking changes**
+
+      - Upgraded to [RealtimeKit Core v3.0.0](/realtime/realtimekit/release-notes/android-core/#2026-06-24). Plugins must now be declared on the client side when constructing `RtkMeetingInfo`.
+
+      **Features**
+
+      - Added Breakout Rooms support. Participants can be assigned to rooms manually or distributed automatically; hosts can create, rename, and close rooms, move participants between them, and return everyone to the main room. See the Connected Meetings documentation for a full guide.
+      - Added an AI Transcription panel accessible from the More Options menu. Consecutive utterances from the same speaker are merged into a single visual block. The list auto-scrolls to the latest transcript and pauses when the user scrolls up. Transcripts can be filtered by participant name or text.
+      - Added edit and delete actions for chat messages. Long-pressing a message opens an actions sheet with Edit and Delete options. Edited messages display an "edited" indicator.
   - publish_date: "2026-05-11"
     title: RealtimeKit Android UI Kit 1.1.0
     description: |-

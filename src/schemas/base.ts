@@ -16,7 +16,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			.array()
 			.optional()
 			.describe(
-				"A group of related keywords relating to the purpose of the page. Refer to [Tags](/style-guide/frontmatter/tags/).",
+				"A group of related keywords relating to the purpose of the page.",
 			),
 		external_link: z
 			.string()
@@ -57,13 +57,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			.boolean()
 			.optional()
 			.describe(
-				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `chatbot_deprioritize` property.",
-			),
-		chatbot_deprioritize: z
-			.boolean()
-			.optional()
-			.describe(
-				"If true, this property will de-prioritize this page in the responses surfaced by Support AI. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `noindex` property.",
+				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/).",
 			),
 		sidebar,
 		hideChildren: z
@@ -87,9 +81,6 @@ export const baseSchema = (_context: SchemaContext) =>
 					.enum(["default", "note", "tip", "caution", "danger"])
 					.optional()
 					.default("default"),
-				dismissible: z
-					.object({ id: z.string(), days: z.number().optional().default(7) })
-					.optional(),
 			})
 			.optional()
 			.describe(

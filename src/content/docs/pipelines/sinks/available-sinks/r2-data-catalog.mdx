@@ -60,11 +60,13 @@ Control when data is written to Iceberg tables. Configure based on your needs:
 
 ### Roll interval
 
-Set how often files are written (default: 300 seconds):
+Set how often files are written (default: 300 seconds, minimum: 60 seconds):
 
 ```bash
 --roll-interval 60  # Write files every 60 seconds
 ```
+
+The minimum interval for R2 Data Catalog sinks is 60 seconds to prevent compaction issues. Iceberg tables require periodic compaction to merge small files into larger ones for optimal query performance. Writing too often creates merge conflicts with the compaction process.
 
 ### Roll size
 

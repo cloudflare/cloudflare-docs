@@ -48,7 +48,7 @@ Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) a
 
 ## Access Audit Logs
 
-You can retrieve audit logs using either the API or the Cloudflare dashboard.
+You can retrieve audit logs using the Cloudflare dashboard, the API, or Logpush.
 
 ### API
 
@@ -61,8 +61,8 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/audit
 Below is an example request to retrieve audit logs for a certain period of time along with its corresponding response. Replace the example values in the URL with your actual values:
 
 - `account_id`: Your Cloudflare account identifier.
-- `Since` (required): Start date for the audit log retrieval in the format yyyy-mm-dd.​
-- `Before` (required) : End date for the audit log retrieval in the format yyyy-mm-dd.
+- `since` (required): Start date for the audit log retrieval. Accepts `yyyy-mm-dd` (interpreted as UTC) or RFC3339 timestamp (`yyyy-mm-ddTHH:MM:SSZ`).
+- `before` (required): End date for the audit log retrieval. Same format as `since`.
 
 ```bash
 GET https://api.cloudflare.com/client/v4/accounts/1234567890abcdef/logs/audit?since=2025-03-01T00:00:00Z&before=2025-03-26T23:59:59Z
@@ -100,9 +100,7 @@ For more information refer to the [API documentation](<https://developers.cloudf
 
 ### Dashboard
 
-To access audit logs in the Cloudflare dashboard:
-
-In the Cloudflare dashboard, go to the **Audit Logs** page.
+To access audit logs in the Cloudflare dashboard, go to **Manage Account** > **Audit Logs**.
 
 <DashButton url="/?to=/:account/audit-log" />
 
@@ -110,7 +108,7 @@ In the Cloudflare dashboard, go to the **Audit Logs** page.
 The Audit Logs v2 is shown by default. You can switch between Audit Logs v2 and v1 as needed.
 :::
 
-## Logpush job
+### Logpush
 
 :::note
 For customers who already have a Logpush job set up for Audit Logs v1, note that a separate Logpush job must be configured for [Audit Logs v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/) (dataset). We will communicate the timeline for when Logpush Audit Logs v1 will be deprecated and turned off.
@@ -161,21 +159,35 @@ The `GET /memberships` endpoint supports cross-account access. To query membersh
 
 #### Organization Activity Logs
 
-Contain events scoped to specific Cloudflare organizations. These logs capture user-initiated actions performed by Org Admins through organization-level APIs and are retrievable via the Audit Logs v2 API.
+Contain events scoped to specific [Cloudflare Organizations](/fundamentals/organizations/). These logs capture user-initiated actions performed by Org Admins through organization-level APIs.
+
+:::note
+Cloudflare Organizations is Enterprise-only and currently in public beta.
+:::
+
+You can retrieve Organization audit logs using either the API or the Cloudflare dashboard.
+
+##### API access
+
+Retrievable via the Audit Logs v2 API:
 
 ```bash
 GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit
 ```
 
+##### Dashboard access
+
+To access organization audit logs in the Cloudflare dashboard, go to **Organizations** > _(select your organization)_ > **Manage Organization** > **Audit Logs**.
+
 :::note
 Organization-level audit logs are separate from account-level audit logs. Actions performed within a specific account continue to be available via the account-level Audit Logs UI, Audit Logs v2 API, and Logpush.
 
-This initial release covers user-initiated actions only. Support for system-initiated actions, a dashboard UI, and Logpush for organizations will be added in future releases.
+This release covers user-initiated actions only. Support for system-initiated actions and Logpush for organizations will be added in future releases.
 :::
 
 ## Example how to query Audit Logs
 
-Use the following example to get a list of audit logs for a user account.
+Use the following example to get a list of audit logs for a Cloudflare account.
 
 <APIRequest method="GET" path="/accounts/{account_id}/logs/audit" />
 

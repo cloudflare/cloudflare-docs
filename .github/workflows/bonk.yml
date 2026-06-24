@@ -57,7 +57,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          version: 10
+          version: 11
 
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -85,9 +85,10 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
+          opencode_version: "1.17.7"
           agent: docs
           mentions: "/bonk"
-          permissions: CODEOWNERS
+          permissions: write
 
   bonk-auto-review:
     needs: check-codeowner
@@ -112,7 +113,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          version: 10
+          version: 11
 
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -140,8 +141,9 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
+          opencode_version: "1.17.7"
           agent: docs
-          permissions: CODEOWNERS
+          permissions: write
           token_permissions: NO_PUSH
           prompt: |
             Review this pull request. Review the title, description, and diff.
