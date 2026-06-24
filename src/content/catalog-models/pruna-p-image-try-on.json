@@ -109,61 +109,61 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"garment_images": {
-					"description": "Garment reference images to fit onto the person. Each entry is an HTTP(S) URL or a base64 data URI. Up to 6 recommended, up to 11 supported.",
-					"items": {
-						"type": "string"
-					},
-					"maxItems": 11,
-					"minItems": 1,
-					"type": "array"
-				},
-				"output_format": {
-					"default": "jpg",
-					"description": "Format of the saved output image.",
-					"enum": [
-						"webp",
-						"jpg",
-						"png"
-					],
-					"type": "string"
-				},
-				"output_quality": {
-					"default": 95,
-					"description": "Quality for jpg/webp outputs, from 0 to 100.",
-					"maximum": 100,
-					"minimum": 0,
-					"type": "integer"
-				},
 				"person_image": {
 					"description": "Image of the person to dress. A publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...).",
 					"type": "string"
 				},
-				"preserve_input_size": {
-					"default": true,
-					"description": "Return the output at the original input resolution.",
-					"type": "boolean"
+				"garment_images": {
+					"description": "Garment reference images to fit onto the person. Each entry is an HTTP(S) URL or a base64 data URI. Up to 6 recommended, up to 11 supported.",
+					"minItems": 1,
+					"maxItems": 11,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				},
 				"prompt": {
-					"default": "",
 					"description": "Experimental guidance for non-flatlay garment images, e.g. which garment from which image to use.",
+					"default": "",
 					"type": "string"
+				},
+				"seed": {
+					"description": "Random seed. Leave unset for a random seed.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"turbo": {
+					"description": "Run faster with additional optimizations. Not recommended for more than 4 garments.",
+					"default": false,
+					"type": "boolean"
+				},
+				"output_format": {
+					"description": "Format of the saved output image.",
+					"default": "jpg",
+					"type": "string",
+					"enum": [
+						"webp",
+						"jpg",
+						"png"
+					]
+				},
+				"output_quality": {
+					"description": "Quality for jpg/webp outputs, from 0 to 100.",
+					"default": 95,
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 100
 				},
 				"reference_pose": {
 					"description": "Optional reference pose image (HTTP(S) URL or data URI). When provided, the person is reposed to match this reference before virtual try-on.",
 					"type": "string"
 				},
-				"seed": {
-					"description": "Random seed. Leave unset for a random seed.",
-					"maximum": 9007199254740991,
-					"minimum": -9007199254740991,
-					"type": "integer"
-				},
-				"turbo": {
-					"default": false,
-					"description": "Run faster with additional optimizations. Not recommended for more than 4 garments.",
+				"preserve_input_size": {
+					"description": "Return the output at the original input resolution.",
+					"default": true,
 					"type": "boolean"
 				}
 			},
@@ -176,22 +176,22 @@
 				"output_quality",
 				"preserve_input_size"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
 				"image": {
 					"description": "Presigned URL for the generated try-on image.",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

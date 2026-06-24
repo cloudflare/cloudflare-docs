@@ -269,43 +269,22 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"content_moderation": {
-					"additionalProperties": false,
-					"description": "Content moderation settings",
-					"properties": {
-						"public_figure_threshold": {
-							"description": "Content moderation strictness for public figures",
-							"enum": [
-								"auto",
-								"low"
-							],
-							"type": "string"
-						}
-					},
-					"type": "object"
-				},
-				"duration": {
-					"default": 5,
-					"description": "Video duration in seconds",
-					"maximum": 10,
-					"minimum": 2,
-					"type": "integer"
+				"prompt": {
+					"description": "Text prompt describing what should appear in the video",
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 1000
 				},
 				"image_input": {
 					"description": "HTTPS URL, Runway URI, or data URI containing an image for image-to-video",
 					"type": "string"
 				},
-				"prompt": {
-					"description": "Text prompt describing what should appear in the video",
-					"maxLength": 1000,
-					"minLength": 1,
-					"type": "string"
-				},
 				"ratio": {
-					"default": "1280:720",
 					"description": "Resolution/aspect ratio of the output video",
+					"default": "1280:720",
+					"type": "string",
 					"enum": [
 						"1280:720",
 						"720:1280",
@@ -313,14 +292,35 @@
 						"960:960",
 						"832:1104",
 						"1584:672"
-					],
-					"type": "string"
+					]
+				},
+				"duration": {
+					"description": "Video duration in seconds",
+					"default": 5,
+					"type": "integer",
+					"minimum": 2,
+					"maximum": 10
 				},
 				"seed": {
 					"description": "Random seed for reproducible results",
-					"maximum": 4294967295,
+					"type": "integer",
 					"minimum": 0,
-					"type": "integer"
+					"maximum": 4294967295
+				},
+				"content_moderation": {
+					"description": "Content moderation settings",
+					"type": "object",
+					"properties": {
+						"public_figure_threshold": {
+							"description": "Content moderation strictness for public figures",
+							"type": "string",
+							"enum": [
+								"auto",
+								"low"
+							]
+						}
+					},
+					"additionalProperties": false
 				}
 			},
 			"required": [
@@ -328,22 +328,22 @@
 				"ratio",
 				"duration"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"video": {
 					"description": "URL to the generated video",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

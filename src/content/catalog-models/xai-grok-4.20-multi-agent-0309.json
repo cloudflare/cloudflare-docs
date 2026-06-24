@@ -676,41 +676,17 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"context_management": {
-					"anyOf": [
-						{
-							"items": {},
-							"type": "array"
-						},
-						{
-							"type": "null"
-						}
-					]
-				},
-				"include": {
-					"anyOf": [
-						{
-							"items": {
-								"type": "string"
-							},
-							"type": "array"
-						},
-						{
-							"type": "null"
-						}
-					]
-				},
 				"input": {
 					"anyOf": [
 						{
 							"type": "string"
 						},
 						{
-							"items": {},
 							"minItems": 1,
-							"type": "array"
+							"type": "array",
+							"items": {}
 						}
 					]
 				},
@@ -724,22 +700,12 @@
 						}
 					]
 				},
-				"logprobs": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
-					]
-				},
 				"max_output_tokens": {
 					"anyOf": [
 						{
+							"type": "integer",
 							"exclusiveMinimum": 0,
-							"maximum": 9007199254740991,
-							"type": "integer"
+							"maximum": 9007199254740991
 						},
 						{
 							"type": "null"
@@ -749,9 +715,9 @@
 				"max_turns": {
 					"anyOf": [
 						{
+							"type": "integer",
 							"exclusiveMinimum": 0,
-							"maximum": 9007199254740991,
-							"type": "integer"
+							"maximum": 9007199254740991
 						},
 						{
 							"type": "null"
@@ -789,17 +755,17 @@
 					]
 				},
 				"reasoning": {
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
 						"effort": {
 							"anyOf": [
 								{
+									"type": "string",
 									"enum": [
 										"low",
 										"medium",
 										"high"
-									],
-									"type": "string"
+									]
 								},
 								{
 									"type": "null"
@@ -827,10 +793,10 @@
 							]
 						}
 					},
-					"type": "object"
+					"additionalProperties": {}
 				},
 				"search_parameters": {
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
 						"from_date": {
 							"anyOf": [
@@ -845,9 +811,9 @@
 						"max_search_results": {
 							"anyOf": [
 								{
+									"type": "integer",
 									"exclusiveMinimum": 0,
-									"maximum": 9007199254740991,
-									"type": "integer"
+									"maximum": 9007199254740991
 								},
 								{
 									"type": "null"
@@ -857,12 +823,12 @@
 						"mode": {
 							"anyOf": [
 								{
+									"type": "string",
 									"enum": [
 										"off",
 										"on",
 										"auto"
-									],
-									"type": "string"
+									]
 								},
 								{
 									"type": "null"
@@ -882,9 +848,9 @@
 						"sources": {
 							"anyOf": [
 								{
-									"items": {},
 									"maxItems": 20,
-									"type": "array"
+									"type": "array",
+									"items": {}
 								},
 								{
 									"type": "null"
@@ -902,7 +868,7 @@
 							]
 						}
 					},
-					"type": "object"
+					"additionalProperties": {}
 				},
 				"store": {
 					"anyOf": [
@@ -927,9 +893,9 @@
 				"temperature": {
 					"anyOf": [
 						{
-							"maximum": 2,
+							"type": "number",
 							"minimum": 0,
-							"type": "number"
+							"maximum": 2
 						},
 						{
 							"type": "null"
@@ -937,11 +903,11 @@
 					]
 				},
 				"text": {
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
 						"format": {}
 					},
-					"type": "object"
+					"additionalProperties": {}
 				},
 				"tool_choice": {
 					"anyOf": [
@@ -949,10 +915,14 @@
 							"type": "string"
 						},
 						{
-							"additionalProperties": false,
+							"type": "object",
 							"properties": {
+								"type": {
+									"type": "string",
+									"const": "function"
+								},
 								"function": {
-									"additionalProperties": false,
+									"type": "object",
 									"properties": {
 										"name": {
 											"type": "string"
@@ -961,49 +931,47 @@
 									"required": [
 										"name"
 									],
-									"type": "object"
-								},
-								"type": {
-									"const": "function",
-									"type": "string"
+									"additionalProperties": false
 								}
 							},
 							"required": [
 								"type",
 								"function"
 							],
-							"type": "object"
+							"additionalProperties": false
 						}
 					]
 				},
 				"tools": {
 					"anyOf": [
 						{
+							"maxItems": 128,
+							"type": "array",
 							"items": {
 								"anyOf": [
 									{
-										"additionalProperties": false,
+										"type": "object",
 										"properties": {
+											"type": {
+												"type": "string",
+												"const": "function"
+											},
+											"name": {
+												"type": "string",
+												"minLength": 1
+											},
 											"description": {
 												"type": "string"
 											},
-											"name": {
-												"minLength": 1,
-												"type": "string"
-											},
 											"parameters": {
-												"additionalProperties": {},
+												"type": "object",
 												"propertyNames": {
 													"type": "string"
 												},
-												"type": "object"
+												"additionalProperties": {}
 											},
 											"strict": {
 												"type": "boolean"
-											},
-											"type": {
-												"const": "function",
-												"type": "string"
 											}
 										},
 										"required": [
@@ -1011,29 +979,27 @@
 											"name",
 											"parameters"
 										],
-										"type": "object"
+										"additionalProperties": false
 									},
 									{
-										"additionalProperties": {},
+										"type": "object",
 										"properties": {
 											"type": {
+												"type": "string",
 												"enum": [
 													"web_search",
 													"x_search",
 													"web_search_preview"
-												],
-												"type": "string"
+												]
 											}
 										},
 										"required": [
 											"type"
 										],
-										"type": "object"
+										"additionalProperties": {}
 									}
 								]
-							},
-							"maxItems": 128,
-							"type": "array"
+							}
 						},
 						{
 							"type": "null"
@@ -1043,9 +1009,19 @@
 				"top_logprobs": {
 					"anyOf": [
 						{
-							"maximum": 8,
+							"type": "integer",
 							"minimum": 0,
-							"type": "integer"
+							"maximum": 8
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"logprobs": {
+					"anyOf": [
+						{
+							"type": "boolean"
 						},
 						{
 							"type": "null"
@@ -1055,9 +1031,9 @@
 				"top_p": {
 					"anyOf": [
 						{
-							"maximum": 1,
+							"type": "number",
 							"minimum": 0,
-							"type": "number"
+							"maximum": 1
 						},
 						{
 							"type": "null"
@@ -1073,17 +1049,51 @@
 							"type": "null"
 						}
 					]
+				},
+				"context_management": {
+					"anyOf": [
+						{
+							"type": "array",
+							"items": {}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"include": {
+					"anyOf": [
+						{
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						{
+							"type": "null"
+						}
+					]
 				}
 			},
 			"required": [
 				"input"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
 				"completed_at": {
 					"anyOf": [
 						{
@@ -1094,49 +1104,21 @@
 						}
 					]
 				},
-				"created_at": {
-					"type": "number"
-				},
-				"error": {
-					"anyOf": [
-						{},
-						{
-							"type": "null"
-						}
-					]
-				},
-				"id": {
-					"type": "string"
-				},
-				"incomplete_details": {
-					"anyOf": [
-						{},
-						{
-							"type": "null"
-						}
-					]
-				},
-				"instructions": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
-					]
-				},
-				"metadata": {},
 				"model": {
 					"type": "string"
 				},
-				"object": {
-					"const": "response",
-					"type": "string"
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"incomplete",
+						"failed"
+					]
 				},
 				"output": {
-					"items": {},
-					"type": "array"
+					"type": "array",
+					"items": {}
 				},
 				"parallel_tool_calls": {
 					"type": "boolean"
@@ -1159,33 +1141,11 @@
 						}
 					]
 				},
-				"status": {
-					"enum": [
-						"in_progress",
-						"completed",
-						"incomplete",
-						"failed"
-					],
-					"type": "string"
-				},
-				"store": {
-					"type": "boolean"
-				},
-				"temperature": {
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
-					]
-				},
 				"text": {},
 				"tool_choice": {},
 				"tools": {
-					"items": {},
-					"type": "array"
+					"type": "array",
+					"items": {}
 				},
 				"top_p": {
 					"anyOf": [
@@ -1197,65 +1157,37 @@
 						}
 					]
 				},
-				"usage": {
-					"additionalProperties": {},
-					"properties": {
-						"cost_in_usd_ticks": {
-							"anyOf": [
-								{
-									"type": "number"
-								},
-								{
-									"type": "null"
-								}
-							]
-						},
-						"input_tokens": {
+				"temperature": {
+					"anyOf": [
+						{
 							"type": "number"
 						},
-						"input_tokens_details": {
-							"additionalProperties": {},
-							"properties": {
-								"cached_tokens": {
-									"type": "number"
-								}
-							},
-							"required": [
-								"cached_tokens"
-							],
-							"type": "object"
-						},
-						"num_server_side_tools_used": {
-							"type": "number"
-						},
-						"num_sources_used": {
-							"type": "number"
-						},
-						"output_tokens": {
-							"type": "number"
-						},
-						"output_tokens_details": {
-							"additionalProperties": {},
-							"properties": {
-								"reasoning_tokens": {
-									"type": "number"
-								}
-							},
-							"required": [
-								"reasoning_tokens"
-							],
-							"type": "object"
-						},
-						"total_tokens": {
-							"type": "number"
+						{
+							"type": "null"
 						}
-					},
-					"required": [
-						"input_tokens",
-						"output_tokens",
-						"total_tokens"
-					],
-					"type": "object"
+					]
+				},
+				"instructions": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"incomplete_details": {
+					"anyOf": [
+						{},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"metadata": {},
+				"store": {
+					"type": "boolean"
 				},
 				"user": {
 					"anyOf": [
@@ -1266,6 +1198,74 @@
 							"type": "null"
 						}
 					]
+				},
+				"error": {
+					"anyOf": [
+						{},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						},
+						"input_tokens_details": {
+							"type": "object",
+							"properties": {
+								"cached_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"cached_tokens"
+							],
+							"additionalProperties": {}
+						},
+						"output_tokens_details": {
+							"type": "object",
+							"properties": {
+								"reasoning_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"reasoning_tokens"
+							],
+							"additionalProperties": {}
+						},
+						"cost_in_usd_ticks": {
+							"anyOf": [
+								{
+									"type": "number"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"num_sources_used": {
+							"type": "number"
+						},
+						"num_server_side_tools_used": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
 				}
 			},
 			"required": [
@@ -1276,7 +1276,7 @@
 				"status",
 				"output"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

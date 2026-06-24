@@ -185,56 +185,8 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"controls": {
-					"additionalProperties": false,
-					"properties": {
-						"background_color": {
-							"additionalProperties": false,
-							"properties": {
-								"rgb": {
-									"items": {
-										"maximum": 255,
-										"minimum": 0,
-										"type": "integer"
-									},
-									"maxItems": 3,
-									"minItems": 3,
-									"type": "array"
-								}
-							},
-							"required": [
-								"rgb"
-							],
-							"type": "object"
-						},
-						"colors": {
-							"items": {
-								"additionalProperties": false,
-								"properties": {
-									"rgb": {
-										"items": {
-											"maximum": 255,
-											"minimum": 0,
-											"type": "integer"
-										},
-										"maxItems": 3,
-										"minItems": 3,
-										"type": "array"
-									}
-								},
-								"required": [
-									"rgb"
-								],
-								"type": "object"
-							},
-							"maxItems": 5,
-							"type": "array"
-						}
-					},
-					"type": "object"
-				},
 				"prompt": {
 					"type": "string"
 				},
@@ -246,16 +198,64 @@
 				},
 				"substyle": {
 					"type": "string"
+				},
+				"controls": {
+					"type": "object",
+					"properties": {
+						"colors": {
+							"maxItems": 5,
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"rgb": {
+										"minItems": 3,
+										"maxItems": 3,
+										"type": "array",
+										"items": {
+											"type": "integer",
+											"minimum": 0,
+											"maximum": 255
+										}
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"additionalProperties": false
+							}
+						},
+						"background_color": {
+							"type": "object",
+							"properties": {
+								"rgb": {
+									"minItems": 3,
+									"maxItems": 3,
+									"type": "array",
+									"items": {
+										"type": "integer",
+										"minimum": 0,
+										"maximum": 255
+									}
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"additionalProperties": false
+						}
+					},
+					"additionalProperties": false
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"image": {
 					"type": "string"
@@ -264,7 +264,7 @@
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

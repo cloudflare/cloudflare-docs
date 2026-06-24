@@ -151,6 +151,40 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0\",\n  \"input\": {\n    \"prompt\": \"Abstract ink drops spreading through water, vivid colors mixing in slow motion\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "4K Cinematic Video",
+			"description": "Generate a detailed cinematic video in 4K",
+			"input": {
+				"prompt": "A sweeping cinematic shot of a futuristic city skyline at dusk, flying past glass towers with neon reflections and dramatic clouds",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "4k"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0/4k-cinematic-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0/4k-cinematic-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0',\n  {\n    prompt:\n      'A sweeping cinematic shot of a futuristic city skyline at dusk, flying past glass towers with neon reflections and dramatic clouds',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '4k',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0\",\n  \"input\": {\n    \"prompt\": \"A sweeping cinematic shot of a futuristic city skyline at dusk, flying past glass towers with neon reflections and dramatic clouds\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"4k\"\n  }\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -173,11 +207,55 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string",
+					"maxLength": 2000
+				},
+				"image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
+					"type": "string"
+				},
+				"reference_video": {
+					"description": "Reference video (HTTP(S) URL or base64 data URI) for style/motion guidance",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
+					"type": "string"
+				},
+				"reference_images": {
+					"description": "Reference images (1-4, HTTP(S) URLs or base64 data URIs) to guide video generation for characters, avatars, clothing, or environments. Cannot be used with 1080p resolution or first/last frame images.",
+					"maxItems": 4,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"duration": {
+					"description": "Video duration in seconds",
+					"default": 5,
+					"type": "integer",
+					"minimum": 4,
+					"maximum": 12
+				},
+				"resolution": {
+					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p",
+						"1080p",
+						"4k"
+					]
+				},
 				"aspect_ratio": {
-					"default": "16:9",
 					"description": "Video aspect ratio. Ignored if an image is used.",
+					"default": "16:9",
+					"type": "string",
 					"enum": [
 						"16:9",
 						"4:3",
@@ -186,76 +264,33 @@
 						"9:16",
 						"21:9",
 						"9:21"
-					],
-					"type": "string"
-				},
-				"camera_fixed": {
-					"default": false,
-					"description": "Whether to fix camera position",
-					"type": "boolean"
-				},
-				"duration": {
-					"default": 5,
-					"description": "Video duration in seconds",
-					"maximum": 12,
-					"minimum": 4,
-					"type": "integer"
+					]
 				},
 				"fps": {
-					"const": 24,
-					"default": 24,
 					"description": "Frame rate (frames per second)",
-					"type": "number"
+					"default": 24,
+					"type": "number",
+					"const": 24
+				},
+				"camera_fixed": {
+					"description": "Whether to fix camera position",
+					"default": false,
+					"type": "boolean"
 				},
 				"generate_audio": {
 					"description": "Whether to generate audio with the video",
 					"type": "boolean"
 				},
-				"image": {
-					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
-					"type": "string"
-				},
-				"last_frame_image": {
-					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
-					"type": "string"
-				},
-				"prompt": {
-					"description": "Text prompt describing the video to generate",
-					"maxLength": 2000,
-					"type": "string"
-				},
-				"reference_images": {
-					"description": "Reference images (1-4, HTTP(S) URLs or base64 data URIs) to guide video generation for characters, avatars, clothing, or environments. Cannot be used with 1080p resolution or first/last frame images.",
-					"items": {
-						"type": "string"
-					},
-					"maxItems": 4,
-					"type": "array"
-				},
-				"reference_video": {
-					"description": "Reference video (HTTP(S) URL or base64 data URI) for style/motion guidance",
-					"type": "string"
-				},
-				"resolution": {
-					"default": "720p",
-					"description": "Video resolution",
-					"enum": [
-						"480p",
-						"720p",
-						"1080p"
-					],
-					"type": "string"
+				"watermark": {
+					"description": "Whether to add a watermark to the output video",
+					"default": false,
+					"type": "boolean"
 				},
 				"seed": {
 					"description": "Random seed for reproducible generation",
-					"maximum": 9007199254740991,
+					"type": "integer",
 					"minimum": -9007199254740991,
-					"type": "integer"
-				},
-				"watermark": {
-					"default": false,
-					"description": "Whether to add a watermark to the output video",
-					"type": "boolean"
+					"maximum": 9007199254740991
 				}
 			},
 			"required": [
@@ -267,22 +302,22 @@
 				"camera_fixed",
 				"watermark"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"video": {
 					"description": "URL to the generated video",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

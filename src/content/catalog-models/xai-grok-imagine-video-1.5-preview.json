@@ -69,17 +69,26 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"_operation": {
+					"type": "string",
 					"enum": [
 						"generate",
 						"edit",
 						"extend"
-					],
+					]
+				},
+				"prompt": {
 					"type": "string"
 				},
+				"duration": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 15
+				},
 				"aspect_ratio": {
+					"type": "string",
 					"enum": [
 						"1:1",
 						"16:9",
@@ -88,16 +97,26 @@
 						"3:4",
 						"3:2",
 						"2:3"
-					],
-					"type": "string"
+					]
 				},
-				"duration": {
-					"maximum": 15,
-					"minimum": 1,
-					"type": "integer"
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p"
+					]
+				},
+				"size": {
+					"type": "string",
+					"enum": [
+						"848x480",
+						"1696x960",
+						"1280x720",
+						"1920x1080"
+					]
 				},
 				"image": {
-					"additionalProperties": false,
+					"type": "object",
 					"properties": {
 						"url": {
 							"type": "string"
@@ -106,26 +125,25 @@
 					"required": [
 						"url"
 					],
-					"type": "object"
+					"additionalProperties": false
 				},
-				"output": {
-					"additionalProperties": false,
+				"video": {
+					"type": "object",
 					"properties": {
-						"upload_url": {
+						"url": {
 							"type": "string"
 						}
 					},
 					"required": [
-						"upload_url"
+						"url"
 					],
-					"type": "object"
-				},
-				"prompt": {
-					"type": "string"
+					"additionalProperties": false
 				},
 				"reference_images": {
+					"maxItems": 10,
+					"type": "array",
 					"items": {
-						"additionalProperties": false,
+						"type": "object",
 						"properties": {
 							"url": {
 								"type": "string"
@@ -134,48 +152,30 @@
 						"required": [
 							"url"
 						],
-						"type": "object"
-					},
-					"maxItems": 10,
-					"type": "array"
+						"additionalProperties": false
+					}
 				},
-				"resolution": {
-					"enum": [
-						"480p",
-						"720p"
-					],
-					"type": "string"
-				},
-				"size": {
-					"enum": [
-						"848x480",
-						"1696x960",
-						"1280x720",
-						"1920x1080"
-					],
-					"type": "string"
-				},
-				"user": {
-					"type": "string"
-				},
-				"video": {
-					"additionalProperties": false,
+				"output": {
+					"type": "object",
 					"properties": {
-						"url": {
+						"upload_url": {
 							"type": "string"
 						}
 					},
 					"required": [
-						"url"
+						"upload_url"
 					],
-					"type": "object"
+					"additionalProperties": false
+				},
+				"user": {
+					"type": "string"
 				}
 			},
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"video": {
 					"type": "string"
@@ -184,7 +184,7 @@
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

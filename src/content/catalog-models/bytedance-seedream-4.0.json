@@ -195,9 +195,22 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K",
+						"custom"
+					]
+				},
 				"aspect_ratio": {
+					"type": "string",
 					"enum": [
 						"match_input_image",
 						"1:1",
@@ -208,53 +221,40 @@
 						"3:2",
 						"2:3",
 						"21:9"
-					],
-					"type": "string"
+					]
+				},
+				"width": {
+					"type": "integer",
+					"minimum": 1024,
+					"maximum": 4096
+				},
+				"height": {
+					"type": "integer",
+					"minimum": 1024,
+					"maximum": 4096
 				},
 				"enhance_prompt": {
 					"type": "boolean"
-				},
-				"height": {
-					"maximum": 4096,
-					"minimum": 1024,
-					"type": "integer"
-				},
-				"prompt": {
-					"type": "string"
-				},
-				"size": {
-					"enum": [
-						"1K",
-						"2K",
-						"4K",
-						"custom"
-					],
-					"type": "string"
-				},
-				"width": {
-					"maximum": 4096,
-					"minimum": 1024,
-					"type": "integer"
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"image": {
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

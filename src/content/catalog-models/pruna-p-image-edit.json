@@ -67,11 +67,30 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"description": "Text instruction describing the desired edit or composition.",
+					"type": "string"
+				},
+				"images": {
+					"description": "Array of 1-5 reference images. Each entry is an HTTP(S) URL or a base64 data URI (data:image/...;base64,...).",
+					"minItems": 1,
+					"maxItems": 5,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"turbo": {
+					"description": "Run faster with additional optimizations. For complicated tasks, it is recommended to turn this off.",
+					"default": true,
+					"type": "boolean"
+				},
 				"aspect_ratio": {
-					"default": "match_input_image",
 					"description": "Output aspect ratio.",
+					"default": "match_input_image",
+					"type": "string",
 					"enum": [
 						"match_input_image",
 						"1:1",
@@ -81,36 +100,17 @@
 						"3:4",
 						"3:2",
 						"2:3"
-					],
-					"type": "string"
-				},
-				"disable_safety_checker": {
-					"default": false,
-					"description": "Disable safety checker for generated images.",
-					"type": "boolean"
-				},
-				"images": {
-					"description": "Array of 1-5 reference images. Each entry is an HTTP(S) URL or a base64 data URI (data:image/...;base64,...).",
-					"items": {
-						"type": "string"
-					},
-					"maxItems": 5,
-					"minItems": 1,
-					"type": "array"
-				},
-				"prompt": {
-					"description": "Text instruction describing the desired edit or composition.",
-					"type": "string"
+					]
 				},
 				"seed": {
 					"description": "Random seed for reproducible generation.",
-					"maximum": 9007199254740991,
+					"type": "integer",
 					"minimum": -9007199254740991,
-					"type": "integer"
+					"maximum": 9007199254740991
 				},
-				"turbo": {
-					"default": true,
-					"description": "Run faster with additional optimizations. For complicated tasks, it is recommended to turn this off.",
+				"disable_safety_checker": {
+					"description": "Disable safety checker for generated images.",
+					"default": false,
 					"type": "boolean"
 				}
 			},
@@ -121,22 +121,22 @@
 				"aspect_ratio",
 				"disable_safety_checker"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
 				"image": {
 					"description": "Presigned URL for the edited image.",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }
