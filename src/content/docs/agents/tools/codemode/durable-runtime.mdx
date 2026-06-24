@@ -249,7 +249,7 @@ Ask the model to list saved notes. The model receives one `codemode` tool and ca
 async () => {
 	const matches = await codemode.search("list saved notes");
 	const docs = await codemode.describe(matches.results[0].path);
-	const savedNotes = await notes.listNotes({});
+	const savedNotes = await notes.listNotes();
 
 	return { docs, savedNotes };
 };

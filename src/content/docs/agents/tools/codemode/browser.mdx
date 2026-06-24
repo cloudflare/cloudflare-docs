@@ -40,7 +40,7 @@ The browser creates the Code Mode tool and registers it as a dynamic client tool
    ```tsx
    import type { JsonSchemaExecutableToolDescriptors } from "@cloudflare/codemode/browser";
 
-   const browserTools: JsonSchemaExecutableToolDescriptors = {
+   export const browserTools: JsonSchemaExecutableToolDescriptors = {
      getPageInfo: {
        description: "Get information about the current browser page",
        inputSchema: {
@@ -80,8 +80,9 @@ The browser creates the Code Mode tool and registers it as a dynamic client tool
      IframeSandboxExecutor,
      createBrowserCodeTool
    } from "@cloudflare/codemode/browser";
+   import { browserTools } from "./browser-tools";
 
-   const codemodeTool = createBrowserCodeTool({
+   export const codemodeTool = createBrowserCodeTool({
      tools: browserTools,
      executor: new IframeSandboxExecutor()
    });
@@ -101,6 +102,7 @@ The browser creates the Code Mode tool and registers it as a dynamic client tool
    import { useAgentChat, type AITool } from "@cloudflare/ai-chat/react";
    import { useAgent } from "agents/react";
    import { useMemo } from "react";
+   import { codemodeTool } from "./codemode-tool";
 
    function BrowserCodeModeChat() {
      const agent = useAgent({ agent: "browser-codemode" });

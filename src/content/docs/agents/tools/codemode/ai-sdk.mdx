@@ -132,14 +132,23 @@ Use `aiTools()` when combining AI SDK tools with providers from other packages. 
 <TypeScriptExample>
 
 ```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { DynamicWorkerExecutor } from "@cloudflare/codemode";
 import { aiTools, createCodeTool } from "@cloudflare/codemode/ai";
+import { Workspace } from "@cloudflare/shell";
 import { stateTools } from "@cloudflare/shell/workers";
+import { weatherTools } from "./tools";
 
-const codemode = createCodeTool({
-	tools: [aiTools(weatherTools), stateTools(workspace)],
-	executor: new DynamicWorkerExecutor({ loader: env.LOADER }),
-});
+export class Chat extends AIChatAgent<Env> {
+	workspace = new Workspace({ sql: this.ctx.storage.sql });
+
+	codemodeTool() {
+		return createCodeTool({
+			tools: [aiTools(weatherTools), stateTools(this.workspace)],
+			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
+		});
+	}
+}
 ```
 
 </TypeScriptExample>
@@ -151,6 +160,8 @@ To assign custom namespaces, pass provider objects instead:
 <TypeScriptExample>
 
 ```ts
+const executor = new DynamicWorkerExecutor({ loader: env.LOADER });
+
 const codemode = createCodeTool({
 	tools: [
 		{ name: "weather", tools: weatherTools },

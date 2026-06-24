@@ -156,6 +156,7 @@ You need a project with the [durable Code Mode runtime](/agents/tools/codemode/d
    <TypeScriptExample filename="src/server.ts">
 
    ```ts
+   import { AIChatAgent } from "@cloudflare/ai-chat";
    import {
    	createCodemodeRuntime,
    	DynamicWorkerExecutor,
@@ -164,13 +165,20 @@ You need a project with the [durable Code Mode runtime](/agents/tools/codemode/d
    	type: "connectors",
    };
 
-   const runtime = createCodemodeRuntime({
-   	ctx: this.ctx,
-   	executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
-   	connectors: [new OrdersConnector(this.ctx, this.env)],
-   });
+   export class Chat extends AIChatAgent<Env> {
+   	#runtime() {
+   		return createCodemodeRuntime({
+   			ctx: this.ctx,
+   			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
+   			connectors: [new OrdersConnector(this.ctx, this.env)],
+   		});
+   	}
 
-   const tools = { codemode: runtime.tool() };
+   	async onChatMessage() {
+   		const tools = { codemode: this.#runtime().tool() };
+   		// Pass tools to your model call.
+   	}
+   }
    ```
 
    </TypeScriptExample>
