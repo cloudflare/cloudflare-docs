@@ -1,0 +1,128 @@
+---
+title: Workers permissions and access
+description: Manage roles and scopes for Workers.
+pcx_content_type: reference
+sidebar:
+  label: Workers
+  order: 1
+products:
+  - workers
+---
+
+Workers permissions control who or what can view, deploy, and manage Workers in your Cloudflare account. Access is granted by assigning a Workers role to a member, User Group, or API token at a specific scope.
+
+Workers roles define what actions are allowed. Scopes define where those actions apply: across all Workers in the account or only to selected Workers.
+
+For the platform-wide permission model, refer to the [Permissions and access overview](/workers/authorization/).
+
+## Workers roles
+
+Workers roles can be assigned to members, User Groups, and API tokens.
+
+| Role               | Access level  | Description                                                                                                                                                                                          |
+| ------------------ | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Metadata Read-Only | Read metadata | Can view Workers metadata, settings, and observability data such as metrics, logs, and traces. Cannot view script source content or secret values.                                                   |
+| Content Read-Only  | Read content  | Can view Workers metadata and script source content. Cannot modify Workers.                                                                                                                          |
+| Editor             | Edit          | Can read, update, and deploy existing Workers, including script content, settings, routes, schedules, versions, deployments, and observability. Cannot create, delete, or rename Workers.            |
+| Admin              | Full manage   | Full control over Workers, including creating, reading, updating, deploying, deleting, and renaming Workers when granted at the product scope. Per-Worker Admin applies only to the selected Worker. |
+
+## Role scopes
+
+Workers roles can be granted at different scopes depending on how broadly the access should apply.
+
+| Scope              | Applies to                 | Use when                                                                     |
+| ------------------ | -------------------------- | ---------------------------------------------------------------------------- |
+| Workers product    | All Workers in the account | A member, User Group, or API token needs the same access across all Workers. |
+| Individual Workers | Only selected Workers      | A member, User Group, or API token should only access specific Workers.      |
+
+Product-level roles apply to every current and future Worker in the account.
+
+Per-Worker roles apply only to the Workers you select. You cannot grant per-Worker access to a Worker that does not exist yet. Creating new Workers requires product-level `Admin` access.
+
+## Combine product-level and per-Worker access
+
+You can combine product-level and per-Worker roles to give broad visibility but limited edit access.
+
+For example, grant `Metadata Read-Only` at the Workers product scope so someone can browse Workers and view observability data across the account. Then grant `Editor` only for the specific Workers they should deploy.
+
+## Members, User Groups, and API tokens
+
+You can assign Workers roles to members, User Groups, and API tokens.
+
+Members and User Groups are for people who need dashboard or user-based access. API tokens are for CI/CD pipelines, agents, scripts, and Wrangler automation.
+
+API tokens use the same Workers roles and scopes as members and User Groups, but they have their own permissions. A token can only perform actions allowed by the Workers role and scope assigned to that token.
+
+## Wrangler
+
+Wrangler authorizes commands using the Workers permissions of the authenticated member or API token.
+
+Here are examples of the scope required to run Wrangler commands:
+
+| Action                                | Wrangler command                                       | Minimum role required                                                                                                                             |
+| ------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tail logs for a Worker                | `wrangler tail`                                        | `Metadata Read-Only` for that Worker                                                                                                              |
+| Deploy an existing Worker             | `wrangler deploy`                                      | `Editor` for that Worker                                                                                                                          |
+| Deploy an existing Worker with routes | `wrangler deploy`                                      | `Editor` for that Worker, plus [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains/) for each zone referenced by routes |
+| Create a new Worker                   | `wrangler deploy` for a Worker that does not exist yet | Product-level `Admin`                                                                                                                             |
+| Upload a version                      | `wrangler versions upload`                             | `Editor` for that Worker                                                                                                                          |
+| Deploy a version                      | `wrangler versions deploy`                             | `Editor` for that Worker                                                                                                                          |
+| Roll back a deployment                | `wrangler rollback`                                    | `Editor` for that Worker                                                                                                                          |
+| Manage secrets for an existing Worker | `wrangler secret put`, `wrangler secret delete`        | `Editor` for that Worker                                                                                                                          |
+
+## Legacy Workers permissions
+
+These legacy permissions are being replaced by the new Workers roles. There is no deprecation date right now. Existing permissions continue to work, and customers will receive advance notice before any deprecation.
+
+These legacy permissions were account-level permissions. To preserve the same behavior, assign the replacement role at the Workers product scope, which applies across all Workers in the account. Use per-Worker scopes only when you intentionally want to limit access to selected Workers.
+
+| Legacy permission                    | Replaced by                                                                                                                      |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| Workers CI Read                      | `Content Read-Only`                                                                                                              |
+| Workers CI Edit                      | `Editor`                                                                                                                         |
+| Workers Observability Read           | `Metadata Read-Only`                                                                                                             |
+| Workers Observability Edit           | `Editor`                                                                                                                         |
+| Workers Observability Telemetry Edit | `Editor`                                                                                                                         |
+| Workers Routes Read                  | `Metadata Read-Only`                                                                                                             |
+| Workers Routes Edit                  | `Editor`, plus [zone-level permission](/fundamentals/manage-members/scope/#specific-domains/) for each zone referenced by routes |
+| Workers Tail Read                    | `Metadata Read-Only`                                                                                                             |
+| Workers Scripts Read                 | `Content Read-Only`                                                                                                              |
+| Workers Scripts Edit                 | `Editor`                                                                                                                         |
+
+## Cloudflare Pages
+
+For members and User Groups, use [Developer Platform roles](/workers/authorization/) to grant [Cloudflare Pages](/pages/) access. Do not use Workers product roles or per-Worker roles for Pages access.
+
+For API tokens, use Pages-specific roles. These roles are available when creating account-owned API tokens.
+
+| API token role      | Access                                                                        |
+| ------------------- | ----------------------------------------------------------------------------- |
+| Pages Metadata Read | View Pages metadata and configuration. Does not include Pages content access. |
+| Pages Read          | View Pages metadata and content.                                              |
+| Pages Write         | Create, update, and delete Pages projects and Pages content.                  |
+
+## Bindings
+
+To deploy a Worker that has [bindings](/workers/runtime-apis/bindings/) to resources like [Workers KV](/kv/), [R2](/r2/), or [D1](/d1/), you need `Editor` access to the Worker. You do not need separate permissions on the bound resources to deploy the Worker.
+
+Permissions on bound resources are only required if you need to access those resources directly, for example, reading KV keys, querying a D1 database, or listing R2 objects.
+
+## Limitations
+
+- Product-level Workers roles do not grant access to other Developer Platform products such as [R2](/r2/), [D1](/d1/), [KV](/kv/), [Queues](/queues/), [Vectorize](/vectorize/), or [Hyperdrive](/hyperdrive/).
+- API tokens do not support platform-level Developer Platform permissions.
+- Creating a new Worker requires Workers Admin because per-Worker permissions can only apply to Workers that already exist.
+- Deploying a Worker with routes also requires [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains/) for each zone referenced by those routes.
+- [Durable Objects permissions](/workers/authorization/durable-objects/) are inherited from Workers roles and are not assigned separately.
+- Legacy Workers permissions may appear in older configuration or API references, but new documentation should use the replacement Workers roles.
+
+## Related resources
+
+- [Permissions and access overview](/workers/authorization/)
+- [Durable Objects permissions and access](/workers/authorization/durable-objects/)
+- [R2 permissions and access](/r2/api/tokens/#permissions)
+- [Roles](/fundamentals/manage-members/roles/)
+- [Role scopes](/fundamentals/manage-members/scope/)
+- [API token permissions](/fundamentals/api/reference/permissions/)
+- [User Groups](/fundamentals/manage-members/user-groups/)
+- [Wrangler authentication](/workers/wrangler/commands/general/#login)
