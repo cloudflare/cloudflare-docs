@@ -1,6 +1,6 @@
 ---
 title: Workers permissions and access
-description: Manage roles and scopes for Workers.
+description: Manage Workers roles, scopes, Wrangler permissions, and API token access for deploying and managing Workers.
 pcx_content_type: reference
 sidebar:
   label: Workers
@@ -63,7 +63,7 @@ Here are examples of the scope required to run Wrangler commands:
 | ------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tail logs for a Worker                | `wrangler tail`                                        | `Metadata Read-Only` for that Worker                                                                                                              |
 | Deploy an existing Worker             | `wrangler deploy`                                      | `Editor` for that Worker                                                                                                                          |
-| Deploy an existing Worker with routes | `wrangler deploy`                                      | `Editor` for that Worker, plus [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains/) for each zone referenced by routes |
+| Deploy an existing Worker with routes | `wrangler deploy`                                      | `Editor` for that Worker, plus [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains) for each zone referenced by routes |
 | Create a new Worker                   | `wrangler deploy` for a Worker that does not exist yet | Product-level `Admin`                                                                                                                             |
 | Upload a version                      | `wrangler versions upload`                             | `Editor` for that Worker                                                                                                                          |
 | Deploy a version                      | `wrangler versions deploy`                             | `Editor` for that Worker                                                                                                                          |
@@ -84,7 +84,7 @@ These legacy permissions were account-level permissions. To preserve the same be
 | Workers Observability Edit           | `Editor`                                                                                                                         |
 | Workers Observability Telemetry Edit | `Editor`                                                                                                                         |
 | Workers Routes Read                  | `Metadata Read-Only`                                                                                                             |
-| Workers Routes Edit                  | `Editor`, plus [zone-level permission](/fundamentals/manage-members/scope/#specific-domains/) for each zone referenced by routes |
+| Workers Routes Edit                  | `Editor`, plus [zone-level permission](/fundamentals/manage-members/scope/#specific-domains) for each zone referenced by routes |
 | Workers Tail Read                    | `Metadata Read-Only`                                                                                                             |
 | Workers Scripts Read                 | `Content Read-Only`                                                                                                              |
 | Workers Scripts Edit                 | `Editor`                                                                                                                         |
@@ -112,14 +112,14 @@ Permissions on bound resources are only required if you need to access those res
 - Product-level Workers roles do not grant access to other Developer Platform products such as [R2](/r2/), [D1](/d1/), [KV](/kv/), [Queues](/queues/), [Vectorize](/vectorize/), or [Hyperdrive](/hyperdrive/).
 - API tokens do not support platform-level Developer Platform permissions.
 - Creating a new Worker requires Workers Admin because per-Worker permissions can only apply to Workers that already exist.
-- Deploying a Worker with routes also requires [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains/) for each zone referenced by those routes.
-- [Durable Objects permissions](/workers/authorization/durable-objects/) are inherited from Workers roles and are not assigned separately.
+- Deploying a Worker with routes also requires [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains) for each zone referenced by those routes.
+- Durable Objects permissions are inherited from Workers roles and are not assigned separately.
 - Legacy Workers permissions may appear in older configuration or API references, but new documentation should use the replacement Workers roles.
 
 ## Related resources
 
 - [Permissions and access overview](/workers/authorization/)
-- [Durable Objects permissions and access](/workers/authorization/durable-objects/)
+- Durable Objects permissions and access — coming soon
 - [R2 permissions and access](/r2/api/tokens/#permissions)
 - [Roles](/fundamentals/manage-members/roles/)
 - [Role scopes](/fundamentals/manage-members/scope/)
