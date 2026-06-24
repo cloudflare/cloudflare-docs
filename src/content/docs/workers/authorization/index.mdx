@@ -56,20 +56,31 @@ For example, create an API token with **Workers Editor** for a deployment pipeli
 
 API tokens support product-level and, where available, resource-level permissions. They do not support platform-level permissions. To grant an API token broad Developer Platform access, select the product-level permissions for each product the token needs.
 
-### Use API tokens with Wrangler
+### Use Wrangler with member or token authentication
 
-If you have an agent or automated system that uses [Wrangler](/workers/wrangler/), you can control what it has access to by authenticating it with a scoped API token.
+[Wrangler](/workers/wrangler/) authorizes commands using the permissions of the authenticated member or API token.
 
-Create an API token with only the permissions the system needs, then set these environment variables before running Wrangler:
+For interactive use, run [`wrangler login`](/workers/wrangler/commands/general/#login). Wrangler uses the roles and scopes assigned to your member account.
+
+For CI/CD pipelines, agents, scripts, and other automated systems, use an API token instead of a member login. Create a token with only the permissions the system needs, then set these environment variables before running Wrangler:
 
 ```bash
 export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export CLOUDFLARE_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 ```
 
-Wrangler uses the token's permissions. If the token is scoped to a specific Worker, Wrangler can only operate on that Worker.
+Wrangler uses the token's permissions. If the token is scoped to a specific Worker, Wrangler can only perform actions allowed for that Worker.
 
-For example, if you have an agent that deploys code with Wrangler, you can create an API token with Editor scoped to a single Worker. The agent can update and deploy that Worker, but cannot see or modify any other Worker on the account.
+Wrangler commands can require different permissions depending on what they manage:
+
+| What you want to do         | Example Wrangler command                               | Required access                                                                                                               |
+| --------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| Deploy an existing Worker   | `wrangler deploy`                                      | `Editor` scoped to that Worker, or `Editor` at the Workers product scope.                                                     |
+| Create a new Worker         | `wrangler deploy` for a Worker that does not exist yet | `Admin` at the Workers product scope.                                                                                         |
+| Tail logs for one Worker    | `wrangler tail`                                        | `Metadata Read-Only` scoped to that Worker, or `Metadata Read-Only` at the Workers product scope.                             |
+| List KV namespaces          | `wrangler kv namespace list`                           | Developer Platform `Metadata Read-Only` at a scope that includes KV.                                                          |
+| Create a KV namespace       | `wrangler kv namespace create`                         | Developer Platform `Admin` at a scope that includes KV.                                                                       |
+| Deploy a Worker with routes | `wrangler deploy`                                      | `Editor` for the Worker, plus the [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains/) for routes. |
 
 ## Bindings
 
