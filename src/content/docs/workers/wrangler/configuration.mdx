@@ -133,12 +133,6 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 - `keep_vars` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
-- `exports` <Type text="object" /> <MetaInfo text="optional" />
-  - Declares the Durable Object classes this Worker exports and their lifecycle state. Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Mutually exclusive with `migrations`.
-
-- `migrations` <Type text="object[]" /> <MetaInfo text="optional" />
-  - The legacy imperative configuration for managing Durable Object class lifecycle. For new Workers, prefer [`exports`](/durable-objects/reference/durable-objects-migrations/). Refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
-
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
@@ -241,7 +235,7 @@ The `main` key is optional for assets-only Workers.
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
 * `exports` <Type text="object"/> <MetaInfo text="optional"/>
-  - Declares the Durable Object classes this Worker exports and their lifecycle state (live, deleted, renamed, transferred). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Mutually exclusive with `migrations`.
+  - Declares the Durable Object classes this Worker exports and their lifecycle state (`created`, `deleted`, `renamed`, `transferred`, `expecting-transfer`). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Mutually exclusive with `migrations`.
 
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
   - Legacy imperative configuration that maps a Durable Object from a class name to a runtime state. For new Workers, prefer [`exports`](/durable-objects/reference/durable-objects-migrations/). Refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
@@ -1916,26 +1910,26 @@ A common example of using a redirected configuration is where a custom build too
 - First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
   <WranglerConfig>
-
-  ```jsonc
-  {
-  	"$schema": "./node_modules/wrangler/config-schema.json",
-  	"name": "my-worker",
-  	"main": "src/index.ts",
-  	"vars": {
-  		"MY_VARIABLE": "production variable",
-  	},
-  	"env": {
-  		"staging": {
-  			"vars": {
-  				"MY_VARIABLE": "staging variable",
-  			},
-  		},
-  	},
-  }
-  ```
-
-  </WranglerConfig>
+  
+          ```jsonc
+          {
+          	"$schema": "./node_modules/wrangler/config-schema.json",
+          	"name": "my-worker",
+          	"main": "src/index.ts",
+          	"vars": {
+          		"MY_VARIABLE": "production variable",
+          	},
+          	"env": {
+          		"staging": {
+          			"vars": {
+          				"MY_VARIABLE": "staging variable",
+          			},
+          		},
+          	},
+          }
+          ```
+  
+          </WranglerConfig>
 
   This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
 

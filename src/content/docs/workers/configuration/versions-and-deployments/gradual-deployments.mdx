@@ -42,7 +42,11 @@ Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require you to
 
 Create a new `"Hello World"` Worker using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) and deploy it.
 
-<PackageManagers type="create" pkg="cloudflare@latest" args="<NAME> -- --type=hello-world" />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="<NAME> -- --type=hello-world"
+/>
 
 Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application. This is the first version of your Worker.
 
@@ -200,7 +204,7 @@ To limit the blast radius of these deployments, Durable Object lifecycle changes
 
 To understand why Durable Object lifecycle changes are atomic operations, consider the hypothetical example of gradually deploying a class deletion. If a delete were applied to 50% of Durable Object instances, then Workers requesting those Durable Object instances would fail because they would have been deleted.
 
-To do this without producing errors, a version of the Worker which does not depend on any Durable Object instances would have to have already been rolled out. Then, you can deploy the class deletion without affecting any traffic and there is no reason to do so gradually.
+To do this without producing errors, a version of the Worker which does not depend on any of the Durable Objects to be deleted would have to have already been rolled out. Then, you can deploy the class deletion without affecting any traffic and there is no reason to do so gradually.
 
 ## Observability
 
