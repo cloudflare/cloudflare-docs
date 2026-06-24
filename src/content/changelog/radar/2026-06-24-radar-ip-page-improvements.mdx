@@ -6,24 +6,22 @@ products:
 date: 2026-06-24
 ---
 
-[**Radar**](/radar/) now plots your IPv4 and IPv6 locations on the [IP page](https://radar.cloudflare.com/ip), shows the Cloudflare data centers serving your connection, and includes more detail about the autonomous system (AS) your IP belongs to.
+[**Radar**](/radar/) now plots your IPv4 and IPv6 locations on the [IP page](https://radar.cloudflare.com/ip), shows the Cloudflare data centers serving your connection, and includes more detail about the autonomous system (AS) your primary IP belongs to.
 
 ## Your IP location on the map
 
 The map of your connection now shows:
 
-- **Your IPv4 and IPv6 location markers** — your primary IP in red and your secondary IP in blue. When both addresses geolocate to the same place, they collapse into a single marker, with a note explaining why IPv4 and IPv6 can resolve to different locations.
-- **Cloudflare data center markers** — every Cloudflare location as a dot, with the data center you connected to highlighted.
-- **A connecting line** from each of your IP markers to the Cloudflare data center serving your connection.
+- **IP location markers** — The primary IP will show as a red marker. When both IP addresses do not geolocate to the same place, a second marker will appear in blue with a note explaining why IPv4 and IPv6 can resolve to different locations.
+- **Cloudflare data center markers** — Cloudflare data centers now show as orange dots on the map and the one you are connected to is highlighted.
+- **Data center connectors** — Each line connects your IP markers to their respective data centers.
 
-![Cloudflare Radar IP page map showing IPv4 and IPv6 location markers, Cloudflare data center dots, and connecting lines](~/assets/images/radar/ip-page-location-map.png)
+![Map showing Cloudflare data centers and a marker representing the IP location with a line connected to a data center](~/assets/images/radar/ip-page-geolocation.png)
 
 Due to the data policies of our geolocation provider, this detailed location is only available for your own IP. Other IP addresses keep the current country-level view.
 
 ## Extended AS information
 
 The AS card on the IP page now shows additional detail about the network an IP belongs to — including alternate names, the operator website, and an estimate of the AS user population — alongside the AS number and country.
-
-![Cloudflare Radar IP page AS card showing AS number, alternate names, country, operator website, and estimated user population](~/assets/images/radar/ip-page-as-card.png)
 
 Visit the [Cloudflare Radar IP page](https://radar.cloudflare.com/ip) to explore more details about your IP.
