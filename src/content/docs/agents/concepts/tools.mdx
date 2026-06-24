@@ -1,6 +1,6 @@
 ---
 title: Tools
-description: Define and use tools in Cloudflare Agents to interact with external APIs, process data, and perform actions.
+description: Understand direct tool calls, Code Mode, and Model Context Protocol tools in Cloudflare Agents.
 pcx_content_type: concept
 sidebar:
   order: 4
@@ -8,53 +8,58 @@ products:
   - agents
 ---
 
-### What are tools?
+Tools let models retrieve information, process data, and perform actions. Each tool defines an interface that describes its inputs, outputs, and behavior.
 
-Tools enable AI systems to interact with external services and perform actions. They provide a structured way for agents and workflows to invoke APIs, manipulate data, and integrate with external systems. Tools form the bridge between AI decision-making capabilities and real-world actions.
+A travel agent might use tools to search flights, check hotel rates, process payments, and send confirmation emails. The tool interface lets the model understand when and how to use each capability.
 
-## Tools on Cloudflare Agents
+## Choose how models use tools
 
-Cloudflare Agents support several tool patterns. Choose the smallest one that fits the job:
+Cloudflare Agents support three related tool-use patterns:
 
-| Pattern           | Use when                                                                                  | Start here                                                                        |
-| ----------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Server-side tools | The tool can run entirely in the Worker, such as fetching an API or querying SQL          | [Chat agents](/agents/communication-channels/chat/chat-agents/#server-side-tools) |
-| Client-side tools | The tool needs browser APIs such as geolocation, clipboard, or local storage              | [Chat agents](/agents/communication-channels/chat/chat-agents/#client-side-tools) |
-| Human approvals   | The tool is sensitive and needs a user decision before it runs                            | [Human-in-the-loop](/agents/concepts/agentic-patterns/human-in-the-loop/)         |
-| MCP tools         | You want to expose or consume tools through the Model Context Protocol                    | [Model Context Protocol](/agents/model-context-protocol/)                         |
-| Agents as tools   | You want a chat agent to run another chat-capable sub-agent as a retained, streaming tool | [Agents as tools](/agents/runtime/execution/agent-tools/)                         |
+| Pattern           | How it works                                                                                                  | Use when                                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Direct tool calls | The model receives individual tool definitions. Each result returns to the model before it chooses what to do next. | The task is simple and uses a small, known tool set.                                                        |
+| Code Mode         | The model writes code against typed tools. Intermediate results and control flow stay inside the sandbox.     | The task needs composition, dependent calls, filtering, branching, repeatable logic, or tool discovery.    |
+| MCP               | A standard protocol connects an agent to tools hosted by another system.                                      | Tools must be discovered, shared, or managed independently from the agent that consumes them.              |
 
-### Understanding tools
+These patterns can work together. An Agent can use MCP tools through direct tool calls or make them available inside Code Mode.
 
-In an AI system, tools are typically implemented as function calls that the AI can use to accomplish specific tasks. For example, a travel booking agent might have tools for:
+## Direct tool calls
 
-- Searching flight availability
-- Checking hotel rates
-- Processing payments
-- Sending confirmation emails
+Most tool examples use direct tool calls, even when they do not name the pattern. You define each tool and pass its schema to the model. The model selects a tool, your application executes it, and the result returns to the model.
 
-Each tool has a defined interface specifying its inputs, outputs, and expected behavior. This allows the AI system to understand when and how to use each tool appropriately.
+The model sees each intermediate result before choosing another tool. This makes the execution path easy to inspect, but dependent operations require repeated model turns and consume context with intermediate data.
 
-### Common tool patterns
+Direct tools can run in different locations:
 
-#### API integration tools
+| Location    | Use when                                                                     | Start here                                                                        |
+| ----------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Server side | The tool can run in the Worker, such as fetching an API or querying SQL.     | [Server-side tools](/agents/communication-channels/chat/chat-agents/#server-side-tools) |
+| Client side | The tool needs browser APIs such as geolocation, clipboard, or local storage. | [Client-side tools](/agents/communication-channels/chat/chat-agents/#client-side-tools) |
+| Sub-agent   | Another chat-capable Agent should run as a retained, streaming tool.          | [Agents as tools](/agents/runtime/execution/agent-tools/)                         |
 
-The most common type of tools are those that wrap external APIs. These tools handle the complexity of API authentication, request formatting, and response parsing, presenting a clean interface to the AI system.
+## Code Mode
 
-#### Model Context Protocol (MCP)
+[Code Mode](/agents/tools/codemode/) gives the model one code-execution tool. The model writes JavaScript that calls typed tools, passes results between them, and applies control flow.
 
-The [Model Context Protocol](https://modelcontextprotocol.io/introduction) provides a standardized way to define and interact with tools. Think of it as an abstraction on top of APIs designed for LLMs to interact with external resources. MCP defines a consistent interface for:
+The generated code can filter large responses and return only the final value the model needs. Intermediate results stay inside the sandbox instead of entering the model context after every operation. This makes Code Mode more efficient for composed workflows and large tool catalogs.
 
-- **Tool Discovery**: Systems can dynamically discover available tools
-- **Parameter Validation**: Tools specify their input requirements using JSON Schema
-- **Error Handling**: Standardized error reporting and recovery
-- **State Management**: Tools can maintain state across invocations
+Code Mode also supports progressive discovery. The model can search available connectors and request detailed types only for the methods it needs. Successful programs can be saved as reusable snippets.
 
-#### Data processing tools
+For runtime behavior, approvals, replay, and snippets, refer to [How Code Mode works](/agents/tools/codemode/how-it-works/).
 
-Tools that handle data transformation and analysis are essential for many AI workflows. These might include:
+## Model Context Protocol
 
-- CSV parsing and analysis
-- Image processing
-- Text extraction
-- Data validation
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) standardizes how AI applications discover and invoke externally hosted tools. MCP tools declare their inputs with JSON Schema and return results through a consistent protocol.
+
+MCP controls how tools are distributed and connected. It does not require one model execution pattern:
+
+- Pass MCP tools directly to a model with the [Agents MCP client](/agents/tools/mcp/).
+- Expose MCP tools inside Code Mode for composition and progressive discovery with [MCP connectors](/agents/tools/codemode/mcp/use-mcp-tools/).
+- Publish a Code Mode tool to MCP clients with a [Code Mode MCP server](/agents/tools/codemode/mcp/).
+
+## Control side effects
+
+Tools that modify external state may require user approval. Direct tools can use the standard [human-in-the-loop approval pattern](/agents/concepts/agentic-patterns/human-in-the-loop/).
+
+The durable Code Mode runtime can pause generated code before an annotated connector method executes. Approval replays completed calls from the execution log, applies the approved action, and continues the same program.
