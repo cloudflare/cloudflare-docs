@@ -334,7 +334,7 @@ class DynamicWorkerExecutor implements Executor {
 | Field            | Type                      | Required | Default | Description                                                                                |
 | ---------------- | ------------------------- | -------- | ------- | ------------------------------------------------------------------------------------------ |
 | `loader`         | `WorkerLoader`            | Yes      | —       | Worker Loader binding used to create isolated Workers.                                     |
-| `timeout`        | `number`                  | No       | `30000` | Execution timeout in milliseconds.                                                         |
+| `timeout`        | `number`                  | No       | `60000` | Execution timeout in milliseconds.                                                         |
 | `globalOutbound` | `Fetcher \| null`         | No       | `null`  | Outbound network policy. `null` blocks access. A `Fetcher` receives all outbound requests. |
 | `modules`        | `Record<string, string>`  | No       | `{}`    | Module source keyed by import specifier. The reserved `executor.js` key is ignored.        |
 | `bindings`       | `Record<string, unknown>` | No       | `{}`    | Additional environment bindings injected into each sandbox Worker.                         |
@@ -839,14 +839,14 @@ The Vite entry point has one default export:
 function codemodeVitePlugin(): Plugin;
 ```
 
-The plugin performs these transformations:
+The plugin appends `export { CodemodeRuntime } from "@cloudflare/codemode"` to the Worker entry module (`src/server.ts`, `src/index.ts`, or `src/worker.ts`). This makes the runtime facet available as `ctx.exports.CodemodeRuntime`, which `createCodemodeRuntime()` requires.
 
-| Behavior            | Details                                                                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Connector discovery | Recursively finds `*.codemode.ts`, `*.codemode.tsx`, `*.codemode.js`, and `*.codemode.jsx` files. It skips `node_modules` and `dist`. |
-| Import attributes   | Resolves a file or directory imported with `with { type: "connectors" }` through a generated virtual module.                          |
-| Connector exports   | Re-exports discovered connector classes from `src/server`, `src/index`, or `src/worker` entry modules.                                |
-| Runtime export      | Adds `export { CodemodeRuntime } from "@cloudflare/codemode"` to the Worker entry module.                                             |
-| Watch mode          | Watches connector files and imported connector directories.                                                                           |
+The plugin leaves the entry module unchanged if it already exports `CodemodeRuntime`. Connector classes need no special file name or import syntax — import them normally and pass instances to the runtime.
+
+Without the plugin, add the export manually:
+
+```ts
+export { CodemodeRuntime } from "@cloudflare/codemode";
+```
 
 A connector import can target one connector file or a directory. A directory import re-exports every matching connector file under that directory.

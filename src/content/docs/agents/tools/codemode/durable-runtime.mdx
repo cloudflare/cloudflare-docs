@@ -64,22 +64,15 @@ You need an existing Agents SDK application that uses `AIChatAgent`, Vite, and t
 
    </TypeScriptExample>
 
-   The Code Mode plugin discovers `*.codemode.ts` files. It also exports connector classes and `CodemodeRuntime` from the Worker entry module.
+   The plugin exports the `CodemodeRuntime` facet class from your Worker entry module. The runtime stores execution state in a Durable Object facet, and the Workers runtime requires facet classes to be available through `ctx.exports`. If you do not use the plugin, add the export manually:
 
-   Set `module` to `esnext` in `tsconfig.json` to use connector import attributes:
-
-   ```json
-   {
-   	"extends": "agents/tsconfig",
-   	"compilerOptions": {
-   		"module": "esnext"
-   	}
-   }
+   ```ts
+   export { CodemodeRuntime } from "@cloudflare/codemode";
    ```
 
-4. Create a connector. This example stores notes in the Agent's Durable Object storage:
+4. Create a connector. Connectors are plain classes — they need no special file name or import syntax. This example stores notes in the Agent's Durable Object storage:
 
-   <TypeScriptExample filename="src/notes.codemode.ts">
+   <TypeScriptExample filename="src/notes-connector.ts">
 
    ```ts
    import {
@@ -163,7 +156,7 @@ You need an existing Agents SDK application that uses `AIChatAgent`, Vite, and t
    } from "@cloudflare/codemode";
    import { callable } from "agents";
    import { convertToModelMessages, stepCountIs, streamText } from "ai";
-   import { NotesConnector } from "./notes.codemode" with { type: "connectors" };
+   import { NotesConnector } from "./notes-connector";
    import { model } from "./model";
 
    export class Chat extends AIChatAgent<Env> {

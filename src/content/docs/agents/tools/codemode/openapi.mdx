@@ -19,7 +19,7 @@ This page covers an Agent consuming an OpenAPI service. To publish an OpenAPI se
 
 ## Prerequisites
 
-You need a project with the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) configured. The runtime setup provides the Worker Loader binding, Code Mode Vite plugin, and connector import convention used in this guide.
+You need a project with the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) configured. The runtime setup provides the Worker Loader binding and the `CodemodeRuntime` export used in this guide.
 
 ## Create an OpenAPI connector
 
@@ -75,9 +75,9 @@ You need a project with the [durable Code Mode runtime](/agents/tools/codemode/d
 
    </TypeScriptExample>
 
-2. Create a `*.codemode.ts` connector. Implement `spec()` to return the document and `request()` to make authenticated host-side requests:
+2. Create the connector. Implement `spec()` to return the document and `request()` to make authenticated host-side requests:
 
-   <TypeScriptExample filename="src/orders.codemode.ts">
+   <TypeScriptExample filename="src/orders-connector.ts">
 
    ```ts
    import {
@@ -161,9 +161,7 @@ You need a project with the [durable Code Mode runtime](/agents/tools/codemode/d
    	createCodemodeRuntime,
    	DynamicWorkerExecutor,
    } from "@cloudflare/codemode";
-   import { OrdersConnector } from "./orders.codemode" with {
-   	type: "connectors",
-   };
+   import { OrdersConnector } from "./orders-connector";
 
    export class Chat extends AIChatAgent<Env> {
    	#runtime() {

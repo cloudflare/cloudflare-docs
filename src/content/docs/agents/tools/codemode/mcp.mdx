@@ -19,7 +19,7 @@ This page covers an Agent consuming an MCP server. To publish Code Mode as an MC
 
 You need:
 
-- A project with the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) configured. That setup provides the Worker Loader binding, the Code Mode Vite plugin, the `CodemodeRuntime` export, and the `tsconfig` `esnext` setting that the `with { type: "connectors" }` import requires.
+- A project with the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) configured. That setup provides the Worker Loader binding and the `CodemodeRuntime` export.
 - An existing Agents SDK MCP connection. To create and authorize the connection, refer to the [McpClient API](/agents/model-context-protocol/apis/client-api/).
 
 <Steps>
@@ -32,9 +32,9 @@ You need:
 
 2. **Create an MCP connector**
 
-   Create `src/github.codemode.ts`. The `*.codemode.ts` suffix lets the Code Mode Vite plugin discover and export the connector.
+   Create the connector in its own file. It is a plain class with no special file name or import syntax.
 
-   <TypeScriptExample filename="src/github.codemode.ts">
+   <TypeScriptExample filename="src/github-connector.ts">
 
    ```ts
    import {
@@ -102,9 +102,7 @@ You need:
    	createCodemodeRuntime,
    	DynamicWorkerExecutor,
    } from "@cloudflare/codemode";
-   import { GithubConnector } from "./github.codemode" with {
-   	type: "connectors",
-   };
+   import { GithubConnector } from "./github-connector";
 
    export class Chat extends Agent<Env> {
    	private async codemodeRuntime() {
