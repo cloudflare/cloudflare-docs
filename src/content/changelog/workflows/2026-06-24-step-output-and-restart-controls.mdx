@@ -1,0 +1,44 @@
+---
+title: Per-step restart, output, and redaction now available in Workflows
+description: Workflows now supports full step output inspection, restarts from a specific step, and redacted outputs for sensitive steps.
+products:
+  - workflows
+  - workers
+date: 2026-06-24 13:00:00
+---
+
+[Workflows](/workflows/) now supports restarting from a specific step, full step output, and redacting outputs of sensitive steps.
+
+## Restart from step
+
+When testing or debugging a workflow instance, you can now restart its execution from a specific step instead of restarting from the beginning. This allows you to preserve earlier completed work and rerun only the selected step and later steps.
+
+Restart an instance from a specific step by passing a `from` object when restarting an instance:
+
+```ts
+const instance = await env.MY_WORKFLOW.get("order-123");
+
+await instance.restart({
+	from: {
+		name: "charge-card",
+		count: 1,
+		type: "do",
+	},
+});
+```
+
+## Get step output
+
+You can retrieve the full output for a specific step via `/instances/${instanceId}/step` on the Workflows REST API. This helps debug large or complex step results without relying only on the truncated output shown in logs. When a step returns a `ReadableStream`, the API returns the raw bytes as `application/octet-stream`.
+
+## Redact sensitive step outputs
+
+You can mark step outputs as `sensitive` in the `WorkflowStepConfig`. Sensitive step outputs are stored for Workflow execution, but logs and full output lookups return `[REDACTED]` after the step completes. Use this for steps that return secrets, tokens, or customer data.
+
+```ts
+const token = await step.do("create-token", { sensitive: "output" }, async () => {
+	return await createToken();
+});
+```
+
+For more information, refer to the [Workflow instance API](/workflows/build/workers-api/) and [Workflows REST API](/workflows/workflows-api/).
