@@ -1,6 +1,6 @@
 ---
 title: Tools
-description: Understand direct tool calls, Code Mode, and Model Context Protocol tools in Cloudflare Agents.
+description: Understand how tools are exposed to models, where tools execute, and how MCP connects external tools to Cloudflare Agents.
 pcx_content_type: concept
 sidebar:
   order: 4
@@ -12,33 +12,30 @@ Tools let models retrieve information, process data, and perform actions. Each t
 
 A travel agent might use tools to search flights, check hotel rates, process payments, and send confirmation emails. The tool interface lets the model understand when and how to use each capability.
 
-## Choose how models use tools
+Tool design involves three independent choices:
 
-Cloudflare Agents support three related tool-use patterns:
+1. **Model interface** — expose tools as direct tool calls or through Code Mode.
+2. **Execution location** — run tool implementations in a Worker, browser, or another Agent.
+3. **Tool source** — define tools in the application or connect to externally hosted tools through Model Context Protocol (MCP).
 
-| Pattern           | How it works                                                                                                  | Use when                                                                                                    |
-| ----------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Direct tool calls | The model receives individual tool definitions. Each result returns to the model before it chooses what to do next. | The task is simple and uses a small, known tool set.                                                        |
-| Code Mode         | The model writes code against typed tools. Intermediate results and control flow stay inside the sandbox.     | The task needs composition, dependent calls, filtering, branching, repeatable logic, or tool discovery.    |
-| MCP               | A standard protocol connects an agent to tools hosted by another system.                                      | Tools must be discovered, shared, or managed independently from the agent that consumes them.              |
+For example, browser tools can be exposed directly or through Code Mode. An MCP tool can also be exposed through either model interface.
 
-These patterns can work together. An Agent can use MCP tools through direct tool calls or make them available inside Code Mode.
+## Choose the model interface
 
-## Direct tool calls
+Direct tool calls and Code Mode define how the model sees and invokes tools. They do not determine where the underlying tool implementations run.
+
+| Interface         | How it works                                                                                                       | Use when                                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| Direct tool calls | The model receives individual tool definitions. Each result returns to the model before it chooses the next call. | The task is simple and uses a small, known tool set.                                                     |
+| Code Mode         | The model receives one code tool and writes code against typed tool interfaces.                                   | The task needs composition, dependent calls, filtering, branching, repeatable logic, or tool discovery. |
+
+### Direct tool calls
 
 Most tool examples use direct tool calls, even when they do not name the pattern. You define each tool and pass its schema to the model. The model selects a tool, your application executes it, and the result returns to the model.
 
-The model sees each intermediate result before choosing another tool. This makes the execution path easy to inspect, but dependent operations require repeated model turns and consume context with intermediate data.
+The model sees each intermediate result before choosing another tool. This makes the execution path easy to inspect. However, dependent operations require repeated model turns and consume context with intermediate data.
 
-Direct tools can run in different locations:
-
-| Location    | Use when                                                                     | Start here                                                                        |
-| ----------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Server side | The tool can run in the Worker, such as fetching an API or querying SQL.     | [Server-side tools](/agents/communication-channels/chat/chat-agents/#server-side-tools) |
-| Client side | The tool needs browser APIs such as geolocation, clipboard, or local storage. | [Client-side tools](/agents/communication-channels/chat/chat-agents/#client-side-tools) |
-| Sub-agent   | Another chat-capable Agent should run as a retained, streaming tool.          | [Agents as tools](/agents/runtime/execution/agent-tools/)                         |
-
-## Code Mode
+### Code Mode
 
 [Code Mode](/agents/tools/codemode/) gives the model one code-execution tool. The model writes JavaScript that calls typed tools, passes results between them, and applies control flow.
 
@@ -48,18 +45,35 @@ Code Mode also supports progressive discovery. The model can search available co
 
 For runtime behavior, approvals, replay, and snippets, refer to [How Code Mode works](/agents/tools/codemode/how-it-works/).
 
-## Model Context Protocol
+## Choose where tools run
 
-The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) standardizes how AI applications discover and invoke externally hosted tools. MCP tools declare their inputs with JSON Schema and return results through a consistent protocol.
+Execution location describes where a tool implementation runs. It is independent from the model interface. Tools in each location can be exposed directly or through Code Mode.
 
-MCP controls how tools are distributed and connected. It does not require one model execution pattern:
+| Location      | Use when                                                                       | Start here                                                                            |
+| ------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| Worker        | The tool calls an API, queries SQL, or uses server-side bindings and secrets.  | [Server-side tools](/agents/communication-channels/chat/chat-agents/#server-side-tools) |
+| Browser       | The tool needs geolocation, clipboard, local storage, or other browser APIs.   | [Client-side tools](/agents/communication-channels/chat/chat-agents/#client-side-tools) |
+| Another Agent | A chat-capable Agent should execute as a retained, streaming tool.              | [Agents as tools](/agents/runtime/execution/agent-tools/)                              |
+
+With direct tool calls, the model calls the tool and the framework routes execution to the configured location.
+
+With Code Mode, generated code runs in a sandbox. Calls from that code cross the sandbox boundary to the underlying tool implementation. Server tools can execute in the host Worker, browser-owned tools can execute in the parent page, and Agent tools can delegate work to another Agent.
+
+## Connect external tools with MCP
+
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) standardizes how AI applications discover and invoke externally hosted tools. MCP describes the source and transport of a tool, not how the model must invoke it.
+
+An Agent can expose MCP tools through either model interface:
 
 - Pass MCP tools directly to a model with the [Agents MCP client](/agents/tools/mcp/).
 - Expose MCP tools inside Code Mode for composition and progressive discovery with [MCP connectors](/agents/tools/codemode/mcp/).
-- Publish Code Mode to MCP clients with a [Code Mode MCP server](/agents/model-context-protocol/guides/codemode-mcp-server/).
+
+An MCP server can also expose Code Mode itself. For example, it can present one `code` tool or separate `search` and `execute` tools. For these server-side patterns, refer to [Code Mode MCP server patterns](/agents/model-context-protocol/guides/codemode-mcp-server/).
 
 ## Control side effects
 
-Tools that modify external state may require user approval. Direct tools can use the standard [human-in-the-loop approval pattern](/agents/concepts/agentic-patterns/human-in-the-loop/).
+Approval policy is also independent from execution location and tool source. Any tool that modifies external state may require user approval.
+
+Direct tools can use the standard [human-in-the-loop approval pattern](/agents/concepts/agentic-patterns/human-in-the-loop/).
 
 The durable Code Mode runtime can pause generated code before an annotated connector method executes. Approval replays completed calls from the execution log, applies the approved action, and continues the same program.
