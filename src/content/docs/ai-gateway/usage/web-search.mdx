@@ -45,7 +45,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
     "messages": [
       {
         "role": "user",
-        "content": "What were the top news stories about Cloudflare this week? Summarise in three bullets."
+        "content": "What were the top news stories about Cloudflare this week? Summarize in three bullets."
       }
     ],
     "tools": [
@@ -71,7 +71,7 @@ const resp = await env.AI.run(
 			{
 				role: "user",
 				content:
-					"What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+					"What were the top news stories about Cloudflare this week? Summarize in three bullets.",
 			},
 		],
 		tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 3 }],
@@ -102,7 +102,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   --header "Content-Type: application/json" \
   --data '{
     "model": "openai/gpt-4o-mini",
-    "input": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+    "input": "What were the top news stories about Cloudflare this week? Summarize in three bullets.",
     "max_output_tokens": 4096,
     "tools": [
       { "type": "web_search_preview" }
@@ -119,7 +119,7 @@ const resp = await env.AI.run(
 	"openai/gpt-4o-mini",
 	{
 		input:
-			"What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+			"What were the top news stories about Cloudflare this week? Summarize in three bullets.",
 		max_output_tokens: 4096,
 		tools: [{ type: "web_search_preview" }],
 	},
@@ -151,7 +151,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   --header "Content-Type: application/json" \
   --data '{
     "model": "xai/grok-4.20-multi-agent-0309",
-    "input": "What were the top news stories about xAI this week? Summarise in three bullets.",
+    "input": "What were the top news stories about Cloudflare this week? Summarize in three bullets.",
     "max_turns": 4,
     "tools": [
       { "type": "web_search" }
@@ -168,7 +168,7 @@ const resp = await env.AI.run(
 	"xai/grok-4.20-multi-agent-0309",
 	{
 		input:
-			"What were the top news stories about xAI this week? Summarise in three bullets.",
+			"What were the top news stories about Cloudflare this week? Summarize in three bullets.",
 		max_turns: 4,
 		tools: [{ type: "web_search" }],
 	},
@@ -203,7 +203,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
     "messages": [
       {
         "role": "user",
-        "content": "What were the top news stories about Cloudflare this week? Summarise in three bullets."
+        "content": "What were the top news stories about Cloudflare this week? Summarize in three bullets."
       }
     ]
   }'
@@ -223,7 +223,7 @@ const resp = await env.AI.run(
 			{
 				role: "user",
 				content:
-					"What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+					"What were the top news stories about Cloudflare this week? Summarize in three bullets.",
 			},
 		],
 	},
