@@ -135,7 +135,7 @@ async () => {
 
 When an upstream tool returns `structuredContent`, Code Mode exposes that value directly. Text-only content is joined and parsed as JSON when possible. Upstream MCP errors become exceptions that model-written code can catch. Mixed text and binary content remains in its MCP result structure.
 
-If you provide a custom `description`, include `{{types}}` for generated declarations. Include `{{example}}` to insert an example call.
+If you provide a custom `description`, use `{{types}}` where the generated TypeScript declarations should appear. Use `{{example}}` where the SDK should insert an example call based on the first upstream MCP tool. Both placeholders are optional.
 
 ## Protect upstream operations
 

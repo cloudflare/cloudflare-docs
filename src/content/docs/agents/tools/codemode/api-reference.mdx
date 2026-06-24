@@ -674,7 +674,7 @@ function codeMcpServer(options: CodeMcpServerOptions): Promise<McpServer>;
 
 Wraps an existing MCP server with one `code` tool. The wrapper connects to the source server through an in-memory transport, discovers its tools, and exposes those tools as methods on `codemode` inside the executor.
 
-A custom description can contain `{{types}}` and `{{example}}`. The wrapper replaces both tokens. Returned MCP values are unwrapped in this order: compatibility `toolResult`, MCP errors, `structuredContent`, all-text content, then the original mixed-content result.
+A custom description can contain `{{types}}`, which the wrapper replaces with generated TypeScript declarations. It can also contain `{{example}}`, which the wrapper replaces with an example call based on the first upstream MCP tool. Returned MCP values are unwrapped in this order: compatibility `toolResult`, MCP errors, `structuredContent`, all-text content, then the original mixed-content result.
 
 ### `openApiMcpServer()`
 
