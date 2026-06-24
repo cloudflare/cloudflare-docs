@@ -1,6 +1,6 @@
 ---
-title: Integrate Code Mode with the Agents SDK
-description: Add a durable Code Mode runtime, connectors, approvals, rollback, and reusable snippets to an Agents SDK application.
+title: Create a durable Code Mode runtime
+description: Create a Code Mode runtime with connectors, durable approvals, rollback, execution history, and reusable snippets.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -145,7 +145,7 @@ You need an existing Agents SDK application that uses `AIChatAgent`, Vite, and t
 
    The `name()` result becomes the sandbox global, in this case `notes`. `requiresApproval: true` pauses before `createNote` executes. The optional `revert` function lets `runtime.rollback()` compensate for an applied call.
 
-   Use `McpConnector` for MCP tools or `OpenApiConnector` for OpenAPI operations. For MCP-specific setup, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/use-mcp-tools/).
+   Use `McpConnector` for MCP tools or `OpenApiConnector` for OpenAPI operations. For MCP-specific setup, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/).
 
 5. Import the connector and create a runtime in your Agent:
 

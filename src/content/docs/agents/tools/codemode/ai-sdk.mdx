@@ -213,7 +213,7 @@ export class OperationsAgent extends AIChatAgent<Env> {
 
 </TypeScriptExample>
 
-The example exports `CodemodeRuntime` manually. If you configure the Code Mode Vite plugin as described in [Integrate Code Mode with the Agents SDK](/agents/tools/codemode/agents-sdk/), remove that manual export because the plugin adds it.
+The example exports `CodemodeRuntime` manually. If you configure the Code Mode Vite plugin as described in [Create a durable Code Mode runtime](/agents/tools/codemode/durable-runtime/), remove that manual export because the plugin adds it.
 
 The connector defaults to the `tools` namespace when `name` is omitted. It excludes tools without an `execute` function from both generated types and sandbox bindings.
 

@@ -20,6 +20,96 @@ These parts have separate responsibilities. The executor runs code but stores no
 Code Mode is experimental and may have breaking changes.
 :::
 
+## What the model sees
+
+In the standard setup, the model receives one outer tool named `codemode`. That tool accepts one field and returns a durable execution outcome:
+
+```ts
+type CodeModeInput = {
+	code: string;
+};
+
+type PendingAction = {
+	executionId: string;
+	seq: number;
+	connector: string;
+	method: string;
+	args: unknown;
+};
+
+type CodeModeOutput =
+	| { status: "completed"; executionId: string; result: unknown; logs?: string[] }
+	| { status: "paused"; executionId: string; pending: PendingAction[] }
+	| { status: "error"; executionId: string; error: string; logs?: string[] };
+```
+
+Its description tells the model to write a JavaScript async arrow function. The description lists the configured connector namespace names, such as `github` or `stripe`, but it does not include every connector method and schema.
+
+The model can use one Code Mode execution to discover relevant methods, then use the returned paths and types in its next execution. This keeps the complete tool catalog out of the initial model context.
+
+### Platform SDK
+
+Inside the sandbox, the `codemode` global provides the platform-level SDK:
+
+```ts
+declare const codemode: {
+	search(query: string): Promise<SearchOutput>;
+	describe(target: string): Promise<DescribeOutput>;
+	step<T>(name: string, fn: () => T | Promise<T>): Promise<T>;
+	run(name: string, input?: unknown): Promise<unknown>;
+};
+
+type SearchOutput = {
+	results: Array<{
+		path: string;
+		connector: string;
+		method: string;
+		description?: string;
+		kind: "method" | "snippet";
+		score: number;
+	}>;
+	total: number;
+	truncated: boolean;
+};
+
+type DescribeOutput = {
+	path: string;
+	description?: string;
+	types: string;
+	kind: "connector" | "method" | "snippet";
+};
+```
+
+`codemode.search()` searches connector methods and saved snippets. It returns ranked paths, not complete schemas. The model can then pass one path to `codemode.describe()` to request focused TypeScript documentation.
+
+`codemode.step()` records nondeterministic or side-effectful sandbox work for replay. `codemode.run()` invokes a saved snippet.
+
+### Connector SDKs
+
+Each configured connector becomes another sandbox global. A connector named `github` is available as `github`, and its methods appear under paths such as `github.list_pull_requests`.
+
+A connector-level description returns declarations similar to:
+
+```ts
+type ListPullRequestsInput = {
+	owner: string;
+	repo: string;
+	state?: "open" | "closed";
+};
+
+type ListPullRequestsOutput = unknown;
+
+declare const github: {
+	list_pull_requests(
+		input: ListPullRequestsInput,
+	): Promise<ListPullRequestsOutput>;
+};
+```
+
+These declarations are generated from connector schemas. They are illustrative; the actual method names, input fields, and output types depend on the connector.
+
+The sandbox also includes standard JavaScript globals. It does not expose Node.js APIs, host credentials, `process`, `require`, or unrestricted network access. All external operations go through connector globals unless the executor explicitly provides another capability.
+
 ## Executor, connectors, and runtime
 
 ### Executor

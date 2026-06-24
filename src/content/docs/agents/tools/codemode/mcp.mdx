@@ -3,14 +3,17 @@ title: Use MCP tools with Code Mode
 description: Expose tools from an existing MCP connection to models through a durable Code Mode runtime.
 pcx_content_type: how-to
 sidebar:
-  order: 1
+  order: 5
+  label: MCP
 products:
   - agents
 ---
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Use `McpConnector` to expose tools from an existing Model Context Protocol (MCP) connection inside the Code Mode sandbox. The connector works with the durable runtime, including discovery, approvals, and execution history.
+Use `McpConnector` to expose tools from an existing Model Context Protocol (MCP) client connection inside the Code Mode sandbox. The connector works with the durable runtime, including discovery, approvals, and execution history.
+
+This page covers an Agent consuming an MCP server. To publish Code Mode as an MCP server, refer to [Code Mode MCP server patterns](/agents/model-context-protocol/guides/codemode-mcp-server/).
 
 ## Prerequisites
 

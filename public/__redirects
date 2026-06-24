@@ -311,6 +311,10 @@
 /agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
+/agents/tools/codemode/agents-sdk/ /agents/tools/codemode/durable-runtime/ 301
+/agents/tools/codemode/mcp/use-mcp-tools/ /agents/tools/codemode/mcp/ 301
+/agents/tools/codemode/mcp/build-mcp-server/ /agents/model-context-protocol/guides/build-codemode-mcp-server/ 301
+/agents/tools/codemode/mcp/build-from-openapi/ /agents/model-context-protocol/guides/build-codemode-openapi-mcp-server/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301

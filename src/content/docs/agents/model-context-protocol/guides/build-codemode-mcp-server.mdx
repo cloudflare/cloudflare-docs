@@ -1,9 +1,9 @@
 ---
-title: Wrap an MCP server with Code Mode
+title: Build a single-tool Code Mode MCP server
 description: Replace an MCP server's individual tools with one sandboxed Code Mode tool on Cloudflare Workers.
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 14
 tags:
   - AI
   - MCP
@@ -151,4 +151,4 @@ Model-written code can select, map, aggregate, or paginate upstream data before 
 
 The publisher limits the final MCP response to approximately 6,000 estimated tokens. A larger response is cut off and includes a `--- TRUNCATED ---` marker. This does not reduce work already performed by upstream tools.
 
-To publish an OpenAPI service with separate `search` and `execute` tools, refer to [Publish an OpenAPI service through MCP](/agents/tools/codemode/mcp/build-from-openapi/).
+To publish an OpenAPI service with separate `search` and `execute` tools, refer to [Build a search and execute MCP server](/agents/model-context-protocol/guides/build-codemode-openapi-mcp-server/).
