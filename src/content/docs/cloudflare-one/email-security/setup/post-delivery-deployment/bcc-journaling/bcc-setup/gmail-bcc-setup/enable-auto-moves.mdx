@@ -8,9 +8,14 @@ sidebar:
   order: 5
 ---
 
+import { DashButton } from "~/components";
+
 If you do not have an integration:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
 2. Go to **Settings** > **Domain management** > **Domains** > select **View**.
 3. Locate your domain, select the three dots > Select **Associate an integration**.
 4. Select **Connect an integration**. You will then be redirected to the **Add an integration** page.

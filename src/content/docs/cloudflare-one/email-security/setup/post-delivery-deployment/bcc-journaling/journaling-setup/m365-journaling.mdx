@@ -10,7 +10,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { DashButton, GlossaryTooltip, Render } from "~/components";
 
 Microsoft 365 journaling is a post-delivery setup method that ensures a copy of every incoming and outgoing email is forwarded to Cloudflare for analysis. When you create a [journal rule](https://learn.microsoft.com/en-us/exchange/security-and-compliance/journaling/journaling#journal-rules) in the Microsoft Purview compliance portal, Cloudflare can scan messages that have already landed in your inbox.
 
@@ -20,7 +20,10 @@ The following diagram shows how this works:
 
 To enable Microsoft 365 journaling deployment:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Email security**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
 2. Select **Overview**. If you have not purchased Email security, select **Contact Sales**. Otherwise, select **Set up** > **BCC/Journaling**.
 3. Select **Integrate with MS** > **Authorize**.
 4. Continue with [Integrate with Microsoft 365](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/#1-integrate-with-microsoft-365) to connect your Microsoft integration.
@@ -91,7 +94,10 @@ Once saved, the rule is automatically active. However, it may take a few minutes
 
 To verift that your domain has been added successfully and that your emails are being scanned:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), select **Email security**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
 2. Go to **Settings** > **Domain management** > **Domains**, then select **View**.
 3. Under **Your domains**, locate your domain, and verify that **Status** is set to **Active**. The **Configured method** should be **BCC/Journaling**.
 

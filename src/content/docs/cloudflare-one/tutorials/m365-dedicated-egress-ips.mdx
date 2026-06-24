@@ -14,6 +14,8 @@ tags:
   - IPv6
 ---
 
+import { DashButton } from "~/components";
+
 :::note
 
 Only available on Zero Trust Enterprise plans.
@@ -33,7 +35,9 @@ Make sure you have:
 
 ## Create an egress policy in Cloudflare Gateway
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Egress policies**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Egress policies**.
+
+   <DashButton url="/?to=/:account/traffic-policies/egress-policies" zeroTrust />
 
 2. Select **Add a policy**.
 

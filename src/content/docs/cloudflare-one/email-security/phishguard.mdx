@@ -8,6 +8,8 @@ sidebar:
   order: 17
 ---
 
+import { DashButton } from "~/components";
+
 PhishGuard is a team of analysts that routinely inspects your email environment and responds to threats that come through your email inbox.
 
 While Email security uses advanced technologies to protect your email inbox, PhishGuard offers an additional human component to protect your email environment against impersonation events, suspicious items, false negatives/false positives, and any new event that automated intelligent systems may miss due to a lack of context (for example, a compromised account activity).
@@ -28,9 +30,9 @@ Additionally, PhishGuard analysts:
 
 To use PhishGuard:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **PhishGuard**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **PhishGuard**.
+
+   <DashButton url="/?to=/:account/email-security/phishguard" zeroTrust />
 
 The dashboard will display the following metrics:
 

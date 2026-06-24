@@ -8,6 +8,8 @@ sidebar:
   order: 3
 ---
 
+import { DashButton } from "~/components";
+
 A submission is invalid when:
 
 - A submission has no EML file attached.
@@ -22,9 +24,8 @@ To ensure your submission is valid:
 
 To view invalid submissions:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security** > **Submissions**.
-3. Select **Invalid submissions**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Submissions**.
+2. Select **Invalid submissions**.
 
 You can search by submission ID or submitted email.
 
@@ -34,6 +35,8 @@ You can filter based on **Date Range** and **Submitted by** (which will list ema
 
 To enable Invalid submission email notifications:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security** > **Settings**.
-3. Go to **Invalid submission emails** and turn on **Invalid submission email notifications**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Invalid submission emails** and turn on **Invalid submission email notifications**.

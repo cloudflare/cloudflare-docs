@@ -3,5 +3,10 @@
 
 ---
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Browser isolation** > **Browser isolation settings**.
+import { DashButton } from "~/components";
+
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Browser isolation** > **Browser isolation settings**.
+
+   <DashButton url="/?to=/:account/browser-isolation/overview" zeroTrust />
+
 2. Turn on **Allow users to open a remote browser without the device client**.

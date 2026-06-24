@@ -10,7 +10,7 @@ sidebar:
   order: 8
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Cloudflare's threat intelligence team crowdsources attack trends and protects users automatically, such as from zero-day vulnerabilities like the [HTTP/2 Rapid Reset attack](https://blog.cloudflare.com/technical-breakdown-http2-rapid-reset-ddos-attack/). However, in some cases, Cloudflare will partner with external entities that have their own feeds which can be shared with eligible Cloudflare users.
 
@@ -137,7 +137,10 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
 
 Once an account is granted access to a feed, it will be available to match traffic as a [selector in Gateway DNS policies](/cloudflare-one/traffic-policies/dns-policies/#indicator-feeds).
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**. Select **DNS**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**. Select **DNS**.
+
+   <DashButton url="/?to=/:account/traffic-policies/overview" zeroTrust />
+
 2. To create a new DNS policy, select **Add a policy**.
 3. Name your policy.
 4. In **Traffic**, add a condition with the **Indicator Feeds** selector. If your account has been granted access to a Custom Indicator Feed, Gateway will list the feed in **Value**. For example, you can block sites that appear in a feed:

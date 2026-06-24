@@ -10,6 +10,8 @@ sidebar:
   order: 1
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare Gateway gives you multiple ways to safely handle your employees' personally identifiable information (PII) in activity logs:
 
 - **Redact PII** (default) — PII is stored in logs but hidden from view. Only the Super Administrator and users with the [Cloudflare Zero Trust PII role](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) can view redacted PII. The underlying data is preserved — redaction only controls who can see it.
@@ -41,5 +43,8 @@ Changes to this setting do not affect PII already stored in previous logs.
 
 To turn on the setting to exclude PII:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings**.
+
+   <DashButton url="/?to=/:account/traffic-policies/traffic-settings" zeroTrust />
+
 2. In **Traffic logging**, turn on **Exclude personally identifiable information (PII) from logs**.

@@ -9,6 +9,8 @@ sidebar:
   label: Get started
 ---
 
+import { DashButton } from "~/components";
+
 Browser Isolation is enabled through [Secure Web Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/). By default, no traffic is isolated until you have added an Isolate policy to your HTTP policies.
 
 ## 1. Connect devices to Cloudflare
@@ -29,7 +31,10 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 
 To configure Browser Isolation policies:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies** > **HTTP**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies** > **HTTP**.
+
+   <DashButton url="/?to=/:account/traffic-policies/overview" zeroTrust />
+
 2. Select **Add a policy** and enter a name for the policy.
 3. Use the HTTP policy [selectors](/cloudflare-one/traffic-policies/http-policies/#selectors) and [operators](/cloudflare-one/traffic-policies/http-policies/#comparison-operators) to specify the websites or content you want to isolate.
 4. For **Action**, choose either [_Isolate_](/cloudflare-one/remote-browser-isolation/isolation-policies/#isolate) or [_Do not Isolate_](/cloudflare-one/remote-browser-isolation/isolation-policies/#do-not-isolate).

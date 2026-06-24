@@ -7,7 +7,7 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { DashButton, GlossaryTooltip, Render } from "~/components";
 
 This page will teach you how to manually add domains via BCC/Journaling on the Cloudflare dashboard.
 
@@ -25,7 +25,10 @@ To use Email security, you will need to have:
 
 ## Manually add domains
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Email security**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
 2. Select **Overview**. If you have not purchased Email security, select **Contact Sales**. Otherwise, select **Set up** > **BCC/Journaling**.
 3. Select **Manual add**.
 
@@ -66,8 +69,11 @@ To enable auto-move events, you will have to associate an integration.
 
 To associate an integration:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Email security**.
-2. Go to **Settings** > **Domain management** > **Domains** > Select **View**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings** > **Domains**.
+
+   <DashButton url="/?to=/:account/email-security/settings/domains" zeroTrust />
+
+2. Go to **Domain management** > **Domains**, then select **View**.
 3. On the **Domain management** page, locate your domain, select the three dots, then select **Associate an integration**.
 4. Select **Connect an integration**. Follow the steps to [enable the Microsoft 365 integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration).
 5. Select the three dots, then select **Associate an integration**. Select the integration, then select **Associate**.

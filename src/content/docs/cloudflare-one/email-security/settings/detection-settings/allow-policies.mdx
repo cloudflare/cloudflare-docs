@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { Example, Details } from "~/components";
+import { DashButton, Example, Details } from "~/components";
 
 Email security allows you to configure allow policies. An allow policy exempts messages that match certain patterns from normal detection scanning.
 
@@ -220,11 +220,13 @@ Below you can find a list of known services you can add when configuring an Acce
 
 To configure allow policies:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**, then go to **Detection settings** > **Allow policies**.
-4. On the **Detection settings** page, select **Add a policy**.
-5. On the **Add an allow policy** page, enter the policy information:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Detection settings** > **Allow policies**.
+3. On the **Detection settings** page, select **Add a policy**.
+4. On the **Add an allow policy** page, enter the policy information:
    - **Input method**: Choose between **Manual input**, and **Uploading an allow policy**:
      - **Manual input**:
        - **Action**: Select one of the following to choose how Email security will handle messages that match your criteria:
@@ -239,7 +241,7 @@ To configure allow policies:
      - **(Recommended) Sender verification**: This option enforces DMARC, SPF, or DKIM authentication. If you choose to enable this option, Email security will only honor policies that pass authentication.
        - **Notes**: Provide additional information about your allow policy.
    - **Uploading an allow policy**: Upload a file no larger than 150 KB. The file can only contain `Pattern`, `Pattern Type`, `Verify Email`, `Trusted Sender`, `Exempt Recipient`, `Acceptable Sender`, `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/settings/detection-settings/allow-policies/#csv-uploads) for an example file.
-6. Select **Save**.
+5. Select **Save**.
 
 <Details header="Allow policy configuration use cases">
     

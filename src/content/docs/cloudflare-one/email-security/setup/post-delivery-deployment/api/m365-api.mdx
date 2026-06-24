@@ -10,7 +10,7 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 This guide will instruct you through setting up Microsoft 365 with Email security via the Cloudflare dashboard.
 
@@ -25,7 +25,10 @@ To use Email security, you will need to have:
 
 ## Enable Email security via the dashboard
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and select **Email security**..
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
 2. Select **Overview**. Select one of the following options depending on your use case:
 
 - If you have not purchased Email security, select **Contact sales**.
@@ -68,9 +71,11 @@ Your domains are now connected successfully.
 
 To connect new domains:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), select **Email security**.
-2. Select **Settings** > **Domain management** > **Domains**, then select **View**.
-3. Select **Add a domain**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings** > **Domain management** > **Domains**.
+
+   <DashButton url="/?to=/:account/email-security/settings/domains" zeroTrust />
+
+2. Select **Add a domain**.
 4. Select a method for connecting your mail environment to Email security:
    - If you select **MS Graph API**, refer to [Enable Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration).
    - If you select BCC/Journaling, choose how to connect your domains:
@@ -82,7 +87,10 @@ To connect new domains:
 
 If you want to prevent Cloudflare from scanning a domain:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), select **Email security**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
 2. Go to **Settings** > **Domain management** > **Domains**, then select **View**.
 3. On the **Domain management** page, select the domain you do not want to be scanned.
 4. Select the three dots > **Stop scanning**.
@@ -91,7 +99,10 @@ If you want to prevent Cloudflare from scanning a domain:
 
 To view the integration for each connected domain:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), select **Email security**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
 2. Go to **Settings** > **Domain management** > **Domains**, then select **View**.
 3. Select a domain.
 4. Select the three dots > **View integration**.

@@ -8,6 +8,8 @@ sidebar:
   order: 6
 ---
 
+import { DashButton } from "~/components";
+
 You can configure how Email security handles links in emails.
 
 :::note
@@ -16,9 +18,11 @@ You can only configure link actions if you deploy Email security via [MX/Inline]
 
 To configure link actions:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**, then go to **Detection settings** > **Link actions** > **View**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Detection settings** > **Link actions** > **View**.
 
 You can configure **Link actions settings**, or **URL rewrite ignore patterns**.
 

@@ -8,11 +8,16 @@ sidebar:
   order: 3
 ---
 
+import { DashButton } from "~/components";
+
 Email security allows you to view and manage your groups directory and their [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/). When a group is added to the registry, all members are registered by default.
 
 To manage a group directory:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** > **Directories**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Directories**.
+
+   <DashButton url="/?to=/:account/email-security/directories" zeroTrust />
+
 2. Locate your directory, select the three dots > **View details**.
 3. Select **Groups**.
 

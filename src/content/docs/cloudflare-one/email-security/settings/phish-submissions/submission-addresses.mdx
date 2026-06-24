@@ -8,11 +8,14 @@ sidebar:
   order: 3
 ---
 
+import { DashButton } from "~/components";
+
 To view the destination addresses of user and team submissions:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**.
-4. Go to **Phish submission** > **Submission addresses** > **View**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Phish submission** > **Submission addresses** > **View**.
 
 The dashboard will display **User submission addresses** and **Team submission addresses**.

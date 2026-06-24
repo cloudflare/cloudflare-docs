@@ -10,6 +10,8 @@ tags:
   - Debugging
 ---
 
+import { DashButton } from "~/components";
+
 Use this guide to troubleshoot common issues with Cloud Access Security Broker (CASB).
 
 This guide covers troubleshooting steps for CASB integrations and webhooks. For integration-specific issues, refer to the integration's documentation.
@@ -48,7 +50,10 @@ CASB integrations do not provide real-time updates. Scans are performed periodic
 
 To trigger a new scan:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Integrations**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Cloud & SaaS findings** > **Integrations**.
+
+   <DashButton url="/?to=/:account/integrations/cloud-and-saas" zeroTrust />
+
 2. Find your integration and select **Configure**.
 3. Turn off **Scan for findings**.
 4. After a few minutes, turn on **Scan for findings** again.

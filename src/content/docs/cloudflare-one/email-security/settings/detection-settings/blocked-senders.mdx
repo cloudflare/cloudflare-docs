@@ -8,6 +8,8 @@ sidebar:
   order: 2
 ---
 
+import { DashButton } from "~/components";
+
 Email security marks all messages from these senders with a malicious [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
 
 ## How blocked senders work
@@ -20,11 +22,13 @@ Sometimes, the same email, IP address or domain always sends malicious emails to
 
 To configure blocked senders:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**, go to **Detection settings** > **Blocked senders**.
-4. On the **Detection settings** page, select **Add a sender**.
-5. Select the **Input method**: Choose between **Manual input**, and **Upload blocked sender list**:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Detection settings** > **Blocked senders**.
+3. On the **Detection settings** page, select **Add a sender**.
+4. Select the **Input method**: Choose between **Manual input**, and **Upload blocked sender list**:
    - **Manual input**:
      - **Sender type**:
        - **Email addresses**: Must be a valid email.
@@ -33,7 +37,7 @@ To configure blocked senders:
        - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email. For example, you can enter `.*@domain\.com` to exempt any email address that ends with `domain.com`.
      - **Notes**: Provide additional information about the blocked sender policy.
    - **Upload blocked sender list**: Upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender`, `Pattern Type,` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/#csv-uploads) for an example file.
-6. Select **Save**.
+5. Select **Save**.
 
 ### CSV uploads
 

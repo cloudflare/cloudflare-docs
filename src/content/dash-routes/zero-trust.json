@@ -862,5 +862,21 @@
 	{
 		"deeplink": "/?to=/oauth",
 		"name": "CASB OAuth"
+	},
+	{
+		"deeplink": "/?to=/:account/traffic-policies/overview",
+		"name": "Traffic policies"
+	},
+	{
+		"deeplink": "/?to=/:account/traffic-policies/egress-policies",
+		"name": "Egress policies"
+	},
+	{
+		"deeplink": "/?to=/:account/traffic-policies/resolver-policies",
+		"name": "Resolver policies"
+	},
+	{
+		"deeplink": "/?to=/:account/cloud-saas-findings/overview",
+		"name": "Cloud & SaaS findings"
 	}
 ]

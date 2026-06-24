@@ -8,6 +8,8 @@ sidebar:
   order: 5
 ---
 
+import { DashButton } from "~/components";
+
 You can manage your Email security directory by editing and deleting added users.
 
 :::note[Registered users]
@@ -16,14 +18,20 @@ The Email security directory contains registered users only. A registered user i
 
 To modify or delete users in the Email security directory:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** > **Directories**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Directories**.
+
+   <DashButton url="/?to=/:account/email-security/directories" zeroTrust />
+
 2. Select **Email security Directory**.
 
 ## Add a user
 
 To manually add a user to the Email security directory:
 
-1. On the sidebar, go to **Settings** > **Impersonation registry** > **View**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings** > **Impersonation registry** > **View**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
 2. Select **Add a user**:
 
 - Choose **Manual input** as the **Input method**.

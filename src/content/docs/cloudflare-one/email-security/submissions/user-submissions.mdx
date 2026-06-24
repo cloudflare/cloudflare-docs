@@ -8,6 +8,8 @@ sidebar:
   order: 2
 ---
 
+import { DashButton } from "~/components";
+
 User submissions are the emails your users submitted for submission. User submissions help enhance our detection model, but can be escalated for human review.
 
 Any email that is reported as [phish](/cloudflare-one/email-security/settings/phish-submissions/#reclassify-an-email) will be displayed under **User submissions**.
@@ -20,9 +22,9 @@ Any email that is reported as [phish](/cloudflare-one/email-security/settings/ph
 
 To view user submissions:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security** > **Submissions**.
-3. Select **User submissions**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Investigation** > **User submissions**.
+
+   <DashButton url="/?to=/:account/email-security/investigation" zeroTrust />
 
 ## Filter user submissions
 

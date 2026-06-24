@@ -8,13 +8,18 @@ sidebar:
   order: 13
 ---
 
+import { DashButton } from "~/components";
+
 Submitting messages allows you to choose the disposition of your messages if the disposition is incorrect. This helps improve Email security's detection accuracy and ensures proper handling of email threats.
 
 ## Submit messages for review
 
 To submit a message for review:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** and select **Investigation**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** and select **Investigation**.
+
+   <DashButton url="/?to=/:account/email-security/investigation" zeroTrust />
+
 2. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
 3. Select the three dots, then select **Submit for review**.
 4. Under **New disposition**, select among the following:
@@ -47,9 +52,8 @@ Once you have submitted your messages, you can access those on **Submissions**.
 
 To view submissions:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security** > **Submissions**.
-3. Choose from the following submission types:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Submissions**.
+2. Choose from the following submission types:
    - [**Team submissions**](/cloudflare-one/email-security/submissions/team-submissions/): View emails your security team submitted for submissions.
    - [**User submissions**](/cloudflare-one/email-security/submissions/user-submissions/): View emails your users submitted for submissions.
    - [**Invalid submissions**](/cloudflare-one/email-security/submissions/invalid-submissions/): View submissions that could not be processed.

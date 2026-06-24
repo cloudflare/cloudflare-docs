@@ -10,6 +10,8 @@ tags:
   - Microsoft
 ---
 
+import { DashButton } from "~/components";
+
 Use Retro Scan to check whether your current email security provider has missed any threats. Cloudflare scans up to 14 days of emails in your Microsoft 365 mailbox and generates a report of malicious messages. Once the scan is complete, you will receive an email notification with a link to the report.
 
 :::note
@@ -18,16 +20,18 @@ Retro Scan is only available for Microsoft 365 accounts.
 
 To start a free scan:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security** > **Overview**.
-3. Select **Start a free scan** > **Generate report**.
-4. Enable your [Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration). Once you have enabled your Microsoft integration, you will be redirected to a page where you will add your domains and specify your current email security system.
-5. Generate Retro Scan report:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Retro Scan**.
+
+   <DashButton url="/?to=/:account/email-security/overview/retro-scan-report" zeroTrust />
+
+2. Select **Start a free scan** > **Generate report**.
+3. Enable your [Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration). Once you have enabled your Microsoft integration, you will be redirected to a page where you will add your domains and specify your current email security system.
+4. Generate Retro Scan report:
    - **Connect domains**: Select at least one domain from your integration, then select **Continue**.
    - **Select current solution**: Select the email security tool you are currently using, then select **Continue**.
    - **Review details**: Confirm the domain and current solution you selected, then select **Continue**. You will receive an email notification once the report is ready.
-6. When you receive the notification email, select the link to view the full report.
-7. On the Cloudflare dashboard, select **View report**.
+5. When you receive the notification email, select the link to view the full report.
+6. On the Cloudflare dashboard, select **View report**.
 
 The dashboard will display **Overview** and **Details** pages.
 

@@ -2,13 +2,16 @@
 {}
 ---
 
-import { Details } from "~/components";
+import { DashButton, Details } from "~/components";
 
 The diagnostics analyzer highlights what Cloudflare determines to be the most important detection events in a `warp-diag` log. You can use the detection report to help parse your [log files](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diag-logs) and identify the root cause of client issues. The diagnostics analyzer is only available for logs [collected via the dashboard](#collect-logs-via-the-dashboard).
 
 To access the diagnostics analyzer:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **DEX** > **Remote captures**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **DEX** > **Remote captures**.
+
+   <DashButton url="/?to=/:account/dex/remote-captures" zeroTrust />
+
 2. Locate an existing `warp-diag` log from the list or select **Run diagnostics** to generate a new `warp-diag` log.
 3. Select the three dots for the `warp-diag` log that you want to analyze, then select **View Device Diag**.
 

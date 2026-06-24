@@ -8,7 +8,7 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Use the results of a Digital Experience Monitoring (DEX) test to monitor availability and performance for a specific application. DEX stores test results for 7 days on all plans, according to the [log retention policy](/cloudflare-one/insights/logs/#log-retention).
 
@@ -21,7 +21,10 @@ Use the results of a Digital Experience Monitoring (DEX) test to monitor availab
 
 To view an overview of test results for all devices:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Digital experience**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Digital experience**.
+
+   <DashButton url="/?to=/:account/dex" zeroTrust />
+
 2. Select the **Tests** tab.
 3. Select a test to view detailed results.
 
@@ -29,7 +32,10 @@ To view an overview of test results for all devices:
 
 To view analytics on a per-device level:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Your devices**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Your devices**.
+
+   <DashButton url="/?to=/:account/team-resources/devices" zeroTrust />
+
 2. Select the device you want to view, and then select **View details**.
 3. Select the **Tests** tab.
 4. Select a test to view detailed results.

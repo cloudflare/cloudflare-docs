@@ -8,6 +8,8 @@ sidebar:
   order: 7
 ---
 
+import { DashButton } from "~/components";
+
 You can create custom labels to be used as the subject or body prefix for emails with specific dispositions.
 
 :::note
@@ -22,10 +24,12 @@ If you currently do not have text add-ons enabled, configuring text add-ons will
 
 To configure a subject prefix:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**, then go to **Detection settings** > **Text add-ons** > **View**.
-4. Select **Configure** > **Subject prefix**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Detection settings** > **Text add-ons** > **View**.
+3. Select **Configure** > **Subject prefix**.
 5. Populate each disposition with a subject prefix, and turn on the **Status** to enable the subject prefix for a specific disposition.
 
 ### Advanced settings

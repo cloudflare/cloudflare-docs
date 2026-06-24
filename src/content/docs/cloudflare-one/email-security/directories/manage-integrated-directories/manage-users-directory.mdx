@@ -8,11 +8,16 @@ sidebar:
   order: 4
 ---
 
+import { DashButton } from "~/components";
+
 Email security allows you to view and manage the [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/) status of your users directory.
 
 To manage users directory:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** > **Directories**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Directories**.
+
+   <DashButton url="/?to=/:account/email-security/directories" zeroTrust />
+
 2. Locate your directory, select the three dots > **View details**.
 3. Select **Users**.
 

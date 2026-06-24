@@ -8,7 +8,7 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 ## Prerequisites
 
@@ -21,16 +21,18 @@ To use Email security, you will need to have:
 
 ## Initiate MX/Inline configuration
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Overview**. Select one of the following options:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security**.
+
+   <DashButton url="/?to=/:account/email-security" zeroTrust />
+
+2. Select **Overview**. Select one of the following options:
 
 - If you have not purchased Email security, select **Contact sales**.
 - If you have not associated any integration, [associate an integration](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#associate-an-integration), then select **Set up**.
 - If you have associated an integration, but have not connected a domain, select [**Connect a domain**](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#connect-a-domain).
 
-4. Select **MX/Inline**.
-5. To start the MX/Inline configuration, you will need to have completed the prerequisite setup on your email provider's platform. Once you have completed this step, select **I confirm that I have completed all the necessary requirements**. Then, select **Start configuration**.
+3. Select **MX/Inline**.
+4. To start the MX/Inline configuration, you will need to have completed the prerequisite setup on your email provider's platform. Once you have completed this step, select **I confirm that I have completed all the necessary requirements**. Then, select **Start configuration**.
 
 :::note
 You can only onboard one domain at a time.
@@ -42,7 +44,10 @@ MX/Inline does not require an integration for protection to be effective. Howeve
 
 To associate an integration:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Cloud & SaaS Integrations** > **Integrations**
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Cloud & SaaS Integrations** > **Integrations**
+
+   <DashButton url="/?to=/:account/integrations/cloud-and-saas" zeroTrust />
+
 2. Select **Connect an integration**.
 3. Select an application: Choose between **Google Workspace CASB + EMAIL**, or **Microsoft CASB + EMAIL**.
    - Refer to [Enable Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#1-create-a-service-account-in-your-gcp-project) if you select **Google Workspace CASB + EMAIL**.

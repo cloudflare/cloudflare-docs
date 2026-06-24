@@ -8,21 +8,24 @@ sidebar:
   order: 3
 ---
 
+import { DashButton } from "~/components";
+
 Auto-moves allow you to automatically move emails out of your inbox based on a [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/) that Email security assigns to each message (for example, malicious, spam, or spoof).
 
 Use auto-moves to enforce email security policy without relying on end users to identify and act on threats themselves. After you configure auto-moves, Email security handles flagged messages according to the action you choose for each disposition.
 
 To configure auto-move events:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**.
-4. Select **Moves**.
-5. Under **Auto-moves**, select **Configure**.
-6. For each disposition (malicious, spam, bulk, suspicious, spoof), choose what happens to matching emails:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Select **Moves**.
+3. Under **Auto-moves**, select **Configure**.
+4. For each disposition (malicious, spam, bulk, suspicious, spoof), choose what happens to matching emails:
    - **Soft delete - user recoverable**: Moves the message to the user's **Recoverable Items - Deleted** folder. The user can still find and restore the message. This option is only available for Microsoft 365 customers. Refer to [Microsoft 365 Exchange data deletion](https://learn.microsoft.com/en-us/compliance/assurance/assurance-exchange-online-data-deletion) for more information.
    - **Hard delete - admin recoverable**: Removes the message from the user's inbox entirely. Only an administrator can recover it. 
    - **Move to trash**: Moves the message to the user's trash or deleted items folder. This option is only available for Google Workspace users.
    - **Move to junk**: Moves the message to the user's junk or spam folder.
    - **No action**: Leaves the message where it is. Email security still records the disposition, but does not move the message.
-7. Select **Save**.
+5. Select **Save**.

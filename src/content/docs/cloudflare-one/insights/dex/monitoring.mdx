@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Monitor performance and network status for your organization's [fleet](/cloudflare-one/insights/dex/monitoring/#fleet-status) (all devices with the Cloudflare One Client installed and connected to your Zero Trust organization) or individual [user devices](/cloudflare-one/insights/dex/monitoring/#device-monitoring).
 
@@ -20,7 +20,10 @@ A fleet is a collection of user devices. All devices in a fleet have the Cloudfl
 
 To view fleet status:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Digital experience**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Digital experience**.
+
+   <DashButton url="/?to=/:account/dex" zeroTrust />
+
 2. Review the information under **Live analytics**.
 
 ### View metrics
@@ -62,7 +65,10 @@ Review network and device performance for a device enrolled in your fleet.
 
 To view a device's network and device performance metrics:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Your devices**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Your devices**.
+
+   <DashButton url="/?to=/:account/team-resources/devices" zeroTrust />
+
 2. Select a device > **View details**.
 3. Select the **DEX** tab.
 4. In **Device Monitoring**, scroll down to **Network performance** and **Device Performance**.

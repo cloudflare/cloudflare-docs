@@ -8,6 +8,8 @@ sidebar:
   order: 5
 ---
 
+import { DashButton } from "~/components";
+
 Email security allows you to configure the following additional detections:
 
 - Domain age
@@ -17,10 +19,11 @@ Email security allows you to configure the following additional detections:
 
 To configure additional detections:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**.
-4. On the **Settings** page, go to **Detection settings** > **Additional detections**, and select **Edit**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Detection settings** > **Additional detections**, and select **Edit**.
 
 ## Configure domain age
 

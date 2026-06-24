@@ -13,7 +13,7 @@ tags:
   - SCIM
 ---
 
-import { WranglerConfig } from "~/components";
+import { DashButton, WranglerConfig } from "~/components";
 
 Microsoft Entra ID (formerly Azure Active Directory) calculates a user's [risk level](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk) based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Entra ID risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
 
@@ -158,7 +158,9 @@ Cloudflare Access will now synchronize changes in group membership with Entra ID
 
 Finally, create a [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to isolate traffic for risky user groups.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies** > **HTTP**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies** > **HTTP**.
+
+   <DashButton url="/?to=/:account/traffic-policies/overview" zeroTrust />
 
 2. Select **Add a policy**.
 

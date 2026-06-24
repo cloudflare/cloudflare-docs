@@ -11,6 +11,8 @@ tags:
   - REST API
 ---
 
+import { DashButton } from "~/components";
+
 You can manage your Cloudflare Zero Trust configuration using the API or Terraform. For more information, refer to the following links:
 
 - [API reference](/api/)
@@ -25,7 +27,10 @@ Super Administrators can lock all settings as read-only in the Cloudflare One da
 
 To enable read-only mode:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Settings** > **Admin controls**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Settings** > **Admin controls**.
+
+   <DashButton url="/?to=/:account/settings" zeroTrust />
+
 2. Enable **Set dashboard to read-only**.
 
 All users, regardless of [user permissions](/cloudflare-one/roles-permissions/), will be prevented from making configuration changes through the UI.

@@ -8,7 +8,7 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { DashButton, GlossaryTooltip, Render } from "~/components";
 
 As part of your continuous email security posture, administrators and security analysts need to submit missed <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> samples to Email security, so Cloudflare can process them and take necessary action.
 
@@ -22,9 +22,11 @@ There are three routes you can use to report an email as a phish:
 
 ## Reclassify an email
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security** > **Investigation**.
-3. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify. Select the three dots, then select **Submit for review**. By selecting **Submit for review**, you are requesting a new disposition for the message.
-4. Select the new disposition, then select **Save**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Investigation**.
+
+   <DashButton url="/?to=/:account/email-security/investigation" zeroTrust />
+
+2. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify. Select the three dots, then select **Submit for review**. By selecting **Submit for review**, you are requesting a new disposition for the message.
+3. Select the new disposition, then select **Save**.
 
 When you report an email as phish, this email will be displayed under [User submissions](/cloudflare-one/email-security/submissions/user-submissions/).

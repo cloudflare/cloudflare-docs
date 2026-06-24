@@ -10,7 +10,7 @@ tags:
   - TLS
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { DashButton, GlossaryTooltip, Render } from "~/components";
 
 Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare One Client on their device. Use Clientless Web Isolation when you need to provide isolated browsing to unmanaged devices (for example, contractor laptops or personal phones) where you cannot install software.
 
@@ -40,7 +40,10 @@ Your application will now be served in an isolated browser for users matching yo
 
 To open links using Browser Isolation:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Browser isolation** > **Browser isolation settings**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Browser isolation** > **Browser isolation settings**.
+
+   <DashButton url="/?to=/:account/browser-isolation/overview" zeroTrust />
+
 2. Turn on **Allow users to open a remote browser without the device client**.
 3. In **Launch browser**, enter the URL link, and then select **Launch**. Your URL will open in a secure isolated browser.
 

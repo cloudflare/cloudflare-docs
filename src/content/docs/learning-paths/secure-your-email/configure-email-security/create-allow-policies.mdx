@@ -8,6 +8,8 @@ products:
   - email-security
 ---
 
+import { DashButton } from "~/components";
+
 Email security allows you to configure allow policies. An allow policy exempts messages that match certain patterns from normal detection scanning.
 
 You can choose how Email security will handle messages that match your criteria:
@@ -20,9 +22,9 @@ You can choose how Email security will handle messages that match your criteria:
 
 To configure allow policies:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**, then go to **Detection settings** > **Allow policies**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings** > **Detection settings** > **Allow policies**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
 4. On the **Detection settings** page, select **Add a policy**.
 5. On the **Add an allow policy** page, enter the policy information:
    - **Input method**: Choose between **Manual input**, and **Uploading an allow policy**:

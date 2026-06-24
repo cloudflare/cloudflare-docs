@@ -40,11 +40,15 @@ if (!route) {
 */
 
 const name = buttonName ?? route.name;
-const baseUrl = zeroTrust
-	? "https://one.dash.cloudflare.com"
-	: "https://dash.cloudflare.com";
+const baseUrl = "https://dash.cloudflare.com";
 
-let { href } = new URL(route.deeplink, baseUrl);
+// Zero Trust routes use internal paths (e.g. /?to=/:account/email-security/...)
+// that need the /one/ prefix when accessed via the Core dashboard.
+const deeplink = zeroTrust
+	? route.deeplink.replace("/?to=/:account/", "/?to=/:account/one/")
+	: route.deeplink;
+
+let { href } = new URL(deeplink, baseUrl);
 ---
 
 <LinkButton href={href} icon="external" target="_blank"

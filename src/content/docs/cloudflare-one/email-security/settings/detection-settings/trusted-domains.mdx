@@ -8,6 +8,8 @@ sidebar:
   order: 3
 ---
 
+import { DashButton } from "~/components";
+
 Email security allows you to exempt known partner and internal domains from typical detection scanning. Adding trusted domains helps to reduce false positives on malicious, suspicious, and spoof [dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/). Email security only checks the date when the domain is created.
 
 ## How trusted domains work
@@ -26,7 +28,10 @@ Suspicious domain age means that after 7 days (this number corresponds to the Ma
 
 To view whether a domain is malicious or suspicious:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Investigation**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Investigation**.
+
+   <DashButton url="/?to=/:account/email-security/investigation" zeroTrust />
+
 2. Run a screen. For example, select **Run screen** for **Malicious emails**, then select **Run screen**.
 3. Under **Your matching messages**, if any message displays **Domain Age** under **Threat types**, that means that the domain age is too low, and therefore the disposition assigned is Malicious. If the domain is legitimate, you can add it as a trusted domain:
    - Go to **Settings** > **Trusted Domains**.
@@ -36,11 +41,13 @@ To view whether a domain is malicious or suspicious:
 
 To configure a trusted domain:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**, go to **Detection settings** > **Trusted domains**.
-4. On the **Detection settings** page, select **Add a domain**.
-5. Select the **Input method**: Choose between **Manual input**, and **Upload trusted domain list**:
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
+
+2. Go to **Detection settings** > **Trusted domains**.
+3. On the **Detection settings** page, select **Add a domain**.
+4. Select the **Input method**: Choose between **Manual input**, and **Upload trusted domain list**:
    - **Manual input**:
      - **Domain info**: Enter a valid domain name.
      - **Domain type**: Select one or both options:
@@ -48,7 +55,7 @@ To configure a trusted domain:
        - **Recent domain**: Domains created recently.
      * **Notes**: Provide additional information about the trusted domain list.
    - **Upload trusted domain list**: You can upload a file no larger than 150 KB of multiple trusted domains. The file can only contain `Domain`, `Proximity`, `New` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/settings/detection-settings/trusted-domains/#csv-uploads) for an example file.
-6. Select **Save**.
+5. Select **Save**.
 
 ### CSV uploads
 

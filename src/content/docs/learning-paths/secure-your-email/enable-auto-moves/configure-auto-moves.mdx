@@ -8,11 +8,13 @@ products:
   - email-security
 ---
 
+import { DashButton } from "~/components";
+
 To configure auto-move events:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security**.
-3. Select **Settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Settings**.
+
+   <DashButton url="/?to=/:account/email-security/settings" zeroTrust />
 4. Select **Moves**.
 5. Under **Auto-moves**, select **Configure**.
 6. Assign actions based on malicious, spoof, suspicious, spam, and bulk dispositions. Select among:
