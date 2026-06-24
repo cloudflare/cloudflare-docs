@@ -188,7 +188,7 @@ The `exports` field declares each Agent class your Worker exports and the storag
 | `type`    | The kind of export. Always `"durable-object"` for an Agent.       |
 | `storage` | The storage backend. Use `"sqlite"` for new Agents (recommended). |
 
-For details on renaming, deleting, or transferring Agent classes, see [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Existing Workers using the legacy `migrations` array continue to work — see [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
+For details on renaming, deleting, or transferring Agent classes, refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Existing Workers using the legacy `migrations` array continue to work — refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 
 #### `assets`
 
@@ -856,7 +856,7 @@ This permanently deletes all data for that class.
 3. **Test locally first.** Lifecycle changes apply on `wrangler deploy`.
 4. **Back up production data** before renaming or deleting.
 
-Existing Workers using the legacy `migrations` array continue to work — see [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/) for the legacy reference, or [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow) to move to `exports`.
+Existing Workers using the legacy `migrations` array continue to work — refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/) for the legacy reference, or [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow) to move to `exports`.
 
 ## Troubleshooting
 

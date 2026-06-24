@@ -20,7 +20,7 @@ import {
 
 For new Workers, use the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field instead of the `migrations` array described on this page. The `migrations` array remains fully supported for existing Workers and continues to work as documented here.
 
-You cannot use both `exports` and `migrations` in the same Worker configuration — they are mutually exclusive. To move an existing Worker from `migrations` to `exports`, see [Migrate from `migrations` to `exports`](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
+You cannot use both `exports` and `migrations` in the same Worker configuration — they are mutually exclusive. To move an existing Worker from `migrations` to `exports`, refer to [Migrate from `migrations` to `exports`](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
 
 :::
 
@@ -28,7 +28,7 @@ A migration is a mapping process from a class name to a runtime state. This proc
 
 To apply a migration, you need to:
 
-1. Edit your Wrangler configuration file, as explained below.
+1. Edit your Wrangler configuration file (refer to [Migration Wrangler configuration](#migration-wrangler-configuration)).
 2. Re-deploy your Worker using `npx wrangler deploy`.
 
 You must initiate a migration process when you:
@@ -414,7 +414,7 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
 :::
 
 :::note
-Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks in the surrounding inline array are acceptable.
+`.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks in the surrounding inline array are acceptable.
 :::
 
 You cannot enable a SQLite storage backend on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
