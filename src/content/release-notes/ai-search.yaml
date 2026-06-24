@@ -3,6 +3,14 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-06-24"
+    title: Configurable similarity cache duration and on-demand purge
+    description: |-
+      You can now control how long AI Search retains cached responses with the `cache_ttl` setting, from 10 minutes up to 6 days. The default is now 48 hours, from the previous fixed duration of 30 days. You can also purge all cached responses for an instance on demand. Refer to [similarity cache](/ai-search/configuration/retrieval/cache/).
+  - publish_date: "2026-06-24"
+    title: Additional file type support
+    description: |-
+      Built-in storage, R2, and website data sources now support `.mdoc`, `.sql`, and `.log.gz` files. Refer to [supported file types](/ai-search/configuration/data-source/#supported-file-types) for the full list.
   - publish_date: "2026-06-18"
     title: Migration to managed infrastructure complete
     description: |-
