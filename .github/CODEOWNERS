@@ -49,10 +49,10 @@ package.json @cloudflare/content-engineering
 
 # API & Zones
 
-/src/content/docs/pulumi/ @dcpena @cloudflare/product-owners
-/src/content/docs/tenant/ @dcpena @cloudflare/product-owners
-/src/content/docs/terraform/ @dcpena @cloudflare/product-owners
-/src/content/docs/version-management/ @dcpena @cloudflare/product-owners
+/src/content/docs/pulumi/ @jhutchings1 @cloudflare/product-owners
+/src/content/docs/tenant/ @jhutchings1 @cloudflare/product-owners
+/src/content/docs/terraform/ @jhutchings1 @cloudflare/product-owners
+/src/content/docs/version-management/ @jhutchings1 @cloudflare/product-owners
 
 # Browser Run
 
@@ -108,7 +108,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/dns/internal-dns/ @RebeccaTamachiro @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/dns/private-origins/ @RebeccaTamachiro @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
+/src/content/docs/fundamentals/ @jhutchings1 @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @cloudflare/product-owners
