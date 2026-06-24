@@ -196,6 +196,8 @@ async () => {
 
 The host callback receives `method`, `path`, optional `query`, optional `body`, optional `contentType`, and optional `rawBody` fields. For exact types, refer to the [`openApiMcpServer()` API](/agents/tools/codemode/api-reference/#openapimcpserver).
 
+The `search` and `execute` tools use fixed example snippets. An optional `description` is appended to the `execute` tool description. This function does not use the `{{types}}` or `{{example}}` placeholders supported by [`codeMcpServer()`](/agents/model-context-protocol/guides/build-codemode-mcp-server/).
+
 ## Protect the API
 
 The example reads the bearer token before creating the MCP server. Its request callback adds that token to outbound requests. The token never enters the sandbox.

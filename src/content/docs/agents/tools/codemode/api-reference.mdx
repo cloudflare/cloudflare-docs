@@ -709,6 +709,8 @@ Creates an MCP server with two tools:
 
 `name` defaults to `openapi`. `version` defaults to `1.0.0`. The host request function keeps credentials outside the sandbox. Text responses are limited to approximately `6,000` tokens and include a truncation marker when clipped.
 
+The `search` and `execute` tool descriptions use fixed example snippets. Unlike `codeMcpServer()`, this function does not support `{{types}}` or `{{example}}` placeholders. An optional `description` is appended to the `execute` tool description.
+
 ## `@cloudflare/codemode/tanstack-ai`
 
 This entry point requires the `@tanstack/ai` and `zod` peer dependencies.
