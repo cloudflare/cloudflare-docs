@@ -1,0 +1,13 @@
+---
+title: AI Search adds cache controls and new file types
+description: Configure similarity cache TTLs, purge cached responses, and index .mdoc, .sql, and .log.gz files.
+products:
+  - ai-search
+date: 2026-06-24
+---
+
+[AI Search](/ai-search/) now supports additional controls and file types:
+
+- [Similarity cache](/ai-search/configuration/retrieval/cache/) entries now use configurable `cache_ttl` values, and you can purge cached responses for an instance on demand.
+- Instances paused automatically after inactivity now resume scheduled sync jobs after receiving new search or chat traffic.
+- Built-in storage, R2, and website data sources now support `.mdoc`, `.sql`, and `.log.gz` files.

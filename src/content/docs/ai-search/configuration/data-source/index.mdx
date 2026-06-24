@@ -12,11 +12,11 @@ import { Render } from "~/components";
 
 You can upload files directly to an instance or connect an external data source.
 
-| Data Source                                                                | Description                                                                       |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Data Source                                                                | Description                                                                   |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | [Built-in storage](/ai-search/configuration/data-source/built-in-storage/) | Upload files directly to an instance. Available by default on every instance. |
-| [Website](/ai-search/configuration/data-source/website/)                   | Connect a domain you own to index website pages.                                  |
-| [R2 Bucket](/ai-search/configuration/data-source/r2/)                      | Connect a Cloudflare R2 bucket to index stored documents.                         |
+| [Website](/ai-search/configuration/data-source/website/)                   | Connect a domain you own to index website pages.                              |
+| [R2 Bucket](/ai-search/configuration/data-source/r2/)                      | Connect a Cloudflare R2 bucket to index stored documents.                     |
 
 ## Supported file types
 
@@ -27,13 +27,14 @@ AI Search can ingest a variety of file types. The following plain text files and
 | Format     | File extensions                                                                | Mime Type                                                            |
 | ---------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
 | Text       | `.txt`, `.rst`                                                                 | `text/plain`                                                         |
-| Log        | `.log`                                                                         | `text/plain`                                                         |
+| Log        | `.log`, `.log.gz`                                                              | `text/plain`                                                         |
 | Config     | `.ini`, `.conf`, `.env`, `.properties`, `.gitignore`, `.editorconfig`, `.toml` | `text/plain`, `text/toml`                                            |
-| Markdown   | `.markdown`, `.md`, `.mdx`                                                     | `text/markdown`                                                      |
+| Markdown   | `.markdown`, `.md`, `.mdx`, `.mdoc`                                            | `text/markdown`                                                      |
 | LaTeX      | `.tex`, `.latex`                                                               | `application/x-tex`, `application/x-latex`                           |
 | Script     | `.sh`, `.bat`, `.ps1`                                                          | `application/x-sh`, `application/x-msdos-batch`, `text/x-powershell` |
 | SGML       | `.sgml`                                                                        | `text/sgml`                                                          |
 | JSON       | `.json`                                                                        | `application/json`                                                   |
+| SQL        | `.sql`                                                                         | `application/sql`                                                    |
 | YAML       | `.yaml`, `.yml`                                                                | `application/x-yaml`                                                 |
 | CSS        | `.css`                                                                         | `text/css`                                                           |
 | JavaScript | `.js`                                                                          | `application/javascript`                                             |
