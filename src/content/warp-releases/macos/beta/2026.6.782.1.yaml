@@ -13,9 +13,9 @@ releaseNotes: |-
   - New UI fixes
     - Fixed an issue where users with invalid MDM configurations were returned to the onboarding screen after successful authentication.
     - Added a re-auth button and banner to the home screen so users don't miss it when their session expires.
-    - Added clear error messaging when the Cloudflare certificate needs to be installed 
+    - Added clear error messaging when the Cloudflare certificate needs to be installed.
     - Brought back support for pausing the tunnel when connected to user-specified Wi-Fi networks for consumer users.
-    - New client UI now surfaces Split tunnel configuration and Local Domain Fallback configuration
+    - New client UI now surfaces Split tunnel configuration and Local Domain Fallback configuration.
     - Added ability to configure proxy mode for consumer users.
     - Added back the option to quit for consumer users.
 
