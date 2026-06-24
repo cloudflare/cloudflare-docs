@@ -27,6 +27,12 @@ Type: `array[object]`
 
 List of objects containing metadata of attachments contained in this message (for example, [{"Md5": "91f073bd208689ddbd248e8989ecae90", "Sha1": "62b77e14e2c43049c45b5725018e78d0f9986930", "Sha256": "3b57505305e7162141fd898ed87d08f92fc42579b5047495859e56b3275a6c06", "Ssdeep": "McAQ8tPlH25e85Q2OiYpD08NvHmjJ97UfPMO47sekO:uN9M553OiiN/OJ9MM+e3", "Name": "attachment.gif", "ContentTypeProvided": "image/gif", "ContentTypeComputed": "application/x-msi", "Encrypted": true, "Decrypted": true}, ...]).
 
+## BCC
+
+Type: `array[string]`
+
+Email address portions of the BCC header provided by the sender, if present (for example, 'firstlast@cloudflare.com').
+
 ## CC
 
 Type: `array[string]`
@@ -38,6 +44,24 @@ Email address portions of the CC header provided by the sender (for example, 'fi
 Type: `array[string]`
 
 Email address portions of the CC header provided by the sender (for example, 'First Last').
+
+## DKIMResult
+
+Type: `string`
+
+Summary of the DKIM authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>error</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
+
+## DMARCPolicy
+
+Type: `string`
+
+Effective DMARC policy for the sending domain. <br />Possible values are <em>none</em> \| <em>quarantine</em> \| <em>reject</em> \| <em>undefined</em>.
+
+## DMARCResult
+
+Type: `string`
+
+Overall DMARC authentication result for the message. <br />Possible values are <em>pass</em> \| <em>fail</em> \| <em>none</em>.
 
 ## FinalDisposition
 
@@ -140,6 +164,12 @@ SMTP HELO server geolocation info (for example, 'US/NV/Las Vegas').
 Type: `string`
 
 Hostname provided by the SMTP HELO server.
+
+## SPFResult
+
+Type: `string`
+
+Summary of the SPF authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>softfail</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
 
 ## Subject
 
