@@ -1,7 +1,7 @@
 ---
 title: Web Search
 pcx_content_type: how-to
-description: Use built-in web search tools from Anthropic, OpenAI, xAI, and Alibaba through AI Gateway, and reach search-first providers like Perplexity and Parallel through their proxy endpoints.
+description: Use provider-native web search tools through AI Gateway, or reach search-first providers like Perplexity and Parallel through their proxy endpoints.
 sidebar:
   order: 4
 tags:
@@ -9,6 +9,8 @@ tags:
 products:
   - ai-gateway
 ---
+
+import { TypeScriptExample } from "~/components";
 
 AI Gateway proxies native web search tools from supported providers so models can answer questions about events after their training cutoff. Search runs on the upstream provider; AI Gateway applies its standard features — logging, caching, rate limiting, and guardrails — to the request.
 
@@ -29,7 +31,7 @@ For providers whose product is search itself — Perplexity and Parallel — ref
 
 Anthropic models expose web search through their native [`web_search_20250305` tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool). Add it to the `tools` array on a `POST /ai/v1/messages` request.
 
-Supported models — `anthropic/claude-haiku-4.5`, `anthropic/claude-opus-4.1`, `anthropic/claude-opus-4.5`, `anthropic/claude-opus-4.6`, `anthropic/claude-opus-4.7`, `anthropic/claude-opus-4.8`, `anthropic/claude-sonnet-4.5`, `anthropic/claude-sonnet-4.6`.
+Supported models — `anthropic/claude-haiku-4.5`, `anthropic/claude-opus-4.5`, `anthropic/claude-opus-4.6`, `anthropic/claude-opus-4.7`, `anthropic/claude-opus-4.8`, `anthropic/claude-sonnet-4.5`, `anthropic/claude-sonnet-4.6`.
 
 ```bash
 # Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
@@ -58,8 +60,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 Equivalent call from a Worker using the AI binding:
 
-```javascript
-const response = await env.AI.run(
+<TypeScriptExample>
+
+```ts
+const resp = await env.AI.run(
 	"anthropic/claude-haiku-4.5",
 	{
 		max_tokens: 4096,
@@ -73,18 +77,22 @@ const response = await env.AI.run(
 		tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 3 }],
 	},
 	{
-		gateway: { id: "default" },
+		gateway: {
+			id: "default", // or use a specific gateway name
+		},
 	},
 );
 ```
 
-Search invocations and results appear in the response as `server_tool_use` and `web_search_tool_result` content blocks. Configurable parameters include `max_uses`, `allowed_domains`, `blocked_domains`, and `user_location` — see Anthropic's [web search tool documentation](https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool) for the full list.
+</TypeScriptExample>
+
+Search invocations and results appear in the response as `server_tool_use` and `web_search_tool_result` content blocks. Configurable parameters include `max_uses`, `allowed_domains`, `blocked_domains`, and `user_location` — refer to Anthropic's [web search tool documentation](https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool) for the full list.
 
 ## OpenAI web search
 
 OpenAI models expose web search through the [`web_search_preview` tool](https://developers.openai.com/api/docs/guides/tools-web-search) on the Responses API. Use the `POST /ai/v1/responses` endpoint and add the tool to the `tools` array.
 
-Supported models — `openai/gpt-4.1`, `openai/gpt-4.1-mini`, `openai/gpt-4o`, `openai/gpt-4o-mini`, `openai/gpt-5`, `openai/gpt-5-mini`, `openai/gpt-5-nano`, `openai/gpt-5-pro`, `openai/gpt-5.1`, `openai/gpt-5.2`, `openai/gpt-5.2-pro`, `openai/gpt-5.4`, `openai/gpt-5.4-mini`, `openai/gpt-5.4-nano`, `openai/gpt-5.4-pro`, `openai/gpt-5.5`, `openai/gpt-5.5-pro`, `openai/o3`, `openai/o3-pro`, `openai/o4-mini`.
+Supported models — `openai/gpt-4.1`, `openai/gpt-4.1-mini`, `openai/gpt-4o`, `openai/gpt-4o-mini`, `openai/gpt-5`, `openai/gpt-5-mini`, `openai/gpt-5-nano`, `openai/gpt-5.1`, `openai/gpt-5.4`, `openai/gpt-5.4-mini`, `openai/gpt-5.4-nano`, `openai/gpt-5.4-pro`, `openai/gpt-5.5`, `openai/gpt-5.5-pro`, `openai/o3`, `openai/o4-mini`.
 
 ```bash
 # Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
@@ -104,8 +112,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 Equivalent call from a Worker using the AI binding:
 
-```javascript
-const response = await env.AI.run(
+<TypeScriptExample>
+
+```ts
+const resp = await env.AI.run(
 	"openai/gpt-4o-mini",
 	{
 		input:
@@ -114,10 +124,14 @@ const response = await env.AI.run(
 		tools: [{ type: "web_search_preview" }],
 	},
 	{
-		gateway: { id: "default" },
+		gateway: {
+			id: "default", // or use a specific gateway name
+		},
 	},
 );
 ```
+
+</TypeScriptExample>
 
 OpenAI web search is available only on the Responses API endpoint (`POST /ai/v1/responses`). The `/ai/v1/chat/completions` endpoint does not accept the `web_search_preview` tool.
 
@@ -147,8 +161,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 Equivalent call from a Worker using the AI binding:
 
-```javascript
-const response = await env.AI.run(
+<TypeScriptExample>
+
+```ts
+const resp = await env.AI.run(
 	"xai/grok-4.20-multi-agent-0309",
 	{
 		input:
@@ -157,12 +173,16 @@ const response = await env.AI.run(
 		tools: [{ type: "web_search" }],
 	},
 	{
-		gateway: { id: "default" },
+		gateway: {
+			id: "default", // or use a specific gateway name
+		},
 	},
 );
 ```
 
-`xai/grok-4.20-multi-agent-0309` is the only xAI model that accepts web search through AI Gateway. For other Grok models, see [Models without web search support](#models-without-web-search-support).
+</TypeScriptExample>
+
+`xai/grok-4.20-multi-agent-0309` is the only xAI model that accepts web search through AI Gateway. For other Grok models, refer to [Models without web search support](#models-without-web-search-support).
 
 ## Alibaba (Qwen) web search
 
@@ -191,8 +211,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 Equivalent call from a Worker using the AI binding:
 
-```javascript
-const response = await env.AI.run(
+<TypeScriptExample>
+
+```ts
+const resp = await env.AI.run(
 	"alibaba/qwen3-max",
 	{
 		enable_search: true,
@@ -206,10 +228,14 @@ const response = await env.AI.run(
 		],
 	},
 	{
-		gateway: { id: "default" },
+		gateway: {
+			id: "default", // or use a specific gateway name
+		},
 	},
 );
 ```
+
+</TypeScriptExample>
 
 DashScope does not return search-grounded context as separate tool-call response blocks. It folds the fetched context into the prompt as additional input tokens — expect `prompt_tokens` to increase substantially on a successful search-grounded response.
 
@@ -237,7 +263,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-a
 
 ### Parallel
 
-Call Parallel's Search API through the [Parallel provider proxy](/ai-gateway/usage/providers/parallel/). See Parallel's [Search API documentation](https://docs.parallel.ai/search/search-quickstart) for the full request schema.
+Call Parallel's Search API through the [Parallel provider proxy](/ai-gateway/usage/providers/parallel/). Refer to Parallel's [Search API documentation](https://docs.parallel.ai/search/search-quickstart) for the full request schema.
 
 ```bash
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/parallel/v1beta/search \
@@ -256,7 +282,7 @@ The following models do not accept web search through AI Gateway:
 
 - **Google Gemini** — Vertex's OpenAI-compatible surface does not pass through the native `googleSearch` tool. Exposing it would require a native `generate-content` request format.
 - **Anthropic `claude-fable-5`** — AI Gateway does not provision the Anthropic credential this model requires.
-- **Grok chat-completions models** — `xai/grok-4.20-0309-non-reasoning`, `xai/grok-4.20-0309-reasoning`, and `xai/grok-4.3` use the chat-completions endpoint, which does not accept the `web_search` tool. For Grok web search, see [xAI web search](#xai-web-search).
+- **Grok chat-completions models** — `xai/grok-4.20-0309-non-reasoning`, `xai/grok-4.20-0309-reasoning`, and `xai/grok-4.3` use the chat-completions endpoint, which does not accept the `web_search` tool. For Grok web search, refer to [xAI web search](#xai-web-search).
 - **DeepSeek `deepseek-v4-flash`, `deepseek-v4-pro`** — these models accept function tools only.
 - **MiniMax `m2.7`, `m3`** — these models accept `{ "type": "function" }` tools only.
 - **OpenAI `gpt-4.1-nano`, `o1-pro`, `o3-mini`** — the upstream returns `invalid_request_error` for `web_search_preview` on these models.
