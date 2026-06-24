@@ -172,7 +172,7 @@ To apply a Delete migration:
 
 </Steps>
 
-<Details header = "Delete migration example">
+<Details header="Delete migration example">
 To delete a Durable Object binding `DEPRECATED_OBJECT`, your Wrangler configuration file should look like the following:
 
 <WranglerConfig>
@@ -245,7 +245,7 @@ To apply a Rename migration:
 
 </Steps>
 
-<Details header = "Rename migration example">
+<Details header="Rename migration example">
 
 To rename a Durable Object class, from `OldName` to `UpdatedName`, your Wrangler configuration file should look like the following:
 
@@ -333,7 +333,7 @@ To apply a Transfer migration:
 
 </Steps>
 
-<Details header = "Transfer migration example">
+<Details header="Transfer migration example">
 
 You can transfer stored Durable Objects from `DurableObjectExample` to `TransferredClass` from a Worker script named `OldWorkerScript`. The configuration of the Wrangler configuration file for your new Worker code (destination Worker code) would look like this:
 
@@ -384,18 +384,22 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
     - Example Wrangler file:
     ```jsonc title="wrangler.jsonc"
     {
-    // top-level default migrations
-    "migrations": [{ ... }],
-    "env": {
-    "staging": {
-      // migration override for staging
-      "migrations": [{...}]
-      }
-     }
+    	// top-level default migrations
+    	"migrations": [
+    		{ "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] }
+    	],
+    	"env": {
+    		"staging": {
+    			// migration override for staging
+    			"migrations": [
+    				{ "tag": "v1-staging", "new_sqlite_classes": ["MyDurableObject"] }
+    			]
+    		}
+    	}
     }
     ```
   - If a migration is only specified at the top-level, but not at the environment-level, the environment will inherit the top-level migration.
-  - Migrations at at the environment-level override migrations at the top level.
+  - Migrations at the environment-level override migrations at the top level.
 
 - All migrations are applied at deployment. Each migration can only be applied once per [environment](/durable-objects/reference/environments/).
 

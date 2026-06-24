@@ -29,7 +29,7 @@ This page covers how to:
 
 :::note[Looking for the legacy `migrations` array?]
 
-The `exports` field replaces the imperative [`migrations` array](/durable-objects/reference/durable-object-class-migrations-legacy/) used by older Workers. Both flows are supported, but a Worker can only use one at a time. To move an existing Worker from `migrations` to `exports`, see [Migrate from the legacy `migrations` flow](#migrate-from-the-legacy-migrations-flow).
+The `exports` field replaces the imperative [`migrations` array](/durable-objects/reference/durable-object-class-migrations-legacy/) used by older Workers. Both flows are supported, but a Worker can only use one at a time. To move an existing Worker from `migrations` to `exports`, refer to [Migrate from the legacy `migrations` flow](#migrate-from-the-legacy-migrations-flow).
 
 :::
 
@@ -132,7 +132,7 @@ Cloudflare provisions a namespace for the class the first time you deploy. On su
 
 :::note
 
-`storage` is required for live entries. New Durable Object namespaces created through `exports` always use the SQLite storage backend. The `legacy-kv` value is only accepted for namespaces that were already provisioned with key-value storage; see [Storage backends](#storage-backends).
+`storage` is required for live entries. New Durable Object namespaces created through `exports` always use the SQLite storage backend. The `legacy-kv` value is only accepted for namespaces that were already provisioned with key-value storage; refer to [Storage backends](#storage-backends).
 
 :::
 
@@ -426,7 +426,7 @@ If the deploy fails, the output shows a structured error per class:
     Referencing scripts: worker-foo, worker-bar
 ```
 
-All class-level errors from a single deploy are reported together so you can fix them in one round trip. See the [error reference](#error-reference) for the full list of error scenarios.
+All class-level errors from a single deploy are reported together so you can fix them in one round trip. Refer to the [error reference](#error-reference) for the full list of error scenarios.
 
 ## Stale tombstones and cleanup
 
@@ -487,7 +487,7 @@ The `exports` field is a map keyed by Durable Object class name. Each value is a
 - `transfer_from` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"expecting-transfer"`. The name of the source Worker the namespace is being transferred from.
 
-Allowed and forbidden fields for each `state`:
+The following table lists the allowed and forbidden fields for each `state`:
 
 | `state`                | Required                   | Forbidden                                                  |
 | ---------------------- | -------------------------- | ---------------------------------------------------------- |
@@ -499,7 +499,7 @@ Allowed and forbidden fields for each `state`:
 
 ## Error reference
 
-When a deploy fails reconciliation, Cloudflare returns one error per class along with a structured `scenario` tag, a human-readable message, and where applicable a `suggestion` and `referencing_scripts` list.
+When a deploy fails reconciliation, Cloudflare returns one error per class along with a structured `scenario` tag, a human-readable message, and where applicable a `suggestion` and `referencing_scripts` list:
 
 | Scenario                                          | Meaning                                                                                  | How to fix                                                                                                                                   |
 | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -524,9 +524,9 @@ When a deploy fails reconciliation, Cloudflare returns one error per class along
 ## Constraints and limitations
 
 - **`exports` and `migrations` are mutually exclusive.** A Worker configuration that contains both fields is rejected at validation. Once a Worker has been deployed with `exports`, subsequent deploys must continue to use `exports` (or neither, which reconciles against an empty config and is usually a mistake).
-- **`wrangler versions upload` does not apply lifecycle changes.** Just like the legacy `migrations` array, Durable Object lifecycle changes can only be applied via `wrangler deploy`. If your Wrangler configuration contains `exports` entries, `wrangler versions upload` fails fast with an actionable error. See [Versions and Deployments — Durable Object migrations](/workers/configuration/versions-and-deployments/#durable-object-migrations).
-- **Gradual deployments are not supported with `exports`.** Lifecycle changes are atomic at the Cloudflare control plane and cannot be rolled out gradually. See [Gradual deployments — Migrations](/workers/configuration/versions-and-deployments/gradual-deployments/#migrations).
-- **Rollbacks cannot cross a lifecycle change.** You cannot roll back to a version deployed before an `exports`-driven lifecycle change. See [Rollbacks — Bindings](/workers/configuration/versions-and-deployments/rollbacks/#bindings).
+- **`wrangler versions upload` does not apply lifecycle changes.** Just like the legacy `migrations` array, Durable Object lifecycle changes can only be applied via `wrangler deploy`. If your Wrangler configuration contains `exports` entries, `wrangler versions upload` fails fast with an actionable error. Refer to [Versions and Deployments — Durable Object migrations](/workers/configuration/versions-and-deployments/#durable-object-migrations).
+- **Gradual deployments are not supported with `exports`.** Lifecycle changes are atomic at the Cloudflare control plane and cannot be rolled out gradually. Refer to [Gradual deployments — Migrations](/workers/configuration/versions-and-deployments/gradual-deployments/#migrations).
+- **Rollbacks cannot cross a lifecycle change.** You cannot roll back to a version deployed before an `exports`-driven lifecycle change. Refer to [Rollbacks — Bindings](/workers/configuration/versions-and-deployments/rollbacks/#bindings).
 - **Storage backends are immutable once provisioned.** You cannot change a namespace's `storage` value in place; delete and re-provision instead.
 
 ## Migrate from the legacy `migrations` flow
