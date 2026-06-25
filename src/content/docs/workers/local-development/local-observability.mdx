@@ -1,32 +1,43 @@
-# Local observability for Workers local development
+---
+pcx_content_type: how-to
+title: Local observability
+description: Capture and inspect traces, spans, and logs from local Workers development.
+sidebar:
+  order: 6
+head: []
+products:
+  - workers
+---
 
 Local observability captures traces, spans, and logs from local Workers development. Use it to understand what your Worker did during `wrangler dev` or Vite development before deploying.
 
-When local observability is turned on, Wrangler/Miniflare writes structured observability data to a local trace store. You can inspect that data in Local Explorer, query it with the Wrangler CLI, or expose it to a coding agent through the optional hosted MCP endpoint.
+When local observability is turned on, Wrangler and Miniflare write structured observability data to a local trace store. You can inspect that data in Local Explorer, query it with the Wrangler CLI, or expose it to a coding agent through the optional hosted MCP endpoint.
 
-> **Experimental**
->
-> Local observability is experimental. Commands, captured fields, storage layout, and MCP behavior may change.
+:::note[Experimental]
+
+Local observability is experimental. Commands, captured fields, storage layout, and MCP behavior may change.
+
+:::
 
 ## Install the preview build
 
 Use the preview packages from the Workers SDK PR.
 
-**Use the preview Wrangler binary**
+### Use the preview Wrangler binary
 
-> The `wrangler observability` commands are only available in the preview build for this PR. If `npx wrangler observability ...` returns `Unknown arguments`, your shell is running a Wrangler version that does not include these commands.
->
-> After installing the preview package, prefer the project-local binary:
->
-> ```sh
-> ./node_modules/.bin/wrangler observability logs --last 10
-> ```
->
-> If you are testing from a local `workers-sdk` checkout, run:
->
-> ```sh
-> node /path/to/workers-sdk/packages/wrangler/bin/wrangler.js observability logs --last 10
-> ```
+The `wrangler observability` commands are only available in the preview build for this PR. If `npx wrangler observability ...` returns `Unknown arguments`, your shell is running a Wrangler version that does not include these commands.
+
+After installing the preview package, prefer the project-local binary:
+
+```sh
+./node_modules/.bin/wrangler observability logs --last 10
+```
+
+If you are testing from a local `workers-sdk` checkout, run:
+
+```sh
+node /path/to/workers-sdk/packages/wrangler/bin/wrangler.js observability logs --last 10
+```
 
 ### Wrangler users
 
@@ -70,7 +81,7 @@ Start Vite with the local observability gate turned on:
 X_LOCAL_OBSERVABILITY=true npx vite dev
 ```
 
-You can also enable observability in the Cloudflare Vite plugin configuration when using a build that supports it:
+You can also turn on observability in the Cloudflare Vite plugin configuration when using a build that supports it:
 
 ```ts
 cloudflare({
@@ -101,7 +112,7 @@ Spans show work done by your Worker, including:
 - root request handling
 - `fetch()` calls
 - D1 queries
-- KV reads/writes
+- KV reads and writes
 - R2 operations
 - Durable Object calls
 - other instrumented runtime operations
@@ -143,7 +154,7 @@ You can combine filters:
 status:error kind:d1 dur:>50
 ```
 
-To find POST requests, search for:
+To find `POST` requests, search for:
 
 ```txt
 POST
@@ -319,12 +330,12 @@ The MCP endpoint is hosted by Miniflare at:
 http://localhost:<PORT>/cdn-cgi/explorer/mcp
 ```
 
-In Local Explorer, go to **Observability** > **MCP** or **Agent Access** (depending on the build) to copy the endpoint/config snippet and configure agent permissions.
+In Local Explorer, go to **Observability** > **MCP** or **Agent Access** to copy the endpoint/config snippet and configure agent permissions.
 
 The hosted MCP exposes two tools:
 
-- `explorer_api` — describes the local dev APIs available to the agent.
-- `run` — executes a JavaScript snippet with a governed `cf` client in scope.
+- `explorer_api`: Describes the local dev APIs available to the agent.
+- `run`: Executes a JavaScript snippet with a governed `cf` client in scope.
 
 Example `run` snippet:
 
@@ -360,6 +371,12 @@ The page also shows **Agent activity**, an audit log of MCP calls. It records wh
 ## Local trace store schema
 
 The local observability store contains three main tables.
+
+:::note
+
+The local trace store schema is experimental and may change.
+
+:::
 
 ### `traces`
 
@@ -501,7 +518,7 @@ That is expected. Browser `GET` requests are handled by the Local Explorer singl
 
 Test MCP with a JSON-RPC `POST` instead.
 
-### MCP endpoint returns 404
+### MCP endpoint returns `404`
 
 Check that you started dev with MCP enabled:
 
