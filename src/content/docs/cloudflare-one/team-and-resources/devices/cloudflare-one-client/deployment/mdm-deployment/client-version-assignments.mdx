@@ -22,8 +22,8 @@ Once an assignment is in place, matching devices silently upgrade or downgrade t
 
 | System   | Availability | Minimum client version |
 | -------- | ------------ | ---------------------- |
-| Windows  | ✅           | 2026.6.x.0             |
-| macOS    | ✅           | 2026.6.x.0             |
+| Windows  | ✅           | 2026.6.0               |
+| macOS    | ✅           | 2026.6.0               |
 | Linux    | ❌           | —                      |
 | iOS      | ❌           | —                      |
 | Android  | ❌           | —                      |
@@ -33,7 +33,7 @@ Once an assignment is in place, matching devices silently upgrade or downgrade t
 
 :::note
 
-In the first general availability (GA) release of the Cloudflare One Client that supports this feature (`2026.6.x.0`), client version assignments will be effectively a no-op: there is only one version available, so any assignment targeting `2026.6.x.0` resolves to the version devices are already running. Client version assignments become meaningful starting with the second GA release, when there is a previous version to upgrade from or roll back to.
+In the first general availability (GA) release of the Cloudflare One Client that supports this feature (`2026.6.0`), client version assignments will be effectively a no-op: there is only one version available, so any assignment targeting `2026.6.0` resolves to the version devices are already running. Client version assignments become meaningful starting with the second GA release, when there is a previous version to upgrade from or roll back to.
 
 :::
 
@@ -47,7 +47,7 @@ When you save a deployment group, the Cloudflare API pushes the assignment to ev
 2. If the versions differ, downloads the target installer and verifies its cryptographic signature.
 3. Runs the installer silently and resumes normal operation once the new version is in place.
 
-The client coordinates the install through a separate persistent OS service that ships alongside the existing service in client version `2026.6.x.0` and later. If any step fails — download, signature verification, or install — the device stays on its previous version and remains functional.
+The client coordinates the install through a separate persistent OS service that ships alongside the existing service in client version `2026.6.0` and later. If any step fails — download, signature verification, or install — the device stays on its previous version and remains functional.
 
 :::note
 
@@ -80,8 +80,8 @@ Send a `POST` request to the [Deployment Groups API](/api/resources/zero_trust/s
 	json={{
 		name: "Engineering Ring 0",
 		version_config: [
-			{ target_environment: "windows", version: "2026.6.x.0" },
-			{ target_environment: "macos", version: "2026.6.x.0" },
+			{ target_environment: "windows", version: "2026.6.0" },
+			{ target_environment: "macos", version: "2026.6.0" },
 		],
 		policy_ids: ["<POLICY_UUID_1>", "<POLICY_UUID_2>"],
 	}}
@@ -102,11 +102,11 @@ Send a `POST` request to the [Deployment Groups API](/api/resources/zero_trust/s
    	version_config = [
    		{
    			target_environment = "windows"
-   			version            = "2026.6.x.0"
+   			version            = "2026.6.0"
    		},
    		{
    			target_environment = "macos"
-   			version            = "2026.6.x.0"
+   			version            = "2026.6.0"
    		},
    	]
    	policy_ids = [
@@ -121,11 +121,12 @@ Send a `POST` request to the [Deployment Groups API](/api/resources/zero_trust/s
 
 ## When a device evaluates an assignment
 
-After you save a deployment group, devices targeted by it evaluate the assignment in three situations:
+After you create, update, or delete a deployment group, the API notifies affected devices of the change. Delivery can take up to 15 minutes. Once a device receives the notification, it evaluates the assignment shortly after and installs the target version if it differs from the running version.
 
-- **When the client service starts or restarts.** The device evaluates shortly after startup and installs the target version if it differs from the running version.
-- **When the device wakes from sleep.** The device evaluates shortly after wake.
-- **When the API notifies the client of a change.** After you create, update, or delete a deployment group, the API pushes a notification to affected devices. Delivery can take up to 15 minutes, after which the device evaluates and installs the target version if needed.
+Devices also re-evaluate the most recent assignment they have received in these additional situations:
+
+- **When the client service starts or restarts.**
+- **When the device wakes from sleep.**
 
 ## Verify a device received the assignment
 
@@ -143,13 +144,13 @@ You can suppress client version assignments on individual devices by setting [`a
 
 ## Limitations
 
-- Devices must be running client version `2026.6.x.0` or later to apply an assignment. Older versions ignore the assignment entirely.
+- Devices must be running client version `2026.6.0` or later to apply an assignment. Older versions ignore the assignment entirely.
 - Once an install has started on a device, it cannot be cancelled. Changing the target version while a device is still downloading the previous target cancels the download cleanly.
 - Each device profile policy ID can belong to only one deployment group at a time.
 
 ## Antivirus and endpoint security configuration
 
-Starting in version `2026.6.x.0`, the client install adds a second persistent OS service that handles updates triggered by client version assignments. If your endpoint protection or antivirus tools maintain process or service allowlists, add the following alongside your existing entries for the Cloudflare One Client:
+Starting in version `2026.6.0`, the client install adds a second persistent OS service that handles updates triggered by client version assignments. If your endpoint protection or antivirus tools maintain process or service allowlists, add the following alongside your existing entries for the Cloudflare One Client:
 
 | Platform | Service identifier         | Process name             |
 | -------- | -------------------------- | ------------------------ |
