@@ -1,0 +1,300 @@
+---
+pcx_content_type: how-to
+title: Get chunk citations in AI responses
+description: Extract source citations from AI Search responses and display them alongside AI-generated answers.
+sidebar:
+  order: 5
+products:
+  - ai-search
+---
+
+import { TypeScriptExample, Tabs, TabItem } from "~/components";
+
+When you use AI Search's `chatCompletions()` method, the response includes a `chunks` array alongside the AI-generated answer. Each chunk contains the source document reference, relevance score, and the text that was used as context. Use these chunks to display citations, link back to source documents, or build a references section in your UI.
+
+The `chunks` array is also available in the `search()` response, and the same approach applies.
+
+## How citations work
+
+AI Search automatically:
+
+1. Retrieves the most relevant chunks from your indexed documents.
+2. Passes them to the language model as context.
+3. Returns the chunks alongside the AI-generated answer in the response.
+
+Each chunk in the response contains an `item` object with the source document's `key` (filename or URL), `timestamp`, and any custom `metadata` you attached during indexing. The `score` field indicates how relevant the chunk was to the query.
+
+## Display citations from chat completions
+
+This example calls `chatCompletions()`, extracts the AI answer, and maps each chunk to a citation object with the source filename, score, and a text snippet.
+
+<TypeScriptExample>
+
+```ts
+export interface Env {
+	AI_SEARCH: AiSearchNamespace;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+		const query = url.searchParams.get("query") ?? "What is Cloudflare?";
+
+		const response = await env.AI_SEARCH.get("my-instance").chatCompletions({
+			messages: [{ role: "user", content: query }],
+		});
+
+		const answer = response.choices[0]?.message?.content ?? "";
+
+		// Extract citations from the chunks array
+		const citations = response.chunks.map((chunk, index) => ({
+			index: index + 1,
+			source: chunk.item.key,
+			score: chunk.score,
+			snippet: chunk.text.slice(0, 200),
+			metadata: chunk.item.metadata,
+		}));
+
+		return Response.json({ answer, citations });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The response looks like:
+
+```json
+{
+	"answer": "Cloudflare is a global network that provides security, performance, and reliability services...",
+	"citations": [
+		{
+			"index": 1,
+			"source": "docs/what-is-cloudflare.md",
+			"score": 0.92,
+			"snippet": "Cloudflare is one of the world's largest networks. Today, businesses, non-profits, bloggers...",
+			"metadata": {
+				"folder": "docs"
+			}
+		},
+		{
+			"index": 2,
+			"source": "blog/intro-to-cloudflare.md",
+			"score": 0.85,
+			"snippet": "Cloudflare provides a broad range of services to businesses of all sizes...",
+			"metadata": {
+				"folder": "blog"
+			}
+		}
+	]
+}
+```
+
+## Deduplicate citations by source
+
+Multiple chunks can come from the same document. Group them by `item.key` to show one citation per source document.
+
+<TypeScriptExample>
+
+```ts
+export interface Env {
+	AI_SEARCH: AiSearchNamespace;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+		const query = url.searchParams.get("query") ?? "What is Cloudflare?";
+
+		const response = await env.AI_SEARCH.get("my-instance").chatCompletions({
+			messages: [{ role: "user", content: query }],
+		});
+
+		const answer = response.choices[0]?.message?.content ?? "";
+
+		// Group chunks by source document
+		const sourceMap = new Map<
+			string,
+			{ score: number; snippets: string[]; metadata?: Record<string, unknown> }
+		>();
+
+		for (const chunk of response.chunks) {
+			const key = chunk.item.key;
+			const existing = sourceMap.get(key);
+
+			if (existing) {
+				existing.score = Math.max(existing.score, chunk.score);
+				existing.snippets.push(chunk.text.slice(0, 200));
+			} else {
+				sourceMap.set(key, {
+					score: chunk.score,
+					snippets: [chunk.text.slice(0, 200)],
+					metadata: chunk.item.metadata,
+				});
+			}
+		}
+
+		const citations = [...sourceMap.entries()].map(
+			([source, { score, snippets, metadata }], i) => ({
+				index: i + 1,
+				source,
+				score,
+				snippets,
+				metadata,
+			}),
+		);
+
+		return Response.json({ answer, citations });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Parse citations from a streaming response
+
+When using `stream: true`, the chunks are sent as a separate `chunks` SSE event before the streamed answer begins. Parse this event to get citations while the response streams.
+
+<TypeScriptExample>
+
+```ts
+export interface Env {
+	AI_SEARCH: AiSearchNamespace;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+		const query = url.searchParams.get("query") ?? "What is Cloudflare?";
+
+		const stream = await env.AI_SEARCH.get("my-instance").chatCompletions({
+			messages: [{ role: "user", content: query }],
+			stream: true,
+		});
+
+		// Transform the stream: extract the chunks event and forward the rest
+		const { readable, writable } = new TransformStream();
+		const writer = writable.getWriter();
+		const encoder = new TextEncoder();
+		const decoder = new TextDecoder();
+
+		const reader = stream.getReader();
+
+		(async () => {
+			let buffer = "";
+
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+
+				buffer += decoder.decode(value, { stream: true });
+				const lines = buffer.split("\n");
+				buffer = lines.pop() ?? "";
+
+				for (const line of lines) {
+					if (line.startsWith("event: chunks")) {
+						// Next data line contains the citations array
+						continue;
+					}
+					if (line.startsWith("data: ") && !line.includes('"choices"')) {
+						// This is the chunks data — wrap it as a citations event
+						const chunksData = line.slice(6);
+						try {
+							const chunks = JSON.parse(chunksData);
+							const citations = chunks.map(
+								(chunk: { item: { key: string }; score: number }) => ({
+									source: chunk.item.key,
+									score: chunk.score,
+								}),
+							);
+							await writer.write(
+								encoder.encode(
+									`event: citations\ndata: ${JSON.stringify(citations)}\n\n`,
+								),
+							);
+							continue;
+						} catch {
+							// Not valid JSON or not chunks — pass through
+						}
+					}
+					await writer.write(encoder.encode(line + "\n"));
+				}
+			}
+
+			await writer.close();
+		})();
+
+		return new Response(readable, {
+			headers: {
+				"content-type": "text/event-stream",
+				"cache-control": "no-cache",
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Use scoring details to rank citations
+
+Each chunk includes a `scoring_details` object with a breakdown of how it was scored. Use these details to filter out low-quality citations or display confidence indicators.
+
+<TypeScriptExample>
+
+```ts
+export interface Env {
+	AI_SEARCH: AiSearchNamespace;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+		const query = url.searchParams.get("query") ?? "What is Cloudflare?";
+
+		const response = await env.AI_SEARCH.get("my-instance").chatCompletions({
+			messages: [{ role: "user", content: query }],
+		});
+
+		const answer = response.choices[0]?.message?.content ?? "";
+
+		const citations = response.chunks
+			// Filter out low-relevance chunks
+			.filter((chunk) => chunk.score > 0.5)
+			.map((chunk, index) => ({
+				index: index + 1,
+				source: chunk.item.key,
+				score: chunk.score,
+				vectorScore: chunk.scoring_details?.vector_score,
+				keywordScore: chunk.scoring_details?.keyword_score,
+				rerankingScore: chunk.scoring_details?.reranking_score,
+				confidence: chunk.score > 0.8 ? "high" : "medium",
+				snippet: chunk.text.slice(0, 200),
+			}));
+
+		return Response.json({ answer, citations });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Citation fields reference
+
+Each chunk in the `chunks` array contains the following fields you can use for citations:
+
+| Field                             | Type   | Description                                                               |
+| --------------------------------- | ------ | ------------------------------------------------------------------------- |
+| `id`                              | string | Unique identifier for the chunk.                                          |
+| `type`                            | string | Content type, typically `text`.                                           |
+| `score`                           | number | Overall relevance score between 0 and 1.                                  |
+| `text`                            | string | The text content of the chunk.                                            |
+| `item.key`                        | string | The file path or URL of the source document.                              |
+| `item.timestamp`                  | number | Unix timestamp of when the item was last indexed.                         |
+| `item.metadata`                   | object | Custom metadata associated with the source item.                          |
+| `scoring_details.vector_score`    | number | Semantic similarity score (0 to 1).                                       |
+| `scoring_details.keyword_score`   | number | BM25 keyword match score. Present when using hybrid retrieval.            |
+| `scoring_details.reranking_score` | number | Reranking score (0 to 1). Present when reranking is enabled.              |
+| `scoring_details.fusion_method`   | string | Fusion method used (`rrf` or `max`). Present when using hybrid retrieval. |
+
+For multi-instance searches, each chunk also includes an `instance_id` field identifying which instance it came from. Refer to [Workers binding](/ai-search/api/search/workers-binding/#search-1) for details.
