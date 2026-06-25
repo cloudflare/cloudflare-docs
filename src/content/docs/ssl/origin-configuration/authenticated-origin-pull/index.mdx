@@ -46,6 +46,10 @@ Global AOP uses a Cloudflare-provided certificate shared across all accounts, so
 
 Using your own certificate is also required for [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliance. For broader origin protection guidance, refer to [Protect your origin server](/fundamentals/security/protect-your-origin-server/).
 
+## Post-quantum certificates
+
+Zone-level and per-hostname AOP support ML-DSA (FIPS 204) post-quantum client certificates. Refer to [Post-quantum signatures](/ssl/post-quantum-cryptography/pqc-to-origin/#post-quantum-signatures) for certificate generation and upload guidance.
+
 ## Related topics
 
 - [SSL/TLS Encryption Modes](/ssl/origin-configuration/ssl-modes/)

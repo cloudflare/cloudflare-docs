@@ -12,7 +12,7 @@ import { WranglerConfig } from "~/components";
 
 VPC Networks allow your Workers to access any service in your private network without pre-registering individual hosts or ports. You can bind to a specific [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) to reach any service behind that tunnel, or bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) to reach any Mesh node, client device, subnet route or hostname route announced through Cloudflare Tunnel or Mesh, or destination reachable through a [Cloudflare WAN](/cloudflare-wan/) on-ramp (GRE, IPsec, or CNI).
 
-At runtime, the URL you pass to `fetch()` determines the destination — any hostname or IP address reachable through the bound Cloudflare Tunnel or through Cloudflare Mesh. This differs from [VPC Services](/workers-vpc/configuration/vpc-services/), which require you to create a separate binding for each target host and port combination.
+At runtime, the URL you pass to `fetch()` or the address you pass to `connect()` determines the destination — any hostname or IP address reachable through the bound Cloudflare Tunnel or through Cloudflare Mesh. Use `fetch()` for HTTP traffic, and [`connect()`](/workers/runtime-apis/tcp-sockets/) for raw TCP connections (Redis, MQTT, custom protocols, and other non-HTTP services). This differs from [VPC Services](/workers-vpc/configuration/vpc-services/), which require you to create a separate binding for each target host and port combination.
 
 :::note
 
@@ -90,7 +90,9 @@ Bind to Cloudflare Mesh using `network_id: "cf1:network"`:
 
 ## Runtime usage
 
-Access any service in your network at runtime:
+### HTTP via `fetch()`
+
+Access any HTTP service in your network at runtime using `fetch()`:
 
 ```typescript
 export default {
@@ -108,6 +110,34 @@ export default {
 
 When a VPC Network cannot establish a connection to your target service, `fetch()` throws an exception.
 
+### TCP via `connect()`
+
+Open raw TCP connections to any private destination using [`connect()`](/workers/runtime-apis/tcp-sockets/). This is useful for non-HTTP protocols like Redis, Memcached, MQTT, or custom binary protocols:
+
+```typescript
+export default {
+	async fetch(request: Request, env: Env) {
+		// Open a TCP connection to a private Redis instance
+		const socket = await env.MY_VPC.connect("10.0.1.50:6379");
+
+		// Write a Redis PING command
+		const writer = socket.writable.getWriter();
+		await writer.write(new TextEncoder().encode("PING\r\n"));
+		await writer.close();
+
+		return new Response(socket.readable);
+	},
+};
+```
+
+When a VPC Network cannot establish a TCP connection, `connect()` throws an exception.
+
+:::note
+
+`connect()` over VPC Networks currently supports plaintext TCP only.
+
+:::
+
 ## VPC Networks vs VPC Services
 
 VPC Networks and [VPC Services](/workers-vpc/configuration/vpc-services/) both connect Workers to private infrastructure, but they make different trade-offs.
@@ -121,6 +151,7 @@ The following table summarizes the differences:
 | -------------------- | ----------------------------------------------------------------------------- | ------------------------- |
 | Scope                | A single Cloudflare Tunnel, or Cloudflare Mesh and Cloudflare WAN routes      | Specific host + port      |
 | Configuration        | `tunnel_id` (single Cloudflare Tunnel) or `cf1:network` (account-wide)        | `service_id`              |
+| Protocols            | HTTP (`fetch()`) and TCP (`connect()`)                                        | HTTP (`fetch()`) or TCP (via [Hyperdrive](/hyperdrive/)) |
 | Service registration | Not required                                                                  | Required for each target  |
 | Use when             | Dynamic discovery, network-wide access, reaching services across your account | Fixed, cataloged services |
 

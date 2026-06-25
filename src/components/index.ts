@@ -31,7 +31,6 @@ export { default as GlossaryTooltip } from "./GlossaryTooltip.astro";
 export { default as GranularControlApplicationsList } from "./GranularControlApplicationsList.astro";
 export { default as HomepageHero } from "./HomepageHero.astro";
 export { default as InlineBadge } from "./InlineBadge.astro";
-export { default as LastReviewed } from "./LastReviewed.astro";
 export { default as LinkTitleCard } from "./LinkTitleCard.astro";
 export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
@@ -44,7 +43,6 @@ export { default as PagesBuildEnvironmentTools } from "./PagesBuildEnvironmentTo
 export { default as PagesBuildPreset } from "./PagesBuildPreset.astro";
 export { default as PagesBuildPresetsTable } from "./PagesBuildPresetsTable.astro";
 export { default as PagesLanguageSupport } from "./PagesLanguageSupport.astro";
-export { default as PartialsUsage } from "./PartialsUsage.astro";
 export { default as Plan } from "./Plan.astro";
 export { default as ProductChangelog } from "./ProductChangelog.astro";
 export { default as ProductReleaseNotes } from "./ProductReleaseNotes.astro";

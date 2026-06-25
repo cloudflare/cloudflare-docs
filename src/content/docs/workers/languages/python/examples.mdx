@@ -72,8 +72,20 @@ from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        name = (await request.json()).name
+        body = await request.json()  # returns a native Python dict
+        name = body["name"]
         return Response("Hello, {name}".format(name=name))
+```
+
+## Return a JSON response
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        data = {"greeting": "Hello, World!", "status": "ok"}
+        return Response.json(data)
 ```
 
 ## Read bundled asset files in your Worker
@@ -200,11 +212,13 @@ Refer to [Durable Objects documentation](/durable-objects/get-started/) for more
 ## Cron Trigger
 
 ```python
-from workers import WorkerEntrypoint, Response
+from workers import WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
     async def scheduled(self, controller, env, ctx):
-  			print("cron processed")
+        # All four parameters (self, controller, env, ctx) are required —
+        # unlike fetch() which only takes (self, request).
+        print("cron processed")
 ```
 
 Refer to [Cron Triggers documentation](/workers/configuration/cron-triggers/) for more information.

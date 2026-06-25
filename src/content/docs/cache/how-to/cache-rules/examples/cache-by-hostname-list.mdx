@@ -1,0 +1,29 @@
+---
+pcx_content_type: example
+summary: Cache everything for hostnames in a list
+title: Cache everything for hostnames in a list
+description: Cache everything for hostnames in a list
+products: [cache-rules]
+---
+
+import { Example } from "~/components"
+
+[Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache everything for hostnames that match a [custom hostname list](/waf/tools/lists/custom-lists/#lists-with-hostnames):
+
+<Example>
+
+- **When incoming requests match**: Custom filter expression
+  - Using the Expression Builder:<br/>
+    `Hostname is in list "my_hostnames"`
+  - Using the Expression Editor:<br/>
+    `(http.host in $my_hostnames)`
+
+- **Then**:
+  - **Cache eligibility**: Eligible for cache
+
+</Example>
+
+:::note
+
+The **is in list** operator requires an Enterprise plan. You must first [create a hostname list](/waf/tools/lists/create-dashboard/) in your account before you can reference it in a cache rule expression.
+:::

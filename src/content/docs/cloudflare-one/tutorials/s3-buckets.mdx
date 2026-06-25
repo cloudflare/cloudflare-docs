@@ -12,6 +12,8 @@ description: >-
   This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet.
 ---
 
+import { DashButton } from "~/components";
+
 This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet. You can combine Cloudflare Access and AWS VPC endpoints. Enterprise may also use Cloudflare Gateway egress policies with dedicated egress IPs.
 
 ## Method 1: Via Cloudflare Access and VPC endpoints
@@ -98,11 +100,14 @@ A bucket website endpoint will be available at `http://<your-S3-bucket01>.s3-web
 
 ### 4. Add a published application to the Cloudflare Tunnel
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
-2. Select your Tunnel, then select **Configure**.
-3. Go to **Published applications**, then select **Add a public hostname**.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select your tunnel, then go to the **Routes** tab.
+3. Select **Add route**, then select **Published application**.
 4. Enter a subdomain your organization will use to access the S3 bucket. For example, `s3-bucket.<your-domain>.com`.
-5. Under **Service**, choose _HTTP_ for **Type**. In **URL**, enter `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
+5. In **Service URL**, enter `http://<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
 6. In **Additional application settings** > **HTTP Settings**, input the **HTTP Host Header** as `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
 7. Select **Save hostname**.
 
@@ -187,7 +192,7 @@ A bucket website endpoint will be available at `http://<your-S3-bucket02>.s3-web
 
 ### 3. Setup a dedicated egress IP policy
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Egress policies**. Select **Add a policy**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Egress policies**. Select **Add a policy**.
 2. Create a policy that specifies which proxied traffic Gateway should assign a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to. For more information, refer to [Egress policies](/cloudflare-one/traffic-policies/egress-policies/).
 3. In **Select an egress IP**, choose _Use dedicated Cloudflare egress IPs_. Select the dedicated egress IP defined in your bucket policy.
 4. Select **Create policy**.

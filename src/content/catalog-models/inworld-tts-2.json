@@ -197,7 +197,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://docs.inworld.ai/tts/realtime-tts-2-preview",
 	"terms": "https://inworld.ai/terms",
@@ -207,6 +207,7 @@
 		"Steering": "Natural language"
 	},
 	"request_formats": null,
+	"banner": null,
 	"created_at": "2026-05-22 17:53:17",
 	"schema": {
 		"input": {

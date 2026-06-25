@@ -1,0 +1,21 @@
+---
+title: Introducing Threat Actor Profiles in Threat Events
+description: Pivot from raw telemetry to rich strategic context with Threat Actor Profiles.
+date: 2026-06-08
+---
+
+**TL;DR:** We’ve launched **Threat Actor Profiles** directly inside the Threat Events dashboard. You can now immediately pivot from a generic alert or blocked event to a profile that unmasks the "Who, Why, and How" behind a threat event.
+
+### Why this matters
+Security teams often suffer from a visibility gap. When an attack is blocked, it's difficult to know if it was a random automated bot or a sophisticated advanced persistent threat (APT) campaign specifically targeting your industry. Finding out usually means leaving your security dashboard to hunt through external OSINT feeds or static, out-of-date threat reports.
+Threat Actor Profiles solve this by sharing Cloudforce One’s deep adversary research directly inside your workflow:
+* Cloudflare sees the traffic in real-time across approximately 20% of the web. This means actor profiles display active malicious infrastructure the moment it touches our global edge.
+* Every profile provides clear strategic and tactical modules including alternative aliases, origin tracking, historical threat event volume, and MITRE ATT&CK mapping detailing the adversary's technical methods.
+* You can search the dedicated threat actor directory or click an actor's name inside any threat event to view all details and related events to the specific threat actor.
+
+### How to use it
+Adversary tracking is now available in the Cloudflare Dashbboard and ready to be included in your daily investigation workflow:
+* Click on the **Threat Actor** name in the Threat Events table to open their full identity profile and review their aliases and attack stats.
+* Navigate to **Cloudflare Dashboard > Application Security > Threat Intelligence** to explore the new **Threat Actors** tab. Here, you can browse a card-based directory of all established entities tracked by Cloudforce One.
+
+Learn more in the [Cloudforce One documentation](https://developers.cloudflare.com/security-center/cloudforce-one/#identify-the-adversary).

@@ -26,6 +26,7 @@ Understanding the limits and timeouts of Cloudflare Realtime is crucial for opti
 ## Inactivity Timeout
 
 * **Track Timeout**: Tracks will automatically timeout and be garbage collected after 30 seconds of inactivity, where inactivity is defined as no media packets being received by Cloudflare. This mechanism ensures efficient use of resources and session cleanliness across all Sessions that use a track.
+* **DataChannel acknowledgment timeout**: When `waitForAck` is enabled on a remote DataChannel, the subscriber must send its first message (the acknowledgment) within 15 seconds of creating the channel. If it does not, the SFU tears down the gated channel and forwards no messages. Create the remote DataChannel again to retry.
 
 ## PeerConnection Requirements
 
@@ -58,4 +59,3 @@ Cloudflare Realtime supports the following codecs:
 :::note
 For external 48kHz PCM support refer to the [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/)
 :::
-

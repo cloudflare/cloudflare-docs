@@ -228,13 +228,14 @@
 /agents/concepts/long-running-agents/ /agents/concepts/agentic-patterns/long-running-agents/ 301
 /agents/api-reference/agents-api/ /agents/runtime/agents-api/ 301
 /agents/api-reference/ /agents/runtime/ 301
-/agents/api-reference/chat-sdk/ /agents/runtime/execution/chat-sdk/ 301
+/agents/api-reference/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
+/agents/runtime/execution/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
 /agents/api-reference/agent-tools/ /agents/runtime/execution/agent-tools/ 301
 /agents/api-reference/browse-the-web/ /agents/tools/browser/ 301
 /agents/api-reference/callable-methods/ /agents/runtime/lifecycle/callable-methods/ 301
 /agents/api-reference/chat-agents/ /agents/communication-channels/chat/chat-agents/ 301
 /agents/api-reference/client-sdk/ /agents/communication-channels/chat/client-sdk/ 301
-/agents/api-reference/codemode/ /agents/model-context-protocol/protocol/codemode/ 301
+/agents/api-reference/codemode/ /agents/tools/codemode/api-reference/ 301
 /agents/api-reference/configuration/ /agents/runtime/operations/configuration/ 301
 /agents/api-reference/durable-execution/ /agents/runtime/execution/durable-execution/ 301
 /agents/api-reference/email/ /agents/communication-channels/email/ 301
@@ -275,6 +276,7 @@
 /agents/guides/test-remote-mcp-server/ /agents/model-context-protocol/guides/test-remote-mcp-server/ 301
 /agents/guides/webhooks/ /agents/communication-channels/webhooks/ 301
 /agents/model-context-protocol/authorization/ /agents/model-context-protocol/protocol/authorization/ 301
+/agents/model-context-protocol/protocol/codemode/ /agents/tools/codemode/ 301
 /agents/model-context-protocol/governance/ /agents/model-context-protocol/protocol/governance/ 301
 /agents/model-context-protocol/mcp-portal/ /agents/model-context-protocol/cloudflare/mcp-portal/ 301
 /agents/model-context-protocol/mcp-servers-for-cloudflare/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
@@ -309,7 +311,7 @@
 /agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
-/agents/tools/sandbox/codemode/ /agents/model-context-protocol/protocol/codemode/ 301
+/agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 
@@ -345,6 +347,7 @@
 /ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
 /ai-gateway/legacy-models/ /ai/models/ 301
 /ai-gateway/supported-models/ /ai/models/ 301
+/ai-gateway/integrations/worker-binding-methods/ /ai-gateway/usage/worker-binding-methods/ 301
 /ai-gateway/tutorials/deploy-aig-worker/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 
 # analytics
@@ -416,8 +419,9 @@
 /ai-search/configuration/indexing/ /ai-search/configuration/indexing/syncing/ 301
 /ai-search/configuration/keyword-search/ /ai-search/configuration/indexing/keyword-search/ 301
 /ai-search/configuration/service-api-token/ /ai-search/configuration/indexing/service-api-token/ 301
-/ai-search/configuration/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
-/ai-search/configuration/retrieval/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
+/ai-search/configuration/retrieval-configuration/ /ai-search/configuration/retrieval/result-controls/ 301
+/ai-search/configuration/retrieval/retrieval-configuration/ /ai-search/configuration/retrieval/result-controls/ 301
+/ai-search/configuration/retrieval/result-filtering/ /ai-search/configuration/retrieval/result-controls/ 301
 /ai-search/configuration/hybrid-search/ /ai-search/configuration/indexing/hybrid-search/ 301
 /ai-search/configuration/metadata/ /ai-search/configuration/indexing/metadata/ 301
 /ai-search/configuration/retrieval/metadata/ /ai-search/configuration/indexing/metadata/ 301
@@ -562,6 +566,8 @@
 /realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
+/realtime/agents/ /realtime/ 301
+/realtime/agents/getting-started/ /realtime/ 301
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
 /realtime/static/calls-api-2024-05-21.yaml /realtime/static/realtime-api-2024-05-21.yaml 301
 
@@ -1117,9 +1123,11 @@
 /images/transform-images/ /images/optimization/transformations/overview/ 301
 /images/transform-images/transform-via-url/ /images/optimization/features/ 301
 /images/transform-images/transform-via-workers/ /images/optimization/transformations/transform-via-workers/ 301
-/images/transform-images/bindings/ /images/optimization/transformations/bindings/ 301
+/images/transform-images/bindings/ /images/optimization/binding/ 301
+/images/optimization/transformations/bindings/ /images/optimization/binding/ 301
 /images/transform-images/control-origin-access/ /images/optimization/transformations/control-origin-access/ 301
-/images/transform-images/draw-overlays/ /images/optimization/transformations/draw-overlays/ 301
+/images/transform-images/draw-overlays/ /images/optimization/draw-overlays/ 301
+/images/optimization/transformations/draw-overlays/ /images/optimization/draw-overlays/ 301
 /images/transform-images/integrate-with-frameworks/ /images/optimization/transformations/integrate-with-frameworks/ 301
 /images/transform-images/make-responsive-images/ /images/optimization/make-responsive-images/ 301
 /images/transform-images/preserve-content-credentials/ /images/optimization/transformations/preserve-content-credentials/ 301
@@ -1282,7 +1290,7 @@
 /learning-paths/get-started-free/other-features/redirects/ /fundamentals/reference/redirects/ 301
 /learning-paths/get-started-free/other-features/analytics/ /analytics/account-and-zone-analytics/ 301
 /learning-paths/get-started-free/other-features/account-profile/ /fundamentals/account/ 301
-/learning-paths/get-started-free/other-features/email-routing/ /email-routing/ 301
+/learning-paths/get-started-free/other-features/email-routing/ /email-service/ 301
 /learning-paths/get-started-free/other-features/resources/ /fundamentals/#additional-resources 301
 /learning-paths/get-started-free/other-features/product-lines/ /directory/ 301
 
@@ -2093,12 +2101,8 @@
 /workers/platform/routes/ /workers/configuration/routing/ 301
 /workers/about/tips/debugging/ /workers/observability/ 301
 /workers/testing/debugging-tools/ /workers/observability/dev-tools/ 301
-/workers/testing/local-development/ /workers/development-testing/#local-development 301
-/workers/local-development/ /workers/development-testing/#local-development 301
-/workers/local-development/bindings-per-env/ /workers/development-testing/bindings-per-env/ 301
-/workers/local-development/environment-variables/ /workers/development-testing/environment-variables/ 301
-/workers/local-development/local-data/ /workers/development-testing/local-data/ 301
-/workers/local-development/remote-data/ /workers/development-testing/#remote-bindings 301
+/workers/testing/local-development/ /workers/local-development/ 301
+/workers/local-development/remote-data/ /workers/local-development/#remote-bindings 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
 /workers/api/ /api/resources/workers/subresources/scripts/methods/list/ 301
@@ -2185,7 +2189,7 @@
 /workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
 /workers/tutorials/create-a-chatgpt-powered-search-plugin/ /workers/tutorials/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
-/workers/writing-workers/debugging-tips/ /workers/development-testing/#local-development 301
+/workers/writing-workers/debugging-tips/ /workers/local-development/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
 /workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -2272,7 +2276,7 @@
 /workers/runtime-apis/kv/ /kv/api/ 301
 /workers/runtime-apis/mtls/ /workers/runtime-apis/bindings/mtls/ 301
 /workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
-/workers/observability/local-development-and-testing/ /workers/development-testing/#local-development 301
+/workers/observability/local-development-and-testing/ /workers/local-development/ 301
 /workers/observability/sentry-integration/ /workers/observability/integrations/sentry 301
 /workers/configuration/deployments/ /workers/configuration/versions-and-deployments/ 301
 /workers/configuration/continuous-integration/ /workers/ci-cd/ 301
@@ -2321,6 +2325,17 @@
 /workers/tutorials/automated-analytics-reporting/ /resources/ 301
 /workers/ai/ /agent-lee/ 301
 /cloudflare-agent/ /agent-lee/ 301
+/workers/development-testing/ /workers/local-development/ 301
+/workers/development-testing/bindings-per-env/ /workers/local-development/bindings-per-env/ 301
+/workers/development-testing/environment-variables/ /workers/local-development/environment-variables/ 301
+/workers/development-testing/local-data/ /workers/local-development/local-data/ 301
+/workers/development-testing/local-dev-tunnels/ /workers/local-development/local-dev-tunnels/ 301
+/workers/development-testing/local-explorer/ /workers/local-development/local-explorer/ 301
+/workers/development-testing/multi-workers/ /workers/local-development/multi-workers/ 301
+/workers/development-testing/vite-plugin/ /workers/local-development/vite-plugin/ 301
+/workers/development-testing/wrangler-vs-vite/ /workers/local-development/wrangler-vs-vite/ 301
+/workers/development-testing/remote-data/ /workers/local-development/#remote-bindings 301
+/workers/development-testing/testing/ /workers/testing/ 301
 
 # workers ai - legacy task type URLs redirect to unified catalog
 /workers-ai/models/llm/ /ai/models/#text-generation 301

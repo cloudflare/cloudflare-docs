@@ -399,6 +399,7 @@ Only a single hashing algorithm can be specified at once.
 
   This means applications must be careful to avoid comparing the amount of returned objects against your `limit`. Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const options = {
 	limit: 500,
@@ -429,6 +430,31 @@ while (truncated) {
 	cursor = next.cursor;
 }
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+limit = 500
+include = ["customMetadata"]
+
+listed = await self.env.MY_BUCKET.list(limit=limit, include=include)
+
+truncated = listed.truncated
+cursor = listed.cursor if truncated else None
+
+# ❌ - if your limit can't fit into a single response or your
+# bucket has less objects than the limit, it will get stuck here.
+while len(listed.objects) < limit:
+    ...
+
+# ✅ - use the truncated property to check if there are more
+# objects to be returned
+while truncated:
+    next_page = await self.env.MY_BUCKET.list(limit=limit, include=include, cursor=cursor)
+    listed.objects.extend(next_page.objects)
+
+    truncated = next_page.truncated
+    cursor = next_page.cursor
+```
+</TabItem> </Tabs>
 
 ### R2Objects
 

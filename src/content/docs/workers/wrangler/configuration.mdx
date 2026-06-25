@@ -576,7 +576,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -809,11 +809,11 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
   - The ID of the KV namespace.
 
 - `preview_id` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/development-testing/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
+  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/local-development/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -995,11 +995,11 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 - `preview_bucket_name` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/development-testing/#remote-bindings)).
+  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/local-development/#remote-bindings)).
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -1573,7 +1573,6 @@ You can configure various aspects of local development, such as the local protoc
 
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
   - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
-    Example:
 
 - `generate_types` <Type text="boolean" /> <MetaInfo text="optional" />
   - Generate types from your Worker configuration. Defaults to `false`.

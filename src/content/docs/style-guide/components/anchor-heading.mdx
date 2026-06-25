@@ -14,7 +14,7 @@ The `AnchorHeading` component defines headings. Specifically, `AnchorHeading` pe
 3. Creates a button to copy the URL at each fragment.
 4. Allows heading fragments to be defined separately from the text of the heading itself.
 
-```mdx live
+```mdx
 import { AnchorHeading } from "~/components";
 
 <AnchorHeading title="How to use AnchorHeading" slug="use-anchorheading" depth={2} />
@@ -24,7 +24,7 @@ Markdown files (including partials) have this behavior by default, applied via r
 
 To override the ID given to a heading within Markdown, add an MDX comment at the end of the line:
 
-```mdx live
+```mdx
 ## foo {/*bar*/}
 {/* HTML: <h2 id="bar">foo</h2> */}
 ```

@@ -1,0 +1,249 @@
+---
+title: AI SDK integration
+description: Use AI SDK tools with Code Mode through createCodeTool(), namespaced providers, or ToolSetConnector for durable execution.
+pcx_content_type: integration-guide
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+The `@cloudflare/codemode/ai` entry point converts AI SDK tools into one Code Mode tool. The model writes JavaScript that calls your tools, and an executor runs that code in an isolated sandbox.
+
+Choose between two integration patterns:
+
+| Pattern                                    | Use case                                                    | Approval behavior                                |
+| ------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------ |
+| `createCodeTool()`                         | Simple, stateless execution with one or more tool providers | Excludes tools that use `needsApproval`          |
+| `ToolSetConnector` or `toolSetConnector()` | Durable execution through a Code Mode runtime               | Maps `needsApproval` to durable runtime approval |
+
+## Create a stateless Code Mode tool
+
+`createCodeTool()` accepts an AI SDK `ToolSet` or an array of tool providers. It also requires an executor. It returns a standard AI SDK tool for use with `streamText()` or `generateText()`.
+
+<Steps>
+
+1. Install Code Mode, the AI SDK, and Zod:
+
+   <PackageManagers pkg="@cloudflare/codemode agents ai zod" />
+
+2. Add a Worker Loader binding for `DynamicWorkerExecutor`:
+
+   <WranglerConfig>
+
+   ```toml
+   compatibility_date = "$today"
+   compatibility_flags = ["nodejs_compat"]
+
+   [[worker_loaders]]
+   binding = "LOADER"
+   ```
+
+   </WranglerConfig>
+
+3. Define executable AI SDK tools. Code Mode uses their schemas to generate types and validate arguments before calling `execute`.
+
+   <TypeScriptExample filename="src/tools.ts">
+
+   ```ts
+   import { tool } from "ai";
+   import { z } from "zod";
+
+   export const weatherTools = {
+     getWeather: tool({
+       description: "Get the weather for a city",
+       inputSchema: z.object({
+         city: z.string().describe("City name")
+       }),
+       outputSchema: z.object({
+         city: z.string(),
+         conditions: z.string()
+       }),
+       execute: async ({ city }) => ({
+         city,
+         conditions: "sunny"
+       })
+     })
+   };
+   ```
+
+   </TypeScriptExample>
+
+   Each sandbox-callable tool needs an `execute` function. Client-side or provider-executed tools cannot run through this server-side executor.
+
+4. Create the Code Mode tool and pass it to an AI SDK model call:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+   import { createCodeTool } from "@cloudflare/codemode/ai";
+   import { generateText, stepCountIs } from "ai";
+   import { model } from "./model";
+   import { weatherTools } from "./tools";
+
+   export default {
+    	async fetch(request, env): Promise<Response> {
+    		const executor = new DynamicWorkerExecutor({ loader: env.LOADER });
+    		const codemode = createCodeTool({ tools: weatherTools, executor });
+
+    		const response = await generateText({
+    			model,
+    			prompt: await request.text(),
+    			tools: { codemode },
+    			stopWhen: stepCountIs(5),
+    		});
+
+    		return new Response(response.text);
+    	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+</Steps>
+
+The example uses `generateText()` for a completed response. You can pass the same `codemode` tool to `streamText()` for streaming. The generated tool description includes TypeScript definitions for `getWeather`. The model still writes JavaScript, such as:
+
+```js
+async () => {
+	const weather = await codemode.getWeather({ city: "Lisbon" });
+	return weather.conditions;
+};
+```
+
+The default namespace is `codemode`. `createCodeTool()` also accepts a custom `description`. Include `{{types}}` in that description where Code Mode should insert the generated definitions.
+
+## Organize tools with providers
+
+A tool provider groups tools under one sandbox namespace. Pass the tool set directly when every tool belongs under `codemode.*`.
+
+Use `aiTools()` when combining AI SDK tools with providers from other packages. The following optional workspace example also requires `@cloudflare/shell`:
+
+<PackageManagers pkg="@cloudflare/shell" />
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+import { aiTools, createCodeTool } from "@cloudflare/codemode/ai";
+import { Workspace } from "@cloudflare/shell";
+import { stateTools } from "@cloudflare/shell/workers";
+import { weatherTools } from "./tools";
+
+export class Chat extends AIChatAgent<Env> {
+	workspace = new Workspace({ sql: this.ctx.storage.sql });
+
+	codemodeTool() {
+		return createCodeTool({
+			tools: [aiTools(weatherTools), stateTools(this.workspace)],
+			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+This example exposes AI SDK tools as `codemode.*` and workspace tools as `state.*`.
+
+To assign custom namespaces, pass provider objects instead:
+
+<TypeScriptExample>
+
+```ts
+const executor = new DynamicWorkerExecutor({ loader: env.LOADER });
+
+const codemode = createCodeTool({
+	tools: [
+		{ name: "weather", tools: weatherTools },
+		{ name: "notifications", tools: notificationTools },
+	],
+	executor,
+});
+```
+
+</TypeScriptExample>
+
+The generated code can then call `weather.getWeather()` and `notifications.send()`. Provider names must be unique, valid JavaScript identifiers.
+
+## Use AI SDK tools with the durable runtime
+
+Use `ToolSetConnector` or its `toolSetConnector()` convenience function when runs need durable state. The connector adapts an AI SDK `ToolSet` for `createCodemodeRuntime()`. The helper returns `new ToolSetConnector(ctx, options)`.
+
+Create the connector from inside an Agent or another Durable Object:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import {
+	createCodemodeRuntime,
+	DynamicWorkerExecutor,
+} from "@cloudflare/codemode";
+import { toolSetConnector } from "@cloudflare/codemode/ai";
+import { convertToModelMessages, streamText } from "ai";
+import { model } from "./model";
+import { operationTools } from "./tools";
+
+// Export this manually when the @cloudflare/codemode/vite plugin is not configured.
+export { CodemodeRuntime } from "@cloudflare/codemode";
+
+export class OperationsAgent extends AIChatAgent<Env> {
+	async onChatMessage() {
+		const operations = toolSetConnector(this.ctx, {
+			name: "operations",
+			instructions: "Use these tools to manage customer requests.",
+			tools: operationTools,
+		});
+
+		const runtime = createCodemodeRuntime({
+			ctx: this.ctx,
+			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
+			connectors: [operations],
+		});
+
+		const result = streamText({
+			model,
+			messages: await convertToModelMessages(this.messages),
+			tools: { codemode: runtime.tool() },
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+The example exports `CodemodeRuntime` manually. If you configure the Code Mode Vite plugin as described in [Create a durable Code Mode runtime](/agents/tools/codemode/durable-runtime/), remove that manual export because the plugin adds it.
+
+The connector defaults to the `tools` namespace when `name` is omitted. It excludes tools without an `execute` function from both generated types and sandbox bindings.
+
+The durable runtime adds an execution log, pause and resume behavior, and on-demand connector discovery. The model can find methods with `codemode.search()` and inspect their types with `codemode.describe()`.
+
+## Approval behavior
+
+The two integration patterns handle AI SDK approvals differently.
+
+### `createCodeTool()` approvals
+
+`createCodeTool()` filters out tools where `needsApproval` is `true` or a function. Filtered tools do not appear in generated types and cannot run from sandbox code. A tool with `needsApproval: false` remains available.
+
+This stateless path does not pause execution for AI SDK approval. Use a standard AI SDK tool outside Code Mode if that tool needs the AI SDK approval flow.
+
+### `ToolSetConnector` approvals
+
+`ToolSetConnector` maps AI SDK `needsApproval` to the durable runtime's `requiresApproval` annotation. Calling that tool pauses the run. Your application can inspect pending actions and resume the same execution with `runtime.approve({ executionId })`.
+
+A function-valued `needsApproval` cannot be evaluated before the sandbox supplies arguments. The connector therefore treats the tool as always requiring approval. `needsApproval: false` executes without pausing.
+
+This approval uses the Code Mode runtime's durable pause, approval, and replay flow. It does not use the AI SDK per-call approval flow.
