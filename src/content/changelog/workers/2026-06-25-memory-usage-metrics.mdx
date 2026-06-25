@@ -1,0 +1,25 @@
+---
+title: Track memory usage for Workers and Durable Objects in the dashboard
+description: The Workers Metrics tab now includes a Memory Usage chart that shows V8 isolate memory consumption across percentiles, helping you track memory trends and detect regressions.
+products:
+  - workers
+date: 2026-06-25
+---
+
+You can now monitor how much memory your Worker consumes across invocations with the new **Memory Usage** chart in the Workers Metrics tab, broken down by P50, P90, P99, and P999 percentiles.
+
+![Memory usage chart showing P50, P90, P99, and P999 percentiles with deployment markers](~/assets/images/changelog/workers/observability/2026-06-25-memory-usage.png)
+
+Memory usage measures the V8 [isolate](/workers/reference/how-workers-works/#isolates) memory at the time of each invocation. This is the same memory pool subject to the [128 MB per-isolate limit](/workers/platform/limits/#memory) — a single isolate can handle many concurrent requests and shares memory across them.
+
+Use the Memory Usage chart to:
+
+- **Track memory trends** — Spot gradual increases that may indicate a memory leak before they cause `Exceeded Memory` errors.
+- **Correlate with deployments** — Deployment markers on the chart help you identify whether a new version introduced a memory regression.
+- **Right-size your Worker** — Understand your baseline memory footprint and how much headroom you have before hitting the 128 MB limit.
+
+Memory usage metrics are also available for [Durable Objects](/durable-objects/observability/metrics-and-analytics/).
+
+To view memory usage, go to **Workers & Pages**, select your Worker, and open the **Metrics** tab. You can also query memory usage programmatically via the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-workers-metrics/) using the `workersInvocationsAdaptive` dataset — the `quantiles.memoryUsageBytesP50` through `quantiles.memoryUsageBytesP999` fields return percentile values in bytes.
+
+For local memory debugging, you can also [profile memory with DevTools](/workers/observability/dev-tools/memory-usage/) to take heap snapshots and identify specific objects causing high memory usage.
