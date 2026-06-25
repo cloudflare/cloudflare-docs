@@ -188,16 +188,16 @@ Allowlist this URL as a redirect URI at the upstream OAuth provider. OAuth provi
 
 #### Shared Cloudflare callback URL (opt-in)
 
-If you have enabled the shared callback URL for the portal, the portal uses a Cloudflare-owned URL instead:
+If you have turned on the shared callback URL for the portal, the portal uses a Cloudflare-owned URL instead:
 
 ```txt
 https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
 ```
 
-Use the shared callback URL when upstream vendors only allow a small number of redirect URIs in their allowlist, or when you want to use a single Cloudflare-owned URL across multiple portals. The shared callback URL is only used when explicitly enabled on the portal.
+Use the shared callback URL when upstream vendors only allow a small number of redirect URIs in their allowlist, or when you want to use a single Cloudflare-owned URL across multiple portals. The shared callback URL is only used when explicitly turned on for the portal.
 
 :::note
-If an upstream OAuth provider rejects the callback URL, verify that the correct URL for the portal (`https://<your-portal-hostname>/servers-callback` by default, or the shared Cloudflare URL when enabled) is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path.
+If an upstream OAuth provider rejects the callback URL, verify that the correct URL for the portal (`https://<your-portal-hostname>/servers-callback` by default, or the shared Cloudflare URL when turned on) is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path.
 :::
 
 ## Create a portal
