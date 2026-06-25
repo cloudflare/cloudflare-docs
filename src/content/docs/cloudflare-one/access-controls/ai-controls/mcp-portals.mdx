@@ -178,18 +178,26 @@ You can also trigger a sync via the API. The sync endpoint returns the current s
 
 When a user authorizes an upstream MCP server that requires per-user OAuth, the portal performs an OAuth authorization code flow with the upstream server on the user's behalf. As part of this flow, the portal registers a callback URL (`redirect_uri`) with the upstream server. The upstream server redirects to this URL after the user authorizes access.
 
-For newly created MCP servers, the portal uses a shared callback URL owned by Cloudflare:
+By default, the portal uses a callback URL on your portal domain:
+
+```txt
+https://<your-portal-hostname>/servers-callback
+```
+
+Allowlist this URL as a redirect URI at the upstream OAuth provider. OAuth providers typically exact-match the full URI including path.
+
+#### Shared Cloudflare callback URL (opt-in)
+
+If you have enabled the shared callback URL for the portal, the portal uses a Cloudflare-owned URL instead:
 
 ```txt
 https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
 ```
 
-Upstream MCP server vendors only need to allowlist this single Cloudflare URL rather than each individual portal hostname. This resolves issues where some vendors rejected portal-specific hostnames that were not in their redirect URI allowlists.
-
-Existing MCP servers that were created before this change continue to use the portal domain as the callback URL (for example, `https://my-portal.example.com/servers-callback`). No action is required for existing servers.
+Use the shared callback URL when upstream vendors only allow a small number of redirect URIs in their allowlist, or when you want to use a single Cloudflare-owned URL across multiple portals. The shared callback URL is only used when explicitly enabled on the portal.
 
 :::note
-If an upstream OAuth provider rejects the callback URL, verify that `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback` is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path. For existing servers that still use per-portal callbacks, allowlist the portal domain instead.
+If an upstream OAuth provider rejects the callback URL, verify that the correct URL for the portal (`https://<your-portal-hostname>/servers-callback` by default, or the shared Cloudflare URL when enabled) is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path.
 :::
 
 ## Create a portal
@@ -1004,8 +1012,8 @@ To resolve this, [reauthenticate the server](#reauthenticate-the-mcp-server) wit
 
 Errors such as `invalid_redirect_uri`, `invalid_client_metadata`, or `Redirect URI not allowed` indicate that the upstream MCP server rejected the callback URL that the portal registered during the OAuth flow. Refer to [Upstream OAuth callback URL](#upstream-oauth-callback-url) for background on how the callback URL is determined.
 
-1. For newly created servers, the upstream provider must allowlist `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback` as a redirect URI. OAuth providers typically exact-match the full URI including path. Contact the upstream MCP server vendor if you do not control the allowlist.
-2. For servers created before this feature was introduced, the upstream provider must allowlist your portal domain (for example, `https://my-portal.example.com`). To switch to the shared callback URL, delete the server and re-add it.
+1. By default, the upstream provider must allowlist `https://<your-portal-hostname>/servers-callback` as a redirect URI (for example, `https://my-portal.example.com/servers-callback`). OAuth providers typically exact-match the full URI including path. Contact the upstream MCP server vendor if you do not control the allowlist.
+2. If the portal is configured to use the [shared Cloudflare callback URL](#shared-cloudflare-callback-url-opt-in), the upstream provider must instead allowlist `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`.
 
 ### Tool calls fail when Gateway routing is turned on.
 
