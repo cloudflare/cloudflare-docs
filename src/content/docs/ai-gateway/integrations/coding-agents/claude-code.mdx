@@ -1,6 +1,6 @@
 ---
 title: Claude Code
-description: Route Claude Code through AI Gateway using your own Anthropic API key.
+description: Route Claude Code through AI Gateway using your Cloudflare gateway token.
 pcx_content_type: configuration
 sidebar:
   order: 1
@@ -10,7 +10,7 @@ products:
 
 import { Tabs, TabItem, Steps } from "~/components";
 
-[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) reads its endpoint and credentials from environment variables. This configuration sends requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/) using your own Anthropic API key, passed directly in the `ANTHROPIC_API_KEY` environment variable. The Anthropic endpoint exposes the same `/v1/messages` API that Claude Code expects.
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) reads its endpoint and credentials from environment variables. This configuration sends requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/), authenticated with your Cloudflare gateway token. The Anthropic endpoint exposes the same `/v1/messages` API that Claude Code expects. With [Unified Billing](/ai-gateway/features/unified-billing/), Cloudflare pays the provider and bills you, so you do not need an Anthropic API key.
 
 ## Prerequisites
 
@@ -18,16 +18,18 @@ Before you start, you need:
 
 - An [authenticated gateway](/ai-gateway/configuration/authentication/) and its [gateway token](/ai-gateway/configuration/authentication/#setting-up-authenticated-gateway-using-the-dashboard). The gateway token must have `Run` permissions.
 - Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
-- An Anthropic API key. To create one, go to [Account Settings](https://platform.claude.com/settings/keys) in the Claude Console. For more information, refer to [Anthropic's API overview](https://docs.anthropic.com/en/api/overview).
+- Credentials for the provider you route to:
+  - **Anthropic**: [Unified Billing](/ai-gateway/features/unified-billing/) credits loaded on your Cloudflare account. No Anthropic API key is required.
+  - **Amazon Bedrock** or **Google Vertex AI**: your provider credentials stored in AI Gateway as a [provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/).
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup) installed and updated to the latest version.
 
 :::note
-This configuration does not use [BYOK (Store Keys)](/ai-gateway/configuration/bring-your-own-keys/). The Anthropic API key comes from the `ANTHROPIC_API_KEY` environment variable, not from a key stored in AI Gateway. Anthropic bills you for model usage, and AI Gateway provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
+The `cf-aig-authorization` header is what authenticates your request to AI Gateway. For the Anthropic flow, `ANTHROPIC_API_KEY` is set to the same gateway token only because Claude Code requires the variable to be set — it is not an Anthropic API key. With [Unified Billing](/ai-gateway/features/unified-billing/), Cloudflare bills you for model usage, and AI Gateway provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
 :::
 
 <Steps>
 
-1. Set the base URL to your gateway's Anthropic endpoint and send your gateway token both in the `ANTHROPIC_API_KEY` and the `cf-aig-authorization` header. The following commands set these as shell environment variables for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) or to Claude Code's [`settings.json`](https://docs.anthropic.com/en/docs/claude-code/settings#settings-files) under the `env` key.
+1. Set the base URL to your gateway's Anthropic endpoint and send your gateway token in the `cf-aig-authorization` header. Set `ANTHROPIC_API_KEY` to the same token, since Claude Code requires the variable to be set. The following commands set these as shell environment variables for the current session. To persist them, add them to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) or to Claude Code's [`settings.json`](https://docs.anthropic.com/en/docs/claude-code/settings#settings-files) under the `env` key.
 
    Replace `<ACCOUNT_ID>`, `<GATEWAY_ID>`, and `<CF_AIG_TOKEN>` with your values.
 
@@ -73,7 +75,7 @@ To run Claude models through [Amazon Bedrock](/ai-gateway/usage/providers/bedroc
 
    ```bash
    export CLAUDE_CODE_USE_BEDROCK="1"
-   export ANTHROPIC_BEDROCK_BASE_URL="https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/aws-bedrock/bedrock-runtime/<AWS_REGION>"
+   export ANTHROPIC_BEDROCK_BASE_URL="https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/aws-bedrock/bedrock-runtime/<AWS_REGION>/"
    export CLAUDE_CODE_SKIP_BEDROCK_AUTH="1"
    export ANTHROPIC_CUSTOM_HEADERS="cf-aig-authorization: Bearer <CF_AIG_TOKEN>"
    ```
@@ -83,7 +85,7 @@ To run Claude models through [Amazon Bedrock](/ai-gateway/usage/providers/bedroc
 
    ```powershell
    $env:CLAUDE_CODE_USE_BEDROCK = "1"
-   $env:ANTHROPIC_BEDROCK_BASE_URL = "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/aws-bedrock/bedrock-runtime/<AWS_REGION>"
+   $env:ANTHROPIC_BEDROCK_BASE_URL = "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/aws-bedrock/bedrock-runtime/<AWS_REGION>/"
    $env:CLAUDE_CODE_SKIP_BEDROCK_AUTH = "1"
    $env:ANTHROPIC_CUSTOM_HEADERS = "cf-aig-authorization: Bearer <CF_AIG_TOKEN>"
    ```
