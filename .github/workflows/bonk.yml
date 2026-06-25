@@ -83,6 +83,10 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
           CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
+          # Auto-approve tool calls in CI only, so Bonk doesn't get stuck on
+          # approval prompts. This is intentionally not in opencode.jsonc so
+          # local/interactive sessions keep their normal permission prompts.
+          OPENCODE_CONFIG_CONTENT: '{"permission":"allow"}'
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
           opencode_version: "1.17.7"
@@ -139,6 +143,10 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
           CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
+          # Auto-approve tool calls in CI only, so Bonk doesn't get stuck on
+          # approval prompts. This is intentionally not in opencode.jsonc so
+          # local/interactive sessions keep their normal permission prompts.
+          OPENCODE_CONFIG_CONTENT: '{"permission":"allow"}'
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
           opencode_version: "1.17.7"
