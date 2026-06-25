@@ -18,7 +18,7 @@ Use the Memory Usage chart to:
 - **Correlate with deployments** — Deployment markers on the chart help you identify whether a new version introduced a memory regression.
 - **Right-size your Worker** — Understand your baseline memory footprint and how much headroom you have before hitting the 128 MB limit.
 
-Memory usage metrics are also available for [Durable Objects](/durable-objects/observability/metrics-and-analytics/).
+Memory usage metrics are also available for Durable Objects.
 
 To view memory usage, go to **Workers & Pages**, select your Worker, and open the **Metrics** tab. You can also query memory usage programmatically via the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-workers-metrics/) using the `workersInvocationsAdaptive` dataset — the `quantiles.memoryUsageBytesP50` through `quantiles.memoryUsageBytesP999` fields return percentile values in bytes.
 
