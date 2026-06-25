@@ -99,7 +99,7 @@ export async function getAutoReviewCount(
  * The counter is incremented on successful completion (not at the start of a
  * run), and deduplicated per head SHA. This means interrupted or failed runs
  * never burn an auto-review slot, and re-runs of the same head SHA (e.g. a
- * watchdog recovery) are not double-counted. The cap therefore limits the
+ * re-runs of the same head SHA are not double-counted. The cap therefore limits the
  * number of *delivered* automatic reviews, which is the intended behavior.
  */
 export async function markAutoReviewCompleted(
@@ -154,109 +154,4 @@ export async function setReviewLimitIgnored(
 		key,
 		JSON.stringify({ ignored: true, actor, setAt: new Date().toISOString() }),
 	);
-}
-
-// ── In-flight review markers ─────────────────────────────────────────────────
-//
-// A marker records that a code-review-orchestrator run is in progress and has
-// posted a "review in progress" placeholder comment that it still owes a final
-// update. The orchestrator writes the marker after posting the placeholder,
-// records the specialist run IDs once they are admitted, and clears it on every
-// terminal path. If the orchestrator's Durable Object is interrupted mid-run,
-// Flue does not resume the workflow (workflows are not resumable), so the marker
-// is left behind — that lingering marker is the durable signal the scheduled
-// watchdog uses to re-drive the review.
-//
-// Markers live under a dedicated `inflight/` prefix (not `diffs/pr-<n>/`) so the
-// watchdog can list only the small set of in-flight reviews instead of scanning
-// every PR's review state.
-
-export interface ReviewInflight {
-	/** Head SHA the placeholder was posted for. */
-	headSha: string;
-	/** Epoch ms when this run posted its placeholder. */
-	startedAt: number;
-	/** Run ID of the orchestrator that owns this marker. */
-	orchestratorRunId: string;
-	/** Specialist run IDs ([code, style]) once admitted; absent before dispatch. */
-	specialistRunIds?: string[];
-	/** 0 for the original run; incremented for each watchdog-driven retry. */
-	attempt: number;
-}
-
-/** A marker plus the PR number parsed from its key. */
-export interface ReviewInflightEntry extends ReviewInflight {
-	prNumber: number;
-}
-
-const inflightKey = (prNumber: number) => `inflight/pr-${prNumber}.json`;
-
-/** Create or overwrite the in-flight marker for a PR. */
-export async function setReviewInflight(
-	bucket: R2Bucket,
-	prNumber: number,
-	marker: ReviewInflight,
-): Promise<void> {
-	await bucket.put(inflightKey(prNumber), JSON.stringify(marker));
-}
-
-/** Read the in-flight marker for a PR, or null if none / unparseable. */
-export async function readReviewInflight(
-	bucket: R2Bucket,
-	prNumber: number,
-): Promise<ReviewInflight | null> {
-	const obj = await bucket.get(inflightKey(prNumber));
-	if (!obj) return null;
-	try {
-		return (await obj.json()) as ReviewInflight;
-	} catch {
-		return null;
-	}
-}
-
-/** Patch an existing in-flight marker. No-op if the marker is gone. */
-export async function updateReviewInflight(
-	bucket: R2Bucket,
-	prNumber: number,
-	patch: Partial<ReviewInflight>,
-): Promise<void> {
-	const current = await readReviewInflight(bucket, prNumber);
-	if (!current) return;
-	await bucket.put(
-		inflightKey(prNumber),
-		JSON.stringify({ ...current, ...patch }),
-	);
-}
-
-/** Delete the in-flight marker for a PR. Safe to call when none exists. */
-export async function clearReviewInflight(
-	bucket: R2Bucket,
-	prNumber: number,
-): Promise<void> {
-	await bucket.delete(inflightKey(prNumber));
-}
-
-/** List all in-flight markers, paging through the dedicated prefix. */
-export async function listReviewInflight(
-	bucket: R2Bucket,
-): Promise<ReviewInflightEntry[]> {
-	const entries: ReviewInflightEntry[] = [];
-	let cursor: string | undefined;
-	do {
-		const listed = await bucket.list({ prefix: "inflight/pr-", cursor });
-		for (const o of listed.objects) {
-			const match = o.key.match(/^inflight\/pr-(\d+)\.json$/);
-			if (!match) continue;
-			const obj = await bucket.get(o.key);
-			if (!obj) continue;
-			try {
-				const data = (await obj.json()) as ReviewInflight;
-				entries.push({ ...data, prNumber: Number(match[1]) });
-			} catch {
-				// Skip malformed markers.
-			}
-		}
-		cursor = listed.truncated ? listed.cursor : undefined;
-	} while (cursor);
-	return entries;
 }

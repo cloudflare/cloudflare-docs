@@ -106,7 +106,7 @@ export const CODE_REVIEW_CONCURRENCY = 5;
  * slot. 10 min comfortably covers a complex file while still being well under the
  * orchestrator's 20-minute poll, which remains the overall bound — a PR where
  * many files are simultaneously slow can still exceed the poll, in which case the
- * section degrades and the watchdog re-drives it.
+ * section degrades.
  */
 export const CODE_REVIEW_FILE_TIMEOUT_MS = 10 * 60 * 1000;
 

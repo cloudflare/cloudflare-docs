@@ -7,7 +7,6 @@ import {
 	hasValidInternalToken,
 	normalizePathname,
 } from "./lib/internal-auth";
-import { runReviewWatchdog } from "./lib/review-watchdog";
 
 const bindings = workerEnv as unknown as {
 	AI: Ai;
@@ -58,19 +57,4 @@ app.use("/workflows/*", async (c, next) => {
 // identities leaking through the mount boundary.
 app.route("/", flue() as unknown as HonoApp);
 
-// Export a module worker so we can attach a cron-triggered `scheduled` handler
-// alongside `fetch`. The scheduled handler runs the code-review watchdog, which
-// re-drives reviews whose orchestrator Durable Object was interrupted (Flue does
-// not resume interrupted workflows). See lib/review-watchdog.ts.
-export default {
-	fetch: app.fetch,
-	async scheduled(
-		_controller: ScheduledController,
-		env: unknown,
-		ctx: ExecutionContext,
-	): Promise<void> {
-		ctx.waitUntil(
-			runReviewWatchdog(env as Parameters<typeof runReviewWatchdog>[0]),
-		);
-	},
-};
+export default app;

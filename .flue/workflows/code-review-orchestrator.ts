@@ -42,15 +42,12 @@ import { admitWorkflow, pollRun } from "../lib/poll-run";
 import { toReviewSpecialistPrMeta } from "../lib/review-specialist";
 import {
 	BOT_COMMENT_MARKER,
-	clearReviewInflight,
 	type DiffMode,
 	extractReviewedHeadSha,
 	getAutoReviewCount,
 	isReviewLimitIgnored,
 	markAutoReviewCompleted,
 	partitionComments,
-	setReviewInflight,
-	updateReviewInflight,
 } from "../lib/code-review-state";
 import {
 	ReconcileResultSchema,
@@ -74,12 +71,6 @@ interface CodeReviewOrchestratorPayload {
 	triggerCommentId?: number;
 	/** Reaction ID of the 👀 reaction to remove when review completes. */
 	triggerEyesReactionId?: number | null;
-	/**
-	 * Set by the scheduled watchdog when re-driving a stuck review. 0 (or absent)
-	 * for the original run; incremented on each recovery so the watchdog can cap
-	 * retries. Recorded in the in-flight marker.
-	 */
-	watchdogAttempt?: number;
 }
 
 export async function run({ id: runId, init, payload, env, req }: FlueContext) {
@@ -224,12 +215,9 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 	// prDir is the R2 key prefix for the cross-run review-state objects.
 	const prDir = `diffs/pr-${input.number}`;
 
-	// ── 2. Post the placeholder comment + record the in-flight marker ──────────
+	// ── 2. Post the placeholder comment ──────────────────────────────────────
 	// In comment mode, immediately post/update with a "review in progress"
-	// message so the reviewer sees something right away, and record an in-flight
-	// marker. Flue does not resume an interrupted workflow, so if this DO is
-	// interrupted before the review finishes, the lingering marker is what lets
-	// the scheduled watchdog (lib/review-watchdog.ts) re-drive the review.
+	// message so the reviewer sees something right away.
 	if (reviewMode === "comment") {
 		await postOrUpdateComment(
 			token,
@@ -242,12 +230,6 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 				botComment?.body ?? undefined,
 			),
 		);
-		await setReviewInflight(bucket, input.number, {
-			headSha: currentHeadSha,
-			startedAt: Date.now(),
-			orchestratorRunId: runId,
-			attempt: input.watchdogAttempt ?? 0,
-		});
 	}
 
 	// ── 3. Dispatch both specialist workflows and poll them in parallel ────────
@@ -279,10 +261,7 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 		action: "specialists_dispatch",
 	});
 
-	// Admit both specialists first so we can record their run IDs in the
-	// in-flight marker. That lets the watchdog detect a dead orchestrator
-	// quickly: both specialists terminal while this run made no further progress
-	// means the parent is gone, so recovery need not wait out the age safety net.
+	// Admit both specialists concurrently.
 	type AdmitOutcome =
 		| { ok: true; runId: string }
 		| { ok: false; reason: string };
@@ -307,16 +286,6 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 		admitSpecialist("/workflows/code-review-specialist"),
 		admitSpecialist("/workflows/style-guide-specialist"),
 	]);
-
-	if (reviewMode === "comment") {
-		const specialistRunIds = [
-			codeAdmit.ok ? codeAdmit.runId : null,
-			styleAdmit.ok ? styleAdmit.runId : null,
-		].filter((id): id is string => id !== null);
-		await updateReviewInflight(bucket, input.number, {
-			specialistRunIds,
-		}).catch(() => {});
-	}
 
 	// Poll an admitted specialist to completion. Never throws — returns an
 	// ok/result outcome the caller maps to a review section.
@@ -423,10 +392,6 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 				});
 			}
 		}
-		// Terminal (delivered a visible failure comment) — drop the marker so the
-		// watchdog does not re-drive it; the message tells the author it will
-		// retry on the next push.
-		await clearReviewInflight(bucket, input.number).catch(() => {});
 		return {
 			mode: reviewMode,
 			active: 0,
@@ -646,14 +611,12 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 
 	// Count this toward the auto-review cap only on successful completion (not at
 	// the start), and only for automatic runs — so interrupted/failed runs and
-	// codeowner/watchdog (bypass) runs never burn a slot. Then drop the in-flight
-	// marker so the watchdog knows the review was delivered.
+	// codeowner-bypassed runs never burn a slot.
 	if (!input.bypassReviewLimit) {
 		await markAutoReviewCompleted(bucket, input.number, currentHeadSha).catch(
 			() => {},
 		);
 	}
-	await clearReviewInflight(bucket, input.number).catch(() => {});
 
 	return {
 		mode: reviewMode,
@@ -687,8 +650,6 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 			typeof input.triggerEyesReactionId === "number"
 				? input.triggerEyesReactionId
 				: null,
-		watchdogAttempt:
-			typeof input.watchdogAttempt === "number" ? input.watchdogAttempt : 0,
 	};
 }
 
