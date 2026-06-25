@@ -1,0 +1,523 @@
+# Local observability for Workers local development
+
+Local observability captures traces, spans, and logs from local Workers development. Use it to understand what your Worker did during `wrangler dev` or Vite development before deploying.
+
+When local observability is turned on, Wrangler/Miniflare writes structured observability data to a local trace store. You can inspect that data in Local Explorer, query it with the Wrangler CLI, or expose it to a coding agent through the optional hosted MCP endpoint.
+
+> **Experimental**
+>
+> Local observability is experimental. Commands, captured fields, storage layout, and MCP behavior may change.
+
+## Install the preview build
+
+Use the preview packages from the Workers SDK PR.
+
+**Use the preview Wrangler binary**
+
+> The `wrangler observability` commands are only available in the preview build for this PR. If `npx wrangler observability ...` returns `Unknown arguments`, your shell is running a Wrangler version that does not include these commands.
+>
+> After installing the preview package, prefer the project-local binary:
+>
+> ```sh
+> ./node_modules/.bin/wrangler observability logs --last 10
+> ```
+>
+> If you are testing from a local `workers-sdk` checkout, run:
+>
+> ```sh
+> node /path/to/workers-sdk/packages/wrangler/bin/wrangler.js observability logs --last 10
+> ```
+
+### Wrangler users
+
+Install the preview Wrangler package in your Worker project:
+
+```sh
+npm i -D https://pkg.pr.new/cloudflare/workers-sdk/wrangler@14391
+```
+
+### Vite users
+
+Install the preview Vite plugin package in your project:
+
+```sh
+npm i -D https://pkg.pr.new/cloudflare/workers-sdk/@cloudflare/vite-plugin@14391
+```
+
+If your project uses `pnpm` or `yarn`, use the equivalent package-manager command for adding a dev dependency.
+
+## Start capture
+
+### Wrangler
+
+Start local development with observability capture turned on:
+
+```sh
+npx wrangler dev --experimental-observability
+```
+
+Then send requests to your local Worker:
+
+```sh
+curl http://localhost:8787/
+```
+
+### Vite
+
+Start Vite with the local observability gate turned on:
+
+```sh
+X_LOCAL_OBSERVABILITY=true npx vite dev
+```
+
+You can also enable observability in the Cloudflare Vite plugin configuration when using a build that supports it:
+
+```ts
+cloudflare({
+  experimental: {
+    observability: true,
+  },
+});
+```
+
+## Open Local Explorer
+
+Open Local Explorer from the `wrangler dev` terminal by pressing `e`, or open the Local Explorer route on your local dev server:
+
+```txt
+http://localhost:<PORT>/cdn-cgi/explorer/
+```
+
+Go to **Observability**.
+
+After your first local request, the **Traces** view should show a captured invocation.
+
+## Inspect traces in Local Explorer
+
+The **Traces** view lists recent local Worker invocations. Select a trace row to expand a waterfall of spans.
+
+Spans show work done by your Worker, including:
+
+- root request handling
+- `fetch()` calls
+- D1 queries
+- KV reads/writes
+- R2 operations
+- Durable Object calls
+- other instrumented runtime operations
+
+Use the trace waterfall to find:
+
+- slow binding calls
+- failed subrequests
+- repeated operations, such as N+1 D1 queries
+- the sequence of operations inside one invocation
+
+Each trace can include:
+
+- `trace_id`
+- operation name, such as `GET /checkout`
+- status code
+- outcome
+- duration
+- span count
+- errors, when available
+- span attributes, such as query text, URLs, binding names, and response metadata
+
+### Filter traces
+
+Use the trace search bar to narrow the trace list.
+
+| Filter | Matches |
+| --- | --- |
+| `status:error` | Traces with errors or error-like status codes |
+| `status:success` | Successful traces |
+| `kind:d1` | Traces with D1 spans |
+| `kind:fetch` | Traces with `fetch()` spans |
+| `dur:>100` | Traces longer than `100` ms |
+| `db.query.text:orders` | D1 spans whose SQL text includes `orders` |
+
+You can combine filters:
+
+```txt
+status:error kind:d1 dur:>50
+```
+
+To find POST requests, search for:
+
+```txt
+POST
+```
+
+or, when request-method attributes are present:
+
+```txt
+http.request.method:POST
+```
+
+## Inspect logs in Local Explorer
+
+The **Logs** view shows captured `console.*` output from your local Worker. Use it to inspect logs without relying on terminal scrollback.
+
+You can:
+
+- search logs by text
+- filter logs by level
+- filter by operation name
+- expand log rows for more context
+- correlate logs with traces when they belong to a captured invocation
+
+### Filter logs
+
+| Filter | Matches |
+| --- | --- |
+| `level:error` | Error logs |
+| `level:warn` | Warning logs |
+| `op:/checkout` | Logs for matching operations |
+| `timeout` | Logs that include matching text |
+
+## Clear captured data
+
+Select **Clear** in the Observability UI to remove captured local traces, spans, and logs.
+
+This is useful when you want to reproduce a bug from a clean state. It only affects local observability data for your development session. It does not affect deployed Workers or production observability data.
+
+## Query from the Wrangler CLI
+
+The preview Wrangler package includes experimental `wrangler observability` commands for reading the local trace store.
+
+These commands read local data from disk. They can work while `wrangler dev` is running and after it exits, as long as the local persistence directory still exists.
+
+Show recent logs:
+
+```sh
+./node_modules/.bin/wrangler observability logs --last 10
+```
+
+Filter logs by level:
+
+```sh
+npx wrangler observability logs --level error --last 20
+```
+
+Show recent traces:
+
+```sh
+npx wrangler observability traces --last 20
+```
+
+Show one trace:
+
+```sh
+npx wrangler observability trace <TRACE_ID>
+```
+
+Run a read-only SQL query against the local observability store:
+
+```sh
+npx wrangler observability query "SELECT * FROM traces ORDER BY start_ms DESC LIMIT 5"
+```
+
+Output defaults to CSV for many commands. Add `--json` for JSON output:
+
+```sh
+npx wrangler observability traces --last 20 --json
+```
+
+If you started dev with a custom persistence directory, pass the same directory to the observability command:
+
+```sh
+npx wrangler observability traces --persist-to <DIRECTORY>
+```
+
+### Example SQL queries
+
+Recent failed invocations:
+
+```sh
+npx wrangler observability query "
+SELECT trace_id, name, status_code, outcome, error, duration_ms
+FROM traces
+WHERE parent_span_id IS NULL
+  AND (status_code >= 500 OR error IS NOT NULL OR outcome != 'ok')
+ORDER BY start_ms DESC
+LIMIT 20
+"
+```
+
+Slowest routes:
+
+```sh
+npx wrangler observability query "
+SELECT name,
+       COUNT(*) AS requests,
+       ROUND(AVG(duration_ms), 1) AS avg_ms,
+       ROUND(MAX(duration_ms), 1) AS max_ms
+FROM traces
+WHERE parent_span_id IS NULL
+GROUP BY name
+ORDER BY avg_ms DESC
+LIMIT 20
+"
+```
+
+Routes with the most D1 calls:
+
+```sh
+npx wrangler observability query "
+SELECT t.name, t.trace_id, COUNT(*) AS d1_calls
+FROM spans s
+JOIN traces t ON t.trace_id = s.trace_id AND t.parent_span_id IS NULL
+WHERE s.kind = 'd1'
+GROUP BY t.trace_id, t.name
+ORDER BY d1_calls DESC
+LIMIT 20
+"
+```
+
+Recent error logs:
+
+```sh
+npx wrangler observability query "
+SELECT created_at, operation, level, message, trace_id
+FROM logs
+WHERE level = 'error'
+ORDER BY created_at DESC
+LIMIT 20
+"
+```
+
+## Print agent guidance
+
+Print command, schema, and query guidance for coding agents:
+
+```sh
+npx wrangler observability skill
+```
+
+Install the local observability skill into detected coding agents:
+
+```sh
+npx wrangler observability skill --install
+```
+
+Use this when you want a local coding agent to query traces, spans, and logs through the Wrangler CLI instead of guessing the schema.
+
+## Connect an agent through hosted Codemode MCP
+
+Wrangler CLI commands are the lowest-friction way for local coding agents to inspect observability data. For agents that support MCP, Local Explorer can also expose a hosted Codemode MCP endpoint.
+
+Start dev with both observability capture and MCP turned on:
+
+```sh
+X_LOCAL_OBSERVABILITY_MCP=true npx wrangler dev --experimental-observability
+```
+
+The MCP endpoint is hosted by Miniflare at:
+
+```txt
+http://localhost:<PORT>/cdn-cgi/explorer/mcp
+```
+
+In Local Explorer, go to **Observability** > **MCP** or **Agent Access** (depending on the build) to copy the endpoint/config snippet and configure agent permissions.
+
+The hosted MCP exposes two tools:
+
+- `explorer_api` — describes the local dev APIs available to the agent.
+- `run` — executes a JavaScript snippet with a governed `cf` client in scope.
+
+Example `run` snippet:
+
+```js
+return await cf.traces.query(`
+  SELECT trace_id, name, status_code, duration_ms
+  FROM traces
+  WHERE parent_span_id IS NULL
+  ORDER BY start_ms DESC
+  LIMIT 5
+`);
+```
+
+The `cf` client can query local traces and, if allowed, inspect local resources such as D1, KV, R2, Durable Objects, and Workflows.
+
+## Agent access controls
+
+The Agent Access/MCP page controls what a connected agent can read.
+
+You can configure:
+
+- log levels: `error`, `warn`, `info`, `log`, `debug`
+- D1 database access
+- KV namespace access
+- Durable Object namespace access
+- R2 bucket access
+- raw Local Explorer API access
+
+By default, application data bindings are not exposed to the agent. Grant access only to resources the agent needs for the debugging task.
+
+The page also shows **Agent activity**, an audit log of MCP calls. It records what the agent requested, which resources it attempted to access, and whether the call succeeded, errored, or was denied.
+
+## Local trace store schema
+
+The local observability store contains three main tables.
+
+### `traces`
+
+One row per root invocation or distributed trace root.
+
+```sql
+traces(
+  trace_id TEXT,
+  root_span_id TEXT,
+  parent_span_id TEXT,
+  name TEXT,
+  start_ms REAL,
+  end_ms REAL,
+  duration_ms REAL,
+  outcome TEXT,
+  status_code INTEGER,
+  error TEXT,
+  span_count INTEGER,
+  created_at TEXT
+)
+```
+
+### `spans`
+
+Operations inside a trace.
+
+```sql
+spans(
+  trace_id TEXT,
+  span_id TEXT,
+  parent_id TEXT,
+  name TEXT,
+  kind TEXT,
+  start_ms REAL,
+  end_ms REAL,
+  duration_ms REAL,
+  outcome TEXT,
+  error TEXT,
+  attributes TEXT
+)
+```
+
+`attributes` is a JSON string that can include details such as:
+
+- `db.query.text`
+- `cloudflare.binding.name`
+- `cloudflare.binding.type`
+- `cloudflare.d1.response.rows_read`
+- `url.full`
+- `http.request.method`
+- `http.response.status_code`
+
+### `logs`
+
+Captured `console.*` output.
+
+```sql
+logs(
+  trace_id TEXT,
+  span_id TEXT,
+  seq INTEGER,
+  ts_ms REAL,
+  level TEXT,
+  message TEXT,
+  operation TEXT,
+  created_at TEXT
+)
+```
+
+`message` is stored as a JSON array of the original console arguments.
+
+## Trace multiple Workers
+
+Local observability can stitch multiple Worker invocations into one trace when the Workers run in the same Miniflare instance. This works well with the Cloudflare Vite plugin and auxiliary Workers.
+
+Separate `wrangler dev` processes do not currently stitch into one trace. Each process captures its own local traces and logs.
+
+## Compare local and production traces
+
+Local observability does not currently provide a first-class local-vs-production diff command.
+
+You can still compare local and production traces manually by structure, not absolute latency. Local development and production run in different environments, so wall time can differ.
+
+Useful comparisons include:
+
+- D1 call count
+- KV read count
+- `fetch()` count
+- span tree shape
+- query text
+- error outcome
+- route volume
+
+## Troubleshooting
+
+### `wrangler observability` is not recognized
+
+Make sure you installed and are running the preview Wrangler package:
+
+```sh
+npm i -D https://pkg.pr.new/cloudflare/workers-sdk/wrangler@14391
+```
+
+Public `npx wrangler` versions may not include the experimental observability commands yet. If there is an error running `npx wrangler` commands, replace `npx wrangler` with `./node_modules/.bin/wrangler` when running the commands.
+
+### No traces appear
+
+Confirm that local observability is turned on:
+
+```sh
+npx wrangler dev --experimental-observability
+```
+
+Then send traffic to your local Worker.
+
+### CLI commands cannot find local data
+
+If you started `wrangler dev` with a custom persistence directory, pass the same directory to the observability command:
+
+```sh
+npx wrangler observability traces --persist-to <DIRECTORY>
+```
+
+### Local Explorer does not load or dev hangs on startup
+
+Your Worker may use bindings that proxy to remote resources, such as Workers AI, Vectorize, or Browser Rendering. If those resources are unreachable, for example because you are offline or behind Cloudflare Access, startup may be slow or fail.
+
+To run fully locally, add `--local`:
+
+```sh
+npx wrangler dev --experimental-observability --local
+```
+
+Remote-only bindings are unavailable in this mode.
+
+### MCP endpoint returns HTML on `GET`
+
+That is expected. Browser `GET` requests are handled by the Local Explorer single-page app.
+
+Test MCP with a JSON-RPC `POST` instead.
+
+### MCP endpoint returns 404
+
+Check that you started dev with MCP enabled:
+
+```sh
+X_LOCAL_OBSERVABILITY_MCP=true npx wrangler dev --experimental-observability
+```
+
+Also verify you are using the correct local dev port.
+
+### Multi-Worker traces are separate
+
+If Workers run in separate `wrangler dev` processes, local observability does not currently stitch them into one trace. Run related Workers in one Miniflare instance when you need a single distributed trace.
+
+## Next steps
+
+- Use **Traces** to inspect local invocation waterfalls.
+- Use **Logs** to inspect captured `console.*` output.
+- Use `wrangler observability query` for custom SQL over local traces, spans, and logs.
+- Use Agent Access/Codemode MCP when you want a coding agent to inspect local observability and selected local resources.
