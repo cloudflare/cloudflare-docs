@@ -80,6 +80,12 @@ User identity is useful for checking application permissions. For example, your 
 
 Due to cookie size limits and bandwidth considerations, the application token only contains a subset of the user's identity. To get the user's full identity, send the `CF_Authorization` cookie to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/get-identity`. Your request should be structured as follows:
 
+:::caution[Group claims are not guaranteed in the JWT]
+Access includes identity provider groups in the application token on a best-effort basis. If the token approaches the 4 KB cookie size limit, Access drops the group claims to keep the cookie under the limit. Because group membership varies per user, this means a user who belongs to many groups may receive a token without group claims, while other users authenticating to the same application receive them.
+
+Do not rely on group claims in the JWT for authorization decisions. If your application needs a user's groups, call the `/cdn-cgi/access/get-identity` endpoint instead, which always returns the full set of groups.
+:::
+
 ```sh
 curl -H 'cookie: CF_Authorization=<user-token>' https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/get-identity
 ```
