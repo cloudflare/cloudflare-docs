@@ -1,10 +1,9 @@
 ---
 import { z } from "astro/zod";
-import { marked } from "marked";
 import { slug as GithubSlug } from "github-slugger";
+import { defineHastPlugin, markdownToHtml } from "satteri";
 
-import { process } from "~/util/rehype";
-import rehypeAutoLinkHeadings from "~/plugins/rehype/autolink-headings";
+import autolinkHeadings from "~/plugins/satteri/autolink-headings";
 
 type Props = z.infer<typeof props>;
 
@@ -16,14 +15,29 @@ const props = z.object({
 
 const { title, slug, depth } = props.parse(Astro.props);
 
-const slugified = GithubSlug(slug ?? title);
+/**
+ * An inline plugin that adds an ID to the header so it can be linked by `autolinkHeadings`.
+ * The syntax used for the `headingSlugs` plugin can't be used here because satteri does not have a simple way to go from mdx to html.
+ * This one-off plugin allows us to do the same thing via pure md.
+ **/
+const setHeadingId = defineHastPlugin({
+	name: "set-heading-id",
+	element: {
+		filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
+		visit(node, ctx) {
+			const id = slug ?? ctx.textContent(node);
+			if (id) {
+				ctx.setProperty(node, "id", GithubSlug(id));
+			}
+		},
+	},
+});
 
-const tag = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-
-const html = await process(
-	`<${tag} id=${slugified}>${marked.parseInline(title)}</${tag}>`,
-	[rehypeAutoLinkHeadings],
-);
+const md = `${"#".repeat(depth)} ${title}`;
+const { html } = markdownToHtml(md, {
+	features: { gfm: true, smartPunctuation: false },
+	hastPlugins: [setHeadingId, autolinkHeadings],
+});
 ---
 
 <Fragment set:html={html} />
