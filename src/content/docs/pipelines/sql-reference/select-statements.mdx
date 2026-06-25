@@ -150,12 +150,6 @@ SELECT user_id, created_at FROM events
 WHERE event_type = 'signup';
 ```
 
-When you route one stream to multiple sinks:
-
-- Each statement must write to a different sink. Two statements cannot write to the same sink.
-- Each statement can select a different subset of columns and apply its own `WHERE` clause.
-- The stream has a single schema. Each statement projects the columns relevant to its destination.
-
 To provide multiple statements with the Wrangler CLI, pass a file with the `--sql-file` flag:
 
 ```bash
