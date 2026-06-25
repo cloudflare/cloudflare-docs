@@ -74,6 +74,12 @@ Change into your new project directory:
 cd bluesky-pipeline
 ```
 
+The `pipelines` commands used later require Wrangler v4 or later. If your project was scaffolded with an older version, update it now:
+
+```sh
+npm install --save-dev wrangler@latest
+```
+
 ## 2. Define the stream schema
 
 A stream has a single schema. Because every event type flows through the same stream, the schema is the union of the fields you want across all types. Each routing statement later selects only the columns relevant to its destination.
@@ -116,12 +122,6 @@ npx wrangler r2 bucket catalog enable bluesky-pipeline
 When you run this command, note the **Warehouse name**. You will need it to query your data with R2 SQL.
 
 ## 4. Create the stream, sinks, and pipeline
-
-The `pipelines` commands require Wrangler v4 or later. If your project was scaffolded with an older version, update it first:
-
-```sh
-npm install --save-dev wrangler@latest
-```
 
 First, create the stream from your schema file:
 
