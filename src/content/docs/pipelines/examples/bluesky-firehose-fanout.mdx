@@ -2,7 +2,7 @@
 pcx_content_type: example
 title: Fan out a stream to multiple Iceberg tables
 summary: Consume the Bluesky Jetstream firehose in a Durable Object, ingest it into a single Pipelines stream, and use one pipeline with multiple SQL statements to route events into separate R2 Data Catalog tables by type.
-description: Consume the Bluesky Jetstream firehose in a Durable Object, ingest it into a single Pipelines stream, and use one pipeline with multiple SQL statements to route events into separate R2 Data Catalog tables by type.
+description: Route Bluesky Jetstream events into multiple R2 Data Catalog tables using a single Pipelines stream and multiple SQL statements.
 products:
   - pipelines
   - r2-data-catalog
@@ -17,7 +17,6 @@ sidebar:
 import {
 	PackageManagers,
 	Render,
-	Steps,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
@@ -218,17 +217,17 @@ import { DurableObject } from "cloudflare:workers";
 import type { Pipeline } from "cloudflare:pipelines";
 
 interface Env {
-BSKY_STREAM: Pipeline;
-JETSTREAM: DurableObjectNamespace<JetstreamConsumer>;
+	BSKY_STREAM: Pipeline;
+	JETSTREAM: DurableObjectNamespace<JetstreamConsumer>;
 }
 
 // Jetstream collection -> our short event_type. Only these are kept.
 const COLLECTION_TO_TYPE: Record<string, string> = {
-"app.bsky.feed.post": "post",
-"app.bsky.feed.like": "like",
-"app.bsky.feed.repost": "repost",
-"app.bsky.graph.follow": "follow",
-"app.bsky.graph.block": "block",
+	"app.bsky.feed.post": "post",
+	"app.bsky.feed.like": "like",
+	"app.bsky.feed.repost": "repost",
+	"app.bsky.graph.follow": "follow",
+	"app.bsky.graph.block": "block",
 };
 const WANTED = Object.keys(COLLECTION_TO_TYPE);
 const JETSTREAM_URL = "https://jetstream2.us-east.bsky.network/subscribe";
@@ -238,27 +237,25 @@ const RECONNECT_MS = 15000;
 
 // Flatten one Jetstream message into a unified stream row, or null to skip.
 function toRow(ev: any) {
-if (ev?.kind !== "commit" || !ev.commit) return null;
-const c = ev.commit;
-const event_type = COLLECTION_TO_TYPE[c.collection];
-if (!event_type) return null;
-const r = c.record ?? {};
-const subject = r.subject;
-return {
-event_id: `${ev.did}/${c.collection}/${c.rkey}`,
-event_type,
-did: ev.did ?? null,
-operation: c.operation ?? null,
-time_us: typeof ev.time_us === "number" ? ev.time_us : null,
-created_at: typeof r.createdAt === "string" ? r.createdAt : null,
-text: event_type === "post" && typeof r.text === "string" ? r.text : null,
-langs:
-event_type === "post" && Array.isArray(r.langs)
-? r.langs.join(",")
-: null,
-subject_uri: typeof subject === "object" ? (subject?.uri ?? null) : null,
-subject_did: typeof subject === "string" ? subject : null,
-};
+	if (ev?.kind !== "commit" || !ev.commit) return null;
+	const c = ev.commit;
+	const event_type = COLLECTION_TO_TYPE[c.collection];
+	if (!event_type) return null;
+	const r = c.record ?? {};
+	const subject = r.subject;
+	return {
+		event_id: `${ev.did}/${c.collection}/${c.rkey}`,
+		event_type,
+		did: ev.did ?? null,
+		operation: c.operation ?? null,
+		time_us: typeof ev.time_us === "number" ? ev.time_us : null,
+		created_at: typeof r.createdAt === "string" ? r.createdAt : null,
+		text: event_type === "post" && typeof r.text === "string" ? r.text : null,
+		langs:
+			event_type === "post" && Array.isArray(r.langs) ? r.langs.join(",") : null,
+		subject_uri: typeof subject === "object" ? subject?.uri ?? null : null,
+		subject_did: typeof subject === "string" ? subject : null,
+	};
 }
 
 export class JetstreamConsumer extends DurableObject<Env> {
@@ -267,72 +264,68 @@ export class JetstreamConsumer extends DurableObject<Env> {
 	private lastFlush = 0;
 	private cursor: number | null = null;
 
-    // Idempotent: connect if needed and arm the reconnect alarm.
-    async start() {
-    	await this.ensureConnected();
-    	await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
-    	return { connected: this.ws !== null };
-    }
+	// Idempotent: connect if needed and arm the reconnect alarm.
+	async start() {
+		await this.ensureConnected();
+		await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
+		return { connected: this.ws !== null };
+	}
 
-    private async ensureConnected() {
-    	if (this.ws) return;
-    	this.cursor ??= (await this.ctx.storage.get<number>("cursor")) ?? null;
+	private async ensureConnected() {
+		if (this.ws) return;
+		this.cursor ??= (await this.ctx.storage.get<number>("cursor")) ?? null;
 
-    	const params = new URLSearchParams();
-    	for (const c of WANTED) params.append("wantedCollections", c);
-    	if (this.cursor) params.set("cursor", String(this.cursor));
+		const params = new URLSearchParams();
+		for (const c of WANTED) params.append("wantedCollections", c);
+		if (this.cursor) params.set("cursor", String(this.cursor));
 
-    	const resp = await fetch(`${JETSTREAM_URL}?${params}`, {
-    		headers: { Upgrade: "websocket" },
-    	});
-    	const ws = resp.webSocket;
-    	if (!ws) throw new Error(`Jetstream handshake failed: ${resp.status}`);
-    	ws.accept();
-    	this.ws = ws;
+		const resp = await fetch(`${JETSTREAM_URL}?${params}`, {
+			headers: { Upgrade: "websocket" },
+		});
+		const ws = resp.webSocket;
+		if (!ws) throw new Error(`Jetstream handshake failed: ${resp.status}`);
+		ws.accept();
+		this.ws = ws;
 
-    	ws.addEventListener("message", (e) => this.onMessage(e));
-    	ws.addEventListener("close", () => (this.ws = null));
-    	ws.addEventListener("error", () => (this.ws = null));
-    }
+		ws.addEventListener("message", (e) => this.onMessage(e));
+		ws.addEventListener("close", () => (this.ws = null));
+		ws.addEventListener("error", () => (this.ws = null));
+	}
 
-    private onMessage(e: MessageEvent) {
-    	let ev: any;
-    	try {
-    		ev = JSON.parse(e.data as string);
-    	} catch {
-    		return;
-    	}
-    	if (typeof ev.time_us === "number") this.cursor = ev.time_us;
-    	const row = toRow(ev);
-    	if (row) this.buf.push(row);
-    	if (
-    		this.buf.length >= FLUSH_MAX ||
-    		Date.now() - this.lastFlush >= FLUSH_MS
-    	) {
-    		void this.flush();
-    	}
-    }
+	private onMessage(e: MessageEvent) {
+		let ev: any;
+		try {
+			ev = JSON.parse(e.data as string);
+		} catch {
+			return;
+		}
+		if (typeof ev.time_us === "number") this.cursor = ev.time_us;
+		const row = toRow(ev);
+		if (row) this.buf.push(row);
+		if (this.buf.length >= FLUSH_MAX || Date.now() - this.lastFlush >= FLUSH_MS) {
+			void this.flush();
+		}
+	}
 
-    private async flush() {
-    	this.lastFlush = Date.now();
-    	if (this.buf.length === 0) return;
-    	const batch = this.buf.splice(0, this.buf.length);
-    	try {
-    		await this.env.BSKY_STREAM.send(batch);
-    		await this.ctx.storage.put("cursor", this.cursor); // advance only on success
-    	} catch (err) {
-    		this.buf.unshift(...batch); // re-queue; retried on the next flush or alarm
-    		console.error("send failed, will retry", err);
-    	}
-    }
+	private async flush() {
+		this.lastFlush = Date.now();
+		if (this.buf.length === 0) return;
+		const batch = this.buf.splice(0, this.buf.length);
+		try {
+			await this.env.BSKY_STREAM.send(batch);
+			await this.ctx.storage.put("cursor", this.cursor); // advance only on success
+		} catch (err) {
+			this.buf.unshift(...batch); // re-queue; retried on the next flush or alarm
+			console.error("send failed, will retry", err);
+		}
+	}
 
-    // Watchdog: reconnect if dropped, flush stragglers, reschedule.
-    async alarm() {
-    	await this.ensureConnected();
-    	await this.flush();
-    	await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
-    }
-
+	// Watchdog: reconnect if dropped, flush stragglers, reschedule.
+	async alarm() {
+		await this.ensureConnected();
+		await this.flush();
+		await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
+	}
 }
 
 export default {
