@@ -117,6 +117,12 @@ When you run this command, note the **Warehouse name**. You will need it to quer
 
 ## 4. Create the stream, sinks, and pipeline
 
+The `pipelines` commands require Wrangler v4 or later. If your project was scaffolded with an older version, update it first:
+
+```sh
+npm install --save-dev wrangler@latest
+```
+
 First, create the stream from your schema file:
 
 ```sh
@@ -257,18 +263,18 @@ subject_did: typeof subject === "string" ? subject : null,
 
 export class JetstreamConsumer extends DurableObject<Env> {
 	private ws: WebSocket | null = null;
-	private buf: unknown[] = [];
+	private buf: Record<string, unknown>[] = [];
 	private lastFlush = 0;
 	private cursor: number | null = null;
 
     // Idempotent: connect if needed and arm the reconnect alarm.
     async start() {
-    	await this.connect();
+    	await this.ensureConnected();
     	await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
     	return { connected: this.ws !== null };
     }
 
-    private async connect() {
+    private async ensureConnected() {
     	if (this.ws) return;
     	this.cursor ??= (await this.ctx.storage.get<number>("cursor")) ?? null;
 
@@ -322,7 +328,7 @@ export class JetstreamConsumer extends DurableObject<Env> {
 
     // Watchdog: reconnect if dropped, flush stragglers, reschedule.
     async alarm() {
-    	await this.connect();
+    	await this.ensureConnected();
     	await this.flush();
     	await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
     }
