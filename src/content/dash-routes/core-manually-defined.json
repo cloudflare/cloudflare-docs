@@ -50,7 +50,7 @@
 		"parent": ["Speed"]
 	},
 	{
-		"deeplink": "/?to=/:organization/audit-log",
+		"deeplink": "/?to=/organizations/:organization/audit-log",
 		"name": "Organization Audit Logs",
 		"parent": ["Organizations"]
 	}
