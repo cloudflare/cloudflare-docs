@@ -8,7 +8,7 @@ products:
   - ai-search
 ---
 
-import { TypeScriptExample, Tabs, TabItem } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 When you use AI Search's `chatCompletions()` method, the response includes a `chunks` array alongside the AI-generated answer. Each chunk contains the source document reference, relevance score, and the text that was used as context. Use these chunks to display citations, link back to source documents, or build a references section in your UI.
 
@@ -180,27 +180,31 @@ export default {
 
 		const reader = stream.getReader();
 
-		(async () => {
-			let buffer = "";
+		// Track the current SSE event type so we can identify chunks data lines
+		let currentEvent = "";
 
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
+		const pump = async () => {
+			try {
+				let buffer = "";
 
-				buffer += decoder.decode(value, { stream: true });
-				const lines = buffer.split("\n");
-				buffer = lines.pop() ?? "";
+				while (true) {
+					const { done, value } = await reader.read();
+					if (done) break;
 
-				for (const line of lines) {
-					if (line.startsWith("event: chunks")) {
-						// Next data line contains the citations array
-						continue;
-					}
-					if (line.startsWith("data: ") && !line.includes('"choices"')) {
-						// This is the chunks data — wrap it as a citations event
-						const chunksData = line.slice(6);
-						try {
-							const chunks = JSON.parse(chunksData);
+					buffer += decoder.decode(value, { stream: true });
+					const lines = buffer.split("\n");
+					buffer = lines.pop() ?? "";
+
+					for (const line of lines) {
+						// Track the SSE event type
+						if (line.startsWith("event: ")) {
+							currentEvent = line.slice(7).trim();
+							continue;
+						}
+
+						// Transform the chunks data line into a citations event
+						if (currentEvent === "chunks" && line.startsWith("data: ")) {
+							const chunks = JSON.parse(line.slice(6));
 							const citations = chunks.map(
 								(chunk: { item: { key: string }; score: number }) => ({
 									source: chunk.item.key,
@@ -212,17 +216,21 @@ export default {
 									`event: citations\ndata: ${JSON.stringify(citations)}\n\n`,
 								),
 							);
+							currentEvent = "";
 							continue;
-						} catch {
-							// Not valid JSON or not chunks — pass through
 						}
-					}
-					await writer.write(encoder.encode(line + "\n"));
-				}
-			}
 
-			await writer.close();
-		})();
+						currentEvent = "";
+						await writer.write(encoder.encode(line + "\n"));
+					}
+				}
+			} finally {
+				reader.releaseLock();
+				await writer.close();
+			}
+		};
+
+		pump().catch(() => writer.close());
 
 		return new Response(readable, {
 			headers: {
