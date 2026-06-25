@@ -1,0 +1,58 @@
+---
+/**
+ * /changelog/product-group/<slug>/ — paginated per-group changelog.
+ * CF source: cloudflare-docs/src/pages/changelog/product-group/[group]/[...page].astro
+ * Design: Nimbus changelog feature (timeline feed); product model kept.
+ */
+import type { GetStaticPaths, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
+import Header from "~/components/changelog/Header.astro";
+import Pagination from "~/components/changelog/Pagination.astro";
+import ChangelogFeed from "~/components/changelog/ChangelogFeed.astro";
+
+import { getChangelogs } from "~/util/changelog";
+import { directoryByGroup } from "~/util/directory";
+
+export const prerender = true;
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allNotes = await getChangelogs({
+    filter: (entry) => !entry.data.hidden,
+  });
+
+  return directoryByGroup.flatMap(([groupName, groupProducts]) => {
+    const groupProductIds = groupProducts.map((p) => p.id);
+    const notes = allNotes.filter((note) =>
+      note.data.products.some((p) => groupProductIds.includes(p.id)),
+    );
+    const slug = groupName.replaceAll(" ", "-").toLowerCase();
+
+    if (notes.length === 0) return [];
+
+    return paginate(notes, {
+      params: { group: slug },
+      props: { groupName },
+      pageSize: 20,
+    });
+  });
+}) satisfies GetStaticPaths;
+
+type Props = { page: Page<CollectionEntry<"changelog">>; groupName: string };
+
+const { page, groupName } = Astro.props as Props;
+---
+
+<ChangelogLayout
+  title={`${groupName} Changelog`}
+  description={`New updates and improvements for ${groupName}.`}
+>
+  <Header rssHref="/changelog/rss/index.xml" />
+  <ChangelogFeed entries={page.data} />
+  <Pagination
+    currentPage={page.currentPage}
+    lastPage={page.lastPage}
+    baseUrl={`/changelog/product-group/${Astro.params.group}/`}
+  />
+</ChangelogLayout>

@@ -1,0 +1,57 @@
+---
+/**
+ * /videos/<url> — Cloudflare Stream video page.
+ *
+ * CF source: cloudflare-docs/src/pages/videos/[...slug].astro (faithful port,
+ * minimal). The Starlight splash wrapper is swapped for Nimbus's BaseLayout +
+ * Header chrome. getStaticPaths keys on `data.url` (NOT the entry id) so the
+ * generated paths equal the `/videos/${data.url}/` hrefs emitted by
+ * ResourcesBySelector's video cards.
+ *
+ * Scope (W5): the requirement is that the URL resolves and the video renders.
+ * The cf-nimbus `stream` schema has no `transcript` field, so the upstream
+ * transcript block is omitted (full playback/transcript parity is secondary).
+ */
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Header from "~/components/Header.astro";
+import Stream from "~/components/cf/Stream.astro";
+import Width from "~/components/cf/Width.astro";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("stream");
+
+  return entries
+    .filter((entry) => Boolean(entry.data.url))
+    .map((entry) => {
+      return {
+        params: {
+          slug: entry.data.url,
+        },
+        props: {
+          entry: entry.data,
+        },
+      };
+    });
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+---
+
+<BaseLayout title={entry.title} description={entry.description}>
+  <div class="flex min-h-screen flex-col">
+    <Header showSidebar={false} />
+    <main id="main-content" transition:name="nb-content" class="flex-1">
+      <div class="mx-auto w-full max-w-(--nb-content-max) px-4 lg:px-6 pt-6 pb-12">
+        <h1 class="text-foreground mb-4 leading-tight" style="font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)">{entry.title}</h1>
+        {entry.description && <p>{entry.description}</p>}
+        <Width size="large" center={true}>
+          <Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
+        </Width>
+      </div>
+    </main>
+  </div>
+</BaseLayout>

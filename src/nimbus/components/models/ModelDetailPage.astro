@@ -1,0 +1,607 @@
+---
+/**
+ * ModelDetailPage — a single AI model page, shared by the `/workers-ai/models`
+ * and `/ai/models` per-model routes, rendered through DocsLayout. Sections:
+ * author logo + heading, copyable model ID, banner, the Model Info table,
+ * Playground, Usage (ExampleCard for catalog / per-task `code/*` for legacy),
+ * the Examples list, the recursive Parameters (multi-mode loop + top-level
+ * variant tabs driving both Input/Output), and raw schema links.
+ *
+ * Props:
+ *   - model:    the resolved ModelView (full, with schema).
+ *   - basePath: "/workers-ai/models" | "/ai/models" — URL prefix.
+ *   - slug:     the URL slug segment(s) under basePath.
+ */
+import type { MarkdownHeading } from "astro";
+import { getRouteNavigation } from "nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { Badge } from "~/components/ui/badge";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+import { LinkButton } from "~/components/ui/link-button";
+import { Aside } from "~/components/ui/aside";
+import { PageActions } from "~/components/ui/page-actions";
+import ModelBadges from "~/components/models/ModelBadges.astro";
+import ModelFeatures from "~/components/models/ModelFeatures.astro";
+import CopyableCode from "~/components/models/CopyableCode.astro";
+import ExampleCard from "~/components/models/ExampleCard.astro";
+import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
+import SchemaVariantTabs from "~/components/models/SchemaVariantTabs.tsx";
+import { authorData } from "~/components/models/data";
+import {
+  detectApiModes,
+  getTopLevelVariants,
+  type ModelView,
+} from "~/util/models";
+
+// Legacy per-task code-example components (only the ones our slice needs).
+import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
+import SummarizationCode from "~/components/models/code/SummarizationCode.astro";
+import TextEmbeddingCode from "~/components/models/code/TextEmbeddingCode.astro";
+import ObjectDetectionCode from "~/components/models/code/ObjectDetectionCode.astro";
+import TextClassificationCode from "~/components/models/code/TextClassificationCode.astro";
+import TranslationCode from "~/components/models/code/TranslationCode.astro";
+import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
+import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
+import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+
+interface Props {
+  model: ModelView;
+  basePath: string;
+  slug: string;
+}
+
+const { model, basePath, slug } = Astro.props;
+
+// Display name: catalog displayName, or fall back to last segment of model ID.
+const displayName =
+  model.displayName !== model.slug
+    ? model.displayName
+    : (model.name.split("/").at(-1) ?? model.name);
+
+// For catalog models, the first example is the "Usage" section; the rest go
+// into the Examples disclosure list.
+const firstExample = model.examples?.[0];
+const remainingExamples = model.examples?.slice(1) ?? [];
+const hasCatalogUsage = !!firstExample?.code_snippets?.length;
+
+// Legacy code-example overrides (only used when there is no catalog usage).
+let CodeExamples: any = null;
+if (!hasCatalogUsage) {
+  switch (model.task) {
+    case "Text Generation":
+      CodeExamples = TextGenerationCode;
+      break;
+    case "Object Detection":
+      CodeExamples = ObjectDetectionCode;
+      break;
+    case "Translation":
+      CodeExamples = TranslationCode;
+      break;
+    case "Summarization":
+      CodeExamples = SummarizationCode;
+      break;
+    case "Text Embeddings":
+      CodeExamples = TextEmbeddingCode;
+      break;
+    case "Text Classification":
+      CodeExamples = TextClassificationCode;
+      break;
+  }
+
+  // Model-specific overrides (by exact model id).
+  if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
+    CodeExamples = Flux1Schnell;
+  }
+  if (model.name === "@cf/baai/bge-reranker-base") {
+    CodeExamples = BgeRerankerBase;
+  }
+  if (model.name === "@cf/deepgram/aura-1") {
+    CodeExamples = DeepgramAura;
+  }
+}
+
+const hasCodeExamples = hasCatalogUsage || !!CodeExamples;
+const hasRemainingExamples = remainingExamples.length > 0;
+
+const description = model.description;
+const isBeta = model.beta;
+
+// Map the banner `severity` onto the four Aside types; unknown severities fall
+// back to neutral "note".
+const banner = model.banner ?? null;
+function bannerAsideType(
+  severity: string,
+): "note" | "tip" | "caution" | "danger" {
+  switch (severity.toLowerCase()) {
+    case "info":
+      return "tip";
+    case "warning":
+      return "caution";
+    case "danger":
+    case "error":
+      return "danger";
+    default:
+      return "note";
+  }
+}
+
+// Playground: Text Generation + Cloudflare-hosted, with a defensive gpt-oss
+// exclusion (gpt-oss is not in our slice — kept as a documented dead branch).
+let hasPlayground = model.task === "Text Generation" && model.hosting === "hosted";
+if (model.name.includes("@cf/openai/gpt-oss")) {
+  hasPlayground = false;
+}
+
+const author = authorData[model.author];
+const authorName = model.authorName;
+
+// `hasSchema`: input must have at least one key.
+const hasSchema = Object.keys(model.schema.input).length > 0;
+const apiModes = detectApiModes(model.schema);
+const allInputsIdentical =
+  apiModes &&
+  apiModes.every(
+    (mode) => JSON.stringify(mode.input) === JSON.stringify(apiModes[0].input),
+  );
+
+// Top-level request-format variants (single-mode branch). Hoist a union of
+// titled branches so a single selector drives both Input + Output panes.
+const inputVariants = getTopLevelVariants(model.schema.input) ?? [];
+const outputVariants =
+  model.schema.output && model.schema.output.format !== "binary"
+    ? (getTopLevelVariants(model.schema.output) ?? [])
+    : [];
+const variantTitles: string[] = [];
+for (const v of [...inputVariants, ...outputVariants]) {
+  if (!variantTitles.includes(v.title)) variantTitles.push(v.title);
+}
+const activeVariant = variantTitles[0];
+
+const outputIsBinary = model.schema.output.format === "binary";
+const outputContentType = model.schema.output.contentType as string | undefined;
+
+// Raw-schema endpoint links, matching the [...schema].json.ts route: per-mode
+// `{mode.id}-input/-output` when modes exist, else `schema-input/-output`.
+const schemaBasePath = `${basePath}/${slug}`;
+const rawLinks = apiModes
+  ? apiModes.flatMap((mode) => [
+      { name: mode.name, kind: "Input", file: `${mode.id}-input` },
+      { name: mode.name, kind: "Output", file: `${mode.id}-output` },
+    ])
+  : [
+      { name: "Input", kind: null, file: "schema-input" },
+      { name: "Output", kind: null, file: "schema-output" },
+    ];
+
+// Navigation for this catalog leaf: the sidebar marks the Models section
+// active and the breadcrumb resolves to the section (the model name is the
+// <h1>, not a crumb). The leaf is never injected into the nav tree.
+//
+// The `/ai` section lands on `/ai/models/`, so its ancestry collapses to
+// "AI"; append a "Models" crumb so the trail reads Home › AI › Models. The
+// `/workers-ai/models/` section already resolves to "Workers AI › Models".
+const trail = basePath === "/ai/models" ? [{ label: "Models" }] : [];
+const { sidebar, breadcrumbs } = await getRouteNavigation({
+  path: `${basePath}/${slug}/`,
+  section: `${basePath}/`,
+  collection: "docs",
+  prevNext: false,
+  trail,
+});
+
+const markdownPath = `${basePath}/${slug}.md`;
+const markdownUrl = Astro.site
+  ? new URL(markdownPath, Astro.site).href
+  : markdownPath;
+
+// `<title>` carries displayName + author; the layout appends the site suffix.
+const pageTitle = `${displayName} (${authorName})`;
+
+const headings: MarkdownHeading[] = [
+  hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
+  hasCodeExamples && { depth: 2, slug: "Usage", text: "Usage" },
+  hasRemainingExamples && { depth: 2, slug: "Examples", text: "Examples" },
+  hasSchema && { depth: 2, slug: "Parameters", text: "Parameters" },
+  hasSchema && { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" },
+].filter(Boolean) as MarkdownHeading[];
+---
+
+<DocsLayout
+  title={pageTitle}
+  description={description}
+  sidebar={sidebar}
+  headings={headings}
+  breadcrumbs={breadcrumbs}
+  markdownUrl={markdownUrl}
+  prevNext={{}}
+  collection="docs"
+>
+  <Fragment slot="pagination" />
+
+  <div slot="page-title">
+    <div class="not-prose mt-6 flex items-center gap-4">
+      {
+        author ? (
+          <img
+            class="h-14 w-14 shrink-0 rounded-sm bg-card object-contain dark:bg-gray-200 dark:p-1"
+            src={author.logo}
+            alt={`${authorName} logo`}
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            class="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-accent text-2xl font-black text-muted-foreground uppercase"
+          >
+            {model.author.charAt(0)}
+          </span>
+        )
+      }
+      <div class="min-w-0">
+        <div class="flex flex-wrap items-center gap-3">
+          <h1
+            class="mb-0 leading-tight text-foreground"
+            style={`font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)`}
+          >
+            {displayName}
+          </h1>
+          {isBeta && <Badge text="Beta" variant="caution" size="medium" />}
+        </div>
+        <p class="mt-1 mb-0 text-sm text-muted-foreground">
+          {model.task} • {authorName}
+        </p>
+      </div>
+    </div>
+    <PageActions markdownUrl={markdownUrl} class="mt-3" />
+    <div class="mt-3 mb-6 h-px w-full bg-border" role="none"></div>
+  </div>
+
+  <div class="not-prose mb-4">
+    <CopyableCode text={model.name} label="Copy model ID" />
+  </div>
+
+  <div class="not-prose mb-4"><ModelBadges model={model} /></div>
+
+  <p>{description}</p>
+
+  {
+    banner && (
+      <Aside type={bannerAsideType(banner.severity)}>
+        <p>
+          {banner.title && <strong>{banner.title}: </strong>}
+          {banner.text}
+          {banner.link && (
+            <Fragment>
+              {" "}
+              <a
+                href={banner.link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${banner.link.label} (${displayName})`}
+              >
+                {banner.link.label}
+                <span class="external-link"> ↗</span>
+              </a>
+            </Fragment>
+          )}
+        </p>
+      </Aside>
+    )
+  }
+
+  {
+    /* Defensive dead branch (model not in slice): Llama 3.2 11b license note. */
+    model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
+      <Aside>
+        <p>
+          To use Llama 3.2 11b Vision Instruct, you need to agree to the{" "}
+          <a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE">
+            Meta License
+          </a>{" "}
+          and{" "}
+          <a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md">
+            Acceptable Use Policy
+          </a>
+          . To do so, please send an initial request to
+          <code>@cf/meta/llama-3.2-11b-vision-instruct</code> with
+          <code>"prompt" : "agree"</code>. After that, you'll be able to use the
+          model as normal.
+        </p>
+        <Code
+          code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \\
+   -X POST \\
+   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+   -d '{ "prompt": "agree"}'`}
+          lang="sh"
+        />
+      </Aside>
+    )
+  }
+
+  <ModelFeatures model={model} />
+
+  {
+    /* Defensive dead branch (model not in slice): nova-3 transport pricing. */
+    model.name === "@cf/deepgram/nova-3" && (
+      <Aside>
+        <p>
+          The <a href="/workers-ai/platform/pricing">pricing of this model</a> is
+          different based on transport. Transport-based pricing does not apply to
+          all models.
+        </p>
+        <ul>
+          <li>
+            WebSocket: $0.0092 per audio minute output (836.36 neurons per audio
+            minute output)
+          </li>
+          <li>
+            Regular HTTP: $0.0052 per audio minute output (472.73 neurons per
+            audio minute output)
+          </li>
+        </ul>
+      </Aside>
+    )
+  }
+
+  {
+    hasPlayground && (
+      <Fragment>
+        <h2 id="Playground">Playground</h2>
+        <p>
+          Try out this model with Workers AI LLM Playground. It does not require
+          any setup or authentication and is an instant way to preview and test a
+          model directly in the browser.
+        </p>
+        <LinkButton href={`https://playground.ai.cloudflare.com/?model=${model.name}`}>
+          Launch the LLM Playground
+        </LinkButton>
+      </Fragment>
+    )
+  }
+
+  {
+    hasCatalogUsage && firstExample && (
+      <Fragment>
+        <h2 id="Usage">Usage</h2>
+        <ExampleCard example={firstExample} layout="stack" />
+      </Fragment>
+    )
+  }
+
+  {
+    !hasCatalogUsage && CodeExamples && (
+      <Fragment>
+        <h2 id="Usage">Usage</h2>
+        <CodeExamples name={model.name} lora={false} />
+      </Fragment>
+    )
+  }
+
+  {
+    hasRemainingExamples && (
+      <Fragment>
+        <h2 id="Examples">Examples</h2>
+        {remainingExamples.map((example) => (
+          <details>
+            <summary>
+              <strong>{example.name}</strong>
+              {example.description && <span> &mdash; {example.description}</span>}
+            </summary>
+            <ExampleCard example={example} />
+          </details>
+        ))}
+      </Fragment>
+    )
+  }
+
+  {
+    hasSchema && apiModes && apiModes.length > 1 ? (
+      <Fragment>
+        <h2 id="Parameters">Parameters</h2>
+
+        {allInputsIdentical ? (
+          <Fragment>
+            <h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
+            <SchemaDisplay schema={apiModes[0].input} title="Input" />
+
+            <h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
+            <div class="not-prose space-y-3">
+              {apiModes.map((mode) => (
+                <details class="group rounded-lg border border-border py-3">
+                  <summary class="cursor-pointer px-8 font-medium text-foreground">
+                    <span>{mode.name}</span>
+                    {mode.description && (
+                      <span class="text-sm font-normal text-muted-foreground">
+                        {" "}
+                        — {mode.description}
+                      </span>
+                    )}
+                  </summary>
+                  <div class="border-t border-border p-4 pb-1">
+                    <SchemaDisplay schema={mode.output} title="Output" />
+                  </div>
+                </details>
+              ))}
+            </div>
+          </Fragment>
+        ) : (
+          <div class="not-prose space-y-3">
+            {apiModes.map((mode) => (
+              <details class="group rounded-lg border border-border py-3">
+                <summary class="cursor-pointer px-8 font-medium text-foreground">
+                  <span>{mode.name}</span>
+                  {mode.description && (
+                    <span class="text-sm font-normal text-muted-foreground">
+                      {" "}
+                      — {mode.description}
+                    </span>
+                  )}
+                </summary>
+                <div class="border-t border-border p-4 pb-1">
+                  <Tabs syncKey={`schema-${mode.id}`}>
+                    <TabItem label="Input">
+                      <SchemaDisplay schema={mode.input} title="Input" />
+                    </TabItem>
+                    <TabItem label="Output">
+                      <SchemaDisplay schema={mode.output} title="Output" />
+                    </TabItem>
+                  </Tabs>
+                </div>
+              </details>
+            ))}
+          </div>
+        )}
+      </Fragment>
+    ) : (
+      hasSchema && (
+        <Fragment>
+          <h2 id="Parameters">Parameters</h2>
+          {variantTitles.length > 0 ? (
+            <div data-variant-section data-active-variant={activeVariant}>
+              <SchemaVariantTabs titles={variantTitles} client:visible />
+              <Tabs syncKey="schema-tab">
+                <TabItem label="Input">
+                  {variantTitles.map((title) => (
+                    <div data-variant-pane={title} hidden={title !== activeVariant}>
+                      <SchemaDisplay
+                        schema={model.schema.input}
+                        title="Input"
+                        variantTitle={title}
+                      />
+                    </div>
+                  ))}
+                </TabItem>
+                <TabItem label="Output">
+                  {outputIsBinary ? (
+                    <p>
+                      {outputContentType?.startsWith("audio/") ? (
+                        <Fragment>
+                          The binding returns a <code>ReadableStream</code> with
+                          the audio in{" "}
+                          {outputContentType.replace("audio/", "").toUpperCase()}{" "}
+                          format (check the model's output schema).
+                        </Fragment>
+                      ) : (
+                        <Fragment>
+                          The binding returns a <code>ReadableStream</code> with
+                          the output (check the model's output schema).
+                        </Fragment>
+                      )}
+                    </p>
+                  ) : (
+                    variantTitles.map((title) => (
+                      <div
+                        data-variant-pane={title}
+                        hidden={title !== activeVariant}
+                      >
+                        <SchemaDisplay
+                          schema={model.schema.output}
+                          title="Output"
+                          variantTitle={title}
+                        />
+                      </div>
+                    ))
+                  )}
+                </TabItem>
+              </Tabs>
+            </div>
+          ) : (
+            <Tabs syncKey="schema-tab">
+              <TabItem label="Input">
+                <SchemaDisplay schema={model.schema.input} title="Input" />
+              </TabItem>
+              <TabItem label="Output">
+                {outputIsBinary ? (
+                  <p>
+                    {outputContentType?.startsWith("audio/") ? (
+                      <Fragment>
+                        The binding returns a <code>ReadableStream</code> with the
+                        audio in{" "}
+                        {outputContentType.replace("audio/", "").toUpperCase()}{" "}
+                        format (check the model's output schema).
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        The binding returns a <code>ReadableStream</code> with the
+                        output (check the model's output schema).
+                      </Fragment>
+                    )}
+                  </p>
+                ) : (
+                  <SchemaDisplay schema={model.schema.output} title="Output" />
+                )}
+              </TabItem>
+            </Tabs>
+          )}
+        </Fragment>
+      )
+    )
+  }
+
+  {
+    hasSchema && (
+      <Fragment>
+        <h2 id="API-Schemas">API Schemas (Raw)</h2>
+        <div class="not-prose grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {rawLinks.map((link) => (
+            <div class="flex items-center justify-between rounded-lg border border-border px-4 py-1.5">
+              <span class="text-sm">
+                <span class="font-medium text-foreground">{link.name}</span>
+                {link.kind && (
+                  <span class="ml-2 text-muted-foreground">{link.kind}</span>
+                )}
+              </span>
+              <span class="flex items-center gap-1">
+                <a
+                  href={`${schemaBasePath}/${link.file}.json`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Open"
+                  class="flex h-7 w-7 items-center justify-center rounded text-muted-foreground no-underline hover:bg-accent hover:text-foreground"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+                <a
+                  href={`${schemaBasePath}/${link.file}.json`}
+                  download={`${link.file}.json`}
+                  title="Download"
+                  class="flex h-7 w-7 items-center justify-center rounded text-muted-foreground no-underline hover:bg-accent hover:text-foreground"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                </a>
+              </span>
+            </div>
+          ))}
+        </div>
+      </Fragment>
+    )
+  }
+</DocsLayout>

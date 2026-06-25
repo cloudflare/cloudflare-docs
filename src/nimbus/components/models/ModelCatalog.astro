@@ -1,0 +1,152 @@
+---
+/**
+ * ModelCatalog — filterable AI model catalog, rendered inside the docs layout.
+ * A top toolbar (search + Task Types / Capabilities / Providers? / Authors
+ * multi-select dropdowns + sort), a "We found N models" count with clear, and a
+ * responsive card grid. A vanilla controller (models.client.ts) drives it.
+ *
+ * The host page resolves the model slice (`getLegacyModels` /
+ * `getResolvedModels` → `toModelCardData`) and passes it in. `basePath` selects
+ * the per-model URL prefix and the card href slug form. The Providers facet is
+ * computed internally — it appears only when the slice spans more than one
+ * `hosting` value.
+ */
+import { Icon } from "astro-icon/components";
+import ModelCard from "./ModelCard.astro";
+import { getFacets, type ModelCardData } from "~/util/models";
+import { resolveCols, LG_GRID_CLASS } from "~/components/directory/grid";
+
+interface Props {
+  models: ModelCardData[];
+  basePath?: string;
+}
+
+const { models, basePath = "/ai/models" } = Astro.props;
+const facets = getFacets(models);
+const cols = resolveCols(models.length);
+---
+
+<div data-models class="not-prose">
+  {/* Toolbar */}
+  <div class="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
+    {/* Search */}
+    <div class="relative flex-1 md:min-w-[300px]">
+      <Icon
+        name="ph:magnifying-glass"
+        class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+      />
+      <input
+        type="text"
+        data-models-search
+        placeholder="Search models"
+        aria-label="Search models"
+        class="h-10 w-full rounded-lg border border-border bg-card pr-3 pl-9 text-sm text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      />
+    </div>
+
+    {/* Filter dropdowns + sort */}
+    <div class="flex flex-wrap items-center gap-2">
+      {
+        facets.map((facet) => (
+          <details data-facet-dropdown class="group relative">
+            <summary class="flex h-10 cursor-pointer list-none items-center gap-1.5 rounded-lg border border-border bg-card px-3 text-sm whitespace-nowrap text-foreground select-none hover:border-border-strong [&::-webkit-details-marker]:hidden">
+              {facet.label}
+              <span
+                data-facet-badge={facet.key}
+                hidden
+                class="grid min-w-[1.25rem] place-items-center rounded-full bg-primary px-1.5 text-[0.6875rem] font-semibold text-primary-foreground"
+              />
+              <Icon name="ph:caret-down" class="size-3.5 text-muted-foreground" />
+            </summary>
+            <div
+              class="absolute left-0 z-20 mt-2 flex max-h-80 w-64 flex-col rounded-lg border border-border bg-card p-1.5 shadow-lg"
+            >
+              {/* Within-facet search */}
+              <input
+                type="text"
+                data-facet-filter
+                placeholder={`Search ${facet.label.toLowerCase()}...`}
+                aria-label={`Search ${facet.label.toLowerCase()}`}
+                class="mb-1.5 h-9 w-full rounded-md border border-border bg-card px-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              />
+              <div class="overflow-y-auto">
+                {facet.options.map((option) => (
+                  <label
+                    data-facet-option
+                    data-label={option.label}
+                    class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm text-foreground hover:bg-accent"
+                  >
+                    <input
+                      type="checkbox"
+                      name={facet.key}
+                      value={option.value}
+                      data-facet={facet.key}
+                      data-match={option.match}
+                      class="size-4 shrink-0 accent-primary"
+                    />
+                    <span class="flex-1">{option.label}</span>
+                  </label>
+                ))}
+                <div
+                  data-facet-empty
+                  hidden
+                  class="px-2 py-3 text-sm text-muted-foreground"
+                >
+                  No results found.
+                </div>
+              </div>
+            </div>
+          </details>
+        ))
+      }
+
+      <label class="sr-only" for="models-sort">Sort models</label>
+      <select
+        id="models-sort"
+        data-models-sort
+        class="h-10 cursor-pointer rounded-lg border border-border bg-card px-3 text-sm text-foreground hover:border-border-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+      </select>
+    </div>
+  </div>
+
+  {/* Count + clear */}
+  <div class="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
+    <span data-models-count aria-live="polite">
+      We found <span class="font-semibold text-foreground">{models.length}</span>
+      {models.length === 1 ? " model" : " models"}
+    </span>
+    <button
+      type="button"
+      data-models-clear
+      hidden
+      class="cursor-pointer text-primary underline-offset-2 hover:underline"
+    >
+      Clear filters
+    </button>
+  </div>
+
+  {/* Grid */}
+  <div
+    data-models-empty
+    hidden
+    class="rounded-lg border border-border py-10 text-center"
+  >
+    <p class="text-lg font-semibold text-foreground">No models found</p>
+    <p class="mt-1 text-muted-foreground">
+      Try a different search term, or broaden your search by removing filters.
+    </p>
+  </div>
+
+  <div class="relative w-full border-t border-l border-border">
+    <div data-models-grid class={LG_GRID_CLASS[cols]}>
+      {models.map((model, i) => <ModelCard model={model} index={i} cols={cols} basePath={basePath} />)}
+    </div>
+  </div>
+</div>
+
+<script>
+  import "~/components/models/models.client";
+</script>

@@ -1,0 +1,369 @@
+---
+/**
+ * DocsLayout — three-column docs layout.
+ *
+ * Named slots for overrides (all optional, defaults render otherwise):
+ *   header, sidebar, toc, page-title, content-footer, pagination
+ */
+import { Icon } from "astro-icon/components";
+import BaseLayout from "./BaseLayout.astro";
+import Header from "@/components/Header.astro";
+import { Banner } from "@/components/ui/banner";
+import { Sidebar, SidebarFilter, SidebarProductNav } from "@/components/ui/sidebar";
+import { TOC } from "@/components/ui/toc";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { Pagination } from "@/components/ui/pagination";
+import { PageActions } from "@/components/ui/page-actions";
+import { Badge } from "@/components/ui/badge";
+import type { DocsPageProps } from "nimbus-docs/types";
+import { config } from "virtual:nimbus/config";
+import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
+import { sectionTitleResolver } from "@/util/sidebar";
+
+type Props = DocsPageProps & { audience?: "human"; wide?: boolean };
+
+const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false } = Astro.props;
+
+// `searchable` derives from `noindex` when omitted: a non-crawlable page is
+// by default not in the site search either. Explicit `searchable: true`
+// overrides for the edge case of "no search engines, yes internal search."
+const effectiveSearchable = searchable ?? !noindex;
+const isCustom = mode === "custom";
+
+// `sidebar: false` / `tableOfContents: false` in frontmatter come through
+// from the route as literal `false` (not coerced to `[]`). They drive
+// per-column suppression — rail, mobile dialog, header menu button.
+const showSidebar = sidebar !== false;
+const showToc = headings !== false;
+
+// Versioning P3: per-page status drives Pagefind faceting, deprecation
+// banner, and the data-pagefind-ignore exclusion for hidden versions.
+const versionStatus = collection ? await getVersionStatus(collection) : null;
+const versionAlternates = collection && entryId
+  ? await getVersionAlternates(collection, entryId)
+  : null;
+const currentSiblingUrl = versionAlternates?.canonical?.url ?? null;
+
+// Page-body attribute resolution:
+//   - If the user opted out via `searchable: false` (or `noindex: true`
+//     with no explicit override) → ignore.
+//   - If the page is in a hidden version → ignore unconditionally
+//     (hidden takes precedence; you can't index hidden content even
+//     if the page frontmatter says searchable=true).
+//   - Otherwise → mark as a Pagefind body, plus emit per-version and
+//     per-status filters so the search UI can scope by them.
+const pagefindAttrs: Record<string, string> = {};
+if (!effectiveSearchable || versionStatus?.isHidden) {
+  pagefindAttrs["data-pagefind-ignore"] = "";
+} else {
+  pagefindAttrs["data-pagefind-body"] = "";
+  if (versionStatus) {
+    pagefindAttrs["data-pagefind-filter"] = `version:${versionStatus.version}`;
+    if (versionStatus.isDeprecated) {
+      // Pagefind supports multiple filter attributes on the same element
+      // via `data-pagefind-filter` repeated as a comma-separated list in
+      // the value. The status filter pairs with the version filter so a
+      // search UI can offer "exclude deprecated" as a default toggle.
+      pagefindAttrs["data-pagefind-filter"] += `, status:deprecated`;
+    }
+  }
+}
+
+// Sidebar header above the filter — an "all products" button plus the
+// current product title. The rail title can diverge from the breadcrumb
+// (learning paths suffix the module title with "(Learning Paths)"), so it
+// comes from `getSectionTitle`; the breadcrumb labels come from the nav tree.
+const productSlug = Astro.url.pathname.split("/").filter(Boolean)[0] ?? null;
+const sectionTitle = await getSectionTitle(Astro.url.pathname, sectionTitleResolver);
+// Link the product (seg0) crumb to the product root when the tree leaves it
+// non-interactive (a section landing with no resolvable page entry).
+const breadcrumbItems = (breadcrumbs ?? []).map((c, i) =>
+  i === 1 && !c.href && productSlug ? { ...c, href: `/${productSlug}/` } : c,
+);
+const product = productSlug
+  ? {
+      title: sectionTitle?.rail ?? breadcrumbItems[1]?.label ?? productSlug,
+      href: `/${productSlug}/`,
+    }
+  : null;
+
+const hasHeader = Astro.slots.has("header");
+const hasSidebar = Astro.slots.has("sidebar");
+const hasToc = Astro.slots.has("toc");
+const hasPageTitle = Astro.slots.has("page-title");
+const hasContentFooter = Astro.slots.has("content-footer");
+const hasPagination = Astro.slots.has("pagination");
+---
+
+<BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId}>
+  <div class="flex flex-col min-h-screen">
+    {hasHeader ? <slot name="header" /> : <Header collection={collection} entryId={entryId} showSidebar={showSidebar} />}
+
+    {isCustom ? (
+      <main id="main-content" transition:name="nb-content" class="flex-1">
+        <slot />
+      </main>
+    ) : (
+      <div class="flex-1 mx-auto w-full">
+        <div class="flex">
+          {showSidebar && (
+            <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
+              {hasSidebar ? (
+                <slot name="sidebar" />
+              ) : (
+                <nav class="flex-1 pb-12">
+                  <div class="sticky top-0 z-10 bg-background px-4 pb-3">
+                    {product && <SidebarProductNav title={product.title} href={product.href} class="py-2.5" />}
+                    <SidebarFilter class="mb-0" />
+                  </div>
+                  <div class="px-4 pt-2">
+                    <Sidebar items={sidebar} persist />
+                  </div>
+                </nav>
+              )}
+              <div class="pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t from-base to-transparent" />
+            </aside>
+          )}
+
+          {/* Sidebar state restore — pre-sets data attributes before the
+              disclosure module loads so collapsed/scrolled state survives nav.
+              Only emit when the sidebar is rendered; otherwise the script is
+              dead code (the `desktop-sidebar` element doesn't exist). */}
+          {showSidebar && (
+          <script is:inline aria-hidden="true">
+          (function () {
+            try {
+              if (!matchMedia("(min-width: 64rem)").matches) return;
+              const sidebar = document.getElementById("desktop-sidebar");
+              if (!sidebar) return;
+              const content = sidebar.querySelector("[data-nb-sidebar]");
+              if (!content) return;
+
+              function setGroupOpen(group, open) {
+                group.setAttribute("data-nb-default-open", open ? "true" : "false");
+                const trigger = group.querySelector("[data-nb-collapsible-trigger]");
+                const panel = group.querySelector("[data-nb-collapsible-content]");
+                const state = open ? "open" : "closed";
+                if (trigger) {
+                  trigger.setAttribute("data-nb-state", state);
+                  trigger.setAttribute("aria-expanded", String(open));
+                }
+                if (panel) panel.setAttribute("data-nb-state", state);
+              }
+
+              const raw = sessionStorage.getItem("sidebar-state");
+              let state;
+              if (raw) {
+                state = JSON.parse(raw);
+                if (state && content.dataset.nbSidebarHash === state.hash) {
+                  const groups = content.querySelectorAll("[data-nb-sidebar-group]");
+                  for (let i = 0; i < groups.length; i++) {
+                    if (typeof state.open[i] === "boolean") {
+                      setGroupOpen(groups[i], state.open[i]);
+                    }
+                  }
+                }
+              }
+
+              // Active page's group must always be open, regardless of stored state
+              const active = sidebar.querySelector("[aria-current='page']");
+              if (active) {
+                let d = active.closest("[data-nb-sidebar-group]");
+                while (d) {
+                  setGroupOpen(d, true);
+                  d = d.parentElement && d.parentElement.closest("[data-nb-sidebar-group]");
+                }
+              }
+
+              // Restore scroll or center active item
+              if (raw && state && state.scroll) {
+                sidebar.scrollTop = state.scroll;
+              } else if (active) {
+                const sr = sidebar.getBoundingClientRect();
+                const ar = active.getBoundingClientRect();
+                sidebar.scrollTop += ar.top - sr.top - sr.height / 2 + ar.height / 2;
+              }
+            } catch (_) {}
+          })();
+          </script>
+          )}
+
+          {/* Named view-transition group — only the content fades+rises on nav.
+              Header / sidebar / TOC stay still via the root rule in globals.css. */}
+          <main id="main-content" transition:name="nb-content" class="flex-1 min-w-0">
+            <div class={`mx-auto px-4 lg:px-6 pt-6 pb-12 ${wide ? "max-w-[1400px]" : "max-w-(--nb-content-max)"}`}>
+              {versionStatus?.isDeprecated && (
+                <Banner
+                  type="caution"
+                  content={
+                    currentSiblingUrl
+                      ? `This is the <strong>${versionStatus.version}</strong> version of the docs and is no longer maintained. The latest version of this page is at <a href="${currentSiblingUrl}">${currentSiblingUrl}</a>.`
+                      : `This is the <strong>${versionStatus.version}</strong> version of the docs and is no longer maintained. See the <a href="/">current docs</a> for up-to-date content.`
+                  }
+                />
+              )}
+              {banner && <Banner content={banner.content} type={banner.type} dismissible={banner.dismissible} />}
+              <Breadcrumbs items={breadcrumbItems} class="pb-2" />
+              <div {...pagefindAttrs}>
+                {hasPageTitle ? (
+                  <slot name="page-title" />
+                ) : (
+                  <Fragment>
+                    <div class="flex items-center gap-3 flex-wrap mt-6">
+                      <h1 class="text-foreground mb-0 leading-tight" style={`font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)`}>{title}</h1>
+                      {draft && <Badge text="Draft" variant="warning" size="medium" />}
+                    </div>
+                    {/* `description` is meta-only (head tags via BaseLayout), matching
+                        upstream cloudflare-docs which never renders it on the page. */}
+                    <PageActions markdownUrl={markdownUrl} lastUpdated={lastUpdated} class="mt-3" />
+                    {(markdownUrl || audience === "human") && (
+                      audience === "human" ? (
+                        <div class="mt-3 mb-6 flex items-center gap-3" role="none">
+                          <div class="h-px flex-1 bg-border"></div>
+                          <Badge text="For humans" variant="success" size="small" class="font-mono uppercase border border-success/15" />
+                          <div class="h-px flex-1 bg-border"></div>
+                        </div>
+                      ) : (
+                        <div class="mt-3 mb-6 h-px w-full bg-border" role="none" />
+                      )
+                    )}
+                    {!markdownUrl && audience !== "human" && <div class="mb-4" />}
+                  </Fragment>
+                )}
+                <article class="docs-content max-w-none">
+                  <slot />
+                </article>
+                {hasContentFooter ? (
+                  <slot name="content-footer" />
+                ) : editUrl && (
+                  <div class="mt-8 mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                    <a href={editUrl} class="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors no-underline" target="_blank" rel="noopener">
+                      <Icon name="ph:pencil-simple" class="w-3.5 h-3.5" />
+                      Edit this page
+                    </a>
+                  </div>
+                )}
+              </div>
+              {hasPagination ? <slot name="pagination" /> : <Pagination prevNext={prevNext} />}
+            </div>
+          </main>
+
+          {showToc && (
+            <aside class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
+              <div class="pt-6 pb-8 pl-8 pr-6">
+                {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
+              </div>
+            </aside>
+          )}
+        </div>
+      </div>
+    )}
+
+  </div>
+
+  {showSidebar && (
+    /* Mobile sidebar — native <dialog> for free focus trap, escape, backdrop. */
+    <dialog
+      data-mobile-sidebar
+      data-state="closed"
+      class="group fixed inset-0 m-0 h-full w-full max-h-full max-w-full border-0 bg-transparent p-0 data-[state=open]:bg-black/40 data-[state=closing]:bg-black/40"
+      aria-label="Site navigation"
+    >
+      <div data-mobile-sidebar-panel class="h-full w-full -translate-x-full overflow-y-auto bg-card shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none">
+        <div class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-card px-4 py-3">
+          <span class="font-semibold text-sm text-foreground">{config.title}</span>
+          <button data-close-sidebar class="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors" aria-label="Close sidebar">
+            <Icon name="ph:x" class="w-5 h-5" />
+          </button>
+        </div>
+        <nav class="px-4 pb-8 pt-5">
+          {hasSidebar ? <slot name="sidebar" /> : (
+            <Fragment>
+              {product && <SidebarProductNav title={product.title} href={product.href} class="py-2.5" />}
+              <SidebarFilter />
+              <Sidebar items={sidebar} />
+            </Fragment>
+          )}
+        </nav>
+      </div>
+    </dialog>
+  )}
+
+  <script>
+    import { lockScroll, unlockScroll } from "nimbus-docs/client";
+
+    const dialog = document.querySelector<HTMLDialogElement>("[data-mobile-sidebar]");
+    const menuBtn = document.querySelector<HTMLElement>("[data-menu-btn]");
+    const CLOSE_DURATION_MS = 250;
+
+    if (dialog && menuBtn) {
+      let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+      const openSidebar = () => {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = undefined;
+        }
+        if (dialog.open) return;
+
+        dialog.showModal();
+        dialog.dataset.state = "closed";
+        lockScroll();
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            dialog.dataset.state = "open";
+          });
+        });
+
+        dialog.querySelector<HTMLElement>("[data-close-sidebar]")?.focus();
+      };
+
+      const closeSidebar = () => {
+        if (!dialog.open || dialog.dataset.state === "closing") return;
+
+        dialog.dataset.state = "closing";
+        closeTimer = setTimeout(() => {
+          dialog.close();
+        }, CLOSE_DURATION_MS);
+      };
+
+      menuBtn.addEventListener("click", openSidebar);
+
+      dialog.addEventListener("cancel", (event) => {
+        event.preventDefault();
+        closeSidebar();
+      });
+
+      // Cleanup on close — fires for Escape, close button, backdrop click
+      dialog.addEventListener("close", () => {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = undefined;
+        }
+
+        dialog.dataset.state = "closed";
+        unlockScroll();
+        menuBtn.focus();
+      });
+
+      // Close button
+      dialog.querySelector("[data-close-sidebar]")
+        ?.addEventListener("click", closeSidebar);
+
+      // Backdrop click (clicks on <dialog> itself, outside the panel)
+      dialog.addEventListener("click", (e) => {
+        if (e.target === dialog) closeSidebar();
+      });
+
+      // The drawer is a mobile-only affordance (the burger is `lg:hidden` and
+      // the sidebar lives inline on desktop). If it's open when the viewport
+      // grows to desktop, close it so it doesn't linger over the page.
+      const desktopMq = window.matchMedia("(min-width: 1024px)");
+      desktopMq.addEventListener("change", (e) => {
+        if (e.matches && dialog.open) dialog.close();
+      });
+    }
+  </script>
+
+</BaseLayout>

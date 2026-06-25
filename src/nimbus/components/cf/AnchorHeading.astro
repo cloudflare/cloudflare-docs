@@ -1,0 +1,42 @@
+---
+/**
+ * AnchorHeading — a heading (h1–h6) with a slugified id and anchor link.
+ *
+ * CF source: cloudflare-docs/src/components/AnchorHeading.astro
+ *
+ * Mapping notes:
+ *   - Upstream runs the heading through the rehype autolink-headings plugin
+ *     (`~/util/rehype`). That pipeline isn't wired here, so the id + anchor
+ *     link are produced directly. Slugging mirrors github-slugger closely
+ *     (lowercase, strip punctuation, spaces→hyphens).
+ */
+import { z } from "astro/zod";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+  title: z.string(),
+  slug: z.string().optional(),
+  depth: z.number().min(1).max(6),
+});
+
+const { title, slug, depth } = props.parse(Astro.props);
+
+function slugify(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+const slugified = slugify(slug ?? title);
+const Tag = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+const inner = marked.parseInline(title) as string;
+---
+
+<Tag id={slugified}>
+  <a href={`#${slugified}`} class="no-underline" set:html={inner} />
+</Tag>

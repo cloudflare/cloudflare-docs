@@ -1,0 +1,37 @@
+---
+/**
+ * SidebarProductNav — sidebar header with two targets on one dense row:
+ * an "all products" button (→ home) and the current product title
+ * (→ product overview). Text-first: the title gets the full remaining width.
+ */
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  /** Current product name. */
+  title: string;
+  /** Product overview URL — the title links here. */
+  href: string;
+  /** Where the "all products" button goes. Defaults to the site home. */
+  homeHref?: string;
+  class?: string;
+}
+
+const { title, href, homeHref = "/", class: className } = Astro.props;
+---
+
+<div class:list={["flex items-center gap-1", className]}>
+  <a
+    href={homeHref}
+    aria-label="All products"
+    class="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-[background-color,color,scale] duration-150 ease-out hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-1 active:scale-[0.96]"
+  >
+    <Icon name="ph:squares-four" aria-hidden="true" class="h-[1.125rem] w-[1.125rem]" />
+  </a>
+  <span class="mx-0.5 h-5 w-px shrink-0 bg-border" aria-hidden="true"></span>
+  <a
+    href={href}
+    class="flex min-h-10 min-w-0 flex-1 items-center rounded-lg px-2.5 no-underline transition-[background-color,scale] duration-150 hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-1 active:scale-[0.96]"
+  >
+    <span class="truncate text-sm font-semibold text-foreground">{title}</span>
+  </a>
+</div>

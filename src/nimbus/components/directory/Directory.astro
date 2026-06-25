@@ -1,0 +1,212 @@
+---
+/**
+ * Directory — filterable catalog of documentation product folders (modelled on
+ * cloudflare.com/products). Astro + a vanilla controller (directory.client.ts);
+ * no framework island, so it can use the Astro <Checkbox> primitive for the
+ * category filter.
+ *
+ * Layout: a centered, search-first hero drawn on the homepage's structural
+ * blueprint (FullPageLines + StructuralGrid), an always-present category
+ * checklist (sticky on desktop), and ONE flat grid of every product — no
+ * per-group sections, so each product appears exactly once even when it
+ * belongs to several groups. Cells are flat (defined only by the shared 1px
+ * lines) with rounded corner-marks on every intersection; cells close their
+ * own right/bottom edge (the container draws top/left), so a ragged final row
+ * needs no filler cells. The controller scopes by category and re-flows the
+ * single grid as search filters it, reusing ./grid.ts so build and runtime
+ * agree.
+ *
+ * Typography matches the homepage: the hero uses the Hero.astro clamp at
+ * font-medium.
+ */
+import { Icon } from "astro-icon/components";
+import { Checkbox, CheckboxGroup } from "~/components/ui/checkbox";
+import BackgroundLines from "../BackgroundLines.astro";
+import {
+  type ProductData,
+  UNCATEGORIZED,
+  LG_GRID_CLASS,
+  resolveCols,
+  cornersFor,
+  cellClass,
+  cornerSpansHTML,
+} from "./grid";
+
+interface Props {
+  products: ProductData[];
+}
+
+const { products } = Astro.props;
+
+// A product's effective categories (its declared groups, or `Other`).
+const groupsOf = (product: ProductData): string[] =>
+  product.groups.length ? product.groups : [UNCATEGORIZED];
+
+// One flat list of unique products, sorted by name. A multi-group product
+// still renders once; the category filter matches it via its `data-groups`.
+const items = products
+  .slice()
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+const cols = resolveCols(items.length);
+
+// Group list for the filter checklist — alphabetical, `Other` last.
+const groupSet = new Set<string>();
+for (const product of products)
+  for (const group of groupsOf(product)) groupSet.add(group);
+const groups = [...groupSet].sort((a, b) => {
+  if (a === UNCATEGORIZED) return 1;
+  if (b === UNCATEGORIZED) return -1;
+  return a.localeCompare(b);
+});
+---
+
+<div class="relative" data-directory>
+  <BackgroundLines inner={1120} outer={1360} />
+
+  <div
+    class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
+  >
+    {/* ---- hero: title + tagline only; type matches Hero.astro ---- */}
+    <header class="mx-auto max-w-2xl text-center">
+      <h1
+        class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+      >
+        Directory
+      </h1>
+      <p
+        class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
+      >
+        Everything you need to build, deploy, and scale applications on Cloudflare's global network.
+      </p>
+    </header>
+
+    {/* ---- working area: rail (search + checklist) + results ---- */}
+    <div
+      class="mt-12 pt-10 md:grid md:grid-cols-[208px_1fr] md:gap-10"
+    >
+      <aside class="mb-8 md:mb-0 md:sticky md:top-20 md:self-start">
+        {/* Search + category filter read as one narrowing unit in the rail. */}
+        <div class="relative mb-5">
+          <Icon
+            name="ph:magnifying-glass"
+            class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+          />
+          <input
+            type="text"
+            data-directory-search
+            placeholder="Search products…"
+            aria-label="Search products"
+            class="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          />
+          <button
+            type="button"
+            data-directory-search-clear
+            hidden
+            aria-label="Clear search"
+            class="absolute top-1/2 right-1.5 grid size-7 -translate-y-1/2 place-items-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
+          >
+            <Icon name="ph:x" class="size-3.5" />
+          </button>
+        </div>
+
+        <CheckboxGroup
+          legend="Filter by group"
+          legendClass="mb-3 px-2 font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase"
+        >
+          {
+            groups.map((group) => (
+              <Checkbox
+                label={group}
+                name="category"
+                value={group}
+              />
+            ))
+          }
+        </CheckboxGroup>
+
+        <button
+          type="button"
+          data-directory-clear
+          hidden
+          class="mt-2 px-2 text-sm text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+        >
+          Clear filters
+        </button>
+      </aside>
+
+      <div class="min-w-0" data-directory-results>
+        <div
+          data-directory-empty
+          hidden
+          class="rounded-lg border border-border py-12 text-center"
+        >
+          <p class="text-lg font-medium text-foreground">No folders found</p>
+          <p class="mt-1 text-muted-foreground">
+            Try a different search term, or clear your filters.
+          </p>
+        </div>
+
+        <div class="relative w-full border-t border-l border-border">
+          <div data-directory-grid class={LG_GRID_CLASS[cols]}>
+            {
+              items.map((product, i) => {
+                const description =
+                  product.data.meta?.description ?? product.data.entry.title;
+                return (
+                  <div
+                    data-directory-cell
+                    data-name={product.data.name.toLowerCase()}
+                    data-groups={groupsOf(product).join("|")}
+                    class={cellClass}
+                  >
+                    <div
+                      data-corner-marks
+                      class="pointer-events-none absolute inset-0 z-10 select-none"
+                      aria-hidden="true"
+                      set:html={cornerSpansHTML(cornersFor(i, cols))}
+                    />
+                    <a
+                      href={product.data.entry.url}
+                      class="group/card flex h-full flex-col p-4 text-inherit! no-underline lg:p-5"
+                    >
+                      {product.icon ? (
+                        <svg
+                          viewBox={product.icon.attributes.viewBox}
+                          fill="currentColor"
+                          aria-hidden="true"
+                          class="-ml-0.5 inline-block size-5 shrink-0 text-muted-foreground group-hover/card:text-primary"
+                          set:html={product.icon.body}
+                        />
+                      ) : (
+                        <span
+                          aria-hidden="true"
+                          class="-ml-0.5 inline-flex size-5 shrink-0 items-center justify-center text-base leading-none font-bold text-muted-foreground group-hover/card:text-primary"
+                        >
+                          {product.data.name.charAt(0)}
+                        </span>
+                      )}
+                      <p class="pt-2 pb-0.5">
+                        <strong class="text-base font-semibold text-foreground">
+                          {product.data.name}
+                        </strong>
+                      </p>
+                      {description && (
+                        <p class="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                          {description}
+                        </p>
+                      )}
+                    </a>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import "~/components/directory/directory.client";
+</script>

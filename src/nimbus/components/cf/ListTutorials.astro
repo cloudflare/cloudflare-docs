@@ -1,0 +1,66 @@
+---
+/**
+ * ListTutorials — table of every tutorial in the current product section
+ * (pages with `pcx_content_type: tutorial`), newest-reviewed first.
+ *
+ * CF source: cloudflare-docs/src/components/ListTutorials.astro
+ * Mapping notes: upstream also pulls cross-product tutorials via the
+ * `directory` collection + `products` frontmatter references; this app
+ * only carries Queues content, so the section-prefix filter is enough.
+ * date-fns `formatDistance` → Intl.RelativeTimeFormat; rehype external
+ * link processing dropped (tutorial links here are always internal).
+ */
+import { getCollection } from "astro:content";
+
+const currentSection = (Astro.params.slug as string).split("/")[0];
+
+const tutorials = await getCollection(
+  "docs",
+  (entry) =>
+    entry.data.pcx_content_type === "tutorial" &&
+    entry.id.startsWith(`${currentSection}/`),
+);
+
+const toDate = (value?: string | Date) =>
+  value ? new Date(value) : undefined;
+
+tutorials.sort(
+  (a, b) =>
+    (toDate(b.data.reviewed)?.getTime() ?? 0) -
+    (toDate(a.data.reviewed)?.getTime() ?? 0),
+);
+
+function timeAgo(value?: string | Date) {
+  const date = toDate(value);
+  if (!date) return undefined;
+
+  const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+  const days = Math.round((date.getTime() - Date.now()) / 86_400_000);
+  if (Math.abs(days) < 30) return rtf.format(days, "day");
+  if (Math.abs(days) < 365) return rtf.format(Math.round(days / 30), "month");
+  return rtf.format(Math.round(days / 365), "year");
+}
+---
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Last Updated</td>
+      <td>Difficulty</td>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      tutorials.map((tutorial) => (
+        <tr>
+          <td>
+            <a href={`/${tutorial.id}/`}>{tutorial.data.title}</a>
+          </td>
+          <td>{timeAgo(tutorial.data.reviewed)}</td>
+          <td>{tutorial.data.difficulty}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

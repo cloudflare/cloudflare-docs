@@ -1,0 +1,31 @@
+---
+/**
+ * ProductPills — badge links for the products a changelog entry is tagged
+ * with. CF source: cloudflare-docs/src/components/changelog/ProductPills.astro
+ * Adapted to this app's Badge (Starlight's Badge isn't available here).
+ */
+import { getEntries, reference } from "astro:content";
+import { z } from "astro/zod";
+
+import { Badge } from "~/components/ui/badge";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+  products: z.array(reference("directory")),
+});
+
+const { products } = await props.parseAsync(Astro.props);
+
+const data = await getEntries(products);
+---
+
+<div class="flex flex-row flex-wrap gap-1.5">
+  {
+    data.map((product) => (
+      <a href={`/changelog/product/${product.id}/`} class="no-underline">
+        <Badge text={product.data.entry.title} variant="default" size="small" />
+      </a>
+    ))
+  }
+</div>

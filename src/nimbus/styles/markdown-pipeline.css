@@ -1,0 +1,302 @@
+/* Styles for the markdown pipeline (external links, heading anchors, mermaid).
+ * Adapted from cloudflare-docs; Starlight tokens are mapped to nimbus tokens. */
+
+/* External links */
+.external-link {
+	text-wrap-mode: nowrap;
+}
+
+/* Heading anchor — sits in the left gutter, revealed on heading hover/focus. */
+.docs-content .heading-wrapper {
+	position: relative;
+}
+
+.docs-content .anchor-link {
+	position: absolute;
+	top: 0.15em;
+	left: -1.4rem;
+	display: inline-flex;
+	align-items: center;
+	color: var(--nb-muted-foreground);
+	text-decoration: none;
+	opacity: 0;
+	transition:
+		opacity 0.15s,
+		color 0.15s;
+}
+
+.docs-content .heading-wrapper:hover .anchor-link,
+.docs-content .anchor-link:focus-visible {
+	opacity: 1;
+}
+
+.docs-content .anchor-link:hover {
+	color: var(--nb-foreground);
+}
+
+.docs-content .anchor-icon {
+	display: inline-flex;
+}
+
+.docs-content .anchor-icon svg {
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+
+/* Mermaid diagrams */
+
+/* Hide unprocessed diagrams to prevent flash of unstyled content */
+pre.mermaid:not([data-processed]) {
+	visibility: hidden;
+}
+
+/* Container wrapper for diagram + annotation */
+.mermaid-container {
+	position: relative;
+	background: transparent;
+	overflow: hidden;
+	margin: 1rem 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+/* Expand button */
+.mermaid-expand {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	margin: 0;
+	border: 1px solid var(--nb-border);
+	border-radius: 6px;
+	background: var(--nb-background);
+	color: var(--nb-muted-foreground);
+	cursor: pointer;
+	opacity: 0;
+	box-sizing: border-box;
+	line-height: 1;
+	outline-offset: 2px;
+	-webkit-appearance: none;
+	appearance: none;
+	text-decoration: none;
+	box-shadow: none;
+	transition:
+		opacity 0.15s ease,
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+.mermaid-container:hover .mermaid-expand {
+	opacity: 1;
+}
+
+.mermaid-expand:focus-visible {
+	opacity: 1;
+	outline: 2px solid var(--nb-foreground);
+}
+
+@media (hover: none) {
+	.mermaid-expand {
+		opacity: 1;
+	}
+}
+
+.mermaid-expand:hover {
+	background: var(--nb-accent);
+	color: var(--nb-foreground);
+}
+
+/* Full-screen dialog */
+.mermaid-dialog {
+	border: none;
+	background: transparent;
+	padding: 0;
+	max-width: 100vw;
+	max-height: 100vh;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+@keyframes mermaid-dialog-in {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes mermaid-dialog-out {
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+}
+
+@keyframes mermaid-backdrop-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes mermaid-backdrop-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+.mermaid-dialog[open] {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+	animation: mermaid-dialog-in 150ms ease-out;
+}
+
+.mermaid-dialog[open]::backdrop {
+	background: rgba(0, 0, 0, 0.8);
+	backdrop-filter: blur(4px);
+	animation: mermaid-backdrop-in 150ms ease-out;
+}
+
+.mermaid-dialog.closing {
+	animation: mermaid-dialog-out 150ms ease-in forwards;
+}
+
+.mermaid-dialog.closing::backdrop {
+	animation: mermaid-backdrop-out 150ms ease-in forwards;
+}
+
+.mermaid-dialog-body {
+	width: 92vw;
+	max-height: 92vh;
+	overflow: auto;
+	border-radius: 10px;
+	box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+/* The cloned container inside the dialog — give it a proper background */
+.mermaid-dialog-body .mermaid-container {
+	margin: 0;
+	background: var(--nb-background);
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+/* Scale the SVG larger in the dialog */
+.mermaid-dialog-body pre.mermaid[data-processed] {
+	padding: 3rem;
+}
+
+.mermaid-dialog-body pre.mermaid[data-processed] svg {
+	max-height: calc(92vh - 120px);
+	width: 100%;
+}
+
+.mermaid-dialog-close {
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 8px;
+	background: rgba(0, 0, 0, 0.5);
+	color: rgba(255, 255, 255, 0.7);
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+.mermaid-dialog-close:hover {
+	background: rgba(0, 0, 0, 0.7);
+	color: #ffffff;
+}
+
+/* The diagram itself */
+pre.mermaid[data-processed] {
+	padding: 1.5rem;
+	margin: 0;
+	background: transparent;
+	border-radius: 0;
+	box-shadow: none;
+	display: block;
+	line-height: 0;
+	border-color: var(--nb-border) !important;
+}
+
+/* Ensure SVG fills the width nicely */
+pre.mermaid[data-processed] svg {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+}
+
+/* Remove any box shadow from SVG elements (excluding edge labels) */
+pre.mermaid[data-processed] svg :not(foreignObject *) {
+	box-shadow: none !important;
+}
+
+/* Annotation footer */
+.mermaid-annotation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.75rem 1rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--nb-muted-foreground);
+	background: rgba(0, 0, 0, 0.02);
+	margin: 0;
+	font-family: var(--nb-font-sans);
+}
+
+.mermaid-annotation-title {
+	flex: 1;
+}
+
+.mermaid-annotation-logo {
+	height: 16px;
+	width: auto;
+	opacity: 0.7;
+}
+
+/* Dark mode adjustments */
+[data-mode="dark"] .mermaid-annotation {
+	background: rgba(255, 255, 255, 0.03);
+	color: var(--nb-muted-foreground);
+}
+
+[data-mode="dark"] .mermaid-annotation-logo {
+	opacity: 0.8;
+}

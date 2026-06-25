@@ -1,0 +1,185 @@
+---
+import { Icon } from "astro-icon/components";
+import CommandBlock from "./CommandBlock.astro";
+import CornerMarks from "@/components/CornerMarks.astro";
+import { LinkButton } from "@/components/ui/link-button";
+import SectionHeading from "./SectionHeading.astro";
+import TabBar from "./TabBar.astro";
+
+const primitives = [
+	{
+		id: "compute",
+		label: "Compute",
+		icon: "workers-vpc",
+		iconColor: "#0a95ff",
+		iconBg: "rgba(10, 149, 255, 0.1)",
+		iconBgDark: "rgba(10, 149, 255, 0.16)",
+		heading: "Deploy with one command",
+		description:
+			"Build and deploy serverless functions and full-stack apps on Cloudflare's global network. No servers to manage. No cold starts or region complexity.",
+		command: "npm create cloudflare@latest my-app",
+		cta: {
+			label: "Create your first Worker",
+			href: "/workers/get-started/guide/",
+		},
+		tags: [
+			{ label: "Workers", href: "/workers/" },
+			{ label: "Containers", href: "/containers/" },
+			{ label: "Durable Objects", href: "/durable-objects/" },
+			{ label: "Queues", href: "/queues/" },
+		],
+	},
+	{
+		id: "ai",
+		label: "AI",
+		icon: "workers-ai",
+		iconColor: "#19e306",
+		iconBg: "#f2f5e1",
+		iconBgDark: "rgba(25, 227, 6, 0.16)",
+		heading: "The AI inference platform",
+		description:
+			"Run AI inference globally with one API call, build agents, and search across your data — no GPUs to manage, no capacity planning.",
+		command: "npx wrangler ai models",
+		cta: { label: "Browse available models", href: "/workers-ai/models/" },
+		tags: [
+			{ label: "Workers AI", href: "/workers-ai/" },
+			{ label: "AI Gateway", href: "/ai-gateway/" },
+			{ label: "Agents", href: "/agents/" },
+			{ label: "Vectorize", href: "/vectorize/" },
+			{ label: "Browser Run", href: "/browser-run/" },
+		],
+	},
+	{
+		id: "storage",
+		label: "Storage & Databases",
+		icon: "d1",
+		iconColor: "#ee0ddb",
+		iconBg: "rgba(238, 13, 219, 0.1)",
+		iconBgDark: "rgba(238, 13, 219, 0.16)",
+		heading: "Make your database feel instant, everywhere",
+		description:
+			"Serverless SQL, globally distributed key-value, and global database acceleration — query directly from Workers with no connection management.",
+		command: "npx wrangler d1 create my-database",
+		cta: { label: "Get started with D1", href: "/d1/get-started/" },
+		tags: [
+			{ label: "R2", href: "/r2/" },
+			{ label: "Pipelines", href: "/pipelines/" },
+			{ label: "D1", href: "/d1/" },
+			{ label: "KV", href: "/kv/" },
+			{ label: "Hyperdrive", href: "/hyperdrive/" },
+		],
+	},
+	{
+		id: "media",
+		label: "Media",
+		icon: "images",
+		iconColor: "#9616ff",
+		iconBg: "rgba(150, 22, 255, 0.1)",
+		iconBgDark: "rgba(150, 22, 255, 0.22)",
+		heading: "Build media pipelines without infrastructure headaches",
+		description:
+			"Cloudflare Images helps teams build scalable, reliable media pipelines to store, optimize, and deliver images.",
+		command:
+			"curl --request POST https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/images/v1",
+		cta: {
+			label: "Get started with Images",
+			href: "/images/get-started/introduction/",
+		},
+		tags: [
+			{ label: "Images", href: "/images/" },
+			{ label: "Stream", href: "/stream/" },
+			{ label: "Realtime", href: "/realtime/" },
+		],
+	},
+];
+---
+
+<section class="pt-10 pb-6 lg:pt-14" aria-labelledby="build-heading" id="build">
+	<SectionHeading id="build-heading" class="mb-8">
+		Powerful primitives, seamlessly integrated
+	</SectionHeading>
+
+	<div class="border-border relative overflow-visible border">
+		<CornerMarks />
+
+		<TabBar
+			name="build"
+			variant="underline"
+			aria-label="Build primitives"
+			tabs={primitives.map((p) => ({ id: p.id, label: p.label }))}
+		/>
+
+		{
+			primitives.map((p, i) => (
+				<div
+					role="tabpanel"
+					id={`build-panel-${p.id}`}
+					aria-labelledby={`build-tab-${p.id}`}
+					data-tabbar="build"
+					data-tab-id={p.id}
+					hidden={i !== 0}
+					class="bg-background p-5 sm:p-8"
+				>
+					<div class="w-full">
+						<div class="mb-4 flex items-center gap-3">
+							<div
+								class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
+								style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
+							>
+								<Icon name={p.icon} size="16px" />
+							</div>
+							<h3 class="text-foreground text-base leading-snug font-medium md:text-lg">
+								{p.heading}
+							</h3>
+						</div>
+						<p class="text-muted-foreground mb-6 text-sm leading-relaxed md:text-base">
+							{p.description}
+						</p>
+
+						<CommandBlock
+							id={`build-cmd-${p.id}`}
+							command={p.command}
+							rounded
+							class="mb-6 max-w-[680px]"
+						/>
+
+						<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+							<LinkButton href={p.cta.href} variant="secondary" size="base">
+								{p.cta.label}
+								<Icon name="ph:arrow-right" class="h-3 w-3" />
+							</LinkButton>
+							<p class="text-muted-foreground relative top-px min-w-0 flex-1 text-sm">
+								{p.tags.map((tag, idx) => (
+									<span class="inline-flex items-center">
+										<a
+											href={tag.href}
+											class="text-foreground no-underline hover:underline hover:underline-offset-4"
+										>
+											{tag.label}
+										</a>
+										{idx < p.tags.length - 1 && (
+											<span class="text-border mx-1.5" aria-hidden="true">
+												·
+											</span>
+										)}
+									</span>
+								))}
+							</p>
+						</div>
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.build-panel-icon {
+		color: var(--build-icon-color);
+		border-color: var(--build-icon-color);
+		background: var(--build-icon-bg);
+	}
+	:global(:root[data-mode="dark"]) .build-panel-icon {
+		background: var(--build-icon-bg-dark);
+	}
+</style>

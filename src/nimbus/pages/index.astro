@@ -1,0 +1,205 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { SidebarFilter } from "@/components/ui/sidebar";
+import Sidebar from "../components/landing/Sidebar.astro";
+import Hero from "../components/landing/Hero.astro";
+import BuildFromScratch from "../components/landing/BuildFromScratch.astro";
+import AgentSetup from "../components/landing/AgentSetup.astro";
+import ChangelogSection from "../components/landing/ChangelogSection.astro";
+import SecureSection from "../components/landing/SecureSection.astro";
+import AccelerateSection from "../components/landing/AccelerateSection.astro";
+import CommunityGrid from "../components/landing/CommunityGrid.astro";
+import StructuralGrid from "../components/landing/StructuralGrid.astro";
+import FullPageLines from "../components/landing/FullPageLines.astro";
+import { config } from "virtual:nimbus/config";
+
+const currentPath = Astro.url.pathname;
+---
+
+<BaseLayout
+  title="Cloudflare Developer Docs"
+  description="Connect, protect, and build everywhere."
+>
+  <div class="flex flex-col h-full">
+    <Header showSidebar />
+
+    <div
+      class="flex flex-col w-full overflow-x-clip bg-background text-foreground"
+    >
+      <div class="flex">
+        <aside
+          data-nb-desktop-sidebar
+          class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto"
+        >
+          <nav class="flex-1 px-4 pt-5 pb-12" aria-label="Documentation">
+            <SidebarFilter placeholder="Search products..." />
+            <Sidebar currentPath={currentPath} />
+          </nav>
+          <div
+            class="pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t from-background to-transparent"
+          >
+          </div>
+        </aside>
+
+        <main
+          id="main-content"
+          transition:name="nb-content"
+          class="flex-1 min-w-0"
+        >
+          <div class="relative">
+            <FullPageLines />
+            <StructuralGrid />
+            <div
+              class="relative z-10 mx-auto max-w-[1280px] px-[max(2rem,4vw)] pt-16 min-[800px]:pt-[max(2rem,4vw)]"
+            >
+              <Hero />
+              <BuildFromScratch />
+              <AgentSetup />
+              <ChangelogSection />
+              <SecureSection />
+              <AccelerateSection />
+              <CommunityGrid />
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <dialog
+    data-mobile-sidebar
+    data-state="closed"
+    class="group fixed inset-0 m-0 h-full w-full max-h-full max-w-full border-0 bg-transparent p-0 data-[state=open]:bg-black/40 data-[state=closing]:bg-black/40"
+    aria-label="Site navigation"
+  >
+    <div
+      data-mobile-sidebar-panel
+      class="h-full w-(--nb-sidebar-width) max-w-[85vw] -translate-x-full overflow-y-auto bg-background shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
+    >
+      <div
+        class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-background px-4 py-3"
+      >
+        <span class="font-semibold text-sm text-foreground">{config.title}</span>
+        <button
+          data-close-sidebar
+          class="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+          aria-label="Close sidebar"
+        >
+          <Icon name="ph:x" class="w-5 h-5" />
+        </button>
+      </div>
+      <nav class="px-4 pt-5 pb-8" aria-label="Documentation">
+        <SidebarFilter placeholder="Search products..." />
+        <Sidebar currentPath={currentPath} />
+      </nav>
+    </div>
+  </dialog>
+
+  <script>
+    import { lockScroll, unlockScroll } from "nimbus-docs/client";
+
+    const dialog = document.querySelector<HTMLDialogElement>("[data-mobile-sidebar]");
+    const menuBtn = document.querySelector<HTMLElement>("[data-menu-btn]");
+    const CLOSE_DURATION_MS = 250;
+
+    if (dialog && menuBtn) {
+      let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+      const openSidebar = () => {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = undefined;
+        }
+        if (dialog.open) return;
+
+        dialog.showModal();
+        dialog.dataset.state = "closed";
+        lockScroll();
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            dialog.dataset.state = "open";
+          });
+        });
+
+        dialog.querySelector<HTMLElement>("[data-close-sidebar]")?.focus();
+      };
+
+      const closeSidebar = () => {
+        if (!dialog.open || dialog.dataset.state === "closing") return;
+
+        dialog.dataset.state = "closing";
+        closeTimer = setTimeout(() => {
+          dialog.close();
+        }, CLOSE_DURATION_MS);
+      };
+
+      menuBtn.addEventListener("click", openSidebar);
+
+      dialog.addEventListener("cancel", (event) => {
+        event.preventDefault();
+        closeSidebar();
+      });
+
+      dialog.addEventListener("close", () => {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = undefined;
+        }
+        dialog.dataset.state = "closed";
+        unlockScroll();
+        menuBtn.focus();
+      });
+
+      dialog.querySelector("[data-close-sidebar]")
+        ?.addEventListener("click", closeSidebar);
+
+      dialog.addEventListener("click", (e) => {
+        if (e.target === dialog) closeSidebar();
+      });
+
+      // The drawer is a mobile-only affordance (the burger is `lg:hidden` and
+      // the sidebar lives inline on desktop). If it's open when the viewport
+      // grows to desktop, close it so it doesn't linger over the page.
+      const desktopMq = window.matchMedia("(min-width: 1024px)");
+      desktopMq.addEventListener("change", (e) => {
+        if (e.matches && dialog.open) dialog.close();
+      });
+    }
+  </script>
+
+  <script>
+    // Instant jump to a hash target on load; in-page clicks stay smooth.
+    {
+      const hash = window.location.hash;
+      if (hash.length > 1) {
+        let target: Element | null = null;
+        let id = hash.slice(1);
+        try {
+          id = decodeURIComponent(id);
+        } catch {}
+        target = document.getElementById(id);
+        if (!target) {
+          try {
+            target = document.querySelector(hash);
+          } catch {
+            target = null;
+          }
+        }
+        if (target) {
+          const html = document.documentElement;
+          const prev = html.style.scrollBehavior;
+          html.style.scrollBehavior = "auto";
+          requestAnimationFrame(() => {
+            target!.scrollIntoView();
+            requestAnimationFrame(() => {
+              html.style.scrollBehavior = prev;
+            });
+          });
+        }
+      }
+    }
+  </script>
+</BaseLayout>
