@@ -71,6 +71,11 @@
 			],
 		},
 	],
+	// Explicitly empty crons list so wrangler clears any previously registered
+	// cron triggers on deploy (an absent triggers key leaves existing ones intact).
+	"triggers": {
+		"crons": [],
+	},
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,
