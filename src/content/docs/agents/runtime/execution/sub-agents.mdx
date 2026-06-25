@@ -506,6 +506,14 @@ The older synchronous `getSchedule()` and `getSchedules()` APIs throw inside sub
 
 Calling `this.destroy()` inside a sub-agent delegates cleanup to the parent. The parent cancels that sub-agent's schedules, removes recovery metadata for the sub-agent and its descendants, removes the registry entry, and asks the runtime to wipe the child storage. Treat `this.destroy()` as fire-and-forget because deleting the sub-agent can abort its isolate before the method returns cleanly.
 
+### Workflows from sub-agents
+
+Sub-agents can also start [Workflows](/agents/runtime/execution/run-workflows/) with `this.runWorkflow()`. Workflow tracking is local to the sub-agent's SQLite database, and `AgentWorkflow.agent` routes RPC, callbacks, state updates, and broadcasts back to the originating sub-agent. Parent agents do not automatically list or control child-started workflows.
+
+Because `SubAgentStub<T>` only exposes user-defined child methods, add child wrapper methods for controls such as `getWorkflow()`, `approveWorkflow()`, or `terminateWorkflow()`, then call those wrappers through `await this.subAgent(Child, name)`. If you pass `runWorkflow(..., { agentBinding })` from a sub-agent, use the root Agent binding name, not a child binding name.
+
+For sub-agent workflow origins, `AgentWorkflow.agent` is RPC-only. Use it to call Agent methods, but use `routeSubAgentRequest()` or the nested `/agents/{parent}/{name}/sub/{child}/{name}` URL shape for external HTTP or WebSocket routing instead of `this.agent.fetch()`.
+
 ## Example
 
 <LinkCard
