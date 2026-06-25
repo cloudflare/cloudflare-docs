@@ -22,7 +22,7 @@ export default function autolinkHeadings() {
 
 				const wrapper = h(
 					"div",
-					{ tabIndex: -1, class: `heading-wrapper level-${node.tagName}` },
+					{ tabindex: -1, class: `heading-wrapper level-${node.tagName}` },
 					[anchor],
 				);
 
