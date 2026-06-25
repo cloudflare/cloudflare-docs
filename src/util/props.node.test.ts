@@ -14,10 +14,10 @@ describe("description", () => {
 
 		test("removes external link icon", async () => {
 			const desc = await generateDescription({
-				markdown: `[links${externalLinkArrow}](/) and **${externalLinkArrow}stuff**`,
+				markdown: `[links${externalLinkArrow}](/) and **stuff${externalLinkArrow}**`,
 			});
 
-			expect(desc).toEqual("links and \\*\\*stuff\\*\\*");
+			expect(desc).toEqual("links and stuff");
 		});
 	});
 

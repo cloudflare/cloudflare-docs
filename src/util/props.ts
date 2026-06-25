@@ -1,8 +1,8 @@
 import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 import { parse } from "node-html-parser";
 import he from "he";
-import { remark } from "remark";
-import strip from "strip-markdown";
+import { toString as mdastToString } from "mdast-util-to-string";
+import { markdownToMdast } from "satteri";
 import { externalLinkArrow } from "~/plugins/shared";
 
 type TableOfContentsItems = NonNullable<StarlightRouteData["toc"]>["items"];
@@ -74,9 +74,10 @@ export async function generateDescription({
 	let description = undefined;
 
 	if (markdown) {
-		const file = await remark().use(strip).process(markdown);
-
-		description = file.toString();
+		const tree = markdownToMdast(markdown, {
+			features: { frontmatter: false, gfm: true },
+		});
+		description = mdastToString(tree).replace(/\s+/g, " ");
 	} else if (html) {
 		const dom = parse(html);
 		const paragraph = dom.querySelector(":root > p");

@@ -239,6 +239,9 @@ importers:
       mdast-util-mdx-expression:
         specifier: 2.0.1
         version: 2.0.1
+      mdast-util-to-string:
+        specifier: 4.0.0
+        version: 4.0.0
       mermaid:
         specifier: 11.15.0
         version: 11.15.0
