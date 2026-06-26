@@ -8,9 +8,9 @@ products:
 
 import { DashButton, Steps } from "~/components";
 
-Cloudflare Access lets you make a Worker private by requiring visitors to sign in before they can reach it. You define who is allowed, such as members of your Cloudflare account or anyone with a verified email address at a specific domain like `example.com`.
+Cloudflare Access makes a Worker private by requiring visitors to sign in first. You can define who is allowed, such as members of your Cloudflare account or anyone with a verified email address at a domain like `example.com`.
 
-Access checks the visitor before your Worker runs. If the visitor is allowed, Cloudflare sends the request to your Worker. If the visitor is not allowed, Access shows a login page or blocks the request.
+Access checks each visitor before your Worker runs. Allowed visitors reach your Worker; everyone else runs into a login page or gets their request blocked.
 
 ## Before you start
 
@@ -36,11 +36,9 @@ Start with what you want visitors to sign in to access:
 
 ## Configure Access in the dashboard
 
-The Workers dashboard supports common Access workflows for all Workers and one Worker.
-
 ### Protect all Workers {/* dashboard-protect-all-workers */}
 
-Use account-level Access when Workers should require sign-in by default. You can protect every production and preview deployment, or protect only preview deployments across the account.
+Protect all Workers when every Worker should require sign-in by default. You can protect all production and preview deployments, or only preview deployments, across every Worker in the account.
 
 Dashboard path: **Workers & Pages** overview page > **Protect all Workers**.
 
@@ -53,14 +51,14 @@ Dashboard path: **Workers & Pages** overview page > **Protect all Workers**.
 
 2. Find the **Protect all Workers** card.
 3. If the card says **Not enabled**, select **Enable Access**.
-4. Choose **Previews & Production** or **Previews**.
+4. Choose **Production & Previews** or **Previews**.
 5. Under **Authentication policy**, select an existing policy or configure one of the [policy options](#policy-options).
 6. Select **Enable Access**.
 </Steps>
 
 ### Protect one Worker {/* dashboard-protect-one-worker */}
 
-Use Worker-level Access when a single Worker should require sign-in. Worker-level Access protects the Worker by Worker ID, so protection follows that Worker across its routes, Custom Domains, `workers.dev` hostname, and previews.
+Protect one Worker when a single Worker should require sign-in. Protection follows the Worker by its ID across all of the Worker's routes, Custom Domains, `workers.dev` hostname, and previews.
 
 Dashboard path: **Workers & Pages** > select your Worker > **Access**.
 
@@ -105,7 +103,7 @@ This option is only useful when account-level Access already protects the Worker
 
 ### Protect one hostname, Custom Domain, or path {/* dashboard-protect-one-hostname-custom-domain-or-path */}
 
-Use hostname-based Access when a specific URL that routes to your Worker should require sign-in. This can protect a `workers.dev` hostname, a Custom Domain, a subdomain, or a path.
+Use hostname-based Access when only a specific URL that routes to your Worker should require sign-in, such as a `workers.dev` hostname, a Custom Domain, a subdomain, or a path. Hostname-based Access protects only that exact URL, whereas [protecting a Worker](#dashboard-protect-one-worker) protects the entire Worker.
 
 For example, you can protect:
 
@@ -113,11 +111,11 @@ For example, you can protect:
 - `admin.example.com`
 - `example.com/login`
 
-To configure hostname or path-based Access, create a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) in **Zero Trust** > **Access** > **Applications** and use the hostname or path as the application domain.
+To configure hostname or path-based Access, create a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) in **Zero Trust** > **Access** > **Applications** and use the hostname or path as the application domain. To match subdomains, multiple paths, or wildcards, refer to [Application paths](/cloudflare-one/access-controls/policies/app-paths/).
 
-Using hostname-based Access for a Custom Domain protects that production Custom Domain. If you only want part of your Worker to be private, protect a specific path such as `example.com/login`.
+To make only part of your Worker private, protect a specific path such as `example.com/login`.
 
-### Policy Options
+### Policy options
 
 When you turn on Access from the Workers dashboard, choose who can sign in. The same policy options are available whether you protect all Workers or one Worker.
 
@@ -128,9 +126,9 @@ When you turn on Access from the Workers dashboard, choose who can sign in. The 
 
 You can add one or more policies. Visitors who match any selected policy can sign in.
 
-For advanced policy configuration, such as multiple identity providers, device posture rules, service tokens, complex policy ordering, or custom login or block pages, edit the Access application in Zero Trust after you create it.
+For advanced policy configuration, such as multiple identity providers, device posture rules, service tokens, complex policy ordering, or custom login or block pages, edit the Access application in Zero Trust after you create it. For the full set of options, refer to [Access policies](/cloudflare-one/access-controls/policies/).
 
-### Disable access
+### Disable Access
 
 To disable Worker-level or account-level Access, open the Worker's **Access** tab or the **Protect all Workers** card and disable the corresponding Access rule.
 
@@ -217,7 +215,7 @@ If account-level Access protects all Workers, create a more specific Worker-leve
 
 To protect a `workers.dev` hostname, Custom Domain, subdomain, or path with the API, create a self-hosted Access application with the hostname or path as the application domain.
 
-### Disable access
+### Disable Access
 
 To disable Access with the API, delete the Access application that protects the Worker, all Workers, or the hostname or path that routes to the Worker.
 
