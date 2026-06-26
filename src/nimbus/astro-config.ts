@@ -160,6 +160,7 @@ export const integrations = [
 	icon(),
 	react(),
 	nimbus(nimbusConfig, {
+		mdx: { optimize: true },
 		markdown: { hastPlugins: rehypePlugins },
 		incrementalBuilds: false,
 		// MDX validation gated until the component barrel covers the full tree (C2).
