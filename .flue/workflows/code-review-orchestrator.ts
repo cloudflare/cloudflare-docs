@@ -618,10 +618,12 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 		});
 	}
 
-	// Count this toward the auto-review cap only on successful completion (not at
-	// the start), and only for automatic runs — so interrupted/failed runs and
-	// codeowner-bypassed runs never burn a slot.
-	if (!input.bypassReviewLimit) {
+	// Count this toward the auto-review cap only when both specialists succeeded
+	// and only for automatic runs — so interrupted/failed/partial runs and
+	// codeowner-bypassed runs never burn a slot. A partial run that degrades one
+	// section tells users "it will retry on the next push"; if we counted it here
+	// the retry would be blocked by the cap.
+	if (!input.bypassReviewLimit && codeOutcome.ok && styleOutcome.ok) {
 		await markAutoReviewCompleted(bucket, input.number, currentHeadSha).catch(
 			() => {},
 		);

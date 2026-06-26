@@ -301,22 +301,33 @@ export async function run({ payload, env, req }: FlueContext) {
 			return { acted: false, summary: "Commenter is not a codeowner." };
 		}
 		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		const prForFanOut = await getPullRequest(token, number).catch(() => null);
 		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url).origin;
+		const isDepBotFanOut = prForFanOut?.user?.login === "dependabot[bot]";
 		try {
 			const runId = await admitWorkflow({
 				baseUrl,
-				pathname: `/workflows/code-review-orchestrator`,
+				pathname: isDepBotFanOut
+					? `/workflows/dependabot-review`
+					: `/workflows/code-review-orchestrator`,
 				headers: internalHeaders,
-				body: {
-					eventType: "pull_request",
-					number,
-					forceFullReview: true,
-					bypassReviewLimit: true,
-					forceReviewMode: "fan-out",
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyesReactionId,
-				},
+				body: isDepBotFanOut
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							forceFullReview: true,
+							bypassReviewLimit: true,
+							forceReviewMode: "fan-out",
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
 			});
 			console.log({
 				message: `Fan-out review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
@@ -369,22 +380,33 @@ export async function run({ payload, env, req }: FlueContext) {
 			return { acted: false, summary: "Commenter is not a codeowner." };
 		}
 		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		const prForHolistic = await getPullRequest(token, number).catch(() => null);
 		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url).origin;
+		const isDepBotHolistic = prForHolistic?.user?.login === "dependabot[bot]";
 		try {
 			const runId = await admitWorkflow({
 				baseUrl,
-				pathname: `/workflows/code-review-orchestrator`,
+				pathname: isDepBotHolistic
+					? `/workflows/dependabot-review`
+					: `/workflows/code-review-orchestrator`,
 				headers: internalHeaders,
-				body: {
-					eventType: "pull_request",
-					number,
-					forceFullReview: true,
-					bypassReviewLimit: true,
-					forceReviewMode: "holistic",
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyesReactionId,
-				},
+				body: isDepBotHolistic
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							forceFullReview: true,
+							bypassReviewLimit: true,
+							forceReviewMode: "holistic",
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
 			});
 			console.log({
 				message: `Holistic review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
