@@ -1,0 +1,412 @@
+---
+pcx_content_type: configuration
+title: Cloudflare Access
+description: Require sign-in before visitors can reach Cloudflare Workers, preview deployments, or all Workers in an account.
+products:
+  - workers
+---
+
+import { DashButton, Steps } from "~/components";
+
+Cloudflare Access lets you make a Worker private by requiring visitors to sign in before they can reach it. You define who is allowed, such as members of your Cloudflare account or anyone with a verified email address at a specific domain like `example.com`.
+
+Access checks the visitor before your Worker runs. If the visitor is allowed, Cloudflare sends the request to your Worker. If the visitor is not allowed, Access shows a login page or blocks the request.
+
+## Choose what to protect
+
+Start with what you want visitors to sign in to access:
+
+- [All Workers: production and previews](#protect-all-workers-in-an-account): Use account-level Worker Access. Every Worker on the account requires sign-in.
+- [All Worker previews only](#protect-all-workers-in-an-account): Use account-level preview Access. All previews require sign-in; production remains public unless another Access rule protects it.
+- [One Worker: production and previews](#protect-one-worker): Select the Worker as the Access application destination. Production and previews for that Worker require sign-in.
+- [One Worker's previews only](#protect-one-worker): Select the Worker's preview destination. Previews require sign-in; production remains public unless another Access rule protects it.
+- [One `workers.dev` hostname](#require-sign-in-for-one-hostname): Use hostname-based Access for the Worker's `workers.dev` hostname. You can protect production, preview URLs, or both.
+- [One Custom Domain](#require-sign-in-for-one-hostname): Use hostname-based Access for the Custom Domain. This protects the production Custom Domain.
+
+## Before you start
+
+To use Access with Workers, you need:
+
+- A Cloudflare Zero Trust organization set up for the account.
+- Permission to manage Workers and Access applications.
+
+Set up Zero Trust before you configure Access for Workers. If Zero Trust is not turned on, complete [Zero Trust setup](/cloudflare-one/setup/) first, then return to the Workers dashboard.
+
+## Default policy options
+
+When you turn on Access from the Workers dashboard, choose who can sign in. The same policy options are available whether you protect all Workers or one Worker.
+
+| Policy option      | Result                                                                                                                                                                                                                                 |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cloudflare account | Allows members of this Cloudflare account to sign in. Use this option when access should be limited to people who already belong to the account.                                                                                       |
+| Email domain       | Allows anyone with a verified email address at the domain you enter, such as `example.com`. Use this option when access should be available to people from a company or organization, even if they are not Cloudflare account members. |
+
+You can add one or more policies. Visitors who match any selected policy can sign in.
+
+## Choose a scope
+
+The scope controls which deployments require sign-in. You choose a scope when you configure Access for all Workers or for one Worker.
+
+### Account-level scopes
+
+Use these options from the **Protect all Workers** card on the Workers & Pages overview page:
+
+| Scope                 | Result                                                                                                                                                   |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Previews & Production | Requires sign-in for production and preview deployments for every Worker in the account.                                                                 |
+| Previews              | Requires sign-in for preview deployments for every Worker in the account. Production deployments remain public unless another Access rule protects them. |
+
+### Worker-level scopes
+
+Use these options from a Worker's **Access** tab:
+
+| Scope                 | Result                                                                                                                            |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Production & Previews | Requires sign-in for the selected Worker's production and preview deployments.                                                    |
+| Previews              | Requires sign-in for the selected Worker's preview deployments. Production remains public unless another Access rule protects it. |
+
+## Understand Access hierarchy
+
+A Worker can be protected by more than one Access rule. When multiple rules could apply to the same request, the most specific rule takes effect first:
+
+1. **Hostname or path-based Access**: Applies first when the request matches that hostname or path, such as `admin.example.com` or `example.com/login`.
+2. **Worker-level Access**: Applies next for the selected Worker across its routes, Custom Domains, `workers.dev` hostname, and previews.
+3. **Account-level Worker Access**: Applies last as the fallback for all Workers or all Worker previews on the account.
+
+For example, if a Worker has both account-level Access and a Worker-level rule, the Worker-level rule controls that Worker. If a matching hostname or path-based Access app also exists, that hostname or path rule controls the matching URL.
+
+If you remove a more specific rule, a broader rule may still protect the Worker. For example, removing Worker-level Access can reveal account-level Access underneath.
+
+## Protect all Workers in an account
+
+Use account-level Access when Workers should require sign-in by default. You can protect every production and preview deployment, or protect only preview deployments across the account.
+
+Dashboard path: **Workers & Pages** overview page > **Protect all Workers**.
+
+![Workers & Pages overview showing the Protect all Workers card above the Workers application list.](~/assets/images/workers/access/protect-all-workers-card.png)
+
+On the [Workers & Pages overview page](https://dash.cloudflare.com/?to=/:account/workers-and-pages), the **Protect all Workers** card appears above the Workers application list. The card can show one of these states:
+
+| State       | Meaning                                                                         | Action                                                     |
+| ----------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Not enabled | Zero Trust is available, but account-level Access is not turned on for Workers. | Select **Enable Access** and add an authentication policy. |
+| Enabled     | Account-level Access already protects Workers on the account.                   | Open the card to manage the configuration.                 |
+
+To protect all Workers:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Find the **Protect all Workers** card.
+3. If the card says **Not enabled**, select **Enable Access**.
+4. In **Enable Access for all Workers?**, [choose a scope](#choose-a-scope).
+5. Under **Authentication policy**, select an existing policy or configure one of the [default policy options](#default-policy-options).
+6. Select **Enable Access**.
+</Steps>
+
+## Protect one Worker
+
+Use Worker-level Access when a single Worker should require sign-in. Worker-level Access protects the Worker by Worker ID, so protection follows that Worker across its routes, Custom Domains, `workers.dev` hostname, and previews.
+
+Dashboard path: **Workers & Pages** > select your Worker > **Access**.
+
+![Worker Access tab showing an unprotected Worker and the Protect this Worker behind Access button.](~/assets/images/workers/access/worker-access-tab-unprotected.png)
+
+To protect one Worker:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker from the application list.
+3. Select the **Access** tab.
+4. Select **Protect this Worker behind Access**.
+5. In **Manage Worker access**, [choose a scope](#choose-a-scope).
+6. Under **Authentication policy**, select an existing policy or configure one of the [default policy options](#default-policy-options).
+7. (Optional) Review the session duration.
+8. Select **Apply Access**.
+</Steps>
+
+The Worker-level dialog also includes a **Session** section. Session duration controls how long sign-in lasts. Most teams can keep the default value.
+
+## Make a Worker public when all Workers are protected
+
+If account-level Access protects all Workers, you can make a specific Worker public by adding a Worker-level bypass.
+
+A bypass means Access does not require sign-in for that Worker. The Worker is publicly reachable.
+
+Dashboard path: **Workers & Pages** > select your Worker > **Access**.
+
+![Manage Worker access dialog showing a Make this Worker public bypass policy.](~/assets/images/workers/access/worker-level-bypass-public.png)
+
+To make a Worker public:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker from the application list.
+3. Select the **Access** tab.
+4. Select the option to make the Worker public or bypass account-level Access.
+5. Confirm the change.
+</Steps>
+
+:::note
+This option is only useful when account-level Access already protects the Worker. If there is no account-level Access policy, a public Worker does not need a bypass.
+:::
+
+## Configure Access with the API
+
+You can also configure Access for Workers by creating an Access application with a Worker destination.
+
+Use these destination types based on what you want to protect:
+
+- `worker`: Protect one Worker's production and preview deployments.
+- `preview_worker`: Protect one Worker's preview deployments only.
+- `all_workers`: Protect every Worker's production and preview deployments.
+- `all_preview_workers`: Protect every Worker's preview deployments only.
+
+For `worker` and `preview_worker` destinations, pass the immutable Worker ID as `worker_id`. This ID is the Worker tag from the Workers scripts API, or the Worker `id` from the Workers beta API.
+
+### Protect one Worker with the API
+
+This example requires sign-in for one Worker's production and preview deployments:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --json '{
+    "type": "self_hosted",
+    "name": "Access for my-worker",
+    "destinations": [
+      {
+        "type": "worker",
+        "worker_id": "c81a2d22c29840ed9d61681a3270dbff"
+      }
+    ],
+    "policies": [
+      {
+        "decision": "allow",
+        "include": [
+          {
+            "email_domain": {
+              "domain": "example.com"
+            }
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+To protect only preview deployments for that Worker, use `preview_worker` instead:
+
+```json
+"destinations": [
+  {
+    "type": "preview_worker",
+    "worker_id": "c81a2d22c29840ed9d61681a3270dbff"
+  }
+]
+```
+
+### Protect all Workers with the API
+
+This example requires sign-in for every Worker's production and preview deployments:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --json '{
+    "type": "self_hosted",
+    "name": "Access for all Workers",
+    "destinations": [
+      {
+        "type": "all_workers"
+      }
+    ],
+    "policies": [
+      {
+        "decision": "allow",
+        "include": [
+          {
+            "email_domain": {
+              "domain": "example.com"
+            }
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+To protect preview deployments for every Worker, use `all_preview_workers` instead:
+
+```json
+"destinations": [
+  {
+    "type": "all_preview_workers"
+  }
+]
+```
+
+### Find existing Access apps
+
+Before creating an Access app, you can search for an existing app that already uses the same Worker destination:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps?destination_type=worker&worker_id=c81a2d22c29840ed9d61681a3270dbff" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+You can also search by account-wide destination type:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps?destination_type=all_workers" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+:::note
+An account cannot have two `worker` destinations with the same `worker_id`, or two `preview_worker` destinations with the same `worker_id`. The same Worker can have one `worker` destination and one `preview_worker` destination.
+:::
+
+## Require sign-in for one hostname
+
+You can also use hostname-based Access when a specific URL that routes to your Worker should require sign-in. Use this for a `workers.dev` hostname, a Custom Domain, a subdomain, or a path.
+
+### One `workers.dev` hostname
+
+Use this option when a specific `workers.dev` URL should require sign-in, such as:
+
+- `my-worker.example.workers.dev`
+
+To configure Access for a `workers.dev` hostname, create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) in **Zero Trust** > **Access** > **Applications** and use the `workers.dev` hostname as the application destination. You can protect the production `workers.dev` URL, preview URLs, or both.
+
+### One Custom Domain, subdomain, or path
+
+Use this option when a production Custom Domain, subdomain, or path should require sign-in.
+
+For example, you can protect:
+
+- `admin.example.com`
+- `example.com/login`
+
+Using hostname-based Access for a Custom Domain protects that production Custom Domain. If you only want part of your Worker to be private, protect a specific path such as `example.com/login`.
+
+For example, if a Worker handles both public and private routes, you may want only `/login` to require Access:
+
+- `example.com/login`
+
+To configure hostname or path-based Access, create a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) in **Zero Trust** > **Access** > **Applications**.
+
+## Why a URL may show as Public
+
+The **Domains** tab shows whether a hostname or route has hostname-based Access protection.
+
+A Worker can still be protected by Worker-level or account-level Access even when a URL appears as **Public** in the **Domains** tab.
+
+For example, a Worker can have Worker-level Access turned on while its **Domains** tab shows a URL as **Public**. In this case, the URL may show as **Public** because there is no hostname-based Access app, but the Worker itself is still protected by Access.
+
+To see Worker-level and account-level Access status, use the Worker's **Access** tab.
+
+## Use signed-in user information in your Worker
+
+When Access allows a request, it adds a JSON Web Token (JWT) to the request in the `Cf-Access-Jwt-Assertion` header.
+
+Your Worker can validate this JWT to confirm that the request passed through Access and to read identity claims, such as the user's email address.
+
+:::caution
+If your Worker relies on the signed-in user's identity, validate the Access JWT in your Worker code.
+:::
+
+To validate the JWT, you need:
+
+| Value    | Description                                                     |
+| -------- | --------------------------------------------------------------- |
+| AUD tag  | The Access application audience value.                          |
+| JWKS URL | The public signing keys for your Cloudflare Access team domain. |
+
+You can find these values in the Worker's **Access** tab under **Worker Identity** or in the Access application in Zero Trust.
+
+![Worker Access tab linked resources card showing the Worker's Access app and blurred Worker Identity values.](~/assets/images/workers/access/worker-identity-linked-resources-blurred.png)
+
+Refer to [Validate JWTs](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#cloudflare-workers-example) for a Workers example.
+
+## Manage advanced policies
+
+The Workers dashboard supports common Access workflows. For advanced Access configuration, use the Zero Trust dashboard.
+
+Use Zero Trust when you need:
+
+- Multiple identity providers.
+- Device posture rules.
+- Service tokens.
+- Complex policy ordering.
+- Custom login or block pages.
+- Hostname and path-based Access apps.
+
+To manage advanced policies:
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Zero Trust**.
+2. Go to **Access** > **Applications**.
+3. Select the Access application that protects your Worker.
+</Steps>
+
+## Disable Access
+
+You can disable Worker-level or account-level Access from the Workers dashboard.
+
+Disabling Access removes the Access application that was created for that Worker or account-level rule. Reusable policies may still exist in Zero Trust if they are used by other Access applications.
+
+### Disable Worker-level Access
+
+To disable Worker-level Access:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker from the application list.
+3. Select the **Access** tab.
+4. Select the Worker-level Access app.
+5. Select **Disable**.
+</Steps>
+
+### Disable account-level Access
+
+To disable account-level Access:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Find the **Protect all Workers** card.
+3. Open the card or select the manage action.
+4. Disable the account-level Access rule.
+</Steps>
+
+## Troubleshooting
+
+| Issue                                                    | Explanation                                                                                                                         | What to do                                                              |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| A Worker URL shows as **Public** in the **Domains** tab. | The URL may not have hostname-based Access protection, even though the Worker is protected by Worker-level or account-level Access. | Check the Worker's **Access** tab.                                      |
+| A Worker is private because all Workers are protected.   | Account-level Access applies to all matching Workers.                                                                               | Add a Worker-level bypass if this Worker should be public.              |
+| A visitor is asked to sign in again.                     | The Access application session or global Access session may have expired.                                                           | Review the Access application's session duration in the dashboard.      |
+| Your Worker needs the user's email address.              | Access passes user identity in the JWT after authentication.                                                                        | Validate the `Cf-Access-Jwt-Assertion` header and read the email claim. |
+
+## Related resources
+
+- [Access policies](/cloudflare-one/access-controls/policies/)
+- [Validate JWTs](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/)
+- [Self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/)
+- [Routes and domains](/workers/configuration/routing/)
+- [Preview URLs](/workers/configuration/previews/)
