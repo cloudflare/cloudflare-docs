@@ -34,36 +34,39 @@ const INITIAL_VISIBLE_ROWS = 20;
   <input
     type="text"
     id="glossary-search"
+    aria-label="Search glossary terms"
     placeholder="Search terms..."
-    class="w-full rounded-md border border-border bg-card px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+    class="w-full rounded-md border border-border bg-card px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none"
   />
 </div>
-{/* No class attrs on table/th — prose.css table styling targets :not([class]). */}
-<table id="glossary-table">
-  <thead>
-    <tr>
-      <th>Term</th>
-      <th>Definition</th>
-      {!product && <th>Product</th>}
-    </tr>
-  </thead>
-  <tbody>
-    {
-      terms.map((entry, idx) => (
-        <tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
-          <td>{entry.term}</td>
-          <td
-            set:html={marked.parse(
-              entry.general_definition.charAt(0).toUpperCase() +
-                entry.general_definition.slice(1),
-            )}
-          />
-          {!product && <td>{entry.product}</td>}
-        </tr>
-      ))
-    }
-  </tbody>
-</table>
+{/* Shared MDX table styles target unclassed tables inside `.docs-content`. */}
+<div class="docs-content max-w-none">
+  <table id="glossary-table">
+    <thead>
+      <tr>
+        <th>Term</th>
+        <th>Definition</th>
+        {!product && <th>Product</th>}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        terms.map((entry, idx) => (
+          <tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
+            <td>{entry.term}</td>
+            <td
+              set:html={marked.parse(
+                entry.general_definition.charAt(0).toUpperCase() +
+                  entry.general_definition.slice(1),
+              )}
+            />
+            {!product && <td>{entry.product}</td>}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
 
 {
   terms.length > INITIAL_VISIBLE_ROWS && (

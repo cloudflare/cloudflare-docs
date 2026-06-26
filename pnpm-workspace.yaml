@@ -1,11 +1,3 @@
-# ⚠️ LOCAL DEV LINK — DO NOT COMMIT. Points nimbus-docs at the in-progress local
-# checkout so migration bugs can be found/fixed incrementally without a publish
-# per fix. Remove this block (revert to the published version) before the
-# consolidated release / cutover. Valid for `astro sync` + build-time work;
-# switch back to a published version for the full render build (peer resolution).
-overrides:
-  nimbus-docs: "link:/Users/mhassan/Documents/dev/nimbus/monorepo/packages/nimbus-docs"
-
 # Minimum age (in minutes) a package version must be published before pnpm will install it.
 # 1440 minutes = 24 hours. Reduces risk from newly-published compromised packages.
 minimumReleaseAge: 1440

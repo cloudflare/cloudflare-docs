@@ -31,8 +31,12 @@ const sections = await getSidebarSections(currentSlug, { collection });
 
 // Standalone, non-docs destinations. Nimbus has no header-nav config and
 // `getSidebarSections` only surfaces docs sidebar *groups*, so site-level
-// links are declared here (Header is user-owned). Add more as needed.
-const siteLinks = [{ label: "Changelog", href: "/changelog/" }];
+const siteLinks = [
+  { label: "Directory", href: "/directory/" },
+  { label: "API", href: "/api/" },
+  { label: "SDKs", href: "/fundamentals/api/reference/sdks/" },
+  { label: "Changelog", href: "/changelog/" },
+];
 
 const navLinks = [
   ...sections,

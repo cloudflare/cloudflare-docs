@@ -207,6 +207,14 @@
   white-space: nowrap;
 }
 
+.docs-content :where(thead tr:first-child th:first-child:not([class])) {
+  border-start-start-radius: 0.75rem;
+}
+
+.docs-content :where(thead tr:first-child th:last-child:not([class])) {
+  border-start-end-radius: 0.75rem;
+}
+
 .docs-content :where(tbody:not([class]) tr:not([class]):last-child td:not([class])) {
   border-bottom: none;
 }

@@ -11,7 +11,7 @@ import {
   getTOC,
 } from "nimbus-docs";
 import { config } from "virtual:nimbus/config";
-import { agentResourcesTransform } from "../util/sidebar";
+import { docsSidebarTransform } from "../util/sidebar";
 import { components } from "../components";
 
 export const prerender = true;
@@ -36,7 +36,7 @@ const tocOn =
 const sidebar = sidebarOn
   ? await getSidebar(currentSlug, {
       collection: entry.collection,
-      transform: agentResourcesTransform,
+      transform: docsSidebarTransform,
     })
   : false;
 
@@ -64,6 +64,24 @@ const markdownUrl = Astro.site ? new URL(markdownPath, Astro.site).href : markdo
 // ~34s build cost without incremental caching. Frontmatter can still set a
 // per-page image; otherwise NimbusHead falls back to the site-wide `/og.png`.
 const socialImage = entry.data.socialImage;
+
+// `external_link` pages (e.g. the per-product "REST API" stubs pointing to
+// `/api/`) build at their own path but redirect to the target. The sidebar
+// already links straight to `external_link` via nimbus-docs; this meta-refresh
+// covers a direct hit on the stub's own URL, matching Starlight's
+// `Head.astro` (`0; url=…`). Body stays empty — the browser leaves immediately.
+const externalLink = entry.data.external_link;
+const head = [
+  ...(entry.data.head ?? []),
+  ...(externalLink
+    ? [
+        {
+          tag: "meta" as const,
+          attrs: { "http-equiv": "refresh", content: `0; url=${externalLink}` },
+        },
+      ]
+    : []),
+];
 ---
 
 <DocsLayout
@@ -75,7 +93,7 @@ const socialImage = entry.data.socialImage;
   prevNext={prevNext}
   mode={entry.data.mode}
   banner={entry.data.banner}
-  head={entry.data.head}
+  head={head}
   searchable={entry.data.searchable}
   noindex={entry.data.noindex}
   markdownUrl={markdownUrl}
