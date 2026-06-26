@@ -14,7 +14,7 @@ Custom Domains allow you to connect your Worker to a domain or subdomain, withou
 
 Custom Domains are routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
 
-Custom Domains are recommended if you want to connect your Worker to the Internet and do not have an application server that you want to always communicate with.  If you do have external dependencies, you can create a `Request` object with the target URI, and use `fetch()` to reach out.
+Custom Domains are recommended if you want to connect your Worker to the Internet and do not have an application server that you want to always communicate with. If you do have external dependencies, you can create a `Request` object with the target URI, and use `fetch()` to reach out.
 
 Custom Domains can stack on top of each other. For example, if you have Worker A attached to `app.example.com` and Worker B attached to `api.example.com`, Worker A can call `fetch()` on `api.example.com` and invoke Worker B.
 
@@ -33,9 +33,7 @@ Custom Domains can be attached to your Worker via the Cloudflare dashboard, [Wra
 
 :::caution
 
-
 You cannot create a Custom Domain on a hostname with an existing CNAME DNS record or on a zone you do not own.
-
 
 :::
 
@@ -55,6 +53,12 @@ To set up a Custom Domain in the dashboard:
 </Steps>
 
 After you have added the domain or subdomain, Cloudflare will create a new DNS record for you. You can add multiple Custom Domains.
+
+### Require sign-in for a Custom Domain
+
+To require visitors to sign in before they can access a Custom Domain, use [Cloudflare Access](/workers/configuration/cloudflare-access/#require-sign-in-for-one-hostname).
+
+You can protect a Custom Domain with hostname-based Access, or protect the Worker itself across its routes, Custom Domains, `workers.dev` hostname, and previews. For more information, refer to [Cloudflare Access](/workers/configuration/cloudflare-access/).
 
 ### Set up a Custom Domain in your Wrangler configuration file
 
@@ -76,8 +80,6 @@ To configure a Custom Domain in your [Wrangler configuration file](/workers/wran
 </WranglerConfig>
 
 To configure multiple Custom Domains:
-
-
 
 <WranglerConfig>
 
@@ -106,8 +108,8 @@ On the same zone, if a Worker is attempting to communicate with a target Worker 
 
 For example, consider the following scenario, where both Workers are running on the `example.com` Cloudflare zone:
 
-* `worker-a` running on the [route](/workers/configuration/routing/routes/#set-up-a-route) `auth.example.com/*`.
-* `worker-b` running on the [route](/workers/configuration/routing/routes/#set-up-a-route) `shop.example.com/*`.
+- `worker-a` running on the [route](/workers/configuration/routing/routes/#set-up-a-route) `auth.example.com/*`.
+- `worker-b` running on the [route](/workers/configuration/routing/routes/#set-up-a-route) `shop.example.com/*`.
 
 If `worker-a` sends a fetch request to `worker-b`, the request will fail, because of the limitation on same-zone fetch requests. `worker-a` must have a service binding to `worker-b` for this request to resolve.
 
@@ -115,9 +117,9 @@ If `worker-a` sends a fetch request to `worker-b`, the request will fail, becaus
 export default {
 	fetch(request) {
 		// This will fail
-		return fetch("https://shop.example.com")
-	}
-}
+		return fetch("https://shop.example.com");
+	},
+};
 ```
 
 However, if `worker-b` was instead set up to run on the Custom Domain `shop.example.com`, the fetch request would succeed.
@@ -142,15 +144,15 @@ For example, consider the following workflow:
 ```js title="auth-worker" {8}
 export default {
 	fetch(request) {
-		const url = new URL(request.url)
-		if(url.searchParams.get("auth") !== "SECRET_TOKEN") {
-			return new Response(null, { status: 401 })
+		const url = new URL(request.url);
+		if (url.searchParams.get("auth") !== "SECRET_TOKEN") {
+			return new Response(null, { status: 401 });
 		} else {
 			// This will invoke `api-worker`
-			return fetch(request)
+			return fetch(request);
 		}
-	}
-}
+	},
+};
 ```
 
 ## Certificates
@@ -170,10 +172,10 @@ Because Custom Domains require an exact hostname match, a Worker attached to `ex
 - [Redirect from www to root](/rules/url-forwarding/examples/redirect-www-to-root/)
 - [Redirect from root to www](/rules/url-forwarding/examples/redirect-root-to-www/)
 
-You also need a [proxied DNS record](/dns/manage-dns-records/how-to/create-dns-records/) for the hostname you are redirecting *from*, so that Cloudflare can apply the redirect rule.
+You also need a [proxied DNS record](/dns/manage-dns-records/how-to/create-dns-records/) for the hostname you are redirecting _from_, so that Cloudflare can apply the redirect rule.
 
-  - For www to root: Add a proxied DNS `A` record for `www` pointing to `192.0.2.0`, or a proxied `AAAA` record pointing to `100::`
-  - For root to www: Add a proxied DNS `A` record for your root domain pointing to `192.0.2.0`, or a proxied `AAAA` record pointing to `100::`
+- For www to root: Add a proxied DNS `A` record for `www` pointing to `192.0.2.0`, or a proxied `AAAA` record pointing to `100::`
+- For root to www: Add a proxied DNS `A` record for your root domain pointing to `192.0.2.0`, or a proxied `AAAA` record pointing to `100::`
 
 :::note
 `192.0.2.0` (A record) and `100::` (AAAA record) are [reserved placeholder addresses](/dns/manage-dns-records/how-to/create-dns-records/#originless-setups) for originless setups. Because the DNS record is proxied, requests never reach this address — Cloudflare intercepts them and applies your redirect rule.
