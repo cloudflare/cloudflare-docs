@@ -78,6 +78,33 @@
 			"tag": "v6",
 			"new_sqlite_classes": ["FlueFinalizeReviewWorkflow"],
 		},
+		{
+			// The specialist DOs accumulated too much SQLite state from crashed runs
+			// (each OOM leaves orphaned session data), causing the Flue alarm recovery
+			// handler to OOM on startup in a death spiral. Phase 1: rename the bloated
+			// instances out of the way (abandoned). Phase 2 (v8): recreate fresh
+			// instances with the original names so the bindings still work.
+			"tag": "v7",
+			"renamed_classes": [
+				{
+					"from": "FlueCodeReviewSpecialistWorkflow",
+					"to": "FlueCodeReviewSpecialistWorkflowOld",
+				},
+				{
+					"from": "FlueStyleGuideSpecialistWorkflow",
+					"to": "FlueStyleGuideSpecialistWorkflowOld",
+				},
+			],
+		},
+		{
+			// Phase 2: recreate the specialist classes with empty storage. The *Old
+			// instances from v7 are orphaned and stop receiving traffic.
+			"tag": "v8",
+			"new_sqlite_classes": [
+				"FlueCodeReviewSpecialistWorkflow",
+				"FlueStyleGuideSpecialistWorkflow",
+			],
+		},
 	],
 	// Explicitly empty crons list so wrangler clears any previously registered
 	// cron triggers on deploy (an absent triggers key leaves existing ones intact).
