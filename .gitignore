@@ -67,5 +67,5 @@ tools/relevant_changed_files.txt
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
 
-# nimbus-docs generated lint report
-.nimbus/
+# nimbus-docs generated lint report (.nimbus/routes.json is a committed manifest)
+.nimbus/lint.json

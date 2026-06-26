@@ -126,7 +126,6 @@ export default defineConfig({
 					rehypeExternalLinks,
 					rehypeHeadingSlugs,
 					rehypeAutolinkHeadings,
-					// @ts-ignore
 					rehypeTitleFigure,
 					rehypeShiftHeadings,
 				],
