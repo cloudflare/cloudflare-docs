@@ -92,7 +92,7 @@ Create a `schema.json` file in the root of your project:
 		{ "name": "event_type", "type": "string", "required": true },
 		{ "name": "did", "type": "string", "required": false },
 		{ "name": "operation", "type": "string", "required": false },
-		{ "name": "time_us", "type": "int64", "required": false },
+		{ "name": "event_time", "type": "timestamp", "required": false },
 		{ "name": "created_at", "type": "string", "required": false },
 		{ "name": "text", "type": "string", "required": false },
 		{ "name": "langs", "type": "string", "required": false },
@@ -150,23 +150,23 @@ Create a `fanout.sql` file:
 
 ```sql
 INSERT INTO bsky_post_sink
-  SELECT event_id, did, operation, time_us, created_at, text, langs
+  SELECT event_id, did, operation, event_time, created_at, text, langs
   FROM bsky_events_stream WHERE event_type = 'post';
 
 INSERT INTO bsky_like_sink
-  SELECT event_id, did, operation, time_us, created_at, subject_uri
+  SELECT event_id, did, operation, event_time, created_at, subject_uri
   FROM bsky_events_stream WHERE event_type = 'like';
 
 INSERT INTO bsky_repost_sink
-  SELECT event_id, did, operation, time_us, created_at, subject_uri
+  SELECT event_id, did, operation, event_time, created_at, subject_uri
   FROM bsky_events_stream WHERE event_type = 'repost';
 
 INSERT INTO bsky_follow_sink
-  SELECT event_id, did, operation, time_us, created_at, subject_did
+  SELECT event_id, did, operation, event_time, created_at, subject_did
   FROM bsky_events_stream WHERE event_type = 'follow';
 
 INSERT INTO bsky_block_sink
-  SELECT event_id, did, operation, time_us, created_at, subject_did
+  SELECT event_id, did, operation, event_time, created_at, subject_did
   FROM bsky_events_stream WHERE event_type = 'block';
 ```
 
@@ -248,12 +248,17 @@ function toRow(ev: any) {
 		event_type,
 		did: ev.did ?? null,
 		operation: c.operation ?? null,
-		time_us: typeof ev.time_us === "number" ? ev.time_us : null,
+		event_time:
+			typeof ev.time_us === "number"
+				? new Date(ev.time_us / 1000).toISOString()
+				: null,
 		created_at: typeof r.createdAt === "string" ? r.createdAt : null,
 		text: event_type === "post" && typeof r.text === "string" ? r.text : null,
 		langs:
-			event_type === "post" && Array.isArray(r.langs) ? r.langs.join(",") : null,
-		subject_uri: typeof subject === "object" ? subject?.uri ?? null : null,
+			event_type === "post" && Array.isArray(r.langs)
+				? r.langs.join(",")
+				: null,
+		subject_uri: typeof subject === "object" ? (subject?.uri ?? null) : null,
 		subject_did: typeof subject === "string" ? subject : null,
 	};
 }
@@ -302,7 +307,10 @@ export class JetstreamConsumer extends DurableObject<Env> {
 		if (typeof ev.time_us === "number") this.cursor = ev.time_us;
 		const row = toRow(ev);
 		if (row) this.buf.push(row);
-		if (this.buf.length >= FLUSH_MAX || Date.now() - this.lastFlush >= FLUSH_MS) {
+		if (
+			this.buf.length >= FLUSH_MAX ||
+			Date.now() - this.lastFlush >= FLUSH_MS
+		) {
 			void this.flush();
 		}
 	}

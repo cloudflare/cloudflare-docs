@@ -104,7 +104,7 @@ FROM my_stream
 
 A single pipeline can run multiple `INSERT` statements, separated by semicolons. Each statement reads from the same stream and writes to a different sink, so you can route ("fan out") events from one stream into several tables based on their content.
 
-This avoids running a separate pipeline for each destination. Each statement filters the stream with its own `WHERE` clause and projects only the columns relevant to that table.
+This avoids running a separate pipeline for each destination. Each statement filters the stream with its own `WHERE` clause and projects only the columns relevant to that table. This can also be a used as a cost optimization as you will be [billed](/pipelines/platform/pricing/) once for the transformations, not per statement.
 
 ```sql
 INSERT INTO purchases_sink
@@ -115,8 +115,6 @@ INSERT INTO page_views_sink
 SELECT user_id, product_id FROM my_stream
 WHERE event_type = 'view_product';
 ```
-
-Each `INSERT` statement requires its own sink, and each sink writes to its own table. You cannot point two statements at the same sink.
 
 For a complete example that fans a live event stream out into five tables, refer to [Fan out a stream to multiple Iceberg tables](/pipelines/examples/bluesky-firehose-fanout/).
 
