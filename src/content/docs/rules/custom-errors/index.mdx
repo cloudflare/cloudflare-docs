@@ -91,6 +91,6 @@ You can use a custom error asset in one or more [custom error rules](#custom-err
 
 ### Size limits
 
-When you provide a URL for a custom error asset, Cloudflare fetches the page and inlines all referenced resources (images, CSS, and JavaScript) into the HTML using base64 encoding. The processed page must not exceed approximately 1.5 MB.
+When you provide a URL for a custom error asset, Cloudflare fetches the page and inlines all referenced resources into the HTML. Images and other binary resources (including those referenced from CSS via `url(...)`) are inlined as base64-encoded data URLs. CSS and JavaScript files are inlined as plain text inside `<style>` and `<script>` tags. The processed page must not exceed approximately 1.5 MB.
 
 If your custom error asset exceeds this size, reduce the number or size of referenced resources. You can also host large resources externally, as long as they remain accessible from Cloudflare's network when the asset is fetched.
