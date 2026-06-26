@@ -41,11 +41,7 @@ flowchart TD
 
 <Render file="prereqs" product="workers" />
 
-You will also need:
-
-- An [R2 API token](/r2/api/tokens/) with **Admin Read & Write** permissions, which includes R2 Data Catalog and R2 SQL access. You will pass this token to each sink.
-
-No Bluesky account or API key is required. Jetstream is public and unauthenticated.
+You will also need an [R2 API token](/r2/api/tokens/) with **Admin Read & Write** permissions, which includes R2 Data Catalog and R2 SQL access. You will pass this token to each sink. No Bluesky account or API key is required, as Jetstream is public and unauthenticated.
 
 ## 1. Create a new Worker project
 
@@ -75,9 +71,7 @@ cd bluesky-pipeline
 
 The `pipelines` commands used later require Wrangler v4 or later. If your project was scaffolded with an older version, update it now:
 
-```sh
-npm install --save-dev wrangler@latest
-```
+<PackageManagers type="add" pkg="wrangler@latest" dev />
 
 ## 2. Define the stream schema
 
@@ -108,15 +102,19 @@ Your sinks write to Iceberg tables in [R2 Data Catalog](/r2/data-catalog/), so y
 
 Create an R2 bucket named `bluesky-pipeline`:
 
-```sh
-npx wrangler r2 bucket create bluesky-pipeline
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="r2 bucket create bluesky-pipeline"
+/>
 
 Enable R2 Data Catalog on the bucket:
 
-```sh
-npx wrangler r2 bucket catalog enable bluesky-pipeline
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="r2 bucket catalog enable bluesky-pipeline"
+/>
 
 When you run this command, note the **Warehouse name**. You will need it to query your data with R2 SQL.
 
@@ -124,9 +122,11 @@ When you run this command, note the **Warehouse name**. You will need it to quer
 
 First, create the stream from your schema file:
 
-```sh
-npx wrangler pipelines streams create bsky_events_stream --schema-file schema.json
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="pipelines streams create bsky_events_stream --schema-file schema.json"
+/>
 
 Note the **stream ID** in the output. You will use it to configure the Worker binding in the next step.
 
@@ -172,15 +172,17 @@ INSERT INTO bsky_block_sink
 
 Create the pipeline from the file:
 
-```sh
-npx wrangler pipelines create bsky_pipeline --sql-file fanout.sql
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="pipelines create bsky_pipeline --sql-file fanout.sql"
+/>
 
 One pipeline writes to five tables. To add a new event type later, add one sink and one `INSERT` statement. Pipeline SQL cannot be modified after creation, so you delete and recreate the pipeline to change it. To learn more, refer to [Route one stream to multiple tables](/pipelines/pipelines/manage-pipelines/#route-one-stream-to-multiple-tables).
 
 ## 5. Bind the stream to your Worker
 
-Add the stream binding, a Durable Object to hold the WebSocket connection, and a [cron trigger](/workers/configuration/cron-triggers/) to keep the consumer alive. Replace `<STREAM_ID>` with the stream ID from step 3.
+Add the stream binding, a Durable Object to hold the WebSocket connection, and a [cron trigger](/workers/configuration/cron-triggers/) to keep the consumer alive. Replace `<STREAM_ID>` with the stream ID from step 4.
 
 <WranglerConfig>
 ```toml
@@ -270,10 +272,10 @@ export class JetstreamConsumer extends DurableObject<Env> {
 	private cursor: number | null = null;
 	private flushing = false;
 
-	// Idempotent: connect if needed and arm the reconnect alarm.
+	// Arm the reconnect watchdog first, then connect (idempotent).
 	async start() {
-		await this.ensureConnected();
 		await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
+		await this.ensureConnected();
 		return { connected: this.ws !== null };
 	}
 
@@ -339,11 +341,16 @@ export class JetstreamConsumer extends DurableObject<Env> {
 		}
 	}
 
-	// Watchdog: reconnect if dropped, flush stragglers, reschedule.
+	// Watchdog: reconnect if dropped, flush stragglers, always reschedule.
 	async alarm() {
-		await this.ensureConnected();
-		await this.flush();
-		await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
+		try {
+			await this.ensureConnected();
+			await this.flush();
+		} catch (err) {
+			console.error("alarm error", err);
+		} finally {
+			await this.ctx.storage.setAlarm(Date.now() + RECONNECT_MS);
+		}
 	}
 }
 
@@ -362,30 +369,29 @@ export default {
 
 Generate types for your bindings:
 
-```sh
-npx wrangler types
-```
+<PackageManagers type="exec" pkg="wrangler" args="types" />
 
 ## 7. Deploy and start the consumer
 
 Deploy the Worker:
 
-```sh
-npx wrangler deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 Open the Worker URL once to start the firehose. The cron trigger keeps it running:
 
 ```sh
 curl https://bluesky-pipeline.YOUR_SUBDOMAIN.workers.dev
-# {"connected":true}
+```
+
+The command returns:
+
+```txt
+{ "connected": true }
 ```
 
 Tail the logs to watch it work:
 
-```sh
-npx wrangler tail
-```
+<PackageManagers type="exec" pkg="wrangler" args="tail" />
 
 ## 8. Query the tables with R2 SQL
 
