@@ -28,9 +28,11 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 When enabled, your `workers.dev` URL is available publicly. To require visitors to sign in before they can access a `workers.dev` URL, use [Cloudflare Access](/workers/configuration/cloudflare-access/).
 
-Access can protect one Worker's production `workers.dev` URL, preview URLs, or both. You can also protect all Workers or all Worker previews in an account. For setup instructions, refer to [Cloudflare Access](/workers/configuration/cloudflare-access/).
+Access can protect one Worker's production `workers.dev` URL, preview URLs, or both. You can also protect all Workers or all Worker previews in an account.
 
-If your Worker relies on the signed-in user's identity, [validate the Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker code.
+For defense in depth, [validate the Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker code so unauthenticated requests cannot reach your application if Access is ever removed or misconfigured.
+
+To use details about the signed-in user in your Worker, read the [user's identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) from the validated JWT or the `/cdn-cgi/access/get-identity` endpoint.
 
 ## Disabling `workers.dev`
 
