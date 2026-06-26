@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Verified bots
-description: Bots confirmed by Cloudflare as legitimate, such as search engine crawlers.
+description: Bots and agents confirmed by Cloudflare as legitimate, such as search engine crawlers and user-driven agents.
 products:
   - bots
 sidebar:
@@ -14,13 +14,37 @@ learning_center:
 
 import { GlossaryTooltip } from "~/components";
 
-A <GlossaryTooltip term="verified bot">verified bot</GlossaryTooltip> is a bot that Cloudflare has confirmed as legitimate, such as search engine crawlers and monitoring services.
+A <GlossaryTooltip term="verified bot">verified bot</GlossaryTooltip> is a bot or agent that Cloudflare has confirmed is **transparent about who it is and what it does**: it represents itself honestly and does not abuse the access that honesty earns. Examples include search engine crawlers, monitoring services, and user-driven agents.
 
-You can request for your bot to be added to Cloudflare's bots and agents directory by filling out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard.
+You can request for your bot or agent to be added to Cloudflare's bots and agents directory by filling out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard.
 
-:::note
-A bot cannot be registered as both a verified bot and a signed agent. Review Cloudflare's [signed agents](/bots/concepts/bot/signed-agents/) to determine how to identify your bot.
+:::note[Signed agents are now verified bots]
+As of [Content Independence Day](https://blog.cloudflare.com/content-independence-day-no-ai-crawl-without-compensation/) (July 1, 2026), **signed agent** is no longer a separate classification. Agents that self-identify with [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) and behave well are now grouped together with verified bots.
+
+The distinction previously drawn between a *verified bot* and a *signed agent* is now expressed by the **Direct** and **Intermediary** labels described in [Direct and intermediary bots and agents](#direct-and-intermediary-bots-and-agents).
 :::
+
+## What "verified" means
+
+Being verified means a bot or agent meets two bars:
+
+1. **Honest self-identification** — it declares who it is deterministically, through a cryptographic [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) signature, a published IP list with a stable user-agent, or reverse DNS.
+2. **Non-abusive behavior** — it obeys `robots.txt` and crawl directives, maintains reasonable request rates, and has not been observed evading website owner preferences or attacking sites.
+
+:::note[Verified no longer means "allow everything"]
+Previously, *all* verified bots were allowed by default. Starting July 1, 2026, the verified label no longer guarantees access on its own. Bots without the verified label are still blocked by default, but which verified bots are allowed by default is now governed by [behavior-based presets](/bots/concepts/bot/#ai-bots) (Training, Search, and User) rather than a single one-size-fits-all label. A verified bot that misbehaves can lose its verified status, and is then removed from the groups you allow.
+:::
+
+## Direct and intermediary bots and agents
+
+Cloudflare labels every verified bot or agent by how it is operated. This replaces the previous split between *verified bots* and *signed agents*:
+
+| Label | Replaces the legacy term | Description | Examples |
+| --- | --- | --- | --- |
+| **Direct** | Verified bot | Operated by a single, narrow operator — usually on the operator's own infrastructure. Only that operator can send requests that present as this bot. | Googlebot, Bingbot, Pinterest crawler |
+| **Intermediary** | Signed agent | An agentic service that a wide range of end users can operate. The operator runs the software, but each action is initiated by a different end user. | Anchor Browser, Browserbase, Cloudflare [`/crawl`](/browser-rendering/) |
+
+Because an **intermediary** acts on behalf of many different end users, the operator and the end user are not the same party. This introduces **transitive trust**: you may trust the intermediary operator, but not necessarily every end user driving it. Cloudflare is experimenting with forwarding information about the end user (using the `Forwarded` header defined in [RFC 7239](https://www.rfc-editor.org/info/rfc7239)) so that website owners can apply their preferences to the party ultimately responsible for a request.
 
 ## Verified bot requirement
 
@@ -54,6 +78,10 @@ The Verified Bot Categories field is not compatible with legacy Firewall rules.
 
 :::note[Availability]
 Verified Bot Categories is available on all plans.
+:::
+
+:::note[Behavior-based classification]
+The categories below populate the long-standing `cf.verified_bot_category` field and continue to work as before. Separately, Cloudflare now also classifies each tracked bot by **behavior** — including **Training**, **Search**, and **User** — which is what the [AI bot presets](/bots/concepts/bot/#ai-bots) act on. A single bot can have more than one behavior. Enterprise Bot Management customers can browse the full behavior classification of every tracked bot in the dashboard.
 :::
 
 <details>
@@ -124,6 +152,10 @@ Verified Bot Categories is available on all plans.
 **Definition**: Powers AI-driven search experiences.
 
 **Example**: OAI-SearchBot
+
+:::note
+Under the taxonomy introduced on July 1, 2026, there is no longer a meaningful distinction between "AI Search" and traditional search — both are treated as **Search** behavior. The `AI Search` category value is retained for backward compatibility with existing rules, but new search crawlers are classified under **Search**. Refer to [AI bots](/bots/concepts/bot/#ai-bots).
+:::
 </details>
 
 <details>

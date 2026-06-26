@@ -1,67 +1,30 @@
 ---
 pcx_content_type: reference
 title: Signed agents policy
-description: Requirements an agent must meet to be listed as a Cloudflare signed agent.
+description: The signed agents policy is deprecated. Agents now follow the verified bots policy.
 products:
   - bots
 sidebar:
     order: 3
     label: Policy
+    badge:
+      text: Deprecated
+      variant: caution
 
 ---
 
-In order to be listed by Cloudflare as a signed agent, your agent must conform to the below requirements. To provide the best possible protection to our customers, this policy may change in the future as we adapt to new bot behaviors.
+:::caution[Deprecated policy]
+As of [Content Independence Day](https://blog.cloudflare.com/content-independence-day-no-ai-crawl-without-compensation/) (July 1, 2026), **signed agent** is no longer a separate classification, so there is no longer a separate signed agents policy.
 
-## Agent policy
+Agents are now evaluated against the [verified bots policy](/bots/concepts/bot/verified-bots/policy/). An agent that many end users can operate is recognized as a verified bot or agent labeled **Intermediary**.
+:::
 
-### Minimum zones
+## Where requirements moved
 
-Service must be made for a widespread use of zones.
+The requirements that previously lived here are now covered by the [verified bots policy](/bots/concepts/bot/verified-bots/policy/), which applies to all bots and agents:
 
-#### Example
+- **Honest self-identification** — authenticate with [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) (or another supported [verification method](/bots/concepts/bot/verified-bots/#verification-methods)).
+- **Benign or helpful purpose** — the service must not perform abusive activity such as credential stuffing, scalping, or excessive scraping.
+- **Public documentation** — the bot or agent must have a publicly documented purpose and expected behavior.
 
-A bot crawling one site is not valid.
-
-### Agent identification
-
-The user-agent field is optional as it is not required for Web Bot Authentication.
-
-However, if you choose to provide a user-agent, it and the message signature must meet the following requirements:
-
-- Have at least five characters.
-- Must not contain special characters.
-- Must not include the same user-agent of another verified service.
-
-#### Example
-
-`cloudflare-browser-rendering` is a valid message signature.
-
-### Service purpose
-
-The purpose of the service should be benign or helpful to both the owner of a zone and the users of the service. The service cannot perform any of the following:
-
-- Bot tooling
-- Scalpers
-- Credential-stuffing
-- Directory-traversal scanning
-- Excessive data scraping
-- DDoS botnets
-
-#### Example
-
-Price scraping direct e-commerce competitors is not a valid use case.
-
-### Public documentation
-
-The agent must have a publicly documented purpose and expected behavior.
-
----
-
-## Breach of policy
-
-If any of the requirements to validate are breached, a service will be removed from the signed agent list.
-
-The following are examples of breaches of policy:
-
-- The service has vulnerabilities that have not been patched.
-- The disclosed purpose of the service does not reflect on the traffic.
+For the full, current list of requirements, refer to the [verified bots policy](/bots/concepts/bot/verified-bots/policy/).

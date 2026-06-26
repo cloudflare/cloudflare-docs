@@ -1,0 +1,55 @@
+---
+pcx_content_type: concept
+title: Attribution Business Insights
+description: Understand which bots help or harm your business with crawl-to-referral ratios and behavior-based classification.
+products:
+  - bots
+tags:
+  - AI
+  - Bots
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: Attribution Business Insights
+---
+
+import { Description, DashButton, GlossaryTooltip } from "~/components"
+
+<Description>
+Understand a crawler's appetite for your content, and how much value it could drive back, with a targeted view of bot traffic to your site.
+</Description>
+
+For decades, publishers allowed search engines to crawl their content and, in return, search engines sent readers back to their pages. The rise of AI crawlers and agents has strained that arrangement: some bots crawl content tens of thousands of times for every visitor they refer, while consuming infrastructure and bypassing the pages that fund content creation.
+
+**Attribution Business Insights** is a dashboard designed for business decision-makers and content owners. It delivers a focused, opinionated view of the bot traffic flowing to your website — so you can tell which bots help your business and which ones harm it, before you take any action.
+
+## Availability
+
+Attribution Business Insights is available to all [Bot Management Enterprise](/bots/get-started/bot-management/) customers.
+
+It is an analytics surface only. To act on what you find, use [Security rules](/waf/custom-rules/), the [AI bot presets](/bots/concepts/bot/#ai-bots), or [AI Crawl Control](/ai-crawl-control/) — the same controls that govern your other bot and abuse mitigations.
+
+## Access
+
+<DashButton url="/?to=/:account/:zone/security/analytics" />
+
+You can also reach the dashboard from **Security** > **Analytics** in the Cloudflare dashboard.
+
+## What you can see
+
+The dashboard surfaces the metrics publishers most need to evaluate AI traffic:
+
+- **Bot traffic to content pages**: Your overall bot versus human traffic, and the volume of bot visitors successfully accessing content.
+- **Crawl-to-referral ratios**: Your site-wide crawl-to-referral ratio over 24 hours, seven days, or 30 days — and the ratio *per bot operator* (per company that owns one or more bots). A high ratio means a company is crawling a lot while referring few visitors back.
+- **Actionable insights**: Opinionated callouts that highlight risk, such as a single bot consuming a high volume of content or bandwidth while remaining unblocked.
+- **Top bots breakdown**: The top bots by volume, including their country of origin, the bandwidth they consume, and whether you currently block or allow them.
+- **Behavior-based classification**: Each crawler is classified with Cloudflare's [updated taxonomy](/bots/concepts/bot/#ai-bots) — **Training**, **Search**, or **User** — instead of a generic "AI Crawler" label.
+
+## Per-operator view
+
+Beyond the site-wide summary, you can drill into a breakdown by bot operator (the company that owns one or more bots) to see, for each operator, details such as behavior classification, crawl-to-referral ratio, and the action you currently apply. This gives you a consolidated baseline of crawler activity per company, so you can step into a business conversation with the facts on your side.
+
+## How it relates to other tools
+
+Attribution Business Insights is intended to be a hub for thoughtful, filtered analytics rather than another place to take action. In line with the rest of [Bot Management](/bots/get-started/bot-management/), the *action* step still happens in [Security rules](/waf/custom-rules/). Use this dashboard to investigate, then mitigate in the same rule engine that governs your other abuse protections.
