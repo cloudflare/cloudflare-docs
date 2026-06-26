@@ -1898,6 +1898,8 @@
 /support/third-party-software/content-management-system-cms/cloudflare-and-joomla-recommended-first-steps/ /cache/how-to/cache-rules/ 301
 /support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/ /cache/how-to/cache-rules/ 301
 /support/third-party-software/e-commerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/ 301
+/support/troubleshooting/general-troubleshooting/Kcannot-locate-dashboard-account/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301
+
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
