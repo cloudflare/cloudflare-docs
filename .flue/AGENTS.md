@@ -55,7 +55,7 @@ Workflows are invoked in **accepted mode** and coordinated with `admitWorkflow` 
 - **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […] }`; a legacy bare array means style-only), `auto-review-count.json`, and `ignore-review-limit.json`. The staged diff lives in the specialist DO's Workspace filesystem, not R2.
 - The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
 - `lib/code-review-render.ts` renders the single comment: a status line, then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables) and `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
-- **Models**: reviews use `cloudflare/@cf/moonshotai/kimi-k2.7-code`; reconciliation uses `cloudflare/@cf/zai-org/glm-4.7-flash`.
+- **Models**: all model calls (reviews and reconciliation) use `cloudflare/@cf/moonshotai/kimi-k2.7-code`.
 - **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
 
 ### Slash commands (codeowner-only, commented on a PR)

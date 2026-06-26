@@ -241,7 +241,7 @@ export async function run({
 		}
 
 		const { data } = await session.skill("reconcile-code-review", {
-			model: "cloudflare/@cf/zai-org/glm-4.7-flash",
+			model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
 			args: {
 				pullRequest: { number: input.number },
 				currentFindings,
