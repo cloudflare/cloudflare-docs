@@ -190,7 +190,19 @@ export async function runStyleGuideReviewInProcess(
 	const tasks = reviewFilenames.map(
 		(filename, index) => async (): Promise<StyleGuideResult> => {
 			try {
-				return await reviewSingleFile({
+				const total = reviewFilenames.length;
+				console.log({
+					message: `Style-guide review: reviewing file (${index + 1}/${total}) — ${filename}`,
+					event: "style_guide_specialist",
+					number: prNumber,
+					filename,
+					fileIndex: index + 1,
+					totalFiles: total,
+					runId,
+					action: "file_start",
+				});
+
+				const result = await reviewSingleFile({
 					harness,
 					sessionName: `sg:${index}`,
 					pullRequest,
@@ -198,6 +210,20 @@ export async function runStyleGuideReviewInProcess(
 					filename,
 					fileTimeoutMs,
 				});
+
+				console.log({
+					message: `Style-guide review: done reviewing file (${index + 1}/${total}) — ${filename} — ${result.findings.length} finding(s)`,
+					event: "style_guide_specialist",
+					number: prNumber,
+					filename,
+					findings: result.findings.length,
+					fileIndex: index + 1,
+					totalFiles: total,
+					runId,
+					action: "file_complete",
+				});
+
+				return result;
 			} catch (err) {
 				const errMsg = err instanceof Error ? err.message : String(err);
 				console.error({

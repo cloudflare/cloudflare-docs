@@ -91,6 +91,17 @@ export interface CodeReviewPullRequest {
 }
 
 export const CODE_REVIEW_MAX_FILES = 20;
+
+/**
+ * Holistic-mode constants. The specialist routes to holistic when the combined
+ * diff exceeds CODE_REVIEW_HOLISTIC_MAX_BYTES; it selects up to
+ * CODE_REVIEW_HOLISTIC_MAX_FILES files (largest-first) for that path.
+ * All three are env-overridable in the specialist.
+ */
+export const CODE_REVIEW_HOLISTIC_MAX_FILES = 50;
+/** 50 KB — ~½ the size of a large flue PR. Override via CODE_REVIEW_HOLISTIC_MAX_BYTES. */
+export const CODE_REVIEW_HOLISTIC_MAX_BYTES = 51200;
+export { CODE_REVIEW_HOLISTIC_TIMEOUT_MS } from "./code-review-holistic";
 // Default concurrency, overridable per-environment via the CODE_REVIEW_CONCURRENCY
 // env var (see code-review-specialist.ts). Each per-file session is deleted as
 // soon as it finishes (see reviewSingleFile), so peak heap is bounded to
@@ -128,10 +139,13 @@ type PullRequestFiles = Awaited<ReturnType<typeof getPullRequestFiles>>;
 /**
  * Select files eligible for code review from the full PR file list.
  * Includes any changed text file with additions and a patch, excluding
- * generated/binary noise, capped at CODE_REVIEW_MAX_FILES (largest-first).
+ * generated/binary noise, sorted largest-first and capped at `maxFiles`
+ * (defaults to CODE_REVIEW_MAX_FILES for fan-out; callers that route to
+ * holistic pass CODE_REVIEW_HOLISTIC_MAX_FILES).
  */
 export function selectCodeReviewFiles(
 	files: PullRequestFiles,
+	maxFiles: number = CODE_REVIEW_MAX_FILES,
 ): PullRequestFiles {
 	return files
 		.filter(
@@ -142,7 +156,7 @@ export function selectCodeReviewFiles(
 				!CODE_REVIEW_IGNORE_PATH_RE.test(file.filename),
 		)
 		.sort((a, b) => b.additions - a.additions)
-		.slice(0, CODE_REVIEW_MAX_FILES);
+		.slice(0, maxFiles);
 }
 
 /**
@@ -239,6 +253,7 @@ export async function runCodeReviewInProcess(
 			findings: [],
 			summary: "No reviewable code files changed.",
 			reviewedFiles: [],
+			reviewMode: "fan-out",
 		};
 	}
 
@@ -295,7 +310,19 @@ export async function runCodeReviewInProcess(
 								`\n\n[...truncated at ${FILE_CONTENT_MAX_BYTES / 1024} KB — file is ${raw.length} bytes total]`
 							: raw;
 
-				return await reviewSingleFile({
+				const total = options.files.length;
+				console.log({
+					message: `Code review: reviewing file (${index + 1}/${total}) — ${file.filename}`,
+					event: "code_review_specialist",
+					number: prNumber,
+					filename: file.filename,
+					fileIndex: index + 1,
+					totalFiles: total,
+					runId,
+					action: "file_start",
+				});
+
+				const result = await reviewSingleFile({
 					harness,
 					sessionName: `cr:${index}`,
 					pullRequest,
@@ -303,7 +330,23 @@ export async function runCodeReviewInProcess(
 					addedLines,
 					fileContent,
 					fileTimeoutMs,
+					prNumber,
+					runId,
 				});
+
+				console.log({
+					message: `Code review: done reviewing file (${index + 1}/${total}) — ${file.filename} — ${result.findings.length} finding(s)`,
+					event: "code_review_specialist",
+					number: prNumber,
+					filename: file.filename,
+					findings: result.findings.length,
+					fileIndex: index + 1,
+					totalFiles: total,
+					runId,
+					action: "file_complete",
+				});
+
+				return result;
 			} catch (err) {
 				const errMsg = err instanceof Error ? err.message : String(err);
 				console.error({
@@ -328,7 +371,7 @@ export async function runCodeReviewInProcess(
 	);
 
 	const results = await withConcurrency(tasks, concurrency);
-	return mergeCodeReviewResults(results);
+	return { ...mergeCodeReviewResults(results), reviewMode: "fan-out" as const };
 }
 
 /**
@@ -344,6 +387,8 @@ async function reviewSingleFile({
 	addedLines,
 	fileContent,
 	fileTimeoutMs,
+	prNumber,
+	runId,
 }: {
 	harness: Awaited<ReturnType<FlueContext["init"]>>;
 	sessionName: string;
@@ -352,6 +397,8 @@ async function reviewSingleFile({
 	addedLines: AddedLine[];
 	fileContent: string;
 	fileTimeoutMs: number;
+	prNumber: number;
+	runId: string;
 }): Promise<CodeReviewResult> {
 	const session = await harness.session(sessionName);
 
@@ -389,6 +436,18 @@ async function reviewSingleFile({
 		}
 
 		const findings = await assignCodeReviewFindingIds(rawData.findings);
+
+		console.log({
+			message: `Code review file usage: PR #${prNumber} — ${filename} — input ${skillResult.usage.input} tokens, total ${skillResult.usage.totalTokens} tokens`,
+			event: "code_review_specialist",
+			number: prNumber,
+			filename,
+			inputTokens: skillResult.usage.input,
+			totalTokens: skillResult.usage.totalTokens,
+			runId,
+			action: "file_usage",
+		});
+
 		return {
 			findings,
 			summary: rawData.summary,

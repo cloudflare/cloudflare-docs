@@ -35,6 +35,8 @@ export type CodeReviewResult = {
 	summary: string;
 	/** Files the specialist actually reviewed — used by the reconciler to resolve findings. */
 	reviewedFiles: string[];
+	/** Which review mode produced these findings — used to label the comment heading. */
+	reviewMode?: "holistic" | "fan-out";
 };
 
 /**

@@ -30,6 +30,11 @@ export interface ReviewSpecialistPayload {
 	diffMode: DiffMode;
 	/** PR metadata needed to stage the diff context. */
 	pr: ReviewSpecialistPrMeta;
+	/**
+	 * When set by a codeowner slash command (/fan-out-review or /holistic-review),
+	 * overrides the size-based routing in the code-review specialist.
+	 */
+	forceReviewMode?: "fan-out" | "holistic";
 }
 
 /** Build the orchestrator->specialist payload PR descriptor from a full PR. */
@@ -89,5 +94,6 @@ export function parseReviewSpecialistPayload(
 		headSha: input.headSha,
 		diffMode: input.diffMode,
 		pr: input.pr,
+		forceReviewMode: input.forceReviewMode,
 	};
 }

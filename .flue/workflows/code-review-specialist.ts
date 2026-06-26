@@ -3,11 +3,22 @@
  *
  * A stateless specialist dispatched by the code-review orchestrator. It runs in
  * its own Durable Object (its own isolate and memory budget), self-fetches the
- * PR diff for the requested mode, runs the per-file code-review fan-out, and
- * returns the findings as its run result.
+ * PR diff for the requested mode, and returns the findings as its run result.
  *
- * Isolating each specialist in its own DO is what keeps the orchestrator DO
- * from over-running its memory limit when both reviews run at once.
+ * Routing: after selecting reviewable files, it computes the combined diff size
+ * and routes to one of two review strategies:
+ *
+ *   - Fan-out  (combined diff ≤ CODE_REVIEW_HOLISTIC_MAX_BYTES): one session per
+ *     file, up to CODE_REVIEW_MAX_FILES files, concurrency CODE_REVIEW_CONCURRENCY.
+ *     Good for smaller PRs; per-file findings, parallel sessions.
+ *
+ *   - Holistic (combined diff >  CODE_REVIEW_HOLISTIC_MAX_BYTES): one session over
+ *     the entire PR diff, up to CODE_REVIEW_HOLISTIC_MAX_FILES files. Good for
+ *     larger PRs; enables cross-file reasoning, eliminates per-file overhead.
+ *
+ * Both strategies return a CodeReviewResult and are transparent to the
+ * orchestrator. The result carries `reviewMode` so the comment heading reflects
+ * which strategy ran.
  *
  * POST /workflows/code-review-specialist  (internal — admitted by the orchestrator)
  */
@@ -25,9 +36,16 @@ import {
 import {
 	CODE_REVIEW_CONCURRENCY,
 	CODE_REVIEW_FILE_TIMEOUT_MS,
+	CODE_REVIEW_HOLISTIC_MAX_BYTES,
+	CODE_REVIEW_HOLISTIC_MAX_FILES,
 	runCodeReviewInProcess,
 	selectCodeReviewFiles,
+	CODE_REVIEW_MAX_FILES,
 } from "../lib/code-review-inproc";
+import {
+	CODE_REVIEW_HOLISTIC_TIMEOUT_MS,
+	runCodeReviewHolistic,
+} from "../lib/code-review-holistic";
 import { envPositiveInt } from "../lib/env";
 import type { CodeReviewResult } from "../lib/code-review-results";
 import {
@@ -63,6 +81,18 @@ export async function run({
 		typedEnv.CODE_REVIEW_FILE_TIMEOUT_MS,
 		CODE_REVIEW_FILE_TIMEOUT_MS,
 	);
+	const holisticMaxBytes = envPositiveInt(
+		typedEnv.CODE_REVIEW_HOLISTIC_MAX_BYTES,
+		CODE_REVIEW_HOLISTIC_MAX_BYTES,
+	);
+	const holisticMaxFiles = envPositiveInt(
+		typedEnv.CODE_REVIEW_HOLISTIC_MAX_FILES,
+		CODE_REVIEW_HOLISTIC_MAX_FILES,
+	);
+	const holisticTimeoutMs = envPositiveInt(
+		typedEnv.CODE_REVIEW_HOLISTIC_TIMEOUT_MS,
+		CODE_REVIEW_HOLISTIC_TIMEOUT_MS,
+	);
 
 	// Self-fetch the diff for the requested mode. Incremental is SHA-pinned;
 	// if the base SHA is gone (force-push since the orchestrator decided),
@@ -81,29 +111,48 @@ export async function run({
 		files = await getPullRequestFiles(token, input.number);
 	}
 
-	const selected = selectCodeReviewFiles(files);
+	// Select up to the holistic cap (largest-first, filtered). The routing
+	// decision is made over this full candidate set; the fan-out path will
+	// further trim to CODE_REVIEW_MAX_FILES.
+	const reviewable = selectCodeReviewFiles(files, holisticMaxFiles);
+	const diffBytes = reviewable.reduce((n, f) => n + (f.patch?.length ?? 0), 0);
+	// A forceReviewMode from a codeowner slash command overrides the size-based
+	// routing. Otherwise route by diff size: large diffs go holistic.
+	const useHolistic =
+		input.forceReviewMode === "holistic"
+			? true
+			: input.forceReviewMode === "fan-out"
+				? false
+				: diffBytes > holisticMaxBytes;
+
 	const workspace = getDefaultWorkspace();
 
-	// Load the repo's root AGENTS.md from the PR base ref (trusted, not the PR
-	// head — the content is injected into agent instructions). Best-effort.
+	// Load AGENTS.md from the PR base ref — best-effort.
 	const repoAgentsMd =
-		selected.length > 0
+		reviewable.length > 0
 			? ((await getRepoFileContent(token, "AGENTS.md", input.pr.base).catch(
 					() => null,
 				)) ?? undefined)
 			: undefined;
 
+	const reviewMode = useHolistic ? "holistic" : "fan-out";
+	const selectedFiles = useHolistic
+		? reviewable
+		: reviewable.slice(0, CODE_REVIEW_MAX_FILES);
+
 	console.log({
-		message: `Code review specialist started: PR #${input.number} — ${selected.length} file(s), concurrency ${concurrency}`,
+		message: `Code review specialist started: PR #${input.number} — ${selectedFiles.length} file(s), ${diffBytes} diff bytes, mode: ${reviewMode}`,
 		event: "code_review_specialist",
 		number: input.number,
-		files: selected.length,
+		files: selectedFiles.length,
+		diffBytes,
 		diffMode: input.diffMode.type,
+		reviewMode,
 		runId,
 		action: "started",
 	});
 
-	const result = await runCodeReviewInProcess({
+	const sharedOptions = {
 		init,
 		workspace,
 		loader,
@@ -117,18 +166,28 @@ export async function run({
 			base: input.pr.base,
 			head: input.pr.head,
 		},
-		files: selected,
+		files: selectedFiles,
 		runId,
-		concurrency,
-		fileTimeoutMs,
-	});
+	};
+
+	const result = useHolistic
+		? await runCodeReviewHolistic({
+				...sharedOptions,
+				timeoutMs: holisticTimeoutMs,
+			})
+		: await runCodeReviewInProcess({
+				...sharedOptions,
+				concurrency,
+				fileTimeoutMs,
+			});
 
 	console.log({
-		message: `Code review specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s)`,
+		message: `Code review specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s), mode: ${reviewMode}`,
 		event: "code_review_specialist",
 		number: input.number,
 		findings: result.findings.length,
 		reviewedFiles: result.reviewedFiles.length,
+		reviewMode,
 		runId,
 		action: "complete",
 	});

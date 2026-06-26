@@ -71,6 +71,11 @@ interface CodeReviewOrchestratorPayload {
 	triggerCommentId?: number;
 	/** Reaction ID of the 👀 reaction to remove when review completes. */
 	triggerEyesReactionId?: number | null;
+	/**
+	 * When set by a codeowner slash command (/fan-out-review or /holistic-review),
+	 * overrides the size-based routing in the code-review specialist.
+	 */
+	forceReviewMode?: "fan-out" | "holistic";
 }
 
 export async function run({ id: runId, init, payload, env, req }: FlueContext) {
@@ -250,6 +255,9 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 		headSha: currentHeadSha,
 		diffMode,
 		pr: specialistPayloadPr,
+		...(input.forceReviewMode
+			? { forceReviewMode: input.forceReviewMode }
+			: {}),
 	};
 
 	console.log({
@@ -539,6 +547,7 @@ export async function run({ id: runId, init, payload, env, req }: FlueContext) {
 			style: reconciledStyle,
 			codeFailed: !codeOutcome.ok,
 			styleFailed: !styleOutcome.ok,
+			codeMode: codeOutcome.ok ? codeOutcome.result.reviewMode : undefined,
 		},
 		currentHeadSha,
 		input.forceFullReview,
@@ -650,6 +659,11 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 			typeof input.triggerEyesReactionId === "number"
 				? input.triggerEyesReactionId
 				: null,
+		forceReviewMode:
+			input.forceReviewMode === "fan-out" ||
+			input.forceReviewMode === "holistic"
+				? input.forceReviewMode
+				: undefined,
 	};
 }
 

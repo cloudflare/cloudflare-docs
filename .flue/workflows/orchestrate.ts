@@ -131,6 +131,10 @@ export async function run({ payload, env, req }: FlueContext) {
 	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
 	const isIgnoreReviewLimitCommand =
 		isOnPullRequest && trimmedComment === "/ignore-review-limit";
+	const isFanOutReviewCommand =
+		isOnPullRequest && trimmedComment === "/fan-out-review";
+	const isHolisticReviewCommand =
+		isOnPullRequest && trimmedComment === "/holistic-review";
 
 	if (
 		!req ||
@@ -139,7 +143,9 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isDependabotReviewEvent &&
 			!isFullReviewCommand &&
 			!isReviewCommand &&
-			!isIgnoreReviewLimitCommand)
+			!isIgnoreReviewLimitCommand &&
+			!isFanOutReviewCommand &&
+			!isHolisticReviewCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -269,6 +275,142 @@ export async function run({ payload, env, req }: FlueContext) {
 			return {
 				acted: false,
 				summary: `Full review dispatch failed: ${errMsg}`,
+			};
+		}
+	}
+
+	// ── 4a. Handle /fan-out-review command ──────────────────────────────────
+	if (isFanOutReviewCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+		if (!codeowner) {
+			console.log({
+				message: `Fan-out review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "fan_out_review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: `/workflows/code-review-orchestrator`,
+				headers: internalHeaders,
+				body: {
+					eventType: "pull_request",
+					number,
+					forceFullReview: true,
+					bypassReviewLimit: true,
+					forceReviewMode: "fan-out",
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+				},
+			});
+			console.log({
+				message: `Fan-out review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "fan_out_review_admitted",
+			});
+			return {
+				acted: true,
+				summary: `Fan-out review triggered by @${senderLogin}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `Fan-out review dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: "fan_out_review_dispatch_failed",
+			});
+			return {
+				acted: false,
+				summary: `Fan-out review dispatch failed: ${errMsg}`,
+			};
+		}
+	}
+
+	// ── 4b. Handle /holistic-review command ─────────────────────────────────
+	if (isHolisticReviewCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+		if (!codeowner) {
+			console.log({
+				message: `Holistic review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "holistic_review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: `/workflows/code-review-orchestrator`,
+				headers: internalHeaders,
+				body: {
+					eventType: "pull_request",
+					number,
+					forceFullReview: true,
+					bypassReviewLimit: true,
+					forceReviewMode: "holistic",
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+				},
+			});
+			console.log({
+				message: `Holistic review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "holistic_review_admitted",
+			});
+			return {
+				acted: true,
+				summary: `Holistic review triggered by @${senderLogin}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `Holistic review dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: "holistic_review_dispatch_failed",
+			});
+			return {
+				acted: false,
+				summary: `Holistic review dispatch failed: ${errMsg}`,
 			};
 		}
 	}
