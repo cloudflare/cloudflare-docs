@@ -115,7 +115,7 @@ export default defineConfig({
 				cacheDir: ".astro-cache-nimbus",
 			}
 		: { cacheDir: ".astro-cache" }),
-	markdown: nimbus
+	markdown: (nimbus
 		? nimbus.markdown
 		: {
 				gfm: true,
@@ -126,11 +126,11 @@ export default defineConfig({
 					rehypeExternalLinks,
 					rehypeHeadingSlugs,
 					rehypeAutolinkHeadings,
-					// @ts-expect-error plugins types are outdated but functional
+					// @ts-ignore
 					rehypeTitleFigure,
 					rehypeShiftHeadings,
 				],
-			},
+			}) as Parameters<typeof defineConfig>[0]["markdown"],
 	image: {
 		service: {
 			entrypoint: "astro/assets/services/sharp",
