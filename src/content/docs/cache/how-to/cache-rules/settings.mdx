@@ -429,7 +429,7 @@ The `vary` object supports these keys:
 | `default` | Yes      | Configuration for any header name in the origin `Vary` response that is not included in `headers`. |
 | `headers` | No       | A map of lowercase request header names to configuration objects.                                  |
 
-If the `vary` object is omitted, Vary is turned off. If the `vary` object is present, `default` is required. An empty `vary` object is invalid.
+If the `vary` object is omitted, this Cache Rules Vary setting is turned off. Other Vary behavior, such as `Vary: *`, [Vary for images](/cache/advanced-configuration/vary-for-images/), and compression handling, is unaffected. If the `vary` object is present, `default` is required. An empty `vary` object is invalid.
 
 Each header configuration object, and the `default` object, must include an `action` key set to one of `normalize`, `passthrough`, or `bypass`. Refer to [Actions](/cache/concepts/vary/#actions) for guidance on when to use each.
 

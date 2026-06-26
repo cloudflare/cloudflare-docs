@@ -102,39 +102,52 @@ The following example configures [Vary](/cache/concepts/vary/). It normalizes `A
 <Details header="Terraform example: Cache expected Vary responses">
 
 ```tf
+variable "zone_id" {
+  type = string
+}
+
 resource "cloudflare_ruleset" "cache_vary_example" {
-  zone_id     = "<ZONE_ID>"
+  zone_id     = var.zone_id
   name        = "Set cache settings"
   description = "Set cache settings for incoming requests"
   kind        = "zone"
   phase       = "http_request_cache_settings"
 
-  rules {
-    ref         = "cache_vary"
-    description = "Cache expected Vary responses"
-    expression  = "(http.host eq \"example.com\")"
-    action      = "set_cache_settings"
+  rules = [
+    {
+      ref         = "cache_vary"
+      description = "Cache expected Vary responses"
+      expression  = "(http.host eq \"example.com\")"
+      action      = "set_cache_settings"
 
-    action_parameters {
-      cache = true
+      action_parameters = {
+        cache = true
 
-      vary = {
-        default = {
-          action = "bypass"
-        }
-        headers = {
-          "accept" = {
-            action      = "normalize"
-            media_types = ["text/html", "application/json"]
+        vary = {
+          default = {
+            action = "bypass"
           }
-          "accept-language" = {
-            action    = "normalize"
-            languages = ["en", "fr", "de"]
+          headers = {
+            "accept" = {
+              action = "normalize"
+              media_types = [
+                "text/html",
+                "application/json"
+              ]
+            }
+            "accept-language" = {
+              action = "normalize"
+              languages = [
+                "en",
+                "fr",
+                "de"
+              ]
+            }
           }
         }
       }
     }
-  }
+  ]
 }
 ```
 
