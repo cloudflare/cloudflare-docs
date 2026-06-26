@@ -276,24 +276,47 @@ export default defineConfig({
 				react(),
 				skills(),
 			],
-	vite: nimbus
-		? nimbus.vite
-		: {
-				resolve: {
-					alias: {
-						"./Page.astro": fileURLToPath(
-							new URL("./src/components/overrides/Page.astro", import.meta.url),
-						),
-						"../components/Page.astro": fileURLToPath(
-							new URL("./src/components/overrides/Page.astro", import.meta.url),
-						),
-						"./SidebarSublist.astro": fileURLToPath(
-							new URL(
-								"./src/components/overrides/SidebarSublist.astro",
-								import.meta.url,
+	vite: {
+		...(nimbus
+			? nimbus.vite
+			: {
+					resolve: {
+						alias: {
+							"./Page.astro": fileURLToPath(
+								new URL(
+									"./src/components/overrides/Page.astro",
+									import.meta.url,
+								),
 							),
-						),
+							"../components/Page.astro": fileURLToPath(
+								new URL(
+									"./src/components/overrides/Page.astro",
+									import.meta.url,
+								),
+							),
+							"./SidebarSublist.astro": fileURLToPath(
+								new URL(
+									"./src/components/overrides/SidebarSublist.astro",
+									import.meta.url,
+								),
+							),
+						},
 					},
-				},
+				}),
+		// Priming-only: both targets' outputs live in the repo root, so each
+		// target's dev watcher would otherwise enumerate the other's ~8.5k build
+		// files. Astro auto-ignores the active target's outDir; this adds the
+		// inactive one. Revisit at cutover (single target). Dev-watcher only —
+		// does not affect the production build.
+		server: {
+			watch: {
+				ignored: [
+					"**/dist-nimbus/**",
+					"**/.astro-cache-nimbus/**",
+					"**/dist/**",
+					"**/.astro-cache/**",
+				],
 			},
+		},
+	},
 });

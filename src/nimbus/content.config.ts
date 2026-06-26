@@ -3,6 +3,12 @@ import { glob } from "astro/loaders";
 import { docsCollection, partialsCollection } from "nimbus-docs/content";
 import { warpReleasesSchema } from "~/schemas/warp-releases";
 import { compatibilityFlagsSchema } from "~/schemas/compatibility-flags";
+import { fieldsSchema } from "~/schemas/fields";
+// Remote (middlecache) data collections — no local content files exist, so we
+// reuse the shared collection configs in place (which carry the middlecache
+// loader + schema) rather than duplicating the fetcher on the Nimbus side.
+import { productAvailabilityCollectionConfig } from "~/content/collections/product-availability";
+import { granularControlApplicationsCollectionConfig } from "~/content/collections/granular-control-applications";
 
 // Extend the default docs schema with the CF-specific frontmatter keys the
 // content uses. The schema is permissive — these fields just need to validate
@@ -221,6 +227,13 @@ export const collections = {
     loader: glob({ pattern: "*.yaml", base: "./src/content/pages-framework-presets" }),
     schema: z.object({ build_configs: z.record(z.string(), z.any()) }),
   }),
+  // CF product availability + granular control application data, fetched from
+  // middlecache at build. Read by ProductAvailabilityText /
+  // GranularControlApplicationsList.
+  "product-availability": defineCollection(productAvailabilityCollectionConfig),
+  "granular-control-applications": defineCollection(
+    granularControlApplicationsCollectionConfig,
+  ),
   // CF notification catalog (single index.yaml). Read by AvailableNotifications.
   notifications: defineCollection({
     loader: glob({ pattern: "*.yaml", base: "./src/content/notifications" }),
@@ -281,6 +294,15 @@ export const collections = {
   "compatibility-flags": defineCollection({
     loader: glob({ pattern: "*.md", base: "./src/content/compatibility-flags" }),
     schema: compatibilityFlagsSchema,
+  }),
+  // CF rules-language field catalog (single index.yaml). Read by FieldCatalog
+  // on /ruleset-engine/rules-language/fields/reference/ via getEntry.
+  fields: defineCollection({
+    loader: glob({
+      pattern: "**/*.{json,yml,yaml}",
+      base: "./src/content/fields",
+    }),
+    schema: fieldsSchema,
   }),
   partials: defineCollection(
     partialsCollection({

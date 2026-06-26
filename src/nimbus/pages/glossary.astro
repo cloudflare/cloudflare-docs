@@ -1,0 +1,21 @@
+---
+/**
+ * /glossary/ — full glossary catalog.
+ *
+ * CF source: src/pages/glossary.astro (StarlightPage `template: "splash"`).
+ * Ported to SplashLayout; body unchanged.
+ */
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import { Glossary as GlossaryComponent } from "~/components";
+import { Badge } from "~/components";
+
+export const prerender = true;
+---
+
+<SplashLayout title="Glossary">
+  <div class="mx-auto w-full max-w-(--nb-content-max) px-[max(1.5rem,4vw)] py-14">
+    <Badge text="Beta" variant="caution" size="medium" />
+    <br />
+    <GlossaryComponent />
+  </div>
+</SplashLayout>

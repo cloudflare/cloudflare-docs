@@ -37,8 +37,10 @@ import LinkTitleCardImpl from "./components/cf/LinkTitleCard.astro";
 import ListTutorialsImpl from "./components/cf/ListTutorials.astro";
 import PlanImpl from "./components/cf/Plan.astro";
 import ProductReleaseNotesImpl from "./components/cf/ProductReleaseNotes.astro";
+import ProductChangelogImpl from "./components/cf/ProductChangelog.astro";
 import RelatedProductImpl from "./components/cf/RelatedProduct.astro";
 import TypeScriptExampleImpl from "./components/cf/TypeScriptExample.astro";
+import TunnelCalculatorImpl from "./components/cf/TunnelCalculator.astro";
 import InlineBadgeImpl from "./components/cf/InlineBadge.astro";
 import YouTubeImpl from "./components/cf/YouTube.astro";
 import ExampleImpl from "./components/cf/Example.astro";
@@ -56,6 +58,11 @@ import AnchorHeadingImpl from "./components/cf/AnchorHeading.astro";
 import FeatureTableImpl from "./components/cf/FeatureTable.astro";
 import ProductFeaturesImpl from "./components/cf/ProductFeatures.astro";
 import PagesBuildPresetImpl from "./components/cf/PagesBuildPreset.astro";
+import PagesBuildPresetsTableImpl from "./components/cf/PagesBuildPresetsTable.astro";
+import ComponentsUsageImpl from "./components/cf/ComponentsUsage.astro";
+import GranularControlApplicationsListImpl from "./components/cf/GranularControlApplicationsList.astro";
+import ProductAvailabilityTextImpl from "./components/cf/ProductAvailabilityText.astro";
+import WorkersTemplatesImpl from "./components/cf/WorkersTemplates.astro";
 import AvailableNotificationsImpl from "./components/cf/AvailableNotifications.astro";
 import ExtraFlagDetailsImpl from "./components/cf/ExtraFlagDetails.astro";
 import FourCardGridImpl from "./components/cf/FourCardGrid.astro";
@@ -73,6 +80,8 @@ import WorkersIsolateDiagramImpl from "./components/cf/WorkersIsolateDiagram.ast
 import AnimatedWorkflowDiagramImpl from "./components/cf/AnimatedWorkflowDiagram.astro";
 import AgentsPlatformDiagramImpl from "./components/cf/AgentsPlatformDiagram.astro";
 import R2LocalUploadsDiagramImpl from "./components/cf/R2LocalUploadsDiagram.astro";
+import WorkersVPCEgressDiagramImpl from "./components/cf/WorkersVPCEgressDiagram.astro";
+import WorkersVPCOverviewDiagramImpl from "./components/cf/WorkersVPCOverviewDiagram.astro";
 import { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 import ResourcesBySelectorImpl from "./components/cf/ResourcesBySelector.astro";
 import SubtractIPCalculatorImpl from "./components/react/SubtractIPCalculator";
@@ -104,8 +113,10 @@ export const LinkTitleCard = LinkTitleCardImpl;
 export const ListTutorials = ListTutorialsImpl;
 export const Plan = PlanImpl;
 export const ProductReleaseNotes = ProductReleaseNotesImpl;
+export const ProductChangelog = ProductChangelogImpl;
 export const RelatedProduct = RelatedProductImpl;
 export const TypeScriptExample = TypeScriptExampleImpl;
+export const TunnelCalculator = TunnelCalculatorImpl;
 export const InlineBadge = InlineBadgeImpl;
 export const YouTube = YouTubeImpl;
 export const Example = ExampleImpl;
@@ -123,6 +134,11 @@ export const AnchorHeading = AnchorHeadingImpl;
 export const FeatureTable = FeatureTableImpl;
 export const ProductFeatures = ProductFeaturesImpl;
 export const PagesBuildPreset = PagesBuildPresetImpl;
+export const PagesBuildPresetsTable = PagesBuildPresetsTableImpl;
+export const ComponentsUsage = ComponentsUsageImpl;
+export const GranularControlApplicationsList = GranularControlApplicationsListImpl;
+export const ProductAvailabilityText = ProductAvailabilityTextImpl;
+export const WorkersTemplates = WorkersTemplatesImpl;
 export const AvailableNotifications = AvailableNotificationsImpl;
 export const ExtraFlagDetails = ExtraFlagDetailsImpl;
 export const FourCardGrid = FourCardGridImpl;
@@ -140,6 +156,8 @@ export const WorkersIsolateDiagram = WorkersIsolateDiagramImpl;
 export const AnimatedWorkflowDiagram = AnimatedWorkflowDiagramImpl;
 export const AgentsPlatformDiagram = AgentsPlatformDiagramImpl;
 export const R2LocalUploadsDiagram = R2LocalUploadsDiagramImpl;
+export const WorkersVPCEgressDiagram = WorkersVPCEgressDiagramImpl;
+export const WorkersVPCOverviewDiagram = WorkersVPCOverviewDiagramImpl;
 
 // SubtractIPCalculator — real port (Phase B / W12, D9). React island
 // (`cidr-tools`); analytics `track()` is stubbed to a no-op via
@@ -197,9 +215,11 @@ export const components = {
   ListTutorials,
   MetaInfo,
   ProductReleaseNotes,
+  ProductChangelog,
   ResourcesBySelector,
   Type,
   TypeScriptExample,
+  TunnelCalculator,
   WranglerConfig,
   WranglerNamespace,
   // CF-domain real ports
@@ -224,6 +244,11 @@ export const components = {
   FeatureTable,
   ProductFeatures,
   PagesBuildPreset,
+  PagesBuildPresetsTable,
+  ComponentsUsage,
+  GranularControlApplicationsList,
+  ProductAvailabilityText,
+  WorkersTemplates,
   AvailableNotifications,
   ExtraFlagDetails,
   FourCardGrid,
@@ -236,6 +261,8 @@ export const components = {
   WARPRelease,
   CompatibilityFlags,
   AutoconfigDiagram,
+  WorkersVPCEgressDiagram,
+  WorkersVPCOverviewDiagram,
   WorkersArchitectureDiagram,
   WorkersIsolateDiagram,
   AnimatedWorkflowDiagram,

@@ -3,6 +3,9 @@
 import { z } from "astro/zod";
 import { getCollection, render } from "astro:content";
 import AnchorHeading from "./AnchorHeading.astro";
+// Forward the MDX globals so admonitions (`:::note` → `<Aside>`) resolve inside
+// each rendered flag entry, the same way Render.astro / ChangelogEntry.astro do.
+import { components } from "@/components";
 
 type Props = z.infer<typeof props>;
 
@@ -61,7 +64,7 @@ flags.sort(
 						</tr>
 					)}
 				</table>
-				<Content />
+				<Content components={components} />
 			</>
 		);
 	})
