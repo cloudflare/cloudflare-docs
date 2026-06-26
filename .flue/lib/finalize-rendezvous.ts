@@ -112,6 +112,16 @@ export async function readContext(
 export interface StreamResultPayload<T> {
 	ok: boolean;
 	result: T;
+	/**
+	 * false = crash-protection placeholder written by the orchestrator before
+	 * the review starts (guarantees a key exists even if the specialist DO is
+	 * evicted immediately). true = the actual result written by the specialist
+	 * after its review completes (or fails).
+	 *
+	 * tryClaimFinalize only proceeds when the sibling's result is final:true,
+	 * preventing a premature finalize triggered by two placeholders racing.
+	 */
+	final: boolean;
 }
 
 export async function writeStreamResult<T>(
@@ -162,17 +172,26 @@ export async function tryClaimFinalize(
 	dispatchId: string,
 	myStream: "code" | "style",
 ): Promise<boolean> {
-	// Check that the sibling has already written its result.
+	// Check that the sibling has written its FINAL result (not just a
+	// crash-protection placeholder). A placeholder has final:false and must
+	// not trigger finalize — the sibling's actual review hasn't run yet.
 	const siblingStream = myStream === "code" ? "style" : "code";
-	const sibling = await bucket.head(
+	const siblingObj = await bucket.get(
 		streamResultKey(prNumber, headSha, dispatchId, siblingStream),
 	);
-	if (!sibling) {
-		// Sibling not done yet — it will claim the lock when it finishes.
+	if (!siblingObj) {
+		// Sibling hasn't written anything yet.
+		return false;
+	}
+	const siblingPayload = (await siblingObj.json()) as { final?: boolean };
+	if (!siblingPayload.final) {
+		// Sibling wrote a placeholder but its review is still in progress.
+		// It will call tryClaimFinalize itself when it writes final:true.
 		return false;
 	}
 
-	// Both present. Race for the lock via conditional PUT (create-if-absent).
+	// Both streams have written final results. Race for the lock via
+	// conditional PUT (create-if-absent) — exactly one specialist wins.
 	const won = await bucket.put(
 		finalizeLockKey(prNumber, headSha, dispatchId),
 		"1",

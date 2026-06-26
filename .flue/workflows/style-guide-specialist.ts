@@ -91,21 +91,6 @@ export async function run({
 	const workspace = getDefaultWorkspace();
 	const diffDir = `diffs/pr-${input.number}/runs/${runId}`;
 
-	// Write a degraded placeholder BEFORE starting the review so finalize
-	// always has a result to work with, even if the specialist DO is
-	// hard-evicted mid-review and never reaches the success write below.
-	// The placeholder is overwritten with the real result on success.
-	if (input.dispatchId && baseUrl) {
-		await writeStreamResult(
-			bucket,
-			input.number,
-			input.headSha,
-			input.dispatchId,
-			"style",
-			{ ok: false, result: degradedStyleResult() },
-		).catch(() => {});
-	}
-
 	let result: StyleGuideResult;
 	let reviewOk = true;
 	try {
@@ -185,7 +170,7 @@ export async function run({
 				input.headSha,
 				input.dispatchId,
 				"style",
-				{ ok: reviewOk, result },
+				{ ok: reviewOk, result, final: true },
 			);
 
 			const won = await tryClaimFinalize(

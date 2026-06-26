@@ -181,23 +181,12 @@ export async function run({
 		runId,
 	};
 
-	// Write a degraded placeholder BEFORE starting the review so finalize
-	// always has a result to work with, even if the specialist DO is
-	// hard-evicted mid-review and never reaches the success write below.
-	// The placeholder is overwritten with the real result on success.
-	if (input.dispatchId && baseUrl) {
-		await writeStreamResult(
-			bucket,
-			input.number,
-			input.headSha,
-			input.dispatchId,
-			"code",
-			{ ok: false, result: degradedCodeResult() },
-		).catch(() => {});
-	}
-
-	// Wrap the review in try/catch so a logic error also writes a degraded
-	// result (overwriting the placeholder with ok:false, same shape).
+	// Wrap the review in try/catch so a logic error writes a degraded final
+	// result. Hard DO eviction mid-review is handled by the orchestrator's
+	// crash-protection placeholder (final:false) — if this specialist is
+	// evicted before writing final:true, the sibling will not claim the lock
+	// (it checks for final:true on the sibling), leaving the review needing
+	// a /review retry. That is the accepted residual failure mode.
 	let result: CodeReviewResult;
 	let reviewOk = true;
 	try {
@@ -246,7 +235,7 @@ export async function run({
 				input.headSha,
 				input.dispatchId,
 				"code",
-				{ ok: reviewOk, result },
+				{ ok: reviewOk, result, final: true },
 			);
 
 			const won = await tryClaimFinalize(

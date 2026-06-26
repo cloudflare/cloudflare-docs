@@ -40,7 +40,12 @@ import {
 	renderPendingComment,
 	renderReviewLimitComment,
 } from "../lib/code-review-render";
-import { writeContext } from "../lib/finalize-rendezvous";
+import {
+	writeContext,
+	writeStreamResult,
+	degradedCodeResult,
+	degradedStyleResult,
+} from "../lib/finalize-rendezvous";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -192,6 +197,24 @@ export async function run({
 			body: c.body ?? "",
 		})),
 	});
+
+	// ── 3b. Write crash-protection placeholders for both streams ─────────────
+	// Written BEFORE the specialists are admitted so a key always exists even
+	// if a specialist DO is evicted immediately after admission. Placeholders
+	// have final:false so tryClaimFinalize ignores them — finalize only runs
+	// once each specialist writes its own final:true result.
+	await Promise.all([
+		writeStreamResult(bucket, input.number, currentHeadSha, runId, "code", {
+			ok: false,
+			result: degradedCodeResult(),
+			final: false,
+		}),
+		writeStreamResult(bucket, input.number, currentHeadSha, runId, "style", {
+			ok: false,
+			result: degradedStyleResult(),
+			final: false,
+		}),
+	]);
 
 	// ── 4. Admit both specialists fire-and-forget ──────────────────────────────
 	const internalHeaders = getInternalHeaders(
