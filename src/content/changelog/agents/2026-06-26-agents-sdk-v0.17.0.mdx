@@ -39,7 +39,7 @@ class OrdersAgent extends Think {
 
 Highlights:
 
-- **Durable, exactly-once-on-the-happy-path completion** via a warm fast path plus a self-scheduling reconcile backbone that survives eviction and deploys. A premature give-up can never dedupe a child's real late completion away.
+- **Durable, exactly-once-on-the-happy-path completion** via a warm fast path plus a self-scheduling reconcile backbone that survives eviction and deploys.
 - **Bounded.** An absolute `maxBudgetMs` ceiling (default 24h) and `cancelAgentTool(runId)` keep abandoned runs from holding a concurrency slot forever.
 - **`detached: { notify: true }`** lets a finished background run inject a message back into the chat so the model reacts to the result — no hand-wired `onFinish` needed.
 
