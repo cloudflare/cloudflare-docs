@@ -268,6 +268,7 @@ export class JetstreamConsumer extends DurableObject<Env> {
 	private buf: Record<string, unknown>[] = [];
 	private lastFlush = 0;
 	private cursor: number | null = null;
+	private flushing = false;
 
 	// Idempotent: connect if needed and arm the reconnect alarm.
 	async start() {
@@ -315,16 +316,26 @@ export class JetstreamConsumer extends DurableObject<Env> {
 		}
 	}
 
+	// Serialize sends: flush one batch at a time, advancing the cursor on success.
 	private async flush() {
-		this.lastFlush = Date.now();
-		if (this.buf.length === 0) return;
-		const batch = this.buf.splice(0, this.buf.length);
+		if (this.flushing) return;
+		this.flushing = true;
 		try {
-			await this.env.BSKY_STREAM.send(batch);
-			await this.ctx.storage.put("cursor", this.cursor); // advance only on success
-		} catch (err) {
-			this.buf.unshift(...batch); // re-queue; retried on the next flush or alarm
-			console.error("send failed, will retry", err);
+			while (this.buf.length > 0) {
+				this.lastFlush = Date.now();
+				const batch = this.buf.splice(0, this.buf.length);
+				const batchCursor = this.cursor;
+				try {
+					await this.env.BSKY_STREAM.send(batch);
+					await this.ctx.storage.put("cursor", batchCursor);
+				} catch (err) {
+					this.buf.unshift(...batch);
+					console.error("send failed, will retry", err);
+					return;
+				}
+			}
+		} finally {
+			this.flushing = false;
 		}
 	}
 
