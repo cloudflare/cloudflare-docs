@@ -32,6 +32,7 @@ import {
 	type StyleGuideResult,
 } from "./style-guide-results";
 import type { getPullRequestFiles } from "./github";
+import { withConcurrency } from "./inproc-utils";
 
 /** PR metadata passed to the style-guide skill as `args.pullRequest`. */
 export interface StyleGuidePullRequest {
@@ -78,31 +79,6 @@ export function selectStyleGuideFiles(
 		)
 		.sort((a, b) => b.additions - a.additions)
 		.slice(0, STYLE_GUIDE_MAX_FILES);
-}
-
-/**
- * Run up to `limit` async tasks concurrently and return results in input order.
- * Tasks are expected not to reject — wrap per-task error handling at the call
- * site so one failure cannot abort the pool.
- */
-export async function withConcurrency<T>(
-	tasks: Array<() => Promise<T>>,
-	limit: number,
-): Promise<T[]> {
-	const results: T[] = new Array(tasks.length);
-	let index = 0;
-
-	async function worker() {
-		while (index < tasks.length) {
-			const current = index++;
-			results[current] = await tasks[current]();
-		}
-	}
-
-	await Promise.all(
-		Array.from({ length: Math.min(limit, tasks.length) }, () => worker()),
-	);
-	return results;
 }
 
 /**
@@ -199,11 +175,9 @@ export async function runStyleGuideReviewInProcess(
 		};
 	}
 
-	// ── Init a separate named harness over the shared workspace. The
-	//    orchestrator owns the default harness for reconciliation, so this
-	//    fan-out uses a distinct name to satisfy the once-per-name rule.
-	//    The skill is registered here; its reference rules ship as packaged
-	//    resources read via the `read` tool. ────────────────────────────────
+	// ── Init a named harness over the specialist's workspace. The skill is
+	//    registered here; its reference rules ship as packaged resources read
+	//    via the `read` tool. ──────────────────────────────────────────────
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",

@@ -33,6 +33,7 @@ import {
 } from "./code-review-results";
 import { getRepoFileContent } from "./github";
 import type { getPullRequestFiles } from "./github";
+import { withConcurrency } from "./inproc-utils";
 
 /** A single added or changed line extracted from a unified diff patch. */
 export interface AddedLine {
@@ -70,6 +71,8 @@ export function parseAddedLines(patch: string): AddedLine[] {
 			newLine++;
 		} else if (raw.startsWith("-")) {
 			// Deleted line — do not advance the new-file line counter.
+		} else if (raw.startsWith("\\")) {
+			// "\ No newline at end of file" — not a content line, ignore.
 		} else {
 			// Context line (space-prefixed or empty trailing line) — advance.
 			newLine++;
@@ -140,31 +143,6 @@ export function selectCodeReviewFiles(
 		)
 		.sort((a, b) => b.additions - a.additions)
 		.slice(0, CODE_REVIEW_MAX_FILES);
-}
-
-/**
- * Run up to `limit` async tasks concurrently and return results in input order.
- * Tasks are expected not to reject — wrap per-task error handling at the call
- * site so one failure cannot abort the pool.
- */
-export async function withConcurrency<T>(
-	tasks: Array<() => Promise<T>>,
-	limit: number,
-): Promise<T[]> {
-	const results: T[] = new Array(tasks.length);
-	let index = 0;
-
-	async function worker() {
-		while (index < tasks.length) {
-			const current = index++;
-			results[current] = await tasks[current]();
-		}
-	}
-
-	await Promise.all(
-		Array.from({ length: Math.min(limit, tasks.length) }, () => worker()),
-	);
-	return results;
 }
 
 /**

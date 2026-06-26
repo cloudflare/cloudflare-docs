@@ -53,9 +53,9 @@
 		},
 		{
 			// The style-guide-review workflow was retired: its per-file review now
-			// runs in-process inside the code-review orchestrator via concurrent
-			// sessions (lib/style-guide-inproc.ts), so the standalone workflow's
-			// Durable Object class is no longer generated.
+			// runs in-process inside the style-guide-specialist workflow via
+			// concurrent sessions (lib/style-guide-inproc.ts), so the standalone
+			// workflow's Durable Object class is no longer generated.
 			"tag": "v4",
 			"deleted_classes": ["FlueStyleGuideReviewWorkflow"],
 		},

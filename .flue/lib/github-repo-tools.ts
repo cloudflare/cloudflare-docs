@@ -108,8 +108,10 @@ export function makeReadRepoFileTool(
 		async execute(args) {
 			const path = String(args.path ?? "");
 			const ref = String(args.ref ?? defaultRef);
+			// Encode each path segment but preserve the slashes the contents API needs.
+			const encodedPath = path.split("/").map(encodeURIComponent).join("/");
 			const res = await fetch(
-				`https://api.github.com/repos/${REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`,
+				`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
 				{ headers: apiHeaders(token) },
 			);
 			if (res.status === 404) return `File not found: ${path}`;
@@ -119,7 +121,11 @@ export function makeReadRepoFileTool(
 				);
 			const data = (await res.json()) as Record<string, unknown>;
 			if (data.encoding === "base64" && typeof data.content === "string") {
-				const text = atob((data.content as string).replace(/\n/g, ""));
+				// Decode as UTF-8 via TextDecoder — atob() alone produces Latin-1
+				// mojibake for non-ASCII content (em dashes, smart quotes, CJK, etc.).
+				const binary = atob((data.content as string).replace(/\n/g, ""));
+				const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+				const text = new TextDecoder().decode(bytes);
 				// Cap at 32 KB to avoid bloating context
 				if (text.length > 32768) {
 					return (

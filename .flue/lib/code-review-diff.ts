@@ -1,9 +1,9 @@
 /**
  * Code-review diff helpers.
  *
- * Writes the PR diff (patch files + manifest + pr.json) directly into the
- * shared Workspace so the style-guide review sessions — which run in the same
- * Durable Object — can read the context with the `code` tool. No R2 round-trip.
+ * Writes the PR diff (patch files + manifest + pr.json) into the specialist's
+ * Workspace so the style-guide review sessions can read the context with the
+ * `code` tool. No R2 round-trip. Each specialist runs in its own Durable Object.
  */
 import type { getDefaultWorkspace } from "../connectors/cloudflare-shell";
 import type { getPullRequestFiles } from "./github";
