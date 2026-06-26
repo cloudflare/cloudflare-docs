@@ -181,9 +181,23 @@ export async function run({
 		runId,
 	};
 
-	// Wrap the review in try/catch so a logic error still participates in the
-	// rendezvous (writes a degraded result). Only a hard DO eviction before
-	// this block would leave no stream result and keep finalize from running.
+	// Write a degraded placeholder BEFORE starting the review so finalize
+	// always has a result to work with, even if the specialist DO is
+	// hard-evicted mid-review and never reaches the success write below.
+	// The placeholder is overwritten with the real result on success.
+	if (input.dispatchId && baseUrl) {
+		await writeStreamResult(
+			bucket,
+			input.number,
+			input.headSha,
+			input.dispatchId,
+			"code",
+			{ ok: false, result: degradedCodeResult() },
+		).catch(() => {});
+	}
+
+	// Wrap the review in try/catch so a logic error also writes a degraded
+	// result (overwriting the placeholder with ok:false, same shape).
 	let result: CodeReviewResult;
 	let reviewOk = true;
 	try {

@@ -54,7 +54,6 @@ import {
 	readContext,
 	readStreamResult,
 	cleanupPending,
-	type FinalizeContext,
 } from "../lib/finalize-rendezvous";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
