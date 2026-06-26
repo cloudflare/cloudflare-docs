@@ -1,0 +1,22 @@
+---
+title: New Logpush datasets and updated fields across multiple Logpush datasets in Cloudflare Logs
+description: New Logpush datasets are now available, and fields have been updated across multiple Logpush datasets in Cloudflare Logs.
+date: 2026-06-26
+---
+
+Cloudflare has updated [Logpush datasets](/logs/logpush/logpush-job/datasets/):
+
+### New datasets
+
+- **Firewall events**: A new dataset with fields including `AISecurityInjectionScore`, `AISecurityPIICategories`, `AISecurityTokenCount`, `AISecurityUnsafeTopicCategories`, `Action`, `ClientASN`, `ClientASNDescription`, `ClientCountry`, `ClientIP`, `ClientIPClass`, `ClientRefererHost`, `ClientRefererPath`, `ClientRefererQuery`, `ClientRefererScheme`, `ClientRequestHost`, `ClientRequestMethod`, `ClientRequestPath`, `ClientRequestProtocol`, `ClientRequestQuery`, `ClientRequestScheme`, `ClientRequestUserAgent`, `ContentScanObjResults`, `ContentScanObjSizes`, `ContentScanObjTypes`, `Datetime`, `Description`, `EdgeColoCode`, `EdgeResponseStatus`, `FirewallForAIInjectionScore`, `FirewallForAIPIICategories`, `FirewallForAITokenCount`, `FirewallForAIUnsafeTopicCategories`, `FraudUserID`, `Kind`, `LeakedCredentialCheckResult`, `MatchIndex`, `Metadata`, `OriginResponseStatus`, `OriginatorRayID`, `RayID`, `Ref`, `RuleID`, `Source`, and `ZoneName`.
+- **WebSocket Analytics**: A new dataset with fields including `BytesReceivedClient`, `BytesReceivedOrigin`, `BytesSentClient`, `BytesSentOrigin`, `ClientASN`, `ClientIP`, `ClientRequestHost`, `ClientRequestPath`, `ClientRequestUserAgent`, `ColoCode`, `ConnectionCloseReason`, `ConnectionCloseSource`, `ConnectionID`, `ConnectionTransportCloseCode`, `EdgeEndTimestamp`, `EdgeStartTimestamp`, and `RayID`.
+- **WebSocket Analytics**: A new dataset with fields including `BytesReceivedClient`, `BytesReceivedOrigin`, `BytesSentClient`, `BytesSentOrigin`, `ClientASN`, `ClientIP`, `ClientRequestHost`, `ClientRequestPath`, `ClientRequestUserAgent`, `ColoCode`, `ConnectionCloseReason`, `ConnectionCloseSource`, `ConnectionID`, `ConnectionTransportCloseCode`, `EdgeEndTimestamp`, `EdgeStartTimestamp`, and `RayID`.
+
+### Updated fields in existing datasets
+
+- **Email Security Alerts** (added): `BCC`, `DKIMResult`, `DMARCPolicy`, `DMARCResult`, and `SPFResult`.
+- **Gateway DNS** (added): `AppliedMaxTTL` and `UpstreamRecordTTLs`.
+- **Firewall events** (added): `ZoneName`.
+- **HTTP requests** (added): `CacheLockWaitedMs`.
+
+For the complete field definitions for each dataset, refer to [Logpush datasets](/logs/logpush/logpush-job/datasets/).
