@@ -772,16 +772,60 @@ After sign-out, the portal displays a confirmation page with a summary of the re
 
 ### Connect with a service token
 
-You can connect to an MCP portal using an [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) for machine-to-machine access. Service tokens bypass the browser-based OAuth flow and authenticate directly using the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
+You can connect to an MCP portal using an [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) for machine-to-machine access. Service tokens bypass the browser-based OAuth flow and authenticate using the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
 
-To connect with a service token:
+A service token session is authorized twice: once at the portal URL, and once for each upstream MCP server it tries to reach through the portal. Both checks need a matching [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth).
+
+#### Required configuration
+
+| Where | Policy action | Include rule | Purpose |
+| --- | --- | --- | --- |
+| Portal Access application | Service Auth | Your service token | Lets the bot connect to the portal URL. |
+| Each linked MCP server Access app | Service Auth | Your service token | Lets the bot see and call that server's tools through the portal. |
+| Server's portal mapping | n/a | n/a | **Require user auth** must be **off** so the portal uses the admin credential. |
+
+If a linked MCP server does not have a Service Auth policy matching the token, that server is hidden from the bot's tool list. If **Require user auth** is on, the portal also hides the server because a service token cannot complete per-user OAuth.
+
+#### Set up a service token connection
 
 1. [Create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token) in your Zero Trust account.
-2. Add a [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth) to your portal's Access application. The policy action must be **Service Auth**, not Allow. Service Auth policies specifically match requests that include valid `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
-3. Include the service token headers when connecting from your MCP client.
+2. Open the portal's Access application and add a Service Auth policy that includes the service token.
+3. For each upstream MCP server you want the bot to reach:
+   1. Open the server's Access application and add a Service Auth policy that includes the same service token.
+   2. Open the portal and edit the server. Turn **Require user auth** off so the portal uses the [admin credential](#reauthenticate-the-mcp-server) for that server.
+4. Connect from your MCP client with the service token headers.
+
+For a CLI client, set the headers directly:
+
+```sh
+curl https://<subdomain>.<domain>/mcp \
+  -H "CF-Access-Client-Id: <CLIENT_ID>" \
+  -H "CF-Access-Client-Secret: <CLIENT_SECRET>"
+```
+
+For `mcp-remote`, pass the headers with `--header`:
+
+```json title="MCP client configuration for service token connections"
+{
+	"mcpServers": {
+		"example-portal": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote@latest",
+				"https://<subdomain>.<domain>/mcp",
+				"--header",
+				"CF-Access-Client-Id: <CLIENT_ID>",
+				"--header",
+				"CF-Access-Client-Secret: <CLIENT_SECRET>"
+			]
+		}
+	}
+}
+```
 
 :::note
-Service tokens do not support per-user OAuth with upstream MCP servers. When connected via a service token, the portal uses the [admin credential](#reauthenticate-the-mcp-server) for all upstream server requests. Servers configured with **Require user auth** turned on will not be available to service token sessions.
+Service tokens do not support per-user OAuth with upstream MCP servers. The portal uses the [admin credential](#reauthenticate-the-mcp-server) for every upstream request made by a service token session. Servers with **Require user auth** turned on are excluded from service token sessions because they require a per-user OAuth grant that a service token cannot provide.
 :::
 
 ### Device authentication
