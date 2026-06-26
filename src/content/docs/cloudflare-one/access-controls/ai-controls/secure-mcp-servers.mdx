@@ -18,19 +18,20 @@ import {
 	Tabs,
 	TabItem,
 	APIRequest,
+	CURL,
 	DashButton,
 } from "~/components";
 
 You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) with Cloudflare Access. There are two approaches depending on how your MCP server handles authentication:
 
-| Approach                                                        | Best for                                                                                           | Auth handled by                                        |
-| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| [Self-hosted application](#self-hosted-application-recommended) | MCP servers where you want Access to handle all authentication and authorization                   | Cloudflare Access                                      |
-| [Access for SaaS (OIDC)](#access-for-saas-application)          | MCP servers that implement their own OAuth flow and need Cloudflare as the identity/token provider | Your MCP server code, with Access as the OIDC provider |
+| Approach                                                      | Best for                                                                                           | Auth handled by                                        |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| [MCP server application](#mcp-server-application-recommended) | MCP servers where you want Access to handle all authentication and authorization                   | Cloudflare Access                                      |
+| [Access for SaaS (OIDC)](#access-for-saas-application)        | MCP servers that implement their own OAuth flow and need Cloudflare as the identity/token provider | Your MCP server code, with Access as the OIDC provider |
 
-## Self-hosted application (recommended)
+## MCP server application (recommended)
 
-The following guide deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) and protects it with a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). Cloudflare Access handles the full OAuth flow automatically — the MCP server does not need to implement any authorization logic. When users connect using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, Access prompts them to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and only grants access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
+The following guide deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) and protects it with an Access MCP server application. Cloudflare Access handles the full OAuth flow automatically. The MCP server does not need to implement any authorization logic. When users connect using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, Access prompts them to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and only grants access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
 
 ### Prerequisites
 
@@ -97,49 +98,62 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
 </TabItem>
 </Tabs>
 
-### 2. Create a self-hosted Access application
+### 2. Create an MCP server Access application
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Create new application**.
-3. Select **Self-hosted and private**.
-4. Select **Add public hostname** and enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
-5. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
-6. <Render
-   	file="access/access-choose-idps"
-   	product="cloudflare-one"
-   	params={{ appType: "self-hosted" }}
-   />
-7. Select **Create**.
-8. On the application details page, go to **Advanced settings** and turn on **Managed OAuth**. This allows non-browser MCP clients to authenticate using a standard OAuth 2.0 flow instead of receiving a browser redirect. For more information, refer to [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
-9. Copy the **AUD tag** value shown in **Additional settings**. You will need this value to configure your MCP server.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab.
+3. Select **Add an MCP server**.
+4. Enter a name for the server.
+5. In **HTTP URL**, enter your Worker URL including the MCP path. For example, `https://mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev/mcp`.
+6. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
+7. <Render
+     file="access/access-choose-idps"
+     product="cloudflare-one"
+     params={{ appType: "mcp" }}
+    />
+8. Select **Save and connect server**.
+9. Go to **Zero Trust** > **Access controls** > **Applications** and open the Access application that was created for your MCP server.
+10. In **Basic information**, add your Worker hostname as a public hostname. For example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`.
+11. Go to **Advanced settings** and turn on **Managed OAuth**. This allows non-browser MCP clients to authenticate using a standard OAuth 2.0 flow instead of receiving a browser redirect. For more information, refer to [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
+12. Copy the **AUD tag** value shown in **Additional settings**. You will need this value to configure your MCP server.
 
 </TabItem>
 <TabItem label="API">
 
-1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint with `oauth_configuration.enabled` set to `true`:
+1. Send a `POST` request to the Access applications endpoint. Set `type` to `mcp` and set `oauth_configuration.enabled` to `true`:
 
-   <APIRequest
-   	path="/accounts/{account_id}/access/apps"
-   	method="POST"
-   	json={{
-   		name: "MCP server",
-   		type: "self_hosted",
-   		domain: "mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev",
-   		policies: ["f174e90a-fafe-4643-bbbc-4a0ed4fc8415"],
-   		allowed_idps: [],
-   		oauth_configuration: {
-   			enabled: true,
-   		},
-   	}}
+   <CURL
+     url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps"
+     method="POST"
+     headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+     json={{
+      name: "MCP server",
+      type: "mcp",
+      destinations: [
+       {
+        type: "public",
+        uri: "mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev",
+       },
+      ],
+      policies: ["f174e90a-fafe-4643-bbbc-4a0ed4fc8415"],
+      allowed_idps: [],
+      oauth_configuration: {
+       enabled: true,
+      },
+     }}
    />
 
 2. Copy the `aud` value returned in the response.
 
 </TabItem>
 </Tabs>
+
+:::note
+Managed OAuth on an MCP server application authenticates MCP clients that connect directly to that server. Managed OAuth on an [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/) authenticates clients that connect to the portal endpoint. Upstream OAuth for servers inside a portal is separate from Access managed OAuth.
+:::
 
 ### 3. Configure your MCP server
 
