@@ -56,6 +56,10 @@ function shallowVariants(side: unknown): MdParamVariant[] {
     .filter((v) => v.rows.length > 0);
 }
 
+function escapeMarkdownTableCell(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/\|/g, "\\|");
+}
+
 function paramTable(variants: MdParamVariant[]): string {
   if (variants.length === 0) return "_No parameters defined._\n";
   return variants
@@ -64,7 +68,7 @@ function paramTable(variants: MdParamVariant[]): string {
       const rows = v.rows
         .map(
           (r) =>
-            `| \`${r.name}\`${r.required ? " *" : ""} | \`${r.type}\` | ${r.description.replace(/\|/g, "\\|")} |`,
+            `| \`${r.name}\`${r.required ? " *" : ""} | \`${r.type}\` | ${escapeMarkdownTableCell(r.description)} |`,
         )
         .join("\n");
       return `${head}| Name | Type | Description |\n| --- | --- | --- |\n${rows}\n`;
