@@ -784,7 +784,11 @@ A service token session is authorized twice: once at the portal URL, and once fo
 | Each linked MCP server Access app | Service Auth | Your service token | Lets the bot see and call that server's tools through the portal. |
 | Server's portal mapping | n/a | n/a | **Require user auth** must be **off** so the portal uses the admin credential. |
 
-If a linked MCP server does not have a Service Auth policy matching the token, that server is hidden from the bot's tool list. If **Require user auth** is on, the portal also hides the server because a service token cannot complete per-user OAuth.
+:::note
+**Require user auth** in the dashboard maps to the `on_behalf` field on the portal-server mapping in the API and Terraform. For each linked server you want a service token to reach, set `on_behalf` to `false`. Servers with `on_behalf: true` are excluded from service token sessions because they require a per-user OAuth grant that a service token cannot provide.
+:::
+
+If a linked MCP server does not have a Service Auth policy matching the token, that server is hidden from the bot's tool list.
 
 #### Set up a service token connection
 
