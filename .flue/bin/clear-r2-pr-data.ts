@@ -1,7 +1,7 @@
 /**
- * Clears per-PR review state (diffs/pr-* and inflight/pr-*) from the local R2
- * bucket — review JSONs, auto-review counters, ignore-limit flags, and the
- * watchdog in-flight markers. Leaves Durable Object run history intact.
+ * Clears per-PR review state (diffs/pr-*) from the local R2 bucket — review
+ * JSONs, pending rendezvous namespaces, auto-review counters, and ignore-limit
+ * flags. Leaves Durable Object run history intact.
  *
  * For a full local reset (Durable Objects + R2), stop the dev server and run
  * `pnpm run flue:reset:local` instead — that is what reclaims the multi-GB DO
@@ -10,7 +10,7 @@
  * Usage:
  *   pnpm flue:clear-r2-pr-data:local   (--local flag, uses wrangler dev state)
  */
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
@@ -64,24 +64,28 @@ if (dbPaths.length === 0) {
 	process.exit(1);
 }
 
-// Both prefixes: diffs/pr-* (review JSONs, counters, ignore flags) and
-// inflight/pr-* (watchdog markers).
-const WHERE = "key LIKE 'diffs/%' OR key LIKE 'inflight/%'";
+// Scope to PR-specific keys only: diffs/pr-* (review JSONs, pending rendezvous
+// namespaces, counters, ignore-limit flags). The broader 'diffs/%' pattern
+// would also delete any future non-PR keys stored under diffs/.
+const WHERE = "key LIKE 'diffs/pr-%' OR key LIKE 'inflight/pr-%'";
 
 let total = 0;
 for (const dbPath of dbPaths) {
 	const count = parseInt(
-		execSync(
-			`sqlite3 "${dbPath}" "SELECT COUNT(*) FROM _mf_objects WHERE ${WHERE};"`,
+		execFileSync(
+			"sqlite3",
+			[dbPath, `SELECT COUNT(*) FROM _mf_objects WHERE ${WHERE};`],
 			{ encoding: "utf-8" },
 		).trim(),
 		10,
 	);
 	if (count > 0) {
 		console.log(`Deleting ${count} object(s) from ${dbPath}...`);
-		execSync(`sqlite3 "${dbPath}" "DELETE FROM _mf_objects WHERE ${WHERE};"`, {
-			stdio: "inherit",
-		});
+		execFileSync(
+			"sqlite3",
+			[dbPath, `DELETE FROM _mf_objects WHERE ${WHERE};`],
+			{ stdio: "inherit" },
+		);
 		total += count;
 	}
 }

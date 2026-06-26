@@ -80,13 +80,13 @@ export function toDiffPullRequest(pr: ReviewSpecialistPrMeta): DiffPullRequest {
 		labels: pr.labels.map((name) => ({ name })),
 	};
 }
-
 /** Validate and normalize an incoming specialist payload. */
 export function parseReviewSpecialistPayload(
 	payload: unknown,
 	workflowName: string,
 ): ReviewSpecialistPayload {
 	const input = payload as Partial<ReviewSpecialistPayload>;
+
 	if (
 		input.eventType !== "pull_request" ||
 		typeof input.number !== "number" ||
@@ -98,6 +98,54 @@ export function parseReviewSpecialistPayload(
 			`[flue] ${workflowName} requires payload { eventType: "pull_request", number, headSha, diffMode, pr }.`,
 		);
 	}
+
+	// Validate ReviewSpecialistPrMeta fields so downstream property accesses
+	// don't crash on malformed payloads.
+	const pr = input.pr;
+	if (
+		typeof pr.number !== "number" ||
+		typeof pr.title !== "string" ||
+		typeof pr.base !== "string" ||
+		typeof pr.head !== "string" ||
+		!Array.isArray(pr.labels)
+	) {
+		throw new Error(
+			`[flue] ${workflowName}: malformed pr field — expected { number, title, base, head, labels[] }.`,
+		);
+	}
+
+	// Validate DiffMode — incremental mode requires fromSha and toSha.
+	const diffMode = input.diffMode;
+	if (diffMode.type === "incremental") {
+		if (
+			typeof diffMode.fromSha !== "string" ||
+			typeof diffMode.toSha !== "string"
+		) {
+			throw new Error(
+				`[flue] ${workflowName}: incremental diffMode missing fromSha or toSha.`,
+			);
+		}
+	} else if (diffMode.type !== "full") {
+		throw new Error(
+			`[flue] ${workflowName}: unknown diffMode.type "${String((diffMode as { type?: unknown }).type)}".`,
+		);
+	}
+
+	// Validate and normalize baseUrl: must be an absolute http(s) origin.
+	// Reject relative strings, opaque paths, or non-http schemes that could
+	// redirect internal auth headers to an unintended destination.
+	let normalizedBaseUrl: string | undefined;
+	if (typeof input.baseUrl === "string" && input.baseUrl.length > 0) {
+		try {
+			const parsed = new URL(input.baseUrl);
+			if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+				normalizedBaseUrl = parsed.origin;
+			}
+		} catch {
+			// Unparseable — drop it; the specialist falls back to req.url.
+		}
+	}
+
 	return {
 		eventType: input.eventType,
 		number: input.number,
@@ -107,6 +155,6 @@ export function parseReviewSpecialistPayload(
 		forceReviewMode: input.forceReviewMode,
 		dispatchId:
 			typeof input.dispatchId === "string" ? input.dispatchId : undefined,
-		baseUrl: typeof input.baseUrl === "string" ? input.baseUrl : undefined,
+		baseUrl: normalizedBaseUrl,
 	};
 }

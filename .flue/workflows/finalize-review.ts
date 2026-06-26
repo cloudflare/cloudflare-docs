@@ -275,24 +275,43 @@ export async function run({
 		return reconciled;
 	};
 
-	const reconciledCode = await reconcileStream(
-		"code",
-		codeResult.findings,
-		codeResult.reviewedFiles,
-		previousCodeFindings,
-		codeResult.findings.length === 0
-			? "No code review issues found."
-			: `${codeResult.findings.length} finding(s); no prior review to reconcile against.`,
-	);
-	const reconciledStyle = await reconcileStream(
-		"style",
-		styleResult.findings,
-		styleResult.reviewedFiles,
-		previousStyleFindings,
-		styleResult.findings.length === 0
-			? "No style-guide issues found."
-			: `${styleResult.findings.length} finding(s); no prior review to reconcile against.`,
-	);
+	// For degraded streams (specialist failed), carry previous findings forward
+	// as active rather than reconciling — an empty degraded result must not
+	// falsely resolve prior findings that the specialist never actually reviewed.
+	const reconciledCode = codeOk
+		? await reconcileStream(
+				"code",
+				codeResult.findings,
+				codeResult.reviewedFiles,
+				previousCodeFindings,
+				codeResult.findings.length === 0
+					? "No code review issues found."
+					: `${codeResult.findings.length} finding(s); no prior review to reconcile against.`,
+			)
+		: {
+				active: previousCodeFindings,
+				ignored_by_reviewer: [],
+				resolved: [],
+				summary:
+					"Code review could not complete — prior findings carried forward.",
+			};
+	const reconciledStyle = styleOk
+		? await reconcileStream(
+				"style",
+				styleResult.findings,
+				styleResult.reviewedFiles,
+				previousStyleFindings,
+				styleResult.findings.length === 0
+					? "No style-guide issues found."
+					: `${styleResult.findings.length} finding(s); no prior review to reconcile against.`,
+			)
+		: {
+				active: previousStyleFindings,
+				ignored_by_reviewer: [],
+				resolved: [],
+				summary:
+					"Style-guide review could not complete — prior findings carried forward.",
+			};
 
 	// ── 5. Persist findings to R2 ─────────────────────────────────────────────
 	const currentReviewKey = `${prDir}/review-${input.headSha}.json`;
@@ -345,17 +364,20 @@ export async function run({
 	} else {
 		// Locate the bot comment — botComment was fetched above before the
 		// idempotency check; re-use it. If null (first-ever review), postComment.
+		// On failure: skip slot consumption and pending cleanup so the next push
+		// retries (the review was prepared but never delivered).
 		try {
 			await postOrUpdateComment(token, input.number, botComment, commentBody);
 		} catch (postErr) {
 			console.log({
-				message: `Finalize: failed to post comment for PR #${input.number}`,
+				message: `Finalize: failed to post comment for PR #${input.number} — skipping slot consumption and cleanup`,
 				event: "finalize_review",
 				number: input.number,
 				error: postErr instanceof Error ? postErr.message : String(postErr),
 				runId,
 				action: "comment_post_failed",
 			});
+			return { finalized: false, reason: "comment_post_failed" };
 		}
 
 		// Swap 👀 → 👍 on the trigger comment if applicable.

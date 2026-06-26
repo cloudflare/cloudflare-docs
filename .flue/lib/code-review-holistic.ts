@@ -118,8 +118,12 @@ export async function runCodeReviewHolistic(
 	const harness = await init(agent, { name: "code-review-holistic" });
 	const session = await harness.session("holistic");
 
+	const patchedFiles = options.files.filter((f) => f.patch);
 	const diff = buildCombinedDiff(options.files);
-	const reviewedFiles = options.files.map((f) => f.filename);
+	// Only include files that actually have a patch — files without one are
+	// filtered out of the diff by buildCombinedDiff and were never sent to
+	// the model, so listing them as reviewed would be misleading.
+	const reviewedFiles = patchedFiles.map((f) => f.filename);
 
 	console.log({
 		message: `Code review (holistic) started: PR #${prNumber} — ${options.files.length} file(s) in one pass, ${diff.length} diff bytes`,
@@ -146,6 +150,9 @@ export async function runCodeReviewHolistic(
 
 	try {
 		const skillResult = await handle;
+		// Clear the timer immediately now that the operation has settled, so
+		// a late fire cannot mislabel any subsequent error as a timeout.
+		clearTimeout(timer);
 		const rawData = skillResult.data;
 
 		if (!rawData) {

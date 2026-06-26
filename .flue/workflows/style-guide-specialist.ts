@@ -9,8 +9,8 @@
  * POST /workflows/style-guide-specialist  (internal — admitted by the orchestrator)
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
-import { getShellSandbox } from "../connectors/cloudflare-shell";
 import {
+	getShellSandbox,
 	getDefaultWorkspace,
 	removeWorkspacePath,
 } from "../connectors/cloudflare-shell";
@@ -34,14 +34,21 @@ import {
 	toDiffPullRequest,
 } from "../lib/review-specialist";
 import {
-	writeStreamResult,
-	tryClaimFinalize,
 	degradedStyleResult,
+	reportSpecialistResult,
 } from "../lib/finalize-rendezvous";
-import { admitWorkflow } from "../lib/poll-run";
-import { getInternalHeaders } from "../lib/internal-auth";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
+
+/** Derive a safe origin string from an optional request, returning "" on failure. */
+function safeOrigin(req: Request | undefined): string {
+	if (!req) return "";
+	try {
+		return new URL(req.url).origin;
+	} catch {
+		return "";
+	}
+}
 
 export async function run({
 	id: runId,
@@ -55,45 +62,49 @@ export async function run({
 		"style-guide-specialist",
 	);
 	const typedEnv = env as Record<string, unknown>;
-	const loader = typedEnv.LOADER as Parameters<
-		typeof getShellSandbox
-	>[0]["loader"];
-	const token = await getInstallationToken(typedEnv as Record<string, string>);
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	const baseUrl = input.baseUrl ?? (req ? new URL(req.url).origin : "");
+	const baseUrl = input.baseUrl ?? safeOrigin(req);
 
-	// Per-environment tuning: default to the prod-safe constants, lower locally
-	// (single shared process) via env vars in .env.local.
-	const concurrency = envPositiveInt(
-		typedEnv.STYLE_GUIDE_CONCURRENCY,
-		STYLE_GUIDE_CONCURRENCY,
-	);
-	const fileTimeoutMs = envPositiveInt(
-		typedEnv.STYLE_GUIDE_FILE_TIMEOUT_MS,
-		STYLE_GUIDE_FILE_TIMEOUT_MS,
-	);
-
-	let files: Awaited<ReturnType<typeof getPullRequestFiles>>;
-	if (input.diffMode.type === "incremental") {
-		const compare = await comparePullRequestHeads(
-			token,
-			input.diffMode.fromSha,
-			input.diffMode.toSha,
-		);
-		files = compare
-			? compare.files
-			: await getPullRequestFiles(token, input.number);
-	} else {
-		files = await getPullRequestFiles(token, input.number);
-	}
-
-	const selected = selectStyleGuideFiles(files);
-	const workspace = getDefaultWorkspace();
 	const diffDir = `diffs/pr-${input.number}/runs/${runId}`;
+	let result: StyleGuideResult = degradedStyleResult();
+	let reviewOk = false;
 
-	let result: StyleGuideResult;
-	let reviewOk = true;
 	try {
+		const loader = typedEnv.LOADER as Parameters<
+			typeof getShellSandbox
+		>[0]["loader"];
+		const token = await getInstallationToken(
+			typedEnv as Record<string, string>,
+		);
+
+		// Per-environment tuning: default to the prod-safe constants, lower locally
+		// (single shared process) via env vars in .env.local.
+		const concurrency = envPositiveInt(
+			typedEnv.STYLE_GUIDE_CONCURRENCY,
+			STYLE_GUIDE_CONCURRENCY,
+		);
+		const fileTimeoutMs = envPositiveInt(
+			typedEnv.STYLE_GUIDE_FILE_TIMEOUT_MS,
+			STYLE_GUIDE_FILE_TIMEOUT_MS,
+		);
+
+		let files: Awaited<ReturnType<typeof getPullRequestFiles>>;
+		if (input.diffMode.type === "incremental") {
+			const compare = await comparePullRequestHeads(
+				token,
+				input.diffMode.fromSha,
+				input.diffMode.toSha,
+			);
+			files = compare
+				? compare.files
+				: await getPullRequestFiles(token, input.number);
+		} else {
+			files = await getPullRequestFiles(token, input.number);
+		}
+
+		const selected = selectStyleGuideFiles(files);
+		const workspace = getDefaultWorkspace();
+
 		await writeDiffToWorkspace(
 			workspace,
 			diffDir,
@@ -129,13 +140,14 @@ export async function run({
 			fileTimeoutMs,
 		});
 
+		reviewOk = true;
+
 		console.log({
-			message: `Style-guide specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s), ok: ${reviewOk}`,
+			message: `Style-guide specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s)`,
 			event: "style_guide_specialist",
 			number: input.number,
 			findings: result.findings.length,
 			reviewedFiles: result.reviewedFiles.length,
-			ok: reviewOk,
 			runId,
 			action: "complete",
 		});
@@ -149,85 +161,32 @@ export async function run({
 			runId,
 			action: "specialist_error_degraded",
 		});
-		result = degradedStyleResult();
-		reviewOk = false;
+		// result and reviewOk keep their degraded defaults.
 	} finally {
 		// Clean up the run-scoped staged diff so the specialist DO's SQLite does
 		// not grow with every run. Safe: the diff is run-scoped scratch, re-fetched
 		// each run; cross-run review state lives in R2 + the comment marker.
+		const workspace = getDefaultWorkspace();
 		await removeWorkspacePath(workspace, `/${diffDir}`, {
 			recursive: true,
 			force: true,
 		}).catch(() => {});
 	}
 
-	// ── Rendezvous: write result, try to claim finalize lock ───────────────────
-	if (input.dispatchId && baseUrl) {
-		try {
-			await writeStreamResult(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"style",
-				{ ok: reviewOk, result, final: true },
-			);
-
-			const won = await tryClaimFinalize(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"style",
-			);
-
-			if (won) {
-				const internalHeaders = getInternalHeaders(
-					typedEnv as Record<string, string>,
-				);
-				await admitWorkflow({
-					baseUrl,
-					pathname: "/workflows/finalize-review",
-					headers: internalHeaders,
-					body: {
-						eventType: "pull_request",
-						number: input.number,
-						headSha: input.headSha,
-						dispatchId: input.dispatchId,
-					},
-				});
-				console.log({
-					message: `Style-guide specialist: finalize-review admitted for PR #${input.number}`,
-					event: "style_guide_specialist",
-					number: input.number,
-					headSha: input.headSha,
-					dispatchId: input.dispatchId,
-					runId,
-					action: "finalize_admitted",
-				});
-			}
-		} catch (rendezvousErr) {
-			console.log({
-				message: `Style-guide specialist: rendezvous error for PR #${input.number} — ${rendezvousErr instanceof Error ? rendezvousErr.message : String(rendezvousErr)}`,
-				event: "style_guide_specialist",
-				number: input.number,
-				error:
-					rendezvousErr instanceof Error
-						? rendezvousErr.message
-						: String(rendezvousErr),
-				runId,
-				action: "rendezvous_error",
-			});
-		}
-	} else {
-		console.log({
-			message: `Style-guide specialist: no dispatchId/baseUrl — skipping rendezvous for PR #${input.number}`,
-			event: "style_guide_specialist",
-			number: input.number,
-			runId,
-			action: "rendezvous_skipped",
-		});
-	}
+	// ── Rendezvous: write final result, try to claim finalize lock ─────────────
+	await reportSpecialistResult({
+		bucket,
+		env: typedEnv,
+		baseUrl,
+		dispatchId: input.dispatchId ?? "",
+		prNumber: input.number,
+		headSha: input.headSha,
+		stream: "style",
+		ok: reviewOk,
+		result,
+		runId,
+		eventName: "style_guide_specialist",
+	});
 
 	return result;
 }

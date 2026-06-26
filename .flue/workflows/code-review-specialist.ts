@@ -53,14 +53,21 @@ import {
 	parseReviewSpecialistPayload,
 } from "../lib/review-specialist";
 import {
-	writeStreamResult,
-	tryClaimFinalize,
 	degradedCodeResult,
+	reportSpecialistResult,
 } from "../lib/finalize-rendezvous";
-import { admitWorkflow } from "../lib/poll-run";
-import { getInternalHeaders } from "../lib/internal-auth";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
+
+/** Derive a safe origin string from an optional request, returning "" on failure. */
+function safeOrigin(req: Request | undefined): string {
+	if (!req) return "";
+	try {
+		return new URL(req.url).origin;
+	} catch {
+		return "";
+	}
+}
 
 export async function run({
 	id: runId,
@@ -74,122 +81,124 @@ export async function run({
 		"code-review-specialist",
 	);
 	const typedEnv = env as Record<string, unknown>;
-	const loader = typedEnv.LOADER as Parameters<
-		typeof getShellSandbox
-	>[0]["loader"];
-	const token = await getInstallationToken(typedEnv as Record<string, string>);
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	// baseUrl: prefer payload (set by orchestrator), fall back to this req's origin.
-	const baseUrl = input.baseUrl ?? (req ? new URL(req.url).origin : "");
+	// baseUrl: prefer the payload value set by the orchestrator (validated
+	// at admission time). Fall back to this request's origin.
+	const baseUrl = input.baseUrl ?? safeOrigin(req);
 
-	// Per-environment tuning: default to the prod-safe constants, lower locally
-	// (single shared process) via env vars in .env.local.
-	const concurrency = envPositiveInt(
-		typedEnv.CODE_REVIEW_CONCURRENCY,
-		CODE_REVIEW_CONCURRENCY,
-	);
-	const fileTimeoutMs = envPositiveInt(
-		typedEnv.CODE_REVIEW_FILE_TIMEOUT_MS,
-		CODE_REVIEW_FILE_TIMEOUT_MS,
-	);
-	const holisticMaxBytes = envPositiveInt(
-		typedEnv.CODE_REVIEW_HOLISTIC_MAX_BYTES,
-		CODE_REVIEW_HOLISTIC_MAX_BYTES,
-	);
-	const holisticMaxFiles = envPositiveInt(
-		typedEnv.CODE_REVIEW_HOLISTIC_MAX_FILES,
-		CODE_REVIEW_HOLISTIC_MAX_FILES,
-	);
-	const holisticTimeoutMs = envPositiveInt(
-		typedEnv.CODE_REVIEW_HOLISTIC_TIMEOUT_MS,
-		CODE_REVIEW_HOLISTIC_TIMEOUT_MS,
-	);
+	let result: CodeReviewResult = degradedCodeResult();
+	let reviewOk = false;
 
-	// Self-fetch the diff for the requested mode. Incremental is SHA-pinned;
-	// if the base SHA is gone (force-push since the orchestrator decided),
-	// self-heal to the full PR diff.
-	let files: Awaited<ReturnType<typeof getPullRequestFiles>>;
-	if (input.diffMode.type === "incremental") {
-		const compare = await comparePullRequestHeads(
-			token,
-			input.diffMode.fromSha,
-			input.diffMode.toSha,
-		);
-		files = compare
-			? compare.files
-			: await getPullRequestFiles(token, input.number);
-	} else {
-		files = await getPullRequestFiles(token, input.number);
-	}
-
-	// Select up to the holistic cap (largest-first, filtered). The routing
-	// decision is made over this full candidate set; the fan-out path will
-	// further trim to CODE_REVIEW_MAX_FILES.
-	const reviewable = selectCodeReviewFiles(files, holisticMaxFiles);
-	const diffBytes = reviewable.reduce((n, f) => n + (f.patch?.length ?? 0), 0);
-	// A forceReviewMode from a codeowner slash command overrides the size-based
-	// routing. Otherwise route by diff size: large diffs go holistic.
-	const useHolistic =
-		input.forceReviewMode === "holistic"
-			? true
-			: input.forceReviewMode === "fan-out"
-				? false
-				: diffBytes > holisticMaxBytes;
-
-	const workspace = getDefaultWorkspace();
-
-	// Load AGENTS.md from the PR base ref — best-effort.
-	const repoAgentsMd =
-		reviewable.length > 0
-			? ((await getRepoFileContent(token, "AGENTS.md", input.pr.base).catch(
-					() => null,
-				)) ?? undefined)
-			: undefined;
-
-	const reviewMode = useHolistic ? "holistic" : "fan-out";
-	const selectedFiles = useHolistic
-		? reviewable
-		: reviewable.slice(0, CODE_REVIEW_MAX_FILES);
-
-	console.log({
-		message: `Code review specialist started: PR #${input.number} — ${selectedFiles.length} file(s), ${diffBytes} diff bytes, mode: ${reviewMode}`,
-		event: "code_review_specialist",
-		number: input.number,
-		files: selectedFiles.length,
-		diffBytes,
-		diffMode: input.diffMode.type,
-		reviewMode,
-		runId,
-		action: "started",
-	});
-
-	const sharedOptions = {
-		init,
-		workspace,
-		loader,
-		token,
-		headSha: input.headSha,
-		repoAgentsMd,
-		prNumber: input.number,
-		pullRequest: {
-			number: input.pr.number,
-			title: input.pr.title,
-			base: input.pr.base,
-			head: input.pr.head,
-		},
-		files: selectedFiles,
-		runId,
-	};
-
-	// Wrap the review in try/catch so a logic error writes a degraded final
-	// result. Hard DO eviction mid-review is handled by the orchestrator's
-	// crash-protection placeholder (final:false) — if this specialist is
-	// evicted before writing final:true, the sibling will not claim the lock
-	// (it checks for final:true on the sibling), leaving the review needing
-	// a /review retry. That is the accepted residual failure mode.
-	let result: CodeReviewResult;
-	let reviewOk = true;
 	try {
+		const loader = typedEnv.LOADER as Parameters<
+			typeof getShellSandbox
+		>[0]["loader"];
+		const token = await getInstallationToken(
+			typedEnv as Record<string, string>,
+		);
+
+		// Per-environment tuning: default to the prod-safe constants, lower locally
+		// (single shared process) via env vars in .env.local.
+		const concurrency = envPositiveInt(
+			typedEnv.CODE_REVIEW_CONCURRENCY,
+			CODE_REVIEW_CONCURRENCY,
+		);
+		const fileTimeoutMs = envPositiveInt(
+			typedEnv.CODE_REVIEW_FILE_TIMEOUT_MS,
+			CODE_REVIEW_FILE_TIMEOUT_MS,
+		);
+		const holisticMaxBytes = envPositiveInt(
+			typedEnv.CODE_REVIEW_HOLISTIC_MAX_BYTES,
+			CODE_REVIEW_HOLISTIC_MAX_BYTES,
+		);
+		const holisticMaxFiles = envPositiveInt(
+			typedEnv.CODE_REVIEW_HOLISTIC_MAX_FILES,
+			CODE_REVIEW_HOLISTIC_MAX_FILES,
+		);
+		const holisticTimeoutMs = envPositiveInt(
+			typedEnv.CODE_REVIEW_HOLISTIC_TIMEOUT_MS,
+			CODE_REVIEW_HOLISTIC_TIMEOUT_MS,
+		);
+
+		// Self-fetch the diff for the requested mode. Incremental is SHA-pinned;
+		// if the base SHA is gone (force-push since the orchestrator decided),
+		// self-heal to the full PR diff.
+		let files: Awaited<ReturnType<typeof getPullRequestFiles>>;
+		if (input.diffMode.type === "incremental") {
+			const compare = await comparePullRequestHeads(
+				token,
+				input.diffMode.fromSha,
+				input.diffMode.toSha,
+			);
+			files = compare
+				? compare.files
+				: await getPullRequestFiles(token, input.number);
+		} else {
+			files = await getPullRequestFiles(token, input.number);
+		}
+
+		// Select up to the holistic cap (largest-first, filtered). The routing
+		// decision is made over this full candidate set; the fan-out path will
+		// further trim to CODE_REVIEW_MAX_FILES.
+		const reviewable = selectCodeReviewFiles(files, holisticMaxFiles);
+		const diffBytes = reviewable.reduce(
+			(n, f) => n + (f.patch?.length ?? 0),
+			0,
+		);
+		// A forceReviewMode from a codeowner slash command overrides the size-based
+		// routing. Otherwise route by diff size: large diffs go holistic.
+		const useHolistic =
+			input.forceReviewMode === "holistic"
+				? true
+				: input.forceReviewMode === "fan-out"
+					? false
+					: diffBytes > holisticMaxBytes;
+
+		const workspace = getDefaultWorkspace();
+
+		// Load AGENTS.md from the PR base ref — best-effort.
+		const repoAgentsMd =
+			reviewable.length > 0
+				? ((await getRepoFileContent(token, "AGENTS.md", input.pr.base).catch(
+						() => null,
+					)) ?? undefined)
+				: undefined;
+
+		const reviewMode = useHolistic ? "holistic" : "fan-out";
+		const selectedFiles = useHolistic
+			? reviewable
+			: reviewable.slice(0, CODE_REVIEW_MAX_FILES);
+
+		console.log({
+			message: `Code review specialist started: PR #${input.number} — ${selectedFiles.length} file(s), ${diffBytes} diff bytes, mode: ${reviewMode}`,
+			event: "code_review_specialist",
+			number: input.number,
+			files: selectedFiles.length,
+			diffBytes,
+			diffMode: input.diffMode.type,
+			reviewMode,
+			runId,
+			action: "started",
+		});
+
+		const sharedOptions = {
+			init,
+			workspace,
+			loader,
+			token,
+			headSha: input.headSha,
+			repoAgentsMd,
+			prNumber: input.number,
+			pullRequest: {
+				number: input.pr.number,
+				title: input.pr.title,
+				base: input.pr.base,
+				head: input.pr.head,
+			},
+			files: selectedFiles,
+			runId,
+		};
+
 		result = useHolistic
 			? await runCodeReviewHolistic({
 					...sharedOptions,
@@ -200,6 +209,19 @@ export async function run({
 					concurrency,
 					fileTimeoutMs,
 				});
+
+		reviewOk = true;
+
+		console.log({
+			message: `Code review specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s), mode: ${reviewMode}`,
+			event: "code_review_specialist",
+			number: input.number,
+			findings: result.findings.length,
+			reviewedFiles: result.reviewedFiles.length,
+			reviewMode,
+			runId,
+			action: "complete",
+		});
 	} catch (err) {
 		const errMsg = err instanceof Error ? err.message : String(err);
 		console.log({
@@ -210,91 +232,23 @@ export async function run({
 			runId,
 			action: "specialist_error_degraded",
 		});
-		result = degradedCodeResult();
-		reviewOk = false;
+		// result and reviewOk keep their degraded defaults.
 	}
 
-	console.log({
-		message: `Code review specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s), mode: ${reviewMode}, ok: ${reviewOk}`,
-		event: "code_review_specialist",
-		number: input.number,
-		findings: result.findings.length,
-		reviewedFiles: result.reviewedFiles.length,
-		reviewMode,
+	// ── Rendezvous: write final result, try to claim finalize lock ─────────────
+	await reportSpecialistResult({
+		bucket,
+		env: typedEnv,
+		baseUrl,
+		dispatchId: input.dispatchId ?? "",
+		prNumber: input.number,
+		headSha: input.headSha,
+		stream: "code",
 		ok: reviewOk,
+		result,
 		runId,
-		action: "complete",
+		eventName: "code_review_specialist",
 	});
-
-	// ── Rendezvous: write result, try to claim finalize lock ───────────────────
-	if (input.dispatchId && baseUrl) {
-		try {
-			await writeStreamResult(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"code",
-				{ ok: reviewOk, result, final: true },
-			);
-
-			const won = await tryClaimFinalize(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"code",
-			);
-
-			if (won) {
-				const internalHeaders = getInternalHeaders(
-					typedEnv as Record<string, string>,
-				);
-				await admitWorkflow({
-					baseUrl,
-					pathname: "/workflows/finalize-review",
-					headers: internalHeaders,
-					body: {
-						eventType: "pull_request",
-						number: input.number,
-						headSha: input.headSha,
-						dispatchId: input.dispatchId,
-					},
-				});
-				console.log({
-					message: `Code review specialist: finalize-review admitted for PR #${input.number}`,
-					event: "code_review_specialist",
-					number: input.number,
-					headSha: input.headSha,
-					dispatchId: input.dispatchId,
-					runId,
-					action: "finalize_admitted",
-				});
-			}
-		} catch (rendezvousErr) {
-			// Non-fatal: the review ran but rendezvous failed. Log and continue —
-			// the review result is still returned in the run stream for observability.
-			console.log({
-				message: `Code review specialist: rendezvous error for PR #${input.number} — ${rendezvousErr instanceof Error ? rendezvousErr.message : String(rendezvousErr)}`,
-				event: "code_review_specialist",
-				number: input.number,
-				error:
-					rendezvousErr instanceof Error
-						? rendezvousErr.message
-						: String(rendezvousErr),
-				runId,
-				action: "rendezvous_error",
-			});
-		}
-	} else {
-		console.log({
-			message: `Code review specialist: no dispatchId/baseUrl — skipping rendezvous for PR #${input.number}`,
-			event: "code_review_specialist",
-			number: input.number,
-			runId,
-			action: "rendezvous_skipped",
-		});
-	}
 
 	return result;
 }

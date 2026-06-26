@@ -425,7 +425,9 @@ async function reviewSingleFile({
 
 	try {
 		const skillResult = await handle;
-
+		// Clear the timer immediately now that the operation has settled, so
+		// a late fire cannot mislabel any subsequent error as a timeout.
+		clearTimeout(timer);
 		const rawData = skillResult.data;
 		if (!rawData) {
 			return {

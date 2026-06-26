@@ -13,6 +13,9 @@ export async function withConcurrency<T>(
 ): Promise<T[]> {
 	const results: T[] = new Array(tasks.length);
 	let index = 0;
+	// Guard against non-positive limits — 0 or negative would spawn no workers
+	// and return an array of empty slots.
+	const effectiveLimit = Math.max(1, Math.floor(limit));
 
 	async function worker() {
 		while (index < tasks.length) {
@@ -22,7 +25,9 @@ export async function withConcurrency<T>(
 	}
 
 	await Promise.all(
-		Array.from({ length: Math.min(limit, tasks.length) }, () => worker()),
+		Array.from({ length: Math.min(effectiveLimit, tasks.length) }, () =>
+			worker(),
+		),
 	);
 	return results;
 }

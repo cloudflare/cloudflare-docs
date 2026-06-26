@@ -194,11 +194,24 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 	}
 
-	// ── 3. Handle /full-review command ──────────────────────────────────────
-	if (isFullReviewCommand) {
+	// ── 3–4b. Handle review slash commands (/full-review, /fan-out-review,
+	//          /holistic-review, /review) via shared helper ───────────────────
+	if (
+		isFullReviewCommand ||
+		isFanOutReviewCommand ||
+		isHolisticReviewCommand ||
+		isReviewCommand
+	) {
+		const commandName = isFullReviewCommand
+			? "full-review"
+			: isFanOutReviewCommand
+				? "fan-out-review"
+				: isHolisticReviewCommand
+					? "holistic-review"
+					: "review";
+
 		const commentId = (body.comment as Record<string, unknown> | undefined)
 			?.id as number | undefined;
-
 		if (!commentId || !senderLogin) {
 			return { acted: false, summary: "Missing comment id or sender." };
 		}
@@ -207,26 +220,44 @@ export async function run({ payload, env, req }: FlueContext) {
 		const token = await getInstallationToken(typedEnv);
 		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
 		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
-
 		if (!codeowner) {
 			console.log({
-				message: `Full review command ignored — ${senderLogin} is not a codeowner`,
+				message: `${commandName} command ignored — ${senderLogin} is not a codeowner`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
-				action: "full_review_ignored_not_codeowner",
+				action: `${commandName.replace(/-/g, "_")}_ignored_not_codeowner`,
 			});
 			return { acted: false, summary: "Commenter is not a codeowner." };
 		}
 
-		// Acknowledge immediately with 👀 so the user knows we saw it
 		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
-
-		// Check if the PR is from Dependabot — if so route to dependabot-review
-		const prForSlash = await getPullRequest(token, number).catch(() => null);
+		const prForCommand = await getPullRequest(token, number).catch(() => null);
 		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url).origin;
-		const isDepBot = prForSlash?.user?.login === "dependabot[bot]";
+		const isDepBot = prForCommand?.user?.login === "dependabot[bot]";
+
+		const orchestratorBody = isDepBot
+			? {
+					eventType: "pull_request" as const,
+					number,
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+				}
+			: {
+					eventType: "pull_request" as const,
+					number,
+					forceFullReview: !isReviewCommand,
+					bypassReviewLimit: true,
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+					...(isFanOutReviewCommand
+						? { forceReviewMode: "fan-out" as const }
+						: isHolisticReviewCommand
+							? { forceReviewMode: "holistic" as const }
+							: {}),
+				};
+
 		try {
 			const runId = await admitWorkflow({
 				baseUrl,
@@ -234,284 +265,34 @@ export async function run({ payload, env, req }: FlueContext) {
 					? `/workflows/dependabot-review`
 					: `/workflows/code-review-orchestrator`,
 				headers: internalHeaders,
-				body: isDepBot
-					? {
-							eventType: "pull_request",
-							number,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						}
-					: {
-							eventType: "pull_request",
-							number,
-							forceFullReview: true,
-							bypassReviewLimit: true,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						},
+				body: orchestratorBody,
 			});
 			console.log({
-				message: `Full review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				message: `${commandName} admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
 				runId,
-				action: "full_review_admitted",
+				action: `${commandName.replace(/-/g, "_")}_admitted`,
 			});
 			return {
 				acted: true,
-				summary: `Full review triggered by @${senderLogin}.`,
+				summary: `${commandName} triggered by @${senderLogin}.`,
 			};
 		} catch (err) {
 			const errMsg = err instanceof Error ? err.message : String(err);
 			console.log({
-				message: `Full review dispatch failed: PR #${number}`,
+				message: `${commandName} dispatch failed: PR #${number}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
 				error: errMsg,
-				action: "full_review_dispatch_failed",
+				action: `${commandName.replace(/-/g, "_")}_dispatch_failed`,
 			});
 			return {
 				acted: false,
-				summary: `Full review dispatch failed: ${errMsg}`,
+				summary: `${commandName} dispatch failed: ${errMsg}`,
 			};
-		}
-	}
-
-	// ── 4a. Handle /fan-out-review command ──────────────────────────────────
-	if (isFanOutReviewCommand) {
-		const commentId = (body.comment as Record<string, unknown> | undefined)
-			?.id as number | undefined;
-		if (!commentId || !senderLogin) {
-			return { acted: false, summary: "Missing comment id or sender." };
-		}
-		const typedEnv = env as Record<string, string>;
-		const token = await getInstallationToken(typedEnv);
-		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
-		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
-		if (!codeowner) {
-			console.log({
-				message: `Fan-out review command ignored — ${senderLogin} is not a codeowner`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				action: "fan_out_review_ignored_not_codeowner",
-			});
-			return { acted: false, summary: "Commenter is not a codeowner." };
-		}
-		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
-		const prForFanOut = await getPullRequest(token, number).catch(() => null);
-		const internalHeaders = getInternalHeaders(typedEnv);
-		const baseUrl = new URL(req.url).origin;
-		const isDepBotFanOut = prForFanOut?.user?.login === "dependabot[bot]";
-		try {
-			const runId = await admitWorkflow({
-				baseUrl,
-				pathname: isDepBotFanOut
-					? `/workflows/dependabot-review`
-					: `/workflows/code-review-orchestrator`,
-				headers: internalHeaders,
-				body: isDepBotFanOut
-					? {
-							eventType: "pull_request",
-							number,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						}
-					: {
-							eventType: "pull_request",
-							number,
-							forceFullReview: true,
-							bypassReviewLimit: true,
-							forceReviewMode: "fan-out",
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						},
-			});
-			console.log({
-				message: `Fan-out review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				runId,
-				action: "fan_out_review_admitted",
-			});
-			return {
-				acted: true,
-				summary: `Fan-out review triggered by @${senderLogin}.`,
-			};
-		} catch (err) {
-			const errMsg = err instanceof Error ? err.message : String(err);
-			console.log({
-				message: `Fan-out review dispatch failed: PR #${number}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				error: errMsg,
-				action: "fan_out_review_dispatch_failed",
-			});
-			return {
-				acted: false,
-				summary: `Fan-out review dispatch failed: ${errMsg}`,
-			};
-		}
-	}
-
-	// ── 4b. Handle /holistic-review command ─────────────────────────────────
-	if (isHolisticReviewCommand) {
-		const commentId = (body.comment as Record<string, unknown> | undefined)
-			?.id as number | undefined;
-		if (!commentId || !senderLogin) {
-			return { acted: false, summary: "Missing comment id or sender." };
-		}
-		const typedEnv = env as Record<string, string>;
-		const token = await getInstallationToken(typedEnv);
-		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
-		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
-		if (!codeowner) {
-			console.log({
-				message: `Holistic review command ignored — ${senderLogin} is not a codeowner`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				action: "holistic_review_ignored_not_codeowner",
-			});
-			return { acted: false, summary: "Commenter is not a codeowner." };
-		}
-		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
-		const prForHolistic = await getPullRequest(token, number).catch(() => null);
-		const internalHeaders = getInternalHeaders(typedEnv);
-		const baseUrl = new URL(req.url).origin;
-		const isDepBotHolistic = prForHolistic?.user?.login === "dependabot[bot]";
-		try {
-			const runId = await admitWorkflow({
-				baseUrl,
-				pathname: isDepBotHolistic
-					? `/workflows/dependabot-review`
-					: `/workflows/code-review-orchestrator`,
-				headers: internalHeaders,
-				body: isDepBotHolistic
-					? {
-							eventType: "pull_request",
-							number,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						}
-					: {
-							eventType: "pull_request",
-							number,
-							forceFullReview: true,
-							bypassReviewLimit: true,
-							forceReviewMode: "holistic",
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						},
-			});
-			console.log({
-				message: `Holistic review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				runId,
-				action: "holistic_review_admitted",
-			});
-			return {
-				acted: true,
-				summary: `Holistic review triggered by @${senderLogin}.`,
-			};
-		} catch (err) {
-			const errMsg = err instanceof Error ? err.message : String(err);
-			console.log({
-				message: `Holistic review dispatch failed: PR #${number}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				error: errMsg,
-				action: "holistic_review_dispatch_failed",
-			});
-			return {
-				acted: false,
-				summary: `Holistic review dispatch failed: ${errMsg}`,
-			};
-		}
-	}
-
-	// ── 4. Handle /review command ────────────────────────────────────────────
-	if (isReviewCommand) {
-		const commentId = (body.comment as Record<string, unknown> | undefined)
-			?.id as number | undefined;
-
-		if (!commentId || !senderLogin) {
-			return { acted: false, summary: "Missing comment id or sender." };
-		}
-
-		const typedEnv = env as Record<string, string>;
-		const token = await getInstallationToken(typedEnv);
-		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
-		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
-
-		if (!codeowner) {
-			console.log({
-				message: `Review command ignored — ${senderLogin} is not a codeowner`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				action: "review_ignored_not_codeowner",
-			});
-			return { acted: false, summary: "Commenter is not a codeowner." };
-		}
-
-		// Acknowledge immediately with 👀
-		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
-
-		// Check if the PR is from Dependabot — if so route to dependabot-review
-		const prForReview = await getPullRequest(token, number).catch(() => null);
-		const internalHeaders = getInternalHeaders(typedEnv);
-		const baseUrl = new URL(req.url).origin;
-		const isDepBot = prForReview?.user?.login === "dependabot[bot]";
-		try {
-			const runId = await admitWorkflow({
-				baseUrl,
-				pathname: isDepBot
-					? `/workflows/dependabot-review`
-					: `/workflows/code-review-orchestrator`,
-				headers: internalHeaders,
-				body: isDepBot
-					? {
-							eventType: "pull_request",
-							number,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						}
-					: {
-							eventType: "pull_request",
-							number,
-							bypassReviewLimit: true,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						},
-			});
-			console.log({
-				message: `Review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				runId,
-				action: "review_admitted",
-			});
-			return { acted: true, summary: `Review triggered by @${senderLogin}.` };
-		} catch (err) {
-			const errMsg = err instanceof Error ? err.message : String(err);
-			console.log({
-				message: `Review dispatch failed: PR #${number}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				error: errMsg,
-				action: "review_dispatch_failed",
-			});
-			return { acted: false, summary: `Review dispatch failed: ${errMsg}` };
 		}
 	}
 

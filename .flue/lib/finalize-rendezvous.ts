@@ -19,6 +19,8 @@
 import type { CodeReviewResult } from "./code-review-results";
 import type { StyleGuideResult } from "./style-guide-results";
 import type { DiffMode } from "./code-review-state";
+import { admitWorkflow } from "../lib/poll-run";
+import { getInternalHeaders } from "../lib/internal-auth";
 
 // ── Key helpers ───────────────────────────────────────────────────────────────
 
@@ -104,7 +106,12 @@ export async function readContext(
 ): Promise<FinalizeContext | null> {
 	const obj = await bucket.get(contextKey(prNumber, headSha, dispatchId));
 	if (!obj) return null;
-	return (await obj.json()) as FinalizeContext;
+	try {
+		return (await obj.json()) as FinalizeContext;
+	} catch {
+		// Corrupted or partial write — treat as missing.
+		return null;
+	}
 }
 
 // ── Per-stream results written by each specialist ─────────────────────────────
@@ -149,7 +156,12 @@ export async function readStreamResult<T>(
 		streamResultKey(prNumber, headSha, dispatchId, stream),
 	);
 	if (!obj) return null;
-	return (await obj.json()) as StreamResultPayload<T>;
+	try {
+		return (await obj.json()) as StreamResultPayload<T>;
+	} catch {
+		// Corrupted or partial write — treat as missing.
+		return null;
+	}
 }
 
 // ── Finalize lock (atomic create-if-absent) ───────────────────────────────────
@@ -183,8 +195,15 @@ export async function tryClaimFinalize(
 		// Sibling hasn't written anything yet.
 		return false;
 	}
-	const siblingPayload = (await siblingObj.json()) as { final?: boolean };
-	if (!siblingPayload.final) {
+	let siblingFinal = false;
+	try {
+		const siblingPayload = (await siblingObj.json()) as { final?: boolean };
+		siblingFinal = siblingPayload.final === true;
+	} catch {
+		// Corrupted sibling result — treat as not-final, do not trigger early.
+		return false;
+	}
+	if (!siblingFinal) {
 		// Sibling wrote a placeholder but its review is still in progress.
 		// It will call tryClaimFinalize itself when it writes final:true.
 		return false;
@@ -240,4 +259,109 @@ export function degradedStyleResult(): StyleGuideResult {
 		summary: "Style-guide review could not complete.",
 		reviewedFiles: [],
 	};
+}
+
+// ── Shared specialist rendezvous tail ─────────────────────────────────────────
+
+export interface ReportSpecialistResultOptions<T> {
+	bucket: R2Bucket;
+	env: Record<string, unknown>;
+	baseUrl: string;
+	dispatchId: string;
+	prNumber: number;
+	headSha: string;
+	stream: "code" | "style";
+	ok: boolean;
+	result: T;
+	runId: string;
+	/** Event name prefix used in structured logs, e.g. "code_review_specialist". */
+	eventName: string;
+}
+
+/**
+ * Write the final stream result to R2, attempt to claim the finalize lock,
+ * and admit finalize-review if this specialist wins.
+ *
+ * Shared by both specialists to eliminate duplicated rendezvous logic.
+ * The try/catch is internal — rendezvous errors are logged, not rethrown.
+ */
+export async function reportSpecialistResult<T>(
+	opts: ReportSpecialistResultOptions<T>,
+): Promise<void> {
+	const {
+		bucket,
+		env,
+		baseUrl,
+		dispatchId,
+		prNumber,
+		headSha,
+		stream,
+		ok,
+		result,
+		runId,
+		eventName,
+	} = opts;
+
+	if (!dispatchId || !baseUrl) {
+		console.log({
+			message: `${stream} specialist: no dispatchId/baseUrl — skipping rendezvous for PR #${prNumber}`,
+			event: eventName,
+			number: prNumber,
+			runId,
+			action: "rendezvous_skipped",
+		});
+		return;
+	}
+
+	try {
+		await writeStreamResult(bucket, prNumber, headSha, dispatchId, stream, {
+			ok,
+			result,
+			final: true,
+		});
+
+		const won = await tryClaimFinalize(
+			bucket,
+			prNumber,
+			headSha,
+			dispatchId,
+			stream,
+		);
+
+		if (won) {
+			const internalHeaders = getInternalHeaders(env as Record<string, string>);
+			await admitWorkflow({
+				baseUrl,
+				pathname: "/workflows/finalize-review",
+				headers: internalHeaders,
+				body: {
+					eventType: "pull_request",
+					number: prNumber,
+					headSha,
+					dispatchId,
+				},
+			});
+			console.log({
+				message: `${stream} specialist: finalize-review admitted for PR #${prNumber}`,
+				event: eventName,
+				number: prNumber,
+				headSha,
+				dispatchId,
+				runId,
+				action: "finalize_admitted",
+			});
+		}
+	} catch (rendezvousErr) {
+		console.log({
+			message: `${stream} specialist: rendezvous error for PR #${prNumber} — ${rendezvousErr instanceof Error ? rendezvousErr.message : String(rendezvousErr)}`,
+			event: eventName,
+			number: prNumber,
+			error:
+				rendezvousErr instanceof Error
+					? rendezvousErr.message
+					: String(rendezvousErr),
+			runId,
+			action: "rendezvous_error",
+		});
+	}
 }

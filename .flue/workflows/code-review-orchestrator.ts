@@ -45,6 +45,7 @@ import {
 	writeStreamResult,
 	degradedCodeResult,
 	degradedStyleResult,
+	tryClaimFinalize,
 } from "../lib/finalize-rendezvous";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
@@ -177,7 +178,12 @@ export async function run({
 	// ── 3. Write context to R2 ─────────────────────────────────────────────────
 	// dispatchId = this run's id, scoping the rendezvous so concurrent
 	// dispatches on the same head SHA don't collide.
-	const baseUrl = new URL(req!.url).origin;
+	if (!req) {
+		throw new Error(
+			"[flue] code-review-orchestrator: missing request context — cannot derive baseUrl",
+		);
+	}
+	const baseUrl = new URL(req.url).origin;
 
 	await writeContext(bucket, {
 		prNumber: input.number,
@@ -271,29 +277,105 @@ export async function run({
 		action: "specialists_dispatched",
 	});
 
+	// For each failed admit, overwrite the crash-protection placeholder with a
+	// final:true degraded result so the surviving specialist can still claim
+	// the finalize lock and run. If both fail, claim the lock here and admit
+	// finalize directly — nothing else will.
 	if (!codeAdmit.ok) {
 		console.log({
-			message: `Code-review specialist admit failed: PR #${input.number} — ${(codeAdmit as { ok: false; reason: string }).reason}`,
+			message: `Code-review specialist admit failed: PR #${input.number} — ${codeAdmit.reason}`,
 			event: "code_review_orchestrator",
 			number: input.number,
-			error: (codeAdmit as { ok: false; reason: string }).reason,
+			error: codeAdmit.reason,
 			runId,
 			action: "code_admit_failed",
 		});
+		await writeStreamResult(
+			bucket,
+			input.number,
+			currentHeadSha,
+			runId,
+			"code",
+			{
+				ok: false,
+				result: degradedCodeResult(),
+				final: true,
+			},
+		).catch(() => {});
 	}
 	if (!styleAdmit.ok) {
 		console.log({
-			message: `Style-guide specialist admit failed: PR #${input.number} — ${(styleAdmit as { ok: false; reason: string }).reason}`,
+			message: `Style-guide specialist admit failed: PR #${input.number} — ${styleAdmit.reason}`,
 			event: "code_review_orchestrator",
 			number: input.number,
-			error: (styleAdmit as { ok: false; reason: string }).reason,
+			error: styleAdmit.reason,
 			runId,
 			action: "style_admit_failed",
 		});
+		await writeStreamResult(
+			bucket,
+			input.number,
+			currentHeadSha,
+			runId,
+			"style",
+			{
+				ok: false,
+				result: degradedStyleResult(),
+				final: true,
+			},
+		).catch(() => {});
+	}
+
+	// If either admit failed, try to claim the finalize lock ourselves. In the
+	// double-fail case both streams are now final:true so the claim will succeed
+	// and finalize runs with two degraded results. In the single-fail case the
+	// surviving specialist will win the lock when it finishes its own review.
+	if (!codeAdmit.ok || !styleAdmit.ok) {
+		try {
+			// Use whichever stream failed as "myStream" — in double-fail both are
+			// final:true so the check passes regardless of which we pick.
+			const myStream = !codeAdmit.ok ? "code" : "style";
+			const won = await tryClaimFinalize(
+				bucket,
+				input.number,
+				currentHeadSha,
+				runId,
+				myStream,
+			);
+			if (won) {
+				await admitWorkflow({
+					baseUrl,
+					pathname: "/workflows/finalize-review",
+					headers: internalHeaders,
+					body: {
+						eventType: "pull_request",
+						number: input.number,
+						headSha: currentHeadSha,
+						dispatchId: runId,
+					},
+				});
+				console.log({
+					message: `Orchestrator admitted finalize-review after specialist admit failure: PR #${input.number}`,
+					event: "code_review_orchestrator",
+					number: input.number,
+					runId,
+					action: "orchestrator_finalize_admitted",
+				});
+			}
+		} catch (err) {
+			console.log({
+				message: `Orchestrator failed to admit finalize-review after specialist failure: PR #${input.number} — ${err instanceof Error ? err.message : String(err)}`,
+				event: "code_review_orchestrator",
+				number: input.number,
+				error: err instanceof Error ? err.message : String(err),
+				runId,
+				action: "orchestrator_finalize_admit_failed",
+			});
+		}
 	}
 
 	return {
-		dispatched: true,
+		dispatched: codeAdmit.ok || styleAdmit.ok,
 		headSha: currentHeadSha,
 		diffMode: diffMode.type,
 		codeAdmitOk: codeAdmit.ok,
