@@ -35,6 +35,16 @@ export interface ReviewSpecialistPayload {
 	 * overrides the size-based routing in the code-review specialist.
 	 */
 	forceReviewMode?: "fan-out" | "holistic";
+	/**
+	 * The orchestrator's runId, used to scope the R2 rendezvous namespace.
+	 * Isolates concurrent dispatches on the same head SHA.
+	 */
+	dispatchId?: string;
+	/**
+	 * Base URL of the Worker (origin only). Used by specialists to admit
+	 * finalize-review without relying on their own req object.
+	 */
+	baseUrl?: string;
 }
 
 /** Build the orchestrator->specialist payload PR descriptor from a full PR. */
@@ -95,5 +105,8 @@ export function parseReviewSpecialistPayload(
 		diffMode: input.diffMode,
 		pr: input.pr,
 		forceReviewMode: input.forceReviewMode,
+		dispatchId:
+			typeof input.dispatchId === "string" ? input.dispatchId : undefined,
+		baseUrl: typeof input.baseUrl === "string" ? input.baseUrl : undefined,
 	};
 }

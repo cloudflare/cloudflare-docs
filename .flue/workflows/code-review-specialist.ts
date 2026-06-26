@@ -52,6 +52,13 @@ import {
 	type ReviewSpecialistPayload,
 	parseReviewSpecialistPayload,
 } from "../lib/review-specialist";
+import {
+	writeStreamResult,
+	tryClaimFinalize,
+	degradedCodeResult,
+} from "../lib/finalize-rendezvous";
+import { admitWorkflow } from "../lib/poll-run";
+import { getInternalHeaders } from "../lib/internal-auth";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -60,6 +67,7 @@ export async function run({
 	init,
 	payload,
 	env,
+	req,
 }: FlueContext): Promise<CodeReviewResult> {
 	const input: ReviewSpecialistPayload = parseReviewSpecialistPayload(
 		payload,
@@ -70,6 +78,9 @@ export async function run({
 		typeof getShellSandbox
 	>[0]["loader"];
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
+	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
+	// baseUrl: prefer payload (set by orchestrator), fall back to this req's origin.
+	const baseUrl = input.baseUrl ?? (req ? new URL(req.url).origin : "");
 
 	// Per-environment tuning: default to the prod-safe constants, lower locally
 	// (single shared process) via env vars in .env.local.
@@ -170,27 +181,117 @@ export async function run({
 		runId,
 	};
 
-	const result = useHolistic
-		? await runCodeReviewHolistic({
-				...sharedOptions,
-				timeoutMs: holisticTimeoutMs,
-			})
-		: await runCodeReviewInProcess({
-				...sharedOptions,
-				concurrency,
-				fileTimeoutMs,
-			});
+	// Wrap the review in try/catch so a logic error still participates in the
+	// rendezvous (writes a degraded result). Only a hard DO eviction before
+	// this block would leave no stream result and keep finalize from running.
+	let result: CodeReviewResult;
+	let reviewOk = true;
+	try {
+		result = useHolistic
+			? await runCodeReviewHolistic({
+					...sharedOptions,
+					timeoutMs: holisticTimeoutMs,
+				})
+			: await runCodeReviewInProcess({
+					...sharedOptions,
+					concurrency,
+					fileTimeoutMs,
+				});
+	} catch (err) {
+		const errMsg = err instanceof Error ? err.message : String(err);
+		console.log({
+			message: `Code review specialist error (degraded): PR #${input.number} — ${errMsg}`,
+			event: "code_review_specialist",
+			number: input.number,
+			error: errMsg,
+			runId,
+			action: "specialist_error_degraded",
+		});
+		result = degradedCodeResult();
+		reviewOk = false;
+	}
 
 	console.log({
-		message: `Code review specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s), mode: ${reviewMode}`,
+		message: `Code review specialist complete: PR #${input.number} — ${result.findings.length} finding(s) across ${result.reviewedFiles.length} file(s), mode: ${reviewMode}, ok: ${reviewOk}`,
 		event: "code_review_specialist",
 		number: input.number,
 		findings: result.findings.length,
 		reviewedFiles: result.reviewedFiles.length,
 		reviewMode,
+		ok: reviewOk,
 		runId,
 		action: "complete",
 	});
+
+	// ── Rendezvous: write result, try to claim finalize lock ───────────────────
+	if (input.dispatchId && baseUrl) {
+		try {
+			await writeStreamResult(
+				bucket,
+				input.number,
+				input.headSha,
+				input.dispatchId,
+				"code",
+				{ ok: reviewOk, result },
+			);
+
+			const won = await tryClaimFinalize(
+				bucket,
+				input.number,
+				input.headSha,
+				input.dispatchId,
+				"code",
+			);
+
+			if (won) {
+				const internalHeaders = getInternalHeaders(
+					typedEnv as Record<string, string>,
+				);
+				await admitWorkflow({
+					baseUrl,
+					pathname: "/workflows/finalize-review",
+					headers: internalHeaders,
+					body: {
+						eventType: "pull_request",
+						number: input.number,
+						headSha: input.headSha,
+						dispatchId: input.dispatchId,
+					},
+				});
+				console.log({
+					message: `Code review specialist: finalize-review admitted for PR #${input.number}`,
+					event: "code_review_specialist",
+					number: input.number,
+					headSha: input.headSha,
+					dispatchId: input.dispatchId,
+					runId,
+					action: "finalize_admitted",
+				});
+			}
+		} catch (rendezvousErr) {
+			// Non-fatal: the review ran but rendezvous failed. Log and continue —
+			// the review result is still returned in the run stream for observability.
+			console.log({
+				message: `Code review specialist: rendezvous error for PR #${input.number} — ${rendezvousErr instanceof Error ? rendezvousErr.message : String(rendezvousErr)}`,
+				event: "code_review_specialist",
+				number: input.number,
+				error:
+					rendezvousErr instanceof Error
+						? rendezvousErr.message
+						: String(rendezvousErr),
+				runId,
+				action: "rendezvous_error",
+			});
+		}
+	} else {
+		console.log({
+			message: `Code review specialist: no dispatchId/baseUrl — skipping rendezvous for PR #${input.number}`,
+			event: "code_review_specialist",
+			number: input.number,
+			runId,
+			action: "rendezvous_skipped",
+		});
+	}
 
 	return result;
 }
