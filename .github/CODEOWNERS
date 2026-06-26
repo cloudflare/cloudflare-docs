@@ -126,8 +126,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
 /src/content/docs/notifications/ @dcpena @cloudflare/product-owners
 /src/content/docs/registrar/ @dcpena @cloudflare/product-owners
-/src/content/docs/rules/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/ruleset-engine/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/rules/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @smarsh-cf @maurizioabba @cloudflare/product-owners
+/src/content/docs/ruleset-engine/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @maurizioabba @cloudflare/product-owners
 /src/content/docs/log-explorer/ @angelampcosta @dcpena @cloudflare/product-owners
 
 # Developer Platform
