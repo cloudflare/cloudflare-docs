@@ -644,3 +644,60 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 	}
 }
 
+@layer components {
+	[data-nb-sidebar-link] {
+		@apply flex min-h-[2rem] items-center gap-2 rounded-lg px-3 py-1 text-[0.8125rem] font-medium no-underline;
+	}
+	[data-nb-sidebar-link]:not([aria-current="page"]) {
+		@apply text-muted-foreground transition-colors duration-150;
+	}
+	[data-nb-sidebar-link]:not([aria-current="page"]):hover {
+		@apply bg-accent text-foreground;
+	}
+	[data-nb-sidebar-link]:focus-visible {
+		@apply outline-offset-[-2px];
+	}
+	[data-nb-sidebar-link][aria-current="page"] {
+		@apply bg-accent font-semibold text-foreground;
+	}
+
+	[data-nb-caret] {
+		@apply ml-auto -mr-px shrink-0 w-5 h-5 text-muted-foreground opacity-50 transition-[rotate,color] duration-[250ms] ease-[cubic-bezier(0.87,0,0.13,1)];
+	}
+	[data-nb-sidebar-group-label]:hover [data-nb-caret] {
+		@apply text-foreground;
+	}
+}
+
+@layer components {
+
+	[data-nb-sidebar-group-label] {
+		@apply flex min-h-[2rem] items-center rounded-lg px-3 py-1 text-[0.8125rem] no-underline transition-colors duration-150 font-medium text-muted-foreground;
+	}
+	[data-nb-sidebar-group-label]:focus-visible { @apply outline-offset-[-2px]; }
+	[data-nb-sidebar-group-label]:hover { @apply bg-accent text-foreground; }
+	[data-nb-sidebar-group-label][data-nb-active] { @apply font-semibold text-foreground; }
+	
+	[data-nb-sidebar-group-label]:not([data-nb-collapsible-trigger]) { @apply p-0; }
+
+	[data-nb-sidebar-group-label][data-nb-current] { @apply bg-accent text-foreground font-semibold; }
+
+	[data-nb-sidebar-group-label][data-nb-collapsible-trigger] { @apply justify-between; }
+
+	[data-nb-sidebar-group-link] {
+		@apply flex flex-1 min-w-0 items-center min-h-[2rem] px-3 py-1 rounded-l-lg;
+	}
+	[data-nb-sidebar-group-link]:focus-visible { @apply outline-offset-[-2px]; }
+
+	[data-nb-sidebar-group-toggle] {
+		@apply flex items-center shrink-0 min-h-[2rem] px-1.5 py-1 rounded-r-lg;
+	}
+	[data-nb-sidebar-group-toggle]:hover { @apply bg-accent text-foreground; }
+	[data-nb-sidebar-group-toggle]:focus-visible { @apply outline-offset-[-2px]; }
+
+	[data-nb-sidebar-group-text] { @apply flex items-center gap-2 flex-1 min-w-0; }
+
+	[data-nb-sidebar-sublist] {
+		@apply mt-0.5 ml-3 list-none border-l border-border p-0 pl-2 flex flex-col gap-px;
+	}
+}
