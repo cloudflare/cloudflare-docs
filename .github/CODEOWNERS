@@ -246,19 +246,29 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/argo-smart-routing/ @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/automatic-platform-optimization/ @cloudflare/product-owners @ack-cf
-/src/content/docs/cache/ @cloudflare/product-owners @ack-cf
-/src/content/partials/cache/ @cloudflare/product-owners @ack-cf
-/src/content/changelog/cache/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf
-/src/assets/images/cache/ @cloudflare/product-owners @ack-cf
+/src/content/docs/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/partials/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/changelog/cache/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf @zaidoon1
+/src/assets/images/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/plans/index.json @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/directory/always-online.yaml @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/directory/cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/directory/cache-reserve.yaml @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/directory/cache-rules.yaml @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/directory/tiered-cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/docs/health-checks/ @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/partials/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
+/src/content/docs/smart-shield/configuration/cache-reserve/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
+/src/content/docs/smart-shield/configuration/regional-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
+/src/content/docs/smart-shield/configuration/smart-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
 /src/content/docs/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu
 /src/content/docs/speed/ @cloudflare/product-owners @ack-cf
 /src/content/partials/speed/ @cloudflare/product-owners @ack-cf
 /src/content/changelog/speed/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf
 /src/assets/images/speed/ @cloudflare/product-owners @ack-cf
+/src/content/docs/speed/optimization/protocol/http2-to-origin.mdx @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/docs/web3/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 
 # Privacy
