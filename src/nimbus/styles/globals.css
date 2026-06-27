@@ -334,12 +334,12 @@ pre.astro-code > code {
 	background: transparent;
 }
 
-/* Dual-theme Shiki tokens — pick by `[data-mode="dark"]`. */
+/* Classed Shiki tokens set --shiki-light/--shiki-dark once in _nimbus/shiki.css. */
 pre.astro-code span {
-	color: var(--shiki-light);
+	color: var(--shiki-light, inherit);
 }
 [data-mode="dark"] pre.astro-code span {
-	color: var(--shiki-dark);
+	color: var(--shiki-dark, inherit);
 }
 
 /* Copy button injected by initCodeCopy. */

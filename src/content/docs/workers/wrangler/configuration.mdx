@@ -1881,7 +1881,12 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-  	- dist - index.js - wrangler.jsonc - .wrangler - deploy - config.json
+		- dist/
+			- index.js
+			- wrangler.jsonc
+		- .wrangler/
+			- deploy/
+				- config.json
   </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:

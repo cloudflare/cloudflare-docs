@@ -163,7 +163,6 @@ export const integrations = [
 		mdx: { optimize: true },
 		markdown: { hastPlugins: rehypePlugins },
 		incrementalBuilds: false,
-		// MDX validation gated until the component barrel covers the full tree (C2).
 		validateMdx: false,
 		partialResolver: (name: string, props: Record<string, unknown>) => {
 			if (name !== "Render" || !props.file) return null;
@@ -206,6 +205,23 @@ export const integrations = [
 const nimbusDir = here(".");
 const rootAssets = here("../assets");
 const rootContent = here("../content");
+const componentsBarrelId = normalizeId(here("./components.ts"));
+
+function normalizeId(id: string) {
+	return id.replace(/\\/g, "/").replace(/\?.*$/, "");
+}
+
+const componentsBarrelSideEffects = {
+	name: "cf-nimbus:components-barrel-side-effects",
+	enforce: "pre" as const,
+	transform: {
+		filter: { id: /[\\/]components\.ts(?:\?.*)?$/ },
+		handler(code: string, id: string) {
+			if (normalizeId(id) !== componentsBarrelId) return;
+			return { code, moduleSideEffects: false };
+		},
+	},
+};
 
 const aliasResolver = {
 	name: "cf-nimbus:alias",
@@ -274,5 +290,5 @@ export const vite = {
 	// can load two React copies across the symlink in dev and client islands
 	// fail to hydrate with "jsxDEV is not a function".
 	resolve: { dedupe: ["react", "react-dom"] },
-	plugins: [aliasResolver, iconAlias],
+	plugins: [aliasResolver, componentsBarrelSideEffects, iconAlias],
 };
