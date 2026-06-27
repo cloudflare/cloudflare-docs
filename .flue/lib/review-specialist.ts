@@ -45,6 +45,12 @@ export interface ReviewSpecialistPayload {
 	 * finalize-review without relying on their own req object.
 	 */
 	baseUrl?: string;
+	/**
+	 * All specialist stream names expected for this dispatch. Forwarded to
+	 * tryClaimFinalize so N-stream rendezvous works correctly. Falls back to
+	 * EXPECTED_STREAMS from finalize-rendezvous if absent (e.g. old dispatch).
+	 */
+	expectedStreams?: string[];
 }
 
 /** Build the orchestrator->specialist payload PR descriptor from a full PR. */
@@ -156,5 +162,8 @@ export function parseReviewSpecialistPayload(
 		dispatchId:
 			typeof input.dispatchId === "string" ? input.dispatchId : undefined,
 		baseUrl: normalizedBaseUrl,
+		expectedStreams: Array.isArray(input.expectedStreams)
+			? (input.expectedStreams as string[])
+			: undefined,
 	};
 }

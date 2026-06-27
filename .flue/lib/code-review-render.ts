@@ -3,9 +3,15 @@
  *
  * Builds the Markdown bodies for all GitHub comment states:
  *   - pending  — review in progress placeholder
- *   - complete — final review with findings table
+ *   - complete — final review with findings tables (4 sections)
  *   - failure  — transient error message
  *   - paused   — auto-review limit reached
+ *
+ * Section order in the rendered comment:
+ *   1. ### Code Review
+ *   2. ### Conventions
+ *   3. ### Style Guide Review
+ *   4. ### Redirects
  *
  * Also exports ReconcileResultSchema / ReconcileResult, which are the model
  * output schema for the reconcile-code-review skill and the input type for
@@ -46,14 +52,20 @@ export const ReconcileResultSchema = v.object({
 
 export type ReconcileResult = v.InferOutput<typeof ReconcileResultSchema>;
 
-/** The two reconciled review streams rendered into one comment. */
+/** All four reconciled review streams rendered into one comment. */
 export interface RenderReviewInput {
 	code: ReconcileResult;
 	style: ReconcileResult;
+	conventions: ReconcileResult;
+	redirects: ReconcileResult;
 	/** True when the code review degraded (its findings may be incomplete). */
 	codeFailed?: boolean;
 	/** True when the style-guide review degraded (its findings may be incomplete). */
 	styleFailed?: boolean;
+	/** True when the conventions check degraded (its findings may be incomplete). */
+	conventionsFailed?: boolean;
+	/** True when the redirect check degraded (its findings may be incomplete). */
+	redirectsFailed?: boolean;
 	/** Review mode from the specialist — drives the Code Review section heading. */
 	codeMode?: "holistic" | "fan-out";
 }
@@ -63,8 +75,13 @@ const SECTION_FAILURE_NOTE =
 
 // ── Rendering helpers ─────────────────────────────────────────────────────────
 
-/** Shorten a file path for display: drop src/content/docs/ or src/content/ prefix. */
+/**
+ * Shorten a file path for display.
+ * The synthetic sentinel "pr" (used by the conventions specialist for PR-level
+ * findings) is rendered as the human-readable label "PR" instead of a code span.
+ */
 function formatFile(path: string, line?: number): string {
+	if (path === "pr") return "PR";
 	const short = path
 		.replace(/^src\/content\/docs\//, "")
 		.replace(/^src\/content\//, "");
@@ -192,8 +209,8 @@ function renderSeverityTable(
 
 /**
  * Render one review section (### heading + status + severity tables).
- * `includeCritical` is true for the code review, false for the style guide
- * (whose specialist never emits critical findings).
+ * `includeCritical` is true for the code review, false for all others
+ * (style, conventions, redirects never emit critical findings).
  */
 function renderSection(
 	lines: string[],
@@ -225,7 +242,7 @@ function renderSection(
 	if (active.length === 0) {
 		if (!failed) {
 			lines.push("");
-			lines.push(noneMessage);
+			lines.push(`<sub>${noneMessage}</sub>`);
 		}
 		return;
 	}
@@ -237,7 +254,7 @@ function renderSection(
 	renderSeverityTable(lines, "Suggestions", suggestions);
 }
 
-/** Render the final review comment from both reconciled finding streams. */
+/** Render the final review comment from all four reconciled finding streams. */
 export function renderComment(
 	reviews: RenderReviewInput,
 	reviewedHeadSha: string,
@@ -249,16 +266,33 @@ export function renderComment(
 
 	const code = activeBySeverity(reviews.code);
 	const style = activeBySeverity(reviews.style);
+	const conventions = activeBySeverity(reviews.conventions);
+	const redirects = activeBySeverity(reviews.redirects);
 
 	const criticalCount = code.critical.length;
-	const warningCount = code.warnings.length + style.warnings.length;
-	const suggestionCount = code.suggestions.length + style.suggestions.length;
+	const warningCount =
+		code.warnings.length +
+		conventions.warnings.length +
+		style.warnings.length +
+		redirects.warnings.length;
+	const suggestionCount =
+		code.suggestions.length +
+		conventions.suggestions.length +
+		style.suggestions.length +
+		redirects.suggestions.length;
 	const totalActive = criticalCount + warningCount + suggestionCount;
 	const ignoredCount =
 		reviews.code.ignored_by_reviewer.length +
-		reviews.style.ignored_by_reviewer.length;
+		reviews.conventions.ignored_by_reviewer.length +
+		reviews.style.ignored_by_reviewer.length +
+		reviews.redirects.ignored_by_reviewer.length;
 
-	const anyFailed = Boolean(reviews.codeFailed || reviews.styleFailed);
+	const anyFailed = Boolean(
+		reviews.codeFailed ||
+		reviews.conventionsFailed ||
+		reviews.styleFailed ||
+		reviews.redirectsFailed,
+	);
 	const failureSuffix =
 		" ⚠️ Part of the review could not complete and will retry on the next push.";
 
@@ -303,34 +337,65 @@ export function renderComment(
 				? "Fan Out Code Review"
 				: "Code Review";
 
+	// ── Section 1: Code Review ────────────────────────────────────────────────
 	renderSection(
 		lines,
 		codeHeading,
-		"✅ No code review issues found.",
+		"No code review issues found.",
 		reviews.code,
 		true,
 		Boolean(reviews.codeFailed),
 		"_This code review is in beta and may not always be helpful — use your judgment._",
 	);
 
+	// ── Section 2: Conventions ────────────────────────────────────────────────
+	renderSection(
+		lines,
+		"Conventions",
+		"No convention issues found.",
+		reviews.conventions,
+		false,
+		Boolean(reviews.conventionsFailed),
+		"_Checks PR title, description, and redirect checklist._",
+	);
+
+	// ── Section 3: Style Guide Review ────────────────────────────────────────
 	renderSection(
 		lines,
 		"Style Guide Review",
-		"✅ No style-guide issues found.",
+		"No style-guide issues found.",
 		reviews.style,
 		false,
 		Boolean(reviews.styleFailed),
 	);
 
-	// Combined "acknowledged by author" block across both review streams.
+	// ── Section 4: Redirects ──────────────────────────────────────────────────
+	renderSection(
+		lines,
+		"Redirects",
+		"No missing redirect entries found.",
+		reviews.redirects,
+		false,
+		Boolean(reviews.redirectsFailed),
+	);
+
+	// ── Combined "acknowledged by author" block ───────────────────────────────
 	const ignored = [
 		...reviews.code.ignored_by_reviewer.map((f) => ({
 			f,
 			kind: "Code" as const,
 		})),
+		...reviews.conventions.ignored_by_reviewer.map((f) => ({
+			f,
+			kind: "Conventions" as const,
+		})),
 		...reviews.style.ignored_by_reviewer.map((f) => ({
 			f,
 			kind: "Style" as const,
+		})),
+		...reviews.redirects.ignored_by_reviewer.map((f) => ({
+			f,
+			kind: "Redirects" as const,
 		})),
 	];
 	if (ignored.length > 0) {

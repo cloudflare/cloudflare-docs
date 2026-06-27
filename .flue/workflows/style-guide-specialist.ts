@@ -34,6 +34,7 @@ import {
 	toDiffPullRequest,
 } from "../lib/review-specialist";
 import {
+	EXPECTED_STREAMS,
 	degradedStyleResult,
 	reportSpecialistResult,
 } from "../lib/finalize-rendezvous";
@@ -182,6 +183,7 @@ export async function run({
 		prNumber: input.number,
 		headSha: input.headSha,
 		stream: "style",
+		expectedStreams: input.expectedStreams ?? [...EXPECTED_STREAMS],
 		ok: reviewOk,
 		result,
 		runId,

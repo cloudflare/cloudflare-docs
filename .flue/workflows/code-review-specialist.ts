@@ -53,6 +53,7 @@ import {
 	parseReviewSpecialistPayload,
 } from "../lib/review-specialist";
 import {
+	EXPECTED_STREAMS,
 	degradedCodeResult,
 	reportSpecialistResult,
 } from "../lib/finalize-rendezvous";
@@ -244,6 +245,7 @@ export async function run({
 		prNumber: input.number,
 		headSha: input.headSha,
 		stream: "code",
+		expectedStreams: input.expectedStreams ?? [...EXPECTED_STREAMS],
 		ok: reviewOk,
 		result,
 		runId,

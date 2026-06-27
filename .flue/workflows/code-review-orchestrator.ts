@@ -2,13 +2,12 @@
  * Code review orchestrator — dispatch phase only
  *
  * Performs the limit check, posts the placeholder, decides the diff mode,
- * writes context to R2, and admits both specialists fire-and-forget. It does
- * NOT wait for the specialists. The finalize-review workflow (admitted by
- * whichever specialist finishes last) handles reconciliation, rendering, and
- * posting.
+ * writes context to R2, and admits all four specialists fire-and-forget. It
+ * does NOT wait for the specialists. The finalize-review workflow (admitted
+ * by whichever specialist finishes last via the R2 rendezvous lock) handles
+ * reconciliation, rendering, and posting.
  *
- * This change removes the 20-minute specialist poll that caused stuck reviews
- * when the orchestrator's Durable Object was interrupted mid-wait (#31562).
+ * Specialist streams: code, style, conventions, redirects.
  *
  * Behavior is controlled by the DOCS_FLUE_REVIEW_MODE env var:
  *   "log"     — (default) does not mutate GitHub (no comment posting).
@@ -41,10 +40,13 @@ import {
 	renderReviewLimitComment,
 } from "../lib/code-review-render";
 import {
+	EXPECTED_STREAMS,
 	writeContext,
 	writeStreamResult,
 	degradedCodeResult,
 	degradedStyleResult,
+	degradedConventionsResult,
+	degradedRedirectsResult,
 	tryClaimFinalize,
 } from "../lib/finalize-rendezvous";
 
@@ -202,9 +204,10 @@ export async function run({
 			created_at: c.created_at,
 			body: c.body ?? "",
 		})),
+		expectedStreams: [...EXPECTED_STREAMS],
 	});
 
-	// ── 3b. Write crash-protection placeholders for both streams ─────────────
+	// ── 3b. Write crash-protection placeholders for all four streams ──────────
 	// Written BEFORE the specialists are admitted so a key always exists even
 	// if a specialist DO is evicted immediately after admission. Placeholders
 	// have final:false so tryClaimFinalize ignores them — finalize only runs
@@ -220,9 +223,33 @@ export async function run({
 			result: degradedStyleResult(),
 			final: false,
 		}),
+		writeStreamResult(
+			bucket,
+			input.number,
+			currentHeadSha,
+			runId,
+			"conventions",
+			{
+				ok: false,
+				result: degradedConventionsResult(),
+				final: false,
+			},
+		),
+		writeStreamResult(
+			bucket,
+			input.number,
+			currentHeadSha,
+			runId,
+			"redirects",
+			{
+				ok: false,
+				result: degradedRedirectsResult(),
+				final: false,
+			},
+		),
 	]);
 
-	// ── 4. Admit both specialists fire-and-forget ──────────────────────────────
+	// ── 4. Admit all four specialists fire-and-forget ──────────────────────────
 	const internalHeaders = getInternalHeaders(
 		typedEnv as Record<string, string>,
 	);
@@ -234,6 +261,7 @@ export async function run({
 		pr: toReviewSpecialistPrMeta(pr),
 		dispatchId: runId,
 		baseUrl,
+		expectedStreams: [...EXPECTED_STREAMS],
 		...(input.forceReviewMode
 			? { forceReviewMode: input.forceReviewMode }
 			: {}),
@@ -259,10 +287,13 @@ export async function run({
 		}
 	};
 
-	const [codeAdmit, styleAdmit] = await Promise.all([
-		admitSpecialist("/workflows/code-review-specialist"),
-		admitSpecialist("/workflows/style-guide-specialist"),
-	]);
+	const [codeAdmit, styleAdmit, conventionsAdmit, redirectsAdmit] =
+		await Promise.all([
+			admitSpecialist("/workflows/code-review-specialist"),
+			admitSpecialist("/workflows/style-guide-specialist"),
+			admitSpecialist("/workflows/conventions-specialist"),
+			admitSpecialist("/workflows/redirect-specialist"),
+		]);
 
 	console.log({
 		message: `Review dispatch: PR #${input.number} — specialists admitted (${diffMode.type} diff)`,
@@ -271,76 +302,95 @@ export async function run({
 		diffMode: diffMode.type,
 		codeRunId: codeAdmit.ok ? codeAdmit.runId : null,
 		styleRunId: styleAdmit.ok ? styleAdmit.runId : null,
+		conventionsRunId: conventionsAdmit.ok ? conventionsAdmit.runId : null,
+		redirectsRunId: redirectsAdmit.ok ? redirectsAdmit.runId : null,
 		codeAdmitOk: codeAdmit.ok,
 		styleAdmitOk: styleAdmit.ok,
+		conventionsAdmitOk: conventionsAdmit.ok,
+		redirectsAdmitOk: redirectsAdmit.ok,
 		runId,
 		action: "specialists_dispatched",
 	});
 
 	// For each failed admit, overwrite the crash-protection placeholder with a
-	// final:true degraded result so the surviving specialist can still claim
-	// the finalize lock and run. If both fail, claim the lock here and admit
-	// finalize directly — nothing else will.
-	if (!codeAdmit.ok) {
-		console.log({
-			message: `Code-review specialist admit failed: PR #${input.number} — ${codeAdmit.reason}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			error: codeAdmit.reason,
-			runId,
-			action: "code_admit_failed",
-		});
-		await writeStreamResult(
-			bucket,
-			input.number,
-			currentHeadSha,
-			runId,
-			"code",
-			{
-				ok: false,
-				result: degradedCodeResult(),
-				final: true,
-			},
-		).catch(() => {});
-	}
-	if (!styleAdmit.ok) {
-		console.log({
-			message: `Style-guide specialist admit failed: PR #${input.number} — ${styleAdmit.reason}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			error: styleAdmit.reason,
-			runId,
-			action: "style_admit_failed",
-		});
-		await writeStreamResult(
-			bucket,
-			input.number,
-			currentHeadSha,
-			runId,
-			"style",
-			{
-				ok: false,
-				result: degradedStyleResult(),
-				final: true,
-			},
-		).catch(() => {});
+	// final:true degraded result so the surviving specialists can still claim
+	// the finalize lock. If all fail, claim the lock here and admit finalize
+	// directly — nothing else will.
+	const admitResults: Array<{
+		admit: AdmitOutcome;
+		stream: string;
+		degraded: () => unknown;
+		label: string;
+	}> = [
+		{
+			admit: codeAdmit,
+			stream: "code",
+			degraded: degradedCodeResult,
+			label: "Code-review",
+		},
+		{
+			admit: styleAdmit,
+			stream: "style",
+			degraded: degradedStyleResult,
+			label: "Style-guide",
+		},
+		{
+			admit: conventionsAdmit,
+			stream: "conventions",
+			degraded: degradedConventionsResult,
+			label: "Conventions",
+		},
+		{
+			admit: redirectsAdmit,
+			stream: "redirects",
+			degraded: degradedRedirectsResult,
+			label: "Redirects",
+		},
+	];
+
+	let anyFailed = false;
+	let firstFailedStream = "";
+	for (const { admit, stream, degraded, label } of admitResults) {
+		if (!admit.ok) {
+			anyFailed = true;
+			if (!firstFailedStream) firstFailedStream = stream;
+			console.log({
+				message: `${label} specialist admit failed: PR #${input.number} — ${admit.reason}`,
+				event: "code_review_orchestrator",
+				number: input.number,
+				error: admit.reason,
+				stream,
+				runId,
+				action: "specialist_admit_failed",
+			});
+			await writeStreamResult(
+				bucket,
+				input.number,
+				currentHeadSha,
+				runId,
+				stream,
+				{
+					ok: false,
+					result: degraded(),
+					final: true,
+				},
+			).catch(() => {});
+		}
 	}
 
-	// If either admit failed, try to claim the finalize lock ourselves. In the
-	// double-fail case both streams are now final:true so the claim will succeed
-	// and finalize runs with two degraded results. In the single-fail case the
-	// surviving specialist will win the lock when it finishes its own review.
-	if (!codeAdmit.ok || !styleAdmit.ok) {
+	// If any admit failed, try to claim the finalize lock. In the all-fail case
+	// all streams are final:true so the claim succeeds and finalize runs with
+	// four degraded results. In a partial-fail case, surviving specialists write
+	// final:true when they finish and the last one to do so claims the lock.
+	if (anyFailed) {
 		try {
-			// Use whichever stream failed as "myStream" — in double-fail both are
-			// final:true so the check passes regardless of which we pick.
-			const myStream = !codeAdmit.ok ? "code" : "style";
 			const won = await tryClaimFinalize(
 				bucket,
 				input.number,
 				currentHeadSha,
 				runId,
-				myStream,
+				firstFailedStream,
+				[...EXPECTED_STREAMS],
 			);
 			if (won) {
 				await admitWorkflow({
@@ -375,11 +425,14 @@ export async function run({
 	}
 
 	return {
-		dispatched: codeAdmit.ok || styleAdmit.ok,
+		dispatched:
+			codeAdmit.ok || styleAdmit.ok || conventionsAdmit.ok || redirectsAdmit.ok,
 		headSha: currentHeadSha,
 		diffMode: diffMode.type,
 		codeAdmitOk: codeAdmit.ok,
 		styleAdmitOk: styleAdmit.ok,
+		conventionsAdmitOk: conventionsAdmit.ok,
+		redirectsAdmitOk: redirectsAdmit.ok,
 	};
 }
 

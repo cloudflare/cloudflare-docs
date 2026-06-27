@@ -9,6 +9,12 @@ export interface PullRequestFile {
 	deletions: number;
 	changes: number;
 	patch?: string;
+	/**
+	 * The previous filename for renamed files (status === "renamed").
+	 * Present in the GitHub API response; absent for all other statuses.
+	 * Use this — not filename — when computing the old path of a rename.
+	 */
+	previous_filename?: string;
 }
 
 export interface GitHubUser {

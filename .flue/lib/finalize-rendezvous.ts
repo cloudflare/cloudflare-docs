@@ -1,13 +1,15 @@
 /**
- * R2 rendezvous helpers for the two-specialist → finalize handoff.
+ * R2 rendezvous helpers for the N-specialist → finalize handoff.
  *
  * Each review dispatch (orchestrator run) creates a short-lived namespace:
  *
  *   diffs/pr-<n>/pending/<headSha>/<dispatchId>/
- *     context.json   — written by the orchestrator; everything finalize needs
- *     code.json      — written by the code-review specialist on completion
- *     style.json     — written by the style-guide specialist on completion
- *     finalize.lock  — atomic conditional-PUT claim; exactly one specialist wins
+ *     context.json        — written by the orchestrator; everything finalize needs
+ *     code.json           — written by the code-review specialist on completion
+ *     style.json          — written by the style-guide specialist on completion
+ *     conventions.json    — written by the conventions specialist on completion
+ *     redirects.json      — written by the redirect specialist on completion
+ *     finalize.lock       — atomic conditional-PUT claim; exactly one specialist wins
  *
  * dispatchId = the orchestrator's runId. It isolates same-head concurrent
  * dispatches (e.g. an auto-review and a /full-review landing at the same time).
@@ -21,6 +23,18 @@ import type { StyleGuideResult } from "./style-guide-results";
 import type { DiffMode } from "./code-review-state";
 import { admitWorkflow } from "../lib/poll-run";
 import { getInternalHeaders } from "../lib/internal-auth";
+
+/**
+ * Canonical ordered list of all specialist streams for a review dispatch.
+ * Shared by the orchestrator and every specialist — avoids per-site constants
+ * that can drift out of sync.
+ */
+export const EXPECTED_STREAMS = [
+	"code",
+	"style",
+	"conventions",
+	"redirects",
+] as const;
 
 // ── Key helpers ───────────────────────────────────────────────────────────────
 
@@ -44,7 +58,7 @@ export function streamResultKey(
 	prNumber: number,
 	headSha: string,
 	dispatchId: string,
-	stream: "code" | "style",
+	stream: string,
 ): string {
 	return `${pendingPrefix(prNumber, headSha, dispatchId)}/${stream}.json`;
 }
@@ -86,6 +100,11 @@ export interface FinalizeContext {
 	 * partitioned against, avoiding comment-timing races.
 	 */
 	humanComments: Array<{ author: string; created_at: string; body: string }>;
+	/**
+	 * All specialist stream names expected for this dispatch. Written by the
+	 * orchestrator so tryClaimFinalize knows which siblings to wait for.
+	 */
+	expectedStreams: string[];
 }
 
 export async function writeContext(
@@ -125,8 +144,8 @@ export interface StreamResultPayload<T> {
 	 * evicted immediately). true = the actual result written by the specialist
 	 * after its review completes (or fails).
 	 *
-	 * tryClaimFinalize only proceeds when the sibling's result is final:true,
-	 * preventing a premature finalize triggered by two placeholders racing.
+	 * tryClaimFinalize only proceeds when all sibling results are final:true,
+	 * preventing a premature finalize triggered by placeholders racing.
 	 */
 	final: boolean;
 }
@@ -136,7 +155,7 @@ export async function writeStreamResult<T>(
 	prNumber: number,
 	headSha: string,
 	dispatchId: string,
-	stream: "code" | "style",
+	stream: string,
 	payload: StreamResultPayload<T>,
 ): Promise<void> {
 	await bucket.put(
@@ -150,7 +169,7 @@ export async function readStreamResult<T>(
 	prNumber: number,
 	headSha: string,
 	dispatchId: string,
-	stream: "code" | "style",
+	stream: string,
 ): Promise<StreamResultPayload<T> | null> {
 	const obj = await bucket.get(
 		streamResultKey(prNumber, headSha, dispatchId, stream),
@@ -169,11 +188,13 @@ export async function readStreamResult<T>(
 /**
  * Try to claim the finalize lock for this dispatch.
  *
- * Both specialists call this after writing their own stream result. Both first
- * check that the sibling result is present — if it is not, the sibling has
- * not finished yet and will claim the lock when it does. If both finish near
- * simultaneously and both see both-present, the R2 conditional PUT
- * (If-None-Match: *) lets exactly one win; the other gets null back.
+ * Each specialist calls this after writing its own stream result. It first
+ * checks that every sibling stream has written a FINAL result (final:true).
+ * If any sibling is still a placeholder (final:false) or absent, this caller
+ * returns false and that sibling will claim the lock when it finishes.
+ *
+ * When all streams are final, the R2 conditional PUT (If-None-Match: *)
+ * lets exactly one specialist win; the rest get null back.
  *
  * Returns true iff this caller won the lock and should admit finalize-review.
  */
@@ -182,34 +203,33 @@ export async function tryClaimFinalize(
 	prNumber: number,
 	headSha: string,
 	dispatchId: string,
-	myStream: "code" | "style",
+	myStream: string,
+	allExpectedStreams: string[],
 ): Promise<boolean> {
-	// Check that the sibling has written its FINAL result (not just a
-	// crash-protection placeholder). A placeholder has final:false and must
-	// not trigger finalize — the sibling's actual review hasn't run yet.
-	const siblingStream = myStream === "code" ? "style" : "code";
-	const siblingObj = await bucket.get(
-		streamResultKey(prNumber, headSha, dispatchId, siblingStream),
+	// Fetch all sibling streams in parallel.
+	const siblingStreams = allExpectedStreams.filter((s) => s !== myStream);
+	const siblingChecks = await Promise.all(
+		siblingStreams.map(async (stream) => {
+			const obj = await bucket.get(
+				streamResultKey(prNumber, headSha, dispatchId, stream),
+			);
+			if (!obj) return false; // Sibling hasn't written anything yet.
+			try {
+				const payload = (await obj.json()) as { final?: boolean };
+				return payload.final === true;
+			} catch {
+				// Corrupted sibling result — treat as not-final.
+				return false;
+			}
+		}),
 	);
-	if (!siblingObj) {
-		// Sibling hasn't written anything yet.
-		return false;
-	}
-	let siblingFinal = false;
-	try {
-		const siblingPayload = (await siblingObj.json()) as { final?: boolean };
-		siblingFinal = siblingPayload.final === true;
-	} catch {
-		// Corrupted sibling result — treat as not-final, do not trigger early.
-		return false;
-	}
-	if (!siblingFinal) {
-		// Sibling wrote a placeholder but its review is still in progress.
-		// It will call tryClaimFinalize itself when it writes final:true.
+
+	// All siblings must be final before we attempt the lock.
+	if (!siblingChecks.every(Boolean)) {
 		return false;
 	}
 
-	// Both streams have written final results. Race for the lock via
+	// All streams have written final results. Race for the lock via
 	// conditional PUT (create-if-absent) — exactly one specialist wins.
 	const won = await bucket.put(
 		finalizeLockKey(prNumber, headSha, dispatchId),
@@ -261,6 +281,22 @@ export function degradedStyleResult(): StyleGuideResult {
 	};
 }
 
+export function degradedConventionsResult(): CodeReviewResult {
+	return {
+		findings: [],
+		summary: "Conventions check could not complete.",
+		reviewedFiles: [],
+	};
+}
+
+export function degradedRedirectsResult(): CodeReviewResult {
+	return {
+		findings: [],
+		summary: "Redirect check could not complete.",
+		reviewedFiles: [],
+	};
+}
+
 // ── Shared specialist rendezvous tail ─────────────────────────────────────────
 
 export interface ReportSpecialistResultOptions<T> {
@@ -270,7 +306,9 @@ export interface ReportSpecialistResultOptions<T> {
 	dispatchId: string;
 	prNumber: number;
 	headSha: string;
-	stream: "code" | "style";
+	stream: string;
+	/** All expected stream names for this dispatch — forwarded to tryClaimFinalize. */
+	expectedStreams: string[];
 	ok: boolean;
 	result: T;
 	runId: string;
@@ -282,7 +320,7 @@ export interface ReportSpecialistResultOptions<T> {
  * Write the final stream result to R2, attempt to claim the finalize lock,
  * and admit finalize-review if this specialist wins.
  *
- * Shared by both specialists to eliminate duplicated rendezvous logic.
+ * Shared by all specialists to eliminate duplicated rendezvous logic.
  * The try/catch is internal — rendezvous errors are logged, not rethrown.
  */
 export async function reportSpecialistResult<T>(
@@ -296,6 +334,7 @@ export async function reportSpecialistResult<T>(
 		prNumber,
 		headSha,
 		stream,
+		expectedStreams,
 		ok,
 		result,
 		runId,
@@ -326,6 +365,7 @@ export async function reportSpecialistResult<T>(
 			headSha,
 			dispatchId,
 			stream,
+			expectedStreams,
 		);
 
 		if (won) {
