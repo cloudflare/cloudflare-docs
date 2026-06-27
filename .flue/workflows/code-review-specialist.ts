@@ -23,7 +23,6 @@ import {
 import {
 	CODE_REVIEW_CONCURRENCY,
 	CODE_REVIEW_FILE_TIMEOUT_MS,
-	CODE_REVIEW_MAX_FILES,
 	runCodeReviewInProcess,
 	selectCodeReviewFiles,
 } from "../lib/code-review-inproc";
