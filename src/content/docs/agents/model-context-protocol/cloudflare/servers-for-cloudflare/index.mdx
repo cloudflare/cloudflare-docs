@@ -17,7 +17,7 @@ These MCP servers allow your MCP client to read configurations from your account
 ## Cloudflare API MCP server
 
 :::tip[You only need one MCP server]
-The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) at `https://mcp.cloudflare.com/mcp` provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product. You do **not** need to install the product-specific servers listed below unless you have a specialized use case that requires them.
+The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) at `https://mcp.cloudflare.com/mcp` provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product. You do **not** need to install the product-specific servers in [Optional product-specific MCP servers](#optional-product-specific-mcp-servers) unless you have a specialized use case that requires them.
 :::
 
 It uses [the search-and-execute Code Mode pattern](/agents/model-context-protocol/codemode/#search-and-execute), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) sandbox.
