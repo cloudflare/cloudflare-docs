@@ -36,6 +36,16 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 You can also filter the charts to a single Durable Object by entering its [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name) and selecting a match. Clear the filter to return to namespace-level metrics.
 
+## Memory usage
+
+The **Memory usage** chart on the **Metrics** tab shows how much [in-memory state](/durable-objects/reference/in-memory-state/) your Durable Objects hold at the time of each invocation, broken down into P50, P90, P99, and P999 percentiles.
+
+Durable Objects run in V8 [isolates](/workers/reference/how-workers-works/#isolates), subject to a [128 MB per-isolate memory limit](/workers/platform/limits/#memory). Memory usage reflects the in-memory state an object holds — such as class properties, caches, and active WebSocket connections — which persists across invocations until the object is [hibernated or evicted](/durable-objects/concepts/durable-object-lifecycle/). This state is not preserved across eviction, hibernation, or a crash, so persist anything important to [storage](/durable-objects/best-practices/access-durable-objects-storage/).
+
+To drill down into memory usage for a specific object, filter the chart to a single Durable Object by entering its [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name).
+
+If you see memory usage trending upward over time, this may indicate a memory leak. Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to take heap snapshots and identify specific objects causing high memory consumption.
+
 ## View logs
 
 You can view Durable Object logs from the Cloudflare dashboard. Logs are aggregated by the script name and the Durable Object class name.
