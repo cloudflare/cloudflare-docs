@@ -109,10 +109,15 @@ const hasPagination = Astro.slots.has("pagination");
           {showSidebar && (
             <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
               {hasSidebar ? (
-                <slot name="sidebar" />
+                <div data-sidebar-home class="flex-1">
+                  <div data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8 max-lg:pt-5">
+                    <slot name="sidebar" />
+                  </div>
+                </div>
               ) : (
-                <nav class="flex-1 pb-12">
-                  <div class="sticky top-0 z-10 bg-background px-4 pb-3">
+                <div data-sidebar-home class="flex-1">
+                <nav data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8 max-lg:pt-5">
+                  <div class="z-10 bg-background px-4 pb-3 lg:sticky lg:top-0">
                     {product && <SidebarProductNav title={product.title} href={product.href} class="py-2.5" />}
                     <SidebarFilter class="mb-0" />
                   </div>
@@ -120,6 +125,7 @@ const hasPagination = Astro.slots.has("pagination");
                     <Sidebar items={sidebar} persist />
                   </div>
                 </nav>
+                </div>
               )}
               <div class="pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t from-base to-transparent" />
             </aside>
@@ -276,15 +282,7 @@ const hasPagination = Astro.slots.has("pagination");
             <Icon name="ph:x" class="w-5 h-5" />
           </button>
         </div>
-        <nav class="px-4 pb-8 pt-5">
-          {hasSidebar ? <slot name="sidebar" /> : (
-            <Fragment>
-              {product && <SidebarProductNav title={product.title} href={product.href} class="py-2.5" />}
-              <SidebarFilter />
-              <Sidebar items={sidebar} />
-            </Fragment>
-          )}
-        </nav>
+        <div data-mobile-sidebar-slot></div>
       </div>
     </dialog>
   )}
@@ -294,10 +292,92 @@ const hasPagination = Astro.slots.has("pagination");
 
     const dialog = document.querySelector<HTMLDialogElement>("[data-mobile-sidebar]");
     const menuBtn = document.querySelector<HTMLElement>("[data-menu-btn]");
+    const sidebarHome = document.querySelector<HTMLElement>("[data-sidebar-home]");
+    const mobileSidebarSlot = dialog?.querySelector<HTMLElement>("[data-mobile-sidebar-slot]");
+    const sharedSidebarNav = sidebarHome?.querySelector<HTMLElement>("[data-shared-sidebar-nav]") ?? null;
     const CLOSE_DURATION_MS = 250;
 
     if (dialog && menuBtn) {
       let closeTimer: ReturnType<typeof setTimeout> | undefined;
+      let desktopOpenState: boolean[] | null = null;
+      let mobileOpenState: boolean[] | null = null;
+      let sidebarLocked = false;
+      let suppressNextFocus = false;
+
+      function readOpenState() {
+        if (!sharedSidebarNav) return [];
+        return [...sharedSidebarNav.querySelectorAll<HTMLElement>("[data-nb-sidebar-group]")]
+          .map((group) => group.querySelector<HTMLElement>("[data-nb-collapsible-trigger]")?.getAttribute("data-nb-state") === "open");
+      }
+
+      function setGroupOpen(group: HTMLElement, open: boolean) {
+        const disclosure = (group as HTMLElement & {
+          __nbDisclosure?: { open(): void; close(): void; isOpen(): boolean };
+        }).__nbDisclosure;
+        if (disclosure) {
+          if (disclosure.isOpen() !== open) {
+            open ? disclosure.open() : disclosure.close();
+          }
+          return;
+        }
+        group.setAttribute("data-nb-default-open", open ? "true" : "false");
+        const trigger = group.querySelector<HTMLElement>("[data-nb-collapsible-trigger]");
+        const panel = group.querySelector<HTMLElement>("[data-nb-collapsible-content]");
+        const state = open ? "open" : "closed";
+        if (trigger) {
+          trigger.setAttribute("data-nb-state", state);
+          trigger.setAttribute("aria-expanded", String(open));
+        }
+        if (panel) panel.setAttribute("data-nb-state", state);
+      }
+
+      function applyOpenState(state: boolean[] | null) {
+        if (!sharedSidebarNav || !state) return;
+        [...sharedSidebarNav.querySelectorAll<HTMLElement>("[data-nb-sidebar-group]")]
+          .forEach((group, index) => {
+            if (typeof state[index] === "boolean") setGroupOpen(group, state[index]);
+          });
+      }
+
+      function moveSidebarToMobile() {
+        if (!sharedSidebarNav || !mobileSidebarSlot) return;
+        desktopOpenState = readOpenState();
+        mobileSidebarSlot.appendChild(sharedSidebarNav);
+        applyOpenState(mobileOpenState);
+      }
+
+      function restoreSidebarToDesktop() {
+        if (!sharedSidebarNav || !sidebarHome) return;
+        if (sharedSidebarNav.parentElement === mobileSidebarSlot) {
+          mobileOpenState = readOpenState();
+          const filter = sharedSidebarNav.querySelector<HTMLInputElement>("[data-nb-sidebar-filter-input]");
+          if (filter) filter.value = "";
+          sharedSidebarNav
+            .querySelectorAll<HTMLElement>("[data-nb-sidebar-hidden], [data-nb-opened-by-filter]")
+            .forEach((el) => {
+              el.removeAttribute("data-nb-sidebar-hidden");
+              el.removeAttribute("data-nb-opened-by-filter");
+            });
+          sidebarHome.appendChild(sharedSidebarNav);
+          applyOpenState(desktopOpenState);
+          desktopOpenState = null;
+        }
+      }
+
+      function finishClose(restoreFocus = true) {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = undefined;
+        }
+
+        dialog.dataset.state = "closed";
+        restoreSidebarToDesktop();
+        if (sidebarLocked) {
+          unlockScroll();
+          sidebarLocked = false;
+        }
+        if (restoreFocus && !desktopMq.matches) menuBtn.focus();
+      }
 
       const openSidebar = () => {
         if (closeTimer) {
@@ -306,9 +386,11 @@ const hasPagination = Astro.slots.has("pagination");
         }
         if (dialog.open) return;
 
+        moveSidebarToMobile();
         dialog.showModal();
         dialog.dataset.state = "closed";
         lockScroll();
+        sidebarLocked = true;
 
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
@@ -337,14 +419,18 @@ const hasPagination = Astro.slots.has("pagination");
 
       // Cleanup on close — fires for Escape, close button, backdrop click
       dialog.addEventListener("close", () => {
+        finishClose(!suppressNextFocus);
+        suppressNextFocus = false;
+      });
+
+      document.addEventListener("astro:before-swap", () => {
         if (closeTimer) {
           clearTimeout(closeTimer);
           closeTimer = undefined;
         }
-
-        dialog.dataset.state = "closed";
-        unlockScroll();
-        menuBtn.focus();
+        suppressNextFocus = true;
+        if (dialog.open) dialog.close();
+        finishClose(false);
       });
 
       // Close button

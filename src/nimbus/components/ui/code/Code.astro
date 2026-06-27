@@ -22,6 +22,7 @@ const userTransformers = themed.transformers ?? [];
 const props = {
   ...themed,
   transformers: defaultCodeTransformers({
+    classTokens: usesNimbusDefaultThemes,
     beforeTitleTransformers: userTransformers,
   }),
 };

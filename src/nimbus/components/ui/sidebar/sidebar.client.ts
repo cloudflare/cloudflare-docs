@@ -34,7 +34,10 @@ function initFilter(root: HTMLElement): (() => void) | null {
   // SidebarFilter is rendered *next to* Sidebar (sibling), so also look in
   // the parent — preserves the existing layout where filter sits above.
   const inputElement =
-    input ?? root.parentElement?.querySelector<HTMLInputElement>("[data-nb-sidebar-filter-input]") ?? null;
+    input ??
+    root.closest("[data-shared-sidebar-nav]")?.querySelector<HTMLInputElement>("[data-nb-sidebar-filter-input]") ??
+    root.parentElement?.querySelector<HTMLInputElement>("[data-nb-sidebar-filter-input]") ??
+    null;
   if (!inputElement) return null;
 
   function handleInput() {
@@ -142,6 +145,7 @@ function initPersistence(root: HTMLElement): (() => void) | null {
   }
 
   function save() {
+    if (root.closest("[data-mobile-sidebar]")) return;
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(readState()));
     } catch {}

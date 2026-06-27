@@ -662,7 +662,9 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 	}
 
 	[data-nb-caret] {
-		@apply ml-auto -mr-px shrink-0 w-5 h-5 text-muted-foreground opacity-50 transition-[rotate,color] duration-[250ms] ease-[cubic-bezier(0.87,0,0.13,1)];
+		@apply ml-auto -mr-px shrink-0 w-5 h-5 bg-current text-muted-foreground opacity-50 transition-[rotate,color] duration-[250ms] ease-[cubic-bezier(0.87,0,0.13,1)];
+		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z'/%3E%3C/svg%3E") center / contain no-repeat;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z'/%3E%3C/svg%3E") center / contain no-repeat;
 	}
 	[data-nb-sidebar-group-label]:hover [data-nb-caret] {
 		@apply text-foreground;

@@ -28,20 +28,6 @@ const hash = sidebarHash(items);
   class={cn(className)}
   {...attrs}
 >
-  {/* Shared caret glyph, referenced via <use href="#nb-caret"> by every
-      SidebarGroup so the path isn't re-emitted per group. Hidden defs.
-      Kept here (not hoisted to the layout) so any <Sidebar> consumer gets
-      working carets — there are 2 consumers (DocsLayout, pages/index) and
-      DocsLayout renders 2 sidebars, so on those pages this <symbol> appears
-      twice. Duplicate id is invalid HTML but benign: <use> resolves to the
-      first match (visibility-independent) and the defs are aria-hidden, so
-      carets always render. Robustness (no silent missing-caret) is preferred
-      over the validation nit; a render-once dedupe can come with the
-      framework/starter port. */}
-  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
-    <symbol id="nb-caret" viewBox="0 0 256 256"
-      ><path fill="currentColor" d="m181.66 133.66l-80 80a8 8 0 0 1-11.32-11.32L164.69 128L90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32"></path></symbol>
-  </svg>
   <ul class="top-level flex list-none flex-col gap-0.5 p-0">
     {items.map((item) =>
       item.type === "group" ? (

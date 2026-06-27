@@ -2,6 +2,12 @@
 
 import { mount, makeDisclosure } from "nimbus-docs/client";
 
+declare global {
+  interface HTMLElement {
+    __nbDisclosure?: ReturnType<typeof makeDisclosure>;
+  }
+}
+
 function initCollapsible(root: HTMLElement): () => void {
   const trigger = root.querySelector<HTMLElement>("[data-nb-collapsible-trigger]");
   const content = root.querySelector<HTMLElement>("[data-nb-collapsible-content]");
@@ -15,8 +21,12 @@ function initCollapsible(root: HTMLElement): () => void {
     content,
     defaultOpen,
   });
+  root.__nbDisclosure = disclosure;
 
-  return () => disclosure.destroy();
+  return () => {
+    delete root.__nbDisclosure;
+    disclosure.destroy();
+  };
 }
 
 mount("[data-nb-collapsible]", initCollapsible);

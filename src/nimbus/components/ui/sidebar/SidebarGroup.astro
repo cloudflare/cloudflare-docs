@@ -98,7 +98,7 @@ const isOpen = Boolean(hasActive || collapsed === false || collapsed === undefin
         aria-expanded={isOpen ? "true" : "false"}
         aria-label={`Toggle ${label} section`}
       >
-        <svg data-nb-caret aria-hidden="true" width="20" height="20"><use href="#nb-caret"></use></svg>
+        <span data-nb-caret aria-hidden="true"></span>
       </CollapsibleTrigger>
     </div>
   ) : (
@@ -118,7 +118,7 @@ const isOpen = Boolean(hasActive || collapsed === false || collapsed === undefin
             <Badge text={badge.text} variant={badge.variant} />
           ))}
       </span>
-      <svg data-nb-caret aria-hidden="true" width="20" height="20"><use href="#nb-caret"></use></svg>
+      <span data-nb-caret aria-hidden="true"></span>
     </CollapsibleTrigger>
   )}
 
