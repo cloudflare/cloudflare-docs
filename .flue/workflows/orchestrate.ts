@@ -136,10 +136,6 @@ export async function run({ payload, env, req }: FlueContext) {
 		isOnPullRequest && trimmedComment === "/ignore-review-limit";
 	const isDisableAutoReviewCommand =
 		isOnPullRequest && trimmedComment === "/disable-auto-review";
-	const isFanOutReviewCommand =
-		isOnPullRequest && trimmedComment === "/fan-out-review";
-	const isHolisticReviewCommand =
-		isOnPullRequest && trimmedComment === "/holistic-review";
 
 	if (
 		!req ||
@@ -149,9 +145,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isFullReviewCommand &&
 			!isReviewCommand &&
 			!isIgnoreReviewLimitCommand &&
-			!isDisableAutoReviewCommand &&
-			!isFanOutReviewCommand &&
-			!isHolisticReviewCommand)
+			!isDisableAutoReviewCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -200,21 +194,9 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 	}
 
-	// ── 3–4b. Handle review slash commands (/full-review, /fan-out-review,
-	//          /holistic-review, /review) via shared helper ───────────────────
-	if (
-		isFullReviewCommand ||
-		isFanOutReviewCommand ||
-		isHolisticReviewCommand ||
-		isReviewCommand
-	) {
-		const commandName = isFullReviewCommand
-			? "full-review"
-			: isFanOutReviewCommand
-				? "fan-out-review"
-				: isHolisticReviewCommand
-					? "holistic-review"
-					: "review";
+	// ── 3–4b. Handle review slash commands (/full-review, /review) ─────────────
+	if (isFullReviewCommand || isReviewCommand) {
+		const commandName = isFullReviewCommand ? "full-review" : "review";
 
 		const commentId = (body.comment as Record<string, unknown> | undefined)
 			?.id as number | undefined;
@@ -257,11 +239,6 @@ export async function run({ payload, env, req }: FlueContext) {
 					bypassReviewLimit: true,
 					triggerCommentId: commentId,
 					triggerEyesReactionId: eyesReactionId,
-					...(isFanOutReviewCommand
-						? { forceReviewMode: "fan-out" as const }
-						: isHolisticReviewCommand
-							? { forceReviewMode: "holistic" as const }
-							: {}),
 				};
 
 		try {

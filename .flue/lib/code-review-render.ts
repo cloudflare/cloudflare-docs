@@ -66,8 +66,6 @@ export interface RenderReviewInput {
 	conventionsFailed?: boolean;
 	/** True when the redirect check degraded (its findings may be incomplete). */
 	redirectsFailed?: boolean;
-	/** Review mode from the specialist — drives the Code Review section heading. */
-	codeMode?: "holistic" | "fan-out";
 }
 
 const SECTION_FAILURE_NOTE =
@@ -330,17 +328,10 @@ export function renderComment(
 		statusLine,
 	];
 
-	const codeHeading =
-		reviews.codeMode === "holistic"
-			? "Holistic Code Review"
-			: reviews.codeMode === "fan-out"
-				? "Fan Out Code Review"
-				: "Code Review";
-
 	// ── Section 1: Code Review ────────────────────────────────────────────────
 	renderSection(
 		lines,
-		codeHeading,
+		"Code Review",
 		"No code review issues found.",
 		reviews.code,
 		true,
@@ -432,12 +423,6 @@ export function renderComment(
 	);
 	lines.push(
 		"| `/full-review` | Re-reviews the entire PR diff from scratch, ignoring incremental history. Useful after a rebase, when you want a fresh review, or if the bot gets out of sync and reports issues that no longer exist. |",
-	);
-	lines.push(
-		"| `/fan-out-review` | Forces a full review using the per-file fan-out mode regardless of diff size. Each file is reviewed in its own session for maximum per-file detail. ⚠️ This may take a very long time on large PRs and may fail or time out — use only when you want the most thorough review and are willing to wait. |",
-	);
-	lines.push(
-		"| `/holistic-review` | Forces a full review using the holistic mode regardless of diff size. The entire diff is reviewed in one pass, enabling cross-file reasoning. Faster and more reliable on large PRs. |",
 	);
 	lines.push(
 		"| `/ignore-review-limit` | Permanently lifts the 2-review automatic limit for this PR. Future pushes will trigger reviews as normal. |",

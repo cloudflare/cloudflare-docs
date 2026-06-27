@@ -64,11 +64,6 @@ interface CodeReviewOrchestratorPayload {
 	triggerCommentId?: number;
 	/** Reaction ID of the 👀 reaction to remove when review completes. */
 	triggerEyesReactionId?: number | null;
-	/**
-	 * When set by a codeowner slash command (/fan-out-review or /holistic-review),
-	 * overrides the size-based routing in the code-review specialist.
-	 */
-	forceReviewMode?: "fan-out" | "holistic";
 }
 
 export async function run({
@@ -280,9 +275,6 @@ export async function run({
 		dispatchId: runId,
 		baseUrl,
 		expectedStreams: [...EXPECTED_STREAMS],
-		...(input.forceReviewMode
-			? { forceReviewMode: input.forceReviewMode }
-			: {}),
 	};
 
 	type AdmitOutcome =
@@ -476,11 +468,6 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 			typeof input.triggerEyesReactionId === "number"
 				? input.triggerEyesReactionId
 				: null,
-		forceReviewMode:
-			input.forceReviewMode === "fan-out" ||
-			input.forceReviewMode === "holistic"
-				? input.forceReviewMode
-				: undefined,
 	};
 }
 

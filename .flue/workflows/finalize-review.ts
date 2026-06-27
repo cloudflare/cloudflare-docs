@@ -471,7 +471,6 @@ export async function run({
 					styleFailed: !styleOk,
 					conventionsFailed: !conventionsOk,
 					redirectsFailed: !redirectsOk,
-					codeMode: codeOk ? codeResult.reviewMode : undefined,
 				},
 				input.headSha,
 				ctx.forceFullReview,

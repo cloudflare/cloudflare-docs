@@ -42,7 +42,7 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
    - Admits both specialists **fire-and-forget** and returns immediately.
 3. Each specialist runs in its **own DO** (own ~128 MB isolate):
    - Self-fetches its diff for the requested mode. Incremental is SHA-pinned via `comparePullRequestHeads`; if the base SHA is gone (force-push since the orchestrator decided), it self-heals to the full PR diff.
-   - Selects eligible files; the code-review specialist routes to fan-out or holistic based on diff size; the style-guide specialist stages the diff into a run-scoped Workspace path (`diffs/pr-<n>/runs/<runId>`) and fans out per-file sessions.
+   - Selects eligible files; the code-review specialist fans out one session per file at bounded concurrency; the style-guide specialist stages the diff into a run-scoped Workspace path (`diffs/pr-<n>/runs/<runId>`) and fans out per-file sessions.
    - On completion (or any error), writes `{ok, result, final:true}` to its R2 rendezvous key (overwriting the placeholder), then calls `tryClaimFinalize`. The **last specialist** to write wins the atomic conditional-PUT lock and admits `finalize-review`.
    - If a specialist DO is hard-evicted before writing `final:true`, the sibling will not claim the lock (it checks `final:true`), leaving the review needing a `/review` retry — the accepted residual case.
 4. `finalize-review`:
@@ -73,8 +73,6 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 
 - `/review` — run now (incremental if a prior review exists, else full); bypasses the auto-review limit.
 - `/full-review` — re-review the entire diff from scratch (clears prior review JSONs); bypasses the limit.
-- `/fan-out-review` — force full fan-out mode regardless of diff size.
-- `/holistic-review` — force full holistic mode regardless of diff size.
 - `/ignore-review-limit` — permanently lift the 2-review automatic cap for the PR.
 - All commands swap 👀 → 👍 on the trigger comment when done.
 - On Dependabot PRs, `/review` and `/full-review` route to `dependabot-review` instead.
