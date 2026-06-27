@@ -38,11 +38,19 @@ You can also filter the charts to a single Durable Object by entering its [ID](/
 
 ## Memory usage
 
-The **Memory usage** chart on the **Metrics** tab shows how much [in-memory state](/durable-objects/reference/in-memory-state/) your Durable Objects hold at the time of each invocation, broken down into P50, P90, P99, and P999 percentiles.
+The **Memory usage** chart on the **Metrics** tab shows V8 [isolate](/workers/reference/how-workers-works/#isolates) memory usage at the time of each invocation, broken down into P50, P90, P99, and P999 percentiles. Each isolate is subject to a [128 MB memory limit](/workers/platform/limits/#memory).
 
-Durable Objects run in V8 [isolates](/workers/reference/how-workers-works/#isolates), subject to a [128 MB per-isolate memory limit](/workers/platform/limits/#memory). Memory usage reflects the in-memory state an object holds — such as class properties, caches, and active WebSocket connections — which persists across invocations until the object is [hibernated or evicted](/durable-objects/concepts/durable-object-lifecycle/). This state is not preserved across eviction, hibernation, or a crash, so persist anything important to [storage](/durable-objects/best-practices/access-durable-objects-storage/).
+This memory holds the in-memory state your objects accumulate — such as class properties, caches, and active WebSocket connections — which persists across invocations until an object is [hibernated or evicted](/durable-objects/concepts/durable-object-lifecycle/). This state is not preserved across eviction, hibernation, or a crash, so persist anything important to [storage](/durable-objects/best-practices/access-durable-objects-storage/).
 
-To drill down into memory usage for a specific object, filter the chart to a single Durable Object by entering its [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name).
+:::note[Memory is measured per isolate, not per Durable Object]
+
+A single isolate can host multiple Durable Objects of the same class, along with the surrounding Worker code, and they all share that isolate's memory. The chart always reflects the memory of the whole isolate, not an individual Durable Object.
+:::
+
+What the chart shows depends on whether you filter:
+
+- **Without a filter (namespace view):** the percentiles are computed across invocations of every Durable Object in the namespace. Each data point is the isolate memory recorded at the time of an invocation, so the chart shows the distribution of isolate memory across the namespace.
+- **Filtered by [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name):** the percentiles are computed only from invocations of that one Durable Object. Each data point is still the memory of the entire isolate hosting it — which may include other Durable Objects sharing that isolate — so this is not a measurement of that single object's memory in isolation.
 
 If you see memory usage trending upward over time, this may indicate a memory leak. Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to take heap snapshots and identify specific objects causing high memory consumption.
 

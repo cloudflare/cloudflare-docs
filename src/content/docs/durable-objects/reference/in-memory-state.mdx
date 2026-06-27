@@ -52,6 +52,6 @@ However, in applications with more complex state, explicitly storing state in yo
 
 :::note[Observe in-memory state size]
 
-You can monitor how much memory your Durable Objects' in-memory state consumes with the **Memory usage** chart on the **Metrics** tab. Refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/#memory-usage) for details. Because in-memory state is not preserved across [eviction or hibernation](/durable-objects/concepts/durable-object-lifecycle/), persist anything important to [storage](/durable-objects/api/sqlite-storage-api/).
+You can monitor V8 isolate memory usage — which includes the in-memory state your Durable Objects hold — with the **Memory usage** chart on the **Metrics** tab. Memory is measured per isolate (which can host multiple Durable Objects), not per object. Refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/#memory-usage) for details, including how filtering by Durable Object ID or name affects what the chart shows. Because in-memory state is not preserved across [eviction or hibernation](/durable-objects/concepts/durable-object-lifecycle/), persist anything important to [storage](/durable-objects/api/sqlite-storage-api/).
 
 :::
