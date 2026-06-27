@@ -17,7 +17,7 @@ import { experimental_AstroContainer } from "astro/container";
 import reactRenderer from "@astrojs/react/server.js";
 import mdxRenderer from "@astrojs/mdx/server.js";
 import { render, type CollectionEntry } from "astro:content";
-import { components } from "~/components";
+import { components } from "~/mdx-components";
 
 export async function entryToString(
   entry: CollectionEntry<"docs" | "changelog">,

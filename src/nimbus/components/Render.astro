@@ -16,7 +16,7 @@ import { getCollection, getEntry, render } from "astro:content";
 // Without this, a partial that uses `:::note` (post-transform `<Aside>`)
 // or any registry global without an explicit import will fail at runtime
 // with "Expected component X to be defined".
-import { components } from "../components";
+import { components } from "../mdx-components";
 
 interface Props {
   /** Partial ID — path relative to src/content/partials/ without extension. */

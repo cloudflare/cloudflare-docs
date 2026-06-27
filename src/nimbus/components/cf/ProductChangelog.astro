@@ -12,7 +12,7 @@ import ProductPills from "~/components/changelog/ProductPills.astro";
 // Forward the MDX globals so admonitions (`:::note` → `<Aside>`) and other
 // registry components resolve inside each rendered changelog entry, the same
 // way Render.astro / ChangelogEntry.astro provide them.
-import { components } from "@/components";
+import { components } from "@/mdx-components";
 
 const props = z
 	.object({
