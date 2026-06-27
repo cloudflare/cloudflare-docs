@@ -32,6 +32,7 @@ import {
 	type DiffMode,
 	extractReviewedHeadSha,
 	getAutoReviewCount,
+	isAutoReviewDisabled,
 	isReviewLimitIgnored,
 	partitionComments,
 } from "../lib/code-review-state";
@@ -82,6 +83,23 @@ export async function run({
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
+
+	// ── Auto-review disabled check ────────────────────────────────────────────
+	// If a codeowner has run /disable-auto-review, suppress push-triggered
+	// reviews. Codeowner slash commands (bypassReviewLimit=true) still work.
+	if (!input.bypassReviewLimit) {
+		const disabled = await isAutoReviewDisabled(bucket, input.number);
+		if (disabled) {
+			console.log({
+				message: `Auto-review suppressed: PR #${input.number} — auto-review is disabled`,
+				event: "code_review_orchestrator",
+				number: input.number,
+				runId,
+				action: "auto_review_disabled",
+			});
+			return { dispatched: false, reason: "auto_review_disabled" };
+		}
+	}
 
 	// ── Auto-review limit check ────────────────────────────────────────────────
 	if (!input.bypassReviewLimit) {

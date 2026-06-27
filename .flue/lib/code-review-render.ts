@@ -442,6 +442,9 @@ export function renderComment(
 	lines.push(
 		"| `/ignore-review-limit` | Permanently lifts the 2-review automatic limit for this PR. Future pushes will trigger reviews as normal. |",
 	);
+	lines.push(
+		"| `/disable-auto-review` | Stops automatic reviews from triggering on future pushes to this PR. Codeowners can still run `/review` or `/full-review` manually. |",
+	);
 	lines.push("");
 	lines.push("</details>");
 

@@ -155,3 +155,36 @@ export async function setReviewLimitIgnored(
 		JSON.stringify({ ignored: true, actor, setAt: new Date().toISOString() }),
 	);
 }
+
+/**
+ * Check whether automatic reviews have been disabled for a PR.
+ * When true, push-triggered reviews are suppressed; codeowner slash commands
+ * (which set bypassReviewLimit) still work normally.
+ * Returns false if no disable flag exists.
+ */
+export async function isAutoReviewDisabled(
+	bucket: R2Bucket,
+	prNumber: number,
+): Promise<boolean> {
+	const key = `diffs/pr-${prNumber}/auto-review-disabled.json`;
+	const obj = await bucket.get(key);
+	if (!obj) return false;
+	const data = (await obj.json()) as { disabled?: boolean };
+	return data.disabled === true;
+}
+
+/**
+ * Disable automatic reviews for a PR in R2.
+ * Records the actor who set the flag for auditability.
+ */
+export async function setAutoReviewDisabled(
+	bucket: R2Bucket,
+	prNumber: number,
+	actor: string,
+): Promise<void> {
+	const key = `diffs/pr-${prNumber}/auto-review-disabled.json`;
+	await bucket.put(
+		key,
+		JSON.stringify({ disabled: true, actor, setAt: new Date().toISOString() }),
+	);
+}

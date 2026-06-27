@@ -21,7 +21,10 @@ import {
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow, pollRun } from "../lib/poll-run";
-import { setReviewLimitIgnored } from "../lib/code-review-state";
+import {
+	setReviewLimitIgnored,
+	setAutoReviewDisabled,
+} from "../lib/code-review-state";
 import {
 	getIssueOrPullRequestLabel,
 	getIssueOrPullRequestNumber,
@@ -131,6 +134,8 @@ export async function run({ payload, env, req }: FlueContext) {
 	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
 	const isIgnoreReviewLimitCommand =
 		isOnPullRequest && trimmedComment === "/ignore-review-limit";
+	const isDisableAutoReviewCommand =
+		isOnPullRequest && trimmedComment === "/disable-auto-review";
 	const isFanOutReviewCommand =
 		isOnPullRequest && trimmedComment === "/fan-out-review";
 	const isHolisticReviewCommand =
@@ -144,6 +149,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isFullReviewCommand &&
 			!isReviewCommand &&
 			!isIgnoreReviewLimitCommand &&
+			!isDisableAutoReviewCommand &&
 			!isFanOutReviewCommand &&
 			!isHolisticReviewCommand)
 	) {
@@ -338,6 +344,51 @@ export async function run({ payload, env, req }: FlueContext) {
 		return {
 			acted: true,
 			summary: `Review limit permanently ignored by @${senderLogin}.`,
+		};
+	}
+
+	// ── 5b. Handle /disable-auto-review command ────────────────────────────────
+	if (isDisableAutoReviewCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `disable-auto-review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "disable_auto_review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
+		await setAutoReviewDisabled(bucket, number, senderLogin as string);
+
+		// Acknowledge with 👍
+		await addReactionToComment(token, commentId, "+1");
+
+		console.log({
+			message: `Auto-review disabled by ${senderLogin}: PR #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			number,
+			action: "auto_review_disabled",
+		});
+
+		return {
+			acted: true,
+			summary: `Auto-review disabled by @${senderLogin}. Push-triggered reviews will no longer run. Codeowners can still use /review or /full-review.`,
 		};
 	}
 
