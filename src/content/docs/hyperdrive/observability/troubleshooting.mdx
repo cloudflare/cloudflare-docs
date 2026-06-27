@@ -35,7 +35,7 @@ Hyperdrive may also emit `Failed to connect to the provided database` when it fa
 | Error message                                 | Details                                                                                                                                                                                               | Recommended fixes                                                                                                                                                     |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Server return error and closed connection.    | This message occurs when you attempt to connect to a database that has client certificate verification enabled.                                                                                       | Ensure you are configuring your Hyperdrive with [client certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) if your database requires them. |
-| TLS handshake failed: cert validation failed. | This message occurs when Hyperdrive has been configured with server CA certificates and is indicating that the certificate provided by the server has not been signed by the expected CA certificate. | Ensure you are using the expected the correct CA certificate for Hyperdrive, or ensure you are connecting to the right database.                                      |
+| TLS handshake failed: cert validation failed. | This message occurs when Hyperdrive has been configured with server CA certificates and is indicating that the certificate provided by the server has not been signed by the expected CA certificate. | Ensure you are using the correct CA certificate for Hyperdrive, or ensure you are connecting to the right database.                                                   |
 
 ## Connection errors
 
@@ -63,16 +63,9 @@ Hyperdrive may also encounter `ErrorResponse` wire protocol messages sent by you
 
 ### Stale reads after writes
 
-If your application writes data and then a later read returns older data, Hyperdrive query caching may be serving a cached read query result. Hyperdrive does not invalidate cached read query results when your application writes to your database.
+If your application writes data and then a later read returns older data, Hyperdrive query caching may be serving a cached read query result. Check Hyperdrive metrics by `cacheStatus` to confirm whether reads return `hit`, `miss`, `disabled`, or `uncacheable`. Refer to [Metrics and analytics](/hyperdrive/observability/metrics/).
 
-To resolve stale reads after writes:
-
-- Use a cache-disabled Hyperdrive configuration for reads that must return fresh data, such as authentication, sessions, permissions, or reads immediately after a write.
-- Keep query caching enabled for reads that can tolerate the configured `max_age` and `stale_while_revalidate` windows.
-- Lower `max_age` and `stale_while_revalidate` if a shorter stale window works for your application.
-- Check Hyperdrive metrics by `cacheStatus` to confirm whether reads return `hit`, `miss`, `disabled`, or `uncacheable`. Refer to [Metrics and analytics](/hyperdrive/observability/metrics/).
-
-Refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for guidance on splitting fresh reads from cacheable reads.
+To resolve stale reads after writes, refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for guidance on splitting fresh reads from cacheable reads, including using a cache-disabled Hyperdrive configuration for reads that must return fresh data.
 
 ### Uncached queries
 

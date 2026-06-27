@@ -66,7 +66,7 @@ For non-mutating queries, Hyperdrive caches the response for the configured `max
 
 Caching reduces the burden on your origin database and accelerates the response times for your queries.
 
-Hyperdrive does not invalidate cached read query results when your application writes to your database. If a read must return fresh data after a write, use a cache-disabled Hyperdrive configuration for that read.
+Hyperdrive does not invalidate cached read query results when your application writes to your database. If your application needs read-after-write consistency, refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for guidance on using a separate cache-disabled Hyperdrive configuration for reads that must return fresh data.
 
 Learn more about query caching behavior and configuration in [Query caching](/hyperdrive/concepts/query-caching/).
 

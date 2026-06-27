@@ -12,8 +12,6 @@ import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 Hyperdrive automatically caches cacheable read queries that your Worker sends to your database when query caching is turned on. This reduces database load and avoids a network round trip to your database for popular queries. Query caching is enabled by default.
 
-Hyperdrive does not invalidate cached read query results when you write to your database. If your application needs read-after-write consistency for a specific path, use a cache-disabled Hyperdrive configuration for the read that must return fresh data. You still get Hyperdrive's connection pooling and fast connection setup on cache-disabled configurations.
-
 ## What does Hyperdrive cache?
 
 Hyperdrive uses database protocols to differentiate between a mutating query (a query that writes to the database) and a non-mutating query (a read-only query). Hyperdrive caches eligible read-only query responses and does not cache writes.
@@ -122,7 +120,7 @@ This means you should choose a caching strategy based on how fresh each read mus
 
 - **Use query caching for reads that can tolerate brief staleness.** Good examples include public content, dashboards, search results, product catalogs, and other high-volume reads where a short delay after writes is acceptable.
 - **Lower `max_age` and `stale_while_revalidate` when a short stale window works.** This keeps query caching enabled while reducing how long Hyperdrive can serve an older result.
-- **Use a cache-disabled Hyperdrive configuration for reads that must be fresh.** Good examples include authentication, sessions, permissions, billing state, admin settings, and reads immediately after a write.
+- **Use a cache-disabled Hyperdrive configuration for reads that must be fresh.** Create a second Hyperdrive configuration with `--caching-disabled`, bind it alongside your cached configuration, and route those reads through the cache-disabled binding. Good examples include authentication, sessions, permissions, billing state, admin settings, and reads immediately after a write. Refer to [Disable caching](#disable-caching) for an example.
 - **Disable query caching everywhere only when most reads must be fresh.** You still get Hyperdrive's connection pooling and fast connection setup when caching is disabled.
 
 If an object-relational mapping (ORM) library or authentication library owns the SQL, create separate database clients for the cached and cache-disabled Hyperdrive bindings. Pass the cache-disabled client to the library or module that needs fresh reads, and use the cached client for reads that can tolerate the configured stale window.
@@ -157,7 +155,7 @@ export default {
 		// Create clients inside your handler — not in global scope
 		const client = postgres(env.HYPERDRIVE.connectionString);
 		// Use the cache-disabled binding for auth, permissions, and reads after writes.
-		const clientFresh = postgres(env.HYPERDRIVE_FRESH.connectionString);
+		const clientNoCache = postgres(env.HYPERDRIVE_CACHE_DISABLED.connectionString);
 		// ...
 	},
 } satisfies ExportedHandler<Env>;
@@ -177,12 +175,12 @@ export default {
 			port: env.HYPERDRIVE.port,
 		});
 		// Use the cache-disabled binding for auth, permissions, and reads after writes.
-		const connectionFresh = await createConnection({
-			host: env.HYPERDRIVE_FRESH.host,
-			user: env.HYPERDRIVE_FRESH.user,
-			password: env.HYPERDRIVE_FRESH.password,
-			database: env.HYPERDRIVE_FRESH.database,
-			port: env.HYPERDRIVE_FRESH.port,
+		const connectionNoCache = await createConnection({
+			host: env.HYPERDRIVE_CACHE_DISABLED.host,
+			user: env.HYPERDRIVE_CACHE_DISABLED.user,
+			password: env.HYPERDRIVE_CACHE_DISABLED.password,
+			database: env.HYPERDRIVE_CACHE_DISABLED.database,
+			port: env.HYPERDRIVE_CACHE_DISABLED.port,
 		});
 		// ...
 	},
@@ -203,8 +201,8 @@ The Wrangler configuration remains the same both for PostgreSQL and MySQL.
 			"id": "<YOUR_HYPERDRIVE_CACHE_ENABLED_CONFIGURATION_ID>",
 		},
 		{
-			"binding": "HYPERDRIVE_FRESH",
-			"id": "<YOUR_HYPERDRIVE_FRESH_CONFIGURATION_ID>",
+			"binding": "HYPERDRIVE_CACHE_DISABLED",
+			"id": "<YOUR_HYPERDRIVE_CACHE_DISABLED_CONFIGURATION_ID>",
 		},
 	],
 }
