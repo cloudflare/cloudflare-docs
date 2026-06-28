@@ -273,3 +273,35 @@ Shared reference files in `.agents/references/`:
 - Format: `[Product] description` or `type: description`
 - Examples: `[Workers] Fix broken link in get-started`, `docs: clarify rate limiting behavior`, `fix: correct TypeScript example`
 - Common prefixes: `docs:`, `fix:`, `chore:`, `[Product]`
+
+## Pull requests and CODEOWNERS
+
+PR operations in this repo use the `gh` CLI (see the `pr` skill for the canonical workflow — title format, body template, draft-by-default rule).
+
+### Resolving a stale PR (merge conflict with `production`)
+
+When a PR sits open long enough to conflict with `production`, the standard recovery is a rebase, not a merge:
+
+```bash
+git fetch origin production
+git rebase origin/production
+# resolve conflicts, git add, then:
+git rebase --continue
+git push --force-with-lease
+```
+
+A successful force-push **will dismiss prior approving reviews** because they are tied to the old commit SHA — expect to re-request review. Check `gh pr view <n> --json mergeStateStatus,reviewDecision` afterwards to confirm the PR is ready to merge.
+
+### CODEOWNERS
+
+The CODEOWNERS file lives at `.github/CODEOWNERS`. Entries are grouped by product with `# Product` section headers.
+
+When adding yourself (or a teammate) as a codeowner for a product, check whether sibling paths exist and add coverage to all of them — missing one is the most common reason a contributor finds out they cannot approve a PR they expected to own:
+
+- `/src/content/docs/{slug}/`
+- `/src/content/partials/{slug}/`
+- `/src/content/changelog/{slug}/`
+- `/src/content/release-notes/{slug}.yaml`
+- `/src/assets/images/{slug}/`
+
+Edits to `.github/CODEOWNERS` itself require approval from `@cloudflare/product-owners` and `@cloudflare/content-engineering` (see line 8 of the file).
