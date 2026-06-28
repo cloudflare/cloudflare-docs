@@ -9,7 +9,7 @@ products:
 
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Tabs, TabItem } from "~/components";
 
 Here are some known bugs and issues with Cloudflare Pages:
 
@@ -106,7 +106,10 @@ npx wrangler pages deployment delete <DEPLOYMENT_ID> --project-name <PROJECT_NAM
 
 Use the `--force` flag to skip the confirmation prompt and to force deletion of aliased deployments.
 
-To delete _all_ your deployments for a particular project name, you could run the following shell script:
+To delete _all_ your deployments for a particular project name, you could run one of the following scripts:
+
+<Tabs>
+	<TabItem label="macOS and Linux">
 
 ```sh
 prod_id=""
@@ -122,6 +125,37 @@ while :; do
   done <<< "$to_delete"
 done
 ```
+
+	</TabItem>
+	<TabItem label="Windows PowerShell">
+
+```powershell
+$prodId = ""
+
+while ($true) {
+	$deployments = npx wrangler pages deployment list --project-name <PROJECT_NAME> --json | ConvertFrom-Json
+	$ids = @($deployments | ForEach-Object { $_.id })
+	$toDelete = @($ids | Where-Object { $_ -ne $prodId })
+
+	if ($toDelete.Count -eq 0) {
+		Write-Output "Done. Production: $prodId"
+		break
+	}
+
+	Write-Output "Deleting $($toDelete.Count) deployments..."
+
+	foreach ($id in $toDelete) {
+		$output = npx wrangler pages deployment delete $id --project-name <PROJECT_NAME> --force 2>&1
+		$outputText = $output | Out-String
+		if ($outputText -notmatch "Successfully deleted" -and $outputText -match "active production deployment") {
+			$prodId = $id
+		}
+	}
+}
+```
+
+	</TabItem>
+</Tabs>
 
 Note that this will not delete the active production deployment if one exists.
 
