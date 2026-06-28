@@ -134,7 +134,7 @@ $prodId = ""
 
 while ($true) {
 	$deployments = npx wrangler pages deployment list --project-name <PROJECT_NAME> --json | ConvertFrom-Json
-	$ids = @($deployments | ForEach-Object { $_.id })
+	$ids = @($deployments | ForEach-Object { $_.Id })
 	$toDelete = @($ids | Where-Object { $_ -ne $prodId })
 
 	if ($toDelete.Count -eq 0) {
