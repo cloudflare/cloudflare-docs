@@ -352,6 +352,7 @@ export async function reportSpecialistResult<T>(
 		return;
 	}
 
+	let won = false;
 	try {
 		await writeStreamResult(bucket, prNumber, headSha, dispatchId, stream, {
 			ok,
@@ -359,7 +360,7 @@ export async function reportSpecialistResult<T>(
 			final: true,
 		});
 
-		const won = await tryClaimFinalize(
+		won = await tryClaimFinalize(
 			bucket,
 			prNumber,
 			headSha,
@@ -367,30 +368,6 @@ export async function reportSpecialistResult<T>(
 			stream,
 			expectedStreams,
 		);
-
-		if (won) {
-			const internalHeaders = getInternalHeaders(env as Record<string, string>);
-			await admitWorkflow({
-				baseUrl,
-				pathname: "/workflows/finalize-review",
-				headers: internalHeaders,
-				body: {
-					eventType: "pull_request",
-					number: prNumber,
-					headSha,
-					dispatchId,
-				},
-			});
-			console.log({
-				message: `${stream} specialist: finalize-review admitted for PR #${prNumber}`,
-				event: eventName,
-				number: prNumber,
-				headSha,
-				dispatchId,
-				runId,
-				action: "finalize_admitted",
-			});
-		}
 	} catch (rendezvousErr) {
 		console.log({
 			message: `${stream} specialist: rendezvous error for PR #${prNumber} — ${rendezvousErr instanceof Error ? rendezvousErr.message : String(rendezvousErr)}`,
@@ -402,6 +379,33 @@ export async function reportSpecialistResult<T>(
 					: String(rendezvousErr),
 			runId,
 			action: "rendezvous_error",
+		});
+	}
+
+	// Admit finalize-review outside the catch-all so an admitWorkflow failure
+	// is not silently swallowed. If the write or lock-claim above failed, won
+	// is false and we skip admission entirely.
+	if (won) {
+		const internalHeaders = getInternalHeaders(env as Record<string, string>);
+		await admitWorkflow({
+			baseUrl,
+			pathname: "/workflows/finalize-review",
+			headers: internalHeaders,
+			body: {
+				eventType: "pull_request",
+				number: prNumber,
+				headSha,
+				dispatchId,
+			},
+		});
+		console.log({
+			message: `${stream} specialist: finalize-review admitted for PR #${prNumber}`,
+			event: eventName,
+			number: prNumber,
+			headSha,
+			dispatchId,
+			runId,
+			action: "finalize_admitted",
 		});
 	}
 }

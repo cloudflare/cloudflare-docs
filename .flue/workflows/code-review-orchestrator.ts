@@ -175,7 +175,17 @@ export async function run({
 				}
 			: { type: "full" };
 
-	// ── 2. Post the placeholder ────────────────────────────────────────────────
+	// ── 2. Derive baseUrl (needed for R2 context + specialist payloads) ──────────
+	// Validate req before posting the placeholder so we never leave a stale
+	// "review pending" comment if the request context is unexpectedly absent.
+	if (!req) {
+		throw new Error(
+			"[flue] code-review-orchestrator: missing request context — cannot derive baseUrl",
+		);
+	}
+	const baseUrl = new URL(req.url).origin;
+
+	// ── 3. Post the placeholder ────────────────────────────────────────────────
 	if (reviewMode === "comment") {
 		await postOrUpdateComment(
 			token,
@@ -190,15 +200,9 @@ export async function run({
 		);
 	}
 
-	// ── 3. Write context to R2 ─────────────────────────────────────────────────
+	// ── 4. Write context to R2 ─────────────────────────────────────────────────
 	// dispatchId = this run's id, scoping the rendezvous so concurrent
 	// dispatches on the same head SHA don't collide.
-	if (!req) {
-		throw new Error(
-			"[flue] code-review-orchestrator: missing request context — cannot derive baseUrl",
-		);
-	}
-	const baseUrl = new URL(req.url).origin;
 
 	await writeContext(bucket, {
 		prNumber: input.number,

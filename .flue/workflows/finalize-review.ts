@@ -183,7 +183,23 @@ export async function run({
 	// ── 2. Head-guard: skip if PR has moved on ────────────────────────────────
 	// A stale dispatch should not clobber a newer review. If the live head
 	// has changed, clean up and exit without touching the comment.
-	const pr = await getPullRequest(token, input.number);
+	let pr: Awaited<ReturnType<typeof getPullRequest>>;
+	try {
+		pr = await getPullRequest(token, input.number);
+	} catch (prErr) {
+		console.log({
+			message: `Finalize aborted: failed to fetch PR #${input.number} — ${prErr instanceof Error ? prErr.message : String(prErr)}`,
+			event: "finalize_review",
+			number: input.number,
+			headSha: input.headSha,
+			dispatchId: input.dispatchId,
+			error: prErr instanceof Error ? prErr.message : String(prErr),
+			runId,
+			action: "pr_fetch_failed",
+		});
+		await cleanupPending(bucket, input.number, input.headSha, input.dispatchId);
+		return { finalized: false, reason: "pr_fetch_failed" };
+	}
 	if (pr.head.sha !== input.headSha) {
 		console.log({
 			message: `Finalize skipped: PR #${input.number} head moved (was ${input.headSha.slice(0, 7)}, now ${pr.head.sha.slice(0, 7)})`,
@@ -203,10 +219,13 @@ export async function run({
 	// In log mode we never post to GitHub so there is nothing to be idempotent
 	// about — always complete the review and log it. In comment mode we check
 	// the bot comment to avoid posting the same review twice for the same head.
-	const allComments = await getIssueComments(token, input.number);
-	const botComment =
-		allComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ?? null;
+	// getIssueComments is only needed in comment mode; skip the GitHub round-trip
+	// entirely in log mode.
+	let botComment: import("../lib/github").GitHubIssueComment | null = null;
 	if (reviewMode === "comment") {
+		const allComments = await getIssueComments(token, input.number);
+		botComment =
+			allComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ?? null;
 		const alreadyFinalizedSha = extractReviewedHeadSha(
 			botComment?.body ?? null,
 		);

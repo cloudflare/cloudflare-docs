@@ -4,7 +4,7 @@ This directory contains the Flue-powered docs bot for `cloudflare-docs`, deploye
 
 ## Architecture
 
-The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull requests on `cloudflare/cloudflare-docs`. It runs two independent reviews — a generic engineering **code review** and a **style-guide review** — and posts both as one GitHub comment with `### Code Review` and `### Style Guide Review` sections.
+The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull requests on `cloudflare/cloudflare-docs`. It runs four independent specialist reviews — **code review**, **conventions**, **style-guide review**, and **redirect check** — and posts all four as one GitHub comment with `### Code Review`, `### Conventions`, `### Style Guide Review`, and `### Redirects` sections.
 
 ### Entry point and routing (`app.ts`)
 
@@ -15,17 +15,19 @@ The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull
 
 ### Workflows (each is a Durable Object)
 
-| Workflow (`workflows/`)        | DO class                             | Role                                                                                    |
-| ------------------------------ | ------------------------------------ | --------------------------------------------------------------------------------------- |
-| `orchestrate.ts`               | `FlueOrchestrateWorkflow`            | Webhook entry. Verifies signature, classifies the event, routes.                        |
-| `spam-and-off-topic-filter.ts` | `FlueSpamAndOffTopicFilterWorkflow`  | Spam/off-topic gate for issues + PRs.                                                   |
-| `code-review-orchestrator.ts`  | `FlueCodeReviewOrchestratorWorkflow` | **Dispatch-only**: limit check, placeholder, context → R2, admits both specialists F&F. |
-| `code-review-specialist.ts`    | `FlueCodeReviewSpecialistWorkflow`   | Generic code-review fan-out (its own isolate).                                          |
-| `style-guide-specialist.ts`    | `FlueStyleGuideSpecialistWorkflow`   | Style-guide fan-out (its own isolate).                                                  |
-| `finalize-review.ts`           | `FlueFinalizeReviewWorkflow`         | Reconciles, renders, and posts the review comment (admitted by last specialist).        |
-| `dependabot-review.ts`         | `FlueDependabotReviewWorkflow`       | Separate review path for Dependabot PRs.                                                |
+| Workflow (`workflows/`)        | DO class                             | Role                                                                                         |
+| ------------------------------ | ------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `orchestrate.ts`               | `FlueOrchestrateWorkflow`            | Webhook entry. Verifies signature, classifies the event, routes.                             |
+| `spam-and-off-topic-filter.ts` | `FlueSpamAndOffTopicFilterWorkflow`  | Spam/off-topic gate for issues + PRs.                                                        |
+| `code-review-orchestrator.ts`  | `FlueCodeReviewOrchestratorWorkflow` | **Dispatch-only**: limit check, placeholder, context → R2, admits all four specialists F&F.  |
+| `code-review-specialist.ts`    | `FlueCodeReviewSpecialistWorkflow`   | Generic code-review fan-out (its own isolate).                                               |
+| `style-guide-specialist.ts`    | `FlueStyleGuideSpecialistWorkflow`   | Style-guide fan-out (its own isolate).                                                       |
+| `conventions-specialist.ts`    | `FlueConventionsSpecialistWorkflow`  | PR-level conventions check (title, description, scope) via a light AI session.               |
+| `redirect-specialist.ts`       | `FlueRedirectSpecialistWorkflow`     | Pure-TypeScript redirect check — no model; flags moved/deleted docs pages missing redirects. |
+| `finalize-review.ts`           | `FlueFinalizeReviewWorkflow`         | Reconciles, renders, and posts the review comment (admitted by the last specialist to finish).|
+| `dependabot-review.ts`         | `FlueDependabotReviewWorkflow`       | Separate review path for Dependabot PRs.                                                     |
 
-Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts`). The orchestrator admits both specialists **fire-and-forget** (no poll). `pollRun` is only used for the spam filter (fast, needs a `closed` verdict before routing to code review).
+Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts`). The orchestrator admits all four specialists **fire-and-forget** (no poll). `pollRun` is only used for the spam filter (fast, needs a `closed` verdict before routing to code review).
 
 ### Request flow
 
@@ -38,20 +40,20 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
    - Posts a "review in progress" placeholder comment (comment mode only).
    - Decides the **diff mode**: `incremental` (from the last reviewed head SHA to the current head) when a prior review exists, else `full`.
    - Writes `context.json` to the **R2 rendezvous namespace** (`diffs/pr-<n>/pending/<headSha>/<dispatchId>/`) containing everything `finalize-review` needs (diffMode, humanComments, previousReviewedSha, reviewMode, etc.) so the orchestrator's DO is not needed again.
-   - Writes crash-protection **placeholder results** (`code.json`, `style.json` with `final:false`) so finalize can always trigger even if a specialist is hard-evicted.
-   - Admits both specialists **fire-and-forget** and returns immediately.
+    - Writes crash-protection **placeholder results** (`code.json`, `style.json`, `conventions.json`, `redirects.json` with `final:false`) so finalize can always trigger even if a specialist is hard-evicted.
+    - Admits all four specialists **fire-and-forget** and returns immediately.
 3. Each specialist runs in its **own DO** (own ~128 MB isolate):
    - Self-fetches its diff for the requested mode. Incremental is SHA-pinned via `comparePullRequestHeads`; if the base SHA is gone (force-push since the orchestrator decided), it self-heals to the full PR diff.
    - Selects eligible files; the code-review specialist fans out one session per file at bounded concurrency; the style-guide specialist stages the diff into a run-scoped Workspace path (`diffs/pr-<n>/runs/<runId>`) and fans out per-file sessions.
    - On completion (or any error), writes `{ok, result, final:true}` to its R2 rendezvous key (overwriting the placeholder), then calls `tryClaimFinalize`. The **last specialist** to write wins the atomic conditional-PUT lock and admits `finalize-review`.
    - If a specialist DO is hard-evicted before writing `final:true`, the sibling will not claim the lock (it checks `final:true`), leaving the review needing a `/review` retry — the accepted residual case.
 4. `finalize-review`:
-   - Reads `context.json` + both stream results from R2.
-   - **Head-guards**: skips posting if the PR head has moved on (newer push already owns the comment).
-   - **Idempotency-guards**: skips if this headSha is already finalized.
-   - **Reconciles** each stream separately against previous findings (from R2) and captured human comments. Degraded streams (`ok:false`) carry their previous findings forward as active rather than reconciling — an empty degraded result must not falsely resolve prior issues.
-   - Persists `review-<headSha>.json` to R2, renders and posts (or logs) the comment, swaps 👀→👍 on trigger comments, and calls `markAutoReviewCompleted` if both streams succeeded.
-   - Cleans up the pending rendezvous namespace (`cleanupPending`).
+    - Reads `context.json` + all four stream results from R2.
+    - **Head-guards**: skips posting if the PR head has moved on (newer push already owns the comment).
+    - **Idempotency-guards** (comment mode only): skips if this headSha is already finalized.
+    - **Reconciles** each stream separately against previous findings (from R2) and captured human comments. Code, style, and conventions use LLM reconciliation; redirects reconcile deterministically (stable hashed IDs — no model). Degraded streams (`ok:false`) carry their previous findings forward as active rather than reconciling.
+    - Persists `review-<headSha>.json` (`{ code, style, conventions, redirects }`) to R2, renders and posts (or logs) the comment, swaps 👀→👍 on trigger comments, and calls `markAutoReviewCompleted` if code and style both succeeded.
+    - Cleans up the pending rendezvous namespace (`cleanupPending`).
 
 ### Per-file fan-out (`lib/code-review-inproc.ts`, `lib/style-guide-inproc.ts`)
 
@@ -63,9 +65,9 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 
 ### State, comment, and rendering
 
-- **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […] }`; a legacy bare array means style-only), `auto-review-count.json`, and `ignore-review-limit.json`. The staged diff lives in the specialist DO's Workspace filesystem, not R2. The **rendezvous namespace** `diffs/pr-<n>/pending/<headSha>/<dispatchId>/` is short-lived (context.json, code.json, style.json, finalize.lock) and deleted by `finalize-review` on completion.
+- **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […], conventions: […], redirects: […] }`; a legacy bare array means style-only), `auto-review-count.json`, `ignore-review-limit.json`, `auto-review-disabled.json`. The staged diff lives in the specialist DO's Workspace filesystem, not R2. The **rendezvous namespace** `diffs/pr-<n>/pending/<headSha>/<dispatchId>/` is short-lived (context.json, code.json, style.json, conventions.json, redirects.json, finalize.lock) and deleted by `finalize-review` on completion.
 - The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
-- `lib/code-review-render.ts` renders the single comment: a status line, then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables) and `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
+- `lib/code-review-render.ts` renders the single comment: a status line, then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables), `### Conventions`, `### Style Guide Review` (Warnings/Suggestions only), `### Redirects`, an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
 - **Models**: all model calls (reviews and reconciliation) use `cloudflare/@cf/moonshotai/kimi-k2.7-code`.
 - **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
 
@@ -74,13 +76,14 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 - `/review` — run now (incremental if a prior review exists, else full); bypasses the auto-review limit.
 - `/full-review` — re-review the entire diff from scratch (clears prior review JSONs); bypasses the limit.
 - `/ignore-review-limit` — permanently lift the 2-review automatic cap for the PR.
+- `/disable-auto-review` — stop push-triggered automatic reviews for the PR. Manual `/review` and `/full-review` still work.
 - All commands swap 👀 → 👍 on the trigger comment when done.
 - On Dependabot PRs, `/review` and `/full-review` route to `dependabot-review` instead.
 
 ### Bindings & migrations (`wrangler.jsonc`)
 
 - Bindings: `AI` (Workers AI), `LOADER` (`worker_loaders`, backs the shell sandbox), `DOCS_FLUE_BUCKET` (R2). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`.
-- DO migrations: v1 initial classes; v2 Dependabot; v3 `Flue…`-prefix renames; v4 deleted the standalone style-guide workflow (its fan-out had moved in-process); v5 added the two specialist classes (the fan-outs split back into their own DOs for isolated memory budgets); v6 added `FlueFinalizeReviewWorkflow` (the new finalize-review workflow).
+- DO migrations: v1 initial classes; v2 Dependabot; v3 `Flue…`-prefix renames; v4 deleted the standalone style-guide workflow (its fan-out had moved in-process); v5 added the two specialist classes (the fan-outs split back into their own DOs for isolated memory budgets); v6 added `FlueFinalizeReviewWorkflow` (the new finalize-review workflow); v7 added `FlueConventionsSpecialistWorkflow` and `FlueRedirectSpecialistWorkflow`.
 
 ## Reading Flue documentation
 

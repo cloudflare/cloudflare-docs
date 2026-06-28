@@ -98,9 +98,13 @@ export async function getAutoReviewCount(
  *
  * The counter is incremented on successful completion (not at the start of a
  * run), and deduplicated per head SHA. This means interrupted or failed runs
- * never burn an auto-review slot, and re-runs of the same head SHA (e.g. a
- * re-runs of the same head SHA are not double-counted. The cap therefore limits the
- * number of *delivered* automatic reviews, which is the intended behavior.
+ * never burn an auto-review slot, and re-runs of the same head SHA are not
+ * double-counted. The cap therefore limits the number of *delivered* automatic
+ * reviews, which is the intended behavior.
+ *
+ * Uses an ETag-based conditional PUT (If-Match) to make the read-modify-write
+ * atomic: if two concurrent finalizes race, one will win and the other will
+ * retry rather than silently overwriting. Retries up to 3 times on conflict.
  */
 export async function markAutoReviewCompleted(
 	bucket: R2Bucket,
@@ -108,21 +112,45 @@ export async function markAutoReviewCompleted(
 	headSha: string,
 ): Promise<void> {
 	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
-	const obj = await bucket.get(key);
-	let count = 0;
-	let shas: string[] = [];
-	if (obj) {
-		try {
-			const data = (await obj.json()) as { count?: number; shas?: string[] };
-			count = data.count ?? 0;
-			shas = data.shas ?? [];
-		} catch {
-			// Corrupt counter — start fresh.
+
+	for (let attempt = 0; attempt < 3; attempt++) {
+		const obj = await bucket.get(key);
+		let count = 0;
+		let shas: string[] = [];
+		const etag = obj?.etag ?? null;
+
+		if (obj) {
+			try {
+				const data = (await obj.json()) as { count?: number; shas?: string[] };
+				count = data.count ?? 0;
+				shas = data.shas ?? [];
+			} catch {
+				// Corrupt counter — start fresh.
+			}
 		}
+
+		if (shas.includes(headSha)) return; // already counted this head SHA
+
+		shas.push(headSha);
+		const body = JSON.stringify({ count: count + 1, shas });
+
+		// Conditional PUT: succeed only if the object hasn't changed since we read it.
+		// etag=null means the key didn't exist; use If-None-Match: * to create-if-absent.
+		const putResult = etag
+			? await bucket.put(key, body, {
+					onlyIf: new Headers({ "If-Match": etag }),
+				})
+			: await bucket.put(key, body, {
+					onlyIf: new Headers({ "If-None-Match": "*" }),
+				});
+
+		if (putResult !== null) return; // success — conditional PUT won
+
+		// Lost the race — another finalize updated the key between our get and put.
+		// Retry with a fresh read.
 	}
-	if (shas.includes(headSha)) return; // already counted this head SHA
-	shas.push(headSha);
-	await bucket.put(key, JSON.stringify({ count: count + 1, shas }));
+	// After 3 failed attempts, give up non-fatally. The review was delivered;
+	// failing to count it precisely is preferable to failing the entire finalize.
 }
 
 /**

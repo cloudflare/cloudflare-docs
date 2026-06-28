@@ -63,8 +63,10 @@ export function parseAddedLines(patch: string): AddedLine[] {
 			newLine = parseInt(hunkMatch[1], 10);
 			continue;
 		}
-		// Skip file headers (--- / +++)
-		if (raw.startsWith("+++") || raw.startsWith("---")) continue;
+		// Skip git file headers (+++ b/path, --- a/path). Use a trailing space
+		// so source lines like "++i;" (which appear as "+++i;" in the patch) are
+		// not mistakenly skipped — real file headers always have "+++ " / "--- ".
+		if (raw.startsWith("+++ ") || raw.startsWith("--- ")) continue;
 
 		if (raw.startsWith("+")) {
 			result.push({ line: newLine, content: raw.slice(1) });
