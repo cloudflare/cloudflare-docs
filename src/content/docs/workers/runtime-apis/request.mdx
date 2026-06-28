@@ -183,9 +183,9 @@ Additional parameters can be specified for certain header names:
 | `accept`          | `media_types`  | MIME types to keep when normalizing the `Accept` header. Maximum 10 items and 255 characters per item.    |
 | `accept-language` | `languages`    | Languages to keep when normalizing the `Accept-Language` header. Maximum 20 items and 64 characters per item. |
 
-The `default` object and custom header entries support only `action`.
+The `default` object and `headers` entries other than `accept` and `accept-language` support only `action`.
 
-For most deployments, set `default` to `bypass`, add entries for expected origin `Vary` headers, and use `normalize` for `accept` and `accept-language` unless your origin requires raw header values.
+For most deployments, set `default.action` to `bypass`, add `headers` entries for expected origin `Vary` headers, and use `normalize` for `accept` and `accept-language` unless your origin requires raw header values.
 
 The following limits and validation rules apply:
 
