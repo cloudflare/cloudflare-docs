@@ -107,15 +107,15 @@ You can configure Edge TLS Termination in the Spectrum application settings in t
 
 Refer to [Edge TLS Termination](/spectrum/reference/configuration-options/#edge-tls-termination) for more details.
 
-## Error 525: SSL handshake failed
+## TLS handshake failures (error 525)
 
 ### Symptoms
 
-Clients connecting through Spectrum receive HTTP 525 errors, typically after creating a Spectrum application or changing TLS settings.
+Spectrum event logs show status code `540` (TLS handshake failed), or clients connecting through an HTTP/HTTPS-type Spectrum application receive error 525. These errors typically appear after creating a Spectrum application or changing TLS settings.
 
 ### Cause
 
-Error 525 indicates that the TLS handshake between Cloudflare and your origin server failed. In a Spectrum context, common causes include:
+These errors indicate that the TLS handshake between Cloudflare and your origin server failed. Common causes include:
 
 - **Edge TLS Termination is set to Full or Full (Strict)**, but the origin does not have a valid TLS certificate or does not accept TLS connections on the configured port.
 - **The Spectrum application origin points to another Cloudflare-proxied hostname** (for example, `origin.example.com.cdn.cloudflare.net`). This creates a double-proxy chain that is not supported for TCP application types and can cause TLS handshake failures.
