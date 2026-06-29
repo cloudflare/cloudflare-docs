@@ -8,7 +8,7 @@ products:
   - email-service
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, WranglerConfig } from "~/components";
 
 In Email Routing, a routing rule pairs an email pattern with a destination — either a verified email address or a Worker. You can route emails to either:
 
@@ -138,6 +138,32 @@ You can enable subaddressing at **Compute** > **Email Service** > **Email Routin
 Once enabled, you can use subaddressing with any of your routing rules. For example, if you send an email to `user+detail@example.com` it will be matched by the `user@example.com` routing rule. The `+detail` part does not affect rule matching, but it is preserved in `message.to` and can be inspected by a [Worker](/email-service/api/route-emails/email-handler/), an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent), or via the activity log.
 
 If a routing rule for `user+detail@example.com` already exists, it takes precedence over the rule for `user@example.com`. This prevents breaking existing routing rules and allows certain sub-addresses to be captured by a specific rule.
+
+## Configure rules with Wrangler
+
+If your routing rules send mail to a [Worker](/email-service/api/route-emails/email-handler/), you can define them in your Worker's [Wrangler configuration file](/workers/wrangler/configuration/) instead of creating them in the dashboard. Add the inbound addresses to the top-level `addresses` field:
+
+<WranglerConfig>
+
+```toml
+name = "my-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+addresses = ["support@example.com", "*@example.com"]
+```
+
+</WranglerConfig>
+
+Each entry is either a literal recipient address (for example, `support@example.com`), which creates a routing rule for that address, or a `*@domain` catch-all (for example, `*@example.com`), which configures the [catch-all rule](#catch-all-rule) for that domain. Every entry uses the _Send to a Worker_ action to route mail to the Worker you are deploying.
+
+The `addresses` field is top-level only: it applies to every [environment](/workers/wrangler/environments/) of the Worker and cannot be set under `env`.
+
+When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Wrangler reconciles the Email Routing rules for the addresses you listed: it adds rules for new entries, updates the rules it manages, and removes rules it previously created that are no longer listed. Wrangler prints the planned changes and asks you to confirm before applying a destructive change, such as deleting a rule or taking over a rule that is managed elsewhere. To validate your configuration without deploying, run `wrangler deploy --dry-run`.
+
+:::note
+
+Rules created from `addresses` are managed by your Wrangler configuration file. If you change one of these rules in the dashboard, a later `wrangler deploy` can overwrite your change to match the configuration file.
+:::
 
 ## Next steps
 
