@@ -111,7 +111,7 @@ Refer to [Edge TLS Termination](/spectrum/reference/configuration-options/#edge-
 
 ### Symptoms
 
-- For TCP applications with Edge TLS Termination set to **Full** or **Full (Strict)**: connections to the origin fail, and Spectrum event logs show origin connection errors such as `521` (connection refused) or `522` (connection timeout).
+- For TCP applications with Edge TLS Termination set to **Full** or **Full (Strict)**: connections to the origin fail. Spectrum event logs may show `521` (connection refused) or `522` (connection timeout) because a failed TLS handshake at the origin is reported as an origin connection failure. Refer to [Event logs](/spectrum/reference/logs/) for the full status code reference.
 - For HTTP/HTTPS applications: clients receive error `525` (SSL handshake failed).
 
 These errors typically appear after creating a Spectrum application or modifying TLS settings.
