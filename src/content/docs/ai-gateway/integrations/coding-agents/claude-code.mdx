@@ -19,12 +19,12 @@ Before you start, you need:
 - An [authenticated gateway](/ai-gateway/configuration/authentication/) and its [gateway token](/ai-gateway/configuration/authentication/#setting-up-authenticated-gateway-using-the-dashboard). The gateway token must have `Run` permissions.
 - Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 - Credentials for the provider you route to:
-  - **Anthropic**: Either your Anthropic API key stored in AI Gateway as a [provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/), or [Unified Billing](/ai-gateway/features/unified-billing/) credits loaded on your Cloudflare account.
+  - **Anthropic**: An Anthropic API key stored in AI Gateway as a [provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/), [Unified Billing](/ai-gateway/features/unified-billing/) credits loaded on your Cloudflare account, or your own Anthropic API key passed directly in `ANTHROPIC_API_KEY` (Anthropic bills you directly).
   - **Amazon Bedrock** or **Google Vertex AI**: your provider credentials stored in AI Gateway as a [provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/).
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup) installed and updated to the latest version.
 
 :::note
-The `cf-aig-authorization` header is what authenticates your request to AI Gateway. When AI Gateway supplies the Anthropic credentials — using either a [stored provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) or [Unified Billing](/ai-gateway/features/unified-billing/) — the `ANTHROPIC_API_KEY` value is ignored. Claude Code still requires the variable to be set, so you can set it to any value (this example reuses the gateway token). AI Gateway also provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
+The `cf-aig-authorization` header is what authenticates your request to AI Gateway. When AI Gateway supplies the Anthropic credentials — using either a [stored provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) or [Unified Billing](/ai-gateway/features/unified-billing/) — the `ANTHROPIC_API_KEY` value is ignored. Claude Code still requires the variable to be set, so you can set it to any value (this example reuses the gateway token). Alternatively, if you do not use BYOK or Unified Billing, set `ANTHROPIC_API_KEY` to your own Anthropic API key and Anthropic bills you directly. AI Gateway provides observability, caching, and rate limiting for the traffic either way. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
 :::
 
 <Steps>
