@@ -52,7 +52,20 @@ Enterprise Bot Management customers can see the full set of behaviors Cloudflare
 
 For new domains, **Training** and **User** are blocked by default **on pages that display ads**, while **Search** is allowed by default. An ad signals that a page is meant for a person to land on and see, so on those pages Cloudflare keeps off the automated traffic that does not send readers back.
 
-A bot that does not give a website owner any way to tell whether it is crawling to train a model or to build a search index does not get the benefit of the doubt — it is blocked by default on pages that display ads.
+### Blocking Training: two options
+
+On July 1, 2026, when you choose to block **Training**, you can pick how strictly to apply it:
+
+- **Block Training (all)**: Blocks every crawler classified as Training, including multi-purpose crawlers that use a single crawler for both model training and search indexing.
+- **Block Training (only if it doesn't affect search)**: Blocks training crawlers, but leaves alone any crawler that does not separate its training crawler from its search crawler. Blocking those would also take down the crawler that builds search indexes and sends you referral traffic, so they remain allowed. This option is technically equivalent to the legacy **Block AI bots** setting.
+
+Cloudflare currently tracks three bots that do **not** separate their crawler — they use one crawler for both search indexing and model training:
+
+- `Googlebot` (Google)
+- `Applebot` (Apple)
+- `Bingbot` (Microsoft)
+
+Because their training and search activity is indistinguishable, these three crawlers are **included in Block Training (all)** but **excluded from Block Training (only if it doesn't affect search)**. Choose **Block Training (all)** to block them as training crawlers, or **Block Training (only if it doesn't affect search)** to keep them for search.
 
 :::note
 Existing configurations are not changed automatically. All customers are notified of the new presets and encouraged to adopt them, and can continue to block or allow individual crawlers with [AI Crawl Control](/ai-crawl-control/).
