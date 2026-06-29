@@ -1,0 +1,23 @@
+---
+title: Cloudflare Access for Workers
+description: Require sign-in for all Workers, one Worker, preview deployments, or a specific Worker hostname.
+products:
+  - workers
+date: 2026-06-25
+---
+
+You can now use Cloudflare Access to require sign-in before visitors can reach your Workers. This lets you make internal tools, staging environments, and preview deployments private without adding authentication code to your Worker.
+
+You can choose what Access protects:
+
+- Production and preview deployments for all Workers.
+- Preview deployments for all Workers.
+- Production and preview deployments for one Worker.
+- Preview deployments for one Worker.
+- One `workers.dev` hostname, Custom Domain, subdomain, or path.
+
+If account-level Access protects all Workers, you can add a Worker-level bypass to keep a specific Worker public.
+
+You can also configure Workers Access with the API using Worker destination types, and validate the Access JWT in your Worker when you rely on signed-in user identity.
+
+For setup instructions, refer to [Cloudflare Access for Workers](/workers/configuration/cloudflare-access/).
