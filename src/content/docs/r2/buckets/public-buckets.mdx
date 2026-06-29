@@ -145,3 +145,11 @@ To disable public access for your bucket:
 2. On the bucket page, select **Settings**.
 3. Under **Public Development URL**, select **Disable**.
 4. In **Disallow Public Access?**, type `disallow` to confirm and select **Disallow**.
+
+## Local development
+
+When [developing locally](/workers/local-development), objects are served under `/cdn-cgi/local/r2/public/<bucket-id>/<key>`, where `<bucket-id>` is the bucket's `bucket_name` as set in your Wrangler config. If `bucket_name` is not set, this is the `binding` name.
+
+Bindings configured with `remote: true` are not exposed. The endpoint supports `GET` and `HEAD`, range requests, conditional headers, and forwards stored HTTP metadata.
+
+Note this is always available locally, regardless of whether or not you have actually enabled public access for this bucket. Recall that by default, buckets are in fact _not_ publicly accessible over the Internet.
