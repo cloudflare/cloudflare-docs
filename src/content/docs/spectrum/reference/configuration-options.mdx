@@ -153,7 +153,7 @@ If you have the TLS termination setting configured to **off**, this means that S
 
 :::caution
 
-Do not configure a TCP-type Spectrum application's origin to point to another Cloudflare-proxied hostname (for example, `origin.example.com.cdn.cloudflare.net`). This creates an unsupported double-proxy path that may result in TLS handshake failures (error 525). Use a direct origin IP address or a DNS hostname that resolves to your origin server without passing through Cloudflare's proxy. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#tls-handshake-failures-error-525) for details.
+Do not configure a TCP-type Spectrum application's origin to point to another Cloudflare-proxied hostname (for example, `origin.example.com.cdn.cloudflare.net`). This creates an unsupported double-proxy path that may result in TLS handshake failures (error `525`). Use a direct origin IP address or a DNS hostname that resolves to your origin server without passing through Cloudflare's proxy. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#tls-handshake-failures-error-525) for details.
 
 :::
 
