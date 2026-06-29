@@ -43,25 +43,25 @@ The code of the first-class action the Cloudflare Firewall took on this request.
 
 Type: `int`
 
-The ASN of the visitor.
+The ASN number of the visitor.
 
 ## ClientASNDescription
 
 Type: `string`
 
-The ASN of the visitor as a string.
+The ASN of the visitor as string.
 
 ## ClientCountry
 
 Type: `string`
 
-Country from which the request originated.
+Country from which request originated.
 
 ## ClientIP
 
 Type: `string`
 
-The IP address of the visitor (IPv4 or IPv6).
+The visitor's IP address (IPv4 or IPv6).
 
 ## ClientIPClass
 
@@ -79,13 +79,13 @@ The referer host.
 
 Type: `string`
 
-The referer path requested by the visitor.
+The referer path requested by visitor.
 
 ## ClientRefererQuery
 
 Type: `string`
 
-The referer query string requested by the visitor.
+The referer query-string was requested by the visitor.
 
 ## ClientRefererScheme
 
@@ -109,7 +109,7 @@ The HTTP method used by the visitor.
 
 Type: `string`
 
-The path requested by the visitor.
+The path requested by visitor.
 
 ## ClientRequestProtocol
 
@@ -121,7 +121,7 @@ The version of HTTP protocol requested by the visitor.
 
 Type: `string`
 
-The query string requested by the visitor.
+The query-string was requested by the visitor.
 
 ## ClientRequestScheme
 
@@ -133,7 +133,7 @@ The URL scheme requested by the visitor.
 
 Type: `string`
 
-The user-agent string of the visitor.
+Visitor's user-agent string.
 
 ## ContentScanObjResults
 
@@ -157,7 +157,7 @@ List of content types.
 
 Type: `int or string`
 
-The date and time the event occurred at the edge. To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).
+The date and time the event occurred at the edge.
 
 ## Description
 
@@ -175,7 +175,7 @@ The airport code of the Cloudflare data center that served this request.
 
 Type: `int`
 
-HTTP response status code returned to the browser.
+HTTP response status code returned to browser.
 
 ## FirewallForAIInjectionScore (deprecated)
 
@@ -235,7 +235,7 @@ Additional product-specific information. Metadata is organized in key:value pair
 
 Type: `int`
 
-HTTP origin response status code returned to the browser.
+HTTP origin response status code returned to browser.
 
 ## OriginatorRayID
 

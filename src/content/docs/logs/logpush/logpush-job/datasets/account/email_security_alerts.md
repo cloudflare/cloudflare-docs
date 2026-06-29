@@ -49,7 +49,7 @@ Email address portions of the CC header provided by the sender (for example, 'Fi
 
 Type: `string`
 
-Summary of the DKIM authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>error</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
+Summary DKIM authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>error</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
 
 ## DMARCPolicy
 
@@ -169,7 +169,7 @@ Hostname provided by the SMTP HELO server.
 
 Type: `string`
 
-Summary of the SPF authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>softfail</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
+Summary SPF authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>softfail</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
 
 ## Subject
 
