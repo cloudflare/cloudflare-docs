@@ -37,6 +37,29 @@ As a security measure, you should hide the hostname of your key server.
 
 :::
 
+:::note
+
+If your key server hostname is on a zone you have on Cloudflare, you must create a **DNS-only** (grey-clouded) record for it — do not proxy it. If the record is proxied or missing, Cloudflare's edge resolver returns `NXDOMAIN` and the Keyless TLS handshake fails. The fix is the DNS-only record — not adding the hostname to a certificate SAN.
+
+:::
+
+---
+
+## Certificates used in Keyless SSL
+
+Keyless SSL involves **two different certificates**. Confusing them is the most common setup error.
+
+| Certificate | What it is | SAN should contain |
+| --- | --- | --- |
+| **Edge (Keyless SSL) certificate** | The public certificate Cloudflare serves for your site. | Your site hostnames only (for example, `www.example.com`) |
+| **Key server authentication certificate** | The certificate your key server uses to prove itself to Cloudflare. | The key server hostname only |
+
+:::caution
+
+Do **not** add your key server hostname to the SAN of your public edge certificate. It is not required, and it leaks internal hostnames into the public certificate and Certificate Transparency logs.
+
+:::
+
 ---
 
 ## 2. Upload Keyless SSL Certificates
