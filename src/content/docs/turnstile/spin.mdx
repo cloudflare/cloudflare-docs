@@ -1,10 +1,10 @@
 ---
 title: Turnstile Spin (beta)
 pcx_content_type: how-to
-description: Set up Turnstile end-to-end (widget + backend siteverify) from the Cloudflare dashboard or your AI coding agent.
+description: Set up Turnstile end-to-end (widget + canonical server-side siteverify) from the Cloudflare dashboard or your AI coding agent.
 products:
   - turnstile
-reviewed: 2026-06-16
+reviewed: 2026-06-26
 sidebar:
   order: 2
   badge:
@@ -17,12 +17,12 @@ head:
 
 import { DashButton, Steps } from "~/components";
 
-Turnstile Spin is a one-shot setup flow for Cloudflare Turnstile. It creates the widget, deploys a managed siteverify Worker into your Cloudflare account, and validates the integration before you ship. Spin runs two ways:
+Turnstile Spin is a setup flow for Cloudflare Turnstile. It creates the widget for you, then hands your AI coding agent the materials (sitekey, secret, and a curated prompt) to embed the widget on the right forms and wire canonical server-side siteverify into your existing backend. Spin runs two ways:
 
-- **From the Cloudflare dashboard.** Enter your domains, select **Set up**, and Spin creates the widget and Worker server-side. You receive the sitekey, the deployed Worker URL, and a prompt for your AI coding agent to wire the frontend code.
-- **From your AI coding agent.** Paste a single prompt into Claude Code, Cursor, Codex, OpenCode, or GitHub Copilot Chat. The agent runs `wrangler` locally and walks you through a nine-step setup.
+- **From the Cloudflare dashboard.** Enter your domains, select **Set up**, and Spin creates the widget server-side. You receive the sitekey, the secret, and a prompt for your AI coding agent.
+- **From your AI coding agent.** Paste a single prompt into Claude Code, Cursor, Codex, OpenCode, or GitHub Copilot Chat. The agent uses the inlined Spin skill to create the widget, embed it, and wire siteverify in your codebase.
 
-Both paths produce the same widget and the same Worker. The only difference is where the API calls run.
+Both paths produce the same widget. The only difference is where the create call runs. Neither path deploys infrastructure on your behalf — Spin uses Turnstile's canonical siteverify endpoint, called from the backend you already have.
 
 ## Set up from the dashboard
 
@@ -36,17 +36,17 @@ Both paths produce the same widget and the same Worker. The only difference is w
 
 3. Enter the domains your Turnstile widget should accept tokens from. The first chip is pre-filled from your account's first active Cloudflare zone. Add more domains, or remove the pre-filled one and type any domain (Turnstile does not require a Cloudflare-managed zone).
 
-4. Select **Set up**. Spin shows a five-step progress indicator while it creates the widget, deploys the managed Worker, binds the secret, and probes the deployed Worker.
+4. Select **Set up**. Spin creates the widget and returns to a success card.
 
 5. When setup completes, copy:
 
 	- The **sitekey** (use as `data-sitekey` on your Turnstile widget HTML).
-	- The **Worker URL** (your backend posts tokens here for siteverify).
-	- The **agent prompt** (paste into your AI coding agent to write the frontend code that mounts the widget and submits the token).
+	- The **secret** (store as `TURNSTILE_SECRET` in your backend's env or secret manager).
+	- The **agent prompt** (paste into your AI coding agent to embed the widget and add the canonical siteverify call to your existing backend handler).
 
 </Steps>
 
-If Spin fails before it finishes, it rolls back any half-created widget or Worker before the dialog returns the error. Select **Try again** to retry from the same dialog. To undo a successful setup, select **Undo** on the result card; Spin deletes the widget and the Worker.
+If Spin fails before it finishes, the dialog shows the error and offers a fallback prompt your AI coding agent can use to drive the same setup from your editor. Select **Try again** to retry from the same dialog.
 
 ## Set up from the command line
 
@@ -59,7 +59,7 @@ If you do not see the **Set up with Spin** button in your dashboard, or you pref
 2. **Paste this prompt into your agent:**
 
 	```txt title="Spin prompt"
-	Set up Cloudflare Turnstile in this project end to end. Plan insertion points, create the widget, deploy the managed backend Worker, write the frontend code, and validate the integration.
+	Set up Cloudflare Turnstile in this project end to end. Plan insertion points, create the widget, embed it on the right forms, wire canonical server-side siteverify in my existing backend, and validate the integration.
 
 	The full Turnstile Spin skill is at https://developers.cloudflare.com/turnstile/spin/prompt.md. Fetch it now if you do not already have it loaded.
 
@@ -69,9 +69,9 @@ If you do not see the **Set up with Spin** button in your dashboard, or you pref
 
 	Replace `<DOMAINS>` with your site domains (comma-separated, no spaces; include `localhost,127.0.0.1` for local development). Replace `<insertion preference>` with what you want protected.
 
-3. **Confirm as the agent goes.** The agent checks authentication, proposes widget and Worker names, and asks you to confirm before any irreversible step.
+3. **Confirm as the agent goes.** The agent checks authentication, proposes widget names, and asks you to confirm before any irreversible step.
 
-4. **Validate.** When the agent finishes, it runs an automated end-to-end test against your deployed Worker. If that passes, your integration is live.
+4. **Validate.** When the agent finishes, it runs a dummy-token siteverify against `challenges.cloudflare.com` using your secret to confirm the widget and secret are wired correctly.
 
 </Steps>
 
@@ -98,27 +98,30 @@ Then prompt your agent: `Use the turnstile-spin skill to add Turnstile to this p
 
 ### What the agent does
 
-The agent does not run silently. It detects what it can, asks only when it has to, and confirms before every irreversible step. The flow is a nine-step wizard with three confirmation points.
+The agent does not run silently. It detects what it can, asks only when it has to, and confirms before every irreversible step. The flow is a twelve-step wizard with several confirmation points.
 
-| Step | What happens                                                          | Confirms with you?               |
-| ---- | --------------------------------------------------------------------- | -------------------------------- |
-| 1    | Acknowledge (agent restates what it is about to do)                   | Yes                              |
-| 2    | Wrangler check (installs locally if missing)                          | Yes, if missing                  |
-| 3    | Authentication (`wrangler whoami` or API token)                       | If a token is needed             |
-| 4    | Account selection (if you have more than one)                         | If more than one                 |
-| 5    | Codebase scan (proposes insertion points and domains)                 | Yes                              |
-| 6    | Widget creation (calls the Cloudflare API to create the widget)       | No (after step 5 confirms scope) |
-| 7    | Worker deploy (uploads the managed Worker template, binds the secret) | No                               |
-| 8    | Frontend snippets (edits the files identified in step 5)              | No                               |
-| 9    | Validate (health check, dummy siteverify, hostname binding)           | No                               |
+| Step | What happens                                                              | Confirms with you?               |
+| ---- | ------------------------------------------------------------------------- | -------------------------------- |
+| 1    | Acknowledge (agent restates what it is about to do)                       | Yes                              |
+| 2    | CLI check (wrangler if present; otherwise falls through to curl)          | No                               |
+| 3    | Authentication (`Account.Turnstile:Edit` token)                           | If a token is needed             |
+| 4    | Account selection (if you have more than one)                             | If more than one                 |
+| 5    | Domain                                                                    | Yes                              |
+| 6    | Codebase scan (frontend framework + backend handler + existing CAPTCHA)   | No                               |
+| 7    | Insertion plan                                                            | Yes                              |
+| 8    | Widget creation (calls the Cloudflare API to create the widget)           | No (after step 7 confirms scope) |
+| 9    | Embed the widget + add canonical siteverify in your existing backend      | Yes                              |
+| 10   | Validate (dummy-token siteverify + widget hostname check)                 | No                               |
+| 11   | Persist the skill locally (so the agent can re-run on follow-up tasks)    | Yes                              |
+| 12   | Final report                                                              | No                               |
 
 If anything fails, the agent reports which step and what it tried. Most failures are recoverable by adjusting one input (token scope, domain list, insertion file) and asking the agent to resume.
 
 ## Wire up the frontend
 
-Whichever setup path you use, Spin gives you a sitekey and a deployed Worker URL but does not write your frontend code. The dashboard hands you a prompt for your AI coding agent. The command-line setup edits files directly via the agent.
+Whichever setup path you use, Spin gives you a sitekey and a secret. The dashboard hands you a prompt for your AI coding agent. The command-line setup edits files directly via the agent.
 
-If you set up from the dashboard and want to wire the frontend by hand, the minimal pattern is:
+If you set up from the dashboard and want to wire it by hand, the minimal pattern is:
 
 ```html title="Turnstile widget on your form"
 <script
@@ -126,49 +129,53 @@ If you set up from the dashboard and want to wire the frontend by hand, the mini
 	async
 	defer
 ></script>
-<form>
+<form action="/api/subscribe" method="POST">
+	<input name="email" type="email" required />
 	<div
 		class="cf-turnstile"
 		data-sitekey="YOUR_SITEKEY"
 		data-action="turnstile-spin-v2"
 	></div>
-	<!-- your form fields -->
 	<button type="submit">Submit</button>
 </form>
 ```
 
-On submit, post the token to your deployed Worker:
+In your existing backend handler for `/api/subscribe`, call canonical siteverify and gate the rest of the handler on `success === true`:
 
-```js title="Gate the submit handler on success"
-const form = document.querySelector("form");
-form.addEventListener("submit", async (e) => {
-	e.preventDefault();
-	const token = form.querySelector("[name=cf-turnstile-response]").value;
-	const r = await fetch("https://YOUR_WORKER.workers.dev/", {
+```js title="Canonical server-side siteverify (Node / Workers fetch idiom)"
+const token = request.body["cf-turnstile-response"];
+const r = await fetch(
+	"https://challenges.cloudflare.com/turnstile/v0/siteverify",
+	{
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ token }),
-	});
-	const result = await r.json();
-	if (result.success) {
-		// existing handler logic runs here, unchanged
-	}
-});
+		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		body: new URLSearchParams({
+			secret: process.env.TURNSTILE_SECRET,
+			response: token,
+			remoteip: request.ip,
+		}),
+	},
+);
+const { success } = await r.json();
+if (!success) {
+	return new Response("forbidden", { status: 403 });
+}
+// existing handler logic runs here, unchanged
 ```
 
-The `data-action="turnstile-spin-v2"` attribute is the telemetry marker for dashboard-deployed widgets. Refer to [Telemetry marker](#telemetry-marker) for the marker convention.
+Equivalent calls in other backend languages (Ruby, Python, Go, PHP) are in the per-framework references shipped with the skill. The canonical fetch idiom works inside a Cloudflare Worker the same way it does in Node — no special binding required. The `data-action="turnstile-spin-v2"` attribute is the telemetry marker; refer to [Telemetry marker](#telemetry-marker) for the marker convention.
 
 ## Recover an existing widget
 
-If you already have a Turnstile widget without a deployed siteverify Worker, recover it from the dashboard. A banner appears above the widgets table when a widget has no matching Worker; select **Fix with Spin** to deploy the managed siteverify Worker against the existing widget and validate end-to-end. No terminal, no `wrangler`.
+If you already have a Turnstile widget without server-side siteverify wired up, recover it from the dashboard. A banner appears above the widgets table when a widget has no matching siteverify traffic; select **Fix with Spin** to get a curated agent prompt that targets your existing widget. The prompt tells your AI coding agent to fetch the secret via API (no rotation), embed the widget on the right forms, and add the canonical siteverify call to your existing backend.
 
-If you do not see the **Fix with Spin** banner in your dashboard, drive the same recovery from your AI coding agent instead. Paste this prompt:
+If you do not see the **Fix with Spin** banner in your dashboard, drive the same recovery from your AI coding agent directly. Paste this prompt:
 
 ```txt title="Recovery prompt"
-I already have a Turnstile widget. The site key is <SITEKEY>. Use the turnstile-spin skill to recover from step 5 onward: deploy the managed siteverify Worker into my account, write the frontend snippets, and validate.
+I already have a Turnstile widget. The site key is <SITEKEY>. Use the turnstile-spin skill to wire siteverify against the existing widget: fetch the secret via the Cloudflare API (don't rotate), embed the widget on the right forms, and add canonical server-side siteverify to my existing backend.
 ```
 
-The sitekey does not change. Your existing widget keeps working throughout. The dashboard's `Deployment` column flips from `Manual` to `Spin` once the first request carrying `data-action="turnstile-spin-v1"` or `data-action="turnstile-spin-v2"` lands.
+The sitekey does not change. Your existing widget keeps working throughout. The dashboard's `Deployment` column flips from `Manual` to `Spin` once the first request carrying `data-action="turnstile-spin-v2"` lands.
 
 ## Migrate from reCAPTCHA or hCaptcha
 
@@ -177,8 +184,7 @@ Use the command-line setup for migrations. The agent detects reCAPTCHA or hCaptc
 - Replace script tags with `https://challenges.cloudflare.com/turnstile/v0/api.js` (`async defer`).
 - Replace `class="g-recaptcha"` or `class="h-captcha"` divs with `class="cf-turnstile"`. Update `data-sitekey` to the new Turnstile site key.
 - Remove any manually-added `<input type="hidden" name="g-recaptcha-response">` or `name="h-captcha-response"` elements. Turnstile renders its own hidden input named `cf-turnstile-response` automatically.
-- Backend siteverify URL points at the Spin-deployed Worker. Drop `RECAPTCHA_SECRET` or `HCAPTCHA_SECRET` environment variables (the Worker holds the secret).
-- The Spin Worker accepts `{ token }`, `{ "cf-turnstile-response": ... }`, or `{ response }` in JSON or form-encoded bodies. Response shape is identical: `success`, `error-codes`.
+- Backend siteverify URL points at `https://challenges.cloudflare.com/turnstile/v0/siteverify`. Drop `RECAPTCHA_SECRET` or `HCAPTCHA_SECRET` env vars; add `TURNSTILE_SECRET`. The response shape is `{ success, error-codes, hostname, action, cdata }`.
 
 Two edge cases to flag to the agent. First, reCAPTCHA v3 score thresholds do not translate: Turnstile has no score, so migrated code rejects on `success === false` rather than a numeric threshold. Second, do not auto-migrate reCAPTCHA Enterprise; refer to [the Cloudflare migration guide for reCAPTCHA](/turnstile/migration/recaptcha/) instead.
 
@@ -186,57 +192,35 @@ Two edge cases to flag to the agent. First, reCAPTCHA v3 score thresholds do not
 
 The agent ships with frontend snippets for vanilla HTML, Next.js (App Router and Pages Router), Astro, SvelteKit, and Hugo. For other frameworks, the agent falls back to a generic vanilla-HTML pattern and asks you to confirm placement.
 
-For Cloudflare Pages projects, the agent can deploy the managed siteverify Worker, or recommend the [Pages Plugin for Turnstile](/pages/functions/plugins/turnstile/) if you prefer Functions to a separate Worker.
+For Cloudflare Pages projects, the agent wires siteverify inside a Pages Function, or recommends the [Pages Plugin for Turnstile](/pages/functions/plugins/turnstile/) when you'd rather use a built-in plugin than write the call yourself.
+
+For Cloudflare Workers backends, the agent writes the canonical fetch call directly into the Worker's request handler.
 
 ## Reference
 
-### Managed Worker endpoints
+### Widget configuration
 
-The deployed Worker exposes three endpoints.
-
-| Method | Path          | Purpose                                                 |
-| ------ | ------------- | ------------------------------------------------------- |
-| POST   | `/`           | Siteverify proxy. Accepts JSON or form-encoded body.    |
-| POST   | `/siteverify` | Alias of `/`.                                           |
-| GET    | `/health`     | Health check. Returns `{"ok": true, "version": "..."}`. |
-| GET    | `/`           | Returns the same payload as `/health` for convenience.  |
-
-Request body (JSON):
-
-```json
-{
-	"token": "TURNSTILE_TOKEN_FROM_WIDGET",
-	"remoteip": "1.2.3.4",
-	"idempotency_key": "optional-uuid"
-}
-```
-
-The Worker forwards the token to `https://challenges.cloudflare.com/turnstile/v0/siteverify` with the secret from `TURNSTILE_SECRET_KEY` and returns the upstream response augmented with `_worker` timing metadata.
-
-### Worker configuration
-
-| Variable               | Type   | Default    | Purpose                                                           |
-| ---------------------- | ------ | ---------- | ----------------------------------------------------------------- |
-| `TURNSTILE_SECRET_KEY` | secret | (required) | The widget's secret. Never on disk.                               |
-| `ALLOWED_ORIGIN`       | var    | `*`        | CORS allowed origin. Lock to your customer-facing domain in prod. |
-| `EXPECTED_HOSTNAME`    | var    | (unset)    | If set, reject siteverify responses with a mismatched hostname.   |
+| Field      | Type   | Purpose                                                         |
+| ---------- | ------ | --------------------------------------------------------------- |
+| `sitekey`  | string | Public identifier. Embedded in the widget HTML on every page.   |
+| `secret`   | string | Server-only. Stored as `TURNSTILE_SECRET` in your backend env.  |
+| `domains`  | array  | The hostnames Turnstile accepts tokens from for this widget.    |
+| `mode`     | string | `managed` (default), `non-interactive`, or `invisible`.         |
 
 ### Telemetry marker
 
-Spin-deployed widgets emit an account-level marker so Cloudflare can measure activation rates and time-to-first-siteverify for Spin-deployed widgets compared to manual ones. The marker is account-level and aggregate. No PII, no per-user tracking. Refer to the [Turnstile privacy addendum](https://www.cloudflare.com/turnstile-privacy-policy/).
+Spin-tagged widgets emit an account-level marker so Cloudflare can measure activation rates and time-to-first-siteverify for Spin-flowed widgets compared to manual ones. The marker is account-level and aggregate. No PII, no per-user tracking. Refer to the [Turnstile privacy addendum](https://www.cloudflare.com/turnstile-privacy-policy/).
 
-The marker takes one of two values, depending on which setup path created the widget:
+| `data-action` value | Set by                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------- |
+| `turnstile-spin-v2` | Current Spin flow (dashboard **Set up with Spin** + command-line skill, all variants) |
+| `turnstile-spin-v1` | Legacy V1 agent flow. Preserved if encountered on an existing widget; not used for new setups. |
 
-| `data-action` value | Set by                                                |
-| ------------------- | ----------------------------------------------------- |
-| `turnstile-spin-v1` | Command-line setup (AI agent runs `wrangler` locally) |
-| `turnstile-spin-v2` | Dashboard setup (**Set up with Spin** button)         |
-
-Each setup path applies its own marker automatically. If you customize the widget snippet by hand, you do not need to add the marker yourself.
+Spin applies the marker automatically. If you customize the widget snippet by hand, you do not need to add the marker yourself.
 
 ### Related
 
-- [`cloudflare/skills`](https://github.com/cloudflare/skills): skills bundle, includes `turnstile-spin/` and the bundled Worker template at `skills/turnstile-spin/templates/worker/`
+- [`cloudflare/skills`](https://github.com/cloudflare/skills): skills bundle, includes `turnstile-spin/`
 - [Turnstile server-side validation](/turnstile/get-started/server-side-validation/)
 - [Test site keys and secrets](/turnstile/troubleshooting/testing/)
 - [Pages Plugin for Turnstile](/pages/functions/plugins/turnstile/)
