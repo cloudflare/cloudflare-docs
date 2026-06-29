@@ -18,11 +18,12 @@ Evaluate Flagship feature flags using OpenFeature.
 
 [OpenFeature](https://openfeature.dev/) is the CNCF standard for feature flag interfaces. It provides a vendor-neutral API so you can switch between flag providers without changing evaluation code.
 
-Flagship provides official OpenFeature-compatible SDKs for TypeScript and Go. The source code is available on [GitHub](https://github.com/cloudflare/flagship).
+Flagship provides official OpenFeature-compatible SDKs for TypeScript, Python, and Go. The source code is available on [GitHub](https://github.com/cloudflare/flagship).
 
 | SDK        | Package                                                                                               | Runtime                    | Evaluation modes                              |
 | ---------- | ----------------------------------------------------------------------------------------------------- | -------------------------- | --------------------------------------------- |
 | TypeScript | [`@cloudflare/flagship`](https://www.npmjs.com/package/@cloudflare/flagship)                          | Workers, Node.js, browsers | Workers binding, HTTP, browser prefetch cache |
+| Python     | [`cloudflare-flagship`](https://pypi.org/project/cloudflare-flagship/)                                | Python server applications | HTTP                                          |
 | Go         | [`github.com/cloudflare/flagship/sdks/go`](https://pkg.go.dev/github.com/cloudflare/flagship/sdks/go) | Go server applications     | HTTP                                          |
 
 The TypeScript SDK includes two providers:
@@ -67,4 +68,5 @@ go get github.com/cloudflare/flagship/sdks/go
 
 - Set up the [server provider](/flagship/sdk/server-provider/) for Workers, Node.js, or other server-side runtimes.
 - Set up the [client provider](/flagship/sdk/client-provider/) for browser applications.
+- Set up the [Python SDK](/flagship/sdk/python/) for Python server applications.
 - Set up the [Go SDK](/flagship/sdk/go/) for Go server applications.
