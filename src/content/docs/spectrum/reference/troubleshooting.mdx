@@ -111,11 +111,14 @@ Refer to [Edge TLS Termination](/spectrum/reference/configuration-options/#edge-
 
 ### Symptoms
 
-Clients connecting through an HTTP/HTTPS-type Spectrum application receive error `525`, or Spectrum event logs show origin connection errors (`520`, `521`, `522`) after changing TLS settings. These errors typically appear after creating a Spectrum application or modifying Edge TLS Termination.
+- For TCP applications with Edge TLS Termination set to **Full** or **Full (Strict)**: connections to the origin fail, and Spectrum event logs show origin connection errors such as `521` (connection refused) or `522` (connection timeout).
+- For HTTP/HTTPS applications: clients receive error `525` (SSL handshake failed).
+
+These errors typically appear after creating a Spectrum application or modifying TLS settings.
 
 ### Cause
 
-These errors indicate that the TLS handshake between Cloudflare and your origin server failed. Common causes include:
+The TLS handshake between Cloudflare and your origin server failed. Common causes include:
 
 - **Edge TLS Termination is set to Full or Full (Strict)**, but the origin does not have a valid TLS certificate or does not accept TLS connections on the configured port.
 - **The Spectrum application origin points to another Cloudflare-proxied hostname** (for example, `origin.example.com.cdn.cloudflare.net`). This creates a double-proxy chain that is not supported for TCP application types and can cause TLS handshake failures.
