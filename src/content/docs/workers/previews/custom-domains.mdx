@@ -1,31 +1,27 @@
 ---
 pcx_content_type: how-to
 title: Custom domains
-description: Serve Worker Previews from custom domains instead of workers.dev URLs.
+description: Serve Preview URLs from custom domains instead of workers.dev URLs.
 sidebar:
   order: 4
 products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { DashButton, WranglerConfig } from "~/components";
 
-Previews can be served from your `workers.dev` subdomain or from your own custom domain.
+Use custom domains to serve Preview URLs from your own domain.
 
-Custom domains help when your application depends on domain-specific cookies, authentication, CORS behavior, or branch-based hostnames.
+Custom domain Preview URLs use this format:
 
-Custom domains only change the Preview URL. To change variables, secrets, bindings, or resources for that Preview, use [Preview settings](/workers/previews/configuration/).
+```txt
+<preview-name>.app.example.com
+```
 
-## URL format
-
-| Host type     | Preview URL                                            | Deployment URL                                          |
-| ------------- | ------------------------------------------------------ | ------------------------------------------------------- |
+| Host type | Preview URL | Deployment URL |
+| --- | --- | --- |
 | `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
-| Custom domain | `<preview-name>.app.example.com`                       | `<deployment-id>-<preview-name>.app.example.com`        |
-
-On `workers.dev`, the Preview name and Worker name share one DNS label. On custom domains, the Preview name is its own subdomain.
-
-## Enable custom domain Previews
+| Custom domain | `<preview-name>.app.example.com` | `<deployment-id>-<preview-name>.app.example.com` |
 
 When you enable Previews on a custom domain, Cloudflare provisions:
 
@@ -34,15 +30,23 @@ When you enable Previews on a custom domain, Cloudflare provisions:
 
 SSL certificates for Preview custom domains can take time to issue after the first Preview is created.
 
+### Use a dedicated Preview subdomain
+
+If your production domain has existing subdomains, use a dedicated Preview subdomain such as `previews.example.com`. Preview URLs will use `<preview-name>.previews.example.com`, and Cloudflare will provision `*.previews.example.com` instead of a wildcard on your production hostname.
+
+This avoids conflicts with existing hostnames such as `docs.example.com`.
+
 ### Dashboard
+
+![Dashboard modal for adding a Worker custom domain with Preview selected](~/assets/images/workers/previews/dash-custom-domain-preview.png)
 
 To enable Previews on a custom domain:
 
-1. In the Cloudflare dashboard, go to **Workers & Pages**.
-2. Select your Worker.
-3. Go to **Settings** > **Domains & Routes**.
-4. Select the custom domain.
-5. Enable **Previews**.
+1. <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Worker
+3. Go to the **Domains** tab
+4. Add or select the custom domain
+5. Set **Enable for** to _Preview_
 
 ### Wrangler
 
@@ -66,11 +70,11 @@ To enable Previews on a custom domain in your Wrangler configuration, set `previ
 
 Then, redeploy your Worker with `wrangler deploy`.
 
+Setting `previews_enabled` on a custom domain tells Cloudflare to provision `*.app.example.com` for Preview URLs. The custom domain itself still serves production traffic.
+
 :::caution[Keep custom domain settings in one place]
 
 If Wrangler manages your custom domain route, each `wrangler deploy` applies the custom domain settings from your Wrangler file. Add `previews_enabled` to the route in your Wrangler file so a later deploy does not turn off custom domain Previews.
-
-The top-level `preview_urls` setting controls `workers.dev` Preview URLs. Custom domain Preview URLs use the separate `previews_enabled` setting on the custom domain route.
 
 If Terraform manages the Worker custom domain, configure the equivalent `previews_enabled` setting in Terraform instead of relying on a dashboard-only change.
 
@@ -93,12 +97,6 @@ curl --request PUT \
   }'
 ```
 
-## Access control
+## Notes
 
-Preview custom domain URLs are public unless you add an access control layer. Use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require authentication.
-
-Production and Preview URLs can be protected independently.
-
-## Limitations
-
-Custom domains control how users reach Preview URLs. They do not make routes, cron triggers, queue consumers, or other user-managed triggers target Previews.
+Custom domains control how users reach Preview URLs. Routes, cron triggers, and queue consumers target production. They do not target Previews.

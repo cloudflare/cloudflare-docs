@@ -66,9 +66,9 @@ You can monitor a build's status and its build logs by navigating to **View buil
 A successful build produces different output depending on the branch:
 
 - Production branch builds create a new [version](/workers/versions-and-deployments/) under Version History. If the build is configured to deploy, that version is promoted to the Active Deployment.
-- Preview builds create or update a [Worker Preview](/workers/previews/). Preview builds run for branches that are not your production branch. The Preview URL is posted as a pull request comment and can also be found in the Previews section of your Worker.
+- Preview builds create or update a [Preview](/workers/previews/). Preview builds run for branches that are not your production branch. The Preview URL is posted as a pull request comment and can also be found in the Previews section of your Worker.
 
-To configure Preview settings such as variables, secrets, bindings, custom domains, or resource isolation, refer to [Worker Previews](/workers/previews/).
+To configure Preview settings such as variables, secrets, bindings, custom domains, or resource isolation, refer to [Previews](/workers/previews/).
 
 :::note[Builds, versions, deployments, Previews]
 
@@ -78,7 +78,7 @@ Previews are not Worker versions, active deployments, or gradual deployments. A 
 
 ## Workers with Containers
 
-For Workers that use [Containers](/containers/), use `wrangler deploy` on the production branch so container images and container instances can update. Preview builds still default to `wrangler versions upload`, which does not update container images. Preview URLs are not generated for these Workers because each container is managed from a Durable Object. Refer to [Deploy Containers](/containers/guides/deploy/#before-production).
+For Workers that use [Containers](/containers/), use `wrangler deploy` on the production branch so container images and container instances can update. If you configure preview builds to run `wrangler versions upload`, container images and container instances will not update. Refer to [Deploy Containers](/containers/guides/deploy/#before-production).
 
 ## Disconnecting builds
 
@@ -98,6 +98,6 @@ To disable automatic deployments while still allowing builds to run automaticall
 
 :::note
 
-Builds that run `wrangler versions upload` create Worker versions and [Version URLs](/workers/configuration/version-urls/). Version URLs use the resources configured for that Worker version. They are different from [Worker Previews](/workers/previews/), which are branch-oriented and can use Preview-specific settings.
+Builds that run `wrangler versions upload` create Worker versions and [Version URLs](/workers/configuration/version-urls/). Version URLs use the resources configured for that Worker version. They are different from [Previews](/workers/previews/), which are branch-oriented and can use Preview-specific settings.
 
 :::

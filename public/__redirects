@@ -2207,6 +2207,7 @@
 /workers/reference/apis/response/ /workers/runtime-apis/response/ 301
 /workers/reference/apis/streams/ /workers/runtime-apis/streams/ 301
 /workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
+/workers/previews/commands/ /workers/wrangler/commands/workers/#preview 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301

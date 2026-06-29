@@ -1,0 +1,530 @@
+---
+
+---
+
+<figure class="pcfg" aria-label="Preview configuration model">
+	<div class="pcfg-shell">
+		<div class="pcfg-grid">
+			<!-- Left: base configuration -->
+			<div class="pcfg-col pcfg-col-shared">
+				<section class="pcfg-win" aria-label="Base configuration">
+					<header class="pcfg-bar">
+						<span class="pcfg-dot"></span><span class="pcfg-dot"></span><span
+							class="pcfg-dot"></span>
+						<strong>Base configuration</strong>
+					</header>
+					<div class="pcfg-rows">
+						<div class="pcfg-row">
+							<span class="pcfg-t pcfg-t-var">var</span>
+							<code>APP_ENV = "preview"</code>
+						</div>
+						<div class="pcfg-row">
+							<span class="pcfg-t pcfg-t-var">var</span>
+							<code>API_URL = "api.staging.example.com"</code>
+						</div>
+						<div class="pcfg-row">
+							<span class="pcfg-t pcfg-t-secret">secret</span>
+							<code>API_KEY = ••••••</code>
+						</div>
+						<div class="pcfg-row">
+							<span class="pcfg-t pcfg-t-binding">binding</span>
+							<code>UPLOADS = preview-r2-bucket</code>
+						</div>
+					</div>
+				</section>
+
+				<p class="pcfg-caption">
+					Every Preview starts with a copy of these settings
+				</p>
+			</div>
+
+			<!-- Right: One Preview at a time -->
+			<div class="pcfg-col pcfg-col-preview">
+				<label class="pcfg-branch-sel">
+					<span>Preview</span>
+					<select class="pcfg-branch-select" aria-label="Select Preview branch">
+						<option
+							value="feature/login"
+							data-caption="Started from the base configuration, then changed UPLOADS and added DEBUG"
+							>feature/login</option
+						>
+						<option
+							value="redesign"
+							data-caption="No changes yet, still matches the base configuration"
+							>redesign</option
+						>
+						<option
+							value="fix-api"
+							data-caption="Changed API_URL and removed the UPLOADS binding"
+							>fix-api</option
+						>
+					</select>
+				</label>
+
+				<div class="pcfg-stack">
+					<!-- feature/login -->
+					<section
+						class="pcfg-win pcfg-card pcfg-card-active"
+						data-pcfg="feature/login"
+					>
+						<header class="pcfg-bar pcfg-bar-pv">
+							<span class="pcfg-dot"></span><span class="pcfg-dot"></span><span
+								class="pcfg-dot"></span>
+							<strong>feature/login</strong>
+						</header>
+						<div class="pcfg-rows">
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-var">var</span>
+								<code>APP_ENV = "preview"</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-var">var</span>
+								<code>API_URL = "api.staging.example.com"</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-secret">secret</span>
+								<code>API_KEY = ••••••</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-binding">binding</span>
+								<code>UPLOADS = login-test-r2-bucket</code>
+							</div>
+							<div class="pcfg-row pcfg-row-add">
+								<span class="pcfg-t pcfg-t-var">var</span>
+								<code>DEBUG = "true"</code>
+								<span class="pcfg-pill pcfg-pill-add">added</span>
+							</div>
+						</div>
+					</section>
+
+					<!-- redesign -->
+					<section class="pcfg-win pcfg-card" data-pcfg="redesign">
+						<header class="pcfg-bar pcfg-bar-pv">
+							<span class="pcfg-dot"></span><span class="pcfg-dot"></span><span
+								class="pcfg-dot"></span>
+							<strong>redesign</strong>
+						</header>
+						<div class="pcfg-rows">
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-var">var</span>
+								<code>APP_ENV = "preview"</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-var">var</span>
+								<code>API_URL = "api.staging.example.com"</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-secret">secret</span>
+								<code>API_KEY = ••••••</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-binding">binding</span>
+								<code>UPLOADS = preview-r2-bucket</code>
+							</div>
+						</div>
+					</section>
+
+					<!-- fix-api -->
+					<section class="pcfg-win pcfg-card" data-pcfg="fix-api">
+						<header class="pcfg-bar pcfg-bar-pv">
+							<span class="pcfg-dot"></span><span class="pcfg-dot"></span><span
+								class="pcfg-dot"></span>
+							<strong>fix-api</strong>
+						</header>
+						<div class="pcfg-rows">
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-var">var</span>
+								<code>APP_ENV = "preview"</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-var">var</span>
+								<code>API_URL = "api.dev.example.com"</code>
+							</div>
+							<div class="pcfg-row">
+								<span class="pcfg-t pcfg-t-secret">secret</span>
+								<code>API_KEY = ••••••</code>
+							</div>
+							<div class="pcfg-row pcfg-row-rm">
+								<span class="pcfg-t pcfg-t-binding">binding</span>
+								<code class="pcfg-struck">UPLOADS</code>
+								<span class="pcfg-pill pcfg-pill-rm">removed</span>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<p class="pcfg-caption" data-pcfg-caption>
+					Started from the base configuration, then changed UPLOADS and added
+					DEBUG
+				</p>
+			</div>
+		</div>
+	</div>
+</figure>
+
+<style>
+	/* Reset global styles inside diagram */
+	.pcfg,
+	.pcfg * {
+		margin: 0;
+		padding: 0;
+		border: none;
+		background: none;
+		box-shadow: none;
+		font-size: inherit;
+		line-height: inherit;
+		color: inherit;
+		box-sizing: border-box;
+	}
+
+	.pcfg code {
+		background: none !important;
+		padding: 0 !important;
+		border: none !important;
+		border-radius: 0 !important;
+		font-size: inherit !important;
+		line-height: inherit !important;
+	}
+
+	.pcfg {
+		--p-bg: light-dark(#fafafa, #0f0f10);
+		--p-card: light-dark(#ffffff, #171719);
+		--p-muted: light-dark(#737373, #a3a3a3);
+		--p-text: light-dark(#171717, #f5f5f5);
+		--p-border: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--p-soft: light-dark(#f5f5f5, #222226);
+		--p-brand: #f6821f;
+		--p-brand-soft: light-dark(#fff7ed, #431407);
+		--p-green: light-dark(#16a34a, #4ade80);
+		--p-green-soft: light-dark(#f0fdf4, #052e16);
+		--p-red: light-dark(#dc2626, #f87171);
+		--p-red-soft: light-dark(#fef2f2, #450a0a);
+		margin: 1.25rem 0 1.75rem;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		letter-spacing: -0.01em;
+		color: var(--p-text);
+		max-width: 100%;
+	}
+
+	.pcfg-shell {
+		padding: 16px;
+		border: 1px solid var(--p-border);
+		border-radius: 14px;
+		overflow: hidden;
+		background:
+			radial-gradient(circle, var(--p-border) 1px, transparent 1px), var(--p-bg);
+		background-size: 14px 14px;
+	}
+
+	/* ── Grid ── */
+	.pcfg-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 16px;
+		align-items: start;
+	}
+
+	.pcfg-col {
+		display: grid;
+		gap: 10px;
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	.pcfg-col-shared {
+		/* push content down so the window tops align with the preview window */
+		padding-top: 44px;
+	}
+
+	.pcfg-col-preview {
+		/* keep the stacked-page overhang inside the diagram width */
+		padding-right: 16px;
+		width: 100%;
+	}
+
+	/* ── Branch selector ── */
+	.pcfg-branch-sel {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 8px;
+		align-items: center;
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+		padding: 10px 11px;
+		border: 1px solid color-mix(in srgb, var(--p-brand) 42%, var(--p-border));
+		border-radius: 9px;
+		background: var(--p-brand-soft);
+	}
+
+	.pcfg-branch-sel span {
+		color: var(--p-muted);
+	}
+
+	.pcfg-branch-sel select {
+		appearance: none;
+		cursor: pointer;
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		padding: 0 22px 0 0;
+		background:
+			linear-gradient(45deg, transparent 50%, var(--p-muted) 50%) right 8px
+				center / 6px 6px no-repeat,
+			linear-gradient(135deg, var(--p-muted) 50%, transparent 50%) right 4px
+				center / 6px 6px no-repeat,
+			transparent;
+		color: var(--p-text);
+		font: inherit;
+		font-weight: 650;
+		text-overflow: ellipsis;
+	}
+
+	.pcfg-branch-sel select:focus,
+	.pcfg-branch-sel select:focus-visible {
+		outline: none;
+	}
+
+	/* ── Window ── */
+	.pcfg-win {
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		border: 1px solid var(--p-border);
+		border-radius: 12px;
+		background: var(--p-card);
+		box-shadow: 0 10px 28px rgb(0 0 0 / 6%);
+		overflow: hidden;
+	}
+
+	.pcfg-bar {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		padding: 10px 12px;
+		border-bottom: 1px solid var(--p-border);
+	}
+
+	.pcfg-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 999px;
+		background: var(--p-border);
+	}
+
+	.pcfg-bar strong {
+		margin-left: 4px;
+		font-weight: 650;
+		font-size: 0.8125rem;
+	}
+
+	.pcfg-bar-pv {
+		border-bottom-color: color-mix(
+			in srgb,
+			var(--p-brand) 28%,
+			var(--p-border)
+		);
+	}
+
+	/* ── Setting rows ── */
+	.pcfg-rows {
+		padding: 4px 8px;
+	}
+
+	.pcfg-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-width: 0;
+		height: 34px;
+		padding: 0 6px;
+		border-radius: 5px;
+	}
+
+	.pcfg-row + .pcfg-row {
+		border-top: 1px solid var(--p-border);
+	}
+
+	.pcfg-row code {
+		flex: 1;
+		min-width: 0;
+		color: var(--p-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.72rem;
+		line-height: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.pcfg-t {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 56px;
+		height: 22px;
+		border-radius: 999px;
+		font-size: 0.5625rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		flex-shrink: 0;
+	}
+
+	.pcfg-t-var {
+		background: var(--p-soft);
+		color: var(--p-text);
+	}
+	.pcfg-t-secret {
+		background: var(--p-soft);
+		color: var(--p-text);
+	}
+	.pcfg-t-binding {
+		background: var(--p-soft);
+		color: var(--p-text);
+	}
+
+	.pcfg-row-add {
+		background: var(--p-green-soft);
+	}
+	.pcfg-row-rm {
+		background: var(--p-red-soft);
+	}
+	.pcfg-struck {
+		text-decoration: line-through;
+		opacity: 0.6;
+	}
+
+	.pcfg-pill {
+		padding: 1px 7px;
+		border-radius: 999px;
+		font-size: 0.5625rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		flex-shrink: 0;
+		white-space: nowrap;
+		line-height: 1;
+	}
+
+	.pcfg-pill-add {
+		background: var(--p-green-soft);
+		color: var(--p-green);
+		border: 1px solid color-mix(in srgb, var(--p-green) 25%, var(--p-border));
+	}
+
+	.pcfg-pill-rm {
+		background: var(--p-red-soft);
+		color: var(--p-red);
+		border: 1px solid color-mix(in srgb, var(--p-red) 25%, var(--p-border));
+	}
+
+	/* ── Stacked card ── */
+	.pcfg-stack {
+		position: relative;
+		isolation: isolate;
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		/* space for the back-pages peeking out bottom-right */
+		margin-bottom: 12px;
+	}
+
+	.pcfg-card {
+		display: none;
+	}
+
+	.pcfg-card-active {
+		display: block;
+		position: relative;
+		z-index: 3;
+		border-color: color-mix(in srgb, var(--p-brand) 35%, var(--p-border));
+		background: var(--p-card);
+	}
+
+	/* back-page layers — fan out to the bottom-right */
+	.pcfg-stack::before,
+	.pcfg-stack::after {
+		content: "";
+		position: absolute;
+		border-radius: 12px;
+	}
+
+	/* 1st back-page: slight offset right + down */
+	.pcfg-stack::before {
+		z-index: 2;
+		top: 6px;
+		left: 6px;
+		right: -6px;
+		bottom: -6px;
+		border: 1.5px solid color-mix(in srgb, var(--p-brand) 20%, var(--p-border));
+		background: var(--p-card);
+	}
+
+	/* 2nd back-page: more offset right + down */
+	.pcfg-stack::after {
+		z-index: 1;
+		top: 12px;
+		left: 12px;
+		right: -12px;
+		bottom: -12px;
+		border: 1.5px solid color-mix(in srgb, var(--p-brand) 45%, var(--p-border));
+		background: var(--p-brand-soft);
+	}
+
+	/* ── Caption ── */
+	.pcfg-caption {
+		color: var(--p-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	/* ── Responsive ── */
+	@media (max-width: 700px) {
+		.pcfg-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.pcfg-col-shared {
+			padding-top: 0;
+		}
+
+		.pcfg-shell {
+			padding: 12px;
+		}
+	}
+</style>
+
+<script>
+	for (const diagram of document.querySelectorAll(".pcfg")) {
+		const select = diagram.querySelector(".pcfg-branch-select");
+		const cards = diagram.querySelectorAll<HTMLElement>(".pcfg-card");
+		const caption = diagram.querySelector("[data-pcfg-caption]");
+
+		if (!(select instanceof HTMLSelectElement)) continue;
+
+		const update = () => {
+			const val = select.value;
+			const opt = select.selectedOptions[0];
+
+			for (const c of cards) {
+				c.classList.toggle(
+					"pcfg-card-active",
+					c.getAttribute("data-pcfg") === val,
+				);
+			}
+
+			if (caption && opt) {
+				caption.textContent = opt.dataset.caption || "";
+			}
+		};
+
+		select.addEventListener("change", update);
+		update();
+	}
+</script>

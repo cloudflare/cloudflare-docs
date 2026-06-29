@@ -421,11 +421,7 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
   }'
 ```
 
-Note the different `deploy_command`: production uses `wrangler deploy` while preview uses `wrangler preview` to create Worker Previews without affecting the live deployment.
-
-:::note
-Preview URLs are not generated for Durable Object Workers, including [Containers](/containers/). Refer to [Preview URL limitations](/workers/versions-and-deployments/preview-urls/#limitations).
-:::
+Note the different `deploy_command`: production uses `wrangler deploy` while preview uses `wrangler preview` to create Previews without affecting the live deployment.
 
 #### Step 7: Set environment variables for each trigger
 

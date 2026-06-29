@@ -69,6 +69,9 @@ export { default as AiSearchVoiceDiagram } from "./components/AiSearchVoiceDiagr
 export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
 export { default as WorkersArchitectureDiagram } from "./components/cf/WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./components/cf/WorkersIsolateDiagram.astro";
+export { default as PreviewsConfigDiagram } from "./components/PreviewsConfigDiagram.astro";
+export { default as PreviewsDOCarouselDiagram } from "./components/PreviewsDOCarouselDiagram.astro";
+export { default as PreviewsResourcesDiagram } from "./components/PreviewsResourcesDiagram.astro";
 export { default as WorkerPreviewsDiagram } from "./components/WorkerPreviewsDiagram.astro";
 export { default as AnimatedWorkflowDiagram } from "./components/cf/AnimatedWorkflowDiagram.astro";
 export { default as AgentsPlatformDiagram } from "./components/cf/AgentsPlatformDiagram.astro";
