@@ -125,7 +125,7 @@ const isOpen = Boolean(hasActive || collapsed === false || collapsed === undefin
   <CollapsibleContent data-nb-state={isOpen ? "open" : "closed"}>
     <ul data-nb-sidebar-sublist>
       {items.map((item) => (
-        <li class="break-words">
+        <li>
           {item.type === "group" ? (
             <Astro.self
               label={item.label}

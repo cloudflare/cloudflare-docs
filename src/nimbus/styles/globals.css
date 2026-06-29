@@ -703,3 +703,42 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 		@apply mt-0.5 ml-3 list-none border-l border-border p-0 pl-2 flex flex-col gap-px;
 	}
 }
+
+/*
+ * Class-hoist (page-weight): the sidebar tree re-emits the same handful of
+ * utility-class strings on thousands of elements per page (e.g. `break-words`
+ * ×736, the collapsible grid-animation string ×63). These rules move that
+ * repeated payload off per-element markup into shared selectors keyed on the
+ * data attributes the elements already carry. Faithful transport — the exact
+ * same utility tokens, so computed styles (and therefore rendering) are
+ * unchanged; only the emitted HTML shrinks. The disclosure runtime toggles
+ * `data-nb-state`, which these rules react to exactly as the inline variant did.
+ *
+ * NOTE: `@apply` hard-fails the build on an unknown utility ("Cannot apply
+ * unknown utility class"), unlike an inline class which silently no-ops. Keep
+ * every token below a real Tailwind utility; a typo here breaks the build.
+ */
+@layer components {
+	[data-nb-collapsible-content] {
+		@apply grid grid-rows-[0fr] transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.87,0,0.13,1)];
+	}
+	[data-nb-collapsible-content][data-nb-state="open"] {
+		@apply grid-rows-[1fr];
+	}
+	[data-nb-collapsible-content] > div {
+		@apply overflow-hidden min-h-0;
+	}
+	[data-nb-collapsible-trigger] {
+		@apply w-full text-left cursor-pointer select-none;
+	}
+	[data-nb-sidebar-sublist] > li {
+		@apply break-words;
+	}
+}
+
+/* Equivalent of the dropped `motion-reduce:transition-none` utility. */
+@media (prefers-reduced-motion: reduce) {
+	[data-nb-collapsible-content] {
+		transition: none;
+	}
+}

@@ -14,7 +14,7 @@ const { class: className, type, ...attrs } = Astro.props;
 <button
   type={type ?? "button"}
   data-nb-collapsible-trigger
-  class={cn("w-full text-left cursor-pointer select-none", className)}
+  class={cn(className)}
   {...attrs}
 >
   <slot />
