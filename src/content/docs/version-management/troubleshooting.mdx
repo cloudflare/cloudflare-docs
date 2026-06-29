@@ -26,7 +26,7 @@ Common causes:
 - **Your user account does not have an API key.** You must have an API key provisioned. Refer to [view your Global API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for more information.
 - **API Access is disabled for your user account.** Refer to [control API Access](/fundamentals/api/how-to/control-api-access/) for more information.
 
-If all requirements are met and Version Management is still unavailable, contact your account team or Cloudflare Support.
+If all requirements are met and Version Management is still unavailable, contact your account team.
 
 ## Failed to create or clone a version
 
@@ -66,17 +66,6 @@ If version creation appears stuck (the status does not change for an extended pe
 3. Retry the clone operation.
 4. If the issue persists, contact Cloudflare Support.
 
-## Compare versions is not loading
-
-The version comparison tool may spin indefinitely or fail to return results when comparing two versions.
-
-This can happen when:
-
-- The versions contain a large number of configuration differences.
-- A temporary platform issue is affecting the comparison service.
-
-Refresh the page and retry the comparison. If the issue persists across multiple attempts over several minutes, contact Cloudflare Support.
-
 ## Worker routes disappear or behave unexpectedly
 
 If a version has a Worker route, the route might disappear when a Worker is deployed using [Wrangler](/workers/wrangler/). Additionally, if two versions have the same custom domains, the Worker might randomly choose between them.
@@ -85,19 +74,6 @@ To avoid this:
 
 - Deploy Workers using Wrangler before creating new versions that reference the same routes.
 - Avoid configuring the same custom domains across multiple versions.
-
-## Disabling Version Management
-
-Version Management cannot currently be disabled through the Cloudflare dashboard. To disable Version Management for a zone, [contact Cloudflare Support](https://developers.cloudflare.com/support/contacting-cloudflare-support/) and include:
-
-- Your zone name and zone ID.
-- Confirmation that you understand disabling Version Management will revert the zone to its global (non-versioned) configuration.
-
-:::note
-
-Disabling Version Management may affect live traffic. Coordinate with your account team to schedule a change window if needed.
-
-:::
 
 ## API and Terraform are not supported
 
@@ -133,17 +109,6 @@ A version may appear as read-only if:
 Verify your user role and check whether the version is deployed to a read-only environment.
 
 </Details>
-
-## Unsupported products and features
-
-For a complete list of products and features with limited or no support for Version Management, refer to [Limitations](/version-management/#limitations).
-
-Key points to keep in mind:
-
-- **DNS, Spectrum, Load Balancing, Waiting Rooms, and Zero Trust** configurations cannot be versioned. Refer to [Available configurations](/version-management/reference/available-configurations/) for details.
-- **China Network** traffic always targets the root zone, regardless of the version deployed to production.
-- **Cache Reserve** is intended for production use only. Purging the production environment purges all environments.
-- **Authenticated Origin Pull** does not work with Zone Versioning. Accessing your domain from an allowlisted IP may return a Cloudflare 520 error.
 
 ## Information for Support
 
