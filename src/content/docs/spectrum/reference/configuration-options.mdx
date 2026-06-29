@@ -130,7 +130,7 @@ Spectrum virtual network origins are for TCP and UDP traffic only. For HTTP/HTTP
 :::caution[Spectrum does not perform protocol upgrade]
 Spectrum operates at Layer 4 and forwards TCP payloads as-is. If Edge TLS Termination is set to **off** (Passthrough), Spectrum will **not** upgrade an HTTP connection to HTTPS, even if your origin listens on port 443. To encrypt traffic between Cloudflare and your origin, enable Edge TLS Termination and set it to **Full** or **Full (Strict)**.
 
-For example, if a client connects to your Spectrum application on port 8012 using HTTP, and your origin is configured on port 443, the connection to origin will use HTTP on port 443 — not HTTPS — unless Edge TLS Termination is enabled.
+For example, if a client connects to your Spectrum application on port 8012 using HTTP, and your origin is configured on port 443, the connection to origin will use HTTP on port 443 — not HTTPS — unless Edge TLS Termination is set to **Full** or **Full (Strict)**.
 :::
 
 If you enable **Edge TLS Termination** for a Spectrum application, Cloudflare will encrypt traffic for the application at the Edge. The Edge TLS Termination toggle applies only to TCP applications.
