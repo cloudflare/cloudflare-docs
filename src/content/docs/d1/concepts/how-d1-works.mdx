@@ -1,0 +1,135 @@
+---
+title: How D1 works
+description: How D1 stores data, runs queries, replicates across regions, and handles consistency.
+pcx_content_type: concept
+sidebar:
+  order: 1
+products:
+  - d1
+---
+
+import { GlossaryTooltip } from "~/components";
+
+[D1](/d1/) is Cloudflare's serverless SQL database. This page explains the architecture underneath the API: the storage engine, where your data runs, how queries are processed, the consistency model, and the resource limits of a single database.
+
+Understanding these properties helps you design schemas, place databases, and scale before you hit a limit. For the patterns that follow from this architecture, refer to [Rules of D1](/d1/best-practices/rules-of-d1/).
+
+## The SQLite engine
+
+D1 is built on [SQLite](https://www.sqlite.org/), and D1 uses SQLite's query engine. SQLite is compatible with most of SQLite's SQL conventions, so most SQL you write for SQLite also runs on D1.
+
+Unlike PostgreSQL or MySQL, SQLite is not a client-server database. There is no connection string, no TLS handshake, and no connection pool to manage. D1 exposes your database through a [Workers binding](/d1/worker-api/) (`env.DB`) and an [HTTP API](/d1/worker-api/), rather than a network socket.
+
+Because D1 uses SQLite, the supported SQL surface includes:
+
+- The [FTS5 module](/d1/sql-api/sql-statements/) for full-text search.
+- The JSON extension for JSON functions and operators.
+- Math functions.
+
+For the list of supported statements and PRAGMAs, refer to [SQL statements](/d1/sql-api/sql-statements/).
+
+## Serverless billing
+
+You do not provision servers or choose instance sizes. Cloudflare runs your query and bills you for the rows your queries read and write, plus the storage your data occupies. When no one queries your database, you pay only for storage.
+
+D1 reports `rows_read` and `rows_written` in the `meta` object of every query result, and these two values are the basis for query billing. Refer to [Pricing](/d1/platform/pricing/) for rates and [Metrics and analytics](/d1/observability/metrics-analytics/) for how to inspect usage.
+
+## Where your data runs
+
+Each D1 database is backed by a single primary database instance that runs in one geographic location. D1 request latency depends on the physical proximity of a user to that primary instance.
+
+By default, D1 creates the primary database instance in a location close to where you issued the request to create the database. In most cases, this lets D1 choose an optimal location on your behalf. The location of the request that creates the database is not always close to your users. If you create a database from a CI pipeline or a control plane in one region, but your users are in another, the primary instance can end up far from your traffic.
+
+You can influence placement at creation time with a [location hint](/d1/configuration/data-location/). A location hint indicates your desired geographical location for the primary database instance:
+
+| Hint   | Region                |
+| ------ | --------------------- |
+| `wnam` | Western North America |
+| `enam` | Eastern North America |
+| `weur` | Western Europe        |
+| `eeur` | Eastern Europe        |
+| `apac` | Asia-Pacific          |
+| `oc`   | Oceania               |
+
+A location hint does not guarantee placement. D1 runs in the nearest possible location, by latency, to your preference. Location hints are not supported for South America (`sam`), Africa (`afr`), or the Middle East (`me`); D1 databases do not run in these locations.
+
+For data locality requirements such as GDPR or FedRAMP, use a [jurisdiction](/d1/configuration/data-location/) instead. Supported jurisdictions are `eu` and `fedramp`. A jurisdiction constrains where the database runs and persists data, though Workers can still access it from anywhere. You can only set a jurisdiction at creation, and it cannot be changed afterward. If you provide both a jurisdiction and a location hint, the jurisdiction takes precedence.
+
+To see the Cloudflare locations that back Durable Objects, and therefore D1, refer to the community-maintained [Durable Objects location map](https://where.durableobjects.live/).
+
+## How queries are processed
+
+D1 operates in auto-commit mode. Each statement executes and commits on its own unless you group statements together.
+
+A single D1 database processes queries against one primary instance. To reduce round-trips and keep related writes atomic, group statements with [`batch()`](/d1/worker-api/d1-database/#batch):
+
+- Statements in a `batch()` call execute sequentially and non-concurrently.
+- A batch is a single SQL transaction. If one statement fails, D1 aborts and rolls back the entire sequence.
+
+Because throughput is bound by how long each query takes, query performance is the main lever you control. A query that scans an entire table is far slower than a point lookup on an [indexed column](/d1/best-practices/use-indexes/). The `queryEfficiency` metric, the number of rows returned divided by the number of rows read, tells you how much work a query wastes. Aim to keep it close to `1`. Refer to [Use indexes](/d1/best-practices/use-indexes/).
+
+## Consistency model
+
+When you use D1 without read replication, D1 routes every query, both reads and writes, to the primary database instance. Because all queries hit the same instance, you read your own writes: after a write is acknowledged, every subsequent read sees it.
+
+### Read replication
+
+[Read replication](/d1/best-practices/read-replication/) lowers latency for read-heavy applications with globally distributed users. When you enable it, D1 creates read-only copies of the primary instance, called read replicas, in regions across Cloudflare's network. Replicas serve read queries. Write queries are always forwarded to the primary instance.
+
+D1 replicates changes from the primary instance to read replicas **asynchronously**. At any given moment, a replica may be arbitrarily out of date. The time for the latest committed data on the primary to reach a replica is the <GlossaryTooltip term="replica lag">replica lag</GlossaryTooltip>.
+
+Replica lag means that, without coordination, a read sent to a replica might not yet contain a write you just made on the primary. For example, you write data, then read it back from a replica 10 milliseconds later, and the replica does not have the change yet.
+
+### Sequential consistency with the Sessions API
+
+The [Sessions API](/d1/best-practices/read-replication/) resolves replica lag by guaranteeing **sequential consistency** within a session. D1 maintains a global order of all operations on the database and uses [bookmarks](/d1/reference/time-travel/#bookmarks) to identify the latest version of the database a query has observed. A query is then served by a replica that is at least as up-to-date as its bookmark.
+
+Sequential consistency gives you these guarantees within a session:
+
+- **Read my own writes** — After you write, all subsequent reads see the write.
+- **Monotonic reads** — A later read never observes a database version older than an earlier read.
+- **Monotonic writes** — Writes are observed by all processes in the order they were made.
+- **Writes follow reads** — A write that follows a read is based on the value that was read.
+
+You start a session with [`withSession()`](/d1/worker-api/d1-database/#withsession) and pass a bookmark between requests to extend consistency across them:
+
+| Parameter                       | Behavior                                                                       |
+| ------------------------------- | ------------------------------------------------------------------------------ |
+| `first-unconstrained` (default) | The first query routes to any instance, for minimum latency.                   |
+| `first-primary`                 | The first query routes to the primary, for the latest data.                    |
+| A bookmark string               | The session starts from a database version at least as recent as the bookmark. |
+
+To enable read replication, set `read_replication.mode: auto` through the REST API. The Sessions API works whether or not replication is enabled, so you can write code with `withSession()` first and turn on replication later without changing Worker code. For the full walkthrough, refer to [Global read replication](/d1/best-practices/read-replication/).
+
+## Point-in-time recovery
+
+D1 includes [Time Travel](/d1/reference/time-travel/), its approach to backups and point-in-time recovery. Time Travel is always on, requires no configuration, and incurs no additional cost. It lets you restore a database to any minute within the last 30 days on the Workers Paid plan, or 7 days on the Workers Free plan.
+
+Time Travel uses the same bookmark primitive as the Sessions API. A bookmark identifies a specific database state, and you can restore to any bookmark within the retention window. Restoring is a destructive, in-place operation: it overwrites the database, and in-flight queries and transactions are cancelled. For commands and details, refer to [Time Travel](/d1/reference/time-travel/).
+
+## Resource limits of a single database
+
+A single D1 database has fixed resources. The most important limits to design around are:
+
+| Limit                               | Workers Paid | Workers Free |
+| ----------------------------------- | ------------ | ------------ |
+| Maximum database size               | 10 GB        | 500 MB       |
+| Databases per account               | 50,000       | 10           |
+| Queries per Worker invocation       | 1,000        | 50           |
+| Maximum SQL query duration          | 30 seconds   | 30 seconds   |
+| Maximum SQL statement length        | 100 KB       | 100 KB       |
+| Maximum bound parameters per query  | 100          | 100          |
+| Maximum string, `BLOB`, or row size | 2 MB         | 2 MB         |
+
+A common issue with larger databases is that an aggregation query attempting to scan an entire multi-gigabyte table into memory fails when it exceeds the database's CPU or memory limit. Avoid full-table scans on large tables, and split bulk work into smaller queries.
+
+D1 is designed for horizontal scale-out across many smaller databases, not vertical scale-up of one large database. If you outgrow a single database, shard your data across multiple databases. The maximum number of databases per account can be raised by request on Workers Paid and Enterprise plans, with support for millions of databases or more. Refer to [Limits](/d1/platform/limits/) for the complete table.
+
+## Related resources
+
+- [Rules of D1](/d1/best-practices/rules-of-d1/) — best practices that follow from this architecture.
+- [Getting started](/d1/get-started/) — create your first database and query it from a Worker.
+- [Global read replication](/d1/best-practices/read-replication/) — reduce read latency with replicas and the Sessions API.
+- [Time Travel](/d1/reference/time-travel/) — backups and point-in-time recovery.
+- [Data location](/d1/configuration/data-location/) — location hints and jurisdictions.
+- [Limits](/d1/platform/limits/) — the full list of D1 limits.
