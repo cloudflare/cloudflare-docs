@@ -2,7 +2,10 @@
 
 ---
 
-<figure class="pdoc" aria-label="Each Preview gets its own Durable Object namespace">
+<figure
+	class="pdoc"
+	aria-label="Each Preview gets its own Durable Object namespace"
+>
 	<div class="pdoc-shell">
 		<!-- Code -->
 		<div class="pdoc-code">
@@ -22,7 +25,11 @@
 						<span class="pdoc-card-branch">redesign</span>
 						<button class="pdoc-close" aria-label="Delete Preview">
 							<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-								<path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+								<path
+									d="M1 1l8 8M9 1l-8 8"
+									stroke="currentColor"
+									stroke-width="1.5"
+									stroke-linecap="round"></path>
 							</svg>
 						</button>
 					</div>
@@ -46,7 +53,11 @@
 						<span class="pdoc-card-branch">fix-api</span>
 						<button class="pdoc-close" aria-label="Delete Preview">
 							<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-								<path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+								<path
+									d="M1 1l8 8M9 1l-8 8"
+									stroke="currentColor"
+									stroke-width="1.5"
+									stroke-linecap="round"></path>
 							</svg>
 						</button>
 					</div>
@@ -70,7 +81,11 @@
 						<span class="pdoc-card-branch">feature/login</span>
 						<button class="pdoc-close" aria-label="Delete Preview">
 							<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-								<path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+								<path
+									d="M1 1l8 8M9 1l-8 8"
+									stroke="currentColor"
+									stroke-width="1.5"
+									stroke-linecap="round"></path>
 							</svg>
 						</button>
 					</div>
@@ -95,7 +110,11 @@
 						<span class="pdoc-card-branch">new-feature</span>
 						<button class="pdoc-close" aria-label="Delete Preview">
 							<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-								<path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+								<path
+									d="M1 1l8 8M9 1l-8 8"
+									stroke="currentColor"
+									stroke-width="1.5"
+									stroke-linecap="round"></path>
 							</svg>
 						</button>
 					</div>
@@ -119,7 +138,11 @@
 						<span class="pdoc-card-branch">dark-mode</span>
 						<button class="pdoc-close" aria-label="Delete Preview">
 							<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-								<path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+								<path
+									d="M1 1l8 8M9 1l-8 8"
+									stroke="currentColor"
+									stroke-width="1.5"
+									stroke-linecap="round"></path>
 							</svg>
 						</button>
 					</div>
@@ -139,9 +162,17 @@
 				</div>
 
 				<!-- Add preview button -->
-				<button class="pdoc-add" aria-label="Add a Preview" title="Add a Preview">
+				<button
+					class="pdoc-add"
+					aria-label="Add a Preview"
+					title="Add a Preview"
+				>
 					<svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-						<path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<path
+							d="M7 1v12M1 7h12"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"></path>
 					</svg>
 				</button>
 			</div>
@@ -193,13 +224,19 @@
 		--p-muted: light-dark(#737373, #a3a3a3);
 		--p-text: light-dark(#171717, #f5f5f5);
 		--p-border: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--p-grid: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 7%));
 		--p-soft: light-dark(#f5f5f5, #222226);
 		--p-brand: #f6821f;
 		--p-brand-soft: light-dark(#fff7ed, #431407);
 		--p-purple: light-dark(#7c3aed, #a78bfa);
 		--p-red: light-dark(#dc2626, #f87171);
 		--p-red-soft: light-dark(#fef2f2, #450a0a);
-		--pdoc-offset: 14px;
+		--pdoc-offset-x: 7px;
+		--pdoc-offset-y: 7px;
+		--pdoc-depth: 4;
+		--pdoc-ease: cubic-bezier(0.16, 1, 0.3, 1);
+		--pdoc-drag-x: 0px;
+		--pdoc-drag-rotate: 0deg;
 		margin: 1.25rem 0 1.75rem;
 		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 		font-size: 0.8125rem;
@@ -215,8 +252,8 @@
 		border-radius: 14px;
 		overflow: hidden;
 		background:
-			radial-gradient(circle, var(--p-border) 1px, transparent 1px), var(--p-bg);
-		background-size: 14px 14px;
+			radial-gradient(circle, var(--p-grid) 0.9px, transparent 1px), var(--p-bg);
+		background-size: 18px 18px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -229,6 +266,7 @@
 		border: 1px solid var(--p-border);
 		border-radius: 8px;
 		background: var(--p-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
 	}
 
 	.pdoc-code code {
@@ -271,9 +309,14 @@
 	.pdoc-stack {
 		position: relative;
 		width: 100%;
-		padding-right: calc(var(--pdoc-offset) * 2);
-		margin-bottom: calc(var(--pdoc-offset) * 2);
-		cursor: pointer;
+		padding-right: calc(var(--pdoc-offset-x) * var(--pdoc-depth));
+		margin-bottom: calc(var(--pdoc-offset-y) * var(--pdoc-depth));
+		cursor: grab;
+		touch-action: pan-y;
+	}
+
+	.pdoc-stack:active {
+		cursor: grabbing;
 	}
 
 	/* ── Card ── */
@@ -281,16 +324,18 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: calc(100% - var(--pdoc-offset) * 2);
-		border: 1px solid color-mix(in srgb, var(--p-brand) 30%, var(--p-border));
+		width: calc(100% - var(--pdoc-offset-x) * var(--pdoc-depth));
+		border: 1px solid color-mix(in srgb, var(--p-brand) 24%, var(--p-border));
 		border-radius: 12px;
 		background: var(--p-card);
 		overflow: hidden;
 		user-select: none;
+		will-change: transform, opacity;
 		transition:
-			transform 0.3s ease,
-			opacity 0.3s ease,
-			box-shadow 0.3s ease;
+			transform 0.5s var(--pdoc-ease),
+			opacity 0.38s ease,
+			box-shadow 0.5s var(--pdoc-ease),
+			border-color 0.24s ease;
 	}
 
 	/* Hidden cards */
@@ -301,15 +346,31 @@
 	/* Layer positions */
 	.pdoc-layer-0 {
 		z-index: 3;
-		transform: translate(0, 0);
-		box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
+		transform: translate(var(--pdoc-drag-x), 0) rotate(var(--pdoc-drag-rotate));
+		box-shadow:
+			0 8px 28px rgb(0 0 0 / 8%),
+			0 1px 3px rgb(0 0 0 / 5%);
 		position: relative;
+	}
+
+	.pdoc-dragging .pdoc-layer-0 {
+		transition: none;
+	}
+
+	.pdoc-swipe-out-next {
+		opacity: 0 !important;
+		transform: translate(-42px, -4px) rotate(-2deg) scale(0.98) !important;
+	}
+
+	.pdoc-swipe-out-prev {
+		opacity: 0 !important;
+		transform: translate(42px, -4px) rotate(2deg) scale(0.98) !important;
 	}
 
 	.pdoc-layer-1 {
 		z-index: 2;
-		transform: translate(var(--pdoc-offset), var(--pdoc-offset));
-		opacity: 0.8;
+		transform: translate(var(--pdoc-offset-x), var(--pdoc-offset-y));
+		opacity: 0.7;
 	}
 
 	.pdoc-layer-1 .pdoc-card-body {
@@ -318,11 +379,40 @@
 
 	.pdoc-layer-2 {
 		z-index: 1;
-		transform: translate(calc(var(--pdoc-offset) * 2), calc(var(--pdoc-offset) * 2));
-		opacity: 0.55;
+		transform: translate(
+			calc(var(--pdoc-offset-x) * 2),
+			calc(var(--pdoc-offset-y) * 2)
+		);
+		opacity: 0.5;
 	}
 
 	.pdoc-layer-2 .pdoc-card-body {
+		visibility: hidden;
+	}
+
+	.pdoc-layer-3 {
+		z-index: 0;
+		transform: translate(
+			calc(var(--pdoc-offset-x) * 3),
+			calc(var(--pdoc-offset-y) * 3)
+		);
+		opacity: 0.36;
+	}
+
+	.pdoc-layer-3 .pdoc-card-body {
+		visibility: hidden;
+	}
+
+	.pdoc-layer-4 {
+		z-index: -1;
+		transform: translate(
+			calc(var(--pdoc-offset-x) * 4),
+			calc(var(--pdoc-offset-y) * 4)
+		);
+		opacity: 0.26;
+	}
+
+	.pdoc-layer-4 .pdoc-card-body {
 		visibility: hidden;
 	}
 
@@ -333,7 +423,7 @@
 		justify-content: space-between;
 		padding: 12px 12px 12px 16px;
 		border-bottom: 1px solid
-			color-mix(in srgb, var(--p-brand) 20%, var(--p-border));
+			color-mix(in srgb, var(--p-brand) 16%, var(--p-border));
 		background: var(--p-brand-soft);
 	}
 
@@ -360,7 +450,9 @@
 		cursor: pointer;
 		color: var(--p-muted);
 		flex-shrink: 0;
-		transition: background 0.15s ease, color 0.15s ease;
+		transition:
+			background 0.15s ease,
+			color 0.15s ease;
 		padding: 0;
 		opacity: 0;
 		pointer-events: none;
@@ -407,7 +499,9 @@
 		border-radius: 8px;
 		border: 1px dashed color-mix(in srgb, var(--p-brand) 40%, var(--p-border));
 		background: var(--p-brand-soft);
-		transition: border-color 0.3s ease, background 0.3s ease;
+		transition:
+			border-color 0.3s ease,
+			background 0.3s ease;
 	}
 
 	.pdoc-ns code {
@@ -417,7 +511,9 @@
 		font-size: 0.8125rem;
 		font-weight: 650;
 		color: var(--p-text);
-		transition: text-decoration 0.3s ease, opacity 0.3s ease;
+		transition:
+			text-decoration 0.3s ease,
+			opacity 0.3s ease;
 	}
 
 	.pdoc-ns-badge {
@@ -434,24 +530,39 @@
 	/* ── Destroying state — smooth transition into red ── */
 	.pdoc-destroying {
 		transition:
-			border-color 0.4s ease,
-			opacity 0.6s ease,
-			transform 0.6s ease !important;
-		border-color: color-mix(in srgb, var(--p-red) 40%, var(--p-border)) !important;
-		position: relative !important;
+			border-color 0.34s ease,
+			opacity 0.5s ease,
+			transform 0.5s var(--pdoc-ease) !important;
+		border-color: color-mix(
+			in srgb,
+			var(--p-red) 40%,
+			var(--p-border)
+		) !important;
 		z-index: 10 !important;
 	}
 
 	.pdoc-destroying .pdoc-card-header {
 		background: var(--p-red-soft) !important;
-		border-bottom-color: color-mix(in srgb, var(--p-red) 20%, var(--p-border)) !important;
-		transition: background 0.4s ease, border-color 0.4s ease;
+		border-bottom-color: color-mix(
+			in srgb,
+			var(--p-red) 20%,
+			var(--p-border)
+		) !important;
+		transition:
+			background 0.4s ease,
+			border-color 0.4s ease;
 	}
 
 	.pdoc-destroying .pdoc-ns {
-		border-color: color-mix(in srgb, var(--p-red) 40%, var(--p-border)) !important;
+		border-color: color-mix(
+			in srgb,
+			var(--p-red) 40%,
+			var(--p-border)
+		) !important;
 		background: var(--p-red-soft) !important;
-		transition: background 0.4s ease, border-color 0.4s ease;
+		transition:
+			background 0.4s ease,
+			border-color 0.4s ease;
 	}
 
 	.pdoc-destroying .pdoc-ns code {
@@ -466,15 +577,31 @@
 	}
 
 	.pdoc-destroying .pdoc-instance {
-		background: color-mix(in srgb, var(--p-red) 40%, var(--p-border)) !important;
+		background: color-mix(
+			in srgb,
+			var(--p-red) 40%,
+			var(--p-border)
+		) !important;
 		transition: background 0.4s ease;
 	}
 
 	/* Fade + shrink out — uses transition not animation for smoothness */
 	.pdoc-removing {
+		position: absolute !important;
+		top: 0;
+		left: 0;
 		opacity: 0 !important;
-		transform: translate(0, -12px) scale(0.96) !important;
+		transform: translate(-30px, -10px) rotate(-2deg) scale(0.94) !important;
 		pointer-events: none !important;
+	}
+
+	.pdoc-entering {
+		opacity: 0 !important;
+		transform: translate(
+				calc(var(--pdoc-offset-x) * 2),
+				calc(var(--pdoc-offset-y) * 3)
+			)
+			scale(0.96) !important;
 	}
 
 	/* ── Instances ── */
@@ -503,8 +630,8 @@
 	.pdoc-add {
 		position: absolute;
 		z-index: 10;
-		bottom: calc(var(--pdoc-offset) * 2 * -1 - 18px);
-		right: -18px;
+		bottom: -18px;
+		right: calc(var(--pdoc-offset-x) * var(--pdoc-depth) - 18px);
 		width: 36px;
 		height: 36px;
 		border-radius: 999px;
@@ -514,14 +641,17 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
-		transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.3s ease;
+		box-shadow: 0 6px 16px rgb(246 130 31 / 20%);
+		transition:
+			transform 0.18s var(--pdoc-ease),
+			box-shadow 0.18s ease,
+			opacity 0.3s ease;
 		padding: 0;
 	}
 
 	.pdoc-add:hover {
 		transform: scale(1.1);
-		box-shadow: 0 4px 14px rgb(0 0 0 / 20%);
+		box-shadow: 0 8px 18px rgb(246 130 31 / 24%);
 	}
 
 	.pdoc-add:active {
@@ -530,7 +660,13 @@
 
 	.pdoc-add-used {
 		opacity: 0.3;
-		pointer-events: none;
+		cursor: not-allowed;
+	}
+
+	.pdoc-add-used:hover,
+	.pdoc-add-used:active {
+		transform: none;
+		box-shadow: 0 6px 16px rgb(246 130 31 / 20%);
 	}
 
 	/* ── Dots ── */
@@ -545,7 +681,9 @@
 		height: 8px;
 		border-radius: 999px;
 		background: var(--p-border);
-		transition: background 0.2s ease;
+		transition:
+			background 0.2s ease,
+			transform 0.2s ease;
 		cursor: pointer;
 		padding: 0;
 	}
@@ -556,6 +694,19 @@
 
 	.pdoc-dot-active {
 		background: var(--p-brand);
+		transform: scale(1.25);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pdoc-card,
+		.pdoc-add,
+		.pdoc-dot,
+		.pdoc-ns,
+		.pdoc-ns code,
+		.pdoc-ns-badge,
+		.pdoc-instance {
+			transition-duration: 0.01ms !important;
+		}
 	}
 
 	.pdoc-dot-hidden {
@@ -586,7 +737,8 @@
 	/* ── Responsive ── */
 	@media (max-width: 700px) {
 		.pdoc {
-			--pdoc-offset: 10px;
+			--pdoc-offset-x: 6px;
+			--pdoc-offset-y: 6px;
 		}
 
 		.pdoc-shell {
@@ -600,9 +752,9 @@
 </style>
 
 <script>
-	for (const diagram of document.querySelectorAll(".pdoc")) {
+	for (const diagram of document.querySelectorAll<HTMLElement>(".pdoc")) {
 		const stack = diagram.querySelector<HTMLElement>(".pdoc-stack");
-		const addBtn = diagram.querySelector<HTMLElement>(".pdoc-add");
+		const addBtn = diagram.querySelector<HTMLButtonElement>(".pdoc-add");
 		const MIN_CARDS = 1;
 
 		if (!stack) continue;
@@ -612,12 +764,14 @@
 
 		const getVisibleCards = () =>
 			Array.from(diagram.querySelectorAll<HTMLElement>(".pdoc-card")).filter(
-				(c) => !c.classList.contains("pdoc-hidden") && !c.classList.contains("pdoc-removing")
+				(c) =>
+					!c.classList.contains("pdoc-hidden") &&
+					!c.classList.contains("pdoc-removing"),
 			);
 
 		const getVisibleDots = () =>
 			Array.from(diagram.querySelectorAll<HTMLElement>(".pdoc-dot")).filter(
-				(d) => !d.classList.contains("pdoc-dot-hidden")
+				(d) => !d.classList.contains("pdoc-dot-hidden"),
 			);
 
 		const updateCloseButtons = () => {
@@ -637,9 +791,15 @@
 			const total = cards.length;
 
 			for (let i = 0; i < total; i++) {
-				cards[i].classList.remove("pdoc-layer-0", "pdoc-layer-1", "pdoc-layer-2");
+				cards[i].classList.remove(
+					"pdoc-layer-0",
+					"pdoc-layer-1",
+					"pdoc-layer-2",
+					"pdoc-layer-3",
+					"pdoc-layer-4",
+				);
 				const offset = (i - current + total) % total;
-				const layer = Math.min(offset, 2);
+				const layer = Math.min(offset, 4);
 				cards[i].classList.add(`pdoc-layer-${layer}`);
 			}
 
@@ -655,14 +815,28 @@
 			if (total === 0 || animating) return;
 			const wrapped = ((idx % total) + total) % total;
 			if (wrapped === current) return;
+			const cards = getVisibleCards();
+			const outgoing = cards[current];
+			const forwardSteps = (wrapped - current + total) % total;
+			const direction = forwardSteps <= total / 2 ? "next" : "prev";
 
 			animating = true;
-			current = wrapped;
-			updateLayers();
+			outgoing?.classList.add(
+				direction === "next" ? "pdoc-swipe-out-next" : "pdoc-swipe-out-prev",
+			);
+
+			setTimeout(() => {
+				current = wrapped;
+				updateLayers();
+				outgoing?.classList.remove(
+					"pdoc-swipe-out-next",
+					"pdoc-swipe-out-prev",
+				);
+			}, 180);
 
 			setTimeout(() => {
 				animating = false;
-			}, 320);
+			}, 620);
 		};
 
 		// Delete a card
@@ -679,42 +853,50 @@
 			const badge = card.querySelector<HTMLElement>(".pdoc-ns-badge");
 			if (badge) badge.textContent = "deleted";
 
-			// 2. Let the "deleted" state sit, then fade out smoothly
+			// 2. Let the "deleted" state sit, then fade out and refill the stack together
 			setTimeout(() => {
 				card.classList.add("pdoc-removing");
+
+				const dots = getVisibleDots();
+				if (dots.length > 0) {
+					dots[dots.length - 1].classList.add("pdoc-dot-hidden");
+				}
+
+				const remaining = getVisibleCards();
+				if (current >= remaining.length) {
+					current = Math.max(0, remaining.length - 1);
+				}
+
+				updateLayers();
+				updateAddBtn();
 
 				// Wait for the fade-out transition to finish
 				setTimeout(() => {
 					card.classList.add("pdoc-hidden");
-					card.classList.remove("pdoc-destroying", "pdoc-removing", "pdoc-layer-0", "pdoc-layer-1", "pdoc-layer-2");
+					card.classList.remove(
+						"pdoc-destroying",
+						"pdoc-removing",
+						"pdoc-layer-0",
+						"pdoc-layer-1",
+						"pdoc-layer-2",
+						"pdoc-layer-3",
+						"pdoc-layer-4",
+					);
 
 					// Reset the badge for if it ever comes back
 					if (badge) badge.textContent = "isolated";
 
-					// Remove the last visible dot
-					const dots = getVisibleDots();
-					if (dots.length > 0) {
-						dots[dots.length - 1].classList.add("pdoc-dot-hidden");
-					}
-
-					// Fix current index
-					const remaining = getVisibleCards();
-					if (current >= remaining.length) {
-						current = Math.max(0, remaining.length - 1);
-					}
-
-					updateLayers();
-					updateAddBtn();
-
 					setTimeout(() => {
 						animating = false;
-					}, 320);
-				}, 650);
-			}, 800);
+					}, 120);
+				}, 560);
+			}, 450);
 		};
 
 		// Close button clicks
-		for (const closeBtn of diagram.querySelectorAll<HTMLElement>(".pdoc-close")) {
+		for (const closeBtn of diagram.querySelectorAll<HTMLElement>(
+			".pdoc-close",
+		)) {
 			closeBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
 				const card = closeBtn.closest<HTMLElement>(".pdoc-card");
@@ -744,11 +926,10 @@
 		const updateAddBtn = () => {
 			if (!addBtn) return;
 			const visible = getVisibleCards().length;
-			if (visible >= 5) {
-				addBtn.classList.add("pdoc-add-used");
-			} else {
-				addBtn.classList.remove("pdoc-add-used");
-			}
+			const disabled = visible >= 5;
+			addBtn.classList.toggle("pdoc-add-used", disabled);
+			addBtn.disabled = disabled;
+			addBtn.setAttribute("aria-disabled", String(disabled));
 		};
 
 		if (addBtn) {
@@ -758,16 +939,21 @@
 				if (animating || visible >= 5) return;
 
 				// Find the first hidden card
-				const nextCard = diagram.querySelector<HTMLElement>(".pdoc-card.pdoc-hidden");
+				const nextCard = diagram.querySelector<HTMLElement>(
+					".pdoc-card.pdoc-hidden",
+				);
 				if (!nextCard) return;
 
 				animating = true;
 
-				// Show the card
+				// Show the card from behind the stack, then settle it into place
+				nextCard.classList.add("pdoc-entering");
 				nextCard.classList.remove("pdoc-hidden");
 
 				// Show a dot
-				const nextDot = diagram.querySelector<HTMLElement>(".pdoc-dot.pdoc-dot-hidden");
+				const nextDot = diagram.querySelector<HTMLElement>(
+					".pdoc-dot.pdoc-dot-hidden",
+				);
 				if (nextDot) {
 					nextDot.classList.remove("pdoc-dot-hidden");
 				}
@@ -777,9 +963,13 @@
 				updateLayers();
 				updateAddBtn();
 
+				requestAnimationFrame(() => {
+					nextCard.classList.remove("pdoc-entering");
+				});
+
 				setTimeout(() => {
 					animating = false;
-				}, 350);
+				}, 520);
 			});
 		}
 
@@ -817,12 +1007,47 @@
 		// Touch swipe
 		let touchStartX = 0;
 		let touchStartY = 0;
+		let touchDx = 0;
+		let touchDragging = false;
+		const SWIPE_THRESHOLD = 44;
+		const DRAG_LIMIT = 72;
+
+		const resetDrag = () => {
+			touchDx = 0;
+			touchDragging = false;
+			diagram.classList.remove("pdoc-dragging");
+			diagram.style.setProperty("--pdoc-drag-x", "0px");
+			diagram.style.setProperty("--pdoc-drag-rotate", "0deg");
+		};
 
 		stack.addEventListener(
 			"touchstart",
 			(e: TouchEvent) => {
+				if (animating || e.touches.length !== 1) return;
 				touchStartX = e.touches[0].clientX;
 				touchStartY = e.touches[0].clientY;
+				touchDx = 0;
+				touchDragging = false;
+			},
+			{ passive: true },
+		);
+
+		stack.addEventListener(
+			"touchmove",
+			(e: TouchEvent) => {
+				if (animating || e.touches.length !== 1) return;
+				const dx = e.touches[0].clientX - touchStartX;
+				const dy = e.touches[0].clientY - touchStartY;
+
+				if (!touchDragging && Math.abs(dx) < 10) return;
+				if (!touchDragging && Math.abs(dy) > Math.abs(dx)) return;
+
+				touchDragging = true;
+				touchDx = dx;
+				const clamped = Math.max(-DRAG_LIMIT, Math.min(DRAG_LIMIT, dx));
+				diagram.classList.add("pdoc-dragging");
+				diagram.style.setProperty("--pdoc-drag-x", `${clamped}px`);
+				diagram.style.setProperty("--pdoc-drag-rotate", `${clamped / 24}deg`);
 			},
 			{ passive: true },
 		);
@@ -831,10 +1056,13 @@
 			"touchend",
 			(e: TouchEvent) => {
 				if (animating) return;
-				const dx = e.changedTouches[0].clientX - touchStartX;
+				const dx = touchDragging
+					? touchDx
+					: e.changedTouches[0].clientX - touchStartX;
 				const dy = e.changedTouches[0].clientY - touchStartY;
+				resetDrag();
 
-				if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+				if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
 					if (dx < 0) {
 						goTo(current + 1);
 					} else {
@@ -844,6 +1072,8 @@
 			},
 			{ passive: true },
 		);
+
+		stack.addEventListener("touchcancel", resetDrag, { passive: true });
 
 		updateLayers();
 	}

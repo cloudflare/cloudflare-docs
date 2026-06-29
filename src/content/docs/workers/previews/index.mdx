@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Worker Previews
+title: Previews
 description: Test branch and pull request changes in isolated copies of your Worker before production.
 sidebar:
   order: 8.5
@@ -10,75 +10,62 @@ products:
 
 import { WorkerPreviewsDiagram } from "~/components";
 
-Worker Previews give each branch or pull request its own URL before you merge code or send live traffic to a change.
+A Worker serves live traffic from a production branch with a URL, variables, secrets, and bindings configured for production.
 
-In Git workflows, each Preview usually represents one branch or pull request. It can use its own variables, secrets, bindings, resources, and custom domains, including test resources such as a test D1 database or R2 bucket. This lets reviewers test the branch in an app-like environment without changing production Worker settings or routing live traffic.
+**Previews** give every other branch the same setup — a separate URL, variables, secrets, and bindings — so you can review and test without touching production.
 
-Coming from Version URLs or Wrangler environments? Refer to [Previews, Version URLs, and Wrangler environments](/workers/configuration/compare-preview-workflows/) to compare the workflows.
+Select a branch below to see how the command, URL, and settings change between production and a Preview.
 
 <WorkerPreviewsDiagram />
 
+Previews are the recommended approach for testing non-production changes. Coming from Version URLs or Wrangler environments? Refer to [Previews, Version URLs, and Wrangler environments](/workers/configuration/compare-preview-workflows/) to compare and migrate.
+
 ## How it works
 
-Production and Preview changes use different commands. Use `wrangler deploy` for the Worker that serves live traffic. Use `wrangler preview` for branch and pull request testing.
+Running `npx wrangler preview` creates or updates a Preview from your current branch. As you use `npx wrangler deploy` for production, use `npx wrangler preview` to test a branch before merging.
 
-| Branch          | Command            | What happens                                                                                                                    |
-| --------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `main`          | `wrangler deploy`  | Deploys your Worker to production with its production variables, secrets, bindings, resources, and custom domains.              |
-| `feature/login` | `wrangler preview` | Creates or updates a Preview for that branch with Preview-specific variables, secrets, bindings, resources, and custom domains. |
+| Branch          | Command                | What happens                                        |
+| --------------- | ---------------------- | --------------------------------------------------- |
+| `main`          | `npx wrangler deploy`  | Deploys to production with production settings.     |
+| `feature/login` | `npx wrangler preview` | Creates or updates a Preview with its own settings. |
 
-Each Preview name maps to one stable Preview URL. In Git workflows, use one Preview name per branch or pull request. When you push more changes and run `wrangler preview` with the same name, the same Preview URL serves the latest deployment for that Preview.
+### URLs
 
-Each new Preview branches from [Shared Preview Settings](/workers/previews/configuration/#shared-preview-settings). After it exists, you can change that Preview's settings without changing production, the shared settings, or other Previews.
+Each Preview gets two URLs. The **Preview URL** always serves the latest deployment. The **Deployment URL** is immutable and points to one specific deploy.
 
-## URL formats
-
-Previews can be served on `workers.dev` or on a [custom domain](/workers/previews/custom-domains/). Each Preview has two URL types:
+Choose to serve these URLs on `workers.dev` or a [custom domain](/workers/previews/custom-domains/):
 
 | Host type     | Preview URL                                            | Deployment URL                                          |
 | ------------- | ------------------------------------------------------ | ------------------------------------------------------- |
 | `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
 | Custom domain | `<preview-name>.app.example.com`                       | `<deployment-id>-<preview-name>.app.example.com`        |
 
-The **Preview URL** stays the same and serves the latest changes for the branch.
+### Preview names
 
-The **Deployment URL** points to one specific deploy for version history, comparisons, or debugging.
+A Preview name identifies the branch Preview. By default, the name comes from your git branch. Deploying again with the same name updates the same Preview and keeps the Preview URL stable.
 
-## Choose your next step
+You can also set the name explicitly with `npx wrangler preview --name <preview-name>`.
 
-| I want to...                                              | Do this                                                                |
-| --------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Create or update a Preview                                | [Get started](/workers/previews/get-started/)                          |
-| Configure variables, secrets, or bindings                 | [Configure Preview settings](/workers/previews/configuration/)         |
-| Point a branch at test data instead of production         | [Set up resource isolation](/workers/previews/resources/)              |
-| Use `preview.example.com` instead of `workers.dev`        | [Enable custom domains](/workers/previews/custom-domains/)             |
-| Make Preview URLs private with sign-in                    | [Use Cloudflare Access](#access-control)                               |
-| Compare Previews, Version URLs, and Wrangler environments | [Compare workflows](/workers/configuration/compare-preview-workflows/) |
+### Settings and isolation
 
-## Resource isolation
+Every Preview gets its own variables, secrets, and bindings. Configure each Preview independently, or set a [base configuration](/workers/previews/configuration/#set-a-base-configuration) so every new Preview starts from the same settings.
 
-Previews can use their own test resources, such as a test D1 database or R2 bucket.
+Bindings connect a Preview to resources. Previews that bind to the same KV namespace, D1 database, R2 bucket, or external system share that data. For details, refer to [Resources and isolation](/workers/previews/resources/).
 
-Set this up in Preview settings. Use Shared Preview Settings for future Preview branches, or this Preview's settings for one branch.
+### Access control
 
-Cloudflare creates separate Preview resources automatically for Durable Objects, Workflows, and Containers. For account-level resources such as KV, D1, R2, Queues, Vectorize, and Hyperdrive, point the Preview at the test resource you want it to use.
+Preview URLs are public by default. Use [Cloudflare Workers Access](/workers/configuration/cloudflare-access/) to require visitors to sign in before they can reach a Preview.
 
-For details, refer to [Resources and isolation](/workers/previews/resources/).
+You can protect all Previews on an account or only one Worker's Previews. Access applies to `workers.dev` Preview URLs, Deployment URLs, and custom domain Preview URLs.
 
-## Access control
+### Limits and automatic cleanup
 
-Preview URLs are public when routing is enabled unless you add an access control layer. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require authentication for Preview URLs and Deployment URLs.
+| Limit | Free plan | Paid plans |
+| --- | --- | --- |
+| Active Previews per Worker | 10 | 100 |
+| Deployments per Preview | 100 | 100 |
 
-Production and Preview access can be controlled independently.
+When a limit is reached, Cloudflare automatically cleans up older Previews or deployments:
 
-To turn Preview URL routing on or off, refer to [Configuration](/workers/previews/configuration/#preview-url-routing).
-
-For custom domain Preview URLs, refer to [Custom domains](/workers/previews/custom-domains/).
-
-## Limits
-
-Each Worker can have up to 100 active Previews. Each Preview can have up to 100 deployments.
-
-When a Worker reaches the Preview limit, Cloudflare automatically deletes the least recently deployed Preview to make room for a new one. When a Preview reaches the deployment limit, Cloudflare deletes the oldest deployments first.
-
-{/* TODO: update section as scaling/deletion work continues. */}
+- When a Worker reaches the active Preview limit, Cloudflare deletes the least recently deployed Preview.
+- When a Preview reaches the deployment limit, Cloudflare deletes the oldest deployments first.

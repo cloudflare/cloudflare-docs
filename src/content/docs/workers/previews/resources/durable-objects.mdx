@@ -1,0 +1,160 @@
+---
+pcx_content_type: concept
+title: Durable Objects and Containers
+description: How Durable Objects and Containers behave in Previews — automatic isolation, intentional sharing, and access patterns.
+sidebar:
+  order: 2
+products:
+  - workers
+---
+
+import {
+	WranglerConfig,
+	PreviewsDOCarouselDiagram,
+} from "~/components";
+
+Durable Objects and Containers are class-based bindings defined in your Worker. They behave differently from resource-ID bindings like KV or D1 because their state belongs to the Worker itself. When the class is defined in the same Worker, each Preview gets automatic isolation.
+
+## Durable Objects
+
+When a Durable Object class is defined in the same Worker (no `script_name`), each Preview gets its own isolated namespace and storage — separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted.
+
+Choose one access pattern:
+
+| Access pattern | Preview configuration | Result |
+| --- | --- | --- |
+| [`ctx.exports`](#option-1-ctxexports) | Class and migration only | Recommended. Each Preview gets a separate namespace automatically. |
+| [`env` binding](#option-2-env-binding) | Class, migration, and a Preview binding | Use when your code needs `env.COUNTER`. |
+
+### Option 1: `ctx.exports`
+
+<PreviewsDOCarouselDiagram />
+
+Every Durable Object setup requires a Durable Object class exported from your Worker and a [migration](/durable-objects/reference/durable-objects-migrations/) in your Wrangler config.
+
+With [`ctx.exports`](/workers/runtime-apis/context/#exports) (recommended, requires [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports), enabled by default for `compatibility_date` `2025-11-17` or later), the migration is enough for automatic Preview isolation:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"migrations": [
+		{ "tag": "v1", "new_classes": ["Counter"] }
+	]
+}
+```
+
+</WranglerConfig>
+
+Production, `feature-login`, and `redesign` each get their own Durable Object namespace and storage. No `previews` block is needed.
+
+### Option 2: `env` binding
+
+If your code uses `env.COUNTER`, declare the binding in the `previews` block so the Preview has it:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{ "name": "COUNTER", "class_name": "Counter" }
+		]
+	},
+	"migrations": [
+		{ "tag": "v1", "new_classes": ["Counter"] }
+	],
+	"previews": {
+		"durable_objects": {
+			"bindings": [
+				{ "name": "COUNTER", "class_name": "Counter" }
+			]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+:::caution
+If you use `env.COUNTER` without declaring the binding in your `previews` block or in the base configuration, the binding will not exist in the Preview and your Worker will return a **1101 error**.
+:::
+
+### Sharing a Durable Object intentionally
+
+If you want all Previews to share the same Durable Object state, bind the Preview to a separate Worker that owns the Durable Object class using `script_name`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{ "name": "COUNTER", "class_name": "Counter" }
+		]
+	},
+	"migrations": [
+		{ "tag": "v1", "new_classes": ["Counter"] }
+	],
+	"previews": {
+		"durable_objects": {
+			"bindings": [
+				{
+					"name": "COUNTER",
+					"class_name": "Counter",
+					"script_name": "my-worker-staging-do"
+				}
+			]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+Every Preview using that setting shares the Durable Object namespace owned by `my-worker-staging-do`. Production continues to use its own Durable Object binding.
+
+:::note
+Isolation only works for classes defined in the same Worker. If a binding includes `script_name`, it resolves to that Worker's production Durable Object namespace. It does not resolve to that Worker's matching Preview.
+:::
+
+## Containers
+
+[Containers](/containers/) run on Durable Objects. When the container class is defined in the same Worker, each Preview gets its own isolated container instances and Durable Object state, separate from production.
+
+Declare the container at the top level (alongside your migrations) and add a Durable Object binding in the `previews` block:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["MyContainer"] }
+	],
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+			"instance_type": "basic"
+		}
+	],
+	"previews": {
+		"durable_objects": {
+			"bindings": [
+				{ "name": "MY_CONTAINER", "class_name": "MyContainer" }
+			]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+The container image is built and deployed per Preview. Each Preview's Durable Object namespace is separate, so container-backed state is isolated.
+
+:::note
+Container support in Previews is partial. Preview container process startup may not work through all deployment paths yet. The Durable Object namespace and state isolation is confirmed, but verify that your Preview's container process responds before relying on it for testing.
+:::

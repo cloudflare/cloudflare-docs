@@ -1,0 +1,700 @@
+---
+
+---
+
+<figure class="pres" aria-label="Resource binding and isolation model">
+	<div class="pres-shell">
+		<!-- Title -->
+		<div class="pres-header">
+			<p class="pres-title">Each Preview decides what resource it points to.</p>
+		</div>
+
+		<!-- Code -->
+		<div class="pres-code">
+			<code
+				><span class="pres-kw">const</span> obj = <span class="pres-kw"
+					>await</span
+				> env.<span class="pres-hl">UPLOADS</span>.get(<span class="pres-str"
+					>"avatar.png"</span
+				>);</code
+			>
+		</div>
+
+		<!-- Binding name callout -->
+		<div class="pres-binding-name" aria-hidden="true">
+			<svg class="pres-arrow-svg" width="2" height="20" viewBox="0 0 2 20">
+				<line
+					x1="1"
+					y1="0"
+					x2="1"
+					y2="20"
+					stroke="currentColor"
+					stroke-width="1.5"
+					stroke-dasharray="4,3"></line>
+			</svg>
+			<span class="pres-binding-pill">Binding name: <code>UPLOADS</code></span>
+			<svg class="pres-arrow-svg" width="2" height="20" viewBox="0 0 2 20">
+				<line
+					x1="1"
+					y1="0"
+					x2="1"
+					y2="20"
+					stroke="currentColor"
+					stroke-width="1.5"
+					stroke-dasharray="4,3"></line>
+			</svg>
+		</div>
+
+		<!-- Two-column grid -->
+		<div class="pres-grid">
+			<!-- Left: base configuration (static) -->
+			<div class="pres-col pres-col-shared">
+				<div class="pres-card">
+					<div class="pres-card-header">
+						<strong>Base configuration</strong>
+					</div>
+					<div class="pres-card-section">
+						<span class="pres-section-label">Binding</span>
+						<div class="pres-setting">
+							<code>UPLOADS</code>
+							<span class="pres-arrow-text">&#8594;</span>
+							<code class="pres-target">preview-uploads</code>
+						</div>
+					</div>
+					<div class="pres-divider"></div>
+					<div class="pres-card-section">
+						<span class="pres-section-label">Resource</span>
+						<div class="pres-resource pres-resource-shared">
+							<span class="pres-resource-type">R2 bucket</span>
+							<code class="pres-resource-name">preview-uploads</code>
+						</div>
+					</div>
+				</div>
+				<p class="pres-note">
+					New Previews start with a copy of this binding. No new bucket is
+					created.
+				</p>
+			</div>
+
+			<!-- Right: Preview branches with dropdown -->
+			<div class="pres-col pres-col-preview">
+				<label class="pres-branch-sel">
+					<span>Preview</span>
+					<select class="pres-branch-select" aria-label="Select Preview">
+						<option
+							value="redesign"
+							data-caption="Started from the base configuration. Same bucket as fix-api, so they read and write the same data."
+							>redesign</option
+						>
+						<option
+							value="fix-api"
+							data-caption="Started from the base configuration. Same bucket as redesign, so they read and write the same data."
+							>fix-api</option
+						>
+						<option
+							value="feature/login"
+							data-caption="Changed its binding to a separate bucket. Only this Preview reads and writes here. redesign and fix-api are not affected."
+							>feature/login (own bucket)</option
+						>
+					</select>
+				</label>
+
+				<div class="pres-stack">
+					<!-- redesign -->
+					<div
+						class="pres-card pres-card-pv pres-preview-card pres-preview-card-active"
+						data-pres="redesign"
+					>
+						<div class="pres-card-section">
+							<span class="pres-section-label">Binding</span>
+							<div class="pres-setting">
+								<code>UPLOADS</code>
+								<span class="pres-arrow-text">&#8594;</span>
+								<code class="pres-target">preview-uploads</code>
+							</div>
+						</div>
+						<div class="pres-divider"></div>
+						<div class="pres-card-section">
+							<span class="pres-section-label">Resource</span>
+							<div class="pres-resource pres-resource-shared">
+								<span class="pres-resource-type">R2 bucket</span>
+								<code class="pres-resource-name">preview-uploads</code>
+							</div>
+						</div>
+					</div>
+
+					<!-- fix-api -->
+					<div
+						class="pres-card pres-card-pv pres-preview-card"
+						data-pres="fix-api"
+					>
+						<div class="pres-card-section">
+							<span class="pres-section-label">Binding</span>
+							<div class="pres-setting">
+								<code>UPLOADS</code>
+								<span class="pres-arrow-text">&#8594;</span>
+								<code class="pres-target">preview-uploads</code>
+							</div>
+						</div>
+						<div class="pres-divider"></div>
+						<div class="pres-card-section">
+							<span class="pres-section-label">Resource</span>
+							<div class="pres-resource pres-resource-shared">
+								<span class="pres-resource-type">R2 bucket</span>
+								<code class="pres-resource-name">preview-uploads</code>
+							</div>
+						</div>
+					</div>
+
+					<!-- feature/login -->
+					<div
+						class="pres-card pres-card-pv pres-card-changed pres-preview-card"
+						data-pres="feature/login"
+					>
+						<div class="pres-card-section">
+							<span class="pres-section-label">Binding</span>
+							<div class="pres-setting">
+								<code>UPLOADS</code>
+								<span class="pres-arrow-text">&#8594;</span>
+								<code class="pres-target">login-test-uploads</code>
+								<span class="pres-pill">changed</span>
+							</div>
+						</div>
+						<div class="pres-divider"></div>
+						<div class="pres-card-section">
+							<span class="pres-section-label">Resource</span>
+							<div class="pres-resource pres-resource-own">
+								<span class="pres-resource-type">R2 bucket</span>
+								<code class="pres-resource-name">login-test-uploads</code>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<p class="pres-caption" data-pres-caption>
+					Started from the base configuration. Same bucket as fix-api, so they
+					read and write the same data.
+				</p>
+			</div>
+		</div>
+
+		<!-- Bottom callout -->
+		<div class="pres-shared-callout">
+			<span class="pres-shared-line"></span>
+			<span class="pres-shared-text"
+				>redesign and fix-api share <code>preview-uploads</code>. Same binding,
+				same data. feature/login has its own bucket.</span
+			>
+			<span class="pres-shared-line"></span>
+		</div>
+	</div>
+</figure>
+
+<style>
+	/* Reset */
+	.pres,
+	.pres * {
+		margin: 0;
+		padding: 0;
+		border: none;
+		background: none;
+		box-shadow: none;
+		font-size: inherit;
+		line-height: inherit;
+		color: inherit;
+		box-sizing: border-box;
+	}
+
+	.pres code {
+		background: none !important;
+		padding: 0 !important;
+		border: none !important;
+		border-radius: 0 !important;
+		font-size: inherit !important;
+		line-height: inherit !important;
+	}
+
+	.pres {
+		--p-bg: light-dark(#fafafa, #0f0f10);
+		--p-card: light-dark(#ffffff, #171719);
+		--p-muted: light-dark(#737373, #a3a3a3);
+		--p-text: light-dark(#171717, #f5f5f5);
+		--p-border: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--p-soft: light-dark(#f5f5f5, #222226);
+		--p-brand: #f6821f;
+		--p-brand-soft: light-dark(#fff7ed, #431407);
+		--p-green: light-dark(#16a34a, #4ade80);
+		--p-green-soft: light-dark(#f0fdf4, #052e16);
+		--p-blue: light-dark(#2563eb, #60a5fa);
+		--p-blue-soft: light-dark(#eff6ff, #1e293b);
+		--p-purple: light-dark(#7c3aed, #a78bfa);
+		--p-amber: light-dark(#d97706, #fbbf24);
+		--p-amber-soft: light-dark(#fffbeb, #451a03);
+		margin: 1.25rem 0 1.75rem;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		letter-spacing: -0.01em;
+		color: var(--p-text);
+		max-width: 100%;
+	}
+
+	.pres-shell {
+		padding: 24px 20px 20px;
+		border: 1px solid var(--p-border);
+		border-radius: 14px;
+		overflow: hidden;
+		background:
+			radial-gradient(circle, var(--p-border) 1px, transparent 1px), var(--p-bg);
+		background-size: 14px 14px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0;
+	}
+
+	/* ── Header ── */
+	.pres-header {
+		text-align: center;
+		margin-bottom: 16px;
+	}
+
+	.pres-title {
+		font-size: 0.9375rem;
+		font-weight: 700;
+		color: var(--p-text);
+		letter-spacing: -0.02em;
+		margin-bottom: 4px;
+	}
+
+	.pres-subtitle {
+		font-size: 0.8125rem;
+		color: var(--p-muted);
+	}
+
+	/* ── Code ── */
+	.pres-code {
+		padding: 10px 16px;
+		border: 1px solid var(--p-border);
+		border-radius: 8px;
+		background: var(--p-card);
+	}
+
+	.pres-code code {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.72rem;
+		line-height: 1.5;
+		color: var(--p-muted);
+	}
+
+	.pres-kw {
+		color: var(--p-purple);
+	}
+
+	.pres-hl {
+		color: var(--p-text);
+		font-weight: 700;
+		padding: 1px 5px;
+		border-radius: 4px;
+		background: var(--p-amber-soft);
+		border: 1px solid color-mix(in srgb, var(--p-amber) 25%, var(--p-border));
+	}
+
+	.pres-str {
+		color: var(--p-green);
+	}
+
+	/* ── Binding name callout ── */
+	.pres-binding-name {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		padding: 4px 0;
+		color: var(--p-muted);
+	}
+
+	.pres-binding-pill {
+		font-size: 0.6875rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--p-muted);
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: var(--p-soft);
+		border: 1px solid var(--p-border);
+	}
+
+	.pres-binding-pill code {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-weight: 700;
+		color: var(--p-text);
+	}
+
+	.pres-arrow-svg {
+		display: block;
+	}
+
+	/* ── Grid ── */
+	.pres-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 16px;
+		width: 100%;
+		align-items: start;
+	}
+
+	.pres-col {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		min-width: 0;
+	}
+
+	/* ── Card header ── */
+	.pres-card-header {
+		padding: 10px 12px;
+		border-bottom: 1px solid var(--p-border);
+	}
+
+	.pres-card-header strong {
+		font-weight: 650;
+		font-size: 0.8125rem;
+		color: var(--p-text);
+	}
+
+	/* ── Branch selector ── */
+	.pres-branch-sel {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 8px;
+		align-items: center;
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+		padding: 10px 11px;
+		border: 1px solid color-mix(in srgb, var(--p-brand) 42%, var(--p-border));
+		border-radius: 9px;
+		background: var(--p-brand-soft);
+	}
+
+	.pres-branch-sel span {
+		color: var(--p-muted);
+	}
+
+	.pres-branch-sel select {
+		appearance: none;
+		cursor: pointer;
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		padding: 0 22px 0 0;
+		background:
+			linear-gradient(45deg, transparent 50%, var(--p-muted) 50%) right 8px
+				center / 6px 6px no-repeat,
+			linear-gradient(135deg, var(--p-muted) 50%, transparent 50%) right 4px
+				center / 6px 6px no-repeat,
+			transparent;
+		color: var(--p-text);
+		font: inherit;
+		font-weight: 650;
+		text-overflow: ellipsis;
+	}
+
+	.pres-branch-sel select:focus,
+	.pres-branch-sel select:focus-visible {
+		outline: none;
+	}
+
+	/* ── Cards ── */
+	.pres-card {
+		border: 1px solid var(--p-border);
+		border-radius: 10px;
+		background: var(--p-card);
+		overflow: hidden;
+	}
+
+	.pres-card-pv {
+		border-color: color-mix(in srgb, var(--p-brand) 25%, var(--p-border));
+	}
+
+	.pres-card-changed {
+		border-color: color-mix(in srgb, var(--p-amber) 35%, var(--p-border));
+	}
+
+	.pres-card-section {
+		padding: 8px 10px;
+	}
+
+	.pres-divider {
+		height: 1px;
+		background: var(--p-border);
+		margin: 0 10px;
+	}
+
+	/* ── Section labels ── */
+	.pres-section-label {
+		display: block;
+		font-size: 0.5625rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--p-muted);
+		margin-bottom: 4px;
+	}
+
+	/* ── Binding setting ── */
+	.pres-setting {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		min-width: 0;
+		flex-wrap: wrap;
+	}
+
+	.pres-setting code {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.6875rem;
+		color: var(--p-text);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.pres-arrow-text {
+		color: var(--p-muted);
+		font-size: 0.75rem;
+		flex-shrink: 0;
+	}
+
+	.pres-target {
+		font-weight: 700;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.pres-pill {
+		padding: 1px 6px;
+		border-radius: 999px;
+		font-size: 0.5rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		white-space: nowrap;
+		line-height: 1.2;
+		background: var(--p-amber-soft);
+		color: var(--p-amber);
+		border: 1px solid color-mix(in srgb, var(--p-amber) 25%, var(--p-border));
+		flex-shrink: 0;
+	}
+
+	/* ── Resource row ── */
+	.pres-resource {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 4px 8px;
+		border-radius: 6px;
+		background: var(--p-soft);
+		border: 1px dashed var(--p-border);
+		min-width: 0;
+	}
+
+	.pres-resource-shared {
+		border-color: color-mix(in srgb, var(--p-brand) 40%, var(--p-border));
+		background: var(--p-brand-soft);
+	}
+
+	.pres-resource-own {
+		border-color: color-mix(in srgb, var(--p-amber) 40%, var(--p-border));
+		background: var(--p-amber-soft);
+	}
+
+	.pres-resource-type {
+		font-size: 0.5625rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--p-muted);
+		flex-shrink: 0;
+	}
+
+	.pres-resource-name {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.6875rem;
+		font-weight: 650;
+		color: var(--p-text);
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	/* ── Stacked cards ── */
+	.pres-stack {
+		position: relative;
+		isolation: isolate;
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 12px;
+	}
+
+	.pres-preview-card {
+		display: none;
+	}
+
+	.pres-preview-card-active {
+		display: block;
+		position: relative;
+		z-index: 3;
+	}
+
+	.pres-stack::before,
+	.pres-stack::after {
+		content: "";
+		position: absolute;
+		border-radius: 10px;
+	}
+
+	.pres-stack::before {
+		z-index: 2;
+		top: 6px;
+		left: 6px;
+		right: -6px;
+		bottom: -6px;
+		border: 1.5px solid color-mix(in srgb, var(--p-brand) 20%, var(--p-border));
+		background: var(--p-card);
+	}
+
+	.pres-stack::after {
+		z-index: 1;
+		top: 12px;
+		left: 12px;
+		right: -12px;
+		bottom: -12px;
+		border: 1.5px solid color-mix(in srgb, var(--p-brand) 45%, var(--p-border));
+		background: var(--p-brand-soft);
+	}
+
+	/* Add right padding to keep stacked pages inside the column */
+	.pres-col-preview {
+		padding-right: 16px;
+	}
+
+	/* Align the base configuration card top with the preview card (selector height + gap) */
+	.pres-col-shared {
+		margin-top: 18px;
+	}
+
+	/* ── Caption ── */
+	.pres-caption {
+		color: var(--p-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	/* ── Note ── */
+	.pres-note {
+		font-size: 0.75rem;
+		color: var(--p-muted);
+		line-height: 1.35;
+	}
+
+	.pres-note strong {
+		color: var(--p-text);
+		font-weight: 650;
+	}
+
+	/* ── Shared callout ── */
+	.pres-shared-callout {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-top: 14px;
+		width: 100%;
+	}
+
+	.pres-shared-line {
+		flex: 1;
+		height: 1px;
+		background: var(--p-border);
+	}
+
+	.pres-shared-text {
+		font-size: 0.75rem;
+		color: var(--p-muted);
+		text-align: center;
+	}
+
+	.pres-shared-text code {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-weight: 650;
+		color: var(--p-text);
+	}
+
+	/* ── Responsive ── */
+	@media (max-width: 700px) {
+		.pres-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.pres-col-shared {
+			margin-top: 0;
+		}
+
+		.pres-col-preview {
+			padding-right: 0;
+		}
+
+		.pres-shell {
+			padding: 16px 12px;
+		}
+
+		.pres-shared-callout {
+			display: none;
+		}
+	}
+</style>
+
+<script>
+	for (const diagram of document.querySelectorAll(".pres")) {
+		const select = diagram.querySelector(".pres-branch-select");
+		const cards = diagram.querySelectorAll<HTMLElement>(".pres-preview-card");
+		const caption = diagram.querySelector("[data-pres-caption]");
+
+		if (!(select instanceof HTMLSelectElement)) continue;
+
+		const update = () => {
+			const val = select.value;
+			const opt = select.selectedOptions[0];
+
+			for (const c of cards) {
+				c.classList.toggle(
+					"pres-preview-card-active",
+					c.getAttribute("data-pres") === val,
+				);
+			}
+
+			if (caption && opt) {
+				caption.textContent = opt.dataset.caption || "";
+			}
+		};
+
+		select.addEventListener("change", update);
+		update();
+	}
+</script>

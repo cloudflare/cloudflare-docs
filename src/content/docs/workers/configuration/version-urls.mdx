@@ -10,13 +10,13 @@ import { DashButton, WranglerConfig } from "~/components";
 
 Version URLs let you open a specific Worker version before that version is deployed to production traffic.
 
-Use Version URLs when you are working with [Workers Versions and Deployments](/workers/configuration/versions-and-deployments/) and want to test one uploaded version. Use [Worker Previews](/workers/previews/) when you want a branch or pull request to get its own URL, settings, and deployments.
+Use Version URLs when you are working with [Workers Versions and Deployments](/workers/configuration/versions-and-deployments/) and want to test one uploaded version. Use [Previews](/workers/previews/) when you want a branch or pull request to get its own URL, settings, and deployments.
 
 :::caution[Version URLs use production resources]
 
 A Version URL runs a version of your production Worker. It uses the bindings, environment variables, secrets, routes, and resources configured for that Worker version. It does not create isolated branch resources.
 
-If you need a branch to use test KV namespaces, D1 databases, R2 buckets, or Preview-specific secrets, use [Worker Previews](/workers/previews/) instead.
+If you need a branch to use test KV namespaces, D1 databases, R2 buckets, or Preview-specific secrets, use [Previews](/workers/previews/) instead.
 
 :::
 
@@ -25,8 +25,8 @@ If you need a branch to use test KV namespaces, D1 databases, R2 buckets, or Pre
 | Desired action | Use this |
 | --- | --- |
 | Test one uploaded Worker version before deploying it | Version URL. |
-| Share a stable link for a branch or pull request | [Worker Preview URL](/workers/previews/). |
-| Test with separate Preview variables, secrets, and bindings | [Worker Previews](/workers/previews/configuration/). |
+| Share a stable link for a branch or pull request | [Preview URL](/workers/previews/). |
+| Test with separate Preview variables, secrets, and bindings | [Previews](/workers/previews/configuration/). |
 | Run a persistent staging Worker | [Wrangler environment](/workers/wrangler/environments/). |
 
 ## URL format
@@ -149,8 +149,8 @@ If `preview_urls` is not specified, it defaults to the value of `workers_dev`.
 - The alias and Worker name combined with a dash must not exceed 63 characters due to DNS label limits.
 - Only the 1000 most recently deployed aliases are retained. When a new alias is created beyond this limit, the least recently deployed alias is deleted.
 
-## Use Worker Previews for branch testing
+## Use Previews for branch testing
 
 Version URLs are tied to Worker versions. They are not branch environments, and they do not isolate resources from production.
 
-For pull request review, branch-specific settings, custom domain Previews, or test resources, use [Worker Previews](/workers/previews/).
+For pull request review, branch-specific settings, custom domain Previews, or test resources, use [Previews](/workers/previews/).

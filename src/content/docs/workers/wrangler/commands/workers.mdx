@@ -258,6 +258,182 @@ None of the options for this command are required. Also, many can be set in your
 
 ---
 
+## `preview`
+
+Create or update a Preview for branch and pull request work. Use [`wrangler deploy`](#deploy) for production.
+
+```txt
+wrangler preview [OPTIONS]
+```
+
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the Preview to create or update.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return machine-readable output.
+
+For example:
+
+```sh
+npx wrangler preview --name feature-branch
+```
+
+Other Preview branches are not affected.
+
+---
+
+### `preview delete`
+
+Delete one Preview and its deployments.
+
+```txt
+wrangler preview delete --name <preview-name> [OPTIONS]
+```
+
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Preview to delete.
+
+---
+
+### `preview secret put`
+
+Add or update a secret for one Preview.
+
+```txt
+wrangler preview secret put SECRET_NAME --name <preview-name> [OPTIONS]
+```
+
+- `SECRET_NAME` <Type text="string" />
+  - The name of the secret to add or update.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Preview to update.
+
+---
+
+### `preview secret delete`
+
+Delete a secret from one Preview.
+
+```txt
+wrangler preview secret delete SECRET_NAME --name <preview-name> [OPTIONS]
+```
+
+- `SECRET_NAME` <Type text="string" />
+  - The name of the secret to delete.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Preview to update.
+
+---
+
+### `preview secret list`
+
+List secrets configured for one Preview.
+
+```txt
+wrangler preview secret list --name <preview-name> [OPTIONS]
+```
+
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Preview to inspect.
+
+---
+
+### `preview secret bulk`
+
+Upload multiple secrets for one Preview.
+
+```txt
+wrangler preview secret bulk --name <preview-name> [OPTIONS]
+```
+
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Preview to update.
+
+---
+
+### `preview base-config push`
+
+Update the base configuration from your Wrangler `previews` block. New Previews start with this base configuration.
+
+```txt
+wrangler preview base-config push [OPTIONS]
+```
+
+- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Apply the base configuration change to Previews that already exist, instead of new Previews only.
+
+For example:
+
+```sh
+npx wrangler preview base-config push
+```
+
+```sh
+npx wrangler preview base-config push --apply-to-existing
+```
+
+---
+
+### `preview base-config secret put`
+
+Add or update a secret in the base configuration.
+
+```txt
+wrangler preview base-config secret put SECRET_NAME [OPTIONS]
+```
+
+- `SECRET_NAME` <Type text="string" />
+  - The name of the secret to add or update.
+- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Apply the base secret change to Previews that already exist, instead of new Previews only.
+
+For example:
+
+```sh
+npx wrangler preview base-config secret put API_TOKEN
+```
+
+---
+
+### `preview base-config secret delete`
+
+Delete a secret from the base configuration.
+
+```txt
+wrangler preview base-config secret delete SECRET_NAME [OPTIONS]
+```
+
+- `SECRET_NAME` <Type text="string" />
+  - The name of the secret to delete.
+- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Apply the base secret change to Previews that already exist, instead of new Previews only.
+
+---
+
+### `preview base-config secret list`
+
+List secrets in the base configuration.
+
+```txt
+wrangler preview base-config secret list [OPTIONS]
+```
+
+---
+
+### `preview base-config secret bulk`
+
+Upload multiple secrets to the base configuration.
+
+```txt
+wrangler preview base-config secret bulk [OPTIONS]
+```
+
+- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Apply the base secret changes to Previews that already exist, instead of new Previews only.
+
+Existing Previews keep their own settings unless you also apply the change to existing Previews.
+
+---
+
 ## `delete`
 
 Delete your Worker and all associated Cloudflare developer platform resources.

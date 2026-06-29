@@ -1,129 +1,37 @@
 ---
 pcx_content_type: concept
 title: Configuration
-description: Understand Shared Preview Settings, one Preview's settings, and Wrangler configuration.
+description: Configure variables, secrets, and bindings for Previews — as a base configuration for new Previews or scoped to one branch.
 sidebar:
   order: 2
 products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, PreviewsConfigDiagram } from "~/components";
 
-## Shared Preview Settings
+A Preview can have its own variables, secrets, bindings, observability, and runtime configuration. These are separate from production, and can be configured in the [Wrangler configuration file](/workers/wrangler/configuration/), the [dashboard](#dashboard), or through the API.
 
-Think about Preview settings like branches in a repository.
+## Set a base configuration
 
-Shared Preview Settings are the starting config for new Preview branches. When Cloudflare creates a Preview, it copies the shared settings into that Preview. From then on, that Preview has its own settings and can change without changing the shared settings or other Previews.
+Previews can be configured one at a time. If you want new Previews to start with the same variables, secrets, and bindings, you can set a base configuration.
 
-Use Shared Preview Settings for common settings across Preview branches. Use one Preview's settings for exceptions. When you add or change a setting, choose where it should apply:
+In the same way a Git branch starts from a base branch, a new Preview starts with a copy of the base configuration when you use one. After a Preview is created, it owns its copy. You can add, remove, or update settings on that Preview without affecting other Previews.
 
-| I want this setting to apply to...   | Choose this target                                    |
-| ------------------------------------ | ----------------------------------------------------- |
-| Future Preview branches              | Shared Preview Settings                               |
-| One branch or pull request Preview   | This Preview                                          |
-| Some existing Preview branches       | Selected Preview branches                             |
-| All existing Preview branches        | All existing Preview branches                         |
-| Existing and future Preview branches | Shared Preview Settings and existing Preview branches |
+<PreviewsConfigDiagram />
 
-Changing Shared Preview Settings changes the starting config copied into future Preview branches. It does not rewrite Preview branches that already exist.
+Adding, removing, or updating values in a base configuration applies to new Previews by default. If you want existing Previews to receive the change on their next deployment, choose to apply the change to existing Previews.
 
-For example:
+| Change this            | When to use it                    | What is affected                                                                                    |
+| ---------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Base configuration     | Set what new Previews start from  | New Previews by default; existing Previews on their next deployment if you apply the change to them |
+| One Preview's settings | Change one branch or pull request | Only that Preview                                                                                   |
 
-- Add `API_HOST` to Shared Preview Settings when every future Preview should call the same test API.
-- Add `API_HOST` to one Preview when only `feature/login` should call a different API.
-- Add a test D1 binding to one Preview when only that branch needs temporary data.
+## Wrangler configuration file
 
-Workers Builds, Wrangler, external CI, and the API all use the same Preview settings. You do not need a different settings model for each way you create a Preview.
+### Variables and bindings
 
-## Secrets
-
-Secrets are never stored in Wrangler config files.
-
-Use one-Preview secrets when only a branch needs access to a test credential. Use Shared Preview Settings when every new Preview branch should receive the same secret. Existing Preview branches keep their own secrets.
-
-## Dashboard, Wrangler, and API
-
-You can manage Preview settings from the dashboard, Wrangler, or the API. They all change the same Preview settings.
-
-API users should follow the same model: update Shared Preview Settings for future Preview branches, update one Preview branch when only that branch should change, or apply a change to existing Preview branches when current Previews need the same update. Changing Shared Preview Settings does not change existing Preview branches unless the request also targets existing Preview branches.
-
-| What you want to change              | API target                                            |
-| ------------------------------------ | ----------------------------------------------------- |
-| Future Preview branches              | Shared Preview Settings                               |
-| One Preview branch                   | One Preview branch                                    |
-| Selected existing Preview branches   | Selected Preview branches                             |
-| All existing Preview branches        | All existing Preview branches                         |
-| Existing and future Preview branches | Shared Preview Settings and existing Preview branches |
-
-### Conflict warnings
-
-If the dashboard, Wrangler, or API changed the same setting, Cloudflare warns before applying a change. Treat that warning as a signal to choose which value should win before continuing.
-
-In CI, do not ignore Preview settings warnings. Review command output and configure your workflow to stop when Wrangler exits with an error.
-
-For fewer surprises:
-
-- Choose one place to manage each category of settings.
-- Keep non-secret shared settings in Wrangler config if your team reviews configuration through Git.
-- Keep secrets in the dashboard, API, or Wrangler secret commands.
-- Review diffs and warnings before applying changes from another place.
-
-## Preview URL routing
-
-The top-level `preview_urls` setting controls routing to `workers.dev` Preview URLs and Deployment URLs.
-
-When `preview_urls` is not set, Preview URL routing follows your `workers_dev` setting:
-
-- If `workers_dev` is enabled, Preview URLs are enabled.
-- If `workers_dev` is disabled, Preview URLs are disabled.
-- Set `preview_urls` explicitly when you want Preview URL routing to differ from `workers_dev`.
-
-Disabling Preview URLs disables routing to `workers.dev` Preview URLs and Deployment URLs. Custom domain Preview URLs use separate custom domain settings. For details, refer to [Custom domains](/workers/previews/custom-domains/).
-
-### Dashboard
-
-To enable or disable Preview URLs:
-
-1. In the Cloudflare dashboard, go to **Workers & Pages**.
-2. Select your Worker.
-3. Go to **Settings** > **Domains & Routes**.
-4. Find **Preview URLs**.
-5. Select **Enable** or **Disable**.
-
-### Wrangler
-
-To enable Preview URLs, add `preview_urls` to your Wrangler config:
-
-<WranglerConfig>
-
-```jsonc
-{
-  "preview_urls": true
-}
-```
-
-</WranglerConfig>
-
-To disable Preview URLs:
-
-<WranglerConfig>
-
-```jsonc
-{
-  "preview_urls": false
-}
-```
-
-</WranglerConfig>
-
-## Wrangler config
-
-Use the `previews` block when you want non-secret Preview settings reviewed and versioned with your code.
-
-Wrangler sends the `previews` block when it creates or updates a Preview.
-
-Everything outside the `previews` block is production configuration. Everything inside the `previews` block is Preview configuration.
+Add a `previews` block to your Wrangler file for Preview-specific variables and bindings. Keep production configuration at the top level, and put Preview configuration inside `previews`.
 
 <WranglerConfig>
 
@@ -132,20 +40,20 @@ Everything outside the `previews` block is production configuration. Everything 
   "vars": {
     "ENVIRONMENT": "production"
   },
-  "kv_namespaces": [
+  "r2_buckets": [
     {
-      "binding": "CACHE",
-      "id": "prod-kv-id"
+      "binding": "UPLOADS",
+      "bucket_name": "prod-uploads"
     }
   ],
   "previews": {
     "vars": {
       "ENVIRONMENT": "preview"
     },
-    "kv_namespaces": [
+    "r2_buckets": [
       {
-        "binding": "CACHE",
-        "id": "preview-kv-id"
+        "binding": "UPLOADS",
+        "bucket_name": "preview-uploads"
       }
     ]
   }
@@ -154,67 +62,51 @@ Everything outside the `previews` block is production configuration. Everything 
 
 </WranglerConfig>
 
-Your Worker code stays the same. `env.CACHE` works in production and Previews. Each environment points that binding at a different resource.
+### Secrets
 
-:::note
-Production bindings are not automatically copied into Previews. Configure each binding that should be available to Preview branches.
-:::
+Secrets cannot be stored in Wrangler configuration files. Use Wrangler commands to add or remove secrets in the base configuration or for one Preview.
 
-## Per-branch overrides
+| I want to                                            | Command                                                           |
+| ---------------------------------------------------- | ----------------------------------------------------------------- |
+| Add or update a secret in the **base configuration** | `npx wrangler preview base-config secret put SECRET_NAME`         |
+| Remove a secret from the **base configuration**      | `npx wrangler preview base-config secret delete SECRET_NAME`      |
+| Add or update a secret for **one Preview**           | `npx wrangler preview secret put SECRET_NAME --name <preview>`    |
+| Remove a secret for **one Preview**                  | `npx wrangler preview secret delete SECRET_NAME --name <preview>` |
 
-Wrangler reads the config from the branch being deployed. To test a setting on one branch, edit the `previews` block on that branch and run `wrangler preview`.
+### How Wrangler applies Preview settings
 
-Other Previews are not modified.
+If your team manages Preview settings in Git, the `previews` block in your Wrangler file is enough. When you run `wrangler preview`, Wrangler reads the `previews` block from your current branch and applies those settings to that Preview. Those settings become that Preview's own settings. They do not change the base configuration.
 
-When the branch lands, the change either becomes part of the shared config on your main branch or disappears with the branch.
+The Preview name decides which Preview receives the settings. For details, refer to [Preview names](/workers/previews/#preview-names).
 
-## Update Shared Preview Settings from Wrangler config
+Running `wrangler deploy` updates production with your top-level Wrangler configuration, but does not update the base configuration.
 
-Use `wrangler preview-defaults push` to update Shared Preview Settings from the `previews` block in your Wrangler config.
+To store the `previews` block in Cloudflare's API and dashboard as the base configuration, run:
 
-This updates Shared Preview Settings for future Preview branches. Existing Preview branches keep their own settings unless you also apply the change to existing Preview branches.
-
-Secrets are not stored in Wrangler config files and are not pushed from the `previews` block.
-
-## Auto-provisioning
-
-For KV, D1, and R2, you can omit the resource identifier in your `previews` block and Wrangler can create a new resource the first time you run `wrangler preview`.
-
-| Binding         | Omit this field | Wrangler creates    |
-| --------------- | --------------- | ------------------- |
-| `kv_namespaces` | `id`            | A new KV namespace. |
-| `d1_databases`  | `database_name` | A new D1 database.  |
-| `r2_buckets`    | `bucket_name`   | A new R2 bucket.    |
-
-Other resource types must be created manually before referencing them in the `previews` block.
-
-## Wrangler environments
-
-If you use [Wrangler environments](/workers/wrangler/environments/), you can define `env.<name>.previews` to give one environment different Preview settings.
-
-<WranglerConfig>
-
-```jsonc
-{
-  "previews": {
-    "vars": {
-      "ENVIRONMENT": "preview"
-    }
-  },
-  "env": {
-    "staging": {
-      "previews": {
-        "vars": {
-          "ENVIRONMENT": "staging-preview"
-        }
-      }
-    }
-  }
-}
+```sh
+npx wrangler preview base-config push
 ```
 
-</WranglerConfig>
+Use this command when Previews created outside your local branch should start with those settings, or when you want to view and manage those values in the dashboard or API.
 
-Use Wrangler environments for persistent staging or production-style Workers. Use Previews for branch and pull request copies.
+The change applies to new Previews. To also apply it to all active Previews on their next deployment, add `--apply-to-existing`:
 
-You do not need to create a Wrangler environment to use Previews. Use both only when you need a persistent environment, such as `staging`, and branch Previews for that environment.
+```sh
+npx wrangler preview base-config push --apply-to-existing
+```
+
+## Dashboard
+
+In the dashboard, select **Production** from the breadcrumb at the top of your Worker, then go to **Settings**. When you add or edit a variable, secret, or binding, use the **Environments** dropdown to choose where it applies — **Production**, **Preview**, or both.
+
+{/* TODO: Add screenshot of the Environments dropdown showing Production and Preview options */}
+
+Selecting **Preview** updates the base configuration. For example, to rotate a secret for Previews, add the secret with **Preview** selected. Every future Preview starts with the new value.
+
+### Individual Preview
+
+Select a Preview from the breadcrumb, then go to **Settings**. Changes here apply to that Preview only. Nothing else is affected.
+
+{/* TODO: Add screenshot of an individual Preview's settings page */}
+
+Use this when one branch needs different configuration. For example, a branch that tests a billing provider can use a different `BILLING_API_KEY` without changing other Previews.

@@ -28,7 +28,7 @@ When a commit is pushed to your connected repository, Workers Builds runs a two-
 For preview builds, a **Preview command** runs instead (defaults to `npx wrangler preview`), which creates or updates a [Preview](/workers/previews/) without promoting it to production.
 
 :::note[Workers that use Containers]
-`wrangler deploy` can build and publish container images and roll out container instances. `wrangler versions upload` does not update container images. Preview URLs are not generated for Workers that implement Durable Objects, including Containers. Refer to [Deploy Containers](/containers/guides/deploy/#before-production).
+`wrangler deploy` can build and publish container images and roll out container instances. `wrangler versions upload` does not update container images. Version URLs are not generated for Workers that implement Durable Objects, including Containers. Refer to [Deploy Containers](/containers/guides/deploy/#before-production).
 :::
 
 ## Build settings

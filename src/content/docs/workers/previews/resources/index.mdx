@@ -1,0 +1,69 @@
+---
+pcx_content_type: concept
+title: Resources and isolation
+description: Understand what happens to your data when you create a Preview — which resources are shared and which are isolated.
+sidebar:
+  order: 3
+  group:
+    label: Resources and isolation
+products:
+  - workers
+---
+
+import {
+	PreviewsResourcesDiagram,
+} from "~/components";
+
+[Configuration](/workers/previews/configuration/) covers where Preview settings live and how to set them. This section shows what happens to your data once those settings are applied.
+
+## Previews can point to the same resource
+
+<PreviewsResourcesDiagram />
+
+When you set a [base configuration](/workers/previews/configuration/#set-a-base-configuration), new Previews start from those settings. If the base configuration binds `UPLOADS` to `preview-uploads`, each new Preview points to that same bucket. Cloudflare does not create a separate bucket for each Preview.
+
+After a Preview exists, it owns its settings. You can change `feature-login` to bind `UPLOADS` to `login-test-uploads` without affecting `redesign`, future Previews, or production.
+
+## Choose how data is shared
+
+Use the same binding name in your Worker code, then choose what each Preview binds to.
+
+| Goal                                                   | Bind the Preview to...                               | Result                                                           |
+| ------------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------------------------------- |
+| Keep production safe, but let Previews share test data | One shared staging resource                          | Production is isolated. Previews can see each other's test data. |
+| Give each Preview its own data                         | A different resource for each Preview                | Each Preview reads and writes separate data.                     |
+| Use automatic isolation                                | A same-Worker Durable Object or Container            | Cloudflare creates isolated state for each Preview.              |
+| Intentionally test against production-like data        | The same resource production uses                    | Preview code can read or write production data. Use with care.   |
+
+Most teams start by binding Previews to shared staging resources for KV, D1, R2, Queues, Vectorize, Hyperdrive, and similar resources. Move one Preview to its own resource when a branch needs isolated writes or risky test data.
+
+## How binding types differ
+
+Not every binding type works the same way. Some share data by default, some are automatically isolated, and some are account-level capabilities with no shared data at all.
+
+| Category | Binding types | How it works |
+| --- | --- | --- |
+| **[Shared by resource ID](/workers/previews/resources/bindings/#resource-id-bindings)** | KV, D1, R2, Queues (producers), Vectorize, Hyperdrive, Analytics Engine, Pipelines, Secrets Store, VPC Services, mTLS, Dispatch Namespaces | Two Previews bound to the same resource ID share data. Create a separate resource to isolate. |
+| **[Shared by resource name](/workers/previews/resources/bindings/#workflows)** | Workflows | Previews binding the same Workflow name share instances. Does not auto-isolate like Durable Objects. |
+| **[Automatically isolated](/workers/previews/resources/durable-objects/)** | Durable Objects and Containers (same-Worker) | Each Preview gets its own namespace and state. No separate resource needed. |
+| **[Account-level / stateless](/workers/previews/resources/bindings/#account-level-bindings)** | AI, Browser, Images, Stream, Media, Worker Loaders, Version Metadata | No shared data between Previews. Isolation means binding presence, not separate resource state. |
+| **[Always targets production](/workers/previews/resources/bindings/#service-bindings)** | Service bindings | Calls the bound Worker's production deployment. Cannot target another Worker's Preview. |
+| **Not a Preview binding** | Queue consumers, Cron Triggers, Routes | These are triggers, not bindings. They target production, not Previews. |
+
+For the full per-binding reference with configuration examples, see [Binding reference](/workers/previews/resources/bindings/).
+
+For Durable Objects and Containers — which have automatic per-Preview isolation — see [Durable Objects and Containers](/workers/previews/resources/durable-objects/).
+
+## Triggers
+
+Routes, cron triggers, and queue consumers target production. They do not target Previews.
+
+Use a Preview URL or [custom domain](/workers/previews/custom-domains/) to send HTTP traffic to a Preview. To test queue-consuming logic, expose a guarded HTTP endpoint in your Preview that calls the same handler, or configure the queue to deliver to a staging consumer Worker.
+
+## External state
+
+Previews can still reach external systems if configured with production credentials, production URLs, or shared third-party resources. Before sharing a Preview, verify that its bindings and environment variables point at safe test resources.
+
+## Service bindings
+
+Service bindings from a Preview always call the bound Worker's production deployment. For same-Worker calls, prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) to keep the call inside the Preview.
