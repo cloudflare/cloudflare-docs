@@ -5,13 +5,12 @@ import {
   getDocsPageProps,
   getSidebar,
   getPrevNext,
-  getBreadcrumbs,
   getEditUrl,
   getLastUpdated,
   getTOC,
 } from "nimbus-docs";
 import { config } from "virtual:nimbus/config";
-import { docsSidebarTransform } from "../util/sidebar";
+import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
 
 export const prerender = true;
@@ -22,14 +21,17 @@ const { entry, Content, headings } = await getDocsPageProps(Astro);
 const currentSlug = Astro.url.pathname.replace(/\/$/, "") || "/";
 const sectionSegment = currentSlug.split("/").filter(Boolean)[0];
 
-// Column renders only when not custom mode AND site-wide flag on AND page hasn't opted out.
+// Starlight `template: "splash"`: no sidebar/TOC and no default title (the body
+// brings its own h1), but keeps the centered container — unlike `mode: "custom"`.
+const isSplash = entry.data.template === "splash";
 const isCustom = entry.data.mode === "custom";
+const isStandalone = isCustom || isSplash;
 const sidebarOn =
-  !isCustom &&
+  !isStandalone &&
   config.features?.sidebar !== false &&
   entry.data.sidebar !== false;
 const tocOn =
-  !isCustom &&
+  !isStandalone &&
   config.features?.tableOfContents !== false &&
   entry.data.tableOfContents !== false;
 
@@ -40,13 +42,15 @@ const sidebar = sidebarOn
     })
   : false;
 
-const prevNext = await getPrevNext(currentSlug, {
-  sidebarTree: sidebar === false ? [] : sidebar,
-  overrides: { prev: entry.data.prev, next: entry.data.next },
-});
-const rawBreadcrumbs = await getBreadcrumbs(currentSlug, {
-  collection: entry.collection,
-});
+const prevNext = isSplash
+  ? {}
+  : await getPrevNext(currentSlug, {
+      sidebarTree: sidebar === false ? [] : sidebar,
+      overrides: { prev: entry.data.prev, next: entry.data.next },
+    });
+const rawBreadcrumbs = isSplash
+  ? []
+  : await getCfBreadcrumbs(currentSlug, { collection: entry.collection });
 const lastCrumb = rawBreadcrumbs[rawBreadcrumbs.length - 1];
 const breadcrumbs =
   rawBreadcrumbs.length > 2 &&
@@ -105,6 +109,7 @@ const head = [
   collection={entry.collection}
   entryId={entry.id}
   wide={entry.data.wide}
+  hideTitle={isSplash}
 >
   <Content components={components} />
 </DocsLayout>

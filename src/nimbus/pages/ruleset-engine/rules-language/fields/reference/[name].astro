@@ -8,9 +8,9 @@
 import type { GetStaticPaths } from "astro";
 import { marked } from "marked";
 import { getEntry } from "astro:content";
-import { getSidebar, getBreadcrumbs } from "nimbus-docs";
+import { getSidebar } from "nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
-import { externalAppLinksTransform } from "~/util/sidebar";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import { Code, Aside, Type } from "~/components";
 import FieldBadges from "~/components/fields/FieldBadges.tsx";
 
@@ -43,7 +43,7 @@ const description = field.description;
 
 const sectionSlug = `/ruleset-engine/rules-language/fields/reference/${field.name}/`;
 const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
-const breadcrumbs = await getBreadcrumbs(sectionSlug);
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 const editUrl =
 	"https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml";
 ---

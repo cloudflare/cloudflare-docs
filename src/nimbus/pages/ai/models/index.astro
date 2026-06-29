@@ -7,9 +7,9 @@
  * "/ai/models". The Providers facet appears because this slice mixes hosted
  * (legacy) + proxied (catalog) models.
  */
-import { getSidebar, getBreadcrumbs } from "nimbus-docs";
+import { getSidebar } from "nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
-import { externalAppLinksTransform } from "~/util/sidebar";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import ModelCatalog from "~/components/models/ModelCatalog.astro";
 import { getResolvedModels, toModelCardData } from "~/util/models";
 
@@ -19,7 +19,7 @@ const models = (await getResolvedModels()).map(toModelCardData);
 
 const sectionSlug = "/ai/models/";
 const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
-const breadcrumbs = await getBreadcrumbs(sectionSlug);
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
 <DocsLayout

@@ -20,11 +20,11 @@ const { products } = await props.parseAsync(Astro.props);
 const data = await getEntries(products);
 ---
 
-<div class="flex flex-row flex-wrap gap-1.5">
+<div class="flex flex-row flex-wrap gap-2">
   {
     data.map((product) => (
-      <a href={`/changelog/product/${product.id}/`} class="no-underline">
-        <Badge text={product.data.entry.title} variant="default" size="small" />
+      <a href={product.data.entry.url} class="no-underline">
+        <Badge text={product.data.entry.title} variant="tip" />
       </a>
     ))
   }

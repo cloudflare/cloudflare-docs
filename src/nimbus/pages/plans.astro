@@ -1,7 +1,6 @@
 ---
-// CF source: src/pages/plans.astro (StarlightPage `template: "splash"`).
-// Ported to SplashLayout; body unchanged.
 import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
 import { ProductFeatures } from "~/components";
 
 export const prerender = true;
@@ -11,16 +10,34 @@ export const prerender = true;
 	title="Plans"
 	description="View the products and features available to you based on your Cloudflare plan."
 >
-	<div class="mx-auto w-full max-w-(--nb-content-max) px-[max(1.5rem,4vw)] py-14">
-	<p>
-		A feature-level companion to our <a href="https://www.cloudflare.com/plans/"
-			>Plans and Pricing page</a
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<div
+			class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
 		>
-	</p>
-	<p style="font-size:.85em;margin-top:-.25em;">
-		(may not include <a href="#missing-features">all features</a>)
-	</p>
+			<header class="mx-auto max-w-2xl text-center">
+				<h1
+					class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+				>
+					Plans
+				</h1>
+				<p
+					class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
+				>
+					A feature-level companion to our <a
+						href="https://www.cloudflare.com/plans/"
+						class="underline hover:no-underline">Plans and Pricing page</a
+					> (may not include <a
+						href="#missing-features"
+						class="underline hover:no-underline">all features</a
+					>)
+				</p>
+			</header>
 
+			<section
+				class="docs-content mx-auto mt-12 w-full max-w-(--nb-content-max) pt-10"
+				aria-label="Plan features"
+			>
 	<h2 id="account">Account</h2>
 	<div class="grid grid-cols-2 *:mt-0!">
 		<ProductFeatures id="account" additional_descriptions />
@@ -136,5 +153,7 @@ export const prerender = true;
 			> to learn more about plans and pricing.
 		</li>
 	</ul>
+			</section>
+		</div>
 	</div>
 </SplashLayout>

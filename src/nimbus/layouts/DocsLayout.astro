@@ -20,9 +20,9 @@ import { config } from "virtual:nimbus/config";
 import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
 
-type Props = DocsPageProps & { audience?: "human"; wide?: boolean };
+type Props = DocsPageProps & { audience?: "human"; wide?: boolean; hideTitle?: boolean };
 
-const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false } = Astro.props;
+const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false } = Astro.props;
 
 // `searchable` derives from `noindex` when omitted: a non-crawlable page is
 // by default not in the site search either. Explicit `searchable: true`
@@ -213,7 +213,7 @@ const hasPagination = Astro.slots.has("pagination");
               <div {...pagefindAttrs}>
                 {hasPageTitle ? (
                   <slot name="page-title" />
-                ) : (
+                ) : hideTitle ? null : (
                   <Fragment>
                     <div class="flex items-center gap-3 flex-wrap mt-6">
                       <h1 class="text-foreground mb-0 leading-tight" style={`font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)`}>{title}</h1>

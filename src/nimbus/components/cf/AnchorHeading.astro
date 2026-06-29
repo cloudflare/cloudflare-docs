@@ -1,17 +1,11 @@
 ---
-/**
- * AnchorHeading — a heading (h1–h6) with a slugified id and anchor link.
- *
- * CF source: cloudflare-docs/src/components/AnchorHeading.astro
- *
- * Mapping notes:
- *   - Upstream runs the heading through the rehype autolink-headings plugin
- *     (`~/util/rehype`). That pipeline isn't wired here, so the id + anchor
- *     link are produced directly. Slugging mirrors github-slugger closely
- *     (lowercase, strip punctuation, spaces→hyphens).
- */
+// Relative imports: `~` resolves to src/nimbus here, not the shared CF root.
 import { z } from "astro/zod";
 import { marked } from "marked";
+import { slug as GithubSlug } from "github-slugger";
+
+import { process } from "../../../util/rehype";
+import rehypeAutoLinkHeadings from "../../../plugins/rehype/autolink-headings";
 
 type Props = z.infer<typeof props>;
 
@@ -23,20 +17,14 @@ const props = z.object({
 
 const { title, slug, depth } = props.parse(Astro.props);
 
-function slugify(input: string): string {
-  return input
-    .trim()
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
-}
+const slugified = GithubSlug(slug ?? title);
 
-const slugified = slugify(slug ?? title);
-const Tag = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-const inner = marked.parseInline(title) as string;
+const tag = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+const html = await process(
+  `<${tag} id=${slugified}>${marked.parseInline(title)}</${tag}>`,
+  [rehypeAutoLinkHeadings],
+);
 ---
 
-<Tag id={slugified}>
-  <a href={`#${slugified}`} class="no-underline" set:html={inner} />
-</Tag>
+<Fragment set:html={html} />

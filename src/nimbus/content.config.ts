@@ -49,6 +49,9 @@ export const collections = {
         pcx_content_type: z.string().optional(),
         content_type: z.string().optional(),
         products: z.array(z.string()).optional(),
+        // Starlight layout key; nimbus-docs renamed it to `mode` but content is
+        // byte-shared with the live Starlight build, so it stays. The route honors `splash`.
+        template: z.enum(["doc", "splash"]).optional(),
         reviewed: z.union([z.string(), z.date()]).optional(),
         order: z.number().optional(),
         results: z.any().optional(),
@@ -268,6 +271,7 @@ export const collections = {
         title: z.string(),
         url: z.string().optional(),
         description: z.string().optional(),
+        transcript: z.string().optional(),
         chapters: z.record(z.string(), z.string()).optional(),
         thumbnail: z
           .object({ url: z.string() })

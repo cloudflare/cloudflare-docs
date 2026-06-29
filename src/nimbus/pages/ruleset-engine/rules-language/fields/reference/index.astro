@@ -7,9 +7,9 @@
  * (StarlightPage → DocsLayout).
  */
 import { getEntry } from "astro:content";
-import { getSidebar, getBreadcrumbs } from "nimbus-docs";
+import { getSidebar } from "nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
-import { externalAppLinksTransform } from "~/util/sidebar";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import FieldCatalog from "~/components/FieldCatalog.tsx";
 
 export const prerender = true;
@@ -20,7 +20,7 @@ const fields = entry.data.entries;
 
 const sectionSlug = "/ruleset-engine/rules-language/fields/reference/";
 const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
-const breadcrumbs = await getBreadcrumbs(sectionSlug);
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
 <DocsLayout

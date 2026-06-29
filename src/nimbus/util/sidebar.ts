@@ -11,6 +11,7 @@
  *     `getSidebar`.
  */
 import { getEntry } from "astro:content";
+import { getBreadcrumbs, getRouteNavigation } from "nimbus-docs";
 import type { SectionTitleResolver } from "nimbus-docs";
 import type { SidebarItem, SidebarTransform } from "nimbus-docs/types";
 
@@ -21,14 +22,71 @@ export const sectionTitleResolver: SectionTitleResolver = async ({ sectionSlug, 
     return entry ? { rail: `${entry.data.title} (Learning Paths)` } : undefined;
   }
 
-  if (sectionSlug === "1.1.1.1") {
-    const entry = await getEntry("directory", "1111");
-    return entry ? { rail: entry.data.entry.title } : undefined;
-  }
-
   const entry = await getEntry("directory", sectionSlug);
   return entry ? { rail: entry.data.entry.title } : undefined;
 };
+
+// Display title for a top-level product, from the `directory` collection — the
+// same source the rail uses. Memoized: a build resolves each of the ~105 slugs
+// once. (Not cleared by clearNavCaches, so dev edits to a title need a restart.)
+const sectionTitleCache = new Map<string, string | undefined>();
+async function directoryTitle(seg0: string): Promise<string | undefined> {
+  if (sectionTitleCache.has(seg0)) return sectionTitleCache.get(seg0);
+  const entry = await getEntry("directory", seg0);
+  const title = entry?.data.entry.title;
+  sectionTitleCache.set(seg0, title);
+  return title;
+}
+
+function firstSegment(path: string): string | undefined {
+  return path.replace(/^\/+|\/+$/g, "").split("/")[0] || undefined;
+}
+
+// Mirrors nimbus-docs' internal `nodeHref`.
+function nodeHref(node: SidebarItem): string | undefined {
+  if (node.type === "link") return node.href;
+  if (node.type === "external") return undefined;
+  return node.indexIsExternal ? undefined : node.indexHref;
+}
+
+/**
+ * Breadcrumb `resolveLabel`: rewrite the product/section crumb from its raw dir
+ * slug (`workers-ai`) to the directory title (`Workers AI`). Only the section
+ * crumb is touched — identified by `href === /<seg0>/` or, for an index-less
+ * section, a top-level group whose label is the slug. All other crumbs keep
+ * `node.label` (page titles), short-circuiting before any lookup.
+ */
+async function breadcrumbLabelResolver({
+  node,
+  slug,
+}: {
+  node: SidebarItem;
+  slug: string;
+}): Promise<string | undefined> {
+  const seg0 = firstSegment(slug);
+  if (!seg0) return undefined;
+  const href = nodeHref(node);
+  const isSectionCrumb = href
+    ? firstSegment(href) === seg0 && !href.replace(/^\/+|\/+$/g, "").includes("/")
+    : node.type === "group" && node.label === seg0;
+  if (!isSectionCrumb) return undefined;
+  return directoryTitle(seg0);
+}
+
+/** `getBreadcrumbs` with the CF section-title resolver always applied. */
+export function getCfBreadcrumbs(
+  slug: Parameters<typeof getBreadcrumbs>[0],
+  options?: Parameters<typeof getBreadcrumbs>[1],
+): ReturnType<typeof getBreadcrumbs> {
+  return getBreadcrumbs(slug, { ...options, resolveLabel: breadcrumbLabelResolver });
+}
+
+/** `getRouteNavigation` with the CF section-title resolver always applied. */
+export function getCfRouteNavigation(
+  options: Parameters<typeof getRouteNavigation>[0],
+): ReturnType<typeof getRouteNavigation> {
+  return getRouteNavigation({ ...options, resolveLabel: breadcrumbLabelResolver });
+}
 
 const EXTERNAL_LINK_ARROW = " \u2197";
 

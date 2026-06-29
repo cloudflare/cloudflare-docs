@@ -1,17 +1,30 @@
 ---
-// CF source: src/pages/sponsorships.astro (StarlightPage `template: "splash"`).
-// Ported to SplashLayout; body unchanged.
 import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
 
 export const prerender = true;
 ---
 
 <SplashLayout title="Sponsorships">
-	<div class="mx-auto w-full max-w-(--nb-content-max) px-[max(1.5rem,4vw)] py-14">
-	<p>
-		Cloudflare powers over 20 million Internet properties, including these
-		world-changing open-source projects.
-	</p>
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<div
+			class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
+		>
+			<header class="mx-auto max-w-2xl text-center">
+				<h1
+					class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+				>
+					Sponsorships
+				</h1>
+				<p
+					class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
+				>
+					Cloudflare powers over 20 million Internet properties, including these world-changing open-source projects.
+				</p>
+			</header>
+
+			<section class="mt-12 pt-10" aria-label="Sponsored projects">
 	<div class="sponsorship-grid">
 		<div class="sponsorship">
 			<a
@@ -1542,6 +1555,8 @@ export const prerender = true;
 			</div>
 		</div>
 	</div>
+			</section>
+		</div>
 	</div>
 </SplashLayout>
 
@@ -1549,7 +1564,7 @@ export const prerender = true;
 	.sponsorship-grid {
 		display: flex;
 		justify-content: center;
-		align-items: flex-center;
+		align-items: center;
 		flex-wrap: wrap;
 		margin: 0;
 	}
@@ -1567,7 +1582,7 @@ export const prerender = true;
 		width: 16em;
 		text-align: left;
 		margin: 0.75em;
-		background: var(--sl-color-bg-nav);
+		background: var(--nb-card);
 		text-decoration: none;
 	}
 

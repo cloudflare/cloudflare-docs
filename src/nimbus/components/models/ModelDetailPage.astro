@@ -13,7 +13,7 @@
  *   - slug:     the URL slug segment(s) under basePath.
  */
 import type { MarkdownHeading } from "astro";
-import { getRouteNavigation } from "nimbus-docs";
+import { getCfRouteNavigation } from "~/util/sidebar";
 import DocsLayout from "~/layouts/DocsLayout.astro";
 import { Badge } from "~/components/ui/badge";
 import { Code } from "~/components/ui/code";
@@ -174,15 +174,13 @@ const rawLinks = apiModes
       { name: "Output", kind: null, file: "schema-output" },
     ];
 
-// Navigation for this catalog leaf: the sidebar marks the Models section
-// active and the breadcrumb resolves to the section (the model name is the
-// <h1>, not a crumb). The leaf is never injected into the nav tree.
-//
-// The `/ai` section lands on `/ai/models/`, so its ancestry collapses to
-// "AI"; append a "Models" crumb so the trail reads Home › AI › Models. The
-// `/workers-ai/models/` section already resolves to "Workers AI › Models".
+// Navigation for this catalog leaf: the model name is the <h1>, not a crumb,
+// and the leaf is never injected into the nav tree. getCfRouteNavigation
+// resolves the section crumb to its directory title (AI / Workers AI). The
+// `/ai` section lands on `/ai/models/` with no "Models" group, so append one
+// for Home › AI › Models; `/workers-ai/models/` already has it.
 const trail = basePath === "/ai/models" ? [{ label: "Models" }] : [];
-const { sidebar, breadcrumbs } = await getRouteNavigation({
+const { sidebar, breadcrumbs } = await getCfRouteNavigation({
   path: `${basePath}/${slug}/`,
   section: `${basePath}/`,
   collection: "docs",

@@ -1,13 +1,6 @@
 ---
-/**
- * /agent-setup/ — splash landing for installing Cloudflare agent tooling.
- *
- * CF source: src/pages/agent-setup/index.astro (StarlightPage `template:
- * "splash"`). Ported to the Nimbus splash pattern (BaseLayout + sidebar-less
- * Header + centered container, as in resources/index.astro); the body,
- * components, and styles are unchanged.
- */
 import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
 import CatalogWithFilter from "~/components/agent-setup/CatalogWithFilter.astro";
 import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
 import AgentPrimer from "~/components/agent-setup/AgentPrimer.astro";
@@ -25,7 +18,20 @@ const agents = AGENTS;
   title="Agent setup"
   description="Cloudflare provides Skills and MCP servers so your agent can seamlessly build on the Cloudflare platform. Pick an agent below to get started."
 >
-  <div class="agent-setup-page mx-auto w-full px-[max(1.5rem,4vw)] py-14">
+  <div class="relative">
+    <BackgroundLines inner={1120} outer={1360} />
+    <div
+      class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
+    >
+      <header class="mx-auto max-w-2xl text-center">
+        <h1
+          class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+        >
+          Agent setup
+        </h1>
+      </header>
+
+      <section class="mt-12 pt-10" aria-label="Agent setup">
         <p class="agent-setup-lede">
           Install an agent of your choice, connect Cloudflare <a
             href="https://github.com/cloudflare/skills"
@@ -101,14 +107,12 @@ const agents = AGENTS;
           </div>
           <AgentPrimer />
         </div>
+      </section>
+    </div>
   </div>
 </SplashLayout>
 
 <style>
-  .agent-setup-page {
-    max-width: 1200px;
-  }
-
   .agent-setup-paths {
     display: flex;
     flex-wrap: wrap;
@@ -138,7 +142,7 @@ const agents = AGENTS;
     box-sizing: border-box;
   }
 
-  :root[data-theme="dark"] .agent-setup-path {
+  :root[data-mode="dark"] .agent-setup-path {
     border-color: var(--color-cl1-gray-2);
   }
 

@@ -8,9 +8,9 @@
 import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import { format } from "date-fns";
-import { getSidebar, getBreadcrumbs } from "nimbus-docs";
+import { getSidebar } from "nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
-import { externalAppLinksTransform } from "~/util/sidebar";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import Pagination from "~/components/changelog/Pagination.astro";
 import RSSButton from "~/components/cf/RSSButton.astro";
 import AnchorHeading from "~/components/cf/AnchorHeading.astro";
@@ -34,7 +34,7 @@ const { page } = Astro.props;
 
 const sectionSlug = "/waf/change-log/changelog/";
 const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
-const breadcrumbs = await getBreadcrumbs(sectionSlug);
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
 <DocsLayout

@@ -1,18 +1,28 @@
 ---
-/**
- * /videos/ — video catalog.
- *
- * CF source: src/pages/videos/index.astro (StarlightPage `template: "splash"`).
- * Ported to SplashLayout; body unchanged.
- */
 import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
 import { ResourcesBySelector } from "~/components";
 
 export const prerender = true;
 ---
 
 <SplashLayout title="Videos">
-  <div class="mx-auto w-full max-w-(--nb-content-max) px-[max(1.5rem,4vw)] py-14">
-    <ResourcesBySelector types={["video"]} columns={3} />
+  <div class="relative">
+    <BackgroundLines inner={1120} outer={1360} />
+    <div
+      class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
+    >
+      <header class="mx-auto max-w-2xl text-center">
+        <h1
+          class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+        >
+          Videos
+        </h1>
+      </header>
+
+      <section class="mt-12 pt-10" aria-label="Videos">
+        <ResourcesBySelector types={["video"]} columns={3} />
+      </section>
+    </div>
   </div>
 </SplashLayout>
