@@ -39,7 +39,7 @@ As a security measure, you should hide the hostname of your key server.
 
 :::note
 
-If your key server hostname is on a zone you have on Cloudflare, you must create a **DNS-only** (grey-clouded) record for it — do not proxy it. If the record is proxied or missing, Cloudflare's edge resolver returns `NXDOMAIN` and the Keyless TLS handshake fails. The fix is the DNS-only record — not adding the hostname to a certificate SAN.
+If your key server hostname is on a Cloudflare zone, you must create a **DNS-only** (grey cloud) record for it — do not proxy it. If the record is proxied or missing, Cloudflare's edge resolver returns `NXDOMAIN` and the Keyless SSL handshake fails. The fix is the DNS-only record — not adding the hostname to a certificate Subject Alternative Name (SAN).
 
 :::
 
