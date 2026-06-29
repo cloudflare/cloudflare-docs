@@ -68,7 +68,7 @@ To test, open an RFC 8707-compliant OAuth client and make a request to your appl
 
 ## Enable managed OAuth on an MCP server application
 
-Managed OAuth is available on [MCP server applications](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/) and allows MCP clients to authenticate users through Access using a standard OAuth 2.0 flow.
+Managed OAuth is available on [MCP server applications](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/) and allows MCP clients to authenticate users through Access using a standard OAuth 2.0 flow. Use this flow for MCP servers served through Cloudflare in the same account as your Zero Trust organization. The MCP server must validate the Access JWT sent in the `Cf-Access-Jwt-Assertion` header.
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">

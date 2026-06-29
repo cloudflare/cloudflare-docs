@@ -976,7 +976,7 @@ Independent MFA, purpose justification, and temporary authentication will be enf
 A `522` error indicates that Cloudflare cannot reach the portal's origin. This typically means the DNS record for the portal hostname is missing or misconfigured.
 
 1. Verify that a CNAME record exists for your portal subdomain pointing to `gateway.agents.cloudflare.com`.
-2. Ensure the CNAME record is proxied (orange-clouded) through Cloudflare.
+2. Ensure the CNAME record has **Proxy status** turned on in Cloudflare DNS.
 3. If you created the portal using the [API](#manage-portals-via-api) or the [Terraform provider](#configure-via-terraform), you must create the DNS record separately. Unlike the dashboard, the API and Terraform provider do not auto-create DNS records.
 
 ### An MCP server is stuck in `Waiting` status.

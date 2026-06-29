@@ -18,7 +18,6 @@ import {
 	Tabs,
 	TabItem,
 	APIRequest,
-	CURL,
 	DashButton,
 } from "~/components";
 
@@ -26,12 +25,12 @@ You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com
 
 | Approach                                                      | Best for                                                                                           | Auth handled by                                        |
 | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| [MCP server application](#mcp-server-application-recommended) | MCP servers where you want Access to handle all authentication and authorization                   | Cloudflare Access                                      |
+| [MCP server application](#mcp-server-application-recommended) | MCP servers served through Cloudflare that can validate Access JWTs                                | Cloudflare Access                                      |
 | [Access for SaaS (OIDC)](#access-for-saas-application)        | MCP servers that implement their own OAuth flow and need Cloudflare as the identity/token provider | Your MCP server code, with Access as the OIDC provider |
 
 ## MCP server application (recommended)
 
-The following guide deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) and protects it with an Access MCP server application. Cloudflare Access handles the full OAuth flow automatically. The MCP server does not need to implement any authorization logic. When users connect using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, Access prompts them to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and only grants access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
+The following guide deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) and protects it with an Access MCP server application. This flow is for MCP servers served through Cloudflare in the same account as your Zero Trust organization. The MCP server does not need to implement OAuth, but it must validate the Access JWT sent in the `Cf-Access-Jwt-Assertion` header. The example Worker in this guide performs that validation. When users connect using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, Access prompts them to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and only grants access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
 
 ### Prerequisites
 
@@ -117,7 +116,7 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
 8. Select **Save and connect server**.
 9. Go to **Zero Trust** > **Access controls** > **Applications** and open the Access application that was created for your MCP server.
 10. In **Basic information**, add your Worker hostname as a public hostname. For example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`.
-11. Go to **Advanced settings** and turn on **Managed OAuth**. This allows non-browser MCP clients to authenticate using a standard OAuth 2.0 flow instead of receiving a browser redirect. For more information, refer to [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
+11. Go to **Advanced settings** and turn on **Managed OAuth**. This allows MCP clients to authenticate using a standard OAuth 2.0 flow. Only enable Managed OAuth for an MCP server that validates the Access JWT sent by Cloudflare. The example Worker in this guide validates this JWT. For more information, refer to [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
 12. Copy the **AUD tag** value shown in **Additional settings**. You will need this value to configure your MCP server.
 
 </TabItem>
@@ -125,10 +124,9 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
 
 1. Send a `POST` request to the Access applications endpoint. Set `type` to `mcp` and set `oauth_configuration.enabled` to `true`:
 
-   <CURL
-     url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps"
+   <APIRequest
+     path="/accounts/{account_id}/access/apps"
      method="POST"
-     headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
      json={{
       name: "MCP server",
       type: "mcp",
@@ -175,7 +173,7 @@ To configure the environment variables for our [example MCP server](#1-deploy-an
    | Workers variable | Value                                                                                         |
    | ---------------- | --------------------------------------------------------------------------------------------- |
    | `TEAM_DOMAIN`    | `https://<YOUR_TEAM_NAME>.cloudflareaccess.com`                                               |
-   | `POLICY_AUD`     | The AUD tag copied from your [Access application](#2-create-a-self-hosted-access-application) |
+   | `POLICY_AUD`     | The AUD tag copied from your [Access application](#2-create-an-mcp-server-access-application) |
 
 </TabItem>
 <TabItem label="CLI">
