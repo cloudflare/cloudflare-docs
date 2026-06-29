@@ -268,10 +268,11 @@ package.json @cloudflare/content-engineering
 /src/content/docs/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu @steve-cloudflare
 /src/content/partials/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu @steve-cloudflare
 /src/content/docs/speed/ @cloudflare/product-owners @ack-cf
-/src/content/partials/speed/ @cloudflare/product-owners @ack-cf
-/src/content/changelog/speed/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf
-/src/assets/images/speed/ @cloudflare/product-owners @ack-cf
+/src/content/docs/speed/optimization/content/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
 /src/content/docs/speed/optimization/protocol/http2-to-origin.mdx @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/partials/speed/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
+/src/content/changelog/speed/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
+/src/assets/images/speed/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
 /src/content/docs/web3/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 
 # Privacy
