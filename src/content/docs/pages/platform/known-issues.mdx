@@ -122,7 +122,12 @@ deployments=$(npx --no-install wrangler pages deployment list \
     --project-name "$project" --json)
 
 prod_id=$(jq -r '[.[] | select(.Environment == "Production")][0].Id // empty' <<<"$deployments")
-[ -n "$prod_id" ] || { echo "No production deployment found - aborting." >&2; exit 1; }
+if [ -z "$prod_id" ]; then
+    echo "No production deployment found for '$project' - aborting." >&2
+    echo "This script keeps your production deployment, so it needs one to run." >&2
+    echo "Create a production deployment by deploying to your production branch (for example: npx wrangler pages deploy <output-dir> --project-name $project), then re-run this script." >&2
+    exit 1
+fi
 
 to_delete=$(jq -r '.[] | select(.Environment != "Production") | .Id' <<<"$deployments")
 count=$(printf '%s\n' "$to_delete" | grep -c . || true)
@@ -157,7 +162,9 @@ $deployments = npx --no-install wrangler pages deployment list `
     --project-name $ProjectName --json | ConvertFrom-Json
 
 $prod = $deployments | Where-Object { $_.Environment -eq "Production" } | Select-Object -First 1
-if (-not $prod) { throw "No production deployment found - aborting to avoid data loss." }
+if (-not $prod) {
+    throw "No production deployment found for '$ProjectName' - aborting to avoid data loss. This script keeps your production deployment, so it needs one to run. Create a production deployment by deploying to your production branch (for example: npx wrangler pages deploy <output-dir> --project-name $ProjectName), then re-run this script."
+}
 
 $toDelete = $deployments | Where-Object { $_.Environment -ne "Production" }
 
