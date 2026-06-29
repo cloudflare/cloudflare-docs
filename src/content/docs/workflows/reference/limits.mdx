@@ -119,6 +119,13 @@ On [Workers Paid](/workers/platform/pricing/#workers), Workflow instances create
 
 After that budget is used, the instance yields and enters the normal concurrency queue. It resumes when a concurrency slot is available. The instance does not fail, time out, or terminate because it used this cron concurrency budget.
 
+The following limits apply to Workflow `schedules`:
+
+| Limit                                                          | Value         |
+| -------------------------------------------------------------- | ------------- |
+| Maximum number of `schedules` (cron expressions) per account   | 100           |
+| Maximum length of a cron expression                            | 256 characters |
+
 ### Increasing Workflow step limits
 
 Each Workflow instance supports 10,000 steps by default, but this can be increased up to 25,000 steps in your Wrangler configuration. Refer to [Workflow step limits](/workflows/build/workers-api/#workflow-step-limits) for more information.

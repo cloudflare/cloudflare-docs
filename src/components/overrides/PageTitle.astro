@@ -6,7 +6,6 @@ import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
 import Description from "~/components/Description.astro";
-import LastReviewed from "~/components/LastReviewed.astro";
 import ComponentUsage from "~/components/ComponentUsage.astro";
 import PageActions from "~/components/PageActions.astro";
 
@@ -14,7 +13,6 @@ import { getEntry } from "astro:content";
 
 const frontmatter = Astro.locals.starlightRoute.entry.data;
 
-const reviewed = frontmatter.reviewed;
 const summary = frontmatter.summary;
 const component = frontmatter.styleGuide?.component;
 
@@ -100,13 +98,9 @@ if (!hideBreadcrumbs) {
 			</Breadcrumbs>
 		)
 	}
-
-
 </div>
 
 {!hideTitle && <Default />}
-
-{reviewed && <LastReviewed date={reviewed} />}
 
 {summary && <Description set:html={marked.parse(summary)} />}
 
@@ -120,9 +114,9 @@ if (!hideBreadcrumbs) {
 
 {
 	component && (
-			<div class="sl-markdown-content md-ignore component-usage-wrapper">
-				<ComponentUsage component={component} />
-			</div>
+		<div class="sl-markdown-content md-ignore component-usage-wrapper">
+			<ComponentUsage component={component} />
+		</div>
 	)
 }
 
@@ -159,12 +153,15 @@ if (!hideBreadcrumbs) {
 	}
 </style>
 
-{ hideTitle && hideBreadcrumbs &&
-	<style>
-		main {
-			.content-panel:first-of-type {
-				display: none;
-			}
-		}
-	</style>
+{
+	hideTitle && hideBreadcrumbs && (
+		<style
+			is:global
+			set:html={`
+				main .content-panel:first-of-type {
+					display: none;
+				}
+			`}
+		/>
+	)
 }

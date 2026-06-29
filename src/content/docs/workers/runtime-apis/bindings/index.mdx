@@ -148,8 +148,7 @@ Bindings are located on the `env` object, which can be accessed in several ways:
   ```
   </TabItem> <TabItem label="Python" icon="seti:python">
   ```python
-  from workers import import_from_javascript
-  env = import_from_javascript("cloudflare:workers").env
+  from workers import env
   print(f"Hi, {env.NAME}")
   ```
   </TabItem></Tabs>

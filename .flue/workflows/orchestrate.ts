@@ -1,0 +1,573 @@
+/**
+ * Orchestrator agent
+ *
+ * Receives GitHub webhooks (issues, pull_request events), verifies the
+ * signature, and dispatches to the appropriate subagents:
+ *
+ * - dependabot-review: runs on PRs from dependabot[bot] (skips spam filter)
+ * - spam-and-off-topic-filter: runs on opened/reopened/synchronize/ready_for_review (non-Dependabot)
+ * - code-review-orchestrator: runs on PR opened/reopened/synchronize/ready_for_review
+ *   (only if spam filter did not close the item, non-Dependabot)
+ *
+ * POST /workflows/orchestrate
+ */
+import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
+import {
+	addReactionToComment,
+	getInstallationToken,
+	getPullRequest,
+	isCodeOwner,
+	verifyGitHubSignature,
+} from "../lib/github";
+import { getInternalHeaders } from "../lib/internal-auth";
+import { admitWorkflow, pollRun } from "../lib/poll-run";
+import { setReviewLimitIgnored } from "../lib/code-review-state";
+import {
+	getIssueOrPullRequestLabel,
+	getIssueOrPullRequestNumber,
+	getIssueOrPullRequestTitle,
+	getIssueOrPullRequestUrl,
+	truncateLogValue,
+} from "../lib/github-webhook";
+
+export const route: WorkflowRouteHandler = async (_c, next) => next();
+
+export async function run({ payload, env, req }: FlueContext) {
+	// ── 1. Verify the GitHub webhook signature ─────────────────────────────
+	const secret = (env as Record<string, string>).GITHUB_WEBHOOK_SECRET;
+	const sig = req?.headers.get("x-hub-signature-256") ?? "";
+	const delivery = req?.headers.get("x-github-delivery") ?? undefined;
+	const eventType =
+		(req?.headers.get("x-github-event") as string | null) ?? "unknown";
+	const rawBody = req ? await req.text() : JSON.stringify(payload);
+
+	if (!secret) {
+		console.log({
+			message: `GitHub webhook rejected: secret not configured`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			eventType,
+			action: "rejected_secret_missing",
+		});
+		return new Response("Webhook secret not configured", { status: 500 });
+	}
+
+	if (!(await verifyGitHubSignature(rawBody, sig, secret))) {
+		console.log({
+			message: `GitHub webhook rejected: invalid signature`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			eventType,
+			action: "rejected_invalid_signature",
+		});
+		return new Response("Unauthorized", { status: 401 });
+	}
+
+	const body = JSON.parse(rawBody) as Record<string, unknown>;
+	const webhookAction = body.action;
+	const number = getIssueOrPullRequestNumber(eventType, body);
+	const title = getIssueOrPullRequestTitle(eventType, body);
+	const _itemUrl = getIssueOrPullRequestUrl(eventType, body, number);
+	const itemType = getIssueOrPullRequestLabel(eventType);
+	const sender = body.sender as Record<string, unknown> | undefined;
+	const senderLogin = sender?.login;
+	const itemLabel = `${itemType}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
+	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")} ${itemLabel}`;
+
+	// console.log({
+	// 	message: `GitHub webhook received: ${webhookLabel}`,
+	// 	event: "github_webhook_orchestrator",
+	// 	delivery,
+	// 	eventType,
+	// 	webhookAction,
+	// 	number,
+	// 	title,
+	// 	sender: senderLogin,
+	// 	action: "received",
+	// });
+
+	// ── 2. Route to the right pipeline ─────────────────────────────────────
+
+	// Detect Dependabot PRs — route to the Dependabot review workflow instead
+	// of the normal spam-filter → code-review pipeline.
+	const prAuthorLogin = (
+		(body.pull_request as Record<string, unknown> | undefined)?.user as
+			| Record<string, unknown>
+			| undefined
+	)?.login as string | undefined;
+	const isDependabotPr =
+		eventType === "pull_request" && prAuthorLogin === "dependabot[bot]";
+
+	const isSpamFilterEvent =
+		!isDependabotPr &&
+		["issues", "pull_request"].includes(eventType) &&
+		(["opened", "reopened", "synchronize"].includes(webhookAction as string) ||
+			(eventType === "pull_request" && webhookAction === "ready_for_review"));
+
+	const isCodeReviewEvent =
+		!isDependabotPr &&
+		eventType === "pull_request" &&
+		["opened", "reopened", "synchronize", "ready_for_review"].includes(
+			webhookAction as string,
+		);
+
+	const isDependabotReviewEvent =
+		isDependabotPr &&
+		["opened", "reopened", "synchronize", "ready_for_review"].includes(
+			webhookAction as string,
+		);
+
+	// Slash commands: issue_comment on a PR from a codeowner
+	const commentBody = (body.comment as Record<string, unknown> | undefined)
+		?.body as string | undefined;
+	const trimmedComment = commentBody?.trim();
+	const isOnPullRequest =
+		eventType === "issue_comment" &&
+		webhookAction === "created" &&
+		(body.issue as Record<string, unknown> | undefined)?.pull_request !==
+			undefined;
+	const isFullReviewCommand =
+		isOnPullRequest && trimmedComment === "/full-review";
+	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
+	const isIgnoreReviewLimitCommand =
+		isOnPullRequest && trimmedComment === "/ignore-review-limit";
+
+	if (
+		!req ||
+		(!isSpamFilterEvent &&
+			!isCodeReviewEvent &&
+			!isDependabotReviewEvent &&
+			!isFullReviewCommand &&
+			!isReviewCommand &&
+			!isIgnoreReviewLimitCommand)
+	) {
+		return { acted: false, summary: "No action needed." };
+	}
+
+	if (!number) {
+		return { acted: false, summary: "No issue or PR number found." };
+	}
+
+	// ── 3a. Handle Dependabot PR events ─────────────────────────────────────
+	if (isDependabotReviewEvent) {
+		const internalHeaders = getInternalHeaders(env as Record<string, string>);
+		const baseUrl = new URL(req.url).origin;
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: `/workflows/dependabot-review`,
+				headers: internalHeaders,
+				body: { eventType: "pull_request", number },
+			});
+			console.log({
+				message: `Dependabot review admitted: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "dependabot_review_admitted",
+			});
+			return {
+				acted: true,
+				summary: `Dependabot review dispatched for PR #${number}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `Dependabot review dispatch failed: ${webhookLabel}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: "dependabot_review_dispatch_failed",
+			});
+			return {
+				acted: false,
+				summary: `Dependabot review dispatch failed: ${errMsg}`,
+			};
+		}
+	}
+
+	// ── 3. Handle /full-review command ──────────────────────────────────────
+	if (isFullReviewCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `Full review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "full_review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		// Acknowledge immediately with 👀 so the user knows we saw it
+		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+
+		// Check if the PR is from Dependabot — if so route to dependabot-review
+		const prForSlash = await getPullRequest(token, number).catch(() => null);
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+		const isDepBot = prForSlash?.user?.login === "dependabot[bot]";
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: isDepBot
+					? `/workflows/dependabot-review`
+					: `/workflows/code-review-orchestrator`,
+				headers: internalHeaders,
+				body: isDepBot
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							forceFullReview: true,
+							bypassReviewLimit: true,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
+			});
+			console.log({
+				message: `Full review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "full_review_admitted",
+			});
+			return {
+				acted: true,
+				summary: `Full review triggered by @${senderLogin}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `Full review dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: "full_review_dispatch_failed",
+			});
+			return {
+				acted: false,
+				summary: `Full review dispatch failed: ${errMsg}`,
+			};
+		}
+	}
+
+	// ── 4. Handle /review command ────────────────────────────────────────────
+	if (isReviewCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `Review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		// Acknowledge immediately with 👀
+		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+
+		// Check if the PR is from Dependabot — if so route to dependabot-review
+		const prForReview = await getPullRequest(token, number).catch(() => null);
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+		const isDepBot = prForReview?.user?.login === "dependabot[bot]";
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: isDepBot
+					? `/workflows/dependabot-review`
+					: `/workflows/code-review-orchestrator`,
+				headers: internalHeaders,
+				body: isDepBot
+					? {
+							eventType: "pull_request",
+							number,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						}
+					: {
+							eventType: "pull_request",
+							number,
+							bypassReviewLimit: true,
+							triggerCommentId: commentId,
+							triggerEyesReactionId: eyesReactionId,
+						},
+			});
+			console.log({
+				message: `Review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: "review_admitted",
+			});
+			return { acted: true, summary: `Review triggered by @${senderLogin}.` };
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `Review dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: "review_dispatch_failed",
+			});
+			return { acted: false, summary: `Review dispatch failed: ${errMsg}` };
+		}
+	}
+
+	// ── 5. Handle /ignore-review-limit command ──────────────────────────────
+	if (isIgnoreReviewLimitCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `Ignore review limit command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "ignore_review_limit_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
+		await setReviewLimitIgnored(bucket, number, senderLogin as string);
+
+		// Acknowledge with 👍
+		await addReactionToComment(token, commentId, "+1");
+
+		console.log({
+			message: `Review limit permanently ignored by ${senderLogin}: PR #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			number,
+			action: "ignore_review_limit_set",
+		});
+
+		return {
+			acted: true,
+			summary: `Review limit permanently ignored by @${senderLogin}.`,
+		};
+	}
+
+	const baseUrl = new URL(req.url).origin;
+	const internalHeaders = getInternalHeaders(env as Record<string, string>);
+	const results: Record<string, unknown> = {};
+
+	// ── 6. Dispatch spam-and-off-topic-filter (issues + PRs on open/reopen) ─
+	if (isSpamFilterEvent) {
+		// Skip spam filter for codeowners — their issues and PRs are never spam.
+		let skipSpamFilter = false;
+		if (senderLogin) {
+			const typedEnv = env as Record<string, string>;
+			const token = await getInstallationToken(typedEnv);
+			const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+			skipSpamFilter = await isCodeOwner(
+				token,
+				orgToken,
+				senderLogin as string,
+			);
+		}
+
+		if (skipSpamFilter) {
+			results.spamFilter = { result: { closed: false }, skipped: true };
+		} else {
+			// Admit the spam filter workflow and poll for its result, since we need
+			// the `closed` boolean before deciding whether to run code review.
+			let runId: string;
+			try {
+				runId = await admitWorkflow({
+					baseUrl,
+					pathname: `/workflows/spam-and-off-topic-filter`,
+					headers: internalHeaders,
+					body: { eventType, number },
+				});
+			} catch (err) {
+				console.log({
+					message: `Spam filter dispatch failed: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					error: err instanceof Error ? err.message : String(err),
+					action: "spam_filter_dispatch_failed",
+				});
+				throw new Error(
+					`Spam and off-topic filter failed: ${err instanceof Error ? err.message : String(err)}`,
+				);
+			}
+
+			console.log({
+				message: `Spam filter admitted: ${webhookLabel} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				eventType,
+				webhookAction,
+				number,
+				runId,
+				action: "spam_filter_admitted",
+			});
+
+			// Spam filter is fast (< 30s usually); 3 minute timeout is generous.
+			const pollResult = await pollRun<{
+				closed?: boolean;
+				is_spam?: boolean;
+				confidence?: string;
+				reason?: string;
+			}>({
+				runId,
+				baseUrl,
+				headers: internalHeaders,
+				timeoutMs: 3 * 60 * 1000,
+				label: `spam-filter PR #${number}`,
+			});
+
+			if (pollResult.timedOut) {
+				console.log({
+					message: `Spam filter timed out: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					action: "spam_filter_timeout",
+				});
+				// Treat timeout as "not spam" — do not block code review
+				results.spamFilter = { result: { closed: false }, timedOut: true };
+			} else if (pollResult.isError) {
+				console.log({
+					message: `Spam filter run failed: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					error: pollResult.error?.message,
+					action: "spam_filter_run_failed",
+				});
+				// Treat error as "not spam" — do not block code review
+				results.spamFilter = {
+					result: { closed: false },
+					error: pollResult.error,
+				};
+			} else {
+				const filterResult = pollResult.result;
+				const closed = filterResult?.closed ?? false;
+				console.log({
+					message: `${itemType} ${closed ? "closed" : "left open"}: ${itemLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					closed,
+					is_spam: filterResult?.is_spam,
+					confidence: filterResult?.confidence,
+					reason: filterResult?.reason,
+					action: "spam_filter_complete",
+				});
+				results.spamFilter = { result: filterResult };
+
+				// If spam filter closed the item, skip code review
+				if (closed) {
+					return results;
+				}
+			}
+		} // end else (not skipSpamFilter)
+	}
+
+	// ── 7. Dispatch code-review-orchestrator (PRs only) ─────────────────────
+	// The code review orchestrator posts its own GitHub comment when done, so
+	// we don't need to wait for the result here — fire-and-forget.
+	if (isCodeReviewEvent) {
+		// Suppress code review on draft PRs unless the action is ready_for_review
+		const isDraft =
+			(body.pull_request as Record<string, unknown> | undefined)?.draft ===
+			true;
+		if (!isDraft || webhookAction === "ready_for_review") {
+			try {
+				const runId = await admitWorkflow({
+					baseUrl,
+					pathname: `/workflows/code-review-orchestrator`,
+					headers: internalHeaders,
+					body: { eventType: "pull_request", number },
+				});
+				console.log({
+					message: `Code review admitted: ${webhookLabel} — runId: ${runId}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					runId,
+					action: "code_review_admitted",
+				});
+				results.codeReview = { runId };
+			} catch (err) {
+				// Code review failure is non-fatal — log and continue
+				console.log({
+					message: `Code review dispatch failed: ${webhookLabel}`,
+					event: "github_webhook_orchestrator",
+					delivery,
+					eventType,
+					webhookAction,
+					number,
+					error: err instanceof Error ? err.message : String(err),
+					action: "code_review_dispatch_failed",
+				});
+			}
+		}
+	}
+
+	return results;
+}

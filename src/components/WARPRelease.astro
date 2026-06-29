@@ -17,7 +17,7 @@ const props = z.object({
 const { header, open, release } = props.parse(Astro.props);
 
 const getPrettyLinuxName = (platform: string) => {
-	const platformInfo = platforms.find(p => p.platform === platform);
+	const platformInfo = platforms.find((p) => p.platform === platform);
 
 	if (platformInfo) {
 		return platformInfo.display_name;
@@ -34,7 +34,10 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 ---
 
 <Details header={header} open={open}>
-	<warp-download data-version={release.version} data-platforms={JSON.stringify(sortedPlatforms)}>
+	<warp-download
+		data-version={release.version}
+		data-platforms={JSON.stringify(sortedPlatforms)}
+	>
 		<p>
 			<div class="flex gap-2">
 				<span>
@@ -60,6 +63,7 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 			<span>
 				{
 					sortedPlatforms.length > 0 ? (
+						<>
 							<select>
 								{sortedPlatforms.map(([platform]) => (
 									<option value={platform}>
@@ -74,6 +78,7 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 							>
 								Download
 							</a>
+						</>
 					) : (
 						<a href={release.packageURL}>Download</a>
 					)
@@ -101,7 +106,9 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 			dropdown?.addEventListener("change", () => {
 				const platform = dropdown?.value;
 
-				const download = this.querySelector<HTMLAnchorElement>("a[data-linux-download]");
+				const download = this.querySelector<HTMLAnchorElement>(
+					"a[data-linux-download]",
+				);
 				const size = this.querySelector<HTMLSpanElement>("span[data-size]");
 
 				download?.setAttribute(
@@ -110,7 +117,9 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 				);
 
 				if (size) {
-					const platformInfo = platforms.find(([p]: [string, number]) => p === platform);
+					const platformInfo = platforms.find(
+						([p]: [string, number]) => p === platform,
+					);
 
 					size.textContent = prettyBytes(Number(platformInfo?.[1] ?? 0));
 				}

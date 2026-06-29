@@ -1,0 +1,313 @@
+---
+title: How Code Mode works
+pcx_content_type: concept
+description: Learn how Code Mode isolates generated code and makes approvals, replay, rollback, and reuse durable.
+sidebar:
+  order: 7
+products:
+  - agents
+tags:
+  - AI
+---
+
+import { TypeScriptExample } from "~/components";
+
+Code Mode is a pattern where a model writes code to compose tools. The `@cloudflare/codemode` package implements that pattern with an isolated executor, service connectors, and a durable runtime.
+
+These parts have separate responsibilities. The executor runs code but stores no state. Connectors provide capabilities but do not manage replay. The runtime records execution and controls approvals, replay, rollback, and reuse.
+
+:::caution
+Code Mode is experimental and may have breaking changes.
+:::
+
+## What the model sees
+
+In the standard setup, the model receives one outer tool named `codemode`. That tool accepts one field and returns a durable execution outcome:
+
+```ts
+type CodeModeInput = {
+	code: string;
+};
+
+type PendingAction = {
+	executionId: string;
+	seq: number;
+	connector: string;
+	method: string;
+	args: unknown;
+};
+
+type CodeModeOutput =
+	| { status: "completed"; executionId: string; result: unknown; logs?: string[] }
+	| { status: "paused"; executionId: string; pending: PendingAction[] }
+	| { status: "error"; executionId: string; error: string; logs?: string[] };
+```
+
+Its description tells the model to write a JavaScript async arrow function. The description lists the configured connector namespace names, such as `github` or `stripe`, but it does not include every connector method and schema.
+
+The model can use one Code Mode execution to discover relevant methods, then use the returned paths and types in its next execution. This keeps the complete tool catalog out of the initial model context.
+
+### Platform SDK
+
+Inside the sandbox, the `codemode` global provides the platform-level SDK:
+
+```ts
+declare const codemode: {
+	search(query: string): Promise<SearchOutput>;
+	describe(target: string): Promise<DescribeOutput>;
+	step<T>(name: string, fn: () => T | Promise<T>): Promise<T>;
+	run(name: string, input?: unknown): Promise<unknown>;
+};
+
+type SearchOutput = {
+	results: Array<{
+		path: string;
+		connector: string;
+		method: string;
+		description?: string;
+		kind: "method" | "snippet";
+		score: number;
+	}>;
+	total: number;
+	truncated: boolean;
+};
+
+type DescribeOutput = {
+	path: string;
+	description?: string;
+	types: string;
+	kind: "connector" | "method" | "snippet";
+};
+```
+
+`codemode.search()` searches connector methods and saved snippets. It returns ranked paths, not complete schemas. The model can then pass one path to `codemode.describe()` to request focused TypeScript documentation.
+
+`codemode.step()` records nondeterministic or side-effectful sandbox work for replay. `codemode.run()` invokes a saved snippet.
+
+### Connector SDKs
+
+Each configured connector becomes another sandbox global. A connector named `github` is available as `github`, and its methods appear under paths such as `github.list_pull_requests`.
+
+A connector-level description returns declarations similar to:
+
+```ts
+type ListPullRequestsInput = {
+	owner: string;
+	repo: string;
+	state?: "open" | "closed";
+};
+
+type ListPullRequestsOutput = unknown;
+
+declare const github: {
+	list_pull_requests(
+		input: ListPullRequestsInput,
+	): Promise<ListPullRequestsOutput>;
+};
+```
+
+These declarations are generated from connector schemas. They are illustrative; the actual method names, input fields, and output types depend on the connector.
+
+The sandbox also includes standard JavaScript globals. It does not expose Node.js APIs, host credentials, `process`, `require`, or unrestricted network access. All external operations go through connector globals unless the executor explicitly provides another capability.
+
+## Executor, connectors, and runtime
+
+### Executor
+
+An executor runs one block of model-generated code once. It receives callable namespaces and returns a result, an error, and captured console output. It does not retain execution history.
+
+`DynamicWorkerExecutor` uses a [Dynamic Worker Loader](/workers/runtime-apis/bindings/worker-loader/) to create an isolated Worker for each execution pass. A resumed execution runs the code again in another pass. Durable state therefore cannot live inside the sandbox.
+
+External `fetch()` and `connect()` calls are blocked by default. `DynamicWorkerExecutor` configures `globalOutbound: null` unless you provide another value. You can provide a `Fetcher` to route outbound requests through a controlled service.
+
+### Connectors
+
+Connectors bridge host-side services into the sandbox. A connector can wrap a Model Context Protocol (MCP) server, an OpenAPI document, an AI SDK toolset, or custom code.
+
+Each connector becomes a global namespace. For example, a connector named `github` exposes calls such as `github.list_pull_requests()`. The generated code never receives the connector credentials or client objects.
+
+Connector calls cross the sandbox boundary through [Workers remote procedure calls (RPC)](/workers/runtime-apis/rpc/). The runtime intercepts each call before the connector executes it. This interception applies approval, logging, replay, and rollback policy.
+
+The `codemode` global provides discovery and runtime operations. `codemode.search()` finds connector methods and saved snippets. `codemode.describe()` returns focused TypeScript documentation without placing every connector schema in the model context.
+
+### Durable runtime
+
+The runtime connects the executor and connectors. It stores execution records, connector-call logs, pending approvals, and snippets in isolated SQLite storage. This state survives request completion and Durable Object hibernation.
+
+The executor and connector instances remain transient. Your application provides them again when it handles a later approval or request.
+
+A typical Agent creates all three parts together:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import {
+	createCodemodeRuntime,
+	DynamicWorkerExecutor,
+} from "@cloudflare/codemode";
+
+const runtime = createCodemodeRuntime({
+	ctx: this.ctx,
+	executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
+	connectors: [github, repoApi],
+});
+
+const tools = { codemode: runtime.tool() };
+```
+
+</TypeScriptExample>
+
+Code Mode stores this state in a Durable Object facet. A facet is a durable child of the Agent with its own SQLite storage. `createCodemodeRuntime()` and the Vite plugin manage this implementation detail. You do not create or address the facet directly.
+
+## Use multiple runtimes
+
+Most Agents need only one Code Mode runtime. If you omit `name`, the runtime uses the name `default`.
+
+Set `name` when one Agent needs separate Code Mode histories. For example, a runtime named `research` and another named `operations` keep separate execution records and snippet collections:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+const researchRuntime = createCodemodeRuntime({
+	ctx: this.ctx,
+	executor,
+	connectors: researchConnectors,
+	name: "research",
+});
+
+const operationsRuntime = createCodemodeRuntime({
+	ctx: this.ctx,
+	executor,
+	connectors: operationsConnectors,
+	name: "operations",
+});
+```
+
+</TypeScriptExample>
+
+A runtime name identifies its durable storage. It does not name the model, connector, tool, or individual execution.
+
+Changing the connector set does not create another runtime. Each execution records every connector configured when it starts, and a saved snippet inherits that list. Approval replay and snippet execution require all recorded connectors to remain available, even if the original code did not call each one.
+
+## Durable execution log
+
+The runtime assigns each execution a stable ID. Each connector call and `codemode.step()` entry receives a sequence number. The log records its arguments, state, replay policy, and result when applicable.
+
+The runtime marks a call as `executing` before invoking its connector. It marks the call as `applied` after recording the result. If the host stops before completing the pass, the execution can remain in `running`. A later `expirePaused()` maintenance call marks that stale execution as an error and releases its resources. Approval does not resume a stale `running` execution.
+
+This log is the replay spine. It also supports developer audit views and determines which actions can be rolled back. It is not general conversation memory and does not replace Agent state.
+
+## Approvals through abort and replay
+
+A connector method can require user approval. When generated code reaches that method, the runtime records the action as pending and aborts the current pass. The action does not receive a provisional result.
+
+The application can show the pending method and arguments to a user. Approval starts another pass with the same source code and execution ID. Calls already marked as applied return their recorded results instead of executing again. The approved action then executes, and the code continues until completion or another approval.
+
+```txt
+first pass:   read ── execute ──> result
+              write ── pause
+
+approval
+
+second pass:  read ── replay ───> recorded result
+              write ── execute ─> result
+              next call ────────> continue
+```
+
+This design lets an approval wait beyond a request or hibernation. Generated code remains linear and does not implement pause or resume logic.
+
+Only a paused execution can resume. A stale approval cannot revive a completed, rejected, or rolled-back execution. Rejecting an action ends the execution, but it does not undo earlier actions. Rollback is a separate operation.
+
+Execution failures are returned as data to the agent loop. Sandbox errors and replay divergence therefore do not need to escape as uncaught RPC exceptions.
+
+## Deterministic replay
+
+Replay requires connector calls and steps to occur in the same order. On every pass, a given sequence number must use the same connector, method, and arguments. A mismatch ends the execution with a replay-divergence error.
+
+Recorded connector results make normal data-dependent branches stable. However, values from `Date.now()`, `Math.random()`, or other nondeterministic sources can change control flow or action arguments.
+
+Use `codemode.step()` to capture such work once. The runtime records the closure result and returns that value during approval replay:
+
+```js
+async () => {
+	const createdAt = await codemode.step("created-at", () => Date.now());
+
+	return github.create_issue({
+		owner: "cloudflare",
+		repo: "agents",
+		title: `Review created at ${createdAt}`,
+	});
+};
+```
+
+Connector calls already pass through the runtime and do not need a step wrapper. Use steps for nondeterministic or side-effectful work outside connector calls. If you explicitly allow direct network access, this includes direct network operations that must not repeat during approval replay.
+
+Issue connector calls sequentially when an execution might pause. The host assigns sequence numbers when calls arrive. Calls in `Promise.all()` can arrive in different orders across passes and cause replay divergence.
+
+## Resource lifetimes
+
+Some connectors need resources beyond one method call. Examples include browser sessions, database transactions, and temporary workspaces. Connector methods receive the stable execution ID, which can key durable resource metadata across passes.
+
+Code Mode distinguishes two resource lifetimes:
+
+- **Pass resources** last for one sandbox pass. The runtime invokes `onPassEnd()` after completed, failed, and paused passes.
+- **Execution resources** last for the whole execution. The runtime invokes `disposeExecution()` after completion, failure, rejection, or rollback, but not after a pause.
+
+A paused execution can resume in another Worker invocation. Connector lifecycle hooks must not depend on instance memory. Cleanup must also be idempotent because a completed execution can later be rolled back and disposed again.
+
+The runtime calls lifecycle hooks for every configured connector. A connector that did not allocate a resource should safely do nothing. Cleanup errors are ignored so they do not turn a finished execution into a failed one.
+
+## Replay policy
+
+By default, the runtime stores a connector result and replays it on later passes. This preserves the exact value that the original code observed.
+
+A connector can mark a call with `replay: "reexecute"`. The runtime still logs its sequence and arguments, but it does not store the result. A later pass runs the connector method again.
+
+Use this policy only for idempotent reads with large, inexpensive results. The result can change between passes, so generated code must tolerate that change. Approval-required methods cannot use `replay: "reexecute"` because replay could apply an approved side effect more than once.
+
+## Rollback
+
+Rollback walks applied connector calls in reverse order. It invokes the `revert` implementation for every applied method that provides one, regardless of whether that method required approval.
+
+For each applied connector call, the runtime asks the currently configured connector to run its `revert` implementation. Methods without `revert` remain applied. Missing connectors are also skipped. A failed revert does not stop later compensation attempts, and the runtime reports failures after trying the remaining calls. The execution moves to `rolled_back` only if at least one call is reverted.
+
+Rollback is compensation, not database transaction isolation. Connector authors define what reversal means for each action. An external system may also change between the original call and its compensation.
+
+## Retention and stale executions
+
+The execution log is an audit trail and grows over time. When a new run begins, the runtime first inserts that run and then prunes older terminal executions. `maxExecutions` defaults to 50. Because a running execution is not terminal, completion can temporarily leave 51 terminal records until another run begins or you call `pruneExecutions()`.
+
+Running and paused executions are not pruned automatically. They may still need to finish or resume. Use `expirePaused()` from recurring maintenance to reclaim stale nonterminal runs. The runtime marks stale paused runs as rejected and stale running runs as errors, then disposes their execution resources.
+
+You can also remove individual execution records or prune terminal history explicitly. Deleting a nonterminal execution disposes its execution-scoped resources.
+
+## Durable value and result limits
+
+Each value stored for durable replay has a serialized character limit of 1,000,000. The implementation checks the JavaScript string length after serialization. This limit applies to connector arguments, recorded connector results, step results, and execution source code.
+
+The runtime cannot truncate these values. Truncation would provide different data during replay. An oversized or unserializable replay value therefore fails the execution and suggests storing the data elsewhere, then passing a small reference such as a file path.
+
+A final result has different behavior because replay does not consume it. The execution can complete and return the real result to the model. If the result cannot fit in the audit record, the runtime stores an omission message there instead.
+
+`transformResult` can reshape the completed result before the model receives it. The transform runs after the runtime attempts to record the raw result. The audit trail retains the original value when it fits, while the model can receive a smaller representation.
+
+## Snippets
+
+A snippet is saved source from an execution. Snippets turn model-written programs into reusable recipes. They remain available across requests and hibernation.
+
+The model does not promote its own code. Your application reviews an execution and calls `runtime.saveSnippet()` with its execution ID. The API accepts any execution status, so verify that the execution completed successfully before saving it. The model can then find the snippet with `codemode.search()`, inspect it with `codemode.describe()`, and invoke it with `codemode.run()`.
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+const runs = await runtime.executions(20);
+
+await runtime.saveSnippet("list-open-prs", {
+	executionId: runs[0].id,
+	description: "List open pull requests for a repository.",
+});
+```
+
+</TypeScriptExample>
+
+A snippet can accept an input value. Its connector calls join the current execution log when the model runs it. The snippet also retains the connector list from its source execution. If a recorded connector is unavailable, `codemode.run()` resolves to an object with an `error` property. It does not throw automatically.

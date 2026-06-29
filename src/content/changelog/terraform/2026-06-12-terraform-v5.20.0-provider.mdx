@@ -1,0 +1,86 @@
+---
+title: Terraform v5.20.0 now available
+description: Terraform v5.20.0 adds 24 new resources including Secrets Store, Zero Trust DLP classification, and Flagship feature flags, and bumps the Go SDK to cloudflare-go v7.
+products:
+  - terraform
+date: 2026-06-12
+---
+
+Cloudflare's Terraform v5 Provider makes it easy for developers to manage their Cloudflare infrastructure using a configuration as code approach. It releases every [2-3 weeks] to ensure that you can always manage the latest features in the platform. This week, we launched Terraform v5.20.0, which adds 24 new resources, bumps the underlying Go SDK to cloudflare-go v7, and includes a range of bug fixes and state upgraders based on community feedback.
+
+## New resources
+
+- **cloudflare_ai_search_namespace:** Manage AI Search namespaces
+- **cloudflare_custom_csr:** Manage custom certificate signing requests
+- **cloudflare_dls_prefix_binding:** Manage DLS regional service prefix bindings
+- **cloudflare_flagship_app:** Manage Flagship feature flag apps
+- **cloudflare_flagship_flag:** Manage Flagship feature flags
+- **cloudflare_google_tag_gateway:** Manage Google Tag Gateway
+- **cloudflare_load_balancer_monitor_group:** Manage load balancer monitor groups
+- **cloudflare_oauth_client:** Manage IAM OAuth clients
+- **cloudflare_origin_cloud_region:** Manage origin cloud regions (v2 endpoints)
+- **cloudflare_secrets_store:** Manage Secrets Store instances
+- **cloudflare_secrets_store_secret:** Manage Secrets Store secrets
+- **cloudflare_share:** Manage resource shares
+- **cloudflare_share_recipient:** Manage share recipients
+- **cloudflare_share_resource:** Manage shared resources
+- **cloudflare_zero_trust_device_deployment_groups:** Manage Zero Trust device deployment groups
+- **cloudflare_zero_trust_dlp_data_class:** Manage DLP data classes
+- **cloudflare_zero_trust_dlp_data_tag:** Manage DLP data tags
+- **cloudflare_zero_trust_dlp_data_tag_category:** Manage DLP data tag categories
+- **cloudflare_zero_trust_dlp_sensitivity_group:** Manage DLP sensitivity groups
+- **cloudflare_zero_trust_dlp_sensitivity_level:** Manage DLP sensitivity levels
+- **cloudflare_zero_trust_dlp_sensitivity_level_order:** Manage DLP sensitivity level ordering
+- **cloudflare_zero_trust_resource_library_application:** Manage Zero Trust resource library applications
+- **cloudflare_zero_trust_resource_library_category:** Manage Zero Trust resource library categories
+- **cloudflare_zero_trust_tunnel_warp_connector_config:** Manage WARP connector tunnel configurations
+
+## Features
+
+- **cache:** add create (POST) method for smart_tiered_cache
+- **cache:** update OPCR config to v2 endpoints
+- **dlp:** promote classification Stainless config to main
+- **dlp:** add custom prompt topics endpoint
+- **email_security_block_sender:** state upgrader for v4 to v5 migration
+- **email_security_impersonation_registry:** state upgrader for v4 to v5 migration
+- **email_security_trusted_domains:** state upgrader for v4 to v5 migration
+- **snippets:** add Terraform `id_property` annotations for snippet and snippet_rules
+- bump Go SDK to cloudflare-go v7
+
+## Bug fixes
+
+- **account_member:** missing upgrade path from v5.0–v5.15
+- **authenticated_origin_pulls_settings:** nil pointer panic
+- **bot_management:** restore `content_bots_protection` handling in model.go
+- **dns_record:** prevent FQDN normalization from swallowing name shortening changes
+- **list:** nullify empty nested objects to prevent inconsistent result after apply
+- **load_balancer_pool:** accept early-v5 object-shape state at schema_version=0
+- **load_balancer_pool:** add `UseStateForUnknown` for `load_shedding` attribute to prevent drift
+- **r2_custom_domain:** restore degraded-response handling in resource.go
+- **regional_hostname:** update cloudflare-go imports from v6 to v7
+- **secrets_store:** fix model/schema parity and guard acceptance tests
+- **spectrum_application:** accept early-v5 object-shape state at schema_version=0
+- **worker:** preserve `observability.traces.propagation_policy` across reads
+- **worker:** add `propagation_policy` to observability defaults
+- **worker_version:** restore handwritten D1 `database_id` handling
+- **workers_custom_domain:** missing `CertId` field in state migration
+- **workers_script:** restore annotations Read workaround stripped by codegen
+- **zero_trust_access_identity_provider:** change `read_only` from computed to optional
+- **zero_trust_access_identity_provider:** add `UseStateForUnknown` to SAML-only config fields
+- **zero_trust_access_identity_provider:** use `UseNonNullStateForUnknown` on scim_config fields
+- **zero_trust_access_policy:** populate `account_id` when migrating zone-scoped v4 state
+- **zero_trust_access_policy:** missing `common_names` transform in migration
+- gracefully handle nil pointer dereference when config has `attributes_flat` during migration
+- set initial schema version to 500 for all new resources
+
+## Refactors
+
+Extracted `MoveState` nil guard into shared helper
+
+## For more information
+- [Terraform Provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+- [Version 5 Migration Guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-migration)
+- [Documentation on using Terraform with Cloudflare](/terraform/)
+- [List of stabilized resources](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237)
+
+[2-3 weeks]: https://github.com/cloudflare/terraform-provider-cloudflare/issues/5774

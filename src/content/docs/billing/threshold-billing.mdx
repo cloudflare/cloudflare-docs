@@ -15,7 +15,7 @@ Threshold billing is an automatic payment collection mechanism for Cloudflare's 
 
 ## How threshold billing works
 
-1. **Usage accumulates** - As you use Cloudflare's usage-based products (R2, Stream, Images, Workers), charges accrue throughout your billing cycle across all these products combined.
+1. **Usage accumulates** - As you use Cloudflare's usage-based products, charges accrue throughout your billing cycle across all these products combined.
 2. **Threshold reached** - When your total accumulated usage charges reach the threshold, Cloudflare automatically generates a mid-cycle invoice.
 3. **Payment collected** - Your payment method on file is charged for the threshold invoice amount.
 4. **One-time trigger** - The threshold fires once per account. After a threshold invoice is generated, your account returns to standard end-of-cycle billing.
@@ -35,18 +35,13 @@ You will never be double-charged. The threshold invoice and end-of-cycle invoice
 
 ## Products subject to threshold billing
 
-Threshold billing applies to combined usage across the following products:
+Threshold billing applies to all Cloudflare products with usage-based pricing. This includes products such as [R2](/r2/), [Workers](/workers/), [Stream](/stream/), [Cloudflare Images](/images/), and any other product billed based on consumption.
 
-- [R2](/r2/)
-- [Stream](/stream/)
-- [Cloudflare Images](/images/)
-- [Workers](/workers/) (usage-based pricing)
-
-The threshold is based on your total combined usage across all of these products, not each product individually.
+The threshold is based on your total combined usage across all usage-based products, not each product individually.
 
 ## Who is affected
 
-Threshold billing applies to self-serve accounts using the products listed above.
+Threshold billing applies to self-serve accounts using any Cloudflare product with usage-based pricing.
 
 :::note
 Enterprise accounts and startup program participants are not subject to threshold billing.
@@ -83,7 +78,7 @@ Threshold invoices are labeled to distinguish them from regular end-of-cycle inv
 
 ### Why did I receive a mid-cycle charge?
 
-Your combined usage-based charges across R2, Stream, Images, and Workers reached the billing threshold before the end of your billing cycle. This is expected behavior for accounts with high usage.
+Your combined usage-based charges across Cloudflare's usage-based products reached the billing threshold before the end of your billing cycle. This is expected behavior for accounts with high usage.
 
 ### Will I be charged twice for the same usage?
 

@@ -8,18 +8,25 @@ products:
   - kv
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Tabs, TabItem } from "~/components";
 
 To delete a key-value pair, call the `delete()` method of the [KV binding](/kv/concepts/kv-bindings/) on any [KV namespace](/kv/concepts/kv-namespaces/) you have bound to your Worker code:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 env.NAMESPACE.delete(key);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+self.env.NAMESPACE.delete(key)
+```
+</TabItem> </Tabs>
 
 #### Example
 
 An example of deleting a key-value pair from within a Worker:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 export default {
   async fetch(request, env, ctx) {
@@ -37,6 +44,20 @@ export default {
   },
 };
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        try:
+            await self.env.NAMESPACE.delete("first-key")
+
+            return Response("Successful delete", status=200)
+        except Exception as e:
+            return Response(str(e), status=500)
+```
+</TabItem> </Tabs>
 
 ## Reference
 
@@ -47,9 +68,15 @@ The following method is provided to delete from KV:
 
 To delete a key-value pair, call the `delete()` method of the [KV binding](/kv/concepts/kv-bindings/) on any KV namespace you have bound to your Worker code:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 env.NAMESPACE.delete(key);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+await self.env.NAMESPACE.delete(key)
+```
+</TabItem> </Tabs>
 
 #### Parameters
 
@@ -75,4 +102,5 @@ Delete more than one key-value pair at a time with Wrangler or [via the REST API
 The bulk REST API can accept up to 10,000 KV pairs at once. Bulk writes are not supported using the [KV binding](/kv/concepts/kv-bindings/).
 
 ## Other methods to access KV
+
 You can also [delete key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#kv-namespace-delete) or [with the REST API](/api/resources/kv/subresources/namespaces/subresources/values/methods/delete/).

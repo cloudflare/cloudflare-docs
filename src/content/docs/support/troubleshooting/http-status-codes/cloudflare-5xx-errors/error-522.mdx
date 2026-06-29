@@ -38,3 +38,7 @@ Two different timeouts cause HTTP error `522` depending on when they occur betwe
 
   - An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
   - Details from the hosting provider's investigation, such as pertinent logs or conversations with the hosting provider.
+
+### Diagnose with Origin Analytics
+
+Use [Origin Analytics](/speed/origin-analytics/) to check for TCP connection failures to your origin. If the **Top endpoints** table shows a high TCP failure rate for specific paths, the issue may be path-specific rather than a general origin problem. Origin Analytics can also help confirm whether your origin is reachable from Cloudflare's edge.

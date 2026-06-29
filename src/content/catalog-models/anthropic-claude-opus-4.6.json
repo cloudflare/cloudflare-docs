@@ -519,7 +519,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://www.anthropic.com/claude/opus",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
@@ -531,126 +531,151 @@
 	"request_formats": [
 		"anthropic-messages"
 	],
+	"banner": null,
 	"created_at": "2026-05-22 17:52:55",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"max_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
 				"messages": {
+					"type": "array",
 					"items": {
-						"additionalProperties": false,
+						"type": "object",
 						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"user",
+									"assistant"
+								]
+							},
 							"content": {
 								"anyOf": [
 									{
 										"type": "string"
 									},
 									{
+										"type": "array",
 										"items": {
-											"additionalProperties": false,
+											"type": "object",
 											"properties": {
-												"source": {},
+												"type": {
+													"type": "string"
+												},
 												"text": {
 													"type": "string"
 												},
-												"type": {
-													"type": "string"
+												"source": {},
+												"cache_control": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "ephemeral"
+														},
+														"ttl": {
+															"type": "string",
+															"enum": [
+																"5m",
+																"1h"
+															]
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": false
 												}
 											},
 											"required": [
 												"type"
 											],
-											"type": "object"
-										},
-										"type": "array"
+											"additionalProperties": {}
+										}
 									}
 								]
-							},
-							"role": {
-								"enum": [
-									"user",
-									"assistant"
-								],
-								"type": "string"
 							}
 						},
 						"required": [
 							"role",
 							"content"
 						],
-						"type": "object"
-					},
-					"type": "array"
+						"additionalProperties": false
+					}
 				},
-				"metadata": {
-					"additionalProperties": {},
-					"propertyNames": {
-						"type": "string"
-					},
-					"type": "object"
-				},
-				"stream": {
-					"type": "boolean"
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
 				},
 				"system": {
 					"type": "string"
 				},
 				"temperature": {
-					"maximum": 1,
+					"type": "number",
 					"minimum": 0,
-					"type": "number"
-				},
-				"top_k": {
-					"exclusiveMinimum": 0,
-					"type": "number"
+					"maximum": 1
 				},
 				"top_p": {
-					"maximum": 1,
+					"type": "number",
 					"minimum": 0,
-					"type": "number"
+					"maximum": 1
+				},
+				"top_k": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"metadata": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string"
+					},
+					"additionalProperties": {}
 				}
 			},
 			"required": [
 				"messages",
 				"max_tokens"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string",
+					"const": "message"
+				},
+				"role": {
+					"type": "string",
+					"const": "assistant"
+				},
 				"content": {
+					"type": "array",
 					"items": {
-						"additionalProperties": {},
+						"type": "object",
 						"properties": {
-							"text": {
+							"type": {
 								"type": "string"
 							},
-							"type": {
+							"text": {
 								"type": "string"
 							}
 						},
 						"required": [
 							"type"
 						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"id": {
-					"type": "string"
+						"additionalProperties": {}
+					}
 				},
 				"model": {
-					"type": "string"
-				},
-				"role": {
-					"const": "assistant",
 					"type": "string"
 				},
 				"stop_reason": {
@@ -663,12 +688,8 @@
 						}
 					]
 				},
-				"type": {
-					"const": "message",
-					"type": "string"
-				},
 				"usage": {
-					"additionalProperties": false,
+					"type": "object",
 					"properties": {
 						"input_tokens": {
 							"type": "number"
@@ -681,7 +702,7 @@
 						"input_tokens",
 						"output_tokens"
 					],
-					"type": "object"
+					"additionalProperties": false
 				}
 			},
 			"required": [
@@ -693,7 +714,7 @@
 				"stop_reason",
 				"usage"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

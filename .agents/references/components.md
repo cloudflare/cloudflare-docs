@@ -870,3 +870,34 @@ import { AvailableNotifications } from "~/components";
 ```
 
 Props: `product` (required, product name or slug), `notificationFilter` (optional, filter to a specific notification type by name).
+
+---
+
+## Type / MetaInfo
+
+Inline annotations for documenting parameters, fields, and properties — used heavily on API and reference pages. `Type` renders a pill-shaped data-type badge; `MetaInfo` renders a metadata annotation (constraints, defaults).
+
+```mdx
+import { Type, MetaInfo } from "~/components";
+
+- `name` <Type text="string" />
+  - The name of your service.
+- `local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - If the service should run locally or not.
+```
+
+Props: both take a single `text` string. Use `Type` for data types (`string`, `boolean`, `Promise<T>`); use `MetaInfo` for constraints and defaults (`required`, `optional`, `read-only`, `(default: false)`).
+
+---
+
+## Example
+
+Wraps content in a styled box to set it apart from the surrounding prose — useful for showcasing a sample without it blending into the page.
+
+```mdx
+import { Example } from "~/components";
+
+<Example title="Hello world">Hello, world!</Example>
+```
+
+Props: `title` (optional string, customizes the box's title).

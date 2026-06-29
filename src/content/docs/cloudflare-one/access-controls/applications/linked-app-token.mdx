@@ -64,7 +64,7 @@ When Access receives the request to Application B, it will:
 
 1. Extract the token from the `Cf-Access-Token` header.
 2. Validate that the token was issued for Application A (matching the `app_uid` in the Linked App Token rule).
-3. If valid, allow the request. The user's identity from the token is propagated to the upstream headers and audit log.
+3. If valid, Access issues a new `Cf-Access-Jwt-Assertion` scoped to Application B's AUD tag, forwards it to Application B's origin, and attributes the request to the original user in the audit log.
 
 ## SaaS to self-hosted
 

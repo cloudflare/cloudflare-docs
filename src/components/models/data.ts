@@ -185,8 +185,12 @@ export const authorData: Record<string, { name: string; logo: string }> = {
 		name: "PixVerse",
 		logo: pixverse.src,
 	},
+	pruna: {
+		name: "Pruna AI",
+		logo: prunaai.src,
+	},
 	prunaai: {
-		name: "PrunaAI",
+		name: "Pruna AI",
 		logo: prunaai.src,
 	},
 	qwen: {

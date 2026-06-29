@@ -4,7 +4,7 @@ name: Auto Format (Build)
 
 on:
   pull_request:
-    branches: [auto-format-canary]
+    branches: [production]
     types: [opened, synchronize]
     paths:
       - "**/*.js"
@@ -16,7 +16,6 @@ on:
       - "**/*.json"
       - "**/*.yaml"
       - "**/*.yml"
-      - "**/*.md"
       - "**/*.astro"
 
 permissions:
@@ -70,7 +69,8 @@ jobs:
           git fetch --depth=1 origin "$BASE_SHA"
           mapfile -t files < <(
             git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD \
-            | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$' \
+            | grep -E '\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|astro)$' \
+            | while IFS= read -r f; do [[ -L "$f" ]] || echo "$f"; done \
             || true
           )
           if [ "${#files[@]}" -eq 0 ]; then
@@ -79,7 +79,7 @@ jobs:
           fi
           printf 'Formatting %d file(s):\n' "${#files[@]}"
           printf '  %s\n' "${files[@]}"
-          pnpm exec prettier --write "${files[@]}"
+          pnpm exec prettier --write --ignore-path .prettierignore "${files[@]}"
 
       - name: Check for changes
         id: diff

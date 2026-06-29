@@ -24,14 +24,20 @@ Tracing gives you end-to-end visibility into the life of a request as it travels
 
 ### Automatic instrumentation
 
-Cloudflare Workers provides tracing instrumentation **out of the box** - no code changes or SDK are required. Simply enable tracing on your Worker and Cloudflare automatically captures telemetry data for:
+Cloudflare Workers provides tracing instrumentation **out of the box** — no code changes or SDK are required. Simply enable tracing on your Worker and Cloudflare automatically captures telemetry data for:
 
-- **Fetch calls** - All outbound HTTP requests, capturing timing, status codes, and request metadata. This enables you to quickly identify how external dependencies affect your application's performance.
-- **Binding calls** - Interactions with various Worker bindings such as KV reads and writes, R2 object storage operations and Durable Object invocations.
-- **Handler calls** - The complete lifecycle of each Worker invocation, including triggers such as [fetch handlers](/workers/runtime-apis/handlers/fetch/),
+- **Fetch calls** — All outbound HTTP requests, capturing timing, status codes, and request metadata. This enables you to quickly identify how external dependencies affect your application's performance.
+- **Binding calls** — Interactions with various Worker bindings such as KV reads and writes, R2 object storage operations and Durable Object invocations.
+- **Handler calls** — The complete lifecycle of each Worker invocation, including triggers such as [fetch handlers](/workers/runtime-apis/handlers/fetch/),
   [scheduled handlers](/workers/runtime-apis/handlers/scheduled/), and [queue handlers](/queues/configuration/javascript-apis/#consumer).
 
-For a full list of instrumented operations , see the [spans and attributes documentation](/workers/observability/traces/spans-and-attributes).
+For a full list of instrumented operations, refer to the [spans and attributes documentation](/workers/observability/traces/spans-and-attributes/).
+
+### Custom spans
+
+You can also create your own spans to trace application-specific logic. Custom spans nest automatically with the built-in instrumentation, giving you end-to-end visibility across both platform operations and your own code.
+
+For more information, refer to [Custom spans](/workers/observability/traces/custom-spans/).
 
 ### How to enable tracing
 

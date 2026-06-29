@@ -1,0 +1,20 @@
+---
+{}
+
+---
+```kotlin
+meeting.connectedMeetings.moveParticipantsWithCustomPreset(
+    sourceMeetingId = "SOURCE_MEETING_ID",
+    destinationMeetingId = "TARGET_MEETING_ID",
+    participants = listOf(
+        MoveParticipantPayload(id = "PARTICIPANT_ID_1", presetId = "PRESET_ID_1"),
+        MoveParticipantPayload(id = "PARTICIPANT_ID_2", presetId = "PRESET_ID_2")
+    )
+) { error ->
+    if (error != null) {
+        println("Failed to move participants: $error")
+    } else {
+        println("Participants moved with custom preset successfully")
+    }
+}
+```

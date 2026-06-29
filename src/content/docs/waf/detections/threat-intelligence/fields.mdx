@@ -1,0 +1,59 @@
+---
+pcx_content_type: reference
+description: Fields available for threat intelligence detection in rule expressions.
+products:
+  - waf
+title: Threat intelligence fields
+tags:
+  - Threat Intelligence
+sidebar:
+  order: 10
+  label: Available fields
+---
+
+import { Type } from "~/components";
+
+The threat intelligence detection populates the following fields when the client IP address is found in the threat intelligence database. If the IP address is not found, the fields are empty.
+
+All fields are arrays. Use the [`any()`](/ruleset-engine/rules-language/functions/#any) function with the `[*]` wildcard to match values.
+
+:::note
+These five fields are available in rule expressions. Security Analytics logs only the dataset and threat event identifiers for each match. You can view the threat event details — including attacker names, industries, and countries — directly in [Security Analytics](/waf/analytics/security-analytics/).
+:::
+
+| Field | Description |
+| ----- | ----------- |
+| Threat intelligence datasets <br/> `cf.intel.ip.datasets` <br/> <Type text="Array<String>" /> | Dataset that flagged the IP address. Values: `ddos`, `waf`. |
+| Target industries <br/> `cf.intel.ip.target_industries` <br/> <Type text="Array<String>" /> | Industries this IP address has targeted. Refer to [target industries](#target-industries) for valid values. |
+| Attacker names <br/> `cf.intel.ip.attacker_names` <br/> <Type text="Array<String>" /> | Threat actor names associated with this IP address (for example, `CONVOLUTEDKRILL`). |
+| Attacker countries <br/> `cf.intel.ip.attacker_countries` <br/> <Type text="Array<String>" /> | Source countries of the threat activity, as [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) codes. |
+| Target countries <br/> `cf.intel.ip.target_countries` <br/> <Type text="Array<String>" /> | Countries this IP address has targeted, as [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) codes. |
+
+## Case sensitivity
+
+Values are case-sensitive. Use the casing shown in the examples: `ddos` (lowercase), `FR` (uppercase country codes), `Banking & Financial Services` (title case), `BLACKBASTA` (uppercase attacker names).
+
+To discover valid values for your traffic, use the [Threat Events](/security-center/cloudforce-one/) dashboard.
+
+## Matching behavior
+
+Fields reflect all threat activity for an IP address over the past seven days, flattened into a single set of values per field.
+
+A value in one field does not have to come from the same threat event as a value in another field. For example, this expression matches if the IP has _any_ China-origin activity **and** _any_ banking-targeted activity — even from separate events:
+
+```txt
+any(cf.intel.ip.attacker_countries[*] == "CN") and any(cf.intel.ip.target_industries[*] == "Banking & Financial Services")
+```
+
+Combining fields across dimensions produces broader matches than you might expect. Test combined rules with the _Log_ action first.
+
+## Target industries
+
+The `cf.intel.ip.target_industries` field uses a fixed set of industry names. Examples:
+
+- `Automotive`
+- `Banking & Financial Services`
+- `Cryptocurrency`
+- `Telecommunications`
+
+For the complete list, refer to [Threat Events](/security-center/cloudforce-one/).

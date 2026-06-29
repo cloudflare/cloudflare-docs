@@ -67,9 +67,10 @@ import AgentDirective from "../AgentDirective.astro";
 	 * Header CTA — mirrors the visual identity of the landing page's
 	 * "Get started" button (src/components/landing/Button.astro, primary).
 	 *
-	 * Colour values match the landing-root override of `--color-accent-100`
-	 * (#ff4801) and `--color-light-foreground` (#fffbf5). They're hard-coded
-	 * here because those tokens are only defined inside `.landing-root` —
+	 * Colour values match the landing-root values of `--color-accent-100`
+	 * (#ff5e1f light / #ff4801 dark) and `--color-light-foreground`
+	 * (#fffbf5). They're hard-coded here — including the per-theme accent —
+	 * because those tokens are only defined inside `.landing-root`;
 	 * starlight-tailwind sets `--color-accent-100` to indigo site-wide,
 	 * which would render the header CTA blue.
 	 *
@@ -108,12 +109,21 @@ import AgentDirective from "../AgentDirective.astro";
 
 	.header-login:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 3px rgb(255 72 1 / 0.5);
+		box-shadow: 0 0 0 3px rgb(255 94 31 / 0.5);
 	}
 
 	.header-login:active {
 		transform: translateY(1px) scale(0.98);
 		transition-duration: 60ms;
+	}
+
+	/* Match the landing "Get started" accent in dark mode (#ff4801). */
+	:root[data-theme="dark"] .header-login {
+		background-color: #ff4801;
+	}
+
+	:root[data-theme="dark"] .header-login:focus-visible {
+		box-shadow: 0 0 0 3px rgb(255 72 1 / 0.5);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

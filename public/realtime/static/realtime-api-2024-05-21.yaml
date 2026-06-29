@@ -684,6 +684,7 @@ paths:
                 value:
                   datachannels:
                     - location: remote
+                      waitForAck: true
                       sessionId: "2a45361d5fd7cc14eface0587c276c94"
                       dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
       security:
@@ -1163,6 +1164,15 @@ components:
         dataChannelName:
           type: string
           description: Given name for the data channel
+        waitForAck:
+          type: boolean
+          default: false
+          description: >
+            For remote DataChannels only. When true, the SFU holds delivery to this subscriber
+            until the subscriber sends its first message on this DataChannel (the acknowledgment).
+            The acknowledgment is consumed by the SFU and is not forwarded. It must arrive within
+            15 seconds of creating the remote DataChannel; otherwise the SFU tears down the gated
+            channel. Ignored for local DataChannels.
         id:
           type: number
           description: Data channel id
