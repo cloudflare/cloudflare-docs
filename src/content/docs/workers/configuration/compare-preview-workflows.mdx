@@ -3,48 +3,45 @@ pcx_content_type: concept
 title: Previews, Version URLs, and Wrangler environments
 description: Understand the difference between Previews, Version URLs, and Wrangler environments.
 sidebar:
+  order: 5
   label: Previews, Version URLs, and Wrangler environments
 products:
   - workers
 ---
 
-For review URLs before merge or live traffic, **use Previews**. Previews give every branch its own URL, settings, deployments, and resource isolation options.
+To give a branch or pull request its own URL before merging, **use [Previews](/workers/previews/)**. Each Preview gets a stable Preview URL, its own variables, secrets, bindings, and resource isolation options.
 
-Version URLs and Wrangler environments still exist, but they solve narrower problems. This page explains when each one applies and why Previews are the recommended path for branch and pull request review.
+Version URLs and Wrangler environments still exist but solve narrower problems. This page explains when each one applies.
 
-## Recommendation
-
-Use Previews for branch and pull request testing. Do not use Version URLs or Wrangler environments to create review URLs.
+## Which one to use
 
 | If you need... | Use... | Why |
 | --- | --- | --- |
-| A URL for every pull request or branch | [Previews](/workers/previews/) | Previews have branch-specific URLs, settings, deployments, and resource isolation options. |
-| A stable staging, QA, or demo review URL | [Previews](/workers/previews/) with `wrangler preview --name <name>` | Named Previews keep the same URL across deployments without creating another Worker. |
+| A Preview URL for every pull request or branch | [Previews](/workers/previews/) | Each branch gets a Preview URL with its own settings, deployments, and resource isolation. |
+| A stable staging, QA, or demo Preview URL | [Previews](/workers/previews/) with `wrangler preview --name <name>` | Named Previews keep the same Preview URL across deployments without creating another Worker. |
 | To inspect one uploaded version before production traffic | Version URLs | Version URLs are tied to Workers Versions and Deployments. They are not branch environments. |
 | A separate long-lived Worker with separately managed routes and bindings | Wrangler environments | Wrangler environments create another Worker that you operate independently. |
 
-If a legacy aliased Version URL and a Preview could match the same URL, the Preview takes precedence. Routing does not use last-write-wins behavior.
+If a legacy aliased Version URL and a Preview could match the same URL, the Preview takes precedence.
 
 ## Quick comparison
 
 | Workflow                  | Command                        | Details and limitations                                                                                                                                                                                                                              |
 | ------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Previews**       | `wrangler preview`             | <ul><li>Review URL for a branch or pull request before merge or live traffic</li><li>Recommended for branch and pull request testing</li><li>Can use Preview-specific variables, secrets, bindings, custom domains, and isolated resources</li><li>Takes precedence over legacy aliased Version URLs if both could match the same URL</li></ul> |
+| **Previews**       | `wrangler preview`             | <ul><li>Preview URL for a branch or pull request</li><li>Recommended for branch and pull request testing</li><li>Preview-specific variables, secrets, bindings, custom domains, and isolated resources</li><li>Takes precedence over legacy aliased Version URLs if both could match the same URL</li></ul> |
 | **Version URLs**          | `wrangler versions upload`     | <ul><li>Inspect one uploaded Worker version</li><li>Uses production resources</li><li>Does not isolate data</li><li>Does not support Durable Objects or custom domain Preview URLs</li><li>Aliased Version URLs are legacy for branch and pull request testing</li></ul>                                                         |
 | **Wrangler environments** | `wrangler deploy --env <name>` | <ul><li>Persistent Worker such as staging, development, or production</li><li>Creates a separately named Worker</li><li>You manage routes, domains, bindings, deploys, and cleanup yourself</li></ul>                                                |
 
 ## Previews (recommended)
 
-Previews are the recommended way to get a review URL before you merge a branch or send live traffic to a change.
-
-Your production branch uses `wrangler deploy`. Your feature branch uses `wrangler preview`. The Preview gets a stable Preview URL with its own variables, secrets, and bindings -- isolated from production.
+Your production branch uses `wrangler deploy`. Your feature branch uses `wrangler preview`. The Preview gets a stable Preview URL with its own variables, secrets, and bindings — isolated from production.
 
 Use Previews for:
 
-- Pull request and branch review.
+- Pull request and branch Preview URLs.
 - QA and stakeholder testing.
 - Testing with Preview-specific resources (test databases, staging KV namespaces, separate Durable Object storage).
-- Sharing custom domain Preview URLs.
+- Custom domain Preview URLs (`<preview-name>.app.example.com`).
 - Any workflow where you previously used Version URL aliases or Wrangler environments for branch testing.
 
 ## Version URLs
@@ -61,7 +58,7 @@ Use Version URLs only when you need to inspect one specific uploaded version bef
 
 Version URLs are created from Worker versions, including versions uploaded with `wrangler versions upload`. They are tied to the [Versions and Deployments](/workers/configuration/versions-and-deployments/) workflow.
 
-Version URLs are not a branch preview system. They do not give you Preview-specific variables, secrets, bindings, Durable Objects, or custom domain Preview URLs.
+Version URLs do not give you Preview-specific variables, secrets, bindings, Durable Objects, or custom domain Preview URLs.
 
 Version URLs are the right fit for:
 
@@ -70,25 +67,25 @@ Version URLs are the right fit for:
 
 ### URL conflicts
 
-An aliased Version URL and a Preview can use the same preview name. For example, these commands both use the name `staging`:
+An aliased Version URL and a Preview can use the same name. For example, these commands both use the name `staging`:
 
 ```sh
 npx wrangler versions upload --preview-alias staging
 npx wrangler preview --name staging
 ```
 
-If both could match the same URL, Cloudflare routes to the Preview. A later `wrangler versions upload --preview-alias staging` does not take the URL back from the Preview.
+If both could match the same URL, Cloudflare routes to the Preview. A later `wrangler versions upload --preview-alias staging` does not take the URL back.
 
-This makes routing deterministic: Previews are the branch and pull request review system; aliased Version URLs are legacy version-inspection URLs. Routing is not based on whichever command ran most recently.
+Previews are the branch and pull request Preview URL system. Aliased Version URLs are legacy version-inspection URLs. Routing is deterministic and does not depend on which command ran most recently.
 
 ### Migrating from aliased Version URLs to Previews
 
-If you are using aliased Version URLs (created with `wrangler versions upload --preview-alias`) for branch or pull request previews, switch to Previews instead. Aliased Version URLs are legacy for branch and pull request review. They still use production resources and do not isolate anything.
+Aliased Version URLs (created with `wrangler versions upload --preview-alias`) use production resources and do not isolate anything. Switch to Previews instead.
 
 | What you do today                                  | What to do instead                                                                                             |
 | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `wrangler versions upload --preview-alias staging` | `wrangler preview --name staging`                                                                              |
-| Share an aliased Version URL for PR review         | Share a [Preview URL](/workers/previews/) or [custom domain Preview URL](/workers/previews/custom-domains/).   |
+| Share an aliased Version URL for a PR              | Share a [Preview URL](/workers/previews/) or [custom domain Preview URL](/workers/previews/custom-domains/).   |
 | Set `preview_urls = true` for aliased Version URLs | Use [Preview settings](/workers/previews/configuration/) for branch-specific variables, secrets, and bindings. |
 
 Previews give you branch isolation, Preview-specific settings, custom domain support, and automatic resource isolation for Durable Objects, Workflows, and Containers. Aliased Version URLs give you none of these.
@@ -101,7 +98,7 @@ Wrangler environments create separately named Workers, such as `my-worker-stagin
 
 If you are using Wrangler environments for branch or pull request testing, switch to Previews. Previews handle branch isolation automatically and do not require manually maintaining separate environment blocks with duplicated bindings.
 
-If your CI currently deploys a staging Wrangler environment only to post a review URL to a pull request, use [External CI](/workers/previews/get-started/#external-ci) for the Previews setup.
+If your CI currently deploys a staging Wrangler environment just to post a URL to a pull request, use [External CI](/workers/previews/get-started/#external-ci) to create Preview URLs instead.
 
 Wrangler environments are separate Workers that you operate over time. You are responsible for that Worker's routes, custom domains, bindings, deploys, access control, and cleanup.
 
@@ -110,4 +107,4 @@ Wrangler environments are still useful for:
 - Long-lived persistent environments that must always be running (for example, a staging Worker that external partners hit continuously).
 - Environment-specific routes or custom domains that need to stay up permanently.
 
-For most teams, Previews replace the need for a `[env.staging]` or `[env.dev]` block for branch and pull request review. You do not need to create a Wrangler environment to use Previews.
+For most teams, Previews replace the need for a `[env.staging]` or `[env.dev]` block. You do not need to create a Wrangler environment to use Previews.
