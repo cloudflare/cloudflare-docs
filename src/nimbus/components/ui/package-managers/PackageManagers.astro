@@ -53,8 +53,12 @@ const uid = `pm-${crypto.randomUUID()}`;
 </script>
 
 <div data-nb-pm class="w-full">
-  <LayerCard>
-    <LayerCardHeader role="tablist" aria-label="Package manager">
+  <LayerCard class="bg-card">
+    <LayerCardHeader
+      role="tablist"
+      aria-label="Package manager"
+      class="bg-[var(--nb-surface-sunken)]"
+    >
       {tabs.map((tab, i) => (
         <button
           role="tab"

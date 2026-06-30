@@ -19,6 +19,7 @@ import type { DocsPageProps } from "nimbus-docs/types";
 import { config } from "virtual:nimbus/config";
 import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
+import logo from "~/assets/logo.svg";
 
 type Props = DocsPageProps & { audience?: "human"; wide?: boolean; hideTitle?: boolean };
 
@@ -34,7 +35,6 @@ const isCustom = mode === "custom";
 // from the route as literal `false` (not coerced to `[]`). They drive
 // per-column suppression — rail, mobile dialog, header menu button.
 const showSidebar = sidebar !== false;
-const showToc = headings !== false;
 
 // Versioning P3: per-page status drives Pagefind faceting, deprecation
 // banner, and the data-pagefind-ignore exclusion for hidden versions.
@@ -110,13 +110,13 @@ const hasPagination = Astro.slots.has("pagination");
             <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
               {hasSidebar ? (
                 <div data-sidebar-home class="flex-1">
-                  <div data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8 max-lg:pt-5">
+                  <div data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8">
                     <slot name="sidebar" />
                   </div>
                 </div>
               ) : (
                 <div data-sidebar-home class="flex-1">
-                <nav data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8 max-lg:pt-5">
+                <nav data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8">
                   <div class="z-10 bg-background px-4 pb-3 lg:sticky lg:top-0">
                     {product && <SidebarProductNav title={product.title} href={product.href} class="py-2.5" />}
                     <SidebarFilter class="mb-0" />
@@ -254,8 +254,8 @@ const hasPagination = Astro.slots.has("pagination");
             </div>
           </main>
 
-          {showToc && (
-            <aside class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
+          {headings !== false && (hasToc || headings.length > 0) && (
+            <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
               <div class="pt-6 pb-8 pl-8 pr-6">
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
               </div>
@@ -277,7 +277,12 @@ const hasPagination = Astro.slots.has("pagination");
     >
       <div data-mobile-sidebar-panel class="h-full w-full -translate-x-full overflow-y-auto bg-card shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none">
         <div class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-card px-4 py-3">
-          <span class="font-semibold text-sm text-foreground">{config.title}</span>
+          <a href="/" class="group flex items-center gap-2 no-underline">
+            <img src={logo.src} alt="" width="51" height="23" class="h-[20px] w-auto" />
+            <span class="font-semibold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
+              {config.title}
+            </span>
+          </a>
           <button data-close-sidebar class="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors" aria-label="Close sidebar">
             <Icon name="ph:x" class="w-5 h-5" />
           </button>
@@ -286,170 +291,5 @@ const hasPagination = Astro.slots.has("pagination");
       </div>
     </dialog>
   )}
-
-  <script>
-    import { lockScroll, unlockScroll } from "nimbus-docs/client";
-
-    const dialog = document.querySelector<HTMLDialogElement>("[data-mobile-sidebar]");
-    const menuBtn = document.querySelector<HTMLElement>("[data-menu-btn]");
-    const sidebarHome = document.querySelector<HTMLElement>("[data-sidebar-home]");
-    const mobileSidebarSlot = dialog?.querySelector<HTMLElement>("[data-mobile-sidebar-slot]");
-    const sharedSidebarNav = sidebarHome?.querySelector<HTMLElement>("[data-shared-sidebar-nav]") ?? null;
-    const CLOSE_DURATION_MS = 250;
-
-    if (dialog && menuBtn) {
-      let closeTimer: ReturnType<typeof setTimeout> | undefined;
-      let desktopOpenState: boolean[] | null = null;
-      let mobileOpenState: boolean[] | null = null;
-      let sidebarLocked = false;
-      let suppressNextFocus = false;
-
-      function readOpenState() {
-        if (!sharedSidebarNav) return [];
-        return [...sharedSidebarNav.querySelectorAll<HTMLElement>("[data-nb-sidebar-group]")]
-          .map((group) => group.querySelector<HTMLElement>("[data-nb-collapsible-trigger]")?.getAttribute("data-nb-state") === "open");
-      }
-
-      function setGroupOpen(group: HTMLElement, open: boolean) {
-        const disclosure = (group as HTMLElement & {
-          __nbDisclosure?: { open(): void; close(): void; isOpen(): boolean };
-        }).__nbDisclosure;
-        if (disclosure) {
-          if (disclosure.isOpen() !== open) {
-            open ? disclosure.open() : disclosure.close();
-          }
-          return;
-        }
-        group.setAttribute("data-nb-default-open", open ? "true" : "false");
-        const trigger = group.querySelector<HTMLElement>("[data-nb-collapsible-trigger]");
-        const panel = group.querySelector<HTMLElement>("[data-nb-collapsible-content]");
-        const state = open ? "open" : "closed";
-        if (trigger) {
-          trigger.setAttribute("data-nb-state", state);
-          trigger.setAttribute("aria-expanded", String(open));
-        }
-        if (panel) panel.setAttribute("data-nb-state", state);
-      }
-
-      function applyOpenState(state: boolean[] | null) {
-        if (!sharedSidebarNav || !state) return;
-        [...sharedSidebarNav.querySelectorAll<HTMLElement>("[data-nb-sidebar-group]")]
-          .forEach((group, index) => {
-            if (typeof state[index] === "boolean") setGroupOpen(group, state[index]);
-          });
-      }
-
-      function moveSidebarToMobile() {
-        if (!sharedSidebarNav || !mobileSidebarSlot) return;
-        desktopOpenState = readOpenState();
-        mobileSidebarSlot.appendChild(sharedSidebarNav);
-        applyOpenState(mobileOpenState);
-      }
-
-      function restoreSidebarToDesktop() {
-        if (!sharedSidebarNav || !sidebarHome) return;
-        if (sharedSidebarNav.parentElement === mobileSidebarSlot) {
-          mobileOpenState = readOpenState();
-          const filter = sharedSidebarNav.querySelector<HTMLInputElement>("[data-nb-sidebar-filter-input]");
-          if (filter) filter.value = "";
-          sharedSidebarNav
-            .querySelectorAll<HTMLElement>("[data-nb-sidebar-hidden], [data-nb-opened-by-filter]")
-            .forEach((el) => {
-              el.removeAttribute("data-nb-sidebar-hidden");
-              el.removeAttribute("data-nb-opened-by-filter");
-            });
-          sidebarHome.appendChild(sharedSidebarNav);
-          applyOpenState(desktopOpenState);
-          desktopOpenState = null;
-        }
-      }
-
-      function finishClose(restoreFocus = true) {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-          closeTimer = undefined;
-        }
-
-        dialog.dataset.state = "closed";
-        restoreSidebarToDesktop();
-        if (sidebarLocked) {
-          unlockScroll();
-          sidebarLocked = false;
-        }
-        if (restoreFocus && !desktopMq.matches) menuBtn.focus();
-      }
-
-      const openSidebar = () => {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-          closeTimer = undefined;
-        }
-        if (dialog.open) return;
-
-        moveSidebarToMobile();
-        dialog.showModal();
-        dialog.dataset.state = "closed";
-        lockScroll();
-        sidebarLocked = true;
-
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            dialog.dataset.state = "open";
-          });
-        });
-
-        dialog.querySelector<HTMLElement>("[data-close-sidebar]")?.focus();
-      };
-
-      const closeSidebar = () => {
-        if (!dialog.open || dialog.dataset.state === "closing") return;
-
-        dialog.dataset.state = "closing";
-        closeTimer = setTimeout(() => {
-          dialog.close();
-        }, CLOSE_DURATION_MS);
-      };
-
-      menuBtn.addEventListener("click", openSidebar);
-
-      dialog.addEventListener("cancel", (event) => {
-        event.preventDefault();
-        closeSidebar();
-      });
-
-      // Cleanup on close — fires for Escape, close button, backdrop click
-      dialog.addEventListener("close", () => {
-        finishClose(!suppressNextFocus);
-        suppressNextFocus = false;
-      });
-
-      document.addEventListener("astro:before-swap", () => {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-          closeTimer = undefined;
-        }
-        suppressNextFocus = true;
-        if (dialog.open) dialog.close();
-        finishClose(false);
-      });
-
-      // Close button
-      dialog.querySelector("[data-close-sidebar]")
-        ?.addEventListener("click", closeSidebar);
-
-      // Backdrop click (clicks on <dialog> itself, outside the panel)
-      dialog.addEventListener("click", (e) => {
-        if (e.target === dialog) closeSidebar();
-      });
-
-      // The drawer is a mobile-only affordance (the burger is `lg:hidden` and
-      // the sidebar lives inline on desktop). If it's open when the viewport
-      // grows to desktop, close it so it doesn't linger over the page.
-      const desktopMq = window.matchMedia("(min-width: 1024px)");
-      desktopMq.addEventListener("change", (e) => {
-        if (e.matches && dialog.open) dialog.close();
-      });
-    }
-  </script>
 
 </BaseLayout>

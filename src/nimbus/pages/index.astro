@@ -14,6 +14,7 @@ import CommunityGrid from "../components/landing/CommunityGrid.astro";
 import StructuralGrid from "../components/landing/StructuralGrid.astro";
 import FullPageLines from "../components/landing/FullPageLines.astro";
 import { config } from "virtual:nimbus/config";
+import logo from "~/assets/logo.svg";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -74,14 +75,19 @@ const currentPath = Astro.url.pathname;
     class="group fixed inset-0 m-0 h-full w-full max-h-full max-w-full border-0 bg-transparent p-0 data-[state=open]:bg-black/40 data-[state=closing]:bg-black/40"
     aria-label="Site navigation"
   >
-    <div
-      data-mobile-sidebar-panel
-      class="h-full w-(--nb-sidebar-width) max-w-[85vw] -translate-x-full overflow-y-auto bg-background shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
-    >
       <div
-        class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-background px-4 py-3"
+        data-mobile-sidebar-panel
+        class="h-full w-full -translate-x-full overflow-y-auto bg-card shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
       >
-        <span class="font-semibold text-sm text-foreground">{config.title}</span>
+        <div
+          class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-card px-4 py-3"
+        >
+        <a href="/" class="group flex items-center gap-2 no-underline">
+          <img src={logo.src} alt="" width="51" height="23" class="h-[20px] w-auto" />
+          <span class="font-semibold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
+            {config.title}
+          </span>
+        </a>
         <button
           data-close-sidebar
           class="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
@@ -90,85 +96,12 @@ const currentPath = Astro.url.pathname;
           <Icon name="ph:x" class="w-5 h-5" />
         </button>
       </div>
-      <nav class="px-4 pt-5 pb-8" aria-label="Documentation">
+      <nav class="px-4 pb-8" aria-label="Documentation">
         <SidebarFilter placeholder="Search products..." />
         <Sidebar currentPath={currentPath} />
       </nav>
     </div>
   </dialog>
-
-  <script>
-    import { lockScroll, unlockScroll } from "nimbus-docs/client";
-
-    const dialog = document.querySelector<HTMLDialogElement>("[data-mobile-sidebar]");
-    const menuBtn = document.querySelector<HTMLElement>("[data-menu-btn]");
-    const CLOSE_DURATION_MS = 250;
-
-    if (dialog && menuBtn) {
-      let closeTimer: ReturnType<typeof setTimeout> | undefined;
-
-      const openSidebar = () => {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-          closeTimer = undefined;
-        }
-        if (dialog.open) return;
-
-        dialog.showModal();
-        dialog.dataset.state = "closed";
-        lockScroll();
-
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            dialog.dataset.state = "open";
-          });
-        });
-
-        dialog.querySelector<HTMLElement>("[data-close-sidebar]")?.focus();
-      };
-
-      const closeSidebar = () => {
-        if (!dialog.open || dialog.dataset.state === "closing") return;
-
-        dialog.dataset.state = "closing";
-        closeTimer = setTimeout(() => {
-          dialog.close();
-        }, CLOSE_DURATION_MS);
-      };
-
-      menuBtn.addEventListener("click", openSidebar);
-
-      dialog.addEventListener("cancel", (event) => {
-        event.preventDefault();
-        closeSidebar();
-      });
-
-      dialog.addEventListener("close", () => {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-          closeTimer = undefined;
-        }
-        dialog.dataset.state = "closed";
-        unlockScroll();
-        menuBtn.focus();
-      });
-
-      dialog.querySelector("[data-close-sidebar]")
-        ?.addEventListener("click", closeSidebar);
-
-      dialog.addEventListener("click", (e) => {
-        if (e.target === dialog) closeSidebar();
-      });
-
-      // The drawer is a mobile-only affordance (the burger is `lg:hidden` and
-      // the sidebar lives inline on desktop). If it's open when the viewport
-      // grows to desktop, close it so it doesn't linger over the page.
-      const desktopMq = window.matchMedia("(min-width: 1024px)");
-      desktopMq.addEventListener("change", (e) => {
-        if (e.matches && dialog.open) dialog.close();
-      });
-    }
-  </script>
 
   <script>
     // Instant jump to a hash target on load; in-page clicks stay smooth.

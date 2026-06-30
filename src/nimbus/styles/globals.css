@@ -33,38 +33,43 @@
 	--nb-card: oklch(1 0 0);
 	--nb-card-foreground: var(--nb-foreground);
 
-	--nb-muted: #fafafa;
+	--nb-muted: oklch(0.985 0 0);
 	--nb-muted-foreground: oklch(0.556 0 0);
 
 	--nb-accent: oklch(0.967 0 0);
 	--nb-accent-foreground: var(--nb-foreground);
 
-	/* Primary action / brand */
-	--nb-primary: #ff4801;
-	--nb-primary-foreground: #fffbf5;
-	--nb-primary-hover: #e63f00;
+	/* Sunken surface — sits BELOW `card` (darker than it in both modes),
+	 * for an inverted header that's darker than the body it sits on
+	 * (code-title bar, package-manager tabs). */
+	--nb-surface-sunken: oklch(0.975 0 0);
+
+	/* Primary action / brand — mode-invariant (dark overrides only -hover). */
+	--nb-primary: oklch(0.663 0.227 35.9);
+	--nb-primary-foreground: oklch(0.99 0.009 78.3);
+	--nb-primary-hover: oklch(0.612 0.211 35.8);
+
+	/* Hyperlink color — brand orange in both modes for now. NOTE: light mode
+	 * is only 3.4:1 on white (below WCAG AA 4.5:1); darken this to fix later. */
+	--nb-link: var(--nb-primary);
 
 	/* Borders / focus */
-	--nb-border: #e4e4e7;
+	--nb-border: oklch(0.92 0 0);
 	--nb-border-strong: oklch(0.87 0 0);
-	--nb-selected: oklch(0.89 0 0);
+	--nb-selected: var(--nb-border);
 	--nb-ring: oklch(0.145 0 0 / 0.35);
 
-	/* Status colors — paired (saturated for text/border + muted for bg) */
+	/* Status colors — base (text/border) + muted (bg). */
 	--nb-info: oklch(0.45 0.18 255);
-	--nb-info-foreground: oklch(0.45 0.18 255);
 	--nb-info-muted: oklch(0.965 0.015 255);
 
 	--nb-success: oklch(0.42 0.14 152);
-	--nb-success-foreground: oklch(0.42 0.14 152);
 	--nb-success-muted: oklch(0.965 0.015 152);
 
 	--nb-warning: oklch(0.48 0.15 65);
-	--nb-warning-foreground: oklch(0.48 0.15 65);
 	--nb-warning-muted: oklch(0.97 0.02 70);
 
 	--nb-danger: oklch(0.47 0.18 25);
-	--nb-danger-foreground: oklch(0.47 0.18 25);
 	--nb-danger-muted: oklch(0.965 0.015 25);
 
 	/* Layout */
@@ -73,8 +78,8 @@
 	--nb-content-max: 43.5rem;
 
 	/* Landing structural-grid tick marks (StructuralGrid.astro) */
-	--nb-grid-line: rgba(0, 0, 0, 0.08);
-	--nb-grid-line-accent: rgba(0, 0, 0, 0.12);
+	--nb-grid-line: oklch(0 0 0 / 0.08);
+	--nb-grid-line-accent: oklch(0 0 0 / 0.12);
 
 	/* Typography — self-hosted via @fontsource-variable in BaseLayout.astro */
 	--nb-font-sans:
@@ -111,49 +116,47 @@
 [data-mode="dark"] {
 	color-scheme: dark;
 
-	--nb-background: oklch(0.085 0 0);
-	--nb-foreground: oklch(0.97 0 0);
+	--nb-background: oklch(0.192 0 0);
+	--nb-foreground: oklch(0.925 0.016 42.4);
 
-	--nb-card: #0F0F0F;
+	--nb-card: oklch(0.168 0 0);
 	--nb-card-foreground: var(--nb-foreground);
 
-	--nb-muted: #252525;
+	--nb-muted: oklch(0.264 0 0);
 	--nb-muted-foreground: oklch(0.556 0 0);
 
 	--nb-accent: oklch(0.269 0 0);
 	--nb-accent-foreground: var(--nb-foreground);
 
-	--nb-primary: #ff4801;
-	--nb-primary-foreground: #fffbf5;
-	--nb-primary-hover: #ff6524;
+	/* Darker than `card` (0.168) so the inverted header recedes below the body. */
+	--nb-surface-sunken: oklch(0.13 0 0);
 
-	--nb-border: #2a2a2a;
+	/* --nb-primary / --nb-primary-foreground inherit from :root (identical). */
+	--nb-primary-hover: oklch(0.696 0.201 40.2);
+
+	--nb-border: oklch(0.285 0 0);
 	--nb-border-strong: oklch(0.371 0 0);
-	--nb-selected: oklch(0.371 0 0);
+	--nb-selected: var(--nb-border);
 	--nb-ring: oklch(0.9 0 0 / 0.35);
 
 	--nb-info: oklch(0.75 0.12 255);
-	--nb-info-foreground: oklch(0.75 0.12 255);
 	--nb-info-muted: oklch(0.17 0.03 260);
 
 	--nb-success: oklch(0.72 0.12 150);
-	--nb-success-foreground: oklch(0.72 0.12 150);
 	--nb-success-muted: oklch(0.17 0.025 153);
 
 	--nb-warning: oklch(0.78 0.11 80);
-	--nb-warning-foreground: oklch(0.78 0.11 80);
 	--nb-warning-muted: oklch(0.19 0.03 70);
 
 	--nb-danger: oklch(0.72 0.14 25);
-	--nb-danger-foreground: oklch(0.72 0.14 25);
 	--nb-danger-muted: oklch(0.17 0.03 25);
 
 	--nb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.2);
 	--nb-shadow: 0 1px 3px oklch(0 0 0 / 0.3), 0 1px 2px oklch(0 0 0 / 0.2);
 	--nb-shadow-lg: 0 4px 12px oklch(0 0 0 / 0.4), 0 2px 4px oklch(0 0 0 / 0.2);
 
-	--nb-grid-line: rgba(255, 255, 255, 0.1);
-	--nb-grid-line-accent: rgba(255, 255, 255, 0.16);
+	--nb-grid-line: oklch(1 0 0 / 0.1);
+	--nb-grid-line-accent: oklch(1 0 0 / 0.16);
 }
 
 /* ---- Diagram accent ----
@@ -161,7 +164,7 @@
  * (CardBadge, lit edges/strokes). Theme diagrams here, once.
  */
 [data-nb-diagram] {
-	--diagram-accent: #1447e6;
+	--diagram-accent: oklch(0.488 0.243 264.4);
 }
 
 /* ---- Tailwind theme mapping ----
@@ -191,19 +194,15 @@
 	--color-ring: var(--nb-ring);
 
 	--color-info: var(--nb-info);
-	--color-info-foreground: var(--nb-info-foreground);
 	--color-info-muted: var(--nb-info-muted);
 
 	--color-success: var(--nb-success);
-	--color-success-foreground: var(--nb-success-foreground);
 	--color-success-muted: var(--nb-success-muted);
 
 	--color-warning: var(--nb-warning);
-	--color-warning-foreground: var(--nb-warning-foreground);
 	--color-warning-muted: var(--nb-warning-muted);
 
 	--color-danger: var(--nb-danger);
-	--color-danger-foreground: var(--nb-danger-foreground);
 	--color-danger-muted: var(--nb-danger-muted);
 
 	--font-sans: var(--nb-font-sans);
@@ -267,6 +266,16 @@ body {
 ::selection {
 	background: color-mix(in oklch, var(--nb-primary) 10%, transparent);
 	color: var(--nb-foreground);
+}
+
+/* ---- Product icons ----
+   Some local product SVGs bake in Cloudflare brand orange. Force those fills to
+   inherit the current text color so every product icon themes consistently
+   (muted by default, accent on hover) like the monochrome glyphs. */
+svg [fill="#f6821f"],
+svg [fill="#f63"],
+svg [fill="#f26539"] {
+	fill: currentColor;
 }
 
 /* ---- Focus indicators ---- */
@@ -415,7 +424,7 @@ pre.astro-code span {
 	gap: 0.75rem;
 	padding: 0.5rem 0.875rem;
 	border-bottom: 1px solid var(--nb-border);
-	background: color-mix(in oklch, var(--nb-muted) 50%, transparent);
+	background: var(--nb-surface-sunken);
 	font-family: var(--nb-font-mono);
 	font-size: 0.75rem;
 	line-height: 1.4;
@@ -654,6 +663,9 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 	[data-nb-sidebar-link]:not([aria-current="page"]):hover {
 		@apply bg-accent text-foreground;
 	}
+	[data-mode="dark"] [data-nb-sidebar-link]:not([aria-current="page"]) {
+		color: var(--nb-foreground);
+	}
 	[data-nb-sidebar-link]:focus-visible {
 		@apply outline-offset-[-2px];
 	}
@@ -675,6 +687,12 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 
 	[data-nb-sidebar-group-label] {
 		@apply flex min-h-[2rem] items-center rounded-lg px-3 py-1 text-[0.8125rem] no-underline transition-colors duration-150 font-medium text-muted-foreground;
+	}
+	[data-mode="dark"] [data-nb-sidebar-group-label]:not([data-nb-active]):not([data-nb-current]) {
+		color: var(--nb-foreground);
+	}
+	[data-mode="dark"] [data-nb-sidebar-group-text] .text-muted-foreground {
+		color: var(--nb-foreground);
 	}
 	[data-nb-sidebar-group-label]:focus-visible { @apply outline-offset-[-2px]; }
 	[data-nb-sidebar-group-label]:hover { @apply bg-accent text-foreground; }

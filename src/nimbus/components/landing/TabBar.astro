@@ -60,11 +60,11 @@ const variantStyles: Record<TabBarVariant, VariantStyles> = {
 	},
 	underline: {
 		tablist: [
-			"border-border bg-muted relative flex border-b",
+			"border-border bg-card relative flex border-b",
 			"scrollbar-hide overflow-x-auto md:overflow-x-visible",
 		].join(" "),
 		indicator: [
-			"bg-primary pointer-events-none absolute bottom-[-1px] h-px",
+			"bg-primary pointer-events-none absolute bottom-0 z-20 h-0.5",
 			"opacity-0",
 		].join(" "),
 		tab: {
@@ -75,9 +75,9 @@ const variantStyles: Record<TabBarVariant, VariantStyles> = {
 				"transition-colors duration-200 ease-out",
 				"focus-visible:outline-primary focus-visible:outline-2 focus-visible:-outline-offset-2",
 			].join(" "),
-			active: "text-foreground bg-background",
+			active: "text-foreground bg-muted",
 			inactive:
-				"text-muted-foreground hover:bg-background hover:text-foreground",
+				"text-muted-foreground hover:bg-muted/50 hover:text-foreground",
 		},
 	},
 };
@@ -150,7 +150,7 @@ const v = variantStyles[variant];
 		const activeClasses =
 			variant === "pill"
 				? ["text-primary-foreground"]
-				: ["text-foreground", "bg-background"];
+				: ["text-foreground", "bg-muted"];
 		const inactiveClasses =
 			variant === "pill"
 				? [
@@ -160,7 +160,7 @@ const v = variantStyles[variant];
 					]
 				: [
 						"text-muted-foreground",
-						"hover:bg-background",
+						"hover:bg-muted/50",
 						"hover:text-foreground",
 					];
 

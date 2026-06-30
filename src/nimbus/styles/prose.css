@@ -161,31 +161,19 @@
   border-radius: 0;
 }
 
-/* Rounded bordered table that fills its container on desktop and falls back to
-   horizontal scroll on narrow viewports. The earlier rule used `display:block`
-   unconditionally, which kept the outer border at 100% but let thead/tbody
-   shrink to content width — leaving dead space on the right for tables with
-   short cells. */
 .docs-content :where(table:not([class])) {
-  display: table;
-  width: 100%;
+  display: block;
+  width: max-content !important;
   max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
   text-align: left;
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 0.75rem;
   border: 1px solid var(--nb-border);
-  table-layout: auto;
-}
-
-@media (max-width: 640px) {
-  .docs-content :where(table:not([class])) {
-    display: block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-  }
 }
 
 .docs-content :where(th:not([class])),
@@ -220,9 +208,9 @@
 }
 
 .docs-content :where(a:not([class])) {
-  color: var(--nb-info);
+  color: var(--nb-link);
   text-decoration-line: underline;
-  text-decoration-color: color-mix(in oklch, var(--nb-info) 40%, transparent);
+  text-decoration-color: color-mix(in oklch, var(--nb-link) 40%, transparent);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   font-weight: 500;
@@ -232,6 +220,6 @@
 }
 
 .docs-content :where(a:not([class]):hover) {
-  text-decoration-color: var(--nb-info);
+  text-decoration-color: var(--nb-link);
 }
 }

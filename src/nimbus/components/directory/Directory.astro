@@ -109,29 +109,32 @@ const groups = [...groupSet].sort((a, b) => {
           </button>
         </div>
 
-        <CheckboxGroup
-          legend="Filter by group"
-          legendClass="mb-3 px-2 font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase"
-        >
-          {
-            groups.map((group) => (
-              <Checkbox
-                label={group}
-                name="category"
-                value={group}
-              />
-            ))
-          }
-        </CheckboxGroup>
+        {/* Group filter is desktop-only; mobile narrows via search alone. */}
+        <div class="hidden md:block">
+          <CheckboxGroup
+            legend="Filter by group"
+            legendClass="mb-3 px-2 font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase"
+          >
+            {
+              groups.map((group) => (
+                <Checkbox
+                  label={group}
+                  name="category"
+                  value={group}
+                />
+              ))
+            }
+          </CheckboxGroup>
 
-        <button
-          type="button"
-          data-directory-clear
-          hidden
-          class="mt-2 px-2 text-sm text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
-        >
-          Clear filters
-        </button>
+          <button
+            type="button"
+            data-directory-clear
+            hidden
+            class="mt-2 px-2 text-sm text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+          >
+            Clear filters
+          </button>
+        </div>
       </aside>
 
       <div class="min-w-0" data-directory-results>

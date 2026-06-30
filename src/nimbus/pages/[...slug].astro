@@ -61,7 +61,8 @@ const breadcrumbs =
 const editUrl = await getEditUrl(entry);
 // Frontmatter wins; git is the fallback.
 const lastUpdated = entry.data.lastUpdated ?? await getLastUpdated(entry);
-const toc = tocOn ? getTOC(headings, entry.data.tableOfContents) : false;
+const tocConfig = entry.data.tableOfContents;
+const toc = tocOn && tocConfig !== false ? getTOC(headings, tocConfig) : false;
 const markdownPath = `/${entry.id}/index.md`;
 const markdownUrl = Astro.site ? new URL(markdownPath, Astro.site).href : markdownPath;
 // Per-page OG cards (programmatic generation) were dropped — not worth the

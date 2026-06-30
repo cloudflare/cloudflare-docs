@@ -1,11 +1,14 @@
 /**
- * Scroll-spy + animated rail indicator. Dash slides via arc-length
- * so it weaves through curves cleanly instead of cutting across.
+ * Scroll-spy + animated rail indicator. Active heading tracked via a single
+ * IntersectionObserver; the dash slides by arc-length so it weaves through the
+ * rail's curves instead of cutting across.
  */
 
 import { mount } from "nimbus-docs/client";
 
-const SCROLL_OFFSET = 100;
+const READING_BAND = 0.25;
+const BOTTOM_EPSILON = 2;
+const REVEAL_PADDING = 12;
 
 function initToc(root: HTMLElement): () => void {
   const nav = root.querySelector<HTMLElement>("nav");
@@ -13,25 +16,22 @@ function initToc(root: HTMLElement): () => void {
   const links = root.querySelectorAll<HTMLElement>("[data-nb-toc-link]");
   if (!nav || !activePath || links.length === 0) return () => {};
 
+  const scrollHost = root.closest<HTMLElement>("[data-nb-toc-scroll-host]") ?? root;
   const slugs = Array.from(links).map((l) => l.dataset.nbSlug!);
   const headingEls = slugs
     .map((s) => document.getElementById(s))
     .filter(Boolean) as HTMLElement[];
   if (headingEls.length === 0) return () => {};
 
-  // Per-link arc-length along the rail path. Computed from real DOM
-  // measurements so the path is always pixel-perfect over the static
-  // gray rail (border-lefts + curve SVGs).
   let segments: { start: number; length: number }[] = [];
   let totalLength = 0;
   let currentIndex = -1;
+  let currentLink: HTMLElement | null = null;
   let hasApplied = false;
 
   function buildRail() {
     const navRect = nav!.getBoundingClientRect();
 
-    // Rail centerline x for each link: link.left + 1 (center of the 2px
-    // border-left stroke). yTop / yBot bracket the link's vertical extent.
     const m = Array.from(links).map((link) => {
       const r = link.getBoundingClientRect();
       return {
@@ -41,32 +41,24 @@ function initToc(root: HTMLElement): () => void {
       };
     });
 
-    // Build the path incrementally so we can measure per-link arc lengths
-    // via getTotalLength() at each step.
     let d = "";
     const newSegments: { start: number; length: number }[] = [];
 
     for (let i = 0; i < m.length; i++) {
       const cur = m[i];
 
-      // Connector from previous link's bottom to this link's top.
       if (i === 0) {
         d += `M ${cur.x} ${cur.yTop} `;
       } else {
         const prev = m[i - 1];
         if (Math.abs(cur.x - prev.x) < 0.5) {
-          // Same indent → straight line through the gap.
           d += `L ${cur.x} ${cur.yTop} `;
         } else {
-          // Different indent → smooth S-curve matching the static curve
-          // SVGs already in the gap (M 0 0 C 0 0.5, 1 0.5, 1 1 stretched
-          // to the gap rectangle).
           const midY = (prev.yBot + cur.yTop) / 2;
           d += `C ${prev.x} ${midY}, ${cur.x} ${midY}, ${cur.x} ${cur.yTop} `;
         }
       }
 
-      // The link's own vertical segment.
       activePath!.setAttribute("d", d);
       const start = activePath!.getTotalLength();
 
@@ -87,16 +79,9 @@ function initToc(root: HTMLElement): () => void {
 
     if (instant) {
       activePath!.setAttribute("data-initial", "true");
-      // Force style recalc so transition-opacity-only takes effect before
-      // we write the new dash values (otherwise the dash transitions on
-      // first paint, producing a visible sweep).
       void activePath!.getBoundingClientRect();
     }
 
-    // A single dash of length seg.length, followed by a gap longer than
-    // the whole path so nothing else is drawn. Shift its starting point
-    // along the path with stroke-dashoffset. Both transition smoothly,
-    // so the highlight slides along arc length — through curves and all.
     activePath!.style.strokeDasharray = `${seg.length} ${totalLength + 1}`;
     activePath!.style.strokeDashoffset = `${-seg.start}`;
 
@@ -110,50 +95,184 @@ function initToc(root: HTMLElement): () => void {
     }
   }
 
+  function revealActiveLink(link: HTMLElement) {
+    const hostRect = scrollHost.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+
+    if (linkRect.top < hostRect.top + REVEAL_PADDING) {
+      scrollHost.scrollTop += linkRect.top - hostRect.top - REVEAL_PADDING;
+      return;
+    }
+
+    if (linkRect.bottom > hostRect.bottom - REVEAL_PADDING) {
+      scrollHost.scrollTop += linkRect.bottom - hostRect.bottom + REVEAL_PADDING;
+    }
+  }
+
   function setActive(index: number) {
     if (index === currentIndex) return;
     currentIndex = index;
 
-    links.forEach((l) => l.removeAttribute("aria-current"));
-    root
-      .querySelector(`[data-nb-toc-link][data-nb-slug="${slugs[index]}"]`)
-      ?.setAttribute("aria-current", "true");
+    currentLink?.removeAttribute("aria-current");
+    const activeLink = links[index] ?? null;
+    activeLink?.setAttribute("aria-current", "true");
+    currentLink = activeLink;
+    if (activeLink) revealActiveLink(activeLink);
 
     applyActive(index, !hasApplied);
     hasApplied = true;
   }
 
-  function updateActive() {
-    // Walk headings in document order. The last one whose top is at or
-    // above the offset is the "current" section the reader is in.
-    let activeIndex = 0;
-    for (let i = 0; i < headingEls.length; i++) {
-      if (headingEls[i].getBoundingClientRect().top <= SCROLL_OFFSET) {
-        activeIndex = i;
-      }
+  const inBand = new Set<number>();
+  let observedIndex = 0;
+  let atBottom = false;
+  let pinnedIndex: number | null = null;
+  let pinnedEnteredViewport = false;
+
+  function resolve() {
+    if (pinnedIndex !== null) {
+      setActive(pinnedIndex);
+      return;
     }
-    setActive(activeIndex);
+    setActive(atBottom ? headingEls.length - 1 : observedIndex);
+  }
+
+  const spy = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const i = headingEls.indexOf(entry.target as HTMLElement);
+        if (i === -1) continue;
+        if (entry.isIntersecting) inBand.add(i);
+        else inBand.delete(i);
+      }
+      if (inBand.size > 0) observedIndex = Math.max(...inBand);
+      resolve();
+    },
+    { rootMargin: `0px 0px -${(1 - READING_BAND) * 100}% 0px`, threshold: 0 },
+  );
+  headingEls.forEach((h) => spy.observe(h));
+
+  function updateBottom() {
+    const scrollEl = document.scrollingElement ?? document.documentElement;
+    const maxScroll = scrollEl.scrollHeight - window.innerHeight;
+    const next =
+      maxScroll > BOTTOM_EPSILON &&
+      scrollEl.scrollTop >= maxScroll - BOTTOM_EPSILON;
+    if (next !== atBottom) {
+      atBottom = next;
+      resolve();
+    }
+  }
+
+  function updateObservedIndex() {
+    const bandBottom = window.innerHeight * READING_BAND;
+    let nextIndex = 0;
+    for (let i = 0; i < headingEls.length; i++) {
+      if (headingEls[i].getBoundingClientRect().top <= bandBottom) nextIndex = i;
+      else break;
+    }
+    observedIndex = nextIndex;
+  }
+
+  function releaseStalePin() {
+    if (pinnedIndex === null) return;
+    const heading = document.getElementById(slugs[pinnedIndex]);
+    if (!heading) {
+      pinnedIndex = null;
+      pinnedEnteredViewport = false;
+      return;
+    }
+
+    const rect = heading.getBoundingClientRect();
+    const inViewport = rect.bottom >= 0 && rect.top <= window.innerHeight;
+    if (inViewport) {
+      pinnedEnteredViewport = true;
+      return;
+    }
+
+    if (pinnedEnteredViewport) {
+      pinnedIndex = null;
+      pinnedEnteredViewport = false;
+    }
   }
 
   let ticking = false;
   function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        updateActive();
-        ticking = false;
-      });
-      ticking = true;
-    }
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateObservedIndex();
+      updateBottom();
+      releaseStalePin();
+      resolve();
+      ticking = false;
+    });
   }
 
   function onLayoutChange() {
-    // Rebuild the path geometry and snap (no animation) to the current
-    // active segment — the user isn't navigating, layout just shifted.
     buildRail();
-    if (currentIndex >= 0) applyActive(currentIndex, true);
+    updateObservedIndex();
+    updateBottom();
+    releaseStalePin();
+    resolve();
+    if (currentIndex >= 0) {
+      applyActive(currentIndex, true);
+      const activeLink = links[currentIndex];
+      if (activeLink) revealActiveLink(activeLink);
+    }
   }
 
   const controller = new AbortController();
+
+  nav.addEventListener(
+    "click",
+    (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const link = (e.target as Element).closest<HTMLElement>("[data-nb-toc-link]");
+      if (!link) return;
+      const i = slugs.indexOf(link.dataset.nbSlug!);
+      if (i === -1) return;
+      pinnedIndex = i;
+      const heading = document.getElementById(slugs[i]);
+      const rect = heading?.getBoundingClientRect();
+      pinnedEnteredViewport = !!rect && rect.bottom >= 0 && rect.top <= window.innerHeight;
+      resolve();
+    },
+    { signal: controller.signal },
+  );
+
+  function releasePin() {
+    if (pinnedIndex === null) return;
+    pinnedIndex = null;
+    pinnedEnteredViewport = false;
+    resolve();
+  }
+  const NAV_KEYS = new Set([
+    "ArrowUp",
+    "ArrowDown",
+    "PageUp",
+    "PageDown",
+    "Home",
+    "End",
+    " ",
+    "Spacebar",
+  ]);
+  window.addEventListener("wheel", releasePin, {
+    passive: true,
+    signal: controller.signal,
+  });
+  window.addEventListener("touchmove", releasePin, {
+    passive: true,
+    signal: controller.signal,
+  });
+  window.addEventListener(
+    "keydown",
+    (e) => {
+      if (NAV_KEYS.has(e.key)) releasePin();
+    },
+    { signal: controller.signal },
+  );
+
   window.addEventListener("scroll", onScroll, {
     passive: true,
     signal: controller.signal,
@@ -167,11 +286,14 @@ function initToc(root: HTMLElement): () => void {
   ro.observe(nav);
 
   buildRail();
-  updateActive();
+  updateObservedIndex();
+  updateBottom();
+  resolve();
 
   return () => {
     controller.abort();
     ro.disconnect();
+    spy.disconnect();
   };
 }
 
