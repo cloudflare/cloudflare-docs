@@ -1,0 +1,60 @@
+---
+pcx_content_type: concept
+title: BotBase
+description: Browse Cloudflare's directory of all known bots and agents, with behavior-based classification, directly in the dashboard.
+products:
+  - bots
+tags:
+  - AI
+  - Bots
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: BotBase
+---
+
+import { GlossaryTooltip } from "~/components"
+
+BotBase is Cloudflare's directory of all known bots, including [verified bots and agents](/bots/concepts/bot/verified-bots/). It provides a comprehensive, searchable view of the entire bot directory directly in the Cloudflare dashboard, where you can see how Cloudflare classifies each bot and target individual bots in your security configuration.
+
+BotBase currently provides visibility into tracked bots. To mitigate traffic, use [Security rules](/security/rules/) or the [AI bot presets](/bots/concepts/bot/#ai-bots).
+
+## Availability
+
+BotBase is available to [Enterprise Bot Management](/bots/get-started/bot-management/) customers.
+
+## Access
+
+To open BotBase, go to the Bot Management configuration card in the Cloudflare dashboard. BotBase opens in a dedicated page that lists every bot Cloudflare tracks.
+
+## What you can do
+
+- Browse the full catalogue of all verified bots and agents, and see the behavior or behaviors each one is classified under.
+- Search and filter the directory to find a specific bot or group of bots.
+- Filter your own traffic to a specific bot to investigate its activity on your zone.
+- Copy a bot's <GlossaryTooltip term="detection ID">detection ID</GlossaryTooltip> to target it in [Security rules](/security/rules/).
+
+## Classification by behavior
+
+BotBase classifies each tracked bot by its behavior — what the bot may do on your site. A single bot can have one or more of the following behaviors:
+
+| Behavior | Description |
+| --- | --- |
+| Training | Crawling to train or fine-tune models. |
+| Search | Crawling to build search indexes or RAG databases. |
+| Agent | User-directed agents visiting a page on behalf of a human. |
+| Transact | Checkout or other transaction actions on behalf of users. |
+| Data Collection | Price scraping, competitive intelligence gathering, and third-party analytics. |
+| Security Testing | Vulnerability scanning and penetration testing. |
+| SEO | SEO crawling, site auditing, and accessibility checks. |
+| Ads Verification | Ad placement verification and ad fraud detection. |
+| Social / Link Preview | Link previews for social platforms and messaging apps. |
+| Feed Fetching | RSS readers, podcast aggregators, and news feed bots. |
+| Monitoring & Operations | Uptime monitoring, webhooks, and health checks. |
+
+Training, Search, and Agent are also available as managed presets you can act on across all plans. For more information, refer to [AI bots](/bots/concepts/bot/#ai-bots).
+
+## Radar's public-facing BotBase
+
+Every bot tracked in BotBase, along with select metadata, is available publicly in [Cloudflare Radar's bots and agents directory](https://radar.cloudflare.com/bots/directory).

@@ -441,9 +441,7 @@
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
 /bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/#categories 301
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
-/bots/concepts/bot/signed-agents /bots/concepts/bot/verified-bots/ 301
 /bots/concepts/bot/signed-agents/ /bots/concepts/bot/verified-bots/ 301
-/bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
 /bots/concepts/challenge-solve-rate/ /cloudflare-challenges/reference/challenge-solve-rate/ 301
 /bots/concepts/detection-ids/ /bots/additional-configurations/detection-ids/ 301
 /bots/concepts/ja3-ja4-fingerprint/ /bots/additional-configurations/ja3-ja4-fingerprint/ 301
@@ -2988,3 +2986,6 @@
 
 # Security Insights (moved from Security Center to Security)
 /security-center/security-insights/* /security/security-insights/:splat 301
+
+# Bots: signed agents deprecated -> verified bots
+/bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301

@@ -44,13 +44,13 @@ The most common AI-related behaviors are exposed as presets you can act on direc
 | --- | --- | --- |
 | **Training** | Crawls your content to train or fine-tune a model. Includes multi-purpose crawlers (such as Googlebot, Bingbot, and Applebot) that use crawled data for training. | GPTBot, ClaudeBot, Googlebot (as training) |
 | **Search** | Collects or indexes your content so it can answer questions about it later. Site owners should expect referral traffic or other equitable value in return. There is no longer a separate "AI search" — all search is treated as Search. | OAI-SearchBot, Claude-Search, Bingbot (as search) |
-| **User** | Automated activity acting in real time on a person's behalf, such as browser-use agents and chat fetch bots. | ChatGPT-User, Claude-User, browser-use agents |
+| **Agent** | Automated activity acting in real time on a person's behalf, such as browser-use agents and chat fetch bots. | ChatGPT-User, Claude-User, browser-use agents |
 
 Enterprise Bot Management customers can see the full set of behaviors Cloudflare tracks — including Transact, Data Collection, Security Testing, SEO, Ads Verification, Social / Link Preview, Feed Fetching, and Monitoring & Operations — for every tracked bot in the dashboard.
 
 ### Default handling
 
-For new domains, **Training** and **User** are blocked by default **on pages that display ads**, while **Search** is allowed by default. An ad signals that a page is meant for a person to land on and see, so on those pages Cloudflare keeps off the automated traffic that does not send readers back.
+For new domains, **Training** and **Agent** are blocked by default **on pages that display ads**, while **Search** is allowed by default. An ad signals that a page is meant for a person to land on and see, so on those pages Cloudflare keeps off the automated traffic that does not send readers back.
 
 ### Blocking Training: two options
 

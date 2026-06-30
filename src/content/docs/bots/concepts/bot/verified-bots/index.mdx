@@ -32,7 +32,7 @@ Being verified means a bot or agent meets two bars:
 2. **Non-abusive behavior** — it obeys `robots.txt` and crawl directives, maintains reasonable request rates, and has not been observed evading website owner preferences or attacking sites.
 
 :::note[Verified no longer means "allow everything"]
-Previously, *all* verified bots were allowed by default. Starting July 1, 2026, the verified label no longer guarantees access on its own. Bots without the verified label are still blocked by default, but which verified bots are allowed by default is now governed by [behavior-based presets](/bots/concepts/bot/#ai-bots) (Training, Search, and User) rather than a single one-size-fits-all label. A verified bot that misbehaves can lose its verified status, and is then removed from the groups you allow.
+Previously, *all* verified bots were allowed by default. Starting July 1, 2026, the verified label no longer guarantees access on its own. Bots without the verified label are still blocked by default, but which verified bots are allowed by default is now governed by [behavior-based presets](/bots/concepts/bot/#ai-bots) (Training, Search, and Agent) rather than a single one-size-fits-all label. A verified bot that misbehaves can lose its verified status, and is then removed from the groups you allow.
 :::
 
 ## Direct and intermediary bots and agents
@@ -81,7 +81,7 @@ Verified Bot Categories is available on all plans.
 :::
 
 :::note[Behavior-based classification]
-The categories below populate the long-standing `cf.verified_bot_category` field and continue to work as before. Separately, Cloudflare now also classifies each tracked bot by **behavior** — including **Training**, **Search**, and **User** — which is what the [AI bot presets](/bots/concepts/bot/#ai-bots) act on. A single bot can have more than one behavior. Enterprise Bot Management customers can browse the full behavior classification of every tracked bot in the dashboard.
+The categories below populate the long-standing `cf.verified_bot_category` field and continue to work as before. Separately, Cloudflare now also classifies each tracked bot by **behavior** — including **Training**, **Search**, and **Agent** — which is what the [AI bot presets](/bots/concepts/bot/#ai-bots) act on. A single bot can have more than one behavior. Enterprise Bot Management customers can browse the full behavior classification of every tracked bot in the dashboard.
 :::
 
 <details>

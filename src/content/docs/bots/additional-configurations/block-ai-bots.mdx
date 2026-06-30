@@ -22,12 +22,12 @@ You can choose to block AI bots based on their [behavior](/bots/concepts/bot/#ai
 
 - **Training**: crawlers taking your content to train or fine-tune a model, including multi-purpose crawlers such as Googlebot, Bingbot, and Applebot.
 - **Search**: crawlers that index your content to answer questions later and that send referral traffic back to you. "AI search" and traditional search are both treated as Search.
-- **User**: agents acting in real time on a person's behalf, such as browser-use agents and chat fetch bots.
+- **Agent**: automated activity acting in real time on a person's behalf, such as browser-use agents and chat fetch bots.
 
 Each preset blocks both [verified bots](/bots/concepts/bot/verified-bots/) classified with that behavior and a number of unverified bots that behave similarly.
 
 :::note[Default configuration]
-For new domains, **Training** and **User** are blocked by default on pages that display ads, while **Search** is allowed by default. Existing configurations are not changed automatically.
+For new domains, **Training** and **Agent** are blocked by default on pages that display ads, while **Search** is allowed by default. Existing configurations are not changed automatically.
 :::
 
 To configure AI bot blocking:
@@ -37,7 +37,7 @@ To configure AI bot blocking:
 
       <DashButton url="/?to=/:account/:zone/security/settings" />
   2. Filter by **Bot traffic**.
-  3. Go to the AI bot presets (**Training**, **Search**, and **User**).
+  3. Go to the AI bot presets (**Training**, **Search**, and **Agent**).
   4. For each preset, select the edit icon. Choose from:
       - **Only block on hostnames with ads**: Use this option if you wish to block this behavior only on portions of your site that show ads. Cloudflare automatically detects whether ads are present on a subdomain, and only blocks on hostnames that contain those ad units.
       - **Block on all pages**: Use this option if you wish to block this behavior on all your pages.
