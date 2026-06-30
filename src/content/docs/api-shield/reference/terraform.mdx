@@ -62,7 +62,7 @@ resource "cloudflare_api_shield_operation" "get_image" {
   host     = "example.com"
   endpoint = "/api/images/{var1}"
 }
- 
+
 resource "cloudflare_api_shield_operation" "post_image" {
   zone_id  = var.zone_id
   method   = "POST"
@@ -90,13 +90,13 @@ resource "cloudflare_schema_validation_schemas" "example_schema" {
   source             = file("./schemas/example-schema.yaml")
   validation_enabled = true
 }
- 
+
 # Block all requests that violate schema by default
 resource "cloudflare_schema_validation_settings" "zone_level_settings" {
   zone_id                              = var.zone_id
   validation_default_mitigation_action = "block"
 }
- 
+
 # For endpoint post_image - only log requests that violate schema
 resource "cloudflare_schema_validation_operation_settings" "post_image_log_only" {
   zone_id           = var.zone_id
