@@ -6,7 +6,7 @@ products:
   - spectrum
 ---
 
-This page documents validation error codes returned by the [Spectrum API](/api/resources/spectrum/subresources/apps/) when creating or updating Spectrum applications.
+This page documents error codes returned by the [Spectrum API](/api/resources/spectrum/subresources/apps/), along with recommended fixes to help with troubleshooting.
 
 ## How errors are returned
 
@@ -17,7 +17,7 @@ Spectrum API errors follow the standard Cloudflare v4 error envelope. The respon
   "errors": [
     {
       "code": 11044,
-      "message": "no matching routes in the specified virtual network"
+      "message": "No matching routes in the specified virtual network."
     }
   ],
   "messages": [],
@@ -26,31 +26,117 @@ Spectrum API errors follow the standard Cloudflare v4 error envelope. The respon
 }
 ```
 
-Look up the `code` in the sections below for the cause and resolution.
+## General errors (10xxx)
+
+### 10002 — Unexpected internal server error
+
+An unexpected error occurred during request processing. The response does not include diagnostic details. If you contact Cloudflare support, provide the [Ray ID](/fundamentals/reference/cloudflare-ray-id/) from the response so the original error can be located.
+
+HTTP `503` indicates a dependent service (such as DNS or IP address management) is temporarily unavailable. HTTP `500` indicates any other internal error.
+
+### 10012 — Unknown field in request JSON
+
+The request body contains a field the API does not recognize. This error is only returned for applications on Pay-as-you-go accounts. Enterprise applications silently ignore unknown fields.
+
+Pay-as-you-go accounts are limited to `protocol`, `dns`, and `origin_direct` when creating or updating a Spectrum application. A common cause is an account without a Spectrum entitlement sending a full Spectrum configuration — any field outside those three will be rejected.
+
+**Resolution:** To use the full Spectrum configuration API, contact your account team to enable Spectrum as a paid add-on. Otherwise, remove any fields other than `protocol`, `dns`, and `origin_direct` from the request.
+
+## Application configuration errors (11xxx)
+
+These errors are returned as HTTP `400`, unless noted otherwise.
+
+### 11000 — Invalid origin configuration
+
+The request must provide exactly one of `origin_direct` or `origin_dns`. Providing both or neither will trigger this error.
+
+### 11001 — Invalid origin DNS configuration
+
+The `origin_dns` configuration failed validation. Common causes:
+
+- The `origin_dns.name` is not a valid domain name.
+- A non-SRV `origin_dns.type` was provided without an `origin_port`.
+- The `origin_dns.ttl` is outside the allowed range.
+
+### 11002 — Invalid origin address
+
+One or more of the origin addresses provided are invalid.
+
+Common causes:
+
+- **IPv6 origin without brackets:** IPv6 addresses must be wrapped in brackets in `origin_direct`, for example `tcp://[2001:db8::1]:443`. Without brackets, the colons in the address make parsing ambiguous.
+- **Origin IP fails access control validation:** The origin IP may fail an internal access control check. Verify the IP is valid and belongs to an allowed range.
+
+### 11004 — Invalid DNS configuration
+
+The DNS type must match the edge IP allocation mode. Dynamic edge IPs require `type: "CNAME"`. Static (BYOIP) edge IPs require `type: "ADDRESS"`. This error is also returned if you attempt to change the DNS type when updating an existing application.
+
+### 11014 — FTP not enabled
+
+FTP traffic type is not enabled for the account. Returned as HTTP `403`.
+
+**Resolution:** Contact your account team to enable FTP support.
+
+### 11018 — `edge_ips` not enabled
+
+The `edge_ips` feature (BYOIP) is not enabled for the account. Returned as HTTP `403`.
+
+**Resolution:** Contact your account team to enable [BYOIP](/spectrum/about/byoip/) for the account.
+
+### 11019 — `edge_ips` not authorized
+
+The authenticated account is not authorized to use the provided `edge_ips`.
+
+Common causes:
+
+- **API token lacks IP prefix permissions:** API tokens scoped to Spectrum may not carry the IP prefix permissions required for BYOIP validation. Use a Global API Key, or add the **Account** > **IP Prefixes** permission to the API token.
+- **BYOIP prefix not allocated to account:** Verify the BYOIP prefix is allocated to the requesting account before assigning it.
+
+### 11026 — Argo Smart Routing not enabled
+
+The request set `argo_smart_routing` to `true`, but Argo Smart Routing is not enabled for the account. Returned as HTTP `403`.
+
+**Resolution:** Contact your account team to enable Argo Smart Routing for the account.
+
+### 11033 — `edge_ips` in use
+
+One or more of the provided `edge_ips` is already in use by another zone.
+
+Common cause: The requested edge IP may be held by a legacy Spectrum application on a deleted zone. Contact Cloudflare support to clean up the orphaned application.
+
+### 11034 — Cannot create more applications for protocol
+
+Pay-as-you-go accounts are limited to one application per protocol. If you need multiple applications on the same protocol, contact your account team to enable Spectrum as a paid add-on.
+
+### 11050 — Invalid cross-zone origin DNS configuration
+
+The DNS record or Load Balancer used as an origin lives on a different zone or a non-permitted zone.
+
+**Resolution:** Move the origin DNS record or Load Balancer to the same zone, or use `origin_direct` with an IP address instead.
 
 ## Virtual network origin errors
 
 The following codes are returned by `POST /zones/:zone/spectrum/apps` and `PATCH /zones/:zone/spectrum/apps/:id` when validating an application that uses a [virtual network origin](/spectrum/reference/configuration-options/#virtual-network-origin).
 
-### Virtual network requires origin direct (11041)
+### 11041 — Virtual network requires origin direct
 
 `virtual_network_id` was set on a request that uses `origin_dns`. Virtual network origins are only supported with IP-based origins.
 
 **Resolution:** Replace `origin_dns` with `origin_direct` and provide the private IP and single port that the virtual network routes to.
 
-### Virtual network requires single origin (11042)
+### 11042 — Virtual network requires single origin
 
 `origin_direct` contained more than one address. Virtual network origins must resolve to a single private IP and port.
 
-**Resolution:** Reduce `origin_direct` to a single entry of the form `tcp://<ip>:<port>` or `udp://<ip>:<port>`.
+**Resolution:** Reduce `origin_direct` to a single entry of the form `tcp://<IP>:<PORT>` or `udp://<IP>:<PORT>`.
 
-### Virtual network no port range (11043)
+### 11043 — Virtual network no port range
 
 The request included a port range, either in `origin_port` or in the `origin_direct` address. Virtual network origins do not support port ranges.
 
 **Resolution:** Use a single port instead of a range. If you need to expose multiple ports, create a separate Spectrum application per port.
 
-### Virtual network route not found (11044)
+### 11044 — Virtual network route not found
 
 The combination of IP and `virtual_network_id` does not match any route in the specified virtual network. This covers two cases: the virtual network does not exist, or the IP is not routable within the virtual network you specified.
 
@@ -60,8 +146,35 @@ The combination of IP and `virtual_network_id` does not match any route in the s
 - Confirm the origin IP is within a route attached to that virtual network. You can list routes with the [List network routes](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/list/) endpoint.
 - If no matching route exists, add one by following [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
 
-### Virtual network invalid UUID (11045)
+### 11045 — Virtual network invalid UUID
 
 `virtual_network_id` is not a valid UUID.
 
 **Resolution:** Provide a UUID. Virtual network IDs are returned by the [List virtual networks](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/list/) endpoint in the `id` field of each entry.
+
+## Addressing errors (12xxx)
+
+### 12005 — IPv4 quota limit
+
+The zone has allocated all available IPv4 addresses in its quota.
+
+**Resolution:** Consolidate applications onto fewer IPs (multiple apps can share a hostname on different ports), purchase additional Cloudflare-managed IPs, or onboard [BYOIP](/spectrum/about/byoip/).
+
+## Protocol errors (13xxx)
+
+### 13002 — Protocol not available
+
+The requested protocol is not available for the zone. The error message includes specific edge ports that are not allowed for the requested protocol.
+
+## Hostname errors (16xxx)
+
+### 16001 — Zone mismatch
+
+A hostname with the same DNS name already exists but belongs to a different zone. This can occur during application creation or update when the hostname lookup matches a record owned by another zone.
+
+**Resolution:**
+
+- Verify you are using the correct zone ID in the API request URL.
+- Use a different DNS name for the application.
+- If the DNS name was previously used on another zone you control, delete the application on that zone first.
+- Contact Cloudflare support if none of these apply — the hostname may need to be cleaned up internally.
