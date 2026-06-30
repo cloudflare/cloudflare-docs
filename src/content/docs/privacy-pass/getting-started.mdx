@@ -100,8 +100,6 @@ Public-Verifiable tokens
 
 The example creates an Issuer, a Client, and an Origin in a single process (the Issuer key pair is generated up front in `setup()` with `Issuer.generateKey`), then runs them through the protocol. The code annotations below sit at the point in the flow where each step happens:
 
-<TypeScriptExample>
-
 ```ts
 // +--------+            +--------+         +----------+ +--------+
 // | Origin |            | Client |         | Attester | | Issuer |
@@ -124,8 +122,6 @@ const token = await client.finalize(tokRes);                                 // 
 //     |                     |                   |           |
 const isValid = await origin.verify(token, issuer.publicKey);                // Origin verifies against the issuer key
 ```
-
-</TypeScriptExample>
 
 :::note
 This demonstrates the protocol and the cryptography. It does **not** reflect a real deployment: in production the roles are operated by separate parties, attestation is real, and the issuer is run by Cloudflare. To validate a real, Cloudflare-operated deployment, refer to [Production Deployment Testing](/privacy-pass/production-deployment-testing/).
