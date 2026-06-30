@@ -94,13 +94,9 @@ To avoid this:
 - Deploy Workers using Wrangler before creating new versions that reference the same routes.
 - Avoid configuring the same custom domains across multiple versions.
 
-## API and Terraform are not supported
+## Terraform is not supported
 
-Version Management does not currently expose a public API. You can only manage versions through the [Cloudflare dashboard](https://dash.cloudflare.com/).
-
-[Terraform](/terraform/) is also not supported. If you currently use Terraform to manage your zone configuration, you should choose either Terraform or Version Management — using both simultaneously is not supported.
-
-If you receive a `10001` authentication error when attempting to access Version Management endpoints through the API, this is expected behavior. There is no public API available at this time.
+[Terraform](/terraform/) is not supported by Version Management. If you currently use Terraform to manage your zone configuration, you should choose either Terraform or Version Management — using both simultaneously is not supported.
 
 ## Analytics discrepancies
 

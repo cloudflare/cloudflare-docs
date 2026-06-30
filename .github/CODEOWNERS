@@ -54,6 +54,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/tenant/ @jhutchings1 @cloudflare/product-owners
 /src/content/docs/terraform/ @jhutchings1 @cloudflare/product-owners
 /src/content/docs/version-management/ @jhutchings1 @cloudflare/product-owners
+/src/content/partials/version-management/ @jhutchings1 @cloudflare/product-owners
 
 # Billing
 
