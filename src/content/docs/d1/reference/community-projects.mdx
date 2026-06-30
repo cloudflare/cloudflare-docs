@@ -62,6 +62,16 @@ Drizzle is a headless TypeScript ORM with a head which runs on Node, Bun and Den
 * [GitHub](https://github.com/drizzle-team/drizzle-orm)
 * [D1 example](https://orm.drizzle.team/docs/connect-cloudflare-d1)
 
+:::caution[Using Drizzle migrations with D1]
+
+When using Drizzle with D1, be aware of the following:
+
+- **`drizzle-kit migrate` does not work with D1.** Drizzle cannot apply migrations to D1 directly because D1 requires Cloudflare's API for writes. Use `drizzle-kit generate` to create the SQL migration files, then apply them with `wrangler d1 migrations apply`. Refer to [Nested migration layouts](/d1/reference/migrations/#nested-migration-layouts) for how to configure Wrangler to read Drizzle's output folder.
+- **`drizzle-kit generate` will try to drop tables not in your schema file.** Drizzle assumes it owns every table in the database. Tables that exist in the database but are not defined in your TypeScript schema — including Wrangler's `d1_migrations` tracking table and Cloudflare's internal `_cf_KV` table — will appear as `DROP TABLE` statements in generated migrations. Always review generated SQL before applying. To prevent this, add `tablesFilter: ["!d1_migrations", "!_cf_KV", "!sqlite_sequence"]` to your `drizzle.config.ts`.
+- **Drizzle and Wrangler track migrations separately.** Wrangler records applied migrations in the `d1_migrations` table. Drizzle tracks them in `drizzle/meta/_journal.json`. These two systems do not communicate. If you use both, let Wrangler handle tracking and use Drizzle only for SQL generation.
+
+:::
+
 ### workers-qb
 
 `workers-qb` is a zero-dependency query builder that provides a simple standardized interface while keeping the benefits and speed of using raw queries over a traditional ORM. While not intended to provide ORM-like functionality, `workers-qb` makes it easier to interact with your database from code for direct SQL access.
