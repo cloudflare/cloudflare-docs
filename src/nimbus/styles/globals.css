@@ -49,8 +49,6 @@
 	--nb-primary-foreground: oklch(0.99 0.009 78.3);
 	--nb-primary-hover: oklch(0.612 0.211 35.8);
 
-	/* Hyperlink color — brand orange in both modes for now. NOTE: light mode
-	 * is only 3.4:1 on white (below WCAG AA 4.5:1); darken this to fix later. */
 	--nb-link: var(--nb-primary);
 
 	/* Borders / focus */
