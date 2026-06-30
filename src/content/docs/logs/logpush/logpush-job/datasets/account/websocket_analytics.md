@@ -73,13 +73,13 @@ IATA airport code of the data center that handled the connection.
 
 Type: `string`
 
-The reason the WebSocket connection ended. <br />Possible values are <em>none</em> \| <em>unspecifiedError</em> \| <em>timedOut</em> \| <em>peerReset</em> \| <em>upstreamReset</em> \| <em>protocolViolation</em> \| <em>peerNoError</em>.
+The reason the WebSocket connection ended. Possible values are <em>none</em> \| <em>unspecifiedError</em> \| <em>timedOut</em> \| <em>peerReset</em> \| <em>upstreamReset</em> \| <em>protocolViolation</em> \| <em>peerNoError</em>.
 
 ## ConnectionCloseSource
 
 Type: `string`
 
-Which side initiated the connection close. <br />Possible values are <em>upstream</em> \| <em>downstream</em> \| <em>me</em> \| <em>both</em>, or the raw internal value if unrecognized.
+Which side initiated the connection close; <em>upstream</em> \| <em>downstream</em> \| <em>me</em> \| <em>both</em>, or the raw internal value if unrecognized.
 
 ## ConnectionID
 
@@ -97,13 +97,13 @@ The first transport-level close code observed. For TLS connections this is the T
 
 Type: `int or string`
 
-Timestamp at which the WebSocket connection closed. To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).
+Timestamp at which the WebSocket connection closed.
 
 ## EdgeStartTimestamp
 
 Type: `int or string`
 
-Timestamp at which the WebSocket connection was established. To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).
+Timestamp at which the WebSocket connection was established.
 
 ## RayID
 
