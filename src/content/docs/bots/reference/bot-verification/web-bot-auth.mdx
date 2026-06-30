@@ -208,6 +208,30 @@ You can test how Cloudflare interprets your signed requests against https://craw
 
 ---
 
+## Transitive trust and the `Forwarded` header
+
+An agent that reaches your site is often not operated by the company that built it. A platform can run automations on behalf of many different end users, so the operator and the end user are not the same party. Cloudflare refers to this chain — website owner → bot operator → end user — as **transitive trust**.
+
+To carry an operator's identity through that chain, Cloudflare is experimenting with the `Forwarded` header defined in [RFC 7239](https://www.rfc-editor.org/info/rfc7239). This works like `X-Forwarded-For` does for IP addresses: a preference to allow an operator holds whether that operator reaches you directly or through intermediaries that Cloudflare trusts.
+
+The operator is identified with the `for` parameter:
+
+```txt
+Forwarded: for="openai"
+```
+
+The header can also carry the [`content-use`](/bots/additional-configurations/managed-robots-txt/#content-use-signal) value that the operator commits to for the content it accesses:
+
+```txt
+Forwarded: for="openai";use="reference"
+```
+
+:::note
+Transitive trust and the `Forwarded` header are experimental and may change.
+:::
+
+---
+
 ## Limitations
 
 Cloudflare's implementation of Web Bot Auth does not support every component and parameter defined in IETF RFC 9421. If you include any of the following in your request's Signature-Input header, verification will fail.

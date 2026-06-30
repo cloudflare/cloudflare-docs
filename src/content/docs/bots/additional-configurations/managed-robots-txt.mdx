@@ -183,6 +183,24 @@ Alternatively, you can use [Security Settings](#implementation).
 Google Search Console may occasionally report `Syntax not understood` for Content Signals and newer directives in the `robots.txt` standard. However, we have observed no impact on crawling rates or SEO as a result of these reports.
 :::
 
+## Content use signal
+
+Cloudflare is testing `content-use`, an optional extension to [Content Signals](https://contentsignals.org/) that lives in your `robots.txt`. It adds a fourth field alongside the existing `search`, `ai-input`, and `ai-train` signals to describe what a crawler may keep and reuse after accessing your content. The field takes one of three values, from least to most permissive:
+
+| Value | Meaning |
+| --- | --- |
+| `use=immediate` | Interact, but store and reuse nothing. |
+| `use=reference` | Index, excerpt, and link back. |
+| `use=full` | Summarize and reproduce. |
+
+For customers who have turned on the managed `robots.txt` setting, Cloudflare adds `use=reference` to the managed content, in line with the existing default of `search=yes,ai-train=no`:
+
+```txt title="Managed robots.txt with the content-use signal"
+User-agent: *
+Content-Signal: search=yes,ai-train=no,use=reference
+Allow: /
+```
+
 ## Availability
 
 Managed `robots.txt` for AI crawlers is available on all plans.
