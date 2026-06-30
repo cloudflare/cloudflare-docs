@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: OpenFeature SDK
-description: Use the official Flagship OpenFeature SDKs to evaluate feature flags from Workers, Node.js, browsers, and Go applications.
+description: Use the official Flagship OpenFeature SDKs to evaluate feature flags from Workers, Node.js, browsers, Python, and Go applications.
 sidebar:
   order: 6
 products:
@@ -26,8 +26,6 @@ Flagship provides official OpenFeature-compatible SDKs for TypeScript, Python, a
 | Python     | [`cloudflare-flagship`](https://pypi.org/project/cloudflare-flagship/)                                | Python server applications | HTTP                                          |
 | Go         | [`github.com/cloudflare/flagship/sdks/go`](https://pkg.go.dev/github.com/cloudflare/flagship/sdks/go) | Go server applications     | HTTP                                          |
 
-The TypeScript SDK includes two providers:
-
 ## SDKs
 
 Flagship SDKs are organized by language. The TypeScript SDK has separate setup guides for server-side and browser usage because they use different OpenFeature packages and runtime behavior.
@@ -35,14 +33,15 @@ Flagship SDKs are organized by language. The TypeScript SDK has separate setup g
 - [TypeScript Server SDK](/flagship/sdk/server-provider/) — For Workers, Node.js, and other server-side JavaScript runtimes.
 - [TypeScript Client SDK](/flagship/sdk/client-provider/) — For browser applications that need synchronous OpenFeature web SDK evaluation.
 - [Python SDK](/flagship/sdk/python/) — For Python server applications.
+- [Go SDK](/flagship/sdk/go/) — For Go server applications.
 
 :::note
 If you are running inside a Cloudflare Worker, the [binding](/flagship/binding/) is the recommended approach because it avoids HTTP overhead. You can also [pass the binding to the OpenFeature SDK](/flagship/sdk/server-provider/) to get the best of both. Use the SDK without a binding when running in non-Worker runtimes like Node.js or the browser.
 :::
 
-## TypeScript installation
+## Installation
 
-For server-side usage:
+For TypeScript server-side usage:
 
 <PackageManagers
 	type="add"
@@ -50,7 +49,7 @@ For server-side usage:
 	pkg="@cloudflare/flagship @openfeature/server-sdk"
 />
 
-For browser usage:
+For TypeScript browser usage:
 
 <PackageManagers
 	type="add"
@@ -58,7 +57,13 @@ For browser usage:
 	pkg="@cloudflare/flagship @openfeature/web-sdk"
 />
 
-For Go server applications:
+For Python:
+
+```sh
+uv add cloudflare-flagship
+```
+
+For Go:
 
 ```sh
 go get github.com/cloudflare/flagship/sdks/go
