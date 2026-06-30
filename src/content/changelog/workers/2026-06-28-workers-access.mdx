@@ -1,0 +1,35 @@
+---
+title: Cloudflare Access for Workers
+description: Protect any Worker with Cloudflare Access directly, no per-hostname configuration required.
+products:
+  - workers
+date: 2026-06-28
+---
+
+import { Image } from "astro:assets";
+import protectAllWorkers from "~/assets/images/changelog/workers/protect-all-workers.png";
+import protectOneWorker from "~/assets/images/changelog/workers/protect-one-worker.png";
+import makeWorkerPublic from "~/assets/images/changelog/workers/make-worker-public.png";
+import chooseWhoCanSignIn from "~/assets/images/changelog/workers/choose-who-can-sign-in.png";
+
+You can now protect a Worker with Cloudflare Access directly. Enabling Access on a Worker requires sign-in before anyone can reach it, and automatically covers every domain associated with it: routes, Custom Domains, and its `workers.dev` hostname. Previously, you had to create separate Access applications for each hostname or path. Now you configure it once on the Worker itself through the dashboard.
+
+**Choose what to protect**
+
+- **Protect all Workers**: Require sign-in for every Worker in your account. You can choose to protect all production and preview deployments, or only preview deployments.
+<Image src={protectAllWorkers} alt="Account-wide Access setting that protects all Workers" />
+
+- **Protect a single Worker**: Require sign-in for one specific Worker across all of its domains and previews, or only its previews.
+<Image src={protectOneWorker} alt="Access setting for protecting a single Worker" />
+
+- **Make a Worker public**: If Access is enabled for all Workers on your account, you can make a specific Worker public by adding a Worker-level bypass.
+<Image src={makeWorkerPublic} alt="Bypass setting to make a Worker public" />
+
+**Control who can sign in**
+
+Define who can access your Workers by Cloudflare account membership, email address, or email domain.
+<Image src={chooseWhoCanSignIn} alt="Access policy configuration for controlling who can sign in" />
+
+You can also [configure Access through the API](/workers/configuration/cloudflare-access/) and validate the Access JWT inside your Worker for identity-aware logic.
+
+For setup instructions, refer to [Cloudflare Access for Workers](/workers/configuration/cloudflare-access/).
