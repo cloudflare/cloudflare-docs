@@ -6,21 +6,26 @@ sidebar:
   order: 4
 ---
 
-You can use version overrides to send a request to a specific version of your Worker in your [gradual deployment](/workers/versions-and-deployments/gradual-deployments/).
+You can use version overrides to send a request to a specific version of your Worker, even those set to serve 0% of traffic.
 
-To specify a version override in your request, set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
+## How to set version overrides
+
+To specify a version override in your request, set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. `Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries) that can contain multiple key-value pairs. Each **key** indicates the name of the Worker the override should be applied to. The **value** indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings). For example:
 
 ```sh
 curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
 ```
 
-`Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+:::caution[Version must be in current deployment]
 
-The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
+A version override will only be applied if the specified version is in the current deployment (set to serve traffic). The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the [**Workers & Pages** page of the Cloudflare dashboard > select your Worker > **Deployments** > **Active Deployment**](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/deployments).
 
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the [**Workers & Pages** page of the Cloudflare dashboard > select your Worker > **Deployments** > **Active Deployment**](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/deployments).
+{/* To be removed/changed once this limit is increased for skew protection */}
+Workers currently only supports serving **two** different versions in one deployment. Follow the instructions for [gradual deployments](/workers/versions-and-deployments/gradual-deployments/#use-gradual-deployments) to ensure the requested version is set to serve traffic.
 
-:::note[Verifying that the version override was applied]
+:::
+
+### Verifying that version overrides were applied
 
 There are a number of reasons why a request's version override may not be applied. For example:
 
@@ -30,8 +35,6 @@ There are a number of reasons why a request's version override may not be applie
 In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
 
 You can observe the version of your Worker that was invoked using [Observability](https://developers.cloudflare.com/workers/observability/), including in features such as [Logpush](/workers/observability/logs/logpush/). Alternatively, if you want to inform clients about the version they ran (e.g. for faster and more transparent debugging), you could use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) and return the version ID in the Worker's response.
-
-:::
 
 ## Smoke test example
 
@@ -94,6 +97,7 @@ Version overrides only apply to `fetch()`-based service binding calls. There is 
 
 ## Related resources
 
-- [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works, including version affinity and observability.
+- [Version affinity](/workers/versions-and-depoloyments/version-affinity) - Use a cookies & headers to pin users to a specific version during a gradual deployment.
+- [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works.
 - [Service bindings](/workers/runtime-apis/bindings/service-bindings/) — How Workers communicate with each other.
 - [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) — Access version ID and tag from within your Worker.
