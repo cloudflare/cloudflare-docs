@@ -162,18 +162,25 @@
 }
 
 .docs-content :where(table:not([class])) {
-  display: block;
-  width: max-content !important;
+  display: table;
+  width: 100%;
   max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
   text-align: left;
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 0.75rem;
   border: 1px solid var(--nb-border);
+  table-layout: auto;
+}
+
+@media (max-width: 640px) {
+  .docs-content :where(table:not([class])) {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .docs-content :where(th:not([class])),
