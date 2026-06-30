@@ -10,8 +10,7 @@
  *   - `product` is a bare icon name (e.g. `"workers"`, `"r2"`) resolved
  *     by astro-icon against the local set in `src/icons/`, ported 1:1
  *     from cloudflare-docs/src/icons/. astro-icon injects
- *     `fill="currentColor"` for local icons, so `text-brand` colors them.
- *   - --orange-accent-200 → Nimbus brand color (`text-brand`).
+ *     `fill="currentColor"` for local icons, so they follow text color.
  */
 import { z } from "astro/zod";
 import { Icon as AstroIcon } from "astro-icon/components";
@@ -26,7 +25,7 @@ const { header, href, product } = props.parse(Astro.props);
 ---
 
 <div class="grid grid-cols-[32px_auto] items-start gap-x-2 mb-3">
-  <AstroIcon name={product} class="text-3xl text-brand" />
+  <AstroIcon name={product} class="text-3xl text-muted-foreground" />
   <div class="mt-0!">
     <strong>
       <a href={href} class="text-foreground! decoration-brand">{header}</a>

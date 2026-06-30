@@ -268,16 +268,6 @@ body {
 	color: var(--nb-foreground);
 }
 
-/* ---- Product icons ----
-   Some local product SVGs bake in Cloudflare brand orange. Force those fills to
-   inherit the current text color so every product icon themes consistently
-   (muted by default, accent on hover) like the monochrome glyphs. */
-svg [fill="#f6821f"],
-svg [fill="#f63"],
-svg [fill="#f26539"] {
-	fill: currentColor;
-}
-
 /* ---- Focus indicators ---- */
 @layer base {
 	:focus-visible {

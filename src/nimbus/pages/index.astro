@@ -77,10 +77,10 @@ const currentPath = Astro.url.pathname;
   >
       <div
         data-mobile-sidebar-panel
-        class="h-full w-full -translate-x-full overflow-y-auto bg-card shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
+        class="h-full w-full -translate-x-full overflow-y-auto bg-background shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
       >
         <div
-          class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-card px-4 py-3"
+          class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-inherit px-4 py-3"
         >
         <a href="/" class="group flex items-center gap-2 no-underline">
           <img src={logo.src} alt="" width="51" height="23" class="h-[20px] w-auto" />
@@ -96,7 +96,7 @@ const currentPath = Astro.url.pathname;
           <Icon name="ph:x" class="w-5 h-5" />
         </button>
       </div>
-      <nav class="px-4 pb-8" aria-label="Documentation">
+      <nav class="px-4 pt-5 pb-8" aria-label="Documentation">
         <SidebarFilter placeholder="Search products..." />
         <Sidebar currentPath={currentPath} />
       </nav>
