@@ -124,7 +124,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 -d '{
 "name": "workers-logpush",
 "output_options": {
-    "field_names": ["Event", "EventTimestampMs", "Outcome", "Logs", "ScriptName", "ScriptVersion"],
+    "field_names": ["Event", "EventTimestampMs", "Outcome", "Logs", "ScriptName", "ScriptVersion"]
 },
 "destination_conf": "<DESTINATION_URL>",
 "dataset": "workers_trace_events",
@@ -135,10 +135,12 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 `ScriptVersion` is an object with the following structure:
 
 ```json
-scriptVersion: {
-    id: "<UUID>",
-    message: "<MESSAGE>",
-    tag: "<TAG>"
+{
+	"ScriptVersion": {
+		"id": "<UUID>",
+		"message": "<MESSAGE>",
+		"tag": "<TAG>"
+	}
 }
 ```
 

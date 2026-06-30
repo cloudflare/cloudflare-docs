@@ -6,6 +6,8 @@ sidebar:
   order: 4
 ---
 
+import { TypeScriptExample } from "~/components";
+
 You can use version overrides to send a request to a specific version of your Worker in the current deployment, even those set to serve 0% of traffic.
 
 ## How to set version overrides
@@ -25,7 +27,7 @@ Workers currently only supports serving **two** different versions in one deploy
 
 :::
 
-### Verifying that version overrides were applied
+### Verify that version overrides were applied
 
 There are a number of reasons why a request's version override may not be applied. For example:
 
@@ -65,21 +67,27 @@ You can set the `Cloudflare-Workers-Version-Overrides` header when making a subr
 
 If you forward the original request object, the override header carries through automatically:
 
-```js
+<TypeScriptExample>
+
+```ts
 // The override header from the inbound request is forwarded to the downstream Worker.
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		return env.MY_SERVICE.fetch(request);
 	},
 };
 ```
 
+</TypeScriptExample>
+
 Alternatively, you can set an override header explicitly:
 
-```js
+<TypeScriptExample>
+
+```ts
 // Replace the version ID with the target version from `wrangler versions list`.
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		const response = await env.MY_SERVICE.fetch("https://example.com/", {
 			headers: {
 				"Cloudflare-Workers-Version-Overrides":
@@ -90,6 +98,8 @@ export default {
 	},
 };
 ```
+
+</TypeScriptExample>
 
 :::note
 Version overrides only apply to `fetch()`-based service binding calls. There is currently no way to specify version overrides when calling a service binding via RPC (`env.MY_SERVICE.someMethod()`), because RPC calls do not support attaching headers.

@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { Example } from "~/components";
+import { Example, TypeScriptExample } from "~/components";
 
 During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each request has a random chance of routing to either version based on the specified percentages. This means the same user can be served content from a different version every time a request is made, which can cause **version skew** issues.
 
@@ -30,7 +30,7 @@ You can set the `Cloudflare-Workers-Version-Key` header both when making an exte
 
 {/* This section can be removed when skew protection launches as that will mean that version affinity is no longer required to support this use case (or could be replaced with a short section linked to the new skew protection page) */}
 
-Version affinity is particularly important when your Worker serves [static assets](/workers/static-assets/) with fingerprinted filenames, which is the default for modern frameworks like React, Vue, Angular, and Svelte.
+Version affinity is particularly important when your Worker serves [static assets](/workers/static-assets/) with content-hashed filenames (like `index-a1b2c3d4.js`), which is the default behavior of most modern build tools and frameworks.
 
 During a gradual rollout, different versions of your application will have different asset filenames:
 
@@ -39,9 +39,9 @@ During a gradual rollout, different versions of your application will have diffe
 
 Without version affinity, a user can receive HTML from version A, but when their browser requests `index-a1b2c3d4.js`, that request may be routed to version B - which does not have that file - resulting in a 404 error and a broken page.
 
-Configuring version affinity using any of the methods described below prevents this entirely by ensuring all requests from the same user are routed to the same version.
+Configuring version affinity using any of the methods in [Choose a version key](#choose-a-version-key) prevents this entirely by ensuring all requests from the same user are routed to the same version.
 
-## Choosing a version key
+## Choose a version key
 
 The right version key depends on what stable identifiers your application has available. You can set the header using a [Transform Rule](/rules/transform/request-header-modification/) on your zone, which extracts values from the request without modifying your application code.
 
@@ -113,17 +113,23 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 **Option 2: Set a long-lived cookie from your Worker.** On the first request (which will be randomly assigned), your Worker generates a stable identifier and sets it as a cookie. All subsequent requests use that cookie as the version key. This gives the best consistency for anonymous users, at the cost of a small amount of application code.
 
-```js
+<TypeScriptExample>
+
+```ts
 export default {
-  async fetch(request, env) {
+  async fetch(request: Request, env: Env): Promise<Response> {
     const response = await handleRequest(request, env);
 
-    // If the request doesn't already have an affinity cookie, set one
-    if (!request.headers.get("Cookie")?.includes("__cf_vk")) {
+    // Set a long-lived cookie to use as a version affinity key.
+    const COOKIE_NAME = "version-key"; // can be any name
+    const cookieHeader = request.headers.get("Cookie") ?? "";
+    const hasAffinityCookie = new RegExp(`(?:^|;\\s*)${COOKIE_NAME}=`).test(cookieHeader);
+
+    if (!hasAffinityCookie) {
       const id = crypto.randomUUID();
       response.headers.append(
         "Set-Cookie",
-        `__cf_vk=${id}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=31536000`,
+        `${COOKIE_NAME}=${id}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=31536000`,
       );
     }
 
@@ -132,6 +138,8 @@ export default {
 };
 ```
 
+</TypeScriptExample>
+
 Then create a Transform Rule to use this cookie as the version key:
 
 <Example>
@@ -139,14 +147,14 @@ Then create a Transform Rule to use this cookie as the version key:
 Text in **Expression Editor**:
 
 ```txt
-http.cookie contains "__cf_vk"
+http.cookie contains "version-key"
 ```
 
 Selected operation under **Modify request header**: _Set dynamic_
 
 **Header name**: `Cloudflare-Workers-Version-Key`
 
-**Value**: `http.request.cookies["__cf_vk"][0]`
+**Value**: `http.request.cookies["version-key"][0]`
 
 </Example>
 

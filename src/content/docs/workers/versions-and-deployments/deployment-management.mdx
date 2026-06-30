@@ -14,7 +14,7 @@ import { DashButton, PackageManagers } from "~/components";
 By default, a new version is created and immediately deployed to 100% of traffic when you use any of the following:
 
 - [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy)
-- [Workers Builds](/workers/ci-cd/builds)
+- [Workers Builds](/workers/ci-cd/builds/)
 - The [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
 
 You can separate these steps so that uploading a version and deploying it are independent actions. This lets you control exactly when a new version goes live.
@@ -32,7 +32,7 @@ Wrangler versions before 3.73.0 require you to specify a `--x-versions` flag.
 :::
 
 :::note
-Changes made to a Worker's triggers ([routes, domains](/workers/configuration/routing/) or [cron triggers](/workers/configuration/cron-triggers/)) need to be applied separately with the command [`wrangler triggers deploy`](/workers/wrangler/commands/workers/#triggers-deploy).
+Changes made to a Worker's triggers ([routes, domains](/workers/configuration/routing/), or [cron triggers](/workers/configuration/cron-triggers/)) need to be applied separately with the command [`wrangler triggers deploy`](/workers/wrangler/commands/workers/#triggers-deploy).
 :::
 
 ### Via the Cloudflare dashboard
