@@ -1,5 +1,4 @@
-// Adapted from cloudflare-docs (src/plugins/rehype/mermaid.ts) — the
-// "pre-mermaid" strategy. A ```mermaid fence reaches hast as
+// A ```mermaid fence reaches hast as
 // `<pre><code class="language-mermaid">…</code></pre>` (mermaid must be in
 // `markdown.syntaxHighlight.excludeLangs`, or shiki tokenises it first) and is
 // replaced with `<pre class="mermaid">…</pre>` for the client to render.
@@ -26,7 +25,7 @@ function mermaidCodeChild(pre: Element): Element | null {
   return found;
 }
 
-export default function rehypeMermaid(): HastPluginDefinition {
+export default function mermaid(): HastPluginDefinition {
   return {
     name: "cf-mermaid",
     element: {

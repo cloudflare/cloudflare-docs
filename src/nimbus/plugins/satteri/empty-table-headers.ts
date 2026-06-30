@@ -6,7 +6,7 @@
 
 import type { HastPluginDefinition } from "./types";
 
-export default function rehypeEmptyTableHeaders(): HastPluginDefinition {
+export default function emptyTableHeaders(): HastPluginDefinition {
   return {
     name: "cf-empty-table-headers",
     element: {

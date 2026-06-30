@@ -9,6 +9,12 @@ let themeObserver: MutationObserver | null = null;
 // Per-<pre> guard: capture source text once, before mermaid replaces innerHTML.
 const captured = new WeakSet<HTMLPreElement>();
 
+function uniqueMermaidId(): string {
+  const random = globalThis.crypto?.randomUUID?.() ??
+    `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  return `mermaid-${random}`;
+}
+
 function getDialog(): HTMLDialogElement {
   if (dialog) return dialog;
 
@@ -99,7 +105,36 @@ function isLightTheme(): boolean {
 function getPageBackground(): string {
   const style = getComputedStyle(document.documentElement);
   const bg = style.getPropertyValue("--nb-background").trim();
-  return bg || (isLightTheme() ? "#ffffff" : "#1d1d1d");
+  if (isMermaidSupportedColor(bg)) return bg;
+  return isLightTheme() ? "#ffffff" : "#1d1d1d";
+}
+
+function getThemeColor(name: string, fallback: string): string {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+  return isMermaidSupportedColor(value) ? value : fallback;
+}
+
+function showRenderError(diagram: HTMLPreElement): void {
+  captureDiagramSource(diagram);
+  diagram.textContent = "Diagram failed to render.";
+  diagram.setAttribute("data-error", "true");
+  diagram.setAttribute("data-processed", "true");
+}
+
+function captureDiagramSource(diagram: HTMLPreElement): void {
+  if (captured.has(diagram)) return;
+  diagram.setAttribute("data-diagram", diagram.textContent as string);
+  captured.add(diagram);
+}
+
+function isMermaidSupportedColor(value: string): boolean {
+  return (
+    /^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(value) ||
+    /^rgba?\(\s*\d+(?:\.\d+)?%?\s*,\s*\d+(?:\.\d+)?%?\s*,\s*\d+(?:\.\d+)?%?(?:\s*,\s*(?:0|1|0?\.\d+|\d+(?:\.\d+)?%))?\s*\)$/i.test(value) ||
+    /^hsla?\(\s*-?\d+(?:\.\d+)?(?:deg|rad|turn)?\s*,\s*\d+(?:\.\d+)?%\s*,\s*\d+(?:\.\d+)?%(?:\s*,\s*(?:0|1|0?\.\d+|\d+(?:\.\d+)?%))?\s*\)$/i.test(value)
+  );
 }
 
 function wrapDiagram(diagram: HTMLPreElement, title: string | null) {
@@ -149,16 +184,27 @@ async function render() {
     document.querySelectorAll<HTMLPreElement>("pre.mermaid");
   if (diagrams.length === 0) return;
 
-  const { default: mermaid } = await import("mermaid");
+  diagrams.forEach(captureDiagramSource);
+
+  let mermaid: typeof import("mermaid").default;
+  try {
+    ({ default: mermaid } = await import("mermaid"));
+  } catch (e) {
+    diagrams.forEach(showRenderError);
+    console.error("Mermaid load failed:", e);
+    return;
+  }
 
   const isLight = isLightTheme();
   const fontFamily = getFontFamily();
   const pageBg = getPageBackground();
+  const accent = getThemeColor("--nb-primary", "#ff4801");
+  const accentBg = isLight ? "#fff1e8" : "#3a1708";
 
   const lightThemeVars = {
     fontFamily,
-    primaryColor: "#fef1e6",
-    primaryBorderColor: "#f6821f",
+    primaryColor: accentBg,
+    primaryBorderColor: accent,
     primaryTextColor: "#1d1d1d",
     secondaryColor: "#f2f2f2",
     secondaryBorderColor: "#999999",
@@ -166,9 +212,9 @@ async function render() {
     tertiaryColor: "#f2f2f2",
     tertiaryBorderColor: "#999999",
     tertiaryTextColor: "#1d1d1d",
-    lineColor: "#f6821f",
+    lineColor: accent,
     textColor: "#1d1d1d",
-    mainBkg: "#fef1e6",
+    mainBkg: accentBg,
     errorBkgColor: "#ffefee",
     errorTextColor: "#3c0501",
     edgeLabelBackground: pageBg,
@@ -177,8 +223,8 @@ async function render() {
 
   const darkThemeVars = {
     fontFamily,
-    primaryColor: "#482303",
-    primaryBorderColor: "#f6821f",
+    primaryColor: accentBg,
+    primaryBorderColor: accent,
     primaryTextColor: "#f2f2f2",
     secondaryColor: "#313131",
     secondaryBorderColor: "#797979",
@@ -186,9 +232,9 @@ async function render() {
     tertiaryColor: "#313131",
     tertiaryBorderColor: "#797979",
     tertiaryTextColor: "#f2f2f2",
-    lineColor: "#f6821f",
+    lineColor: accent,
     textColor: "#f2f2f2",
-    mainBkg: "#482303",
+    mainBkg: accentBg,
     background: "#1d1d1d",
     errorBkgColor: "#3c0501",
     errorTextColor: "#ffefee",
@@ -198,42 +244,41 @@ async function render() {
 
   const themeVariables = isLight ? lightThemeVars : darkThemeVars;
 
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: "base",
-    themeVariables,
-    flowchart: {
-      htmlLabels: true,
-      useMaxWidth: true,
-      curve: "linear",
-    },
-  });
+  try {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "base",
+      themeVariables,
+      flowchart: {
+        htmlLabels: true,
+        useMaxWidth: true,
+        curve: "linear",
+      },
+    });
+  } catch (e) {
+    diagrams.forEach(showRenderError);
+    console.error("Mermaid initialize failed:", e);
+    return;
+  }
 
   for (const diagram of diagrams) {
     try {
-      if (!captured.has(diagram)) {
-        diagram.setAttribute("data-diagram", diagram.textContent as string);
-        captured.add(diagram);
-      }
-
       const def = diagram.getAttribute("data-diagram") as string;
 
-      const { svg } = await mermaid.render(
-        `mermaid-${crypto.randomUUID()}`,
-        def,
-      );
+      const { svg } = await mermaid.render(uniqueMermaidId(), def);
       diagram.innerHTML = svg;
+      diagram.removeAttribute("data-error");
 
       const svgElement = diagram.querySelector("svg");
       const titleElement = svgElement?.querySelector("title");
       const title = titleElement?.textContent?.trim() || null;
 
       wrapDiagram(diagram, title);
+      diagram.setAttribute("data-processed", "true");
     } catch (e) {
+      showRenderError(diagram);
       console.error("Mermaid render failed:", e);
     }
-
-    diagram.setAttribute("data-processed", "true");
   }
 }
 

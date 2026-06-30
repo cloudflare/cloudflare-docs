@@ -1,9 +1,5 @@
-// Adapted from cloudflare-docs (src/plugins/rehype/shift-headings.ts).
-//
 // In changelog entries only, demotes h1–h3 to h4 (inside the `.heading-wrapper`
 // autolink-headings produces) and rewrites the wrapper's `level-h${n}` class.
-// Gated on the source path via `ctx.filename`. Runs last (after
-// autolink-headings).
 
 import type { Element, HastPluginDefinition } from "./types";
 import { classNames, isElement } from "./types";
@@ -11,7 +7,7 @@ import { classNames, isElement } from "./types";
 const CHANGELOG_PATH = "/content/changelog/";
 const HEADING = /^h([1-6])$/;
 
-export default function rehypeShiftHeadings(): HastPluginDefinition {
+export default function shiftHeadings(): HastPluginDefinition {
   return {
     name: "cf-shift-headings",
     element: {
