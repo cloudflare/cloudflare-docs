@@ -261,7 +261,7 @@ If route-based VPNs are not an option and you must use policy-based VPNs, be awa
 ### Downgrade protection (beta)
 
 :::note[Beta]
-This feature is in beta. Contact your account team to enable this feature on your account.
+This feature is in beta. Contact your account team to enable the `ipsec_downgrade_protection` flag on your account.
 :::
 
 IKEv2's original authentication design has each endpoint sign only its own outbound messages, not the full handshake transcript. A quantum-capable man-in-the-middle attacker can exploit this to create a "split view" of the handshake, tricking the endpoints into downgrading a post-quantum connection back to classical cryptography even when both sides support post-quantum key exchange. 
