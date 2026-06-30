@@ -8,12 +8,14 @@ sidebar:
   order: 2
 ---
 
+import { TypeScriptExample } from "~/components";
+
 There are two self-serve ways to see Privacy Pass in action:
 
 - **Get a real token with the debugging tool:** the fastest way to obtain a real, issuer-signed token, using a browser tool and a Cloudflare-provided demo issuer.
 - **See a local example:** run the complete issuance and redemption flow on your own machine in a few minutes, using real Blind RSA cryptography.
 
-To understand the protocol itself, see [Privacy Pass Protocol](/privacy-pass/concepts/privacy-pass-protocol/). When you are ready to validate a real, Cloudflare-operated deployment, see [Production Deployment Testing](/privacy-pass/production-deployment-testing/) and [contact us](https://www.cloudflare.com/lp/privacy-edge/) to begin setting up the necessary infrastructure.
+To understand the protocol itself, refer to [Privacy Pass Protocol](/privacy-pass/concepts/privacy-pass-protocol/). When you are ready to validate a real, Cloudflare-operated deployment, refer to [Production Deployment Testing](/privacy-pass/production-deployment-testing/) and [contact us](https://www.cloudflare.com/lp/privacy-edge/) to begin setting up the necessary infrastructure.
 
 ---
 
@@ -42,7 +44,7 @@ PrivateToken token=...
 `Draft 16 Valid: true` means the issuer returned a real token that verifies against its public key. The `PrivateToken token=...` value is the finalized token a client would send to an Origin in an `Authorization` header.
 
 :::note
-The debugging tool routes its requests through its own backend to work around browser cross-origin (CORS) limits. It needs no attester or client certificate here because the demo issuer is open for testing. Production issuers accept requests only from an authenticated Attester, so they cannot be exercised this way — see [Production Deployment Testing](/privacy-pass/production-deployment-testing/).
+The debugging tool routes its requests through its own backend to work around browser cross-origin (CORS) limits. It needs no attester or client certificate here because the demo issuer is open for testing. Production issuers accept requests only from an authenticated Attester, so they cannot be exercised this way — refer to [Production Deployment Testing](/privacy-pass/production-deployment-testing/).
 :::
 
 ---
@@ -67,11 +69,15 @@ npm ci
 
 The publicly-verifiable example ([`pub_verif.example.ts`](https://github.com/cloudflare/privacypass-ts/blob/main/examples/pub_verif.example.ts)) only exports its functions, so add a small runner that calls just that one. Create `examples/run-pub-verif.ts`:
 
+<TypeScriptExample>
+
 ```ts
-import { publicVerifiableTokensPSS } from './pub_verif.example.js';
+import { publicVerifiableTokensPSS } from "./pub_verif.example.js";
 
 await publicVerifiableTokensPSS();
 ```
+
+</TypeScriptExample>
 
 Compile the examples and run your runner:
 
@@ -93,6 +99,8 @@ Public-Verifiable tokens
 ### How the example maps to the four roles
 
 The example creates an Issuer, a Client, and an Origin in a single process (the Issuer key pair is generated up front in `setup()` with `Issuer.generateKey`), then runs them through the protocol. The code annotations below sit at the point in the flow where each step happens:
+
+<TypeScriptExample>
 
 ```ts
 // +--------+            +--------+         +----------+ +--------+
@@ -117,8 +125,10 @@ const token = await client.finalize(tokRes);                                 // 
 const isValid = await origin.verify(token, issuer.publicKey);                // Origin verifies against the issuer key
 ```
 
+</TypeScriptExample>
+
 :::note
-This demonstrates the protocol and the cryptography. It does **not** reflect a real deployment: in production the roles are operated by separate parties, attestation is real, and the issuer is run by Cloudflare. To validate a real, Cloudflare-operated deployment, see [Production Deployment Testing](/privacy-pass/production-deployment-testing/).
+This demonstrates the protocol and the cryptography. It does **not** reflect a real deployment: in production the roles are operated by separate parties, attestation is real, and the issuer is run by Cloudflare. To validate a real, Cloudflare-operated deployment, refer to [Production Deployment Testing](/privacy-pass/production-deployment-testing/).
 :::
 
 ---
