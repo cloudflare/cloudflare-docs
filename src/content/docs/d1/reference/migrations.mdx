@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Steps } from "~/components";
 
 Database migrations are a way of versioning your database. Each migration is stored as an `.sql` file in your `migrations` folder. The `migrations` folder is created in your project directory when you create your first migration. This enables you to store and track changes throughout database development.
 
@@ -92,11 +92,13 @@ If your D1 database already has tables and you want to start using the migration
 
 This is useful when you work on a team and a new developer needs to set up a local database from scratch, when you use CI/CD that creates fresh test databases, or when you want a complete schema history in your git repository. If you are a solo developer with one database and do not plan to recreate it, you can skip this step.
 
-1. Get your current schema:
+<Steps>
+
+1. Get your current schema, including tables, indexes, and views:
 
 	```sh
 	npx wrangler d1 execute <DATABASE_NAME> --remote \
-		--command="SELECT sql FROM sqlite_master WHERE type='table' AND name NOT LIKE '_cf%' AND name != 'sqlite_sequence'"
+		--command="SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT LIKE '_cf%' AND name != 'sqlite_sequence' AND name != 'd1_migrations'"
 	```
 
 2. Create a baseline migration:
@@ -105,7 +107,7 @@ This is useful when you work on a team and a new developer needs to set up a loc
 	npx wrangler d1 migrations create <DATABASE_NAME> baseline
 	```
 
-3. Paste your existing `CREATE TABLE` statements into the file, adding `IF NOT EXISTS` so the migration is safe to run against the live database that already has these tables:
+3. Copy the output from step 1 into the migration file. Add `IF NOT EXISTS` to each `CREATE TABLE` statement so the migration is safe to run against the live database:
 
 	```sql
 	-- migrations/0001_baseline.sql
@@ -122,6 +124,8 @@ This is useful when you work on a team and a new developer needs to set up a loc
 	npx wrangler d1 migrations apply <DATABASE_NAME> --local
 	npx wrangler d1 migrations apply <DATABASE_NAME> --remote
 	```
+
+</Steps>
 
 The `IF NOT EXISTS` clause prevents the existing tables from being recreated. The migration is recorded in the `d1_migrations` table, establishing a starting point for all future migrations.
 
