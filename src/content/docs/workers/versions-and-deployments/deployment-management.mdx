@@ -75,6 +75,10 @@ You can also create versions and deployments directly with the API, library SDKs
 
 ## Limits
 
+### Deployments limit
+
+You can only create a deployment with the last 100 uploaded versions of your Worker.
+
 ### First upload
 
 You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions-upload) the first time you upload a Worker will fail.
