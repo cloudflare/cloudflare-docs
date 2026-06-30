@@ -38,42 +38,29 @@ AI crawlers and agents interact with your site for very different reasons, and y
 
 ### Behavior-based classification
 
-The most common AI-related behaviors are exposed as presets you can act on directly:
+Cloudflare lets all customers manage three AI-related use cases directly:
 
 | Behavior | What it does | Examples |
 | --- | --- | --- |
-| **Training** | Crawls your content to train or fine-tune a model. Includes multi-purpose crawlers (such as Googlebot, Bingbot, and Applebot) that use crawled data for training. | GPTBot, ClaudeBot, Googlebot (as training) |
-| **Search** | Collects or indexes your content so it can answer questions about it later. Site owners should expect referral traffic or other equitable value in return. There is no longer a separate "AI search" — all search is treated as Search. | OAI-SearchBot, Claude-Search, Bingbot (as search) |
-| **Agent** | Automated activity acting in real time on a person's behalf, such as browser-use agents and chat fetch bots. | ChatGPT-User, Claude-User, browser-use agents |
+| **Search** | Collects or indexes your content so it can answer questions about it later. Site owners should expect referral traffic or other equitable compensation in return. | OAI-SearchBot, Claude-Search |
+| **Agent** | Automated activity acting in real time on a person's behalf to get something done, such as chat fetch bots and browser-use agents. | ChatGPT-User, browser-use agents |
+| **Training** | Crawls your content to train or fine-tune a model, permanently absorbing your data into the model. | GPTBot, ClaudeBot |
 
-Enterprise Bot Management customers can see the full set of behaviors Cloudflare tracks — including Transact, Data Collection, Security Testing, SEO, Ads Verification, Social / Link Preview, Feed Fetching, and Monitoring & Operations — for every tracked bot in the dashboard.
+Cloudflare classifies many other behaviors too — including Transact, Data Collection, Security Testing, SEO, Ads Verification, Social / Link Preview, Feed Fetching, and Monitoring & Operations. Enterprise Bot Management customers can browse the full behavior classification of every tracked bot in [BotBase](/bots/botbase/).
 
-### Default handling
+### Managing AI traffic
 
-For new domains, **Training** and **Agent** are blocked by default **on pages that display ads**, while **Search** is allowed by default. An ad signals that a page is meant for a person to land on and see, so on those pages Cloudflare keeps off the automated traffic that does not send readers back.
+The options to manage **Search**, **Agent**, and **Training** traffic are available to all customers, including on the Free plan. To turn them on, refer to [Block AI Bots](/bots/additional-configurations/block-ai-bots/). To express crawl preferences in your `robots.txt`, refer to the [managed `robots.txt` setting](/bots/additional-configurations/managed-robots-txt/).
 
-### Blocking Training: two options
+### New defaults on September 15, 2026
 
-On July 1, 2026, when you choose to block **Training**, you can pick how strictly to apply it:
+On **September 15, 2026**, Cloudflare will set new defaults for these three classifications. For new domains onboarding to Cloudflare, **Training** and **Agent** will be blocked by default **on pages that display ads**, while **Search** will remain allowed by default. An ad signals that a page is meant for a person to land on and see, so on those pages Cloudflare keeps off the automated traffic that does not send readers back.
 
-- **Block Training (all)**: Blocks every crawler classified as Training, including multi-purpose crawlers that use a single crawler for both model training and search indexing.
-- **Block Training (only if it doesn't affect search)**: Blocks training crawlers, but leaves alone any crawler that does not separate its training crawler from its search crawler. Blocking those would also take down the crawler that builds search indexes and sends you referral traffic, so they remain allowed. This option is technically equivalent to the legacy **Block AI bots** setting.
-
-Cloudflare currently tracks three bots that do **not** separate their crawler — they use one crawler for both search indexing and model training:
-
-- `Googlebot` (Google)
-- `Applebot` (Apple)
-- `Bingbot` (Microsoft)
-
-Because their training and search activity is indistinguishable, these three crawlers are **included in Block Training (all)** but **excluded from Block Training (only if it doesn't affect search)**. Choose **Block Training (all)** to block them as training crawlers, or **Block Training (only if it doesn't affect search)** to keep them for search.
+Also on September 15, multi-purpose crawlers — those that combine **Search** with **Training** — will be blocked according to *all* of their behaviors. Because defaults are enforced by the most restrictive applicable rule, multi-purpose crawlers such as `Googlebot`, `Applebot`, and `Bingbot` will be blocked for customers who block **Training**, whether through the [options to manage AI traffic](/bots/additional-configurations/block-ai-bots/) or the legacy Block AI bots service.
 
 :::note
-Existing configurations are not changed automatically. All customers are notified of the new presets and encouraged to adopt them, and can continue to block or allow individual crawlers with [AI Crawl Control](/ai-crawl-control/).
+Existing configurations are not changed automatically. Before September 15, you can [opt out of the new defaults](https://dash.cloudflare.com/?to=/:account/:zone/security/settings) to confirm that you want no changes to Training crawlers that also crawl for Search. You can block or allow individual crawlers at any time with [AI Crawl Control](/ai-crawl-control/).
 :::
-
-### Blocking AI bots
-
-To turn these controls on, refer to [Block AI Bots](/bots/additional-configurations/block-ai-bots/). To express crawl preferences in your `robots.txt`, refer to the [managed `robots.txt` setting](/bots/additional-configurations/managed-robots-txt/).
 
 ### How it works
 
