@@ -1,0 +1,37 @@
+---
+/**
+ * /ai/models/ — the unified AI model catalog (Cloudflare-hosted + third-party).
+ *
+ * Rendered through DocsLayout: title "Models", TOC off, and the model slice
+ * resolved via `getResolvedModels` → `toModelCardData`. `basePath` defaults to
+ * "/ai/models". The Providers facet appears because this slice mixes hosted
+ * (legacy) + proxied (catalog) models.
+ */
+import { getSidebar } from "nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
+import ModelCatalog from "~/components/models/ModelCatalog.astro";
+import { getResolvedModels, toModelCardData } from "~/util/models";
+
+export const prerender = true;
+
+const models = (await getResolvedModels()).map(toModelCardData);
+
+const sectionSlug = "/ai/models/";
+const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
+---
+
+<DocsLayout
+  title="Models"
+  description="Browse the unified catalog of AI models, including Cloudflare-hosted and third-party provider models."
+  sidebar={sidebar}
+  headings={false}
+  breadcrumbs={breadcrumbs}
+  prevNext={{}}
+  collection="docs"
+  wide
+>
+  <Fragment slot="pagination" />
+  <ModelCatalog models={models} />
+</DocsLayout>

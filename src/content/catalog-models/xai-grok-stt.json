@@ -343,82 +343,122 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"audio_format": {
-					"description": "Format hint for raw/headerless audio. Required for pcm, mulaw, alaw. Omit for container formats (mp3, wav, etc.) \u2014 xAI auto-detects them.",
-					"enum": [
-						"pcm",
-						"mulaw",
-						"alaw"
-					],
-					"type": "string"
-				},
-				"channels": {
-					"description": "Number of audio channels (2\u20138). Required only for multichannel raw audio; auto-detected for container formats.",
-					"maximum": 8,
-					"minimum": 2,
-					"type": "integer"
-				},
-				"diarize": {
-					"description": "When true, enables speaker diarization. Each word in the response includes a `speaker` integer identifying the detected speaker.",
-					"type": "boolean"
-				},
 				"file": {
 					"description": "Audio file as a data URI (data:audio/...;base64,...) or an HTTPS URL the gateway fetches and uploads. Supported container formats: flac, mp3, mp4, m4a, mkv, ogg, opus, wav, aac. Raw formats (pcm, mulaw, alaw) also accepted \u2014 supply audio_format and sample_rate. Gateway-side size limit: 25 MB. Mutually exclusive with `url`.",
 					"type": "string"
 				},
-				"filler_words": {
-					"description": "When true, filler words (uh, um, er) are included in the transcript. Defaults to false \u2014 filler words are removed.",
+				"url": {
+					"description": "HTTPS URL of an audio file for xAI to fetch server-side. Mutually exclusive with `file` and `websocket`. No gateway-side size limit applies.",
+					"type": "string",
+					"format": "uri"
+				},
+				"websocket": {
+					"description": "Enable WebSocket streaming for speech-to-text. When true, establishes a bidirectional WebSocket connection for real-time audio transcription. Mutually exclusive with `file` and `url`.",
 					"type": "boolean"
 				},
-				"format": {
-					"description": "When true, enables Inverse Text Normalization \u2014 spoken numbers and currencies are converted to written form (e.g. \"one hundred dollars\" \u2192 \"$100\"). Requires language to be set.",
-					"type": "boolean"
+				"audio_format": {
+					"description": "Format hint for raw/headerless audio. Required for pcm, mulaw, alaw. Omit for container formats (mp3, wav, etc.) \u2014 xAI auto-detects them.",
+					"type": "string",
+					"enum": [
+						"pcm",
+						"mulaw",
+						"alaw"
+					]
 				},
-				"keyterm": {
-					"description": "Key terms to bias transcription toward (e.g. product names, proper nouns). Each term up to 50 characters, max 100 terms. Sent as repeated form fields: keyterm=Term+One&keyterm=Term+Two.",
-					"items": {
-						"maxLength": 50,
-						"type": "string"
-					},
-					"maxItems": 100,
-					"type": "array"
+				"sample_rate": {
+					"description": "Sample rate in Hz. Required when audio_format is set.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
 				},
 				"language": {
 					"description": "Language code (e.g. \"en\", \"fr\", \"de\"). Used with format=true to enable Inverse Text Normalization. xAI transcribes in any language regardless \u2014 supplying this enables number/currency formatting in the transcript.",
 					"type": "string"
 				},
+				"format": {
+					"description": "When true, enables Inverse Text Normalization \u2014 spoken numbers and currencies are converted to written form (e.g. \"one hundred dollars\" \u2192 \"$100\"). Requires language to be set.",
+					"type": "boolean"
+				},
+				"diarize": {
+					"description": "When true, enables speaker diarization. Each word in the response includes a `speaker` integer identifying the detected speaker.",
+					"type": "boolean"
+				},
+				"filler_words": {
+					"description": "When true, filler words (uh, um, er) are included in the transcript. Defaults to false \u2014 filler words are removed.",
+					"type": "boolean"
+				},
 				"multichannel": {
 					"description": "When true, each audio channel is transcribed independently. Results are returned in the `channels` array. Requires channels \u2265 2.",
 					"type": "boolean"
 				},
-				"sample_rate": {
-					"description": "Sample rate in Hz. Required when audio_format is set.",
-					"maximum": 9007199254740991,
-					"minimum": -9007199254740991,
-					"type": "integer"
+				"channels": {
+					"description": "Number of audio channels (2\u20138). Required only for multichannel raw audio; auto-detected for container formats.",
+					"type": "integer",
+					"minimum": 2,
+					"maximum": 8
 				},
-				"url": {
-					"description": "HTTPS URL of an audio file for xAI to fetch server-side. Mutually exclusive with `file` and `websocket`. No gateway-side size limit applies.",
-					"format": "uri",
-					"type": "string"
-				},
-				"websocket": {
-					"description": "Enable WebSocket streaming for speech-to-text. When true, establishes a bidirectional WebSocket connection for real-time audio transcription. Mutually exclusive with `file` and `url`.",
-					"type": "boolean"
+				"keyterm": {
+					"description": "Key terms to bias transcription toward (e.g. product names, proper nouns). Each term up to 50 characters, max 100 terms. Sent as repeated form fields: keyterm=Term+One&keyterm=Term+Two.",
+					"maxItems": 100,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"maxLength": 50
+					}
 				}
 			},
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
+				"text": {
+					"description": "Full transcript text.",
+					"type": "string"
+				},
+				"language": {
+					"description": "Detected language name (e.g. \"English\", \"French\").",
+					"type": "string"
+				},
+				"duration": {
+					"description": "Audio duration in seconds (2 d.p.).",
+					"type": "number"
+				},
+				"words": {
+					"description": "Word-level segments. Each entry has text, start, end (seconds). Includes speaker integer when diarize=true.",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"text": {
+								"type": "string"
+							},
+							"start": {
+								"type": "number"
+							},
+							"end": {
+								"type": "number"
+							},
+							"speaker": {
+								"type": "number"
+							}
+						},
+						"required": [
+							"text",
+							"start",
+							"end"
+						],
+						"additionalProperties": {}
+					}
+				},
 				"channels": {
 					"description": "Per-channel transcripts when multichannel=true.",
+					"type": "array",
 					"items": {
-						"additionalProperties": {},
+						"type": "object",
 						"properties": {
 							"index": {
 								"type": "number"
@@ -427,17 +467,18 @@
 								"type": "string"
 							},
 							"words": {
+								"type": "array",
 								"items": {
-									"additionalProperties": {},
+									"type": "object",
 									"properties": {
-										"end": {
-											"type": "number"
+										"text": {
+											"type": "string"
 										},
 										"start": {
 											"type": "number"
 										},
-										"text": {
-											"type": "string"
+										"end": {
+											"type": "number"
 										}
 									},
 									"required": [
@@ -445,63 +486,22 @@
 										"start",
 										"end"
 									],
-									"type": "object"
-								},
-								"type": "array"
+									"additionalProperties": {}
+								}
 							}
 						},
 						"required": [
 							"index",
 							"text"
 						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"duration": {
-					"description": "Audio duration in seconds (2 d.p.).",
-					"type": "number"
-				},
-				"language": {
-					"description": "Detected language name (e.g. \"English\", \"French\").",
-					"type": "string"
-				},
-				"text": {
-					"description": "Full transcript text.",
-					"type": "string"
-				},
-				"words": {
-					"description": "Word-level segments. Each entry has text, start, end (seconds). Includes speaker integer when diarize=true.",
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"end": {
-								"type": "number"
-							},
-							"speaker": {
-								"type": "number"
-							},
-							"start": {
-								"type": "number"
-							},
-							"text": {
-								"type": "string"
-							}
-						},
-						"required": [
-							"text",
-							"start",
-							"end"
-						],
-						"type": "object"
-					},
-					"type": "array"
+						"additionalProperties": {}
+					}
 				}
 			},
 			"required": [
 				"text"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

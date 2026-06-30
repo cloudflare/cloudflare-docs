@@ -1,0 +1,26 @@
+---
+{}
+
+---
+```swift
+class MyListener: RtkConnectedMeetingsEventListener {
+    // Triggered when a meeting switch is initiated — use this to show a loading UI
+    func onChangingMeeting(meetingId: String) {
+        print("Switching to breakout room or main meeting with id: \(meetingId)")
+        print("Show a custom UI to indicate that a meeting switch is happening")
+    }
+
+    // Triggered when the meeting switch is complete
+    func onMeetingChanged(error: MeetingError?) {
+        if let error = error {
+            print("Failed to switch meeting: \(error)")
+        } else {
+            print("Switched to breakout room or main meeting successfully")
+        }
+    }
+
+    func onStateUpdate(meetings: [RtkConnectedMeeting], parentMeeting: RtkConnectedMeeting?) {}
+}
+
+meeting.addConnectedMeetingsEventListener(MyListener())
+```

@@ -14,23 +14,27 @@ tags:
 
 import { Example, APIRequest } from "~/components";
 
+This page covers post-quantum cryptography on the TLS connection between Cloudflare's edge and your origin server. Cloudflare supports both [post-quantum key agreement](#post-quantum-key-agreement) (X25519MLKEM768) and [post-quantum signatures](#post-quantum-signatures) (ML-DSA via Authenticated Origin Pulls and Custom Origin Trust Store) on this connection.
+
+If you would prefer to connect your origin to Cloudflare without managing certificates on a publicly exposed TLS endpoint, [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is another option for post-quantum origin connections. Cloudflare Tunnel uses post-quantum key agreement on the TLS connection between `cloudflared` and Cloudflare's network. Post-quantum signatures are not yet used for authentication on that path.
+
+## Post-quantum key agreement
+
 As explained in [About PQC](/ssl/post-quantum-cryptography/), Cloudflare has deployed support for hybrid key agreements, which includes both the most common key agreement for TLS 1.3, X25519, and the post-quantum secure ML-KEM.
 
 With X25519, the [ClientHello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) almost always fits within one network packet. However, with the addition of ML-KEM, the ClientHello is typically split across two packets.
 
 This poses a question of how the origin servers - as well as other middleboxes (routers, load balancers, etc) - will handle this change in behavior. Although allowed by the TLS 1.3 standard ([RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html)), a split ClientHello risks not being handled well due to [protocol ossification](https://en.wikipedia.org/wiki/Protocol_ossification) and implementation bugs. Refer to our [blog post](https://blog.cloudflare.com/post-quantum-to-origins/) for details.
 
-Customers can also configure connections to origin servers via [PQ Cloudflare Tunnel](/ssl/post-quantum-cryptography/pqc-and-zero-trust/).
-
-## ClientHello from Cloudflare
+### ClientHello from Cloudflare
 
 To reduce the risk of any issues when connecting to servers that are not ready for hybrid key agreements, Cloudflare leverages HelloRetryRequest. This means that, instead of sending [X25519MLKEM768](/ssl/post-quantum-cryptography/#hybrid-key-agreement) immediately as a keyshare [^1], Cloudflare will by default only advertise support for it.
 
 If the origin supports post-quantum hybrid key agreement, it can use HelloRetryRequest to request it from Cloudflare.
 
-## Set up
+### Set up
 
-### Cloudflare zone settings
+#### Cloudflare zone settings
 
 The method described above is the one Cloudflare uses to support post-quantum to all outbound connections. However, if your origin server supports PQC and prefers it, you can use the [API](/api/resources/origin_post_quantum_encryption/methods/update/) to adjust your Cloudflare zone settings and avoid the extra round trip.
 
@@ -41,19 +45,20 @@ This setting affects all outbound connections from the zone you specify in the A
 :::
 
 <APIRequest
-  path="/zones/{zone_id}/cache/origin_post_quantum_encryption"
-  method="PUT"
-  json={{
-		"value": "<YOUR_CHOSEN_SETTING>"
+	path="/zones/{zone_id}/cache/origin_post_quantum_encryption"
+	method="PUT"
+	json={{
+		value: "<YOUR_CHOSEN_SETTING>",
 	}}
 />
 
 The possible values are:
+
 - `supported` (most compatible): Advertise support for post-quantum key agreement, but send a classical keyshare in the first ClientHello.
 - `preferred` (most performant): Send a post-quantum keyshare in the first ClientHello. Cloudflare continues to advertise support for classical keyshares as well.
 - `off`: Do not send nor advertise support for post-quantum key agreement to the origin.
 
-### Origin server
+#### Origin server
 
 To make sure that your origin server prefers the post-quantum key agreement, use the `bssl` tool of [BoringSSL](https://github.com/google/boringssl):
 
@@ -65,5 +70,118 @@ $ bssl client -connect (your server):443 -curves X25519MLKEM768
 Verify that the `ECDHE curve` in the handshake output indicates `X25519MLKEM768`.
 
 </Example>
+
+## Post-quantum signatures
+
+Since mid-2026, Cloudflare supports [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final) post-quantum signatures in two origin-facing features:
+
+- [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) (AOP) — Cloudflare presents an ML-DSA client certificate during the mTLS handshake to the origin.
+- [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) (COTS) — Cloudflare trusts an ML-DSA certificate authority when validating the origin server certificate under [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-strict/).
+
+Both can be used independently or together. Using them together lets you establish end-to-end post-quantum authentication between Cloudflare's edge and your origin server, in addition to [post-quantum key agreement](#post-quantum-key-agreement).
+
+### Requirements
+
+- A TLS library on your origin that supports ML-DSA — for example, [OpenSSL](https://www.openssl.org/) 3.5.0 or later. Refer to [PQC support](/ssl/post-quantum-cryptography/pqc-support/) for additional options.
+- [OpenSSL](https://www.openssl.org/) 3.5.0 or later on your workstation to generate certificates.
+- An origin server that negotiates TLS 1.3. ML-DSA signatures are not available in TLS 1.2 or earlier.
+
+:::note
+ML-DSA private keys must be provided in the [seed-only encoding](https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/) when uploaded to Cloudflare. The expanded-key encoding is currently rejected by the upload endpoints.
+:::
+
+### Generate an ML-DSA certificate authority and leaf certificate
+
+The following commands create a private certificate authority and a leaf certificate that chains to it, using ML-DSA-44. Repeat once for an AOP client certificate, and once for a COTS server-facing certificate if you manage that side too.
+
+```bash
+# Private ML-DSA-44 CA (30-year validity)
+openssl genpkey \
+  -algorithm mldsa44 \
+  -provparam ml-dsa.output_formats=seed-only \
+  -out ca.key
+openssl req -new -x509 \
+  -key ca.key \
+  -out ca.crt \
+  -days 10950 \
+  -subj "/CN=ML-DSA Origin CA"
+
+# Leaf certificate signed by the CA (15-year validity)
+openssl genpkey \
+  -algorithm mldsa44 \
+  -provparam ml-dsa.output_formats=seed-only \
+  -out leaf.key
+openssl req -new \
+  -key leaf.key \
+  -out leaf.csr \
+  -subj "/CN=origin.example.com"
+openssl x509 -req \
+  -in leaf.csr \
+  -CA ca.crt -CAkey ca.key \
+  -CAcreateserial \
+  -out leaf.crt \
+  -days 5475 \
+  -extfile <(printf "basicConstraints=CA:FALSE\nkeyUsage=digitalSignature\nsubjectAltName=DNS:origin.example.com\n")
+```
+
+The `-provparam ml-dsa.output_formats=seed-only` flag is required so that the private key is written in the FIPS 204 seed form rather than as the expanded private key. This is the only form Cloudflare currently accepts on upload.
+
+Verify the generated cert:
+
+```bash
+openssl x509 -in leaf.crt -noout -subject -issuer -dates -ext subjectAltName
+```
+
+### Set up Authenticated Origin Pulls with an ML-DSA client certificate
+
+ML-DSA client certificates are supported with both [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP. Generate an ML-DSA CA and leaf cert as described in [Generate an ML-DSA certificate authority and leaf certificate](#generate-an-ml-dsa-certificate-authority-and-leaf-certificate), then follow the setup guide for the scope you are configuring. The [global AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/) scope uses a Cloudflare-provided certificate and is not configurable.
+
+On the origin server side, install the ML-DSA CA certificate (the `ca.crt` file generated earlier) so that your TLS server can verify the client certificate that Cloudflare presents. For nginx, this looks like:
+
+```txt
+ssl_client_certificate /etc/ssl/cloudflare-aop-ca.crt;
+ssl_verify_client      on;
+```
+
+Refer to the [AOP setup guide for origin servers](/ssl/origin-configuration/authenticated-origin-pull/set-up/) for complete origin-side configuration.
+
+### Set up Custom Origin Trust Store with an ML-DSA CA
+
+Upload the ML-DSA CA certificate (the `ca.crt` file generated earlier) as a [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) entry. Cloudflare will then trust any origin server certificate that chains to that CA under [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-strict/).
+
+:::caution
+Uploading a Custom Origin Trust Store CA replaces the default publicly trusted CAs for the zone. Cloudflare will no longer trust origin certificates signed by public CAs on that zone while the COTS entry is in place. Refer to [Custom Origin Trust Store — Limitations](/ssl/origin-configuration/custom-origin-trust-store/#limitations) for details.
+:::
+
+On the origin server side, present the ML-DSA leaf certificate and its private key as the TLS server cert:
+
+```txt
+ssl_certificate     /etc/ssl/origin-mldsa.pem;
+ssl_certificate_key /etc/ssl/origin-mldsa.key;
+ssl_protocols       TLSv1.3;
+```
+
+### Verify end-to-end
+
+Once AOP and COTS are configured, you can verify the post-quantum origin handshake from a host that has ML-DSA support. For example, from a machine with OpenSSL 3.5.0 or later, connect directly to your origin and confirm the handshake uses ML-DSA:
+
+```bash
+openssl s_client \
+  -connect origin.example.com:443 \
+  -servername origin.example.com \
+  -CAfile ca.crt \
+  -cert leaf.crt \
+  -key leaf.key \
+  -brief
+```
+
+The output should show `Signature type: mldsa44` and `Negotiated TLS1.3 group: X25519MLKEM768`.
+
+### Avoid downgrades
+
+Presenting an ML-DSA certificate on the authenticating side is not enough on its own. To actually gain post-quantum authentication, the _verifying_ side must reject classical (non-post-quantum) certificates. If the verifier still accepts a classical certificate, an attacker who compromises that classical key can impersonate the peer with an [on-path attack](https://www.cloudflare.com/learning/security/threats/on-path-attack/) — a downgrade that negates the post-quantum protection.
+
+- **Custom Origin Trust Store (COTS):** Upload only ML-DSA certificate authorities. If you leave classical CAs in the trust store alongside the ML-DSA CA, Cloudflare will still accept an origin certificate that chains to a classical CA, leaving the connection open to downgrade. Uploading a COTS CA already replaces the default publicly trusted CAs for the zone (see the caution above), so make sure every CA you upload is post-quantum.
+- **Authenticated Origin Pulls (AOP):** Configure your origin server to require the ML-DSA client certificate and to reject classical client certificates. Cloudflare presenting an ML-DSA certificate only helps if the origin refuses to authenticate connections that use a classical certificate.
 
 [^1]: When, to remove a round trip, a client makes a guess of what the server supports.

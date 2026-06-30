@@ -1,0 +1,101 @@
+import { z } from "astro/zod";
+import { reference, type SchemaContext } from "astro:content";
+
+import { sidebar } from "./types/sidebar";
+
+export const baseSchema = (_context: SchemaContext) =>
+	z.object({
+		pcx_content_type: z
+			.string()
+			.optional()
+			.describe(
+				"The purpose of the page, and defined through specific pages in [Content strategy](/style-guide/documentation-content-strategy/content-types/).",
+			),
+		tags: z
+			.string()
+			.array()
+			.optional()
+			.describe(
+				"A group of related keywords relating to the purpose of the page.",
+			),
+		external_link: z
+			.string()
+			.optional()
+			.describe(
+				"Path to another page in our docs or elsewhere. Used to add a crosslink entry to the lefthand navigation sidebar.",
+			),
+		difficulty: z
+			.string()
+			.optional()
+			.describe(
+				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).",
+			),
+		reviewed: z
+			.date()
+			.optional()
+			.describe(
+				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end.",
+			),
+		release_notes_file_name: z
+			.string()
+			.array()
+			.optional()
+			.describe(
+				"Required for the [`ProductReleaseNotes`](/style-guide/components/usage/#productreleasenotes) component.",
+			),
+		products: z
+			.array(reference("directory"))
+			.default([])
+			.describe(
+				"The names of related directory entries (according to their file name in `src/content/directory`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
+			),
+		summary: z
+			.string()
+			.optional()
+			.describe("Renders a summary description directly below the page title."),
+		noindex: z
+			.boolean()
+			.optional()
+			.describe(
+				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/).",
+			),
+		sidebar,
+		hideChildren: z
+			.boolean()
+			.optional()
+			.describe(
+				"Renders this group as a single link on the sidebar, to the index page. Refer to [Sidebar](https://developers.cloudflare.com/style-guide/frontmatter/sidebar/).",
+			),
+		styleGuide: z
+			.object({
+				component: z.string(),
+			})
+			.optional()
+			.describe(
+				"Used by overrides for style guide component documentation, which helps us display the [usage counts](/style-guide/components/usage/) for components directly on the component page itself.",
+			),
+		banner: z
+			.object({
+				content: z.string(),
+				type: z
+					.enum(["default", "note", "tip", "caution", "danger"])
+					.optional()
+					.default("default"),
+			})
+			.optional()
+			.describe(
+				"Displays a [Banner](https://developers.cloudflare.com/style-guide/frontmatter/banner/) on the current docs page.",
+			),
+		feedback: z
+			.boolean()
+			.default(true)
+			.describe(
+				"Whether to show the FeedbackPrompt on the page, defaults to true",
+			),
+		canonical: z
+			.string()
+			.optional()
+			.describe(
+				'A canonical URL or path to set as the `<link rel="canonical">` in the page `<head>`, overriding the default derived from the page URL.',
+			),
+	});

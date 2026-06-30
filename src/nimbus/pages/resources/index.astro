@@ -1,0 +1,66 @@
+---
+/**
+ * /resources — filterable catalog aggregating docs + videos + learning-paths.
+ *
+ *
+ * NOTE (Phase A): learning-path cards link to `${path}/` →
+ * `/learning-paths/<module>/`, which 404s until Phase B copies the content
+ * pages. Documented, expected.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Header from "~/components/Header.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import ResourcesBySelector from "~/components/cf/ResourcesBySelector.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Resources"
+  description="Explore tutorials, videos, reference architectures, and learning paths for every Cloudflare product."
+>
+  <div class="flex min-h-screen flex-col">
+    <Header showSidebar={false} />
+    <main id="main-content" transition:name="nb-content" class="flex-1">
+      <div class="relative">
+        <BackgroundLines inner={1120} outer={1360} />
+        <div
+          class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
+        >
+        <header class="mx-auto max-w-2xl text-center">
+          <h1
+            class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+          >
+            Resources
+          </h1>
+          <p
+            class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
+          >
+            Tutorials, videos, reference architectures, and learning paths for
+            building on Cloudflare.
+          </p>
+        </header>
+
+        <div class="mt-12 pt-10">
+          <ResourcesBySelector
+            directory=""
+            types={[
+              "tutorial",
+              "video",
+              "reference-architecture",
+              "reference-architecture-diagram",
+              "implementation-guide",
+              "design-guide",
+              "learning-path",
+              "solution-guide",
+            ]}
+            filterables={["pcx_content_type", "products"]}
+            filterPlacement="left"
+            columns={1}
+          />
+        </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>

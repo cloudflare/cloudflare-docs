@@ -1,0 +1,23 @@
+---
+/**
+ * Splash layout — full-width landing shell with no sidebar, for the custom
+ * `src/pages` routes that CF rendered via Starlight's `template: "splash"`
+ * (agent-setup, glossary, plans, sponsorships, videos, …). Pages supply their
+ * own inner container/width; this just provides the BaseLayout + sidebar-less
+ * Header + main shell.
+ */
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import type { BasePageProps } from "nimbus-docs/types";
+
+type Props = BasePageProps;
+---
+
+<BaseLayout {...Astro.props}>
+  <div class="flex min-h-screen flex-col">
+    <Header showSidebar={false} />
+    <main id="main-content" transition:name="nb-content" class="flex-1">
+      <slot />
+    </main>
+  </div>
+</BaseLayout>

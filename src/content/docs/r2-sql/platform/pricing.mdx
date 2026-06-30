@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pricing
-description: R2 SQL pricing based on data scanned, with free tier details and billing examples.
+description: R2 SQL pricing based on data scanned, with included usage details and billing examples.
 sidebar:
   order: 1
 head:
@@ -21,10 +21,10 @@ All included usage is on a monthly basis.
 
 ## R2 SQL pricing
 
-|                | Free plan       | Paid plan                 |
-| -------------- | --------------- | ------------------------- |
-| Included       | 1 GB / month    | 10 GB / month             |
-| Data scanned   | N/A             | $0.0025 / GB ($2.50 / TB) |
+|              | Pricing                   |
+| ------------ | ------------------------- |
+| Included     | 10 GB / month             |
+| Data scanned | $0.0025 / GB ($2.50 / TB) |
 
 ### What counts as data scanned
 
@@ -40,23 +40,23 @@ Data scanned is the compressed bytes read from R2 object storage to answer your 
 
 A user stores 500 GB of Parquet data in R2 Data Catalog and runs queries that scan a total of 50 GB of compressed data during the month.
 
-| Dimension                   | Usage              | Included    | Billable           | Cost        |
-| --------------------------- | ------------------ | ----------- | ------------------ | ----------- |
-| R2 storage                  | 500 GB-month       | 10 GB-month | 490 GB-month       | $7.35       |
-| R2 SQL (data scanned)       | 50 GB              | 10 GB       | 40 GB              | $0.10       |
-| **Total**                   |                    |             |                    | **$7.45**   |
+| Dimension             | Usage        | Included    | Billable     | Cost      |
+| --------------------- | ------------ | ----------- | ------------ | --------- |
+| R2 storage            | 500 GB-month | 10 GB-month | 490 GB-month | $7.35     |
+| R2 SQL (data scanned) | 50 GB        | 10 GB       | 40 GB        | $0.10     |
+| **Total**             |              |             |              | **$7.45** |
 
 ### Example 2: Heavy query workload on 10 TB dataset
 
 A data team stores 10 TB of compressed Parquet/Iceberg data and scans 50 TB of data per month across their queries. The team also makes 2 million catalog operations with compaction processing 500 GB.
 
-| Dimension                         | Usage              | Included         | Billable            | Cost          |
-| --------------------------------- | ------------------ | ---------------- | ------------------- | ------------- |
-| R2 storage                        | 10,000 GB-month    | 10 GB-month      | 9,990 GB-month      | $149.85       |
-| R2 SQL (data scanned)             | 50,000 GB          | 10 GB            | 49,990 GB           | $124.98       |
-| R2 Data Catalog operations        | 2,000,000          | 1,000,000        | 1,000,000           | $9.00         |
-| R2 Data Catalog compaction (data) | 500 GB             | 10 GB            | 490 GB              | $2.45         |
-| **Total**                         |                    |                  |                     | **$286.28**   |
+| Dimension                         | Usage           | Included    | Billable       | Cost        |
+| --------------------------------- | --------------- | ----------- | -------------- | ----------- |
+| R2 storage                        | 10,000 GB-month | 10 GB-month | 9,990 GB-month | $149.85     |
+| R2 SQL (data scanned)             | 50,000 GB       | 10 GB       | 49,990 GB      | $124.98     |
+| R2 Data Catalog operations        | 2,000,000       | 1,000,000   | 1,000,000      | $9.00       |
+| R2 Data Catalog compaction (data) | 500 GB          | 10 GB       | 490 GB         | $2.45       |
+| **Total**                         |                 |             |                | **$286.28** |
 
 ## Frequently asked questions
 

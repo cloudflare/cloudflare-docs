@@ -1,0 +1,142 @@
+---
+title: Troubleshooting
+pcx_content_type: troubleshooting
+sidebar:
+  order: 8
+
+description: Troubleshoot common issues with Version Management, including enablement problems, clone failures, and known limitations.
+products:
+  - version-management
+---
+
+import { Details } from "~/components"
+
+Use this page to resolve common issues with Version Management. If the steps below do not solve your problem, [contact Cloudflare Support](/support/contacting-cloudflare-support/) and include the details listed in [Information for Support](#information-for-support).
+
+## Version Management is greyed out or unavailable
+
+If the Version Management option appears greyed out or is not visible in the Cloudflare dashboard, verify that all [requirements](/version-management/#requirements) are met.
+
+Common causes:
+
+- **Your zone is not on an Enterprise plan.** Version Management is only available for Enterprise zones.
+- **Your zone is not in an active state.** Verify that your zone's [domain status](/dns/zone-setups/reference/domain-status/) is **Active**.
+- **WAF migration is incomplete.** Your zone must use [WAF managed rules](/waf/managed-rules/) and [custom rules](/waf/custom-rules/) instead of the deprecated Firewall Rules. If your zone still uses the legacy WAF, contact your account team to complete the migration.
+- **Your user account does not have the required role.** You need a [Super Administrator or Administrator role](/fundamentals/manage-members/roles/) to enable Version Management. Zone Versioning roles cannot create new versions.
+- **Your user account does not have an API key.** You must have an API key provisioned. Refer to [view your Global API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for more information.
+- **API Access is disabled for your user account.** Refer to [control API Access](/fundamentals/api/how-to/control-api-access/) for more information.
+
+If all requirements are met and Version Management is still unavailable, contact your account team.
+
+## Failed to create or clone a version
+
+Version creation (cloning) can fail for several reasons. When you clone a version, Cloudflare copies the zone configuration from the source version to a new version. If any part of this process encounters an error, the clone will fail.
+
+### Common causes
+
+<Details header="Unsupported or partially supported product configurations">
+
+Certain products and features are not fully compatible with Version Management. If the source version contains configurations for unsupported products, the clone may fail or produce incomplete results. Refer to [Limitations](/version-management/#limitations) for the full list.
+
+Notable examples:
+
+- **API Shield** — Some API Shield configurations are not cloned. You may need to reconfigure API Shield settings manually after creating a new version.
+- **Image Transformations** — Changes to Image Transformations are not carried over to new versions.
+- **WAF Attack Score** — WAF Attack Score configurations are not cloned.
+- **Network Error Logging** — NEL configurations are not copied to new versions.
+
+</Details>
+
+<Details header="Invalid or conflicting configuration in the source version">
+
+If the source version contains rules or settings that are invalid or conflict with each other, the clone operation may fail. Review the configuration in the source version and correct any errors before retrying.
+
+</Details>
+
+<Details header="Version creation is stuck">
+
+If version creation appears stuck (the status does not change for an extended period), wait a few minutes and refresh the dashboard. If the issue persists, contact Cloudflare Support with the details listed in [Information for Support](#information-for-support).
+
+</Details>
+
+### What to do
+
+1. Check the [Limitations](/version-management/#limitations) section to confirm the source version does not rely on unsupported configurations.
+2. Review the configuration in the source version for invalid or conflicting rules.
+3. Retry the clone operation.
+4. If the issue persists, contact Cloudflare Support.
+
+## Rules or settings appear missing for some users
+
+When Version Management is enabled, each version has its own independent set of rules and configurations. If a rule or setting appears to be missing, you or another user may be viewing a different version than the one where the rule was created.
+
+For example, a cache rule created in one version will not appear when viewing another version. The rule may still be active and affecting traffic if its version is promoted to an active environment, but it will not be visible in the dashboard when a different version is selected.
+
+To resolve this:
+
+1. In the Cloudflare dashboard, go to **Version Management**.
+2. Check which version you are currently viewing.
+3. Switch to the version where the rule was created.
+4. If you need the rule in a different version, recreate it in that version or [clone the version](/version-management/how-to/versions/#create-version) that contains the rule.
+
+:::note
+
+This also applies to other versioned configurations such as WAF rules, Page Rules, and redirect rules. Refer to [Available configurations](/version-management/reference/available-configurations/) for the full list of settings that are versioned.
+
+:::
+
+## Worker routes disappear or behave unexpectedly
+
+If a version has a Worker route, the route might disappear when a Worker is deployed using [Wrangler](/workers/wrangler/). Additionally, if two versions have the same custom domains, the Worker might randomly choose between them.
+
+To avoid this:
+
+- Deploy Workers using Wrangler before creating new versions that reference the same routes.
+- Avoid configuring the same custom domains across multiple versions.
+
+## API and Terraform are not supported
+
+Version Management does not currently expose a public API. You can only manage versions through the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+[Terraform](/terraform/) is also not supported. If you currently use Terraform to manage your zone configuration, you should choose either Terraform or Version Management — using both simultaneously is not supported.
+
+If you receive a `10001` authentication error when attempting to access Version Management endpoints through the API, this is expected behavior. There is no public API available at this time.
+
+## Analytics discrepancies
+
+When Version Management is enabled, analytics data in the Cloudflare dashboard may not reflect traffic splits across environments as expected. Analytics are reported at the zone level and may not break down by individual version or environment.
+
+If you notice data discrepancies in your analytics dashboard after enabling Version Management, verify that you are viewing zone-level analytics rather than expecting per-version breakdowns.
+
+## Permissions and read-only versions
+
+<Details header="Domain-scoped roles do not copy to new versions">
+
+[Domain-scoped roles](/fundamentals/manage-members/roles/#domain-scoped-roles) apply only to your root zone. When a new version is created, these roles are not copied, and users with domain-scoped roles lose access to the new version.
+
+To resolve this, reassign the necessary roles after creating a new version, or use account-level roles instead.
+
+</Details>
+
+<Details header="Version appears as read-only">
+
+A version may appear as read-only if:
+
+- It is currently promoted to a [read-only environment](/version-management/reference/read-only-environments/).
+- Your user account does not have the required permissions to edit versions.
+
+Verify your user role and check whether the version is deployed to a read-only environment.
+
+</Details>
+
+## Information for Support
+
+When contacting Cloudflare Support about a Version Management issue, include the following details:
+
+- **Account ID** and **Zone ID** (found in the Cloudflare dashboard under **Overview**).
+- **Zone name** (your domain).
+- The **version number** you were working with when the issue occurred.
+- The **action you were attempting** (for example, creating a version, cloning, promoting, or comparing).
+- The **exact error message** displayed, if any.
+- The **approximate timestamp** (including timezone) of when the issue occurred.
+- **Screenshots** of the error, if available.

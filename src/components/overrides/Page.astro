@@ -74,10 +74,6 @@ if (data.description) {
 } else {
 	data.description = await generateDescription({ html });
 }
-
-if (data.reviewed) {
-	data.lastUpdated = undefined;
-}
 ---
 
 <Default set:html={html} />

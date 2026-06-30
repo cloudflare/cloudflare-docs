@@ -1,0 +1,34 @@
+---
+// D1 pilot: shared placeholder for CF-domain components that haven't
+// been ported into the Nimbus starter yet. The real implementations
+// live in `cloudflare/cloudflare-docs/src/components/` and weren't
+// copied across as part of the content move (per the pilot plan:
+// stand up the build first, port components on demand).
+//
+// Behaviour:
+//   - Accepts any props (forwarded onto the wrapper element as
+//     `data-*` attributes, so authors can see what was passed).
+//   - Renders children, so prose inside `<Foo>...</Foo>` survives.
+//   - Visually obvious (yellow bar + label) so unported components
+//     stand out at a glance during the pilot.
+//
+// Once a real implementation lands in `src/components/`, drop the
+// stub re-export in `src/components.ts` and import the real one.
+
+interface Props {
+  name?: string;
+  [key: string]: unknown;
+}
+
+const { name = "Stub" } = Astro.props;
+---
+
+<div
+  data-cf-stub={name}
+  style="border-left: 3px solid #f5b400; background: #fff8e1; color: #5c4a00; padding: 0.5rem 0.75rem; margin: 0.5rem 0; font-family: ui-monospace, monospace; font-size: 0.85em;"
+>
+  <strong>[{name}]</strong> WIP: importing requires a bit of work
+  <div style="margin-top: 0.5rem; font-family: inherit; font-size: inherit;">
+    <slot />
+  </div>
+</div>

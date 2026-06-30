@@ -1,0 +1,851 @@
+{
+	"model_id": "google/gemini-3.5-flash",
+	"provider_id": "google",
+	"name": "Gemini 3.5 Flash",
+	"description": "Gemini 3.5 Flash is Google's fast multimodal model with frontier intelligence, superior search, and grounding capabilities.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Fast",
+		"Multimodal",
+		"Reasoning"
+	],
+	"context_length": 1048576,
+	"max_output_tokens": 65536,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic generateContent request",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "What are the three laws of thermodynamics?"
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "While there are actually **four** fundamental laws of thermodynamics, they are numbered from Zero to Three. \n\nHere are the **Three Laws of Thermodynamics** (traditionally numbered 1, 2, and 3), followed by the \"Zeroth\" law which was added later.\n\n---\n\n### 1. The First Law: The Law of Conservation of Energy\nThis law states that **energy cannot be created or destroyed; it can only change forms.** The total amount of energy in an isolated system remains constant.\n\n*   **In simple terms:** You cannot get energy from nothing. If a system does work or releases heat, it must lose an equivalent amount of internal energy.\n*   **Example:** A car engine converts the chemical energy of gasoline into mechanical energy (movement) and thermal energy (heat). No energy is lost; it just changes form.\n\n### 2. The Second Law: The Law of Entropy\nThis law states that **the total entropy (a measure of disorder or randomness) of an isolated system will always increase over time.** It also establishes that heat flows naturally from hotter objects to colder objects, never the reverse.\n\n*   **In simple terms:** Things naturally progress from order to disorder. Natural processes are irreversible.\n*   **Example:** If you drop a hot cup of coffee, the heat disperses into the cooler room. The room gets slightly warmer, but that heat will never spontaneously concentrate back into the coffee cup to make it hot again.\n\n### 3. The Third Law: The Law of Absolute Zero\nThis law states that **as the temperature of a system approaches absolute zero (0 Kelvin, or -273.15\u00b0C / -459.67\u00b0F), the entropy of the system approaches a constant minimum.** For a perfect crystal, entropy becomes exactly zero at absolute zero.\n\n*   **In simple terms:** It is impossible to cool any system down to absolute zero in a finite number of steps, because as you get closer, it becomes infinitely harder to remove the remaining heat. At absolute zero, all molecular motion stops.\n*   **Example:** Scientists can get objects incredibly close to absolute zero (within billionths of a degree), but they can never reach absolute zero because some heat will always leak back in.\n\n---\n\n### *The \"Bonus\" Law: The Zeroth Law (Thermal Equilibrium)*\nScientists realized *after* the First and Second laws were established that a more fundamental law was needed to define temperature. Rather than renumbering the existing laws, they called it the **Zeroth Law**.\n\n*   **What it states:** If System A is in thermal equilibrium with System B, and System B is in thermal equilibrium with System C, then System A is in thermal equilibrium with System C.\n*   **In simple terms:** This is the law that makes thermometers work. If two objects are the same temperature as a third object, they are the same temperature as each other.\n\n---\n\n### The Famous \"Humorous\" Summary\nPhysicists often summarize the laws of thermodynamics as a game you cannot win:\n*   **First Law:** You can't win. (You can't get more energy out than you put in).\n*   **Second Law:** You can't break even. (You can't even get back all the energy you put in; some is always wasted as heat/entropy).\n*   **Third Law:** You can't get out of the game. (You can't reach absolute zero to stop the process entirely)."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "While there are actually **four** fundamental laws of thermodynamics, they are numbered from Zero to Three. \n\nHere are the **Three Laws of Thermodynamics** (traditionally numbered 1, 2, and 3), followed by the \"Zeroth\" law which was added later.\n\n---\n\n### 1. The First Law: The Law of Conservation of Energy\nThis law states that **energy cannot be created or destroyed; it can only change forms.** The total amount of energy in an isolated system remains constant.\n\n*   **In simple terms:** You cannot get energy from nothing. If a system does work or releases heat, it must lose an equivalent amount of internal energy.\n*   **Example:** A car engine converts the chemical energy of gasoline into mechanical energy (movement) and thermal energy (heat). No energy is lost; it just changes form.\n\n### 2. The Second Law: The Law of Entropy\nThis law states that **the total entropy (a measure of disorder or randomness) of an isolated system will always increase over time.** It also establishes that heat flows naturally from hotter objects to colder objects, never the reverse.\n\n*   **In simple terms:** Things naturally progress from order to disorder. Natural processes are irreversible.\n*   **Example:** If you drop a hot cup of coffee, the heat disperses into the cooler room. The room gets slightly warmer, but that heat will never spontaneously concentrate back into the coffee cup to make it hot again.\n\n### 3. The Third Law: The Law of Absolute Zero\nThis law states that **as the temperature of a system approaches absolute zero (0 Kelvin, or -273.15\u00b0C / -459.67\u00b0F), the entropy of the system approaches a constant minimum.** For a perfect crystal, entropy becomes exactly zero at absolute zero.\n\n*   **In simple terms:** It is impossible to cool any system down to absolute zero in a finite number of steps, because as you get closer, it becomes infinitely harder to remove the remaining heat. At absolute zero, all molecular motion stops.\n*   **Example:** Scientists can get objects incredibly close to absolute zero (within billionths of a degree), but they can never reach absolute zero because some heat will always leak back in.\n\n---\n\n### *The \"Bonus\" Law: The Zeroth Law (Thermal Equilibrium)*\nScientists realized *after* the First and Second laws were established that a more fundamental law was needed to define temperature. Rather than renumbering the existing laws, they called it the **Zeroth Law**.\n\n*   **What it states:** If System A is in thermal equilibrium with System B, and System B is in thermal equilibrium with System C, then System A is in thermal equilibrium with System C.\n*   **In simple terms:** This is the law that makes thermometers work. If two objects are the same temperature as a third object, they are the same temperature as each other.\n\n---\n\n### The Famous \"Humorous\" Summary\nPhysicists often summarize the laws of thermodynamics as a game you cannot win:\n*   **First Law:** You can't win. (You can't get more energy out than you put in).\n*   **Second Law:** You can't break even. (You can't even get back all the energy you put in; some is always wasted as heat/entropy).\n*   **Third Law:** You can't get out of the game. (You can't reach absolute zero to stop the process entirely).",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 8,
+					"candidatesTokenCount": 735,
+					"totalTokenCount": 1719,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 8
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 735
+						}
+					],
+					"thoughtsTokenCount": 976
+				},
+				"modelVersion": "gemini-3.5-flash",
+				"createTime": "2026-06-08T20:34:13.120988Z",
+				"responseId": "RScnapyxB-axodAP9r69oQ0",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash',\n  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the three laws of thermodynamics?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Instruction",
+			"description": "Using a system instruction to set context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "How do I read a JSON file in Python?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"temperature": 0.3
+				},
+				"systemInstruction": {
+					"parts": [
+						{
+							"text": "You are a helpful coding assistant specializing in Python."
+						}
+					]
+				}
+			},
+			"output": {
+				"text": "To read a JSON file in Python, you should use the built-in `json` module. \n\nHere is the standard and most secure way to do it using a `with` statement (which ensures the file is properly closed after reading):\n\n### The Standard Method\n\n```python\nimport json\n\n# Open the JSON file and load its contents\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary (or list, depending on your JSON structure)\nprint(data)\n```\n\n### How it works:\n1. **`import json`**: Imports Python's built-in JSON library.\n2. **`with open(...)`**: Opens the file. \n   * `\"r\"` means open in **read** mode.\n   * `encoding='utf-8'` is highly recommended to prevent errors with special characters (like emojis or accented letters).\n3. **`json.load(file)`**: Reads the file and converts the JSON data into a Python dictionary or list.\n\n---\n\n### Other Common Scenarios\n\n#### 1. Reading a JSON String (not a file)\nIf you already have the JSON data as a string in your code, use `json.loads()` (the \"s\" stands for **string**):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\n\n# Parse the string\ndata = json.loads(json_string)\nprint(data[\"name\"])  # Output: Alice\n```\n\n#### 2. Reading JSON with Pandas (for Data Science)\nIf you are doing data analysis and want to load the JSON directly into a DataFrame, you can use the `pandas` library:\n\n```python\nimport pandas as pd\n\n# Load JSON into a DataFrame\ndf = pd.read_json(\"data.json\")\nprint(df.head())\n```"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "To read a JSON file in Python, you should use the built-in `json` module. \n\nHere is the standard and most secure way to do it using a `with` statement (which ensures the file is properly closed after reading):\n\n### The Standard Method\n\n```python\nimport json\n\n# Open the JSON file and load its contents\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary (or list, depending on your JSON structure)\nprint(data)\n```\n\n### How it works:\n1. **`import json`**: Imports Python's built-in JSON library.\n2. **`with open(...)`**: Opens the file. \n   * `\"r\"` means open in **read** mode.\n   * `encoding='utf-8'` is highly recommended to prevent errors with special characters (like emojis or accented letters).\n3. **`json.load(file)`**: Reads the file and converts the JSON data into a Python dictionary or list.\n\n---\n\n### Other Common Scenarios\n\n#### 1. Reading a JSON String (not a file)\nIf you already have the JSON data as a string in your code, use `json.loads()` (the \"s\" stands for **string**):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\n\n# Parse the string\ndata = json.loads(json_string)\nprint(data[\"name\"])  # Output: Alice\n```\n\n#### 2. Reading JSON with Pandas (for Data Science)\nIf you are doing data analysis and want to load the JSON directly into a DataFrame, you can use the `pandas` library:\n\n```python\nimport pandas as pd\n\n# Load JSON into a DataFrame\ndf = pd.read_json(\"data.json\")\nprint(df.head())\n```",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 20,
+					"candidatesTokenCount": 422,
+					"totalTokenCount": 1165,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 20
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 422
+						}
+					],
+					"thoughtsTokenCount": 723
+				},
+				"modelVersion": "gemini-3.5-flash",
+				"createTime": "2026-06-08T20:34:23.284583Z",
+				"responseId": "TycnaqevEamO4_UPsMub-Qc",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash',\n  {\n    contents: [{ parts: [{ text: 'How do I read a JSON file in Python?' }], role: 'user' }],\n    generationConfig: { temperature: 0.3 },\n    systemInstruction: {\n      parts: [{ text: 'You are a helpful coding assistant specializing in Python.' }],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"How do I read a JSON file in Python?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.3\n    },\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are a helpful coding assistant specializing in Python.\"\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "I need help planning a road trip from San Francisco to Los Angeles."
+							}
+						],
+						"role": "user"
+					},
+					{
+						"parts": [
+							{
+								"text": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+							}
+						],
+						"role": "model"
+					},
+					{
+						"parts": [
+							{
+								"text": "Yes, what are some good places to stop?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 2048
+				}
+			},
+			"output": {
+				"text": "To give you the best recommendations, it helps to know which route you\u2019re planning to take. \n\nThere are two main scenic ways to make this drive: **The Iconic Coastal Route (Highway 1)** and **The Central Valley/Wine Route (US-101)**. (The third option, Interstate 5, is the fastest at 5.5 hours, but it is mostly flat farmland with very few scenic stops).\n\nHere are the best places to stop along the two scenic routes:\n\n---\n\n### Option 1: The Iconic Coastal Route (Highway 1 / PCH)\n*Best for: Breathtaking ocean cliffs, beaches, and nature. (3-4 days recommended)*\n* **Crucial Note:** Check current road conditions before you go. Highway 1 in the Big Sur region is prone to landslides, and parts of it are occasionally closed, requiring a detour to Highway 101.\n\n*   **Santa Cruz:** Known for its vintage beach boardwalk, surfing culture, and redwoods just inland. Great for a quick walk on the pier.\n*   **Monterey & Carmel-by-the-Sea:** Visit the world-famous Monterey Bay Aquarium, drive the gorgeous **17-Mile Drive**, and walk through Carmel, a fairytale-like village with no street addresses or streetlights.\n*   **Big Sur:** Drive across the famous **Bixby Creek Bridge**, hike in Julia Pfeiffer Burns State Park to see **McWay Falls** (a waterfall that drops directly onto the beach), and grab lunch at Nepenthe for cliffside views.\n*   **San Simeon:** Home to **Hearst Castle** (the lavish estate of publishing tycoon William Randolph Hearst) and the **Elephant Seal Vista Point**, where you can see hundreds of wild elephant seals lounging on the beach.\n*   **Morro Bay:** Famous for \"Morro Rock,\" a massive volcanic plug standing right in the harbor. It\u2019s a great, quiet spot for kayaking or getting fresh seafood.\n*   **Solvang:** A quirky, authentic Danish village tucked into the Santa Ynez Valley. Stop here for Danish bakeries, windmills, and wine tasting.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Stop here to see the historic Old Mission, walk down State Street for shopping and dining, or visit the Funk Zone for trendy wine-tasting rooms.\n*   **Malibu:** Grab a bite at the Malibu Farm Cafe at the end of the Malibu Pier as you make your final approach into LA.\n\n---\n\n### Option 2: The Central Valley/Wine Route (US-101)\n*Best for: Wine tasting, historic missions, and a faster but still beautiful drive. (1-2 days)*\n*If Highway 1 is closed in Big Sur, this is your best alternative.*\n\n*   **Pinnacles National Park:** Just east of the 101, this is California's newest National Park. It features dramatic volcanic rock formations, caves you can hike through, and is one of the few places to spot the endangered California Condor.\n*   **Paso Robles:** A world-class wine region known for its bold Zinfandels and Rhone-style blends. If you stay overnight, don't miss **Sensorio**, a stunning, massive outdoor light installation in the hills.\n*   **San Luis Obispo (SLO):** A charming college town with a historic mission, a great Thursday night farmers market, and \"Bubblegum Alley\" (a quirky alleyway lined with chewed gum).\n*   **Pismo Beach:** Just south of SLO, famous for its wide-open beaches and the Oceano Dunes, where you can drive vehicles right onto the sand.\n*   **Santa Barbara & Solvang:** (Both Highway 1 and US-101 merge here, so these are great stops on either route!)\n\n---\n\n### To help me narrow this down for you:\n1. **How many days** do you have for the trip? (Are you doing this in one day, or making a weekend out of it?)\n2. **What are you most interested in?** (e.g., wine tasting, hiking, beaches, cute towns, or food?)"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "To give you the best recommendations, it helps to know which route you\u2019re planning to take. \n\nThere are two main scenic ways to make this drive: **The Iconic Coastal Route (Highway 1)** and **The Central Valley/Wine Route (US-101)**. (The third option, Interstate 5, is the fastest at 5.5 hours, but it is mostly flat farmland with very few scenic stops).\n\nHere are the best places to stop along the two scenic routes:\n\n---\n\n### Option 1: The Iconic Coastal Route (Highway 1 / PCH)\n*Best for: Breathtaking ocean cliffs, beaches, and nature. (3-4 days recommended)*\n* **Crucial Note:** Check current road conditions before you go. Highway 1 in the Big Sur region is prone to landslides, and parts of it are occasionally closed, requiring a detour to Highway 101.\n\n*   **Santa Cruz:** Known for its vintage beach boardwalk, surfing culture, and redwoods just inland. Great for a quick walk on the pier.\n*   **Monterey & Carmel-by-the-Sea:** Visit the world-famous Monterey Bay Aquarium, drive the gorgeous **17-Mile Drive**, and walk through Carmel, a fairytale-like village with no street addresses or streetlights.\n*   **Big Sur:** Drive across the famous **Bixby Creek Bridge**, hike in Julia Pfeiffer Burns State Park to see **McWay Falls** (a waterfall that drops directly onto the beach), and grab lunch at Nepenthe for cliffside views.\n*   **San Simeon:** Home to **Hearst Castle** (the lavish estate of publishing tycoon William Randolph Hearst) and the **Elephant Seal Vista Point**, where you can see hundreds of wild elephant seals lounging on the beach.\n*   **Morro Bay:** Famous for \"Morro Rock,\" a massive volcanic plug standing right in the harbor. It\u2019s a great, quiet spot for kayaking or getting fresh seafood.\n*   **Solvang:** A quirky, authentic Danish village tucked into the Santa Ynez Valley. Stop here for Danish bakeries, windmills, and wine tasting.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Stop here to see the historic Old Mission, walk down State Street for shopping and dining, or visit the Funk Zone for trendy wine-tasting rooms.\n*   **Malibu:** Grab a bite at the Malibu Farm Cafe at the end of the Malibu Pier as you make your final approach into LA.\n\n---\n\n### Option 2: The Central Valley/Wine Route (US-101)\n*Best for: Wine tasting, historic missions, and a faster but still beautiful drive. (1-2 days)*\n*If Highway 1 is closed in Big Sur, this is your best alternative.*\n\n*   **Pinnacles National Park:** Just east of the 101, this is California's newest National Park. It features dramatic volcanic rock formations, caves you can hike through, and is one of the few places to spot the endangered California Condor.\n*   **Paso Robles:** A world-class wine region known for its bold Zinfandels and Rhone-style blends. If you stay overnight, don't miss **Sensorio**, a stunning, massive outdoor light installation in the hills.\n*   **San Luis Obispo (SLO):** A charming college town with a historic mission, a great Thursday night farmers market, and \"Bubblegum Alley\" (a quirky alleyway lined with chewed gum).\n*   **Pismo Beach:** Just south of SLO, famous for its wide-open beaches and the Oceano Dunes, where you can drive vehicles right onto the sand.\n*   **Santa Barbara & Solvang:** (Both Highway 1 and US-101 merge here, so these are great stops on either route!)\n\n---\n\n### To help me narrow this down for you:\n1. **How many days** do you have for the trip? (Are you doing this in one day, or making a weekend out of it?)\n2. **What are you most interested in?** (e.g., wine tasting, hiking, beaches, cute towns, or food?)",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 64,
+					"candidatesTokenCount": 888,
+					"totalTokenCount": 1812,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 64
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 888
+						}
+					],
+					"thoughtsTokenCount": 860
+				},
+				"modelVersion": "gemini-3.5-flash",
+				"createTime": "2026-06-08T20:34:30.085273Z",
+				"responseId": "VicnapmaBeWW4_UPgJf74AQ",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash',\n  {\n    contents: [\n      {\n        parts: [{ text: 'I need help planning a road trip from San Francisco to Los Angeles.' }],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Yes, what are some good places to stop?' }], role: 'user' },\n    ],\n    generationConfig: { maxOutputTokens: 2048 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"I need help planning a road trip from San Francisco to Los Angeles.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"I'\\''d be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Yes, what are some good places to stop?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 2048\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "Write a short story opening about a detective finding an unusual clue."
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 4096,
+					"temperature": 0.8
+				}
+			},
+			"output": {
+				"text": "The rain against the penthouse glass sounded like a handful of gravel thrown repeatedly against the window. Detective Silas Thorne ignored it, kneeling beside the body of Julian Vance. Vance, a billionaire philanthropist with a reputation for pristine health, sat upright in his velvet wingback chair, looking less like a corpse and more like a man waiting for a late-night guest. There were no signs of struggle, no traces of poison in the half-empty scotch glass, and no marks on his throat. \n\nThorne snapped on a pair of latex gloves and leaned closer, tilting Vance\u2019s chin upward. Under the harsh, sterile beam of his penlight, the dead man\u2019s mouth was slightly agape. \n\nThorne tapped the victim\u2019s teeth with the metal tip of his pen. *Clack. Clack. Click.*\n\nThe sound of the left rear molar was too hollow, too metallic. Thorne reached for his forceps, gently gripping the tooth, expecting a loose crown. Instead, with a soft, wet pop, the entire tooth slipped effortlessly out of the gumline. \n\nIt wasn\u2019t bone.\n\nThorne held the object up to the light. It was a masterpiece of micro-engineering: a molar carved from translucent white jade, capped in tarnished silver. But it was what lay *inside* the jade that made Thorne\u2019s breath hitch. Encased in the stone was a microscopic brass gear, no larger than a grain of sand, turning in perfect, silent rhythm. \n\nFrowning, Thorne pressed the tiny tooth to his ear. \n\nFrom the depths of the dead man's molar, a microscopic music box was playing a tinny, three-note lullaby. It was the exact melody Thorne's mother used to hum to him when he was a boy\u2014a song he had never told a living soul about."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "The rain against the penthouse glass sounded like a handful of gravel thrown repeatedly against the window. Detective Silas Thorne ignored it, kneeling beside the body of Julian Vance. Vance, a billionaire philanthropist with a reputation for pristine health, sat upright in his velvet wingback chair, looking less like a corpse and more like a man waiting for a late-night guest. There were no signs of struggle, no traces of poison in the half-empty scotch glass, and no marks on his throat. \n\nThorne snapped on a pair of latex gloves and leaned closer, tilting Vance\u2019s chin upward. Under the harsh, sterile beam of his penlight, the dead man\u2019s mouth was slightly agape. \n\nThorne tapped the victim\u2019s teeth with the metal tip of his pen. *Clack. Clack. Click.*\n\nThe sound of the left rear molar was too hollow, too metallic. Thorne reached for his forceps, gently gripping the tooth, expecting a loose crown. Instead, with a soft, wet pop, the entire tooth slipped effortlessly out of the gumline. \n\nIt wasn\u2019t bone.\n\nThorne held the object up to the light. It was a masterpiece of micro-engineering: a molar carved from translucent white jade, capped in tarnished silver. But it was what lay *inside* the jade that made Thorne\u2019s breath hitch. Encased in the stone was a microscopic brass gear, no larger than a grain of sand, turning in perfect, silent rhythm. \n\nFrowning, Thorne pressed the tiny tooth to his ear. \n\nFrom the depths of the dead man's molar, a microscopic music box was playing a tinny, three-note lullaby. It was the exact melody Thorne's mother used to hum to him when he was a boy\u2014a song he had never told a living soul about.",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 13,
+					"candidatesTokenCount": 379,
+					"totalTokenCount": 2124,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 13
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 379
+						}
+					],
+					"thoughtsTokenCount": 1732
+				},
+				"modelVersion": "gemini-3.5-flash",
+				"createTime": "2026-06-08T20:34:42.810405Z",
+				"responseId": "YicnaqW7MZyfq8YPksChgAE",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 4096, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 4096,\n      \"temperature\": 0.8\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Image Understanding",
+			"description": "Sending an image with a text prompt for visual understanding",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "What logo is shown in this image? Describe its colors and design."
+							},
+							{
+								"inlineData": {
+									"mimeType": "image/png",
+									"data": "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"
+								}
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The logo shown in the image is the **Google \"G\" logo** (specifically, the \"Super G\" icon used for Google Search, the Google app, and various other Google services).\n\n### **Design and Colors:**\n*   **Shape:** It is a stylized, geometric representation of the capital letter **\"G\"** designed within a circular framework.\n*   **Color Segments:** The logo is divided into four distinct, vibrant color segments:\n    *   **Blue:** Covers the right side, including the horizontal crossbar that extends into the center of the circle.\n    *   **Red:** Arches across the top section.\n    *   **Yellow:** Covers the left side.\n    *   **Green:** Arches across the bottom section.\n*   **Background:** In this specific image, the logo is set against a solid **black** background."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "The logo shown in the image is the **Google \"G\" logo** (specifically, the \"Super G\" icon used for Google Search, the Google app, and various other Google services).\n\n### **Design and Colors:**\n*   **Shape:** It is a stylized, geometric representation of the capital letter **\"G\"** designed within a circular framework.\n*   **Color Segments:** The logo is divided into four distinct, vibrant color segments:\n    *   **Blue:** Covers the right side, including the horizontal crossbar that extends into the center of the circle.\n    *   **Red:** Arches across the top section.\n    *   **Yellow:** Covers the left side.\n    *   **Green:** Arches across the bottom section.\n*   **Background:** In this specific image, the logo is set against a solid **black** background.",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 1103,
+					"candidatesTokenCount": 183,
+					"totalTokenCount": 1807,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "IMAGE",
+							"tokenCount": 1089
+						},
+						{
+							"modality": "TEXT",
+							"tokenCount": 14
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 183
+						}
+					],
+					"thoughtsTokenCount": 521
+				},
+				"modelVersion": "gemini-3.5-flash",
+				"createTime": "2026-06-08T20:34:56.911323Z",
+				"responseId": "cCcnatvPN8e64_UPks6J8A8",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash',\n  {\n    contents: [\n      {\n        parts: [\n          { text: 'What logo is shown in this image? Describe its colors and design.' },\n          {\n            inlineData: {\n              mimeType: 'image/png',\n              data: 'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAC/VBMVEUAAAAzhPwzhPwyhPwzhPoyg/sonYslp1swiuD/vgDwQivwQivvQivvQivxQyzwQivwQC3uQizwQizvQivyRSvwQyvvQivvQivwQyvvQyvwQyr/vgD/vwD/tAD/vwD/vwD/vwD/vwD/vwD/vgD/vwD/vgDwQivwQizvQivvQivwQizwQyvwQyvuRC3vQizwQi3wQivwQivsQyjvQyvwQizwQivrQy/wQivwQivyRCr/SkryRS3wQirwQivxQSrvQisyhPwyg/sjqkjvQywyg/z/vwDwQyv/vgDxUCfSug4kqkjMuRHwQizwQyvxQSrwQivvQys1gvnxQSvwQizwQyzxTyj9rAf/vwDUuw0kqkgkqkkkqVEvit4zhPswid8wieAyhPv/vgD/vwAkqkjNuRDvQizwQiwyg/wyg/wyg/szg/wyhPo4f/8yhPsyhPsxhf8vh/8yhPsyg/wugv8yhPzvQiwkqkgjqkgkqkgbrVIjqkkjqUkjqUkjqkgkqkcjqkgiqkcjqkgjqkgkqUkkqkgkqUgjqkgjqkgnqkcjqkgjpUcjqkklqUcjqkkjqUgkqkgkqUgAxWwjqkgkqkgjqkknqkcjqkkiqkgjqkgjqkgjqkgjqUkutlkjqkkjqkgjqkgjqkkkqkgjqkgfqkojqkjvQiwjqkn/vwD/vgD/vQD/vgD/vwD/vwD/vwD/vwD/vwD/vwD/vwD/vgD/vwD/vgD/vwD/vwD/vwD/vwD/vgD/vwD/vgAzhPwzhPwyhPwxgvsyhPsyg/szhP8zg/oyg/sqi/8zgP8yhPsyg/wzhPszhPwyhPwyhPwzhPszg/vvQisjqkkjqkgjqkkjqkjvQizwQiz/hwD/wAD/vQD/vgD/wQD/vwD/vwD/vwD/vwD/vgD9qwfxTSj8qQjxTSjyZh/9sgT/vQH/wAD/twD/vwD/vwD+swX/vgD/vgD/vgD/vgD/vQD/vwD/vwD/vgD/vwD/vwD/vwD/vgD/vwD/mRDtQivvQivvQisvjsgzhPtZTWZOAAAA/3RSTlMAzP9mNvBxeuPi3qIvdDlZED5D1yjv28pm/EdLOgqLtcneHT5eV1V4lrRefqos/iCF5Q1RxLsJmmwYAxQ18DfHyN7d1dLRzs/KzumxrLA79kArOvL/////zef//+Xl5Ofp6ry4uLi+wm6WszsS9qAdCoG3EKunmuJvCV4qj59ZvC7l9qrvN1QyEyUHyyHss8VMAUX+kgzYQX9lhjwDaaTRlncaEPv5+PVREPunn5hD/XTzY2hsZZGT+SOvg31iV1FDTCUx/QYY2XP6aL67kIqRma7A8u0zAVQaNwju1nnA/v////ZS+iYUA9qHM37G9yoXWTXDMMy4m3wFHOpMS4fyEyqSAAABpklEQVR42u2Wv0vDQBiGj7h0EBFBcFToooWig4uI4uqgIIcHR/BP0NF/oJsigtFFRXDqJrgorv5YXApSXRxEnIu/NhdN0yR3yfflvuTQofiO393z9C25HGGsizPElTTz0os8lVE63cuR0PB+nhECz7MzaMCb3JhM/osTMlC4fphJjF8mCrBTIQTRMA3zJ4JomIH5U+HnWdtaHftZmKqQeCaCPEUbx9XVCSofGRaSG2aDeR/CfwrdgD3kJWYq0DZU4E3VdK8wZVUgXrBtKK8VEPUCt4/Ktyx5wSwFr7aCIvyZwr/9UgEHTI+twEkLRmwF77YC9i8QZVuB+FvBnK1grbP6oAiGTS8O8A/yvc5GwQWdv4qmj+QKl2CBHJeiQxGcE/lVZeFeM9Qw3sUK6BWklDAvZUnhb7F7UUrY4PnzFaQAYy2NTyt2O2M3eQqTFWSc/XhxK566cIHQIJOp3SUnJYRndYiH4sI8Yx803jdcw49pgyiQN9hBadD4jKN+bMm3T5sh86YLw7P5+SA7OH5I/GBYh/HtHN8cByl6L/+Hy+ZRCHusq/MN4hbRTvNyopwAAAAASUVORK5CYII=',\n            },\n          },\n        ],\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What logo is shown in this image? Describe its colors and design.\"\n          },\n          {\n            \"inlineData\": {\n              \"mimeType\": \"image/png\",\n              \"data\": \"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\"\n            }\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://deepmind.google/technologies/gemini/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-3.5-flash.png",
+	"metadata": {
+		"Architecture": "Transformer (multimodal)",
+		"Thinking": "Yes"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"banner": null,
+	"created_at": "2026-06-17 23:03:54",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"contents": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"model"
+										]
+									},
+									"parts": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												}
+											},
+											"additionalProperties": {}
+										}
+									}
+								},
+								"required": [
+									"parts"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"systemInstruction": {
+							"type": "object",
+							"properties": {
+								"parts": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"text": {
+												"type": "string"
+											}
+										},
+										"additionalProperties": {}
+									}
+								}
+							},
+							"required": [
+								"parts"
+							],
+							"additionalProperties": {}
+						},
+						"generationConfig": {
+							"type": "object",
+							"properties": {
+								"temperature": {
+									"type": "number"
+								},
+								"topP": {
+									"type": "number"
+								},
+								"topK": {
+									"type": "number"
+								},
+								"maxOutputTokens": {
+									"type": "number"
+								},
+								"candidateCount": {
+									"type": "number"
+								},
+								"stopSequences": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"responseMimeType": {
+									"type": "string"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"safetySettings": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"category": {
+										"type": "string"
+									},
+									"threshold": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"category",
+									"threshold"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"toolConfig": {}
+					},
+					"required": [
+						"contents"
+					],
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"candidates": {
+							"type": "array",
+							"items": {}
+						},
+						"usageMetadata": {
+							"type": "object",
+							"properties": {
+								"promptTokenCount": {
+									"type": "number"
+								},
+								"candidatesTokenCount": {
+									"type": "number"
+								},
+								"totalTokenCount": {
+									"type": "number"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"modelVersion": {
+							"type": "string"
+						}
+					},
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"anyOf": [
+													{
+														"type": "string"
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		}
+	}
+}

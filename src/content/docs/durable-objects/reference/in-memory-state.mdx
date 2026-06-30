@@ -49,3 +49,9 @@ The Durable Object's storage has a built-in in-memory cache of its own. If you u
 However, in applications with more complex state, explicitly storing state in your Object may be easier than making Storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
 :::
+
+:::note[Observe in-memory state size]
+
+You can monitor V8 isolate memory usage — which includes the in-memory state your Durable Objects hold — with the **Memory usage** chart on the **Metrics** tab. Memory is measured per isolate (which can host multiple Durable Objects), not per object. Refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/#memory-usage) for details, including how filtering by Durable Object ID or name affects what the chart shows. Because in-memory state is not preserved across [eviction or hibernation](/durable-objects/concepts/durable-object-lifecycle/), persist anything important to [storage](/durable-objects/best-practices/access-durable-objects-storage/).
+
+:::

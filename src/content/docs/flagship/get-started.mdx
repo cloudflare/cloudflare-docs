@@ -115,13 +115,13 @@ Evaluate flags using the OpenFeature client:
 
 <Tabs> <TabItem label="With binding">
 
-Pass the Flagship binding directly to the provider. This avoids additional HTTP requests and is the recommended approach inside a Worker. Authentication is handled automatically through the binding.
+Pass the Flagship binding directly to the provider. This avoids additional HTTP overhead and is the recommended approach inside a Worker. The binding handles authentication automatically.
 
 <TypeScriptExample>
 
 ```ts
 import { OpenFeature } from "@openfeature/server-sdk";
-import { FlagshipServerProvider } from "@cloudflare/flagship";
+import { FlagshipServerProvider } from "@cloudflare/flagship/server";
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
@@ -148,13 +148,13 @@ export default {
 
 </TabItem> <TabItem label="With app ID">
 
-Use an app ID, account ID, and an API token when running outside of a Worker (for example, in Node.js). The provider makes HTTP requests to the Flagship evaluation endpoint. Generate an [API token](/fundamentals/api/get-started/create-token/) from your Cloudflare account with Flagship Evaluate permission.
+Use an app ID, account ID, and an API token when running outside of a Worker (for example, in Node.js). Generate an [API token](/fundamentals/api/get-started/create-token/) from your Cloudflare account with Flagship Evaluate permission.
 
 <TypeScriptExample>
 
 ```ts
 import { OpenFeature } from "@openfeature/server-sdk";
-import { FlagshipServerProvider } from "@cloudflare/flagship";
+import { FlagshipServerProvider } from "@cloudflare/flagship/server";
 
 await OpenFeature.setProviderAndWait(
 	new FlagshipServerProvider({
@@ -182,3 +182,4 @@ Refer to the [SDK documentation](/flagship/sdk/) for detailed setup instructions
 - Learn about [targeting rules](/flagship/targeting/) to serve different values based on user attributes.
 - Explore the full [binding API reference](/flagship/binding/) for all evaluation methods.
 - Read about [percentage rollouts](/flagship/targeting/percentage-rollouts/) for gradual feature releases.
+- Refer to the [Flagship API reference](/flagship/reference/api-reference/) to manage Flagship programmatically.

@@ -92,6 +92,33 @@ To delete an account you have created, send a `DELETE` request to the `/accounts
 
 Account deletion is permanent and will delete any zones or other resources under the account.
 
+:::caution[Some resources require manual deletion]
+The following resources are **not** automatically deleted when you delete an account and must be removed manually beforehand:
+
+- **Logpush jobs**: Will continue delivering logs after account deletion.
+- **Zero Trust Gateway configurations**: May continue resolving DNS queries after account deletion.
+
+To ensure complete cleanup, delete these resources before deleting the account by calling the following endpoints in sequence:
+
+1. Delete Zero Trust Gateway configuration:
+   ```bash
+   curl --request DELETE \
+   https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>"
+   ```
+
+2. Delete Access organization:
+   ```bash
+   curl --request DELETE \
+   https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>"
+   ```
+
+3. Then delete the account (see below).
+:::
+
 ```bash title="Request"
 curl --request DELETE \
 https://api.cloudflare.com/client/v4/accounts/{account_id} \

@@ -1,0 +1,59 @@
+---
+/**
+ * ChangelogEntry — one entry in the feed. Renders the date marker, a
+ * permalink title, product pills, and the entry's full MDX body inline
+ * (rendered with the site's MDX globals).
+ *
+ * Design: Nimbus changelog feature (registry/features/changelog.md, 5c).
+ * Adapted to the kept product model: product pills (links to product views)
+ * instead of opaque tag pills, and the `/changelog/post/<id>/` permalink.
+ */
+import { render, type CollectionEntry } from "astro:content";
+import DateRail from "./DateRail.astro";
+import ProductPills from "./ProductPills.astro";
+import { components } from "@/mdx-components";
+
+interface Props {
+  entry: CollectionEntry<"changelog">;
+  /** Last visible entry — drops its trailing rail segment so the timeline
+   *  closes at the final dot. */
+  railEnd?: boolean;
+}
+
+const { entry, railEnd = false } = Astro.props;
+const { title, date, products } = entry.data;
+const href = `/changelog/post/${entry.id}/`;
+const { Content } = await render(entry);
+---
+<article
+  class="nb-cl-entry relative pb-13 pl-[var(--body-x)] max-md:pb-11 max-md:pl-0"
+  data-rail-end={railEnd ? "" : undefined}
+>
+  <DateRail date={date} />
+
+  {/* `nb-cl-title-link` is kept only as the `:has()` hover hook for the dot. */}
+  <div class="max-w-[40rem]">
+    <a
+      href={href}
+      class="nb-cl-title-link group inline-block text-inherit no-underline"
+    >
+      <h2
+        class="m-0 text-[1.375rem] leading-[1.25] font-semibold tracking-[-0.02em] text-balance text-foreground underline-offset-[3px] decoration-1 group-hover:underline"
+      >
+        {title}
+      </h2>
+    </a>
+
+    {
+      products.length > 0 && (
+        <div class="mt-[0.6875rem]">
+          <ProductPills products={products} />
+        </div>
+      )
+    }
+
+    <div class="docs-content nb-cl-prose mt-[1.125rem] max-w-none">
+      <Content components={components} />
+    </div>
+  </div>
+</article>

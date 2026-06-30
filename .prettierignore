@@ -1,5 +1,10 @@
 dist
 .astro
+
+# Nimbus migration target (vendored app code, behind BUILD_TARGET=nimbus).
+# Excluded from repo formatting during priming; format/re-enable before cutover.
+src/nimbus/
+dist-nimbus/
 # fetched at prebuild/predev by bin/fetch-skills.ts
 .tmp
 # generated actions JS

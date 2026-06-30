@@ -134,7 +134,7 @@ The MCP server status indicates the synchronization status of the MCP server to 
 
 #### Error details
 
-When an MCP server is in the **Error** state, the API returns an `error_details` object with structured information to help you diagnose the issue:
+When an MCP server is in the **Error** or **Sync Required** state, Cloudflare Access surfaces structured information to help you diagnose the issue. In the dashboard, hover over the server's status to view the error message, the error category (upstream or connection), the HTTP status code, and the MCP protocol error code (if applicable). The same details are returned by the API as an `error_details` object:
 
 | Field | Description |
 | --- | --- |
@@ -178,18 +178,26 @@ You can also trigger a sync via the API. The sync endpoint returns the current s
 
 When a user authorizes an upstream MCP server that requires per-user OAuth, the portal performs an OAuth authorization code flow with the upstream server on the user's behalf. As part of this flow, the portal registers a callback URL (`redirect_uri`) with the upstream server. The upstream server redirects to this URL after the user authorizes access.
 
-For newly created MCP servers, the portal uses a shared callback URL owned by Cloudflare:
+By default, the portal uses a callback URL on your portal domain:
+
+```txt
+https://<your-portal-hostname>/servers-callback
+```
+
+Allowlist this URL as a redirect URI at the upstream OAuth provider. OAuth providers typically exact-match the full URI including path.
+
+#### Shared Cloudflare callback URL (opt-in)
+
+If you have turned on the shared callback URL for the portal, the portal uses a Cloudflare-owned URL instead:
 
 ```txt
 https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
 ```
 
-Upstream MCP server vendors only need to allowlist this single Cloudflare URL rather than each individual portal hostname. This resolves issues where some vendors rejected portal-specific hostnames that were not in their redirect URI allowlists.
-
-Existing MCP servers that were created before this change continue to use the portal domain as the callback URL (for example, `https://my-portal.example.com/servers-callback`). No action is required for existing servers.
+Use the shared callback URL when upstream vendors only allow a small number of redirect URIs in their allowlist, or when you want to use a single Cloudflare-owned URL across multiple portals. The shared callback URL is only used when explicitly turned on for the portal.
 
 :::note
-If an upstream OAuth provider rejects the callback URL, verify that `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback` is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path. For existing servers that still use per-portal callbacks, allowlist the portal domain instead.
+If an upstream OAuth provider rejects the callback URL, verify that the correct URL for the portal (`https://<your-portal-hostname>/servers-callback` by default, or the shared Cloudflare URL when turned on) is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path.
 :::
 
 ## Create a portal
@@ -297,6 +305,8 @@ You can set aliases at two levels. Portal-level aliases take precedence over ser
 When multiple names exist, the portal resolves them in this order: `portal_alias` > `server_alias` > `alias` > original tool name.
 
 If no alias is set, the portal uses the original name and description from the upstream server.
+
+Custom descriptions follow the same precedence. Set a description by including the `description` field on an entry in `updated_tools` or `updated_prompts`. In API responses, server-level descriptions are returned as `server_description` and portal-level descriptions are returned as `portal_description`. Portal-level descriptions take precedence over server-level descriptions when both are set.
 
 #### Set aliases in the dashboard
 
@@ -420,7 +430,7 @@ If you are building an MCP client with the [Agents SDK](/agents/model-context-pr
 
 - **`normalizeServerId`** (exported from `agents/mcp/client`) normalizes a caller-supplied server ID into a safe string. For example, `"GitHub MCP!"` becomes `"github-mcp"`. The SDK calls this automatically when you pass an `id` option to `addMcpServer()`.
 
-- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in Code Mode contexts. Refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/#sanitizetoolnamename) for details.
+- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in Code Mode contexts. Refer to the [Code Mode SDK reference](/agents/tools/codemode/api-reference/#code-and-output-utilities) for details.
 
 :::note
 The Agents SDK uses a `tool_{server_id}_{tool_name}` format (with a `tool_` prefix) when returning tools from `getAITools()`. This differs from the portal format, which uses `{server_id}_{tool_name}` without the prefix.
@@ -460,7 +470,7 @@ When you connect with [Code Mode](#code-mode) enabled, the portal replaces all u
 | `portal_codemode_search` | Searches available tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode.tools()` function that returns all upstream tool definitions with sanitized names. |
 | `portal_codemode_execute` | Calls upstream tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode` proxy object where each property maps to an upstream tool. Supports `Promise.all()` for parallel tool calls. |
 
-Refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/) for details on writing code for these tools.
+Refer to the [Code Mode SDK reference](/agents/tools/codemode/api-reference/) for details on writing code for these tools.
 
 ## Manage portals via API
 
@@ -571,7 +581,7 @@ For the full list of supported resource arguments, refer to the [Terraform provi
 
 ## Code Mode
 
-[Code Mode](/agents/model-context-protocol/protocol/codemode/) is turned on by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
+[Code Mode](/agents/tools/codemode/) is turned on by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
 
 To use Code Mode, the MCP client must request it when connecting to the portal URL. Refer to [Connect with Code Mode](#connect-with-code-mode) for the required query parameter.
 
@@ -606,7 +616,7 @@ For MCP clients with server configuration files, use the portal URL with the que
 
 When Code Mode is active, the portal advertises a single `code` tool to connected MCP clients. The AI agent discovers available tools by inspecting the typed method signatures in the Dynamic Worker environment and composes multiple tool calls into a single code execution.
 
-For more information on building with Code Mode, refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/).
+For more information on building with Code Mode, refer to the [Code Mode SDK reference](/agents/tools/codemode/api-reference/).
 
 ### Turn off Code Mode
 
@@ -770,16 +780,64 @@ After sign-out, the portal displays a confirmation page with a summary of the re
 
 ### Connect with a service token
 
-You can connect to an MCP portal using an [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) for machine-to-machine access. Service tokens bypass the browser-based OAuth flow and authenticate directly using the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
+You can connect to an MCP portal using an [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) for machine-to-machine access. Service tokens bypass the browser-based OAuth flow and authenticate using the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
 
-To connect with a service token:
+A service token session is authorized twice: once at the portal URL, and once for each upstream MCP server it tries to reach through the portal. Both checks need a matching [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth).
 
-1. [Create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token) in your Zero Trust account.
-2. Add a [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth) to your portal's Access application. The policy action must be **Service Auth**, not Allow. Service Auth policies specifically match requests that include valid `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
-3. Include the service token headers when connecting from your MCP client.
+#### Required configuration
+
+| Where | Policy action | Include rule | Purpose |
+| --- | --- | --- | --- |
+| Portal Access application | Service Auth | Your service token | Lets the bot connect to the portal URL. |
+| Each linked MCP server Access app | Service Auth | Your service token | Lets the bot see and call that server's tools through the portal. |
+| Server's portal mapping | n/a | n/a | **Require user auth** must be **off** so the portal uses the admin credential. |
 
 :::note
-Service tokens do not support per-user OAuth with upstream MCP servers. When connected via a service token, the portal uses the [admin credential](#reauthenticate-the-mcp-server) for all upstream server requests. Servers configured with **Require user auth** turned on will not be available to service token sessions.
+**Require user auth** in the dashboard maps to the `on_behalf` field on the portal-server mapping in the API and Terraform. For each linked server you want a service token to reach, set `on_behalf` to `false`. Servers with `on_behalf: true` are excluded from service token sessions because they require a per-user OAuth grant that a service token cannot provide.
+:::
+
+If a linked MCP server does not have a Service Auth policy matching the token, that server is hidden from the bot's tool list.
+
+#### Set up a service token connection
+
+1. [Create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token) in your Zero Trust account.
+2. Open the portal's Access application and add a Service Auth policy that includes the service token.
+3. For each upstream MCP server you want the bot to reach:
+   1. Open the server's Access application and add a Service Auth policy that includes the same service token.
+   2. Open the portal and edit the server. Turn **Require user auth** off so the portal uses the [admin credential](#reauthenticate-the-mcp-server) for that server.
+4. Connect from your MCP client with the service token headers.
+
+For a CLI client, set the headers directly:
+
+```sh
+curl https://<subdomain>.<domain>/mcp \
+  -H "CF-Access-Client-Id: <CLIENT_ID>" \
+  -H "CF-Access-Client-Secret: <CLIENT_SECRET>"
+```
+
+For `mcp-remote`, pass the headers with `--header`:
+
+```json title="MCP client configuration for service token connections"
+{
+	"mcpServers": {
+		"example-portal": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote@latest",
+				"https://<subdomain>.<domain>/mcp",
+				"--header",
+				"CF-Access-Client-Id: <CLIENT_ID>",
+				"--header",
+				"CF-Access-Client-Secret: <CLIENT_SECRET>"
+			]
+		}
+	}
+}
+```
+
+:::note
+Service tokens do not support per-user OAuth with upstream MCP servers. The portal uses the [admin credential](#reauthenticate-the-mcp-server) for every upstream request made by a service token session. Servers with **Require user auth** turned on are excluded from service token sessions because they require a per-user OAuth grant that a service token cannot provide.
 :::
 
 ### Device authentication
@@ -850,7 +908,7 @@ For MCP clients with server configuration files:
 }
 ```
 
-For more information on the Code Mode pattern behind `search_and_execute`, refer to the [Code Mode SDK reference](/agents/model-context-protocol/protocol/codemode/).
+For more information on the Code Mode pattern behind `search_and_execute`, refer to [Code Mode](/agents/tools/codemode/).
 
 ## Manage portal sessions
 
@@ -943,6 +1001,8 @@ MCP server portals have the following known limitations:
 
 - **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync Required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
 
+- **Each portal supports up to 40 MCP servers.** If you need to aggregate more than 40 servers into a single portal, contact your Cloudflare account team to request a higher limit. The dashboard displays a warning as you approach the limit.
+
 ## Policy limitations
 
 MCP servers use a dedicated Access application type (*mcp*) that does not support the following Access policy features when the server is authorized through a portal.
@@ -1000,8 +1060,8 @@ To resolve this, [reauthenticate the server](#reauthenticate-the-mcp-server) wit
 
 Errors such as `invalid_redirect_uri`, `invalid_client_metadata`, or `Redirect URI not allowed` indicate that the upstream MCP server rejected the callback URL that the portal registered during the OAuth flow. Refer to [Upstream OAuth callback URL](#upstream-oauth-callback-url) for background on how the callback URL is determined.
 
-1. For newly created servers, the upstream provider must allowlist `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback` as a redirect URI. OAuth providers typically exact-match the full URI including path. Contact the upstream MCP server vendor if you do not control the allowlist.
-2. For servers created before this feature was introduced, the upstream provider must allowlist your portal domain (for example, `https://my-portal.example.com`). To switch to the shared callback URL, delete the server and re-add it.
+1. By default, the upstream provider must allowlist `https://<your-portal-hostname>/servers-callback` as a redirect URI (for example, `https://my-portal.example.com/servers-callback`). OAuth providers typically exact-match the full URI including path. Contact the upstream MCP server vendor if you do not control the allowlist.
+2. If the portal is configured to use the [shared Cloudflare callback URL](#shared-cloudflare-callback-url-opt-in), the upstream provider must instead allowlist `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`.
 
 ### Tool calls fail when Gateway routing is turned on.
 

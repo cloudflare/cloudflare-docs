@@ -8,6 +8,14 @@
 		"display_name": "Windows"
 	},
 	{
+		"platform": "resolute-intel",
+		"display_name": "Ubuntu 26.04 (x86-64)"
+	},
+	{
+		"platform": "resolute-arm",
+		"display_name": "Ubuntu 26.04 (arm64)"
+	},
+	{
 		"platform": "noble-intel",
 		"display_name": "Ubuntu 24.04 (x86-64)"
 	},
@@ -64,6 +72,22 @@
 		"display_name": "CentOS / RHEL 8 (arm64)"
 	},
 	{
+		"platform": "almalinux9-intel",
+		"display_name": "AlmaLinux / RHEL 9 (x86-64)"
+	},
+	{
+		"platform": "almalinux9-arm",
+		"display_name": "AlmaLinux / RHEL 9 (arm64)"
+	},
+	{
+		"platform": "almalinux10-intel",
+		"display_name": "AlmaLinux / RHEL 10 (x86-64)"
+	},
+	{
+		"platform": "almalinux10-arm",
+		"display_name": "AlmaLinux / RHEL 10 (arm64)"
+	},
+	{
 		"platform": "fedora34-intel",
 		"display_name": "Fedora 34 (x86-64)"
 	},
@@ -78,5 +102,17 @@
 	{
 		"platform": "fedora35-arm",
 		"display_name": "Fedora 35 (arm64)"
+	},
+	{
+		"platform": "fedora43-intel",
+		"display_name": "Fedora 43 (x86-64)"
+	},
+	{
+		"platform": "fedora43-arm",
+		"display_name": "Fedora 43 (arm64)"
+	},
+	{
+		"platform": "fedora44-intel",
+		"display_name": "Fedora 44 (x86-64)"
 	}
 ]

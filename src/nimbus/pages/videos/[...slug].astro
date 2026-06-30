@@ -1,0 +1,77 @@
+---
+// /videos/<url> — Cloudflare Stream video page. getStaticPaths keys on
+// `data.url` so paths equal the `/videos/${data.url}/` hrefs from
+// ResourcesBySelector.
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import { Stream, Width, Details } from "~/components";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("stream");
+
+  return entries
+    .filter((entry) => Boolean(entry.data.url))
+    .map((entry) => ({
+      params: { slug: entry.data.url },
+      props: { entry: entry.data },
+    }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+
+// WebVTT → readable paragraphs: drop the header, cue timings, tags, blank and
+// numeric-only lines, and consecutive duplicates.
+let parts: string[] | undefined;
+if (entry.transcript) {
+  parts = entry.transcript
+    .replace("WEBVTT", "")
+    .replace(/.+ --> .+/g, "")
+    .replace(/<\/c>/g, "")
+    .replace(/<.+?>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .split("\n\n")
+    .map((line) => line.trim().replaceAll("\n", ""))
+    .filter(Boolean)
+    .filter((line) => !/\d/.test(line))
+    .filter((line, index, lines) => line !== lines[index + 1]);
+}
+---
+
+<SplashLayout title={entry.title} description={entry.description}>
+  <div class="relative">
+    <BackgroundLines inner={1120} outer={1360} />
+    <div
+      class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
+    >
+      <header class="mx-auto max-w-2xl text-center">
+        <h1
+          class="text-[clamp(2.25rem,4vw,3rem)] leading-[1.1] font-medium text-balance text-foreground"
+        >
+          {entry.title}
+        </h1>
+      </header>
+
+      <section class="docs-content mt-12 pt-10" aria-label="Video">
+        <Width size="large" center={true}>
+          {entry.description && <p class="mb-6">{entry.description}</p>}
+          <Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
+          {
+            parts && (
+              <Details header="Transcript">
+                <div class="space-y-4 leading-8">
+                  {parts.map((part) => (
+                    <p>{part}</p>
+                  ))}
+                </div>
+              </Details>
+            )
+          }
+        </Width>
+      </section>
+    </div>
+  </div>
+</SplashLayout>

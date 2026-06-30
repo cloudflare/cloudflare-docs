@@ -1,0 +1,84 @@
+---
+/**
+ * GlossaryTooltip — dashed-underlined term that reveals its glossary
+ * definition on hover/focus.
+ *
+ * CF source: cloudflare-docs/src/components/GlossaryTooltip.astro
+ * Mapping notes: upstream positions the bubble with Tippy.js; this port
+ * is CSS-only (absolutely-positioned bubble, hover/focus visibility),
+ * which keeps the component dependency-free. Term lookup spans every
+ * glossary file, same as upstream's `getGlossaryEntry`.
+ */
+import { getCollection } from "astro:content";
+import { marked } from "marked";
+
+interface Props {
+  term: string;
+  prepend?: string;
+  link?: string;
+}
+
+const { term, prepend, link } = Astro.props;
+
+const glossaries = await getCollection("glossary");
+const entry = glossaries
+  .flatMap((g) => g.data.entries)
+  .find((e) => e.term === term);
+
+if (!entry) {
+  throw new Error(`[GlossaryTooltip] Unable to find entry for ${term}`);
+}
+
+let definition = prepend
+  ? prepend.concat(entry.general_definition)
+  : entry.general_definition;
+definition = definition.charAt(0).toUpperCase() + definition.slice(1);
+definition = definition.split(/\r?\n/)[0]!;
+---
+
+<!-- prettier-ignore -->
+<span class="glossary-tooltip" tabindex="0"
+  >{link ? <a href={link}><slot /></a> : <slot />}<span
+    class="glossary-tooltip-bubble"
+    role="tooltip"
+    set:html={marked.parseInline(definition)}
+  /></span>
+
+<style>
+  .glossary-tooltip {
+    position: relative;
+    border-bottom: 2px dashed var(--nb-border-strong);
+    cursor: help;
+  }
+
+  .glossary-tooltip-bubble {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+    width: max-content;
+    max-width: 20rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--nb-border);
+    background: var(--nb-card);
+    color: var(--nb-foreground);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.15s,
+      visibility 0.15s;
+  }
+
+  .glossary-tooltip:hover .glossary-tooltip-bubble,
+  .glossary-tooltip:focus-visible .glossary-tooltip-bubble,
+  .glossary-tooltip:focus-within .glossary-tooltip-bubble {
+    opacity: 1;
+    visibility: visible;
+  }
+
+</style>

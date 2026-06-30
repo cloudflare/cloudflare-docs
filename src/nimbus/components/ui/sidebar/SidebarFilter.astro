@@ -1,0 +1,26 @@
+---
+/** SidebarFilter — text input that filters the adjacent Sidebar. Press "/" to focus. */
+import { cn } from "@/lib/cn";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  placeholder?: string;
+}
+
+const {
+  class: className,
+  placeholder = "Search sidebar...",
+  ...attrs
+} = Astro.props;
+---
+
+<div class={cn("mb-5", className)} {...attrs}>
+  <input
+    data-nb-sidebar-filter-input
+    type="search"
+    placeholder={placeholder}
+    class="w-full rounded-md border border-border bg-card px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus-visible:border-brand focus-visible:outline-2 focus-visible:outline-ring"
+    aria-label="Filter navigation"
+    autocomplete="off"
+  />
+</div>

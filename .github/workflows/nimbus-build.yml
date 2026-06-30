@@ -1,0 +1,105 @@
+name: Nimbus Build
+
+# Priming-only, non-deploying parity build for the Starlight → Nimbus
+# migration. It builds the `BUILD_TARGET=nimbus` target from the shared
+# `src/content` and uploads `dist-nimbus/` as an artifact — it never deploys.
+#
+# Scoped to the migration author's PRs ONLY (see the `if` guard below), so
+# contributors raising ordinary content/MDX PRs never see this job, never
+# wait on it, and are never blocked by Nimbus-specific breakage (unported
+# components, icon gaps, Sätteri quirks, etc.). Keep this OUT of the repo's
+# required status checks until the cutover PR (Epic G1).
+on:
+  pull_request:
+    branches:
+      - production
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nimbus-build:
+    name: Nimbus Build (parity, non-deploying)
+    # Only run on the migration author's own PRs. Every other PR skips this
+    # job entirely (shows as "skipped", never "failed") — zero contributor
+    # impact. Extend this to an allowlist if more people drive the migration.
+    if: github.event.pull_request.user.login == 'MohamedH1998'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: pnpm install --frozen-lockfile
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Restore Astro (Nimbus) assets from cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            .astro-cache-nimbus/assets
+          key: astro-nimbus-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-nimbus-assets-
+
+      - name: Build (Nimbus target → dist-nimbus)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_TARGET: nimbus
+          # Match the proven Starlight baseline AND the cutover gate budget
+          # (rollout gate 1: cold build "within memory budget — today
+          # --max-old-space-size=8192"). `--max-old-space-size` bounds only the
+          # V8 heap, not total RSS; sharp/libvips allocate outside it, so on a
+          # 16 GB ubuntu-latest runner a larger heap risks a kernel OOM (137),
+          # not a cleaner build. The warm `.astro-cache-nimbus/assets` cache
+          # keeps image RSS low. If the cold Nimbus tree OOMs at 8192, that's
+          # the F2 memory item surfacing — and a real, must-know signal that
+          # the gate budget isn't met yet, not a number to paper over here.
+          NODE_OPTIONS: "--max-old-space-size=8192"
+        run: |
+          set -o pipefail
+          pnpm run prebuild
+          pnpm exec astro build 2>&1 | tee nimbus-build.log
+
+      - name: Upload Nimbus build artifact
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: dist-nimbus
+          path: dist-nimbus
+          if-no-files-found: ignore
+
+      # The build log is the whole point of a drift check when it fails —
+      # capture it (don't discard to /tmp like ci.yml does) so a failed
+      # Nimbus build is inspectable from the run's artifacts.
+      - name: Upload Nimbus build log
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: nimbus-build-log
+          path: nimbus-build.log
+          if-no-files-found: ignore

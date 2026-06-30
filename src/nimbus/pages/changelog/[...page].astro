@@ -1,0 +1,55 @@
+---
+/**
+ * /changelog/ — paginated index of all (non-hidden) changelog entries.
+ * CF source: cloudflare-docs/src/pages/changelog/[...page].astro
+ * Design: Nimbus changelog feature (timeline feed); product model + server
+ * pagination kept.
+ */
+import type { GetStaticPaths, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
+import Header from "~/components/changelog/Header.astro";
+import Pagination from "~/components/changelog/Pagination.astro";
+import ChangelogFeed from "~/components/changelog/ChangelogFeed.astro";
+
+import { getChangelogs } from "~/util/changelog";
+
+export const prerender = true;
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const visibleNotes = await getChangelogs({
+    filter: (entry) => !entry.data.hidden,
+  });
+
+  return paginate(visibleNotes, { pageSize: 20 });
+}) satisfies GetStaticPaths;
+
+type Props = { page: Page<CollectionEntry<"changelog">> };
+
+const { page } = Astro.props as Props;
+---
+
+<ChangelogLayout
+  title="Changelog"
+  description="New features, improvements, and fixes."
+  head={[
+    {
+      tag: "link",
+      attrs: {
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: "Changelog RSS",
+        href: "/changelog/rss/index.xml",
+      },
+    },
+  ]}
+>
+  <Header rssHref="/changelog/rss/index.xml" />
+  <ChangelogFeed entries={page.data} />
+  <Pagination
+    currentPage={page.currentPage}
+    lastPage={page.lastPage}
+    baseUrl="/changelog/"
+  />
+</ChangelogLayout>

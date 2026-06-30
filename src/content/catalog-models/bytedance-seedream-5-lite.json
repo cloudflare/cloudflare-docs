@@ -223,9 +223,28 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image_input": {
+					"maxItems": 14,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				},
+				"size": {
+					"type": "string",
+					"enum": [
+						"2K",
+						"3K"
+					]
+				},
 				"aspect_ratio": {
+					"type": "string",
 					"enum": [
 						"match_input_image",
 						"1:1",
@@ -236,69 +255,50 @@
 						"3:2",
 						"2:3",
 						"21:9"
-					],
-					"type": "string"
-				},
-				"image_input": {
-					"items": {
-						"format": "uri",
-						"type": "string"
-					},
-					"maxItems": 14,
-					"type": "array"
-				},
-				"max_images": {
-					"maximum": 15,
-					"minimum": 1,
-					"type": "integer"
-				},
-				"output_format": {
-					"enum": [
-						"png",
-						"jpeg"
-					],
-					"type": "string"
-				},
-				"prompt": {
-					"type": "string"
+					]
 				},
 				"sequential_image_generation": {
+					"type": "string",
 					"enum": [
 						"disabled",
 						"auto"
-					],
-					"type": "string"
+					]
 				},
-				"size": {
+				"max_images": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 15
+				},
+				"output_format": {
+					"type": "string",
 					"enum": [
-						"2K",
-						"3K"
-					],
-					"type": "string"
+						"png",
+						"jpeg"
+					]
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"images": {
-					"items": {
-						"format": "uri",
-						"type": "string"
-					},
 					"minItems": 1,
-					"type": "array"
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
 				}
 			},
 			"required": [
 				"images"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

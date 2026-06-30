@@ -49,6 +49,36 @@ Instructs the client to direct all DNS queries to a specific [Gateway DNS locati
 
 You can use the following parameters to configure a specific Zero Trust organization.
 
+### `allow_managed_deployments`
+
+<Details header="Feature availability">
+
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                                                         | All plans                                                     |
+
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2026.6.0               |
+| macOS    | ✅           | 2026.6.0               |
+| Linux    | ❌           | —                      |
+| iOS      | ❌           | —                      |
+| Android  | ❌           | —                      |
+| ChromeOS | ❌           | —                      |
+
+</Details>
+
+Local kill switch for [client version assignments](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/client-version-assignments/) pushed from the Cloudflare dashboard. Use this parameter to opt a device out of dashboard-managed version changes regardless of what is configured in the dashboard.
+
+By default, the device applies any assignment the dashboard sends. If no assignment targets the device, the parameter has no effect.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+- `true` — (default) The device applies client version assignments configured for it in the Cloudflare dashboard. If no assignment targets the device, this setting has no effect.
+- `false` — The device ignores client version assignments and stays on its current installed version, regardless of what is configured in the dashboard.
+
 ### `auth_client_id`
 
 Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token).

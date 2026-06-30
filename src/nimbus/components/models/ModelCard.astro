@@ -1,0 +1,129 @@
+---
+/**
+ * ModelCard — one model as a flat grid cell, sharing the Directory shell
+ * (grid.ts): bg-background, 1px self-closing borders, rounded corner-mark
+ * squares at line intersections. Content hierarchy: logo + 18px title anchor,
+ * a 12px meta row (author • model type), 14px muted description, badges.
+ *
+ * The cell carries the `data-facet-*` / `data-name` / `data-date` attributes the
+ * catalog controller (models.client.ts) reads to filter, sort, and re-flow the
+ * corner marks. `index`/`cols` seed the build-time corner marks.
+ */
+import { Badge } from "~/components/ui/badge";
+import ModelBadges from "./ModelBadges.astro";
+import { authorData } from "~/components/models/data";
+import { facetValues, pinnedModelNames, type ModelCardData } from "~/util/models";
+import {
+  cellClass,
+  cornersFor,
+  cornerSpansHTML,
+} from "~/components/directory/grid";
+
+interface Props {
+  model: ModelCardData;
+  index: number;
+  cols: number;
+  basePath?: string;
+}
+
+const { model, index, cols, basePath = "/ai/models" } = Astro.props;
+// Card href: short last-path-segment slug under /workers-ai (legacy URLs),
+// else the full model id/slug (multi-segment under /ai).
+const slugSeg = basePath === "/workers-ai/models" ? model.shortName : model.name;
+const href = `${basePath}/${slugSeg}/`;
+const dateValue = model.createdAt ? new Date(model.createdAt).getTime() : 0;
+// Pinned-first sort tier: -1 when not pinned.
+const pinnedIndex = pinnedModelNames.indexOf(model.name);
+const isPinned = pinnedIndex >= 0;
+// Author logo; initial-letter tile when the author id is unmapped.
+const authorLogo = authorData[model.author]?.logo;
+---
+
+<div
+  data-models-cell
+  data-name={model.name.toLowerCase()}
+  data-facet-tasks={facetValues(model, "tasks").join("|")}
+  data-facet-capabilities={facetValues(model, "capabilities").join("|")}
+  data-facet-providers={facetValues(model, "providers").join("|")}
+  data-facet-authors={facetValues(model, "authors").join("|")}
+  data-date={dateValue}
+  data-pinned-index={pinnedIndex}
+  class={cellClass}
+>
+  <div
+    data-corner-marks
+    class="pointer-events-none absolute inset-0 z-10 select-none"
+    aria-hidden="true"
+    set:html={cornerSpansHTML(cornersFor(index, cols))}
+  />
+
+  {
+    isPinned && (
+      <span
+        class="pointer-events-none absolute top-2 right-2 z-20 text-sm leading-none select-none"
+        title="Pinned model"
+      >
+        📌
+      </span>
+    )
+  }
+
+  <a
+    href={href}
+    class="group/card relative flex h-full flex-col p-5 text-inherit! no-underline transition-colors duration-150 hover:bg-muted/30 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+  >
+    <div class="flex items-center gap-3">
+      {
+        authorLogo ? (
+          <img
+            src={authorLogo}
+            alt={`${model.authorName} logo`}
+            loading="lazy"
+            class="size-10 shrink-0 rounded-md border border-border bg-card object-contain p-1 dark:bg-gray-200"
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            class="flex size-10 shrink-0 items-center justify-center rounded-md border border-border bg-muted text-base font-bold text-foreground uppercase"
+          >
+            {model.author.charAt(0)}
+          </span>
+        )
+      }
+      <div class="flex min-w-0 flex-1 items-center gap-2">
+        <h3
+          class="line-clamp-2 text-sm leading-snug font-semibold break-words text-foreground group-hover/card:text-primary"
+        >
+          {model.shortName}
+        </h3>
+        {
+          model.beta && (
+            <Badge
+              text="Beta"
+              variant="caution"
+              size="small"
+              class="shrink-0"
+            />
+          )
+        }
+      </div>
+    </div>
+
+    <div
+      class="mt-3 mb-3 flex items-center justify-between gap-2 border-t border-border pt-3 text-xs"
+    >
+      <span class="truncate text-foreground">{model.authorName}</span>
+      <span class="shrink-0 font-mono tracking-wider text-foreground uppercase">
+        {model.task}
+      </span>
+    </div>
+
+    <p
+      class="mb-4 line-clamp-2 min-h-10 flex-1 text-sm leading-relaxed text-muted-foreground"
+    >
+      {model.description}
+    </p>
+
+    <ModelBadges model={model} />
+  </a>
+</div>

@@ -1,0 +1,85 @@
+---
+/**
+ * /changelog/post/<id>/ — a single changelog entry (permalink).
+ * CF source: cloudflare-docs/src/pages/changelog/post/[...slug].astro
+ * Design: Nimbus changelog feature (registry/features/changelog.md, 5h);
+ * product model kept (product pills instead of tag pills).
+ */
+import type { GetStaticPaths } from "astro";
+import { Icon } from "astro-icon/components";
+import { render } from "astro:content";
+
+import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+import { components } from "~/mdx-components";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const { getChangelogs } = await import("~/util/changelog");
+  const notes = await getChangelogs({});
+
+  return notes.map((note) => ({
+    params: { slug: note.id },
+    props: { note },
+  }));
+}) satisfies GetStaticPaths;
+
+const { note } = Astro.props;
+const { title, description, date, products } = note.data;
+
+const iso = date.toISOString().slice(0, 10);
+const dateLabel = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+
+const { Content } = await render(note);
+---
+
+<ChangelogLayout
+  title={title}
+  description={description}
+  noindex={note.data.hidden}
+>
+  <a
+    href="/changelog"
+    class="group mb-9 -ml-0.5 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-muted-foreground no-underline transition-[color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-foreground active:scale-[0.98] motion-reduce:active:scale-100"
+  >
+    <Icon
+      name="ph:arrow-left"
+      class="h-4 w-4 transition-transform duration-[160ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-x-0.5 motion-reduce:transform-none"
+    />
+    <span>Changelog</span>
+  </a>
+
+  <article>
+    <time
+      datetime={iso}
+      class="block text-[0.8125rem] font-medium tabular-nums text-muted-foreground"
+    >
+      {dateLabel}
+    </time>
+    {/* h1 token trio via inline style — site convention. */}
+    <h1
+      class="mt-2 text-balance leading-[1.15] text-foreground"
+      style="font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)"
+    >
+      {title}
+    </h1>
+
+    {
+      products.length > 0 && (
+        <div class="mt-4">
+          <ProductPills products={products} />
+        </div>
+      )
+    }
+
+    <div class="docs-content nb-cl-prose mt-9 max-w-none">
+      <Content components={components} />
+    </div>
+  </article>
+</ChangelogLayout>

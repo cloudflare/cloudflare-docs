@@ -1,0 +1,74 @@
+---
+/**
+ * /waf/change-log/changelog/ — paginated WAF changelog. CF source: the same
+ * path's `[...page].astro` (StarlightPage → DocsLayout). Sibling imports
+ * rewired to `cf/`; `<Content>` is given the MDX registry so admonitions
+ * resolve (the Nimbus convention). Body otherwise unchanged.
+ */
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import { format } from "date-fns";
+import { getSidebar } from "nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
+import Pagination from "~/components/changelog/Pagination.astro";
+import RSSButton from "~/components/cf/RSSButton.astro";
+import AnchorHeading from "~/components/cf/AnchorHeading.astro";
+import { components } from "@/mdx-components";
+import { getChangelogs } from "~/util/changelog";
+
+export const prerender = true;
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const entries = await getChangelogs({
+		filter: (entry) =>
+			!entry.data.hidden &&
+			!entry.data.publish_future_dated_entry &&
+			entry.data.products.some((p) => p.id === "waf"),
+	});
+
+	return paginate(entries, { pageSize: 25 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+const sectionSlug = "/waf/change-log/changelog/";
+const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
+---
+
+<DocsLayout
+	title="Changelog"
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={breadcrumbs}
+	prevNext={{}}
+	collection="docs"
+>
+	<Fragment slot="pagination" />
+	<RSSButton href="/changelog/rss/waf.xml" />
+
+	{
+		page.data.map(async (entry) => {
+			const { Content } = await render(entry);
+			return (
+				<>
+					<AnchorHeading
+						depth={2}
+						title={format(entry.data.date, "yyyy-MM-dd")}
+					/>
+					<br />
+					<strong>{entry.data.title}</strong>
+					<br />
+					<Content components={components} />
+				</>
+			);
+		})
+	}
+
+	<Pagination
+		currentPage={page.currentPage}
+		lastPage={page.lastPage}
+		baseUrl="/waf/change-log/changelog/"
+	/>
+</DocsLayout>

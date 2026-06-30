@@ -1,0 +1,90 @@
+name: Nimbus Preview Deploy
+
+# TEMPORARY (Starlight → Nimbus migration). On every merge to `production`,
+# builds the BUILD_TARGET=nimbus output and deploys it to the stable `nimbus`
+# Preview on the SAME `cloudflare-docs` Worker:
+#   https://nimbus-cloudflare-docs.<subdomain>.workers.dev
+#
+# Safety:
+#   • Uses `wrangler preview` (private beta) — NEVER `wrangler deploy` — so it
+#     cannot overwrite the production deployment or its route.
+#   • Independent workflow: it does not gate, slow, or fail the production
+#     `publish` workflow. It is not a required status check.
+#
+# This is deliberately separate from `nimbus-build.yml` (PR-time parity build,
+# non-deploying). Delete this whole file at cutover (Epic G1/H1), along with
+# `wrangler.preview.json` and `worker/index.preview.ts`.
+on:
+  push:
+    branches:
+      - production
+
+concurrency:
+  group: nimbus-preview-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    # Only deploy on merges performed by the migration author — mirrors the
+    # author scoping in `nimbus-build.yml`. On a `push` event there is no
+    # pull_request context, so we gate on `github.actor` (the person who merged
+    # the PR / pushed to production). Merges by anyone else skip this job
+    # entirely (shows as "skipped", never "failed") — zero impact on others.
+    # Extend to an allowlist if more people drive the migration.
+    if: >-
+      github.repository == 'cloudflare/cloudflare-docs' &&
+      github.actor == 'MohamedH1998'
+    name: Deploy Nimbus Preview
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: pnpm install --frozen-lockfile
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Restore Astro (Nimbus) assets from cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            .astro-cache-nimbus/assets
+          key: astro-nimbus-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-nimbus-assets-
+
+      - name: Build Nimbus target (→ dist-nimbus)
+        run: pnpm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_TARGET: nimbus
+
+      # Pushes a new deployment to the stable `nimbus` Preview on the same
+      # Worker. `wrangler preview` (private beta) never affects production.
+      - name: Deploy Nimbus Preview
+        run: pnpm exec wrangler preview --config wrangler.preview.json --name nimbus
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

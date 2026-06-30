@@ -3,6 +3,50 @@ link: "/realtime/realtimekit/release-notes/ios-core/"
 productName: RealtimeKit iOS Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-06-24"
+    title: RealtimeKit iOS Core 3.0.0
+    description: |-
+      **Breaking changes**
+
+      - Plugins are no longer provided by the server. They must now be declared upfront on the client side by passing a `plugins` list to `RtkMeetingInfo`. Any plugin not declared at initialization will not be available in the meeting.
+        ```swift
+        let meetingInfo = RtkMeetingInfo(
+          authToken: authToken,
+          plugins: [
+            RtkClientPluginConfig(
+              id: "whiteboard", // Must match the plugin ID used on Web for sync to work
+              name: "Whiteboard",
+              url: "https://example.com",
+              icon: "https://example.com/logo.png",
+              permissions: RtkClientPluginPermissions(canActivate: true, canDeactivate: false)
+            )
+          ]
+        )
+        ```
+      - Several internal properties have been removed from `RtkPlugin`: `baseURL`, `config`, `description`, `isPrivate`, and `staggered`. Use the new `icon` and `permissions` properties instead.
+      - `baseUrl` in `RtkMeetingInfo` now has a default value and no longer needs to be passed explicitly.
+      - The two-argument `subscribe(key:listener:)` and `unsubscribe(key:listener:)` overloads on `RtkStore` that passed both the key and value to the callback have been removed. Use the single-argument callback variants introduced in 2.1.0.
+
+      **Features**
+
+      - **AI Transcription** — A new `RtkAi` class (exposed as `client.ai`) provides access to real-time transcripts. Implement `RtkAiEventListener` and register it with `addAiEventListener(_:)` to receive `onTranscript(data:)` callbacks. A `transcriptionEnabled` permission is available on `MiscellaneousPermissions`.
+      - **Connected Meetings (Breakout Rooms)** — A new `RtkConnectedMeetings` class (exposed as `client.connectedMeetings`) enables breakout room workflows. Register an `RtkConnectedMeetingsEventListener` to handle room transitions and state updates. See the [Breakout Rooms](/realtime/realtimekit/core/breakout-rooms/) documentation for a full guide.
+      - **Chat: Edit and Delete** — Messages can now be edited and deleted. New methods on `RtkChat`: `editTextMessage(messageId:newText:onResult:)`, `editImageMessage(messageId:newUri:onResult:)`, `editFileMessage(messageId:newUri:onResult:)`, and `deleteMessage(messageId:onResult:)`. `RtkChatEventListener` gains `onMessageEdited(message:)` and `onMessageDeleted(messageId:)` callbacks. `ChatMessage` now includes an `isEdited` flag.
+      - **Chat: Fetch and Pagination** — New methods on `RtkChat` — `fetchPublicMessages(beforeTimestamp:count:onlyPinned:onResult:)`, `fetchPrivateMessages(userId:beforeTimestamp:count:onlyPinned:onResult:)`, `fetchPinnedMessages(beforeTimestamp:count:onlyPinned:onResult:)`, and `getMessages(timestamp:count:channelId:isPinned:onResult:)` — allow fetching historical messages with cursor-based pagination via `FetchMessagesResult(messages:hasMore:)`.
+      - **Client-Declared Plugins** — Plugins are now configured entirely on the client via `RtkClientPluginConfig` and `RtkClientPluginPermissions`. `RtkPlugin` exposes the new `icon` and `permissions` properties accordingly.
+      - **Targeted Broadcast Messages** — `RtkParticipants.broadcastMessage(message:targetParticipantIds:payload:)` sends a message to a specific subset of participants.
+      - **Nullable Store Values** — `RtkStore.set(key:value:broadcast:persist:)` now accepts a nullable `value: Any?`, allowing keys to be cleared by setting them to `nil`.
+      - **Logging Control** — `RealtimeKitClient` gains `enableLogging(_:)` and `enableLogging(_:minSeverity:)` to control SDK log output at runtime.
+      - **Result\_ Utility Type** — A new `Result_<S, F>` type with `Success` and `Failure` variants is used consistently across new async APIs. It is named `Result_` to avoid collision with Swift's built-in `Result` type.
+
+      **Fixes**
+
+      - Improved reconnection handling to ensure media recovers gracefully in more scenarios
+      - Fixed potential UI hangs by dispatching audio route change observer off the main thread
+      - Improved simulcast tiers to broadcast at a wider range of qualities on higher tiers
+      - Fixed some races in media handling causing mute/unmute operations to rarely result in a crash
+      - Optimized API calls in the room join flow to speed up first join durations
+      - Fixed file and image uploads in chat failing under some conditions
   - publish_date: "2026-05-08"
     title: RealtimeKit iOS Core 2.1.0
     description: |-

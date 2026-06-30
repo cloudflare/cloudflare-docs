@@ -1,0 +1,113 @@
+---
+import { Icon } from "astro-icon/components";
+import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
+---
+
+<Dialog aria-label="Search documentation" data-search-dialog>
+  <DialogContent class="max-w-xl bg-muted shadow-xl ring-border">
+    <div class="overflow-hidden rounded-t-lg bg-card border-b border-border">
+      <div class="flex items-center gap-3 border-b border-border px-4 py-3">
+        <Icon name="ph:magnifying-glass" class="h-4 w-4 shrink-0 text-muted-foreground" />
+        <input
+          data-search-input
+          role="combobox"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          aria-controls="search-listbox"
+          type="text"
+          placeholder="Search documentation…"
+          class="min-w-0 flex-1 border-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+          autocomplete="off"
+          spellcheck="false"
+          autocorrect="off"
+          autocapitalize="none"
+        />
+        <DialogClose class="rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+          Esc
+        </DialogClose>
+      </div>
+
+      <div
+        data-search-results
+        role="listbox"
+        id="search-listbox"
+        aria-orientation="vertical"
+        class="min-h-40 overflow-y-auto p-2"
+      >
+        <p data-search-empty class="py-8 text-center text-sm text-muted-foreground">
+          Type to search…
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4 px-4 py-2.5 text-xs text-muted-foreground/80">
+      <span>↑↓ navigate</span>
+      <span>↵ select</span>
+      <span>Esc close</span>
+    </div>
+  </DialogContent>
+</Dialog>
+
+<script>
+  import { initSearch } from "./search.client";
+  import { provider } from "./providers/pagefind";
+
+  type SearchDialogElement = HTMLDialogElement & {
+    __openSearchDialog?: () => void;
+  };
+
+  function primaryDialog(): SearchDialogElement | null {
+    return document.querySelector<SearchDialogElement>("[data-search-dialog][data-search-ready]");
+  }
+
+  function bindGlobals() {
+    if (document.documentElement.hasAttribute("data-search-globals")) return;
+    document.documentElement.setAttribute("data-search-globals", "true");
+
+    document.addEventListener("click", (event) => {
+      const trigger = (event.target as Element | null)?.closest("[data-search-trigger]");
+      if (!trigger) return;
+      primaryDialog()?.__openSearchDialog?.();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "k") return;
+      const dialog = primaryDialog();
+      if (!dialog) return;
+      event.preventDefault();
+      if (dialog.open) dialog.close();
+      else dialog.__openSearchDialog?.();
+    });
+  }
+
+  function initSearchDialog() {
+    document.querySelectorAll<SearchDialogElement>("[data-search-dialog]").forEach((dialog) => {
+      if (dialog.hasAttribute("data-search-ready")) return;
+      dialog.setAttribute("data-search-ready", "true");
+
+      const input = dialog.querySelector<HTMLInputElement>("[data-search-input]");
+      const resultsContainer = dialog.querySelector<HTMLElement>("[data-search-results]");
+      const emptyState = dialog.querySelector<HTMLElement>("[data-search-empty]");
+      if (!input || !resultsContainer || !emptyState) return;
+
+      const search = initSearch({
+        input,
+        resultsContainer,
+        emptyState,
+        provider,
+        onNavigate: () => dialog.close(),
+      });
+
+      dialog.__openSearchDialog = () => {
+        if (!dialog.open) dialog.showModal();
+        void search.reset();
+      };
+    });
+
+    bindGlobals();
+  }
+
+  initSearchDialog();
+  document.addEventListener("astro:page-load", initSearchDialog);
+</script>

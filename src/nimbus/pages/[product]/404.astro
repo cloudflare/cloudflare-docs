@@ -1,0 +1,47 @@
+---
+// Per-product 404 — keeps the product sidebar (not splash), unlike the site /404.
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import { getSidebar } from "nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { externalAppLinksTransform } from "~/util/sidebar";
+import FourOhFour from "~/components/404.astro";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const sections = await getCollection("docs", (e) => {
+    return e.id.split("/").length === 1;
+  });
+
+  return sections.map((section) => {
+    return {
+      params: {
+        product: section.id,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { product } = Astro.params;
+
+const sectionSlug = `/${product}/404/`;
+const sidebar = await getSidebar(sectionSlug, {
+  collection: "docs",
+  transform: externalAppLinksTransform,
+});
+---
+
+<DocsLayout
+  title="404 - Page Not Found"
+  sidebar={sidebar}
+  headings={false}
+  breadcrumbs={[]}
+  prevNext={{}}
+  collection="docs"
+  noindex
+>
+  <Fragment slot="page-title" />
+  <Fragment slot="pagination" />
+  <FourOhFour />
+</DocsLayout>

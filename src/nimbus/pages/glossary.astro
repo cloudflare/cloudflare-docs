@@ -1,0 +1,43 @@
+---
+/**
+ * /glossary/ — full glossary catalog.
+ *
+ * CF source: src/pages/glossary.astro (StarlightPage `template: "splash"`).
+ * Nimbus redesign: shared splash shell + directory/changelog-style blueprint
+ * framing and centered hero. Glossary behavior remains the original search +
+ * table + view-more flow.
+ */
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import { Glossary as GlossaryComponent } from "~/components";
+import { Badge } from "~/components";
+
+export const prerender = true;
+---
+
+<SplashLayout
+  title="Glossary"
+  description="Search Cloudflare terms and definitions across products, security concepts, and developer platform primitives."
+>
+  <div class="relative">
+    <BackgroundLines inner={1120} outer={1360} />
+    <div
+      class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
+    >
+      <header class="mx-auto max-w-2xl text-center">
+        <h1
+          class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+        >
+          Glossary
+        </h1>
+        <div class="mb-5 flex items-center justify-center gap-2">
+          <Badge text="Beta" variant="caution" size="medium" />
+        </div>
+      </header>
+
+      <section class="mt-12 pt-10" aria-label="Glossary terms">
+        <GlossaryComponent />
+      </section>
+    </div>
+  </div>
+</SplashLayout>

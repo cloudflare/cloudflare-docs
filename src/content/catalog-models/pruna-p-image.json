@@ -96,11 +96,16 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"description": "Text description of the image to generate. The model automatically enhances prompts for better results.",
+					"type": "string"
+				},
 				"aspect_ratio": {
-					"default": "16:9",
 					"description": "Aspect ratio for the image. Use \"custom\" with width/height for exact dimensions.",
+					"default": "16:9",
+					"type": "string",
 					"enum": [
 						"1:1",
 						"16:9",
@@ -110,57 +115,52 @@
 						"3:2",
 						"2:3",
 						"custom"
-					],
-					"type": "string"
+					]
 				},
-				"disable_safety_checker": {
-					"default": false,
-					"description": "Disable safety checker for generated images.",
-					"type": "boolean"
+				"width": {
+					"description": "Custom width in pixels (256-1440, multiple of 16). Only used when aspect_ratio=\"custom\".",
+					"type": "integer",
+					"minimum": 256,
+					"maximum": 1440,
+					"multipleOf": 16
 				},
 				"height": {
 					"description": "Custom height in pixels (256-1440, multiple of 16). Only used when aspect_ratio=\"custom\".",
-					"maximum": 1440,
+					"type": "integer",
 					"minimum": 256,
-					"multipleOf": 16,
-					"type": "integer"
-				},
-				"hf_api_token": {
-					"description": "HuggingFace API token for accessing private LoRAs. This credential is forwarded verbatim to Pruna. It is only written to gateway request-body logs when the gateway-level collectLogPayload debug flag is explicitly enabled \u2014 it never appears in structured analytics logs.",
-					"type": "string"
-				},
-				"lora_scale": {
-					"default": 0.5,
-					"description": "How strongly the LoRA should be applied (-1 to 3).",
-					"maximum": 3,
-					"minimum": -1,
-					"type": "number"
+					"maximum": 1440,
+					"multipleOf": 16
 				},
 				"lora_weights": {
 					"description": "Load LoRA weights. Supports HuggingFace URLs in the format huggingface.co/<owner>/<model-name>[/<file.safetensors>].",
 					"type": "string"
 				},
-				"prompt": {
-					"description": "Text description of the image to generate. The model automatically enhances prompts for better results.",
+				"lora_scale": {
+					"description": "How strongly the LoRA should be applied (-1 to 3).",
+					"default": 0.5,
+					"type": "number",
+					"minimum": -1,
+					"maximum": 3
+				},
+				"hf_api_token": {
+					"description": "HuggingFace API token for accessing private LoRAs. This credential is forwarded verbatim to Pruna. It is only written to gateway request-body logs when the gateway-level collectLogPayload debug flag is explicitly enabled \u2014 it never appears in structured analytics logs.",
 					"type": "string"
 				},
 				"prompt_upsampling": {
-					"default": false,
 					"description": "Upsample the prompt with an LLM for enhanced results.",
+					"default": false,
 					"type": "boolean"
 				},
 				"seed": {
 					"description": "Random seed for reproducible generation.",
-					"maximum": 9007199254740991,
+					"type": "integer",
 					"minimum": -9007199254740991,
-					"type": "integer"
+					"maximum": 9007199254740991
 				},
-				"width": {
-					"description": "Custom width in pixels (256-1440, multiple of 16). Only used when aspect_ratio=\"custom\".",
-					"maximum": 1440,
-					"minimum": 256,
-					"multipleOf": 16,
-					"type": "integer"
+				"disable_safety_checker": {
+					"description": "Disable safety checker for generated images.",
+					"default": false,
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -170,22 +170,22 @@
 				"prompt_upsampling",
 				"disable_safety_checker"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
 				"image": {
 					"description": "Presigned URL for the generated image.",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

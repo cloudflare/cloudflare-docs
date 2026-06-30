@@ -1,0 +1,204 @@
+---
+title: Vary
+pcx_content_type: concept
+description: Cache multiple versions of the same URL based on the request headers your origin varies on.
+products:
+  - cache
+tags:
+  - Headers
+---
+
+import { FeatureTable } from "~/components";
+
+The [`Vary`](https://www.rfc-editor.org/rfc/rfc9110.html#name-vary) HTTP response header tells Cloudflare that an origin can serve different responses for the same URL depending on request headers. For example, an origin might serve different languages based on `Accept-Language`, or different content formats based on `Accept`.
+
+By default, Cloudflare's CDN constructs [cache keys](/cache/how-to/cache-keys/) from a request's URL and a handful of specific headers. [Cache Rules](/cache/how-to/cache-rules/) can add other request properties to the cache key ahead of time. The `Vary` response header lets the origin decide which request headers matter when Cloudflare receives the response.
+
+:::note
+A response containing `Vary: *` always bypasses cache, regardless of your Vary configuration.
+:::
+
+This page explains how Vary affects caching. To configure it, refer to [Vary](/cache/how-to/cache-rules/settings/#vary) in the Cache Rules settings.
+
+This feature is distinct from [Vary for images](/cache/advanced-configuration/vary-for-images/), which serves image format variants based on the `Accept` header through a separate cache variants rule.
+
+## Availability
+
+<FeatureTable id="cache.vary" />
+
+## How Vary affects cache keys
+
+When Cloudflare caches a response with a `Vary` header, the listed request headers become part of the cache key for that response, following the HTTP caching behavior described in [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html#name-calculating-cache-keys-with). The same URL can then have multiple cached versions, each selected by the request header values named in the origin's `Vary` response.
+
+Cloudflare does not vary every cached response just because Vary is configured in a Cache Rule. The origin response must include a `Vary` header. Cloudflare then uses the configured action for each listed header to decide which request header value is added to the cache key.
+
+For example, assume the origin returns this response:
+
+```txt
+Vary: Accept-Language
+Cache-Control: public, max-age=3600
+```
+
+This tells Cloudflare that the value of the `Accept-Language` request header should be part of the cache key.
+
+With `accept-language` configured to `normalize`, these two requests can use the same cached version:
+
+```txt
+Accept-Language: en-US, fr;q=0.8
+Accept-Language: fr;q=0.8, en-GB
+```
+
+Both request headers normalize to the same language preference order, `en,fr`. A request with a different normalized value, such as `Accept-Language: fr, en;q=0.8`, creates or selects a different cached version of the same URL.
+
+When a response varies on multiple headers, Cloudflare includes each listed header in the cache key. For example, a response with `Vary: Accept, Accept-Language` uses both the configured `accept` value and the configured `accept-language` value to select the cached response.
+
+If the origin response does not include a `Vary` header, Cloudflare caches the response normally. If the origin response includes a `Vary` header name configured to `bypass` cache, Cloudflare does not store that response.
+
+## Actions
+
+Each configured header uses one of three actions:
+
+| Action        | Meaning                                                                                                                                                       | When to use                                                                               |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `normalize`   | Normalize the request header value before selecting the cached version. For selected headers, Cloudflare may also forward the normalized value to the origin. | Most `Accept`, `Accept-Language`, and `Accept-Encoding` use cases.                        |
+| `passthrough` | Use the raw request header value to select the cached version. The header is forwarded to the origin unchanged.                                               | When byte-for-byte differences in the header value should create different versions.      |
+| `bypass`      | Bypass cache when this header name appears in the origin's `Vary` response.                                                                                   | Headers with too many possible values, per-user values, or values you do not want cached. |
+
+### Normalize
+
+`normalize` reduces unnecessary cached versions by converting equivalent request header values into the same cache key value.
+
+For example, these two `Accept` headers can normalize to the same value:
+
+```txt
+Accept: text/html, application/json;q=0.9
+Accept: application/json;q=0.9, text/html
+```
+
+### Passthrough
+
+`passthrough` uses the raw request header value when selecting a cached version. Semantically equivalent values can still create different cached versions if the bytes differ.
+
+For example, under `passthrough`, these two requests select different cached versions:
+
+```txt
+Accept: text/html, application/json
+Accept: application/json, text/html
+```
+
+Use `passthrough` only when the exact header value matters to your origin and should matter to the cache.
+
+### Bypass
+
+`bypass` tells Cloudflare not to cache a response when the origin's `Vary` response includes that header name.
+
+For example, if your configuration sets `user-agent` to `bypass`, a response with this header is not cached:
+
+```txt
+Vary: User-Agent
+```
+
+## Normalization behavior
+
+Vary normalization is the normalization performed when the configured action is `normalize`. It affects how Cloudflare selects a cached version and, for some headers, what Cloudflare forwards to the origin.
+
+Normalization is optional but recommended for most deployments because it reduces the number of cached versions and improves cache hit ratio.
+
+When a header's action is `normalize`, Cloudflare uses the normalized value to select the cached version. Normalization can be lossy: it may reorder values, drop quality values, lowercase values, or remove entries that are not in a configured allowlist.
+
+### Origin request headers
+
+For `Accept`, `Accept-Language`, and `Accept-Encoding` with [Respect Strong ETags](/cache/how-to/cache-rules/settings/#respect-strong-etags) enabled, Cloudflare may also forward the normalized header value to the origin. This keeps the response generated by the origin consistent with the cache key value Cloudflare uses for caching.
+
+For example, if `accept-language` normalizes these two requests to `en,fr`, Cloudflare forwards `Accept-Language: en,fr` to the origin on a cache miss or revalidation:
+
+```txt
+Accept-Language: en-US, fr;q=0.8
+Accept-Language: fr;q=0.8, en-GB
+```
+
+Forwarding the normalized value prevents Cloudflare from storing a response generated for one raw header value under a broader normalized value that another request could later reuse incorrectly.
+
+This origin request rewrite applies to:
+
+- `Accept`
+- `Accept-Language`
+- `Accept-Encoding`, only when Respect Strong ETags is enabled
+
+This rewrite does not apply to:
+
+- Headers configured as `passthrough`
+- Headers configured as `bypass`
+- Other generic headers
+
+This rewrite happens before Cloudflare receives the origin response, so it is based on your Cache Rule configuration. If `Accept`, `Accept-Language`, or `Accept-Encoding` is configured with `normalize`, Cloudflare rewrites that request header when forwarding to the origin even if the origin's eventual response does not list that header in `Vary`. Cache selection and bypass still depend on the origin response's `Vary` header.
+
+If normalization reduces a header to an empty value — for example, because none of the request's values match a configured `media_types` or `languages` list — Cloudflare removes that header from the origin request.
+
+### Accept
+
+Cloudflare normalizes the `Accept` request header in the following steps:
+
+1. Convert MIME types to lowercase.
+2. Strip optional whitespace.
+3. Sort MIME types by quality value. Types with the same quality value are sorted alphabetically.
+4. Strip parameters.
+
+Quality values are used for sorting and then removed from the normalized value. `q=0` is preserved because it means "not acceptable" and should remain distinguishable from a low-priority value.
+
+You can provide an optional `media_types` list. If provided, any MIME type not in the list is removed from the normalized value.
+
+### Accept-Language
+
+Cloudflare normalizes the `Accept-Language` request header in the following steps:
+
+1. Convert languages to lowercase.
+2. Strip optional whitespace.
+3. Sort languages by quality value. Languages with the same quality value are sorted alphabetically.
+4. Strip parameters.
+5. Strip region variants. For example, `en-US` becomes `en`. If multiple region variants of the same language are present, they are combined into a single item.
+
+Quality values are used for sorting and then removed from the normalized value. `q=0` is preserved because it means "not acceptable" and should remain distinguishable from a low-priority value.
+
+You can provide an optional `languages` list. If provided, any language not in the list is removed from the normalized value. If an item in the list specifies a region variant, and there is a matching item in the request header, the region variant is retained in the normalized value.
+
+### Accept-Encoding
+
+By default, Cloudflare's CDN overrides the `Accept-Encoding` header based on the enabled compression encodings. If Brotli compression is enabled, the `Accept-Encoding` forwarded to the origin is `gzip, br`. If Brotli compression is not enabled, the `Accept-Encoding` forwarded to the origin is `gzip`. Cloudflare can then recompress cached assets based on the visitor's `Accept-Encoding`. For details, refer to [ETag headers](/cache/reference/etag-headers/).
+
+This behavior can be turned off by enabling [Respect Strong ETags](/cache/how-to/cache-rules/settings/#respect-strong-etags). With Respect Strong ETags enabled, the visitor's `Accept-Encoding` is forwarded to the origin instead of Cloudflare's compression override. If Vary normalization is enabled for `Accept-Encoding`, the normalized value is used both to select the cached version and as the value forwarded to the origin.
+
+Because Cloudflare controls `Accept-Encoding` when Respect Strong ETags is turned off, `Accept-Encoding` normalization only rewrites the origin request when Respect Strong ETags is turned on.
+
+Cloudflare normalizes the `Accept-Encoding` request header in the following steps:
+
+1. Convert encodings to lowercase.
+2. Strip optional whitespace.
+3. Sort encodings by quality value. Encodings with the same quality value are sorted alphabetically.
+4. Strip parameters.
+
+Quality values are used for sorting and then removed from the normalized value. `q=0` is preserved because it means "not acceptable" and should remain distinguishable from a low-priority value.
+
+### Other headers
+
+For any header other than `Accept`, `Accept-Language`, and `Accept-Encoding`, Cloudflare does not know the field's semantics. Normalization is restricted to transformations that are safe for any header:
+
+- Multiple header field lines for the same header are combined into a single comma-separated value in the order received.
+- Optional whitespace around each value is trimmed.
+
+Values are not reordered, lowercased, deduplicated, or otherwise altered, because the order and contents of an arbitrary header may be significant.
+
+For example, these two header field lines:
+
+```txt
+X-Custom-Header: Value2
+X-Custom-Header: Value1
+```
+
+When selecting a cached version, Cloudflare combines these values as `Value2,Value1`. The header forwarded to the origin is not rewritten.
+
+## Purge behavior
+
+Purging a URL purges all cached versions for that URL. You do not need to send a separate [purge](/cache/how-to/purge-cache/) request for each `Vary` header value. This applies to purge methods that target the cached object, such as purge by URL, tag, hostname, prefix, or purge everything.
+
+Changing Vary configuration does not itself purge cached content. Because a new Vary configuration can change how cached versions are selected, requests may miss and refill under the new cache keys until the old cached entries expire or are purged.

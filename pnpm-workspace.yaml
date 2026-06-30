@@ -2,6 +2,23 @@
 # 1440 minutes = 24 hours. Reduces risk from newly-published compromised packages.
 minimumReleaseAge: 1440
 
+# First-party package published as part of the Nimbus migration; exempt from the
+# age guard so freshly-cut versions install without a 24h wait.
+minimumReleaseAgeExclude:
+  - nimbus-docs
+
+# @astrojs/mdx's @astrojs/markdown-satteri peer is optional and only engages when
+# markdown.processor is Sätteri (the Nimbus target, via nimbus-docs's pinned mdx
+# 6.0.1 + markdown-satteri 0.2.1). nimbus-docs pulls 0.2.1 into the tree, and pnpm
+# satisfies every mdx's optional peer from it — including Starlight's mdx 6.0.3,
+# which prefers 0.3.0 but never loads the Sätteri bridge (verified inert). The
+# wiring is identical with or without this rule; it only silences the cosmetic
+# version-mismatch warning. Pulling markdown-satteri 0.3.x instead would drag in
+# an unused satteri 0.9 major, so accept 0.2.1 for the peer everywhere.
+peerDependencyRules:
+  allowedVersions:
+    "@astrojs/mdx>@astrojs/markdown-satteri": "0.2.1"
+
 # Prevent transitive dependencies from using exotic sources (git repos, direct tarball URLs).
 # Only direct dependencies may use exotic sources.
 blockExoticSubdeps: true

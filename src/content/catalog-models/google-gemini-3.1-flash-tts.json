@@ -140,46 +140,16 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"maxOutputTokens": {
-					"description": "Maximum number of tokens to generate",
-					"exclusiveMinimum": 0,
-					"maximum": 9007199254740991,
-					"type": "integer"
-				},
-				"stopSequences": {
-					"description": "Sequences where the model will stop generating further tokens",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"temperature": {
-					"description": "Controls randomness in generation (0-2)",
-					"maximum": 2,
-					"minimum": 0,
-					"type": "number"
-				},
 				"text": {
 					"description": "The text to convert to speech. Maximum 10,000 characters.",
-					"maxLength": 10000,
-					"type": "string"
-				},
-				"topK": {
-					"description": "Only sample from the top K tokens. Smaller K = more focused, larger K = more diverse",
-					"exclusiveMinimum": 0,
-					"maximum": 9007199254740991,
-					"type": "integer"
-				},
-				"topP": {
-					"description": "Nucleus sampling threshold (0-1). Tokens with cumulative probability up to topP are considered",
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
+					"type": "string",
+					"maxLength": 10000
 				},
 				"voice": {
 					"description": "The voice to use for speech synthesis",
+					"type": "string",
 					"enum": [
 						"Zephyr",
 						"Puck",
@@ -211,18 +181,48 @@
 						"Sadachbia",
 						"Sadaltager",
 						"Sulafat"
-					],
-					"type": "string"
+					]
+				},
+				"temperature": {
+					"description": "Controls randomness in generation (0-2)",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"topP": {
+					"description": "Nucleus sampling threshold (0-1). Tokens with cumulative probability up to topP are considered",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"topK": {
+					"description": "Only sample from the top K tokens. Smaller K = more focused, larger K = more diverse",
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991
+				},
+				"maxOutputTokens": {
+					"description": "Maximum number of tokens to generate",
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991
+				},
+				"stopSequences": {
+					"description": "Sequences where the model will stop generating further tokens",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				}
 			},
 			"required": [
 				"text"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"audio": {
 					"description": "Base64-encoded audio data (WAV format)",
@@ -232,7 +232,7 @@
 			"required": [
 				"audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }
