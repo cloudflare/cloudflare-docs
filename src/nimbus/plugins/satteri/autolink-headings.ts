@@ -1,5 +1,3 @@
-// Adapted from cloudflare-docs (src/plugins/rehype/autolink-headings.ts).
-//
 // Wraps each heading that has an id in a `.heading-wrapper` div and appends an
 // `.anchor-link`. Runs after heading-slugs (ids exist) and before the built-in
 // heading-ids, which still finds the wrapped heading and honours its id.
@@ -32,7 +30,7 @@ function anchorIcon(): Element {
   };
 }
 
-export default function rehypeAutolinkHeadings(): HastPluginDefinition {
+export default function autolinkHeadings(): HastPluginDefinition {
   return {
     name: "cf-autolink-headings",
     element: {

@@ -1,11 +1,9 @@
 ---
-// Relative imports: `~` resolves to src/nimbus here, not the shared CF root.
 import { z } from "astro/zod";
-import { marked } from "marked";
 import { slug as GithubSlug } from "github-slugger";
+import { defineHastPlugin, markdownToHtml } from "satteri";
 
-import { process } from "../../../util/rehype";
-import rehypeAutoLinkHeadings from "../../../plugins/rehype/autolink-headings";
+import autolinkHeadings from "../../plugins/satteri/autolink-headings";
 
 type Props = z.infer<typeof props>;
 
@@ -16,15 +14,23 @@ const props = z.object({
 });
 
 const { title, slug, depth } = props.parse(Astro.props);
-
 const slugified = GithubSlug(slug ?? title);
+const headingTitle = title.replace(/\r?\n/g, " ");
 
-const tag = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+const setHeadingId = defineHastPlugin({
+  name: "cf-anchor-heading-id",
+  element: {
+    filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
+    visit(node, ctx) {
+      ctx.setProperty(node, "id", slugified);
+    },
+  },
+});
 
-const html = await process(
-  `<${tag} id=${slugified}>${marked.parseInline(title)}</${tag}>`,
-  [rehypeAutoLinkHeadings],
-);
+const { html } = markdownToHtml(`${"#".repeat(depth)} ${headingTitle}`, {
+  features: { gfm: true, smartPunctuation: false },
+  hastPlugins: [setHeadingId, autolinkHeadings],
+});
 ---
 
 <Fragment set:html={html} />

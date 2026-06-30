@@ -1,5 +1,3 @@
-// Adapted from cloudflare-docs (src/plugins/rehype/heading-slugs.ts).
-//
 //   ## foo {/* bar */}  ->  <h2 id="bar">foo</h2>
 //
 // Runs after external-links, so the arrow on any external link inside a
@@ -7,9 +5,6 @@
 // form: Sätteri invokes the factory per compile) for deterministic -1/-2
 // dedupe. Sets `properties.id`; the built-in heading-ids honours it.
 //
-// A trailing `{/* id */}` arrives as an `mdxTextExpression` child in the .mdx
-// pipeline; the literal-text form is handled as a fallback for .md.
-
 import GithubSlugger from "github-slugger";
 import type {
   Element,
@@ -29,7 +24,7 @@ function setSlug(
   ctx.setProperty(node, "id", slug);
 }
 
-export default function rehypeHeadingSlugs(): HastPluginDefinition {
+export default function headingSlugs(): HastPluginDefinition {
   const slugger = new GithubSlugger();
 
   return {
