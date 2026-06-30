@@ -3,6 +3,12 @@ link: "/realtime/realtimekit/release-notes/flutter-ui-kit/"
 productName: RealtimeKit Flutter UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-06-30"
+    title: RealtimeKit Flutter UI Kit 0.4.0
+    description: |-
+      **Enhancements**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.2.0](/realtime/realtimekit/release-notes/flutter-core/#2026-06-30)
   - publish_date: "2026-01-17"
     title: RealtimeKit Flutter UI Kit 0.3.0
     description: |-

@@ -3,6 +3,35 @@ link: "/realtime/realtimekit/release-notes/flutter-core/"
 productName: RealtimeKit Flutter Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-06-30"
+    title: RealtimeKit Flutter Core 0.2.0
+    description: |-
+      **Features**
+
+      - Added `pinMessage()` and `unpinMessage()` methods to `RtkChat`
+      - Added `getMessagesByUser(userId)` and `getMessagesByType(type)` filtering helpers to `RtkChat`
+      - Added paginated `getMessages()` to `RtkChat` for fetching message history
+      - Exposed `characterLimit` and `rateLimit` configuration on `RtkChat`
+      - Added `activeSpeaker` getter on `RtkParticipants`
+      - Added `getAll()` method on `RtkParticipants` to return all participants across all pages
+      - Added `getTotalCount()` method on `RtkParticipants`
+      - Added `addParticipantUpdateListener` and `removeParticipantUpdateListener` for per-participant update events
+      - Added `pause()` and `resume()` methods to the recording API
+      - Added `paused` state to `RecordingState` enum
+      - Added `viewers` getter on the stage object
+      - Added `getPresetInfo()` to `RtkSelfParticipant` to retrieve the local user's preset configuration
+      - Added UI flow helper methods to `RtkSelfParticipant`: `shouldJoinMediaRoom()`, `shouldShowSetupScreen()`, and `getRoomJoined()`
+      - Added permission check methods to `RtkSelfParticipant`
+      - Added `onMediaConnectionUpdate(MediaConnectionUpdate)` callback to `RtkMeetingRoomEventListener`
+
+      **Fixes**
+
+      - Fixed `setAudioDevice()`, `setVideoDevice()`, waiting room, and stage calls hanging indefinitely on Android
+      - Fixed a NullPointerException crash in the participant update listener on Android
+      - Fixed `meeting.participants.grid` returning the wrong type — now correctly returns `RtkGridPagesInfo` (includes `shouldShowPaginator`); `GridPagesInfo` is deprecated
+      - Fixed `activeSpeaker` not being preserved across participant state updates
+      - Fixed duplicate native listener registrations causing repeated callbacks
+      - Fixed waiting room events not firing correctly due to incorrect listener check
   - publish_date: "2026-01-17"
     title: RealtimeKit Flutter Core 0.1.5+1
     description: |-
