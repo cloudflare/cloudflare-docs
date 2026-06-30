@@ -82,7 +82,7 @@ The Duration per request chart shows historical [duration](/workers/platform/lim
 
 The Memory usage chart shows how much V8 isolate memory your Worker uses at the time of each invocation, broken down into P50, P90, P99, and P999 percentiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). For more information, refer to [Interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
 
-Workers run in V8 [isolates](/workers/reference/how-workers-works/#isolates), each with a [128 MB memory limit](/workers/platform/limits/#memory). A single isolate can handle many concurrent requests and shares memory across them. The memory usage metric reflects how much of this shared pool is in use at the time of each invocation.
+Workers run in V8 [isolates](/workers/reference/how-workers-works/#isolates), each with a [128 MB memory limit](/workers/platform/limits/#memory). A single isolate can handle many concurrent requests and shares memory across them. The memory usage metric reflects how much of this shared memory is in use at the time of each invocation.
 
 Deployment markers on the chart let you correlate memory changes with specific code deployments, making it easier to identify whether a new version introduced a memory regression.
 
