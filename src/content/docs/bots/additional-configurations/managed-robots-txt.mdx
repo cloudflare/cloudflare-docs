@@ -196,8 +196,8 @@ Cloudflare is testing `content-use`, an optional extension to [Content Signals](
 For customers who have turned on the managed `robots.txt` setting, Cloudflare adds `use=reference` to the managed content, in line with the existing default of `search=yes,ai-train=no`:
 
 ```txt title="Managed robots.txt with the content-use signal"
-User-agent: *
-Content-Signal: search=yes,ai-train=no,use=reference
+User-Agent: *
+Content-signal: search=yes, ai-train=no, use=reference
 Allow: /
 ```
 
