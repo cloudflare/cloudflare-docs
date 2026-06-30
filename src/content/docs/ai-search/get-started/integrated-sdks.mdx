@@ -1,0 +1,141 @@
+---
+title: Integrated SDKs
+pcx_content_type: get-started
+sidebar:
+  order: 4
+description: Use AI Search from the Cloudflare Python SDK and Workers TypeScript bindings.
+products:
+  - ai-search
+---
+
+import { TypeScriptExample } from "~/components";
+
+Use AI Search from Python applications with the [Cloudflare Python SDK](https://github.com/cloudflare/cloudflare-python), or from a Worker with the Workers TypeScript binding.
+
+- [Python SDK](#python-sdk)
+- [Workers TypeScript binding](#workers-typescript-binding)
+
+## Prerequisites
+
+- Your [account ID](/fundamentals/account/find-account-and-zone-ids/).
+- An API token with **AI Search:Edit** and **AI Search:Run** permissions.
+- An AI Search instance with indexed content. To create one first, refer to [Dashboard](/ai-search/get-started/dashboard/), [REST API](/ai-search/get-started/api/), or [Wrangler commands](/ai-search/get-started/wrangler/).
+
+## Python SDK
+
+Install the official `cloudflare` package:
+
+```sh
+pip install cloudflare
+```
+
+Set your credentials:
+
+```sh
+export CLOUDFLARE_ACCOUNT_ID="<ACCOUNT_ID>"
+export CLOUDFLARE_API_TOKEN="<API_TOKEN>"
+```
+
+Search an AI Search instance:
+
+```python
+import os
+
+from cloudflare import Cloudflare
+
+client = Cloudflare(api_token=os.environ["CLOUDFLARE_API_TOKEN"])
+account_id = os.environ["CLOUDFLARE_ACCOUNT_ID"]
+
+results = client.aisearch.namespaces.instances.search(
+    "my-instance",
+    account_id=account_id,
+    name="my-namespace",
+    query="How do I get started with AI Search?",
+    aisearch_options={"retrieval": {"max_num_results": 3, "retrieval_type": "hybrid"}},
+)
+
+print(results.chunks[0].text)
+```
+
+Upload a file to an instance that uses [built-in storage](/ai-search/configuration/data-source/built-in-storage/):
+
+```python
+item = client.aisearch.namespaces.instances.items.upload(
+    "my-instance",
+    account_id=account_id,
+    name="my-namespace",
+    file={
+        "file": ("getting-started.md", b"AI Search indexes content.", "text/markdown"),
+        "wait_for_completion": True,
+    },
+    timeout=120,
+)
+
+print(item.status)
+```
+
+## Workers TypeScript binding
+
+Use a Workers binding to call AI Search without manually signing REST API requests. Add a namespace binding to your Wrangler configuration:
+
+```jsonc
+{
+	"compatibility_date": "2026-03-27",
+	"ai_search_namespaces": [
+		{
+			"binding": "AI_SEARCH",
+			"namespace": "my-namespace",
+		},
+	],
+}
+```
+
+Then call AI Search from your Worker:
+
+<TypeScriptExample>
+
+```ts
+export interface Env {
+	AI_SEARCH: AiSearchNamespace;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const query =
+			new URL(request.url).searchParams.get("q") ?? "What is Cloudflare?";
+
+		const results = await env.AI_SEARCH.get("my-instance").search({
+			messages: [{ role: "user", content: query }],
+			ai_search_options: {
+				retrieval: { max_num_results: 3, retrieval_type: "hybrid" },
+			},
+		});
+
+		return Response.json(results.chunks);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+To upload content from a Worker, use `items.uploadAndPoll()`:
+
+<TypeScriptExample>
+
+```ts
+const item = await env.AI_SEARCH.get("my-instance").items.uploadAndPoll(
+	"support-faq.md",
+	"# Support FAQ\n\nAI Search indexes uploaded content for retrieval.",
+	{ timeoutMs: 60_000 },
+);
+
+return Response.json({ status: item.status });
+```
+
+</TypeScriptExample>
+
+## Next steps
+
+- Review the [Workers binding reference](/ai-search/api/search/workers-binding/).
+- Learn how to [manage items with Workers bindings](/ai-search/api/items/workers-binding/).
+- Compare these examples with the [REST API guide](/ai-search/get-started/api/).
