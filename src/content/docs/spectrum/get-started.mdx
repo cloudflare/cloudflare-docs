@@ -8,6 +8,44 @@ sidebar:
   order: 4
 ---
 
+{/* TODO(Remedy): Automated rewrite was unavailable — please apply this change manually and delete this comment.
+
+Suggested change: Expand the Spectrum get-started page with two new sections: **Common protocol-specific setups** and **Troubleshoot a new Spectrum application**.
+
+### Common protocol-specific setups
+Add concise, copy-pasteable examples for the most common onboarding scenarios that drive support cases:
+
+- **SSH / SFTP**
+  - Create a TCP Spectrum application on the desired edge port (e.g., `22` or a custom port).
+  - Point traffic to the application via a Spectrum IP or a CNAME record.
+  - Ensure the origin server accepts traffic on the configured origin port.
+  - If using a hostname, verify the DNS record resolves to the Spectrum edge.
+
+- **HTTPS with a custom hostname**
+  - Create an HTTPS Spectrum application and specify the custom hostname.
+  - Do not use Universal SSL; provision an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or upload a [custom certificate](/ssl/edge-certificates/custom-certificates/) for the hostname.
+  - Configure the origin to serve the correct certificate or disable origin TLS verification only if intended.
+  - Note that HTTPS Spectrum does not support HTTP/3.
+
+Each example should link to the relevant configuration options and limitations pages.
+
+### Troubleshoot a new Spectrum application
+Add a checklist that users can run through before contacting support:
+
+1. Confirm a Spectrum application is configured for the exact edge port you are testing.
+2. Verify DNS (CNAME) resolves to the Spectrum edge, or that clients are connecting to the assigned Spectrum IP.
+3. Confirm the origin is reachable and allows traffic from [Cloudflare IP ranges](https://www.cloudflare.com/ips/).
+4. For HTTPS, confirm an advanced or custom SSL certificate covers the hostname; Universal SSL is not compatible.
+5. Use [IP Access rules](/waf/tools/ip-access-rules/) for allowlisting or blocking; custom WAF rules do not apply to Spectrum.
+6. Review protocol-specific limitations: no UDP fragmentation, no HTTP/3 for HTTPS, no Universal SSL, and Minecraft Bedrock is unsupported.
+7. If using Proxy Protocol, ensure the origin can parse the header; otherwise disable it.
+
+Also add cross-links from the Limitations and Configuration options pages back to this new guidance so users can discover it during self-service setup.
+
+Context: Multiple cases are generic onboarding or setup requests for custom hostnames, SFTP, or broadly 'Spectrum is not working,' suggesting self-service setup and troubleshooting guidance is insufficient.
+
+Source: de-watchtower Remedy */}
+
 import { Details, Render, APIRequest, DashButton } from "~/components";
 
 Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic. Refer to [Configuration options](/spectrum/reference/configuration-options/) for more configuration details.
