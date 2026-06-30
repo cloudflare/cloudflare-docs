@@ -42,7 +42,7 @@ Cloudflare labels every verified bot or agent by how it is operated. This replac
 | Label | Replaces the legacy term | Description | Examples |
 | --- | --- | --- | --- |
 | **Direct** | Verified bot | Operated by a single, narrow operator — usually on the operator's own infrastructure. Only that operator can send requests that present as this bot. | Googlebot, Bingbot, Pinterest crawler |
-| **Intermediary** | Signed agent | An agentic service that a wide range of end users can operate. The operator runs the software, but each action is initiated by a different end user. | Anchor Browser, Browserbase, Cloudflare [`/crawl`](/browser-rendering/) |
+| **Intermediary** | Signed agent | An agentic service that a wide range of end users can operate. The operator runs the software, but each action is initiated by a different end user. | Anchor Browser, Browserbase, Cloudflare [`/crawl`](/browser-run/quick-actions/crawl-endpoint/) |
 
 Because an **intermediary** acts on behalf of many different end users, the operator and the end user are not the same party. This introduces **transitive trust**: you may trust the intermediary operator, but not necessarily every end user driving it. Cloudflare is experimenting with forwarding information about the end user (using the `Forwarded` header defined in [RFC 7239](https://www.rfc-editor.org/info/rfc7239)) so that website owners can apply their preferences to the party ultimately responsible for a request.
 
