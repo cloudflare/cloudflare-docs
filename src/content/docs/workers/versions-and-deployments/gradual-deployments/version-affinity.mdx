@@ -8,7 +8,7 @@ sidebar:
 
 import { Example } from "~/components";
 
-During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each request has a random chance of routing to either version based on the specified percentages. This means the same user can be served content from a different version every time a request is made, which can cause **verison skew** issues.
+During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each request has a random chance of routing to either version based on the specified percentages. This means the same user can be served content from a different version every time a request is made, which can cause **version skew** issues.
 
 Version affinity solves this by deterministically assigning users to a version based on a stable identifier, so they consistently hit the same version across page loads and subrequests for the duration of the gradual deployment.
 

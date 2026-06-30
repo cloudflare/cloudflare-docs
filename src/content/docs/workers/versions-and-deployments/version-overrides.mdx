@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-You can use version overrides to send a request to a specific version of your Worker, even those set to serve 0% of traffic.
+You can use version overrides to send a request to a specific version of your Worker in the current deployment, even those set to serve 0% of traffic.
 
 ## How to set version overrides
 
@@ -18,10 +18,10 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 :::caution[Version must be in current deployment]
 
-A version override will only be applied if the specified version is in the current deployment (set to serve traffic). The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the [**Workers & Pages** page of the Cloudflare dashboard > select your Worker > **Deployments** > **Active Deployment**](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/deployments).
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the [**Workers & Pages** page of the Cloudflare dashboard > select your Worker > **Deployments** > **Active Deployment**](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/deployments).
 
 {/* To be removed/changed once this limit is increased for skew protection */}
-Workers currently only supports serving **two** different versions in one deployment. Follow the instructions for [gradual deployments](/workers/versions-and-deployments/gradual-deployments/#use-gradual-deployments) to ensure the requested version is set to serve traffic.
+Workers currently only supports serving **two** different versions in one deployment. Follow the instructions for [gradual deployments](/workers/versions-and-deployments/gradual-deployments/#use-gradual-deployments) to ensure the requested version is in the current deployment. You can set the new version to 0% traffic to avoid normal traffic being routed to it.
 
 :::
 
@@ -97,7 +97,7 @@ Version overrides only apply to `fetch()`-based service binding calls. There is 
 
 ## Related resources
 
-- [Version affinity](/workers/versions-and-depoloyments/version-affinity) - Use a cookies & headers to pin users to a specific version during a gradual deployment.
-- [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works.
-- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) — How Workers communicate with each other.
-- [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) — Access version ID and tag from within your Worker.
+- [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) - Use cookies & headers to pin users to a specific version during a gradual deployment.
+- [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) - Learn how percentage-based traffic splitting works.
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) - How Workers communicate with each other.
+- [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) - Access version ID and tag from within your Worker.

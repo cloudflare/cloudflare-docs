@@ -31,11 +31,11 @@ A deployment determines which version(s) of your Worker are actively serving tra
 
 Each deployment tracks who created it, when, and which version(s) it includes.
 
-## Default behaviour
+## Default behavior
 
 By default, these two concepts are coupled together - when you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Workers creates a new version and immediately deploys it to 100% of traffic in a single step.
 
-You can decouple them so that uploading a version and deploying it are independent actions. This gives you control over when new code goes live, and lets you use strategies like [gradual deployments](/workers/versions-and-deployments/gradual-deployments) or manual promotion. Refer to [Deployment management](/workers/versions-and-deployments/deployment-management/) for details.
+You can decouple them so that uploading a version and deploying it are independent actions. This gives you control over when new code goes live, and lets you use strategies like [gradual deployments](/workers/versions-and-deployments/gradual-deployments/) or manual promotion. Refer to [Deployment management](/workers/versions-and-deployments/deployment-management/) for details.
 
 ## View versions and deployments
 

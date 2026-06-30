@@ -62,7 +62,7 @@ Use the [`wrangler versions deploy`](/workers/wrangler/commands/general/#version
 Run a cURL command on your Worker to test the split deployment.
 
 ```bash
-for j in {0..10}
+for j in {1..10}
 do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
 done
@@ -91,7 +91,7 @@ Run `wrangler versions deploy` again and follow the interactive prompts. Select 
 
 ## Version skew
 
-Because gradual deployments mean multiple versions of your Worker serve traffic simultaneously, clients and services can end up interacting with more than one version in ways that produce errors or inconsistent behaviour. This is called **version skew**.
+Because gradual deployments mean multiple versions of your Worker serve traffic simultaneously, clients and services can end up interacting with more than one version in ways that produce errors or inconsistent behavior. This is called **version skew**.
 
 ### Version skew within a Worker
 
