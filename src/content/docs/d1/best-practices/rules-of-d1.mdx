@@ -1,0 +1,329 @@
+---
+title: Rules of D1
+description: Best practices for building fast, reliable applications on D1, covering indexing, batching, retries, migrations, and scale.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - d1
+---
+
+import { TypeScriptExample } from "~/components";
+
+[D1](/d1/) is a serverless SQL database built on [SQLite](https://www.sqlite.org/). A single database runs against one primary instance and processes queries against it, so the cost of each query and the shape of your schema directly determine how your application performs and scales.
+
+This is a guidebook of rules for building fast, reliable applications on D1. Each rule explains the behavior behind it and shows the pattern to follow.
+
+## Query performance
+
+### Index every queried column
+
+A query that scans a whole table reads every row, which is slow and counts every scanned row toward your bill. An index turns a scan into a lookup. Create an index for any column you filter on in a `WHERE` clause, join on, or sort by in an `ORDER BY` clause.
+
+```sql
+-- Index a column used in predicates and joins
+CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id);
+```
+
+After you create or drop an index, run `PRAGMA optimize`. This runs `ANALYZE` on each table and updates the statistics the query planner uses to choose an index.
+
+```sql
+PRAGMA optimize;
+```
+
+Verify that a query uses the index you expect with `EXPLAIN QUERY PLAN`. Output containing `USING INDEX` confirms the index is used; a `SCAN` over the table means it is not.
+
+```sql
+EXPLAIN QUERY PLAN SELECT * FROM users WHERE email_address = ?;
+```
+
+For a multi-column index, a query uses the index only if it filters on all of the indexed columns, or on a left-prefix of them. An index on `(customer_id, transaction_date)` serves a query that filters on `customer_id`, or on both columns, but not one that filters on `transaction_date` alone.
+
+Tables with the default `INTEGER PRIMARY KEY` do not need a separate index for that column. Every other indexed column adds a write to the index on each `INSERT`, `UPDATE`, or `DELETE` that touches it. For read-heavy workloads, the reduction in rows read almost always outweighs this write amplification.
+
+Indexes are hard to add after the fact on a multi-gigabyte database, so define them up front where you can. For full detail on unique, partial, and multi-column indexes, refer to [Use indexes](/d1/best-practices/use-indexes/).
+
+### Batch related queries to reduce round-trips
+
+Each call to `run()` is a separate round-trip to your database. Calling `run()` in a loop multiplies network latency by the number of statements. [`batch()`](/d1/worker-api/d1-database/#batch) sends a set of statements in one round-trip, and runs them as a single transaction: if any statement fails, the entire sequence rolls back.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const users = [{ name: "Alice" }, { name: "Bob" }, { name: "Carol" }];
+const stmt = env.DB.prepare("INSERT INTO users (name) VALUES (?)");
+
+// Bad: one round-trip per statement
+for (const user of users) {
+	await stmt.bind(user.name).run();
+}
+
+// Good: one round-trip, one transaction
+await env.DB.batch(users.map((user) => stmt.bind(user.name)));
+```
+
+</TypeScriptExample>
+
+The per-query limits apply to each statement inside a batch. For example, the 100 KB maximum statement length applies to every statement in the batch, not the batch as a whole.
+
+### Always use parameterized queries
+
+Never interpolate user input or runtime values into a SQL string. Bind them as parameters with [`bind()`](/d1/worker-api/prepared-statements/) instead. D1 follows SQLite's convention and supports ordered (`?NNN`) and anonymous (`?`) parameters.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+// Bad: string interpolation is open to SQL injection
+const bad = env.DB.prepare(`SELECT * FROM users WHERE email = '${email}'`);
+
+// Good: bind the value as a parameter
+const good = env.DB.prepare("SELECT * FROM users WHERE email = ?").bind(email);
+```
+
+</TypeScriptExample>
+
+Beyond preventing SQL injection, parameterized queries make your query metrics useful. D1 captures query strings for [query insights](/d1/observability/metrics-analytics/) but strips bound parameters, so every execution of the same query template aggregates together instead of appearing as thousands of distinct queries.
+
+## Reliability and error handling
+
+### Retry write queries from your application
+
+D1 automatically retries read-only queries up to two times on a retryable error. Only queries containing solely `SELECT`, `EXPLAIN`, or `WITH` are retried; any query that can write is never auto-retried. Your application must retry its own writes.
+
+Retry only idempotent writes, and only on errors that are safe to retry. Use exponential backoff with jitter so concurrent clients do not retry in lockstep.
+
+<TypeScriptExample filename="retry.ts">
+
+```ts
+// Retryable errors from the D1 error list
+function isRetryable(err: unknown): boolean {
+	const message = String(err);
+	return (
+		message.includes("Network connection lost") ||
+		message.includes("storage caused object to be reset") ||
+		message.includes("reset because its code was updated")
+	);
+}
+
+async function writeWithRetry(
+	stmt: D1PreparedStatement,
+	maxAttempts = 3,
+): Promise<D1Result> {
+	for (let attempt = 1; ; attempt++) {
+		try {
+			return await stmt.run();
+		} catch (err) {
+			if (attempt >= maxAttempts || !isRetryable(err)) throw err;
+			// Exponential backoff capped at 2s, with full jitter
+			const backoff = Math.min(50 * 2 ** attempt, 2000);
+			await new Promise((resolve) =>
+				setTimeout(resolve, Math.random() * backoff),
+			);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+For the complete set of error messages and which are safe to retry, refer to the [error list](/d1/observability/debug-d1/#error-list). Refer to [Retry queries](/d1/best-practices/retry-queries/) for more.
+
+### Chunk bulk mutations
+
+A single `UPDATE` or `DELETE` over hundreds of thousands of rows can exceed the database's CPU or memory limit and reset the instance, which surfaces as an internal error and loses the in-flight operation. Process large mutations in chunks of roughly 10,000 rows.
+
+<TypeScriptExample filename="cleanup.ts">
+
+```ts
+const CHUNK_SIZE = 10_000;
+let deleted = CHUNK_SIZE;
+
+// Delete in bounded chunks until none remain
+while (deleted >= CHUNK_SIZE) {
+	const result = await env.DB.prepare(
+		`DELETE FROM logs WHERE id IN (
+			SELECT id FROM logs WHERE created_at < ? LIMIT ?
+		)`,
+	)
+		.bind(cutoff, CHUNK_SIZE)
+		.run();
+
+	deleted = result.meta.changes ?? 0;
+}
+```
+
+</TypeScriptExample>
+
+The same applies to bulk imports. Partition import data into files of tens of megabytes rather than one large file. Refer to [Import and export data](/d1/best-practices/import-export-data/).
+
+## Schema and migrations
+
+### Use migrations for team and multi-environment workflows
+
+Migrations are not required for every schema change. If you are a solo developer with one database, running `ALTER TABLE` directly with `wrangler d1 execute` is valid and permanent.
+
+Migrations become valuable when you work on a team or have multiple environments (local dev, staging, production) that need identical schemas. A migration is a `.sql` file checked into git that records a schema change. Wrangler tracks which migrations have been applied in a `d1_migrations` table so they are never double-applied.
+
+Typical team workflow:
+
+1. Developer pulls latest code from git (which includes new `.sql` migration files from teammates).
+2. Developer runs `wrangler d1 migrations apply <DATABASE> --local` to update their local database.
+3. Developer creates a new migration with `wrangler d1 migrations create`, writes SQL, tests locally.
+4. Developer commits the migration file and pushes to git.
+5. CI/CD applies the migration to production with `wrangler d1 migrations apply <DATABASE> --remote`, then deploys the Worker.
+
+Migration files live in git, not in the database. The `d1_migrations` table is a checklist of which files have been applied in each environment. Refer to [Migrations](/d1/reference/migrations/) for the full guide.
+
+### Choose the right migration tooling
+
+You can write migration SQL by hand or use an ORM to generate it. Each approach has trade-offs.
+
+**Raw SQL with Wrangler** works well when:
+
+- You have 1-5 tables
+- Your queries are straightforward CRUD
+- You are the only developer
+- You are comfortable writing SQL
+
+**An ORM like Drizzle or Prisma** starts paying off when:
+
+- You have 10+ tables with foreign key relationships between them
+- You build complex queries with joins across 3+ tables, where type safety prevents you from accidentally joining on the wrong column or misspelling a field name
+- Multiple developers touch the schema, and the TypeScript definition becomes the single source of truth with compile errors catching mismatches immediately
+- You want autocompletion in your editor when writing queries
+- You are iterating rapidly on schema design and want to see what SQL each change produces without writing it yourself
+
+If you use an ORM, be aware that ORM migration generators cannot apply migrations to D1 directly. You generate the SQL with your ORM, then apply it with Wrangler. Review all generated SQL before applying — ORMs may generate destructive statements for tables they do not manage. Refer to the [Drizzle integration notes](/d1/reference/community-projects/#drizzle-orm) for specific gotchas.
+
+### Defer foreign keys during migrations, do not disable them
+
+D1 enforces foreign key constraints by default, equivalent to `PRAGMA foreign_keys = on` for every transaction. This is unlike plain SQLite, where enforcement is off by default. If you migrate a schema that was designed with enforcement off, existing violations surface immediately.
+
+Because D1 runs every query inside an implicit transaction, you cannot turn enforcement off with `PRAGMA foreign_keys = off`; D1 ignores it. A migration script copied from a SQLite dump that sets `foreign_keys = off` has no effect and can fail with constraint errors.
+
+To violate constraints temporarily within a migration, use `PRAGMA defer_foreign_keys = on`. This defers enforcement to the end of the current transaction instead of disabling it.
+
+```sql
+PRAGMA defer_foreign_keys = on;
+
+-- Run ALTER TABLE, data backfills, and other migration statements here.
+-- Resolve every constraint violation before the transaction ends.
+```
+
+Any violation left unresolved when the transaction commits fails with a `FOREIGN KEY constraint failed` error. For relationship definitions and the available actions (`CASCADE`, `RESTRICT`, `SET DEFAULT`, `SET NULL`, `NO ACTION`), refer to [Define foreign keys](/d1/sql-api/foreign-keys/).
+
+### Capture a Time Travel bookmark before a destructive migration
+
+[Time Travel](/d1/reference/time-travel/) is always on and free, and lets you restore a database to any minute within the last 30 days (7 days on the Workers Free plan). Before any migration that drops columns, drops tables, or runs a bulk `UPDATE` or `DELETE`, capture the current bookmark and store it.
+
+```sh
+npx wrangler d1 time-travel info my-database
+```
+
+If the migration goes wrong, restore to that bookmark.
+
+```sh
+npx wrangler d1 time-travel restore my-database --bookmark=<YOUR_BOOKMARK>
+```
+
+Restoring is a destructive, in-place overwrite that cancels in-flight queries, so treat it as you would any production rollback. Bookmarks older than the retention window cannot be used as a restore point, so capture one as part of every destructive deploy rather than relying on recovering after the window closes.
+
+## Data location and replication
+
+### Set a location hint that matches your workload
+
+A D1 database is pinned to one primary region. Without a location hint, D1 places the primary close to the request that created the database, which is often your control plane or CI pipeline rather than your users. Every cross-region query then pays a round-trip penalty.
+
+Set a [location hint](/d1/configuration/data-location/) at creation time, matching the region closest to the workload that queries the database most.
+
+```sh
+npx wrangler d1 create my-database --location=weur
+```
+
+A location hint is a preference, not a guarantee, and write latency is always dominated by the primary's location even when read replicas exist. Refer to [Data location](/d1/configuration/data-location/) for the full list of hints and for jurisdiction constraints.
+
+### Use the Sessions API so you can add replicas later
+
+[Read replication](/d1/best-practices/read-replication/) helps read-heavy applications with users around the world. To use replicas, you must use the [Sessions API](/d1/worker-api/d1-database/#withsession); otherwise every query goes to the primary. The Sessions API also works on databases without replication enabled, so writing code with `withSession()` from the start lets you turn on replication later with a single API call, without changing Worker code.
+
+`withSession()` returns an object with the same interface as the top-level database, so your query code is unchanged. To preserve [sequential consistency](/d1/best-practices/read-replication/#sequential-consistency) across requests, pass the bookmark from one request to the next.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// Resume from the bookmark the client last saw, or start unconstrained
+		const bookmark =
+			request.headers.get("x-d1-bookmark") ?? "first-unconstrained";
+		const session = env.DB.withSession(bookmark);
+
+		const { results } = await session
+			.prepare("SELECT * FROM orders WHERE customer_id = ?")
+			.bind(customerId)
+			.all();
+
+		const response = Response.json(results);
+		// Return the new bookmark so the next request stays consistent
+		response.headers.set("x-d1-bookmark", session.getBookmark() ?? "");
+		return response;
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Start a session with `first-primary` when the first read must see the latest data, or `first-unconstrained` (the default) when minimum latency matters more. Refer to [Global read replication](/d1/best-practices/read-replication/) for the full guide.
+
+## Scaling
+
+### Respect the limits of a single database
+
+A single D1 database has fixed resources. The size and shape of your queries, not a configurable instance size, determine how much it can do. The limits to design around first:
+
+| Limit                               | Workers Paid | Workers Free |
+| ----------------------------------- | ------------ | ------------ |
+| Maximum database size               | 10 GB        | 500 MB       |
+| Queries per Worker invocation       | 1,000        | 50           |
+| Maximum SQL query duration          | 30 seconds   | 30 seconds   |
+| Maximum bound parameters per query  | 100          | 100          |
+| Maximum string, `BLOB`, or row size | 2 MB         | 2 MB         |
+
+A frequent issue on databases of 5 GB and larger is an aggregation query that tries to scan the entire table into memory and fails on the CPU or memory limit. Keep hot-path queries indexed and bounded, and avoid `SELECT *` over a large table without a `LIMIT`. Refer to [Limits](/d1/platform/limits/) for the complete table.
+
+### Scale out across many databases
+
+D1 is designed for horizontal scale-out across many smaller databases, not vertical scale-up of one large one. When a single database approaches its size or throughput limit, shard your data across multiple databases instead of growing one.
+
+A natural sharding boundary is one database per tenant: each user, organization, or project gets its own isolated database. This gives complete data isolation, per-tenant schema evolution, and a migration blast radius limited to a single tenant. You can create databases programmatically with the [REST API](/d1/d1-api/), setting a location hint per tenant. Workers Paid accounts support 50,000 databases, raisable to millions by request.
+
+Attribute usage per database with the `rows_read` and `rows_written` fields that every query returns in its `meta` object, and apply per-query and per-tenant limits so one tenant cannot inflate your bill.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const result = await env.DB.prepare("SELECT * FROM orders WHERE status = ?")
+	.bind(status)
+	.all();
+
+console.log({
+	rowsRead: result.meta.rows_read,
+	rowsWritten: result.meta.rows_written,
+});
+```
+
+</TypeScriptExample>
+
+To dynamically bind a separate database per tenant for a SaaS platform, refer to [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+
+## Related resources
+
+- [Use indexes](/d1/best-practices/use-indexes/) — unique, partial, and multi-column indexes.
+- [Retry queries](/d1/best-practices/retry-queries/) — auto-retry behavior and application retries.
+- [Debug D1](/d1/observability/debug-d1/) — the full error list and which errors are retryable.
+- [Global read replication](/d1/best-practices/read-replication/) — replicas and the Sessions API.
+- [Define foreign keys](/d1/sql-api/foreign-keys/) — relationships and migration handling.
+- [Time Travel](/d1/reference/time-travel/) — backups and point-in-time recovery.
+- [Migrations](/d1/reference/migrations/) — versioning your schema with migration files.
+- [Community projects](/d1/reference/community-projects/) — ORMs, query builders, and tools.
+- [Limits](/d1/platform/limits/) — the full list of D1 limits.
