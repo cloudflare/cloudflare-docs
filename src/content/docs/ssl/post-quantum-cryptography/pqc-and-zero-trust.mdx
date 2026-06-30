@@ -105,6 +105,8 @@ Traffic leaves the Cloudflare network over a post-quantum Cloudflare IPsec link 
 
 The hybrid key agreement is negotiated using ML-KEM as an additional Key Exchange to classical Diffie-Hellman during the IKEv2 handshake, as defined in [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/) and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/). For the list of validated third-party platforms and their supported parameters, refer to [Tested third-party vendor interoperability](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability).
 
+Cloudflare also supports downgrade protection for IPsec tunnels via the [`IKE_SA_INIT_FULL_TRANSCRIPT_AUTH`](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/) extension. Both the initiator and Cloudflare (responder) must support the extension for protection to be effective, see [Downgrade protection](/cloudflare-wan/reference/gre-ipsec-tunnels/#downgrade-protection-beta).
+
 ## Secure Web Gateway
 
 A [secure web gateway (SWG)](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) is used to secure access to third-party websites on the public Internet by intercepting and inspecting TLS traffic.
