@@ -40,20 +40,14 @@ const { start, class: className, ...attrs } = Astro.props;
     padding: 0;
   }
 
-  /* Markdown mode (ol > li) AND component mode ([data-step]) share styling.
-     Grid layout so the circle (col 1) lines up with the first row of column 2
-     via `align-items: center` — no font-metric guesswork. */
+  /* Marker is absolutely positioned in the padding-left gutter (not a grid
+     track) so tight-list inline content flows instead of scattering. */
   .steps :global(ol > li),
   .steps :global([data-step]) {
-    display: grid;
-    grid-template-columns: 1.75rem 1fr;
-    column-gap: 0.75rem;
-    row-gap: 0.5rem;
-    align-items: center;
-    counter-increment: step;
     position: relative;
+    counter-increment: step;
     min-height: 1.75rem;
-    /* Cancel the prose li margin — step rhythm comes from padding/row-gap. */
+    padding-left: 2.5rem;
     margin: 0;
     padding-bottom: 1.5rem;
   }
@@ -63,22 +57,19 @@ const { start, class: className, ...attrs } = Astro.props;
     padding-bottom: 0;
   }
 
-  /* All non-marker content lives in column 2 — prevents the second+ child
-     from falling into column 1 (which is reserved for the circle). The
-     child selector lives inside :global() so Astro's scope hash doesn't
-     skip elements coming from Step.astro. */
-  .steps :global(ol > li > *),
-  .steps :global([data-step] > *) {
-    grid-column: 2;
-    min-width: 0;
+  /* Spacing between a step's block children. */
+  .steps :global(ol > li > * + *),
+  .steps :global([data-step] > * + *) {
+    margin-top: 0.5rem;
   }
 
-  /* Number marker — auto-placed in row 1 col 1, centered with col 2's first row. */
+  /* Number marker — aligned to the first line (line-height == circle height). */
   .steps :global(ol > li)::before,
   .steps :global([data-step])::before {
     content: counter(step);
-    grid-row: 1;
-    grid-column: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 0.5rem;
@@ -108,7 +99,6 @@ const { start, class: className, ...attrs } = Astro.props;
     color: var(--nb-foreground);
   }
 
-  /* Vertical rhythm comes from the grid row-gap, not p margins. */
   .steps :global(ol > li > p) {
     margin: 0;
   }
