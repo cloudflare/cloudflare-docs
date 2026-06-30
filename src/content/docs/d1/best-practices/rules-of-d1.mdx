@@ -88,7 +88,7 @@ Beyond preventing SQL injection, parameterized queries make your query metrics u
 
 ### Retry write queries from your application
 
-D1 automatically retries read-only queries up to two times on a retryable error. Only queries containing solely `SELECT`, `EXPLAIN`, or `WITH` are retried; any query that can write is never auto-retried. Your application must retry its own writes.
+D1 automatically retries read-only queries up to two times on a retryable error. Only read-only queries — those containing solely `SELECT`, `EXPLAIN`, or read-only `WITH` statements — are retried; any query that can write is never auto-retried. Your application must retry its own writes.
 
 Retry only idempotent writes, and only on errors that are safe to retry. Use exponential backoff with jitter so concurrent clients do not retry in lockstep.
 
@@ -162,7 +162,7 @@ The same applies to bulk imports. Partition import data into files of tens of me
 
 Migrations are not required for every schema change. If you are a solo developer with one database, running `ALTER TABLE` directly with `wrangler d1 execute` is valid and permanent.
 
-Migrations become valuable when you work on a team or have multiple environments (local dev, staging, production) that need identical schemas. A migration is a `.sql` file checked into git that records a schema change. Wrangler tracks which migrations have been applied in a `d1_migrations` table so they are never double-applied.
+Migrations become valuable when you work on a team or have multiple environments (local dev, staging, production) that need identical schemas. A migration is a `.sql` file checked into git that records a schema change. `wrangler` tracks which migrations have been applied in a `d1_migrations` table so they are never double-applied.
 
 Typical team workflow:
 
@@ -176,24 +176,24 @@ Migration files live in git, not in the database. The `d1_migrations` table is a
 
 ### Choose the right migration tooling
 
-You can write migration SQL by hand or use an ORM to generate it. Each approach has trade-offs.
+You can write migration SQL by hand or use an object-relational mapping (ORM) tool to generate it. Each approach has trade-offs.
 
-**Raw SQL with Wrangler** works well when:
+**Raw SQL** with `wrangler` works well when:
 
-- You have 1-5 tables
-- Your queries are straightforward CRUD
+- You have one to five tables
+- Your queries are basic create, read, update, and delete (CRUD) operations
 - You are the only developer
 - You are comfortable writing SQL
 
 **An ORM like Drizzle or Prisma** starts paying off when:
 
 - You have 10+ tables with foreign key relationships between them
-- You build complex queries with joins across 3+ tables, where type safety prevents you from accidentally joining on the wrong column or misspelling a field name
+- You build complex queries with joins across three or more tables, where type safety prevents you from accidentally joining on the wrong column or misspelling a field name
 - Multiple developers touch the schema, and the TypeScript definition becomes the single source of truth with compile errors catching mismatches immediately
 - You want autocompletion in your editor when writing queries
 - You are iterating rapidly on schema design and want to see what SQL each change produces without writing it yourself
 
-If you use an ORM, be aware that ORM migration generators cannot apply migrations to D1 directly. You generate the SQL with your ORM, then apply it with Wrangler. Review all generated SQL before applying — ORMs may generate destructive statements for tables they do not manage. Refer to the [Drizzle integration notes](/d1/reference/community-projects/#drizzle-orm) for specific gotchas.
+If you use an ORM, be aware that ORM migration generators cannot apply migrations to D1 directly. You generate the SQL with your ORM, then apply it with `wrangler`. Review all generated SQL before applying — ORMs may generate destructive statements for tables they do not manage. Refer to the [Drizzle integration notes](/d1/reference/community-projects/#drizzle-orm) for specific gotchas.
 
 ### Defer foreign keys during migrations, do not disable them
 
@@ -281,7 +281,7 @@ Start a session with `first-primary` when the first read must see the latest dat
 
 A single D1 database has fixed resources. The size and shape of your queries, not a configurable instance size, determine how much it can do. The limits to design around first:
 
-| Limit                               | Workers Paid | Workers Free |
+| Limit                               | Workers paid | Workers free |
 | ----------------------------------- | ------------ | ------------ |
 | Maximum database size               | 10 GB        | 500 MB       |
 | Queries per Worker invocation       | 1,000        | 50           |
