@@ -86,24 +86,29 @@ The pattern is a standard glob — `*` matches one path segment, `**` matches an
 
 `wrangler d1 migrations create` only writes top-level files inside `migrations_dir`, so if your `migrations_pattern` only matches nested files (as with the Drizzle layout), generate new migrations using your ORM's command (for example, `drizzle-kit generate`) instead.
 
-## Using an ORM for migrations
+## Generate migrations with an ORM
 
-You can use an ORM like [Drizzle](https://orm.drizzle.team/) or [Prisma](https://www.prisma.io/) to generate migration SQL instead of writing it by hand. With an ORM, you define your schema in TypeScript (or a schema file), and the ORM's CLI detects changes and outputs `.sql` migration files.
+You can use an object-relational mapping (ORM) tool like [Drizzle](https://orm.drizzle.team/) or [Prisma](https://www.prisma.io/) to generate migration SQL instead of writing it by hand. With an ORM, you define your schema in TypeScript (or a schema file), and the ORM's CLI detects changes and outputs `.sql` migration files.
 
-ORMs cannot apply migrations to D1 directly. D1 requires Cloudflare's API for writes, so you must use Wrangler to apply the generated SQL. The workflow is:
+ORMs cannot apply migrations to D1 directly. D1 requires Cloudflare's API for writes, so you must use `wrangler` to apply the generated SQL. The workflow is:
 
 1. Define or edit your schema in TypeScript (or your ORM's schema format).
 2. Run your ORM's migration generation command (for example, `drizzle-kit generate`) to produce a `.sql` file.
-3. Review the generated SQL. ORMs may generate destructive statements for tables they do not manage. For example, Drizzle assumes it owns every table in the database — any table not defined in your schema file will appear as a `DROP TABLE` statement.
+3. Review the generated SQL for destructive statements. ORMs may generate `DROP TABLE` statements for tables they do not manage, such as the `d1_migrations` tracking table.
 4. Apply the migration with `wrangler d1 migrations apply`.
 
-To connect an ORM's migration output folder to Wrangler, use `migrations_dir` and `migrations_pattern` in your [Wrangler configuration](#wrangler-customizations). Refer to [Nested migration layouts](#nested-migration-layouts) for an example using Drizzle's subdirectory layout.
+To connect an ORM's migration output folder to `wrangler`, use `migrations_dir` and `migrations_pattern` in your [Wrangler configuration](#wrangler-customizations). Refer to [Nested migration layouts](#nested-migration-layouts) for an example using Drizzle's subdirectory layout.
 
-### When to use an ORM vs. raw SQL
+### ORM vs. raw SQL
 
-Raw SQL migrations with Wrangler work well when you have a small number of tables, your queries are straightforward, you are comfortable writing SQL, or you are the only developer on the project.
+Raw SQL migrations with `wrangler` work well when you have a small number of tables, your queries are basic, you are comfortable writing SQL, or you are the only developer on the project.
 
-An ORM starts to pay off when your schema grows to many tables with foreign key relationships, you build complex queries with joins across multiple tables and want compile-time type safety, multiple developers touch the schema and need a single TypeScript definition as the source of truth, or you want editor autocompletion when writing queries.
+An ORM starts to pay off in the following situations:
+
+- Your schema grows to many tables with foreign key relationships.
+- You build complex queries with joins across multiple tables and want compile-time type safety.
+- Multiple developers touch the schema and need a single TypeScript definition as the source of truth.
+- You want editor autocompletion when writing queries.
 
 Either way, always review migration SQL before applying to production.
 
