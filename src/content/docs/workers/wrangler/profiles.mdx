@@ -54,7 +54,7 @@ If a command targets an account that the active profile cannot reach, Wrangler f
 
 ## Create a profile
 
-Run [`wrangler auth create`](/workers/wrangler/commands/general/#auth) with a name. Wrangler starts the OAuth flow, where you choose which accounts the profile may reach.
+Run [`wrangler auth create`](/workers/wrangler/commands/general/#auth-create) with a name. Wrangler starts the OAuth flow, where you choose which accounts the profile may reach.
 
 ```sh
 wrangler auth create work
@@ -64,7 +64,7 @@ Run the command again with the same name to re-authenticate an existing profile,
 
 ## Activate a profile in a directory
 
-Run [`wrangler auth activate`](/workers/wrangler/commands/general/#auth) to bind a profile to a directory. The binding applies to that directory and its subdirectories. The directory defaults to the current working directory.
+Run [`wrangler auth activate`](/workers/wrangler/commands/general/#auth-activate) to bind a profile to a directory. The binding applies to that directory and its subdirectories. The directory defaults to the current working directory.
 
 ```sh
 wrangler auth activate work ~/projects/work
@@ -140,7 +140,7 @@ The `--profile` flag is not supported by the `auth`, `login`, `logout`, and `who
 
 ## List profiles
 
-Run [`wrangler auth list`](/workers/wrangler/commands/general/#auth) to see every profile and the directories bound to it.
+Run [`wrangler auth list`](/workers/wrangler/commands/general/#auth-list) to see every profile and the directories bound to it.
 
 ```sh
 wrangler auth list
@@ -148,13 +148,13 @@ wrangler auth list
 
 ## Remove a binding or a profile
 
-To stop a directory from using a profile, run [`wrangler auth deactivate`](/workers/wrangler/commands/general/#auth) in that directory. The directory returns to the profile bound above it, or to the default profile.
+To stop a directory from using a profile, run [`wrangler auth deactivate`](/workers/wrangler/commands/general/#auth-deactivate) in that directory. The directory returns to the profile bound above it, or to the default profile.
 
 ```sh
 wrangler auth deactivate ~/projects/staging
 ```
 
-To remove a profile and all of its directory bindings, run [`wrangler auth delete`](/workers/wrangler/commands/general/#auth).
+To remove a profile and all of its directory bindings, run [`wrangler auth delete`](/workers/wrangler/commands/general/#auth-delete).
 
 ```sh
 wrangler auth delete staging
