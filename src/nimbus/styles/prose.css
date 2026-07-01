@@ -161,26 +161,34 @@
   border-radius: 0;
 }
 
+/* Scroll container injected around every markdown table by the
+   `cf-table-scroll` Sätteri plugin. It carries the border + rounded corners and
+   clips the table to them, and scrolls horizontally when the table is wider
+   than the content column (many columns). When the table fits, it fills 100%
+   and no scrollbar shows. This is what lets a wide table scroll in place rather
+   than overflowing the layout — a bare table can't do both. */
+.docs-content :where(.table-scroll) {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--nb-border);
+  border-radius: 0.75rem;
+}
+
+.docs-content :where(.table-scroll):focus-visible {
+  outline: 2px solid var(--nb-link);
+  outline-offset: 2px;
+}
+
 .docs-content :where(table:not([class])) {
   display: table;
   width: 100%;
-  max-width: 100%;
   text-align: left;
   border-collapse: separate;
   border-spacing: 0;
-  border-radius: 0.75rem;
-  border: 1px solid var(--nb-border);
   table-layout: auto;
-}
-
-@media (max-width: 640px) {
-  .docs-content :where(table:not([class])) {
-    display: block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-  }
 }
 
 .docs-content :where(th:not([class])),
@@ -200,14 +208,6 @@
   font-weight: 600;
   font-size: 0.8125rem;
   white-space: nowrap;
-}
-
-.docs-content :where(thead tr:first-child th:first-child:not([class])) {
-  border-start-start-radius: 0.75rem;
-}
-
-.docs-content :where(thead tr:first-child th:last-child:not([class])) {
-  border-start-end-radius: 0.75rem;
 }
 
 .docs-content :where(tbody:not([class]) tr:not([class]):last-child td:not([class])) {

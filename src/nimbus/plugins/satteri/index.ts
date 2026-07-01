@@ -12,6 +12,7 @@ import headingSlugs from "./heading-slugs";
 import autolinkHeadings from "./autolink-headings";
 import shiftHeadings from "./shift-headings";
 import emptyTableHeaders from "./empty-table-headers";
+import tableScroll from "./table-scroll";
 import type { HastPluginDefinition } from "./types";
 
 export {
@@ -20,6 +21,7 @@ export {
   autolinkHeadings,
   shiftHeadings,
   emptyTableHeaders,
+  tableScroll,
 };
 
 export const hastPlugins: HastPluginDefinition[] = [
@@ -30,4 +32,5 @@ export const hastPlugins: HastPluginDefinition[] = [
   titleFigure(),
   shiftHeadings,
   emptyTableHeaders,
+  tableScroll,
 ] as unknown as HastPluginDefinition[];
