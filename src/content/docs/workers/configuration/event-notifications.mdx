@@ -1,0 +1,138 @@
+---
+pcx_content_type: reference
+title: Event notifications
+description: Subscribe to Workers lifecycle and configuration events via Queues event subscriptions.
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: Event notifications
+products:
+  - workers
+---
+
+import { Render } from "~/components";
+
+## Event sources
+
+Workers events are published from the following sources:
+
+| Source | Scope | Description |
+| --- | --- | --- |
+| `workers` | Account | Account-level resources (subdomain, account settings) |
+| `workers.worker` | Worker | A specific Worker's lifecycle, deployments, and config |
+| `workers.dispatchNamespace` | Dispatch namespace | Workers for Platforms dispatch namespaces |
+
+---
+
+## Milestone 1
+
+### Gradual deployment events
+
+Events emitted during [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `rollout.started` | `cf.workers.worker.rollout.started` | A gradual rollout has begun |
+| `stage.started` | `cf.workers.worker.stage.started` | A rollout stage has started |
+| `stage.completed` | `cf.workers.worker.stage.completed` | A rollout stage finished |
+| `healthCheck.passed` | `cf.workers.worker.healthCheck.passed` | Health check passed for the current stage |
+| `healthCheck.failed` | `cf.workers.worker.healthCheck.failed` | Health check failed for the current stage |
+| `rollback.triggered` | `cf.workers.worker.rollback.triggered` | Automatic rollback initiated |
+| `rollout.completed` | `cf.workers.worker.rollout.completed` | Rollout finished successfully |
+| `rollout.cancelled` | `cf.workers.worker.rollout.cancelled` | Rollout was cancelled |
+| `approval.required` | `cf.workers.worker.approval.required` | Manual approval is needed to proceed |
+
+### Deployment and version events
+
+Events for Worker creation, code changes, deployments, and version management.
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `worker.created` | `cf.workers.worker.created` | A new Worker was created |
+| `worker.updated` | `cf.workers.worker.updated` | Worker code or content was updated |
+| `worker.deleted` | `cf.workers.worker.deleted` | A Worker was deleted |
+| `version.created` | `cf.workers.worker.version.created` | A new version was explicitly uploaded (for example, `wrangler versions upload`) |
+| `version.deleted` | `cf.workers.worker.version.deleted` | A version was deleted |
+| `deployment.created` | `cf.workers.worker.deployment.created` | A new deployment was created (for example, `wrangler deploy`) |
+| `deployment.deleted` | `cf.workers.worker.deployment.deleted` | A deployment was deleted |
+
+:::note
+`version.created` is only emitted when a version is explicitly uploaded without deploying (for example, `wrangler versions upload`). A standard `wrangler deploy` emits `deployment.created` only — the version creation is an internal implementation detail and not surfaced as a separate event.
+:::
+
+### Routing events
+
+Events for changes to how traffic reaches your Worker.
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `route.created` | `cf.workers.worker.route.created` | A route was added |
+| `route.updated` | `cf.workers.worker.route.updated` | A route was modified |
+| `route.deleted` | `cf.workers.worker.route.deleted` | A route was removed |
+| `domain.attached` | `cf.workers.worker.domain.attached` | A Custom Domain was attached |
+| `domain.detached` | `cf.workers.worker.domain.detached` | A Custom Domain was removed |
+| `cronTriggers.updated` | `cf.workers.worker.cronTriggers.updated` | Cron Triggers were changed |
+
+### Secrets, tags, and settings
+
+Events for changes to a Worker's secrets, tags, and configuration.
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `secret.created` | `cf.workers.worker.secret.created` | A secret was added |
+| `secret.bulkUpdated` | `cf.workers.worker.secret.bulkUpdated` | Secrets were bulk-updated |
+| `secret.deleted` | `cf.workers.worker.secret.deleted` | A secret was removed |
+| `tags.replaced` | `cf.workers.worker.tags.replaced` | All tags were replaced |
+| `tag.added` | `cf.workers.worker.tag.added` | A tag was added |
+| `tag.removed` | `cf.workers.worker.tag.removed` | A tag was removed |
+| `version.created` | `cf.workers.worker.version.created` | A versioned setting was changed (bindings, limits, placement) |
+| `settings.updated` | `cf.workers.worker.settings.updated` | An unversioned setting was changed (observability, logpush, tail consumers, subdomain) |
+
+:::note[Open question]
+Secret changes create new versions under the hood. These events may collapse into `version.created` in a future revision — to be determined based on whether customers prefer granular secret-level events or version-level events.
+:::
+
+### Account-level events
+
+Events for account-wide Workers resources. Subscribe to the `workers` source.
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `subdomain.created` | `cf.workers.subdomain.created` | Account workers.dev subdomain was set up |
+| `subdomain.deleted` | `cf.workers.subdomain.deleted` | Account workers.dev subdomain was removed |
+| `accountSettings.updated` | `cf.workers.accountSettings.updated` | Account-level Worker settings were changed |
+
+### Workers for Platforms events
+
+Events for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) dispatch namespace management. Subscribe to the `workers.dispatchNamespace` source.
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `dispatchNamespace.created` | `cf.workers.dispatchNamespace.created` | A dispatch namespace was created |
+| `dispatchNamespace.updated` | `cf.workers.dispatchNamespace.updated` | A dispatch namespace was updated |
+| `dispatchNamespace.deleted` | `cf.workers.dispatchNamespace.deleted` | A dispatch namespace was deleted |
+
+---
+
+## Milestone 2
+
+Granular settings events to replace the single `settings.updated` event. These would let customers subscribe to specific configuration changes individually.
+
+### Unversioned settings (granular)
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `observability.updated` | `cf.workers.worker.observability.updated` | Observability settings changed (logs, traces, sampling rate) |
+| `logpush.updated` | `cf.workers.worker.logpush.updated` | Logpush enabled or disabled |
+| `tailConsumers.updated` | `cf.workers.worker.tailConsumers.updated` | Tail consumers added, updated, or removed |
+| `subdomain.enabled` | `cf.workers.worker.subdomain.enabled` | workers.dev subdomain enabled for this Worker |
+| `subdomain.disabled` | `cf.workers.worker.subdomain.disabled` | workers.dev subdomain disabled for this Worker |
+
+### Versioned settings (granular)
+
+| Event | `type` field | Description |
+| --- | --- | --- |
+| `limits.updated` | `cf.workers.worker.limits.updated` | CPU or subrequest limits changed |
+| `bindings.updated` | `cf.workers.worker.bindings.updated` | Bindings changed (KV, R2, D1, Durable Objects, service bindings, etc.) |
+| `placement.updated` | `cf.workers.worker.placement.updated` | Smart Placement configuration changed |
