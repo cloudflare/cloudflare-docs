@@ -1,0 +1,252 @@
+---
+pcx_content_type: configuration
+description: Configure Egress policies in Gateway.
+products:
+  - cloudflare-one
+title: Egress policies
+sidebar:
+  order: 5
+tags:
+  - IPv4
+  - IPv6
+---
+
+import {
+	Render,
+	Badge,
+	Tabs,
+	TabItem,
+	Details,
+	GlossaryTooltip,
+	APIRequest,
+} from "~/components";
+
+:::note
+Only available on Enterprise plans.
+:::
+
+Many third-party services (for example, a bank or partner API) only allow connections from a known list of IP addresses. By default, traffic that exits through Cloudflare Gateway shares a source IP address with all other Cloudflare One Client users, so upstream services cannot identify your organization by IP alone.
+
+[Dedicated egress IPs](/cloudflare-one/traffic-policies/policy-types/egress-policies/dedicated-egress-ips/) solve this problem. They are static IP addresses assigned only to your account, which you can add to upstream allowlists.
+
+Egress policies control which dedicated egress IP is used for a given connection. You can match traffic on attributes such as user identity, source or destination IP address, and geolocation. Traffic that does not match an egress policy defaults to the most performant dedicated egress IP.
+
+Cloudflare does not publish Cloudflare One Client egress IP ranges. Cloudflare One Client egress IPs are not listed at [Cloudflare's IP Ranges](https://cloudflare.com/ips). To obtain a dedicated Cloudflare One Client egress IP, contact your account team.
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
+## Load balancing
+
+Traffic that does not match any egress policy exits from the closest Cloudflare data center using a default Gateway egress IP. This applies whether your account uses dedicated egress IPs or the default shared IPs.
+
+If two data centers are equally close to the user, Gateway splits traffic between them. The load balancer keeps each user on the same egress IP regardless of which data center handles the request.
+
+## Force IP version
+
+Some upstream services only accept connections over a specific IP version. To force all egress traffic to use IPv4 or IPv6 only, first verify you are [filtering DNS traffic](/cloudflare-one/traffic-policies/get-started/dns/), then create a DNS policy to [block AAAA or A records](/cloudflare-one/traffic-policies/policy-types/dns-policies/common-policies/#control-ip-version).
+
+## Example policies
+
+The following egress policy configures all traffic destined for a third-party network to use a static source IP:
+
+<Render
+	file="gateway/policies/egress-destination-ip"
+	product="cloudflare-one"
+/>
+
+### Secure access to SaaS applications
+
+Many SaaS providers (for example, Microsoft 365, Salesforce, or Workday) allow you to restrict access to connections from specific IP addresses. You can use dedicated egress IPs with Gateway to enforce this restriction:
+
+1. **Obtain dedicated egress IPs** from your account team and note the assigned IPv4 and IPv6 addresses.
+2. **Create an egress policy** that routes traffic destined for the SaaS provider through your dedicated egress IP. Use the Destination IP selector with the published IP ranges of the provider. Alternatively, use the Application selector (Beta) to match the provider by name.
+3. **Add the egress IPs to the SaaS provider's allowlist** so the provider only accepts connections from your organization's IPs.
+4. **Pair with HTTP policies** to add deeper controls. For example, block file uploads to personal accounts, enforce DLP profiles to prevent sensitive data from leaving the organization, or require [device posture checks](/cloudflare-one/reusable-components/posture-checks/) before allowing access.
+
+This pattern ensures that access to the SaaS application is limited to traffic that passes through Gateway, where your security policies are enforced, and that the SaaS provider can verify traffic originates from your organization.
+
+### Catch-all policy
+
+Without a catch-all policy, any traffic that does not match an explicit egress policy will attempt to use the closest dedicated egress IP location. To avoid unexpected IP assignments and maintain the best performance, create a catch-all policy that routes remaining traffic through the default Zero Trust IP range:
+
+| Policy name           | Selector | Operator | Value                    | Egress method                    |
+| --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
+| Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
+
+Gateway policies evaluate from [top to bottom](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#order-of-precedence) in the UI. Place the catch-all policy at the bottom of the list so that more specific policies are evaluated first.
+
+## Egress methods
+
+When you configure your egress policy, you can choose whether to egress traffic using the default Cloudflare egress method or dedicated egress IPs.
+
+### Use default Cloudflare egress method
+
+**Use default Cloudflare egress method** routes traffic through the default source IP range shared across all Zero Trust accounts. Traffic exits from the nearest Cloudflare data center, which provides the best performance.
+
+### Use dedicated egress IPs
+
+**Use dedicated egress IPs (Cloudflare or BYOIP)** routes traffic through the primary IPv4 address and IPv6 range you select in the dropdown menus. <Render file="gateway/secondary-ipv4-requirement" product="cloudflare-one" />
+
+If the data center associated with your primary IPv4 address goes down, Gateway fails over to the secondary data center to prevent traffic drops. A secondary IPv6 address is not required because IPv6 traffic can exit from any Cloudflare data center. You can use IPs provided by Cloudflare or [bring your own IP addresses (BYOIP)](/cloudflare-one/traffic-policies/policy-types/egress-policies/dedicated-egress-ips/#bring-your-own-ip-address-byoip).
+
+To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/traffic-policies/policy-types/egress-policies/dedicated-egress-ips/#egress-location).
+
+## Selectors
+
+Selectors are the criteria that Gateway uses to match egress traffic against a policy. Gateway evaluates the following selectors:
+
+### Application <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/application-http"
+	product="cloudflare-one"
+	params={{ policyType: "egress" }}
+/>
+
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
+
+### Content Categories <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.fqdn.content_category" }}
+/>
+
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
+
+### Destination Continent
+
+<Render
+	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
+	params={{ one: "net.dst" }}
+/>
+
+### Destination Country
+
+<Render
+	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
+	params={{ one: "net.dst" }}
+/>
+
+### Destination IP
+
+<Render
+	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.dst.ip" }}
+/>
+
+### Destination Port
+
+<Render file="gateway/selectors/destination-port" product="cloudflare-one" />
+
+### Device Posture
+
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
+
+### Domain <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/domain-http"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.fqdn.domains" }}
+/>
+
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
+
+### Host <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/host-http"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.fqdn.host" }}
+/>
+
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
+
+### Protocol
+
+<Render file="gateway/selectors/protocol" product="cloudflare-one" />
+
+### Proxy Endpoint
+
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
+
+### Source Continent
+
+The continent of the user making the request. <Render file="gateway/selectors/source-continent-http" product="cloudflare-one" params={{ one: "net.src" }} />
+
+### Source Country
+
+The country of the user making the request. <Render file="gateway/selectors/source-country-http" product="cloudflare-one" params={{ one: "net.src" }} />
+
+### Source Internal IP
+
+<Render
+	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
+	params={{ one: "egress", two: "net.src.internal_src_ip" }}
+/>
+
+### Source IP
+
+<Render
+	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.src.ip" }}
+/>
+
+### Source Port
+
+<Render file="gateway/selectors/source-port" product="cloudflare-one" />
+
+### Users
+
+<Render file="gateway/selectors/users-http" product="cloudflare-one" />
+
+### Virtual Network
+
+<Render
+	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
+	params={{ one: "net.vnet_id" }}
+/>
+
+## Comparison operators
+
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
+
+## Value
+
+You can input a single value or use regular expressions to specify a range of values.
+
+Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
+
+## Logical operators
+
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "**Identity** or **Device Posture**" }}
+/>
+
+## Limitations
+
+### Selector prerequisites
+
+The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors require additional setup before they work in egress policies. Before deploying policies with these selectors, refer to [Host selectors](/cloudflare-one/traffic-policies/policy-types/egress-policies/host-selectors).

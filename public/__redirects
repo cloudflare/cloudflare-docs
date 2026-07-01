@@ -4,6 +4,68 @@
 # ============================================================================
 
 
+# Traffic policies reorganization (cloudflare-one/traffic-policies)
+# Moved to reference/
+/cloudflare-one/traffic-policies/proxy/ /cloudflare-one/traffic-policies/reference/proxy/ 301
+/cloudflare-one/traffic-policies/order-of-enforcement/ /cloudflare-one/traffic-policies/reference/order-of-enforcement/ 301
+/cloudflare-one/traffic-policies/identity-selectors/ /cloudflare-one/traffic-policies/reference/identity-selectors/ 301
+/cloudflare-one/traffic-policies/application-app-types/ /cloudflare-one/traffic-policies/reference/application-app-types/ 301
+/cloudflare-one/traffic-policies/domain-categories/ /cloudflare-one/traffic-policies/reference/domain-categories/ 301
+/cloudflare-one/traffic-policies/expression-syntax/ /cloudflare-one/traffic-policies/reference/policy-expressions/ 301
+/cloudflare-one/traffic-policies/global-policies/ /cloudflare-one/traffic-policies/reference/global-policies/ 301
+/cloudflare-one/traffic-policies/tiered-policies/ /cloudflare-one/traffic-policies/reference/tiered-policies/ 301
+/cloudflare-one/traffic-policies/tiered-policies/organizations/ /cloudflare-one/traffic-policies/reference/tiered-policies/organizations/ 301
+/cloudflare-one/traffic-policies/tiered-policies/tenant-api/ /cloudflare-one/traffic-policies/reference/tiered-policies/tenant-api/ 301
+
+# Moved to tls-decryption/
+/cloudflare-one/traffic-policies/http-policies/tls-decryption/ /cloudflare-one/traffic-policies/tls-decryption/tls-decryption/ 301
+/cloudflare-one/traffic-policies/http-policies/http3/ /cloudflare-one/traffic-policies/tls-decryption/http3/ 301
+
+# Moved to get-started/
+/cloudflare-one/traffic-policies/dns-policies/test-dns-filtering/ /cloudflare-one/traffic-policies/get-started/test-dns-filtering/ 301
+
+# Moved to policy-types/
+/cloudflare-one/traffic-policies/dns-policies/ /cloudflare-one/traffic-policies/policy-types/dns-policies/ 301
+/cloudflare-one/traffic-policies/dns-policies/common-policies/ /cloudflare-one/traffic-policies/policy-types/dns-policies/common-policies/ 301
+/cloudflare-one/traffic-policies/dns-policies/timed-policies/ /cloudflare-one/traffic-policies/policy-types/dns-policies/timed-policies/ 301
+/cloudflare-one/traffic-policies/network-policies/ /cloudflare-one/traffic-policies/policy-types/network-policies/ 301
+/cloudflare-one/traffic-policies/network-policies/common-policies/ /cloudflare-one/traffic-policies/policy-types/network-policies/common-policies/ 301
+/cloudflare-one/traffic-policies/network-policies/protocol-detection/ /cloudflare-one/traffic-policies/policy-types/network-policies/protocol-detection/ 301
+/cloudflare-one/traffic-policies/network-policies/ssh-logging/ /cloudflare-one/traffic-policies/policy-types/network-policies/ssh-logging/ 301
+/cloudflare-one/traffic-policies/http-policies/ /cloudflare-one/traffic-policies/policy-types/http-policies/ 301
+/cloudflare-one/traffic-policies/http-policies/common-policies/ /cloudflare-one/traffic-policies/policy-types/http-policies/common-policies/ 301
+/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/ /cloudflare-one/traffic-policies/policy-types/http-policies/antivirus-scanning/ 301
+/cloudflare-one/traffic-policies/http-policies/file-sandboxing/ /cloudflare-one/traffic-policies/policy-types/http-policies/file-sandboxing/ 301
+/cloudflare-one/traffic-policies/http-policies/granular-controls/ /cloudflare-one/traffic-policies/policy-types/http-policies/granular-controls/ 301
+/cloudflare-one/traffic-policies/http-policies/tenant-control/ /cloudflare-one/traffic-policies/policy-types/http-policies/tenant-control/ 301
+/cloudflare-one/traffic-policies/packet-filtering/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-policies/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/create-rate-limiting-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/enable-managed-rulesets/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/enable-managed-rulesets/ 301
+/cloudflare-one/traffic-policies/packet-filtering/form-expressions/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/form-expressions/ 301
+/cloudflare-one/traffic-policies/packet-filtering/ruleset-logic/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ruleset-logic/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/extended-ruleset/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/extended-ruleset/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/magic-transit-egress/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/magic-transit-egress/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/minimal-ruleset/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/minimal-ruleset/ 301
+/cloudflare-one/traffic-policies/egress-policies/ /cloudflare-one/traffic-policies/policy-types/egress-policies/ 301
+/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/ /cloudflare-one/traffic-policies/policy-types/egress-policies/dedicated-egress-ips/ 301
+/cloudflare-one/traffic-policies/egress-policies/egress-cloudflared/ /cloudflare-one/traffic-policies/policy-types/egress-policies/egress-cloudflared/ 301
+/cloudflare-one/traffic-policies/egress-policies/host-selectors/ /cloudflare-one/traffic-policies/policy-types/egress-policies/host-selectors/ 301
+/cloudflare-one/traffic-policies/resolver-policies/ /cloudflare-one/traffic-policies/policy-types/resolver-policies/ 301
+
+# Moved enable-ids to packet-filtering/ids
+/cloudflare-one/traffic-policies/enable-ids/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ids/ 301
+
+# Deleted/merged pages (redirected to target)
+/cloudflare-one/traffic-policies/troubleshoot-gateway/ /cloudflare-one/traffic-policies/troubleshooting/ 301
+/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ 301
+/cloudflare-one/traffic-policies/packet-filtering/traffic-types/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/form-expressions/ 301
+/cloudflare-one/traffic-policies/packet-filtering/protocol-validation-rules/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/form-expressions/ 301
+
+# Legacy IDS link (also check if people linked to /ids/ at top level)
+/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ids/ 301
+
 # Sandbox (claude-managed-agents moved to tutorials)
 /sandbox/claude-managed-agents/ /sandbox/tutorials/claude-managed-agents/ 301
 
