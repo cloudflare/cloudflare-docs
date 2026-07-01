@@ -63,7 +63,7 @@ Build an [AI vibe coding platform](/reference-architecture/diagrams/ai/ai-vibe-c
 ## Features
 
 - **Isolation and multitenancy** — Each of your customers runs code in their own Worker, a [secure and isolated sandbox](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/).
-- **Programmable routing, ingress, egress, and limits** — You write code that dispatches requests to your customers' code, and can control [ingress](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/), [egress](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), and set [per-customer limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/).
+- **Programmable routing, ingress, egress, and limits** — You write code that dispatches requests to your customers' code, and can control [ingress](/cloudflare-for-platforms/workers-for-platforms/inbound-control/), [egress](/cloudflare-for-platforms/workers-for-platforms/outbound-control/), and set [per-customer limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/).
 - **Databases and storage** — You can provide [databases, object storage, and more](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) to your customers as APIs they can call directly, without API tokens, keys, or external dependencies.
 - **Custom domains and subdomains** — You [call an API](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) to create custom subdomains or configure custom domains for each of your customers.
 

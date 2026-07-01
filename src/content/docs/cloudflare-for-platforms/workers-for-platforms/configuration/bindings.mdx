@@ -1,49 +1,42 @@
 ---
 pcx_content_type: how-to
 title: Bindings
-description: Attach KV, R2, D1, and other resource bindings to user Workers deployed through Workers for Platforms.
+description: Give user Workers access to resources and controlled platform APIs in Workers for Platforms.
 tags:
   - Bindings
 sidebar:
-  order: 5
+  order: 1
 products:
   - cloudflare-for-platforms
 ---
-import { Aside } from "@astrojs/starlight/components";
 
-When you deploy User Workers through Workers for Platforms, you can attach [bindings](/workers/runtime-apis/bindings/) to give them access to resources like [KV namespaces](/kv/), [D1 databases](/d1/), [R2 buckets](/r2/), and more. This enables your end customers to build more powerful applications without you having to build the infrastructure components yourself.
+Bindings let you control what a user Worker can access. When your platform uploads or updates a user Worker, you decide which resources and platform-defined APIs are attached to that Worker.
 
-With bindings, each of your users can have their own:
-- [KV namespace](/kv/) that they can use to store and retrieve data
-- [R2 bucket](/r2/) that they can use to store files and assets
-- [Analytics Engine](/analytics/analytics-engine/) dataset that they can use to collect observability data
-- [Durable Objects](/durable-objects/) class that they can use for stateful coordination
+Use bindings when you want to:
 
-#### Resource isolation
+- Give each user Worker its own KV namespace, R2 bucket, D1 database, Analytics Engine dataset, or other resource.
+- Expose custom platform capabilities, such as `sendEmail()`, `trackUsage()`, or `createCheckoutSession()`.
+- Restrict and control access before calls reach the underlying resource.
+- Scope access per tenant, project, plan, or request.
 
-Each User Worker can only access the bindings that are explicitly attached to it. For complete isolation, you can create and attach a unique resource (like a D1 database or KV namespace) to every User Worker.
+## How it works
 
-![Resource Isolation Model](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-5.svg "Resource Isolation Model")
+There are two common binding patterns in Workers for Platforms:
 
-## Adding a KV Namespace to a User Worker
-This example walks through how to create a [KV namespace](/kv/) and attach it to a User Worker. The same process can be used to attach to other [bindings](/workers/runtime-apis/bindings/).
+- **Resource bindings**: The user Worker receives a direct binding to a Cloudflare resource, such as KV, R2, D1, or Analytics Engine.
+- **Custom bindings**: The user Worker receives a Service binding to platform-owned code. The user Worker calls methods on the binding, but the implementation runs in your platform Worker.
 
-### 1. Create a KV namespace
-Create a KV namespace using the [Cloudflare API](/api/resources/kv/subresources/namespaces/methods/bulk_update/).
+Use resource bindings when each user Worker can safely access the attached resource directly. Use custom bindings when your platform needs to validate input, enforce quota, inject secrets, or expose a narrower API than the underlying resource provides.
 
-### 2. Attach the KV namespace to the User Worker
+## Attach resource bindings
 
-Use the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to attach the KV namespace binding to the Worker. You can do this when you're first uploading the Worker script or when updating an existing Worker.
+When you upload a user Worker, include bindings in the `metadata` object of the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) request.
 
-:::note
-When using the API to upload scripts, bindings must be specified in the `metadata` object of your multipart upload request. You cannot upload the Wrangler configuration file as a module to configure the bindings. For more details about multipart uploads, see [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
-:::
-
-##### Example API request
+This example attaches a KV namespace to a user Worker:
 
 ```bash
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workers/dispatch/namespaces/<your-namespace>/scripts/<script-name>" \
+  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workers/dispatch/namespaces/<namespace>/scripts/<script-name>" \
   -H "Content-Type: multipart/form-data" \
   -H "Authorization: Bearer <api-token>" \
   -F 'metadata={
@@ -52,19 +45,29 @@ curl -X PUT \
       {
         "type": "kv_namespace",
         "name": "USER_KV",
-        "namespace_id": "<your-namespace-id>"
+        "namespace_id": "<kv-namespace-id>"
       }
     ]
   }' \
   -F 'worker.js=@/path/to/worker.js'
 ```
-Now, the User Worker has can access the `USER_KV` binding through the `env` argument using `env.USER_DATA.get()`, `env.USER_DATA.put()`, and other KV methods.
 
-Note: If you plan to add new bindings to the Worker, use the `keep_bindings` parameter to ensure existing bindings are preserved while adding new ones.
+The user Worker accesses the binding through `env` like a regular Worker:
+
+```js
+export default {
+	async fetch(request, env) {
+		const value = await env.USER_KV.get("settings");
+		return Response.json({ value });
+	},
+};
+```
+
+To add new bindings without removing existing bindings, include `keep_bindings` in the upload metadata.
 
 ```bash
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workers/dispatch/namespaces/<your-namespace>/scripts/<script-name>" \
+  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workers/dispatch/namespaces/<namespace>/scripts/<script-name>" \
   -H "Content-Type: multipart/form-data" \
   -H "Authorization: Bearer <api-token>" \
   -F 'metadata={
@@ -72,9 +75,152 @@ curl -X PUT \
       {
         "type": "r2_bucket",
         "name": "STORAGE",
-        "bucket_name": "<your-bucket-name>"
+        "bucket_name": "<bucket-name>"
       }
     ],
     "keep_bindings": ["kv_namespace"]
   }'
 ```
+
+## Custom bindings
+
+Custom bindings let your platform expose a controlled API to user Workers. A user Worker calls a binding on `env`, but the call runs in a platform-owned Worker.
+
+Use custom bindings when you want to:
+
+- Wrap a resource such as R2, KV, or D1 with platform-specific checks.
+- Expose only the methods your users should call.
+- Keep secrets and trusted configuration in platform-owned code.
+- Apply per-tenant quota, logging, validation, or routing before the resource is used.
+
+### Define the binding implementation
+
+Create a platform Worker that exports a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#the-workerentrypoint-class) class. The public methods on this class become the API that user Workers can call.
+
+This example exposes an R2-like `SITE_BUCKET` binding that checks a storage limit before writes reach the underlying R2 bucket.
+
+```ts title="platform-worker.ts"
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class CappedR2Bucket extends WorkerEntrypoint {
+	async get(key) {
+		return this.ctx.props.BUCKET.get(key);
+	}
+
+	async delete(key) {
+		const bucket = this.ctx.props.BUCKET;
+		const usage = this.ctx.props.USAGE_COUNTER;
+		const existing = await bucket.head(key);
+
+		await bucket.delete(key);
+
+		if (existing) {
+			await usage.subtract(existing.size);
+		}
+	}
+
+	async put(key, value, options = {}) {
+		const bucket = this.ctx.props.BUCKET;
+		const usage = this.ctx.props.USAGE_COUNTER;
+		const maxBytes = this.ctx.props.MAX_BYTES;
+		const { size: newSize, ...r2Options } = options;
+
+		if (typeof newSize !== "number") {
+			throw new Error("MISSING_OBJECT_SIZE");
+		}
+
+		const existing = await bucket.head(key);
+		const oldSize = existing?.size ?? 0;
+		const delta = newSize - oldSize;
+
+		if (delta > 0) {
+			const currentUsage = await usage.get();
+
+			if (currentUsage + delta > maxBytes) {
+				throw new Error("BUCKET_QUOTA_EXCEEDED");
+			}
+
+			await usage.add(delta);
+		}
+
+		try {
+			const object = await bucket.put(key, value, r2Options);
+
+			if (delta < 0) {
+				await usage.subtract(Math.abs(delta));
+			}
+
+			return object;
+		} catch (err) {
+			if (delta > 0) {
+				await usage.subtract(delta);
+			}
+
+			throw err;
+		}
+	}
+}
+```
+
+In this example, the platform Worker reads `BUCKET`, `USAGE_COUNTER`, and `MAX_BYTES` from [`this.ctx.props`](/workers/runtime-apis/context/#props). The user Worker never receives direct access to those values.
+
+### Attach the custom binding
+
+When you upload the user Worker, add a Service binding that points to the platform Worker and its `CappedR2Bucket` entrypoint.
+
+```jsonc
+{
+	"bindings": [
+		{
+			"type": "service",
+			"name": "SITE_BUCKET",
+			"service": "r2-wrapper-worker",
+			"entrypoint": "CappedR2Bucket",
+			"props": {
+				"BUCKET": "<R2 bucket for this site>",
+				"USAGE_COUNTER": "<usage counter for this site>",
+				"MAX_BYTES": 10737418240,
+				"CUSTOMER_ID": "<customer ID>"
+			}
+		}
+	]
+}
+```
+
+This is where the platform scopes the custom binding. You do not bind the R2 bucket directly to the user Worker. Instead, you bind the platform Worker as `SITE_BUCKET`, and use `props` to tell that platform Worker which R2 bucket and controls to use for this user Worker.
+
+### Call the custom binding from a user Worker
+
+From the user Worker's perspective, `SITE_BUCKET` behaves like a normal binding with the methods your platform exposes.
+
+```js title="user-worker.js"
+export default {
+	async fetch(request, env) {
+		await env.SITE_BUCKET.put("foo.txt", "hello world", {
+			size: 11,
+		});
+
+		const object = await env.SITE_BUCKET.get("foo.txt");
+
+		if (object === null) {
+			return new Response("Not found", { status: 404 });
+		}
+
+		return new Response(object.body);
+	},
+};
+```
+
+The user Worker can call `get()`, `put()`, and `delete()`. It cannot call methods you did not define, read `props`, or access the underlying R2 bucket directly.
+
+## Capability-based access
+
+Custom bindings follow a capability-based security model. A user Worker can only access the binding stubs you explicitly attach to it. If it does not receive a binding for a resource or platform API, it cannot call that resource or API.
+
+When the user Worker receives a custom binding stub, each method call is an RPC call back to the platform-owned implementation. This lets your platform build least-privilege APIs for each tenant without exposing the underlying resource or secret.
+
+## Related resources
+
+- [Service bindings RPC](/workers/runtime-apis/bindings/service-bindings/rpc/)
+- [Context props](/workers/runtime-apis/context/#props)
+- [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/)

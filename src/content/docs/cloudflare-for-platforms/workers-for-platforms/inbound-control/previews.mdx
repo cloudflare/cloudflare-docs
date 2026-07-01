@@ -1,0 +1,113 @@
+---
+pcx_content_type: concept
+title: Previews
+description: Preview user Worker versions while keeping platform inbound policy in front of the preview invocation.
+sidebar:
+  order: 3
+products:
+  - cloudflare-for-platforms
+---
+
+Previews let your platform test a user Worker version before promoting it to production traffic. In Workers for Platforms, your platform uploads a user Worker version through the API, and inbound control can run before preview requests reach that version.
+
+Use previews when you want to:
+
+- Let customers test code before release.
+- Review AI-generated or customer-uploaded code before routing production traffic to it.
+- Keep the same platform authentication, logging, and policy checks in front of preview traffic.
+
+## How it works
+
+Previews follow the same split between platform configuration and user Worker behavior:
+
+- Your platform creates or uploads a user Worker version for preview.
+- The user Worker defines handlers the same way a regular Worker does.
+- When the preview is invoked, inbound control runs before the user Worker version handles the request.
+
+```txt
+Preview request
+  -> Cloudflare selects the previewed user Worker version
+  -> Inbound control runs platform policy
+  -> User Worker version handles fetch()
+```
+
+## Platform side
+
+Your platform creates a previewable version by uploading a user Worker version through the Workers for Platforms API. This version belongs to the user Worker, independent of the dispatcher and inbound Worker.
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/versions" \
+  -H "Content-Type: multipart/form-data" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F 'metadata={
+    "main_module": "worker.js",
+    "annotations": {
+      "workers/message": "Preview customer changes"
+    }
+  }' \
+  -F 'worker.js=@/path/to/worker.js;type=application/javascript+module'
+```
+
+The version upload response includes version metadata, including whether the version can be previewed.
+
+Your platform should also decide what preview policy applies. For example, your inbound Worker can require a platform preview token before forwarding preview requests to the user Worker.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class PlatformInbound extends WorkerEntrypoint {
+	async fetch(request) {
+		const previewToken = request.headers.get("X-Platform-Preview-Token");
+
+		if (previewToken !== this.env.PREVIEW_TOKEN) {
+			return new Response("Preview not authorized", { status: 403 });
+		}
+
+		return this.ctx
+			.next({
+				props: { source: "preview" },
+			})
+			.fetch(request);
+	}
+}
+```
+
+This keeps preview access control in the platform-owned inbound Worker. The user Worker does not need to implement preview authentication itself.
+
+## User Worker side
+
+The user Worker is normal Worker code. It does not need preview-specific logic unless your platform wants to expose preview metadata through bindings or `ctx.props`.
+
+```js
+export default {
+	async fetch(request) {
+		return new Response("Preview response");
+	},
+};
+```
+
+When the preview request reaches this Worker, it has already passed through inbound control. Your platform manages the preview version through the API, and the user Worker code stays normal.
+
+## Add preview context
+
+If the user Worker needs to know that a request is a preview, pass trusted context with `ctx.next({ props })`.
+
+```js
+return this.ctx
+	.next({
+		props: {
+			source: "preview",
+			previewId: "preview-123",
+		},
+	})
+	.fetch(request);
+```
+
+The user Worker can read the props through `this.ctx.props` if it uses a `WorkerEntrypoint` class. The platform controls which props are passed.
+
+## Related resources
+
+- [Versions and deployments](/cloudflare-for-platforms/workers-for-platforms/versioning/)
+- [Rollout](/cloudflare-for-platforms/workers-for-platforms/versioning/rollout/)
+- [Inbound control overview](/cloudflare-for-platforms/workers-for-platforms/inbound-control/)

@@ -2,13 +2,22 @@
 pcx_content_type: concept
 title: Tags
 description: Organize, search, and filter user Workers by custom tags like customer ID or plan type in Workers for Platforms.
+sidebar:
+  order: 5
 products:
   - cloudflare-for-platforms
 ---
 
 import { APIRequest } from "~/components";
 
-Use tags to organize, search, and filter user Workers at scale. Tag Workers based on customer ID, plan type, project ID, or environment. After you tag user Workers, you can perform bulk operations like deleting all Workers for a specific customer.
+Tags let your platform organize, search, filter, and bulk-manage user Workers. Tag user Workers by customer ID, plan type, project ID, or environment.
+
+Use tags when you want to:
+
+- Find all user Workers that belong to a customer.
+- Filter user Workers by plan, environment, or project.
+- Delete or manage all Workers that match a tag.
+- Build platform dashboard filters around user Worker metadata.
 
 :::note
 
@@ -16,7 +25,11 @@ You can set a maximum of eight tags per script. Avoid special characters like `,
 
 :::
 
-## Add tags via dashboard
+## Platform side
+
+On the platform side, add tags when you create or update user Workers, or manage tags later through the dashboard or API.
+
+### Add tags via dashboard
 
 1. Go to **Workers for Platforms** in the Cloudflare dashboard and select your namespace.
 2. Select a user Worker from the list.

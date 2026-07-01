@@ -1,0 +1,215 @@
+---
+pcx_content_type: how-to
+title: Create and test versions
+description: Upload Worker versions and test them before production traffic in Workers for Platforms.
+sidebar:
+  order: 1
+  label: Versions
+products:
+  - cloudflare-for-platforms
+---
+
+A version is a snapshot of a user Worker's code, static assets, bindings, compatibility settings, and metadata. Creating a version does not change production traffic. Once you create a version, add it to a deployment to test it, and then [roll out](/cloudflare-for-platforms/workers-for-platforms/versioning/rollout/) traffic to it when you are ready.
+
+## Create a version
+
+When your customer updates their code, create a new version with the new code and static assets if applicable. Your platform does this through the Workers for Platforms API.
+
+In the request, include:
+
+- **Worker code** — The source files for that version, such as `worker.js`.
+- **Version message** — A short description of what changed, similar to a commit message. Set in `annotations.workers/message`.
+- **Static assets** (optional) — If the version includes static assets, upload them first. Refer to [Include static assets](#include-static-assets).
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/versions" \
+  -H "Content-Type: multipart/form-data" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F 'metadata={
+    "main_module": "worker.js",
+    "annotations": {
+      "workers/message": "Add customer checkout flow"
+    }
+  };type=application/json' \
+  -F 'worker.js=@/path/to/worker.js;type=application/javascript+module'
+```
+
+The response includes the `version_id`. Your platform should store the association between the Worker name and the version ID. You need both when you add the version to a deployment and when your dispatcher injects version routing headers. The customer does not need to know about the version ID — your platform manages it.
+
+### Include static assets
+
+If the version includes static assets, upload the assets before you create the version.
+
+1. Build the customer project and generate an asset manifest.
+2. Create an asset upload session for the Worker.
+3. Upload the assets Cloudflare identifies as missing.
+4. Receive a completion token from the upload flow.
+
+For the full upload steps, refer to [Static assets](/cloudflare-for-platforms/workers-for-platforms/configuration/static-assets/) and [Direct uploads](/workers/static-assets/direct-upload/).
+
+Once you have the completion token, include it when you create the version:
+
+```json
+{
+	"main_module": "worker.js",
+	"assets": {
+		"jwt": "<completion-token>",
+		"config": {
+			"html_handling": "auto-trailing-slash"
+		}
+	},
+	"annotations": {
+		"workers/message": "Upload customer preview version with static assets"
+	}
+}
+```
+
+The `assets.config` object is optional. Use it to set asset routing behavior, such as HTML handling.
+
+## Add the version to a deployment
+
+To make a version routable — for testing or production traffic — include it in the Worker's active deployment. To test the version without sending production traffic to it, add it at `0%`.
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/deployments" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  --data '{
+    "strategy": "percentage",
+    "versions": [
+      {
+        "version_id": "<stable-version-id>",
+        "percentage": 100
+      },
+      {
+        "version_id": "<new-version-id>",
+        "percentage": 0
+      }
+    ]
+  }'
+```
+
+Production traffic stays on the stable version. The new version is now reachable through version overrides from your dispatcher.
+
+## Send test requests to the new version
+
+Once the version is in the deployment, your dispatcher can route test requests to it by injecting `Cloudflare-Workers-Version-Overrides` with the target version ID. This tells Cloudflare to route the request to that specific version instead of following the deployment percentages.
+
+### What to set up on the user Worker
+
+Nothing. The user Worker does not need test-specific code. It handles `fetch()` the same way it would for production traffic. Your customer does not need to know about version IDs or override headers — your platform manages this entirely.
+
+### What to set up on your platform
+
+Your dispatcher is the trusted gateway for version testing. It owns the version routing header — external clients must not set it directly.
+
+Your dispatcher handles each test request by:
+
+1. **Stripping incoming version headers** — Delete `Cloudflare-Workers-Version-Overrides` and `Cloudflare-Workers-Version-Key` from the incoming request. This prevents external clients from spoofing version routing.
+
+2. **Resolving the Worker name and version ID** — Determine `workerName` from the hostname or path. Look up the target `versionId` from the association your platform stored when the version was created. Your platform decides how to store and surface test state — common approaches include a short-lived `HttpOnly` preview cookie, a server-side preview session, or a signed token scoped to the Worker, version, and user.
+
+3. **Validating the test request** — Check that test state exists, is not expired, the user is authorized, the version belongs to the Worker, and the version is in the active deployment. If validation fails, return an error and do not forward to user code.
+
+4. **Injecting the override and forwarding** — Set the header and dispatch:
+
+```js
+headers.set(
+	"Cloudflare-Workers-Version-Overrides",
+	`${workerName}="${versionId}"`,
+);
+
+return env.DISPATCHER.get(workerName).fetch(new Request(request, { headers }));
+```
+
+The header is a Dictionary Structured Header. The key is the Worker name. The value is the version ID as a string.
+
+### Example: dispatcher with version testing
+
+This example shows the full flow. The dispatcher strips incoming version headers, resolves the Worker name, checks for platform-owned test state, and injects the override when valid test state exists. When no test state is found, the request follows the active deployment percentages.
+
+```js
+export default {
+	async fetch(request, env) {
+		const headers = new Headers(request.headers);
+
+		// Strip untrusted incoming version headers.
+		headers.delete("Cloudflare-Workers-Version-Overrides");
+		headers.delete("Cloudflare-Workers-Version-Key");
+
+		const workerName = resolveWorkerName(request);
+		const testVersion = await resolveTestVersion(request, env, workerName);
+
+		if (testVersion) {
+			// Inject the override only after validation.
+			headers.set(
+				"Cloudflare-Workers-Version-Overrides",
+				`${workerName}="${testVersion.versionId}"`,
+			);
+		}
+
+		return env.DISPATCHER.get(workerName).fetch(
+			new Request(request, { headers }),
+		);
+	},
+};
+
+function resolveWorkerName(request) {
+	return new URL(request.url).hostname.split(".")[0];
+}
+
+async function resolveTestVersion(request, env, workerName) {
+	// Look up test state from a platform-managed preview cookie or session.
+	// Return null if no valid test state exists.
+	const previewCookie = getCookie(
+		request.headers.get("Cookie"),
+		"__cf_wfp_preview",
+	);
+
+	if (!previewCookie) {
+		return null;
+	}
+
+	const testState = await env.PREVIEW_SESSIONS.get(previewCookie, {
+		type: "json",
+	});
+
+	if (
+		!testState ||
+		testState.workerName !== workerName ||
+		Date.now() > testState.expiresAt
+	) {
+		return null;
+	}
+
+	return testState;
+}
+
+function getCookie(cookieHeader, name) {
+	if (!cookieHeader) return null;
+	for (const part of cookieHeader.split(";")) {
+		const [key, value] = part.trim().split("=");
+		if (key === name) return value;
+	}
+	return null;
+}
+```
+
+From the customer's perspective, they select **Test version** in your platform UI. Your platform looks up the stored version ID, creates test state, and the dispatcher injects the override. The request lands on the target version. The user Worker does not need to know the request is a test — it runs the same code it would in production.
+
+## Next steps
+
+Once you have confirmed the version works:
+
+- [Roll out the version](/cloudflare-for-platforms/workers-for-platforms/versioning/rollout/) — Start sending production traffic to the new version.
+- [Use version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/) — Keep related requests on the same version during rollout.
+
+## Related resources
+
+- [Versioning overview](/cloudflare-for-platforms/workers-for-platforms/versioning/)
+- [Rollout](/cloudflare-for-platforms/workers-for-platforms/versioning/rollout/)
+- [Rollback](/cloudflare-for-platforms/workers-for-platforms/versioning/rollback/)
+- [Version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/)
+- [Static assets](/cloudflare-for-platforms/workers-for-platforms/configuration/static-assets/)

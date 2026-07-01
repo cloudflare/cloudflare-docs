@@ -37,6 +37,10 @@ Use Workers for Platforms when you need to:
 
 Workers for Platforms provides tools to manage and control your customers' code:
 
+- **[Inbound control](/cloudflare-for-platforms/workers-for-platforms/inbound-control/)** - Run platform policy before user Workers receive HTTP requests, previews, cron triggers, queue messages, and other invocations.
+- **[Outbound control](/cloudflare-for-platforms/workers-for-platforms/outbound-control/)** - Intercept outgoing `fetch()` requests from user Workers to inject credentials, log requests, or block destinations.
+- **[Bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/)** - Give each user Worker access to resources or controlled platform APIs.
+- **[Versioning](/cloudflare-for-platforms/workers-for-platforms/versioning/)** - Upload versions of user Workers and control which deployments serve traffic.
 - **[Custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/)** - Set per-customer limits on CPU time and subrequests.
 - **[Observability](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/)** - Collect logs and metrics across all user Workers in your namespace. Export to third-party platforms like Datadog, Splunk, and Grafana.
 - **[Tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/)** - Organize, search, and filter user Workers by custom tags like customer ID, plan type, or environment.
@@ -74,7 +78,7 @@ Explore <GlossaryTooltip term="reference architecture">reference architectures</
 	href="/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/"
 >
 	Understand the architecture: dispatch namespaces, dynamic dispatch Workers,
-	user Workers, and outbound Workers.
+	user Workers, inbound control, and outbound control.
 </LinkTitleCard>
 
 </CardGrid>

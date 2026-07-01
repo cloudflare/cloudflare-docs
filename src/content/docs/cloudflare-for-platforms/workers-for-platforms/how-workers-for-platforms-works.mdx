@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: How Workers for Platforms works
-description: Understand the architecture of Workers for Platforms, including dispatch namespaces, dynamic dispatch Workers, user Workers, and outbound Workers.
+description: Understand the architecture of Workers for Platforms, including dispatch namespaces, dynamic dispatch Workers, user Workers, inbound control, and outbound control.
 sidebar:
   order: 2
 head:
@@ -13,7 +13,7 @@ products:
 
 ## Architecture
 
-If you are familiar with [Workers](/workers/), Workers for Platforms introduces four key components: dispatch namespaces, dynamic dispatch Workers, user Workers, and optionally outbound Workers.
+If you are familiar with [Workers](/workers/), Workers for Platforms introduces dispatch namespaces, dynamic dispatch Workers, user Workers, and optional platform controls for inbound and outbound traffic.
 
 ![Workers for Platforms architecture](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-1.svg)
 
@@ -37,35 +37,40 @@ If you need to test changes safely, create a separate `staging` namespace.
 
 A dynamic dispatch Worker is the entry point for all requests to your platform. Your dynamic dispatch Worker:
 
-- **Routes requests** - Determines which customer Worker should handle each request based on hostname, path, headers, or any other criteria
-- **Runs platform logic** - Executes authentication, rate limiting, or request validation before customer code runs
+- **Routes HTTP requests** - Determines which user Worker should handle each request based on hostname, path, headers, or any other criteria
 - **Sets per-customer limits** - Enforces [custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) on CPU time and subrequests based on plan type
-- **Sanitizes responses** - Modifies or filters responses from customer Workers
+- **Sanitizes responses** - Modifies or filters responses from user Workers
 
-The dynamic dispatch Worker uses a [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) to invoke user Workers:
+The dynamic dispatch Worker uses a dispatch namespace binding to invoke user Workers:
 
 ```js
 export default {
 	async fetch(request, env) {
-		// Determine which customer Worker to call
+		// Determine which user Worker to call
 		const customerName = new URL(request.url).hostname.split(".")[0];
 
-		// Get and invoke the customer's Worker
+		// Get and invoke the user Worker
 		const userWorker = env.DISPATCHER.get(customerName);
 		return userWorker.fetch(request);
 	},
 };
 ```
 
+### Inbound control (optional)
+
+[Inbound control](/cloudflare-for-platforms/workers-for-platforms/inbound-control/) runs platform policy before a selected user Worker receives an invocation. It does not replace the dynamic dispatch Worker. The dynamic dispatch Worker routes HTTP requests; inbound control wraps the selected user Worker.
+
+Use inbound control to require authentication, audit invocations, attach customer context, or block unsupported handlers before user Worker code runs. For cron triggers, queue consumers, previews, email handlers, and RPC calls, the target user Worker is already known, so the invocation can pass through inbound control without going through the dispatcher.
+
 ### User Workers
 
-User Workers contain code written by your customers. Your customer sends their code to your platform, and then you make an API request to deploy a user Worker on their behalf. User Workers are deployed to a dispatch namespace and invoked by your dynamic dispatch Worker. You can provide user Workers with [bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) to access KV, D1, R2, and other Cloudflare resources.
+User Workers contain code written by your customers. Your customer sends their code to your platform, and then you make an API request to deploy a user Worker on their behalf. User Workers are deployed to a dispatch namespace and invoked by your dynamic dispatch Worker, cron triggers, queue consumers, previews, or direct calls. You can provide user Workers with [bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) to access KV, D1, R2, and other Cloudflare resources.
 
 ![Deployment and management flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-6.svg)
 
-### Outbound Worker (optional)
+### Outbound control (optional)
 
-An [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) intercepts [`fetch()`](/workers/runtime-apis/fetch/) requests made by user Workers. Use it to:
+[Outbound control](/cloudflare-for-platforms/workers-for-platforms/outbound-control/) intercepts [`fetch()`](/workers/runtime-apis/fetch/) requests made by user Workers. Use it to:
 
 - **Control egress** - Block or allow external API calls from customer code
 - **Log requests** - Track what external services customers are calling
@@ -78,9 +83,10 @@ An [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configurati
 1. A request arrives at your dynamic dispatch Worker (for example, `customer-a.example.com/api`)
 2. Your dynamic dispatch Worker determines which user Worker should handle the request
 3. The dynamic dispatch Worker calls `env.DISPATCHER.get("customer-a")` to get the user Worker
-4. The user Worker executes. If it makes external `fetch()` calls and an outbound Worker is configured, those requests pass through the outbound Worker first.
-5. The user Worker returns a response
-6. Your dynamic dispatch Worker can optionally modify the response before returning it
+4. If inbound control is configured, inbound control runs before the selected user Worker handles the request.
+5. The user Worker executes. If it makes external `fetch()` calls and outbound control is configured, those requests pass through outbound control first.
+6. The user Worker returns a response.
+7. Your dynamic dispatch Worker can optionally modify the response before returning it.
 
 ---
 

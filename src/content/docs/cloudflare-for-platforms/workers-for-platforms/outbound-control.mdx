@@ -1,0 +1,122 @@
+---
+pcx_content_type: concept
+title: Outbound control
+description: Intercept, inspect, and modify outgoing fetch requests from user Workers in Workers for Platforms.
+sidebar:
+  order: 6
+products:
+  - cloudflare-for-platforms
+---
+
+Outbound control lets your platform run policy on outgoing `fetch()` requests made by user Workers. It gives you a platform-owned egress layer for allowlists, blocklists, logging, request transformation, and secrets injection.
+
+Use outbound control when you want to:
+
+- Block or allow requests based on destination hostnames.
+- Log every external API call made by user Workers.
+- Inject credentials into outbound requests without exposing secrets to user Worker code.
+- Route requests through platform-owned services before they reach the Internet.
+
+## How it works
+
+An outbound Worker sits between user Workers and the public Internet. The user Worker calls `fetch()` normally. If outbound control is configured, Cloudflare invokes your outbound Worker before the request leaves your platform.
+
+```txt
+User Worker calls fetch()
+  -> Outbound Worker runs platform policy
+  -> Request goes to the Internet or is blocked
+```
+
+Outbound control is the egress counterpart to [inbound control](/cloudflare-for-platforms/workers-for-platforms/inbound-control/). Inbound control wraps what comes into user Workers. Outbound control wraps what user Workers send out.
+
+:::note
+When outbound control is enabled, user Workers cannot use the [`connect()` API](/workers/runtime-apis/tcp-sockets/#connect) to create outbound TCP sockets. This ensures outbound communication goes through the outbound Worker's `fetch()` handler.
+:::
+
+## Platform side
+
+On the platform side, define an outbound Worker and configure the dispatch namespace to use it.
+
+```jsonc
+{
+	"namespace": "my-platform",
+	"outbound": {
+		"service": "platform-worker",
+		"entrypoint": "OutboundInterceptor"
+	}
+}
+```
+
+The outbound Worker receives outgoing requests from user Workers. It can inspect, modify, block, or forward each request.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class OutboundInterceptor extends WorkerEntrypoint {
+	async fetch(request) {
+		const url = new URL(request.url);
+
+		if (!url.hostname.endsWith("api.example.com")) {
+			return new Response("Outbound host not allowed", { status: 403 });
+		}
+
+		this.ctx.waitUntil(
+			fetch("https://audit.example.com/events", {
+				method: "POST",
+				body: JSON.stringify({
+					type: "outbound_fetch",
+					hostname: url.hostname,
+				}),
+			}),
+		);
+
+		return fetch(request);
+	}
+}
+```
+
+## User Worker side
+
+The user Worker calls `fetch()` like a regular Worker.
+
+```js
+export default {
+	async fetch() {
+		const response = await fetch("https://api.example.com/data");
+		return new Response(await response.text());
+	},
+};
+```
+
+The user Worker does not need outbound-specific code. Because the Worker runs in a namespace with outbound control, its outgoing `fetch()` request passes through the outbound Worker first.
+
+## Inject secrets into outbound requests
+
+Outbound control is useful when user Workers need to call an API but should not see the API credential.
+
+In this example, the user Worker calls `https://api.example.com` without an `Authorization` header. The outbound Worker adds the header from a platform-owned secret before forwarding the request.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class OutboundInterceptor extends WorkerEntrypoint {
+	async fetch(request) {
+		const url = new URL(request.url);
+
+		if (url.hostname !== "api.example.com") {
+			return fetch(request);
+		}
+
+		const headers = new Headers(request.headers);
+		headers.set("Authorization", `Bearer ${this.env.API_TOKEN}`);
+
+		return fetch(new Request(request, { headers }));
+	}
+}
+```
+
+The secret stays in the platform-owned outbound Worker. The user Worker can call the API, but it cannot read or modify the token.
+
+## Limits
+
+Outbound control intercepts `fetch()` requests made by user Workers. It does not intercept fetch requests made from [Durable Objects](/durable-objects/) or [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/).

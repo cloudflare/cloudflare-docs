@@ -1,0 +1,147 @@
+---
+pcx_content_type: how-to
+title: Hostname routing
+description: Route HTTP requests by hostname, subdomain, path, or custom hostname metadata before inbound control runs platform policy.
+sidebar:
+  order: 2
+products:
+  - cloudflare-for-platforms
+---
+
+Hostname routing lets your platform route incoming HTTP requests to the right user Worker. Your dispatch Worker makes the routing decision, and inbound control runs after that decision to enforce policy before the selected user Worker handles `fetch()`.
+
+Use hostname routing when you want to:
+
+- Serve each customer from a subdomain such as `customer1.example.com`.
+- Support customer-owned domains through [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/).
+- Route millions of hostnames without creating one Worker route per hostname.
+- Use platform data, such as KV records or custom hostname metadata, to choose the user Worker.
+
+## How it works
+
+There are two separate steps in the request path:
+
+1. The dispatch Worker selects a user Worker by calling `env.DISPATCHER.get(workerName)`.
+2. If inbound control is configured on the namespace, Cloudflare runs the inbound Worker before the selected user Worker handles `fetch()`.
+
+```txt
+HTTP request
+  -> Dispatch Worker selects a user Worker
+  -> Inbound control runs platform policy
+  -> Selected user Worker handles fetch()
+```
+
+The dispatch Worker should focus on routing. Put cross-cutting policy, such as authentication, audit logging, and invocation allowlists, in [inbound control](/cloudflare-for-platforms/workers-for-platforms/inbound-control/).
+
+## Platform side
+
+On the platform side, configure a dispatch namespace binding on your dispatch Worker:
+
+```jsonc
+{
+	"dispatch_namespaces": [
+		{
+			"binding": "DISPATCHER",
+			"namespace": "my-platform"
+		}
+	]
+}
+```
+
+Your dispatch Worker can then route requests to any user Worker in the namespace.
+
+### Route by subdomain
+
+Use subdomain routing when each user Worker maps directly to a subdomain.
+
+```js
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const workerName = url.hostname.split(".")[0];
+
+		const userWorker = env.DISPATCHER.get(workerName);
+		return userWorker.fetch(request);
+	},
+};
+```
+
+For `customer1.example.com`, this example routes to a user Worker named `customer1`.
+
+### Route by hostname lookup
+
+Use a lookup table when hostnames do not map directly to user Worker names. For example, store hostname-to-Worker mappings in [Workers KV](/kv/).
+
+```js
+export default {
+	async fetch(request, env) {
+		const hostname = new URL(request.url).hostname;
+		const workerName = await env.ROUTING.get(hostname);
+
+		if (!workerName) {
+			return new Response("Hostname not configured", { status: 404 });
+		}
+
+		const userWorker = env.DISPATCHER.get(workerName);
+		return userWorker.fetch(request);
+	},
+};
+```
+
+This lets your platform change routing without redeploying the dispatch Worker.
+
+## Configure the hostname
+
+You can route requests from subdomains you control or from custom hostnames your customers bring to your platform.
+
+### Wildcard route with a dispatch Worker
+
+For a SaaS domain that handles many customer hostnames, configure a wildcard [route](/workers/configuration/routing/routes/) such as `*/*` on the zone and point it to your dispatch Worker.
+
+This allows your dispatch Worker to receive both platform subdomains and customer-owned hostnames, then route each request in code.
+
+To set up a wildcard route:
+
+1. Set up your SaaS domain and custom hostnames with [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/).
+2. Set the fallback origin for custom hostnames. If the Worker is the origin, use a placeholder DNS record for the fallback origin, such as `A 192.0.2.0`.
+3. Ask customers to point their DNS records to your SaaS domain. If customers need to proxy an apex hostname, refer to [Apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/).
+4. Add a `*/*` route on your platform zone and associate it with your dispatch Worker.
+5. Implement dispatch logic that routes based on hostname, path, metadata, or a routing table.
+
+If you do not want all traffic on the zone to reach the dispatch Worker, use a dedicated domain for customer traffic, such as `customers.example.com`, or add routes without a Worker specification to exclude specific hostnames or paths.
+
+### Subdomain-only routing
+
+If you only route platform-owned subdomains, use a more specific route such as `*.example.com/*`.
+
+To set up subdomain routing:
+
+1. Create an orange-clouded wildcard DNS record such as `*.example.com`. If the Worker is the origin, use a placeholder DNS value such as `A 192.0.2.0`.
+2. Add a route such as `*.example.com/*` that points to your dispatch Worker.
+3. Add dispatch logic that maps each subdomain to the right user Worker.
+
+## User Worker side
+
+The user Worker does not configure hostname routing. It only defines a `fetch()` handler, like a regular Worker.
+
+```js
+export default {
+	async fetch(request) {
+		return new Response("Hello from a user Worker");
+	},
+};
+```
+
+Your platform uploads this Worker to the dispatch namespace. When the dispatch Worker selects it with `env.DISPATCHER.get(workerName)`, the request reaches the user Worker's `fetch()` handler after inbound control runs.
+
+## O2O behavior
+
+When your customers also use Cloudflare and point their custom domain to your SaaS domain with a CNAME, Worker routing behavior depends on whether the customer's DNS record is proxied or DNS-only. Learn more about [O2O setups](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/#with-o2o).
+
+Since you may not control your customer's DNS proxy settings, use a `*/*` wildcard route when you need routing logic to work consistently for both proxied and DNS-only customer records.
+
+| Route pattern | Custom hostname proxied | Custom hostname DNS-only |
+| --- | --- | --- |
+| `*/*` | Supported | Supported |
+| Target hostname route | Supported | Not supported |
+| Custom hostname route | Not supported | Supported |
