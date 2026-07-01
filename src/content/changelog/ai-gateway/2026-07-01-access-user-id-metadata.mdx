@@ -1,0 +1,13 @@
+---
+title: Track Access users in AI Gateway metadata
+description: AI Gateway now adds the authenticated Access user ID to request metadata for Access-protected custom domain traffic.
+products:
+  - ai-gateway
+date: 2026-07-01
+---
+
+AI Gateway now records the authenticated Cloudflare Access user ID in request metadata for traffic sent through an Access-protected custom domain.
+
+When AI Gateway receives a valid Access JWT with a user subject, it adds the user's Access `sub` claim as `cf.user_id`. You can use this metadata field to filter logs, review usage, and build per-user or per-team spend controls without passing user IDs from the client application.
+
+For setup instructions, refer to [Custom domains](/ai-gateway/configuration/custom-domains/).
