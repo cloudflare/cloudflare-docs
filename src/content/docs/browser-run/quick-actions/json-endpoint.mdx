@@ -242,7 +242,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 	"response_format": {
 		"type": "json_schema",
 		"json_schema": {
-			"type": object",
+			"type": "object",
 			"properties": {
 			"products": {
 				"type": "array",
@@ -353,7 +353,7 @@ Browser Run can use a custom model for which you supply credentials. List the mo
 This example uses the `custom_ai` parameter to instruct Browser Run to use a Anthropic's Claude Sonnet 4 model. The prompt asks the model to extract the main `<h1>` and `<h2>` headings from the target URL and return them in a structured JSON object.
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
   -H 'authorization: Bearer <apiToken>' \
   -H 'content-type: application/json' \
   -d '{
