@@ -6,11 +6,9 @@ products:
 date: 2026-06-30
 ---
 
-[Wrangler CLI](/workers/wrangler/) authenticates as one user at a time, so working across several Cloudflare users meant re-running `wrangler login` and losing the previous session each time or giving one user access to every account that you might need to use from Wrangler.
+[Wrangler CLI](/workers/wrangler/) now supports auth profiles: named logins that you scope to specific Cloudflare accounts and switch between automatically, based on the directory you are working in.
 
-Auth profiles provide a safer and more convenient way to manage multiple accounts.
-
-A profile is a named OAuth login that you scope to a chosen set of accounts and bind to a directory. Commands run in that directory, and its subdirectories, use the matching account automatically.
+A profile is a named OAuth login bound to a directory. Commands run in that directory, and its subdirectories, use the matching account — so you can move between accounts without re-running `wrangler login`.
 
 Use profiles to keep a separate login for each client when working at an agency, or to separate staging and production into different accounts. Pair a profile with an `account_id` in your [Wrangler configuration file](/workers/wrangler/configuration/) so a command cannot reach the wrong account.
 
