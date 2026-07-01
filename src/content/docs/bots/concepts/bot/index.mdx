@@ -13,8 +13,6 @@ tags:
   - AI
 ---
 
-import { Render } from "~/components";
-
 A **bot** is a software application programmed to do certain tasks.
 
 Bots can be used for good (chatbots, search engine crawlers) or for evil (inventory hoarding, credential stuffing).
@@ -24,72 +22,18 @@ Bots can be used for good (chatbots, search engine crawlers) or for evil (invent
 For more background, refer to [What is a bot?](https://www.cloudflare.com/learning/bots/what-is-a-bot/).
 :::
 
-## Verified bots and agents
-
-<Render file="verified-bots" product="bots" />
-
-:::note
-The method for allowing or blocking verified bots depends on [your plan](/bots/concepts/bot/verified-bots/#availability).
-:::
-
 ## AI bots
 
 AI crawlers and agents interact with your site for very different reasons, and you may want to treat those reasons differently. Rather than relying on a single "AI bot" label, Cloudflare classifies bots by **behavior** — what a bot does on your site — so you can allow the behavior that helps your business and block the behavior that harms it. A single bot can have more than one behavior.
 
-### Behavior-based classification
+### Classification
 
 Cloudflare lets all customers manage three AI-related use cases directly:
 
-| Behavior | What it does | Examples |
-| --- | --- | --- |
-| **Search** | Collects or indexes your content so it can answer questions about it later. Site owners should expect referral traffic or other equitable compensation in return. | OAI-SearchBot, Claude-Search |
-| **Agent** | Automated activity acting in real time on a person's behalf to get something done, such as chat fetch bots and browser-use agents. | ChatGPT-User, browser-use agents |
-| **Training** | Crawls your content to train or fine-tune a model, permanently absorbing your data into the model. | GPTBot, ClaudeBot |
+| Behavior | What it does |
+| --- | --- |
+| **Search** | Collects or indexes your content so it can answer questions about it later. |
+| **Agent** | Automated activity acting in real time on a person's behalf to get something done, such as chat fetch bots and browser-use agents. |
+| **Training** | Crawls your content to train or fine-tune a model, permanently absorbing your data into the model. |
 
-Cloudflare classifies many other behaviors too — including Transact, Data Collection, Security Testing, SEO, Ads Verification, Social / Link Preview, Feed Fetching, and Monitoring & Operations. Enterprise Bot Management customers can browse the full behavior classification of every tracked bot in [BotBase](/bots/botbase/).
-
-### Managing AI traffic
-
-The options to manage **Search**, **Agent**, and **Training** traffic are available to all customers, including on the Free plan. To turn them on, refer to [Block AI Bots](/bots/additional-configurations/block-ai-bots/). To express crawl preferences in your `robots.txt`, refer to the [managed `robots.txt` setting](/bots/additional-configurations/managed-robots-txt/).
-
-### New defaults on September 15, 2026
-
-On **September 15, 2026**, Cloudflare will set new defaults for these three classifications. For new domains onboarding to Cloudflare, **Training** and **Agent** will be blocked by default **on pages that display ads**, while **Search** will remain allowed by default. An ad signals that a page is meant for a person to land on and see, so on those pages Cloudflare keeps off the automated traffic that does not send readers back.
-
-Also on September 15, multi-purpose crawlers — those that combine **Search** with **Training** — will be blocked according to *all* of their behaviors. Because defaults are enforced by the most restrictive applicable rule, multi-purpose crawlers such as `Googlebot`, `Applebot`, and `Bingbot` will be blocked for customers who block **Training**, whether through the [options to manage AI traffic](/bots/additional-configurations/block-ai-bots/) or the legacy Block AI bots service.
-
-:::note
-Existing configurations are not changed automatically. Before September 15, you can [opt out of the new defaults](https://dash.cloudflare.com/?to=/:account/:zone/security/settings) to confirm that you want no changes to Training crawlers that also crawl for Search. You can block or allow individual crawlers at any time with [AI Crawl Control](/ai-crawl-control/).
-:::
-
-### How it works
-
-When you enable AI bot blocking, Cloudflare detects and blocks two categories of AI bots:
-
-- **Well-behaved AI crawlers** that comply with `robots.txt`, respect crawl rates, and do not hide their behavior from your website.
-- **Evasive AI crawlers** that do not follow these conventions but are detected through additional signatures.
-
-### Rule evaluation order
-
-Cloudflare evaluates bot-related rules in a specific order. When a request matches a rule and receives a terminating action (such as block or challenge), it does not continue to later rules in the sequence.
-
-1. **Custom rules** (WAF custom rules you create) — evaluated first.
-2. **Block AI bots** (the managed AI rule) — evaluated second.
-3. **Other Super Bot Fight Mode rules** (definitely automated, likely automated, verified bots) — evaluated last.
-
-The Block AI bots rule takes precedence over all other Super Bot Fight Mode rules. For example, if you have enabled **Block AI bots** and **Allow verified bots**, verified AI bots will still be blocked.
-
-For Bot Management customers, custom rules run before the Block AI bots rule. If your custom rule challenges definitely automated traffic, AI bots will receive that challenge instead of reaching the Block AI bots rule. Because the challenge is a terminating action, Cloudflare does not evaluate the request against later rules in the sequence.
-
-The SBFM settings for verified, definitely automated, and likely bots also affect evaluation. If these settings are set to `allow`, the request is not matched to any SBFM rule and proceeds to the next phase — where the Block AI bots rule can still block it. If the setting is `block`, the request is blocked in the earlier phase and does not reach the AI rule at all. If the setting is `challenge`, the request matches a rule and receives a terminating action, so it will not continue to later rules.
-
-For self-serve non-Bot Management customers, all rules for verified, definitely automated, and likely bots run in the phase following the AI bots rule.
-
-<Render file="execution-order" product="bots" />
-
-This feature is available on all Cloudflare plans.
-
-:::note
-
-The method for blocking AI bots depends on [your plan](/bots/get-started/).
-:::
+Cloudflare classifies other behaviors, too — refer to [Verified bots](/bots/concepts/bot/verified-bots/).
