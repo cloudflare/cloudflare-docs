@@ -1,0 +1,42 @@
+---
+pcx_content_type: concept
+title: BotBase
+description: Browse Cloudflare's directory of all known bots and agents, with behavior-based classification, directly in the dashboard.
+products:
+  - bots
+tags:
+  - AI
+  - Bots
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: BotBase
+---
+
+BotBase is Cloudflare's directory of all known bots, including [verified bots and agents](/bots/concepts/bot/verified-bots/). It provides a comprehensive, searchable view of the entire bot directory directly in the Cloudflare dashboard, where you can see how Cloudflare classifies each bot and target individual bots in your security configuration.
+
+BotBase currently serves as a visibility plane for tracked bots. To mitigate these bots, you can use [Security rules](/security/rules/) or the [AI traffic options](/bots/concepts/bot/#ai-bots).
+
+## Availability
+
+BotBase is available to [Enterprise Bot Management](/bots/get-started/bot-management/) customers.
+
+## Access
+
+To view BotBase, go to **Security Analytics** > **Bot analysis** > **BotBase**. You can also access BotBase from **Security Settings** > **Bot Management** > **BotBase**.
+
+## What you can do
+
+- Browse the full catalogue of all verified bots and agents, and see the behavior or behaviors each one is classified under.
+- Search and filter the directory to find a specific bot or group of bots.
+- Filter your own traffic to a specific bot to investigate its activity on your zone.
+- Copy a bot's detection ID to target it in [Security rules](/security/rules/).
+
+## Classification
+
+BotBase classifies each tracked bot by its behavior — what the bot may do on your site. A single bot can have one or more behaviors. To read more, see [Verified bot classifications](/bots/concepts/bot/verified-bots/).
+
+## Radar's public-facing BotBase
+
+Every bot tracked in BotBase, along with select metadata, is available publicly in [Cloudflare Radar's bots and agents directory](https://radar.cloudflare.com/bots/directory).
