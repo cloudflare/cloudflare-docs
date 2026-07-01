@@ -33,7 +33,9 @@ Most importantly, this splits information about the Client so that no single rol
 - **Issuer** — knows only that the Client was attested for and is owed a signed token. (This depends on the deployment: if the Attester and Issuer are the same entity, the Issuer may learn identity information, but the Origin identity stays hidden.)
 - **Origin** — knows only that the Client is verified.
 
-It is important to note that the unlinkability between token issuance and redemption provided by Privacy Pass only partially relies on the separation of roles. The anonymity set, which can be impacted by network-level identifiers (visible IP address, TLS fingerprint, HTTP headers) and partitionable token-bound information (excessive public key usage or token metadata), is also key in protecting a Client's unlinkability. Customers are trusted to follow Privacy Pass [guidelines](https://datatracker.ietf.org/doc/html/rfc9576#name-privacy-considerations) to mitigate such threats.
+It is important to note that the unlinkability between token issuance and redemption provided by Privacy Pass only partially relies on the separation of roles. To provide meaningful privacy, the anonymity set–e.g., the group of clients that are part of the same deployment setup–must also be kept large. Anything that causes clients to see different setups splits them into smaller groups, shrinking anonymity.
+
+For more information, see the Privacy Pass RFC's [guidelines](https://datatracker.ietf.org/doc/html/rfc9576#name-privacy-considerations).
 
 ---
 
@@ -65,7 +67,7 @@ Application developers may want to ensure that users of their service are subscr
 | Attester | Cloudflare; operating an Attester built to customer specifications |
 | Issuer | Cloudflare |
 
-This deployment uses a **joint Attester-Issuer model**, where Cloudflare operates both the Issuer and Attester. If the customer is acting as the Origin, it is essential that they do not operate the Attester, as the Origin and Attester should generally not be operated by the same entity. Having Cloudflare operate it jointly with the Issuer prevents having to introduce an entirely new third party, although is not necessary. The joint Attester-Issuer model is also useful if the roles are reversed, such that the customer is an identity authority (e.g., an enterprise IdP/SSO provider) who wants to offer private verification for their Origins.
+This deployment uses a **joint Attester-Issuer model**, where Cloudflare operates both the Issuer and Attester. If the customer is acting as the Origin, they should generally not operate the Attester as well, since that would create an Origin-Attester entity that knows both user identity and destination, making privacy significantly harder to guarantee. Having Cloudflare operate it jointly with the Issuer prevents having to introduce an entirely new third party, although is not necessary. The joint Attester-Issuer model is also useful if the roles are reversed, such that the customer is an identity authority (e.g., an enterprise IdP/SSO provider) who wants to offer private verification for their Origins.
 
 ---
 
