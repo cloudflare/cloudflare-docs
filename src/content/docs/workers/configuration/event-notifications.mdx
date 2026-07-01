@@ -74,24 +74,16 @@ Events for changes to how traffic reaches your Worker.
 | `domain.detached` | `cf.workers.worker.domain.detached` | A Custom Domain was removed |
 | `cronTriggers.updated` | `cf.workers.worker.cronTriggers.updated` | Cron Triggers were changed |
 
-### Secrets, tags, and settings
+### Tags and settings
 
-Events for changes to a Worker's secrets, tags, and configuration.
+Events for changes to a Worker's tags and configuration. Secret and versioned setting changes (bindings, limits, placement) create new versions and are covered by `version.created` above.
 
 | Event | `type` field | Description |
 | --- | --- | --- |
-| `secret.created` | `cf.workers.worker.secret.created` | A secret was added |
-| `secret.bulkUpdated` | `cf.workers.worker.secret.bulkUpdated` | Secrets were bulk-updated |
-| `secret.deleted` | `cf.workers.worker.secret.deleted` | A secret was removed |
 | `tags.replaced` | `cf.workers.worker.tags.replaced` | All tags were replaced |
 | `tag.added` | `cf.workers.worker.tag.added` | A tag was added |
 | `tag.removed` | `cf.workers.worker.tag.removed` | A tag was removed |
-| `version.created` | `cf.workers.worker.version.created` | A versioned setting was changed (bindings, limits, placement) |
 | `settings.updated` | `cf.workers.worker.settings.updated` | An unversioned setting was changed (observability, logpush, tail consumers, subdomain) |
-
-:::note[Open question]
-Secret changes create new versions under the hood. These events may collapse into `version.created` in a future revision — to be determined based on whether customers prefer granular secret-level events or version-level events.
-:::
 
 ### Account-level events
 
