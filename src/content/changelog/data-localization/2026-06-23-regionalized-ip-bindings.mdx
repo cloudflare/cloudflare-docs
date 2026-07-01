@@ -1,0 +1,15 @@
+---
+title: Regionalized IP Bindings for Regional Services
+description: Regionalize traffic at the IP layer by binding a BYOIP prefix to a region.
+products:
+  - data-localization
+date: "2026-06-23"
+---
+
+Regional Services now supports **Regionalized IP Bindings**, letting you regionalize traffic at the IP layer for prefixes you bring to Cloudflare through [Bring Your Own IP (BYOIP)](/byoip/).
+
+Where [Regional Hostnames](/data-localization/regional-services/regional-hostnames/) regionalize traffic by hostname, Regionalized IP Bindings let you bind a CIDR from one of your prefixes to a region — ideal for address-map deployments and any service you address by IP rather than hostname. Cloudflare then terminates TLS and processes traffic to those addresses only within the data centers in that region.
+
+Regionalized IP Bindings requires the Regional Services and Regional Services for BYOIP entitlements. Contact your account team to enable them.
+
+To get started, refer to [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/).

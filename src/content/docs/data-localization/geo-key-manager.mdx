@@ -20,6 +20,8 @@ By default, your private keys are encrypted and securely distributed to each Clo
 
 Geo Key Manager was restricted to the US, EU, and high-security data centers, but with the new version of Geo Key Manager, available in [Closed Beta](https://blog.cloudflare.com/configurable-and-scalable-geo-key-manager-closed-beta/), you can now create `allowlists` and `blocklists` of countries in which your private keys will be stored. That means that you will be able define specific geographic locations where to store keys, for instance you can store your private keys exclusively in Australia or limit private keys storage to the EU and the UK.
 
+Geo Key Manager uses its own country-based storage model, separate from [Regional Services regions](/data-localization/region-support/#region-types). For the regions supported by each Data Localization Suite feature, refer to [Region support](/data-localization/region-support/).
+
 ## Cloudflare data center flow example
 
 The following diagram shows what happens when an end user connects to a Cloudflare data center that does not hold your private key. Because TLS termination requires the private key, the local data center must request a temporary session key (a short-lived symmetric encryption key) from a data center in an authorized region. Once the session key is established, the local data center can decrypt traffic for the remainder of the connection without contacting the key-holding data center again. This extra step adds latency on the first request, which can be as much as a second if the key-holding data center is geographically distant.
