@@ -1,16 +1,13 @@
 ---
-title: Get started
-pcx_content_type: get-started
-description: Enable and configure Regional Services for your hostnames via dashboard or API.
+title: Regional Hostnames
+pcx_content_type: how-to
+description: Regionalize proxied hostnames by assigning a region through the dashboard or Regional Hostnames API.
 products:
   - data-localization
 tags:
   - Terraform
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: Get Started — Regional Services
 ---
 
 import { Details, APIRequest, DashButton, Render } from "~/components";
@@ -21,7 +18,11 @@ Interested customers need to contact their account team to enable DNS Regionalis
 
 :::
 
-Regional Services controls which Cloudflare data centers can decrypt and process your HTTPS traffic. You can configure it through the dashboard or via API.
+Regional Hostnames are the most common way to use [Regional Services](/data-localization/regional-services/): you assign a region to a proxied hostname, and Cloudflare steers traffic for that hostname — using its shared anycast IP addresses — to in-region data centers for TLS termination and processing. For other ways to regionalize traffic, refer to [Ways to use Regional Services](/data-localization/regional-services/#ways-to-use-regional-services).
+
+Regional Hostnames support [managed regions](/data-localization/region-support/#region-types). If you need a custom region, use [Regionalized Spectrum Applications](/data-localization/regional-services/spectrum-applications/) or [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/) instead.
+
+You can configure Regional Hostnames through the dashboard or via API.
 
 ## Configure Regional Services in the dashboard
 
