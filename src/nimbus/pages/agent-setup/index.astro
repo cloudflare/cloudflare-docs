@@ -1,6 +1,8 @@
 ---
 import SplashLayout from "~/layouts/SplashLayout.astro";
 import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
 import CatalogWithFilter from "~/components/agent-setup/CatalogWithFilter.astro";
 import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
 import AgentPrimer from "~/components/agent-setup/AgentPrimer.astro";
@@ -20,16 +22,8 @@ const agents = AGENTS;
 >
   <div class="relative">
     <BackgroundLines inner={1120} outer={1360} />
-    <div
-      class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
-    >
-      <header class="mx-auto max-w-2xl text-center">
-        <h1
-          class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
-        >
-          Agent setup
-        </h1>
-      </header>
+    <PageShell>
+      <PageHeader title="Agent setup" />
 
       <section class="mt-12 pt-10" aria-label="Agent setup">
         <p class="agent-setup-lede">
@@ -108,7 +102,7 @@ const agents = AGENTS;
           <AgentPrimer />
         </div>
       </section>
-    </div>
+    </PageShell>
   </div>
 </SplashLayout>
 

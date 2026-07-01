@@ -15,10 +15,12 @@ const props = z.object({
 
 const { size, center } = props.parse(Astro.props);
 
+// Full width on small screens (a fractional block on a phone is unusable),
+// collapsing to the requested fraction from `md` up.
 const widthClasses = {
-  large: "w-3/4",
-  medium: "w-1/2",
-  small: "w-1/4",
+  large: "w-full md:w-3/4",
+  medium: "w-full md:w-1/2",
+  small: "w-full md:w-1/4",
 };
 ---
 

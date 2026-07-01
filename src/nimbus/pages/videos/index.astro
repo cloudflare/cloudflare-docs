@@ -1,6 +1,8 @@
 ---
 import SplashLayout from "~/layouts/SplashLayout.astro";
 import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
 import { ResourcesBySelector } from "~/components";
 
 export const prerender = true;
@@ -9,20 +11,12 @@ export const prerender = true;
 <SplashLayout title="Videos">
   <div class="relative">
     <BackgroundLines inner={1120} outer={1360} />
-    <div
-      class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
-    >
-      <header class="mx-auto max-w-2xl text-center">
-        <h1
-          class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
-        >
-          Videos
-        </h1>
-      </header>
+    <PageShell>
+      <PageHeader title="Videos" />
 
       <section class="mt-12 pt-10" aria-label="Videos">
         <ResourcesBySelector types={["video"]} columns={3} />
       </section>
-    </div>
+    </PageShell>
   </div>
 </SplashLayout>

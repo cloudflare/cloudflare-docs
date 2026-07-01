@@ -44,6 +44,8 @@ const { Content } = await render(note);
   description={description}
   noindex={note.data.hidden}
 >
+  {/* Symmetric horizontal padding; left clears the spine, matching the feed's --body-x (3.5rem, 4rem >=lg). pt-6 matches the docs body top rhythm. */}
+  <div class="px-14 lg:px-16 pt-6">
   <a
     href="/changelog"
     class="group mb-9 -ml-0.5 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-muted-foreground no-underline transition-[color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-foreground active:scale-[0.98] motion-reduce:active:scale-100"
@@ -82,4 +84,5 @@ const { Content } = await render(note);
       <Content components={components} />
     </div>
   </article>
+  </div>
 </ChangelogLayout>

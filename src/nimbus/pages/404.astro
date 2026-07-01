@@ -1,13 +1,15 @@
 ---
 // Site-wide 404: splash, noindex; body supplies its own h1.
 import SplashLayout from "~/layouts/SplashLayout.astro";
+import PageShell from "~/components/PageShell.astro";
 import FourOhFour from "~/components/404.astro";
 
 export const prerender = true;
 ---
 
 <SplashLayout title="404 - Page Not Found" noindex>
-  <div class="mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] py-14">
+  {/* No backdrop hero here; symmetric padding via pb-14! overriding the shell's pb-24. */}
+  <PageShell class="pt-14 pb-14!">
     <FourOhFour />
-  </div>
+  </PageShell>
 </SplashLayout>
