@@ -20,7 +20,7 @@ interface Props {
 }
 
 const { title, tagline, class: className } = Astro.props;
-const hasTagline = tagline != null || Astro.slots.has("tagline");
+const hasTagline = Boolean(tagline) || Astro.slots.has("tagline");
 ---
 
 <header class:list={["mx-auto max-w-2xl pt-14 text-center", className]}>
@@ -32,7 +32,7 @@ const hasTagline = tagline != null || Astro.slots.has("tagline");
   {
     hasTagline && (
       <p class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
-        {tagline ?? <slot name="tagline" />}
+        {tagline || <slot name="tagline" />}
       </p>
     )
   }

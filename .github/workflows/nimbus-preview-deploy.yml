@@ -87,4 +87,4 @@ jobs:
       - name: Deploy Nimbus Preview
         run: pnpm exec wrangler preview --config wrangler.preview.json --name nimbus
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.WORKERS_PREVIEW_DEPLOY }}
