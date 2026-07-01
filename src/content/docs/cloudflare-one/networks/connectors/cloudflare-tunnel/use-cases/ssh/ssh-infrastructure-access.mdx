@@ -107,7 +107,20 @@ chmod 600 /etc/ssh/ca.pub
 
 <Render file="ssh/restart-server" product="cloudflare-one" />
 
-## 8. Connect as a user
+## 8. (Optional) Require independent MFA for SSH
+
+You can require users to authenticate with a [YubiKey PIV key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps) before connecting to your SSH servers. When MFA is required, users must complete public key authentication with their enrolled PIV key before the connection is established.
+
+To configure independent MFA for SSH, refer to [Enforce MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).
+
+Before users can connect with MFA enabled, they must:
+
+1. [Enroll a PIV key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps) through the App Launcher.
+2. [Configure their SSH client](/cloudflare-one/access-controls/access-settings/independent-mfa/#configure-your-ssh-client) to use the enrolled PIV key.
+
+When the user runs `ssh <username>@<target IP>`, the SSH proxy checks if MFA is required for the matching policy. If required, the user must touch their YubiKey and enter their PIN (depending on the key's PIN policy). The proxy then completes the connection.
+
+## 9. Connect as a user
 
 Users can use any SSH client to connect to the target, as long as they are logged into the Cloudflare One Client on their device. If the target is located within a particular virtual network, ensure that the Cloudflare One Client is [connected to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
