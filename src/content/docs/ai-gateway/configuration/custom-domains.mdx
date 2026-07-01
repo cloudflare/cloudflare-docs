@@ -52,10 +52,6 @@ After setup, users can make requests to the custom domain after authenticating t
 
 You can also create and manage custom domains through the Cloudflare API.
 
-:::note
-The custom domains API is not yet included in the public API reference while the contract is still being finalized.
-:::
-
 Unlike the dashboard, the API does not create the DNS record for you. After you create the custom domain, use the returned `cname_target` to create a proxied CNAME record for your hostname.
 
 ### Create a custom domain
