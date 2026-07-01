@@ -51,6 +51,13 @@ describe("Cloudflare Docs", () => {
 				"/directory/?test=whatever",
 			);
 		});
+
+		it("does not force a trailing slash on index.md requests", async () => {
+			const request = new Request("http://fakehost/docs/index.md");
+			const response = await SELF.fetch(request, { redirect: "manual" });
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe("/directory/index.md");
+		});
 	});
 
 	describe("json endpoints", () => {

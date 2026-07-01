@@ -165,16 +165,16 @@ export default class extends WorkerEntrypoint<Env> {
 				console.error("Could not evaluate redirects", error);
 			}
 
-			if (!pathname.endsWith("/")) {
+			// Markdown requests are handled by the first pass via the stripped
+			// base path, so no trailing-slash retry is needed here.
+			if (!pathname.endsWith("/") && !isMarkdownRequest) {
 				try {
 					const redirect = await redirectsEvaluator(
 						new Request(`${url.origin}${pathname}/${url.search}`, request),
 						this.env.ASSETS,
 					);
 					if (redirect) {
-						return isMarkdownRequest
-							? rewriteRedirectForMarkdown(redirect, url)
-							: redirect;
+						return redirect;
 					}
 				} catch (error) {
 					console.error(
