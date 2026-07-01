@@ -11,7 +11,7 @@ products:
 
 import { TabItem, Tabs, GlossaryTooltip } from "~/components";
 
-Redirects for AI Training enforces your existing <GlossaryTooltip term="canonical URL">`<link rel="canonical">`</GlossaryTooltip> tags as 301 redirects for [verified AI training crawlers](/bots/concepts/bot/#verified-bots). When a verified bot with the [AI Crawler category](/bots/concepts/bot/verified-bots/#categories) requests a page whose canonical tag points to a different same-origin URL, Cloudflare returns a `301 Moved Permanently` to the canonical. All other visitors—browsers, search engines, [AI Assistants](/bots/concepts/bot/verified-bots/#categories)—receive the original page unchanged.
+Redirects for AI Training enforces your existing <GlossaryTooltip term="canonical URL">`<link rel="canonical">`</GlossaryTooltip> tags as 301 redirects for [verified AI training crawlers](/bots/concepts/bot/#verified-bots). When a verified bot with the [AI Crawler category](/bots/concepts/bot/verified-bots/#legacy-categories) requests a page whose canonical tag points to a different same-origin URL, Cloudflare returns a `301 Moved Permanently` to the canonical. All other visitors—browsers, search engines, [AI Assistants](/bots/concepts/bot/verified-bots/#legacy-categories)—receive the original page unchanged.
 
 To learn more about why this feature can be useful, refer to the [announcement blog post](https://blog.cloudflare.com/ai-redirects/).
 
@@ -190,7 +190,7 @@ Available on Pro, Business, and Enterprise plans at no additional cost.
 - Only HTML responses (`content-type: text/html`) from the origin are evaluated. Other content types pass through unchanged.
 - The canonical tag must appear within the first 256 KB of the uncompressed HTML response body.
 - Only same-origin canonical URLs trigger a redirect. Cross-origin canonicals are ignored.
-- Only [verified bots](/bots/concepts/bot/#verified-bots) with the [AI Crawler category](/bots/concepts/bot/verified-bots/#categories) are redirected. [AI Assistants and AI Search bots](/bots/concepts/bot/verified-bots/#categories) are not affected.
+- Only [verified bots](/bots/concepts/bot/#verified-bots) with the [AI Crawler category](/bots/concepts/bot/verified-bots/#legacy-categories) are redirected. [AI Assistants and AI Search bots](/bots/concepts/bot/verified-bots/#legacy-categories) are not affected.
 - Self-canonical pages (where the canonical URL matches the request URL) are not redirected.
 - Best-effort loop detection uses the `Referer` header. If a crawler was just redirected from the canonical URL back to the current page, the origin HTML is served instead of redirecting. This handles common two-page canonical misconfigurations (Page A canonical points to Page B, Page B canonical points to Page A).
 
@@ -206,4 +206,4 @@ When a redirect is issued, Cloudflare logs the canonical target URL in your HTTP
 - [Content Signals Policy](https://contentsignals.org/) - Signal post-access content usage preferences in `robots.txt`
 - [Directives](/ai-crawl-control/features/track-robots-txt/) - Monitor `robots.txt` compliance and check Agent Readiness
 - [Single Redirects](/rules/url-forwarding/single-redirects/) - Rule-based URL redirects that execute before origin
-- [Verified bots](/bots/concepts/bot/verified-bots/#categories) - Bot categories including AI Crawler, AI Assistant, and AI Search
+- [Verified bots](/bots/concepts/bot/verified-bots/#legacy-categories) - Bot categories including AI Crawler, AI Assistant, and AI Search
