@@ -187,17 +187,11 @@ You now have access to the remote Windows desktop.
 
 ## Connection settings
 
-Connection settings restrict data transfer between the user's local machine and the browser-based RDP session. You can control two types of data transfer:
-
-- **Text controls** — Copy and paste text between the local machine and the remote session.
-- **File controls** <Badge text="Beta" variant="caution" size="small" /> — Transfer files between the local machine and the remote session.
-
-These controls are configured per policy, so you can grant different permissions to different groups of users.
+Connection settings restrict data transfer between the user's local machine and the browser-based RDP session. You can control text (copy and paste) and file transfers. Text controls manage clipboard content. File controls <Badge text="Beta" variant="caution" size="small" /> manage file uploads and downloads. These controls are configured per policy, so you can grant different permissions to different groups of users.
 
 ### Default behavior
 
-- **New policies**: Both text controls and file controls are denied by default. You must explicitly allow each action.
-- **Existing applications**: Existing applications retain full text clipboard access for backward compatibility. File controls are denied unless explicitly enabled.
+For new policies, both text controls and file controls are denied by default. You must explicitly allow each action. Existing applications retain full text clipboard access for backward compatibility. File controls are denied unless explicitly enabled.
 
 ### Available settings
 
@@ -212,7 +206,7 @@ Text controls and file controls use the same directional options:
 
 For example, you can allow text copy and paste in both directions while restricting file transfers to uploads only.
 
-When a user attempts a restricted clipboard action, the clipboard content is replaced with a message informing them that the action is not allowed. When a user attempts a restricted file transfer, the transfer fails with an error message.
+When a user attempts a restricted clipboard action, the clipboard content is replaced with a message informing them that the action is not allowed. When file transfer is restricted, upload methods are disabled and download buttons do not appear in the control panel.
 
 ### Configure connection settings
 
@@ -291,18 +285,14 @@ resource "cloudflare_zero_trust_access_policy" "rdp-policy" {
 
 To manage transfers, select the settings gear icon on the left side of the RDP session. You can drag this icon along the left edge to reposition it.
 
-:::note
-**PLACEHOLDER — LIMITS TO BE CONFIRMED:**
-- **Maximum file size:** **`<MAX_FILE_SIZE>`**
-- **Maximum files per upload:** **`<MAX_FILES_PER_UPLOAD>`**
-:::
+File transfer has the following limits:
+
+- **Maximum file size:** 2 GB per file (upload and download)
+- **Maximum files per upload:** 1,000 files
 
 #### Upload files (local to remote)
 
-To transfer files from your local machine to the remote Windows session, use one of the following methods:
-
-- **Drag and drop**: Drag one or more files from your local machine directly onto the browser-based RDP window. The file lands on the active element of the remote desktop. For example, if you have a folder open in File Explorer, the file lands in that folder. If no folder is open, the file lands on the desktop.
-- **Control panel**: Select the settings gear icon to open the control panel, then select the upload icon (third icon from the top). A file picker opens where you can select one or more files to upload. Files do not need to be the same type.
+To transfer files from your local machine to the remote Windows session, drag files onto the browser window or use the control panel. Drag and drop supports individual files and folders (including subfolders, up to 1,000 total entries). The control panel file picker selects individual files only. Files land on the active element of the remote desktop. For example, if you have a folder open in File Explorer, the file lands in that folder. If no folder is open, the file lands on the desktop.
 
 #### Download files (remote to local)
 
@@ -311,17 +301,16 @@ To transfer files from the remote Windows session to your local machine:
 1. In the remote Windows session, copy the file you want to download. Right-click the file and select **Copy**, or select the file and press **Ctrl+C**.
 2. The control panel icon does a small hop to indicate that a file is available. Open the control panel to view the file.
 3. Select one of the following options:
-   - **Download** — Download the file to your local machine.
-   - **Download zip** — Download multiple files at once as a zipped folder to your local machine.
-   - **Print** (PDF files only) — Print the file to a local printer on your network.
+   - **Download**: Download the file to your local machine.
+   - **Download zip**: Download multiple files at once as a zipped folder to your local machine.
+   - **Print** (PDF files only): Print the file to a local printer on your network.
 
 :::note
-Local printing from the control panel is only available for PDF files.
+Printing to a local printer is available for PDF files in Chromium-based browsers and Firefox. In Safari, download the PDF and print from your system viewer.
 :::
 
 #### Limitations
 
-- Only individual files are supported. Directory uploads are not available.
 - Transfer history is discarded when the RDP session ends.
 - The remote Windows server must support file transfer via the RDP clipboard virtual channel. Windows Server 2012 and later support this by default.
 - If the remote server does not support file transfer, text clipboard continues to work normally.
