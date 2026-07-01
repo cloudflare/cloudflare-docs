@@ -162,14 +162,14 @@ export default {
 
     switch (request.method) {
       case "PUT": {
-        await this.env.MY_BUCKET.put(key, request.body, {
+        await env.MY_BUCKET.put(key, request.body, {
           onlyIf: request.headers,
           httpMetadata: request.headers,
         });
         return new Response(`Put ${key} successfully!`);
       }
       case "GET": {
-        const object = await this.env.MY_BUCKET.get(key, {
+        const object = await env.MY_BUCKET.get(key, {
           onlyIf: request.headers,
           range: request.headers,
         });
@@ -189,7 +189,7 @@ export default {
         });
       }
       case "DELETE": {
-        await this.env.MY_BUCKET.delete(key);
+        await env.MY_BUCKET.delete(key);
         return new Response("Deleted!");
       }
       default:
