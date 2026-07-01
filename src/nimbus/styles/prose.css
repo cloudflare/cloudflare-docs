@@ -11,6 +11,10 @@
   font-size: 1rem;
   line-height: 1.75;
   color: var(--nb-foreground);
+  /* Break long unbreakable tokens (e.g. registry paths like
+     HKLM\SOFTWARE\...\UseWebView2) so they wrap instead of overflowing on
+     narrow viewports. Inherited by all prose text. */
+  overflow-wrap: break-word;
 }
 
 /* Vertical rhythm — every direct child gets spacing by default.
@@ -171,7 +175,6 @@
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
-  overflow-y: visible;
   overscroll-behavior-x: contain;
   border: 1px solid var(--nb-border);
   border-radius: 0.75rem;

@@ -8,6 +8,7 @@
 import { Icon } from "astro-icon/components";
 import BaseLayout from "./BaseLayout.astro";
 import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 import { Banner } from "@/components/ui/banner";
 import { Sidebar, SidebarFilter, SidebarProductNav } from "@/components/ui/sidebar";
 import { TOC } from "@/components/ui/toc";
@@ -95,17 +96,20 @@ const hasContentFooter = Astro.slots.has("content-footer");
 const hasPagination = Astro.slots.has("pagination");
 ---
 
-<BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId}>
+<BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId} footer={false}>
   <div class="flex flex-col min-h-screen">
     {hasHeader ? <slot name="header" /> : <Header collection={collection} entryId={entryId} showSidebar={showSidebar} />}
 
     {isCustom ? (
-      <main id="main-content" transition:name="nb-content" class="flex-1">
-        <slot />
-      </main>
+      <Fragment>
+        <main id="main-content" transition:name="nb-content" class="flex-1">
+          <slot />
+        </main>
+        <Footer class="mt-16" />
+      </Fragment>
     ) : (
-      <div class="flex-1 mx-auto w-full">
-        <div class="flex">
+      <div class="flex-1 mx-auto w-full flex flex-col">
+        <div class="flex flex-1">
           {showSidebar && (
             <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
               {hasSidebar ? (
@@ -194,6 +198,11 @@ const hasPagination = Astro.slots.has("pagination");
           </script>
           )}
 
+          {/* Right column: the content row (main + TOC) with the footer beneath
+              it, so the footer sits under the body only — not under the sidebar,
+              whose border runs the full page height alongside it. */}
+          <div class="flex min-w-0 flex-1 flex-col">
+            <div class="flex min-w-0 flex-1">
           {/* Named view-transition group — only the content fades+rises on nav.
               Header / sidebar / TOC stay still via the root rule in globals.css. */}
           <main id="main-content" transition:name="nb-content" class="flex-1 min-w-0">
@@ -261,6 +270,9 @@ const hasPagination = Astro.slots.has("pagination");
               </div>
             </aside>
           )}
+            </div>
+            <Footer class="mt-16" />
+          </div>
         </div>
       </div>
     )}

@@ -22,6 +22,8 @@
 import { Icon } from "astro-icon/components";
 import { Checkbox, CheckboxGroup } from "~/components/ui/checkbox";
 import BackgroundLines from "../BackgroundLines.astro";
+import PageHeader from "../PageHeader.astro";
+import PageShell from "../PageShell.astro";
 import {
   type ProductData,
   UNCATEGORIZED,
@@ -63,22 +65,11 @@ const groups = [...groupSet].sort((a, b) => {
 <div class="relative" data-directory>
   <BackgroundLines inner={1120} outer={1360} />
 
-  <div
-    class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
-  >
-    {/* ---- hero: title + tagline only; type matches Hero.astro ---- */}
-    <header class="mx-auto max-w-2xl text-center">
-      <h1
-        class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
-      >
-        Directory
-      </h1>
-      <p
-        class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
-      >
-        Everything you need to build, deploy, and scale applications on Cloudflare's global network.
-      </p>
-    </header>
+  <PageShell>
+    <PageHeader
+      title="Directory"
+      tagline="Everything you need to build, deploy, and scale applications on Cloudflare's global network."
+    />
 
     {/* ---- working area: rail (search + checklist) + results ---- */}
     <div
@@ -207,7 +198,7 @@ const groups = [...groupSet].sort((a, b) => {
         </div>
       </div>
     </div>
-  </div>
+  </PageShell>
 </div>
 
 <script>

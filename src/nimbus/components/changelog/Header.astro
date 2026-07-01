@@ -9,6 +9,7 @@
  * views (and "All products" → /changelog/). The RSS href is contextual.
  */
 import { Icon } from "astro-icon/components";
+import PageHeader from "~/components/PageHeader.astro";
 import { directory, directoryByGroup, groups } from "~/util/directory";
 import { changelogProductIds } from "~/util/changelog";
 import { LinkButton } from "~/components/ui/link-button";
@@ -76,19 +77,7 @@ const selectedLabel = productMatch
     : "All products";
 ---
 
-<header class="text-center">
-  {/* Centered hero — type scale matches the directory page (Hero.astro clamp). */}
-  <h1
-    class="mx-auto text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
-  >
-    {heading}
-  </h1>
-  <p
-    class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
-  >
-    {tagline}
-  </p>
-</header>
+<PageHeader title={heading} tagline={tagline} />
 
 {/* Controls toolbar — horizontal padding matches the feed's --body-x (the
     entry text indent) so the controls line up with the entry titles/body:
@@ -138,7 +127,7 @@ const selectedLabel = productMatch
       class="rounded-lg"
       target="_blank"
     >
-      All feeds
+      View RSS feeds
     </LinkButton>
     <LinkButton
       href={rssHref}
@@ -146,10 +135,10 @@ const selectedLabel = productMatch
       size="lg"
       class="rounded-lg"
       target="_blank"
-      aria-label="Changelog RSS feed"
+      aria-label="Subscribe to the changelog RSS feed"
     >
       <Icon name="ph:rss-simple" class="h-4 w-4" />
-      RSS
+      Subscribe to RSS
     </LinkButton>
   </div>
 </div>

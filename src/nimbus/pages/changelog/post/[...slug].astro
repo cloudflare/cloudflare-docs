@@ -10,6 +10,7 @@ import { Icon } from "astro-icon/components";
 import { render } from "astro:content";
 
 import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
+import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
 import { components } from "~/mdx-components";
 
@@ -44,42 +45,50 @@ const { Content } = await render(note);
   description={description}
   noindex={note.data.hidden}
 >
-  <a
-    href="/changelog"
-    class="group mb-9 -ml-0.5 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-muted-foreground no-underline transition-[color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-foreground active:scale-[0.98] motion-reduce:active:scale-100"
-  >
-    <Icon
-      name="ph:arrow-left"
-      class="h-4 w-4 transition-transform duration-[160ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-x-0.5 motion-reduce:transform-none"
-    />
-    <span>Changelog</span>
-  </a>
+  {/* Same masthead as the main changelog (title + tagline + RSS), no product
+      dropdown. The back link sits above the post entry below. */}
+  <Header rssHref="/changelog/rss/index.xml" showFilter={false} />
 
-  <article>
-    <time
-      datetime={iso}
-      class="block text-[0.8125rem] font-medium tabular-nums text-muted-foreground"
+  {/* Horizontal padding matches the masthead toolbar: none below md (the column
+      already has a 1.5rem gutter), then --body-x at md/lg. No timeline spine to
+      clear on a post, so mobile stays flush to the column instead of over-padded. */}
+  <div class="md:px-14 lg:px-16">
+    <a
+      href="/changelog"
+      class="group mb-9 -ml-0.5 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-muted-foreground no-underline transition-[color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-foreground active:scale-[0.98] motion-reduce:active:scale-100"
     >
-      {dateLabel}
-    </time>
-    {/* h1 token trio via inline style — site convention. */}
-    <h1
-      class="mt-2 text-balance leading-[1.15] text-foreground"
-      style="font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)"
-    >
-      {title}
-    </h1>
+      <Icon
+        name="ph:arrow-left"
+        class="h-4 w-4 transition-transform duration-[160ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-x-0.5 motion-reduce:transform-none"
+      />
+      <span>Back to all posts</span>
+    </a>
 
-    {
-      products.length > 0 && (
-        <div class="mt-4">
-          <ProductPills products={products} />
-        </div>
-      )
-    }
+    <article>
+      <time
+        datetime={iso}
+        class="block text-[0.8125rem] font-medium tabular-nums text-muted-foreground"
+      >
+        {dateLabel}
+      </time>
+      <h2
+        class="mt-2 mb-0 text-balance leading-[1.15] text-foreground"
+        style="font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)"
+      >
+        {title}
+      </h2>
 
-    <div class="docs-content nb-cl-prose mt-9 max-w-none">
-      <Content components={components} />
-    </div>
-  </article>
+      {
+        products.length > 0 && (
+          <div class="mt-4">
+            <ProductPills products={products} />
+          </div>
+        )
+      }
+
+      <div class="docs-content nb-cl-prose mt-9 max-w-none">
+        <Content components={components} />
+      </div>
+    </article>
+  </div>
 </ChangelogLayout>

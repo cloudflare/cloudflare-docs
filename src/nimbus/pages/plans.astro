@@ -1,6 +1,8 @@
 ---
 import SplashLayout from "~/layouts/SplashLayout.astro";
 import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
 import { ProductFeatures } from "~/components";
 
 export const prerender = true;
@@ -12,18 +14,9 @@ export const prerender = true;
 >
 	<div class="relative">
 		<BackgroundLines inner={1120} outer={1360} />
-		<div
-			class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
-		>
-			<header class="mx-auto max-w-2xl text-center">
-				<h1
-					class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
-				>
-					Plans
-				</h1>
-				<p
-					class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
-				>
+		<PageShell>
+			<PageHeader title="Plans">
+				<Fragment slot="tagline">
 					A feature-level companion to our <a
 						href="https://www.cloudflare.com/plans/"
 						class="underline hover:no-underline">Plans and Pricing page</a
@@ -31,8 +24,8 @@ export const prerender = true;
 						href="#missing-features"
 						class="underline hover:no-underline">all features</a
 					>)
-				</p>
-			</header>
+				</Fragment>
+			</PageHeader>
 
 			<section
 				class="docs-content mx-auto mt-12 w-full max-w-(--nb-content-max) pt-10"
@@ -154,6 +147,6 @@ export const prerender = true;
 		</li>
 	</ul>
 			</section>
-		</div>
+		</PageShell>
 	</div>
 </SplashLayout>

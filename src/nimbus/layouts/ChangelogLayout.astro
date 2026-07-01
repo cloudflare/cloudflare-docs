@@ -60,8 +60,9 @@ const baseProps = Astro.props;
     z-index: 1;
     width: var(--nb-cl-col);
     margin-inline: auto;
-    padding-top: 3.5rem;
-    padding-bottom: 8rem;
+    /* Top padding is owned by the page content (PageHeader's pt-14 on the feed,
+       pt-6 on the post), so the feed hero lines up with Directory/Agent Setup. */
+    padding-bottom: 3rem;
   }
 
   /* Decorative backdrop — desktop only, purely decorative, animation-free. */

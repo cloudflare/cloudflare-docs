@@ -8,11 +8,16 @@ import { ClientRouter } from "astro:transitions";
 import { config } from "virtual:nimbus/config";
 import { getCollectionLlmsUrl, getVersionStatus } from "nimbus-docs";
 import AgentDirective from "@/components/AgentDirective.astro";
+import Footer from "@/components/Footer.astro";
 import { SearchDialog } from "@/components/ui/search";
 import NimbusHead from "nimbus-docs/components/NimbusHead.astro";
 import type { BasePageProps } from "nimbus-docs/types";
 
-type Props = BasePageProps;
+type Props = BasePageProps & {
+  /** Render the global footer after the page content. DocsLayout sets this
+   *  false and renders its own footer inside the content column instead. */
+  footer?: boolean;
+};
 
 const {
   title,
@@ -24,6 +29,7 @@ const {
   head: pageHead = [],
   collection,
   entryId,
+  footer = true,
 } = Astro.props;
 
 const lang = config.locale ?? "en";
@@ -113,12 +119,14 @@ const llmsUrl = Astro.site
     </a>
     {markdownUrl && !isHiddenVersion && <AgentDirective markdownUrl={markdownUrl} llmsUrl={llmsUrl} />}
     <slot />
+    {footer !== false && <Footer />}
     {config.search !== false && <SearchDialog />}
 
     <script>
       import { codeCopy } from "nimbus-docs/client";
       import "../scripts/mobile-sidebar.client";
       import "../scripts/mermaid.client";
+      import "../scripts/table-scroll.client";
       codeCopy();
     </script>
   </body>

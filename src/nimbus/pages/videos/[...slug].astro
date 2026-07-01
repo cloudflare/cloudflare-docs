@@ -6,6 +6,7 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import SplashLayout from "~/layouts/SplashLayout.astro";
 import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageShell from "~/components/PageShell.astro";
 import { Stream, Width, Details } from "~/components";
 
 export const prerender = true;
@@ -44,9 +45,7 @@ if (entry.transcript) {
 <SplashLayout title={entry.title} description={entry.description}>
   <div class="relative">
     <BackgroundLines inner={1120} outer={1360} />
-    <div
-      class="relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pt-14 pb-24"
-    >
+    <PageShell class="pt-14">
       <header class="mx-auto max-w-2xl text-center">
         <h1
           class="text-[clamp(2.25rem,4vw,3rem)] leading-[1.1] font-medium text-balance text-foreground"
@@ -72,6 +71,6 @@ if (entry.transcript) {
           }
         </Width>
       </section>
-    </div>
+    </PageShell>
   </div>
 </SplashLayout>
