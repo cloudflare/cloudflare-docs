@@ -33,7 +33,7 @@ import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
 
 :::note
-Access for Infrastructure currently only supports [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/). To connect using other protocols, [add a self-hosted private application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/). For browser-based SSH, RDP, or VNC, refer to [browser-rendered terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
+Access for Infrastructure currently supports [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/). To connect using other protocols, [add a self-hosted private application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/). For browser-based SSH, RDP, or VNC, refer to [browser-rendered terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
 :::
 
 ## Prerequisites
@@ -61,13 +61,19 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/networks
 	params={{ selector: "Access Infrastructure Target", protocol: "infra" }}
 />
 
-## 4. Configure the server
+## 4. (Optional) Require independent MFA
+
+You can require users to authenticate with a [YubiKey PIV key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps) before connecting with SSH to targets. You can configure MFA at the application level or at the policy level, allowing you to enforce stricter requirements for sensitive usernames.
+
+For setup instructions, refer to [Enforce MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).
+
+## 5. Configure the server
 
 Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
 
-- [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#6-configure-ssh-server)
+- [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
 
-## 5. Connect as a user
+## 6. Connect as a user
 
 Users connect to the target's IP address using their preferred client software. The user must be logged into the Cloudflare One Client on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/traffic-policies/resolver-policies/) to allow connections to the target's private hostname.
 
@@ -84,13 +90,13 @@ If a user is connected to a target in VNET-A and needs to connect to a target in
 <Details header="Feature availability">
 
 | System   | Availability | Minimum client version |
-| -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2024.9.346.0         |
-| macOS    | ✅           | 2024.9.346.0         |
-| Linux    | ✅           | 2024.9.346.0         |
-| iOS      | ❌           |                      |
-| Android  | ❌           |                      |
-| ChromeOS | ❌           |                      |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2024.9.346.0           |
+| macOS    | ✅           | 2024.9.346.0           |
+| Linux    | ✅           | 2024.9.346.0           |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
 
 </Details>
 
