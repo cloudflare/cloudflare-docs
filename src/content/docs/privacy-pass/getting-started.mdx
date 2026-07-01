@@ -1,7 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Getting started
-description: Two self-serve ways to see Privacy Pass work — get a real token with the debugging tool, and run the issuance and redemption flow locally.
+description: Two self-serve ways to see Privacy Pass work — get a real token with the demo tool, and run the issuance and redemption flow locally.
 products:
   - privacy-pass
 sidebar:
@@ -12,16 +12,16 @@ import { TypeScriptExample } from "~/components";
 
 There are two self-serve ways to see Privacy Pass in action:
 
-- **Get a real token with the debugging tool:** the fastest way to obtain a real, issuer-signed token, using a browser tool and a Cloudflare-provided demo issuer.
+- **Get a real token with the demo tool:** the fastest way to obtain a real, issuer-signed token, using a browser tool and a Cloudflare-provided demo issuer.
 - **See a local example:** run the complete issuance and redemption flow on your own machine in a few minutes, using real Blind RSA cryptography.
 
 To understand the protocol itself, refer to [Privacy Pass Protocol](/privacy-pass/concepts/privacy-pass-protocol/). When you are ready to validate a real, Cloudflare-operated deployment, refer to [Production Deployment Testing](/privacy-pass/production-deployment-testing/) and [contact us](https://www.cloudflare.com/lp/privacy-edge/) to begin setting up the necessary infrastructure.
 
 ---
 
-## Get a real token with the debugging tool
+## Get a real token with the demo tool
 
-The quickest way to see what an issuer-signed token looks like is with Cloudflare's [Privacy Pass Debugging Tool](https://pepe-debug.research.cloudflare.com/). Pointed at an issuer, it runs the full issuance flow in your browser and returns a verified token.
+The quickest way to see what an issuer-signed token looks like is with Cloudflare's [Privacy Pass Demo Tool](https://pepe-debug.research.cloudflare.com/). Pointed at an issuer, it runs the full issuance flow in your browser and returns a verified token.
 
 ### Prerequisites
 
@@ -29,7 +29,7 @@ The quickest way to see what an issuer-signed token looks like is with Cloudflar
 
 ### How to get a token
 
-1. Open the [Privacy Pass debugging tool](https://pepe-debug.research.cloudflare.com/).
+1. Open the [Privacy Pass demo tool](https://pepe-debug.research.cloudflare.com/).
 2. In **Fetch from issuer URL**, paste the demo issuer directory URL and submit. The tool displays the issuer directory—a list of `token-keys` with token type `2` (Blind RSA)—and automatically fills in the fields for the steps below.
 3. In **Create challenge**, submit the prefilled form. The tool builds a `WWW-Authenticate` token challenge from the issuer's key.
 4. In **Send Token Request**, submit the prefilled form. The tool blinds the request, sends it to the issuer, unblinds the response, and verifies the result.
@@ -44,7 +44,7 @@ PrivateToken token=...
 `Draft 16 Valid: true` means the issuer returned a real token that verifies against its public key. The `PrivateToken token=...` value is the finalized token a client would send to an Origin in an `Authorization` header.
 
 :::note
-The debugging tool routes its requests through its own backend to work around browser cross-origin (CORS) limits. It needs no attester or client certificate here because the demo issuer is open for testing. Production issuers accept requests only from an authenticated Attester, so they cannot be exercised this way — refer to [Production Deployment Testing](/privacy-pass/production-deployment-testing/).
+The demo tool routes its requests through its own backend to work around browser cross-origin (CORS) limits. It needs no attester or client certificate here because the demo issuer is open for testing. Production issuers accept requests only from an authenticated Attester, so they cannot be exercised this way — refer to [Production Deployment Testing](/privacy-pass/production-deployment-testing/).
 :::
 
 ---
