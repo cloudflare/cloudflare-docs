@@ -198,6 +198,24 @@ describe("Nimbus Satteri HAST pipeline", () => {
     expect(realHeader).toContain("Name");
   });
 
+  test("wraps each markdown table in a single keyboard-focusable scroll region", () => {
+    const root = fragment(render("| A | B |\n| --- | --- |\n| 1 | 2 |"));
+    const wrappers = root.querySelectorAll("div.table-scroll");
+
+    expect(wrappers.length).toBe(1);
+    expect(wrappers[0].children.length).toBe(1);
+    expect(wrappers[0].firstElementChild?.tagName.toLowerCase()).toBe("table");
+    expect(root.querySelectorAll(".table-scroll .table-scroll").length).toBe(0);
+    expect(wrappers[0].getAttribute("tabindex")).toBe("0");
+    expect(wrappers[0].getAttribute("role")).toBe("region");
+    expect(wrappers[0].getAttribute("aria-label")).toBe("Table");
+  });
+
+  test("wraps every markdown table on the page", () => {
+    const html = render("| A |\n| - |\n| 1 |\n\nprose\n\n| B |\n| - |\n| 2 |");
+    expect(fragment(html).querySelectorAll("div.table-scroll > table").length).toBe(2);
+  });
+
   test.each([
     ["h1", "# Release notes"],
     ["h2", "## Release notes"],
