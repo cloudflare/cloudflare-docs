@@ -12,6 +12,8 @@ This guide covers obtaining a token from your Cloudflare-operated deployment. By
 
 Privacy Pass is not a self-serve product at the moment: a production deployment is a managed engagement with Cloudflare. If you just want to see Privacy Pass work without any setup, see [Getting started](/privacy-pass/getting-started/).
 
+[Contact us](https://www.cloudflare.com/lp/privacy-edge/) to request access and receive your issuer configuration.
+
 ---
 
 ## Before you begin
@@ -24,12 +26,16 @@ Privacy Pass is not a self-serve product at the moment: a production deployment 
 
 **What you operate or need in place:**
 
-- A working **Attester** — the service that verifies your claim and, once the Client is verified, proxies the blinded token request to the issuer. In Cloudflare Issuer deployments, the Client never contacts the issuer directly. You operate the Attester to keep roles separate; Cloudflare can help build it. See [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) for an implementation for Cloudflare Workers.
+- A working **Attester** — the service that verifies your claim and, once the Client is verified, proxies the blinded token request to the Issuer. In Cloudflare Issuer deployments, the Client never contacts the Issuer directly. You operate the Attester to keep roles separate; Cloudflare can help build it. See [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) for an implementation for Cloudflare Workers.
 - The **Origin** (the web service, application, or website a Client is trying to access) configured to verify tokens against the issuer's public key (or Cloudflare redemption at the edge).
-- The **client library** ([@cloudflare/privacypass-ts](https://github.com/cloudflare/privacypass-ts)) for running the issuance protocol.
 - The **mTLS client certificate** your Attester uses to authenticate to the issuer.
+- The **client library** for running the issuance protocol. Library options include TypeScript, Go, and Rust. 
 
-[Contact us](https://www.cloudflare.com/lp/privacy-edge/) to request access and receive your issuer configuration.
+Implement the Client with the Privacy Pass library for your stack:
+
+- **TypeScript** — [@cloudflare/privacypass-ts](https://github.com/cloudflare/privacypass-ts)
+- **Go** — [cloudflare/pat-go](https://github.com/cloudflare/pat-go) (reference implementation, intended for experimental and interop use)
+- **Rust** — [raphaelrobert/privacypass](https://github.com/raphaelrobert/privacypass) (not independently audited)
 
 ---
 
@@ -81,13 +87,7 @@ In this deployment the Client never contacts the issuer directly. Getting a toke
    │────- 200 OK ────->│                    │                  │
 ```
 
-Implement the Client with the Privacy Pass library for your stack:
-
-- **TypeScript** — [@cloudflare/privacypass-ts](https://github.com/cloudflare/privacypass-ts)
-- **Go** — [cloudflare/pat-go](https://github.com/cloudflare/pat-go) (reference implementation, intended for experimental and interop use)
-- **Rust** — [raphaelrobert/privacypass](https://github.com/raphaelrobert/privacypass) (not independently audited)
-
-Using the TypeScript library, the Client builds the blinded token request, then sends it to your Attester, which proxies it to the issuer and returns the signed response:
+Using the TypeScript library for this example, the Client builds the blinded token request, then sends it to your Attester, which proxies it to the issuer and returns the signed response:
 
 ```ts
 import { publicVerif } from '@cloudflare/privacypass-ts';
@@ -125,10 +125,10 @@ Two signals confirm issuance and redemption are working end to end:
 - The directory endpoint returns the issuer's `token-keys`.
 - A redeemed token verifies against the issuer's public key, and the Origin returns `200 OK`.
 
-To check that the directory endpoint is reachable, you can use the [Privacy Pass debugging tool](https://pepe-debug.research.cloudflare.com/) to fetch the issuer's directory.
+To check that the directory endpoint is reachable, you can use the [Privacy Pass demo tool](https://pepe-debug.research.cloudflare.com/) to fetch the issuer's directory.
 
 :::note
-Against a production issuer, use the debugging tool only as a directory reachability check or to validate a production token against a production public key. It cannot complete a token request because production issuers accept requests only from an authenticated Attester (unlike the open demo issuer in [Getting started](/privacy-pass/getting-started/)).
+Against a production issuer, use the demo tool only as a directory reachability check or to validate a production token against a production public key. It cannot complete a token request because production issuers accept requests only from an authenticated Attester (unlike the open demo issuer in [Getting started](/privacy-pass/getting-started/)).
 :::
 
 ---
