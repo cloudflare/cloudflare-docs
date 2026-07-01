@@ -33,6 +33,24 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(301);
 			expect(response.headers.get("Location")).toBe("/directory/");
 		});
+
+		it("preserves query strings on trailing-slash redirects", async () => {
+			const request = new Request("http://fakehost/docs/?test=whatever");
+			const response = await SELF.fetch(request, { redirect: "manual" });
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(
+				"/directory/?test=whatever",
+			);
+		});
+
+		it("preserves query strings when forcing a trailing slash", async () => {
+			const request = new Request("http://fakehost/docs?test=whatever");
+			const response = await SELF.fetch(request, { redirect: "manual" });
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(
+				"/directory/?test=whatever",
+			);
+		});
 	});
 
 	describe("json endpoints", () => {
