@@ -46,6 +46,26 @@ Cloudflare labels every verified bot or agent by how it is operated. This replac
 
 Because an **intermediary** acts on behalf of many different end users, the operator and the end user are not the same party. This introduces **transitive trust**: you may trust the intermediary operator, but not necessarily every end user driving it. Cloudflare is experimenting with forwarding information about the end user (using the `Forwarded` header defined in [RFC 7239](https://www.rfc-editor.org/info/rfc7239)) so that website owners can apply their preferences to the party ultimately responsible for a request.
 
+## Classification
+
+Cloudflare classifies each tracked bot by its behavior — what the bot may do on your site. A single bot can have one or more of the following behaviors:
+
+| Behavior | Description |
+| --- | --- |
+| Search | Crawling to build search indexes or RAG databases. |
+| Agent | User-directed agents visiting a page on behalf of a human. |
+| Training | Crawling to train or fine-tune models. |
+| Transact | Checkout or other transaction actions on behalf of users. |
+| Data Collection | Price scraping, competitive intelligence gathering, and third-party analytics. |
+| Security Testing | Vulnerability scanning and penetration testing. |
+| SEO | SEO crawling, site auditing, and accessibility checks. |
+| Ads Verification | Ad placement verification and ad fraud detection. |
+| Social / Link Preview | Link previews for social platforms and messaging apps. |
+| Feed Fetching | RSS readers, podcast aggregators, and news feed bots. |
+| Monitoring & Operations | Uptime monitoring, webhooks, and health checks. |
+
+Search, Agent, and Training are also available as managed presets you can act on across all plans. For more information, refer to [AI bots](/bots/concepts/bot/#ai-bots).
+
 ## Verified bot requirement
 
 For a bot to be verified, it must meet the following requirements:
