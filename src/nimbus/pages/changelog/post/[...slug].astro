@@ -7,12 +7,13 @@
  */
 import type { GetStaticPaths } from "astro";
 import { Icon } from "astro-icon/components";
-import { render } from "astro:content";
+import { getEntries, render } from "astro:content";
 
 import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
 import { components } from "~/mdx-components";
+import { getOgImage } from "../../../../util/og";
 
 export const prerender = true;
 
@@ -28,6 +29,11 @@ export const getStaticPaths = (async () => {
 
 const { note } = Astro.props;
 const { title, description, date, products } = note.data;
+const productEntries = await getEntries(products);
+const productNames = productEntries.flatMap((product) =>
+  product.data.name ? [product.data.name] : [],
+);
+const primaryProduct = productEntries[0];
 
 const iso = date.toISOString().slice(0, 10);
 const dateLabel = date.toLocaleDateString("en-US", {
@@ -44,6 +50,16 @@ const { Content } = await render(note);
   title={title}
   description={description}
   noindex={note.data.hidden}
+  socialImage={await getOgImage(note)}
+  lastUpdated={date}
+  meta={{
+    titleSuffix: "Changelog",
+    product: primaryProduct?.data.entry?.title,
+    productGroup: primaryProduct?.data.entry?.group,
+    contentType: "changelog-entry",
+    products: productNames,
+    datePublished: date,
+  }}
 >
   {/* Same masthead as the main changelog (title + tagline + RSS), no product
       dropdown. The back link sits above the post entry below. */}

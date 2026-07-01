@@ -9,8 +9,11 @@
 import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
 import type { BasePageProps } from "nimbus-docs/types";
+import type { PageMeta } from "@/components/PageHead.astro";
 
-type Props = BasePageProps;
+type Props = BasePageProps & {
+  meta?: PageMeta;
+};
 ---
 
 <BaseLayout {...Astro.props}>
