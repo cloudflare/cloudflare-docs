@@ -8,30 +8,32 @@ products:
 
 import { DashButton, Steps, Tabs, TabItem } from "~/components";
 
-Cloudflare Access makes a Worker private by checking each visitor before your Worker runs: allowed visitors reach your Worker, and everyone else gets a login page or has their request blocked. You define who is allowed, such as members of your Cloudflare account or anyone with a verified email address at a domain like `example.com`.
+You can require sign-in on your Workers so that only authorized users can reach them.
+
+By enabling Cloudflare Access on your Worker, every request is checked before your Worker runs: approved visitors are let through, while everyone else is shown a login page or blocked.
+
+You decide who is approved, such as members of your Cloudflare account or anyone with a verified email address at a domain like `example.com`.
 
 ## Before you start
 
 To use Access with Workers, you need:
 
-- A Cloudflare Zero Trust organization set up for the account. If Zero Trust is not turned on, complete [Zero Trust setup](/cloudflare-one/setup/) first, then return to the Workers dashboard.
+- Zero Trust enabled on your account. If Zero Trust is not turned on, complete [Zero Trust setup](/cloudflare-one/setup/) first, then return to the Workers dashboard.
 - Permission to manage Workers and Access applications.
 
 ## Choose what to protect
 
-Start with what you want visitors to sign in to access, then follow that section below. Each section covers both the dashboard and the API.
-
-| I want to protect...                                          | Section                                                                                     | API destination type           |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------ |
-| Production and preview deployments for **all Workers**        | [Protect all Workers](#protect-all-workers)                                                 | `all_workers`                  |
-| Preview deployments for **all Workers**                       | [Protect all Workers](#protect-all-workers)                                                 | `all_preview_workers`          |
-| Production and preview deployments for **one Worker**         | [Protect one Worker](#protect-one-worker)                                                   | `worker`                       |
-| Preview deployments for **one Worker**                        | [Protect one Worker](#protect-one-worker)                                                   | `preview_worker`               |
-| One `workers.dev` hostname, Custom Domain, subdomain, or path | [Protect one hostname, Custom Domain, or path](#protect-one-hostname-custom-domain-or-path) | Self-hosted application domain |
+| I want to protect...                                                   | Section                                                                                                   | API destination type           |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| Preview deployments for **all Workers**                                | [Protect all Workers](#protect-all-workers)                                                               | `all_preview_workers`          |
+| Production and preview deployments for **all Workers**                 | [Protect all Workers](#protect-all-workers)                                                               | `all_workers`                  |
+| Preview deployments for **one Worker**                                 | [Protect one Worker](#protect-one-worker)                                                                 | `preview_worker`               |
+| Production and preview deployments for **one Worker**                  | [Protect one Worker](#protect-one-worker)                                                                 | `worker`                       |
+| A specific hostname — can be `workers.dev`, a Custom Domain, or a path | [Protect a specific hostname, Custom Domain, or path](#protect-a-specific-hostname-custom-domain-or-path) | Self-hosted application domain |
 
 ## Protect all Workers
 
-Protect all Workers when every Worker should require sign-in by default. You can protect all production and preview deployments, or only preview deployments, across every Worker in the account.
+Require sign-in on every Worker in your account, including Workers you deploy in the future. You can require sign-in on only preview deployments, or on both production and preview deployments.
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -47,7 +49,7 @@ Dashboard path: **Workers & Pages** overview page > **Protect all Workers**.
 
 2. Find the **Protect all Workers** card.
 3. If the card says **Not enabled**, select **Enable Access**.
-4. Choose **Production & Previews** or **Previews**.
+4. Choose **Previews** or **Production & Previews**.
 5. Under **Authentication policy**, select an existing policy or configure one of the [policy options](#policy-options).
 6. Select **Enable Access**.
 </Steps>
@@ -55,22 +57,22 @@ Dashboard path: **Workers & Pages** overview page > **Protect all Workers**.
 </TabItem>
 <TabItem label="API">
 
-Create a self-hosted Access application with an `all_workers` destination to require sign-in for every Worker's production and preview deployments:
-
-```json
-"destinations": [
-  {
-    "type": "all_workers"
-  }
-]
-```
-
-To protect only preview deployments for every Worker, use `all_preview_workers` instead:
+To protect only preview deployments for every Worker, create a self-hosted Access application with an `all_preview_workers` destination:
 
 ```json
 "destinations": [
   {
     "type": "all_preview_workers"
+  }
+]
+```
+
+To protect every Worker's production and preview deployments, use `all_workers` instead:
+
+```json
+"destinations": [
+  {
+    "type": "all_workers"
   }
 ]
 ```
@@ -82,7 +84,7 @@ Send these `destinations` in a `POST /accounts/{account_id}/access/apps` request
 
 ## Protect one Worker
 
-Protect one Worker when a single Worker should require sign-in. Protection follows the Worker by its ID across all of the Worker's routes, Custom Domains, `workers.dev` hostname, and previews.
+Require sign-in on a single Worker. This automatically protects every domain associated with the Worker, including its routes, Custom Domains, `workers.dev` hostname, and previews. You can require sign-in on only preview deployments, or on both production and preview deployments.
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -99,7 +101,7 @@ Dashboard path: **Workers & Pages** > select your Worker > **Access**.
 2. Select your Worker from the application list.
 3. Select the **Access** tab.
 4. Select **Protect this Worker behind Access**.
-5. Choose **Production & Previews** or **Previews**.
+5. Choose **Previews** or **Production & Previews**.
 6. Under **Authentication policy**, select an existing policy or configure one of the [policy options](#policy-options).
 7. (Optional) Review the session duration.
 8. Select **Apply Access**.
@@ -108,7 +110,7 @@ Dashboard path: **Workers & Pages** > select your Worker > **Access**.
 </TabItem>
 <TabItem label="API">
 
-Create a self-hosted Access application with a `worker` destination to require sign-in for one Worker's production and preview deployments. Pass the immutable Worker ID as `worker_id` — this is the Worker tag from the Workers scripts API, or the Worker `id` from the Workers beta API.
+To protect only preview deployments for one Worker, create a self-hosted Access application with a `preview_worker` destination. Set `worker_id` to your Worker's ID:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
@@ -119,7 +121,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
     "name": "Access for my-worker",
     "destinations": [
       {
-        "type": "worker",
+        "type": "preview_worker",
         "worker_id": "c81a2d22c29840ed9d61681a3270dbff"
       }
     ],
@@ -138,12 +140,12 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
   }'
 ```
 
-To protect only preview deployments for that Worker, use `preview_worker` instead:
+To protect the Worker's production and preview deployments, use `worker` instead:
 
 ```json
 "destinations": [
   {
-    "type": "preview_worker",
+    "type": "worker",
     "worker_id": "c81a2d22c29840ed9d61681a3270dbff"
   }
 ]
@@ -154,7 +156,7 @@ For the full request schema, including [policy options](#policy-options) and ses
 </TabItem>
 </Tabs>
 
-## Protect one hostname, Custom Domain, or path
+## Protect a specific hostname, Custom Domain, or path
 
 Use hostname-based Access when only a specific URL that routes to your Worker should require sign-in, such as a `workers.dev` hostname, a Custom Domain, a subdomain, or a path. Hostname-based Access protects only that exact URL, whereas [protecting a Worker](#protect-one-worker) protects the entire Worker. For example, you can protect `my-worker.example.workers.dev`, `admin.example.com`, or a single path such as `example.com/login` to make only part of your Worker private.
 
@@ -202,7 +204,7 @@ Dashboard path: **Workers & Pages** > select your Worker > **Access**.
 </TabItem>
 <TabItem label="API">
 
-Create a more specific Worker-level Access app with a bypass policy. Use the `worker` destination, set `worker_id` to the Worker's immutable ID, and set the policy `decision` to `bypass`.
+Create a Worker-level Access application with a bypass policy. Use the `worker` destination, set `worker_id` to your Worker's ID, and set the policy `decision` to `bypass`.
 
 </TabItem>
 </Tabs>
