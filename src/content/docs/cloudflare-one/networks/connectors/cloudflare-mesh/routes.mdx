@@ -119,7 +119,7 @@ Instead of advertising an IP range, you can attract traffic for a specific hostn
 - **Private hostname** (for example, `wiki.internal.local`) — the node delivers the traffic to the application's private IP on the local network. Useful when the application has an unknown or ephemeral IP.
 - **Public hostname** (for example, `www.example.com`) — the node egresses the traffic to the public Internet using its own public IP. This lets you use a Mesh node as a dedicated egress for that hostname.
 
-Hostname routes replace [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/tunnel-virtual-networks/) as the way to reach resources: because a hostname is globally unique, **overlapping hostnames are not supported** and a hostname can only be routed to one node or tunnel at a time.
+Hostname routes replace [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) as the way to reach resources: because a hostname is globally unique, **overlapping hostnames are not supported** and a hostname can only be routed to one node or tunnel at a time.
 
 <MeshHostnameRoutingDiagram />
 
@@ -201,7 +201,7 @@ If the DNS server is reached through a Mesh node, you cannot run it on the **sam
 
 :::
 
-A **public** hostname does not need internal DNS resolution — Gateway resolves it publicly and the node egresses the traffic using its public IP.
+For a **public** hostname, the Mesh node handles resolution: Gateway sends the DNS query to the node, the node resolves it through its upstream DNS provider, and then routes the packet to the destination and egresses using its own public IP. No internal DNS server or resolver policy is required.
 
 ### Secure hostname traffic
 
