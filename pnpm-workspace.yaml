@@ -11,6 +11,8 @@ minimumReleaseAgeExclude:
   # it (and its miniflare dependency) from the 24h wait.
   - wrangler
   - miniflare
+  - workerd 
+  - @cloudflare/workers-types
 
 # @astrojs/mdx's @astrojs/markdown-satteri peer is optional and only engages when
 # markdown.processor is Sätteri (the Nimbus target, via nimbus-docs's pinned mdx
