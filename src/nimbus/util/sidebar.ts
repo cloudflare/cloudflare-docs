@@ -90,13 +90,17 @@ export function getCfRouteNavigation(
 
 const EXTERNAL_LINK_ARROW = " \u2197";
 
-export const agentResourcesTransform: SidebarTransform = async ({ tree, module }) => {
-  if (!module) return tree;
+// `docs-for-agents` is itself the agent-facing surface, so it gets no group.
+const NO_LLM_RESOURCES = new Set(["docs-for-agents"]);
 
-  const product = await getEntry("directory", module);
+// `sectionSlug` is seg0 (the product); key off its `directory` entry.
+export const agentResourcesTransform: SidebarTransform = async ({ tree, sectionSlug }) => {
+  if (!sectionSlug || NO_LLM_RESOURCES.has(sectionSlug)) return tree;
+
+  const product = await getEntry("directory", sectionSlug);
   if (!product) return tree;
 
-  const baseUrl = product.data.entry.url ?? `/${module}/`;
+  const baseUrl = product.data.entry.url ?? `/${sectionSlug}/`;
   const links: Array<[string, string]> = [
     ["Agent setup", "/agent-setup/"],
     ["Cloudflare Skills", "https://github.com/cloudflare/skills"],

@@ -1,15 +1,5 @@
-/**
- * FeedbackPrompt — "Was this helpful?" docs feedback widget.
- *
- * Ported from the upstream Starlight component
- * (src/components/FeedbackPrompt.tsx). Behaviour is identical — yes/no →
- * reason radios → free-text → Turnstile → POST to the external feedback
- * service — but the styling is re-themed from Starlight's `--sl-color-*` /
- * `--color-cl1-*` tokens onto Nimbus's semantic Tailwind tokens
- * (foreground / muted-foreground / border / background / accent / primary /
- * success). `track` resolves to the Nimbus no-op zaraz stub; the POST still
- * fires.
- */
+// "Was this helpful?" docs feedback widget. Ported from the Starlight
+// src/components/FeedbackPrompt.tsx, re-themed onto nimbus tokens.
 import { useState } from "react";
 import {
 	MdOutlineThumbUp,
@@ -125,9 +115,7 @@ function Form({
 								onChange={() => setSelectedReason(true)}
 								className="peer absolute top-0 left-0 h-full w-full cursor-pointer opacity-0"
 							/>
-							{/* Outer ring — becomes accent-colored when checked or focused */}
 							<span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-border transition-all duration-150 peer-checked:border-primary peer-focus-visible:border-primary">
-								{/* Inner dot — visible when checked or focused */}
 								<span className="h-2 w-2 scale-0 rounded-full bg-primary transition-transform duration-150 [label:has(:checked)_&]:scale-100 [label:has(:focus-visible)_&]:scale-100" />
 							</span>
 							<span className="leading-tight">{label}</span>
@@ -169,9 +157,7 @@ function SuccessState() {
 export default function FeedbackPrompt({
 	id = "feedback-form",
 }: {
-	/** Root element id. DocsLayout renders two placements (TOC rail + content
-	 *  fallback) that can coexist in the DOM on wide viewports, so each passes a
-	 *  distinct id to keep ids unique. */
+	// Distinct per placement — the two DocsLayout copies can coexist in the DOM.
 	id?: string;
 }) {
 	const [title, setTitle] = useState("Was this helpful?");
