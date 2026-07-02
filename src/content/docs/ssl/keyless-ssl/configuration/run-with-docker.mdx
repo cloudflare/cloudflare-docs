@@ -44,10 +44,7 @@ Each environment variable maps to the equivalent setting in `gokeyless.yaml`. Wh
 
 ## Configure private keys
 
-Private key locations **cannot** be set with an environment variable. Configure them with either:
-
-- a `private_key_stores` block in `gokeyless.yaml` (each entry sets exactly one of `dir`, `file`, or `uri`), or
-- the `--private-key-dirs` / `--private-key-files` flags (comma-separated), passed as arguments after the image name.
+Private key locations **cannot** be set with an environment variable. Configure them with a `private_key_stores` block in `gokeyless.yaml` (each entry sets exactly one of `dir`, `file`, or `uri`), or with the `--private-key-dirs` / `--private-key-files` flags (comma-separated), passed as arguments after the image name.
 
 ## Run the container
 
