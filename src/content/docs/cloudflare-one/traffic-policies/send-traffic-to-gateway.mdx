@@ -1,0 +1,68 @@
+---
+pcx_content_type: concept
+description: Choose how devices, networks, and private resources send traffic to Cloudflare Gateway for inspection and filtering.
+products:
+  - cloudflare-one
+title: Send traffic to Gateway
+sidebar:
+  order: 1
+tags:
+  - TCP
+  - UDP
+  - ICMP
+---
+
+import { Steps } from "~/components";
+
+Cloudflare Gateway can inspect traffic after it reaches Cloudflare. The connection method you choose determines which traffic Gateway receives and which policy types Gateway can enforce.
+
+You can send traffic to Gateway from individual devices, DNS resolvers, browsers, offices, data centers, and private networks. You can also combine methods. For example, use the Cloudflare One Client for roaming users and Cloudflare WAN for branch offices.
+
+## Choose a connection method
+
+The following table summarizes the main ways to send traffic to Gateway:
+
+| Connection method | Traffic sent to Gateway | Best for | Next step |
+| --- | --- | --- | --- |
+| [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) | Device DNS, network, and HTTP traffic | Managed laptops, phones, and desktops | [Set up the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/) |
+| [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) | DNS queries | Networks, unmanaged devices, or DNS-only filtering | [Add a DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) |
+| [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) | Browser HTTP and HTTPS traffic | Browser-level filtering without a device client | [Create a proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#1-create-a-proxy-endpoint) |
+| [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) | Site traffic through GRE, IPsec, CNI, or the Cloudflare One Appliance | Offices, data centers, and private networks | [Choose a Cloudflare WAN on-ramp](/cloudflare-one/networks/connectors/cloudflare-wan/on-ramps/) |
+| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) | Private IP traffic between Mesh participants | Device-to-device, site-to-site, and mesh connectivity | [Create a Mesh node](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) |
+
+## Connect private resources
+
+Gateway can also inspect traffic that is directed to private resources connected to Cloudflare. Use the method that matches how users and services need to reach those resources:
+
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connects specific private applications, hostnames, or IP routes to Cloudflare with `cloudflared`.
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) connects devices, servers, and subnets through Mesh IPs.
+- [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) connects sites and networks with Cloudflare WAN on-ramps.
+
+## Supported proxy protocols
+
+For proxied traffic, Gateway supports TCP, UDP, and Internet Control Message Protocol (ICMP).
+
+### TCP
+
+Gateway always forwards TCP traffic when the proxy is turned on. By default, TCP connection attempts time out after 30 seconds, and idle connections disconnect after 8 hours.
+
+### UDP
+
+The UDP proxy forwards UDP traffic such as VoIP, internal DNS requests, and thick client applications. To inspect HTTP/3 traffic, turn on both [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/) and the UDP proxy. For more information, refer to [HTTP/3 inspection](/cloudflare-one/traffic-policies/tls-decryption/http3/).
+
+### ICMP
+
+The ICMP proxy allows ICMP traffic to reach your private network through Gateway. For example, Cloudflare One Client users can run diagnostic commands such as `ping` and `traceroute` to an internal server IP. Gateway cannot log or filter ICMP traffic.
+
+## Turn on the Gateway proxy
+
+The Gateway proxy toggle only applies to traffic from Cloudflare One Client devices. Gateway will always proxy traffic sent with [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Browser Isolation](/cloudflare-one/remote-browser-isolation/) regardless of this setting.
+
+<Steps>
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings**.
+2. In **Proxy and inspection settings**, turn on **Allow Secure Web Gateway to proxy traffic**.
+3. Select **TCP**.
+4. (Optional) Depending on your use case, you can select **UDP**, **ICMP**, or both.
+
+</Steps>

@@ -5,8 +5,11 @@
 
 
 # Traffic policies reorganization (cloudflare-one/traffic-policies)
+# Renamed proxy page
+/cloudflare-one/traffic-policies/proxy/ /cloudflare-one/traffic-policies/send-traffic-to-gateway/ 301
+/cloudflare-one/traffic-policies/reference/proxy/ /cloudflare-one/traffic-policies/send-traffic-to-gateway/ 301
+
 # Moved to reference/
-/cloudflare-one/traffic-policies/proxy/ /cloudflare-one/traffic-policies/reference/proxy/ 301
 /cloudflare-one/traffic-policies/order-of-enforcement/ /cloudflare-one/traffic-policies/reference/order-of-enforcement/ 301
 /cloudflare-one/traffic-policies/identity-selectors/ /cloudflare-one/traffic-policies/reference/identity-selectors/ 301
 /cloudflare-one/traffic-policies/application-app-types/ /cloudflare-one/traffic-policies/reference/application-app-types/ 301
@@ -2783,8 +2786,6 @@
 /cloudflare-one/identity/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
-/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
-
 # Catch-all redirects (must come last)
 /cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
 

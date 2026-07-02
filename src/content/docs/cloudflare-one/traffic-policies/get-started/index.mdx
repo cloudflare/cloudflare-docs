@@ -42,7 +42,7 @@ For setup instructions, refer to [Set up DNS filtering](/cloudflare-one/traffic-
 
 After DNS filtering is in place, add network-level controls for non-HTTP traffic.
 
-- Deploy the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enable the [Gateway proxy](/cloudflare-one/traffic-policies/reference/proxy/) for TCP.
+- Deploy the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enable the [Gateway proxy](/cloudflare-one/traffic-policies/send-traffic-to-gateway/) for TCP.
 - Block traffic to high-risk IP ranges or restrict which ports and protocols users can access.
 - Use [protocol detection](/cloudflare-one/traffic-policies/policy-types/network-policies/protocol-detection/) to identify applications by traffic pattern rather than port number.
 - Enable network session logging for audit trails.
@@ -65,7 +65,7 @@ For setup instructions, refer to [Set up HTTP filtering](/cloudflare-one/traffic
 
 With all policy layers active, extend Gateway to cover your full network and integrate with other Cloudflare One services.
 
-- Connect branch offices and data centers with [network tunnels](/cloudflare-one/networks/) (IPsec/GRE via Magic WAN).
+- Connect branch offices and data centers with [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/).
 - Configure [dedicated egress IPs](/cloudflare-one/traffic-policies/policy-types/egress-policies/) so third-party services can identify your organization's traffic.
 - Set up [resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) to route internal DNS queries to your private DNS servers.
 - Monitor SaaS application usage with [CASB](/cloudflare-one/cloud-and-saas-findings/).

@@ -33,7 +33,7 @@ To filter HTTP requests from a device:
 1. [Install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
 2. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your device.
 3. In the Cloudflare One Client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
-4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/reference/proxy/#turn-on-the-gateway-proxy) for TCP. Optionally, enable the UDP proxy to also inspect QUIC traffic on port 443 — this covers HTTP/3, a newer protocol some browsers use by default.
+4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/send-traffic-to-gateway/#turn-on-the-gateway-proxy) for TCP. Optionally, enable the UDP proxy to also inspect QUIC traffic on port 443 — this covers HTTP/3, a newer protocol some browsers use by default.
 5. To inspect HTTPS traffic, [enable TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/#turn-on-tls-decryption). TLS decryption allows Gateway to read encrypted requests. Without it, Gateway can see that a user visited `example.com` but not which specific page or what they uploaded.
 6. (Optional) To scan file uploads and downloads for malware, [enable anti-virus scanning](/cloudflare-one/traffic-policies/policy-types/http-policies/antivirus-scanning/).
 
