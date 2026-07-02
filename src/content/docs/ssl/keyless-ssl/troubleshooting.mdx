@@ -29,6 +29,16 @@ cd /etc/keyless
 sudo -u keyless gokeyless --loglevel 0
 ```
 
+When running in a container, `gokeyless` is the container's main process (PID 1), so the command above does not apply. Instead, set the log level when you start the container and read logs from the container runtime:
+
+```sh
+# Set verbosity via environment variable
+docker run ... -e KEYLESS_LOGLEVEL=0 ghcr.io/cloudflare/gokeyless:latest
+
+# Read logs
+docker logs -f <container>   # or: kubectl logs -f <pod>
+```
+
 ## Browsers are seeing a TLS connection failure after trying to connect
 
 1. Make sure your key server is accessible from outside your network (tcp/2407).
