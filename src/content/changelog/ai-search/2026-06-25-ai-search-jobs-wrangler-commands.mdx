@@ -8,7 +8,7 @@ date: 2026-06-25
 
 When you connect a [data source](/ai-search/configuration/data-source/) to your [AI Search](/ai-search/) instance, AI Search runs sync jobs to keep your index up to date with your content. You can now manage those jobs directly from [Wrangler](/ai-search/wrangler-commands/).
 
-The most common use case is automation. You can trigger a sync job from your CI or automated pipelines with `jobs create` so your index refreshes whenever your content changes.
+For example, you can trigger a sync job from your CI/CD or automated pipelines with the `jobs create` command so your index refreshes when you push a change:
 
 ```sh
 wrangler ai-search jobs create my-instance
