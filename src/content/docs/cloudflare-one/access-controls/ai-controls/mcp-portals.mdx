@@ -31,7 +31,7 @@ MCP server portals provide the following capabilities:
 
 - **Context optimization**: Portals support query parameter options that reduce context window usage by minimizing or hiding tool definitions. Refer to [Optimize context](#optimize-context) for details.
 
-- **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect. You can also connect using [Access service tokens](#connect-with-a-service-token) for machine-to-machine access.
+- **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). This managed OAuth configuration applies to the portal's Access application. It is separate from upstream OAuth used by individual MCP servers in the portal. Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect. You can also connect using [Access service tokens](#connect-with-a-service-token) for machine-to-machine access.
 
 - **Code Mode**: Code Mode is available by default on all portals. It collapses all upstream tools into a single `code` tool. The AI agent writes JavaScript that calls typed methods for each tool, and the code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This keeps context window usage fixed regardless of how many tools are available. Refer to [Code Mode](#code-mode) for connection instructions.
 
@@ -1032,7 +1032,7 @@ Independent MFA, purpose justification, and temporary authentication will be enf
 A `522` error indicates that Cloudflare cannot reach the portal's origin. This typically means the DNS record for the portal hostname is missing or misconfigured.
 
 1. Verify that a CNAME record exists for your portal subdomain pointing to `gateway.agents.cloudflare.com`.
-2. Ensure the CNAME record is proxied (orange-clouded) through Cloudflare.
+2. Ensure the CNAME record has **Proxy status** turned on in Cloudflare DNS.
 3. If you created the portal using the [API](#manage-portals-via-api) or the [Terraform provider](#configure-via-terraform), you must create the DNS record separately. Unlike the dashboard, the API and Terraform provider do not auto-create DNS records.
 
 ### An MCP server is stuck in `Waiting` status.

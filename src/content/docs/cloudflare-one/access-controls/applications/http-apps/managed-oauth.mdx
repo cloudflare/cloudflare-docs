@@ -25,7 +25,7 @@ If you run your own OAuth server behind an Access application and rely on your o
 
 ## Prerequisites
 
-- A [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) or an [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/)
+- A [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/), [MCP server application](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/), or [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/)
 - An OAuth client that supports [RFC 8707](https://datatracker.ietf.org/doc/html/rfc8707)
 
 ## Enable managed OAuth on a self-hosted application
@@ -35,6 +35,48 @@ If you run your own OAuth server behind an Access application and rely on your o
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 2. Find the application you want to configure, then select the three dots on the right > **Edit**.
+3. Go to the **Advanced settings** tab and turn on **Managed OAuth**.
+4. (Optional) Configure [Managed OAuth settings](#managed-oauth-settings).
+5. Select **Save**.
+
+</TabItem>
+<TabItem label="API">
+
+1. Get your existing Access application configuration:
+
+   <APIRequest
+    path="/accounts/{account_id}/access/apps/{app_id}"
+    method="GET"
+   />
+
+2. Make a `PUT` request and set `oauth_configuration.enabled` to `true`. To avoid overwriting your existing configuration, the request body should contain all fields returned by the previous `GET` request.
+
+   <APIRequest
+    path="/accounts/{account_id}/access/apps/{app_id}"
+    method="PUT"
+    json={{
+     oauth_configuration: {
+      enabled: true,
+     },
+    }}
+   />
+
+</TabItem>
+</Tabs>
+
+To test, open an RFC 8707-compliant OAuth client and make a request to your application. The client should open a browser window prompting you to log in to Access. Refer to the [Authorization flow](#authorization-flow) section for more details.
+
+## Enable managed OAuth on an MCP server application
+
+Managed OAuth is available on [MCP server applications](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/) and allows MCP clients to authenticate users through Access using a standard OAuth 2.0 flow. Use this flow for MCP servers served through Cloudflare in the same account as your Zero Trust organization. The MCP server must validate the Access JWT sent in the `Cf-Access-Jwt-Assertion` header.
+
+Do not enable Managed OAuth for third-party MCP server code that already handles its own OAuth flow and cannot validate Access JWTs.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Find the MCP server application you want to configure, then select the three dots on the right > **Edit**.
 3. Go to the **Advanced settings** tab and turn on **Managed OAuth**.
 4. (Optional) Configure [Managed OAuth settings](#managed-oauth-settings).
 5. Select **Save**.
@@ -64,7 +106,7 @@ If you run your own OAuth server behind an Access application and rely on your o
 </TabItem>
 </Tabs>
 
-To test, open an RFC 8707-compliant OAuth client and make a request to your application. The client should open a browser window prompting you to log in to Access. Refer to the [Authorization flow](#authorization-flow) section for more details.
+To test, open an MCP client and connect to the protected MCP server. The client should open a browser window prompting you to log in to Access. Refer to the [Authorization flow](#authorization-flow) section for more details.
 
 ## Enable managed OAuth on an MCP server portal
 
@@ -111,7 +153,7 @@ To test, open an MCP client and [connect to the MCP portal](/cloudflare-one/acce
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-Configure these settings in the **Advanced settings** tab of your [self-hosted app](#enable-managed-oauth-on-a-self-hosted-application) or [MCP server portal](#enable-managed-oauth-on-an-mcp-server-portal).
+Configure these settings in the **Advanced settings** tab of your [self-hosted app](#enable-managed-oauth-on-a-self-hosted-application), [MCP server application](#enable-managed-oauth-on-an-mcp-server-application), or [MCP server portal](#enable-managed-oauth-on-an-mcp-server-portal).
 
 - **Allow localhost clients**: Allow any client with redirect URIs on `localhost`.
 - **Allow loopback clients**: Allow any client with redirect URIs on `127.0.0.1`.
@@ -149,7 +191,7 @@ Configure these settings via the `oauth_configuration` object on the [Access app
    	method="GET"
    />
 
-2. Make a `PUT` request  with your Managed OAUth settings. To avoid overwriting your existing configuration, the request body should contain all fields returned by the previous `GET` request.
+2. Make a `PUT` request with your Managed OAuth settings. To avoid overwriting your existing configuration, the request body should contain all fields returned by the previous `GET` request.
 
    <APIRequest
    	path="/accounts/{account_id}/access/apps/{app_id}"

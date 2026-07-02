@@ -34,7 +34,7 @@ export const getStaticPaths = (async ({ paginate }) => {
     return paginate(notes, {
       params: { group: slug },
       props: { groupName },
-      pageSize: 20,
+      pageSize: 25,
     });
   });
 }) satisfies GetStaticPaths;
@@ -46,7 +46,6 @@ const { page, groupName } = Astro.props as Props;
 
 <ChangelogLayout
   title={`${groupName} Changelog`}
-  description={`New updates and improvements for ${groupName}.`}
 >
   <Header rssHref="/changelog/rss/index.xml" />
   <ChangelogFeed entries={page.data} />
