@@ -27,6 +27,12 @@ Type: `string`
 
 Name of the application the domain belongs to (for example, 'Cloudflare Dashboard').
 
+## AppliedMaxTTL
+
+Type: `int`
+
+Maximum TTL cap applied to the response records, in seconds. Set to 0 when no cap was applied.
+
 ## AuthoritativeNameServerIPs
 
 Type: `array[string]`
@@ -482,6 +488,12 @@ Time zone used to calculate the current time, if a matched rule was scheduled wi
 Type: `string`
 
 Method used to pick the time zone for the schedule (from rule/ from user ip/ from local time).
+
+## UpstreamRecordTTLs
+
+Type: `array[int]`
+
+TTL of each record in the upstream response, in seconds. Maps one-to-one with the resource records (for example, [3600, 300]).
 
 ## UserID
 
