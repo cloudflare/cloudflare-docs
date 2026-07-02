@@ -51,7 +51,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 | Product                                     | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | ------------------------------------------- | --------------- | ----------------- | -------------------------- |
 | Advanced Certificate Manager                | ⚫️             | ⚫️               | ⚫️                        |
-| Advanced DDoS Protection                    | ✅              | ✅                | 🚧 [^3]                    |
+| Advanced DDoS Protection                    | ✅              | ✅                | 🚧 [^3] [^50]              |
 | API Shield                                  | ✅              | ✅                | 🚧 [^4]                    |
 | Bot Management                              | ✅              | ✅                | ✅                         |
 | Client-side security (formerly Page Shield) | ✅              | ✅                | ✅                         |
@@ -60,7 +60,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 | SSL                                         | ✅              | ✅                | ✅                         |
 | Cloudflare for SaaS                         | ✘               | ✅                | ✅                         |
 | Turnstile                                   | ⚫️             | ✘                 | ✅ [^38]                   |
-| WAF/L7 Firewall                             | ✅              | ✅                | ✅                         |
+| WAF/L7 Firewall                             | ✅              | ✅                | 🚧 [^50]                   |
 | DMARC Management                            | ⚫️             | ⚫️               | ✅                         |
 
 ---
@@ -159,7 +159,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 [^17]: Currently may only be used with US FedRAMP region.
 
-[^18]: When Cloudflare Tunnel (a secure outbound connection from your network to Cloudflare) connects to Cloudflare, it can use either the Global Region (default, any data center worldwide) or the [US FedRAMP Moderate Domestic region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) (data centers that meet the US government's FedRAMP security standard). For incoming web requests, Regional Services only applies when you have [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) (services exposed to users through the tunnel). In that case, the region associated with the DNS record will apply.
+[^18]: The [`--region` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) in `cloudflared` controls where the tunnel connector establishes its connection to Cloudflare. This setting is separate from Regional Services. For public hostnames served through a tunnel, Regional Services is configured at the DNS record level and operates independently from the tunnel connector region. For incoming web requests, Regional Services only applies when you have [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) (services exposed to users through the tunnel); in that case, the region associated with the DNS record will apply.
 
 [^19]: Uses Gateway HTTP and CASB.
 
@@ -216,3 +216,5 @@ The tables below show whether each Cloudflare product is compatible with each DL
 [^48]: The following are exceptions and are supported: AI Gateway Analytics (GraphQL Analytics datasets) and Logs (Logpush), R2 Dashboard Metrics & Analytics, Workers AI GraphQL Analytics datasets like aiInferenceAdaptive.
 
 [^49]: Dashboard Analytics are empty when using CMB outside the US region. Use [Logpush](/logs/logpush/) instead.
+
+[^50]: Email and webhook notifications for DDoS and WAF events may not fire reliably when Customer Metadata Boundary is set to `eu`. This behavior is intermittent and under investigation. If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism.
