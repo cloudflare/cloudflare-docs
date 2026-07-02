@@ -44,6 +44,8 @@ fetch(imageURL, {
 
 These typings are also available in [our Workers TypeScript definitions library](https://github.com/cloudflare/workers-types).
 
+`cf.image` is available on any zone that hosts a Worker, including `*.workers.dev` subdomains. Each transformation is billed to the account that owns the Worker.
+
 ## Configure a Worker
 
 Create a new script in the Workers section of the Cloudflare dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
@@ -85,6 +87,12 @@ Image transformations are not simulated in the preview of the Workers dashboard 
 :::
 
 The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of image transformations you must deploy the Worker script and use it outside of the editor.
+
+## Local development
+
+When running `wrangler dev`, `cf.image` transformations are applied locally using a low fidelity mock.
+
+A subset of options are supported, including resize, rotate, format, and background colour. Unsupported options are ignored.
 
 ## Error handling
 
