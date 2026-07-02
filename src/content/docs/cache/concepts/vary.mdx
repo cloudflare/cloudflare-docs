@@ -18,7 +18,7 @@ By default, Cloudflare's CDN constructs [cache keys](/cache/how-to/cache-keys/) 
 A response containing `Vary: *` always bypasses cache, regardless of your Vary configuration.
 :::
 
-This page explains how Vary affects caching. To configure it, refer to [Vary](/cache/how-to/cache-rules/settings/#vary) in the Cache Rules settings.
+This page explains how Vary affects caching. To configure Vary, use [Vary](/cache/how-to/cache-rules/settings/#vary) in Cache Rules settings, or [`cf.vary`](/workers/runtime-apis/request/#the-cfvary-property) for Workers subrequests.
 
 This feature is distinct from [Vary for images](/cache/advanced-configuration/vary-for-images/), which serves image format variants based on the `Accept` header through a separate cache variants rule.
 
