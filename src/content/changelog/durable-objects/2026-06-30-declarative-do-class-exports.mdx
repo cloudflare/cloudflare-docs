@@ -4,10 +4,10 @@ description: A new declarative `exports` field in your Wrangler configuration re
 products:
   - durable-objects
   - workers
-date: 2026-06-30
+date: 2026-07-04
 ---
 
-A new declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field in your Wrangler configuration file replaces the imperative [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array for managing Durable Object class lifecycle. Instead of writing an ordered list of migration steps with unique tags, you declare each Durable Object class your Worker exports and Cloudflare reconciles your declaration against the namespaces that have already been provisioned.
+A new declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field in your Wrangler configuration file replaces the imperative [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array for managing Durable Object class lifecycle. Instead of writing an ordered list of migration steps with unique tags, you declare each Durable Object class your Worker exports and Cloudflare compares that against what's already deployed to determine what Durable Object state needs to be created, renamed, or deleted.
 
 ```jsonc title="wrangler.jsonc"
 {
