@@ -67,6 +67,6 @@ docker run -d \
 
 The image entrypoint is `gokeyless`, so any command-line flags (such as `--private-key-dirs`) are appended after the image name.
 
-## Serving multiple private keys
+## Serve multiple private keys
 
 A single key server can hold private keys for multiple certificates. List several directories or files with `--private-key-dirs` / `--private-key-files` (comma-separated), or define multiple `private_key_stores` entries in `gokeyless.yaml`.
