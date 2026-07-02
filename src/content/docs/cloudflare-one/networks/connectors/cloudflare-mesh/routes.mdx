@@ -177,13 +177,13 @@ For a **private** hostname, Gateway must be able to resolve the hostname to its 
 
 #### The node resolves the hostname (default)
 
-In the common case, the same Mesh node carries both the DNS resolution and the application traffic, so the node resolves the hostname itself. Unlike a Cloudflare Tunnel, a Mesh node does **not** require you to run a DNS server — add an entry to the node's hosts file (for example, `/etc/hosts` on Linux) mapping the hostname to its private IP:
+By default, the Mesh node resolves the hostname using the DNS resolver configured on its host machine (for example, in `/etc/resolv.conf` on Linux) — the same way `cloudflared` does. If the node can already resolve the hostname to its private IP through that resolver, no further configuration is required.
+
+If the node cannot resolve the hostname on its own, the simplest option is to add an entry to the node's hosts file (for example, `/etc/hosts` on Linux) mapping the hostname to its private IP. Unlike a Cloudflare Tunnel, a Mesh node does **not** require you to run a dedicated DNS server:
 
 ```txt title="/etc/hosts"
 10.0.0.50 wiki.internal.local
 ```
-
-Alternatively, the node's system resolver can resolve the hostname if it already points at a DNS server the node can reach.
 
 #### Split DNS: DNS and application traffic use different connectors
 
