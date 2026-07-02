@@ -104,7 +104,7 @@ const hasContentFooter = Astro.slots.has("content-footer");
 const hasPagination = Astro.slots.has("pagination");
 
 // Feedback: rail copy on wide screens, content-column fallback otherwise.
-const hasTocAside = headings !== false && (hasToc || headings.length > 0);
+const hasTocAside = headings !== false;
 const showFeedback = feedback !== false && !isCustom;
 ---
 
@@ -231,7 +231,7 @@ const showFeedback = feedback !== false && !isCustom;
               )}
               {banner && <Banner content={banner.content} type={banner.type} dismissible={banner.dismissible} />}
               <Breadcrumbs items={breadcrumbItems} class="pb-2" />
-              <div {...pagefindAttrs}>
+              <div id="_top" {...pagefindAttrs}>
                 {hasPageTitle ? (
                   <slot name="page-title" />
                 ) : hideTitle ? null : (
@@ -280,7 +280,7 @@ const showFeedback = feedback !== false && !isCustom;
             </div>
           </main>
 
-          {headings !== false && (hasToc || headings.length > 0) && (
+          {headings !== false && (
             <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
               <div class="pt-6 pb-8 pl-8 pr-6">
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
