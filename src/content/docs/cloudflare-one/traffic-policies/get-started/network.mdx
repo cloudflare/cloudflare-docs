@@ -33,7 +33,7 @@ To filter network traffic from a device such as a laptop or phone:
 1. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your device.
 2. In the Cloudflare One Client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
 3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) when users are blocked, [install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device. Without the certificate, blocked users will see a generic browser connection error instead of an informative page.
-4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP. The Gateway proxy is what routes your device's traffic through Cloudflare so network policies can inspect it — without it enabled, your policies will have no effect. Optionally, enable the UDP proxy to also inspect QUIC traffic (a newer protocol used by HTTP/3 connections) on port 443.
+4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/reference/proxy/#turn-on-the-gateway-proxy) for TCP. The Gateway proxy is what routes your device's traffic through Cloudflare so network policies can inspect it — without it enabled, your policies will have no effect. Optionally, enable the UDP proxy to also inspect QUIC traffic (a newer protocol used by HTTP/3 connections) on port 443.
 
 ### Connect private networks
 
@@ -67,7 +67,7 @@ To verify your device is connected to Cloudflare One:
 
 5. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Logs** > **Network logs**. Before building network policies, make sure you see network logs from the Source IP assigned to your device.
 
-If no logs appear after a few minutes, check two things: first, verify that the [Gateway proxy is turned on](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy). Second, confirm that the device is enrolled in your Zero Trust organization by checking the Cloudflare One Client connection status.
+If no logs appear after a few minutes, check two things: first, verify that the [Gateway proxy is turned on](/cloudflare-one/traffic-policies/reference/proxy/#turn-on-the-gateway-proxy). Second, confirm that the device is enrolled in your Zero Trust organization by checking the Cloudflare One Client connection status.
 
 ## 3. Create your first network policy
 
@@ -80,4 +80,4 @@ A network policy has two parts: a matcher that selects which traffic to act on (
 
 ## 4. Add optional policies
 
-Refer to our list of [common network policies](/cloudflare-one/traffic-policies/network-policies/common-policies) for policies you may want to create. Common additions include blocking traffic to specific IP ranges, restricting access to non-standard ports (ports other than well-known ones like 80 for HTTP and 443 for HTTPS), and using protocol detection to identify applications like BitTorrent based on their traffic patterns rather than port numbers alone.
+Refer to our list of [common network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/common-policies) for policies you may want to create. Common additions include blocking traffic to specific IP ranges, restricting access to non-standard ports (ports other than well-known ones like 80 for HTTP and 443 for HTTPS), and using protocol detection to identify applications like BitTorrent based on their traffic patterns rather than port numbers alone.
