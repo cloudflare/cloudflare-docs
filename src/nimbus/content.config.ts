@@ -41,9 +41,7 @@ export const collections = {
         // `[...slug].astro`). Used by the model catalog content pages.
         wide: z.boolean().optional(),
 
-        // Whether to render the "Was this helpful?" FeedbackPrompt (forwarded to
-        // DocsLayout by `[...slug].astro`). Defaults true; set `feedback: false`
-        // to opt a page out. Mirrors the upstream Starlight `feedback` flag.
+        // Show the "Was this helpful?" widget (forwarded to DocsLayout).
         feedback: z.boolean().default(true),
 
         // --- CF frontmatter passthrough ---------------------

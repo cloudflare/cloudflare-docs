@@ -608,10 +608,7 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 /* Scoped to <main transition:name="nb-content"> only — the surrounding UI snap-swaps
    via the root rule below so the visual field doesn't shift on nav. */
 @media (prefers-reduced-motion: no-preference) {
-	/* Pure crossfade, no movement — nothing shifts position, so the page never
-	   looks like it's sliding. Outgoing clears quickly and slightly ahead of the
-	   incoming so the two snapshots never sit half-visible on top of each other
-	   (that overlap is what made the old equal-length crossfade read as a dim). */
+	/* Pure crossfade — outgoing clears just ahead of the incoming (no overlap dim). */
 	::view-transition-old(nb-content) {
 		animation: nb-content-out 120ms cubic-bezier(0.4, 0, 1, 1) both;
 	}
