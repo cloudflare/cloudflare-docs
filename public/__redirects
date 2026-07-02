@@ -2281,6 +2281,7 @@
 /workers/observability/local-development-and-testing/ /workers/local-development/ 301
 /workers/observability/sentry-integration/ /workers/observability/integrations/sentry 301
 /workers/configuration/deployments/ /workers/versions-and-deployments/ 301
+/workers/configuration/previews/ /workers/versions-and-deployments/preview-urls/ 301
 /workers/configuration/versions-and-deployments/ /workers/versions-and-deployments/ 301
 /workers/configuration/versions-and-deployments/gradual-deployments/ /workers/versions-and-deployments/gradual-deployments/ 301
 /workers/configuration/versions-and-deployments/version-overrides/ /workers/versions-and-deployments/version-overrides/ 301
