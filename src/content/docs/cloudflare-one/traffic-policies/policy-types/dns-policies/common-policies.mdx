@@ -26,7 +26,7 @@ Refer to the [DNS policies page](/cloudflare-one/traffic-policies/policy-types/d
 
 ## Allow corporate domains
 
-This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a blocked category like _Newly seen domains_ or _Login pages_.
+This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/traffic-policies/policy-types/dns-policies/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a blocked category like _Newly seen domains_ or _Login pages_.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -399,7 +399,7 @@ SafeSearch is a feature of search engines that helps you filter explicit or offe
 
 Filter DNS queries to allow only specific users access.
 
-The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#order-of-precedence).
+The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to [DNS policy order of enforcement](/cloudflare-one/traffic-policies/policy-types/dns-policies/order-of-enforcement/).
 
 ### 1. Allow a group
 

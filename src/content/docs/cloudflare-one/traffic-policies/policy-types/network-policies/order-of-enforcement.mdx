@@ -1,0 +1,47 @@
+---
+pcx_content_type: concept
+description: Understand how Gateway evaluates network policies and applies network policy precedence.
+products:
+  - cloudflare-one
+title: Network policy order of enforcement
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+Use network policy order of enforcement when you need to decide which TCP or UDP policy should match first. For the complete Gateway enforcement flow across policy types, refer to [Gateway order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/).
+
+## Where network policies run
+
+Gateway evaluates network policies after egress policies and before HTTP policies. Network policies apply to proxied TCP and UDP connections.
+
+Before Gateway evaluates a network policy, it verifies that the origin server is reachable by attempting a TCP connection to the destination. If that connection fails, Gateway does not evaluate the network policy.
+
+If you need to block the initial TCP SYN packet before Gateway checks origin availability, use [Cloudflare Network Firewall](/cloudflare-one/traffic-policies/policy-types/packet-filtering/) instead of a Gateway network policy.
+
+## Order within network policies
+
+Gateway evaluates network policies in order of precedence. In the Cloudflare dashboard, network policies are ordered from top to bottom.
+
+The first matching Allow or Block policy applies. Gateway stops evaluating later network policies after the first match.
+
+Place specific exceptions above general policies. For example, place an Allow policy for a specific private application above a broader Block policy for the private network.
+
+## Interaction with HTTP and Access policies
+
+A matching Network Block policy terminates the connection before Gateway evaluates HTTP policies.
+
+A matching Network Allow policy allows Gateway to continue evaluating the connection. It does not bypass HTTP policies or Access policies. If the traffic is HTTP or HTTPS, Gateway can still apply matching HTTP policies later in the flow.
+
+If traffic is headed to a private IP address protected as an Access application, the destination application's Access policies still apply. A Gateway Allow policy does not override Access.
+
+## Default behavior
+
+If no network policy matches, Gateway allows the TCP or UDP connection through the Gateway proxy. To block network traffic by default, create a catch-all Block policy with the lowest priority in the network policy list, then place specific Allow policies above it.
+
+## API and Terraform precedence
+
+To update policy precedence with the Cloudflare API, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to update the `precedence` field.
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />

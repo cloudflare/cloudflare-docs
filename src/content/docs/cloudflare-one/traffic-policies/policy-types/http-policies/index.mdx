@@ -29,6 +29,8 @@ An HTTP policy consists of an **Action** and a logical expression that determine
 - [Value](#value)
 - [Logical operators](#logical-operators)
 
+For information about how Gateway evaluates HTTP policies, refer to [HTTP policy order of enforcement](/cloudflare-one/traffic-policies/policy-types/http-policies/order-of-enforcement/).
+
 <Render
 	file="gateway/response"
 	product="cloudflare-one"
@@ -245,7 +247,7 @@ Information contained within HTTPS encryption, such as the full requested URL, w
 Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indication (SNI) in the TLS header. When accessing a Do Not Inspect site in the browser, your browser may display a **Your connection is not private** warning, which you can proceed through to connect. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/#inspection-limitations).
 
 :::note
-All Do Not Inspect policies are evaluated before any Allow or Block policies, regardless of their position in the policy list. For more information, refer to [Order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#http-policies).
+All Do Not Inspect policies are evaluated before any Allow or Block policies, regardless of their position in the policy list. For more information, refer to [HTTP policy order of enforcement](/cloudflare-one/traffic-policies/policy-types/http-policies/order-of-enforcement/).
 :::
 
 ### Do Not Isolate

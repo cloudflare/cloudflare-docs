@@ -1,0 +1,49 @@
+---
+pcx_content_type: concept
+description: Understand how Gateway evaluates resolver policies and applies resolver policy precedence.
+products:
+  - cloudflare-one
+title: Resolver policy order of enforcement
+sidebar:
+  order: 1
+---
+
+import { Render } from "~/components";
+
+:::note
+Only available on Enterprise plans.
+:::
+
+Use resolver policy order of enforcement when you need to decide which custom resolver should receive a DNS query. For the complete Gateway enforcement flow across policy types, refer to [Gateway order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/).
+
+## Where resolver policies run
+
+Gateway evaluates resolver policies during DNS resolution. Resolver policies run after DNS policies with pre-resolution selectors and before DNS policies with post-resolution selectors.
+
+DNS and resolver policy evaluation follows this order:
+
+1. DNS policies with selectors evaluated before DNS resolution
+2. Resolver policies
+3. DNS policies with selectors evaluated after DNS resolution
+
+Resolver policies route DNS queries to custom resolvers. They do not replace DNS policies that allow or block DNS queries.
+
+## Order within resolver policies
+
+Gateway evaluates resolver policies in order of precedence. In the Cloudflare dashboard, resolver policies are ordered from top to bottom.
+
+The first matching resolver policy applies. Gateway stops evaluating later resolver policies after the first match.
+
+Place specific resolver policies above general resolver policies. For example, place a resolver policy for a private hostname above a broader resolver policy for an internal domain suffix.
+
+## Interaction with DNS policies
+
+Pre-resolution DNS policies can allow, block, or override a DNS query before Gateway evaluates resolver policies. Post-resolution DNS policies can still evaluate the DNS response after the resolver policy routes the query.
+
+If no resolver policy matches, Gateway sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudflare's public DNS resolver, unless another DNS routing feature handles the query.
+
+## API and Terraform precedence
+
+To update policy precedence with the Cloudflare API, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to update the `precedence` field.
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />

@@ -1,0 +1,47 @@
+---
+pcx_content_type: concept
+description: Understand how Gateway evaluates egress policies and applies egress policy precedence.
+products:
+  - cloudflare-one
+title: Egress policy order of enforcement
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+:::note
+Only available on Enterprise plans.
+:::
+
+Use egress policy order of enforcement when you need to decide which dedicated egress route should match first. For the complete Gateway enforcement flow across policy types, refer to [Gateway order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/).
+
+## Where egress policies run
+
+Gateway evaluates egress policies after Cloudflare Network Firewall and before network policies. Egress policies choose the source egress method for matching traffic.
+
+Egress policies do not decide whether a connection is allowed or blocked. After Gateway selects the egress method, Gateway can still evaluate network and HTTP policies later in the flow.
+
+## Order within egress policies
+
+Gateway evaluates egress policies in order of precedence. In the Cloudflare dashboard, egress policies are ordered from top to bottom.
+
+The first matching egress policy applies. Gateway stops evaluating later egress policies after the first match.
+
+Place specific policies above general policies. For example, place an egress policy for a specific SaaS provider above a catch-all policy that uses the default Cloudflare egress method.
+
+## Catch-all policies
+
+Without a catch-all policy, traffic that does not match an explicit egress policy exits through the closest available Gateway egress IP. This behavior can be useful for performance, but it can make source IP selection less predictable.
+
+To make unmatched traffic predictable, create a catch-all policy at the bottom of the egress policy list. Set the catch-all policy to use the default Cloudflare egress method or the dedicated egress IPs you want unmatched traffic to use.
+
+## Default behavior
+
+If no egress policy matches, Gateway selects the most performant available egress path for the traffic. Network and HTTP policies can still allow or block the connection after egress policy evaluation.
+
+## API and Terraform precedence
+
+To update policy precedence with the Cloudflare API, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to update the `precedence` field.
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />

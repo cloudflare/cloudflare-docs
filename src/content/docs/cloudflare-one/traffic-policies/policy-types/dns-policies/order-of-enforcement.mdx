@@ -1,0 +1,51 @@
+---
+pcx_content_type: concept
+description: Understand how Gateway evaluates DNS policies and applies DNS policy precedence.
+products:
+  - cloudflare-one
+title: DNS policy order of enforcement
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+Use DNS policy order of enforcement when you need to decide which DNS policy should match first. For the complete Gateway enforcement flow across policy types, refer to [Gateway order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/).
+
+## Where DNS policies run
+
+Gateway evaluates DNS policies during DNS resolution. DNS policies apply before egress, network, and HTTP policies.
+
+DNS and resolver policy evaluation follows this order:
+
+1. DNS policies with selectors evaluated before DNS resolution
+2. Resolver policies, if configured
+3. DNS policies with selectors evaluated after DNS resolution
+
+DNS policies control name resolution. If you block a domain with a DNS policy, users can still reach the destination if they know its IP address and no network or HTTP policy blocks the connection.
+
+## Order within DNS policies
+
+Gateway evaluates DNS policies by selector evaluation phase, then by order of precedence.
+
+Policies with pre-resolution selectors take precedence over policies with post-resolution selectors. For example, a policy that matches _Domain_ is evaluated before a policy that matches _Resolved Country IP Geolocation_, even if the resolved country policy appears first in the policy list.
+
+If a policy includes both pre-resolution and post-resolution selectors, Gateway evaluates the entire policy after DNS resolution. For information about when each selector is evaluated, refer to [DNS policy selectors](/cloudflare-one/traffic-policies/policy-types/dns-policies/#selectors).
+
+## Order of precedence
+
+Order of precedence controls the priority of individual policies within the same evaluation phase. Gateway evaluates DNS policies in ascending order, beginning with the lowest precedence value.
+
+In the Cloudflare dashboard, DNS policies are ordered from top to bottom. The first matching Allow, Block, or Override policy applies. Gateway stops evaluating later policies after the first match.
+
+Place specific exceptions above general policies. For example, place an Allow policy for a trusted domain above a broader Block policy for a content category.
+
+## Default behavior
+
+If no DNS policy matches, Gateway allows the DNS query to resolve through the configured resolver. To block DNS queries by default, create a catch-all Block policy with the lowest priority in the DNS policy list, then place specific Allow policies above it.
+
+## API and Terraform precedence
+
+To update policy precedence with the Cloudflare API, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to update the `precedence` field.
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />

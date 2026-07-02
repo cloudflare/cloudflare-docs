@@ -1,0 +1,64 @@
+---
+pcx_content_type: concept
+description: Understand how Gateway evaluates HTTP policies and applies HTTP policy precedence.
+products:
+  - cloudflare-one
+title: HTTP policy order of enforcement
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+Use HTTP policy order of enforcement when you need to decide which HTTP policy action should match first. For the complete Gateway enforcement flow across policy types, refer to [Gateway order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/).
+
+## Where HTTP policies run
+
+Gateway evaluates HTTP policies after DNS, egress, and network policies. For HTTP/3 traffic proxied by Gateway, Gateway evaluates DNS policies, then network policies, then HTTP policies.
+
+Network policies can affect whether HTTP policies run. A matching Network Block policy terminates the connection before HTTP policy evaluation. A matching Network Allow policy does not bypass HTTP policies.
+
+## Order within HTTP policies
+
+Gateway applies HTTP policies based on action type and order of precedence:
+
+1. Do Not Inspect policies, in order of precedence
+2. Isolate and Do Not Isolate policies, in order of precedence
+3. Allow, Block, Do Not Scan, Quarantine, and Redirect policies, in order of precedence
+4. HTTP request body inspection, including Data Loss Prevention (DLP), anti-virus scanning, and file sandboxing
+
+This order lets Gateway decide whether to decrypt traffic before it evaluates policy actions that require inspection.
+
+## Do Not Inspect precedence
+
+Do Not Inspect policies always run before other HTTP policies. If traffic matches a Do Not Inspect policy, Gateway allows the traffic, skips TLS decryption, and bypasses the remaining HTTP policies.
+
+The only exception is [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/). Sites inside the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy.
+
+## Isolate policy precedence
+
+After Do Not Inspect policies, Gateway evaluates Isolate and Do Not Isolate policies. If traffic matches an Isolate policy, Gateway reroutes the request to [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/).
+
+Gateway then evaluates Allow, Block, and related HTTP policies against isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/admin` is blocked by a later HTTP policy, Gateway blocks `example.com/admin` inside the remote browser.
+
+## Order of precedence
+
+Order of precedence controls the priority of policies within each HTTP action group. In the Cloudflare dashboard, policies are ordered from top to bottom.
+
+The first matching HTTP policy in the active action group applies. Gateway stops evaluating later policies in that group after the first match.
+
+Place specific exceptions above general policies. For example, place an Allow policy for an approved application path above a broader Block policy for the application.
+
+## DLP policy precedence
+
+Gateway filters and logs HTTP traffic based on first match, then scans the request body for matching content. If a DLP Block policy later blocks a request that was first allowed, Gateway may log the initial Allow action even though it ultimately blocks the request.
+
+## Default behavior
+
+If no HTTP policy matches, Gateway allows HTTP and HTTPS requests. If you configured a default Block action in [HTTP policy settings](/cloudflare-one/traffic-policies/policy-types/http-policies/), unmatched traffic is blocked instead.
+
+## API and Terraform precedence
+
+To update policy precedence with the Cloudflare API, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to update the `precedence` field.
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />

@@ -31,6 +31,8 @@ Many third-party services (for example, a bank or partner API) only allow connec
 
 Egress policies control which dedicated egress IP is used for a given connection. You can match traffic on attributes such as user identity, source or destination IP address, and geolocation. Traffic that does not match an egress policy defaults to the most performant dedicated egress IP.
 
+For information about how Gateway evaluates egress policies, refer to [Egress policy order of enforcement](/cloudflare-one/traffic-policies/policy-types/egress-policies/order-of-enforcement/).
+
 Cloudflare does not publish Cloudflare One Client egress IP ranges. Cloudflare One Client egress IPs are not listed at [Cloudflare's IP Ranges](https://cloudflare.com/ips). To obtain a dedicated Cloudflare One Client egress IP, contact your account team.
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
@@ -73,7 +75,7 @@ Without a catch-all policy, any traffic that does not match an explicit egress p
 | --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
 | Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
 
-Gateway policies evaluate from [top to bottom](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#order-of-precedence) in the UI. Place the catch-all policy at the bottom of the list so that more specific policies are evaluated first.
+Gateway policies evaluate from [top to bottom](/cloudflare-one/traffic-policies/policy-types/egress-policies/order-of-enforcement/#order-within-egress-policies) in the UI. Place the catch-all policy at the bottom of the list so that more specific policies are evaluated first.
 
 ## Egress methods
 

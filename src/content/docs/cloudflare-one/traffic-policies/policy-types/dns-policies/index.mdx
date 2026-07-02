@@ -24,6 +24,8 @@ A DNS policy consists of an **Action** as well as a logical expression that dete
 - [Value](#value)
 - [Logical operators](#logical-operators)
 
+For information about how Gateway evaluates DNS policies, refer to [DNS policy order of enforcement](/cloudflare-one/traffic-policies/policy-types/dns-policies/order-of-enforcement/).
+
 When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. Unless a more specific selector is configured in a policy (for example, _User Email_ or _Source IP_), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
 
 <Render
@@ -88,7 +90,7 @@ API value: `allow`
 
 </Details>
 
-Policies with Allow actions explicitly permit DNS queries to resolve. Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#order-of-precedence), which means that if an Allow policy matches a query at a higher precedence than a Block policy, the query will be allowed to resolve. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
+Policies with Allow actions explicitly permit DNS queries to resolve. Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/policy-types/dns-policies/order-of-enforcement/#order-of-precedence), which means that if an Allow policy matches a query at a higher precedence than a Block policy, the query will be allowed to resolve. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
 
 | Selector           | Operator | Value       | Action |
 | ------------------ | -------- | ----------- | ------ |
@@ -302,7 +304,7 @@ Each selector is evaluated during a specific phase of the DNS resolution process
 - **During DNS resolution** — Gateway inspects information discovered while resolving the query (for example, the authoritative nameserver IP).
 - **After DNS resolution** — Gateway inspects the DNS answer (for example, the resolved IP or CNAME record) after resolution completes.
 
-The Override action cannot be used with selectors evaluated during or after DNS resolution, because the override must be applied before the answer is returned. For more information on how evaluation phase interacts with precedence, refer to [order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#dns-policies).
+The Override action cannot be used with selectors evaluated during or after DNS resolution, because the override must be applied before the answer is returned. For more information on how evaluation phase interacts with precedence, refer to [DNS policy order of enforcement](/cloudflare-one/traffic-policies/policy-types/dns-policies/order-of-enforcement/).
 
 ### Application
 
