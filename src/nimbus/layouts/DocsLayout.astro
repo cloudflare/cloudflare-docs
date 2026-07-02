@@ -21,10 +21,16 @@ import { config } from "virtual:nimbus/config";
 import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
 import logo from "~/assets/logo.svg";
+import type { PageMeta } from "@/components/PageHead.astro";
 
-type Props = DocsPageProps & { audience?: "human"; wide?: boolean; hideTitle?: boolean };
+type Props = DocsPageProps & {
+  audience?: "human";
+  wide?: boolean;
+  hideTitle?: boolean;
+  meta?: PageMeta;
+};
 
-const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false } = Astro.props;
+const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta } = Astro.props;
 
 // `searchable` derives from `noindex` when omitted: a non-crawlable page is
 // by default not in the site search either. Explicit `searchable: true`
@@ -96,7 +102,7 @@ const hasContentFooter = Astro.slots.has("content-footer");
 const hasPagination = Astro.slots.has("pagination");
 ---
 
-<BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId} footer={false}>
+<BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId} footer={false} meta={meta}>
   <div class="flex flex-col min-h-screen">
     {hasHeader ? <slot name="header" /> : <Header collection={collection} entryId={entryId} showSidebar={showSidebar} />}
 
@@ -203,7 +209,7 @@ const hasPagination = Astro.slots.has("pagination");
               whose border runs the full page height alongside it. */}
           <div class="flex min-w-0 flex-1 flex-col">
             <div class="flex min-w-0 flex-1">
-          {/* Named view-transition group — only the content fades+rises on nav.
+          {/* Named view-transition group — only the content crossfades on nav.
               Header / sidebar / TOC stay still via the root rule in globals.css. */}
           <main id="main-content" transition:name="nb-content" class="flex-1 min-w-0">
             <div class={`mx-auto px-4 lg:px-6 pt-6 pb-12 ${wide ? "max-w-[1400px]" : "max-w-(--nb-content-max)"}`}>
@@ -287,8 +293,12 @@ const hasPagination = Astro.slots.has("pagination");
       class="group fixed inset-0 m-0 h-full w-full max-h-full max-w-full border-0 bg-transparent p-0 data-[state=open]:bg-black/40 data-[state=closing]:bg-black/40"
       aria-label="Site navigation"
     >
-      <div data-mobile-sidebar-panel class="h-full w-full -translate-x-full overflow-y-auto bg-background shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none">
-        <div class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-inherit px-4 py-3">
+  <div
+      data-mobile-sidebar-panel
+      class="h-full w-full -translate-x-full overflow-y-auto bg-background shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
+    >
+      <div
+        class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-inherit px-4 py-3">
           <a href="/" class="group flex items-center gap-2 no-underline">
             <img src={logo.src} alt="" width="51" height="23" class="h-[20px] w-auto" />
             <span class="font-semibold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">

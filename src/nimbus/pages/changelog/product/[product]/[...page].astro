@@ -32,7 +32,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 
     return paginate(notes, {
       params: { product: productId },
-      pageSize: 20,
+      pageSize: 25,
     });
   });
 }) satisfies GetStaticPaths;
@@ -48,20 +48,8 @@ const productTitle = productEntry?.data.entry.title ?? productId;
 
 <ChangelogLayout
   title={`${productTitle} Changelog`}
-  description={`New updates and improvements for ${productTitle}.`}
-  head={[
-    {
-      tag: "link",
-      attrs: {
-        rel: "alternate",
-        type: "application/rss+xml",
-        title: `${productTitle} Changelog RSS`,
-        href: `/changelog/rss/${productId}.xml`,
-      },
-    },
-  ]}
 >
-  <Header rssHref={`/changelog/rss/${productId}.xml`} />
+  <Header />
   <ChangelogFeed entries={page.data} />
   <Pagination
     currentPage={page.currentPage}
