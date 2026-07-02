@@ -223,17 +223,6 @@
 			opacity: 0;
 		}
 	}
-
-	@keyframes fade-rise {
-		from {
-			opacity: 0;
-			transform: translateY(12px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
 }
 
 /* scrollbar-hide — used by horizontally-scrollable strips (TabBar). */
@@ -601,46 +590,6 @@ pre.astro-code[data-nb-wrap] .line {
 /* Hide hamburger on pages without a sidebar dialog. */
 body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 	display: none;
-}
-
-/* ---- View transitions ---- */
-
-/* Scoped to <main transition:name="nb-content"> only — the surrounding UI snap-swaps
-   via the root rule below so the visual field doesn't shift on nav. */
-@media (prefers-reduced-motion: no-preference) {
-	/* Outgoing clears quickly so it never ghosts under the rising incoming. */
-	::view-transition-old(nb-content) {
-		animation: nb-content-out 90ms cubic-bezier(0.4, 0, 1, 1) both;
-	}
-	/* Incoming fades up from just below — a subtle directional rise reads smoother
-	   than a flat crossfade and matches the fade-rise entrance used elsewhere. */
-	::view-transition-new(nb-content) {
-		animation: nb-content-in 240ms cubic-bezier(0.16, 1, 0.3, 1) 30ms both;
-	}
-
-	::view-transition-old(root),
-	::view-transition-new(root) {
-		animation: none;
-	}
-
-	@keyframes nb-content-out {
-		from { opacity: 1; }
-		to   { opacity: 0; }
-	}
-
-	@keyframes nb-content-in {
-		from { opacity: 0; transform: translateY(6px); }
-		to   { opacity: 1; transform: translateY(0); }
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	::view-transition-old(nb-content),
-	::view-transition-new(nb-content),
-	::view-transition-old(root),
-	::view-transition-new(root) {
-		animation: none;
-	}
 }
 
 @layer components {

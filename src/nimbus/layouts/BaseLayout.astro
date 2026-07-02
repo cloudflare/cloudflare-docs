@@ -4,7 +4,6 @@ import "@fontsource-variable/jetbrains-mono";
 import "../styles/globals.css";
 import "../styles/prose.css";
 import "../styles/markdown-pipeline.css";
-import { ClientRouter } from "astro:transitions";
 import { config } from "virtual:nimbus/config";
 import { getCollectionLlmsUrl, getVersionStatus } from "nimbus-docs";
 import AgentDirective from "@/components/AgentDirective.astro";
@@ -115,9 +114,6 @@ const llmsUrl = Astro.site
       entryId={entryId}
       meta={meta}
     />
-
-    {/* SPA-like navigation. Page-level animation in globals.css. */}
-    <ClientRouter />
   </head>
   <body class="min-h-screen bg-background text-foreground antialiased">
     <a
