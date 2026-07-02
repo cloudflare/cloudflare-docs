@@ -8,10 +8,8 @@ products:
 
 Cloudflare Web Analytics (Real User Monitoring) has rolled out performance optimizations to significantly improve the stability and loading speed of account-wide dashboards.
 
-For large accounts monitoring hundreds to thousands of websites, loading the aggregate account-wide view would often fail, running into timeouts or unexpected interface errors due to the massive scale of parallel query processing. This update optimizes how high-volume multi-site data is queried to reduce errors and provide a snappier dashboard experience.
+For larger accounts (with >100 Web Analytics sites), loading the aggregate account-wide view would often fail, running into timeouts or unexpected interface errors due to the massive scale of parallel query processing. This update optimizes how high-volume multi-site data is queried to reduce errors and provide a snappier dashboard experience.
 
-As part of this optimization, Cloudflare is introducing a safety guardrail for a minority of complex accounts. If your account contains **more than 1,000 active sites**, a contextual warning will now appear on your account-wide Web Analytics view.
+Accounts with up to 1,000 sites will now be able to load this account-wide aggregate view without experiencing misleading errors.
 
-This warning states that the aggregate view _may_ include historical beacon data from recently-deleted sites alongside active properties.
-
-If your workflow requires absolute, strict accuracy focused only on active sites, use [the filtering options](/web-analytics/configuration-options/filters/) to select the relevant site(s).
+If you have an account with over 1,000 sites, we cannot currently aggregate over this volume due to processing constraints but you'll now be presented with a clear error and instruction to filter to the relevant site(s) you wish to see the data for.
