@@ -126,6 +126,7 @@ const rssHref = entry.data.pcx_content_type === "changelog" && Astro.site
   entryId={entry.id}
   wide={entry.data.wide}
   hideTitle={isSplash}
+  feedback={entry.data.feedback}
   meta={{
     titleSuffix: productMetaTitle,
     canonical: entry.data.canonical,
