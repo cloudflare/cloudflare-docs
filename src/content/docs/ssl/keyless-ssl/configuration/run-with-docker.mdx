@@ -1,0 +1,72 @@
+---
+title: Run with Docker
+pcx_content_type: how-to
+description: Run a Keyless SSL key server as a container using environment variables.
+products:
+  - ssl
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Run Keyless SSL with Docker
+---
+
+The `gokeyless` key server is published as a container image, and most settings can be configured with environment variables instead of a `gokeyless.yaml` file.
+
+## Pull the image
+
+```sh
+docker pull ghcr.io/cloudflare/gokeyless:latest
+```
+
+:::note
+The image is published on the GitHub Container Registry (`ghcr.io`), not Docker Hub.
+:::
+
+A complete example is available in [`docker-compose.example.yaml`](https://github.com/cloudflare/gokeyless/blob/master/docker-compose.example.yaml) in the gokeyless repository.
+
+## Environment variables
+
+Each environment variable maps to the equivalent setting in `gokeyless.yaml`. When both are present, the environment variable takes precedence (the order is command-line flag, then environment variable, then configuration file).
+
+| Environment variable | Purpose |
+| --- | --- |
+| `KEYLESS_HOSTNAME` | Hostname of this key server (must match the value configured in Cloudflare). |
+| `KEYLESS_ZONE_ID` | Cloudflare Zone ID. |
+| `KEYLESS_ORIGIN_CA_API_KEY` | Origin CA API key used to enroll the key server and obtain its authentication certificate. |
+| `KEYLESS_AUTH_CERT` | Path to the key server authentication certificate (default `server.pem`). |
+| `KEYLESS_AUTH_KEY` | Path to the authentication certificate private key (default `server-key.pem`). |
+| `KEYLESS_AUTH_CSR` | Path to write the CSR generated during initialization (default `server.csr`). |
+| `KEYLESS_CLOUDFLARE_CA_CERT` | Path to the Cloudflare CA certificate used to authenticate connecting key clients (default `keyless_cacert.pem`). |
+| `KEYLESS_PORT` | Port the key server listens on (default `2407`). |
+| `KEYLESS_METRICS_PORT` | Port for the `/metrics` endpoint (default `2406`). |
+| `KEYLESS_LOGLEVEL` | Log verbosity, `0` (most verbose) to `5`. |
+
+## Configure private keys
+
+Private key locations **cannot** be set with an environment variable. Configure them with either:
+
+- a `private_key_stores` block in `gokeyless.yaml` (each entry sets exactly one of `dir`, `file`, or `uri`), or
+- the `--private-key-dirs` / `--private-key-files` flags (comma-separated), passed as arguments after the image name.
+
+## Run the container
+
+```sh
+docker run -d \
+  -e KEYLESS_HOSTNAME=<KEY_SERVER_HOSTNAME> \
+  -e KEYLESS_ZONE_ID=<ZONE_ID> \
+  -e KEYLESS_AUTH_CERT=/config/server.pem \
+  -e KEYLESS_AUTH_KEY=/config/server-key.pem \
+  -e KEYLESS_CLOUDFLARE_CA_CERT=/config/keyless_cacert.pem \
+  -v /local/config:/config:ro \
+  -v /local/keys:/keys:ro \
+  -p 2407:2407 \
+  ghcr.io/cloudflare/gokeyless:latest \
+  --private-key-dirs /keys
+```
+
+The image entrypoint is `gokeyless`, so any command-line flags (such as `--private-key-dirs`) are appended after the image name.
+
+## Serving multiple private keys
+
+A single key server can hold private keys for multiple certificates. List several directories or files with `--private-key-dirs` / `--private-key-files` (comma-separated), or define multiple `private_key_stores` entries in `gokeyless.yaml`.
