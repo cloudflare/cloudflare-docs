@@ -32,7 +32,7 @@ Traditional network security relied on hardware firewalls at the perimeter of a 
 
 Without an SWG, organizations lose visibility into what websites and applications users access, what threats reach user devices, and what data leaves the organization. An SWG restores that visibility and control by inspecting traffic in the cloud, close to users, rather than forcing all traffic through a central data center.
 
-Cloudflare Gateway is Cloudflare's SWG, built into the [Cloudflare One](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) SASE platform. It inspects and filters traffic at the DNS, network (Layer 4), and HTTP (Layer 7) layers. 
+Cloudflare Gateway is Cloudflare's SWG, built into the [Cloudflare One](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) SASE platform. It inspects and filters traffic at the DNS, network (Layer 4), and HTTP (Layer 7) layers.
 
 For more information on how SWGs work, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/).
 
@@ -50,15 +50,7 @@ If you are familiar with traditional network security, Gateway's policy layers m
 
 Unlike hardware firewalls that sit at a single network perimeter, Gateway enforces these policies across Cloudflare's global network, protecting traffic regardless of where users connect.
 
-Gateway supports several policy types because network traffic can be inspected at different layers — from raw packets up to full HTTP requests. Each policy type gives you control at a specific layer:
-
-<Details header="Packet filtering">
-
-**[Packet filtering](/cloudflare-one/traffic-policies/policy-types/packet-filtering/)** inspects raw network packets and blocks traffic based on properties like source IP address or protocol. It does not need to know who the user is or what session they belong to.
-
-Use packet filtering to drop unwanted traffic before it reaches any other policy.
-
-</Details>
+Gateway supports several policy types because network traffic can be inspected at different layers — from DNS queries up to full HTTP requests. Each policy type gives you control at a specific layer:
 
 <Details header="DNS policies">
 
@@ -149,7 +141,6 @@ The following table maps common traffic-filtering goals to the best Cloudflare G
 | Block non-HTTP traffic (SSH, RDP)      | Network          | Inspects TCP/UDP packets on any port                                   |
 | Block malware and threats              | DNS _and_ HTTP   | DNS blocks known-bad domains. HTTP catches threats in allowed traffic. |
 | Assign static egress IPs               | Egress           | Lets third-party services identify your organization                   |
-| Drop traffic before other policies run | Packet filtering | Blocks by packet attributes without user context                       |
 | Route DNS to custom nameservers        | Resolver         | Overrides the default Cloudflare resolver                              |
 
 After you choose a Cloudflare Gateway policy type, continue with the matching setup guide to create the policy that fits your traffic-filtering goal.
@@ -202,4 +193,3 @@ For details on how Gateway proxies traffic and establishes connections, refer to
 ## Troubleshoot Cloudflare Gateway policies
 
 For help resolving common issues with Cloudflare Gateway policies, refer to [Troubleshooting](/cloudflare-one/traffic-policies/troubleshooting/).
-
