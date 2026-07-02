@@ -16,6 +16,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Pagination } from "@/components/ui/pagination";
 import { PageActions } from "@/components/ui/page-actions";
 import { Badge } from "@/components/ui/badge";
+import FeedbackPrompt from "@/components/react/FeedbackPrompt";
 import type { DocsPageProps } from "nimbus-docs/types";
 import { config } from "virtual:nimbus/config";
 import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
@@ -28,9 +29,10 @@ type Props = DocsPageProps & {
   wide?: boolean;
   hideTitle?: boolean;
   meta?: PageMeta;
+  feedback?: boolean;
 };
 
-const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta } = Astro.props;
+const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true } = Astro.props;
 
 // `searchable` derives from `noindex` when omitted: a non-crawlable page is
 // by default not in the site search either. Explicit `searchable: true`
@@ -100,6 +102,14 @@ const hasToc = Astro.slots.has("toc");
 const hasPageTitle = Astro.slots.has("page-title");
 const hasContentFooter = Astro.slots.has("content-footer");
 const hasPagination = Astro.slots.has("pagination");
+
+// Feedback widget placement mirrors the Starlight overrides: a copy in the TOC
+// rail on wide screens (the aside is `hidden xl:block`, so the rail copy is
+// naturally xl-only) plus a fallback in the content column for narrow viewports
+// and pages without a TOC. `hasTocAside` reuses the exact aside render
+// condition below so the two copies are mutually exclusive by viewport.
+const hasTocAside = headings !== false && (hasToc || headings.length > 0);
+const showFeedback = feedback !== false && !isCustom;
 ---
 
 <BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId} footer={false} meta={meta}>
@@ -266,6 +276,11 @@ const hasPagination = Astro.slots.has("pagination");
                 )}
               </div>
               {hasPagination ? <slot name="pagination" /> : <Pagination prevNext={prevNext} />}
+              {showFeedback && (
+                <div class:list={["mt-10", hasTocAside && "xl:hidden"]}>
+                  <FeedbackPrompt client:idle id="feedback-form-content" />
+                </div>
+              )}
             </div>
           </main>
 
@@ -273,6 +288,11 @@ const hasPagination = Astro.slots.has("pagination");
             <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
               <div class="pt-6 pb-8 pl-8 pr-6">
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
+                {showFeedback && (
+                  <div class="mt-8 border-t border-border pt-6">
+                    <FeedbackPrompt client:only="react" id="feedback-form-toc" />
+                  </div>
+                )}
               </div>
             </aside>
           )}
