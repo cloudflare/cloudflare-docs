@@ -1,5 +1,6 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
+import { getEntries, getEntry } from "astro:content";
 import {
   getDocsStaticPaths,
   getDocsPageProps,
@@ -12,6 +13,9 @@ import {
 import { config } from "virtual:nimbus/config";
 import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
+import { getOgImage } from "../../util/og";
+
+const NOINDEX_PRODUCTS = ["email-security"];
 
 export const prerender = true;
 export const getStaticPaths = getDocsStaticPaths;
@@ -65,28 +69,39 @@ const tocConfig = entry.data.tableOfContents;
 const toc = tocOn && tocConfig !== false ? getTOC(headings, tocConfig) : false;
 const markdownPath = `/${entry.id}/index.md`;
 const markdownUrl = Astro.site ? new URL(markdownPath, Astro.site).href : markdownPath;
-// Per-page OG cards (programmatic generation) were dropped — not worth the
-// ~34s build cost without incremental caching. Frontmatter can still set a
-// per-page image; otherwise NimbusHead falls back to the site-wide `/og.png`.
-const socialImage = entry.data.socialImage;
+const socialImage = entry.data.socialImage ?? await getOgImage(entry);
 
 // `external_link` pages (e.g. the per-product "REST API" stubs pointing to
 // `/api/`) build at their own path but redirect to the target. The sidebar
-// already links straight to `external_link` via nimbus-docs; this meta-refresh
-// covers a direct hit on the stub's own URL, matching Starlight's
-// `Head.astro` (`0; url=…`). Body stays empty — the browser leaves immediately.
+// already links straight to `external_link` via nimbus-docs; PageHead
+// emits the direct-hit meta refresh and noindex metadata.
 const externalLink = entry.data.external_link;
-const head = [
-  ...(entry.data.head ?? []),
-  ...(externalLink
-    ? [
-        {
-          tag: "meta" as const,
-          attrs: { "http-equiv": "refresh", content: `0; url=${externalLink}` },
-        },
-      ]
-    : []),
-];
+const head = entry.data.head ?? [];
+const sectionProduct = sectionSegment
+  ? await getEntry("directory", sectionSegment.replaceAll(".", ""))
+  : undefined;
+const productRefs = (entry.data.products ?? []).map((product) =>
+  typeof product === "string"
+    ? ({ collection: "directory", id: product } as const)
+    : product,
+);
+const additionalProducts = await getEntries(productRefs);
+const additionalProductNames = additionalProducts.flatMap((product) =>
+  product?.data.name ? [product.data.name] : [],
+);
+// Parity: only enrich the title with ` · <suffix>` when the section is backed
+// by a `directory` entry (mirrors production Head.astro's `if (product)`).
+// Otherwise leave titleSuffix undefined so PageHead uses ` | Cloudflare Docs`.
+const productMetaTitle = sectionProduct
+  ? (sectionProduct.data.meta?.title ?? "Cloudflare Docs")
+  : undefined;
+const effectiveNoindex =
+  entry.data.noindex ||
+  Boolean(externalLink) ||
+  NOINDEX_PRODUCTS.includes(sectionSegment ?? "");
+const rssHref = entry.data.pcx_content_type === "changelog" && Astro.site
+  ? new URL(`/${entry.id}/index.xml`, Astro.site).href
+  : undefined;
 ---
 
 <DocsLayout
@@ -100,7 +115,7 @@ const head = [
   banner={entry.data.banner}
   head={head}
   searchable={entry.data.searchable}
-  noindex={entry.data.noindex}
+  noindex={effectiveNoindex}
   markdownUrl={markdownUrl}
   socialImage={socialImage}
   lastUpdated={lastUpdated}
@@ -111,6 +126,18 @@ const head = [
   entryId={entry.id}
   wide={entry.data.wide}
   hideTitle={isSplash}
+  meta={{
+    titleSuffix: productMetaTitle,
+    canonical: entry.data.canonical,
+    product: sectionProduct?.data.entry?.title,
+    productGroup: sectionProduct?.data.entry?.group,
+    contentType: entry.data.pcx_content_type,
+    products: additionalProductNames,
+    tags: entry.data.tags ?? undefined,
+    reviewed: entry.data.reviewed,
+    rssHref,
+    externalLink,
+  }}
 >
   <Content components={components} />
 </DocsLayout>

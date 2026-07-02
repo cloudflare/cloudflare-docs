@@ -188,13 +188,15 @@ const { sidebar, breadcrumbs } = await getCfRouteNavigation({
   trail,
 });
 
-const markdownPath = `${basePath}/${slug}.md`;
+const markdownPath = `${basePath}/${slug}/index.md`;
 const markdownUrl = Astro.site
   ? new URL(markdownPath, Astro.site).href
   : markdownPath;
 
-// `<title>` carries displayName + author; the layout appends the site suffix.
+// Match production Starlight: the head title carries displayName + author + AI suffix;
+// the shared Head layer then applies the product-specific suffix.
 const pageTitle = `${displayName} (${authorName})`;
+const headTitle = `${pageTitle} · Cloudflare AI docs`;
 
 const headings: MarkdownHeading[] = [
   hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
@@ -206,14 +208,16 @@ const headings: MarkdownHeading[] = [
 ---
 
 <DocsLayout
-  title={pageTitle}
+  title={displayName}
   description={description}
   sidebar={sidebar}
   headings={headings}
   breadcrumbs={breadcrumbs}
+  head={[{ tag: "title", content: headTitle }]}
   markdownUrl={markdownUrl}
   prevNext={{}}
   collection="docs"
+  meta={{ contentType: "reference" }}
 >
   <Fragment slot="pagination" />
 
