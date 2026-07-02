@@ -30,7 +30,7 @@ Regional Services ensures that all of the following application-layer services (
 - Running Cloudflare Workers scripts.
 - Load Balancing traffic to the best origin servers (or other <GlossaryTooltip term="endpoint">endpoints</GlossaryTooltip>).
 
-Regional Services is a compliance solution, not a performance optimization. Within the configured region, Cloudflare routes requests to the most performant in-region data center — using a scoring system that considers available connections, latency, and load — which is not necessarily the closest one. For geographically large regions, requests may be processed at a data center farther than the closest in-region option.
+Regional Services is a compliance solution, not a performance optimization. Within the configured region, Cloudflare routes requests to the most performant in-region data center — using a scoring system that considers available connections, latency, and load — which is not necessarily the closest one. Refer to [Geographic traffic routing](/support/troubleshooting/general-troubleshooting/geographic-traffic-routing/) for more details. For geographically large regions, requests may be processed at a data center farther than the closest in-region option.
 
 ## Request flow example
 
@@ -125,7 +125,7 @@ Setting up Regional Services follows the same path regardless of which option yo
 
 ## Availability and SLA
 
-For availability and Service Level Agreements (SLAs), refer to your Cloudflare contract. For Regional Services configurations restricted to a single country (except the US), Cloudflare's SLA includes specific exclusions: because traffic cannot fail over to data centers outside that country, there is no automatic failover if in-country capacity is unavailable. Multi-country regions (for example, the European Union) generally maintain the standard SLA.
+For availability and Service Level Agreements (SLAs), refer to your Cloudflare Enterprise contract. For Regional Services configurations restricted to a single country (except the US), Cloudflare's SLA includes specific exclusions: because traffic cannot fail over to data centers outside that country, there is no automatic failover if in-country capacity is unavailable. Multi-country regions (for example, the European Union) generally maintain the standard SLA.
 
 ## Additional information
 
