@@ -76,3 +76,4 @@ export { default as WorkersVPCOverviewDiagram } from "./components/cf/WorkersVPC
 export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelector.astro";
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
 export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
+export  {default as MeshHostnameRoutingDiagram}  from "./components/cf/MeshHostnameRoutingDiagram.astro";
