@@ -25,7 +25,7 @@ Regional Services can be used with Gateway in all [supported regions](/data-loca
 Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
 This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/).
 
-Regional Services controls where user traffic is decrypted and processed. It does not by itself guarantee the geolocation of egress IPs to the origin. For guaranteed egress IP geolocation, use [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) in combination with Regional Services.
+Zero Trust [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) control the IPs used by WARP and Gateway traffic when it leaves Cloudflare toward the Internet. They are different from [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), which control the IPs used by the Cloudflare CDN when connecting to your origin server. For guaranteed egress IP geolocation from the Cloudflare CDN to your origin, refer to the [Cache](/data-localization/how-to/cache/#egress-to-origin) guide.
 
 ### HTTP policies
 
