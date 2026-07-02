@@ -12,7 +12,7 @@ With [Workflows](/workflows/), you can configure built-in retry behavior for eac
 
 Step retries now support dynamic delay functions. Instead of choosing only a base delay and backoff strategy, pass a function to `retries.delay` and calculate the next delay from the failed attempt and thrown error.
 
-This is useful when retries should depend on the failure. Your Workflow may need to wait longer after a rate-limit error, but retry sooner after a short network failure. The delay function can also accomodate provider guidance if, for example, a downstream API returns a `Retry-After` value in its error messaging.
+This is useful when retries should depend on the failure. Your Workflow may need to wait longer after a rate-limit error, but retry sooner after a short network failure. The delay function can also accommodate provider guidance if, for example, a downstream API returns a `Retry-After` value in its error messaging.
 
 <TypeScriptExample>
 

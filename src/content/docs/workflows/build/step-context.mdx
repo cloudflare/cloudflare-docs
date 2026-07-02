@@ -32,7 +32,7 @@ type WorkflowStepContext = {
 | `attempt`    | `number`                                                                 | The current attempt number (1-indexed). `1` on the first try, `2` on the first retry, and so on.                                                |
 | `config`     | [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) | The resolved retry and timeout configuration for this step, including any defaults applied by the runtime.                                      |
 
-If `retries.delay` is a function, the dynamic delay is not exposed on `ctx.config.retries.delay`. The delay function receives its own context object with the current step context and the error that caused the retry.
+If a step config's `retries.delay` is a function, the dynamic delay is not exposed on `ctx.config.retries.delay`. The delay function receives its own context object with the current step context and the error that caused the retry.
 
 ## Access the context
 
