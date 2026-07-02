@@ -103,11 +103,7 @@ const hasPageTitle = Astro.slots.has("page-title");
 const hasContentFooter = Astro.slots.has("content-footer");
 const hasPagination = Astro.slots.has("pagination");
 
-// Feedback widget placement mirrors the Starlight overrides: a copy in the TOC
-// rail on wide screens (the aside is `hidden xl:block`, so the rail copy is
-// naturally xl-only) plus a fallback in the content column for narrow viewports
-// and pages without a TOC. `hasTocAside` reuses the exact aside render
-// condition below so the two copies are mutually exclusive by viewport.
+// Feedback: rail copy on wide screens, content-column fallback otherwise.
 const hasTocAside = headings !== false && (hasToc || headings.length > 0);
 const showFeedback = feedback !== false && !isCustom;
 ---
