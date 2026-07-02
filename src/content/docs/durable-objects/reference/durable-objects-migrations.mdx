@@ -324,27 +324,27 @@ The recommended sequence is four deploys:
     ```
     </WranglerConfig>
 
-	Deploy the source. Cloudflare matches the pending transfer and atomically reassigns the namespace to the target Worker. The reconciliation output reports `Transferred (committed): MyDO → target-worker`.
+    Deploy the source. Cloudflare matches the pending transfer and atomically reassigns the namespace to the target Worker. The reconciliation output reports `Transferred (committed): MyDO → target-worker`.
 
-	If the source Worker still needs to access `MyDO` after the transfer commits, update its `durable_objects.bindings` entry to point at the target Worker with `script_name`:
+    If the source Worker still needs to access `MyDO` after the transfer commits, update its `durable_objects.bindings` entry to point at the target Worker with `script_name`:
 
-	<WranglerConfig>
-	```jsonc title="source Worker"
-	{
-		"durable_objects": {
-			"bindings": [
-				{
-					"name": "MY_DURABLE_OBJECT",
-					"class_name": "MyDO",
-					"script_name": "target-worker"
-				}
-			]
-		}
-	}
-	```
-	</WranglerConfig>
+    <WranglerConfig>
+    ```jsonc title="source Worker"
+    {
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "MY_DURABLE_OBJECT",
+            "class_name": "MyDO",
+            "script_name": "target-worker"
+          }
+        ]
+      }
+    }
+    ```
+    </WranglerConfig>
 
-	If the source Worker no longer needs to access `MyDO`, remove the binding when you remove `MyDO` from the source Worker's code.
+    If the source Worker no longer needs to access `MyDO`, remove the binding when you remove `MyDO` from the source Worker's code.
 
 4. **Target Worker — bind the class.** Once the source's deploy has fully rolled out, redeploy the target with a `durable_objects.bindings` entry for `MyDO`. The binding now resolves to the namespace on the target Worker.
 
@@ -501,25 +501,36 @@ The following table lists the allowed and forbidden fields for each `state`:
 
 When a deploy fails reconciliation, Cloudflare returns one error per class along with a structured `scenario` tag, a human-readable message, and where applicable a `suggestion` and `referencing_scripts` list:
 
-| Scenario                                          | Meaning                                                                                  | How to fix                                                                                                                                   |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `provisioned_class_missing_from_config`           | A namespace exists for a class but `exports` has no entry for it.                        | Add a live entry (`state: "created"`) to keep the namespace, or add a tombstone (`deleted`, `renamed`, or `transferred`) to retire it.       |
-| `config_export_not_in_code`                       | A live entry declares a class that the Worker code does not export.                      | Add the class to your code, or replace the entry with a tombstone.                                                                           |
-| `config_references_nonexistent_class`             | A live entry declares a class that is neither in code nor provisioned.                   | Remove the entry, or add the class to your Worker code.                                                                                      |
-| `orphaned_provisioned_namespace`                  | A namespace exists for a class that is neither in code nor declared.                     | Add a tombstone for the class, or add the class back to code and `exports`.                                                                  |
-| `tombstone_delete_class_still_in_code`            | A `deleted` tombstone names a class that is still exported in code.                      | Remove the class from your code first, then deploy the tombstone.                                                                            |
-| `tombstone_delete_blocked_by_external_bindings`   | Another Worker in the account binds to the namespace being deleted.                      | Redeploy the referencing Workers without the binding, then re-run your deploy.                                                               |
-| `tombstone_renamed_to_occupied`                   | A `renamed_to` target collides with an existing namespace under that name.               | Delete the colliding namespace via its own `deleted` tombstone in a prior deploy.                                                            |
-| `tombstone_pending_transfer_not_found`            | A `transferred` tombstone has no matching `expecting-transfer` entry on the target.      | Deploy the target Worker first with an `expecting-transfer` entry naming this Worker.                                                        |
-| `tombstone_transfer_target_missing`               | The target Worker named by `transferred_to` no longer exists.                            | Update `transferred_to` to a valid target, or remove the tombstone.                                                                          |
-| `phase_one_transfer_after_commit_mismatch`        | The target's namespace was transferred from a different source than the one declared.    | Remove the `expecting-transfer` entry — the transfer cannot be redirected after commit.                                                      |
-| `phase_one_transfer_target_class_provisioned`     | The target Worker already owns a namespace for the class.                                | Replace the `expecting-transfer` entry with a normal live entry, or delete the existing namespace first.                                     |
-| `phase_one_transfer_duplicate`                    | Another `expecting-transfer` hint is already in flight for the same class.               | Cancel the existing pending transfer first by removing or replacing its entry.                                                               |
-| `phase_one_transfer_source_missing`               | The source Worker named by `transfer_from` does not exist in the account.                | Correct the source Worker name.                                                                                                              |
-| `phase_one_transfer_namespace_missing`            | The source Worker has no namespace for the class.                                        | Make sure the source Worker has the class deployed before the target declares `expecting-transfer`.                                          |
-| `phase_one_transfer_source_in_dispatch_namespace` | The source Worker is in a dispatch namespace; cross-dispatch transfer is not supported.  | Move the transfer within a single dispatch-namespace context.                                                                                |
-| `phase_one_transfer_target_in_dispatch_namespace` | The target Worker is in a dispatch namespace; cross-dispatch transfer is not supported.  | Move the transfer within a single dispatch-namespace context.                                                                                |
-| `storage_type_mismatch`                           | The declared `storage` value does not match the provisioned namespace's storage backend. | Storage backends cannot be changed in place. Delete the namespace and re-provision it under the new backend if you genuinely need to switch. |
+| Scenario                                          | Meaning                                                                                                                                                            | How to fix                                                                                                                                   |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `provisioned_class_missing_from_config`           | A namespace exists for a class but `exports` has no entry for it.                                                                                                  | Add a live entry (`state: "created"`) to keep the namespace, or add a tombstone (`deleted`, `renamed`, or `transferred`) to retire it.       |
+| `config_export_not_in_code`                       | A live entry declares a class that the Worker code does not export.                                                                                                | Add the class to your code, or replace the entry with a tombstone.                                                                           |
+| `config_references_nonexistent_class`             | A live entry declares a class that is neither in code nor provisioned.                                                                                             | Remove the entry, or add the class to your Worker code.                                                                                      |
+| `orphaned_provisioned_namespace`                  | A namespace exists for a class that is neither in code nor declared.                                                                                               | Add a tombstone for the class, or add the class back to code and `exports`.                                                                  |
+| `invalid_export`                                  | An `exports` entry is structurally invalid — for example, requesting `legacy-kv` for a new namespace, or a class that maps to more than one provisioned namespace. | Correct the entry: use `"storage": "sqlite"` for new namespaces, or resolve the duplicate with a `deleted` or `renamed` tombstone.           |
+| `tombstone_delete_class_still_in_code`            | A `deleted` tombstone names a class that is still exported in code.                                                                                                | Remove the class from your code first, then deploy the tombstone.                                                                            |
+| `tombstone_delete_blocked_by_external_bindings`   | Another Worker in the account binds to the namespace being deleted.                                                                                                | Redeploy the referencing Workers without the binding, then re-run your deploy.                                                               |
+| `tombstone_renamed_to_occupied`                   | A `renamed_to` target collides with an existing namespace under that name.                                                                                         | Delete the colliding namespace via its own `deleted` tombstone in a prior deploy.                                                            |
+| `transferred_pending_not_found`                   | A `transferred` tombstone has no matching `expecting-transfer` entry on the target.                                                                                | Deploy the target Worker first with an `expecting-transfer` entry naming this Worker.                                                        |
+| `transferred_target_missing`                      | The target Worker named by `transferred_to` no longer exists.                                                                                                      | Update `transferred_to` to a valid target, or remove the tombstone.                                                                          |
+| `transferred_target_mismatch`                     | The `transferred_to` value does not match the target recorded by the pending transfer.                                                                             | Set `transferred_to` to the pending transfer's target, or have the target cancel its `expecting-transfer` entry before redirecting.          |
+| `transferred_source_in_dispatch_namespace`        | The source Worker declaring the `transferred` tombstone is in a dispatch namespace; cross-dispatch transfer is not supported.                                      | Perform the transfer within a single dispatch-namespace context.                                                                             |
+| `transferred_target_in_dispatch_namespace`        | The target of a `transferred` tombstone is in a dispatch namespace; cross-dispatch transfer is not supported.                                                      | Cancel the pending transfer by having the target redeploy without `expecting-transfer`, or keep both Workers in the same context.            |
+| `phase_one_transfer_after_commit_mismatch`        | The target's namespace was transferred from a different source than the one declared.                                                                              | Remove the `expecting-transfer` entry — the transfer cannot be redirected after commit.                                                      |
+| `phase_one_transfer_target_class_provisioned`     | The target Worker already owns a namespace for the class.                                                                                                          | Replace the `expecting-transfer` entry with a normal live entry, or delete the existing namespace first.                                     |
+| `phase_one_transfer_duplicate`                    | Another `expecting-transfer` hint is already in flight for the same class.                                                                                         | Cancel the existing pending transfer first by removing or replacing its entry.                                                               |
+| `phase_one_transfer_source_missing`               | The source Worker named by `transfer_from` does not exist in the account.                                                                                          | Correct the source Worker name.                                                                                                              |
+| `phase_one_transfer_source_namespace_missing`     | The source Worker has no namespace for the class.                                                                                                                  | Make sure the source Worker has the class deployed before the target declares `expecting-transfer`.                                          |
+| `phase_one_transfer_source_in_dispatch_namespace` | The source Worker is in a dispatch namespace; cross-dispatch transfer is not supported.                                                                            | Move the transfer within a single dispatch-namespace context.                                                                                |
+| `phase_one_transfer_target_in_dispatch_namespace` | The target Worker is in a dispatch namespace; cross-dispatch transfer is not supported.                                                                            | Move the transfer within a single dispatch-namespace context.                                                                                |
+| `storage_type_mismatch`                           | The declared `storage` value does not match the provisioned namespace's storage backend.                                                                           | Storage backends cannot be changed in place. Delete the namespace and re-provision it under the new backend if you genuinely need to switch. |
+| `free_tier_requires_sqlite`                       | The account's plan only supports SQLite-backed namespaces, but the entry requests `legacy-kv`.                                                                     | Use `"storage": "sqlite"`.                                                                                                                   |
+
+:::note
+
+The blocking error `tombstone_delete_class_still_in_code` (specific to `deleted` tombstones) is distinct from the non-blocking `tombstone_class_still_in_code` info notice emitted for `renamed` and `transferred` tombstones. The latter is the expected zero-downtime rollout pattern — refer to [Reading the reconciliation output](#reading-the-reconciliation-output).
+
+:::
 
 ## Constraints and limitations
 
