@@ -8,7 +8,7 @@ products:
 
 Cloudflare IPsec now supports the `IKE_SA_INIT_FULL_TRANSCRIPT_AUTH` IKEv2 extension to protect against quantum downgrade attacks on IPsec tunnels. Cloudflare helped develop this extension in ([draft-ietf-ipsecme-ikev2-downgrade-prevention](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/)) with the IETF IPSECME Working Group.
 
-IKEv2's original authentication design has each endpoint sign only its own outbound messages, not the full handshake transcript. A quantum-capable man-in-the-middle attacker can exploit this to bypass post-quantum key exchange by downgrading the connection to classical cryptography. The `IKE_SA_INIT_FULL_TRANSCRIPT_AUTH` extension addresses this by having both peers sign the entire handshake transcript during the authentication exchange, preventing an attacker from manipulating the negotiation without detection.
+IKEv2's original authentication design has each endpoint sign only its own outbound messages, not the full handshake transcript. A quantum-capable [on-path attacker](https://www.cloudflare.com/learning/security/threats/on-path-attack/) can exploit this to bypass post-quantum key exchange by downgrading the connection to classical cryptography. The `IKE_SA_INIT_FULL_TRANSCRIPT_AUTH` extension addresses this by having both peers sign the entire handshake transcript during the authentication exchange, preventing an attacker from manipulating the negotiation without detection.
 
 Key details:
 
