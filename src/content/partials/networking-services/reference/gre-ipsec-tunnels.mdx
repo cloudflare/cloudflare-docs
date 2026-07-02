@@ -264,7 +264,7 @@ If route-based VPNs are not an option and you must use policy-based VPNs, be awa
 This feature is in beta. Contact your account team to enable the `ipsec_downgrade_protection` flag on your account.
 :::
 
-IKEv2's original authentication design has each endpoint sign only its own outbound messages, not the full handshake transcript. A quantum-capable man-in-the-middle attacker can exploit this to create a "split view" of the handshake, tricking the endpoints into downgrading a post-quantum connection back to classical cryptography even when both sides support post-quantum key exchange. 
+IKEv2's original authentication design has each endpoint sign only its own outbound messages, not the full handshake transcript. A quantum-capable [on-path attacker](https://www.cloudflare.com/learning/security/threats/on-path-attack/) can exploit this to create a "split view" of the handshake, tricking the endpoints into downgrading a post-quantum connection back to classical cryptography even when both sides support post-quantum key exchange. 
 
 To address this, Cloudflare supports the [`IKE_SA_INIT_FULL_TRANSCRIPT_AUTH`](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/) IKEv2 extension. When enabled, both IKEv2 peers sign the entire handshake transcript during the authentication exchange, rather than only their own messages. This prevents an attacker from downgrading the connection without being detected. 
 
