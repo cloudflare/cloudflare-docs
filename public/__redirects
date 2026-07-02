@@ -38,33 +38,47 @@
 /cloudflare-one/traffic-policies/http-policies/file-sandboxing/ /cloudflare-one/traffic-policies/policy-types/http-policies/file-sandboxing/ 301
 /cloudflare-one/traffic-policies/http-policies/granular-controls/ /cloudflare-one/traffic-policies/policy-types/http-policies/granular-controls/ 301
 /cloudflare-one/traffic-policies/http-policies/tenant-control/ /cloudflare-one/traffic-policies/policy-types/http-policies/tenant-control/ 301
-/cloudflare-one/traffic-policies/packet-filtering/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ 301
-/cloudflare-one/traffic-policies/packet-filtering/add-policies/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/add-policies/ 301
-/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/create-rate-limiting-policies/ 301
-/cloudflare-one/traffic-policies/packet-filtering/enable-managed-rulesets/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/enable-managed-rulesets/ 301
-/cloudflare-one/traffic-policies/packet-filtering/form-expressions/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/form-expressions/ 301
-/cloudflare-one/traffic-policies/packet-filtering/ruleset-logic/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ruleset-logic/ 301
-/cloudflare-one/traffic-policies/packet-filtering/best-practices/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/ 301
-/cloudflare-one/traffic-policies/packet-filtering/best-practices/extended-ruleset/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/extended-ruleset/ 301
-/cloudflare-one/traffic-policies/packet-filtering/best-practices/magic-transit-egress/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/magic-transit-egress/ 301
-/cloudflare-one/traffic-policies/packet-filtering/best-practices/minimal-ruleset/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/minimal-ruleset/ 301
+/cloudflare-one/traffic-policies/packet-filtering/ /cloudflare-network-firewall/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-policies/ /cloudflare-network-firewall/how-to/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ /cloudflare-network-firewall/how-to/create-rate-limiting-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/enable-managed-rulesets/ /cloudflare-network-firewall/how-to/enable-managed-rulesets/ 301
+/cloudflare-one/traffic-policies/packet-filtering/form-expressions/ /cloudflare-network-firewall/how-to/form-expressions/ 301
+/cloudflare-one/traffic-policies/packet-filtering/ruleset-logic/ /cloudflare-network-firewall/about/ruleset-logic/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/ /cloudflare-network-firewall/best-practices/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/extended-ruleset/ /cloudflare-network-firewall/best-practices/extended-ruleset/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/magic-transit-egress/ /cloudflare-network-firewall/best-practices/magic-transit-egress/ 301
+/cloudflare-one/traffic-policies/packet-filtering/best-practices/minimal-ruleset/ /cloudflare-network-firewall/best-practices/minimal-ruleset/ 301
 /cloudflare-one/traffic-policies/egress-policies/ /cloudflare-one/traffic-policies/policy-types/egress-policies/ 301
 /cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/ /cloudflare-one/traffic-policies/policy-types/egress-policies/dedicated-egress-ips/ 301
 /cloudflare-one/traffic-policies/egress-policies/egress-cloudflared/ /cloudflare-one/traffic-policies/policy-types/egress-policies/egress-cloudflared/ 301
 /cloudflare-one/traffic-policies/egress-policies/host-selectors/ /cloudflare-one/traffic-policies/policy-types/egress-policies/host-selectors/ 301
 /cloudflare-one/traffic-policies/resolver-policies/ /cloudflare-one/traffic-policies/policy-types/resolver-policies/ 301
 
-# Moved enable-ids to packet-filtering/ids
-/cloudflare-one/traffic-policies/enable-ids/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ids/ 301
+# Moved Network Firewall packet filtering docs out of Cloudflare One traffic policies
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/ /cloudflare-network-firewall/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/add-policies/ /cloudflare-network-firewall/how-to/add-policies/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/create-rate-limiting-policies/ /cloudflare-network-firewall/how-to/create-rate-limiting-policies/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/enable-managed-rulesets/ /cloudflare-network-firewall/how-to/enable-managed-rulesets/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/form-expressions/ /cloudflare-network-firewall/how-to/form-expressions/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/ids/ /cloudflare-network-firewall/how-to/enable-ids/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/ruleset-logic/ /cloudflare-network-firewall/about/ruleset-logic/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/ /cloudflare-network-firewall/best-practices/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/extended-ruleset/ /cloudflare-network-firewall/best-practices/extended-ruleset/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/magic-transit-egress/ /cloudflare-network-firewall/best-practices/magic-transit-egress/ 301
+/cloudflare-one/traffic-policies/policy-types/packet-filtering/best-practices/minimal-ruleset/ /cloudflare-network-firewall/best-practices/minimal-ruleset/ 301
+/cloudflare-one/traffic-policies/enable-ids/ /cloudflare-network-firewall/how-to/enable-ids/ 301
 
 # Deleted/merged pages (redirected to target)
 /cloudflare-one/traffic-policies/troubleshoot-gateway/ /cloudflare-one/traffic-policies/troubleshooting/ 301
-/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ 301
-/cloudflare-one/traffic-policies/packet-filtering/traffic-types/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/form-expressions/ 301
-/cloudflare-one/traffic-policies/packet-filtering/protocol-validation-rules/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/form-expressions/ 301
+/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ /cloudflare-network-firewall/ 301
+/cloudflare-one/traffic-policies/packet-filtering/traffic-types/ /cloudflare-network-firewall/how-to/form-expressions/ 301
+/cloudflare-one/traffic-policies/packet-filtering/protocol-validation-rules/ /cloudflare-network-firewall/how-to/form-expressions/ 301
 
 # Legacy IDS link (also check if people linked to /ids/ at top level)
-/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/policy-types/packet-filtering/ids/ 301
+/cloudflare-one/traffic-policies/ids/ /cloudflare-network-firewall/how-to/enable-ids/ 301
+/cloudflare-one/reusable-components/packet-filtering-fields/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
+/cloudflare-one/reusable-components/use-rules-list/ /cloudflare-network-firewall/how-to/use-rules-list/ 301
+/cloudflare-network-firewall/about/protocol-validation-rules/ /cloudflare-network-firewall/how-to/form-expressions/ 301
 
 # Sandbox (claude-managed-agents moved to tutorials)
 /sandbox/claude-managed-agents/ /sandbox/tutorials/claude-managed-agents/ 301
@@ -1430,7 +1444,7 @@
 # CF1 MSP page moved under tiered-policies
 /cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-policies/tiered-policies/tenant-api/ 301
 # CF1 packet filtering overview rename
-/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
+/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-network-firewall/ 301
 # cross-product magic-firewall slug renames
 /learning-paths/data-center-protection/enable-magic-firewall/ /learning-paths/data-center-protection/enable-network-firewall/ 301
 /analytics/graphql-api/tutorials/querying-magic-firewall-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-samples/ 301
@@ -2738,8 +2752,8 @@
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
-/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-one/traffic-policies/packet-filtering/add-policies/ 301
-/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-network-firewall/how-to/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-network-firewall/how-to/create-rate-limiting-policies/ 301
 /cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/team-and-resources/devices/agentless/dns/locations/ 301
 /cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
@@ -2783,8 +2797,6 @@
 /cloudflare-one/identity/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
-/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
-
 # Catch-all redirects (must come last)
 /cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
 

@@ -1,7 +1,7 @@
 ---
 title: Form expressions
 pcx_content_type: concept
-description: Write expressions for Network Firewall rules.
+description: Learn about expression syntax and traffic types for Cloudflare Network Firewall.
 products:
   - cloudflare-network-firewall
 sidebar:
@@ -13,15 +13,15 @@ head:
 
 import { GlossaryTooltip } from "~/components";
 
-Rules are written as using the Cloudflare Rules language - a domain-specific language (DSL) intended to mimic Wireshark semantics. For more information, refer to the [Rules language](/ruleset-engine/rules-language/) documentation.
+Rules are written using the Cloudflare Rules language - a domain-specific language (DSL) intended to mimic Wireshark semantics. For more information, refer to the [Rules language](/ruleset-engine/rules-language/) documentation.
 
-To start with a simple case, review below how you would match a source IP:
+To start with a simple case, review below how you would match a source IP. In this expression, `ip.src` refers to the source IP address of the incoming packet, and `==` means "equals":
 
 ```txt
 ip.src == 192.0.2.0
 ```
 
-Expressions can be more complex by joining multiple clauses via a logical operator:
+Expressions can be more complex by joining multiple clauses via a logical operator (`&&` means AND, `||` means OR). The following expression matches packets from `192.0.2.1` that also have the TCP push or reset flag set:
 
 ```txt
 ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)
@@ -31,9 +31,29 @@ ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)
 
 You can use Cloudflare Network Firewall (formerly Magic Firewall) to skip or block <GlossaryTooltip term="data packet">packets</GlossaryTooltip> based on source or destination IP, source or destination port, protocol, packet length, or <GlossaryTooltip term="bit field matching">bit field match</GlossaryTooltip>.
 
+Cloudflare Network Firewall enables you to allow or block traffic on a variety of packet characteristics, including:
+
+- **Source and destination IP** - the sender's and receiver's IP addresses
+- **Source and destination port** - the numeric port identifying the specific service, such as port `80` for HTTP
+- **Protocol** - the communication method, such as TCP or UDP
+- **Packet length** - the size of the packet in bytes
+- **<GlossaryTooltip term="bit field matching">Bit field match</GlossaryTooltip>** - inspect individual flags within packet headers
+
+Cloudflare Network Firewall operates at OSI layers 3 and 4: the network layer for IP addressing and routing, and the transport layer for port-based connections. It supports protocols such as TCP, UDP, and ICMP. You can write rules against any layer 3 or 4 protocol, not only TCP and UDP.
+
+To see the full list of fields you can use when writing filter expressions, refer to [Cloudflare Network Firewall fields](/cloudflare-network-firewall/reference/network-firewall-fields/).
+
+## Protocol validation
+
+Cloudflare Network Firewall can validate [Session Initiation Protocol (SIP)](https://datatracker.ietf.org/doc/html/rfc2543) traffic. This lets you inspect whether SIP packets are properly formatted and enforce a positive security model.
+
+You can use the `sip` field when creating a rule to check whether packets contain valid SIP data, a Layer 7 protocol. The `sip` field evaluates to `true` for well-formed SIP packets. Refer to [Cloudflare Network Firewall fields](/cloudflare-network-firewall/reference/network-firewall-fields/), specifically the `sip` field, for more information.
+
+Currently, SIP is the only protocol supported for deep validation. Contact your account manager if you need Cloudflare Network Firewall to support additional protocols.
+
 ## Restrictions
 
-Wirefilter comparisons support CIDR notation, but only inside sets. For example:
+The expression engine supports CIDR notation, but only inside curly-brace sets. A bare comparison will not work as expected:
 
 ```txt
 ip.src == 192.0.2.0/24  # bad
@@ -46,4 +66,4 @@ Expressions have a complexity limit that is easily reached when many joined or n
 (tcp.dstport == 1000 || tcp.dstport == 1001) && (tcp.dstport == 1002 || tcp.dstport == 1003) && (tcp.dstport == 1004 || tcp.dstport == 1005) && (tcp.dstport == 1006 || tcp.dstport == 1007) && (tcp.dstport == 1008 || tcp.dstport == 1009) && (tcp.dstport == 1010 || tcp.dstport == 1011) && (tcp.dstport == 1012 || tcp.dstport == 1013) && (tcp.dstport == 1014 || tcp.dstport == 1015) && (tcp.dstport == 1016 || tcp.dstport == 1017)
 ```
 
-If the limit is reached, the response will have a `400` status code and an error message of `ruleset exceeds complexity constraints`. Split the expression into multiple rules and try again.
+If the limit is reached, the response will have a `400` status code and an error message of `ruleset exceeds complexity constraints`. Split the expression across multiple rules and try again. Each rule can handle a subset of the conditions, and the firewall evaluates them in order.

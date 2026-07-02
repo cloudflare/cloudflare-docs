@@ -6,8 +6,6 @@ products:
   - cloudflare-network-firewall
 ---
 
-import { DashButton } from "~/components";
-
 With [managed rulesets](/ruleset-engine/managed-rulesets/), you can quickly deploy rules maintained by Cloudflare, and you can use Cloudflare Network Firewall (formerly Magic Firewall) to control which rules are enabled.
 
 :::note[Note:]
@@ -17,6 +15,8 @@ Before you can begin using managed rulesets with Cloudflare Network Firewall, yo
 :::
 
 To enable or disable a rule, you can specify which properties should be overridden. The overrides occur in the Managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset, but a single rule can contain multiple overrides.
+
+Cloudflare recommends starting with the `action` set to `log` to evaluate impact before switching to block.
 
 You have multiple options for enabling rules:
 
@@ -30,7 +30,7 @@ You have multiple options for enabling rules:
 
 To create a managed ruleset, you must first build a request with the following:
 
-- `managed_ruleset_id`: The ID of the Managed phase Managed kind ruleset that contains the rule you want to enable.
+- `managed_ruleset_id`: The ID of the Managed phase Managed kind ruleset that contains the rule you want to enable. To find this ID, list available managed rulesets using `GET /accounts/{account_id}/rulesets?kind=managed&phase=magic_transit_managed`.
 - `managed_rule_id`: The ID of the rule you want to enable.
 
 Additionally, you need the properties you want to override. The properties you can override include:
@@ -76,7 +76,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets
 
 ### 2. Patch a Managed phase Managed kind ruleset
 
-To ensure a root kind ruleset only contains one rule, patch the rule to enable new managed rules.
+Because the root ruleset can only contain one rule, you must PATCH that existing rule rather than adding new rules when you want to enable additional managed rules.
 
 Building off the example from the previous step, the example below enables a category to select multiple rules instead of a single rule. The category will be set to `log` mode, which means the rule can produce logs but will not accept or drop packets.
 
@@ -116,7 +116,7 @@ To enable the complete ruleset or enable all rules, send the request below.
 
 ```bash title="Example request to enable all rules"
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{

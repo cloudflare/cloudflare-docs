@@ -52,14 +52,6 @@ Unlike hardware firewalls that sit at a single network perimeter, Gateway enforc
 
 Gateway supports several policy types because network traffic can be inspected at different layers — from raw packets up to full HTTP requests. Each policy type gives you control at a specific layer:
 
-<Details header="Packet filtering">
-
-**[Packet filtering](/cloudflare-one/traffic-policies/policy-types/packet-filtering/)** inspects raw network packets and blocks traffic based on properties like source IP address or protocol. It does not need to know who the user is or what session they belong to.
-
-Use packet filtering to drop unwanted traffic before it reaches any other policy.
-
-</Details>
-
 <Details header="DNS policies">
 
 **[DNS policies](/cloudflare-one/traffic-policies/policy-types/dns-policies/)** check every DNS query your users make. When a query matches a policy rule, Gateway can block the domain from resolving — the site never loads because the domain name is never translated to an IP address.
@@ -149,7 +141,6 @@ The following table maps common traffic-filtering goals to the best Cloudflare G
 | Block non-HTTP traffic (SSH, RDP)      | Network          | Inspects TCP/UDP packets on any port                                   |
 | Block malware and threats              | DNS _and_ HTTP   | DNS blocks known-bad domains. HTTP catches threats in allowed traffic. |
 | Assign static egress IPs               | Egress           | Lets third-party services identify your organization                   |
-| Drop traffic before other policies run | Packet filtering | Blocks by packet attributes without user context                       |
 | Route DNS to custom nameservers        | Resolver         | Overrides the default Cloudflare resolver                              |
 
 After you choose a Cloudflare Gateway policy type, continue with the matching setup guide to create the policy that fits your traffic-filtering goal.
@@ -202,4 +193,3 @@ For details on how Gateway proxies traffic and establishes connections, refer to
 ## Troubleshoot Cloudflare Gateway policies
 
 For help resolving common issues with Cloudflare Gateway policies, refer to [Troubleshooting](/cloudflare-one/traffic-policies/troubleshooting/).
-
