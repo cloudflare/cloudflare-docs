@@ -136,6 +136,8 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 ## `auth`
 
+Manage authentication, including named [authentication profiles](/workers/wrangler/profiles/) for working across multiple accounts.
+
 ### `auth token`
 
 Retrieve your current authentication token or credentials for use with other tools and scripts.
@@ -169,6 +171,16 @@ When using `--json`, the output includes the token type:
 An error is returned if no authentication method is available, or if API key/email is configured without `--json`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
+
+<WranglerCommand command="auth create" headingLevel={3} />
+
+<WranglerCommand command="auth activate" headingLevel={3} />
+
+<WranglerCommand command="auth deactivate" headingLevel={3} />
+
+<WranglerCommand command="auth list" headingLevel={3} />
+
+<WranglerCommand command="auth delete" headingLevel={3} />
 
 ---
 
