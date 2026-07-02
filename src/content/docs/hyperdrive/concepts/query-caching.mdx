@@ -92,14 +92,23 @@ Only functions designated as `IMMUTABLE` by PostgreSQL (functions whose return v
 :::caution[Do not use SQL comments as cache controls]
 Hyperdrive uses text-based pattern matching to detect some uncacheable functions in your queries. This can include function names inside SQL comments.
 
-Do not rely on comments such as `-- NOW()` or `-- RAND()` to bypass query caching. Hyperdrive does not document SQL comments as a cache-control API, and parser behavior can differ between database engines. Use a cache-disabled Hyperdrive configuration when you need a guaranteed fresh read.
+Comments that contain volatile or uncacheable function names, such as `-- NOW()` or `-- RANDOM()`, can cause the query to be treated as uncacheable. However, comment text that does not contain uncacheable function names does not change the cache key.
+
+For example:
+
+A: `/* some text here */ SELECT * FROM some_table;`
+B: `/* some different text here */ SELECT * FROM some_table;`
+
+Both A and B share the same cached value. If A is run before B, B will receive the value cached by A.
+
+Hyperdrive does not document SQL comments as a cache-control API, and parser behavior can differ between database engines. Use a cache-disabled Hyperdrive configuration when you need a guaranteed fresh read.
 
 Avoid referencing uncacheable function names anywhere in query text, including comments.
 :::
 
 ## Default cache settings
 
-The default caching behavior for Hyperdrive is defined as below:
+The default caching behavior for Hyperdrive is:
 
 - `max_age` = 60 seconds (1 minute)
 - `stale_while_revalidate` = 15 seconds
