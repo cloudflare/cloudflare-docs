@@ -12,13 +12,9 @@ import { PackageManagers, TypeScriptExample } from "~/components";
 
 The Sandbox SDK `1.0` preview contains the replacement APIs for upcoming breaking changes. It is published on the `@cloudflare/sandbox@next` npm tag and is aiming to ship as `1.0.0` on July 31, 2026. Existing projects should migrate as soon as possible. New projects should install `@cloudflare/sandbox@next` today.
 
-The current release now marks the legacy APIs as deprecated. The `1.0` preview removes or replaces those APIs so you can test the migration before the `1.0.0` release.
+The current release marks the legacy APIs as deprecated. The `1.0` preview removes or replaces those APIs so you can test the migration before the `1.0.0` release.
 
 For the announcement and rationale, refer to the [Sandbox SDK deprecations changelog](/changelog/post/2026-06-09-deprecating-sandbox-sdk-features/).
-
-:::note[Interfaces in progress]
-The `1.0` preview APIs are still stabilizing. This guide includes the migration path and the expected public interface patterns. Some interface details will be updated as the final TypeScript interfaces land.
-:::
 
 ## Install the 1.0 preview
 
@@ -34,7 +30,29 @@ After installing the `1.0` preview, verify the migration in a development enviro
 2. Deploy the Worker and container image together.
 3. Create or retrieve a sandbox instance.
 4. Run one top-level `exec()` call.
-5. Test each plugin or extension your application depends on.
+5. Test each extension your application depends on.
+
+## Migration plan
+
+Use this plan to audit an existing project:
+
+1. Compare your code against the removed APIs listed in this guide.
+2. For each match, identify the user-facing behavior it depends on.
+3. Decide whether the replacement changes application behavior.
+4. Update the code and test that behavior against `@cloudflare/sandbox@next`.
+
+The main migration entries are:
+
+| Area                    | User-facing change                                              | Migration action                                                 |
+| ----------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Transports              | HTTP and WebSocket transport selection is removed.              | Remove transport settings. No replacement setting is required.   |
+| Command execution       | `exec()` returns a process handle instead of a buffered result. | Use `sandbox.exec(command).output()` or `sandbox.run(command)`.  |
+| Streaming and processes | `execStream()` and `startProcess()` are removed.                | Use `sandbox.exec()` streams, process IDs, and process helpers.  |
+| Sessions                | Hidden default sessions are removed.                            | Create explicit sessions or pass `sessionId`.                    |
+| Code Interpreter        | Interpreter methods move to `@cloudflare/sandbox/interpreter`.  | Attach `withInterpreter(this)` to your Sandbox subclass.         |
+| Terminals               | Terminals are explicit resources.                               | Use `sandbox.terminal(options).connect(request, options)`.       |
+| Git                     | Git remains on the core Sandbox API in the current preview.     | Keep `sandbox.gitCheckout()` unless a future preview changes it. |
+| Extensions              | Optional capabilities can use the extension framework.          | Use `@cloudflare/sandbox/extensions` for SDK extensions.         |
 
 ## Migrate deprecated features
 
@@ -42,15 +60,16 @@ This section covers each legacy API surface and the migration path for the `1.0`
 
 ### HTTP and WebSocket transports
 
-The `1.0` preview removes HTTP and WebSocket transports. RPC is the supported transport path.
+The `1.0` preview removes HTTP and WebSocket transport selection. The SDK now uses one RPC control channel internally.
 
-Before installing the `1.0` preview, move your current project to RPC and test it. Set the transport variable in your Worker configuration:
+Remove these transport controls from your Worker code and configuration:
 
-```txt
-SANDBOX_TRANSPORT=rpc
-```
+- `SANDBOX_TRANSPORT`
+- `SandboxTransport`
+- The `transport` option on `getSandbox()`
+- `sandbox.setTransport()`
 
-If your code passes a transport option to `getSandbox()`, remove values that force HTTP or WebSocket:
+If your code passes a transport option to `getSandbox()`, remove it:
 
 <TypeScriptExample>
 ```ts
@@ -64,49 +83,113 @@ const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 ```
 </TypeScriptExample>
 
-After installing the `1.0` preview, remove obsolete transport toggles from Worker configuration unless the `1.0` API keeps an explicit RPC setting. For more information on current transport behavior, refer to [Transport modes](/sandbox/configuration/transport/).
+No replacement configuration is required.
 
 ### Execution API consolidation
 
-The `1.0` preview consolidates `exec()`, `execStream()`, and `startProcess()` into a single `exec()` API. The new API aligns with the Containers `container.exec()` model: a command starts a process, and the returned process object exposes output, streams, exit status, and process control.
+The `1.0` preview unifies command execution around `sandbox.exec()`. The new `exec()` starts a process and returns a `SandboxProcessPromise`. The returned value is a thenable process handle with output, streams, exit status, standard input, process control, and re-attach support.
 
-:::note[Final Sandbox signature pending]
-The final Sandbox SDK `exec()` TypeScript signature is still being finalized. Use this section for the migration model, but verify the exact method signature against the `1.0` preview release before updating production code.
-:::
-
-Use the following migration map:
-
-| Current API                     | 1.0 preview API                          | Notes                                                                            |
-| ------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------- |
-| `sandbox.exec(command)`         | `sandbox.exec(...)`                       | Use for one-shot commands. The returned process exposes output and exit status.  |
-| `sandbox.execStream(command)`   | `sandbox.exec(...)` with streamed output  | Use the process stream APIs instead of a separate streaming method.              |
-| `sandbox.startProcess(command)` | `sandbox.exec(...)` process handle        | Use for long-running processes and process control.                              |
-
-The expected process model mirrors Containers:
+Existing buffered command code should migrate from `await sandbox.exec(command)` to `await sandbox.exec(command).output()`:
 
 <TypeScriptExample>
 ```ts
-const process = await sandbox.exec(["node", "--version"]);
+// Before
+const result = await sandbox.exec("npm test");
+
+console.log(result.stdout);
+console.log(result.stderr);
+console.log(result.exitCode);
+
+// After
+const result = await sandbox.exec("npm test").output();
+
+console.log(result.stdout);
+console.log(result.stderr);
+console.log(result.exitCode);
+```
+</TypeScriptExample>
+
+Use `sandbox.run()` when you need the previous buffered, session-shell behavior:
+
+<TypeScriptExample>
+```ts
+const result = await sandbox.run("cd /workspace/app && npm test");
+```
+</TypeScriptExample>
+
+Use the following migration map:
+
+| Current API                     | 1.0 preview API                        | Notes                                                              |
+| ------------------------------- | -------------------------------------- | ------------------------------------------------------------------ |
+| `await sandbox.exec(command)`   | `await sandbox.exec(command).output()` | Use for buffered output.                                           |
+| `await sandbox.exec(command)`   | `await sandbox.run(command)`           | Use when you need the previous persistent-shell buffered behavior. |
+| `sandbox.execStream(command)`   | `sandbox.exec(command)`                | Read from `process.stdout` and `process.stderr`.                   |
+| `sandbox.startProcess(command)` | `sandbox.exec(command, { processId })` | Use for long-running processes and re-attach support.              |
+
+The process handle provides convenience helpers:
+
+<TypeScriptExample>
+```ts
+const process = await sandbox.exec("node --version");
+
 const output = await process.output();
-const decoder = new TextDecoder();
+const stdout = await process.text();
+const json = await sandbox.exec("cat package.json").json<{ name: string }>();
 
 return {
+	pid: process.pid,
 	exitCode: output.exitCode,
-	stdout: decoder.decode(output.stdout),
-	stderr: decoder.decode(output.stderr),
+	stdout,
+	packageName: json.name,
 };
 ```
 </TypeScriptExample>
 
-Commands are started as an executable with arguments. Invoke a shell explicitly when you need pipes, redirects, or variable expansion:
+You can also call helpers directly on the returned promise:
 
 <TypeScriptExample>
 ```ts
-await sandbox.exec(["sh", "-lc", "cd /workspace/app && npm test"]);
+const output = await sandbox.exec("npm test").output();
+const text = await sandbox.exec("node --version").text();
 ```
 </TypeScriptExample>
 
-Final examples for streaming output, standard input, signals, and long-running process lifecycle will be added after the Sandbox `exec()` interface lands.
+Pass either a shell command string or an argument array:
+
+<TypeScriptExample>
+```ts
+await sandbox.exec("cd /workspace/app && npm test").output();
+await sandbox.exec(["node", "--version"]).output();
+```
+</TypeScriptExample>
+
+Use `stdin`, `stdout`, and `stderr` options for streaming and interactive workflows:
+
+<TypeScriptExample>
+```ts
+const process = await sandbox.exec("python /workspace/script.py", {
+	stdin: "input text",
+	stderr: "combined",
+});
+
+return new Response(process.stdout);
+```
+</TypeScriptExample>
+
+Use a named process ID when you need to re-attach later:
+
+<TypeScriptExample>
+```ts
+const server = await sandbox.exec("npm run dev", {
+	processId: "dev-server",
+});
+
+await server.waitForPort(3000);
+
+const sameServer = await sandbox.getProcess("dev-server");
+await sameServer?.waitForLog("ready");
+```
+</TypeScriptExample>
 
 ### Default sessions and `enableDefaultSession`
 
@@ -132,37 +215,31 @@ Use an explicit session for stateful shell workflows:
 
 <TypeScriptExample>
 ```ts
-const session = await sandbox.createSession();
+const session = await sandbox.createSession({ id: "build" });
 
-await session.exec("cd /workspace/app");
-const result = await session.exec("pwd");
+await session.run("cd /workspace/app");
+const result = await session.run("pwd");
 
 console.log(result.stdout);
 ```
 </TypeScriptExample>
 
-Use separate sandboxes for separate users. Use explicit sessions for separate workflows inside one user workspace.
-
-### Plugins for Code Interpreter, Git, and PTY support
-
-The `1.0` preview extracts Code Interpreter, Git, and PTY support from the core SDK into plugins. The existing public interfaces should remain the same, but they are namespaced on the sandbox instance through the plugin.
-
-Plugins use this pattern:
+You can also pass `sessionId` to top-level operations:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
-import { withFeature } from "@cloudflare/sandbox/<plugin>";
-
-export class MySandbox extends Sandbox {
-	feature = withFeature(this);
-}
+await sandbox.run("cd /workspace/app", { sessionId: "build" });
+const result = await sandbox.run("pwd", { sessionId: "build" });
 ```
 </TypeScriptExample>
 
-Replace `<plugin>` with the plugin import path, `feature` with the namespace you want on the sandbox instance, and `withFeature` with the matching helper exported by that plugin package.
+Use `listProcesses({ sessionId })` and `getProcess(id, { sessionId })` when process lookup must be scoped to a session.
 
-#### Code Interpreter plugin
+Use separate sandboxes for separate users. Use explicit sessions for separate workflows inside one user workspace.
+
+### Code Interpreter extension
+
+The `1.0` preview extracts Code Interpreter from the core SDK. It is now an opt-in extension at `@cloudflare/sandbox/interpreter`. Its runtime ships as a sidecar that the container provisions on first use.
 
 Current code uses Code Interpreter methods directly on the sandbox instance:
 
@@ -173,88 +250,127 @@ const result = await sandbox.runCode("1 + 1", { context });
 ```
 </TypeScriptExample>
 
-On the `1.0` preview, import the Code Interpreter plugin and call the same public interface through the plugin namespace:
+On the `1.0` preview, import `withInterpreter()` and call the same methods through `sandbox.interpreter`:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
-import { withCodeInterpreter } from "@cloudflare/sandbox/code-interpreter";
+import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
+import { withInterpreter } from "@cloudflare/sandbox/interpreter";
 
-export class MySandbox extends Sandbox {
-	codeInterpreter = withCodeInterpreter(this);
+export class Sandbox extends BaseSandbox<Env> {
+	interpreter = withInterpreter(this);
 }
 
-const context = await sandbox.codeInterpreter.createCodeContext({
+const context = await sandbox.interpreter.createCodeContext({
 	language: "python",
 });
-const result = await sandbox.codeInterpreter.runCode("1 + 1", { context });
+const result = await sandbox.interpreter.runCode("1 + 1", { context });
 ```
 </TypeScriptExample>
 
-#### Git plugin
+`createCodeContext()`, `runCode()`, `runCodeStream()`, `listCodeContexts()`, and `deleteCodeContext()` keep the same signatures, with these serialization changes:
 
-Current code uses Git methods directly on the sandbox instance:
+- `runCode()` returns a plain `ExecutionResult` instead of an `Execution` instance.
+- The `onResult` callback receives plain `ResultData` instead of a `Result` instance.
+- The `formats()` helper is no longer available on the `onResult` callback argument.
+
+Python execution still requires the `-python` image variant.
+
+### Git APIs
+
+Git is not an extension in the current `1.0` preview. Keep using the core `sandbox.gitCheckout()` API:
 
 <TypeScriptExample>
 ```ts
-await sandbox.gitCheckout("https://github.com/user/repo");
+await sandbox.gitCheckout("https://github.com/user/repo", {
+	branch: "main",
+	targetDir: "/workspace/repo",
+});
 ```
 </TypeScriptExample>
 
-On the `1.0` preview, import the Git plugin and call the same public interface through the plugin namespace:
+If your Git workflow depends on persistent shell state, run shell commands through an explicit session:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
-import { withGit } from "@cloudflare/sandbox/git";
+const session = await sandbox.createSession({ id: "repo" });
 
-export class MySandbox extends Sandbox {
-	git = withGit(this);
-}
-
-await sandbox.git.gitCheckout("https://github.com/user/repo");
+await session.gitCheckout("https://github.com/user/repo", {
+	targetDir: "/workspace/repo",
+});
+await session.run("cd /workspace/repo");
+await session.run("git status");
 ```
 </TypeScriptExample>
 
-#### PTY plugin
+### Terminal APIs
 
-Current code uses terminal methods directly on the sandbox instance or on a session:
+The `1.0` preview makes interactive terminals explicit resources. Use `sandbox.terminal()` to create a terminal handle, then call `connect()` with the WebSocket upgrade request.
+
+Replace direct terminal calls with the terminal resource API:
 
 <TypeScriptExample>
 ```ts
-return await sandbox.terminal(request, { cols: 120, rows: 30 });
+// Before
+return await session.terminal(request, { cols: 120, rows: 30 });
+
+// After
+const terminal = sandbox.terminal({
+	id: "main-terminal",
+	cwd: "/workspace",
+	shell: "/bin/bash",
+});
+
+return await terminal.connect(request, { cols: 120, rows: 30 });
 ```
 </TypeScriptExample>
 
-On the `1.0` preview, import the PTY plugin and call the same public interface through the plugin namespace:
+Destroy terminals when your application no longer needs them:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
-import { withPty } from "@cloudflare/sandbox/pty";
-
-export class MySandbox extends Sandbox {
-	pty = withPty(this);
-}
-
-return await sandbox.pty.terminal(request, { cols: 120, rows: 30 });
+const terminal = sandbox.terminal({ id: "main-terminal" });
+await terminal.destroy();
 ```
 </TypeScriptExample>
-
-Confirm plugin identifiers and helper names against the installed `1.0` preview package before updating production code.
 
 ### Extension API
 
-The `1.0` preview introduces a Sandbox extension API. Use extensions when a capability needs to attach reusable methods, state, or lifecycle behavior to a Sandbox instance.
+The `1.0` preview introduces a Sandbox extension API. Use extensions when a capability needs to attach reusable methods or sidecar-backed behavior to a Sandbox instance.
 
-Extensions follow the same attachment model as plugins:
+SDK-side extensions use `@cloudflare/sandbox/extensions`:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
-import { withMyExtension } from "@cloudflare/sandbox/my-extension";
+import {
+	SandboxExtension,
+	type SandboxLike,
+} from "@cloudflare/sandbox/extensions";
 
-export class MySandbox extends Sandbox {
+class MyExtension extends SandboxExtension {
+	constructor(sandbox: SandboxLike) {
+		super(sandbox);
+	}
+
+	async doWork() {
+		return this.client.commands.execute("echo hello");
+	}
+}
+
+export function withMyExtension(sandbox: SandboxLike) {
+	return new MyExtension(sandbox);
+}
+```
+</TypeScriptExample>
+
+Attach the extension to your Sandbox subclass:
+
+<TypeScriptExample>
+```ts
+import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
+import { withMyExtension } from "./my-extension";
+
+export class Sandbox extends BaseSandbox<Env> {
 	myExtension = withMyExtension(this);
 }
 
@@ -262,13 +378,34 @@ await sandbox.myExtension.doWork();
 ```
 </TypeScriptExample>
 
-Use an extension when you want to:
+Sidecar extensions can use `@cloudflare/sandbox/sidecar` inside the sidecar process:
 
-- Share a Sandbox capability across projects.
-- Keep optional functionality out of the core SDK.
-- Add methods that operate on an existing Sandbox instance.
+<TypeScriptExample>
+```ts
+import {
+	SandboxSidecar,
+	serveSandboxSidecar,
+} from "@cloudflare/sandbox/sidecar";
 
-The final extension authoring interface will be documented when the extension framework API lands.
+class MySidecar extends SandboxSidecar {
+	async isOdd(value: number) {
+		return value % 2 === 1;
+	}
+}
+
+serveSandboxSidecar(new MySidecar());
+```
+</TypeScriptExample>
+
+Sidecars are distributed as npm-style `.tgz` packages. The SDK sends the sidecar bytes to the container by content hash, and the container starts the sidecar on demand.
+
+Third-party npm distribution for extensions is not wired up in the current preview.
+
+### Error and lifecycle behavior
+
+The `1.0` preview adds `CONTAINER_UNAVAILABLE` errors for temporary container startup and replacement failures. Treat this error as retryable according to your application's retry policy.
+
+The preview also improves backup restore and tunnel recovery across sandbox runtime restarts. No migration is required for these recovery improvements, but you should test backup and preview URL workflows after upgrading.
 
 ## Public interfaces
 
@@ -276,7 +413,7 @@ This section collects the public interfaces that affect migration.
 
 ### `exec()` API
 
-The final Sandbox `exec()` signature is pending. The migration target follows this model:
+The Sandbox `exec()` API returns a `SandboxProcessPromise`:
 
 <TypeScriptExample>
 ```ts
@@ -289,42 +426,59 @@ output.stderr;
 ```
 </TypeScriptExample>
 
-Expected behavior:
+Key behavior:
 
-- The command can be an executable with arguments.
-- The returned process object provides complete output.
-- The returned process object provides streamed output for long-running commands.
-- The returned process object supports process lifecycle control.
-- Shell features require an explicit shell command.
+- `command` can be a string or a `string[]`.
+- `.output()` returns decoded strings by default.
+- `.output({ encoding: "buffer" })` returns `ArrayBuffer` output.
+- `.text()` returns stdout as a string.
+- `.json()` parses stdout as JSON.
+- `stdin` accepts a `ReadableStream<Uint8Array>`, a string, or `"pipe"`.
+- `stdout` can be `"pipe"` or `"ignore"`.
+- `stderr` can be `"pipe"`, `"ignore"`, or `"combined"`.
+- `processId` lets you re-attach with `getProcess(id)`.
+- `sessionId` scopes execution to an explicit session.
 
-### Plugin API pattern
+### Code Interpreter extension API
 
-Plugins are imported from `@cloudflare/sandbox/<plugin>` and attached to the Sandbox instance with `with<Plugin>(this)`:
+Code Interpreter is imported from `@cloudflare/sandbox/interpreter` and attached with `withInterpreter(this)`:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
-import { withGit } from "@cloudflare/sandbox/git";
+import { withInterpreter } from "@cloudflare/sandbox/interpreter";
 
-export class MySandbox extends Sandbox {
-	git = withGit(this);
+export class Sandbox extends BaseSandbox<Env> {
+	interpreter = withInterpreter(this);
 }
 ```
 </TypeScriptExample>
 
-The plugin namespace exposes the same public methods that existed on the core sandbox instance for that feature.
+The interpreter namespace exposes the Code Interpreter methods that previously existed on the core sandbox instance.
+
+### Terminal API
+
+Terminals are created from the sandbox instance and connected to WebSocket upgrade requests:
+
+<TypeScriptExample>
+```ts
+const terminal = sandbox.terminal({ id: "main", cwd: "/workspace" });
+return terminal.connect(request, { cols: 120, rows: 30 });
+```
+</TypeScriptExample>
 
 ### Extension API pattern
 
-Extensions use the same attachment model as plugins. They should expose a namespaced API from the Sandbox instance and avoid changing core SDK behavior for applications that do not install the extension.
+Extensions use a namespaced API from the Sandbox instance and avoid changing core SDK behavior for applications that do not install the extension.
 
 ## Next steps
 
 1. Install `@cloudflare/sandbox@next` in a development environment.
 2. Remove HTTP and WebSocket transport configuration.
 3. Replace default-session assumptions with explicit sessions.
-4. Move Code Interpreter, Git, and PTY usage to plugins.
-5. Replace `execStream()` and `startProcess()` usage after the final `exec()` interface lands.
-6. Run your application's integration tests against the `1.0` preview.
+4. Replace buffered `exec()` calls with `exec().output()` or `run()`.
+5. Replace `execStream()` and `startProcess()` usage with `exec()` process handles.
+6. Move Code Interpreter usage to `@cloudflare/sandbox/interpreter`.
+7. Update terminal code to use explicit terminal resources.
+8. Run your application's integration tests against the `1.0` preview.
 
 For agent-assisted migrations, use the [Sandbox SDK 1.0 migration skill](/sandbox/guides/migrating-to-1-0/SKILL.md).

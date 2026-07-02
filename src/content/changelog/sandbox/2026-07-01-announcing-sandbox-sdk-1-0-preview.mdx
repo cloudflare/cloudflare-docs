@@ -9,7 +9,7 @@ publish_future_dated_entry: true
 
 import { PackageManagers } from "~/components";
 
-Following on from our [recent deprecation announcement](/changelog/post/2026-06-09-deprecating-sandbox-sdk-features/), we are announcing a new preview package that contains the replacement APIs.
+Following on from the [Sandbox SDK deprecations announcement](/changelog/post/2026-06-09-deprecating-sandbox-sdk-features/), we are announcing a new preview package that contains the replacement APIs.
 
 Install the `1.0` preview with:
 
@@ -17,8 +17,13 @@ Install the `1.0` preview with:
 
 The preview includes:
 
-- A revised command interface that consolidates `exec()`, `execStream()`, and `startProcess()` into a single `exec()` function, aligning with the Containers `container.exec()` model.
-- A new extensions API for adding reusable Sandbox capabilities outside the core SDK, including the Code Interpreter, Git, and PTY features that are moving into plugins.
+- A revised command interface that consolidates `exec()`, `execStream()`, and `startProcess()` into a single `exec()` process handle. Use `sandbox.exec(command).output()` for buffered output, or `sandbox.run(command)` for the previous buffered, session-shell behavior.
+- Removal of HTTP and WebSocket transport selection. The SDK now uses one RPC control channel internally.
+- Removal of hidden default sessions. Use explicit sessions when shell state must persist across commands.
+- A new extensions API for adding reusable Sandbox capabilities outside the core SDK.
+- Code Interpreter as an opt-in extension at `@cloudflare/sandbox/interpreter`.
+- Explicit terminal resources through `sandbox.terminal(options).connect(request, options)`.
+- Improved backup restore and tunnel recovery across sandbox runtime restarts.
 
 We are aiming to ship this preview as `1.0.0` on July 31, 2026.
 
