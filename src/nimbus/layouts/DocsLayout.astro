@@ -278,7 +278,7 @@ const showFeedback = feedback !== false && !isCustom;
               {hasPagination ? <slot name="pagination" /> : <Pagination prevNext={prevNext} />}
               {showFeedback && (
                 <div class:list={["mt-10", hasTocAside && "xl:hidden"]}>
-                  <FeedbackPrompt client:idle />
+                  <FeedbackPrompt client:idle id="feedback-form-content" />
                 </div>
               )}
             </div>
@@ -290,7 +290,7 @@ const showFeedback = feedback !== false && !isCustom;
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
                 {showFeedback && (
                   <div class="mt-8 border-t border-border pt-6">
-                    <FeedbackPrompt client:only="react" />
+                    <FeedbackPrompt client:only="react" id="feedback-form-toc" />
                   </div>
                 )}
               </div>

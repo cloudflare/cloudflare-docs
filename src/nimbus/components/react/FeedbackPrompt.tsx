@@ -166,13 +166,20 @@ function SuccessState() {
 	);
 }
 
-export default function FeedbackPrompt() {
+export default function FeedbackPrompt({
+	id = "feedback-form",
+}: {
+	/** Root element id. DocsLayout renders two placements (TOC rail + content
+	 *  fallback) that can coexist in the DOM on wide viewports, so each passes a
+	 *  distinct id to keep ids unique. */
+	id?: string;
+}) {
 	const [title, setTitle] = useState("Was this helpful?");
 	const [option, setOption] = useState<"yes" | "no">();
 	const [submitted, setSubmitted] = useState(false);
 
 	return (
-		<div id="feedback-form">
+		<div id={id}>
 			{!submitted && (
 				<p className="m-0 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase">
 					{title}
