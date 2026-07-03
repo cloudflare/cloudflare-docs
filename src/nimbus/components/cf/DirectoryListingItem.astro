@@ -19,7 +19,9 @@ const { node, descriptions } = Astro.props;
 ---
 
 <li>
-  <a href={"/" + node.page.id + "/"}>{node.page.data.title}</a>
+  <a href={node.page.data.external_link ?? "/" + node.page.id + "/"}>
+    {node.page.data.title}
+  </a>
   {
     descriptions && node.page.data.description && (
       <>
