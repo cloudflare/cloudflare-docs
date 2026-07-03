@@ -80,13 +80,13 @@ Sidecars are provisioned lazily the first time you call the extension, cached ac
 
 As a rule of thumb: if existing container APIs are enough to implement your feature, use an SDK-only extension. Reach for a sidecar only when you need a long-running process inside the container.
 
-## Authoring an extension
+## Author an extension
 
 Every extension follows the same shape: a class extending `SandboxExtension`, and a `withX(sandbox)` factory. The base class captures the sandbox and exposes `this.client` (the container API surface) and, for sidecar extensions, `this.sidecar<T>()` (a typed remote handle to the sidecar process).
 
 ### SDK-only extension
 
-An SDK-only extension calls existing container APIs. Here is a minimal example that shells out via `commands.execute`:
+An SDK-only extension calls existing container APIs. Here is a minimal example that reports basic system information by shelling out via `commands.execute`:
 
 <TypeScriptExample>
 ```
@@ -95,19 +95,19 @@ import {
   type SandboxLike,
 } from "@cloudflare/sandbox/extensions";
 
-class Greeter extends SandboxExtension {
+class SystemInfo extends SandboxExtension {
   constructor(sandbox: SandboxLike) {
     super(sandbox);
   }
-  async greet(name: string, sessionId: string) {
+  async kernelVersion(sessionId: string) {
     const { stdout } = await this.client.commands.execute(
-      `echo "hi ${name}"`,
+      "uname -a",
       sessionId,
     );
     return stdout.trim();
   }
 }
-export const withGreeter = (s: SandboxLike) => new Greeter(s);
+export const withSystemInfo = (s: SandboxLike) => new SystemInfo(s);
 ```
 </TypeScriptExample>
 
@@ -116,15 +116,17 @@ Wire it onto a `Sandbox` subclass:
 <TypeScriptExample>
 ```
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
-import { withGreeter } from "./greeter";
+import { withSystemInfo } from "./system-info";
 
 export class Sandbox extends BaseSandbox<Env> {
-  greeter = withGreeter(this);
+  systemInfo = withSystemInfo(this);
 }
 ```
 </TypeScriptExample>
 
-Callers use `sandbox.greeter.greet(name, sessionId)` from a Worker.
+Callers use `sandbox.systemInfo.kernelVersion(sessionId)` from a Worker.
+
+If your extension needs to pass caller-supplied values into a shell command, do not string-interpolate them into the command. Untrusted input can contain shell metacharacters and alter the command that runs. Validate the input against an allowlist, or escape it before use.
 
 ### Sidecar extension
 
@@ -262,7 +264,7 @@ const branches = await sandbox.git.listBranches();
 ```
 </TypeScriptExample>
 
-### Migrating from the base class
+### Migrate from the base class
 
 In the `next` release, `sandbox.gitCheckout()` and the interpreter methods (`createCodeContext`, `runCode`, `runCodeStream`, `listCodeContexts`, `deleteCodeContext`) no longer exist on the base `Sandbox` class. To keep existing call sites working, attach the extension and add a delegate method:
 
