@@ -36,14 +36,14 @@ The code interpreter and Git client are the first two Cloudflare-authored extens
 Every extension is a subclass of `SandboxExtension` from `@cloudflare/sandbox/extensions`, attached to a `Sandbox` subclass via a `withX(this)` factory:
 
 <TypeScriptExample>
-```ts
+```
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withInterpreter } from "@cloudflare/sandbox/interpreter";
 import { withGit } from "@cloudflare/sandbox/git";
 
 export class Sandbox extends BaseSandbox<Env> {
-	interpreter = withInterpreter(this);
-	git = withGit(this);
+  interpreter = withInterpreter(this);
+  git = withGit(this);
 }
 ```
 </TypeScriptExample>
@@ -51,20 +51,21 @@ export class Sandbox extends BaseSandbox<Env> {
 From a Worker, you call extension methods as a nested namespace on the sandbox stub:
 
 <TypeScriptExample>
-```ts
+```
 import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 const ctx = await sandbox.interpreter.createCodeContext({ language: "python" });
-const result = await sandbox.interpreter.runCode('print("hello")', { context: ctx });
+const result = await sandbox.interpreter.runCode('print("hello")', {
+  context: ctx,
+});
 
 await sandbox.git.checkout("https://github.com/owner/repo.git", { depth: 1 });
-
-````
+```
 </TypeScriptExample>
 
-Under the hood, the SDK routes `sandbox.<extension>.<method>(...)` calls across the Worker → Durable Object boundary and dispatches them to the matching `SandboxExtension` instance. You can still add flatter delegate methods on your `Sandbox` subclass if you want to keep an existing API shape (`sandbox.runCode(...)`), but they are optional.
+Under the hood, the SDK routes `sandbox.<extension>.<method>(...)` calls across the Worker to Durable Object boundary and dispatches them to the matching `SandboxExtension` instance. You can still add flatter delegate methods on your `Sandbox` subclass if you want to keep an existing API shape (`sandbox.runCode(...)`), but they are optional.
 
 Extension methods called from a Worker must return serializable data. You cannot hand back class instances that only make sense inside the Durable Object.
 
@@ -88,40 +89,37 @@ Every extension follows the same shape: a class extending `SandboxExtension`, an
 An SDK-only extension calls existing container APIs. Here is a minimal example that shells out via `commands.execute`:
 
 <TypeScriptExample>
-```ts
+```
 import {
-	SandboxExtension,
-	type SandboxLike,
+  SandboxExtension,
+  type SandboxLike,
 } from "@cloudflare/sandbox/extensions";
 
 class Greeter extends SandboxExtension {
-	constructor(sandbox: SandboxLike) {
-		super(sandbox);
-	}
-
-	async greet(name: string, sessionId: string) {
-		const { stdout } = await this.client.commands.execute(
-			`echo "hi ${name}"`,
-			sessionId,
-		);
-		return stdout.trim();
-	}
+  constructor(sandbox: SandboxLike) {
+    super(sandbox);
+  }
+  async greet(name: string, sessionId: string) {
+    const { stdout } = await this.client.commands.execute(
+      `echo "hi ${name}"`,
+      sessionId,
+    );
+    return stdout.trim();
+  }
 }
-
 export const withGreeter = (s: SandboxLike) => new Greeter(s);
-````
-
+```
 </TypeScriptExample>
 
 Wire it onto a `Sandbox` subclass:
 
 <TypeScriptExample>
-```ts
+```
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withGreeter } from "./greeter";
 
 export class Sandbox extends BaseSandbox<Env> {
-	greeter = withGreeter(this);
+  greeter = withGreeter(this);
 }
 ```
 </TypeScriptExample>
@@ -133,26 +131,23 @@ Callers use `sandbox.greeter.greet(name, sessionId)` from a Worker.
 A sidecar extension additionally passes a tarball to `super()` and reaches its container-side runtime through `this.sidecar<T>()`:
 
 <TypeScriptExample>
-```ts
+```
 import sidecarTarballBytes from "./sidecar-package.tgz";
 import {
-	SandboxExtension,
-	type SandboxLike,
+  SandboxExtension,
+  type SandboxLike,
 } from "@cloudflare/sandbox/extensions";
 import type { MySidecarAPI } from "./shared";
 
 class MyExtension extends SandboxExtension {
-constructor(sandbox: SandboxLike) {
-super(sandbox, { tarball: new Uint8Array(sidecarTarballBytes) });
+  constructor(sandbox: SandboxLike) {
+    super(sandbox, { tarball: new Uint8Array(sidecarTarballBytes) });
+  }
+  async run(input: string) {
+    const api = await this.sidecar<MySidecarAPI>();
+    return api.run(input);
+  }
 }
-
-    async run(input: string) {
-    	const api = await this.sidecar<MySidecarAPI>();
-    	return api.run(input);
-    }
-
-}
-
 export const withMyExtension = (s: SandboxLike) => new MyExtension(s);
 ```
 </TypeScriptExample>
@@ -160,48 +155,44 @@ export const withMyExtension = (s: SandboxLike) => new MyExtension(s);
 The sidecar itself is a small npm package that extends `SandboxSidecar` and calls `serveSandboxSidecar(...)`. It listens on the `EXT_SOCKET` Unix socket the container injects and serves a capnweb session per connection:
 
 <TypeScriptExample>
-```ts
+```
 import {
-	SandboxSidecar,
-	serveSandboxSidecar,
+  SandboxSidecar,
+  serveSandboxSidecar,
 } from "@cloudflare/sandbox/sidecar";
 
 class MySidecar extends SandboxSidecar {
-async run(input: string) {
-return { result: input.toUpperCase() };
+  async run(input: string) {
+    return { result: input.toUpperCase() };
+  }
 }
-}
-
 serveSandboxSidecar(new MySidecar());
-
-````
+```
 </TypeScriptExample>
 
 Streaming is expressed as a typed callback parameter on a sidecar method. The callback is stubbed across both the Worker to Durable Object and Durable Object to sidecar hops, so there is no separate streaming protocol to learn:
 
 <TypeScriptExample>
-```ts
+```
 import {
-	SandboxExtension,
-	type SandboxLike,
+  SandboxExtension,
+  type SandboxLike,
 } from "@cloudflare/sandbox/extensions";
 import type { InterpreterSidecarAPI } from "./shared";
 
 class Interpreter extends SandboxExtension {
-	constructor(sandbox: SandboxLike) {
-		super(sandbox, { tarball: new Uint8Array() });
-	}
-
-	async runCode(
-		code: string,
-		onEvent: (event: { kind: string; data: unknown }) => void,
-	) {
-		const api = await this.sidecar<InterpreterSidecarAPI>();
-		return api.runCode(code, onEvent);
-	}
+  constructor(sandbox: SandboxLike) {
+    super(sandbox, { tarball: new Uint8Array() });
+  }
+  async runCode(
+    code: string,
+    onEvent: (event: { kind: string; data: unknown }) => void,
+  ) {
+    const api = await this.sidecar<InterpreterSidecarAPI>();
+    return api.runCode(code, onEvent);
+  }
 }
 ```
-
 </TypeScriptExample>
 
 ## Practical examples
@@ -211,12 +202,12 @@ class Interpreter extends SandboxExtension {
 The Python/JavaScript interpreter ships as `@cloudflare/sandbox/interpreter`. Its container-side runtime (the process pool and language executors) runs as a sidecar that is provisioned the first time you use it, so you only pay for it when you opt in.
 
 <TypeScriptExample>
-```ts
+```
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withInterpreter } from "@cloudflare/sandbox/interpreter";
 
 export class Sandbox extends BaseSandbox<Env> {
-	interpreter = withInterpreter(this);
+  interpreter = withInterpreter(this);
 }
 ```
 </TypeScriptExample>
@@ -224,45 +215,43 @@ export class Sandbox extends BaseSandbox<Env> {
 From a Worker:
 
 <TypeScriptExample>
-```ts
+```
 import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 const context = await sandbox.interpreter.createCodeContext({
-language: "python",
+  language: "python",
 });
-
 const result = await sandbox.interpreter.runCode('print("hello")', {
-context,
+  context,
 });
-
-````
-
+```
 </TypeScriptExample>
 
-Python execution still requires the `-python` container image variant. `runCode()` resolves to an `ExecutionResult` (a plain, serializable object) so it can safely cross the Worker → Durable Object boundary.
+Python execution still requires the `-python` container image variant. `runCode()` resolves to an `ExecutionResult` (a plain, serializable object) so it can safely cross the Worker to Durable Object boundary.
 
 ### Git client (SDK-only extension)
 
 Git ships as `@cloudflare/sandbox/git`. Because `git` is just shell commands, no sidecar is needed: the extension calls `exec()` with the right arguments and parses the results.
 
 <TypeScriptExample>
-```ts
+```
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withGit } from "@cloudflare/sandbox/git";
 
 export class Sandbox extends BaseSandbox<Env> {
-	git = withGit(this);
+  git = withGit(this);
 }
-````
-
+```
 </TypeScriptExample>
 
 From a Worker:
 
 <TypeScriptExample>
-```ts
+```
+import { getSandbox } from "@cloudflare/sandbox";
+
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 await sandbox.git.checkout("https://github.com/owner/repo.git", { depth: 1 });
@@ -270,8 +259,7 @@ await sandbox.git.checkoutBranch("feature/my-work");
 
 const branch = await sandbox.git.getCurrentBranch();
 const branches = await sandbox.git.listBranches();
-
-````
+```
 </TypeScriptExample>
 
 ### Migrating from the base class
@@ -279,20 +267,18 @@ const branches = await sandbox.git.listBranches();
 In the `next` release, `sandbox.gitCheckout()` and the interpreter methods (`createCodeContext`, `runCode`, `runCodeStream`, `listCodeContexts`, `deleteCodeContext`) no longer exist on the base `Sandbox` class. To keep existing call sites working, attach the extension and add a delegate method:
 
 <TypeScriptExample>
-```ts
+```
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withGit } from "@cloudflare/sandbox/git";
 
 export class Sandbox extends BaseSandbox<Env> {
-	git = withGit(this);
-
-	// Optional: preserve the previous flat API.
-	gitCheckout(url: string, options?: { depth?: number }) {
-		return this.git.checkout(url, options);
-	}
+  git = withGit(this);
+  // Optional: preserve the previous flat API.
+  gitCheckout(url: string, options?: { depth?: number }) {
+    return this.git.checkout(url, options);
+  }
 }
-````
-
+```
 </TypeScriptExample>
 
 ## Related resources
