@@ -2151,6 +2151,7 @@
 /workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301
+/workers/cache/ /workers/runtime-apis/cache/ 301
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
 /workers/reference/runtime/apis/ /workers/runtime-apis/ 301
 /workers/reference/storage/ /workers/platform/storage-options/ 301
