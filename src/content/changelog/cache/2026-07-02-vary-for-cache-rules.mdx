@@ -10,7 +10,7 @@ Your origin can serve different responses for the same URL — different languag
 
 ## What changed
 
-Your origin now decides which request headers matter by listing them in its `Vary` response, and you control how Cloudflare treats each one. When a response includes `Vary`, the listed request headers become part of the cache key automatically.
+Your origin now decides which request headers matter by listing them in its `Vary` response, and you control how Cloudflare treats each one. When you have enabled Vary using a cache rule and a response includes a `Vary` header, the request headers listed become part of the cache key.
 
 For each header your origin varies on, choose one of three actions:
 
