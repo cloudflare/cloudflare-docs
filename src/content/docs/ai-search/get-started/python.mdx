@@ -122,7 +122,6 @@ results = client.aisearch.namespaces.instances.search(
     account_id=account_id,
     name="default",
     query="How does AI Search handle uploaded content?",
-    aisearch_options={"retrieval": {"max_num_results": 3}},
 )
 
 if results.chunks:
