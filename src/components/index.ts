@@ -6,6 +6,7 @@ export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
 export { default as AiSearchIndexingDiagram } from "./AiSearchIndexingDiagram.astro";
+export { default as AiSearchQueryingDiagram } from "./AiSearchQueryingDiagram.astro";
 export { default as AnimatedWorkflowDiagram } from "./AnimatedWorkflowDiagram.astro";
 export { default as AgentsPlatformDiagram } from "./AgentsPlatformDiagram.astro";
 export { default as APIRequest } from "./APIRequest.astro";
