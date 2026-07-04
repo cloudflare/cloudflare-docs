@@ -24,23 +24,23 @@ Use OpenNext when you need an adapter for standard Next.js build output, or when
 
 Most Next.js features are supported by the Cloudflare OpenNext adapter:
 
-| Feature | Cloudflare OpenNext adapter | Notes |
-| --- | --- | --- |
-| App Router | Supported |  |
-| Pages Router | Supported |  |
-| Route Handlers | Supported |  |
-| React Server Components | Supported |  |
-| Static Site Generation (SSG) | Supported |  |
-| Server-Side Rendering (SSR) | Supported |  |
-| Incremental Static Regeneration (ISR) | Supported |  |
-| Server Actions | Supported |  |
-| Response streaming | Supported |  |
-| Asynchronous work with `next/after` | Supported |  |
-| Middleware | Supported |  |
-| Image optimization | Supported | Supported through [Cloudflare Images](/images/). |
-| Partial Prerendering (PPR) | Supported | PPR is experimental in Next.js. |
-| Composable Caching (`"use cache"`) | Supported | Composable Caching is experimental in Next.js. |
-| Node.js in Middleware | Not yet supported | Node.js middleware introduced in Next.js 15.2 is not yet supported. |
+| Feature                               | Cloudflare OpenNext adapter | Notes                                                               |
+| ------------------------------------- | --------------------------- | ------------------------------------------------------------------- |
+| App Router                            | Supported                   |                                                                     |
+| Pages Router                          | Supported                   |                                                                     |
+| Route Handlers                        | Supported                   |                                                                     |
+| React Server Components               | Supported                   |                                                                     |
+| Static Site Generation (SSG)          | Supported                   |                                                                     |
+| Server-Side Rendering (SSR)           | Supported                   |                                                                     |
+| Incremental Static Regeneration (ISR) | Supported                   |                                                                     |
+| Server Actions                        | Supported                   |                                                                     |
+| Response streaming                    | Supported                   |                                                                     |
+| Asynchronous work with `next/after`   | Supported                   |                                                                     |
+| Middleware                            | Supported                   |                                                                     |
+| Image optimization                    | Supported                   | Supported through [Cloudflare Images](/images/).                    |
+| Partial Prerendering (PPR)            | Supported                   | PPR is experimental in Next.js.                                     |
+| Composable Caching (`"use cache"`)    | Supported                   | Composable Caching is experimental in Next.js.                      |
+| Node.js in Middleware                 | Not yet supported           | Node.js middleware introduced in Next.js 15.2 is not yet supported. |
 
 For detailed OpenNext documentation, refer to [OpenNext for Cloudflare](https://opennext.js.org/cloudflare).
 
@@ -64,21 +64,18 @@ Wrangler automatic configuration uses vinext for Next.js projects. To use OpenNe
 
    <WranglerConfig>
 
-   ```jsonc
-   {
-   	"$schema": "./node_modules/wrangler/config-schema.json",
-   	"name": "my-app",
-   	"main": ".open-next/worker.js",
-   	"compatibility_date": "$today",
-   	"compatibility_flags": ["nodejs_compat"],
-   	"assets": {
-   		"directory": ".open-next/assets",
-   		"binding": "ASSETS"
-   	},
-   	"observability": {
-   		"enabled": true
-   	}
-   }
+   ```toml
+   name = "my-app"
+   main = ".open-next/worker.js"
+   compatibility_date = "$today"
+   compatibility_flags = ["nodejs_compat"]
+
+   [assets]
+   directory = ".open-next/assets"
+   binding = "ASSETS"
+
+   [observability]
+   enabled = true
    ```
 
    </WranglerConfig>

@@ -9,12 +9,7 @@ products:
   - workers
 ---
 
-import {
-	Description,
-	Details,
-	PackageManagers,
-	Steps,
-} from "~/components";
+import { Description, Details, PackageManagers, Steps } from "~/components";
 
 <Description>
 	Use vinext to create or migrate a Next.js application and deploy it to
@@ -45,19 +40,19 @@ vinext is in beta. Before adopting it for an existing production application, ru
 
 vinext supports most commonly used Next.js features on Cloudflare Workers:
 
-| Feature | vinext support | Notes |
-| --- | --- | --- |
-| App Router | Supported | Includes layouts, route handlers, metadata, loading, error, and not-found routes. |
-| Pages Router | Supported | Includes `getStaticProps`, `getStaticPaths`, and `getServerSideProps`. |
-| React Server Components | Supported | Uses Vite's React Server Components support. |
-| Server Actions | Supported | Works with forms and server mutations. |
-| Server-side rendering | Supported | Includes streaming rendering. |
-| Static generation and static export | Supported | Use `output: "export"` for static exports. |
-| Incremental Static Regeneration (ISR) | Supported | Uses a stale-while-revalidate caching model so Workers can serve cached content while refreshing it in the background. Refer to [asynchronous revalidation](/cache/concepts/revalidation/#asynchronous-revalidation). |
-| Middleware and proxy routes | Supported | Includes `middleware.ts` and `proxy.ts`. |
-| `next/*` imports | Mostly supported | Review the compatibility dashboard for module-level details. |
-| Cloudflare bindings | Supported | Use `cloudflare:workers` in server components, route handlers, and server actions. |
-| Image optimization | Partially supported | Cloudflare image optimization is available at request time. |
+| Feature                               | vinext support      | Notes                                                                                                                                                                                                                 |
+| ------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| App Router                            | Supported           | Includes layouts, route handlers, metadata, loading, error, and not-found routes.                                                                                                                                     |
+| Pages Router                          | Supported           | Includes `getStaticProps`, `getStaticPaths`, and `getServerSideProps`.                                                                                                                                                |
+| React Server Components               | Supported           | Uses Vite's React Server Components support.                                                                                                                                                                          |
+| Server Actions                        | Supported           | Works with forms and server mutations.                                                                                                                                                                                |
+| Server-side rendering                 | Supported           | Includes streaming rendering.                                                                                                                                                                                         |
+| Static generation and static export   | Supported           | Use `output: "export"` for static exports.                                                                                                                                                                            |
+| Incremental Static Regeneration (ISR) | Supported           | Uses a stale-while-revalidate caching model so Workers can serve cached content while refreshing it in the background. Refer to [asynchronous revalidation](/cache/concepts/revalidation/#asynchronous-revalidation). |
+| Middleware and proxy routes           | Supported           | Includes `middleware.ts` and `proxy.ts`.                                                                                                                                                                              |
+| `next/*` imports                      | Mostly supported    | Review the compatibility dashboard for module-level details.                                                                                                                                                          |
+| Cloudflare bindings                   | Supported           | Use `cloudflare:workers` in server components, route handlers, and server actions.                                                                                                                                    |
+| Image optimization                    | Partially supported | Cloudflare image optimization is available at request time.                                                                                                                                                           |
 
 For detailed compatibility results, refer to [vinext compatibility](https://vinext.dev/compatibility).
 
@@ -209,8 +204,8 @@ For example, you can import `env` from `cloudflare:workers` in server-side appli
 
 vinext is the recommended path for Next.js applications on Cloudflare Workers, but legacy deployment paths remain documented:
 
-| Path | Use when |
-| --- | --- |
-| [OpenNext adapter](/workers/framework-guides/web-apps/opennext/) | You need the mature OpenNext adapter for standard Next.js build output or your application depends on a vinext compatibility gap. |
-| [Static Next.js on Pages](/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/) | Your application is a static export and you specifically want to deploy it to Cloudflare Pages. |
-| [Next on Pages](/pages/framework-guides/nextjs/next-on-pages/) | You maintain an existing Pages project that already uses `@cloudflare/next-on-pages`. |
+| Path                                                                                   | Use when                                                                                                                          |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [OpenNext adapter](/workers/framework-guides/web-apps/opennext/)                       | You need the mature OpenNext adapter for standard Next.js build output or your application depends on a vinext compatibility gap. |
+| [Static Next.js on Pages](/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/) | Your application is a static export and you specifically want to deploy it to Cloudflare Pages.                                   |
+| [Next on Pages](/pages/framework-guides/nextjs/next-on-pages/)                         | You maintain an existing Pages project that already uses `@cloudflare/next-on-pages`.                                             |

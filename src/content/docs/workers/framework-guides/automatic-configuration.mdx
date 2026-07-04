@@ -31,21 +31,21 @@ When you run `wrangler deploy` or `wrangler setup` in a project directory withou
 
 Automatic configuration supports the following frameworks:
 
-| Framework                                                                    | Adapter/Tool                   | Notes                                                                                                          |
-| ---------------------------------------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `vinext`                       | Configures vinext for Cloudflare Workers and adds the required Vite and Wrangler configuration.                 |
-| [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically                                                                      |
-| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically                                                                  |
-| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                                                                                |
-| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         |                                                                                                                |
-| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     |                                                                                                                |
-| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         |                                                                                                                |
-| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   |                                |                                                                                                                |
-| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     |                                                                                                                |
-| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         |                                                                                                                |
-| [Vike](/workers/framework-guides/web-apps/vike/)                             |                                |                                                                                                                |
-| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                                                                                |
-| Static sites                                                                 | None                           | Any directory with an `index.html`                                                                             |
+| Framework                                                                    | Adapter/Tool                   | Notes                                                                                           |
+| ---------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------- |
+| [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `vinext`                       | Configures vinext for Cloudflare Workers and adds the required Vite and Wrangler configuration. |
+| [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically                                                       |
+| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically                                                   |
+| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                                                                 |
+| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         |                                                                                                 |
+| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     |                                                                                                 |
+| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         |                                                                                                 |
+| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   |                                |                                                                                                 |
+| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     |                                                                                                 |
+| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         |                                                                                                 |
+| [Vike](/workers/framework-guides/web-apps/vike/)                             |                                |                                                                                                 |
+| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                                                                 |
+| Static sites                                                                 | None                           | Any directory with an `index.html`                                                              |
 
 Automatic configuration may also work with other projects, such as React or Vue SPAs. Try running `wrangler deploy` or `wrangler setup` to see if your project is detected.
 
