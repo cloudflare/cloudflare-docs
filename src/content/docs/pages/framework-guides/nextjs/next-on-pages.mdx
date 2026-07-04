@@ -12,7 +12,7 @@ products:
   - pages
 ---
 
-import { PagesBuildPreset } from "~/components";
+import { PackageManagers, PagesBuildPreset } from "~/components";
 
 Cloudflare recommends [vinext on Workers](/workers/framework-guides/web-apps/nextjs/) for new full-stack Next.js applications. Use Next on Pages only to maintain an existing Cloudflare Pages project that already uses `@cloudflare/next-on-pages`.
 
@@ -34,4 +34,26 @@ The preset uses the following values:
 
 ## Migrate to Workers
 
-To migrate an existing Next.js application from Pages to Workers, use the [Next.js Workers guide](/workers/framework-guides/web-apps/nextjs/). The recommended migration path is `vinext init` or the `cloudflare/vinext` agent skill.
+To migrate an existing Next.js application from Pages to Workers, use the [Next.js Workers guide](/workers/framework-guides/web-apps/nextjs/). Choose one of the following paths.
+
+### Agent-assisted migration
+
+Install the vinext Agent Skill:
+
+<PackageManagers type="dlx" pkg="skills" args="add cloudflare/vinext" />
+
+Then open the project in your coding agent and prompt:
+
+```txt
+migrate this project to vinext
+```
+
+For the full workflow, refer to [Add vinext with an agent](/workers/framework-guides/web-apps/nextjs/#add-vinext-with-an-agent).
+
+### CLI migration
+
+Run the vinext initializer from your Next.js project directory:
+
+<PackageManagers type="dlx" pkg="vinext" args="init" />
+
+For the full workflow, refer to [Add vinext with the CLI](/workers/framework-guides/web-apps/nextjs/#add-vinext-with-the-cli).

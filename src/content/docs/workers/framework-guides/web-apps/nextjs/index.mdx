@@ -37,7 +37,9 @@ Next.js supports server-side rendering, client-side rendering, static generation
 
 [vinext](https://github.com/cloudflare/vinext) is a Vite plugin that reimplements the Next.js API surface. You can keep your existing `app/`, `pages/`, `next.config.js`, and `public/` directories while using the Vite toolchain.
 
-vinext is in beta. Before adopting it for an existing production application, run the compatibility check and review the [vinext compatibility dashboard](https://vinext.dev/compatibility).
+vinext is in beta. Before adopting it for an existing production application, run the compatibility check from your project directory and review the [vinext compatibility dashboard](https://vinext.dev/compatibility).
+
+<PackageManagers type="dlx" pkg="vinext" args="check" />
 
 ## Supported features
 
@@ -51,13 +53,21 @@ vinext supports most commonly used Next.js features on Cloudflare Workers:
 | Server Actions | Supported | Works with forms and server mutations. |
 | Server-side rendering | Supported | Includes streaming rendering. |
 | Static generation and static export | Supported | Use `output: "export"` for static exports. |
-| Incremental Static Regeneration (ISR) | Supported | Uses stale-while-revalidate caching. |
+| Incremental Static Regeneration (ISR) | Supported | Uses a stale-while-revalidate caching model so Workers can serve cached content while refreshing it in the background. Refer to [asynchronous revalidation](/cache/concepts/revalidation/#asynchronous-revalidation). |
 | Middleware and proxy routes | Supported | Includes `middleware.ts` and `proxy.ts`. |
 | `next/*` imports | Mostly supported | Review the compatibility dashboard for module-level details. |
 | Cloudflare bindings | Supported | Use `cloudflare:workers` in server components, route handlers, and server actions. |
 | Image optimization | Partially supported | Cloudflare image optimization is available at request time. |
 
 For detailed compatibility results, refer to [vinext compatibility](https://vinext.dev/compatibility).
+
+## Choose a setup path
+
+Most Next.js projects can start from the same workflow: open a Next.js app, check compatibility, add vinext, then deploy to Workers.
+
+- Use [Add vinext with an agent](#add-vinext-with-an-agent) if you want an agent to inspect the project and apply the migration.
+- Use [Add vinext with the CLI](#add-vinext-with-the-cli) if you want a direct, repeatable command-line setup.
+- Use [Create a Cloudflare-ready project](#create-a-cloudflare-ready-project) if you want to scaffold a new project already configured for Workers.
 
 ## Add vinext with an agent
 
