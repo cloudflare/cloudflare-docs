@@ -91,7 +91,21 @@ export default defineConfig({
 				allowExec: true,
 				allowWrite: true,
 			},
-			instances: [{ browser: "chromium" }],
+			expect: {
+				toMatchScreenshot: {
+					comparatorName: "pixelmatch",
+					comparatorOptions: {
+						threshold: 0.2,
+						allowedMismatchedPixelRatio: 0.005,
+					},
+				},
+			},
+			instances: [
+				{
+					browser: "chromium",
+					viewport: { width: 1280, height: 800 },
+				},
+			],
 		},
 	},
 });
@@ -104,6 +118,8 @@ The Cloudflare Vite plugin starts a tunnel and sets `CLOUDFLARE_TUNNEL_URL`. The
 If you expose the Vitest browser API with a different tunnel, set `VITEST_BROWSER_PUBLIC_ORIGIN` to its public origin.
 
 This configuration sets `test.browser.api.allowExec` and `test.browser.api.allowWrite` to `true` so browser tests can use APIs such as `cdp()` and write screenshot artifacts. If your tests do not use `cdp()` or write artifacts, remove the corresponding option. Anyone with the tunnel URL can reach your dev server while the tunnel is active. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/#security-considerations).
+
+The `test.browser.expect.toMatchScreenshot` block configures shared defaults for visual regression assertions. The fixed viewport keeps screenshots the same size across local and CI runs.
 
 ## Write a browser test
 
@@ -153,7 +169,41 @@ describe("Browser Run Vitest test", () => {
 });
 ```
 
-You can also use Vitest Browser Mode APIs such as `expect.element(...).toMatchScreenshot()` for visual regression tests. When you update screenshots, keep `test.browser.api.allowWrite` set to `true`.
+## Add visual regression tests
+
+Use `expect.element(...).toMatchScreenshot()` to compare a page element against a reference screenshot:
+
+```ts title="test/browser/hero.browser.test.ts"
+import { expect, test } from "vitest";
+import { page } from "vitest/browser";
+
+test("hero section", async () => {
+	document.body.innerHTML = `
+		<main>
+			<section data-testid="hero">
+				<h1>Build with Cloudflare</h1>
+				<p>Run browser tests in hosted Chromium.</p>
+			</section>
+		</main>
+	`;
+
+	await expect
+		.element(page.getByTestId("hero"))
+		.toMatchScreenshot("hero-section");
+});
+```
+
+When you run a visual test for the first time, Vitest creates a reference screenshot in a `__screenshots__` directory and fails the test. Review the screenshot, commit it, and run the test again.
+
+To intentionally update reference screenshots, run Vitest with `--update`:
+
+<PackageManagers
+	type="exec"
+	pkg="vitest"
+	args="run --config vitest.browser-run.config.ts --update"
+/>
+
+Review updated screenshots before committing them. Keep `test.browser.api.allowWrite` set to `true` when tests need to create or update screenshots.
 
 ## Run tests
 
