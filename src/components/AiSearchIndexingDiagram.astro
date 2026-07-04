@@ -21,7 +21,11 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 	>
 		<div class="asid-track">
 			<!-- Start -->
-			<div class="asid-cap asid-start" data-step="0">
+			<a
+				class="asid-cap asid-start"
+				data-step="0"
+				href="/ai-search/configuration/data-source/"
+			>
 				<span class="asid-cap-icon" aria-hidden="true">
 					<svg
 						viewBox="0 0 24 24"
@@ -35,7 +39,8 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 					</svg>
 				</span>
 				<span>Your content</span>
-			</div>
+				<span class="asid-cap-hint">e.g. PDF, image</span>
+			</a>
 
 			<!-- Line into the "storage" scope -->
 			<div class="asid-connector" data-step="1"></div>
@@ -663,6 +668,32 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 		background: var(--asid-card);
 		border: 1px solid var(--asid-border);
 		color: var(--asid-text);
+	}
+
+	/* Clickable start cap links to docs — match the node cards' affordance. */
+	a.asid-cap {
+		text-decoration: none;
+		color: var(--asid-text);
+	}
+
+	a.asid-cap:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asid-accent) 55%,
+			var(--asid-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+	}
+
+	a.asid-cap:focus-visible {
+		outline: 2px solid var(--asid-accent);
+		outline-offset: 2px;
+	}
+
+	/* Muted example hint next to the "Your content" label. */
+	.asid-cap-hint {
+		font-weight: 400;
+		color: var(--asid-muted);
 	}
 
 	.asid-cap-icon {

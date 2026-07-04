@@ -261,7 +261,11 @@ const { autoPlay = true, loop = true } = Astro.props;
 			<div class="asqd-connector" data-step="16"></div>
 
 			<!-- Output pill: the Search endpoint returns the retrieved chunks -->
-			<div class="asqd-cap asqd-end" data-step="17">
+			<a
+				class="asqd-cap asqd-end"
+				data-step="17"
+				href="/ai-search/api/search/workers-binding/#search"
+			>
 				<span class="asqd-cap-icon" aria-hidden="true">
 					<svg
 						viewBox="0 0 24 24"
@@ -278,7 +282,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 					</svg>
 				</span>
 				<span>Search result</span>
-			</div>
+			</a>
 
 			<!-- For the Chat Completions endpoint, the retrieved content continues
 			     on to response generation (dashed = this endpoint only). -->
@@ -304,7 +308,11 @@ const { autoPlay = true, loop = true } = Astro.props;
 			<div class="asqd-connector" data-step="20"></div>
 
 			<!-- Output pill: the Chat Completions endpoint returns the response -->
-			<div class="asqd-cap asqd-end asqd-terminal" data-step="21">
+			<a
+				class="asqd-cap asqd-end asqd-terminal"
+				data-step="21"
+				href="/ai-search/api/search/workers-binding/#chatcompletions"
+			>
 				<span class="asqd-cap-icon" aria-hidden="true">
 					<svg
 						viewBox="0 0 24 24"
@@ -318,7 +326,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 					</svg>
 				</span>
 				<span>Chat Completions result</span>
-			</div>
+			</a>
 		</div>
 	</cfdocs-ai-search-querying-diagram>
 </figure>
@@ -630,6 +638,27 @@ const { autoPlay = true, loop = true } = Astro.props;
 		background: var(--asqd-card);
 		border: 1px solid var(--asqd-border);
 		color: var(--asqd-text);
+	}
+
+	/* Clickable caps (the query input, the endpoint outputs) link to docs —
+	   give them the same hover/focus affordance as the node cards. */
+	a.asqd-cap {
+		text-decoration: none;
+		color: var(--asqd-text);
+	}
+
+	a.asqd-cap:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asqd-accent) 55%,
+			var(--asqd-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+	}
+
+	a.asqd-cap:focus-visible {
+		outline: 2px solid var(--asqd-accent);
+		outline-offset: 2px;
 	}
 
 	.asqd-cap-icon {
