@@ -28,13 +28,16 @@ Browser Run tests run in a real browser. If you need to test Worker handlers, bi
 
 Install Vitest Browser Mode, the Playwright browser provider, the Browser Run provider, and the Cloudflare Vite plugin:
 
-<PackageManagers pkg="vitest @vitest/browser @vitest/browser-playwright @cloudflare/vitest-browser-run-provider @cloudflare/vite-plugin playwright@npm:playwright-core" dev />
+<PackageManagers
+	pkg="vitest @vitest/browser @vitest/browser-playwright @cloudflare/vitest-browser-run-provider @cloudflare/vite-plugin playwright@npm:playwright-core"
+	dev
+/>
 
 The `playwright@npm:playwright-core` alias satisfies the Playwright provider without downloading local browser binaries. If your project already uses the full `playwright` package, you can use that package instead.
 
 ## Configure credentials
 
-Set the Browser Run credentials in your shell, CI environment, or an uncommitted `.env` file:
+Set the Browser Run credentials in your shell, CI environment, or an uncommitted `.env` file. By default, `browserRunCdp()` reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`:
 
 ```txt title=".env"
 CLOUDFLARE_ACCOUNT_ID="<ACCOUNT_ID>"
@@ -156,7 +159,11 @@ You can also use Vitest Browser Mode APIs such as `expect.element(...).toMatchSc
 
 Run Vitest with the Browser Run config:
 
-<PackageManagers type="exec" pkg="vitest" args="run --config vitest.browser-run.config.ts" />
+<PackageManagers
+	type="exec"
+	pkg="vitest"
+	args="run --config vitest.browser-run.config.ts"
+/>
 
 To run fewer test files at the same time, lower `CLOUDFLARE_BROWSER_RUN_CONCURRENCY`:
 
@@ -179,14 +186,14 @@ If your tests need separate browser processes for isolation, run separate Vitest
 
 `browserRunCdp()` reads credentials and Browser Run options from environment variables. You can also pass options directly to the provider, but avoid hardcoding secrets in committed files.
 
-| Option         | Environment variable                                       | Description                                                          |
-| -------------- | ---------------------------------------------------------- | -------------------------------------------------------------------- |
-| `accountId`    | `CLOUDFLARE_ACCOUNT_ID`                                    | Cloudflare account ID used to create the Browser Run URL             |
-| `apiToken`     | `CLOUDFLARE_API_TOKEN`                                     | API token used in the Browser Run authorization header               |
-| `publicOrigin` | `VITEST_BROWSER_PUBLIC_ORIGIN` or `CLOUDFLARE_TUNNEL_URL`  | Public origin for the Vitest browser API                             |
-| `wsEndpoint`   | `CLOUDFLARE_BROWSER_RUN_WS_ENDPOINT`                       | Custom Browser Run CDP WebSocket endpoint                            |
-| `keepAliveMs`  | `CLOUDFLARE_BROWSER_RUN_KEEP_ALIVE_MS`                     | Browser inactivity timeout in milliseconds. Defaults to `600000`     |
-| `recording`    | `CLOUDFLARE_BROWSER_RUN_RECORDING`                         | Set to `true` to enable [session recording](/browser-run/features/session-recording/) |
+| Option         | Environment variable                                      | Description                                                                           |
+| -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `accountId`    | `CLOUDFLARE_ACCOUNT_ID`                                   | Cloudflare account ID used to create the Browser Run URL                              |
+| `apiToken`     | `CLOUDFLARE_API_TOKEN`                                    | API token used in the Browser Run authorization header                                |
+| `publicOrigin` | `VITEST_BROWSER_PUBLIC_ORIGIN` or `CLOUDFLARE_TUNNEL_URL` | Public origin for the Vitest browser API                                              |
+| `wsEndpoint`   | `CLOUDFLARE_BROWSER_RUN_WS_ENDPOINT`                      | Custom Browser Run CDP WebSocket endpoint                                             |
+| `keepAliveMs`  | `CLOUDFLARE_BROWSER_RUN_KEEP_ALIVE_MS`                    | Browser inactivity timeout in milliseconds. Defaults to `600000`                      |
+| `recording`    | `CLOUDFLARE_BROWSER_RUN_RECORDING`                        | Set to `true` to enable [session recording](/browser-run/features/session-recording/) |
 
 For example:
 

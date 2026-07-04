@@ -6,7 +6,7 @@ entries:
   - publish_date: "2026-07-03"
     title: "Vitest Browser Mode provider for Browser Run"
     description: |-
-      * You can now run [Vitest Browser Mode](/browser-run/cdp/vitest-browser-mode/) test suites on Browser Run hosted Chromium using `@cloudflare/vitest-browser-run-provider`. The provider connects Vitest's Playwright browser provider to Browser Run over CDP and supports parallel browser files in one hosted Chromium session.
+      * You can now run [Vitest Browser Mode](/browser-run/cdp/vitest-browser-mode/) test suites on Browser Run hosted Chromium using `@cloudflare/vitest-browser-run-provider`. The provider connects Vitest's Playwright browser provider to Browser Run over CDP and supports parallel browser files in one hosted Chromium session. Set `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` before running tests. The token needs `Browser Rendering - Edit` permission.
   - publish_date: "2026-06-12"
     title: "New tutorial: Pre-render pages for crawlers"
     description: |-
