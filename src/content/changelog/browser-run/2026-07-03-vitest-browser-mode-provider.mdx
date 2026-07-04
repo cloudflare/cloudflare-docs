@@ -30,6 +30,25 @@ export default defineConfig({
 });
 ```
 
+After configuring the provider, you can write Vitest Browser Mode tests that run in Browser Run hosted Chromium. For example, the following test captures and compares a reference screenshot:
+
+```ts title="test/browser/hero.browser.test.ts"
+import { expect, test } from "vitest";
+import { page } from "vitest/browser";
+
+test("hero section", async () => {
+	document.body.innerHTML = `
+		<main>
+			<section data-testid="hero">
+				<h1>Build with Cloudflare</h1>
+			</section>
+		</main>
+	`;
+
+	await expect.element(page.getByTestId("hero")).toMatchScreenshot("hero");
+});
+```
+
 Before running tests, set `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`. The token needs `Browser Rendering - Edit` permission.
 
 To get started, refer to [Using with Vitest Browser Mode (CDP)](/browser-run/cdp/vitest-browser-mode/).
