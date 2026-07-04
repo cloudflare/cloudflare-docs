@@ -11,11 +11,9 @@ products:
 
 import { PackageManagers, Render, TypeScriptExample } from "~/components";
 
-Use Vitest Browser Mode with Browser Run to run browser tests, user interaction tests, and visual regression tests in a hosted Chromium browser. The `@cloudflare/vitest-browser-run-provider` package connects Vitest to Browser Run through the Chrome DevTools Protocol (CDP).
+Use [Vitest Browser Mode](https://vitest.dev/guide/browser/) with Browser Run to run browser tests, user interaction tests, and visual regression tests in a hosted Chromium browser. The `@cloudflare/vitest-browser-run-provider` package connects Vitest to Browser Run through the Chrome DevTools Protocol (CDP).
 
 <Render file="cdp-api-token-permissions" product="browser-run" />
-
-Browser Run tests run in a real browser. If you need to test Worker handlers, bindings, Durable Objects, or Workers runtime APIs, use the [Workers Vitest integration](/workers/testing/vitest-integration/) instead.
 
 ## Prerequisites
 
@@ -33,11 +31,9 @@ Install Vitest Browser Mode, the Playwright browser provider, the Browser Run pr
 	dev
 />
 
-The `playwright@npm:playwright-core` alias satisfies the Playwright provider without downloading local browser binaries. If your project already uses the full `playwright` package, you can use that package instead.
-
 ## Configure credentials
 
-Set the Browser Run credentials in your shell, CI environment, or an uncommitted `.env` file. By default, `browserRunCdp()` reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`:
+Set the Browser Run credentials in your shell, CI environment, or a `.env` file that is ignored by Git. By default, `browserRunCdp()` reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`:
 
 ```txt title=".env"
 CLOUDFLARE_ACCOUNT_ID="<ACCOUNT_ID>"
@@ -117,7 +113,26 @@ The Cloudflare Vite plugin starts a tunnel and sets `CLOUDFLARE_TUNNEL_URL`. The
 
 If you expose the Vitest browser API with a different tunnel, set `VITEST_BROWSER_PUBLIC_ORIGIN` to its public origin.
 
-This configuration sets `test.browser.api.allowExec` and `test.browser.api.allowWrite` to `true` so browser tests can use APIs such as `cdp()` and write screenshot artifacts. If your tests do not use `cdp()` or write artifacts, remove the corresponding option. Anyone with the tunnel URL can reach your dev server while the tunnel is active. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/#security-considerations).
+This configuration sets `test.browser.api.allowExec` and `test.browser.api.allowWrite` to `true` so browser tests can use APIs such as `cdp()` and write screenshot artifacts. If your tests do not use `cdp()` or write artifacts, remove the corresponding option.
+
+By default, `tunnel: { autoStart: true }` creates a short-lived [Quick Tunnel](/tunnel/setup/#quick-tunnels-development). Anyone with the tunnel URL can reach your dev server while the tunnel is active. Use this mode for local runs only after you review what the dev server exposes. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/#security-considerations).
+
+For a stable hostname or stricter access control, use a [named tunnel](/tunnel/setup/#create-a-tunnel) with the Cloudflare Vite plugin:
+
+<TypeScriptExample filename="vitest.browser-run.config.ts">
+
+```ts
+cloudflare({
+	tunnel: {
+		name: "vitest-browser-run",
+		autoStart: true,
+	},
+}),
+```
+
+</TypeScriptExample>
+
+You can protect the named tunnel hostname by adding a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). For non-interactive test runs, use a [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth) and an [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/). Browser Run must be able to load the Vitest browser runner through that Access policy; service tokens authenticate HTTP requests with the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers.
 
 The `test.browser.expect.toMatchScreenshot` block configures shared defaults for visual regression assertions. The fixed viewport keeps screenshots the same size across local and CI runs.
 
