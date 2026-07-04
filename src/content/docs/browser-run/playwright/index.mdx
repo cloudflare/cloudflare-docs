@@ -156,8 +156,6 @@ export default {
 
 One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; refer to [Assertions](https://playwright.dev/docs/test-assertions) in the Playwright documentation for details. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
 
-To run Vitest Browser Mode tests against Browser Run hosted Chromium, refer to [Using with Vitest Browser Mode (CDP)](/browser-run/cdp/vitest-browser-mode/).
-
 ```ts
 import { launch } from "@cloudflare/playwright";
 import { expect } from "@cloudflare/playwright/test";
@@ -191,6 +189,8 @@ export default {
 	},
 };
 ```
+
+To run Vitest Browser Mode tests against Browser Run hosted Chromium, refer to [Use Vitest Browser Mode (CDP)](/browser-run/cdp/vitest-browser-mode/).
 
 ### Storage state
 
