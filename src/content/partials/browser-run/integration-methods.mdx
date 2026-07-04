@@ -5,7 +5,7 @@
 Browser Run offers two categories of integration methods:
 
 - **[Quick Actions](/browser-run/quick-actions/)**: Simple, stateless browser tasks like screenshots, PDFs, and scraping. No code deployment needed.
-- **Browser Sessions**: Direct browser control via [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [CDP](/browser-run/cdp/), or [Stagehand](/browser-run/stagehand/). Deploy within Cloudflare Workers or connect from any environment via CDP.
+- **Browser Sessions**: Direct browser control via [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [CDP](/browser-run/cdp/), [Vitest Browser Mode](/browser-run/cdp/vitest-browser-mode/), or [Stagehand](/browser-run/stagehand/). Deploy within Cloudflare Workers or connect from any environment via CDP.
 
 | Use case                                    | Recommended                                                                                                        | Why                                                              |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
@@ -15,5 +15,6 @@ Browser Run offers two categories of integration methods:
 | AI-powered data extraction                  | [JSON endpoint](/browser-run/quick-actions/json-endpoint/)                                                         | Structured data via natural language prompts                     |
 | Site-wide crawling                          | [Crawl endpoint](/browser-run/quick-actions/crawl-endpoint/)                                                       | Multi-page content extraction with async results                 |
 | AI agent browsing                           | [Playwright MCP](/browser-run/playwright/playwright-mcp/) or [CDP with MCP clients](/browser-run/cdp/mcp-clients/) | LLMs control browsers via MCP                                    |
+| Browser tests and visual regression         | [Vitest Browser Mode](/browser-run/cdp/vitest-browser-mode/)                                                       | Real hosted Chromium for local or CI test suites                 |
 | Resilient scraping                          | [Stagehand](/browser-run/stagehand/)                                                                               | AI finds elements by intent, not selectors                       |
 | Direct browser control from any environment | [CDP](/browser-run/cdp/)                                                                                           | WebSocket access from local machines, CI/CD, or external servers |

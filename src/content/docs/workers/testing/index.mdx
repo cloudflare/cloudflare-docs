@@ -12,6 +12,8 @@ import { Render, LinkButton } from "~/components";
 
 The Workers platform has a variety of ways to test your applications, depending on your requirements. We recommend using the [Vitest integration](/workers/testing/vitest-integration), which allows you to run tests _inside_ the Workers runtime, and unit test individual functions within your Worker.
 
+For browser tests that need DOM APIs, user interactions, screenshots, or visual regression in a real browser, use [Vitest Browser Mode with Browser Run](/browser-run/cdp/vitest-browser-mode/). That setup runs tests in hosted Chromium instead of inside the Workers runtime.
+
 <LinkButton href="/workers/testing/vitest-integration/write-your-first-test/">
 	Get started with Vitest
 </LinkButton>

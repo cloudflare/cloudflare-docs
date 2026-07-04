@@ -1,0 +1,33 @@
+---
+title: Run Vitest Browser Mode tests on Browser Run
+description: Use the Browser Run Vitest provider to run Vitest Browser Mode test suites in hosted Chromium over CDP.
+products:
+  - browser-run
+date: 2026-07-03
+---
+
+You can now run [Vitest Browser Mode](https://vitest.dev/guide/browser/) test suites on [Browser Run](/browser-run/) hosted Chromium using `@cloudflare/vitest-browser-run-provider`. The provider connects Vitest's Playwright browser provider to Browser Run over the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/), so browser tests can run against a managed Chromium environment from local development or CI.
+
+Use this for tests that need browser APIs, user interactions, screenshots, or visual regression. For tests that need Workers runtime APIs or bindings, continue to use the [Workers Vitest integration](/workers/testing/vitest-integration/).
+
+Here is a minimal Browser Run provider configuration:
+
+```ts title="vitest.browser-run.config.ts"
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { browserRunCdp } from "@cloudflare/vitest-browser-run-provider";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	plugins: [cloudflare({ tunnel: { autoStart: true } })],
+	test: {
+		browser: {
+			enabled: true,
+			headless: true,
+			provider: browserRunCdp(),
+			instances: [{ browser: "chromium" }],
+		},
+	},
+});
+```
+
+To get started, refer to [Using with Vitest Browser Mode (CDP)](/browser-run/cdp/vitest-browser-mode/).

@@ -1,0 +1,200 @@
+---
+pcx_content_type: how-to
+title: Using with Vitest Browser Mode (CDP)
+description: Run Vitest Browser Mode tests on Browser Run using hosted Chromium over the Chrome DevTools Protocol.
+sidebar:
+  order: 5
+  label: Vitest Browser Mode
+products:
+  - browser-run
+---
+
+import { PackageManagers, Render, TypeScriptExample } from "~/components";
+
+Use Vitest Browser Mode with Browser Run to run browser tests, user interaction tests, and visual regression tests in a hosted Chromium browser. The `@cloudflare/vitest-browser-run-provider` package connects Vitest to Browser Run through the Chrome DevTools Protocol (CDP).
+
+<Render file="cdp-api-token-permissions" product="browser-run" />
+
+Browser Run tests run in a real browser. If you need to test Worker handlers, bindings, Durable Objects, or Workers runtime APIs, use the [Workers Vitest integration](/workers/testing/vitest-integration/) instead.
+
+## Prerequisites
+
+- A Vite project that uses [Vitest Browser Mode](https://vitest.dev/guide/browser/)
+- A Cloudflare account with Browser Run enabled
+- A Browser Run API token with `Browser Rendering - Edit` permission
+- The [Cloudflare Vite plugin](/workers/vite-plugin/), if Browser Run needs to reach a local Vite dev server
+
+## Install packages
+
+Install Vitest Browser Mode, the Playwright browser provider, the Browser Run provider, and the Cloudflare Vite plugin:
+
+<PackageManagers pkg="vitest @vitest/browser @vitest/browser-playwright @cloudflare/vitest-browser-run-provider @cloudflare/vite-plugin playwright@npm:playwright-core" dev />
+
+The `playwright@npm:playwright-core` alias satisfies the Playwright provider without downloading local browser binaries. If your project already uses the full `playwright` package, you can use that package instead.
+
+## Configure credentials
+
+Set the Browser Run credentials in your shell, CI environment, or an uncommitted `.env` file:
+
+```txt title=".env"
+CLOUDFLARE_ACCOUNT_ID="<ACCOUNT_ID>"
+CLOUDFLARE_API_TOKEN="<API_TOKEN>"
+CLOUDFLARE_BROWSER_RUN_CONCURRENCY="8"
+```
+
+`CLOUDFLARE_BROWSER_RUN_CONCURRENCY` controls how many Vitest browser test files can run at the same time. It does not create that many Browser Run browser instances.
+
+## Configure Vitest
+
+Create a Vitest config for Browser Run tests:
+
+<TypeScriptExample filename="vitest.browser-run.config.ts">
+
+```ts
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { browserRunCdp } from "@cloudflare/vitest-browser-run-provider";
+import { defineConfig } from "vitest/config";
+
+const browserApiHost = process.env.VITEST_BROWSER_API_HOST ?? "0.0.0.0";
+const browserApiPort = Number(process.env.VITEST_BROWSER_API_PORT ?? "63315");
+const browserRunConcurrency = Number(
+	process.env.CLOUDFLARE_BROWSER_RUN_CONCURRENCY ?? "8",
+);
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			tunnel: { autoStart: true },
+		}),
+	],
+	server: {
+		host: browserApiHost,
+		port: browserApiPort,
+		strictPort: true,
+		allowedHosts: true,
+	},
+	test: {
+		include: ["test/browser/**/*.browser.test.ts"],
+		fileParallelism: true,
+		maxWorkers: browserRunConcurrency,
+		browser: {
+			enabled: true,
+			headless: true,
+			fileParallelism: true,
+			provider: browserRunCdp(),
+			api: {
+				host: browserApiHost,
+				port: browserApiPort,
+				allowExec: true,
+				allowWrite: true,
+			},
+			instances: [{ browser: "chromium" }],
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+The Cloudflare Vite plugin starts a tunnel and sets `CLOUDFLARE_TUNNEL_URL`. The Browser Run provider uses that public origin so hosted Chromium can reach the local Vitest browser API.
+
+If you expose the Vitest browser API with a different tunnel, set `VITEST_BROWSER_PUBLIC_ORIGIN` to its public origin.
+
+This configuration sets `test.browser.api.allowExec` and `test.browser.api.allowWrite` to `true` so browser tests can use APIs such as `cdp()` and write screenshot artifacts. If your tests do not use `cdp()` or write artifacts, remove the corresponding option. Anyone with the tunnel URL can reach your dev server while the tunnel is active. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/#security-considerations).
+
+## Write a browser test
+
+Create a browser test file under the configured `test/browser/` directory:
+
+```ts title="test/browser/greeting.browser.test.ts"
+import { describe, expect, it } from "vitest";
+import { cdp, userEvent } from "vitest/browser";
+
+describe("Browser Run Vitest test", () => {
+	it("runs in hosted Chromium", async () => {
+		const userAgent = (await cdp().send("Runtime.evaluate", {
+			expression: "navigator.userAgent",
+			returnByValue: true,
+		})) as { result: { value: string } };
+
+		expect(userAgent.result.value).toContain("Chrome");
+
+		document.body.innerHTML = `
+			<main>
+				<label for="name">Name</label>
+				<input id="name" />
+				<button type="button">Greet</button>
+				<p data-testid="greeting"></p>
+			</main>
+		`;
+
+		const input = document.querySelector<HTMLInputElement>("#name");
+		const button = document.querySelector<HTMLButtonElement>("button");
+		const greeting = document.querySelector<HTMLElement>(
+			"[data-testid='greeting']",
+		);
+
+		expect(input).not.toBeNull();
+		expect(button).not.toBeNull();
+		expect(greeting).not.toBeNull();
+
+		button!.addEventListener("click", () => {
+			greeting!.textContent = `Hello, ${input!.value}!`;
+		});
+
+		await userEvent.type(input!, "Cloudflare");
+		await userEvent.click(button!);
+
+		expect(greeting!.textContent).toBe("Hello, Cloudflare!");
+	});
+});
+```
+
+You can also use Vitest Browser Mode APIs such as `expect.element(...).toMatchScreenshot()` for visual regression tests. When you update screenshots, keep `test.browser.api.allowWrite` set to `true`.
+
+## Run tests
+
+Run Vitest with the Browser Run config:
+
+<PackageManagers type="exec" pkg="vitest" args="run --config vitest.browser-run.config.ts" />
+
+To run fewer test files at the same time, lower `CLOUDFLARE_BROWSER_RUN_CONCURRENCY`:
+
+<PackageManagers
+	type="exec"
+	pkg="vitest"
+	args="run --config vitest.browser-run.config.ts"
+	prefix="CLOUDFLARE_BROWSER_RUN_CONCURRENCY=2"
+/>
+
+## Parallelism model
+
+Vitest schedules browser test files across `test.maxWorkers`. The Browser Run provider connects to one hosted Chromium browser and opens isolated pages or contexts for Vitest browser sessions.
+
+This means `CLOUDFLARE_BROWSER_RUN_CONCURRENCY=8` runs up to eight browser test files at once inside one shared Browser Run browser. It does not launch eight separate Browser Run browsers.
+
+If your tests need separate browser processes for isolation, run separate Vitest invocations or lower concurrency. Each new Browser Run browser is subject to [Browser Run limits](/browser-run/limits/).
+
+## Configure provider options
+
+`browserRunCdp()` reads credentials and Browser Run options from environment variables. You can also pass options directly to the provider, but avoid hardcoding secrets in committed files.
+
+| Option         | Environment variable                                       | Description                                                          |
+| -------------- | ---------------------------------------------------------- | -------------------------------------------------------------------- |
+| `accountId`    | `CLOUDFLARE_ACCOUNT_ID`                                    | Cloudflare account ID used to create the Browser Run URL             |
+| `apiToken`     | `CLOUDFLARE_API_TOKEN`                                     | API token used in the Browser Run authorization header               |
+| `publicOrigin` | `VITEST_BROWSER_PUBLIC_ORIGIN` or `CLOUDFLARE_TUNNEL_URL`  | Public origin for the Vitest browser API                             |
+| `wsEndpoint`   | `CLOUDFLARE_BROWSER_RUN_WS_ENDPOINT`                       | Custom Browser Run CDP WebSocket endpoint                            |
+| `keepAliveMs`  | `CLOUDFLARE_BROWSER_RUN_KEEP_ALIVE_MS`                     | Browser inactivity timeout in milliseconds. Defaults to `600000`     |
+| `recording`    | `CLOUDFLARE_BROWSER_RUN_RECORDING`                         | Set to `true` to enable [session recording](/browser-run/features/session-recording/) |
+
+For example:
+
+```ts title="vitest.browser-run.config.ts"
+provider: browserRunCdp({
+	keepAliveMs: 600000,
+	recording: true,
+}),
+```
+
+<Render file="faq" product="browser-run" />

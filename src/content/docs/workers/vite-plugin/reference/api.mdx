@@ -82,6 +82,8 @@ It accepts an optional `PluginConfig` parameter.
 
   Provide an object to configure a named tunnel or control whether the tunnel starts automatically. Press `t + Enter` to start or close the tunnel. Set `tunnel.autoStart` to `true` if you want the tunnel to open when Vite starts.
 
+  Vitest Browser Mode tests that run on Browser Run can use `tunnel.autoStart` to expose the local Vitest browser API to hosted Chromium. For a complete configuration, refer to [Using with Vitest Browser Mode (CDP)](/browser-run/cdp/vitest-browser-mode/).
+
   <TypeScriptExample filename="vite.config.ts">
   ```ts
   import { defineConfig } from "vite";
