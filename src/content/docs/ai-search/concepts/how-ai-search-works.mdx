@@ -8,6 +8,8 @@ products:
   - ai-search
 ---
 
+import { AiSearchIndexingDiagram } from "~/components";
+
 AI Search is a managed search service. Connect a website, an R2 bucket, or upload your own documents, and AI Search indexes your content for natural language queries.
 
 AI Search consists of two core processes:
@@ -19,7 +21,7 @@ AI Search consists of two core processes:
 
 Indexing begins automatically when you connect a data source or upload files through the [Items API](/ai-search/api/items/workers-binding/).
 
-![Indexing](~/assets/images/ai-search/indexing.png)
+<AiSearchIndexingDiagram />
 
 Here is what happens during indexing:
 
