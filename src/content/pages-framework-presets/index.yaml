@@ -10,7 +10,7 @@ build_configs:
     build_output_directory: public
     icon: /icons/framework-icons/logo-gatsby.svg
   next-js:
-    display_name: Next.js
+    display_name: Next.js (Next on Pages)
     build_command: npx @cloudflare/next-on-pages@1
     build_output_directory: .vercel/output/static
     icon: /icons/framework-icons/logo-next-js.svg

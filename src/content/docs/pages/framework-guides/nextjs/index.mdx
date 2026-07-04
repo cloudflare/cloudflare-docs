@@ -9,6 +9,9 @@ products:
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications.
 
-If you want to deploy a full stack Server Side Rendered Next.js application please refer to the [Next.js Workers guide](/workers/framework-guides/web-apps/nextjs).
+Cloudflare recommends [vinext on Workers](/workers/framework-guides/web-apps/nextjs/) for full-stack Next.js applications, including server-side rendering, React Server Components, Server Actions, route handlers, and middleware.
 
-To instead deploy a static Next.js site using Pages see the [static Next.js Pages guide](/pages/framework-guides/nextjs/deploy-a-static-nextjs-site).
+Use Pages for Next.js only when you have a static export or an existing Next on Pages project:
+
+- To deploy a static Next.js site with Pages, refer to [Static site](/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/).
+- To maintain an existing project that uses `@cloudflare/next-on-pages`, refer to [Next on Pages](/pages/framework-guides/nextjs/next-on-pages/).

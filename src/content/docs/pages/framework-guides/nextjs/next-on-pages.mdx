@@ -1,0 +1,37 @@
+---
+pcx_content_type: how-to
+title: Next on Pages
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Next on Pages | Next.js apps
+description: Maintain an existing Next.js application that uses Next on Pages.
+chatbot_deprioritize: true
+products:
+  - pages
+---
+
+import { PagesBuildPreset } from "~/components";
+
+Cloudflare recommends [vinext on Workers](/workers/framework-guides/web-apps/nextjs/) for new full-stack Next.js applications. Use Next on Pages only to maintain an existing Cloudflare Pages project that already uses `@cloudflare/next-on-pages`.
+
+Next on Pages uses `@cloudflare/next-on-pages` to build a Next.js application for Cloudflare Pages.
+
+## Build settings
+
+Use the following Pages build preset for existing Next on Pages projects:
+
+<PagesBuildPreset framework="next-js" />
+
+The preset uses the following values:
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | Next.js (Next on Pages) |
+| Build command | `npx @cloudflare/next-on-pages@1` |
+| Build output directory | `.vercel/output/static` |
+
+## Migrate to Workers
+
+To migrate an existing Next.js application from Pages to Workers, use the [Next.js Workers guide](/workers/framework-guides/web-apps/nextjs/). The recommended migration path is `vinext init` or the `cloudflare/vinext` agent skill.

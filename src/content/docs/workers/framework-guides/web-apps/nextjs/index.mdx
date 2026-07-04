@@ -1,0 +1,206 @@
+---
+pcx_content_type: how-to
+title: Next.js
+sidebar:
+  order: 4
+tags: ["full-stack"]
+description: Create a Next.js application with vinext and deploy it to Cloudflare Workers.
+products:
+  - workers
+---
+
+import {
+	Description,
+	Details,
+	PackageManagers,
+	Steps,
+} from "~/components";
+
+<Description>
+	Use vinext to create or migrate a Next.js application and deploy it to
+	Cloudflare Workers.
+</Description>
+
+Cloudflare recommends [vinext](https://vinext.dev/) as the default way to run Next.js applications on Cloudflare Workers. Start with any Next.js app, then add vinext when you are ready to run it on Cloudflare.
+
+You do not need to start from a Cloudflare template. Create your Next.js application with the tools you already use, or use an existing app, then follow the vinext setup path.
+
+If you maintain an application that uses the OpenNext adapter, refer to [OpenNext adapter](/workers/framework-guides/web-apps/nextjs/opennext/). If you maintain an existing Pages project that uses Next on Pages, refer to [Next on Pages](/pages/framework-guides/nextjs/next-on-pages/).
+
+## What is Next.js?
+
+[Next.js](https://nextjs.org/) is a [React](https://react.dev/) framework for building full-stack applications.
+
+Next.js supports server-side rendering, client-side rendering, static generation, React Server Components, Server Actions, route handlers, and middleware.
+
+## What is vinext?
+
+[vinext](https://github.com/cloudflare/vinext) is a Vite plugin that reimplements the Next.js API surface. You can keep your existing `app/`, `pages/`, `next.config.js`, and `public/` directories while using the Vite toolchain.
+
+vinext is in beta. Before adopting it for an existing production application, run the compatibility check and review the [vinext compatibility dashboard](https://vinext.dev/compatibility).
+
+## Supported features
+
+vinext supports most commonly used Next.js features on Cloudflare Workers:
+
+| Feature | vinext support | Notes |
+| --- | --- | --- |
+| App Router | Supported | Includes layouts, route handlers, metadata, loading, error, and not-found routes. |
+| Pages Router | Supported | Includes `getStaticProps`, `getStaticPaths`, and `getServerSideProps`. |
+| React Server Components | Supported | Uses Vite's React Server Components support. |
+| Server Actions | Supported | Works with forms and server mutations. |
+| Server-side rendering | Supported | Includes streaming rendering. |
+| Static generation and static export | Supported | Use `output: "export"` for static exports. |
+| Incremental Static Regeneration (ISR) | Supported | Uses stale-while-revalidate caching. |
+| Middleware and proxy routes | Supported | Includes `middleware.ts` and `proxy.ts`. |
+| `next/*` imports | Mostly supported | Review the compatibility dashboard for module-level details. |
+| Cloudflare bindings | Supported | Use `cloudflare:workers` in server components, route handlers, and server actions. |
+| Image optimization | Partially supported | Cloudflare image optimization is available at request time. |
+
+For detailed compatibility results, refer to [vinext compatibility](https://vinext.dev/compatibility).
+
+## Add vinext with an agent
+
+Use the vinext Agent Skill when you want a coding agent to inspect your Next.js project, run compatibility checks, update configuration, and start the vinext development server.
+
+<Steps>
+
+1. **Open your Next.js project.**
+
+   Use an existing project, or create a project with your preferred Next.js setup flow.
+
+2. **Install the vinext Agent Skill.**
+
+   <PackageManagers type="dlx" pkg="skills" args="add cloudflare/vinext" />
+
+3. **Prompt your agent.**
+
+   In your coding agent, run the following prompt:
+
+   ```txt
+   migrate this project to vinext
+   ```
+
+   The skill runs vinext compatibility checks, applies the migration, and flags issues that need manual attention.
+
+4. **Develop with vinext.**
+
+   Start the vinext development server.
+
+   <PackageManagers type="run" args="dev:vinext" />
+
+5. **Build with vinext.**
+
+   Build the production output with vinext.
+
+   <PackageManagers type="run" args="build:vinext" />
+
+6. **Deploy to Workers.**
+
+   Deploy with the vinext Cloudflare deploy command.
+
+   <PackageManagers type="dlx" pkg="@vinext/cloudflare" args="deploy" />
+
+</Steps>
+
+## Add vinext with the CLI
+
+Use `vinext init` when you want a direct command-line setup. The migration is non-destructive: your existing Next.js setup continues to work alongside vinext while you test the Cloudflare Workers deployment.
+
+<Steps>
+
+1. **Open your Next.js project.**
+
+   Use an existing project, or create a project with your preferred Next.js setup flow.
+
+2. **Check compatibility.**
+
+   Run the vinext compatibility check from your Next.js project directory.
+
+   <PackageManagers type="dlx" pkg="vinext" args="check" />
+
+   Review any reported compatibility issues before continuing.
+
+3. **Initialize vinext.**
+
+   Run the vinext initializer and choose Cloudflare Workers as the deployment target when prompted.
+
+   <PackageManagers type="dlx" pkg="vinext" args="init" />
+
+   `vinext init` installs vinext and Vite dependencies, adds vinext scripts, generates the Vite configuration, and creates the Cloudflare Workers configuration.
+
+4. **Develop with vinext.**
+
+   Start the vinext development server.
+
+   <PackageManagers type="run" args="dev:vinext" />
+
+5. **Build with vinext.**
+
+   Build the production output with vinext.
+
+   <PackageManagers type="run" args="build:vinext" />
+
+6. **Deploy to Workers.**
+
+   Deploy with the vinext Cloudflare deploy command.
+
+   <PackageManagers type="dlx" pkg="@vinext/cloudflare" args="deploy" />
+
+</Steps>
+
+## Create a Cloudflare-ready project
+
+Use the create-cloudflare CLI (C3) when you want to scaffold a new Next.js project already configured for Cloudflare Workers.
+
+<Steps>
+
+1. **Create a new project with C3.**
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args="my-next-app --framework=next"
+   />
+
+   <Details header="Command behavior">
+		C3 creates a new Next.js project, configures vinext for Cloudflare
+		Workers, installs the required dependencies, and offers to deploy the
+		application.
+   </Details>
+
+2. **Develop with vinext.**
+
+   Change to your project directory and start the local development server.
+
+   <PackageManagers type="run" args="dev" />
+
+3. **Build your application.**
+
+   Run the generated build script before deploying or testing a production build.
+
+   <PackageManagers type="run" args="build" />
+
+4. **Deploy your project.**
+
+   Deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/).
+
+   <PackageManagers type="run" args="deploy" />
+
+</Steps>
+
+## Access Cloudflare bindings
+
+In vinext applications deployed to Workers, use `cloudflare:workers` to access bindings from server components, route handlers, and server actions. Define bindings in your Wrangler configuration, then generate types with [`wrangler types`](/workers/wrangler/commands/workers/#types).
+
+For example, you can import `env` from `cloudflare:workers` in server-side application code to access D1, R2, KV, Durable Objects, Workers AI, Queues, Vectorize, and other bindings.
+
+## Use another Next.js deployment path
+
+vinext is the recommended path for Next.js applications on Cloudflare Workers, but legacy deployment paths remain documented:
+
+| Path | Use when |
+| --- | --- |
+| [OpenNext adapter](/workers/framework-guides/web-apps/nextjs/opennext/) | You need the mature OpenNext adapter for standard Next.js build output or your application depends on a vinext compatibility gap. |
+| [Static Next.js on Pages](/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/) | Your application is a static export and you specifically want to deploy it to Cloudflare Pages. |
+| [Next on Pages](/pages/framework-guides/nextjs/next-on-pages/) | You maintain an existing Pages project that already uses `@cloudflare/next-on-pages`. |

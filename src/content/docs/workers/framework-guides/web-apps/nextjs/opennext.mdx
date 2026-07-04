@@ -1,0 +1,148 @@
+---
+pcx_content_type: how-to
+title: OpenNext adapter
+sidebar:
+  order: 1
+tags: ["full-stack"]
+description: Deploy a Next.js application to Cloudflare Workers with the OpenNext adapter.
+chatbot_deprioritize: true
+products:
+  - workers
+---
+
+import { Details, PackageManagers, Steps, WranglerConfig } from "~/components";
+
+:::note[Recommended path]
+Cloudflare recommends [vinext](/workers/framework-guides/web-apps/nextjs/) instead of OpenNext for new Next.js applications on Cloudflare Workers.
+:::
+
+Use OpenNext when you need an adapter for standard Next.js build output, or when your application depends on a vinext compatibility gap.
+
+[OpenNext](https://opennext.js.org/) adapts the output of `next build` so it can run on different platforms, including Cloudflare Workers.
+
+## Supported features
+
+Most Next.js features are supported by the Cloudflare OpenNext adapter:
+
+| Feature | Cloudflare OpenNext adapter | Notes |
+| --- | --- | --- |
+| App Router | Supported |  |
+| Pages Router | Supported |  |
+| Route Handlers | Supported |  |
+| React Server Components | Supported |  |
+| Static Site Generation (SSG) | Supported |  |
+| Server-Side Rendering (SSR) | Supported |  |
+| Incremental Static Regeneration (ISR) | Supported |  |
+| Server Actions | Supported |  |
+| Response streaming | Supported |  |
+| Asynchronous work with `next/after` | Supported |  |
+| Middleware | Supported |  |
+| Image optimization | Supported | Supported through [Cloudflare Images](/images/). |
+| Partial Prerendering (PPR) | Supported | PPR is experimental in Next.js. |
+| Composable Caching (`"use cache"`) | Supported | Composable Caching is experimental in Next.js. |
+| Node.js in Middleware | Not yet supported | Node.js middleware introduced in Next.js 15.2 is not yet supported. |
+
+For detailed OpenNext documentation, refer to [OpenNext for Cloudflare](https://opennext.js.org/cloudflare).
+
+## Configure OpenNext manually
+
+Wrangler automatic configuration uses vinext for Next.js projects. To use OpenNext, configure the adapter manually.
+
+<Steps>
+
+1. **Install the OpenNext Cloudflare adapter.**
+
+   <PackageManagers pkg="@opennextjs/cloudflare@latest" />
+
+2. **Install Wrangler.**
+
+   <PackageManagers pkg="wrangler@latest" dev />
+
+3. **Add a Wrangler configuration file.**
+
+   In your project root, create a [Wrangler configuration file](/workers/wrangler/configuration/) with the following content:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "./node_modules/wrangler/config-schema.json",
+   	"name": "my-app",
+   	"main": ".open-next/worker.js",
+   	"compatibility_date": "$today",
+   	"compatibility_flags": ["nodejs_compat"],
+   	"assets": {
+   		"directory": ".open-next/assets",
+   		"binding": "ASSETS"
+   	},
+   	"observability": {
+   		"enabled": true
+   	}
+   }
+   ```
+
+   </WranglerConfig>
+
+   :::note
+   You must turn on the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) and set your [compatibility date](/workers/configuration/compatibility-dates/) to `2024-09-23` or later.
+   :::
+
+4. **Add an OpenNext configuration file.**
+
+   In your project root, create `open-next.config.ts`:
+
+   ```ts
+   import { defineCloudflareConfig } from "@opennextjs/cloudflare";
+
+   export default defineCloudflareConfig();
+   ```
+
+   Use this file to configure OpenNext features such as caching. For more information, refer to [OpenNext caching](https://opennext.js.org/cloudflare/caching).
+
+5. **Update `package.json`.**
+
+   Add scripts for previewing, deploying, and generating Cloudflare types:
+
+   ```json
+   {
+     "scripts": {
+       "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+       "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+       "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+     }
+   }
+   ```
+
+   <Details header="Script usage">
+		- `preview`: Builds your app and serves it locally in the Workers
+		runtime.
+		- `deploy`: Builds your app and deploys it to Cloudflare Workers.
+		- `cf-typegen`: Generates `cloudflare-env.d.ts` with Cloudflare binding
+		types.
+   </Details>
+
+6. **Develop locally.**
+
+   Start the Next.js development server.
+
+   <PackageManagers type="run" args="dev" />
+
+7. **Preview with OpenNext.**
+
+   Preview your application in the Workers runtime.
+
+   <PackageManagers type="run" args="preview" />
+
+8. **Deploy your project.**
+
+   Deploy your project to Cloudflare Workers.
+
+   <PackageManagers type="run" args="deploy" />
+
+</Steps>
+
+:::note[Workers Builds]
+[Workers Builds](/workers/ci-cd/builds/) requires you to configure environment variables in [Build variables and secrets](/workers/ci-cd/builds/configuration/#build-variables-and-secrets).
+
+This ensures the Next.js build has access to both public `NEXT_PUBLIC_` variables and non-public variables required for static generation and server-side build work. For more information, refer to [OpenNext environment variables](https://opennext.js.org/cloudflare/howtos/env-vars#workers-builds).
+:::
