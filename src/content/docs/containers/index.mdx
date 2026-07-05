@@ -23,7 +23,6 @@ import {
 	Tabs,
 	WranglerConfig,
 	LinkButton,
-	PackageManagers,
 } from "~/components";
 
 <Description>
@@ -38,16 +37,6 @@ Run code written in any programming language, built for any runtime, as part of 
 
 Deploy your container image to `Region:Earth` without worrying about managing infrastructure - just define your
 Worker and [`wrangler deploy`](/workers/wrangler/commands/general/#deploy).
-
-If you already have a `Dockerfile` or `Containerfile`, Wrangler can generate a singleton Containers Worker for you:
-
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="deploy Dockerfile --experimental-auto-config-containers"
-/>
-
-In CI, pass the `Dockerfile` or `Containerfile` target explicitly with `--experimental-auto-config-containers`, or use `wrangler setup --yes --experimental-auto-config-containers` before deploying.
 
 With Containers you can run:
 

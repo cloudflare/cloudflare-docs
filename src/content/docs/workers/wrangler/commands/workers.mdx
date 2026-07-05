@@ -176,7 +176,7 @@ None of the options for this command are required. Also, many can be set in your
   - To deploy a configured static site, pass an assets directory. This overrides the `assets` configuration in your Wrangler configuration file and is equivalent to the `--assets` option. This option works only in interactive mode.
   - To deploy an HTML file without creating a Wrangler configuration file, pass the `.html` file directly.
   - To deploy an explicit static directory or static Vite app directory without creating a Wrangler configuration file, pass the directory with `--experimental-auto-config-static-assets`.
-  - To configure and deploy a Dockerfile-backed Container project, pass `Dockerfile` or `Containerfile` with `--experimental-auto-config-containers`.
+  - To configure and deploy a Dockerfile-backed Container project, pass `Dockerfile` or `Containerfile`.
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
@@ -197,8 +197,6 @@ None of the options for this command are required. Also, many can be set in your
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
 - `--experimental-auto-config-static-assets` <Type text="boolean" /> <MetaInfo text="optional experimental" />
   - Deploy an explicit static assets directory or static Vite app directory without creating a Wrangler configuration file. Requires `PATH` to be a directory.
-- `--experimental-auto-config-containers` <Type text="boolean" /> <MetaInfo text="optional experimental" />
-  - Configure and deploy a Dockerfile-backed Containers project. Use with `wrangler deploy Dockerfile`, `wrangler deploy Containerfile`, or `wrangler setup`. In CI, pass an explicit Dockerfile or Containerfile target, or use `wrangler setup --yes --experimental-auto-config-containers`.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Folder of static assets for Workers Sites.
     :::caution
@@ -283,7 +281,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 This command configures your project for Cloudflare Workers without deploying. It performs the same [automatic project configuration](/workers/framework-guides/automatic-configuration/) as `wrangler deploy`, but does not deploy. This is useful when you want to review the generated configuration before deploying.
 
-To configure a Dockerfile-backed Containers project, run `wrangler setup --experimental-auto-config-containers`. Use `wrangler setup --yes --experimental-auto-config-containers` to accept detected settings non-interactively.
+To configure a Dockerfile-backed Containers project non-interactively, run `wrangler setup --yes` from a project root that contains a `Dockerfile` or `Containerfile`.
 
 ---
 

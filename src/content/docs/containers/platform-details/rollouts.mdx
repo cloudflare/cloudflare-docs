@@ -73,13 +73,3 @@ If you need to do a one-off deployment that rolls out to 100% of container insta
 />
 
 Note that `rollout_active_grace_period`, if configured, will still apply.
-
-## Skip Container updates
-
-To deploy Worker code changes without building or updating Containers, deploy with:
-
-<PackageManagers
-	pkg="wrangler"
-	type="exec"
-	args="deploy --containers-rollout=none"
-/>

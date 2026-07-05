@@ -51,7 +51,7 @@ Do not store the value of `CLOUDFLARE_API_TOKEN` in your repository. It gives ac
 
 2. Create a workflow that runs `wrangler deploy`. Review an example GitLab pipeline in the following section.
 
-If your repository does not have a Wrangler configuration file and uses [automatic project configuration](/workers/framework-guides/automatic-configuration/), run `wrangler deploy --yes` in CI. For Dockerfile-backed Containers, pass the Dockerfile or Containerfile target with `--experimental-auto-config-containers`, or run `wrangler setup --yes --experimental-auto-config-containers` before deploying. Bare Dockerfile detection is not used in CI.
+If your repository does not have a Wrangler configuration file and uses [automatic project configuration](/workers/framework-guides/automatic-configuration/), run `wrangler deploy --yes` in CI. For Dockerfile-backed Containers, pass the Dockerfile or Containerfile target, or run `wrangler setup --yes` before deploying. Bare Dockerfile detection is not used in CI.
 
 ### GitLab Pipelines
 

@@ -35,9 +35,6 @@ On Wrangler v3 and up, Workers Builds automatically matches the name of the conn
 `✘ [ERROR] Missing entry-point: The entry-point should be specified via the command line (e.g. wrangler deploy path/to/script) or the main config field.`
 
 If you see this error, a Wrangler configuration file is likely missing from the root directory. Navigate to **Settings** > **Build** > **Build Configuration** to update the root directory, or add a [Wrangler configuration file](/workers/wrangler/configuration/) to the specified directory.
-
-For supported frameworks and project types, Wrangler can [configure your project automatically](/workers/framework-guides/automatic-configuration/). If your repository does not have a Wrangler configuration file, confirm that your deploy command runs from the project root and uses `npx wrangler deploy --yes`. If you deploy an explicit static directory, use `npx wrangler deploy ./site --experimental-auto-config-static-assets`. For Dockerfile-backed Containers, use `npx wrangler deploy Dockerfile --experimental-auto-config-containers` or `npx wrangler setup --yes --experimental-auto-config-containers`. Bare Dockerfile detection is not used in CI.
-
 ### Incorrect account_id
 
 `Could not route to /client/v4/accounts/<Account ID>/workers/services/<Worker name>, perhaps your object identifier is invalid? [code: 7003]`

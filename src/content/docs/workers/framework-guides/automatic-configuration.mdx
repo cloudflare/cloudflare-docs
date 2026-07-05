@@ -67,7 +67,7 @@ Automatic configuration also supports the following project types and deploy tar
 | Single HTML files               | No-write           | Pass an `.html` file to `wrangler deploy`. Wrangler deploys the file as static assets. If the file is not named `index.html`, Wrangler also preserves the original filename.                                                                                                                                                     |
 | Static asset directories        | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must contain an `index.html` file. This path is experimental and only runs when you pass the flag.                                                                                                                                        |
 | Static Vite app directories     | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must include a `package.json` with a `vite` dependency and a `build` script. Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. This path is experimental and only runs when you pass the flag. |
-| Dockerfile-backed Containers    | Persistent         | Pass `Dockerfile` or `Containerfile` with `--experimental-auto-config-containers`, or run `wrangler setup --experimental-auto-config-containers`. Wrangler generates a singleton Containers Worker. Containers require Docker locally and a Workers Paid plan. This path is experimental and only runs when you pass the flag.   |
+| Dockerfile-backed Containers    | Persistent         | Run `wrangler deploy Dockerfile`, `wrangler deploy Containerfile`, or `wrangler setup`. Wrangler uses a root Dockerfile as a fallback when no stronger project type is detected. Wrangler generates a singleton Containers Worker. Containers require Docker locally and a Workers Paid plan.                                    |
 
 ## Files created and modified
 
@@ -186,13 +186,9 @@ Wrangler generates a Worker wrapper in `src/worker.js` or `src/worker.ts`. It us
 
 Wrangler refuses to overwrite an existing generated entrypoint, such as `src/worker.js` or `src/worker.ts`. Move or remove that file before trying again.
 
-For Dockerfile-backed Containers, pass the Containers auto-configuration flag with a `Dockerfile` or `Containerfile` target:
+For Dockerfile-backed Containers, pass `Dockerfile` or `Containerfile` as the deploy target:
 
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="deploy Dockerfile --experimental-auto-config-containers"
-/>
+<PackageManagers type="exec" pkg="wrangler" args="deploy Dockerfile" />
 
 After Wrangler configures a Containers project, use `wrangler deploy` for future deploys. Do not continue passing `Dockerfile` or `Containerfile` as the deploy target.
 
@@ -224,13 +220,7 @@ To configure your project without deploying, use [`wrangler setup`](/workers/wra
 
 This is useful when you want to review the generated configuration before deploying.
 
-To configure a Dockerfile-backed Containers project without deploying, pass the Containers flag:
-
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="setup --experimental-auto-config-containers"
-/>
+For Dockerfile-backed Containers, run this command from the project root that contains the `Dockerfile` or `Containerfile`.
 
 ### Preview changes with dry run
 
@@ -248,21 +238,13 @@ To skip the confirmation prompts, use the [`--yes` flag](/workers/wrangler/comma
 
 This applies the configuration automatically using detected defaults. This is useful in CI/CD environments or when you want to accept the detected settings without reviewing them.
 
-Dockerfile-backed Containers require an explicit opt-in for non-interactive configuration. Use one of the following commands:
+Dockerfile-backed Containers require an explicit target or `wrangler setup --yes` for non-interactive configuration. Use one of the following commands:
 
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="deploy Dockerfile --experimental-auto-config-containers"
-/>
+<PackageManagers type="exec" pkg="wrangler" args="deploy Dockerfile" />
 
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="setup --yes --experimental-auto-config-containers"
-/>
+<PackageManagers type="exec" pkg="wrangler" args="setup --yes" />
 
-In CI, pass the Dockerfile or Containerfile target explicitly with `--experimental-auto-config-containers`, or use `wrangler setup --yes --experimental-auto-config-containers`. Bare Dockerfile detection is not used in non-interactive sessions.
+In CI, pass the Dockerfile or Containerfile target explicitly, or use `wrangler setup --yes`. Bare Dockerfile detection is not used in non-interactive sessions.
 
 ## Automation output
 
@@ -293,7 +275,7 @@ Container deploy output includes `containers_rollout` and `containers` fields. `
 
 When you import a GitHub or GitLab repository via the Cloudflare dashboard, automatic configuration runs non-interactively. If your repository does not have a Wrangler configuration file, [Workers Builds](/workers/ci-cd/builds/) will create a pull request with the necessary configuration.
 
-Experimental static asset directory and Dockerfile-backed Containers paths require explicit Wrangler flags, and are not used by default during dashboard import.
+Experimental static asset directory paths require explicit Wrangler flags. Dockerfile-backed Containers are not used by default during dashboard import.
 
 The PR includes all the configuration changes described above. A preview deployment is generated so you can test the changes before merging. Once merged, your project is ready for deployment.
 
