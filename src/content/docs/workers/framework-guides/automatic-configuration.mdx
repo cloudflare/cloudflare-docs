@@ -42,16 +42,17 @@ Automatic configuration supports the following frameworks:
 | [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `@opennextjs/cloudflare`       | Runs `@opennextjs/cloudflare migrate` automatically. [R2 caching](#nextjs-caching) is configured if available. |
 | [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically                                                                      |
 | [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically                                                                  |
-| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     | None                                                                                                           |
-| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         | None                                                                                                           |
-| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     | None                                                                                                           |
-| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         | None                                                                                                           |
-| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   | None                           | None                                                                                                           |
-| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     | None                                                                                                           |
-| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         | None                                                                                                           |
-| [Vike](/workers/framework-guides/web-apps/vike/)                             | None                           | None                                                                                                           |
-| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         | None                           | None                                                                                                           |
-| Static sites                                                                 | None                           | Any directory with an `index.html`                                                                             |
+| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                                                                                |
+| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         |                                                                                                                |
+| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     |                                                                                                                |
+| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         |                                                                                                                |
+| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   |                                |                                                                                                                |
+| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     |                                                                                                                |
+| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         |                                                                                                                |
+| [Vike](/workers/framework-guides/web-apps/vike/)                             |                                |                                                                                                                |
+| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                                                                                |
+| [Express.js](/workers/tutorials/deploy-an-express-app/)                      | Generated Worker wrapper       | Supports existing Express apps and explicit server entrypoints.                                                |
+| Static sites                                                                 |                                | Any directory with an `index.html`                                                                             |
 
 Automatic configuration may also work with other projects, such as React or Vue SPAs. Try running `wrangler deploy` or `wrangler setup` to see if your project is detected.
 
@@ -61,13 +62,12 @@ The Static sites row applies when the current project directory, detected output
 
 Automatic configuration also supports the following project types and deploy targets:
 
-| Project type                    | Configuration mode | Notes                                                                                                                                                                                                                                                                                                                            |
-| ------------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Express-style Node HTTP servers | Persistent         | Run `wrangler deploy`, `wrangler setup`, or pass a JavaScript or TypeScript target such as `server.js`. Wrangler detects an Express dependency, import, or `express()` call, then checks that the app listens for HTTP traffic or exports the app.                                                                               |
-| Single HTML files               | No-write           | Pass an `.html` file to `wrangler deploy`. Wrangler deploys the file as static assets. If the file is not named `index.html`, Wrangler also preserves the original filename.                                                                                                                                                     |
-| Static asset directories        | No-write           | Pass a directory that contains an `index.html` file. Wrangler deploys the directory as static assets without writing `wrangler.jsonc`.                                                                                                                                                                                           |
-| Static Vite app directories     | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must include a `package.json` with a `vite` dependency and a `build` script. Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. This path is experimental and only runs when you pass the flag. |
-| Dockerfile-backed Containers    | Persistent         | Run `wrangler deploy Dockerfile`, `wrangler deploy Containerfile`, or `wrangler setup`. Wrangler uses a root Dockerfile as a fallback when no stronger project type is detected. Wrangler generates a singleton Containers Worker. Containers require Docker locally and a Workers Paid plan.                                    |
+| Project type                 | Configuration mode | Notes                                                                                                                                                                                                                                                                                                                            |
+| ---------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Single HTML files            | No-write           | Pass an `.html` file to `wrangler deploy`. Wrangler deploys the file as static assets. If the file is not named `index.html`, Wrangler also preserves the original filename.                                                                                                                                                     |
+| Static asset directories     | No-write           | Pass a directory that contains an `index.html` file. Wrangler deploys the directory as static assets without writing `wrangler.jsonc`.                                                                                                                                                                                           |
+| Static Vite app directories  | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must include a `package.json` with a `vite` dependency and a `build` script. Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. This path is experimental and only runs when you pass the flag. |
+| Dockerfile-backed Containers | Persistent         | Run `wrangler deploy Dockerfile`, `wrangler deploy Containerfile`, or `wrangler setup`. Wrangler uses a root Dockerfile as a fallback when no stronger project type is detected. Wrangler generates a singleton Containers Worker. Containers require Docker locally and a Workers Paid plan.                                    |
 
 ## Files created and modified
 
@@ -77,7 +77,7 @@ For persistent configuration, the following files may be created or modified:
 
 ### `src/worker.js` or `src/worker.ts`
 
-For Express-style Node HTTP servers and Dockerfile-backed Containers, Wrangler generates a Worker entrypoint. This wrapper adapts the existing app to the Workers runtime.
+For Express.js apps and Dockerfile-backed Containers, Wrangler generates a Worker entrypoint. This wrapper adapts the existing app to the Workers runtime.
 
 For Express apps, the generated Worker imports your server file and uses `cloudflare:node` to serve it. If Wrangler detects `express.static()`, static assets are not migrated automatically. Configure [Workers Static Assets](/workers/static-assets/) separately if your Express app serves static files. If Wrangler detects Node HTTP upgrade or WebSocket patterns, you may need to migrate those routes to Worker-native WebSocket handling.
 
@@ -110,7 +110,7 @@ A new Wrangler configuration file is created with settings appropriate for your 
 
 The exact configuration varies based on your framework or project type.
 
-For Express-style Node HTTP servers, `wrangler.jsonc` sets `main` to the generated Worker wrapper and adds the `nodejs_compat` compatibility flag. For Containers, `wrangler.jsonc` includes the generated Container, Durable Object binding, and migration configuration.
+For Express.js apps, `wrangler.jsonc` sets `main` to the generated Worker wrapper and adds the `nodejs_compat` compatibility flag. For Containers, `wrangler.jsonc` includes the generated Container, Durable Object binding, and migration configuration.
 
 ### `package.json`
 
@@ -162,7 +162,7 @@ To deploy an explicit target, pass the target path to [`wrangler deploy`](/worke
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy server.js" />
 
-You can use explicit targets for Express-style Node HTTP servers, single HTML files, static asset directories, static Vite app directories, Dockerfiles, and Containerfiles.
+You can use explicit targets for Express.js server entrypoints, single HTML files, static asset directories, static Vite app directories, Dockerfiles, and Containerfiles.
 
 To deploy a standalone HTML file without creating a `wrangler.jsonc` file, pass the HTML file directly:
 
@@ -174,7 +174,7 @@ To deploy a standalone HTML file without creating a `wrangler.jsonc` file, pass 
 
 If you deploy a named HTML file, Wrangler serves it at `/` and at its original filename. For example, `wrangler deploy landing.html` serves the same file at `/` and `/landing.html`.
 
-To deploy an Express-style Node HTTP server, pass the server entrypoint directly:
+To deploy an Express.js app, pass the server entrypoint directly:
 
 <PackageManagers
 	type="exec"
