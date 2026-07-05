@@ -115,7 +115,7 @@ const llmsUrl = Astro.site
       meta={meta}
     />
   </head>
-  <body class="min-h-screen bg-background text-foreground antialiased">
+  <body class="min-h-screen bg-background text-foreground">
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-100 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:no-underline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
@@ -132,6 +132,7 @@ const llmsUrl = Astro.site
       import "../scripts/mobile-sidebar.client";
       import "../scripts/mermaid.client";
       import "../scripts/table-scroll.client";
+
       codeCopy();
     </script>
   </body>

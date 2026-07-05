@@ -641,7 +641,7 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 
 	[data-nb-sidebar-group-label][data-nb-current] { @apply bg-accent text-foreground font-semibold; }
 
-	[data-nb-sidebar-group-label][data-nb-collapsible-trigger] { @apply justify-between; }
+	[data-nb-sidebar-group-label][data-nb-collapsible-trigger] { @apply justify-between pr-1.5; }
 
 	[data-nb-sidebar-group-link] {
 		@apply flex flex-1 min-w-0 items-center min-h-[2rem] px-3 py-1 rounded-l-lg;

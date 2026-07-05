@@ -1,18 +1,18 @@
 /**
  * URL helpers — small client-side history utilities.
- *
- * CF source: cloudflare-docs/src/util/url.ts (faithful port). Used by the
- * DirectoryCatalog component to reflect active filters in the query string.
  */
-export function setSearchParams(params: URLSearchParams) {
-  if (params.size === 0) {
-    history.pushState(null, "", window.location.pathname);
-    return;
-  }
+export function setSearchParams(
+  params: URLSearchParams,
+  opts: { replace?: boolean } = {},
+) {
+  const next =
+    params.size === 0
+      ? window.location.pathname
+      : `${window.location.pathname}?${params.toString()}`;
 
-  history.pushState(
-    null,
-    "",
-    `${window.location.pathname}?${params.toString()}`,
-  );
+  if (opts.replace) {
+    history.replaceState(null, "", next);
+  } else {
+    history.pushState(null, "", next);
+  }
 }

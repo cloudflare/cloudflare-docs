@@ -254,7 +254,7 @@ export default function ResourcesBySelector({
 				);
 			}
 
-			setSearchParams(params);
+			setSearchParams(params, { replace: true });
 		}
 	}, [leftFilters, filterPlacement]);
 

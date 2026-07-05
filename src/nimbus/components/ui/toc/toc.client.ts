@@ -43,6 +43,14 @@ function initToc(root: HTMLElement): () => void {
 
     let d = "";
     const newSegments: { start: number; length: number }[] = [];
+    const measure = (subPath: string) => {
+      activePath!.setAttribute("d", subPath);
+      return activePath!.getTotalLength();
+    };
+
+    let cumulative = 0;
+    let prevX = 0;
+    let prevYBot = 0;
 
     for (let i = 0; i < m.length; i++) {
       const cur = m[i];
@@ -51,26 +59,32 @@ function initToc(root: HTMLElement): () => void {
         d += `M ${cur.x} ${cur.yTop} `;
       } else {
         const prev = m[i - 1];
+        let connector: string;
         if (Math.abs(cur.x - prev.x) < 0.5) {
-          d += `L ${cur.x} ${cur.yTop} `;
+          connector = `L ${cur.x} ${cur.yTop} `;
         } else {
           const midY = (prev.yBot + cur.yTop) / 2;
-          d += `C ${prev.x} ${midY}, ${cur.x} ${midY}, ${cur.x} ${cur.yTop} `;
+          connector = `C ${prev.x} ${midY}, ${cur.x} ${midY}, ${cur.x} ${cur.yTop} `;
         }
+        d += connector;
+        cumulative += measure(`M ${prevX} ${prevYBot} ${connector}`);
       }
 
-      activePath!.setAttribute("d", d);
-      const start = activePath!.getTotalLength();
+      const start = cumulative;
 
-      d += `L ${cur.x} ${cur.yBot} `;
-      activePath!.setAttribute("d", d);
-      const end = activePath!.getTotalLength();
+      const seg = `L ${cur.x} ${cur.yBot} `;
+      d += seg;
+      cumulative += measure(`M ${cur.x} ${cur.yTop} ${seg}`);
 
-      newSegments.push({ start, length: end - start });
+      newSegments.push({ start, length: cumulative - start });
+
+      prevX = cur.x;
+      prevYBot = cur.yBot;
     }
 
+    activePath!.setAttribute("d", d);
     segments = newSegments;
-    totalLength = activePath!.getTotalLength();
+    totalLength = cumulative;
   }
 
   function applyActive(index: number, instant: boolean) {
