@@ -1,8 +1,11 @@
 ---
 title: Ports
+description: Expose sandbox services via public preview URLs using the Sandbox SDK ports API.
 pcx_content_type: concept
 sidebar:
   order: 5
+products:
+  - sandbox
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -11,7 +14,55 @@ import { TypeScriptExample } from "~/components";
 Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/).
 :::
 
+:::note[Prefer `sandbox.tunnels` for public URLs]
+For most public-URL use cases — development, `.workers.dev` deployments, and production traffic — [`sandbox.tunnels`](/sandbox/api/tunnels/) is the recommended option. Use named tunnels for stable hostnames on a zone you control, or quick tunnels for zero-config `*.trycloudflare.com` URLs. `exposePort()` is appropriate when you want the Worker itself to front the request (for example, to inject authentication, rewrite responses, or call sandbox-only RPC methods on the same hostname).
+:::
+
 Expose services running in your sandbox via public preview URLs. See [Preview URLs concept](/sandbox/concepts/preview-urls/) for details.
+
+## Module functions
+
+### `proxyToSandbox()`
+
+Route incoming HTTP and WebSocket requests to the correct sandbox container. Call this at the top of your Worker's `fetch` handler, before any application logic, so that it intercepts and forwards preview URL requests automatically.
+
+```ts
+proxyToSandbox(request: Request, env: Env): Promise<Response | null>
+```
+
+**Parameters**:
+
+- `request` - The incoming `Request` object from the `fetch` handler.
+- `env` - The `Env` object containing your Sandbox binding.
+
+**Returns**: `Promise<Response | null>` — a `Response` if the request matched a preview URL and was routed to the sandbox, or `null` if the request did not match and should be handled by your application logic.
+
+The function inspects the request hostname to determine whether it matches the subdomain pattern of an exposed port (for example, `8080-sandbox-id-token.yourdomain.com`). If it matches, `proxyToSandbox()` proxies the request to the correct Durable Object, and the sandbox service handles it. Both HTTP and WebSocket upgrade requests are supported.
+
+<TypeScriptExample>
+```ts
+import { proxyToSandbox, getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Always call proxyToSandbox first to handle preview URL requests
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    // Your application routes
+    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+    // ...
+    return new Response('Not found', { status: 404 });
+  }
+};
+```
+</TypeScriptExample>
+
+:::note
+`proxyToSandbox` is a module-level function imported directly from `@cloudflare/sandbox` — it is not a method on a `Sandbox` instance. It requires the Sandbox Durable Object binding (`env.Sandbox`) to look up and route requests to the correct container.
+:::
 
 ## Methods
 
@@ -180,14 +231,14 @@ Get information about all currently exposed ports.
 const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsResponse>
 ```
 
-**Returns**: `Promise<GetExposedPortsResponse>` with `ports` array (containing `port`, `exposedAt`, `name`)
+**Returns**: `Promise<GetExposedPortsResponse>` with `ports` array (containing `port`, `url`, `name`)
 
 <TypeScriptExample>
 ```
 const { ports } = await sandbox.getExposedPorts();
 
 for (const port of ports) {
-  console.log(`${port.name || port.port}: ${port.exposedAt}`);
+  console.log(`${port.name || port.port}: ${port.url}`);
 }
 ```
 </TypeScriptExample>
@@ -235,4 +286,8 @@ export default {
 ## Related resources
 
 - [Preview URLs concept](/sandbox/concepts/preview-urls/) - How preview URLs work
+- [Expose Services guide](/sandbox/guides/expose-services/) - Full workflow for starting services, exposing ports, and routing requests
+- [WebSocket Connections guide](/sandbox/guides/websocket-connections/) - WebSocket routing via preview URLs
 - [Commands API](/sandbox/api/commands/) - Start background processes
+- [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for quick development
+```

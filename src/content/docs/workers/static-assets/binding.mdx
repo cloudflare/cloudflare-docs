@@ -7,6 +7,8 @@ sidebar:
   order: 2
 head: []
 description: Details on how to configure Workers static assets and its binding.
+products:
+  - workers
 ---
 
 import {
@@ -36,8 +38,8 @@ The folder of static assets to be served. For many frameworks, this is the `./pu
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"assets": {
-		"directory": "./public/"
-	}
+		"directory": "./public/",
+	},
 }
 ```
 
@@ -79,12 +81,12 @@ Controls whether to invoke the Worker script regardless of a request which would
 	"compatibility_date": "$today",
 	"main": "src/index.ts",
 	// The following configuration unconditionally invokes the Worker script at
-	// `src/index.ts`, which can programatically fetch assets via the ASSETS binding
+	// `src/index.ts`, which can programmatically fetch assets via the ASSETS binding
 	"assets": {
 		"directory": "./public/",
 		"binding": "ASSETS",
-		"run_worker_first": true
-	}
+		"run_worker_first": true,
+	},
 }
 ```
 
@@ -120,6 +122,8 @@ The order in which the patterns are listed is not significant.
 
 In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
+Common uses for `run_worker_first` include authentication checks, A/B testing, and [injecting bootstrap data into your SPA shell](/workers/examples/spa-shell/).
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
@@ -134,8 +138,8 @@ Configuring the optional [binding](/workers/runtime-apis/bindings) gives you acc
 	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./public/",
-		"binding": "ASSETS"
-	}
+		"binding": "ASSETS",
+	},
 }
 ```
 
@@ -216,7 +220,7 @@ For the various static asset routing configuration options, refer to [Routing](/
 
 If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/worker-script/#run-your-worker-script-first) by setting `run_worker_first=true`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
 
-Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
+Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if you want to make modifications to your assets before serving them.
 
 If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/placement/#multiple-workers).
 

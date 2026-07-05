@@ -1,4 +1,4 @@
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const paramsDocs =
 	"https://developers.cloudflare.com/style-guide/components/render/#defining-expected-properties-in-frontmatter";

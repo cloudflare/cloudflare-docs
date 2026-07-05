@@ -1,20 +1,25 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
 
-Specifies maximum width of the image. Exact behavior depends on the `fit` mode; use the `fit=scale-down` option to ensure that the image will not be enlarged unnecessarily.
+<a id="width"></a>
 
-Available options are a specified width in pixels or `auto`.
+### `width` | `w`
+
+Sets the width of the output image in pixels using a positive integer value. By default, Cloudflare uses the original width of the input image.
+
+When `width` is set, the exact behavior depends on the `fit` parameter.
+
+Accepts the following values:
+
+- A number in pixels (for example, `250`).
+- `auto` — Automatically serves the image in the most optimal width based on available information about the browser and device. Accepts `wbreakpoints` (client hints), `wmobile` (user-agent detection), and `wdesktop` (user-agent detection) as sub-parameters.
 
 <Tabs>
   <TabItem label="URL format">
-    ```js
+    ```txt
     width=250
-    ```
-  </TabItem>
-  <TabItem label="URL format alias">
-    ```js
     w=250
     ```
   </TabItem>
@@ -25,8 +30,32 @@ Available options are a specified width in pixels or `auto`.
   </TabItem>
 </Tabs>
 
-Ideally, image sizes should match the exact dimensions at which they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200">`, then you can resize the image by applying `width=200`.
+#### `width=auto` sub-parameters
 
-[To serve responsive images](/images/transform-images/make-responsive-images/#transform-with-html-srcset), you can use the HTML `srcset` element and apply width parameters.
+When `width=auto` is specified, Cloudflare resizes the image using information from client hints (sent by the browser) or by user-agent detection as a fallback.
 
-`auto` - Automatically serves the image in the most optimal width based on available information about the browser and device. This method is supported only by Chromium browsers. For more information about this works, refer to [Transform width parameter](/images/transform-images/make-responsive-images/#transform-with-width-parameter).
+You can customize the `width=auto` behavior with the following sub-parameters:
+
+| Sub-parameter | Description | Default |
+| --- | --- | --- |
+| `wbreakpoints` | Override default breakpoint widths, in pixels (client hints) | `320;768;960;1200` |
+| `wmobile` | Override default width, in pixels, for mobile devices (user-agent detection) | `768` |
+| `wdesktop` | Override default width, in pixels, for desktop devices (user-agent detection) | `1200` |
+
+When optimizing remote images with `width=auto`, each unique width counts as a separate [billable transformation](/images/pricing/#images-transformed).
+
+To learn how `width=auto` works, refer to our guide on [serving responsive images](/images/optimization/make-responsive-images/).
+
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    wbreakpoints=320;768;960;1920 // Changes the largest breakpoint to 1920 pixels
+    wbreakpoints=320;768;960;1200;1920 // Adds another breakpoint at 1920 pixels
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {wbreakpoints: "320;768;960;1920"}}
+  ```
+  </TabItem>
+</Tabs>

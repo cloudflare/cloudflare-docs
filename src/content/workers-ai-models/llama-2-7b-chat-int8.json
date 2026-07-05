@@ -14,6 +14,10 @@
         {
             "property_id": "context_window",
             "value": "8192"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-05-30"
         }
     ],
     "schema": {
@@ -123,8 +127,29 @@
                                         "description": "The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool')."
                                     },
                                     "content": {
-                                        "type": "string",
-                                        "description": "The content of the message as a string."
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "description": "The content of the message as a string."
+                                            },
+                                            {
+                                                "type": "array",
+                                                "description": "Array of text content parts.",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "description": "Type of the content (text)"
+                                                        },
+                                                        "text": {
+                                                            "type": "string",
+                                                            "description": "Text content"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 "required": [

@@ -1,0 +1,21 @@
+---
+title: Homepage and sign-out for MCP server portals
+description: MCP server portals display a homepage with connection instructions and support a sign-out flow that revokes all portal sessions.
+date: 2026-04-17
+products:
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) display a homepage when users visit the portal domain in a browser.
+
+![MCP server portal homepage showing connection status and setup instructions](~/assets/images/changelog/access/portals-homepage-disconnected.png)
+
+The homepage shows:
+
+- The portal name and organization branding
+- The MCP endpoint URL with a copy button
+- Per-client connection instructions for Claude Desktop, Workers AI Playground, OpenCode, Windsurf, and other MCP clients
+
+Authenticated users see their email address and a **Sign out** button. Selecting **Sign out** revokes all portal-level OAuth grants, deletes upstream server OAuth states, and redirects through Cloudflare Access logout. A confirmation page shows a summary of the revoked sessions.
+
+For more information, refer to [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/#portal-homepage).

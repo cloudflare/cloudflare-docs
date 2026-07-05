@@ -1,0 +1,12 @@
+id: YtiodJ
+name: malicious-uploads-detection
+
+entry:
+  title: Malicious uploads detection
+  url: /waf/detections/malicious-uploads/
+  show: false
+
+meta:
+  title: Cloudflare Malicious uploads detection docs
+  description: Malicious uploads detection is a WAF traffic detection that scans content being uploaded to your application for malicious signatures like malware.
+  author: "@cloudflare"

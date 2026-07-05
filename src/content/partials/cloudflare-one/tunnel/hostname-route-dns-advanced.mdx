@@ -2,10 +2,15 @@
 {}
 ---
 
+import { DashButton } from "~/components";
+
 If you need `cloudflared` to use a specific internal DNS server that is different from the host's default resolver, you must explicitly connect that DNS server to Cloudflare via an [IP/CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/). You will also need to configure a [Gateway resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to route queries to this specific private DNS server.
 
 1.  To create an IP/CIDR route for the DNS server:
-    1. Go to **Networks** > **Routes** > **CIDR**.
+    1. Go to **Networking** > **Routes**.
+
+       <DashButton url="/?to=/:account/magic-networks/routes" />
+
     2. Select **Add CIDR route**.
     3. Enter the private IP address of your internal DNS resolver.
     4. Select the Cloudflare Tunnel that connects to the network where this DNS server resides.

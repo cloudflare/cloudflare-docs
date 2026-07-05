@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkMicToggle
+description: API reference for RtkMicToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to enable or disable the local participant's microphone. Automatically hides if the participant lacks audio production permissions.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant                   |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMicToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkMicToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMicToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkMicToggle meeting={meeting} size="md" variant="button" />;
+}
+```

@@ -3,7 +3,7 @@ import { parse } from "node-html-parser";
 import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
 import TOML from "@iarna/toml";
 import { parse as jsoncParse } from "jsonc-parser";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const props = z.object({
 	removeSchema: z.boolean().optional().default(false),
@@ -19,7 +19,7 @@ const copy = html.querySelector("div.copy > button");
 
 if (!copy) {
 	throw new Error(
-		`[WranglerConfig] Unable to find copy button in rendered code block HTML.`
+		`[WranglerConfig] Unable to find copy button in rendered code block HTML.`,
 	);
 }
 
@@ -27,11 +27,13 @@ let code = copy.attributes["data-code"];
 
 if (!code) {
 	throw new Error(
-		`[WranglerConfig] Unable to find data-code attribute on copy button.`
+		`[WranglerConfig] Unable to find data-code attribute on copy button.`,
 	);
 }
 
 code = code.replace(/\u007f/g, "\n");
+
+const hadTodayMagicString = /\$today/i.test(code);
 code = code.replaceAll(/\$today/gi, new Date().toISOString().split("T")[0]);
 
 const language =
@@ -39,6 +41,17 @@ const language =
 
 if (!language) {
 	throw new Error(`[WranglerConfig] Unable to find data-language.`);
+}
+
+/**
+ * When the author used `$today` for `compatibility_date`, inject a helpful
+ * comment above that line so readers know they should keep it current.
+ */
+function injectCompatDateComment(src: string, commentPrefix: string): string {
+	return src.replace(
+		/^(\s*)(.*compatibility_date.*)/m,
+		`$1${commentPrefix} Set this to today's date\n$1$2`,
+	);
 }
 
 let toml, json;
@@ -53,6 +66,11 @@ if (language === "toml") {
 } else {
 	json = code;
 	toml = TOML.stringify(jsoncParse(code));
+}
+
+if (hadTodayMagicString) {
+	toml = injectCompatDateComment(toml, "#");
+	json = injectCompatDateComment(json, "//");
 }
 ---
 

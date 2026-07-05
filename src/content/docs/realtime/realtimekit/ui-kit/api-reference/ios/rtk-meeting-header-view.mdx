@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: RtkMeetingHeaderView
+description: API reference for RtkMeetingHeaderView component (iOS Library)
+products:
+  - realtime
+---
+
+Meeting header view that displays the meeting title, participant count, elapsed time clock, recording indicator, and camera switch button.
+
+## Initializer parameters
+
+| Parameter | Type                | Required | Default | Description                                            |
+| --------- | ------------------- | -------- | ------- | ------------------------------------------------------ |
+| `meeting` | `RealtimeKitClient` | ✅       | -       | The RealtimeKit client instance for the active meeting |
+
+## Methods
+
+| Method                                  | Return Type | Description                                                   |
+| --------------------------------------- | ----------- | ------------------------------------------------------------- |
+| `setContentTop(offset: CGFloat)`        | `Void`      | Sets the top content offset for the header layout             |
+| `refreshNextPreviousButtonState()`      | `Void`      | Refreshes the enabled state of next and previous page buttons |
+| `setClicks(nextButton:previousButton:)` | `Void`      | Assigns tap handlers for the next and previous page buttons   |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let headerView = RtkMeetingHeaderView(meeting: rtkClient)
+view.addSubview(headerView)
+```
+
+### With page navigation
+
+```swift
+import RealtimeKitUI
+
+let headerView = RtkMeetingHeaderView(meeting: rtkClient)
+headerView.setClicks(
+    nextButton: { print("Next page") },
+    previousButton: { print("Previous page") }
+)
+headerView.refreshNextPreviousButtonState()
+view.addSubview(headerView)
+```

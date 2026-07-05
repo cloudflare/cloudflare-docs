@@ -1,5 +1,5 @@
 ---
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { marked } from "marked";
 import { indexPlans } from "~/util/plans";
 
@@ -29,8 +29,7 @@ const entries = Object.entries(plan);
 				<h3>{value.title}</h3>
 				{value.link && (
 					<p>
-						<!-- prettier-ignore -->
-						<strong>Link:</strong>{" "}<a href={value.link}>{value.title}</a>
+						<strong>Link:</strong> <a href={value.link}>{value.title}</a>
 					</p>
 				)}
 				{Object.values(value.properties).map((value: any) => (

@@ -36,9 +36,25 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 		return true;
 	});
 
+	// Versions up to and including 2026.3.566.1 render as "WARP client";
+	// newer versions render as "Cloudflare One Client".
+	const isLegacyVersion = (ver: string): boolean => {
+		const legacyThreshold = [2026, 3, 566, 1];
+		const parts = ver.split(".").map(Number);
+		for (let i = 0; i < legacyThreshold.length; i++) {
+			if ((parts[i] ?? 0) < legacyThreshold[i]) return true;
+			if ((parts[i] ?? 0) > legacyThreshold[i]) return false;
+		}
+		return true;
+	};
+
 	return releases.map((release) => {
 		const { platformName, version, releaseNotes, releaseDate } = release.data;
-		const title = `WARP client for ${platformName} (version ${version})`;
+
+		const clientName = isLegacyVersion(version)
+			? "WARP client"
+			: "Cloudflare One Client";
+		const title = `${clientName} for ${platformName} (version ${version})`;
 
 		const [platform, track] = release.id.split("/");
 
@@ -50,10 +66,10 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 
 		const link =
 			track === "ga"
-				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/)"
-				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/beta-releases/)";
+				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/)"
+				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/beta-releases/)";
 
-		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} WARP client is now available on the ${link}.`;
+		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} ${clientName} is now available on the ${link}.`;
 
 		return {
 			id: `${releaseDate.toISOString().slice(0, 10)}-warp-${platform}-${track}`,
@@ -64,8 +80,8 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				description: title,
 				hidden: false,
 				date: releaseDate,
-				products: [{ id: "zero-trust-warp", collection: "directory" }],
-				scheduled: false,
+				products: [{ id: "cloudflare-one-client", collection: "directory" }],
+				publish_future_dated_entry: false,
 			},
 			rendered: {
 				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
@@ -116,8 +132,27 @@ export async function getChangelogs({
 		entries = entries.filter((e) => filter(e));
 	}
 
+	// Exclude entries with a date in the future so that changelog posts
+	// merged ahead of time do not appear until their publish date.
+	const now = new Date();
+	entries = entries.filter(
+		(e) =>
+			e.data.publish_future_dated_entry ||
+			e.data.date.getTime() <= now.getTime(),
+	);
+
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
+
+// Pre-computed set of all product IDs that have at least one visible changelog
+// entry. Used by Header to scope the filter dropdown consistently across all pages.
+export const changelogProductIds: string[] = [
+	...new Set(
+		(await getChangelogs({ filter: (e) => !e.data.hidden })).flatMap((e) =>
+			e.data.products.map((p) => p.id),
+		),
+	),
+];
 
 type GetRSSItemsOptions = {
 	/**
@@ -179,7 +214,7 @@ export async function getRSSItems({
 				description: content,
 				pubDate: date,
 				categories: productTitles,
-				link: `/changelog/${note.id}/`,
+				link: `/changelog/post/${note.id}/`,
 				customData: `<product>${productTitles.at(0)}</product>`,
 			};
 		}),

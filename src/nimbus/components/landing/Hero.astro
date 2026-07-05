@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+import { stagger } from "./animation";
+import { LinkButton } from "@/components/ui/link-button";
+import CopyPromptButton from "@/components/CopyPromptButton.astro";
+---
+
+<section id="hero" class="pb-12 md:pt-6 lg:pb-16">
+	<h1
+		class={`text-[clamp(2.75rem,5vw,3.5rem)] font-medium leading-[1.1] tracking-tight text-balance mb-4 text-foreground ${stagger(0.05)}`}
+	>
+		Cloudflare Developer Docs
+	</h1>
+
+	<p
+		class={`text-base text-pretty max-w-[480px] leading-relaxed mb-6 sm:text-lg sm:mb-8 text-muted-foreground ${stagger(0.1)}`}
+	>
+		Explore guides and tutorials to start building on Cloudflare's platform
+	</p>
+
+	<div class={`flex flex-wrap items-center gap-x-3 gap-y-3 ${stagger(0.16)}`}>
+		<LinkButton href="/fundamentals/get-started/" variant="primary" size="lg">
+			Get started
+			<Icon name="ph:arrow-right" class="h-4 w-4" />
+		</LinkButton>
+
+		<CopyPromptButton tooltip="Sets up your AI agent for Cloudflare" />
+	</div>
+</section>

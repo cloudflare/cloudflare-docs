@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: How Published applications works in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Published applications
 sidebar:
   order: 8
@@ -8,6 +11,8 @@ sidebar:
 Cloudflare Tunnel allows you to publish local applications to the Internet via a public hostname. For example, you can [add a published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application) that points `docs.example.com` to `https://localhost:8080`. Anyone can now view your application by going to `docs.example.com` in their web browser.
 
 Cloudflare can route traffic down your Cloudflare Tunnel using a [DNS record](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) or [Cloudflare Load Balancer](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/). You can configure either option from the Cloudflare dashboard by pointing a DNS `CNAME` record or a load balancer pool to your Cloudflare Tunnel subdomain (`<UUID>.cfargotunnel.com`). You can also associate these records with your tunnel from `cloudflared` directly.
+
+For TCP or UDP applications, Cloudflare can also route traffic through a [Spectrum application](/spectrum/get-started/#create-a-spectrum-application-using-a-virtual-network-origin) attached to a [virtual network](/cloudflare-one/networks/virtual-networks/).
 
 :::note
 

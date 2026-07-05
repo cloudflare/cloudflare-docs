@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkLiveStreamIndicator
+description: API reference for RtkLiveStreamIndicator component (React Native Library)
+products:
+  - realtime
+---
+
+Displays a "Live" indicator when a livestream is active. Only visible in livestream mode for off-stage viewers.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                     |
+| `t`        | `RtkI18n`                      | ❌       | `useLanguage()`   | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLiveStreamIndicator } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLiveStreamIndicator meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLiveStreamIndicator } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLiveStreamIndicator meeting={meeting} size="md" />;
+}
+```

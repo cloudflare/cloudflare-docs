@@ -1,9 +1,12 @@
 ---
 pcx_content_type: navigation
 title: Storage and Broadcast
+description: Create real-time key-value stores and broadcast messages to participants in RealtimeKit.
 sidebar:
   label: Collaborative Stores
   order: 7
+products:
+  - realtime
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
@@ -74,12 +77,12 @@ This method must be executed for every user.
 
 ### Update a Store
 
-You can add, update or delete entires in a store:
+You can add, update or delete entries in a store:
 
 | Param   | Type       | Description                                                 | Required |
 | ------- | ---------- | ----------------------------------------------------------- | -------- |
 | `key`   | string     | Unique identifier used to store/update a value in the store | Yes      |
-| `value` | StoreValue | Value that can be stored agains a key                       | Yes      |
+| `value` | StoreValue | Value that can be stored against a key                       | Yes      |
 
 <RTKCodeSnippet id={"web-react", "mobile-react-native"}>
 

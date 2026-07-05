@@ -1,0 +1,15 @@
+---
+title: Digital experience tests to authenticated resources and enhanced configuration
+description: Digital experience now supports testing applications with authentication and has enhanced test configuration
+date: 2026-04-29
+---
+
+[Digital experience tests](/cloudflare-one/insights/dex/tests/) now support testing applications protected by Cloudflare Access or third-party authentication. All authentication secrets are managed via [Cloudflare Secret Store](/secrets-store/). 
+
+Digital experience tests also have enhanced configuration options including:
+- New HTTP methods (DELETE, PATCH, POST, PUT)
+- Secret Store headers, custom plain text headers, and custom request bodies
+- Advanced settings: follow redirects, response bodies, response headers, and allow untrusted certificates
+
+![Digital experience test configuration for Cloudflare Access applications](~/assets/images/changelog/dex/dex_test_auth_config.png)
+![Digital experience enhanced test configuration](~/assets/images/changelog/dex/dex_test_enhanced_config.png)

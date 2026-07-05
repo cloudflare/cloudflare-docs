@@ -1,10 +1,14 @@
 ---
 title: Unified API (OpenAI compat)
+description: Send requests to multiple AI providers through a single OpenAI-compatible endpoint on AI Gateway.
 pcx_content_type: reference
 tags:
   - AI
 sidebar:
-  order: 2
+  order: 3
+  badge: Deprecated
+products:
+  - ai-gateway
 ---
 
 import {
@@ -14,15 +18,19 @@ import {
 } from "~/components";
 import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
 
+:::caution[Deprecated]
+This endpoint is deprecated. Use the [REST API](/ai-gateway/usage/rest-api/) instead, which provides OpenAI-compatible endpoints at `api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/v1/chat/completions`. The `/compat/chat/completions` endpoint will continue to work for existing integrations.
+:::
+
 Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
 
 ## Endpoint URL
 
 ```txt
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
+https://gateway.ai.cloudflare.com/v1/{account_id}/default/compat/chat/completions
 ```
 
-Replace `{account_id}` and `{gateway_id}` with your Cloudflare account and gateway IDs.
+Replace `{account_id}` with your Cloudflare account ID. The `default` gateway is created automatically on your first request — no setup needed. You can also replace `default` with a specific gateway ID if you have already created one.
 
 ## Parameters
 

@@ -1,0 +1,19 @@
+---
+title: Run 15x more Containers with higher resource limits
+description: Containers limits increased 15x for memory, vCPU, and disk
+products:
+  - containers
+date: 2026-02-25
+---
+
+You can now run more [Containers](/containers/) concurrently with significantly higher limits on memory, vCPU, and disk.
+
+| Limit                                          | Previous Limit | New Limit |
+| ---------------------------------------------- | -------------- | --------- |
+| Memory for concurrent live Container instances | 400GiB         | 6TiB      |
+| vCPU for concurrent live Container instances   | 100            | 1,500     |
+| Disk for concurrent live Container instances   | 2TB            | 30TB      |
+
+This 15x increase enables larger-scale workloads on Containers. You can now run 15,000 instances of the `lite` instance type, 6,000 instances of `basic`, over 1,500 instances of `standard-1`, or over 1,000 instances of `standard-2` concurrently.
+
+Refer to [Limits](/containers/platform-details/limits/) for more details on the available instance types and limits.

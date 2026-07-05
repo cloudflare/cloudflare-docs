@@ -1,26 +1,44 @@
 ---
-title: Revalidation and request collapsing
+title: Revalidation
 pcx_content_type: concept
+description: How Cloudflare revalidates stale cached content with your origin.
+products:
+  - cache
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+## Stale-while-revalidate
 
-Revalidation is a caching mechanism that checks the [freshness](/cache/concepts/retention-vs-freshness/#freshness-ttl) of cached data before serving it to users. If a cached object is no longer fresh and Cloudflare receives a request for it, the system makes a request to the origin to revalidate the object in the Cloudflare cache. By using headers like `If-Modified-Since` and `ETag`, Cloudflare validates content without fully re-fetching it. When these headers are missing, [Smart Edge Revalidation](https://blog.cloudflare.com/introducing-smart-edge-revalidation/) generates a `Last-Modified` header, ensuring efficient updates and delivery of fresh content while reducing origin traffic.
+When a cached asset expires, Cloudflare uses the [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) directive in `Cache-Control` to determine whether it can continue serving the stale asset while fetching a fresh copy from the origin. If the directive is present and the asset is within the allowed staleness window, Cloudflare serves the expired content to visitors and revalidates in the background. By using headers like `If-Modified-Since` and `ETag`, Cloudflare validates content without fully re-fetching it, reducing origin traffic.
 
-## Revalidation towards origin
+## Asynchronous revalidation
 
-For stale (expired TTL) content, Cloudflare will send a revalidation request to the origin. If the stale content is still valid Cloudflare will set a new TTL. If the content is expired, then the origin will provide new fresh content to replace the old.
+Revalidation is fully asynchronous. When a cached asset expires and `stale-while-revalidate` is set, the first request that arrives after expiry triggers revalidation in the background. That request immediately receives stale content with an [UPDATING](/cache/concepts/cache-responses/#updating) status instead of blocking until the origin responds. All following requests also receive stale content with an `UPDATING` status until the origin responds. Once revalidation completes, subsequent requests receive fresh content with a [HIT](/cache/concepts/cache-responses/#hit) status.
 
-Consider the following example scenarios.
+If the stale content is still valid, Cloudflare sets a new TTL. If the content has changed, the origin provides fresh content to replace the old.
 
-### Example 1
+## Controlling stale behavior
 
-One-thousand (1,000) requests arrive simultaneously at Cloudflare's network, and the requested resource was in Cloudflare but cannot be served because its TTL configuration indicates it is no longer fresh. This means that the resource needs to be served from the origin server. In this case, one request will go to the origin to be revalidated, while the other 999 requests will be served from cache with the status of [UPDATING](/cache/concepts/cache-responses/#updating). This means that the resource, although expired, is served stale from Cloudflare's cache, while the origin server is updating it. This behavior is defined by the [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) directive in `cache-control`. If you do not wish to serve stale content, set the directive to zero seconds, `stale-while-revalidate=0`.
+Cloudflare only serves stale content during revalidation if your origin includes the `stale-while-revalidate` directive in its `Cache-Control` header. Without this directive, visitors wait for the origin to respond before receiving content.
 
-### Example 2
+If your origin sets `stale-while-revalidate` but you want to override it, you can disable stale serving through the [Serve stale content while revalidating](/cache/how-to/cache-rules/settings/#serve-stale-content-while-revalidating) setting in Cache Rules.
 
-One-thousand (1,000) requests arrive simultaneously at a single Cloudflare data center, and the requested asset is not in Cloudflare's cache (a cache miss). These requests will use a <GlossaryTooltip term="cache lock">cache lock</GlossaryTooltip> to communicate with your origin. This means that only the first request will go to origin to fetch the asset. The remaining 999 requests wait for the first request to fetch the data, after which the response is [streamed](https://blog.cloudflare.com/introducing-concurrent-streaming-acceleration/) to all the waiting requests. The cache lock ensures that Cloudflare only sends the origin one request at a time for a given asset from a location in Cloudflare's network, preventing the origin from getting too much traffic.
+### Directives that disable stale-while-revalidate
+
+When [Origin Cache Control](/cache/concepts/cache-control/#enable-origin-cache-control) is enabled, the following `Cache-Control` directives prevent Cloudflare from serving stale content, per [RFC 9111 §4.2.4](https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2.4):
+
+- **`must-revalidate`** — Prohibits serving stale content; the cache must revalidate with the origin first.
+- **`proxy-revalidate`** — Same as `must-revalidate`, but only applies to shared caches (like Cloudflare).
+- **`s-maxage`** — Implies `proxy-revalidate` semantics, so shared caches cannot serve stale content.
+- **`no-cache`** — Requires revalidation before serving any cached response.
+
+If any of these directives are present alongside `stale-while-revalidate`, Cloudflare will not serve stale content — requests will return `EXPIRED` instead of `UPDATING`.
+
+:::note[Workaround for different edge and browser TTLs]
+If you need `stale-while-revalidate` behavior with a different TTL for Cloudflare than for browsers, do not use `s-maxage`. Instead, configure your origin to send `max-age` with `stale-while-revalidate`, then use [Edge Cache TTL](/cache/how-to/cache-rules/settings/#edge-ttl) in Cache Rules to set a separate TTL for Cloudflare.
+:::
+
+For all available directives or behavior when Origin Cache Control is disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
 ## Smart revalidation towards users
 

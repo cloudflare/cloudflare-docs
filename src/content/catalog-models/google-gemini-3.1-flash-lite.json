@@ -1,0 +1,764 @@
+{
+	"model_id": "google/gemini-3.1-flash-lite",
+	"provider_id": "google",
+	"name": "Gemini 3.1 Flash Lite",
+	"description": "Google's lightest and most cost-efficient Gemini model for high-throughput tasks.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Fast",
+		"Cost-Efficient",
+		"Multimodal"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 8192,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic generateContent request",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "What are the three laws of thermodynamics?"
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The three laws of thermodynamics (plus the \"zeroth\" law, which was defined later) describe the fundamental rules governing energy, heat, and entropy in the universe.\n\nHere is a breakdown of each:\n\n### 0. The Zeroth Law (The Law of Equilibrium)\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.\n*   **What it means:** This is the logical basis for temperature. It explains why thermometers work: if a thermometer reads the same temperature as object A, and the same temperature as object B, then object A and object B have the same temperature as each other.\n\n### 1. The First Law (The Law of Conservation of Energy)\nEnergy cannot be created or destroyed, only transformed from one form to another. The total energy of an isolated system remains constant.\n*   **What it means:** You cannot get \"something for nothing.\" If you want to increase the energy inside a system, you must add energy from the outside (by doing work on it or adding heat). Mathematically, it is often expressed as: **\u0394U = Q - W** (The change in internal energy equals the heat added to the system minus the work done by the system).\n\n### 2. The Second Law (The Law of Entropy)\nThe total entropy of an isolated system can never decrease over time; it can only remain constant or increase. \n*   **What it means:** Heat always flows spontaneously from a hotter object to a colder object, never the other way around. It also implies that \"disorder\" (entropy) in the universe is constantly increasing. This law effectively dictates the \"arrow of time\" and explains why perpetual motion machines are impossible: some energy is always lost to the environment as unusable heat.\n\n### 3. The Third Law (The Law of Absolute Zero)\nAs the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero.\n*   **What it means:** It is impossible to reach absolute zero in a finite number of steps. At absolute zero, all molecular motion would theoretically stop, and a perfectly ordered crystal would have no \"randomness\" or entropy. Because entropy can never be fully removed, you can get very close to absolute zero, but you can never actually reach it.\n\n***\n\n### Summary for easy remembering:\n*   **Zeroth:** You have to play the game (temperature exists).\n*   **First:** You can't win (you can't create energy).\n*   **Second:** You can't break even (you can't get back as much energy as you put in; some is always lost).\n*   **Third:** You can't leave the game (you can't reach absolute zero)."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "The three laws of thermodynamics (plus the \"zeroth\" law, which was defined later) describe the fundamental rules governing energy, heat, and entropy in the universe.\n\nHere is a breakdown of each:\n\n### 0. The Zeroth Law (The Law of Equilibrium)\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.\n*   **What it means:** This is the logical basis for temperature. It explains why thermometers work: if a thermometer reads the same temperature as object A, and the same temperature as object B, then object A and object B have the same temperature as each other.\n\n### 1. The First Law (The Law of Conservation of Energy)\nEnergy cannot be created or destroyed, only transformed from one form to another. The total energy of an isolated system remains constant.\n*   **What it means:** You cannot get \"something for nothing.\" If you want to increase the energy inside a system, you must add energy from the outside (by doing work on it or adding heat). Mathematically, it is often expressed as: **\u0394U = Q - W** (The change in internal energy equals the heat added to the system minus the work done by the system).\n\n### 2. The Second Law (The Law of Entropy)\nThe total entropy of an isolated system can never decrease over time; it can only remain constant or increase. \n*   **What it means:** Heat always flows spontaneously from a hotter object to a colder object, never the other way around. It also implies that \"disorder\" (entropy) in the universe is constantly increasing. This law effectively dictates the \"arrow of time\" and explains why perpetual motion machines are impossible: some energy is always lost to the environment as unusable heat.\n\n### 3. The Third Law (The Law of Absolute Zero)\nAs the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero.\n*   **What it means:** It is impossible to reach absolute zero in a finite number of steps. At absolute zero, all molecular motion would theoretically stop, and a perfectly ordered crystal would have no \"randomness\" or entropy. Because entropy can never be fully removed, you can get very close to absolute zero, but you can never actually reach it.\n\n***\n\n### Summary for easy remembering:\n*   **Zeroth:** You have to play the game (temperature exists).\n*   **First:** You can't win (you can't create energy).\n*   **Second:** You can't break even (you can't get back as much energy as you put in; some is always lost).\n*   **Third:** You can't leave the game (you can't reach absolute zero).",
+									"thoughtSignature": "AY89a1/EHFiot4UXSeid202GCFEHyZa98rcGe1Gu+0O8+BEZz4yYyhqwk0jb/IjL11U="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 8,
+					"candidatesTokenCount": 582,
+					"totalTokenCount": 590,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 8
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 582
+						}
+					]
+				},
+				"modelVersion": "gemini-3.1-flash-lite-preview",
+				"createTime": "2026-05-28T00:56:41.227568Z",
+				"responseId": "yZIXavDxDfqE3dAP7f2X4Qo",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the three laws of thermodynamics?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Instruction",
+			"description": "Using a system instruction to set context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "How do I read a JSON file in Python?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"temperature": 0.3
+				},
+				"systemInstruction": {
+					"parts": [
+						{
+							"text": "You are a helpful coding assistant specializing in Python."
+						}
+					]
+				}
+			},
+			"output": {
+				"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the standard way to do it:\n\n### The Basic Approach\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Breakdown of the code:\n1.  **`import json`**: Imports Python's built-in library for handling JSON.\n2.  **`with open(...)`**: This is a \"context manager.\" It is the best practice because it ensures the file is automatically closed after you are done reading it, even if an error occurs.\n3.  **`json.load(file)`**: This function parses the file object and converts the JSON data into the corresponding Python object (e.g., a JSON object becomes a `dict`, a JSON array becomes a `list`).\n\n---\n\n### Common Scenarios\n\n#### 1. What if the file is empty or malformed?\nIf the file is empty or contains invalid JSON, `json.load()` will raise a `json.JSONDecodeError`. You can handle this with a `try-except` block:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\nexcept FileNotFoundError:\n    print(\"The file does not exist.\")\n```\n\n#### 2. Reading a JSON string (instead of a file)\nIf you have the JSON data as a string variable rather than a file, use `json.loads()` (the \"s\" stands for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])  # Output: Alice\n```\n\n### Summary: Which one to use?\n*   Use **`json.load(file_object)`** when reading from a **file**.\n*   Use **`json.loads(string)`** when reading from a **string**."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the standard way to do it:\n\n### The Basic Approach\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Breakdown of the code:\n1.  **`import json`**: Imports Python's built-in library for handling JSON.\n2.  **`with open(...)`**: This is a \"context manager.\" It is the best practice because it ensures the file is automatically closed after you are done reading it, even if an error occurs.\n3.  **`json.load(file)`**: This function parses the file object and converts the JSON data into the corresponding Python object (e.g., a JSON object becomes a `dict`, a JSON array becomes a `list`).\n\n---\n\n### Common Scenarios\n\n#### 1. What if the file is empty or malformed?\nIf the file is empty or contains invalid JSON, `json.load()` will raise a `json.JSONDecodeError`. You can handle this with a `try-except` block:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\nexcept FileNotFoundError:\n    print(\"The file does not exist.\")\n```\n\n#### 2. Reading a JSON string (instead of a file)\nIf you have the JSON data as a string variable rather than a file, use `json.loads()` (the \"s\" stands for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])  # Output: Alice\n```\n\n### Summary: Which one to use?\n*   Use **`json.load(file_object)`** when reading from a **file**.\n*   Use **`json.loads(string)`** when reading from a **string**.",
+									"thoughtSignature": "AY89a19YeehPDK20Ix1JZMp7Y711rMQkP3i2gEgq6TQjivmc3a78w5LmaBP2PZS2AZM="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 20,
+					"candidatesTokenCount": 493,
+					"totalTokenCount": 513,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 20
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 493
+						}
+					]
+				},
+				"modelVersion": "gemini-3.1-flash-lite-preview",
+				"createTime": "2026-05-28T00:56:44.293757Z",
+				"responseId": "zJIXav32EfeY3dAPlp-m0AY",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [{ parts: [{ text: 'How do I read a JSON file in Python?' }], role: 'user' }],\n    generationConfig: { temperature: 0.3 },\n    systemInstruction: {\n      parts: [{ text: 'You are a helpful coding assistant specializing in Python.' }],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"How do I read a JSON file in Python?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.3\n    },\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are a helpful coding assistant specializing in Python.\"\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "I need help planning a road trip from San Francisco to Los Angeles."
+							}
+						],
+						"role": "user"
+					},
+					{
+						"parts": [
+							{
+								"text": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+							}
+						],
+						"role": "model"
+					},
+					{
+						"parts": [
+							{
+								"text": "Yes, what are some good places to stop?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 2048
+				}
+			},
+			"output": {
+				"text": "To give you the best recommendations, it helps to know which route you plan to take. There are two primary ways to drive from San Francisco to Los Angeles:\n\n### 1. The Pacific Coast Highway (Highway 1) \u2013 The Scenic Route\n*   **Time:** 9\u201312 hours of driving (without stops). This is best done over **2\u20133 days**.\n*   **Best for:** Views, photography, nature, and cute coastal towns.\n\n**Top Stops:**\n*   **Santa Cruz:** Grab a coffee, walk the famous Beach Boardwalk, or watch the surfers at Steamer Lane.\n*   **Monterey/Carmel-by-the-Sea:** Visit the world-class Monterey Bay Aquarium and take the iconic \"17-Mile Drive\" through Pebble Beach. Carmel is perfect for a boutique lunch.\n*   **Big Sur:** This is the highlight. Stop at **Bixby Creek Bridge** for the classic photo. If you have time, hike in **Pfeiffer Big Sur State Park** or see **McWay Falls** (a waterfall that drops onto the beach).\n*   **San Simeon:** Visit **Hearst Castle** (book in advance!) and the nearby **Elephant Seal Vista Point** to see hundreds of seals lounging on the beach.\n*   **San Luis Obispo / Pismo Beach:** A great spot to grab a tri-tip sandwich or walk out on the Pismo Pier.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Walk State Street for shopping and dining, or visit the Old Mission Santa Barbara.\n\n---\n\n### 2. The I-5 Freeway \u2013 The \"Get There Fast\" Route\n*   **Time:** 5\u20136 hours.\n*   **Best for:** Efficiency. It is largely agricultural and flat, but there are a few unique spots to break up the monotony.\n\n**Top Stops:**\n*   **Harris Ranch (Coalinga):** The most famous stop on the I-5. It\u2019s an enormous cattle ranch and restaurant known for their steaks. It\u2019s the primary \"pit stop\" for most road trippers.\n*   **The Grapevine:** As you descend toward LA, you\u2019ll hit the \"Grapevine\" mountain pass. There are several scenic overlooks where you can see the Tejon Pass.\n*   **Castaic/Valencia:** As you enter the LA basin, you\u2019ll pass Six Flags Magic Mountain if you want a thrill-seeking break.\n\n---\n\n### Which one should you pick?\n*   **Choose Highway 1 if:** You are on vacation, have at least two days, and want to see some of the most famous coastline in the world.\n*   **Choose I-5 if:** You need to get to LA for an appointment, have limited time, or simply want the most direct route possible.\n\n**Pro Tip:** If you take Highway 1, **check road conditions before you leave.** Big Sur is prone to landslides, and parts of the highway are occasionally closed for repairs.\n\n**Are you planning to do this in one day or spread it out over a few?** I can help you build an itinerary based on your timeline!"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "To give you the best recommendations, it helps to know which route you plan to take. There are two primary ways to drive from San Francisco to Los Angeles:\n\n### 1. The Pacific Coast Highway (Highway 1) \u2013 The Scenic Route\n*   **Time:** 9\u201312 hours of driving (without stops). This is best done over **2\u20133 days**.\n*   **Best for:** Views, photography, nature, and cute coastal towns.\n\n**Top Stops:**\n*   **Santa Cruz:** Grab a coffee, walk the famous Beach Boardwalk, or watch the surfers at Steamer Lane.\n*   **Monterey/Carmel-by-the-Sea:** Visit the world-class Monterey Bay Aquarium and take the iconic \"17-Mile Drive\" through Pebble Beach. Carmel is perfect for a boutique lunch.\n*   **Big Sur:** This is the highlight. Stop at **Bixby Creek Bridge** for the classic photo. If you have time, hike in **Pfeiffer Big Sur State Park** or see **McWay Falls** (a waterfall that drops onto the beach).\n*   **San Simeon:** Visit **Hearst Castle** (book in advance!) and the nearby **Elephant Seal Vista Point** to see hundreds of seals lounging on the beach.\n*   **San Luis Obispo / Pismo Beach:** A great spot to grab a tri-tip sandwich or walk out on the Pismo Pier.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Walk State Street for shopping and dining, or visit the Old Mission Santa Barbara.\n\n---\n\n### 2. The I-5 Freeway \u2013 The \"Get There Fast\" Route\n*   **Time:** 5\u20136 hours.\n*   **Best for:** Efficiency. It is largely agricultural and flat, but there are a few unique spots to break up the monotony.\n\n**Top Stops:**\n*   **Harris Ranch (Coalinga):** The most famous stop on the I-5. It\u2019s an enormous cattle ranch and restaurant known for their steaks. It\u2019s the primary \"pit stop\" for most road trippers.\n*   **The Grapevine:** As you descend toward LA, you\u2019ll hit the \"Grapevine\" mountain pass. There are several scenic overlooks where you can see the Tejon Pass.\n*   **Castaic/Valencia:** As you enter the LA basin, you\u2019ll pass Six Flags Magic Mountain if you want a thrill-seeking break.\n\n---\n\n### Which one should you pick?\n*   **Choose Highway 1 if:** You are on vacation, have at least two days, and want to see some of the most famous coastline in the world.\n*   **Choose I-5 if:** You need to get to LA for an appointment, have limited time, or simply want the most direct route possible.\n\n**Pro Tip:** If you take Highway 1, **check road conditions before you leave.** Big Sur is prone to landslides, and parts of the highway are occasionally closed for repairs.\n\n**Are you planning to do this in one day or spread it out over a few?** I can help you build an itinerary based on your timeline!",
+									"thoughtSignature": "AY89a18J+OP94FihCOOSKOTP1/A3aj1DPFpKGlAu0M+6gC05cuBJdnWi+n4VC0J/O7s="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 64,
+					"candidatesTokenCount": 669,
+					"totalTokenCount": 733,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 64
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 669
+						}
+					]
+				},
+				"modelVersion": "gemini-3.1-flash-lite-preview",
+				"createTime": "2026-05-28T00:56:47.115882Z",
+				"responseId": "z5IXaqqJB4GR3dAP46nYuQ8",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        parts: [{ text: 'I need help planning a road trip from San Francisco to Los Angeles.' }],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Yes, what are some good places to stop?' }], role: 'user' },\n    ],\n    generationConfig: { maxOutputTokens: 2048 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"I need help planning a road trip from San Francisco to Los Angeles.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"I'\\''d be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Yes, what are some good places to stop?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 2048\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "Write a short story opening about a detective finding an unusual clue."
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 1500,
+					"temperature": 0.8
+				}
+			},
+			"output": {
+				"text": "The rain drummed a relentless, hollow rhythm against the skylight of the abandoned clock tower, but Elias Thorne didn\u2019t hear it. He was too busy staring at the centerpiece of the crime scene.\n\nThe victim lay sprawled across the floorboards, exactly where the anonymous tip had promised, but it wasn't the body that made the breath hitch in Elias\u2019s throat. Tucked neatly into the victim\u2019s stiff, pale hand was a small, ornate music box\u2014not the kind you\u2019d find in a dusty antique shop, but one carved from a material that seemed to swallow the beam of his flashlight. \n\nElias knelt, his joints popping in the quiet room. He reached out with a gloved finger to nudge the lid. As the mechanism clicked open, a melody drifted into the damp air\u2014a discordant, shivering waltz that sounded less like a song and more like a warning. \n\nBut it was what sat inside the velvet lining that turned his blood to ice: a perfectly preserved, human tooth, still damp, with a tiny, silver serial number etched into the enamel."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "The rain drummed a relentless, hollow rhythm against the skylight of the abandoned clock tower, but Elias Thorne didn\u2019t hear it. He was too busy staring at the centerpiece of the crime scene.\n\nThe victim lay sprawled across the floorboards, exactly where the anonymous tip had promised, but it wasn't the body that made the breath hitch in Elias\u2019s throat. Tucked neatly into the victim\u2019s stiff, pale hand was a small, ornate music box\u2014not the kind you\u2019d find in a dusty antique shop, but one carved from a material that seemed to swallow the beam of his flashlight. \n\nElias knelt, his joints popping in the quiet room. He reached out with a gloved finger to nudge the lid. As the mechanism clicked open, a melody drifted into the damp air\u2014a discordant, shivering waltz that sounded less like a song and more like a warning. \n\nBut it was what sat inside the velvet lining that turned his blood to ice: a perfectly preserved, human tooth, still damp, with a tiny, silver serial number etched into the enamel.",
+									"thoughtSignature": "AY89a1+efRG966PVAWsOCpYT3WsWbVd23ij9APAlGDpoQpVy3/vLRUmxGHuK6AsLd8I="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 13,
+					"candidatesTokenCount": 226,
+					"totalTokenCount": 239,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 13
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 226
+						}
+					]
+				},
+				"modelVersion": "gemini-3.1-flash-lite-preview",
+				"createTime": "2026-05-28T00:56:50.984912Z",
+				"responseId": "0pIXatCOPOCH3dAPs-CH0Ac",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 1500, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.1-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 1500,\n      \"temperature\": 0.8\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://deepmind.google/technologies/gemini/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-3.1-flash-lite.png",
+	"metadata": {
+		"Architecture": "Transformer (multimodal)"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"banner": null,
+	"created_at": "2026-05-22 17:53:09",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"contents": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"model"
+										]
+									},
+									"parts": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												}
+											},
+											"additionalProperties": {}
+										}
+									}
+								},
+								"required": [
+									"parts"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"systemInstruction": {
+							"type": "object",
+							"properties": {
+								"parts": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"text": {
+												"type": "string"
+											}
+										},
+										"additionalProperties": {}
+									}
+								}
+							},
+							"required": [
+								"parts"
+							],
+							"additionalProperties": {}
+						},
+						"generationConfig": {
+							"type": "object",
+							"properties": {
+								"temperature": {
+									"type": "number"
+								},
+								"topP": {
+									"type": "number"
+								},
+								"topK": {
+									"type": "number"
+								},
+								"maxOutputTokens": {
+									"type": "number"
+								},
+								"candidateCount": {
+									"type": "number"
+								},
+								"stopSequences": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"responseMimeType": {
+									"type": "string"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"safetySettings": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"category": {
+										"type": "string"
+									},
+									"threshold": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"category",
+									"threshold"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"toolConfig": {}
+					},
+					"required": [
+						"contents"
+					],
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"candidates": {
+							"type": "array",
+							"items": {}
+						},
+						"usageMetadata": {
+							"type": "object",
+							"properties": {
+								"promptTokenCount": {
+									"type": "number"
+								},
+								"candidatesTokenCount": {
+									"type": "number"
+								},
+								"totalTokenCount": {
+									"type": "number"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"modelVersion": {
+							"type": "string"
+						}
+					},
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"anyOf": [
+													{
+														"type": "string"
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		}
+	}
+}

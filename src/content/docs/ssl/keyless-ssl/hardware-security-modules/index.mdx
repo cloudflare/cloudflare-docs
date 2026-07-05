@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Store private keys in hardware security modules for Keyless SSL.
+products:
+  - ssl
 title: Hardware security modules
 sidebar:
   order: 2
@@ -12,7 +15,7 @@ In addition to private keys stored on disk, Keyless SSL supports keys stored in 
 
 ## Why use Keyless SSL with an HSM?
 
-Hardware Security Modules (HSMs) facilitate a higher level of protection for your private keys over storing them directly on your key server. The primary responsibility of an HSM is safeguarding private keys and performing operations such as signing or encryption internally. In addition to access control, that means the physical device must offer some degree of tamper-resistance in order to be compliant with government or [industry regulations such as FIPS 140](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.140-2.pdf).
+Hardware Security Modules (HSMs) facilitate a higher level of protection for your private keys over storing them directly on your key server. The primary responsibility of an HSM is safeguarding private keys and performing operations such as signing or encryption internally. In addition to access control, that means the physical device must offer some degree of tamper-resistance in order to be compliant with government or [industry regulations such as FIPS 140](https://csrc.nist.gov/pubs/fips/140-3/final).
 
 Moreover, many HSMs are also capable of generating keys and producing cryptographically secure randomness. Some are purpose-built to perform cryptographic computations more efficiently.
 

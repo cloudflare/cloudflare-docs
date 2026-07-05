@@ -1,0 +1,7 @@
+:::note[Working with disabled iptables]
+Cloudflare Containers do not support iptables manipulation. The `--iptables=false` and `--ip6tables=false` flags prevent Docker from attempting to configure network rules, which would otherwise fail.
+
+To send or receive traffic from a container running within Docker-in-Docker, use the `--network=host` flag when running Docker commands.
+
+This allows you to connect to the container, but it means each inner container has access to your outer container's network stack. Ensure you understand the security implications of this setup before proceeding.
+:::

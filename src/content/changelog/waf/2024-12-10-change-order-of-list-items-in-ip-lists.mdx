@@ -1,7 +1,0 @@
----
-title: Change the order of list items in IP Lists (for API and Terraform users)
-description: API and Terraform users may see changes in IP list item order.
-date: 2024-12-10
----
-
-Due to changes in the API implementation, the order of list items in an IP list obtained via API or Terraform may change, which may cause Terraform to detect a change in Terraform state. To fix this issue, resync the Terraform state or upgrade the version of your Terraform Cloudflare provider to [version 4.44.0](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v4.44.0) or later.

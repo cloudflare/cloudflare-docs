@@ -1,6 +1,6 @@
 ---
 /* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { getGlossaryEntry } from "~/util/glossary";
 import { marked } from "marked";
 
@@ -41,7 +41,9 @@ definition = definition.split(/\r?\n/)[0];
 	}</span><script>
 	import { addTooltip } from "~/util/tippy";
 
-	const tooltips = document.querySelectorAll<HTMLSpanElement>("[data-tooltip]");
+	const tooltips = document.querySelectorAll<HTMLSpanElement>(
+		"[data-tooltip][data-content]",
+	);
 
 	for (const tooltip of tooltips) {
 		addTooltip(tooltip, tooltip.dataset.content as string);

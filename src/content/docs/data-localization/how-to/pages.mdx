@@ -1,17 +1,21 @@
 ---
 title: Pages
 pcx_content_type: how-to
+description: Configure Pages with Regional Services and Customer Metadata Boundary.
+products:
+  - data-localization
+  - pages
 sidebar:
   order: 2
 ---
 
 import { TabItem, Tabs, DashButton } from "~/components";
 
-In the following sections, we will give you some details about how to configure Pages with Regional Services and Customer Metadata Boundary.
+The following sections describe how to configure Cloudflare Pages with Regional Services and Customer Metadata Boundary to control where your Pages project is processed and where logs are stored.
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that processing of a Pages project occurs only in-region, follow these steps for the dashboard or API configuration:
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and ensure that processing of a Pages project occurs only in-region, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -30,7 +34,7 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) throu
 <TabItem label="API">
 
 1. Use the [API POST](/api/resources/pages/subresources/projects/subresources/domains/methods/create/) command to add a Custom Domain to a Pages project.
-2. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the Pages Custom Domain to create a `regional_hostnames` with a specific Region.
+2. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the Pages Custom Domain to create a `regional_hostnames` with a specific Region.
 
 </TabItem> </Tabs>
 

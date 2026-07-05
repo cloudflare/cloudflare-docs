@@ -21,6 +21,18 @@ Type: `string`
 
 Action performed by gateway on the HTTP request.
 
+## AddedHeaders
+
+Type: `array[string]`
+
+Headers added to the HTTP request by a Gateway rule.
+
+## AppControlInfo
+
+Type: `object`
+
+Information about application control operations, APIs, and groups that matched the HTTP request.
+
 ## ApplicationIDs
 
 Type: `array[int]`
@@ -32,6 +44,12 @@ IDs of the applications that matched the HTTP request parameters.
 Type: `array[string]`
 
 Names of the applications that matched the HTTP request parameters.
+
+## ApplicationStatuses
+
+Type: `array[string]`
+
+Statuses of the applications that matched the HTTP request parameters.
 
 ## BlockedFileHash
 
@@ -80,6 +98,12 @@ Names of the categories that matched the HTTP request parameters.
 Type: `int or string`
 
 The date and time the corresponding HTTP request was made.
+
+## DeletedHeaders
+
+Type: `array[string]`
+
+Names of headers that were deleted from the HTTP request by a Gateway rule.
 
 ## DestinationIP
 
@@ -203,9 +227,9 @@ The private app AUD, if any.
 
 ## ProxyEndpoint
 
-Type: ``
+Type: `string`
 
-
+The proxy endpoint used on the HTTP request, if any.
 
 ## Quarantined
 
@@ -243,6 +267,12 @@ Type: `string`
 
 Network session ID.
 
+## SetHeaders
+
+Type: `array[string]`
+
+Names of headers that were set (overwritten) on the HTTP request by a Gateway rule.
+
 ## SourceIP
 
 Type: `string`
@@ -272,6 +302,12 @@ Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel
 Type: `int`
 
 Source port of the request.
+
+## TenantID
+
+Type: `string`
+
+The tenant ID of the request, if exists.
 
 ## URL
 

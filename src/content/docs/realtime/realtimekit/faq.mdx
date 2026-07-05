@@ -1,9 +1,10 @@
 ---
 pcx_content_type: navigation
 title: FAQ
+description: Frequently asked questions about RealtimeKit meetings, recordings, and SDK usage.
 slug: realtime/realtimekit/faq
 sidebar:
-  order: 11
+  order: 14
 ---
 
 import { Details } from "~/components";
@@ -173,12 +174,28 @@ Higher screen share frame rates increase bandwidth usage and may impact the vide
 
 There could be multiple reasons for this.
 
-First, try a sample meeting on the [demo app](https://demo.realtime.cloudflare.com/). If you cannot send a message in the demo app, contact support. If you can send a message in the demo app, the issue is on the integration side.
+First, try a sample meeting on the [demo app](https://examples.realtime.cloudflare.com/). If you cannot send a message in the demo app, contact support. If you can send a message in the demo app, the issue is on the integration side.
 
 To troubleshoot integration issues, first check if the user has joined the meeting successfully. If the user has [joined](/realtime/realtimekit/core/meeting-object-explained/) the meeting successfully, check if the user's [preset](/realtime/realtimekit/concepts/preset/) has permissions to send messages. If you are using a custom UI, check if the core [Chat APIs](/realtime/realtimekit/core/chat/) are working to eliminate the Core SDK from the usual suspects.
 
 If this does not solve the issue, check if your framework is blocking the UI. Frameworks like Material UI can block input focus using focus traps in Drawer component. There is usually a prop to disable the focus trap. Material UI has a `disableEnforceFocus` prop for this purpose.
 
 If you are still unable to send a message, please contact support.
+
+</Details>
+
+### Demo App
+
+<Details header="Can I use the Cloudflare hosted demo app or examples in my website as an iframe?">
+
+We strongly recommend against embedding the Cloudflare hosted demo app or examples as an iframe in your website, even if you pass authentication tokens via URL parameters.
+
+Instead, set up the default meeting UI in your own website by following the [UI Kit setup guide](/realtime/realtimekit/ui-kit/) or deploy the [RealtimeKit web examples](https://github.com/cloudflare/realtimekit-web-examples/) under your own domain. The effort required for either approach is minimal and provides significant benefits:
+
+- **Control**: You maintain full control over the user experience, structure, and interface.
+- **Stability**: Your implementation remains consistent and will not change overnight, protecting your product from sudden disruptions.
+- **Reliability**: You control when and how to upgrade, ensuring a stable experience for your users.
+
+The demo app and example applications may be updated at any time without prior notice.
 
 </Details>

@@ -1,0 +1,19 @@
+---
+title: List Container instances with `wrangler containers instances`
+description: A new Wrangler command to list all instances for a Container application.
+products:
+  - containers
+date: 2026-03-12
+---
+
+A new [`wrangler containers instances`](/workers/wrangler/commands/containers/#containers-instances) command lists all instances for a given Container application. This mirrors the instances view in the Cloudflare dashboard.
+
+The command displays each instance's ID, name, state, location, version, and creation time:
+
+```sh
+wrangler containers instances <APPLICATION_ID>
+```
+
+Use the `--json` flag for machine-readable output, which is also the default format in non-interactive environments such as CI pipelines.
+
+For the full list of options, refer to the [`containers instances` command reference](/workers/wrangler/commands/containers/#containers-instances).

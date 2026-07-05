@@ -1,9 +1,14 @@
 ---
 pcx_content_type: reference
+description: Reference information for Useful terms in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Useful terms
 sidebar:
   order: 4
 ---
+
+import { DashButton } from "~/components";
 
 Review terminology for Cloudflare Tunnels.
 
@@ -21,15 +26,17 @@ A tunnel name is a unique, user-friendly identifier that you choose for a tunnel
 
 ## Connector
 
-The connector, referred to as `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Our connector offers high availability by creating four long-lived connections to two distinct data centers within Cloudflare's global network. This built-in redundancy means that if an individual connection, server, or data center goes down, your origin remains available.
+The connector, referred to as `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Each `cloudflared` instance creates four long-lived connections to at least two distinct data centers within Cloudflare's global network. This built-in redundancy means that if an individual connection, server, or data center goes down, your origin remains available.
 
 ## Replica
 
-You can create and configure a tunnel once and run that tunnel through multiple, unique instances of the connector, `cloudflared`. These instances are known as replicas. DNS records and Cloudflare Load Balancers will still point to the tunnel and its DNS Record (`UUID.cfargotunnel.com`), while that tunnel sends traffic to the multiple instances of `cloudflared` that run through it. Today, there is no guarantee about which replica will be chosen. Replicas are often deployed to provide tunnels with high availability in the event a given host running `cloudflared` is interrupted or taken offline.
+A replica is an additional instance of `cloudflared` running the same tunnel on a different host. You can create and configure a tunnel once, then run it through multiple replicas for redundancy. DNS records and Cloudflare Load Balancers continue to point to the tunnel (`UUID.cfargotunnel.com`), while Cloudflare distributes traffic across the available replicas. There is no guarantee about which replica will be chosen — Cloudflare routes to the geographically closest one. Replicas are typically deployed to keep a tunnel available if a host running `cloudflared` goes offline.
 
 ## Remotely-managed tunnel
 
-A remotely-managed tunnel is a [tunnel](#tunnel) that was created in [Cloudflare One](https://one.dash.cloudflare.com/) under **Networks** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/get/).
+A remotely-managed tunnel is a [tunnel](#tunnel) that was created in the Cloudflare dashboard under **Networking** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/get/).
+
+<DashButton url="/?to=/:account/tunnels" />
 
 ## Locally-managed tunnel
 
@@ -41,4 +48,4 @@ Quick tunnels, when run, will generate a URL that consists of a random subdomain
 
 ## Virtual networks
 
-A [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.
+A [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their Cloudflare One Client settings before entering the destination IP.

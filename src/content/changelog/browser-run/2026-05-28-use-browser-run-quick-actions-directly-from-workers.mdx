@@ -1,0 +1,53 @@
+---
+title: Use Browser Run Quick Actions directly from Workers
+description: Call Browser Run Quick Actions from your Worker using the new quickAction() binding method, with no API tokens or external HTTP requests required.
+products:
+  - browser-run
+date: 2026-05-28
+---
+
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
+You can now call [Browser Run Quick Actions](/browser-run/quick-actions/) directly from a [Cloudflare Worker](/workers/) using the `quickAction()` method on the browser binding. This simplifies how Workers interact with Browser Run by removing the need for API tokens or external HTTP requests. Your Worker communicates with Browser Run directly over Cloudflare's network, resulting in simpler code and lower latency.
+
+With the `quickAction()` method you can:
+
+- [Capture screenshots](/browser-run/quick-actions/screenshot-endpoint/) from URLs or HTML
+- [Generate PDFs](/browser-run/quick-actions/pdf-endpoint/) with custom styling, headers, and footers
+- [Extract HTML content](/browser-run/quick-actions/content-endpoint/) from fully rendered pages
+- [Convert pages to Markdown](/browser-run/quick-actions/markdown-endpoint/)
+- [Extract structured JSON](/browser-run/quick-actions/json-endpoint/) using AI
+- [Scrape elements](/browser-run/quick-actions/scrape-endpoint/) with CSS selectors
+- [Get all links](/browser-run/quick-actions/links-endpoint/) from a page
+- [Capture snapshots](/browser-run/quick-actions/snapshot/) (HTML + screenshot in one request)
+
+To get started, add a browser binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "compatibility_date": "2026-03-24",
+  "browser": {
+    "binding": "BROWSER"
+  }
+}
+```
+
+</WranglerConfig>
+
+Then call any Quick Action directly from your Worker. For example, to capture a screenshot:
+
+<TypeScriptExample>
+
+```ts
+const screenshot = await env.BROWSER.quickAction("screenshot", {
+  url: "https://www.cloudflare.com/",
+});
+```
+
+</TypeScriptExample>
+
+The `quickAction()` method requires a compatibility date of `2026-03-24` or later.
+
+For setup instructions and the full list of available actions, refer to [Browser Run Quick Actions](/browser-run/quick-actions/).

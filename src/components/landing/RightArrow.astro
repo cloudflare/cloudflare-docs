@@ -1,0 +1,52 @@
+---
+type Variant = "line" | "chevron";
+
+interface Props {
+	variant?: Variant;
+	size?: number;
+	strokeWidth?: number;
+	class?: string;
+}
+
+const {
+	variant = "line",
+	size = 14,
+	strokeWidth = variant === "chevron" ? 1.5 : 2,
+	class: className = "",
+} = Astro.props;
+---
+
+{
+	variant === "line" ? (
+		<svg
+			width={size}
+			height={size}
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width={strokeWidth}
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class:list={["shrink-0", className]}
+			aria-hidden="true"
+		>
+			<line x1="5" y1="12" x2="19" y2="12" />
+			<polyline points="12 5 19 12 12 19" />
+		</svg>
+	) : (
+		<svg
+			width={size}
+			height={size}
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width={strokeWidth}
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class:list={["shrink-0", className]}
+			aria-hidden="true"
+		>
+			<polyline points="9 6 15 12 9 18" />
+		</svg>
+	)
+}

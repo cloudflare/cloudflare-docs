@@ -1,10 +1,14 @@
 ---
 pcx_content_type: faq
+products:
+  - cloudflare-one
 title: General
 sidebar:
   order: 3
 head: []
 description: Review frequently asked questions about Cloudflare Zero Trust.
+tags:
+  - DNS
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -17,9 +21,10 @@ Cloudflare Gateway's DNS resolver introduces security into this flow. Instead of
 
 ## Is multi-factor authentication supported?
 
-Access is subjected to the MFA policies set in your identity provider. For example, users attempting to log in to an Access protected app might log in through Okta. Okta would enforce an MFA check before sending the valid authentication confirmation back to Cloudflare Access.
+Access supports two methods of enforcing MFA:
 
-Access does not have an independent or out-of-band MFA feature.
+- **Independent MFA** — Access prompts users for a second factor directly, without relying on your identity provider. You can configure MFA requirements per organization, application, or policy. For more information, refer to [Enforce independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa).
+- **Identity provider-based MFA** — Access respects the [MFA policies](/cloudflare-one/access-controls/policies/mfa-requirements/#identity-provider-based-mfa) set in your identity provider. For example, if your users are logging into an Access protected app through Okta, Okta would enforce an MFA check before sending the valid authentication confirmation back to Cloudflare Access.
 
 ## Which browsers are supported?
 
@@ -30,6 +35,23 @@ These browsers are supported:
 - Firefox (current release, last release)
 - Chrome (current release, last release)
 - Safari (current release, last release)
+
+## What languages does the Cloudflare dashboard support?
+
+The Cloudflare dashboard is available in the following languages:
+
+- Deutsch (German)
+- English
+- Español (Spanish)
+- Français (French)
+- Italiano (Italian)
+- 日本語 (Japanese)
+- 한국어 (Korean)
+- Português (Portuguese)
+- 简体中文 (Mandarin Chinese, Simplified)
+- 繁體中文 (Mandarin Chinese, Traditional)
+
+To change your dashboard language, refer to [Profile settings](/fundamentals/user-profiles/customize-account/#language).
 
 ## What data localization services are supported?
 

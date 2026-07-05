@@ -5,9 +5,12 @@ sidebar:
   order: 3
 tags: ["full-stack"]
 description: Create a React Router application and deploy it to Cloudflare Workers
+products:
+  - workers
 ---
 
 import {
+	AutoconfigDiagram,
 	Render,
 	PackageManagers,
 	Steps,
@@ -16,7 +19,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-**Start from CLI**: Scaffold a full-stack app with [React Router v7](https://reactrouter.com/) and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
+**Start from CLI**: Scaffold a full-stack app with [React Router v8](https://reactrouter.com/) and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
 
 <PackageManagers
 	type="create"
@@ -24,7 +27,7 @@ import {
 	args="my-react-router-app --framework=react-router"
 />
 
-**Or just deploy**: Create a full-stack app using React Router v7, with CI/CD and previews all set up for you.
+**Or just deploy**: Create a full-stack app using React Router v8, with CI/CD and previews all set up for you.
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
 
@@ -33,9 +36,27 @@ SPA mode and prerendering are not currently supported when using the [Cloudflare
 If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
 :::
 
+:::tip[Already have a React Router project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect React Router, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="React Router"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: "build/server/index.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: build/client" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
+
 ## What is React Router?
 
-[React Router v7](https://reactrouter.com/) is a full-stack React framework for building web applications.
+[React Router v8](https://reactrouter.com/) is a full-stack React framework for building web applications.
 It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide a first-class experience for developing, building and deploying your apps on Cloudflare.
 
 ## Creating a full-stack React Router app
@@ -69,10 +90,9 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
         	- wrangler.jsonc
         </FileTree>
 
-        `react-router.config.ts` is your [React Router config file](https://reactrouter.com/explanation/special-files#react-routerconfigts).
+        `react-router.config.ts` is your [React Router config file](https://reactrouter.com/api/framework-conventions/react-router.config.ts).
         In this file:
         	- `ssr` is set to `true`, meaning that your application will use server-side rendering.
-        	- `future.unstable_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 
         `vite.config.ts` is your [Vite config file](https://vite.dev/config/).
@@ -144,7 +164,7 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
     };
 
     export class MyWorkflow extends WorkflowEntrypoint<Env> {
-    	override async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+    	override async run(event: WorkflowEvent<{ hello: string }>, step: WorkflowStep) {
     		await step.do("first step", async () => {
     			return { output: "First step result" };
     		});
@@ -194,10 +214,10 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
     And then use it in your application:
 
     ```ts title="app/routes/home.tsx"
-    export async function action({ context }: Route.LoaderArgs) {
+    export async function action({ context }: Route.ActionArgs) {
     	const env = context.cloudflare.env;
-    	const instance = await env.MY_WORKFLOW.create({ params: { "hello": "world" })
-    	return { id: instance.id, details: instance.status() };
+    	const instance = await env.MY_WORKFLOW.create({ params: { "hello": "world" } })
+    	return { id: instance.id, details: await instance.status() };
     }
     ```
 

@@ -1,0 +1,99 @@
+---
+import { getChangelogs, type GetChangelogsOptions } from "~/util/changelog";
+import { reference } from "astro:content";
+import { z } from "astro/zod";
+import { getCollection, render } from "astro:content";
+import { slug } from "github-slugger";
+import { format } from "date-fns";
+
+import RSSButton from "~/components/cf/RSSButton.astro";
+import AnchorHeading from "~/components/cf/AnchorHeading.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+// Forward the MDX globals so admonitions (`:::note` → `<Aside>`) and other
+// registry components resolve inside each rendered changelog entry, the same
+// way Render.astro / ChangelogEntry.astro provide them.
+import { components } from "@/mdx-components";
+
+const props = z
+	.object({
+		product: reference("directory"),
+	})
+	.or(
+		z.object({
+			area: z.string(),
+		}),
+	)
+	.and(
+		z.object({
+			hideEntry: z.string().optional(),
+			publish_future_dated_entry: z.boolean().default(false),
+			numberOfEntries: z.number().int().positive().optional(),
+		}),
+	);
+
+const input = await props.parseAsync(Astro.props);
+
+let filter: GetChangelogsOptions["filter"];
+let rss: string;
+
+if ("product" in input) {
+	rss = `/changelog/rss/${input.product.id}.xml`;
+
+	filter = (e) => {
+		return (
+			!e.data.hidden &&
+			e.data.products.some(({ id }) => id === input.product.id) &&
+			input.hideEntry !== e.id &&
+			input.publish_future_dated_entry == e.data.publish_future_dated_entry
+		);
+	};
+} else {
+	rss = `/changelog/rss/${slug(input.area)}.xml`;
+
+	const products = await getCollection("directory", (e) => {
+		return e.data.entry.group === input.area && input.hideEntry !== e.id;
+	});
+
+	filter = (e) => {
+		return e.data.products.some((x) => products.some((y) => x.id === y.id));
+	};
+}
+
+const allChangelogs = await getChangelogs({ filter });
+const changelogs =
+	input.numberOfEntries !== undefined
+		? allChangelogs.slice(0, input.numberOfEntries)
+		: allChangelogs;
+---
+
+<RSSButton href={rss} />
+
+{
+	changelogs.length === 0 && (
+		<>
+			<br />
+			<br />
+			<p>There are no scheduled entries at this time.</p>
+		</>
+	)
+}
+
+{
+	changelogs.map(async (entry) => {
+		const { Content } = await render(entry);
+
+		return (
+			<>
+				<AnchorHeading
+					depth={2}
+					title={format(entry.data.date, "yyyy-MM-dd")}
+				/>
+				{"area" in input && <ProductPills products={entry.data.products} />}
+				<br />
+				<strong>{entry.data.title}</strong>
+				<br />
+				<Content components={components} />
+			</>
+		);
+	})
+}

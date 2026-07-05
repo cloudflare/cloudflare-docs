@@ -33,7 +33,7 @@ entries:
     general_definition: |-
       a firewall is a security system that monitors and controls network traffic based on a set of security rules.
     associated_products:
-      - Magic Firewall
+      - Cloudflare Network Firewall
 
   - term: LLM
     general_definition: |-
@@ -69,3 +69,7 @@ entries:
   - term: threat score
     general_definition: |-
       the threat score was a score from `0` (zero risk) to `100` (high risk) classifying the IP reputation of a visitor. Currently, the threat score is always `0` (zero).
+
+  - term: zero-shot classification model
+    general_definition: |-
+      a pretrained machine learning model capable of categorizing data (text or images) into classes it has never seen during training.

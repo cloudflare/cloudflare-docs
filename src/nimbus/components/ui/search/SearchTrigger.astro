@@ -1,0 +1,41 @@
+---
+/** Button that opens the search dialog. Cmd+K on macOS, Ctrl+K elsewhere. */
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  data-search-trigger
+  type="button"
+  class="flex items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+  aria-label="Search documentation"
+  aria-keyshortcuts="Control+K"
+>
+  <Icon name="ph:magnifying-glass" class="h-4 w-4" />
+  <span class="hidden md:inline">Search</span>
+  <kbd class="hidden sm:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 text-[0.625rem] font-medium text-muted-foreground">
+    <span data-shortcut-key>Ctrl</span>K
+  </kbd>
+</button>
+
+<script>
+  function initSearchTrigger() {
+    document.querySelectorAll<HTMLElement>("[data-search-trigger]").forEach((btn) => {
+      if (btn.hasAttribute("data-search-trigger-ready")) return;
+      btn.setAttribute("data-search-trigger-ready", "true");
+
+      const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
+      const platform = nav.userAgentData?.platform ?? "";
+      const isMac = platform
+        ? /mac/i.test(platform)
+        : /mac|iphone|ipod|ipad/i.test(navigator.userAgent);
+      if (isMac) {
+        btn.setAttribute("aria-keyshortcuts", "Meta+K");
+        const key = btn.querySelector("[data-shortcut-key]");
+        if (key) key.textContent = "⌘";
+      }
+    });
+  }
+
+  initSearchTrigger();
+  document.addEventListener("astro:page-load", initSearchTrigger);
+</script>

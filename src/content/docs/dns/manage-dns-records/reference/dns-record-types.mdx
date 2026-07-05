@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: DNS record types supported by Cloudflare.
+products:
+  - dns
 title: DNS record types
 sidebar:
   order: 2
@@ -15,6 +18,12 @@ import {
 
 This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
+:::note
+Each DNS record has a maximum wire format size of 4,096 bytes. Wire format refers to how a record is encoded when transmitted over the DNS protocol ([RFC 1035](https://www.rfc-editor.org/rfc/rfc1035.html#section-3.2.1)).
+
+If you have multiple records with the same name and type, their combined content length must not exceed 8,192 characters.
+:::
+
 ---
 
 ## IP address resolution
@@ -27,21 +36,23 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 These records include the following fields:
 
-
 <Render file="records-name-field" product="dns" />
+
 - **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
 
-  :::note
+:::note
 
-  Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an AAAA record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
+Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an AAAA record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
 
-  Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for A records.
-  :::
+Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for A records.
+
+:::
 
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
 - **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
+- **Private network routing**: Some Enterprise customers also have access to [private network routing](/dns/private-origins/private-network-routing/). For `A` and `AAAA` records, this feature allows you to proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
 
 #### Example API call
 
@@ -63,7 +74,7 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 		proxied: false,
 	}}
 	code={{
-		mark: [8, 10],
+		mark: [5, 7],
 	}}
 />
 
@@ -100,13 +111,13 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 
 These records include the following fields:
 
-
-<Render file="records-name-field" product="dns" />
-- **Target**: The hostname where traffic should be directed (`example.com`).
-- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
-  - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
-  - If the **Proxy Status** is **DNS Only**, you can customize the value.
-- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
+<Render file="records-name-field" product="dns" />- **Target**: The hostname
+where traffic should be directed (`example.com`). - **TTL**: Time to live, which
+controls how long DNS resolvers should cache a response before revalidating it.
+- If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which
+is 300 seconds. - If the **Proxy Status** is **DNS Only**, you can customize the
+value. - **Proxy status**: For more details, refer to [Proxied DNS
+records](/dns/proxy-status/).
 
 #### Proxied CNAME records
 
@@ -121,7 +132,7 @@ DNS management for **example.com**:
 
 | Type  | Name | Content                | Proxy status |
 | ----- | ---- | ---------------------- | ------------ |
-| CNAME | abc  | `target.external.test` | Proxied     |
+| CNAME | abc  | `target.external.test` | Proxied      |
 
 </Example>
 
@@ -144,7 +155,7 @@ In this example, a query for TXT in `abc.example.com` will **not** return the TX
 - If you encounter a CNAME record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration. Refer to [proxying limitations](/dns/proxy-status/limitations/#proxy-eligibility) for details.
 
 :::note
-Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
+Specific CNAME record values with traffic proxied through Cloudflare will enable O2O routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
 :::
 
 #### Example API call
@@ -167,7 +178,7 @@ When creating CNAME records [using the API](/dns/manage-dns-records/how-to/creat
 		proxied: false,
 	}}
 	code={{
-		mark: [8, 10],
+		mark: [5, 7],
 	}}
 />
 
@@ -178,7 +189,7 @@ When creating CNAME records [using the API](/dns/manage-dns-records/how-to/creat
 		"zone_id": "<ZONE_ID>",
 		"zone_name": "example.com",
 		"name": "www.example.com",
-		"type": "A",
+		"type": "CNAME",
 		"content": "www.another-example.com",
 		"proxiable": true,
 		"proxied": false,
@@ -252,14 +263,6 @@ You could also use TXT to create email authentication records, but we recommend 
 
 <Render file="api-field-definitions" product="dns" />
 
-:::note
-
-The **Content** for each TXT record must be 2,048 characters or less.
-
-If you have multiple TXT records with the same **Name**, there is also a limit for the sum of their **Content** characters, which must be 8,192 or less.
-
-:::
-
 ### CAA
 
 A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
@@ -332,6 +335,45 @@ Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a 
 
 If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [proxied DNS records](/dns/proxy-status/), and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
+#### Proxied vs DNS-only names
+For [proxied (orange cloud)](/dns/proxy-status/) names, Cloudflare synthesizes HTTPS records automatically when Universal SSL is enabled. Manually-added HTTPS records on proxied names are not served — Cloudflare uses the auto-generated records instead.
+
+If you have disabled Universal SSL (for example, because you use [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) exclusively), Cloudflare will not generate HTTPS records for proxied names.
+
+For [DNS-only (grey cloud)](/dns/proxy-status/) names, you can manually add HTTPS records and Cloudflare will serve them. However, **all records with the same name must be DNS-only** for the manual HTTPS record to be served.
+
+<Details header="Example: Manual HTTPS records and proxy status">
+
+For Cloudflare to serve a manually-added HTTPS record, every record with the same name must be DNS-only (grey cloud).
+
+<Example>
+
+**Will work** — All records with the same name are DNS-only:
+
+| Type  | Name        | Content         | Proxy status |
+| ----- | ----------- | --------------- | ------------ |
+| A     | example.com | `192.0.2.1`     | DNS only     |
+| HTTPS | example.com | `1 . alpn="h3"` | -            |
+
+The HTTPS record will be served because the A record is DNS-only.
+
+</Example>
+
+<Example>
+
+**Will not work** — Mixed proxy status for the same name:
+
+| Type  | Name        | Content         | Proxy status |
+| ----- | ----------- | --------------- | ------------ |
+| AAAA  | example.com | `2001:db8::1`   | Proxied      |
+| HTTPS | example.com | `1 . alpn="h3"` | -            |
+
+The HTTPS record will **not** be served because the AAAA record with the same name is proxied.
+
+</Example>
+
+</Details>
+
 For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
 
 <Render file="api-field-definitions" product="dns" />
@@ -354,10 +396,6 @@ With Enterprise accounts, you also have the option to change the SOA record valu
 
 - As a DNS zone default: Define the SOA record values that Cloudflare will use for all new zones added to your account. Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for step-by-step guidance.
 - For existing zones: Override the defaults or Cloudflare-generated values under **DNS record options** on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page.
-
-:::note
-If you are an Enterprise customer and these options are not displayed on your Cloudflare dashboard, reach out to your account team.
-:::
 
 Refer to the following list for information about each SOA record field:
 
@@ -406,6 +444,10 @@ Refer to the following list for information about each SOA record field:
 
 </Details>
 
+:::note
+When you query the SOA record itself, the TTL in the response is the smaller of the `Record TTL` and the `Minimum TTL` values. For example, if `Record TTL` is `3600` and `Minimum TTL` is `1800`, the SOA record is returned with a TTL of `1800`.
+:::
+
 ### NS
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
@@ -419,6 +461,7 @@ Your assigned Cloudflare nameservers, custom nameservers, and their correspondin
 :::
 
 #### Limits
+
 <Render file="ns-delegation-name-limit" product="dns" />
 
 ### DS and DNSKEY

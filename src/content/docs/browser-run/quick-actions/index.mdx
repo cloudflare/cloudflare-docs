@@ -1,0 +1,71 @@
+---
+pcx_content_type: navigation
+title: Quick Actions
+description: Use Browser Run Quick Actions HTTP endpoints to capture screenshots, extract HTML, generate PDFs, and perform other common browser tasks.
+sidebar:
+  order: 3
+products:
+  - browser-run
+---
+
+import { DashButton, DirectoryListing } from "~/components";
+
+Quick Actions provide simple interfaces for common browser tasks like capturing screenshots, extracting HTML content, generating PDFs, and more. You can use Quick Actions in two ways:
+
+- **REST API**: HTTP endpoints for one-off requests or external integration.
+- **Workers Bindings**: Call Quick Actions directly from a [Cloudflare Worker](/workers/) using `env.BROWSER.quickAction()`.
+
+The following are the available options:
+
+<DirectoryListing />
+
+Use Quick Actions when you need a fast, simple way to perform common browser tasks such as capturing screenshots, extracting HTML, or generating PDFs without writing complex scripts. For more advanced automation, custom workflows, or persistent browser sessions, use [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [CDP](/browser-run/cdp/).
+
+## Before you begin
+
+### REST API
+
+To use Quick Actions via the REST API, [create a custom API Token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
+- `Browser Rendering - Edit`
+
+### Workers binding
+
+To use Quick Actions from a [Worker](/workers/), configure a [browser binding](/browser-run/reference/wrangler/#bindings) in your `wrangler.json`. No API token is needed when using the Workers binding.
+
+```jsonc
+{
+  "browser": {
+    "binding": "BROWSER"
+  }
+}
+```
+
+:::caution
+
+The `.quickAction()` method has two requirements:
+
+- **Compatibility date:** Your Worker must use a compatibility date of `2026-03-24` or later.
+- **Remote mode for local development:** The `.quickAction()` method is not yet supported in local development mode. When developing locally with `wrangler dev`, you must use `npx wrangler dev --remote` or set `"remote": true` in your browser binding configuration. Without remote mode, you will receive the error: `The RPC receiver does not implement the method "quickAction"`.
+
+```jsonc
+{
+  "compatibility_date": "2026-03-24",
+  "browser": {
+    "binding": "BROWSER",
+    "remote": true
+  }
+}
+```
+
+:::
+
+:::note[Note]
+
+You can monitor Browser Run (formerly Browser Rendering) usage in two ways:
+
+- In the Cloudflare dashboard, go to the **Browser Run** page to view aggregate metrics, including total Quick Actions requests and total browser hours used.
+  <DashButton url="/?to=/:account/workers/browser-run" />
+- `X-Browser-Ms-Used` header: Returned in every Quick Actions response, reporting browser time used for that request (in milliseconds).
+
+:::

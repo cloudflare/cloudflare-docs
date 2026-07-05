@@ -1,0 +1,12 @@
+id: uz9nrh
+name: cf-fonts
+
+entry:
+  title: Cloudflare Fonts
+  url: /speed/optimization/content/fonts/
+  show: false
+
+meta:
+  title: Cloudflare Fonts docs
+  description: Cloudflare Fonts rewrites Google Fonts to be delivered from your own origin, eliminating reliance on third-party font providers to improve performance and user privacy.
+  author: "@cloudflare"

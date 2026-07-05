@@ -7,6 +7,10 @@ sidebar:
 reviewed: 2025-02-06
 description: >-
   This document outlines a reference architecture for achieving Federal Information Processing Standard (FIPS) 140 Level 3 compliance using Cloudflare's Application Services.
+products:
+  - reference-architecture
+  - ssl
+  - tunnel
 ---
 
 import { Tabs, Steps, TabItem, DirectoryListing } from "~/components";
@@ -52,7 +56,7 @@ This level makes the physical security requirements more stringent, requiring th
 
 - **Cloudflare Keyless SSL**: A service that allows organizations to use Cloudflare's SSL/TLS protection while keeping their private keys securely stored in their own infrastructure, ensuring private keys remain under their control and never leave their premises, while still benefiting from Cloudflare's DDoS protection and performance optimization features.
 - **Cloudflare Tunnel**: Provides a secure, encrypted connection between Cloudflare's global network and the private infrastructure hosting CloudHSM, protecting data in transit.
-- **Hardware Security module**: A FIPS 140-2 Level 3 compliant HSM that securely manages cryptographic keys. Cloudflare supports a handful of HSMs, including AWS CloudHSM, Azure Key Vault, and Google Cloud KMS.
+- **Hardware Security module**: A FIPS 140 Level 3 compliant HSM that securely manages cryptographic keys. Cloudflare supports a handful of HSMs, including AWS CloudHSM, Azure Key Vault, and Google Cloud KMS.
 
 ## Architecture overview
 

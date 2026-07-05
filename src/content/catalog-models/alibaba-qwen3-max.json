@@ -1,0 +1,2165 @@
+{
+	"model_id": "alibaba/qwen3-max",
+	"provider_id": "alibaba",
+	"name": "Qwen 3 Max",
+	"description": "Alibaba's Qwen 3 Max is a large language model with strong coding, reasoning, and multilingual capabilities, served via DashScope's OpenAI-compatible endpoint.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multilingual"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"content": "What are the three laws of thermodynamics?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The three laws of thermodynamics are fundamental principles that describe the behavior of energy and entropy in physical systems:\n\n1. **Zeroth Law of Thermodynamics**:  \n   *If two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other.*  \n   This law establishes the concept of temperature and justifies the use of thermometers.\n\n2. **First Law of Thermodynamics** (Law of Energy Conservation):  \n   *Energy cannot be created or destroyed in an isolated system; it can only change forms.*  \n   Mathematically, this is often expressed as:  \n   \\[\n   \\Delta U = Q - W\n   \\]  \n   where \\(\\Delta U\\) is the change in internal energy of the system, \\(Q\\) is the heat added to the system, and \\(W\\) is the work done by the system.\n\n3. **Second Law of Thermodynamics**:  \n   *The total entropy of an isolated system can never decrease over time; it either increases or remains constant in ideal reversible processes.*  \n   This law introduces the concept of irreversibility and explains why certain processes occur spontaneously in one direction (e.g., heat flows from hot to cold).\n\nThere is also a **Third Law of Thermodynamics**, which is sometimes included as the fourth in historical contexts but is now standardly recognized as the third:\n\n4. **Third Law of Thermodynamics**:  \n   *As the temperature of a system approaches absolute zero, the entropy of the system approaches a constant minimum value.*  \n   In practical terms, it implies that absolute zero (0 K) cannot be reached in a finite number of steps.\n\nSo, while commonly referred to as \u201cthree laws,\u201d modern physics includes **four**\u2014with the Zeroth Law added later for logical completeness, even though it was formulated after the first three."
+			},
+			"raw_response": {
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "The three laws of thermodynamics are fundamental principles that describe the behavior of energy and entropy in physical systems:\n\n1. **Zeroth Law of Thermodynamics**:  \n   *If two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other.*  \n   This law establishes the concept of temperature and justifies the use of thermometers.\n\n2. **First Law of Thermodynamics** (Law of Energy Conservation):  \n   *Energy cannot be created or destroyed in an isolated system; it can only change forms.*  \n   Mathematically, this is often expressed as:  \n   \\[\n   \\Delta U = Q - W\n   \\]  \n   where \\(\\Delta U\\) is the change in internal energy of the system, \\(Q\\) is the heat added to the system, and \\(W\\) is the work done by the system.\n\n3. **Second Law of Thermodynamics**:  \n   *The total entropy of an isolated system can never decrease over time; it either increases or remains constant in ideal reversible processes.*  \n   This law introduces the concept of irreversibility and explains why certain processes occur spontaneously in one direction (e.g., heat flows from hot to cold).\n\nThere is also a **Third Law of Thermodynamics**, which is sometimes included as the fourth in historical contexts but is now standardly recognized as the third:\n\n4. **Third Law of Thermodynamics**:  \n   *As the temperature of a system approaches absolute zero, the entropy of the system approaches a constant minimum value.*  \n   In practical terms, it implies that absolute zero (0 K) cannot be reached in a finite number of steps.\n\nSo, while commonly referred to as \u201cthree laws,\u201d modern physics includes **four**\u2014with the Zeroth Law added later for logical completeness, even though it was formulated after the first three.",
+							"role": "assistant"
+						}
+					}
+				],
+				"created": 1776471062,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "chatcmpl-1cc68967-fae9-9f2f-aa72-ec0674038c0a",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 375,
+					"prompt_tokens": 17,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 392
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  { messages: [{ content: 'What are the three laws of thermodynamics?', role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"What are the three laws of thermodynamics?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"content": "You are a helpful coding assistant specializing in Python.",
+						"role": "system"
+					},
+					{
+						"content": "How do I read a JSON file in Python?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "To read a JSON file in Python, you can use the built-in `json` module. Here's the basic approach:\n\n## Basic Example\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now you can work with your data\nprint(data)\n```\n\n## Step-by-step breakdown:\n\n1. **Import the json module**: `import json`\n2. **Open the file**: Use `open()` with mode `'r'` (read mode)\n3. **Parse the JSON**: Use `json.load()` to parse the file content into Python objects\n4. **Use context manager**: The `with` statement automatically closes the file when done\n\n## Common Data Types After Loading\n\nJSON data gets converted to these Python types:\n- JSON object \u2192 Python dictionary (`dict`)\n- JSON array \u2192 Python list (`list`)\n- JSON string \u2192 Python string (`str`)\n- JSON number \u2192 Python int or float\n- JSON boolean \u2192 Python `True` or `False`\n- JSON null \u2192 Python `None`\n\n## Example with Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(\"Data loaded successfully!\")\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON from a String\n\nIf you have JSON as a string (not a file), use `json.loads()` instead:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\nprint(data)  # {'name': 'Alice', 'age': 30}\n```\n\n## Specifying Encoding (if needed)\n\nFor files with non-UTF-8 encoding:\n\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\nThe `json.load()` function handles UTF-8 by default, so you usually don't need to specify encoding unless you're dealing with a different character encoding."
+			},
+			"raw_response": {
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "To read a JSON file in Python, you can use the built-in `json` module. Here's the basic approach:\n\n## Basic Example\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now you can work with your data\nprint(data)\n```\n\n## Step-by-step breakdown:\n\n1. **Import the json module**: `import json`\n2. **Open the file**: Use `open()` with mode `'r'` (read mode)\n3. **Parse the JSON**: Use `json.load()` to parse the file content into Python objects\n4. **Use context manager**: The `with` statement automatically closes the file when done\n\n## Common Data Types After Loading\n\nJSON data gets converted to these Python types:\n- JSON object \u2192 Python dictionary (`dict`)\n- JSON array \u2192 Python list (`list`)\n- JSON string \u2192 Python string (`str`)\n- JSON number \u2192 Python int or float\n- JSON boolean \u2192 Python `True` or `False`\n- JSON null \u2192 Python `None`\n\n## Example with Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(\"Data loaded successfully!\")\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON from a String\n\nIf you have JSON as a string (not a file), use `json.loads()` instead:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\nprint(data)  # {'name': 'Alice', 'age': 30}\n```\n\n## Specifying Encoding (if needed)\n\nFor files with non-UTF-8 encoding:\n\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\nThe `json.load()` function handles UTF-8 by default, so you usually don't need to specify encoding unless you're dealing with a different character encoding.",
+							"role": "assistant"
+						}
+					}
+				],
+				"created": 1776471064,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "chatcmpl-ba93d05e-b778-9fe4-97f6-a2b16726e379",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 449,
+					"prompt_tokens": 33,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 482
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [\n      { content: 'You are a helpful coding assistant specializing in Python.', role: 'system' },\n      { content: 'How do I read a JSON file in Python?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful coding assistant specializing in Python.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"max_completion_tokens": 8192,
+				"messages": [
+					{
+						"content": "I need help planning a road trip from San Francisco to Los Angeles.",
+						"role": "user"
+					},
+					{
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?",
+						"role": "assistant"
+					},
+					{
+						"content": "Yes, what are some good places to stop?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Great! The classic route from San Francisco to Los Angeles along the California coast\u2014especially **Highway 1 (Pacific Coast Highway)**\u2014is one of the most scenic drives in the world. While it takes longer than the inland I-5 freeway (about 8\u201310 hours without stops), it\u2019s absolutely worth it for the views and experiences. Here are some top places to stop, roughly ordered from north to south:\n\n### \ud83c\udf09 **Half Moon Bay**  \n- Just 30 miles south of SF  \n- Charming coastal town with beaches, tide pools, and great seafood  \n- Stop at **Pillar Point Harbor** or walk the **Coastal Trail**\n\n### \ud83c\udfde\ufe0f **Santa Cruz**  \n- Famous for its beach boardwalk (oldest in California!), surfing, and laid-back vibe  \n- Visit the **Santa Cruz Beach Boardwalk** or explore **Natural Bridges State Beach**\n\n### \ud83d\udc2c **Monterey & Carmel-by-the-Sea**  \n- **Monterey**: Don\u2019t miss the world-class **Monterey Bay Aquarium** and Cannery Row  \n- **Carmel**: Quaint village with art galleries, fairytale cottages, and **Carmel Beach**  \n- Optional detour: **17-Mile Drive** through Pebble Beach (toll road with stunning ocean views)\n\n### \ud83c\udf32 **Big Sur**  \n- The crown jewel of the PCH! Dramatic cliffs, redwoods, and ocean vistas  \n- Must-stops:  \n  - **Bixby Creek Bridge** (iconic photo spot)  \n  - **McWay Falls** at Julia Pfeiffer Burns State Park (80-ft waterfall onto a beach!)  \n  - **Nepenthe** restaurant for lunch with panoramic views  \n\n> \u26a0\ufe0f Note: Check road conditions before heading through Big Sur\u2014landslides occasionally close Highway 1.\n\n### \ud83c\udf77 **San Simeon**  \n- Home of **Hearst Castle**, the opulent estate of newspaper magnate William Randolph Hearst  \n- Also great for spotting **elephant seals** at the **Piedras Blancas Rookery** just north of town\n\n### \ud83c\udfd6\ufe0f **Cambria & Morro Bay**  \n- **Cambria**: Cozy seaside village with unique shops and forest-meets-ocean scenery  \n- **Morro Bay**: Known for **Morro Rock**, kayaking, and fresh oysters\n\n### \ud83c\udf34 **San Luis Obispo (SLO)**  \n- A relaxed college town with a historic mission, farmers\u2019 market (Thursday nights!), and great food  \n- Nearby: **Bubblegum Alley** and **Madonna Inn** (quirky, Instagrammable hotel)\n\n### \ud83c\udfc4 **Pismo Beach**  \n- Classic Central Coast surf town with dunes and a long pier  \n- Try clam chowder\u2014it\u2019s the \u201cClam Capital of the World\u201d!\n\n### \ud83c\udf3a **Santa Barbara**  \n- \u201cThe American Riviera\u201d with Spanish architecture, palm-lined streets, and wine tasting  \n- Stroll **Stearns Wharf**, visit the **Mission Santa Barbara**, or relax on **East Beach**\n\n### \ud83c\udfd9\ufe0f **Final Stretch to Los Angeles**  \n- From Santa Barbara, you can stay on Highway 1 through **Malibu** (stop at **El Matador Beach** or **Point Dume**)  \n- Or hop on US-101 for a quicker arrival into LA\n\n---\n\n### Tips:\n- **Allow 2\u20133 days** if you want to enjoy the stops without rushing  \n- **Book lodging in advance**, especially in Big Sur, Carmel, or Santa Barbara  \n- **Fill your gas tank**\u2014some stretches (like Big Sur) have limited services  \n- **Pack layers**\u2014coastal weather changes fast, even in summer!\n\nWould you like help planning an itinerary based on how many days you have?"
+			},
+			"raw_response": {
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "Great! The classic route from San Francisco to Los Angeles along the California coast\u2014especially **Highway 1 (Pacific Coast Highway)**\u2014is one of the most scenic drives in the world. While it takes longer than the inland I-5 freeway (about 8\u201310 hours without stops), it\u2019s absolutely worth it for the views and experiences. Here are some top places to stop, roughly ordered from north to south:\n\n### \ud83c\udf09 **Half Moon Bay**  \n- Just 30 miles south of SF  \n- Charming coastal town with beaches, tide pools, and great seafood  \n- Stop at **Pillar Point Harbor** or walk the **Coastal Trail**\n\n### \ud83c\udfde\ufe0f **Santa Cruz**  \n- Famous for its beach boardwalk (oldest in California!), surfing, and laid-back vibe  \n- Visit the **Santa Cruz Beach Boardwalk** or explore **Natural Bridges State Beach**\n\n### \ud83d\udc2c **Monterey & Carmel-by-the-Sea**  \n- **Monterey**: Don\u2019t miss the world-class **Monterey Bay Aquarium** and Cannery Row  \n- **Carmel**: Quaint village with art galleries, fairytale cottages, and **Carmel Beach**  \n- Optional detour: **17-Mile Drive** through Pebble Beach (toll road with stunning ocean views)\n\n### \ud83c\udf32 **Big Sur**  \n- The crown jewel of the PCH! Dramatic cliffs, redwoods, and ocean vistas  \n- Must-stops:  \n  - **Bixby Creek Bridge** (iconic photo spot)  \n  - **McWay Falls** at Julia Pfeiffer Burns State Park (80-ft waterfall onto a beach!)  \n  - **Nepenthe** restaurant for lunch with panoramic views  \n\n> \u26a0\ufe0f Note: Check road conditions before heading through Big Sur\u2014landslides occasionally close Highway 1.\n\n### \ud83c\udf77 **San Simeon**  \n- Home of **Hearst Castle**, the opulent estate of newspaper magnate William Randolph Hearst  \n- Also great for spotting **elephant seals** at the **Piedras Blancas Rookery** just north of town\n\n### \ud83c\udfd6\ufe0f **Cambria & Morro Bay**  \n- **Cambria**: Cozy seaside village with unique shops and forest-meets-ocean scenery  \n- **Morro Bay**: Known for **Morro Rock**, kayaking, and fresh oysters\n\n### \ud83c\udf34 **San Luis Obispo (SLO)**  \n- A relaxed college town with a historic mission, farmers\u2019 market (Thursday nights!), and great food  \n- Nearby: **Bubblegum Alley** and **Madonna Inn** (quirky, Instagrammable hotel)\n\n### \ud83c\udfc4 **Pismo Beach**  \n- Classic Central Coast surf town with dunes and a long pier  \n- Try clam chowder\u2014it\u2019s the \u201cClam Capital of the World\u201d!\n\n### \ud83c\udf3a **Santa Barbara**  \n- \u201cThe American Riviera\u201d with Spanish architecture, palm-lined streets, and wine tasting  \n- Stroll **Stearns Wharf**, visit the **Mission Santa Barbara**, or relax on **East Beach**\n\n### \ud83c\udfd9\ufe0f **Final Stretch to Los Angeles**  \n- From Santa Barbara, you can stay on Highway 1 through **Malibu** (stop at **El Matador Beach** or **Point Dume**)  \n- Or hop on US-101 for a quicker arrival into LA\n\n---\n\n### Tips:\n- **Allow 2\u20133 days** if you want to enjoy the stops without rushing  \n- **Book lodging in advance**, especially in Big Sur, Carmel, or Santa Barbara  \n- **Fill your gas tank**\u2014some stretches (like Big Sur) have limited services  \n- **Pack layers**\u2014coastal weather changes fast, even in summer!\n\nWould you like help planning an itinerary based on how many days you have?",
+							"role": "assistant"
+						}
+					}
+				],
+				"created": 1776471088,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "chatcmpl-8ebaff89-c5a7-9010-b5a4-84e5f446841a",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 821,
+					"prompt_tokens": 81,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 902
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    max_completion_tokens: 8192,\n    messages: [\n      {\n        content: 'I need help planning a road trip from San Francisco to Los Angeles.',\n        role: 'user',\n      },\n      {\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n        role: 'assistant',\n      },\n      { content: 'Yes, what are some good places to stop?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"max_completion_tokens\": 8192,\n  \"messages\": [\n    {\n      \"content\": \"I need help planning a road trip from San Francisco to Los Angeles.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"I'\\''d be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Yes, what are some good places to stop?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Longer completion for creative output",
+			"input": {
+				"max_completion_tokens": 8192,
+				"messages": [
+					{
+						"content": "Write a short story opening about a detective finding an unusual clue.",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Rain slicked the cobblestones of Blackwater Lane, turning the gaslight into smears of gold on wet stone. Detective Aris Thorne hunched deeper into his trench coat, the damp wool smell a familiar companion to the city\u2019s usual perfume of coal smoke and despair. Another dead end\u2014literally and figuratively\u2014in the case of the vanished heiress, Elara Vance. The alley reeked of stale beer and something sharper, metallic.\n\nThen he saw it.\n\nNestled in a puddle near a overflowing gutter, half-submerged but gleaming with unnatural clarity, was a single playing card. Not just any card. The Queen of Hearts. But this one was wrong. Horribly wrong.\n\nThe queen\u2019s face wasn\u2019t printed ink. It was *stitched*. Delicate, almost surgical sutures traced her features\u2014a crimson thread for lips, fine black silk for eyes, silver wire forming the curve of a regal brow. And where the heart symbol should be, centered on her chest, was a tiny, perfect keyhole, wrought from what looked like tarnished silver. Rainwater pooled around it, but the stitches remained unnervingly dry, as if repelling the downpour.\n\nThorne crouched, ignoring the ache in his knees and the cold seeping through his trousers. He didn\u2019t touch it. Not yet. This wasn\u2019t evidence left by accident; it was a message. A challenge. And the meticulous, chilling craftsmanship whispered of a mind far more dangerous than the common cutpurse or jealous rival he\u2019d been chasing. The rain drummed a frantic rhythm on his hat, but the only sound he truly heard was the sudden, icy thrum of his own pulse. The game, it seemed, had just changed its rules."
+			},
+			"raw_response": {
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"logprobs": null,
+						"message": {
+							"content": "Rain slicked the cobblestones of Blackwater Lane, turning the gaslight into smears of gold on wet stone. Detective Aris Thorne hunched deeper into his trench coat, the damp wool smell a familiar companion to the city\u2019s usual perfume of coal smoke and despair. Another dead end\u2014literally and figuratively\u2014in the case of the vanished heiress, Elara Vance. The alley reeked of stale beer and something sharper, metallic.\n\nThen he saw it.\n\nNestled in a puddle near a overflowing gutter, half-submerged but gleaming with unnatural clarity, was a single playing card. Not just any card. The Queen of Hearts. But this one was wrong. Horribly wrong.\n\nThe queen\u2019s face wasn\u2019t printed ink. It was *stitched*. Delicate, almost surgical sutures traced her features\u2014a crimson thread for lips, fine black silk for eyes, silver wire forming the curve of a regal brow. And where the heart symbol should be, centered on her chest, was a tiny, perfect keyhole, wrought from what looked like tarnished silver. Rainwater pooled around it, but the stitches remained unnervingly dry, as if repelling the downpour.\n\nThorne crouched, ignoring the ache in his knees and the cold seeping through his trousers. He didn\u2019t touch it. Not yet. This wasn\u2019t evidence left by accident; it was a message. A challenge. And the meticulous, chilling craftsmanship whispered of a mind far more dangerous than the common cutpurse or jealous rival he\u2019d been chasing. The rain drummed a frantic rhythm on his hat, but the only sound he truly heard was the sudden, icy thrum of his own pulse. The game, it seemed, had just changed its rules.",
+							"role": "assistant"
+						}
+					}
+				],
+				"created": 1776471079,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"id": "chatcmpl-7bdc3457-d069-92c5-9ea0-0f1c3987d776",
+				"model": "qwen3-max",
+				"object": "chat.completion",
+				"system_fingerprint": null,
+				"usage": {
+					"completion_tokens": 362,
+					"prompt_tokens": 21,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"total_tokens": 383
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    max_completion_tokens: 8192,\n    messages: [\n      {\n        content: 'Write a short story opening about a detective finding an unusual clue.',\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"max_completion_tokens\": 8192,\n  \"messages\": [\n    {\n      \"content\": \"Write a short story opening about a detective finding an unusual clue.\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"content": "Explain the concept of recursion with a simple example.",
+						"role": "user"
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": [
+					"**",
+					"Recursion**",
+					" is a programming technique where a",
+					" function calls itself to solve a problem",
+					" by breaking it down into smaller,",
+					" similar subproblems.\n\n##",
+					" Key Components of Recursion",
+					"\n\n1. **Base case",
+					"**: A condition that stops",
+					" the recursion (prevents",
+					" infinite loops)\n2.",
+					" **Recursive case**: The",
+					" function calls itself with modified",
+					" arguments that move toward the",
+					" base case\n\n## Simple",
+					" Example: Calculating Factor",
+					"ial\n\nThe factorial of a",
+					" number `n` (",
+					"written as `n!`)",
+					" is the product of all positive",
+					" integers from 1 to n",
+					".\n- 5! =",
+					" 5 \u00d7 4 \u00d7",
+					" 3 \u00d7 2 \u00d7",
+					" 1 = 12",
+					"0\n- By definition:",
+					" 0! = 1",
+					"\n\n### Recursive Implementation\n\n```python",
+					"\ndef factorial(n):\n   ",
+					" # Base case: stop",
+					" when n is 0 or",
+					" 1\n    if n",
+					" <= 1:\n        return ",
+					"1\n    \n    # Recursive",
+					" case: n! = n",
+					" \u00d7 (n-1)!\n",
+					"    return n * factorial(n",
+					" - 1)\n\n# Example usage",
+					"\nprint(factorial(5",
+					"))  # Output: ",
+					"120\n```\n\n",
+					"### How it works step by",
+					" step:\n\n```\nfactorial",
+					"(5)\n\u251c\u2500\u2500 ",
+					"5 * factorial(4",
+					")\n    \u251c\u2500\u2500 4",
+					" * factorial(3)\n       ",
+					" \u251c\u2500\u2500 3 * factorial(",
+					"2)\n            \u251c\u2500\u2500 2",
+					" * factorial(1)\n               ",
+					" \u2514\u2500\u2500 returns 1 (",
+					"base case)\n            \u2514",
+					"\u2500\u2500 returns 2 * ",
+					"1 = 2\n       ",
+					" \u2514\u2500\u2500 returns 3",
+					" * 2 = 6",
+					"\n    \u2514\u2500\u2500 returns",
+					" 4 * 6 =",
+					" 24\n\u2514",
+					"\u2500\u2500 returns 5 * ",
+					"24 = 12",
+					"0\n```\n\n## Why",
+					" Recursion Works\n\nEach",
+					" recursive call works on a **",
+					"smaller version** of the",
+					" original problem until it reaches",
+					" the simplest case (base case).",
+					" Then, the results bubble",
+					" back up to build the final",
+					" answer.\n\n**Important**: Always",
+					" ensure your recursive function has a proper",
+					" base case, otherwise it",
+					" will run infinitely and cause a",
+					" stack overflow error!"
+				]
+			},
+			"raw_response": [
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "",
+								"role": "assistant"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "**"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "Recursion**"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " is a programming technique where a"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " function calls itself to solve a problem"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " by breaking it down into smaller,"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " similar subproblems.\n\n##"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " Key Components of Recursion"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "\n\n1. **Base case"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "**: A condition that stops"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " the recursion (prevents"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " infinite loops)\n2."
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " **Recursive case**: The"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " function calls itself with modified"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " arguments that move toward the"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " base case\n\n## Simple"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " Example: Calculating Factor"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "ial\n\nThe factorial of a"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " number `n` ("
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "written as `n!`)"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " is the product of all positive"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " integers from 1 to n"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": ".\n- 5! ="
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " 5 \u00d7 4 \u00d7"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " 3 \u00d7 2 \u00d7"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " 1 = 12"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "0\n- By definition:"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " 0! = 1"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "\n\n### Recursive Implementation\n\n```python"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "\ndef factorial(n):\n   "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " # Base case: stop"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " when n is 0 or"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " 1\n    if n"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " <= 1:\n        return "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "1\n    \n    # Recursive"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " case: n! = n"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " \u00d7 (n-1)!\n"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "    return n * factorial(n"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " - 1)\n\n# Example usage"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "\nprint(factorial(5"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "))  # Output: "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "120\n```\n\n"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "### How it works step by"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " step:\n\n```\nfactorial"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "(5)\n\u251c\u2500\u2500 "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "5 * factorial(4"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": ")\n    \u251c\u2500\u2500 4"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " * factorial(3)\n       "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " \u251c\u2500\u2500 3 * factorial("
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "2)\n            \u251c\u2500\u2500 2"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " * factorial(1)\n               "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " \u2514\u2500\u2500 returns 1 ("
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "base case)\n            \u2514"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "\u2500\u2500 returns 2 * "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "1 = 2\n       "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " \u2514\u2500\u2500 returns 3"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " * 2 = 6"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "\n    \u2514\u2500\u2500 returns"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " 4 * 6 ="
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " 24\n\u2514"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "\u2500\u2500 returns 5 * "
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "24 = 12"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "0\n```\n\n## Why"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " Recursion Works\n\nEach"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " recursive call works on a **"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": "smaller version** of the"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " original problem until it reaches"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " the simplest case (base case)."
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " Then, the results bubble"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " back up to build the final"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " answer.\n\n**Important**: Always"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " ensure your recursive function has a proper"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " base case, otherwise it"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " will run infinitely and cause a"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": " stack overflow error!"
+							},
+							"finish_reason": null,
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [
+						{
+							"delta": {
+								"content": ""
+							},
+							"finish_reason": "stop",
+							"index": 0,
+							"logprobs": null
+						}
+					],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": null
+				},
+				{
+					"choices": [],
+					"created": 1776471081,
+					"id": "chatcmpl-269e4881-6d79-91da-ad5b-a5d16443cade",
+					"model": "qwen3-max",
+					"object": "chat.completion.chunk",
+					"system_fingerprint": null,
+					"usage": {
+						"completion_tokens": 422,
+						"prompt_tokens": 19,
+						"prompt_tokens_details": {
+							"cached_tokens": 0
+						},
+						"total_tokens": 441
+					}
+				}
+			],
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    stream: true,\n    stream_options: { include_usage: true },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://www.alibabacloud.com/en/solutions/generative-ai/qwen",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/qwen3-max.png",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"request_formats": [
+		"chat-completions",
+		"responses"
+	],
+	"banner": null,
+	"created_at": "2026-05-22 17:52:51",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"anyOf": [
+													{
+														"type": "string"
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				}
+			]
+		}
+	}
+}

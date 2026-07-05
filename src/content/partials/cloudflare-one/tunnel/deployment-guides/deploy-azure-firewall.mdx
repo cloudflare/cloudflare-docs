@@ -1,0 +1,15 @@
+---
+params:
+  - tunnelFirewallURL
+  - hostnameAnchor
+  - privateIpAnchor?
+---
+
+To secure your Azure VM, you can configure your [Network Security Group (NSG)](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview) to deny all inbound traffic and allow only outbound traffic to the <a href={props.tunnelFirewallURL}>Cloudflare Tunnel IP addresses</a>. All NSG rules are evaluated by priority; traffic that does not match an allow rule is blocked by the default deny rules. Therefore, you can delete all custom inbound rules and leave only the relevant outbound rules.
+
+:::note
+
+If you delete the inbound rule for port `22`, you will be unable to SSH back into the VM.
+:::
+
+After configuring your NSG rules, verify that you can still access the service through Cloudflare Tunnel via its <a href={props.hostnameAnchor}>public hostname</a>{props.privateIpAnchor && <> or <a href={props.privateIpAnchor}>private IP</a></>}. The service should no longer be accessible from outside Cloudflare Tunnel — for example, direct access to the VM's public IP should no longer work.

@@ -1,6 +1,11 @@
 ---
 pcx_content_type: how-to
+products:
+  - cloudflare-one
 title: Okta (SAML)
+tags:
+  - Okta
+  - SAML
 description: Integrate Okta as a SAML identity provider with Cloudflare One.
 ---
 
@@ -58,7 +63,7 @@ To set up SAML with Okta as your identity provider:
 
 ![Retrieving SAML provider information in Okta](~/assets/images/cloudflare-one/identity/okta-saml/okta-saml-5.png)
 
-13. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity provider**.
+13. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity provider**.
 
 14. Under **Your identity providers**, select **Add new identity provider**, and select _SAML_.
 
@@ -80,7 +85,7 @@ To test that your connection is working, go to **Integrations** > **Identity pro
 
 :::caution
 
-SAML attributes are only refreshed during authentications with the Okta identity provider. This means the Okta group membership is not updated unless a user logs in and out of the WARP client, or logs in to an Access application.
+SAML attributes are only refreshed during authentications with the Okta identity provider. This means the Okta group membership is not updated unless a user logs in and out of the Cloudflare One Client, or logs in to an Access application.
 
 :::
 

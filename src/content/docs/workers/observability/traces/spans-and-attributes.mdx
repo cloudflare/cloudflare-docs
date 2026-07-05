@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Spans and attributes
+description: Review the spans and attributes automatically captured by Workers tracing, including fetch calls, bindings, and handler invocations.
 sidebar:
   order: 2
+products:
+  - workers
 ---
 
 import { Render } from "~/components";
@@ -113,7 +116,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `geo.country.code`
 - `geo.locality.name`
 - `geo.locality.region`
-- `user_agent.orginal`
+- `user_agent.original`
 - `user_agent.os.name`
 - `user_agent.os.version`
 - `user_agent.browser.name`
@@ -146,7 +149,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 - `cloudflare.jsrpc.method`
 
-#### [`Email Handler`](/email-routing/email-workers/runtime-api/)
+#### [`Email Handler`](/email-service/api/route-emails/email-handler/)
 
 - `cloudflare.email.from`
 - `cloudflare.email.to`
@@ -211,7 +214,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 ---
 
-### [Browser Rendering](/browser-rendering/)
+### [Browser Run](/browser-run/)
 
 #### `browser_rendering_fetch`
 
@@ -513,9 +516,9 @@ The legacy KV-backed API allows you to modify embedded storage within a Durable 
 
 ---
 
-### [Images](/images/transform-images/bindings/)
+### [Images](/images/optimization/binding/)
 
-### [`images_output`](/images/transform-images/bindings/#output)
+### [`images_output`](/images/optimization/binding/#output)
 
 - `cloudflare.binding.type`
 - `cloudflare.images.options.format`
@@ -525,7 +528,7 @@ The legacy KV-backed API allows you to modify embedded storage within a Durable 
 - `cloudflare.images.options.transforms`
 - `cloudflare.images.error.code`
 
-### [`images_info`](/images/transform-images/bindings/#info)
+### [`images_info`](/images/optimization/binding/#info)
 
 - `cloudflare.binding.type`
 - `cloudflare.images.options.encoding`
@@ -537,13 +540,13 @@ The legacy KV-backed API allows you to modify embedded storage within a Durable 
 
 ---
 
-### [Email](/email-routing/)
+### [Email](/email-service/)
 
-#### [`reply_email`](/email-routing/email-workers/reply-email-workers/)
+#### [`reply_email`](/email-service/api/route-emails/email-handler/#reply-to-emails)
 
-#### [`forward_email`](/email-routing/email-workers/runtime-api/)
+#### [`forward_email`](/email-service/api/route-emails/email-handler/)
 
-#### [`send_email`](/email-routing/email-workers/send-email-workers/)
+#### [`send_email`](/email-service/api/send-emails/workers-api/)
 
 ---
 

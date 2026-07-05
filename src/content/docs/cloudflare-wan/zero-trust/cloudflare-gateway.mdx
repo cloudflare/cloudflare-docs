@@ -1,6 +1,9 @@
 ---
 title: Cloudflare Gateway
 pcx_content_type: reference
+description: Route WAN traffic through Cloudflare Gateway.
+products:
+  - cloudflare-wan
 head:
   - tag: title
     content: Connect to Cloudflare Gateway with Cloudflare WAN
@@ -13,22 +16,22 @@ import { Render } from "~/components";
 	product="networking-services"
 	params={{
 		gatewayURL: "/cloudflare-one/traffic-policies/",
-		warpURL: "/cloudflare-wan/zero-trust/warp/",
+		warpURL: "/cloudflare-wan/zero-trust/cloudflare-one-client/",
 		cfAutoCertificatesURL: "/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/",
 		cfManualCertificatesURL: "/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/",
 		decryptTlsURL: "/cloudflare-one/traffic-policies/http-policies/tls-decryption/",
 		doNotInspectURL: "/cloudflare-one/traffic-policies/http-policies/#do-not-inspect",
-		warpChecksURL: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
-		osVersionChecks: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/",
+		warpChecksURL: "/cloudflare-one/reusable-components/posture-checks/client-checks/",
+		osVersionChecks: "/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/",
 		mwanOnrampsURL: "/cloudflare-wan/on-ramps/",
 		gatewayResolverPoliciesURL: "/cloudflare-one/traffic-policies/resolver-policies/",
 		gatewayInternalDnsURL: "/cloudflare-one/traffic-policies/resolver-policies/#internal-dns",
 		egressPoliciesURL: "/cloudflare-one/traffic-policies/egress-policies/",
-		gatewayLogsURL: "/cloudflare-one/insights/logs/gateway-logs/#http-logs",
+		gatewayLogsURL: "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#http-logs",
 		tcpMssClampingURL: "/cloudflare-wan/get-started/#set-maximum-segment-size",
 		ikeURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
-		greIpsecURL: "/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-		tracerouteURL: "/cloudflare-wan/configuration/manually/how-to/traceroute/"
+		greIpsecURL: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+		tracerouteURL: "/cloudflare-wan/configuration/how-to/traceroute/"
 
     }}
 

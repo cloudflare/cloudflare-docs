@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Create server-side variables using Workers for use in Zaraz actions.
+products:
+  - zaraz
 title: Worker Variables
 sidebar:
   order: 10
@@ -135,7 +138,7 @@ export default {
 
 ### Hash a value before sending it to a third-party vendor
 
-Assuming you're sending a value that your want to hash, for example, an email address:
+Assuming you're sending a value that you want to hash, for example, an email address:
 
 ```js
 zaraz.track("user_logged_in", { email: "user@example.com" });

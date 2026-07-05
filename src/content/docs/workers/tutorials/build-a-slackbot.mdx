@@ -3,11 +3,13 @@ reviewed: 2024-06-05
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Build a Slackbot
+products:
+  - workers
 tags:
   - Hono
   - TypeScript
 description: >-
-  Learn how to build a Slackbot with Hono and TypeScript in Cloudflare Workerss
+  Learn how to build a Slackbot with Hono and TypeScript in Cloudflare Workers
 ---
 
 import { Render, TabItem, Tabs, PackageManagers } from "~/components";
@@ -669,7 +671,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 :::
 
-To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler/commands/#secret) command:
+To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler/commands/general/#secret) command:
 
 ```sh title="Set the SLACK_WEBHOOK_URL secret"
 npx wrangler secret put SLACK_WEBHOOK_URL

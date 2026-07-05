@@ -1,8 +1,11 @@
 ---
 pcx_content_type: reference
 title: Pricing
+description: Review AI Gateway pricing, including free core features, persistent log storage limits, and premium add-ons.
 sidebar:
   order: 8
+products:
+  - ai-gateway
 ---
 
 AI Gateway is available to use on all plans.
@@ -15,16 +18,30 @@ You can monitor your usage in the AI Gateway dashboard.
 
 ## Persistent logs
 
-Persistent logs are available on all plans, with a free allocation for both free and paid plans. Charges for additional logs beyond those limits are based on the number of logs stored per month.
+Persistent logs are available on all plans. Log storage limits vary by plan.
 
-### Free allocation and overage pricing
+### Log storage limits
 
-| Plan         | Free logs stored   | Overage pricing                      |
-| ------------ | ------------------ | ------------------------------------ |
-| Workers Free | 100,000 logs total | N/A - Upgrade to Workers Paid        |
-| Workers Paid | 1,000,000 logs total | N/A |
+| Plan         | Log storage limit                      |
+| ------------ | -------------------------------------- |
+| Workers Free | 100,000 logs total across all gateways |
+| Workers Paid | 10,000,000 logs per gateway            |
 
-Allocations are based on the total logs stored across all gateways. For guidance on managing or deleting logs, please see our [documentation](/ai-gateway/observability/logging).
+For more details on log storage behavior and automatic log deletion, refer to [Limits](/ai-gateway/reference/limits/) and [Logging](/ai-gateway/observability/logging/#automatic-log-deletion).
+
+## Data Loss Prevention (DLP)
+
+DLP scanning in AI Gateway is free on all plans. Accounts without a Zero Trust subscription have access to two predefined [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/): Financial Information and Social / Insurance / National Identifier Numbers.
+
+DLP profiles are shared at the account level with [Cloudflare One](/cloudflare-one/data-loss-prevention/). If your account has a Zero Trust subscription that includes DLP, the full set of profiles — including all predefined profiles, custom profiles, integration profiles, DLP datasets, and OCR — is automatically available in AI Gateway.
+
+## Guardrails
+
+[Guardrails](/ai-gateway/features/guardrails/) evaluates prompts and responses using [`@cf/meta/llama-guard-3-8b`](/workers-ai/models/llama-guard-3-8b/) on Workers AI. Usage is billed as [Workers AI](/workers-ai/platform/pricing/) token-based inference — cost scales with the length of the prompts and responses being evaluated.
+
+## Unified Billing
+
+A 5% fee is applied to all credits purchased through [Unified Billing](/ai-gateway/features/unified-billing/). For example, a $100 credit purchase will result in a $105 charge. Inference pricing from providers is passed through with no markup — you pay the same per-token rates as you would directly with the provider.
 
 ## Logpush
 
@@ -34,6 +51,6 @@ Logpush is only available on the Workers Paid plan.
 | -------- | ---------------------------------- |
 | Requests | 10 million / month, +$0.05/million |
 
-## Fine print
+## Pricing notes
 
 Prices subject to change. If you are an Enterprise customer, reach out to your account team to confirm pricing details.

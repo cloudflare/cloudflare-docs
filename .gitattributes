@@ -1,3 +1,6 @@
+# Text files that Git should normalize to LF line endings.
+# The pre-commit hook (.husky/pre-commit) uses the same extension list
+# to skip binary files. Keep both in sync when adding new file types.
 *.astro text eol=lf
 *.css text eol=lf
 *.go text eol=lf

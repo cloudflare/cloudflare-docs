@@ -1,8 +1,12 @@
 ---
 title: API token permissions
+description: Review available Cloudflare API token permissions for user, account, and zone resources.
 pcx_content_type: reference
 sidebar:
   order: 5
+products:
+  - fundamentals
+  - api
 ---
 
 import { Render, TabItem, Tabs } from "~/components";
@@ -42,6 +46,10 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 ## Account permissions
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
+
+:::note
+The `AI Gateway Read`, `Run`, and `Edit` permissions are account-scoped only — they cannot be restricted to a single gateway. For details, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/).
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

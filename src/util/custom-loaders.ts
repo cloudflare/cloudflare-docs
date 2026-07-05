@@ -4,6 +4,9 @@ import type { LoaderContext, Loader } from "astro/loaders";
 import { file } from "astro/loaders";
 
 import { fileURLToPath } from "node:url";
+import { Readable } from "node:stream";
+import type { ReadableStream as WebReadableStream } from "node:stream/web";
+import { writeFile } from "node:fs/promises";
 import fs from "fs";
 import { dirname, join } from "path";
 
@@ -43,9 +46,17 @@ export async function downloadToDotTempIfNotPresent(
 		fs.mkdirSync(dirname(destination), { recursive: true });
 
 		const response = await fetch(source);
-		const content = await response.text();
-
-		fs.writeFileSync(destination, content);
+		try {
+			// Stream file to destination to avoid storing in memory
+			await writeFile(
+				destination,
+				Readable.fromWeb(response.body! as WebReadableStream),
+			);
+		} catch (err) {
+			// Clean up partial download if stream fails
+			fs.rmSync(destination, { force: true });
+			throw err;
+		}
 	}
 }
 

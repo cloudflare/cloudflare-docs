@@ -1,8 +1,11 @@
 ---
 title: D1 Database
+description: Use the D1Database binding to prepare statements, execute queries, batch operations, and dump a D1 database from a Worker.
 pcx_content_type: concept
 sidebar:
   order: 1
+products:
+  - d1
 ---
 
 import { Type, MetaInfo, Details, Tabs, TabItem } from "~/components";
@@ -109,15 +112,13 @@ const batchResult = await env.DB.batch([
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-from pyodide.ffi import to_js
-
 company_name1 = "Bs Beverages"
 company_name2 = "Around the Horn"
 stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?")
-batch_result = await self.env.DB.batch(to_js([
+batch_result = await self.env.DB.batch([
     stmt.bind(company_name1),
-    stmt.bind(company_name2)
-]))
+    stmt.bind(company_name2),
+])
 ```
 </TabItem> </Tabs>
 
@@ -146,15 +147,14 @@ return Response.json(stmt)
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-from pyodide.ffi import to_js
 from workers import Response
 
 company_name1 = "Bs Beverages"
 company_name2 = "Around the Horn"
-stmt = await self.env.DB.batch(to_js([
+stmt = await self.env.DB.batch([
     self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(company_name1),
-    self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(company_name2)
-]))
+    self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(company_name2),
+])
 return Response.json(stmt)
 ```
 </TabItem> </Tabs>
@@ -246,16 +246,15 @@ print(stmt[1].results.to_py())
 	```
 	</TabItem> <TabItem label="Python" icon="seti:python">
 	```py
-	from pyodide.ffi import to_js
 	from workers import Response
 
 	company_name1 = "Bs Beverages"
 	company_name2 = "Around the Horn"
 	stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?")
-	batch_result = await self.env.DB.batch(to_js([
+	batch_result = await self.env.DB.batch([
 	    stmt.bind(company_name1),
-	    stmt.bind(company_name2)
-	]))
+	    stmt.bind(company_name2),
+	])
 	return Response.json(batch_result)
 	```
 	</TabItem> </Tabs>
@@ -312,7 +311,7 @@ return Response.json(return_value)
 
 #### Guidance
 
-- If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/observability/debug-d1/#errors) to learn more.
+- If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/observability/debug-d1/#error-list) to learn more.
 - This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe.
 - Only use this method for maintenance and one-shot tasks (for example, migration jobs).
 - The input can be one or multiple queries separated by `\n`.

@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Add a subdomain as a standalone zone in Cloudflare.
+products:
+  - dns
 title: Subdomain setup
 sidebar:
   order: 3
@@ -40,3 +43,11 @@ The availability of different setups depends on both the parent zone setup and t
 ## Resources
 
 <DirectoryListing />
+
+## FAQ
+
+### Why does my parent zone show DNS queries for child zone hostnames?
+
+If you have both a parent zone (for example, `example.com`) and a child subdomain zone (for example, `sub.example.com`) on Cloudflare, the parent zone's DNS analytics may show queries for hostnames belonging to the child zone.
+
+This is normal DNS behavior — recursive resolvers query the parent zone first to get the referral (NS records) pointing to the child zone's nameservers. These referral queries appear in the parent zone's analytics even though the authoritative answer comes from the child zone.

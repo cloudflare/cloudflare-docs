@@ -92,7 +92,7 @@ This should be called in response to a RTKStage Join request
 
 #### module.exports.join()
 Method to join the stage
-Users either need to have the permission in the preset or must be accepted by a priveleged
+Users either need to have the permission in the preset or must be accepted by a privileged
 user to call this method
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  

@@ -1,5 +1,7 @@
 ---
 pcx_content_type: reference
+products:
+  - ssl
 title: Certificate authorities
 sidebar:
   order: 5
@@ -41,6 +43,7 @@ For Universal certificates, Cloudflare controls the validity periods and certifi
 
 - Hostname on certificate can contain up to 10 levels of subdomains.
 - Duplicate certificate limit of [5 certificates](https://letsencrypt.org/docs/rate-limits/) per week.
+- Redsys[^1] is not compatible with Let's Encrypt certificates. If you use Redsys and find issues with Let's Encrypt certificates, order an advanced certificate or upload a custom certificate to use a different CA.
 
 #### Browser compatibility
 
@@ -64,10 +67,6 @@ You can find the full list of supported clients in the [Let's Encrypt documentat
 
 - Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days.
 - [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 14 days.
-
-#### Limitations
-
-- Punycode domains are not yet supported.
 
 #### Browser compatibility (most compatible)
 
@@ -119,7 +118,7 @@ SSL.com certificates are [cross-signed with Certum](https://www.ssl.com/reposito
 
 #### Browser compatibility
 
-Refer to [Sectigo documentation](https://www.sectigo.com/knowledge-base/detail/SSL-Browser-Compatibility-1527076085062/kA01N000000zFJt).
+Refer to [Sectigo documentation](https://www.sectigo.com/resource-library/sectigo-certificate-authority-root-keys).
 
 ---
 
@@ -137,3 +136,5 @@ The following table lists the CAA record content for each CA:
 | Google Trust Services | `pki.goog; cansignhttpexchanges=yes` |
 | SSL.com               | `ssl.com`                            |
 | Sectigo               | `sectigo.com`                        |
+
+[^1]: A payment gateway used with some ecommerce plugins.

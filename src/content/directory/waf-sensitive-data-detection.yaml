@@ -1,0 +1,12 @@
+id: V36cHg
+name: waf-sensitive-data-detection
+
+entry:
+  title: Cloudflare Sensitive Data Detection
+  url: /waf/managed-rules/reference/sensitive-data-detection/
+  show: false
+
+meta:
+  title: Cloudflare Sensitive Data Detection docs
+  description: Cloudflare Sensitive Data Detection helps identify data leaks from your origin servers by scanning response bodies for patterns of common sensitive data like PII, financial information, and secrets.
+  author: "@cloudflare"

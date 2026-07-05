@@ -1,0 +1,23 @@
+---
+title: Workflow instances now support pause(), resume(), restart(), and terminate() methods in local development
+description: The pause(), resume(), restart(), and terminate() instance methods are now available in local development via wrangler dev
+products:
+  - workflows
+  - workers
+date: 2026-03-23 12:00:00 UTC
+---
+
+Workflow instance methods `pause()`, `resume()`, `restart()`, and `terminate()` are now available in local development when using `wrangler dev`.
+
+You can now test the full Workflow instance lifecycle locally:
+
+```ts
+const instance = await env.MY_WORKFLOW.create({
+	id: "my-instance-id",
+});
+
+await instance.pause(); // pauses a running workflow instance
+await instance.resume(); // resumes a paused instance
+await instance.restart(); // restarts the instance from the beginning
+await instance.terminate(); // terminates the instance immediately
+```

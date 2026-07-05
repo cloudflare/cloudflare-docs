@@ -1,11 +1,16 @@
 ---
 pcx_content_type: how-to
+description: gRPC in Zero Trust networking.
+products:
+  - cloudflare-one
 title: gRPC
+tags:
+  - RPC
 sidebar:
   order: 9
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { DashButton, GlossaryTooltip, Render } from "~/components";
 
 gRPC is a Remote Procedure Call (RPC) framework that allows client applications to call methods on a remote server as if they were running on the same local machine. You can connect gRPC servers and clients to Cloudflare's global network, making it easier to build applications that use services across different data centers and environments.
 
@@ -13,7 +18,7 @@ gRPC is a Remote Procedure Call (RPC) framework that allows client applications 
 In this example, we will connect a gRPC server to Cloudflare using the
 `cloudflared` <GlossaryTooltip term="daemon">daemon</GlossaryTooltip>, secure
 the server with Gateway policies, and open a gRPC channel to the server using
-the Cloudflare WARP client.
+the Cloudflare One Client.
 
 ## 1. Set up a gRPC server
 
@@ -34,9 +39,13 @@ To establish a secure, outbound-only connection to Cloudflare:
 
 <Render file="tunnel/connect-private-network" product="cloudflare-one" />
 
-3. In the **CIDR** tab for the tunnel, enter the private IP or CIDR address of your server.
+3. In the Cloudflare dashboard, go to **Networking** > **Routes**.
 
-## 3. Route private network IPs through WARP
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+4. Select **Create route** > **Tunnel CIDR**. Select the tunnel you just created, enter the private IP or CIDR address of your server, and select **Create route**.
+
+## 3. Route private network IPs through the Cloudflare One Client
 
 <Render
 	file="tunnel/warp-to-tunnel-route-ips"
@@ -67,12 +76,12 @@ For more details on setting up the Gateway proxy, refer to [Filter network traff
 
 ## 5. Set up the client
 
-gRPC clients can connect to the server by installing Cloudflare WARP on the device and enrolling in your Zero Trust organization. When the client makes a request to a private IP exposed through Cloudflare Tunnel, WARP routes the connection through Cloudflare's network to the corresponding tunnel.
+gRPC clients can connect to the server by installing the Cloudflare One Client on the device and enrolling in your Zero Trust organization. When the client makes a request to a private IP exposed through Cloudflare Tunnel, WARP routes the connection through Cloudflare's network to the corresponding tunnel.
 
 To set up the gRPC client:
 
-1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device in Traffic and DNS mode.
-2. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
+1. [Deploy the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your device in Traffic and DNS mode.
+2. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 3. Install gRPC on the device by following this [quick start guide](https://grpc.io/docs/languages/python/quickstart/).
 4. Modify `greeter.py` to point to the private IP of your gRPC server. This is the same private IP configured in your [Cloudflare Tunnel routes](#2-connect-the-server-to-cloudflare). For example,
 
@@ -90,7 +99,7 @@ def run():
 
 ## 6. Test the connection
 
-1. On the client device, ensure that WARP is `Connected`.
+1. On the client device, ensure that the Cloudflare One Client is `Connected`.
 2. Run the gRPC client application:
 
 ```sh

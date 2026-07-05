@@ -1,8 +1,11 @@
 ---
 title: Insert vectors
+description: Insert and upsert vectors into a Vectorize index, including supported formats and namespaces.
 pcx_content_type: concept
 sidebar:
   order: 4
+products:
+  - vectorize
 ---
 
 import { Render } from "~/components";
@@ -57,7 +60,7 @@ Carefully consider the cardinality of metadata values in relation to your querie
 
 High cardinality is good for the selectiveness of the equal (`$eq`) filter. For example, if you want to find vectors associated with one user's id. But the filter is not going to help if all vectors have the same value. That's an example of extreme low cardinality.
 
-High cardinality can also impact range queries, which searches across multiple unqiue metadata values. For example, an indexed metadata value using millisecond timestamps will see lower performance if the range spans long periods of time in which thousands of vectors with unique timestamps were written.
+High cardinality can also impact range queries, which searches across multiple unique metadata values. For example, an indexed metadata value using millisecond timestamps will see lower performance if the range spans long periods of time in which thousands of vectors with unique timestamps were written.
 
 Behind the scenes, Vectorize uses a reverse index to map values to vector ids. If the number of unique values in a particular range is too high, then that requires reading large portions of the index (a full index scan in the worst case). This would lead to memory issues, so Vectorize will degrade performance and the accuracy of the query in order to finish the request.
 
@@ -114,7 +117,7 @@ let matches = await env.TUTORIAL_INDEX.query(queryVector, {
 
 One way to reduce the time to make updates visible in queries is to batch more vectors into fewer requests. This is important for write-heavy workloads. To see how many vectors you can write in a single request, please refer to the [Limits](/vectorize/platform/limits/) page.
 
-Vectorize writes changes immeditely to a write ahead log for durability. To make these writes visible for reads, an asynchronous job needs to read the current index files from R2, create an updated index, write the new index files back to R2, and commit the change. To keep the overhead of writes low and improve write throughput, Vectorize will combine multiple changes together into a single batch. It sets the maximum size of a batch to 200,000 total vectors or to 1,000 individual updates, whichever limit it hits first.
+Vectorize writes changes immediately to a write ahead log for durability. To make these writes visible for reads, an asynchronous job needs to read the current index files from R2, create an updated index, write the new index files back to R2, and commit the change. To keep the overhead of writes low and improve write throughput, Vectorize will combine multiple changes together into a single batch. It sets the maximum size of a batch to 200,000 total vectors or to 1,000 individual updates, whichever limit it hits first.
 
 For example, let's say we have 250,000 vectors we would like to insert into our index. We decide to insert them one at a time, calling the insert API 250,000 times. Vectorize will only process 1000 vectors in each job, and will need to work through 250 total jobs. This could take at least an hour to do.
 

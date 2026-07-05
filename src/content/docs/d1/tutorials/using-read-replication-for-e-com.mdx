@@ -10,6 +10,8 @@ tags:
   - SQL
 description: >-
   D1 Read Replication is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves read throughput.
+products:
+  - d1
 ---
 
 import {
@@ -639,7 +641,8 @@ The `withRetry` function is a utility function that retries a given operation wi
 
 :::caution
 
-In a distrubed system, retry mechanisms can have certain risks. Read the article [Retry Strategies in Distributed Systems: Identifying and Addressing Key Pitfalls](https://www.computer.org/publications/tech-news/trends/retry-strategies-avoiding-pitfalls) to learn more about the risks of retry mechanisms and how to avoid them.
+In a distributed system, retry mechanisms can have certain risks. Read the article [Retry Strategies in Distributed Systems: Identifying and Addressing Key Pitfalls](https://www.computer.org/publications/tech-news/trends/retry-strategies-avoiding-pitfalls) to learn more about the risks of retry mechanisms and how to avoid them.
+
 
 Retries can sometimes lead to data inconsistency. Make sure to handle the retry logic carefully.
 
@@ -866,7 +869,7 @@ curl -X POST http://localhost:8787/api/product \
 
 Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-9-deploy-the-application). D1 does not create read replicas when you develop locally.
 
-To test it locally, you can set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
+To test it locally, you can set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/local-development/#remote-bindings) for more information.
 
 :::
 

@@ -4,6 +4,9 @@ pcx_content_type: how-to
 title: Filters
 sidebar:
   order: 5
+description: Apply filters to Logpush job log output.
+products:
+  - logpush
 ---
 
 import { Render, APIRequest, DashButton } from "~/components";
@@ -97,9 +100,9 @@ Here is an example request using cURL via API:
 To set filters through the dashboard:
 
 1. In the Cloudflare dashboard, go to the **Logpush** page at the account or or domain (also known as zone) level.
- 
+
    For account: <DashButton url="/?to=/:account/logs" />
- 
+
    For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
 
 

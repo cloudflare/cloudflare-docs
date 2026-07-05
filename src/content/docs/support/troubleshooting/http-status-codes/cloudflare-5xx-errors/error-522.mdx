@@ -2,6 +2,9 @@
 pcx_content_type: troubleshooting
 title: Error 522
 source: null
+description: Troubleshoot HTTP 522 error responses.
+products:
+  - support
 ---
 
 ## Error 522: connection timed out
@@ -17,7 +20,7 @@ Two different timeouts cause HTTP error `522` depending on when they occur betwe
 
 ### Resolution
 
-- Contact your hosting provider and share the necessary [error details](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to assist in troubleshooting these common causes:
+- Contact your hosting provider and share the [error details](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to assist in troubleshooting these common causes:
 
   - [Cloudflare IP addresses](https://www.cloudflare.com/ips/) are rate limited or blocked in .htaccess, iptables, or firewalls. Confirm your hosting provider allows **all Cloudflare IP ranges** (most common cause). You can use a [Cloudflare WAF Custom Rule](/waf/custom-rules/use-cases/block-by-geographical-location/) if you need to restrict traffic from geographical locations.
   - An overloaded or offline origin web server drops incoming requests.
@@ -35,3 +38,7 @@ Two different timeouts cause HTTP error `522` depending on when they occur betwe
 
   - An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
   - Details from the hosting provider's investigation, such as pertinent logs or conversations with the hosting provider.
+
+### Diagnose with Origin Analytics
+
+Use [Origin Analytics](/speed/origin-analytics/) to check for TCP connection failures to your origin. If the **Top endpoints** table shows a high TCP failure rate for specific paths, the issue may be path-specific rather than a general origin problem. Origin Analytics can also help confirm whether your origin is reachable from Cloudflare's edge.

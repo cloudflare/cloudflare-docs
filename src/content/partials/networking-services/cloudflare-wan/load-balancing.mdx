@@ -2,6 +2,8 @@
 {}
 ---
 
-You can use Cloudflare Load Balancing with Cloudflare WAN (formerly Magic WAN) to distribute traffic across endpoints, reducing strain and improving the performance of your network. Cloudflare WAN uses Private Network Load Balancing, which supports both on-ramping and off-ramping traffic to Cloudflare WAN.
+If your network has multiple paths to the same destination — for example, redundant tunnels to a data center — you can use Cloudflare Load Balancing to distribute traffic across those paths. This prevents any single path from becoming a bottleneck and allows traffic to fail over automatically if a path goes down.
+
+Cloudflare WAN (formerly Magic WAN) uses Private Network Load Balancing, which balances traffic across your private network endpoints. It supports both on-ramping (traffic entering Cloudflare's network) and off-ramping (traffic exiting to your sites).
 
 Refer to [Private Network Load Balancing](/load-balancing/private-network/) for more information about the feature and how to set it up. Before using this feature, [enable Load Balancing](/load-balancing/).

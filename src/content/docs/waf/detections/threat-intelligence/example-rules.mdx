@@ -1,0 +1,64 @@
+---
+title: Example rules
+pcx_content_type: configuration
+description: Mitigate high-risk traffic using threat intelligence fields in WAF rules.
+products:
+  - waf
+tags:
+  - Threat Intelligence
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Example rules using threat intelligence
+---
+
+[Custom rule](/waf/custom-rules/) and [rate limiting rule](/waf/rate-limiting-rules/) examples using [threat intelligence fields](/waf/detections/threat-intelligence/fields/). All fields are arrays — use [`any()`](/ruleset-engine/rules-language/functions/#any) with `[*]`.
+
+:::caution
+Test rules with _Log_ before enforcing. IP-based threat intelligence is a seven-day lookback over shared infrastructure — combine with other signals such as [attack score](/waf/detections/attack-score/) before you block.
+:::
+
+## Log matches before blocking
+
+Deploy with _Log_ (Enterprise plans) to review matches before enforcing:
+
+- **Expression:**<br/>
+  `any(cf.intel.ip.attacker_names[*] != "")`
+- **Action:** _Log_
+
+Review matches in [Security Events](/waf/analytics/security-events/), then change the action to _Block_ or _Managed Challenge_.
+
+## Block DDoS participants targeting your region
+
+- **Expression:**<br/>
+  `any(cf.intel.ip.target_countries[*] == "FR") and any(cf.intel.ip.datasets[*] == "ddos")`
+- **Action:** _Block_
+
+## Challenge a threat actor targeting the finance sector
+
+- **Expression:**<br/>
+  `any(cf.intel.ip.target_industries[*] == "Banking & Financial Services") and any(cf.intel.ip.attacker_names[*] == "BLACKBASTA")`
+- **Action:** _Managed Challenge_
+
+## Filter by attacker country
+
+- **Expression:**<br/>
+  `any(cf.intel.ip.attacker_countries[*] == "CN")`
+- **Action:** _Block_
+
+## Combine with attack score
+
+Block requests flagged by the WAF threat intelligence dataset that also have a low [attack score](/waf/detections/attack-score/):
+
+- **Expression:**<br/>
+  `any(cf.intel.ip.datasets[*] == "waf") and cf.waf.score lt 20`
+- **Action:** _Block_
+
+## Rate limit threat actors on API paths
+
+[Rate limiting rule](/waf/rate-limiting-rules/) applying a stricter rate to flagged IPs on your API:
+
+- **Expression:**<br/>
+  `any(cf.intel.ip.datasets[*] == "ddos") and starts_with(http.request.uri.path, "/api/")`
+- **Action:** _Block_ when the rate is exceeded.

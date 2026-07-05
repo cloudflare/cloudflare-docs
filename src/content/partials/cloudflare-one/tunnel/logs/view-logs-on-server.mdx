@@ -1,0 +1,15 @@
+---
+params:
+  - loglevelURL
+  - logfileURL
+  - runParametersURL
+---
+
+If you have access to the origin server, you can use the <a href={props.loglevelURL}>`--loglevel` flag</a> to enable logging when you start the tunnel. By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can optionally use the <a href={props.logfileURL}>`--logfile` flag</a> to write your logs to a file.
+
+To enable logs, <a href={props.runParametersURL}>run the tunnel</a> using the `--loglevel info` and `--logfile <PATH>` flags. For example,
+
+```sh
+cloudflared tunnel --loglevel info --logfile cloudflared.log run <UUID>
+```
+

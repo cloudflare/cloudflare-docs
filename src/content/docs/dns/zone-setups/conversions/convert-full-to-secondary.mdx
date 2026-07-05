@@ -1,6 +1,9 @@
 ---
 title: Convert full setup to secondary setup
 pcx_content_type: tutorial
+difficulty: Advanced
+products:
+  - dns
 sidebar:
   order: 2
   label: Full to secondary
@@ -56,7 +59,7 @@ Follow the steps below to achieve this conversion.
 
 3. Select **Manage linked peers** under **DNS Zone Transfers**.
 3. Link the peer server you created in the previous steps and select **Save**.
-4. Back to the the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, select **Initiate zone transfer**.
+4. Back on the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, select **Initiate zone transfer**.
 5. Confirm the DNS records are transferring as expected.
 6. Go to the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page and take note of your new **Cloudflare Nameservers**.
 7. At your domain registrar (or parent zone), [update your nameservers](/dns/nameservers/update-nameservers/) to include the `secondary.cloudflare.com` nameservers.

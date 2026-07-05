@@ -1,6 +1,9 @@
 ---
 title: Create a rule via API
 pcx_content_type: how-to
+description: Create cache rules using the Rulesets API.
+products:
+  - cache
 
 sidebar:
   order: 4
@@ -132,6 +135,46 @@ These examples are setting all the Cache Rules of a zone to a single rule, since
   }}
   roles={false}
 />
+
+</Details>
+
+
+<Details header="Example: Cache expected Vary responses">
+
+<APIRequest
+  path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+  method="PUT"
+  parameters={{ ruleset_phase: "http_request_cache_settings" }}
+  json={{
+    rules: [
+      {
+        expression: '(http.host eq "example.com")',
+        description: "cache expected vary responses",
+        action: "set_cache_settings",
+        action_parameters: {
+          cache: true,
+          vary: {
+            default: {
+              action: "bypass"
+            },
+            headers: {
+              accept: {
+                action: "normalize",
+                media_types: ["text/html", "application/json"]
+              },
+              "accept-language": {
+                action: "normalize",
+                languages: ["en", "fr", "de"]
+              }
+            }
+          }
+        }
+      }
+    ]
+  }}
+  roles={false}
+/>
+
 
 </Details>
 

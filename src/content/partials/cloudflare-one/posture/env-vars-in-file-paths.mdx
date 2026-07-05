@@ -1,0 +1,14 @@
+---
+{}
+---
+
+import { Details } from "~/components";
+
+<Details header="Environment variables" open={true}>
+
+File paths can include environment variables to account for differences across devices. Environment variables are resolved in the context of the Cloudflare One Client daemon, not the logged-in user. Only variables available to the daemon process at runtime will work.
+
+- **Windows**: Use `%VAR%` syntax. For example, `%PROGRAMFILES%\myfolder\myfile.exe`.
+- **macOS/Linux**: Use `${VAR}` syntax. For example, `${RUNTIME_DIRECTORY}/myfolder/myfile`.
+
+</Details>

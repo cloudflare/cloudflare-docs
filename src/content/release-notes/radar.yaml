@@ -3,6 +3,57 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-05-29"
+    title: Add TLS bug detection to the Radar post-quantum TLS support checker
+    description: |-
+      * The [post-quantum TLS support checker](https://radar.cloudflare.com/post-quantum) now reports TLS bugs detected during the handshake test (Split ClientHello, HRR Failure, Unknown Keyshare) with user-facing descriptions and remediation guidance. The bugs section only appears for hosts where issues are detected.
+      * Bug detection data is returned by the existing [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) endpoint.
+  - publish_date: "2026-05-04"
+    title: Add new routing widgets to Cloudflare Radar
+    description: |-
+      * Added a **Top ASes by announced IP space** chart to country [routing pages](https://radar.cloudflare.com/routing), breaking down the IPv4 and IPv6 address space announced from a country across the top originating autonomous systems.
+      * Added an **RPKI ROA deployment** timeseries widget to the [RPKI sub-page](https://radar.cloudflare.com/routing/rpki), tracking the share of announced BGP space covered by a valid Route Origin Authorization (ROA) over time, with a toggle between covered prefixes and covered IP address space. Available on global, country, and AS views.
+      * Added two new endpoints to the [`BGP`](/api/resources/radar/subresources/bgp/) API:
+        * [`/bgp/ips/top/ases`](/api/resources/radar/subresources/bgp/subresources/ips/subresources/top/methods/ases/) - Returns the top autonomous systems by announced IPv4 or IPv6 address space, globally or filtered by country.
+        * [`/bgp/rpki/roas/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/roas/methods/timeseries/) - Returns RPKI ROA validation coverage over time, by share of prefixes or share of IP address space, split by IP version, with optional ASN or location filters.
+  - publish_date: "2026-04-24"
+    title: Add signature agent URL to bot details
+    description: |-
+      * Added `signatureAgentUrl` field to the [bot details](/api/resources/radar/subresources/bots/methods/get/) API endpoint. For agents verified via [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/), this field contains the URL to the agent's HTTP Message Signatures key directory. It is `null` for bots not verified via request signature.
+      * Added signature agent URL to the [bot detail page](https://radar.cloudflare.com/bots/directory) on Radar, with a modal to inspect the key directory JSON content.
+  - publish_date: "2026-04-01"
+    title: Promote Routing to a dedicated section with sub-pages
+    description: |-
+      * Expanded the Routing page into a full section with dedicated [Overview](https://radar.cloudflare.com/routing), [RPKI](https://radar.cloudflare.com/routing/rpki), and [Anomalies](https://radar.cloudflare.com/routing/anomalies) sub-pages.
+      * Added new **Top 100 ASes** widget to the routing overview, with rankings by customer cone, IPv4 address space, and IPv6 address space.
+      * Added new **RPKI prefix validation** widget showing per-ASN prefixes grouped by validation status (Valid, Invalid, Unknown).
+      * Improved the IP address space chart to display both IPv4 and IPv6 trends on all views including global.
+  - publish_date: "2026-03-06"
+    title: Add region filtering and AS/location dimensions to API
+    description: |-
+      * Added region filtering across all location-aware pages, including continents, geographic subregions, political regions (EU, ASEAN, African Union), and US Census regions/divisions.
+      * Added traffic volume insights by top autonomous systems and countries/territories.
+      * Added AS and location dimensions to the [`HTTP`](/api/resources/radar/subresources/http/), [`DNS`](/api/resources/radar/subresources/dns/), and [`NetFlows`](/api/resources/radar/subresources/netflows/) APIs.
+      * Added breadcrumb navigation.
+  - publish_date: "2026-02-27"
+    title: Add Post-Quantum and Key Transparency insights
+    description: |-
+      * Added new [`Post-Quantum`](/api/resources/radar/subresources/post_quantum/) API:
+        * [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) - Tests whether a host supports post-quantum TLS key exchange.
+        * [`/post_quantum/origin/summary/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/summary/) - Returns origin post-quantum data summarized by key agreement algorithm.
+        * [`/post_quantum/origin/timeseries_groups/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/timeseries_groups/) - Returns origin post-quantum timeseries data grouped by key agreement algorithm.
+      * Launched [Post-Quantum Encryption](https://radar.cloudflare.com/post-quantum) page.
+      * Launched [Key Transparency](https://radar.cloudflare.com/key-transparency) page.
+  - publish_date: "2026-02-25"
+    title: Add RPKI ASPA deployment insights
+    description: |-
+      * Added new [`ASPA`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/) API endpoints:
+        * [`/bgp/rpki/aspa/snapshot`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/snapshot/) - Retrieves current or historical ASPA objects.
+        * [`/bgp/rpki/aspa/changes`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/changes/) - Retrieves changes to ASPA objects over time.
+        * [`/bgp/rpki/aspa/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/timeseries/) - Retrieves ASPA object counts over time as a timeseries.
+      * Added ASPA deployment trend and objects count widgets to the [global routing page](https://radar.cloudflare.com/routing).
+      * Added ASPA deployment rate widget to country and region routing pages.
+      * Added ASPA-verified upstreams and change timeline to AS routing pages.
   - publish_date: "2026-02-12"
     title: Add content type dimension to AI Bots
     description: |-
@@ -18,7 +69,6 @@ entries:
       * Added new dimension `client_type` to the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API.
         * Added new **HTML page requests by client type graph** to the [AI Insights page](https://radar.cloudflare.com/ai-insights#html-page-requests-by-client-type).
   - publish_date: "2025-11-24"
-
     title: Add HTTP origins insights
     description: |-
       * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.

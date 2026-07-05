@@ -1,5 +1,6 @@
 ---
-title: Hyperdrive
+title: Hyperdrive (Postgres & MySQL)
+description: Accelerate access to your existing databases from Cloudflare Workers with Hyperdrive's global connection pooling and query caching.
 order: 0
 
 pcx_content_type: overview
@@ -8,6 +9,8 @@ sidebar:
 head:
   - tag: title
     content: Overview
+products:
+  - hyperdrive
 ---
 
 import {
@@ -35,11 +38,13 @@ Hyperdrive is a service that accelerates queries you make to existing databases,
 Hyperdrive supports any Postgres or MySQL database, including those hosted on AWS, Google Cloud, Azure, Neon and PlanetScale. Hyperdrive also supports Postgres-compatible databases like CockroachDB and Timescale.
 You do not need to write new code or replace your favorite tools: Hyperdrive works with your existing code and tools you use.
 
-Use Hyperdrive's connection string from your Cloudflare Workers application with your existing Postgres drivers and object-relational mapping (ORM) libraries:
+Use Hyperdrive's connection details from your Cloudflare Workers application with your existing database drivers and object-relational mapping (ORM) libraries.
+
+## Examples
+
+### PostgreSQL
 
 <Tabs>
-	<TabItem label="PostgreSQL">
-	<Tabs>
 	<TabItem label="index.ts">
 ```ts
 import { Client } from "pg";
@@ -66,8 +71,8 @@ export default {
 } satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
 ```
 
-    </TabItem>
-    <TabItem label="wrangler.jsonc">
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
 ```json
 	{
 		"$schema": "node_modules/wrangler/config-schema.json",
@@ -92,9 +97,10 @@ export default {
 
 </TabItem>
 </Tabs>
-</TabItem>
-<TabItem label="MySQL">
-	<Tabs>
+
+### MySQL
+
+<Tabs>
 	<TabItem label="index.ts">
 ```ts
 import { createConnection } from 'mysql2/promise';
@@ -150,9 +156,6 @@ export default {
 		]
 	}
 ```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 </Tabs>

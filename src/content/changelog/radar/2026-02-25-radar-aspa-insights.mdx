@@ -1,0 +1,37 @@
+---
+title: RPKI ASPA Deployment Insights on Cloudflare Radar
+description: New RPKI ASPA insights on Cloudflare Radar, including ASPA deployment trends, per-ASN ASPA content, and API access
+products:
+  - radar
+date: 2026-02-25
+---
+
+[**Radar**](/radar/) now includes [Autonomous System Provider Authorization (ASPA)](https://datatracker.ietf.org/doc/draft-ietf-sidrops-aspa-verification/) deployment insights, providing visibility into the adoption and verification of ASPA objects across the global routing ecosystem.
+
+## New API endpoints
+
+The new [`ASPA`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/) API provides the following endpoints:
+
+- [`/bgp/rpki/aspa/snapshot`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/snapshot/) - Retrieves current or historical ASPA objects.
+- [`/bgp/rpki/aspa/changes`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/changes/) - Retrieves changes to ASPA objects over time.
+- [`/bgp/rpki/aspa/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/timeseries/) - Retrieves ASPA object counts over time as a timeseries.
+
+## New Radar widgets
+
+The [global routing page](https://radar.cloudflare.com/routing) now shows the ASPA deployment trend over time by counting daily ASPA objects.
+
+![Screenshot of the ASPA deployment trend chart](~/assets/images/radar/aspa-global-trend.png)
+
+The global routing page also displays the most recent ASPA objects, searchable by ASN or AS name.
+
+![Screenshot of the ASPA objects table](~/assets/images/radar/aspa-global-table.png)
+
+On country and region routing pages, a new widget shows the ASPA deployment rate for ASNs registered in the selected country or region.
+
+![Screenshot of the ASPA deployment trent chart for Germany](~/assets/images/radar/aspa-germany-trend.png)
+
+On AS routing pages, the connectivity table now includes checkmarks for ASPA-verified upstreams. All ASPA upstreams are listed in a dedicated table, and a timeline shows ASPA changes at daily granularity.
+
+![Screenshot of the ASPA changes timeline on an AS routing page](~/assets/images/radar/aspa-asn-timeline.png)
+
+Check out the [Radar routing page](https://radar.cloudflare.com/routing) to explore the data.

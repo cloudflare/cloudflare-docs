@@ -1,21 +1,26 @@
 ---
 pcx_content_type: concept
 title: How it works
+description: How O2O routes traffic through two Cloudflare zones for SaaS provider configurations.
+products:
+  - cloudflare-for-saas
+tags:
+  - DNS
 sidebar:
   order: 1
 head:
   - tag: title
-    content: How Orange-to-Orange (O2O) works
+    content: How O2O works
 
 ---
 
 import { Example } from "~/components";
 
-Orange-to-Orange (O2O) is a specific traffic routing configuration where traffic routes through two Cloudflare zones: the first Cloudflare zone is owned by customer 1 and the second Cloudflare zone is owned by customer 2, who is considered a SaaS provider.
+O2O is a specific traffic routing configuration where traffic routes through two Cloudflare zones: the first Cloudflare zone is owned by customer 1 and the second Cloudflare zone is owned by customer 2, who is considered a SaaS provider.
 
 If one or more hostnames are onboarded to a SaaS Provider that uses Cloudflare products as part of their platform - specifically the [Cloudflare for SaaS product](/cloudflare-for-platforms/cloudflare-for-saas/) - those hostnames will be created as [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) in the SaaS Provider's zone.
 
-To give the SaaS provider permission to route traffic through their zone, any custom hostname must be activated by you (the SaaS customer) by placing a [CNAME record](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#3-have-customer-create-cname-record) on your authoritative DNS. If your authoritative DNS is Cloudflare, you have the option to [proxy](/fundamentals/concepts/how-cloudflare-works/#application-services) your CNAME record, achieving an Orange-to-Orange setup.
+To give the SaaS provider permission to route traffic through their zone, any custom hostname must be activated by you (the SaaS customer) by placing a [CNAME record](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#3-have-customer-create-cname-record) on your authoritative DNS. If your authoritative DNS is Cloudflare, you have the option to [proxy](/fundamentals/concepts/how-cloudflare-works/#application-services) your CNAME record, achieving an O2O setup.
 
 ## Prerequisites
 
@@ -55,6 +60,12 @@ A --> B
 B --> C
 C --> D
 ```
+
+## Detect O2O traffic
+
+When traffic flows through an O2O configuration, Cloudflare sets the HTTP header `cf-connecting-o2o: 1` on requests entering the SaaS provider's zone. There is no API field or zone setting that indicates whether O2O is active — it is a per-request routing behavior determined by the customer's DNS configuration.
+
+You can check for this header in your origin server or in a [Cloudflare Worker](/workers/) to identify O2O traffic and apply specific logic.
 
 ## Without O2O
 

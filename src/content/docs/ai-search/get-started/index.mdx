@@ -3,33 +3,45 @@ title: Get started
 pcx_content_type: get-started
 sidebar:
   order: 2
+  group:
+    hideIndex: true
 head:
   - tag: title
     content: Get started with AI Search
 description: Create fully-managed, retrieval-augmented generation pipelines with Cloudflare AI Search.
+products:
+  - ai-search
 ---
 
-import { CardGrid, LinkCard } from "@astrojs/starlight/components";
-import { DashButton } from "~/components";
+import { CardGrid, LinkCard } from "~/components";
 
-AI Search is Cloudflare's managed search service. Connect your data such as websites or an R2 bucket, and it automatically creates a continuously updating index that you can query with natural language in your applications or AI agents.
-
-## Prerequisites
-
-AI Search integrates with R2 for storing your data. You must have an active R2 subscription before creating your first AI Search instance.
-
-<DashButton url="/?to=/:account/r2/overview" buttonName="R2 Overview" />
+AI Search is a managed search service. Connect a website, an R2 bucket, or upload your own documents, and AI Search indexes your content for natural language queries.
 
 ## Choose your setup method
 
 <CardGrid>
+	<LinkCard
+		title="Workers API"
+		description="Create, populate, and query an AI Search instance from a Cloudflare Worker."
+		href="/ai-search/get-started/workers/"
+	/>
+	<LinkCard
+		title="Python SDK"
+		description="Create, populate, and query an AI Search instance from Python."
+		href="/ai-search/get-started/python/"
+	/>
+	<LinkCard
+		title="CLI"
+		description="Create and manage AI Search instances from the command line."
+		href="/ai-search/get-started/wrangler/"
+	/>
 	<LinkCard
 		title="Dashboard"
 		description="Create and configure AI Search using the Cloudflare dashboard."
 		href="/ai-search/get-started/dashboard/"
 	/>
 	<LinkCard
-		title="API"
+		title="REST API"
 		description="Create AI Search instances programmatically using the REST API."
 		href="/ai-search/get-started/api/"
 	/>

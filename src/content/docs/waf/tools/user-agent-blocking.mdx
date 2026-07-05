@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Block or challenge requests based on User-Agent header values.
+products:
+  - waf
 title: User Agent Blocking
 source: https://support.cloudflare.com/hc/en-us/articles/115001856951-Understanding-Cloudflare-User-Agent-Blocking
 sidebar:
@@ -56,7 +59,7 @@ User Agent Blocking is only available in the new security dashboard if you have 
 
 3. Enter a descriptive name for the rule in **Name/Description**.
 
-4. In **Action**, select the action to perform: _Managed Challenge_, _Block_, _JS Challenge_, or _Interactive Challenge_.
+4. In **Action**, select the action to perform: _Block_, _Non-Interactive Challenge_, _Managed Challenge_, or _Interactive Challenge_.
 
 5. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
 
@@ -76,7 +79,7 @@ User Agent Blocking is only available in the new security dashboard if you have 
 
 4. Enter a descriptive name for the rule in **Name/Description**.
 
-5. In **Action**, select the action to perform: _Managed Challenge_, _Block_, _JS Challenge_, or _Interactive Challenge_.
+5. In **Action**, select the action to perform: _Block_, _Non-Interactive Challenge_, _Managed Challenge_, or _Interactive Challenge_.
 
 6. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
 
@@ -102,6 +105,10 @@ Issue a `POST` request for the [Create a User Agent Blocking rule](/api/resource
 />
 
 </TabItem> </Tabs>
+
+## Challenge actions
+
+When a User Agent Blocking rule uses a challenge action such as _Managed Challenge_, the visitor must pass a challenge page. After passing the challenge, a `cf_clearance` cookie is set. The duration of this cookie is controlled by the [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/) setting.
 
 ## Related resources
 

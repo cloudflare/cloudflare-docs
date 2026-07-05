@@ -1,21 +1,39 @@
 ---
 pcx_content_type: concept
 title: Brand Protection
+description: Detect phishing domains and impersonation attempts targeting your brand.
+products:
+  - security-center
+tags:
+  - Phishing
+  - AI
 sidebar:
   order: 7
-  badge:
-    text: Beta
 ---
 
 import { AvailableNotifications, Render, DashButton } from "~/components";
 
-:::note[User permission]
-While the Brand Protection tool is in beta, all Cloudflare Enterprise customers have automatic access to Brand Protection, including five saved queries. Only Admin, Super Admin and users with a Brand Protection role can access Brand Protection
-:::
-
 <Render file="brand-protection-definition" product="security-center" />
 
-## Domain search
+:::note[User permission]
+Access to Brand Protection is managed through [Cloudflare RBAC](/fundamentals/manage-members/roles/).
+
+Only users with the following roles can access and configure Brand Protection:
+
+- Super Admin
+- Admin
+- Brand Protection (custom role)
+- Cloudforce One
+
+:::
+
+## Types of queries
+
+Cloudflare Brand Protection offers two distinct methods for monitoring impersonation: domain search and logo search.
+
+### Domain search
+
+Search for domains based on text patterns, misspellings, or service combinations.
 
 To start searching for new domains that might be trying to impersonate your brand:
 
@@ -25,7 +43,7 @@ To start searching for new domains that might be trying to impersonate your bran
 
 2. In **String query**, provide a name for your query. You can add multiple brand phrases on the same query, and the results will generate matches for all of those. Once you entered the string queries, select **Search matches**.
 
-3. In the **Character distance**, select from `0-3`. The number of characters the results can differ from your domain.
+3. In the **Character distance**, select from `0-3`. This defines how many characters a result can differ from your string (for example, a distance of 1 would catch `clpudflare.com`). The number of characters the results can differ from your domain.
 
    :::note
 
@@ -36,39 +54,18 @@ To start searching for new domains that might be trying to impersonate your bran
 
 5. To export all matches from a saved query, select your **Query name** > select the three dots > **Export matches**.
 
-In the section **Monitor Strings**, you can check all the string queries that you selected to monitor. You can delete, clone, or create notifications for a string query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications.
+In the section **Monitor Strings**, you can check all the string queries that you selected to monitor. You can delete, clone, or create notifications for a string query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications. You can also dismiss any domain matched in the query if you have investigated and deemed it benign or a false positive. Users can still access their previously dismissed matches by turning on the  **Show dismissed matches** toggle in the Cloudflare dashboard.
 
-### Report abuse
+### Logo search (AI-powered)
 
-:::note[Submit abuse report]
-You can only submit an abuse report if your domain is with [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/), or if the IP used by the domain is hosted by Cloudflare.
-:::
-
-To submit abuse reports directly from the dashboard:
-
-1. In the Cloudflare dashboard, go to the **Brand Protection** page.
-
-   <DashButton url="/?to=/:account/security-center/brand-protection" />
-2. Go to **Monitor Strings**, select the query you want to report.
-3. Select **Report to Cloudflare**.
-4. Fill in the details to submit an abuse report.
-5. Select **Submit**.
-
-To view abuse reports, in the Cloudflare dashboard, go to the **Abuse Reports** page.
-   
-   <DashButton url="/?to=/:account/abuse-reports" />
-
-You can review abuse reports against your zones and any mitigations taken against reports in response.
-
-You can also **Request review** of most mitigations.
-
-## Logo queries
+Logo search uses computer vision to detect domains using your visual assets, even if the domain name does not contain your brand string.
 
 To set up a new logo query:
 
 1. Select **Monitor Logos** and select **Add logo**.
-3. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
-4. Select **Save logo**.
+2. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
+3. Set the threshold: Set a match threshold (the minimum is 75%). A higher score ensures high-precision matches, while a lower score catches remixed or slightly altered versions of your logo.
+4. Select **Save logo**. The system will now scan newly detected infrastructure for visual matches.
 
 The browser will return to the **Monitored Logos** page, where you can access your query and configure notifications.
 
@@ -87,16 +84,69 @@ To investigate a string query:
 2. Select a monitored query to inspect all the domains that matched your query.
 3. Next to the domain, select **Domain** or **URL**. This will trigger a search on the [**Investigate**](/security-center/investigate/) section in a separate tab. URL scanner will also be triggered from **Brand Protection** through **Security Center** > **Investigate**. You will also have access to a report which will be generated automatically. The report will display screenshots of the matched domain, and the registrar of your domain.
 
+## Report abuse
+
+:::note[Submit abuse report]
+You can only submit an abuse report if your domain is with [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/), or if the IP used by the domain is hosted by Cloudflare.
+:::
+
+To submit abuse reports directly from the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Brand Protection** page.
+
+   <DashButton url="/?to=/:account/security-center/brand-protection" />
+
+2. Go to **Monitor Strings**, select the query you want to report.
+3. Select **Report to Cloudflare**.
+4. Fill in the details to submit an abuse report.
+5. Select **Submit**.
+
+To view abuse reports, in the Cloudflare dashboard, go to the **Abuse Reports** page.
+
+<DashButton url="/?to=/:account/abuse-reports" />
+
+You can review abuse reports against your zones and any mitigations taken against reports in response.
+
+You can also **Request review** of most mitigations.
+
+## Cease and Desist letters
+
+When you identify an infringing domain hosted outside of Cloudflare, you can generate a Cease and Desist (C&D) letter directly from the dashboard. The system automatically pulls registrar data and WHOIS contact information (such as the registrant or registrar abuse email) and pre-fills your custom-branded templates.
+
+When reviewing a matched domain, you have two paths to action depending on where the domain is hosted:
+
+- **Report to Cloudflare**: If the matched domain is using Cloudflare's network or registrar, trigger the integrated abuse reporting flow instantly.
+- **Generate a C&D Letter**: If the domain is hosted elsewhere, use one of the default templates or one you previously saved in the dashboard.
+
+### Generate a C&D letter
+
+1. In the Cloudflare dashboard, go to the **Brand Protection** page.
+
+   <DashButton url="/?to=/:account/security-center/brand-protection" />
+
+2. Go to **Monitor Strings** and select a query to view its matched domains.
+3. Next to the domain you want to take action on, click **Generate C&D Letter**.
+4. Choose a template. You can select from three default templates or from your own saved templates:
+   - **Registrant - Exact Match**: A cease and desist letter direct to a registrant of a domain that is an exact match to the protected trademark.
+   - **Registrant - Similar Match**: A cease and desist letter directed to a registrant of a domain that is confusingly similar to the protected trademark (1-character distance).
+   - **Registrar - Trademark Infringement**: A letter directed to a domain registrar regarding trademark infringement by their registrant.
+   - **Registrar - Trademark Infringement & Phishing**: A letter directed to a domain registrar regarding trademark infringement and phishing by their registrant.
+5. Review and edit the pre-filled letter. The system auto-populates recipient data from WHOIS records.
+6. Click **Download** to save the finalized PDF.
+
+:::note
+Cloudflare does not represent you and cannot provide you with legal advice. Only you can decide whether your rights have been infringed, whether a cease and desist letter is appropriate, and what that letter should say.
+:::
+
 ## Brand Protection API
 
-The [Brand Protection API](/api/resources/brand_protection/) allows you to:
+The [Brand Protection API](/api/resources/brand_protection/) allows for programmatic management and integration with your [SOC](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-a-security-operations-center-soc/) or [SIEM](https://www.cloudflare.com/en-gb/learning/security/what-is-siem/). Using the Brand Protection API, you can:
 
-- Create new strings or logo queries
-- Delete strings or logo queries
-- Download matches for both logo and string queries
-- Read matches for both logo and string queries
+- Manage queries: Create, edit, or delete string and logo queries.
+- Data retrieval: Read and download matches for automated ingestion.
+- Query editing: Update existing query parameters without losing historical data.
 
-## Brand Protection Alerts
+## Notifications and alerts
 
 <Render file="brand-protection-alerts" product="security-center" />
 
@@ -119,7 +169,7 @@ To set up a Brand Protection Alert:
 
 Manage your notifications in the **All notifications** tab. You can disable, edit, delete, or test them.
 
-## Limitations
+## Subscriptions and limitations
 
-- While this product is in beta, all Enterprise customers and Cloudforce One subscribers have access to Brand Protection. Enterprise customers are entitled to five saved queries for their account.
+- Self-serve users can subscribe directly to add monitoring capacity to their account.
 - You may only use the Brand Protection search tools to search for domains that may be attempting to impersonate your brand or a brand that has authorized you to conduct such search on its behalf.

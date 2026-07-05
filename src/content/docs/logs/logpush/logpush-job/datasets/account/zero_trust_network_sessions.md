@@ -7,6 +7,8 @@ sidebar:
   order: 21
 ---
 
+Network session logs are generated for all traffic proxied through Cloudflare Gateway across all supported [on-ramps](/cloudflare-one/networks/connectivity-options/), such as the Cloudflare One Client (WARP), proxy endpoints (PAC files), Browser Isolation, and Cloudflare Tunnel.
+
 The descriptions below detail the fields available for `zero_trust_network_sessions`.
 
 ## AccountID
@@ -207,6 +209,12 @@ Type: `int`
 
 The duration taken by Secure Web Gateway applying applicable Network, HTTP, and Egress rules to the network session in milliseconds.
 
+## SNI
+
+Type: `string`
+
+The server name indication (SNI) value from the TLS handshake, if applicable.
+
 ## SessionEndTime
 
 Type: `int or string`
@@ -242,6 +250,12 @@ Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel
 Type: `int`
 
 Source port of the network session.
+
+## TenantID
+
+Type: `string`
+
+The tenant ID of the network session, if exists.
 
 ## UserID
 

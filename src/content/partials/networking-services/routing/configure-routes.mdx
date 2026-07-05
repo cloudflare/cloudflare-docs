@@ -4,6 +4,7 @@ params:
   - magicWord
   - trafficSteeringPage
   - productName
+  - virtualNetworkName
   - tunnelEndpoints
   - routePrioritization
   - chooseWeights
@@ -13,11 +14,12 @@ params:
   - addTunnelsURL?
   - unifiedRoutingModeURL?
   - arrReferenceURL?
+  - routingTableName
 ---
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Cloudflare Virtual Network routing table through static route configuration or routes learned from BGP peering (beta) (available over CNI with Dataplane v2, as well as IPsec and GRE tunnels).
+{props.virtualNetworkName} uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the {props.routingTableName} through static route configuration or routes learned from BGP peering (beta) (available over CNI with Dataplane v2, as well as IPsec and GRE tunnels).
 
 Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
 - Routes' priorities and weights
@@ -31,6 +33,10 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 	</>
 )
 }
+
+<Aside type="note" title="One page for all your routes">
+The dashboard **Routes** page shows the routes for all of your connectors — including Cloudflare Tunnel and Cloudflare Mesh — in a single table, not just {props.productName} static routes. The following steps cover {props.productName} static routes. Routes for other connector types appear in the same table and can be filtered by type.
+</Aside>
 
 ## Configure static routes
 
@@ -81,7 +87,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 		<Markdown
 			text={`
-			2. From the **Routes** tab, select **Create static route** to add a new route.
+			2. From the **Routes** tab, select **Create route**, then choose **WAN** as the route type.
 			`}
 			inline={false}
 		/>
@@ -412,9 +418,9 @@ BGP peering is available when using the following on-ramps:
 
 ### Choose an ASN for BGP peering
 
-The Cloudflare Virtual Network routing table is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
+The {props.routingTableName} is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
 
-By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Cloudflare Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
+By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the {props.routingTableName}. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
 
 :::note
 If you are setting up BGP over IPsec or GRE tunnels you cannot change this value.
@@ -505,6 +511,10 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 
 #### Set up BGP for an interconnect
 
+:::note
+BGP over CNI is in closed beta and is not currently available to new customers. If you are interested in BGP peering over CNI, contact your account team.
+:::
+
 {/* Dashboard steps for CF1 Cloudflare WAN (Cloudflare One dashboard) */}
 { props.magicWord === "CF1 Cloudflare WAN" && (
 	<>
@@ -542,7 +552,7 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 			inline={false}
 		/>
 
-		<DashButton url="/?to=/:account/interconnects" />
+		<DashButton url="/?to=/:account/magic-networks/connections/cni-tunnels" />
 	</>
 )
 }
@@ -625,7 +635,9 @@ If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware
 - Your CPE may advertise up to 5,000 prefixes on one BGP session.
 - MD5 authentication is optional. You can use a maximum of 80 characters. Supported characters include ``a-zA-Z0-9'!@#$%^&*()+[]{}<>/.,;:_-~`= \\|``
   :::caution
-	MD5 authentication is not a security measure nor is it a valid security mechanism. The MD5 key is not treated as a secret value. This is only supported for preventing misconfiguration, not for defending against malicious attacks.
+	MD5 authentication is not a valid security mechanism. The MD5 key is not treated as a secret value. This is only supported for preventing misconfiguration, not for defending against malicious attacks.
+
+	When MD5 is enabled, you cannot use Telnet to test BGP connectivity (Telnet does not support TCP MD5 authentication).
   :::
 
 
@@ -636,5 +648,3 @@ If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware
   </>
 )
 }
-
-

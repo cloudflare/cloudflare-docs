@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Workers as your fallback origin
+products:
+  - cloudflare-for-saas
 sidebar:
   order: 4
 head:
@@ -67,7 +69,15 @@ You do not need to add individual Worker routes for each custom hostname. The wi
 
 :::
 
+## Interaction with custom origin server
+
+:::caution
+When a Worker route matches incoming traffic, the request is handled by the Worker. The [`custom_origin_server`](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) setting on individual custom hostnames is bypassed because the Worker processes the request before origin resolution occurs.
+
+If you need per-hostname origin routing, implement it within your Worker using `request.headers.get("host")` or `request.cf.hostMetadata` (via [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/)).
+:::
+
 ## Related resources
 
-- [Hostname routing](/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/) - Learn about advanced routing patterns, including dispatch Workers and Orange-to-Orange (O2O) behavior.
+- [Hostname routing](/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/) - Learn about advanced routing patterns, including dispatch Workers and O2O behavior.
 - [Workers routes](/workers/configuration/routing/routes/) - Learn more about route pattern matching and validity rules.

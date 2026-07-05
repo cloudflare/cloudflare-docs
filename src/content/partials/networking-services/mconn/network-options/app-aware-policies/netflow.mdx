@@ -5,10 +5,10 @@ params:
 
 import { CURL, Render } from "~/components";
 
-## NetFlow exports from Cloudflare One Appliance to Magic Network Monitoring
+## NetFlow exports from Cloudflare One Appliance to Network Flow
 
 {/* only renders the link on the analytics > Netflow statistics page */}
-You can configure your Cloudflare One Appliance (formerly Magic WAN Connector) to export Netflow statistics for {props.breakoutTrafficURL ? <a href={props.breakoutTrafficURL}>local breakout traffic</a> : <>local breakout traffic</>} to <a href="/magic-network-monitoring">Magic Network Monitoring</a>. This provides insights into traffic that leaves your site directly, bypassing the Cloudflare network.
+You can configure your Cloudflare One Appliance (formerly Magic WAN Connector) to export Netflow statistics for {props.breakoutTrafficURL ? <a href={props.breakoutTrafficURL}>local breakout traffic</a> : <>local breakout traffic</>} to <a href="/network-flow">Network Flow</a> (formerly Magic Network Monitoring). This provides insights into traffic that leaves your site directly, bypassing the Cloudflare network.
 
 The Cloudflare One Appliance uses NetFlow v9 to export flow data for breakout traffic only. You can enable and configure this export by setting the Netflow configuration for the associated site via the Cloudflare API.
 
@@ -17,7 +17,7 @@ The Cloudflare One Appliance uses NetFlow v9 to export flow data for breakout tr
 <Render file="account-id-api-key" product="networking-services" params={{ showSiteId: true }} />
 
 1. Send a `PUT` request to the Netflow configuration endpoint for your site.
-2. In the JSON body request, you must include the `collector_ip` parameter. To export traffic statistics to Magic Network Monitoring, use the IP address `162.159.65.1`. This is the only field required to enable the feature.
+2. In the JSON body request, you must include the `collector_ip` parameter. To export traffic statistics to Network Flow, use the IP address `162.159.65.1`. This is the only field required to enable the feature.
 
 Minimal configuration example:
 
@@ -49,4 +49,4 @@ Full configuration example:
 	}}
 />
 
-Your Cloudflare One Appliance will now begin exporting Netflow data for its breakout traffic, which will be ingested and displayed within your Magic Network Monitoring dashboard. You can retrieve the current settings by sending a `GET` request, or disable the export by sending a `DELETE` request to the same endpoint.
+Your Cloudflare One Appliance will now begin exporting Netflow data for its breakout traffic, which will be ingested and displayed within your Network Flow dashboard. You can retrieve the current settings by sending a `GET` request, or disable the export by sending a `DELETE` request to the same endpoint.

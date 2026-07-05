@@ -1,0 +1,44 @@
+---
+interface Props {
+	class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div
+	class:list={[
+		"halftone-bg pointer-events-none absolute inset-0 z-0 select-none",
+		className,
+	]}
+	aria-hidden="true"
+>
+</div>
+
+<style>
+	.halftone-bg {
+		background-image: url("/pattern.png"), url("/pattern.png");
+		background-repeat: no-repeat;
+		background-position:
+			right bottom,
+			right bottom;
+		background-size: cover, cover;
+		-webkit-mask-image: linear-gradient(
+			to top,
+			black 15%,
+			rgba(0, 0, 0, 0.55) 50%,
+			transparent 85%
+		);
+		mask-image: linear-gradient(
+			to top,
+			black 15%,
+			rgba(0, 0, 0, 0.55) 50%,
+			transparent 85%
+		);
+	}
+
+	:global([data-theme="dark"]) .halftone-bg {
+		mix-blend-mode: screen;
+		filter: brightness(1.4) saturate(1.3);
+	}
+</style>

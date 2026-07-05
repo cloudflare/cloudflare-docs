@@ -1,0 +1,16 @@
+---
+title: Web Assets fields now available in GraphQL Analytics API
+description: Query matched operation IDs and managed labels per request using the httpRequestsAdaptive and httpRequestsAdaptiveGroups GraphQL datasets.
+date: 2026-03-23
+---
+
+Two new fields are now available in the `httpRequestsAdaptive` and `httpRequestsAdaptiveGroups` [GraphQL Analytics API](/analytics/graphql-api/) datasets:
+
+- `webAssetsOperationId` — the ID of the [saved endpoint](/api-shield/management-and-monitoring/) that matched the incoming request.
+- `webAssetsLabelsManaged` — the [managed labels](/api-shield/management-and-monitoring/endpoint-labels/#managed-labels) mapped to the matched operation at the time of the request (for example, `cf-llm`, `cf-log-in`). At most 10 labels are returned per request.
+
+Both fields are empty when no operation matched. `webAssetsLabelsManaged` is also empty when no managed labels are assigned to the matched operation.
+
+These fields allow you to determine, per request, which Web Assets operation was matched and which managed labels were active. This is useful for troubleshooting downstream security detection verdicts — for example, understanding why [AI Security for Apps](/waf/detections/ai-security-for-apps/) did or did not flag a request.
+
+Refer to [Endpoint labeling service](/api-shield/management-and-monitoring/endpoint-labels/#analytics) for GraphQL query examples.

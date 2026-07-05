@@ -1,0 +1,39 @@
+---
+title: Send emails with named recipient addresses
+description: You can now include display names on to, cc, bcc, and from addresses when sending emails via the Workers binding or REST API.
+products:
+  - email-service
+date: 2026-05-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+You can now send emails with display names on recipient addresses in addition to the existing `from` support. Pass an object with `email` and an optional `name` field for `to`, `cc`, `bcc`, `replyTo`, or `from`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const response = await env.EMAIL.send({
+			from: { email: "support@example.com", name: "Support Team" },
+			to: { email: "jane@example.com", name: "Jane Doe" },
+			cc: [
+				"manager@company.com",
+				{ email: "team@company.com", name: "Engineering Team" },
+			],
+			subject: "Welcome!",
+			html: "<h1>Thanks for joining!</h1>",
+			text: "Thanks for joining!",
+		});
+
+		return Response.json({ messageId: response.messageId });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Plain strings remain fully supported for backward compatibility, and you can mix strings and named objects in the same array.
+
+Refer to the [Workers API](/email-service/api/send-emails/workers-api/) and [REST API](/email-service/api/send-emails/rest-api/) documentation for full request examples.

@@ -3,7 +3,8 @@ pcx_content_type: configuration
 title: Request
 head: []
 description: Interface that represents an HTTP request.
-
+products:
+  - workers
 ---
 
 import { Type, MetaInfo, Render } from "~/components";
@@ -130,9 +131,13 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
   * This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, "404": 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
 
+* `vary` <Type text="RequestInitCfPropertiesVary" /> <MetaInfo text="optional" />
+
+  * Controls how Cloudflare caches origin responses with a `Vary` header for a single `fetch()` request. If both `cf.vary` and [Cache Rules Vary](/cache/how-to/cache-rules/settings/#vary) apply, `cf.vary` takes precedence for this subrequest.
+
 * `image` Object | null optional
 
-  * Enables [Image Resizing](/images/transform-images/) for this request. The possible values are described in [Transform images via Workers](/images/transform-images/transform-via-workers/) documentation.
+  * Enables [Image Resizing](/images/optimization/transformations/overview/) for this request. The possible values are described in [Transform images via Workers](/images/optimization/transformations/transform-via-workers/) documentation.
 
 * `polish` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -150,6 +155,73 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
   * Enables or disables [WebP](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/) image format in [Polish](/images/polish/).
 
+
+
+#### The `cf.vary` property
+
+The `cf.vary` object controls how Cloudflare handles request headers named by the origin `Vary` response header for a single `fetch()` request. It uses the same `default` and `headers` shape as [Cache Rules Vary](/cache/how-to/cache-rules/settings/#vary), and the same actions and normalization behavior as [Vary](/cache/concepts/vary/).
+
+If you omit `cf.vary`, Cloudflare uses other Vary behavior for the zone, including Cache Rules Vary if configured.
+
+The origin response must include a `Vary` header for this setting to affect the cache key. A response containing `Vary: *` always bypasses cache.
+
+The `cf.vary` object supports these keys:
+
+| Key       | Required | Description                                                                                        |
+| --------- | -------- | -------------------------------------------------------------------------------------------------- |
+| `default` | Yes      | Configuration for any header name in the origin `Vary` response that is not included in `headers`. |
+| `headers` | No       | A map of lowercase request header names to configuration objects.                                  |
+
+If the `vary` object is present, `default` is required. An empty `vary` object is invalid. Invalid `cf.vary` configurations are ignored for that request.
+
+Each header configuration object, and the `default` object, must include an `action` key set to one of `normalize`, `passthrough`, or `bypass`. For guidance, refer to [Actions](/cache/concepts/vary/#actions).
+
+Additional parameters can be specified for certain header names:
+
+| Header            | Additional key | Description                                                                                                 |
+| ----------------- | -------------- | ----------------------------------------------------------------------------------------------------------- |
+| `accept`          | `media_types`  | MIME types to keep when normalizing the `Accept` header. Maximum 10 items and 255 characters per item.    |
+| `accept-language` | `languages`    | Languages to keep when normalizing the `Accept-Language` header. Maximum 20 items and 64 characters per item. |
+
+The `default` object and `headers` entries other than `accept` and `accept-language` support only `action`.
+
+For most deployments, set `default.action` to `bypass`, add `headers` entries for expected origin `Vary` headers, and use `normalize` for `accept` and `accept-language` unless your origin requires raw header values.
+
+The following limits and validation rules apply:
+
+- Header names in `headers` must be lowercase.
+- Header names can contain lowercase letters, numbers, underscores, and hyphens.
+- Header names cannot exceed 128 characters.
+- Header names beginning with `cf-` or `cf_` are not allowed.
+- Certain hop-by-hop, cache-control, or proxy-control headers are not allowed. Examples include `connection`, `content-length`, `cache-control`, `host`, `range`, `origin`, and `x-forwarded-for`.
+- `headers` can contain up to 50 entries.
+- `accept.media_types` can contain up to 10 entries.
+- `accept-language.languages` can contain up to 20 entries.
+- Values in `media_types` and `languages` must be non-empty printable ASCII strings.
+
+The following request init fragment normalizes `Accept` and `Accept-Language`, and bypasses cache for any other header in the origin `Vary` response:
+
+```json title="Request init fragment"
+{
+	"cf": {
+		"vary": {
+			"default": {
+				"action": "bypass"
+			},
+			"headers": {
+				"accept": {
+					"action": "normalize",
+					"media_types": ["text/html", "application/json"]
+				},
+				"accept-language": {
+					"action": "normalize",
+					"languages": ["en", "fr", "de"]
+				}
+			}
+		}
+	}
+}
+```
 
 
 ***
@@ -221,11 +293,19 @@ All plans have access to:
 
 * `botManagement` Object | null
 
-  * Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, `ja3Hash`, `ja4`, and `detectionIds`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables/) for more details.
+  * Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `signedAgent`, `staticResource`, `ja3Hash`, `ja4`, and `detectionIds`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables/) for more details.
 
 * `clientAcceptEncoding` string | null
 
   * If Cloudflare replaces the value of the `Accept-Encoding` header, the original value is stored in the `clientAcceptEncoding` property, for example, `"gzip, deflate, br"`.
+
+* `clientQuicRtt` number | undefined
+
+  * The smoothed round-trip time (RTT) between Cloudflare and the client for QUIC connections, in milliseconds. Only present when the client connected over QUIC (HTTP/3). For example, `42`.
+
+* `clientTcpRtt` number | undefined
+
+  * The smoothed round-trip time (RTT) between the client and Cloudflare for TCP connections, in milliseconds. Only present when the client connected over TCP (HTTP/1 and HTTP/2). For example, `22`.
 
 * `colo` string
 
@@ -234,6 +314,12 @@ All plans have access to:
 * `country` string | null
 
   * Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, for example, `"US"`.
+
+* `edgeL4` Object | undefined
+
+  * Layer 4 transport statistics for the connection between the client and Cloudflare. Contains the following property:
+    * `deliveryRate` number - The most recent data delivery rate estimate for the connection, in bytes per second. For example, `123456`.
+
 
 * `isEUCountry` string | null
 
@@ -257,7 +343,7 @@ All plans have access to:
 
 * `tlsClientAuth` Object | null
 
-  * Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+  * Various details about the client certificate (for mTLS connections). Refer to [Client certificate variables](/ssl/client-certificates/client-certificate-variables/) for more details.
 
 * `tlsClientCiphersSha1` string
 
@@ -432,7 +518,7 @@ Using any other type of `ReadableStream` as the body of a request will result in
 The Workers implementation of the `Request` interface includes several extensions to the web standard `Request` API. These differences are intentional and provide additional functionality specific to the Workers runtime.
 
 :::note[TypeScript users]
-Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/#types)) define a `Request` type that includes Workers-specific properties like `cf`. This type is not directly compatible with the standard `Request` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions or create a new `Request` object.
+Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/general/#types)) define a `Request` type that includes Workers-specific properties like `cf`. This type is not directly compatible with the standard `Request` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions or create a new `Request` object.
 :::
 
 ### The `cf` property

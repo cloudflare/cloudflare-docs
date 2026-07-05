@@ -1,0 +1,38 @@
+---
+title: New Best Practices guide for Workers
+description: Best practices for building production Workers, covering configuration, architecture, observability, security, and code patterns.
+products:
+  - workers
+date: 2026-02-15
+---
+
+import { WranglerConfig } from "~/components";
+
+A new [Workers Best Practices](/workers/best-practices/workers-best-practices/) guide provides opinionated recommendations for building fast, reliable, observable, and secure Workers. The guide draws on production patterns, Cloudflare internal usage, and best practices observed from developers building on Workers.
+
+Key guidance includes:
+
+- **Keep your compatibility date current and enable `nodejs_compat`** — Ensure you have access to the latest runtime features and Node.js built-in modules.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+}
+```
+
+</WranglerConfig>
+- **Generate binding types with `wrangler types`** — Never hand-write your `Env` interface. Let Wrangler generate it from your actual configuration to catch mismatches at compile time.
+- **Stream request and response bodies** — Avoid buffering large payloads in memory. Use `TransformStream` and `pipeTo` to stay within the 128 MB memory limit and improve time-to-first-byte.
+- **Use bindings, not REST APIs** — Bindings to KV, R2, D1, Queues, and other Cloudflare services are direct, in-process references with no network hop and no authentication overhead.
+- **Use Queues and Workflows for background work** — Move long-running or retriable tasks out of the critical request path. Use Queues for simple fan-out and buffering, and Workflows for multi-step durable processes.
+- **Enable Workers Logs and Traces** — Configure observability before deploying to production so you have data when you need to debug.
+- **Avoid global mutable state** — Workers reuse isolates across requests. Storing request-scoped data in module-level variables causes cross-request data leaks.
+- **Always `await` or `waitUntil` your Promises** — Floating promises cause silent bugs and dropped work.
+- **Use Web Crypto for secure token generation** — Never use `Math.random()` for security-sensitive operations.
+
+To learn more, refer to [Workers Best Practices](/workers/best-practices/workers-best-practices/).

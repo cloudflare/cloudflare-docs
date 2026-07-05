@@ -1,8 +1,24 @@
 import { GlossaryTooltip } from "~/components";
 
-Starting with [Chrome 142](https://developer.chrome.com/release-notes/142), the browser restricts requests from websites to local IP addresses, including the Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP </GlossaryTooltip> CGNAT range (`100.80.0.0/16`). When a website attempts to access a domain resolved through an initial resolved IP, the browser will display a prompt from the website asking to look for and connect to devices on the local network. Chrome will block requests to these domains until the user accepts this prompt.
+Starting with [Chrome 142](https://developer.chrome.com/release-notes/142), the browser restricts requests from websites to local IP addresses, including the Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> CGNAT range (`100.80.0.0/16`). Because this range falls within `100.64.0.0/10`, Chrome categorizes these addresses as belonging to a local network. When a website loaded from a public IP makes subrequests to a domain resolved through an initial resolved IP, Chrome treats this as a public-to-local network request and displays a prompt asking the user to allow access to devices on the local network. Chrome will block requests to these domains until the user accepts this prompt.
+
+This commonly occurs when an Egress policy matches broadly used domains (such as `cloudfront.net` or `github.com`), causing subrequests from public pages to resolve to the `100.80.0.0/16` range.
+
+#### Iframes
+
+If the affected request originates from within an iframe (for example, an application embedded in a third-party portal), the iframe must declare the `local-network-access` permission for the browser prompt to appear in the parent frame:
+
+- **Chrome 142-144**: Use the `allow="local-network-access"` attribute on the iframe element.
+- **Chrome 145+**: The permission was split into `allow="local-network"` and `allow="loopback-network"`.
+
+If iframes are nested, every iframe in the chain must include the appropriate attribute. Since third-party applications control their own iframe attributes, this may not be configurable by the end user.
+
+#### Workarounds
 
 To avoid this issue, choose one of the following options:
 
-- Disable the Chrome feature flag: Go to `chrome://flags` and set the **Local Network Access Checks** flag to _Disabled_.
-- Configure Chrome Enterprise policy: Use the **LocalNetworkAccessAllowedForUrls** policy to allow specific websites to make requests to these domains. For more information, refer to the [Chrome Enterprise documentation](https://chromeenterprise.google/policies/#LocalNetworkAccessAllowedForUrls).
+- **Override IP address space classification (Chrome 146+)**: Use the [`LocalNetworkAccessIpAddressSpaceOverrides`](https://chromeenterprise.google/policies/#LocalNetworkAccessIpAddressSpaceOverrides) Chrome Enterprise policy to reclassify the `100.80.0.0/16` range as public. This is the most targeted fix because it only changes the classification for the initial resolved IP range rather than disabling security checks entirely.
+- **Allow specific URLs (Chrome 140+)**: Use the [`LocalNetworkAccessAllowedForUrls`](https://chromeenterprise.google/policies/#LocalNetworkAccessAllowedForUrls) Chrome Enterprise policy to exempt specific websites from Local Network Access checks. Note that `https://*` is a valid entry to disable checks for all URLs.
+- **Allow specific URLs (Chrome 146+)**: Use the [`LocalNetworkAllowedForUrls`](https://chromeenterprise.google/policies/#LocalNetworkAllowedForUrls) Chrome Enterprise policy, which replaces `LocalNetworkAccessAllowedForUrls` starting in Chrome 146.
+- **Opt out of Local Network Access restrictions (Chrome 142-152)**: Use the [`LocalNetworkAccessRestrictionsTemporaryOptOut`](https://chromeenterprise.google/policies/#LocalNetworkAccessRestrictionsTemporaryOptOut) Chrome Enterprise policy to completely opt out of Local Network Access restrictions. This is a temporary policy and will be removed after Chrome 152.
+- **Disable the Chrome feature flag**: Go to `chrome://flags` and set the **Local Network Access Checks** flag to _Disabled_. This approach is suitable for individual users but not for enterprise-wide deployment.

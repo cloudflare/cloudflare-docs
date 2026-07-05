@@ -1,11 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Watch a live stream
+description: Play Cloudflare Stream live video using the Stream Player or custom HLS and DASH players.
 learning_center:
   title: What is live streaming?
   link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 sidebar:
   order: 3
+products:
+  - stream
 ---
 
 import { Render,DashButton } from "~/components";
@@ -33,7 +36,7 @@ input; it will not change.
 
 Use a Video ID in instances where a player should be used to display a single
 broadcast or its recording once the broadcast has concluded. This option is best for cases where
-a page is dedicated to a one-time event, specific episode/occurance, or date.
+a page is dedicated to a one-time event, specific episode/occurrence, or date.
 There is a _new_ Video ID generated for each broadcast _when it starts._
 
 Using DVR mode, explained below, there are additional considerations.

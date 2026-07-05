@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { DOCS_BASE_URL, PREVIEW_URL_REGEX } from "./constants";
-import { filenameToPath, branchToSubdomain } from "./util";
+import { filenameToPath } from "./util";
 
 describe("PREVIEW_URL_REGEX", () => {
 	test("no changed files", () => {
@@ -19,20 +19,6 @@ describe("PREVIEW_URL_REGEX", () => {
 
 	test("empty", () => {
 		expect(PREVIEW_URL_REGEX.test("")).toBe(false);
-	});
-});
-
-describe("branchToSubdomain", () => {
-	test("slash", () => {
-		expect(branchToSubdomain("kian/pcx-15803")).toEqual("kian-pcx-15803");
-	});
-
-	test("normal", () => {
-		expect(branchToSubdomain("pcx-15803")).toEqual("pcx-15803");
-	});
-
-	test("capitalisation", () => {
-		expect(branchToSubdomain("PCX-15803")).toEqual("pcx-15803");
 	});
 });
 
@@ -64,12 +50,14 @@ describe("filenameToPath", () => {
 	test("changelog", () => {
 		expect(
 			filenameToPath("src/content/changelog/workers/2025-02-05-title.mdx"),
-		).toEqual("changelog/2025-02-05-title/");
+		).toEqual("changelog/post/2025-02-05-title/");
 	});
 
 	test("changelog base", () => {
 		expect(
 			`${DOCS_BASE_URL}/${filenameToPath("src/content/changelog/workers/2025-02-05-title.mdx")}`,
-		).toEqual("https://developers.cloudflare.com/changelog/2025-02-05-title/");
+		).toEqual(
+			"https://developers.cloudflare.com/changelog/post/2025-02-05-title/",
+		);
 	});
 });

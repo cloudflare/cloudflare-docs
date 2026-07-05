@@ -1,0 +1,34 @@
+---
+title: Cloudflare Pipelines as a Logpush destination
+description: Send Cloudflare logs to Pipelines for SQL transformation and storage in R2 as Parquet or Apache Iceberg tables.
+products:
+  - logs
+  - pipelines
+date: 2026-04-20
+---
+
+Logpush has traditionally been great at delivering Cloudflare logs to a variety of destinations in JSON format. While JSON is flexible and easily readable, it can be inefficient to store and query at scale.
+
+With this release, you can now send your logs directly to [Pipelines](/pipelines/) to ingest, transform, and store your logs in [R2](/r2/) as Parquet files or Apache Iceberg tables managed by [R2 Data Catalog](/r2/data-catalog/). This makes the data footprint more compact and more efficient at querying your logs instantly with [R2 SQL](/r2-sql/) or any other query engine that supports Apache Iceberg or Parquet.
+
+## Transform logs before storage
+
+Pipelines SQL runs on each log record in-flight, so you can reshape your data before it is written. For example, you can drop noisy fields, redact sensitive values, or derive new columns:
+
+```sql
+INSERT INTO http_logs_sink
+SELECT
+  ClientIP,
+  EdgeResponseStatus,
+  to_timestamp_micros(EdgeStartTimestamp) AS event_time,
+  upper(ClientRequestMethod) AS method,
+  sha256(ClientIP) AS hashed_ip
+FROM http_logs_stream
+WHERE EdgeResponseStatus >= 400;
+```
+
+Pipelines SQL supports string functions, regex, hashing, JSON extraction, timestamp conversion, conditional expressions, and more. For the full list, refer to the [Pipelines SQL reference](/pipelines/sql-reference/).
+
+## Get started
+
+To configure Pipelines as a Logpush destination, refer to [Enable Cloudflare Pipelines](/logs/logpush/logpush-job/enable-destinations/pipelines/).

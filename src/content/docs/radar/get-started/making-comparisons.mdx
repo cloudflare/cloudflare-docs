@@ -1,9 +1,11 @@
 ---
 pcx_content_type: reference
 title: Make comparisons
+description: Compare Radar API time series data across locations, date ranges, and autonomous systems in a single request.
 sidebar:
   order: 2
-
+products:
+  - radar
 ---
 
 When comparing time series, across locations/time ranges/etc., in endpoints that normalize values using [min-max](/radar/concepts/normalization), you must do so in the same request. This is done by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other.

@@ -141,11 +141,29 @@ Type: `string`
 
 HTTP test method. HTTP tests only.
 
+## HTTPRedirectEndMs
+
+Type: `int`
+
+HTTP test redirect end timestamp, in milliseconds elapsed since test start. HTTP tests only. Refer to [Resource timing](https://developer.mozilla.org/en-US/docs/Web/API/Resource_Timing_API/Using_the_Resource_Timing_API) for more details.
+
+## HTTPRedirectStartMs
+
+Type: `int`
+
+HTTP test redirect start timestamp, in milliseconds elapsed since test start. HTTP tests only. Refer to [Resource timing](https://developer.mozilla.org/en-US/docs/Web/API/Resource_Timing_API/Using_the_Resource_Timing_API) for more details.
+
 ## HTTPRequestStartMs
 
 Type: `int`
 
 HTTP test result request start, in milliseconds since test start. HTTP tests only. Refer to [Resource timing](https://developer.mozilla.org/en-US/docs/Web/API/Resource_Timing_API/Using_the_Resource_Timing_API) for more details.
+
+## HTTPResponseBody
+
+Type: `string`
+
+HTTP response body. HTTP tests only.
 
 ## HTTPResponseBodyBytes
 
@@ -164,6 +182,12 @@ HTTP test result response end, in milliseconds since test start. HTTP tests only
 Type: `int`
 
 HTTP test result header bytes. HTTP tests only.
+
+## HTTPResponseHeaders
+
+Type: `array[object]`
+
+HTTP response headers, for example `[{"name": "Content-Type", "value": "text/html"}]`. HTTP tests only.
 
 ## HTTPResponseStartMs
 

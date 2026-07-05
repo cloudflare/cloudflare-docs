@@ -1,0 +1,69 @@
+---
+title: "WAF Release - 2026-03-02"
+description: Cloudflare WAF managed rulesets 2026-03-02 release
+date: 2026-03-02
+---
+
+import { RuleID } from "~/components";
+
+This week's release introduces new detections for vulnerabilities in SmarterTools SmarterMail (CVE-2025-52691 and CVE-2026-23760), alongside improvements to an existing Command Injection (nslookup) detection to enhance coverage.
+
+
+**Key Findings**
+
+- CVE-2025-52691: SmarterTools SmarterMail mail server is vulnerable to Arbitrary File Upload, allowing an unauthenticated attacker to upload files to any location on the mail server, potentially enabling remote code execution.
+- CVE-2026-23760: SmarterTools SmarterMail versions prior to build 9511 contain an authentication bypass vulnerability in the password reset API permitting unaunthenticated to reset system administrator accounts failing to verify existing password or reset token.
+
+**Impact**
+
+Successful exploitation of these SmarterMail vulnerabilities could lead to full system compromise or unauthorized administrative access to mail servers. Administrators are strongly encouraged to apply vendor patches without delay.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="0f282f3c89614779966faf52966ec6b1" />
+			</td>
+			<td>N/A</td>
+			<td>SmarterMail - Arbitrary File Upload - CVE-2025-52691</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="35978af68e374a059e397bf5ee964a8c" />
+			</td>
+			<td>N/A</td>
+			<td>SmarterMail - Authentication Bypass - CVE-2026-23760</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="4bb099bcd71141d4a35c1aa675b64d99" />
+			</td>
+			<td>N/A</td>
+			<td>Command Injection - Nslookup - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This rule is merged into the original rule "Command Injection - Nslookup" (ID: <RuleID id="f4a310393c564d50bd585601b090ba9a" />)</td>
+		</tr>
+          
+	</tbody>
+</table>

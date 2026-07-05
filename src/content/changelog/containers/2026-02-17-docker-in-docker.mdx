@@ -1,0 +1,18 @@
+---
+title: Docker-in-Docker support added to Containers and Sandboxes
+description: Run Docker in Docker inside Containers and Sandboxes
+products:
+  - containers
+date: 2026-02-17
+---
+
+[Sandboxes](/sandbox/) and [Containers](/containers/) now support running Docker for "Docker-in-Docker" setups. This is particularly useful when your end users or [agents](/agents) want to run a full sandboxed development environment.
+
+This allows you to:
+
+- Develop containerized applications with your Sandbox
+- Run isolated test environments for images
+- Build container images as part of CI/CD workflows
+- Deploy arbitrary images supplied at runtime within a container
+
+For [Sandbox SDK](/sandbox/) users, see the [Docker-in-Docker guide](/sandbox/guides/docker-in-docker/) for instructions on combining Docker with the SandboxSDK. For general Containers usage, see the [Containers FAQ](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker).

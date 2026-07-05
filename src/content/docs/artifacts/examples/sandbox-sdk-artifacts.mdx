@@ -1,0 +1,103 @@
+---
+title: Sandbox SDK + Artifacts
+description: Connect a sandbox to an Artifacts repo.
+pcx_content_type: example
+sidebar:
+  order: 3
+products:
+  - artifacts
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+This example uses the `git-repo-per-sandbox` Sandbox SDK template and highlights the Artifacts-specific pieces.
+
+Start from the template with `create cloudflare`, as shown in [Run Claude Code on a Sandbox](/sandbox/tutorials/claude-code/#1-create-your-project). Then adapt the Artifacts flow with the focused snippets below.
+
+- Creates or reuses a sandbox by ID.
+- Creates or reuses an Artifacts repo with the same ID.
+- Passes an authenticated Git remote into the sandbox as `ARTIFACTS_GIT_REMOTE`.
+
+## Create your project
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={
+		"repo-per-sandbox --template=cloudflare/sandbox-sdk/examples/git-repo-per-sandbox"
+	}
+/>
+
+```sh
+cd repo-per-sandbox
+```
+
+## 1. Create or reuse the repo
+
+The template keeps one Artifacts repo per sandbox ID. Use your own source of truth to decide whether this request should create a new repo or load an existing one.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+let defaultBranch: string;
+let remote: string;
+let token: string;
+const sandboxWasJustCreated = true; // for example, set this when you create a new sandbox record
+
+if (sandboxWasJustCreated) {
+	const created = await env.ARTIFACTS.create(sandboxId);
+
+	defaultBranch = created.defaultBranch;
+	remote = created.remote;
+	token = created.token;
+} else {
+	const repo = await env.ARTIFACTS.get(sandboxId);
+
+	defaultBranch = repo.defaultBranch;
+	remote = repo.remote;
+	token = (await repo.createToken("write", 3600)).plaintext;
+}
+```
+
+</TypeScriptExample>
+
+The template already knows the repo name, so start with direct lookup instead of scanning `list()` pages. Avoid broad `catch` blocks here. They can hide missing-repo, auth, and validation failures behind the same retry message.
+
+If your flow can race with repo creation, handle that retry at the application level after you inspect the thrown error.
+
+## 2. Create or reuse the sandbox
+
+Use the same ID for the sandbox:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, sandboxId);
+```
+
+</TypeScriptExample>
+
+## 3. Pass the repo into the sandbox
+
+Convert the write token into an authenticated Git remote, then store it as an environment variable inside the sandbox.
+
+Use a short-lived token and pass it into the sandbox only after the sandbox session is authorized to push changes.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+function toAuthenticatedRemote(remote: string, token: string) {
+	const tokenSecret = token.split("?expires=")[0];
+	return `https://x:${tokenSecret}@${remote.slice("https://".length)}`;
+}
+
+await sandbox.setEnvVars({
+	ARTIFACTS_GIT_REMOTE: toAuthenticatedRemote(remote, token),
+});
+```
+
+</TypeScriptExample>
+
+Code running inside the sandbox can then use `ARTIFACTS_GIT_REMOTE` with `git clone`, `git fetch`, `git pull`, or `git push`.

@@ -1,10 +1,14 @@
 ---
 title: Code interpreter with Workers AI
 pcx_content_type: tutorial
+difficulty: Intermediate
 sidebar:
   order: 3
 description: Build a code interpreter using Workers AI GPT-OSS model with the official workers-ai-provider package.
 reviewed: 2026-01-28
+products:
+  - sandbox
+  - workers-ai
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
@@ -94,7 +98,7 @@ The template includes the proper Wrangler configuration:
 {
   "name": "sandbox-code-interpreter-example",
   "main": "src/index.ts",
-  "compatibility_date": "2025-05-06",
+  "compatibility_date": "$today",
   "ai": {
     "binding": "AI"
   },

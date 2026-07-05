@@ -1,0 +1,12 @@
+id: MAXx9v
+name: tiered-cache
+
+entry:
+  title: Tiered Cache
+  url: /cache/how-to/tiered-cache/
+  show: false
+
+meta:
+  title: Cloudflare Tiered Cache docs
+  description: Tiered Cache uses the size of Cloudflare's network to reduce requests to customer origins by dramatically increasing cache hit ratios.
+  author: "@cloudflare"

@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkAudioIndicatorIconWidget
+description: API reference for RtkAudioIndicatorIconWidget component (Flutter Library)
+products:
+  - realtime
+---
+
+A widget that displays the audio status of a participant in a RealtimeKit meeting.
+
+:::note
+[`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) must be an ancestor of this widget in the widget tree.
+:::
+
+## Properties
+
+| Property      | Type                    | Required | Default | Description                                   |
+| ------------- | ----------------------- | -------- | ------- | --------------------------------------------- |
+| `participant` | `RtkMeetingParticipant` | ✅       | -       | The participant whose audio status to display |
+| `iconSize`    | `double?`               | ❌       | `24`    | Size of the audio indicator icon              |
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkAudioIndicatorIconWidget(
+  participant: participant,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkAudioIndicatorIconWidget(
+  participant: participant,
+  iconSize: 32.0,
+)
+```

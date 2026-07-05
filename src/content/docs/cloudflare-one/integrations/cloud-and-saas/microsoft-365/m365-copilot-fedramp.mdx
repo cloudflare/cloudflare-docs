@@ -1,0 +1,33 @@
+---
+pcx_content_type: reference
+description: Reference information for Microsoft 365 Copilot (FedRAMP) in Zero Trust integrations.
+products:
+  - cloudflare-one
+title: Microsoft 365 Copilot (FedRAMP)
+rss: file
+sidebar:
+  order: 10
+tags:
+  - Microsoft
+  - AI
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Microsoft 365 Copilot (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/microsoft/integrations/m365-copilot"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Microsoft 365 Copilot (FedRAMP)",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/copilot-fedramp",
+	}}
+/>

@@ -1,14 +1,19 @@
 ---
 pcx_content_type: how-to
+description: SSH with Access for Infrastructure in Zero Trust networking.
+products:
+  - cloudflare-one
 title: SSH with Access for Infrastructure
+tags:
+  - SSH
 sidebar:
   order: 3
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
+import { Tabs, TabItem, Badge, Render, APIRequest, DashButton } from "~/components";
 
-[Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
+[Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. Like the [self-managed SSH keys](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/) method, it uses the Cloudflare One Client on user devices and Cloudflare Tunnel on the server to create a secure, private connection through Cloudflare's network. Access for Infrastructure adds application-level policies with per-target and per-username controls, as well as SSH command logging.
 
 <Render
 	file="access/short-lived-certs-intro"
@@ -29,11 +34,11 @@ import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 To connect your devices to Cloudflare:
 
-1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your devices in Traffic and DNS mode.
+1. [Deploy the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your devices in Traffic and DNS mode.
 2. [Enable the Gateway proxy for TCP](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy).
-3. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
+3. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
-## 3. Route server IPs through WARP
+## 3. Route server IPs through the Cloudflare One Client
 
 <Render
 	file="tunnel/warp-to-tunnel-route-ips"
@@ -55,13 +60,14 @@ To connect your devices to Cloudflare:
 
 ## 6. (Recommended) Configure network policies
 
-Traffic from the WARP client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/initial-setup/network/) and the application-specific Access policies.
+Traffic from the Cloudflare One Client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/get-started/network/) and the application-specific Access policies.
 
 ### Catch-all block policy
 
-<Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
+<Render file="tunnel/catch-all-policy" product="cloudflare-one" />
 
 ### Allow Access infrastructure targets
+
 <Render
 	file="access/modify-gateway-policy-precedence"
 	product="cloudflare-one"
@@ -101,9 +107,22 @@ chmod 600 /etc/ssh/ca.pub
 
 <Render file="ssh/restart-server" product="cloudflare-one" />
 
-## 8. Connect as a user
+## 8. (Optional) Require independent MFA for SSH
 
-Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
+You can require users to authenticate with a [YubiKey PIV key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps) before connecting to your SSH servers. When MFA is required, users must complete public key authentication with their enrolled PIV key before the connection is established.
+
+To configure independent MFA for SSH, refer to [Enforce MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).
+
+Before users can connect with MFA enabled, they must:
+
+1. [Enroll a PIV key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps) through the App Launcher.
+2. [Configure their SSH client](/cloudflare-one/access-controls/access-settings/independent-mfa/#configure-your-ssh-client) to use the enrolled PIV key.
+
+When the user runs `ssh <username>@<target IP>`, the SSH proxy checks if MFA is required for the matching policy. If required, the user must touch their YubiKey and enter their PIN (depending on the key's PIN policy). The proxy then completes the connection.
+
+## 9. Connect as a user
+
+Users can use any SSH client to connect to the target, as long as they are logged into the Cloudflare One Client on their device. If the target is located within a particular virtual network, ensure that the Cloudflare One Client is [connected to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
 ssh <username>@<target IP>
@@ -136,7 +155,7 @@ To turn off SSH command logging, delete your uploaded public key:
 <Tabs>
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
 2. Select **Remove**.
 3. Select **Remove key** to confirm.
 
@@ -164,7 +183,7 @@ SSH command logs are not visible from the dashboard itself and must be exported 
 
 To manually retrieve logs:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights** > **Logs**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Logs**.
 2. Select **SSH command logs**.
 3. Filter the logs using the name of your [SSH application](#5-add-an-infrastructure-application).
 4. Select the SSH session for which you want to export command logs.
@@ -193,7 +212,7 @@ The following SSH features are not supported:
 
 ### Session duration
 
-SSH sessions have a maximum expected duration of 10 hours. For more information, refer to the [Troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#long-lived-ssh-sessions-frequently-disconnect).
+SSH sessions have a maximum expected duration of 10 hours. For more information, refer to [Troubleshoot Access](/cloudflare-one/access-controls/troubleshooting/#long-lived-ssh-sessions-disconnect).
 
 ## Troubleshooting
 
@@ -238,7 +257,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 :::
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Logs**.
 
 2. Select **Access authentication logs**.
 
@@ -266,14 +285,17 @@ If the end user cannot connect to the target, the tunnel you set up in [step 1: 
 
 To check the status of your tunnel:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
-2. Search your IP to find the tunnel associated with the IP.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. Search your IP to find the route and its associated tunnel.
 
    This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.
 
-3. Copy the tunnel name.
-4. Go to **Networks** > **Connectors** > **Cloudflare Tunnels** and search by your tunnel name.
-5. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
+3. Select the tunnel name in the **Connector** column to open the tunnel detail page.
+
+4. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />
 

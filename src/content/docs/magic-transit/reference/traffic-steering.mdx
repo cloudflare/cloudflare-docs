@@ -1,10 +1,14 @@
 ---
 pcx_content_type: concept
+products:
+  - magic-transit
 title: Traffic steering
 head: []
 description: Magic Transit uses a static configuration to route traffic through anycast tunnels using the Generic Routing Encapsulation (GRE) and Internet Protocol Security (IPsec) protocols from Cloudflare's global network to your network.
 sidebar:
   order: 7
+tags:
+  - IPsec
 ---
 
 import { Render } from "~/components";
@@ -15,10 +19,10 @@ import { Render } from "~/components";
 	params={{
 		magicWord: "Magic Transit",
 		productName: "Magic Transit",
-		virtualNetworkName: "Magic Transit Virtual Network routing table",
-		mFirewallName: "Magic Firewall",
+		routingTableName: "Magic Transit Virtual Network routing table",
+		mFirewallName: "Cloudflare Network Firewall",
 		mFirewallURL: "/cloudflare-network-firewall/",
-		warpClientURL: "/cloudflare-one/team-and-resources/devices/warp/",
+		warpClientURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/",
 		remoteBrowserURL: "/cloudflare-one/remote-browser-isolation/",
 		accessURL: "/cloudflare-one/access-controls/policies/",
 		gatewayURL: "/cloudflare-one/traffic-policies/",
@@ -32,5 +36,6 @@ import { Render } from "~/components";
 		legacyHCs:
 			"/magic-transit/reference/tunnel-health-checks/#legacy-bidirectional-health-checks",
 		tunnelHCsPage: "/magic-transit/reference/tunnel-health-checks/",
+		virtualNetworkName: "Magic Transit Virtual Network",
 	}}
 />

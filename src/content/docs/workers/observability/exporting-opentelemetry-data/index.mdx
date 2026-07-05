@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Exporting OpenTelemetry Data
+description: Export traces and logs from Cloudflare Workers to any OpenTelemetry-compatible destination.
 sidebar:
   order: 5
+products:
+  - workers
 ---
 
 import { Badge, DirectoryListing, WranglerConfig } from "~/components";
@@ -26,9 +29,14 @@ Below are common OTLP endpoint formats for popular observability providers. Refe
 | --------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [**Honeycomb**](/workers/observability/exporting-opentelemetry-data/honeycomb/)         | `https://api.honeycomb.io/v1/traces`                         | `https://api.honeycomb.io/v1/logs`                           |
 | [**Grafana Cloud**](/workers/observability/exporting-opentelemetry-data/grafana-cloud/) | `https://otlp-gateway-{region}.grafana.net/otlp/v1/traces`   | `https://otlp-gateway-{region}.grafana.net/otlp/v1/logs`[^1] |
+| [**Firetiger**](https://docs.firetiger.com/ingest/cloudflare-workers.html)              | `https://ingest.cloud.firetiger.com/v1/traces`               | `https://ingest.cloud.firetiger.com/v1/logs`                 |
 | [**Axiom**](/workers/observability/exporting-opentelemetry-data/axiom/)                 | `https://api.axiom.co/v1/traces`                             | `https://api.axiom.co/v1/logs`                               |
 | [**Sentry**](/workers/observability/exporting-opentelemetry-data/sentry/)               | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/traces` | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/logs`   |
+| [**PostHog**](/workers/observability/exporting-opentelemetry-data/posthog/)             | Not supported                                                | `https://{REGION}.i.posthog.com/i/v1/logs`                   |
 | [**Datadog**](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/)              | Coming soon, pending release from Datadog                    | `https://otlp.{SITE}.datadoghq.com/v1/logs`                  |
+| [**New Relic**](https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/) | `https://otlp.nr-data.net/v1/traces` | `https://otlp.nr-data.net/v1/logs` |
+| [**Splunk Observability**](https://dev.splunk.com/observability/reference/api/ingest_data/latest) | `https://ingest.{REALM}.signalfx.com/v2/trace/otlp` | N/A |
+| [**Splunk Platform**](https://github.com/splunk/splunk-connect-for-otlp) | `http://splunk.internal:4318/v1/traces` | `http://splunk.internal:4318/v1/logs` |
 
 :::note[Authentication]
 Most providers require authentication headers. Refer to your provider's documentation for specific authentication requirements.
@@ -69,7 +77,8 @@ After setting up destinations in the dashboard, configure your Worker to export 
 			// traces sample rate of 5%
 			"head_sampling_rate": 0.05,
 
-			// (optional disable traces in Cloudflare dashboard
+			// (optional) set to false to only export traces to your
+			// destination without persisting them in the Cloudflare dashboard
 			"persist": false
 		},
 		"logs": {
@@ -78,7 +87,8 @@ After setting up destinations in the dashboard, configure your Worker to export 
 			// logs sample rate of 60%
 			"head_sampling_rate": 0.6,
 
-			// (optional disable logs in Cloudflare dashboard
+			// (optional) set to false to only export logs to your
+			// destination without persisting them in the Cloudflare dashboard
 			"persist": false
 		}
 	}
@@ -86,6 +96,10 @@ After setting up destinations in the dashboard, configure your Worker to export 
 ```
 
 </WranglerConfig>
+
+:::note[`persist` and pricing]
+By default, `persist` is `true`, which means logs and traces are both exported to your destination and stored in the Cloudflare dashboard. Dashboard storage is billed [separately](/workers/observability/logs/workers-logs/#pricing). Set `persist` to `false` if you only need data in your external destination.
+:::
 
 Once you've configured your Wrangler configuration file, redeploy your Worker for new configurations to take effect. Note that it may take a few minutes for events to reach your destination.
 
@@ -98,7 +112,7 @@ After creating a destination, you can monitor its health and delivery status in 
 | Status                  | Description                                                             | Troubleshooting                                                                                               |
 | ----------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | **Last: n minutes ago** | Data was recently delivered successfully.                               |                                                                                                               |
-| **Never run**           | No data has been delivered to this destination.                         | •Check if your Worker is receving traffic <br /> • Review sampling rates (low rates generate less data)<br /> |
+| **Never run**           | No data has been delivered to this destination.                         | •Check if your Worker is receiving traffic <br /> • Review sampling rates (low rates generate less data)<br /> |
 | **Error**               | An error occurred while attempting to deliver data to this destination. | • Verify OTLP endpoint URL is correct<br />• Check authentication headers are valid<br />                     |
 
 ## Limits and pricing

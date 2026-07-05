@@ -69,9 +69,9 @@ cd rag-ai-tutorial
 
 ## 2. Develop with Wrangler CLI
 
-The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. C3 will install Wrangler in projects by default.
+The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/general/#init), [test](/workers/wrangler/commands/general/#dev), and [deploy](/workers/wrangler/commands/general/#deploy) your Workers projects. C3 will install Wrangler in projects by default.
 
-After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
+After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/general/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
 ```sh
 npx wrangler dev
@@ -81,13 +81,13 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 ## 3. Adding the AI binding
 
-To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/) as a [remote binding](/workers/development-testing/#remote-bindings). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
+To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/) as a [remote binding](/workers/local-development/#remote-bindings). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
 :::note
 
 If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 
-If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information.
+If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/general/#login) documentation for more information.
 
 :::
 

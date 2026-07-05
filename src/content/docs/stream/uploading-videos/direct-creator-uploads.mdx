@@ -1,24 +1,56 @@
 ---
 pcx_content_type: example
 title: Direct creator uploads
+description: Let end users upload videos directly to Cloudflare Stream without exposing your API token.
 sidebar:
   order: 5
 reviewed: 2020-09-03
+products:
+  - stream
 ---
 
-Direct creator uploads let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+import { Tabs, TabItem } from "~/components";
 
-- If your video is a [basic upload](/stream/uploading-videos/direct-creator-uploads/#basic-uploads) under 200 MB and users do not need resumable uploads, generate a URL that accepts an HTTP post request.
+Direct creator uploads let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients. You can implement direct creator uploads using either a [basic POST request](#basic-post-request) or the [tus protocol](#direct-creator-uploads-with-tus-protocol). Use this chart to decide which method to use:
 
-- If your video is over 200 MB or if you need to allow users to [resume interrupted uploads](/stream/uploading-videos/direct-creator-uploads/#resumable-uploads), generate a URL using the tus protocol.
+```mermaid
+flowchart LR
+accTitle: Direct creator uploads decision flow
+accDescr: Decision flow for choosing between basic POST uploads and tus protocol based on file size and connection reliability
 
-In either case, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage.
+A{Is the video over 200 MB?}
+A -->|Yes| B[You must use the tus protocol]:::link
+A -->|No| C{Does the end user have a reliable connection?}
+C -->|Yes| D[Basic POST is recommended]:::link
+C -->|No| E[The tus protocol is optional, but recommended]:::link
 
-## Basic uploads
+classDef link text-decoration:underline,color:#F38020
 
-Use this option if your users upload videos under 200 MB, and you do not need to allow resumable uploads.
+click B "#direct-creator-uploads-with-tus-protocol" "Learn about tus protocol"
+click D "#basic-post-request" "See basic POST instructions"
+click E "#direct-creator-uploads-with-tus-protocol" "Learn about tus protocol"
+```
 
-1. Generate a unique, one-time upload URL using the [Direct upload API](/api/resources/stream/subresources/direct_upload/methods/create/).
+:::note[Billing considerations]
+
+Whether you use basic `POST` or tus protocol, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage. This duration will be deducted from your account's available storage until the user's upload is received. Once the upload is processed, its actual duration will be counted and the remaining reservation will be released. If the video errors or is not received before the link expires, the entire reservation will be released.
+
+For a detailed breakdown of pricing and example scenarios, refer to [Pricing](/stream/pricing/).
+
+:::
+
+## Basic POST request
+
+If your end user's video is under 200 MB and their connection is reliable, we recommend using this method. If your end user's connection is unreliable, we recommend using the [tus protocol](#direct-creator-uploads-with-tus-protocol) instead.
+
+To enable direct creator uploads with a `POST` request:
+
+### Step 1: Generate a unique, one-time upload URL
+
+<Tabs>
+<TabItem label="REST API">
+
+Generate a unique, one-time upload URL using the [Direct upload API](/api/resources/stream/subresources/direct_upload/methods/create/).
 
 ```sh title="Generate upload"
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload \
@@ -42,7 +74,57 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_up
 }
 ```
 
-2. With the `uploadURL` from the previous step, users can upload video files that are limited to 200 MB in size. Refer to the example request below.
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+
+:::note
+
+Currently, the Workers Binding API creates a basic POST direct upload URL. For TUS protocol uploads (necessary for files over 200MB), use the REST API approach shown below.
+
+:::
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const directUpload = await env.STREAM.createDirectUpload({
+			maxDurationSeconds: 3600,
+		});
+
+		return new Response(JSON.stringify(directUpload));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
+
+### Step 2: Upload the video to the one-time URL
+
+With the `uploadURL` from the previous step, users can upload video files that are limited to 200 MB in size. Refer to the example request below.
 
 {/* <!-- videodelivery.net is correct domain. See STREAM-4364 --> */}
 
@@ -52,16 +134,42 @@ curl --request POST \
   https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22
 ```
 
-A successful upload will receive a `200` HTTP status code response. If the upload does not meet
-the upload constraints defined at time of creation or is larger than 200 MB in size, you will receive a `4xx` HTTP status code response.
+A successful upload returns a `200` HTTP status code response. If the upload does not meet
+the upload constraints defined at time of creation or is larger than 200 MB in size, the response returns a `4xx` HTTP status code.
 
-## Resumable uploads
+## Direct creator uploads with tus protocol
 
-1. Create your own API endpoint that returns an upload URL.
+If your end user's video is over 200 MB, you must use the tus protocol. Even if the file is under 200 MB, if the end user's connection is potentially unreliable, Cloudflare recommends using the tus protocol because it is resumable. For detailed information about tus protocol requirements, additional client examples, and upload options, refer to [Resumable and large files (tus)](/stream/uploading-videos/resumable-uploads/).
 
-The example below shows how to build a Worker to get a URL you can use to upload your video. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
+The following diagram shows how the two steps of this process interact:
 
-```javascript {23} title="Example API endpoint"
+```mermaid
+sequenceDiagram
+accTitle: Direct Creator Uploads with tus sequence diagram
+accDescr: Shows the two-step flow where a backend provisions a tus upload URL and the end user uploads directly to Stream
+
+participant U as End user
+participant B as Your backend
+participant S as Cloudflare Stream
+
+U->>B: Initiates upload request
+B->>S: Requests tus upload URL (authenticated)
+S->>B: Returns one-time upload URL
+B->>U: Returns one-time upload URL
+U->>S: Uploads video directly using tus
+```
+
+### Step 1: Your backend provisions a one-time upload URL
+
+:::note
+
+Before provisioning the one-time upload URL, your backend must obtain the file size from the end user. The tus protocol requires the `Upload-Length` header when creating the upload endpoint. In a browser, you can get the file size from the selected file's `.size` property (for example, `fileInput.files[0].size`).
+
+:::
+
+The example below shows how to build a Worker that returns a one-time upload URL to your end users. For tus protocol uploads, your backend must pass the `Tus-Resumable`, `Upload-Length`, and `Upload-Metadata` headers. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
+
+```javascript title="Example tus API endpoint"
 export async function onRequest(context) {
 	const { request, env } = context;
 	const { CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN } = env;
@@ -90,7 +198,9 @@ export async function onRequest(context) {
 }
 ```
 
-2. Use this API endpoint **directly** in your tus client. A common mistake is to extract the upload URL from your new API endpoint, and use this directly. See below for a complete example of how to use the API from Step 1 with the uppy tus client.
+### Step 2: Your end user's client uploads directly to Stream
+
+Use your backend endpoint directly in your tus client. Refer to the below example for a complete demonstration of how to use the backend from Step 1 with the uppy tus client.
 
 ```html {35} title="Upload a video using the uppy tus client"
 <html>
@@ -162,20 +272,15 @@ In the example below, the `Upload-Metadata` header is instructing Stream to only
 `'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls,expiry MjAyNC0wMi0yN1QwNzoyMDo1MFo='`
 
 `NjAw` is the base64 encoded value for "600" (or 10 minutes).
+
 `MjAyNC0wMi0yN1QwNzoyMDo1MFo=` is the base64 encoded value for "2024-02-27T07:20:50Z" (an RFC3339 format timestamp)
 
 ## Track upload progress
 
-After the creation of a unique one-time upload URL, you may wish to retain the unique identifier (`uid`) returned in the response to track the progress of a user's upload.
+After the creation of a unique one-time upload URL, you should retain the unique identifier (`uid`) returned in the response to track the progress of a user's upload.
 
-You can do that two ways:
+You can track upload progress in the following ways:
 
-- [Search for a video](/stream/manage-video-library/searching/) with the UID to check the status.
+- [Use the get video details API endpoint](/api/resources/stream/methods/get/) with the `uid`.
 
-- [Create a webhook subscription](/stream/manage-video-library/using-webhooks/) to receive notifications about the video status. These notifications include the video's UID.
-
-## Billing considerations
-
-Direct Creator Upload links count towards your storage limit even if your users have not yet uploaded video to this URL. If the link expires before it is used or the upload cannot be processed, the storage reservation will be released. Otherwise, once the upload is encoded, its true duration will be counted toward storage and the reservation will be released.
-
-For a detailed breakdown of pricing and example scenarios, refer to [Pricing](/stream/pricing/).
+- [Create a webhook subscription](/stream/manage-video-library/using-webhooks/) to receive notifications about the video status. These notifications include the `uid`.

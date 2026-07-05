@@ -1,0 +1,53 @@
+---
+pcx_content_type: reference
+title: RtkLiveStreamViewerCount
+description: API reference for RtkLiveStreamViewerCount component (React Native Library)
+products:
+  - realtime
+---
+
+Displays the current livestream viewer count. Only visible in livestream mode.
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`           | ✅       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import {
+	RtkLiveStreamViewerCount,
+	useLanguage,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	const t = useLanguage();
+	return <RtkLiveStreamViewerCount meeting={meeting} t={t} />;
+}
+```
+
+### With Properties
+
+```tsx
+import {
+	RtkLiveStreamViewerCount,
+	useLanguage,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	const t = useLanguage();
+	return (
+		<RtkLiveStreamViewerCount
+			meeting={meeting}
+			t={t}
+			iconPack={customIconPack}
+		/>
+	);
+}
+```

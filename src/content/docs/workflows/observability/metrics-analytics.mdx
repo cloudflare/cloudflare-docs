@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
+description: Query Workflows execution metrics, error rates, and step durations via the dashboard or GraphQL Analytics API.
 sidebar:
   order: 10
+products:
+  - workflows
 ---
 
 import { DashButton } from "~/components";
@@ -49,6 +52,9 @@ The possible values for `eventType` are documented below:
 - `WORKFLOW_SUCCESS` - the Workflow finished without errors.
 - `WORKFLOW_FAILURE` - the Workflow failed due to errors (exhausting retries, errors thrown, etc).
 - `WORKFLOW_TERMINATED` - the Workflow was explicitly terminated.
+- `ROLLBACK_START` - the Workflow began executing registered rollback handlers.
+- `ROLLBACK_COMPLETE` - all rollback handlers that were run completed successfully.
+- `ROLLBACK_FAILED` - a rollback handler failed and rollback did not finish cleanly.
 
 #### Step-level status labels
 
@@ -60,6 +66,14 @@ The possible values for `eventType` are documented below:
 - `ATTEMPT_START` - a step is retrying.
 - `ATTEMPT_SUCCESS` - the retry succeeded.
 - `ATTEMPT_FAILURE` - the retry attempt failed.
+- `ROLLBACK_STEP_START` - a rollback handler started running.
+- `ROLLBACK_STEP_SUCCESS` - a rollback handler finished successfully.
+- `ROLLBACK_STEP_FAILURE` - a rollback handler failed.
+- `ROLLBACK_ATTEMPT_START` - a rollback retry attempt started.
+- `ROLLBACK_ATTEMPT_SUCCESS` - a rollback retry attempt succeeded.
+- `ROLLBACK_ATTEMPT_FAILURE` - a rollback retry attempt failed.
+
+Rollback events let you distinguish forward execution failures from compensation failures when you are querying Workflow health or debugging instance timelines.
 
 ## View metrics in the dashboard
 

@@ -20,4 +20,4 @@ entries:
       Using an analogy, the prefix is like a street address. If an IP is in the same street, it belongs to the same network of devices.
     associated_products:
       - Cloudflare WAN
-      - Magic Network Monitoring
+      - Network Flow

@@ -27,9 +27,9 @@ With [Enterprise Bot Management](/bots/get-started/bot-management/) customers ha
 
 ## Cloudflare Bot Management Detection Engines
 
-- **Heuristics:** Cloudflare conducts a number of heuristic checks to identify automated traffic, and requests are matched against a growing database of malicious fingerprints. The [Heuristics engine](/bots/concepts/bot-score/#heuristics) immediately gives automated requests a score of 1.
+- **Heuristics:** Cloudflare conducts a number of heuristic checks to identify automated traffic, and requests are matched against a growing database of malicious fingerprints. The [Heuristics engine](/bots/concepts/bot-score/#heuristics) gives automated requests a score of 1 for high-confidence detections, or a score of 29 for detections where confidence is still being assessed.
 - **Machine Learning (ML):** The [ML engine](/bots/concepts/bot-score/#machine-learning) accounts for the majority of all detections, human and bot. The ML model leverages Cloudflare's global network, which proxies billions of requests daily, to identify both automated and human traffic. The ML engine produces scores 2 through 99.
-- **Anomaly Detection (AD):** The [AD engine](/bots/concepts/bot-score/#anomaly-detection) is an optional detection engine that uses a form of unsupervised learning. Cloudflare records a baseline of a domain's traffic and uses the baseline to intelligently detect outlier requests. Anomaly Detection is user agent-agnostic and can be turned on or off by your account team. Cloudflare does not recommend AD for domains that use [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) or expect large amounts of API traffic. The AD engine immediately gives automated requests a score of 1.
+- **Anomaly Detection (AD):** The [AD engine](/bots/concepts/bot-score/#anomaly-detection) is an optional detection engine that uses a form of unsupervised learning. Cloudflare records a baseline of a domain's traffic and uses the baseline to intelligently detect outlier requests. Cloudflare is deprecating Anomaly Detection and is not onboarding new customers onto this engine. Future behavioral detections will cover the same detection areas.
 - **JavaScript Detections (JSD)**: The [JSD engine](/bots/concepts/bot-score/#javascript-detections) identifies headless browsers and other malicious fingerprints. This engine performs a lightweight, invisible JavaScript injection on the client side of any request. The JSD engine either blocks, challenges, or passes requests to other engines. JSD is enabled by default but is completely optional.
 
 ## Bot Dashboards, Analytics, and Logs
@@ -53,7 +53,7 @@ Cloudflare bot score and bot traffic analysis is available in several locations.
 
 1. Client request is sent to the closest Cloudflare Data Center via anycast ensuring low latency.
 2. Cloudflare applies a layered approach for bot detection; each detection mechanism impacts the bot score assigned by Cloudflare to every request. Every request is assigned a bot score between 1-99 inclusive.
-3. Once the client request has been processed by all of Cloudflare's detection engines and assigned a bot score, defined security policies will be executed, some of which may also be leveraging bot score. Various actions can be taken based on the assigned bot score including the block, allow, rate limit, NoCAPTCHA Challenge.
+3. Once the client request has been processed by all of Cloudflare's detection engines and assigned a bot score, defined security policies will be executed, some of which may also be leveraging bot score. Various actions can be taken based on the assigned bot score including block, allow, rate limit, and one of the challenge actions.
 4. Cloudflare provides analytics and insights into traffic and requests traversing the Cloudflare network. Customers can use the Bots, Security Analytics, Events, and Log Explorer dashboards to understand the overall traffic and bots activity across their site. Customers can also export logs to third party SIEM and Analytics Platforms.
 
 # Related Resources

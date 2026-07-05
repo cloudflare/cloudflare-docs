@@ -1,15 +1,23 @@
 ---
 pcx_content_type: how-to
+description: Mutual TLS in Access.
+products:
+  - cloudflare-one
 title: Mutual TLS
+tags:
+  - mTLS
 sidebar:
   order: 3
 ---
 
 import { AvailableNotifications, Render, Example } from "~/components";
 
-[Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
+[Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) requires both the client and the server to present certificates during the TLS handshake. In the Cloudflare Access implementation, the CA you upload is used to verify the client certificate (server certificate verification is handled by standard TLS). Access mTLS serves two purposes:
 
-With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
+- **Authenticate devices that do not use an identity provider** — Automated systems and IoT devices can prove their identity by presenting a client certificate instead of logging in through an IdP.
+- **Add a second authentication factor** — Team members who log in through an IdP can also be required to present a valid client certificate, providing an additional layer of security.
+
+When you upload a root certificate authority (CA) to Access, only requests from devices with a matching client certificate are allowed through. When a request reaches the application, Access asks the client to present a certificate. If the client cannot present a valid certificate, the request is blocked. If the client presents a valid certificate, Access completes a key exchange to verify.
 
 ![mTLS handshake diagram](~/assets/images/cloudflare-one/identity/devices/mtls.png)
 
@@ -53,9 +61,7 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 
    **Example mTLS policy**
 
-   | Action       | Rule type | Selector    | Value      |
-   | ------------ | --------- | ----------- | ---------- |
-   | Service Auth | Include   | Common Name | `John Doe` |
+   <Render file="access/example-service-auth-mtls" product="cloudflare-one" />
 
    </Example>
 
@@ -94,7 +100,7 @@ When the authentication process completes successfully, a `CF_Authorization Set-
 
 :::caution
 
-Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for the domain.
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the Cloudflare One Client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for the domain.
 :::
 
 ### Test in a browser
@@ -352,6 +358,8 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
 
 You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be found on the [Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template).
 
+<Render file="add-client-certificate-rfc9440" product="ssl" />
+
 <Render file="forward-client-certificate" product="ssl" />
 
 ## Known limitations
@@ -369,4 +377,3 @@ Cloudflare will send the following [notifications](/notifications/) before your 
 	product="SSL/TLS"
 	notificationFilter="Access mTLS Certificate Expiration Alert"
 />
-

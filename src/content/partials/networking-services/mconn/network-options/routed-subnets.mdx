@@ -5,9 +5,9 @@ params:
   - virtualConnectorURL
 ---
 
-Each LAN interface (physical port + VLAN tag) on Cloudflare One Appliance (formerly Magic WAN Connector) is part of a _directly-attached subnet_. When you specify a static address for the LAN interface, you indicate both the interface's address as well as the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has the IP address `192.168.100.13`, and is part of the subnet `192.168.100.0/24`.
+Each LAN interface (physical port + VLAN tag) on Cloudflare One Appliance (formerly Magic WAN Connector) is part of a _directly-attached subnet_ — a subnet that the Appliance connects to directly. When you specify a static address for the LAN interface, you indicate both the interface's address and the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has the IP address `192.168.100.13`, and is part of the subnet `192.168.100.0/24`.
 
-Some LANs are more complex. In addition to the directly-attached subnet, they might have additional subnets sitting behind L3 routers south of the Cloudflare One Appliance. We call these _routed subnets_.
+Some LANs have additional subnets behind Layer 3 routers that sit between those subnets and the Cloudflare One Appliance. These are routed subnets — the Appliance does not connect to them directly but can reach them through a next-hop router. You need to configure routed subnets so that Cloudflare installs the correct routes to forward traffic to the right Appliance and LAN interface.
 
 Refer to the following diagram for an example of how this might work:
 

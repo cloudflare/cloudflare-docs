@@ -1,0 +1,18 @@
+---
+title: Cloudflare as identity provider and account membership selector
+description: Use Cloudflare as an identity provider in Access and build policies based on Cloudflare account membership.
+date: 2026-05-19
+products:
+  - access
+---
+
+Cloudflare Access now supports using Cloudflare itself as an [identity provider](/cloudflare-one/integrations/identity-providers/cloudflare/). If you publish an Access application and select Cloudflare as the login method, users can sign in with their existing Cloudflare account — no one-time PINs, no third-party IdP configuration, and no shared email inboxes. Authentication is backed by Cloudflare's own account security (including multi-factor authentication), making it both simpler to set up and more secure than OTP-based login for most use cases.
+
+Cloudflare is now the **default identity provider for all newly created Zero Trust accounts**, replacing One-time PIN.
+
+This also enables two new capabilities:
+
+- **Cloudflare Account Member selector** — A new [policy selector](/cloudflare-one/access-controls/policies/#cloudflare-access-selectors) that matches users based on their membership in a Cloudflare account. You can target the current account or specify a different account ID for cross-account access scenarios.
+- **Restrict to account members** — An identity provider configuration option that limits authentication to users who are members of your Cloudflare account.
+
+To get started, add Cloudflare as an [identity provider](/cloudflare-one/integrations/identity-providers/cloudflare/) in your Zero Trust settings.

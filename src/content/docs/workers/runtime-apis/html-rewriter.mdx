@@ -3,9 +3,11 @@ pcx_content_type: configuration
 title: HTMLRewriter
 head: []
 description: Build comprehensive and expressive HTML parsers inside of a Worker application.
+products:
+  - workers
 ---
 
-import { Render } from "~/components";
+import { Render, Type, MetaInfo } from "~/components";
 
 ## Background
 
@@ -130,58 +132,50 @@ The `element` argument, used only in element handlers, is a representation of a 
 - `removed` boolean
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-- `namespaceURI` String
+- `namespaceURI` string
   - Represents the [namespace URI](https://infra.spec.whatwg.org/#namespaces) of an element.
 
 #### Methods
 
-- <code>getAttribute(namestring)</code> : string | null
+- <code>getAttribute(name <Type text="string" />)</code> : <Type text="string | null" />
   - Returns the value for a given attribute name on the element, or `null` if it is not found.
 
-- <code>hasAttribute(namestring)</code> : boolean
+- <code>hasAttribute(name <Type text="string" />)</code> : <Type text="boolean" />
   - Returns a boolean indicating whether an attribute exists on the element.
 
-- <code>setAttribute(namestring, valuestring)</code> : Element
+- <code>setAttribute(name <Type text="string" />, value <Type text="string" />)</code> : <Type text="Element" />
   - Sets an attribute to a provided value, creating the attribute if it does not exist.
 
-- <code>removeAttribute(namestring)</code> : Element
+- <code>removeAttribute(name <Type text="string" />)</code> : <Type text="Element" />
   - Removes the attribute.
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>before(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>after(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content right after the element.
 
-- <code>prepend(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>prepend(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content right after the start tag of the element.
 
-- <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>append(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content right before the end tag of the element.
 
-- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>replace(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Removes the element and inserts content in place of it.
 
-- <code>
-  	setInnerContent(contentContent, contentOptionsContentOptionsoptional)
-  </code>
-  : Element
+- <code>setInnerContent(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Replaces content of the element.
 
-- <code>remove()</code> : Element
+- <code>remove()</code> : <Type text="Element" />
   - Removes the element with all its content.
 
-- <code>removeAndKeepContent()</code> : Element
+- <code>removeAndKeepContent()</code> : <Type text="Element" />
   - Removes the start tag and end tag of the element but keeps its inner content intact.
 
-- `onEndTag(handlerFunction<void>)` : void
+- <code>onEndTag(handler <Type text="Function&lt;void&gt;" />)</code> : <Type text="void" />
   - Registers a handler that is invoked when the end tag of the element is reached.
 
 ### EndTag
@@ -195,24 +189,22 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
 #### Methods
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  EndTag
+- <code>before(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="EndTag" />
   - Inserts content right before the end tag.
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  EndTag
+- <code>after(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="EndTag" />
   - Inserts content right after the end tag.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>remove()</code> : EndTag
+- <code>remove()</code> : <Type text="EndTag" />
   - Removes the element with all its content.
 
 ### Text chunks
 
 Since Cloudflare performs zero-copy streaming parsing, text chunks are not the same thing as text nodes in the lexical tree. A lexical tree text node can be represented by multiple chunks, as they arrive over the wire from the origin.
 
-Consider the following markup: `<div>Hey. How are you?</div>`. It is possible that the Workers script will not receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with `“Hey. How ”,` then `“are you?”`. When the last chunk arrives, the text’s `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
+Consider the following markup: `<div>Hey. How are you?</div>`. It is possible that the Workers script will not receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with `"Hey. How "`, then `"are you?"`. When the last chunk arrives, the text's `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
 
 #### Properties
 
@@ -227,21 +219,18 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 #### Methods
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>before(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>after(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content right after the element.
 
-- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>replace(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Removes the element and inserts content in place of it.
 
-- <code>remove()</code> : Element
+- <code>remove()</code> : <Type text="Element" />
   - Removes the element with all its content.
 
 ### Comments
@@ -262,30 +251,27 @@ class ElementHandler {
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
 - `comment.text` string
-  - The text of the comment. This property can be assigned different values, to modify comment’s text.
+  - The text of the comment. This property can be assigned different values, to modify comment's text.
 
 #### Methods
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>before(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>after(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content right after the element.
 
-- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
+- <code>replace(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Removes the element and inserts content in place of it.
 
-- <code>remove()</code> : Element
+- <code>remove()</code> : <Type text="Element" />
   - Removes the element with all its content.
 
 ### Doctype
 
-The `doctype` function on a document handler allows developers to query a document’s [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doctype).
+The `doctype` function on a document handler allows developers to query a document's [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doctype).
 
 ```js
 class DocumentHandler {
@@ -321,8 +307,7 @@ class DocumentHandler {
 
 #### Methods
 
-- <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
-  DocumentEnd
+- <code>append(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="DocumentEnd" />
   - Inserts content after the end of the document.
 
   <Render file="content_and_contentoptions" product="workers" />
@@ -428,3 +413,4 @@ async function handle(request) {
 - [Tutorial: Localize a Website](/pages/tutorials/localize-a-website/)
 - [Example: rewrite links](/workers/examples/rewrite-links/)
 - [Example: Inject Turnstile](/workers/examples/turnstile-html-rewriter/)
+- [Example: SPA shell with bootstrap data](/workers/examples/spa-shell/)

@@ -1,7 +1,7 @@
 ---
 # Code generator. DO NOT EDIT.
 
-title: Email security Alerts
+title: Email Security Alerts
 pcx_content_type: configuration
 sidebar:
   order: 21
@@ -13,7 +13,7 @@ The descriptions below detail the fields available for `email_security_alerts`.
 
 Type: `string`
 
-The canonical ID for an Email security Alert (for example, '4WtWkr6nlBz9sNH-2024-08-28T15:32:35').
+The canonical ID for an Email Security Alert (for example, '4WtWkr6nlBz9sNH-2024-08-28T15:32:35').
 
 ## AlertReasons
 
@@ -25,7 +25,13 @@ Human-readable list of findings which contributed to this message's final dispos
 
 Type: `array[object]`
 
-List of objects containing metadata of attachments contained in this message (for example, [{"Md5": "91f073bd208689ddbd248e8989ecae90", "Sha1": "62b77e14e2c43049c45b5725018e78d0f9986930", "Sha256": "3b57505305e7162141fd898ed87d08f92fc42579b5047495859e56b3275a6c06", "Ssdeep": "McAQ8tPlH25e85Q2OiYpD08NvHmjJ97UfPMO47sekO:uN9M553OiiN/OJ9MM+e3", "Name": "attachment.gif", "ContentTypeProvided": "image/gif", "ContentTypeComputed": "application/x-msi", "Encrypted": true, "Decrypted": true]}, ...]).
+List of objects containing metadata of attachments contained in this message (for example, [{"Md5": "91f073bd208689ddbd248e8989ecae90", "Sha1": "62b77e14e2c43049c45b5725018e78d0f9986930", "Sha256": "3b57505305e7162141fd898ed87d08f92fc42579b5047495859e56b3275a6c06", "Ssdeep": "McAQ8tPlH25e85Q2OiYpD08NvHmjJ97UfPMO47sekO:uN9M553OiiN/OJ9MM+e3", "Name": "attachment.gif", "ContentTypeProvided": "image/gif", "ContentTypeComputed": "application/x-msi", "Encrypted": true, "Decrypted": true}, ...]).
+
+## BCC
+
+Type: `array[string]`
+
+Email address portions of the BCC header provided by the sender, if present (for example, 'firstlast@cloudflare.com').
 
 ## CC
 
@@ -38,6 +44,24 @@ Email address portions of the CC header provided by the sender (for example, 'fi
 Type: `array[string]`
 
 Email address portions of the CC header provided by the sender (for example, 'First Last').
+
+## DKIMResult
+
+Type: `string`
+
+Summary of the DKIM authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>error</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
+
+## DMARCPolicy
+
+Type: `string`
+
+Effective DMARC policy for the sending domain. <br />Possible values are <em>none</em> \| <em>quarantine</em> \| <em>reject</em> \| <em>undefined</em>.
+
+## DMARCResult
+
+Type: `string`
+
+Overall DMARC authentication result for the message. <br />Possible values are <em>pass</em> \| <em>fail</em> \| <em>none</em>.
 
 ## FinalDisposition
 
@@ -67,7 +91,7 @@ List of links detected in this message, benign or otherwise; limited to 100 in t
 
 Type: `string`
 
-The message's mode of transport to Email security. <br />Possible values are <em>unset</em> \| <em>api</em> \| <em>direct</em> \| <em>bcc</em> \| <em>journal</em> \| <em>retroScan</em>.
+The message's mode of transport to Email Security. <br />Possible values are <em>unset</em> \| <em>api</em> \| <em>direct</em> \| <em>bcc</em> \| <em>journal</em> \| <em>retroScan</em>.
 
 ## MessageID
 
@@ -85,7 +109,7 @@ The origin of the message. <br />Possible values are <em>unset</em> \| <em>inter
 
 Type: `string`
 
-The original sender address as determined by Email security mail processing (for example, 'firstlast@cloudflare.com').
+The original sender address as determined by Email Security mail processing (for example, 'firstlast@cloudflare.com').
 
 ## ReplyTo
 
@@ -141,6 +165,12 @@ Type: `string`
 
 Hostname provided by the SMTP HELO server.
 
+## SPFResult
+
+Type: `string`
+
+Summary of the SPF authentication result for the message. <br />Possible values are <em>pass</em> \| <em>neutral</em> \| <em>fail</em> \| <em>softfail</em> \| <em>permerror</em> \| <em>temperror</em> \| <em>none</em>.
+
 ## Subject
 
 Type: `string`
@@ -151,7 +181,7 @@ Value of the Subject header provided by the sender.
 
 Type: `array[string]`
 
-Threat categories attributed by Email security processing (for example, 'CredentialHarvester', 'Dropper').
+Threat categories attributed by Email Security processing (for example, 'CredentialHarvester', 'Dropper').
 
 ## Timestamp
 

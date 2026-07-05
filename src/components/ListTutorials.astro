@@ -2,9 +2,6 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import { formatDistance } from "date-fns";
 
-import { process } from "~/util/rehype";
-import rehypeExternalLinks from "~/plugins/rehype/external-links";
-
 type DocsEntry = CollectionEntry<"docs">;
 
 const tutorials: Array<DocsEntry> = [];
@@ -51,25 +48,15 @@ const timeAgo = (date?: Date) => {
 	</thead>
 	<tbody>
 		{
-			tutorials.map(async (tutorial) => {
-				const title = tutorial.data.title;
-
-				const href = `/${tutorial.id}/`;
-
-				const anchor = await process(`<a href=${href}>${title}</a>`, [
-					rehypeExternalLinks,
-				]);
-
-				return (
-					<tr>
-						<td>
-							<Fragment set:html={anchor} />
-						</td>
-						<td>{timeAgo(tutorial.data.reviewed)}</td>
-						<td>{tutorial.data.difficulty}</td>
-					</tr>
-				);
-			})
+			tutorials.map((tutorial) => (
+				<tr>
+					<td>
+						<a href={`/${tutorial.id}/`}>{tutorial.data.title}</a>
+					</td>
+					<td>{timeAgo(tutorial.data.reviewed)}</td>
+					<td>{tutorial.data.difficulty}</td>
+				</tr>
+			))
 		}
 	</tbody>
 </table>

@@ -1,7 +1,9 @@
 ---
 pcx_content_type: concept
 title: Known issues
-
+description: Known issues with Durable Objects, including global uniqueness guarantees, code updates, and development tool limitations.
+products:
+  - durable-objects
 ---
 
 import { GlossaryTooltip } from "~/components";
@@ -20,17 +22,17 @@ A Durable Object may be replaced in the event of a network partition or a softwa
 
 ## Code updates
 
-Code changes for Workers and Durable Objects are released globally in an eventually consistent manner. Because each Durable Object is globally unique, the situation can arise that a request arrives to the latest version of your Worker (running in one part of the world), which then calls to a unique Durable Object running the previous version of your code for a short period of time (typically seconds to minutes). If you create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/), this period of time is determined by how long your live deployment is configured to use more than one version.
+Code changes for Workers and Durable Objects are released globally in an eventually consistent manner. Because each Durable Object is globally unique, the situation can arise that a request arrives to the latest version of your Worker (running in one part of the world), which then calls to a unique Durable Object running the previous version of your code for a short period of time (typically seconds to minutes). If you create a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), this period of time is determined by how long your live deployment is configured to use more than one version.
 
 For this reason, it is best practice to ensure that API changes between your Workers and Durable Objects are forward and backward compatible across code updates.
 
 ## Development tools
 
-[`wrangler tail`](/workers/wrangler/commands/#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed. `wrangler tail` should not be connected to a Worker that you expect will receive heavy volumes of traffic.
+[`wrangler tail`](/workers/wrangler/commands/general/#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed. `wrangler tail` should not be connected to a Worker that you expect will receive heavy volumes of traffic.
 
 The Workers editor in the [Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. In the editor, Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
-[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the [Durable Object binding](/workers/runtime-apis/bindings/), then writes will affect persistent data. Wrangler will emit a warning in that case.
+[`wrangler dev`](/workers/wrangler/commands/general/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the [Durable Object binding](/workers/runtime-apis/bindings/), then writes will affect persistent data. Wrangler will emit a warning in that case.
 
 ## Alarms in local development
 

@@ -1,86 +1,42 @@
 ---
 title: Workers AI
+description: Route Workers AI requests through AI Gateway for analytics, caching, and rate limiting.
 pcx_content_type: configuration
 tags:
   - AI
 sidebar:
   order: 2
+products:
+  - ai-gateway
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { TypeScriptExample } from "~/components";
 
-Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/). Workers AI integrates seamlessly with AI Gateway, allowing you to execute AI inference via API requests or through an environment binding for Workers scripts. The binding simplifies the process by routing requests through your AI Gateway with minimal setup.
-
-## Prerequisites
-
-When making requests to Workers AI, ensure you have the following:
-
-- Your AI Gateway Account ID.
-- Your AI Gateway gateway name.
-- An active Workers AI API token.
-- The name of the Workers AI model you want to use.
+Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/).
 
 ## REST API
 
-To interact with a REST API, update the URL used for your request:
+Use the [REST API](/ai-gateway/usage/rest-api/) to call Workers AI models. Workers AI models use the `@cf/` prefix in the model name and require the `cf-aig-gateway-id` header to specify which gateway to route through.
 
-- **Previous**:
-
-```txt
-https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}
+```bash title="Request to Workers AI Kimi model"
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "cf-aig-gateway-id: default" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "@cf/moonshotai/kimi-k2.6",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
 ```
 
-- **New**:
-
-```txt
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}
-```
-
-For these parameters:
-
-- `{account_id}` is your Cloudflare [account ID](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
-- `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway).
-- `{model_id}` refers to the model ID of the [Workers AI model](/workers-ai/models/).
-
-## Examples
-
-First, generate an [API token](/fundamentals/api/get-started/create-token/) with `Workers AI Read` access and use it in your request.
-
-```bash title="Request to Workers AI llama model"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3.1-8b-instruct \
- --header 'Authorization: Bearer {cf_api_token}' \
- --header 'Content-Type: application/json' \
- --data '{"prompt": "What is Cloudflare?"}'
-```
-
-```bash title="Request to Workers AI text classification model"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/huggingface/distilbert-sst-2-int8 \
-  --header 'Authorization: Bearer {cf_api_token}' \
-  --header 'Content-Type: application/json' \
-  --data '{ "text": "Cloudflare docs are amazing!" }'
-```
-
-### OpenAI compatible endpoints
-
-<Render file="openai-compatibility" product="workers-ai" /> <br />
-
-```bash title="Request to OpenAI compatible endpoint"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v1/chat/completions \
- --header 'Authorization: Bearer {cf_api_token}' \
- --header 'Content-Type: application/json' \
- --data '{
-      "model": "@cf/meta/llama-3.1-8b-instruct",
-      "messages": [
-        {
-          "role": "user",
-          "content": "What is Cloudflare?"
-        }
-      ]
-    }
-'
-```
-
-## Workers Binding
+## Workers binding
 
 You can integrate Workers AI with AI Gateway using an environment binding. To include an AI Gateway within your Worker, add the gateway as an object in your Workers AI request.
 
@@ -113,27 +69,13 @@ export default {
 
 </TypeScriptExample>
 
-For a detailed step-by-step guide on integrating Workers AI with AI Gateway using a binding, see [Integrations in AI Gateway](/ai-gateway/integrations/aig-workers-ai-binding/).
+For a detailed step-by-step guide on integrating Workers AI with AI Gateway using a binding, refer to [Integrations in AI Gateway](/ai-gateway/integrations/aig-workers-ai-binding/).
 
 Workers AI supports the following parameters for AI gateways:
 
 - `id` string
-  - Name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway). Must be in the same account as your Worker.
+  - Name of your existing [AI Gateway](/ai-gateway/get-started/). Must be in the same account as your Worker.
 - `skipCache` boolean(default: false)
   - Controls whether the request should [skip the cache](/ai-gateway/features/caching/#skip-cache-cf-aig-skip-cache).
 - `cacheTtl` number
   - Controls the [Cache TTL](/ai-gateway/features/caching/#cache-ttl-cf-aig-cache-ttl).
-
-<Render
-	file="chat-completions-providers"
-	product="ai-gateway"
-	params={{
-		name: "Workers AI",
-		jsonexample: `
-{
-	"model": "workers-ai/{model}"
-}`
-
-    }}
-
-/>

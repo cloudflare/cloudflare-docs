@@ -1,25 +1,108 @@
 ---
 pcx_content_type: how-to
 title: Upload with a link
+description: Upload videos to Cloudflare Stream by providing an HTTP link to a file in cloud storage.
 sidebar:
   order: 4
-
+products:
+  - stream
 ---
 
-import { LinkButton } from "~/components"
+import {
+	Tabs,
+	TabItem,
+	LinkButton,
+} from "~/components"
+
+If you have videos stored in a cloud storage bucket (R2, S3, GCS) or hosted by a service that exposes a download link, you can pass its URL. Stream will fetch the file on your behalf.
+
+:::note
+
+Google Drive share links are _not_ recommended for this purpose. They are prone to rate limiting and access restrictions imposed by Google that may prevent Stream from downloading the file.
+
+:::
+
+<Tabs>
+<TabItem label="REST API">
+
+    <Tabs>
+    	<TabItem label="cURL">
+
+			Make a `POST` request to the Stream API using the link to your video.
+    	```bash
+				curl \
+				--data '{"url":"https://pub-2da57dbfcf5f4369863991d59747d686.r2.dev/acadia.mp4","meta":{"name":"My First Stream Video"}}' \
+				--header "Authorization: Bearer <API_TOKEN>" \
+				https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
+			```
+    	</TabItem>
+    	<TabItem label="TypeScript">
+    		```ts
+    		const client = new Cloudflare({
+    			apiEmail: process.env['CLOUDFLARE_EMAIL'], // This is the default and can be omitted
+    			apiKey: process.env['CLOUDFLARE_API_KEY'], // This is the default and can be omitted
+    		});
+
+    		const video = await client.stream.copy.create({
+    			account_id: '<ACCOUNT_ID>',
+    			url: 'https://pub-2da57dbfcf5f4369863991d59747d686.r2.dev/acadia.mp4',
+    		});
+    		```
+    	</TabItem>
+    </Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// upload a video with a link
+		const videoDetails = await env.STREAM.upload(
+			"https://pub-2da57dbfcf5f4369863991d59747d686.r2.dev/acadia.mp4",
+			// (optional) attach metadata
+			{ meta: { name: "My First Stream Video" } }
+		);
+
+		// return a Workers response
+		return new Response(
+			JSON.stringify(videoDetails),
+		);
+	},
+
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+
+    ```
+    </TabItem>
+    <TabItem label="wrangler.jsonc">
+
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-04-14",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+
+    </TabItem>
+    </Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
 
 If you have videos stored in a cloud storage bucket, you can pass a HTTP link for the file, and Stream will fetch the file on your behalf.
-
-## Make an HTTP request
-
-Make a `POST` request to the Stream API using the link to your video.
-
-```bash
-curl \
---data '{"url":"https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4","meta":{"name":"My First Stream Video"}}' \
---header "Authorization: Bearer <API_TOKEN>" \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
-```
 
 ## Check video status
 
@@ -40,7 +123,7 @@ You can optionally use [webhooks](/stream/manage-video-library/using-webhooks/) 
       "state": "downloading"
     },
     "meta": {
-      "downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
+      "downloaded-from": "https://pub-2da57dbfcf5f4369863991d59747d686.r2.dev/acadia.mp4",
       "name": "My First Stream Video"
     },
     "created": "2020-10-16T20:20:17.872170843Z",

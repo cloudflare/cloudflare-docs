@@ -1,16 +1,22 @@
 ---
 title: Egress IPs
 pcx_content_type: concept
+description: How egress IPs are allocated across IPv4 and IPv6 for your account.
+products:
+  - smart-shield
 sidebar:
   order: 2
 head:
   - tag: title
     content: How Dedicated CDN Egress IPs work
+tags:
+  - IPv4
+  - IPv6
 ---
 
 import { Render } from "~/components";
 
-When you use Cloudflare [as a reverse proxy](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy), [Cloudflare's global network](https://www.cloudflare.com/network/) sits between client requests and your origin servers.
+When you use Cloudflare [as a reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy), [Cloudflare's global network](https://www.cloudflare.com/network/) sits between client requests and your origin servers.
 
 ```mermaid
 flowchart LR

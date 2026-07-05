@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Bot Feedback Loop
+description: Submit feedback to improve bot detection accuracy for your domain.
+products:
+  - bots
 sidebar:
   order: 4
 ---
@@ -13,7 +16,7 @@ import {
 	DashButton,
 } from "~/components";
 
-The Bot Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially <GlossaryTooltip term="bot score" link="/bots/concepts/bot-score/">scoring</GlossaryTooltip> a request incorrectly. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
+The Bot Feedback Loop allows you to report requests that Bot Management <GlossaryTooltip term="bot score" link="/bots/concepts/bot-score/">scored</GlossaryTooltip> incorrectly. When you submit a false negative or false positive report, Cloudflare analyzes the data and uses it to train the next machine learning model.
 
 ## Availability
 
@@ -47,8 +50,6 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 
 ## Submit a report
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
@@ -71,8 +72,6 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
     </Steps>
   </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 ## Via the API
 

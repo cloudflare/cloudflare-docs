@@ -1,0 +1,46 @@
+---
+pcx_content_type: reference
+title: RtkNameTag
+description: API reference for RtkNameTag component (iOS Library)
+products:
+  - realtime
+---
+
+Base name tag view with an icon, title, and optional subtitle.
+Serves as the foundation for `RtkMeetingNameTag`.
+
+## Initializer parameters
+
+| Parameter    | Type                   | Required | Default | Description                                       |
+| ------------ | ---------------------- | -------- | ------- | ------------------------------------------------- |
+| `image`      | `RtkImage`             | ✅       | -       | The icon image displayed in the name tag          |
+| `appearance` | `RtkNameTagAppearance` | ❌       | -       | Appearance configuration for the name tag         |
+| `title`      | `String`               | ✅       | -       | The primary text displayed in the name tag        |
+| `subtitle`   | `String`               | ❌       | `""`    | Optional secondary text displayed below the title |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let nameTag = RtkNameTag(
+    image: RtkImage(image: UIImage(systemName: "mic")),
+    title: "John Doe"
+)
+view.addSubview(nameTag)
+```
+
+### With subtitle
+
+```swift
+import RealtimeKitUI
+
+let nameTag = RtkNameTag(
+    image: RtkImage(image: UIImage(systemName: "mic")),
+    title: "John Doe",
+    subtitle: "Host"
+)
+view.addSubview(nameTag)
+```

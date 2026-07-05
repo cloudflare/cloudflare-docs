@@ -13,6 +13,17 @@ To enable Markdown for Agents for your zone in the dashboard:
 3. Visit the [AI Crawl Control](https://dash.cloudflare.com/?to=/:account/:zone/ai) section.
 4. Enable **Markdown for Agents**.
 
+### Enable for specific subdomains or paths
+
+To enable Markdown for Agents for specific subdomains or paths instead of your entire zone, create a [configuration rule](/rules/configuration-rules/):
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select the zone you want to configure.
+3. Go to **Rules** > **Overview** and select **Create rule** > **Configuration Rules**.
+4. Under **When incoming requests match**, build an expression to match your subdomain (for example, `http.host eq "docs.example.com"`) or path.
+5. Under **Then the settings are**, select **Add setting** > **Markdown for Agents** and set it to **On**.
+6. Select **Deploy**.
+
 </TabItem> <TabItem label="API">
 
 To enable Markdown for Agents for your zone using APIs, send a `PATCH` to `/client/v4/zones/{zone_tag}/settings/content_converter` with the payload `{"value": "on"}` to the Cloudflare API.
@@ -26,6 +37,29 @@ curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_tag}/settings/co
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer {api_token}" --data-raw '{"value": "on"}'
 ```
+
+### Enable for specific subdomains or paths
+
+To enable Markdown for Agents for specific subdomains or paths instead of your entire zone, create a [configuration rule](/rules/configuration-rules/create-api/):
+
+```bash title="Enable Markdown for Agents for a subdomain"
+curl --request PUT \
+  --url "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_config_settings/entrypoint" \
+  --header "Authorization: Bearer {api_token}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "rules": [{
+      "expression": "http.host eq \"docs.example.com\"",
+      "action": "set_config",
+      "action_parameters": {
+        "content_converter": true
+      },
+      "description": "Enable Markdown for Agents for docs subdomain"
+    }]
+  }'
+```
+
+You can also use path-based expressions like `starts_with(http.request.uri.path, "/blog/")`. For more information on building expressions, refer to [Rules language](/ruleset-engine/rules-language/).
 
 </TabItem> <TabItem label="Custom Hostnames">
 

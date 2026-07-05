@@ -1,8 +1,11 @@
 ---
 title: Data location
+description: Control where D1 stores your data by setting location hints or jurisdiction constraints.
 pcx_content_type: concept
 sidebar:
   order: 5
+products:
+  - d1
 ---
 
 import { DashButton } from "~/components";
@@ -53,7 +56,7 @@ npx wrangler@latest d1 create db-with-jurisdiction --jurisdiction=eu
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/d1/database" \
      -H "Authorization: Bearer $TOKENn" \
      -H "Content-Type: application/json" \
-     --data '{"name": "db-wth-jurisdiction", "jurisdiction": "eu" }'
+     --data '{"name": "db-with-jurisdiction", "jurisdiction": "eu" }'
 ```
 
 ## Provide a location hint
@@ -68,7 +71,7 @@ You may want to explicitly provide a location hint in cases where the majority o
 
 Provide a location hint when creating a D1 database when:
 
-- Using [`wrangler d1`](/workers/wrangler/commands/#d1) to create a database.
+- Using [`wrangler d1`](/workers/wrangler/commands/d1/) to create a database.
 - Creating a database [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1).
 
 :::caution

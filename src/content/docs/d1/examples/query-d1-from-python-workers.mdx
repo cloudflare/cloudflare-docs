@@ -8,6 +8,8 @@ sidebar:
   order: 10
 description: Learn how to query D1 from a Python Worker
 reviewed: 2024-04-02
+products:
+  - d1
 ---
 
 import { WranglerConfig } from "~/components";
@@ -104,7 +106,7 @@ class Default(WorkerEntrypoint):
 
 ```
 
-The value of `binding` in your Wrangler file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and query this binding via `await env.DB.prepare(...)`.
+The value of `binding` in your Wrangler file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and queries this binding via `await self.env.DB.prepare(...)`.
 
 You can then deploy your Python Worker directly:
 

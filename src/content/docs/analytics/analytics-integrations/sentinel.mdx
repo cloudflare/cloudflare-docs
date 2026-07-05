@@ -3,6 +3,10 @@ pcx_content_type: how-to
 title: Sentinel
 sidebar:
   order: 105
+description: Ingest Cloudflare logs into Microsoft Sentinel.
+products:
+  - analytics
+  - logs
 ---
 
 import { Details } from "~/components";
@@ -21,6 +25,8 @@ This guide provides clear, step-by-step instructions for integrating Cloudflare 
 - Microsoft Sentinel Workspace already set up in your Azure environment.
 - Azure Storage Account with a Blob container for storing Cloudflare logs.
 - Cloudflare Account with access to the domain whose logs you wish to export, and permission to configure Logpush jobs.
+- The Azure Storage account needs to be set to public network access.
+- The Azure Storage account needs to be in the same subscription as the Microsoft Sentinel Workspace. 
 
 ## Step 2: Set up a logpush job
 
@@ -45,7 +51,7 @@ For complete details, refer to the [Cloudflare Logpush to Azure documentation](/
 4. Select **Install** in the right pane.
 5. In your **Sentinel workspace**, go to **Data connectors**.
 6. Search for the **Cloudflare connector** (may appear as **Cloudflare (using Azure Blob Storage)**).
-7. Selecte the connector to configure it.
+7. Select the connector to configure it.
 
 ![Azure portal](~/assets/images/analytics/azure-portal.png)
 

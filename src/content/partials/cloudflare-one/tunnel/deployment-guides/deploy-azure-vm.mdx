@@ -1,0 +1,47 @@
+---
+inputParameters: product
+---
+
+1. In the Azure portal, go to **Virtual Machines** > **Create** > **Azure virtual machine**.
+
+2. Select a **Resource group** or create a new one.
+
+   ![Azure group](~/assets/images/cloudflare-one/connections/connect-apps/azure-1.png)
+
+3. Enter a name for the VM and select a region. For **Image**, select _Ubuntu Server 24.04 LTS_. For **Size**, select an appropriate size (for example, _Standard_B1s_).
+
+4. Under **Administrator account**, select **SSH public key** and enter your key pair.
+
+   ![Azure keypair](~/assets/images/cloudflare-one/connections/connect-apps/azure-2.png)
+
+5. Under **Inbound port rules**, allow SSH (`22`). For testing purposes, also allow HTTP (`80`) and HTTPS (`443`).
+
+   ![Azure ports](~/assets/images/cloudflare-one/connections/connect-apps/azure-3.png)
+
+6. Select **Review + create**, then **Create**.
+
+7. Once the VM is running, copy its **Public IP address** from the VM overview page. {props.product === "cloudflare-one" ? (<>Also record the <strong>Private IP address</strong> — Azure by default uses the <code>10.0.0.0/8</code> subnet.</>) : null}
+
+8. SSH into the instance:
+
+   ```sh
+   ssh -i "your-key.pem" azureuser@<PUBLIC_IP>
+   ```
+
+9. Run `sudo su` to gain full admin rights to the VM.
+
+10. For testing purposes, you can deploy a basic Apache web server on port `80`:
+
+    ```bash
+    apt update
+
+    apt -y install apache2
+
+    cat <<EOF > /var/www/html/index.html
+    <html><body><h1>Hello Cloudflare!</h1>
+    <p>This page was created for a Cloudflare demo.</p>
+    </body></html>
+    EOF
+    ```
+
+11. To verify that the Apache server is running, open a browser and go to `http://<PUBLIC_IP>` (make sure to connect over `http`, not `https`). You should see the **Hello Cloudflare!** test page.

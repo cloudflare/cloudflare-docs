@@ -1,8 +1,11 @@
 ---
 title: Build a Durable AI Agent
+description: Build a durable AI agent using Cloudflare Workflows that researches GitHub repositories with automatic retries.
 pcx_content_type: get-started
 sidebar:
   order: 3
+products:
+  - workflows
 ---
 
 import {
@@ -23,7 +26,7 @@ In this guide, you will build an AI agent that researches GitHub repositories. G
 3. Analyze and compare them
 4. Return a recommendation
 
-Each LLM call and tool call becomes a <GlossaryTooltip term="step">step</GlossaryTooltip> — a self-contained, individually retriable unit of work. If any step fails, Workflows retries it automatically. If the entire Workflow crashes mid-task, it resumes from the last successful step.
+Each LLM call and tool call becomes a <GlossaryTooltip term="step">step</GlossaryTooltip> — a self-contained, individually retryable unit of work. If any step fails, Workflows retries it automatically. If the entire Workflow crashes mid-task, it resumes from the last successful step.
 
 | Challenge                    | Solution with Workflows                                   |
 | ---------------------------- | --------------------------------------------------------- |
@@ -646,7 +649,7 @@ Agent class names are automatically converted to kebab-case for URLs (`ResearchA
 
 <LinkCard
 	title="Agents SDK Workflows"
-	href="/agents/api-reference/run-workflows/"
+	href="/agents/runtime/execution/run-workflows/"
 	description="Complete API reference for AgentWorkflow, lifecycle callbacks, and bidirectional communication."
 />
 

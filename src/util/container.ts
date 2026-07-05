@@ -19,7 +19,6 @@ export async function entryToString(
 	});
 	container.addServerRenderer({
 		name: "@astrojs/react",
-		// @ts-expect-error incompatible types
 		renderer: reactRenderer,
 	});
 
@@ -44,7 +43,6 @@ export async function componentToString(
 	});
 	container.addServerRenderer({
 		name: "@astrojs/react",
-		// @ts-expect-error incompatible types
 		renderer: reactRenderer,
 	});
 

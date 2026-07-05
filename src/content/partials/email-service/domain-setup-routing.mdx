@@ -1,0 +1,26 @@
+---
+{}
+---
+
+import { DashButton } from "~/components";
+
+Before using Email Routing, configure your domain.
+
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
+2. Select **Onboard Domain**.
+
+3. Choose a domain from your Cloudflare account. Optionally review the DNS records that Cloudflare will add to your root domain:
+   - MX records to route incoming emails to Cloudflare.
+   - TXT record for SPF to authorize email routing.
+   - TXT record for DKIM to provide authentication for routed emails.
+
+4. Select **Done**.
+
+:::note
+DNS changes can take up to 24 hours to propagate globally, but usually complete within 5-15 minutes for domains using Cloudflare DNS.
+:::
+
+Once your domain is onboarded, you can start routing emails.

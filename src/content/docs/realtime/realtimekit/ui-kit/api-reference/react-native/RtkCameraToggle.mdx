@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkCameraToggle
+description: API reference for RtkCameraToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to enable or disable the local participant's camera. Automatically hides if the participant lacks video production permissions.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant                   |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkCameraToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkCameraToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkCameraToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkCameraToggle meeting={meeting} size="md" variant="button" />;
+}
+```

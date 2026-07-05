@@ -1,20 +1,23 @@
 ---
 pcx_content_type: how-to
+description: Private network applications (legacy) in Access.
+products:
+  - cloudflare-one
 title: Private network applications (legacy)
 sidebar:
   order: 4
   label: Private network applications (legacy)
+tags:
+- Private networks
 ---
 
-:::note
-Not recommended for new deployments. We recommend using a [self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) to secure a private IP address.
+:::caution
+The Private Network application type can no longer be created from the dashboard. If you do not already have a legacy private network application, use a [self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) to secure a private IP address instead.
 :::
 
-You can configure a **Private Network** application to manage access to specific applications on your private network.
+Existing **Private Network** applications continue to function and can still be managed. These applications were originally configured with the following steps:
 
-To create a private network application:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications** > **Add an application**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications** > **Add an application**.
 
 2. Select **Private Network**.
 

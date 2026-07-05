@@ -1,0 +1,12 @@
+id: DTqUkM
+name: ai-crawl-pay-per-crawl
+
+entry:
+  title: Pay Per Crawl
+  url: /ai-crawl-control/features/pay-per-crawl/
+  show: false
+
+meta:
+  title: Cloudflare Pay Per Crawl docs
+  description: Pay Per Crawl is a feature of AI Crawl Control that enables site owners to control and monetize AI crawler access to their content by setting a price per zone.
+  author: "@cloudflare"

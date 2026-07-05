@@ -187,7 +187,7 @@ sudo tcpdump -i <OUTGOING_INTERFACE> esp and host <TUNNEL_CLOUDFLARE_ENDPOINT_IP
 
 In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare's health check probes (both the request and response) are going through the IPsec tunnel.
 
-![tcpdump shows the IPsec encrypted packets from Cloudflare's health probes](~/assets/images/magic-wan/third-party/strongswan/ipsec.png)
+![tcpdump shows the IPsec encrypted packets from Cloudflare's health probes](~/assets/images/cloudflare-wan/third-party/strongswan/ipsec.png)
 
 Run tcpdump on `vti0` to check the decrypted packets.
 
@@ -195,4 +195,4 @@ Run tcpdump on `vti0` to check the decrypted packets.
 sudo tcpdump -i vti0 host 172.64.240.252
 ```
 
-![If you run tcpdump on vti0 you can check for decrypted packets](~/assets/images/magic-wan/third-party/strongswan/tcpdump.png)
+![If you run tcpdump on vti0 you can check for decrypted packets](~/assets/images/cloudflare-wan/third-party/strongswan/tcpdump.png)

@@ -1,0 +1,12 @@
+id: dpTd6D
+name: trace-request
+
+entry:
+  title: Cloudflare Trace
+  url: /rules/trace-request/
+  show: false
+
+meta:
+  title: Cloudflare Trace docs
+  description: Cloudflare Trace follows an HTTP/S request through Cloudflare's reverse proxy to your origin, helping you understand how different Cloudflare configurations interact with a request.
+  author: "@cloudflare"

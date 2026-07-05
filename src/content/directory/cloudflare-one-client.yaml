@@ -1,0 +1,11 @@
+id: fyoNfT
+name: Cloudflare One Client
+
+entry:
+  title: Cloudflare One Client
+  group: Cloudflare One
+  url: /cloudflare-one/team-and-resources/devices/cloudflare-one-client/
+  wrap: true
+
+meta:
+  description: Connect corporate devices to your Zero Trust organization

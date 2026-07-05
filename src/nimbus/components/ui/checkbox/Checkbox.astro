@@ -1,0 +1,92 @@
+---
+/**
+ * Checkbox — accessible checkbox control. Astro port of the kumo React
+ * Checkbox (@cloudflare/kumo, built on Base UI), mapped to Nimbus tokens.
+ *
+ * Built on a real <input type="checkbox"> for free keyboard + screen-reader
+ * support. The visible box and check/minus glyphs are siblings of the input
+ * and are driven entirely by CSS `peer-*` state — no JS, except a one-line
+ * inline script to seed `indeterminate`, which the HTML spec only exposes as
+ * a JS property.
+ *
+ *   <Checkbox label="Email notifications" name="prefs" value="email" />
+ *   <Checkbox label="Enable" controlFirst={false} />   // label before box
+ *   <Checkbox label="Select all" indeterminate />
+ *   <Checkbox aria-label="Select row" />               // no visible label
+ *
+ * Group related checkboxes under a shared legend with <CheckboxGroup>.
+ */
+import { cn } from "@/lib/cn";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import { checkboxVariants, type CheckboxVariant } from "./variants";
+
+interface Props extends Omit<HTMLAttributes<"input">, "size"> {
+  /** Visible label. Omit only when passing `aria-label` / `aria-labelledby`. */
+  label?: string;
+  /** Visual variant. @default "default" */
+  variant?: CheckboxVariant;
+  /** Box before label (default) or after. @default true */
+  controlFirst?: boolean;
+  /** Seed the indeterminate ("mixed") state. */
+  indeterminate?: boolean;
+}
+
+const {
+  label,
+  variant = "default",
+  controlFirst = true,
+  indeterminate = false,
+  checked,
+  disabled,
+  class: className,
+  id,
+  ...attrs
+} = Astro.props;
+
+// Stable id so the inline indeterminate-seeding script can target this input.
+const inputId = id ?? `cb-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<label
+  class={cn(
+    "group/checkbox m-0 inline-flex items-start gap-2",
+    !controlFirst && "flex-row-reverse justify-end",
+    disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+    className,
+  )}
+>
+  <span class={cn("relative inline-flex size-4 shrink-0", label && "mt-0.5")}>
+    <input
+      type="checkbox"
+      id={inputId}
+      checked={checked}
+      disabled={disabled}
+      data-indeterminate={indeterminate ? "true" : undefined}
+      class="peer absolute inset-0 z-20 m-0 size-4 cursor-[inherit] appearance-none opacity-0"
+      {...attrs}
+    />
+    <span aria-hidden="true" class={checkboxVariants({ variant })}></span>
+    {/* Glyphs are siblings of the input (not children of the box) so the
+        `peer-*` combinator can reach them. */}
+    <Icon
+      name="ph:check-bold"
+      class="pointer-events-none absolute inset-0 z-10 m-auto size-3 text-background opacity-0 transition-opacity peer-checked:opacity-100 peer-indeterminate:opacity-0"
+    />
+    <Icon
+      name="ph:minus-bold"
+      class="pointer-events-none absolute inset-0 z-10 m-auto size-3 text-background opacity-0 transition-opacity peer-indeterminate:opacity-100"
+    />
+  </span>
+  {label && <span class="text-sm text-foreground select-none">{label}</span>}
+</label>
+
+{/* `indeterminate` is a JS-only property — seed it once the element exists. */}
+{
+  indeterminate && (
+    <script is:inline define:vars={{ inputId }}>
+      var el = document.getElementById(inputId);
+      if (el) el.indeterminate = true;
+    </script>
+  )
+}

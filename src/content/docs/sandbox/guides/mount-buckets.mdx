@@ -4,19 +4,43 @@ pcx_content_type: how-to
 sidebar:
   order: 10
 description: Mount S3-compatible object storage as local filesystems for persistent data storage.
+products:
+  - sandbox
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Mount S3-compatible object storage buckets as local filesystem paths. Access object storage using standard file operations.
+Mount S3-compatible object storage buckets as local filesystem paths. Access object storage using standard file operations. For Cloudflare R2 in production, you can also mount by Worker R2 binding name so credentials stay in the Worker runtime.
+
+:::caution[Mounting `/workspace`]
+Mounting a bucket at `/workspace` or a subpath under it can be confusing in app or project setups. In production, the mount overlays that path instead of merging with files already in the image or template. If you want `/workspace` itself to persist over time, [Backup and restore](/sandbox/guides/backup-restore/) is often a better fit.
+:::
 
 :::note[S3-compatible providers]
 The SDK works with any S3-compatible object storage provider. Examples include Cloudflare R2, Amazon S3, Google Cloud Storage, Backblaze B2, MinIO, and [many others](https://github.com/s3fs-fuse/s3fs-fuse/wiki/Non-Amazon-S3). The SDK automatically detects and optimizes for R2, S3, and GCS.
 :::
 
-:::caution[Production only]
-Bucket mounting does not work with `wrangler dev` because it requires FUSE support that wrangler does not currently provide. Deploy your Worker with `wrangler deploy` to use this feature. All other Sandbox SDK features work in local development.
-:::
+## Production prerequisites for R2 binding mounts
+
+To mount an R2 bucket in production without passing credentials into the container, add an R2 binding and export `ContainerProxy` from your Worker entrypoint.
+
+<WranglerConfig>
+```toml
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "my-r2-bucket"
+```
+</WranglerConfig>
+
+<TypeScriptExample>
+```typescript
+import { ContainerProxy } from "@cloudflare/sandbox";
+
+export { ContainerProxy };
+```
+</TypeScriptExample>
+
+When you omit `endpoint`, the first argument to `mountBucket()` must be the Worker R2 binding name, such as `MY_BUCKET`.
 
 ## When to mount buckets
 
@@ -35,10 +59,8 @@ import { getSandbox } from '@cloudflare/sandbox';
 
 const sandbox = getSandbox(env.Sandbox, 'data-processor');
 
-// Mount R2 bucket
-await sandbox.mountBucket('my-r2-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
-});
+// Mount R2 bucket by Worker binding name
+await sandbox.mountBucket('MY_BUCKET', '/data');
 
 // Access bucket with standard filesystem operations
 await sandbox.exec('ls', { args: ['/data'] });
@@ -53,24 +75,32 @@ df.describe().to_csv('/data/summary.csv')
 ```
 </TypeScriptExample>
 
+In this example, `MY_BUCKET` is the binding name from `wrangler.toml`. It does not have to match the bucket's dashboard name, although many projects use matching names.
+
 :::note[Mounting affects entire sandbox]
 Mounted buckets are visible across all sessions since they share the filesystem. Mount once per sandbox.
 :::
 
 ## Credentials
 
+R2 binding mounts do not require credentials. Remote endpoint mounts remain supported for Cloudflare R2 and other S3-compatible providers, and those flows can still use automatic credential detection or explicit credentials.
+
 ### Automatic detection
 
-Set credentials as Worker secrets and the SDK automatically detects them:
+When you include an `endpoint`, set credentials as Worker secrets and the SDK automatically detects them:
 
 ```sh
-npx wrangler secret put AWS_ACCESS_KEY_ID
-npx wrangler secret put AWS_SECRET_ACCESS_KEY
+npx wrangler secret put R2_ACCESS_KEY_ID
+npx wrangler secret put R2_SECRET_ACCESS_KEY
 ```
+
+:::note[R2 credentials]
+We also automatically detect `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for compatibility with other S3-compatible providers.
+:::
 
 <TypeScriptExample>
 ```typescript
-// Credentials automatically detected from environment
+// Credentials automatically detected from environment for remote endpoint mounts
 await sandbox.mountBucket('my-r2-bucket', '/data', {
 	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
 });
@@ -93,6 +123,38 @@ await sandbox.mountBucket('my-r2-bucket', '/data', {
 ```
 </TypeScriptExample>
 
+### Credential proxy
+
+When you mount with explicit credentials, s3fs writes those credentials to a password file on the container's disk. A compromised container process can read and exfiltrate the credentials, or use them to access storage outside the intended bucket scope.
+
+Set `credentialProxy: true` to keep credentials out of the container entirely. Instead of passing real credentials into the container, the Durable Object intercepts all outbound S3 requests at the network layer, re-signs them with the real credentials, and forwards them upstream. The container only ever holds dummy credentials that are useless outside the proxy.
+
+This works with [AWS SigV4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html) signing for S3-compatible endpoints (including R2) and HMAC signing for Google Cloud Storage. It is recommended to set `credentialProxy: true` for all endpoint mounts. The option defaults to `false` for backwards compatibility and will become the default in a future version of the Sandbox SDK.
+
+<TypeScriptExample>
+```typescript
+await sandbox.mountBucket('my-bucket', '/data', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	provider: 'r2',
+	credentials: {
+		accessKeyId: env.R2_ACCESS_KEY_ID,
+		secretAccessKey: env.R2_SECRET_ACCESS_KEY
+	},
+	credentialProxy: true
+});
+```
+</TypeScriptExample>
+
+:::caution[ContainerProxy export required]
+Credential proxy mounts use egress interception and require `ContainerProxy` to be exported from your Worker entrypoint. Without this export, the proxy cannot intercept requests and the mount will fail.
+
+```typescript
+import { ContainerProxy } from "@cloudflare/sandbox";
+
+export { ContainerProxy };
+```
+:::
+
 ## Mount bucket subdirectories
 
 Mount a specific subdirectory within a bucket using the `prefix` option. Only contents under the prefix are visible at the mount point:
@@ -100,35 +162,32 @@ Mount a specific subdirectory within a bucket using the `prefix` option. Only co
 <TypeScriptExample>
 ```typescript
 // Mount only the /uploads/images/ subdirectory
-await sandbox.mountBucket('my-bucket', '/images', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+await sandbox.mountBucket('MY_BUCKET', '/images', {
 	prefix: '/uploads/images/'
 });
 
 // Files appear at mount point without the prefix
-// Bucket: my-bucket/uploads/images/photo.jpg
+// Bound bucket: my-r2-bucket/uploads/images/photo.jpg
 // Mounted path: /images/photo.jpg
 await sandbox.exec('ls', { args: ['/images'] });
 
 // Write to subdirectory
 await sandbox.writeFile('/images/photo.jpg', imageData);
-// Creates my-bucket:/uploads/images/photo.jpg
+// Creates my-r2-bucket/uploads/images/photo.jpg
 
 // Mount different prefixes to different paths
-await sandbox.mountBucket('datasets', '/training-data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+await sandbox.mountBucket('MY_BUCKET', '/training-data', {
 	prefix: '/ml/training/'
 });
 
-await sandbox.mountBucket('datasets', '/test-data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+await sandbox.mountBucket('MY_BUCKET', '/test-data', {
 	prefix: '/ml/testing/'
 });
 ```
 </TypeScriptExample>
 
 :::note[Prefix format]
-The `prefix` must start and end with `/` (e.g., `/data/`, `/logs/2024/`). This is required by the underlying s3fs tool.
+The `prefix` must start with `/` (for example, `/data` or `/logs/2024/`).
 :::
 
 ## Read-only mounts
@@ -137,8 +196,7 @@ Protect data by mounting buckets in read-only mode:
 
 <TypeScriptExample>
 ```typescript
-await sandbox.mountBucket('dataset-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+await sandbox.mountBucket('MY_BUCKET', '/data', {
 	readOnly: true
 });
 
@@ -150,12 +208,70 @@ await sandbox.writeFile('/data/new-file.txt', 'data');  // Error: Read-only file
 ```
 </TypeScriptExample>
 
+## Local development
+
+You can also mount R2 buckets during local development with `wrangler dev` by passing the `localBucket` option. Production R2 binding mounts and local `localBucket` mounts both avoid explicit credentials, but they are different execution paths. Production uses credential-less egress interception and overlays the target path. Local development uses periodic synchronization with the R2 binding.
+
+<TypeScriptExample>
+```typescript
+await sandbox.mountBucket('MY_BUCKET', '/data', {
+	localBucket: true
+});
+
+// Access files using standard operations
+await sandbox.exec('ls', { args: ['/data'] });
+await sandbox.writeFile('/data/results.json', JSON.stringify(results));
+```
+</TypeScriptExample>
+
+:::note
+You can use an environment variable to toggle `localBucket` between local development and production. Set an environment variable such as `LOCAL_DEV` in your Wrangler configuration using `vars` for local development, then reference it in your code:
+
+```typescript
+const mountOptions = env.LOCAL_DEV ? { localBucket: true } : {};
+
+await sandbox.mountBucket('MY_BUCKET', '/data', mountOptions);
+```
+
+When `localBucket` is `true`, the SDK uses local R2 binding synchronization. When `localBucket` is `false` or omitted and `endpoint` is also omitted, the SDK uses the production R2 binding mount path. For more information on setting environment variables, refer to [Environment variables in Wrangler configuration](/workers/configuration/environment-variables/).
+:::
+
+The `readOnly` and `prefix` options work the same way in local mode:
+
+<TypeScriptExample>
+```typescript
+// Read-only local mount
+await sandbox.mountBucket('MY_BUCKET', '/data', {
+	localBucket: true,
+	readOnly: true
+});
+
+// Mount a subdirectory
+await sandbox.mountBucket('MY_BUCKET', '/images', {
+	localBucket: true,
+	prefix: '/uploads/images/'
+});
+```
+</TypeScriptExample>
+
+### Local development considerations
+
+During local development, files are synchronized between R2 and the container using a periodic sync process rather than a direct filesystem mount. Keep the following in mind:
+
+- **Synchronization window** - A brief delay exists between when a file is written and when it appears on the other side. For example, if you upload a file to R2 and then immediately read it from the mounted path in the container, the file may not yet be available. Allow a short window for synchronization to complete before reading recently written data.
+- **High-frequency writes** - Rapid successive writes to the same file path may take slightly longer to fully propagate. For best results, avoid writing to the same file from both R2 and the container at the same time.
+- **Bidirectional sync** - Changes made in the container are synced to R2, and changes made in R2 are synced to the container. Both directions follow the same periodic sync model.
+
+:::note
+These considerations apply to local development with `wrangler dev` only. In production, bucket mounts use a direct filesystem mount with no synchronization delay. Local sync-style behavior may not fully reflect how a production mount overlays the target path.
+:::
+
 ## Unmount buckets
 
 <TypeScriptExample>
 ```typescript
 // Mount for processing
-await sandbox.mountBucket('my-bucket', '/data', { endpoint: '...' });
+await sandbox.mountBucket('MY_BUCKET', '/data');
 
 // Do work
 await sandbox.exec('python process_data.py');
@@ -178,7 +294,7 @@ The SDK supports any S3-compatible object storage. Here are examples for common 
 <TypeScriptExample>
 ```typescript
 await sandbox.mountBucket('my-s3-bucket', '/data', {
-	endpoint: 'https://s3.us-west-2.amazonaws.com',  // Regional endpoint
+	endpoint: 'https://s3.us-west-2.amazonaws.com',
 	credentials: {
 		accessKeyId: env.AWS_ACCESS_KEY_ID,
 		secretAccessKey: env.AWS_SECRET_ACCESS_KEY
@@ -194,7 +310,7 @@ await sandbox.mountBucket('my-s3-bucket', '/data', {
 await sandbox.mountBucket('my-gcs-bucket', '/data', {
 	endpoint: 'https://storage.googleapis.com',
 	credentials: {
-		accessKeyId: env.GCS_ACCESS_KEY_ID,  // HMAC key
+		accessKeyId: env.GCS_ACCESS_KEY_ID,
 		secretAccessKey: env.GCS_SECRET_ACCESS_KEY
 	}
 });
@@ -202,7 +318,7 @@ await sandbox.mountBucket('my-gcs-bucket', '/data', {
 </TypeScriptExample>
 
 :::note[GCS requires HMAC keys]
-Generate HMAC keys in GCS console under Settings → Interoperability.
+Generate HMAC keys in GCS console under **Settings** > **Interoperability**.
 :::
 
 ### Other S3-compatible providers
@@ -212,7 +328,7 @@ For providers like Backblaze B2, MinIO, Wasabi, or others, use the standard moun
 <TypeScriptExample>
 ```typescript
 await sandbox.mountBucket('my-bucket', '/data', {
-	endpoint: 'https://s3.us-west-000.backblazeb2.com',  // Provider-specific endpoint
+	endpoint: 'https://s3.us-west-000.backblazeb2.com',
 	credentials: {
 		accessKeyId: env.ACCESS_KEY_ID,
 		secretAccessKey: env.SECRET_ACCESS_KEY
@@ -221,15 +337,40 @@ await sandbox.mountBucket('my-bucket', '/data', {
 ```
 </TypeScriptExample>
 
-For provider-specific configuration, see the [s3fs-fuse wiki](https://github.com/s3fs-fuse/s3fs-fuse/wiki/Non-Amazon-S3) which documents supported providers and their recommended flags.
+For provider-specific configuration, see the [s3fs-fuse wiki](https://github.com/s3fs-fuse/s3fs-fuse/wiki/Non-Amazon-S3) for supported providers and recommended flags.
 
 ## Troubleshooting
+
+### R2 binding not found error
+
+**Error**: `R2 binding "MY_BUCKET" not found in Worker env`
+
+**Solution**: Ensure your Worker has an `r2_buckets` binding and that `mountBucket()` uses the binding name, not the bucket's dashboard name:
+
+<WranglerConfig>
+```toml
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "my-r2-bucket"
+```
+</WranglerConfig>
+
+### Credential-less R2 mount fails immediately
+
+**Solution**: Ensure your Worker entrypoint exports `ContainerProxy`. If you are using an older Wrangler version, you may also need the `enable_ctx_exports` compatibility flag.
 
 ### Missing credentials error
 
 **Error**: `MissingCredentialsError: No credentials found`
 
-**Solution**: Set credentials as Worker secrets:
+**Solution**: This error only applies when you mount a remote S3-compatible endpoint by setting `endpoint`. Set credentials as Worker secrets:
+
+```sh
+npx wrangler secret put R2_ACCESS_KEY_ID
+npx wrangler secret put R2_SECRET_ACCESS_KEY
+```
+
+or
 
 ```sh
 npx wrangler secret put AWS_ACCESS_KEY_ID
@@ -243,20 +384,19 @@ npx wrangler secret put AWS_SECRET_ACCESS_KEY
 **Common causes**:
 - Incorrect endpoint URL
 - Invalid credentials
-- Bucket doesn't exist
+- Missing `ContainerProxy` export, or on older Wrangler versions missing `enable_ctx_exports`
+- Bucket does not exist
 - Network connectivity issues
 
-Verify your endpoint format and credentials:
+Verify your binding or endpoint configuration:
 
 <TypeScriptExample>
 ```typescript
 try {
-	await sandbox.mountBucket('my-bucket', '/data', {
-		endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
-	});
+	await sandbox.mountBucket('MY_BUCKET', '/data');
 } catch (error) {
 	console.error('Mount failed:', error.message);
-	// Check endpoint format, credentials, bucket existence
+	// Check binding name, ContainerProxy export, or remote endpoint configuration
 }
 ```
 </TypeScriptExample>
@@ -299,17 +439,19 @@ await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/outp
 ## Best practices
 
 - **Mount early** - Mount buckets at sandbox initialization
-- **Use R2 for Cloudflare** - Zero egress fees and optimized configuration
+- **Choose the right mount mode** - Use R2 binding mounts when you want Worker-managed R2 access, or use `endpoint` for explicit R2, S3, GCS, and other S3-compatible providers
 - **Secure credentials** - Always use Worker secrets, never hardcode
 - **Read-only when possible** - Protect data with read-only mounts
-- **Use prefixes for isolation** - Mount subdirectories when working with specific datasets
-- **Mount paths** - Use `/data`, `/storage`, or `/mnt/*` (avoid `/workspace`, `/tmp`)
-- **Handle errors** - Wrap mount operations in try/catch blocks
+- **Mount the narrowest path** - Use prefixes to expose only the data a sandbox needs
+- **Mount paths** - Prefer `/data`, `/storage`, or `/mnt/*`; if you mount under `/workspace`, account for the mount overlaying that path in production
+- **Handle errors** - Wrap mount operations in `try...catch` blocks
 - **Optimize access** - Copy frequently accessed files locally
 
 ## Related resources
 
 - [Persistent storage tutorial](/sandbox/tutorials/persistent-storage/) - Complete R2 example
 - [Storage API reference](/sandbox/api/storage/) - Full method documentation
-- [Environment variables](/sandbox/configuration/environment-variables/) - Credential configuration
+- [Environment variables](/sandbox/configuration/environment-variables/) - Credential configuration for remote endpoint mounts
+- [Wrangler configuration](/sandbox/configuration/wrangler/) - Configure R2 bindings and compatibility flags
 - [R2 documentation](/r2/) - Learn about Cloudflare R2
+- [Outbound traffic](/sandbox/guides/outbound-traffic/) - Learn how `ContainerProxy` and outbound interception work

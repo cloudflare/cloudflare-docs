@@ -1,5 +1,5 @@
 releaseNotes: |-
-  *PLEASE NOTE* If you are a Zero Trust customer and have strict firewall rules, you must visit https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#client-orchestration-api and explicitly allow our new Client Orchestration API Endpoints.
+  *PLEASE NOTE* If you are a Zero Trust customer and have strict firewall rules, you must visit https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#client-orchestration-api and explicitly allow our new Client Orchestration API Endpoints.
 
   This release contains new features and improvements from the last release
 

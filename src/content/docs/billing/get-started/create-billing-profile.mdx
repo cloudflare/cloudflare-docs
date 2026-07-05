@@ -1,0 +1,74 @@
+---
+title: Create billing profile
+pcx_content_type: how-to
+sidebar:
+  order: 1
+description: Add a payment method to your Cloudflare account.
+products:
+  - billing
+---
+
+import { DashButton, Render, Steps } from "~/components";
+
+## Add a primary payment method
+
+A primary payment method is required to purchase Cloudflare products and services. Cloudflare does not store or have access to your full card number, PIN, or PayPal password.
+
+:::note
+Because some countries tax goods and services on personal accounts, you may be asked to indicate whether your Cloudflare account is personal or business to determine tax eligibility.
+:::
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+   <DashButton url="/?to=/:account/billing" />
+
+2. Go to the **Subscriptions** page and open the **Payment methods** panel.
+3. Select **Add Payment Method**. If no payment method is on file, the dialog opens automatically.
+4. Choose a payment option and enter the required details:
+
+   **Card** (Visa, Mastercard, American Express, Discover, UnionPay):
+   1. Enter your card details.
+   2. Complete 3D Secure authentication if your card issuer requires it.
+   3. If applicable, add your business information for your invoice, including your **Company** and **VAT/GST Number**.
+
+   **PayPal** (your linked card or bank is charged if you have insufficient funds in your PayPal account):
+   1. Select **PayPal**.
+   2. Follow the online instructions until PayPal returns you to the Cloudflare **Payment Method** form to continue setup.
+   3. Verify your **PayPal username** now appears next to the PayPal logo.
+   4. Add your account contact information as well as **Company** and **VAT/GST Number**, if applicable.
+
+   **Wallets**: Apple Pay, Google Pay, Link, and [Instant Bank Payments via Link](/billing/payment-methods/instant-bank-payments-link/) (US-based self-serve accounts) are also available.
+
+5. Review the payment method and contact information.
+6. To finish, select **Confirm**.
+7. Ensure your new payment method appears in the **Payment methods** panel.
+
+</Steps>
+
+## Add an additional payment method
+
+Optionally, add an additional payment method. Cloudflare automatically retries the charge on the additional method if the primary method fails. Refer to [Additional payment method auto-retry](/billing/payment-methods/additional-payment-method-auto-retry/) for details.
+
+<Render file="two-payment-methods" product="billing" />
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+   <DashButton url="/?to=/:account/billing" />
+
+2. Go to the **Subscriptions** page and open the **Payment methods** panel.
+3. Select **Add Payment Method**.
+4. Enter card details or select a supported wallet. Complete 3D Secure authentication if your card issuer requires it.
+5. Confirm the billing address and select **Save**.
+6. To make the additional payment method the primary method, select **Make primary payment method**.
+
+</Steps>
+
+## Related resources
+
+- [Update billing information](/billing/get-started/update-billing-info/) — Change payment methods, billing address, or email
+- [How Cloudflare billing works](/billing/understand/how-billing-works/) — Billing lifecycle and charge types
+- [Billing policy](/billing/understand/billing-policy/) — Refund policy and subscription terms

@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Resolve CNAME records at the zone apex to comply with DNS standards.
+products:
+  - dns
 title: CNAME flattening
 sidebar:
   order: 9
@@ -29,3 +32,4 @@ For information about CNAME flattening in [Internal DNS](/dns/internal-dns/), re
 - CNAME flattening happens by default in some cases. Refer to [Setup](/dns/cname-flattening/set-up-cname-flattening/) for details.
 - CNAME to a different Cloudflare account is prohibited and will result in [Error 1014: CNAME Cross-User Banned](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1014/)
 - <Render file="cname-flattening-callout" product="dns" />
+- If the final CNAME target has no A/AAAA records (a dangling CNAME), CNAME flattening returns an empty response (NODATA) because there is no IP address to flatten to. This can make it appear as if the DNS record is not propagating. Ensure your CNAME targets resolve to valid A/AAAA records.

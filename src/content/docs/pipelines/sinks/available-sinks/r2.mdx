@@ -2,13 +2,15 @@
 pcx_content_type: configuration
 title: R2
 description: Write data as JSON or Parquet files to R2 object storage
+products:
+  - pipelines
 sidebar:
   order: 1
 ---
 
 R2 sinks write processed data from pipelines as raw files to [R2 object storage](/r2/). They currently support writing to JSON and Parquet formats.
 
-To create an R2 sink, run the [`pipelines sinks create`](/workers/wrangler/commands/#pipelines-sinks-create) command and specify the sink type and target [bucket](/r2/buckets/):
+To create an R2 sink, run the [`pipelines sinks create`](/workers/wrangler/commands/pipelines/#pipelines-sinks-create) command and specify the sink type and target [bucket](/r2/buckets/):
 
 ```bash
 npx wrangler pipelines sinks create my-sink \
@@ -86,10 +88,10 @@ Control when files are written to R2. Configure based on your needs:
 
 ### Roll interval
 
-Set how often files are written (default: 300 seconds):
+Set how often files are written (default: 300 seconds, minimum: 10 seconds):
 
 ```bash
---roll-interval 60  # Write files every 60 seconds
+--roll-interval 10  # Write files every 10 seconds
 ```
 
 ### Roll size

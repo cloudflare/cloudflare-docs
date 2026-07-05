@@ -6,7 +6,7 @@ products:
 date: 2025-11-19
 ---
 
-[AI Search](/ai-search/) now supports [custom HTTP headers](/ai-search/configuration/data-source/website/#access-protected-content) for website crawling, solving a common problem where valuable content behind authentication or access controls could not be indexed.
+[AI Search](/ai-search/) now supports [custom HTTP headers](/ai-search/configuration/data-source/website/#extra-headers-for-access-protected-content) for website crawling, solving a common problem where valuable content behind authentication or access controls could not be indexed.
 
 Previously, AI Search could only crawl publicly accessible pages, leaving knowledge bases, documentation, and other protected content out of your search results. With custom headers support, you can now include authentication credentials that allow the crawler to access this protected content.
 
@@ -28,4 +28,4 @@ CF-Access-Client-Secret: your-token-secret
 
 The crawler will automatically include these headers in all requests, allowing it to access protected pages that would otherwise be blocked. 
 
-Learn more about [configuring custom headers for website crawling](/ai-search/configuration/data-source/website/#access-protected-content) in AI Search.
+Learn more about [configuring custom headers for website crawling](/ai-search/configuration/data-source/website/#extra-headers-for-access-protected-content) in AI Search.

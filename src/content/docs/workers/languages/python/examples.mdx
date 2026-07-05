@@ -1,10 +1,13 @@
 ---
 pcx_content_type: example
 title: Examples
+description: Python code examples demonstrating modules, bindings, and SDK usage in Workers.
 head:
   - tag: title
     content: Python Worker Examples
 reviewed: 2024-04-03
+products:
+  - workers
 ---
 
 Cloudflare has a wide range of Python examples in the [Workers Example gallery](/workers/examples/?languages=Python).
@@ -69,8 +72,20 @@ from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        name = (await request.json()).name
+        body = await request.json()  # returns a native Python dict
+        name = body["name"]
         return Response("Hello, {name}".format(name=name))
+```
+
+## Return a JSON response
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        data = {"greeting": "Hello, World!", "status": "ok"}
+        return Response.json(data)
 ```
 
 ## Read bundled asset files in your Worker
@@ -197,11 +212,13 @@ Refer to [Durable Objects documentation](/durable-objects/get-started/) for more
 ## Cron Trigger
 
 ```python
-from workers import WorkerEntrypoint, Response
+from workers import WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
     async def scheduled(self, controller, env, ctx):
-  			print("cron processed")
+        # All four parameters (self, controller, env, ctx) are required —
+        # unlike fetch() which only takes (self, request).
+        print("cron processed")
 ```
 
 Refer to [Cron Triggers documentation](/workers/configuration/cron-triggers/) for more information.
@@ -213,20 +230,20 @@ from workers import WorkflowEntrypoint
 
 class MyWorkflow(WorkflowEntrypoint):
     async def run(self, event, step):
-        @step.do("dependency a")
+        @step.do()
         async def step_a():
             # do some work
             return 10
 
-        @step.do("dependency b")
+        @step.do()
         async def step_b():
             # do some work
             return 20
 
-        @step.do("my final step", depends=[step_a, step_b], concurrent=True)
-        async def my_final_step(result_a=0, result_b=0):
+        @step.do(concurrent=True)
+        async def my_final_step(step_a, step_b):
             # should return 30
-            return result_a + result_b
+            return step_a + step_b
 
         await my_final_step()
 ```

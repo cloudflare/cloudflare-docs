@@ -1,8 +1,11 @@
 ---
 title: Workers API
+description: Reference for the Workflows Workers API, including WorkflowEntrypoint, step methods, and instance management.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - workflows
 ---
 
 import {
@@ -29,7 +32,6 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 ### run
 
-{/* prettier-ignore */}
 - <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
   - `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
   - `step` - the `WorkflowStep` type that provides the step methods for your Workflow
@@ -52,22 +54,33 @@ The `WorkflowEvent` type accepts an optional [type parameter](https://www.typesc
 
 Refer to the [events and parameters](/workflows/build/events-and-parameters/) documentation for how to handle events within your Workflow code.
 
-Finally, any JS control-flow primitive (if conditions, loops, try-catches, promises, etc) can be used to manage steps inside the `run` method.
+Finally, any JS control-flow primitive (if conditions, loops, `try...catch` blocks, promises, and more) can be used to manage steps inside the `run` method.
 
 ## WorkflowEvent
 
 ```ts
+export type WorkflowCronSchedule = {
+	/** Cron expression that triggered this event. */
+	cron: string;
+	/** Timestamp of the scheduled trigger, in milliseconds since the Unix epoch. */
+	scheduledTime: number;
+};
+
 export type WorkflowEvent<T> = {
 	payload: Readonly<T>;
 	timestamp: Date;
 	instanceId: string;
+	workflowName: string;
+	schedule?: WorkflowCronSchedule;
 };
 ```
 
-- The `WorkflowEvent` is the first argument to a Workflow's `run` method, and includes an optional `payload` parameter and a `timestamp` property.
+- The `WorkflowEvent` is the first argument to a Workflow's `run` method.
   - `payload` - a default type of `any` or type `T` if a type parameter is provided.
   - `timestamp` - a `Date` object set to the time the Workflow instance was created (triggered).
   - `instanceId` - the ID of the associated instance.
+  - `workflowName` - the name of the associated Workflow.
+  - `schedule` - metadata for Workflow instances created by a cron schedule, including the `cron` expression and `scheduledTime` in milliseconds since the Unix epoch.
 
 Refer to the [events and parameters](/workflows/build/events-and-parameters/) documentation for how to handle events within your Workflow code.
 
@@ -76,30 +89,72 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 ### step
 
 {/* prettier-ignore */}
-- <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
-- <code>step.do(name: string, config?: WorkflowStepConfig, callback: ():
-  	RpcSerializable): Promise&lt;T&gt;</code>
-  - `name` - the name of the step, up to 256 characters.
-  - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
-  - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
+- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
+	RpcSerializable): Promise&lt;T&gt;</code>
+	- `name` - the name of the step, up to 256 characters.
+	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
+	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
+- <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
+	RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
+	- `name` - the name of the step, up to 256 characters.
+	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
+	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
+	- `rollbackOptions` (optional) - register rollback logic for the step. If the Workflow later fails, registered rollbacks run in reverse step-start order.
 
 :::note[Returning state]
 
 When returning state from a `step`, ensure that the object you return is _serializable_.
 
-Primitive types like `string`, `number`, and `boolean`, along with composite structures such as `Array` and `Object` (provided they only contain serializable values), can be serialized.
+Primitive types like `string`, `number`, and `boolean`, along with composite structures such as `Array` and `Object` (provided they only contain serializable values), can be serialized. Any [structured-cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) type can be serialized, as long it is no longer than 1 MB.
 
-Objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized and the Workflow instance will throw an error if objects with those types is returned.
+On the other hand, objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized. The Workflow instance will throw an error if objects with those types is returned.
+
+In JavaScript Workflows, `ReadableStream<Uint8Array>` is a supported serializable return type when a step needs to persist larger binary output than the normal 1 MiB non-stream step-result limit.
+
+Return a new stream from the callback.
+
+:::caution
+Do not return a locked stream or a stream that has already been read. BYOB streams and BYOB readers are not supported.
+:::
+
+After a `ReadableStream<Uint8Array>` object has been persisted within a step, it should not be reused - rely on the new fresh stream that gets returned from step. The bytes are preserved from the original stream, but the implementation might differ.
 
 :::
 
-{/* prettier-ignore */}
+<TypeScriptExample>
+
+```ts
+type Env = {
+	MY_BUCKET: R2Bucket;
+};
+
+export class MyWorkflow extends WorkflowEntrypoint<Env> {
+	async run(_event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		const reportStream = await step.do("read report from R2", async () => {
+			const object = await this.env.MY_BUCKET.get("reports/latest.csv");
+
+			if (!object?.body) {
+				throw new Error("Could not read reports/latest.csv from R2.");
+			}
+
+			return object.body;
+		});
+
+		const preview = await new Response(reportStream).text();
+		return { preview };
+	}
+}
+```
+
+</TypeScriptExample>
+
 - <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
-{/* prettier-ignore */}
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
@@ -112,9 +167,13 @@ More information about the limits imposed on Workflow can be found in the [Workf
 
 :::
 
-- <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
-  - `name` - the name of the step.
-  - `options` - an object with properties for `type` (up to 100 characters [^1]), which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
+- <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>-
+  `name` - the name of the step. - `options` - an object with properties for
+  `type` (up to 100 characters [^1]), which determines which event type this
+  `waitForEvent` call will match on when calling `instance.sendEvent`, and an
+  optional `timeout` property, which defines how long the `waitForEvent` call
+  will block for before throwing a timeout exception. The default timeout is 24
+  hours.
 
 <TypeScriptExample>
 
@@ -152,9 +211,113 @@ export type WorkflowStepConfig = {
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
+## Rollback options
+
+```ts
+type WorkflowRollbackContext<T = unknown> = {
+	ctx: WorkflowStepContext;
+	error: Error;
+	output: T | undefined;
+};
+
+type WorkflowRollbackHandler<T = unknown> = (
+	ctx: WorkflowRollbackContext<T>,
+) => Promise<void>;
+
+type WorkflowStepRollbackConfig = Pick<
+	WorkflowStepConfig,
+	"retries" | "timeout"
+>;
+
+type WorkflowStepRollbackOptions<T = unknown> = {
+	rollback: WorkflowRollbackHandler<T>;
+	rollbackConfig?: WorkflowStepRollbackConfig;
+};
+```
+
+- Pass this `WorkflowStepRollbackOptions` object as the final argument to `step.do()` to register a compensating action for a successful step.
+- `rollback` receives the original step context, the error that caused the Workflow to fail, and the step output returned by the forward step.
+- `rollbackConfig` applies retry and timeout settings to the rollback handler itself.
+
+<TypeScriptExample>
+
+```ts
+export class BillingWorkflow extends WorkflowEntrypoint<Env> {
+	async run(_event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		await step.do(
+			"create charge",
+			async () => {
+				const charge = await createCharge();
+				return { chargeId: charge.id };
+			},
+			{
+				rollback: async ({ ctx, output, error }) => {
+					const { chargeId } = output as { chargeId: string };
+					await refundCharge(chargeId, {
+						reason: `${ctx.step.name}: ${error.message}`,
+					});
+				},
+				rollbackConfig: {
+					retries: {
+						limit: 3,
+						delay: "30 seconds",
+						backoff: "linear",
+					},
+					timeout: "5 minutes",
+				},
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## WorkflowStepContext
+
+```ts
+export type WorkflowStepContext = {
+	step: {
+		name: string;
+		count: number;
+	};
+	attempt: number;
+	config: WorkflowStepConfig;
+};
+```
+
+- The `WorkflowStepContext` is passed as the first argument to the `step.do` callback function. It provides runtime information about the current step.
+  - `step.name` - the name of the step as passed to `step.do`.
+  - `step.count` - how many times `step.do` has been called with this name in the current Workflow run (1-indexed).
+  - `attempt` - the current attempt number (1-indexed). `1` on the first try, `2` on the first retry, and so on.
+  - `config` - the resolved `WorkflowStepConfig` for this step, including any defaults applied by the runtime.
+
+Refer to the [step context documentation](/workflows/build/step-context/) for usage examples.
+
+## Workflow step limits
+
+Each workflow on Workers Paid supports 10,000 steps by default. You can increase this up to 25,000 steps by configuring `steps` within the `limits` property of your Workflow definition in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[[workflows]]
+name = "my-workflow"
+binding = "MY_WORKFLOW"
+class_name = "MyWorkflow"
+
+[workflows.limits]
+steps = 25_000
+```
+
+</WranglerConfig>
+
+`step.sleep` does not count towards the maximum steps limit.
+
+Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workflow limits](/workflows/reference/limits/) for more information.
+
 ## NonRetryableError
 
-{/* prettier-ignore */}
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
   - When thrown inside [`step.do()`](/workflows/build/workers-api/#step), this error stops step retries, propagating the error to the top level (the [run](/workflows/build/workers-api/#run) function). Any error not handled at this top level will cause the Workflow instance to fail.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows steps are retried.
@@ -182,9 +345,9 @@ For example, to bind to a Workflow called `workflows-starter` and to make it ava
 			// binding name env.MY_WORKFLOW
 			"binding": "MY_WORKFLOW",
 			// this is class that extends the Workflow class in src/index.ts
-			"class_name": "MyWorkflow"
-		}
-	]
+			"class_name": "MyWorkflow",
+		},
+	],
 }
 ```
 
@@ -220,9 +383,9 @@ For example, if your Workflow is defined in a Worker script named `billing-worke
 			"class_name": "MyWorkflow",
 			// the script name where the Workflow is defined.
 			// required if the Workflow is defined in another script.
-			"script_name": "billing-worker"
-		}
-	]
+			"script_name": "billing-worker",
+		},
+	],
 }
 ```
 
@@ -239,7 +402,7 @@ Ensure you have a compatibility date `2024-10-22` or later installed when bindin
 :::
 
 The `Workflow` type provides methods that allow you to create, inspect the status, and manage running Workflow instances from within a Worker script.
-It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/#types).
+It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/general/#types).
 
 ```ts title="./worker-configuration.d.ts"
 interface Env {
@@ -254,7 +417,6 @@ The `Workflow` type exports the following methods:
 
 Create (trigger) a new instance of the given Workflow.
 
-{/* prettier-ignore */}
 - <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
   - `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
 
@@ -318,7 +480,6 @@ Create (trigger) a batch of new instance of the given Workflow, up to 100 instan
 
 This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/reference/limits/).
 
-{/* prettier-ignore */}
 - <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
   - `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
 
@@ -378,7 +539,38 @@ interface WorkflowInstanceCreateOptions {
 	 * The event payload the Workflow instance is triggered with
 	 */
 	params?: unknown;
+	/**
+	 * The retention policy for the Workflow instance.
+	 * Defaults to the maximum retention period available for the owner's account.
+	 */
+	retention?: {
+		/**
+		 * How long to retain instance state after the Workflow completes successfully.
+		 */
+		successRetention?: WorkflowRetentionDuration;
+		/**
+		 * How long to retain instance state after the Workflow ends in an errored or terminated state.
+		 */
+		errorRetention?: WorkflowRetentionDuration;
+	};
 }
+
+type WorkflowRetentionDuration = WorkflowSleepDuration;
+```
+
+If `retention` is not set, instance state is retained for the maximum retention period available on your account (3 days on the Workers Free plan, 30 days on the Workers Paid plan). Refer to the [retention limit](/workflows/reference/limits/) for more information.
+
+The following example creates an instance that retains state for 1 day after success and 7 days after an error:
+
+```ts
+let instance = await env.MY_WORKFLOW.create({
+	id: myIdDefinedFromOtherSystem,
+	params: { hello: "world" },
+	retention: {
+		successRetention: "1 day",
+		errorRetention: "7 days",
+	},
+});
 ```
 
 ## WorkflowInstance
@@ -401,9 +593,9 @@ declare abstract class WorkflowInstance {
 	 */
 	public terminate(): Promise<void>;
 	/**
-	 * Restart the instance.
+	 * Restart the instance from the beginning, or from a specific step.
 	 */
-	public restart(): Promise<void>;
+	public restart(options?: WorkflowInstanceRestartOptions): Promise<void>;
 	/**
 	 * Returns the current status of the instance.
 	 */
@@ -423,10 +615,6 @@ Return the status of a running Workflow instance.
 
 - <code>status(): Promise&lt;InstanceStatus&gt;</code>
 
-:::caution
-The following methods are not yet supported in local development.
-:::
-
 ### pause
 
 Pause a running Workflow instance.
@@ -441,9 +629,56 @@ Resume a paused Workflow instance.
 
 ### restart
 
-Restart a Workflow instance.
+Restart a Workflow instance from the beginning, or from a specific step.
 
-- <code>restart(): Promise&lt;void&gt;</code>
+- <code>restart(options?: WorkflowInstanceRestartOptions): Promise&lt;void&gt;</code>
+  - `options` - optional properties that control from where the instance restarts.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+
+// Restart the instance from the beginning.
+await instance.restart();
+
+// Restart the instance from the step named "aggregate".
+await instance.restart({ from: { name: "aggregate" } });
+
+// Restart the instance from the third call to a step named "process".
+await instance.restart({ from: { name: "process", count: 3 } });
+```
+
+When restarting from a specific step, the cached results of every earlier step are reused, while the target step and any steps that follow it run again. The call throws an error if no step matching `from` is found in the instance's execution history.
+
+#### WorkflowInstanceRestartOptions
+
+```ts
+interface WorkflowInstanceRestartOptions {
+	/**
+	 * The step to restart the instance from.
+	 * If omitted, the instance restarts from the beginning.
+	 */
+	from?: {
+		/**
+		 * The name of the step.
+		 */
+		name: string;
+		/**
+		 * The 1-based index of the step, used when multiple steps share the same name and type. Defaults to 1 (the first occurrence).
+		 */
+		count?: number;
+		/**
+		 * The step type. Use this to disambiguate when the same name is shared across step types. Defaults to "do".
+		 */
+		type?: "do" | "sleep" | "waitForEvent";
+	};
+}
+```
+
+The `from` object identifies the step to restart from. Only `name` is required; `count` and `type` are only needed when the same step name appears more than once in the run.
+
+- `name` - the name of the step.
+- `count` - the 1-based index of the step, used when multiple steps share the same name and type (for example, inside a loop). Defaults to `1` (the first occurrence). Corresponds to `step.count` in the [step context](/workflows/build/step-context/).
+- `type` - the step type (`"do"`, `"sleep"`, or `"waitForEvent"`). Defaults to `"do"`. Use this when the same name is shared across different step types.
 
 ### terminate
 
@@ -455,8 +690,10 @@ Terminate a Workflow instance.
 
 [Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
 
-- <code>sendEvent(): Promise&lt;void&gt;</code>
-  - `options` - the event `type` (up to 100 characters [^1]) and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
+- <code>sendEvent(): Promise&lt;void&gt;</code>- `options` - the event `type`
+  (up to 100 characters [^1]) and `payload` to send to the Workflow instance.
+  The `type` must match the `type` in the corresponding `waitForEvent` call in
+  your Workflow.
 
 Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
 
@@ -505,12 +742,21 @@ type InstanceStatus = {
 		| "waiting" // instance is hibernating and waiting for sleep or event to finish
 		| "waitingForPause" // instance is finishing the current work to pause
 		| "unknown";
-	error?: { 
-		name: string,
-		message: string 
+	error?: {
+		name: string;
+		message: string;
 	};
 	output?: unknown;
+	rollback: {
+		outcome: "complete" | "failed";
+		error: {
+			name: string;
+			message: string;
+		} | null;
+	} | null;
 };
 ```
+
+If a Workflow enters rollback, the Workers API continues to report `status: "running"` for compatibility while the rollback is executing. After the instance reaches a terminal state, inspect `rollback` to determine whether compensating steps completed successfully or failed.
 
 [^1]: Match pattern: `^[a-zA-Z0-9_][a-zA-Z0-9-_]*$`

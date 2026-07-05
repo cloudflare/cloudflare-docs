@@ -1,0 +1,12 @@
+id: 7kXHmh
+name: logpush
+
+entry:
+  title: Logpush
+  url: /logs/logpush/
+  show: false
+
+meta:
+  title: Cloudflare Logpush docs
+  description: Logpush delivers logs in batches as quickly as possible, enabling Cloudflare to provide information almost in real time to storage services, SIEMs, and log management providers.
+  author: "@cloudflare"

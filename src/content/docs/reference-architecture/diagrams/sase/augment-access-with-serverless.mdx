@@ -102,7 +102,7 @@ Cloudflare's Workers are a great candidate for interacting with incoming JSON We
 
 In some situations, it is beneficial to elaborate on this JWT in order to execute additional processing on the protected destination application (for example, adding device [posture details](/cloudflare-one/reusable-components/posture-checks/) as part of an incoming request).
 
-In the following example, we want to make sure the exposed application is aware of the status of the device's firewall and disk encryption (Note that the WARP client needs to be installed on the client machine for these signals to be collected).
+In the following example, we want to make sure the exposed application is aware of the status of the device's firewall and disk encryption (Note that the Cloudflare One Client needs to be installed on the client machine for these signals to be collected).
 
 ![Figure 2: Modified origin request including posture details](~/assets/images/reference-architecture/augment-access-with-serverless/diagram2.svg "Figure 2: Modified origin request including posture details")
 

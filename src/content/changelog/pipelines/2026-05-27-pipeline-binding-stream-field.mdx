@@ -1,0 +1,42 @@
+---
+title: Pipeline binding configuration field renamed to stream
+description: The pipeline field in Wrangler pipeline binding configuration has been renamed to stream. The old field is deprecated but still accepted.
+products:
+  - pipelines
+  - workers
+date: 2026-06-04
+---
+
+import { WranglerConfig } from "~/components";
+
+The `pipeline` field inside the `pipelines` binding configuration in your [Wrangler configuration file](/workers/wrangler/configuration/) has been renamed to `stream`. The old field is deprecated but still accepted.
+
+Update your configuration to use `stream` to avoid the deprecation warning.
+
+**Before (deprecated):**
+
+<WranglerConfig>
+
+```toml
+[[pipelines]]
+binding = "MY_PIPELINE"
+pipeline = "<STREAM_ID>"
+```
+
+</WranglerConfig>
+
+**After:**
+
+<WranglerConfig>
+
+```toml
+[[pipelines]]
+binding = "MY_PIPELINE"
+stream = "<STREAM_ID>"
+```
+
+</WranglerConfig>
+
+No other changes are required. The binding name, TypeScript types, and runtime API (`env.MY_PIPELINE.send(...)`) remain the same.
+
+For more information on configuring pipeline bindings, refer to [Writing to streams](/pipelines/streams/writing-to-streams/#configure-pipeline-binding).

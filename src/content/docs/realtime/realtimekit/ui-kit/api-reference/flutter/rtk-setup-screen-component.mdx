@@ -1,0 +1,51 @@
+---
+pcx_content_type: navigation
+title: RtkSetupScreen
+description: API reference for RtkSetupScreen component (Flutter Library)
+products:
+  - realtime
+---
+
+A pre-built setup screen shown before joining a meeting. Allows users to edit their display name and configure media settings.
+
+:::note
+[`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) must be an ancestor of this widget in the widget tree.
+:::
+
+## Properties
+
+| Property              | Type           | Required | Default | Description                                            |
+| --------------------- | -------------- | -------- | ------- | ------------------------------------------------------ |
+| `selectedAudioDevice` | `AudioDevice?` | ✅       | -       | Currently selected audio device (positional parameter) |
+| `selectedVideoDevice` | `VideoDevice?` | ✅       | -       | Currently selected video device (positional parameter) |
+
+:::note
+Both parameters are positional. Pass them without named arguments.
+:::
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkSetupScreen(
+  selectedAudioDevice,
+  selectedVideoDevice,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+final selectedAudioDevice = meeting.getSelectedAudioDevice();
+final selectedVideoDevice = meeting.getSelectedVideoDevice();
+
+RtkSetupScreen(
+  selectedAudioDevice,
+  selectedVideoDevice,
+)
+```

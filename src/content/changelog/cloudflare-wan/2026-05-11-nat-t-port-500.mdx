@@ -1,0 +1,26 @@
+---
+title: NAT-T support for IKE on UDP port 500
+description: IPsec tunnels can now use the standard NAT traversal flow, starting IKE on UDP port 500 and switching to port 4500 after NAT detection.
+date: 2026-05-11
+products:
+  - cloudflare-wan
+  - magic-transit
+---
+
+Cloudflare IPsec now supports the standard NAT traversal (NAT-T) flow, where IKE begins on UDP port `500` and switches to UDP port `4500` after NAT is detected.
+
+Previously, devices behind NAT had to be configured to initiate IKE on UDP port `4500` directly. Devices that started on UDP port `500` could not complete the IKE handshake when NAT was in the path. This required custom configuration on devices such as VeloCloud SD-WAN edges, Cisco IOS-XE routers, and Juniper SRX firewalls, and was not possible on every platform.
+
+What changed:
+
+- Devices behind NAT can now initiate IKE on either UDP port `500` or UDP port `4500`.
+- Devices that start IKE on UDP port `500` and switch to UDP port `4500` after NAT detection now complete the handshake successfully.
+- No configuration change is required on Cloudflare. The change is available for all IPsec tunnels on Cloudflare WAN and Magic Transit.
+
+This change does not affect existing tunnels:
+
+- Tunnels using UDP port `500` with no NAT detected continue to operate as before.
+- Tunnels configured to start IKE on UDP port `4500` continue to operate as before.
+- NAT detection logic is unchanged.
+
+For configuration details, refer to [GRE and IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/).

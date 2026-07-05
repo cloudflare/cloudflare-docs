@@ -1,13 +1,17 @@
 ---
 pcx_content_type: how-to
+products:
+  - rules
 title: Create Bulk Redirects via API
 sidebar:
   order: 7
   label: Create via API
 description: Learn how to create Bulk Redirects using the Cloudflare API.
+tags:
+  - Redirects
 ---
 
-import { Render, Steps, APIRequest } from "~/components";
+import { Render, Steps, APIRequest, Tabs, TabItem } from "~/components";
 
 To create Bulk Redirects via API, you must:
 
@@ -295,7 +299,16 @@ If there is already a phase entry point ruleset for the `http_request_redirect` 
 
 ## Required API token permissions
 
-The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following permissions:
+The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following [permissions](/fundamentals/api/reference/permissions/):
 
-- _Account_ > _Account Rulesets_ > _Edit_
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+- _Account_ > _Bulk URL Redirects_ > _Edit_
 - _Account_ > _Account Filter Lists_ > _Edit_
+
+</TabItem> <TabItem label="API">
+
+- Mass URL Redirects Write
+- Account Rule Lists Write
+
+</TabItem> </Tabs>

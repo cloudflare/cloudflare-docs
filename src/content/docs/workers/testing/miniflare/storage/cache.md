@@ -81,6 +81,21 @@ res = await mf.dispatchFetch("http://localhost:8787");
 console.log(await res.text()); // 2
 ```
 
+## Purging
+
+You can programmatically purge all entries from a cache using the `purgeCache` method on the `Miniflare` instance. This is useful during development when cached assets need to be cleared without restarting the instance:
+
+```js
+const mf = new Miniflare({ /* options */ });
+
+// Purge the default cache and get the number of entries purged
+const count = await mf.purgeCache();
+console.log(`Purged ${count} entries`);
+
+// Purge a specific named cache
+await mf.purgeCache("my-named-cache");
+```
+
 ## Disabling
 
 Both default and named caches can be disabled with the `disableCache` option.

@@ -1,0 +1,41 @@
+---
+title: "Artifacts now in beta: versioned filesystem with Git access"
+description: Artifacts is now available in beta as a versioned filesystem for Workers, APIs, and Git-compatible workflows.
+products:
+  - artifacts
+date: 2026-04-16
+---
+
+[Artifacts](/artifacts/) is now in private beta. Artifacts is Git-compatible storage built for scale: create tens of millions of repos, fork from any remote, and hand off a URL to any Git client. It provides a versioned filesystem for storing and exchanging file trees across Workers, the REST API, and any Git client, running locally or within an agent.
+
+You can [read the announcement blog](https://blog.cloudflare.com/artifacts-git-for-agents-beta/) to learn more about what Artifacts does, how it works, and how to create repositories for your agents to use.
+
+Artifacts has three API surfaces:
+
+* Workers bindings (for creating and managing repositories)
+* REST API (for creating and managing repos from any other compute platform)
+* Git protocol (for interacting with repos)
+
+As an example: you can use the Workers binding to create a repo and read back its remote URL:
+
+```ts
+# Create a thousand, a million or ten million repos: one for every agent, for every upstream branch, or every user.
+const created = await env.PROD_ARTIFACTS.create("agent-007");
+const remote = (await created.repo.info())?.remote;
+```
+
+Or, use the REST API to create a repo inside a namespace from your agent(s) running on any platform:
+
+```bash
+curl --request POST "https://artifacts.cloudflare.net/v1/api/namespaces/some-namespace/repos" --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --header "Content-Type: application/json" --data '{"name":"agent-007"}'
+```
+
+Any Git client that speaks smart HTTP can use the returned remote URL:
+
+```bash
+# Agents know git.
+# Every repository can act as a git repo, allowing agents to interact with Artifacts the way they know best: using the git CLI.
+git clone https://x:${REPO_TOKEN}@artifacts.cloudflare.net/some-namespace/agent-007.git
+```
+
+To learn more, refer to [Get started](/artifacts/get-started/), [Workers binding](/artifacts/api/workers-binding/), and [Git protocol](/artifacts/api/git-protocol/).

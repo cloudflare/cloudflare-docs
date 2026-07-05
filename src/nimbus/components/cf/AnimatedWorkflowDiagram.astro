@@ -1,0 +1,361 @@
+---
+interface Props {
+	steps: {
+		id: string;
+		label: string;
+		description?: string;
+		duration: string;
+	}[];
+	autoPlay?: boolean;
+	loop?: boolean;
+}
+
+const { steps, autoPlay = true, loop = true } = Astro.props;
+---
+
+<animated-workflow-diagram
+	data-steps={JSON.stringify(steps)}
+	data-autoplay={autoPlay}
+	data-loop={loop}
+>
+	<div class="diagram-container"></div>
+</animated-workflow-diagram>
+
+<style>
+	animated-workflow-diagram {
+		position: relative;
+		width: 100%;
+	}
+
+	.diagram-container {
+		position: relative;
+		margin: 0 auto;
+		padding: 0;
+		width: 100%;
+		max-width: 400px;
+	}
+
+	animated-workflow-diagram :global(.workflow-line) {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 2px;
+		background-color: rgb(212 212 212);
+		z-index: 0;
+	}
+
+	:root[data-theme="dark"] animated-workflow-diagram :global(.workflow-line) {
+		background-color: rgb(64 64 64);
+	}
+
+	animated-workflow-diagram :global(.workflow-node) {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 0.75rem;
+	}
+
+	animated-workflow-diagram :global(.workflow-node:last-child) {
+		margin-bottom: 0;
+	}
+
+	animated-workflow-diagram :global(.workflow-node-card) {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: white;
+		border-radius: 0.5rem;
+		padding: 0.5rem 0.75rem;
+		border: 1px solid rgb(229 229 229);
+		width: 280px;
+	}
+
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.workflow-node-card) {
+		background: rgb(23 23 23);
+		border-color: rgb(64 64 64);
+	}
+
+	animated-workflow-diagram :global(.workflow-node.running .workflow-node-card),
+	animated-workflow-diagram
+		:global(.workflow-node.completed .workflow-node-card) {
+		border-color: rgb(163 163 163);
+	}
+
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.workflow-node.running .workflow-node-card),
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.workflow-node.completed .workflow-node-card) {
+		border-color: rgb(115 115 115);
+	}
+
+	animated-workflow-diagram :global(.step-badge) {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding: 0.125rem 0.375rem;
+		border-radius: 0.25rem;
+		font-size: 0.6875rem;
+		font-weight: 500;
+		background-color: rgb(245 245 245);
+		color: rgb(115 115 115);
+	}
+
+	:root[data-theme="dark"] animated-workflow-diagram :global(.step-badge) {
+		background-color: rgb(38 38 38);
+		color: rgb(163 163 163);
+	}
+
+	animated-workflow-diagram :global(.workflow-node.running .step-badge),
+	animated-workflow-diagram :global(.workflow-node.completed .step-badge) {
+		background-color: rgb(229 229 229);
+		color: rgb(64 64 64);
+	}
+
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.workflow-node.running .step-badge),
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.workflow-node.completed .step-badge) {
+		background-color: rgb(64 64 64);
+		color: rgb(212 212 212);
+	}
+
+	animated-workflow-diagram :global(.step-badge svg) {
+		width: 0.75rem;
+		height: 0.75rem;
+	}
+
+	animated-workflow-diagram :global(.step-badge svg.animate-spin) {
+		animation: spin 1s linear infinite;
+	}
+
+	animated-workflow-diagram :global(.step-info) {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+		flex: 1;
+		min-width: 0;
+		margin-top: 0;
+	}
+
+	animated-workflow-diagram :global(.step-name) {
+		font-size: 0.75rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-weight: 500;
+		color: rgb(23 23 23);
+	}
+
+	:root[data-theme="dark"] animated-workflow-diagram :global(.step-name) {
+		color: rgb(245 245 245);
+	}
+
+	animated-workflow-diagram :global(.step-description) {
+		font-size: 0.625rem;
+		color: rgb(115 115 115);
+	}
+
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.step-description) {
+		color: rgb(163 163 163);
+	}
+
+	animated-workflow-diagram :global(.start-end-node) {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 0.75rem;
+	}
+
+	animated-workflow-diagram :global(.start-end-node:last-child) {
+		margin-bottom: 0;
+	}
+
+	animated-workflow-diagram :global(.start-end-btn) {
+		background-color: rgb(23 23 23);
+		color: white;
+		border-radius: 9999px;
+		padding: 0.375rem 1rem;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		border: none;
+		cursor: default;
+	}
+
+	:root[data-theme="dark"] animated-workflow-diagram :global(.start-end-btn) {
+		background-color: rgb(64 64 64);
+	}
+
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		animated-workflow-diagram :global(.step-badge svg) {
+			animation: none !important;
+		}
+	}
+</style>
+
+<script>
+	const STATUS_ICONS = {
+		completed: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Step</span>`,
+		running: `<svg class="animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg><span>Step</span>`,
+		pending: `<svg fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3"/></svg><span>Step</span>`,
+	};
+
+	interface Step {
+		id: string;
+		label: string;
+		description?: string;
+		duration: string;
+	}
+
+	class AnimatedWorkflowDiagram extends HTMLElement {
+		private diagramContainer!: HTMLElement;
+		private steps: Step[] = [];
+		private loop = false;
+		private currentStepIndex = -1;
+		private isPlaying = false;
+
+		connectedCallback() {
+			this.diagramContainer = this.querySelector(".diagram-container")!;
+			this.steps = JSON.parse(this.dataset.steps || "[]");
+			this.loop = this.dataset.loop === "true";
+
+			this.renderDiagram();
+			if (this.dataset.autoplay === "true") {
+				setTimeout(() => this.play(), 500);
+			}
+		}
+
+		private renderDiagram() {
+			const line = document.createElement("div");
+			line.className = "workflow-line";
+			this.diagramContainer.appendChild(line);
+
+			const startNode = document.createElement("div");
+			startNode.className = "start-end-node";
+			const startBtn = document.createElement("button");
+			startBtn.className = "start-end-btn";
+			startBtn.textContent = "START";
+			startBtn.onclick = () => !this.isPlaying && this.play();
+			startNode.appendChild(startBtn);
+			this.diagramContainer.appendChild(startNode);
+
+			this.steps.forEach((step) => {
+				const stepNode = document.createElement("div");
+				stepNode.className = `workflow-node pending node-${step.id}`;
+
+				const card = document.createElement("div");
+				card.className = "workflow-node-card";
+
+				const badge = document.createElement("div");
+				badge.className = "step-badge";
+				badge.innerHTML = STATUS_ICONS.pending;
+
+				const stepInfo = document.createElement("div");
+				stepInfo.className = "step-info";
+				stepInfo.innerHTML = `<span class="step-name">${step.label}</span>${step.description ? `<span class="step-description">${step.description}</span>` : ""}`;
+
+				card.append(badge, stepInfo);
+				stepNode.appendChild(card);
+				this.diagramContainer.appendChild(stepNode);
+			});
+
+			const endNode = document.createElement("div");
+			endNode.className = "start-end-node";
+			const endBtn = document.createElement("div");
+			endBtn.className = "start-end-btn";
+			endBtn.textContent = "END";
+			endNode.appendChild(endBtn);
+			this.diagramContainer.appendChild(endNode);
+
+			requestAnimationFrame(() => {
+				const containerRect = this.diagramContainer.getBoundingClientRect();
+				const startRect = startBtn.getBoundingClientRect();
+				const endRect = endBtn.getBoundingClientRect();
+				const lineTop =
+					startRect.top + startRect.height / 2 - containerRect.top;
+				const lineBottom = endRect.top + endRect.height / 2 - containerRect.top;
+				line.style.top = `${lineTop}px`;
+				line.style.height = `${lineBottom - lineTop}px`;
+			});
+		}
+
+		private play() {
+			this.isPlaying = true;
+			this.advanceStep();
+		}
+
+		private advanceStep() {
+			if (!this.isPlaying) return;
+
+			this.currentStepIndex++;
+
+			if (this.currentStepIndex >= this.steps.length) {
+				this.updateDiagram();
+				if (this.loop) {
+					this.currentStepIndex = -1;
+					setTimeout(() => this.advanceStep(), 1000);
+				} else {
+					this.isPlaying = false;
+				}
+				return;
+			}
+
+			this.updateDiagram();
+			const duration = this.parseDuration(
+				this.steps[this.currentStepIndex].duration,
+			);
+			setTimeout(() => this.advanceStep(), duration);
+		}
+
+		private updateDiagram() {
+			this.steps.forEach((step, index) => {
+				const node = this.diagramContainer.querySelector(`.node-${step.id}`);
+				if (!node) return;
+
+				const badge = node.querySelector(".step-badge");
+				if (!badge) return;
+
+				node.classList.remove("pending", "running", "completed");
+
+				let status: keyof typeof STATUS_ICONS;
+				if (index < this.currentStepIndex) {
+					status = "completed";
+				} else if (index === this.currentStepIndex) {
+					status = "running";
+				} else {
+					status = "pending";
+				}
+
+				node.classList.add(status);
+				badge.innerHTML = STATUS_ICONS[status];
+			});
+		}
+
+		private parseDuration(duration: string): number {
+			const match = duration.match(/^(\d+(?:\.\d+)?)(ms|s)$/);
+			if (!match) return 2000;
+			return match[2] === "s"
+				? parseFloat(match[1]) * 1000
+				: parseFloat(match[1]);
+		}
+	}
+
+	customElements.define("animated-workflow-diagram", AnimatedWorkflowDiagram);
+</script>

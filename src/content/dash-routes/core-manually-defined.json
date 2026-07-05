@@ -1,1 +1,52 @@
-[]
+[
+	{
+		"deeplink": "/?to=/:account/tunnels",
+		"name": "Tunnels",
+		"parent": ["Networking"]
+	},
+	{
+		"deeplink": "/?to=/:account/magic-networks/routes/virtual-networks",
+		"name": "Virtual networks",
+		"parent": ["Networking", "Routes"]
+	},
+	{
+		"deeplink": "/?to=/:account/data-catalog/overview",
+		"name": "R2 Data Catalog",
+		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
+		"name": "Browser Run",
+		"deeplink": "/?to=/:account/workers/browser-run",
+		"parent": ["Compute & AI"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/browser-run/logs",
+		"name": "Browser Run Logs",
+		"parent": ["Compute & AI"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/browser-run/runs",
+		"name": "Browser Run Runs",
+		"parent": ["Compute & AI"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1",
+		"name": "Create a PlanetScale database",
+		"parent": ["Storage & databases", "Hyperdrive"]
+	},
+	{
+		"deeplink": "/?to=/:account/mesh",
+		"name": "Mesh",
+		"parent": ["Networking"]
+	},
+	{
+		"deeplink": "/?to=/:account/domains/registrations",
+		"name": "Registrations",
+		"parent": ["Domain registration"]
+	},
+	{
+		"deeplink": "/?to=/:account/:zone/speed/origin-analytics",
+		"name": "Origin Analytics",
+		"parent": ["Speed"]
+	}
+]

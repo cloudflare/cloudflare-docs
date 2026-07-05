@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: How KV works
+description: Workers KV stores data centrally and caches it globally, optimizing for high-read, low-latency workloads.
 sidebar:
   order: 6
+products:
+  - kv
 ---
 
 KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access.

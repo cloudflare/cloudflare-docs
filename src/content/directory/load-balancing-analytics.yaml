@@ -1,0 +1,12 @@
+id: zhhuFD
+name: load-balancing-analytics
+
+entry:
+  title: Analytics
+  url: /load-balancing/reference/load-balancing-analytics/
+  show: false
+
+meta:
+  title: Cloudflare Analytics docs
+  description: Load balancing analytics let you evaluate traffic flow, assess the health status of endpoints in your pools, and review changes in pool health over time.
+  author: "@cloudflare"

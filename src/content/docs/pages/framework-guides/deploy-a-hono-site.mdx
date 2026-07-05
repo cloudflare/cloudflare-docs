@@ -1,13 +1,15 @@
 ---
 pcx_content_type: how-to
 title: Hono
+description: Deploy a Hono web application to Cloudflare Pages.
 tags:
   - Hono
+products:
+  - pages
 ---
 
 import {
 	ResourcesBySelector,
-	ExternalResources,
 	Render,
 	TabItem,
 	Tabs,
@@ -75,23 +77,5 @@ After deploying your site, you will receive a unique subdomain for your project 
 Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Related resources
-
-### Tutorials
-
-For more tutorials involving Hono and Cloudflare Pages, refer to the following resources:
-
-<ResourcesBySelector
-	tags={["Hono"]}
-	types={["tutorial"]}
-	products={["pages"]}
-/>
-
-### Demo apps
-
-For demo applications using Hono and Cloudflare Pages, refer to the following resources:
-
-<ExternalResources tags={["Hono"]} type="apps" products={["Pages"]} />
-
-### Creator Interview
 
 <YouTube id="yoqtk85HITM" />

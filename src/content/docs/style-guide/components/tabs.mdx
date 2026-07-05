@@ -2,6 +2,9 @@
 title: Tabs
 styleGuide:
   component: Tabs
+description: Display content in switchable tab panels.
+products:
+  - style-guide
 ---
 
 import { Tabs, TabItem, Render } from "~/components";
@@ -13,7 +16,11 @@ This component can help you create a tabbed interface to show related informatio
 - Account-level vs zone-level navigation
 - GRE / IPsec tunnels
 
-```mdx live
+## Additional guidance
+
+<Render file="tab-guidance" product="style-guide" />
+
+```mdx
 import { Tabs, TabItem } from "~/components";
 
 <Tabs>
@@ -47,7 +54,7 @@ We use the following `syncKey` values in our docs:
 
 ### Example
 
-```mdx live
+```mdx
 import { Tabs, TabItem } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">

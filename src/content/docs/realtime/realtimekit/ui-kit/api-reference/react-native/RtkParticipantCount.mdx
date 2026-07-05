@@ -1,0 +1,39 @@
+---
+pcx_content_type: reference
+title: RtkParticipantCount
+description: API reference for RtkParticipantCount component (React Native Library)
+products:
+  - realtime
+---
+
+Displays the total participant count and opens the participants sidebar when tapped.
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`           | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkParticipantCount } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkParticipantCount meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkParticipantCount } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkParticipantCount meeting={meeting} iconPack={customIconPack} />;
+}
+```

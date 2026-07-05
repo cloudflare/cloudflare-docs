@@ -1,0 +1,35 @@
+---
+title: New cfWorker metric in Server-Timing header
+description: A new cfWorker timing metric helps isolate Worker execution time from origin latency in the Server-Timing header.
+date: 2026-02-18
+---
+
+The Server-Timing header now includes a new `cfWorker` metric that measures time spent executing Cloudflare Workers, including any subrequests performed by the Worker. This helps developers accurately identify whether high Time to First Byte (TTFB) is caused by Worker processing or slow upstream dependencies.
+
+Previously, Worker execution time was included in the `edge` metric, making it harder to identify true edge performance. The new `cfWorker` metric provides this visibility:
+
+| Metric | Description |
+| --- | --- |
+| `edge` | Total time spent on the Cloudflare edge, including Worker execution |
+| `origin` | Time spent fetching from the origin server |
+| `cfWorker` | Time spent in Worker execution, including subrequests but excluding origin fetch time |
+
+### Example response
+
+```txt
+Server-Timing: cdn-cache; desc=DYNAMIC, edge; dur=20, origin; dur=100, cfWorker; dur=7
+```
+
+In this example, the edge took 20ms, the origin took 100ms, and the Worker added just 7ms of processing time.
+
+### Availability
+
+The `cfWorker` metric is enabled by default if you have [Real User Monitoring (RUM)](/web-analytics/) enabled. Otherwise, you can enable it using [Rules](/rules/).
+
+This metric is particularly useful for:
+
+- **Performance debugging**: Quickly determine if latency is caused by Worker code, external API calls within Workers, or slow origins.
+- **Optimization targeting**: Identify which component of your request path needs optimization.
+- **Real User Monitoring (RUM)**: Access detailed timing breakdowns directly from response headers for client-side analytics.
+
+For more information about Server-Timing headers, refer to the [W3C Server Timing specification](https://www.w3.org/TR/server-timing/).

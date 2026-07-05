@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: Test your exposed credentials check configuration.
+products:
+  - waf
 title: Test your exposed credentials checks configuration
 sidebar:
   order: 6
@@ -8,9 +11,9 @@ sidebar:
 
 import { Render } from "~/components";
 
-After enabling and configuring exposed credentials checks, you may want to test if the checks are working properly.
+<Render file="exposed-credential-check-deprecation" product="waf" />
 
-<Render file="leaked-credentials-recommend-detection" product="waf" />
+After enabling and configuring exposed credentials checks, you may want to test if the checks are working properly.
 
 Cloudflare provides a special set of case-sensitive credentials for this purpose:
 

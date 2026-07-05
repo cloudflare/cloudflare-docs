@@ -1,0 +1,22 @@
+---
+inputParameters: param1;;param2
+
+---
+
+import { Markdown, DashButton } from "~/components"
+
+Create a Cloudflare Tunnel and run it on the {props.one}.
+
+1. Log in to the Cloudflare dashboard and go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select **Create a tunnel**.
+
+3. Enter a name for your tunnel (for example, <code>{props.two}-tunnel</code>).
+
+4. Select **Create Tunnel**.
+
+5. Choose your operating system (select **Debian** for your {props.one}). Copy the installation command and run it on your {props.one}.
+
+6. Wait for the tunnel to connect. Once the connection is established, select **Continue**.

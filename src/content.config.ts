@@ -3,14 +3,16 @@ import { defineCollection } from "astro:content";
 import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
-import { glob, file } from "astro/loaders";
+import { glob } from "astro/loaders";
 import { skillsLoader } from "astro-skills";
 
 import { productAvailabilityCollectionConfig } from "./content/collections/product-availability";
 import { granularControlApplicationsCollectionConfig } from "./content/collections/granular-control-applications";
 
+import { middlecacheLoader } from "./util/custom-loaders";
+
 import {
-	appsSchema,
+	catalogModelsSchema,
 	changelogSchema,
 	baseSchema,
 	notificationsSchema,
@@ -19,13 +21,14 @@ import {
 	compatibilityFlagsSchema,
 	glossarySchema,
 	learningPathsSchema,
-	videosSchema,
 	workersAiModelsSchema,
 	warpReleasesSchema,
 	releaseNotesSchema,
 	fieldsSchema,
 	partialsSchema,
 	streamSchema,
+	cloudflareSkillSchema,
+	mcpServerSchema,
 } from "~/schemas";
 
 function contentLoader(name: string) {
@@ -90,19 +93,19 @@ export const collections = {
 		schema: learningPathsSchema,
 	}),
 	directory: defineCollection({
-		loader: dataLoader("directory"),
+		loader: glob({
+			pattern: "**/*.(json|yml|yaml)",
+			base: "./src/content/directory",
+			generateId: ({ entry }) => entry.replace(/\.(json|yml|yaml)$/, ""),
+		}),
 	}),
 	"workers-ai-models": defineCollection({
 		loader: dataLoader("workers-ai-models"),
 		schema: workersAiModelsSchema,
 	}),
-	videos: defineCollection({
-		loader: file("src/content/videos/index.yaml"),
-		schema: videosSchema,
-	}),
-	apps: defineCollection({
-		loader: file("src/content/apps/index.yaml"),
-		schema: appsSchema,
+	"catalog-models": defineCollection({
+		loader: dataLoader("catalog-models"),
+		schema: catalogModelsSchema,
 	}),
 	"warp-releases": defineCollection({
 		loader: dataLoader("warp-releases"),
@@ -126,5 +129,27 @@ export const collections = {
 	),
 	skills: defineCollection({
 		loader: skillsLoader({ base: "./skills" }),
+	}),
+	"cloudflare-skills-manifest": defineCollection({
+		loader: middlecacheLoader("v1/cloudflare-skills/skills-manifest.json", {
+			parser: (fileContent: string) => {
+				const data = JSON.parse(fileContent) as {
+					skills: Array<{ name: string; description: string; files: string[] }>;
+				};
+				return Object.fromEntries(data.skills.map((s) => [s.name, s]));
+			},
+		}),
+		schema: cloudflareSkillSchema,
+	}),
+	"cloudflare-mcps-manifest": defineCollection({
+		loader: middlecacheLoader("v1/cloudflare-mcps/mcps-manifest.json", {
+			parser: (fileContent: string) => {
+				const data = JSON.parse(fileContent) as {
+					servers: Array<{ name: string; description: string; url: string }>;
+				};
+				return Object.fromEntries(data.servers.map((s) => [s.url, s]));
+			},
+		}),
+		schema: mcpServerSchema,
 	}),
 };
