@@ -22,6 +22,8 @@ import {
 
 In this guide, you will create a new [Vue](https://vuejs.org/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
+If you already have a Vue app built with Vite and do not need a Worker API, Wrangler can deploy it with the experimental static assets auto-configuration flag. For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/#deploy-a-specific-target).
+
 ## 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, use code from the official Vue template, and provide the option to deploy instantly.
@@ -34,30 +36,34 @@ To use `create-cloudflare` to create a new Vue project with Workers Assets, run 
 	args="my-vue-app --framework=vue"
 />
 
-    		 <Details header="How is this project set up?">
-        			Below is a simplified file tree of the project.
-        			<FileTree>
-    						- my-vue-app
-    							- src/
-    									- App.vue
-    							- server/
-    								- index.ts
-    							- index.html
-    							- vite.config.ts
-    							- wrangler.jsonc
-        			</FileTree>
+<Details header="How is this project set up?">
 
-        			`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/).
-        			In this file:
-        					- `main` points to `server/index.ts`. This is your Worker, which is going to act as your backend API.
-        					- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your Vue SPA do not go to the Worker, and are thus free.
-        					- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
+Below is a simplified file tree of the project.
 
-    						`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
+<FileTree>
 
-    						`server/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
-    						At `src/App.vue`, your Vue app calls this endpoint to get a message back and displays this.
-        		</Details>
+- my-vue-app
+  - src/
+    - App.vue
+  - server/
+    - index.ts
+  - index.html
+  - vite.config.ts
+  - wrangler.jsonc
+
+</FileTree>
+
+`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/). In this file:
+
+- `main` points to `server/index.ts`. This is your Worker, which acts as your backend API.
+- `assets.not_found_handling` is set to `single-page-application`. Routes handled by your Vue SPA do not go to the Worker, and are free.
+- Bindings to resources on Cloudflare's developer platform are configured here. For more information, refer to [Bindings](/workers/runtime-apis/bindings/).
+
+`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
+
+`server/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response. At `src/App.vue`, your Vue app calls this endpoint to get a message back and displays this.
+
+</Details>
 
 ## 2. Develop locally with the [Cloudflare Vite plugin](/workers/vite-plugin/)
 

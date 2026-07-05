@@ -32,6 +32,12 @@ Unlike Pages, Workers has a distinctly broader set of features available to it, 
 
 Migrating from Cloudflare Pages to Cloudflare Workers is often a straightforward process. The following are some of the most common steps you will need to take to migrate your project.
 
+For supported frameworks and project types, Wrangler can [configure or deploy your project automatically](/workers/framework-guides/automatic-configuration/). From your project root, run:
+
+<PackageManagers type="exec" pkg="wrangler" args="setup" />
+
+If Wrangler detects your project, review the generated configuration before deploying. Continue with the manual migration steps if you need to migrate Pages Functions, adjust static asset routing, or configure an unsupported project.
+
 ### Frameworks
 
 If your Pages project uses [a popular framework](/workers/framework-guides/), most frameworks already have adapters available for Cloudflare Workers. Switch out any Pages-specific adapters for the Workers equivalent and follow any guidance that they provide.
@@ -321,27 +327,25 @@ If you are using Pages' built-in CI/CD system, you can swap this for Workers Bui
 
 Pages automatically creates a preview environment for each project, and can be independently configured.
 
-To get a similar experience in Workers, you must:
+To get a similar experience in Workers, ensure [preview URLs](/workers/versions-and-deployments/preview-urls/) are enabled. They are on by default.
 
-1. Ensure [preview URLs](/workers/versions-and-deployments/preview-urls/) are enabled (they are on by default).
+<WranglerConfig>
 
-   <WranglerConfig>
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"main": "./worker/index.ts",
+	"assets": {
+		"directory": "./dist/client/"
+	},
+	"preview_urls": true
+}
+```
 
-   ```json
-   {
-   	"name": "my-worker",
-   	"compatibility_date": "$today",
-   	"main": "./worker/index.ts",
-   	"assets": {
-   		"directory": "./dist/client/"
-   	},
-   	"preview_urls": true
-   }
-   ```
+</WranglerConfig>
 
-   </WranglerConfig>
-
-1. [Enable non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds) in Workers Builds.
+Then, [enable non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds) in Workers Builds.
 
 Optionally, you can also [protect these preview URLs with Cloudflare Access](/workers/versions-and-deployments/preview-urls/#manage-access-to-preview-urls).
 
@@ -412,11 +416,11 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | ----------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | **Writing, Testing, and Deploying Code**                                                                    |         |         |
 | [Cloudflare Vite plugin](/workers/vite-plugin/)                                                             | ✅      | ❌      |
-| [Rollbacks](/workers/versions-and-deployments/rollbacks/)                                     | ✅      | ✅      |
-| [Gradual Deployments](/workers/versions-and-deployments/)                                     | ✅      | ❌      |
+| [Rollbacks](/workers/versions-and-deployments/rollbacks/)                                                   | ✅      | ✅      |
+| [Gradual Deployments](/workers/versions-and-deployments/)                                                   | ✅      | ❌      |
 | [Preview URLs](/workers/versions-and-deployments/preview-urls/)                                             | ✅      | ✅      |
 | [Testing tools](/workers/testing)                                                                           | ✅      | ✅      |
-| [Local Development](/workers/local-development/)                                                          | ✅      | ✅      |
+| [Local Development](/workers/local-development/)                                                            | ✅      | ✅      |
 | [Remote Development (`--remote`)](/workers/wrangler/commands/)                                              | ✅      | ❌      |
 | [Quick Editor in Dashboard](https://blog.cloudflare.com/improved-quick-edit)                                | ✅      | ❌      |
 | **Static Assets**                                                                                           |         |         |

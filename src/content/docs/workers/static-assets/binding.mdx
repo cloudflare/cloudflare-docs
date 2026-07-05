@@ -22,7 +22,9 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's Wrangler file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
+When you use persistent Worker configuration, configure assets by specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's Wrangler file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script, for example `env.ASSETS.fetch()`, similar to making a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
+
+Wrangler can also deploy some static asset targets without creating a persistent Wrangler configuration file. Static directories and static Vite apps require the experimental static assets auto-configuration flag. For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/#deploy-a-specific-target).
 
 Only one collection of static assets can be configured in each Worker.
 

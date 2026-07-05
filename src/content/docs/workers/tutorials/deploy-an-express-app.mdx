@@ -31,6 +31,18 @@ This creates a repository in your GitHub account and deploys the application to 
 
 You may wish to manually follow the steps if you are new to Cloudflare Workers.
 
+If you already have an Express.js app and do not need the D1 steps in this tutorial, Wrangler can generate the Workers wrapper and `nodejs_compat` configuration for you:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={"deploy server.js --name express-app --compatibility-date <YYYY-MM-DD>"}
+/>
+
+For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/#deploy-a-specific-target).
+
+If your existing app uses `express.static()` or Node HTTP upgrade/WebSocket patterns, review the generated configuration. Static assets and WebSocket routes may require manual migration.
+
 ## 1. Create a new Cloudflare Workers project
 
 Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:

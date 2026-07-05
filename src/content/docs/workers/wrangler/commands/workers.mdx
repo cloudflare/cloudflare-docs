@@ -154,7 +154,7 @@ None of the options for this command are required. Many of these options can be 
 
 Deploy your Worker to Cloudflare.
 
-When you run `wrangler deploy` in a project directory without a Wrangler configuration file, Wrangler will [automatically detect your framework](/workers/framework-guides/automatic-configuration/) and configure your project for Cloudflare Workers. This command will prompt you to confirm the detected settings before applying changes. Confirm that you would like to proceed, and your project will be configured and deployed.
+When you run `wrangler deploy` in a project directory without a Wrangler configuration file, Wrangler can [automatically detect your framework, project type, or deploy target](/workers/framework-guides/automatic-configuration/). This command prompts you to confirm the detected settings before applying changes. Confirm that you would like to proceed, and Wrangler configures and deploys your project.
 
 To deploy from an AI agent or another environment before Cloudflare authentication is available, use `wrangler deploy --temporary`. This flow requires Wrangler 4.102.0 or later. Wrangler creates or reuses a temporary preview account, deploys to that account, and prints a claim URL. For more information, refer to [Claim deployments](/workers/platform/claim-deployments/).
 
@@ -171,15 +171,12 @@ None of the options for this command are required. Also, many can be set in your
 :::
 
 - `PATH` <Type text="string" />
-  - A path specific what needs to be deployed, this can either be:
-    - The path to an entry point for your Worker.
-      - Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
-
-    - Or the path to an assets directory for the deployment of a static site.
-      - Visit [assets](/workers/static-assets/) for more information.
-      - This overrides the eventual `assets` configuration in your [Wrangler configuration file](/workers/wrangler/configuration/).
-      - This is equivalent to the `--assets` option listed below.
-      - Note: this option currently only works only in interactive mode (so not in CI systems).
+  - The path to what Wrangler should deploy. This can be a Worker entrypoint, an Express-style Node HTTP server entrypoint, an HTML file, an assets directory, a static Vite app directory, a Dockerfile, or a Containerfile.
+  - A Worker entrypoint is only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key, for example `main = "index.js"`.
+  - To deploy a configured static site, pass an assets directory. This overrides the `assets` configuration in your Wrangler configuration file and is equivalent to the `--assets` option. This option works only in interactive mode.
+  - To deploy an HTML file without creating a Wrangler configuration file, pass the `.html` file directly.
+  - To deploy an explicit static directory or static Vite app directory without creating a Wrangler configuration file, pass the directory with `--experimental-auto-config-static-assets`.
+  - To configure and deploy a Dockerfile-backed Container project, pass `Dockerfile` or `Containerfile` with `--experimental-auto-config-containers`.
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
@@ -198,6 +195,10 @@ None of the options for this command are required. Also, many can be set in your
   - Use the latest version of the Workers runtime.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
+- `--experimental-auto-config-static-assets` <Type text="boolean" /> <MetaInfo text="optional experimental" />
+  - Deploy an explicit static assets directory or static Vite app directory without creating a Wrangler configuration file. Requires `PATH` to be a directory.
+- `--experimental-auto-config-containers` <Type text="boolean" /> <MetaInfo text="optional experimental" />
+  - Configure and deploy a Dockerfile-backed Containers project. Use with `wrangler deploy Dockerfile`, `wrangler deploy Containerfile`, or `wrangler setup`. In CI, pass an explicit Dockerfile or Containerfile target, or use `wrangler setup --yes --experimental-auto-config-containers`.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Folder of static assets for Workers Sites.
     :::caution
@@ -239,8 +240,8 @@ None of the options for this command are required. Also, many can be set in your
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
   - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
-- `--containers-rollout` <Type text="immediate | gradual" /> <MetaInfo text="optional" />
-  - Specify the [rollout strategy](/containers/faq#how-do-container-updates-and-rollouts-work) for [Containers](/containers) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. Note that `rollout_active_grace_period`, if configured, still applies.
+- `--containers-rollout` <Type text="immediate | gradual | none" /> <MetaInfo text="optional" />
+  - Specify the [rollout strategy](/containers/platform-details/rollouts/) for [Containers](/containers/) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. The `rollout_active_grace_period` setting still applies. If set to `none`, Wrangler deploys Worker changes without building or updating Containers.
   - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
 - `--strict` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular, this mode prevents deployments if the deployment would potentially override remote settings in non-interactive environments.
@@ -281,6 +282,8 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 <WranglerCommand command="setup" headingLevel={2} />
 
 This command configures your project for Cloudflare Workers without deploying. It performs the same [automatic project configuration](/workers/framework-guides/automatic-configuration/) as `wrangler deploy`, but does not deploy. This is useful when you want to review the generated configuration before deploying.
+
+To configure a Dockerfile-backed Containers project, run `wrangler setup --experimental-auto-config-containers`. Use `wrangler setup --yes --experimental-auto-config-containers` to accept detected settings non-interactively.
 
 ---
 

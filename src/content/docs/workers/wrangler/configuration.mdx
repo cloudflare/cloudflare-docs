@@ -22,6 +22,8 @@ import { FileTree } from "@astrojs/starlight/components";
 
 Wrangler optionally uses a configuration file to customize the development and deployment setup for a Worker.
 
+If your project does not have a Wrangler configuration file, Wrangler can [configure supported existing projects automatically](/workers/framework-guides/automatic-configuration/) when you run `wrangler deploy` or `wrangler setup`.
+
 :::note
 
 As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler.jsonc`) and TOML (`wrangler.toml`) for its configuration file. Prior to that version, only `wrangler.toml` was supported.
@@ -1331,10 +1333,10 @@ The following options are available:
 
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
   - Configures what percentage of instances should be updated at each step of a [rollout](/containers/faq#how-do-container-updates-and-rollouts-work).
-  - If this is set to a single number, each step will rollout to that percentage of instances. The options are `5`, `10`, `20`, `25`, `50` or `100`.
+  - If this is set to a single number, each step will roll out to that percentage of instances. The options are `5`, `10`, `20`, `25`, `50`, or `100`.
   - If this is an array of numbers, each step specifies the cumulative rollout progress, so the final step must be `100`.
   - Defaults to `[10, 100]`.
-  - This can be overridden ad hoc by deploying with the `--containers-rollout=immediate` flag, which will roll out to 100% of instances in one step. Note that flag will not override `rollout_active_grace_period`, if configured.
+  - This can be overridden ad hoc by deploying with the `--containers-rollout=immediate` flag, which will roll out to 100% of instances in one step. To deploy Worker changes without building or updating Containers, use `--containers-rollout=none`. Note that `--containers-rollout=immediate` will not override `rollout_active_grace_period`, if configured.
 
 - `ssh` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for SSH through Wrangler. Refer to [SSH](#ssh).
@@ -1845,49 +1847,50 @@ This is because such a file, when required, should be created as part of a build
 
 A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
+First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
-  <WranglerConfig>
+<WranglerConfig>
 
-  ```jsonc
-  {
-  	"$schema": "./node_modules/wrangler/config-schema.json",
-  	"name": "my-worker",
-  	"main": "src/index.ts",
-  	"vars": {
-  		"MY_VARIABLE": "production variable",
-  	},
-  	"env": {
-  		"staging": {
-  			"vars": {
-  				"MY_VARIABLE": "staging variable",
-  			},
-  		},
-  	},
-  }
-  ```
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"vars": {
+		"MY_VARIABLE": "production variable",
+	},
+	"env": {
+		"staging": {
+			"vars": {
+				"MY_VARIABLE": "staging variable",
+			},
+		},
+	},
+}
+```
 
-  </WranglerConfig>
+</WranglerConfig>
 
-  This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
+This configuration points `main` at the user's code entrypoint and defines the `MY_VARIABLE` variable in two different environments.
 
-- Then, the user runs a custom build for a given environment (for example `staging`). This will read the user's Wrangler configuration file to find the source code entry-point and environment specific settings:
+Then, the user runs a custom build for a given environment, such as `staging`. This reads the user's Wrangler configuration file to find the source code entrypoint and environment-specific settings:
 
-  ```bash
-  > my-tool build --env=staging
-  ```
+```bash
+my-tool build --env=staging
+```
 
-- `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file, containing only the settings for the given environment.
-  It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
+`my-tool` generates a `dist` directory that contains compiled code and a new generated deployment configuration file containing only the settings for the given environment. It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new generated deployment configuration file:
 
-  <FileTree>
-		- dist/
-			- index.js
-			- wrangler.jsonc
-		- .wrangler/
-			- deploy/
-				- config.json
-  </FileTree>
+<FileTree>
+
+- dist/
+  - index.js
+  - wrangler.jsonc
+- .wrangler/
+  - deploy/
+    - config.json
+
+</FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:
 

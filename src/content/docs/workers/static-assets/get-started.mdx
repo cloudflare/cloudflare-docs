@@ -29,6 +29,28 @@ Alternatively, you may prefer to build your website from scratch if:
 
 This guide will instruct you through setting up and deploying a static site or a full-stack application without a framework on Workers.
 
+## Deploy existing static assets
+
+If you already have a standalone HTML file, Wrangler can deploy it directly. Pass the file to `wrangler deploy`:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={"deploy index.html --name my-site --compatibility-date <YYYY-MM-DD>"}
+/>
+
+For an existing static directory or static Vite app directory, pass the directory with the experimental static assets auto-configuration flag:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy ./site --experimental-auto-config-static-assets"
+/>
+
+For a static Vite app directory, Wrangler runs the build command and deploys `dist`. The build output must contain `dist/index.html`.
+
+For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/).
+
 ## Deploy a static site
 
 This guide will instruct you through setting up and deploying a static site on Workers.

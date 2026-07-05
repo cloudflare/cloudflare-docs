@@ -249,6 +249,8 @@ export default httpServerHandler({ port: 8080 });
 
 The `httpServerHandler` function integrates Node.js HTTP servers with the Cloudflare Workers request model. It supports two API patterns:
 
+If you already have an Express-style Node HTTP server, Wrangler can generate the Worker wrapper and Node.js compatibility configuration for you. Static assets and WebSocket routes may require manual migration. For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/#deploy-a-specific-target).
+
 ```js
 import http from "node:http";
 import { httpServerHandler } from "cloudflare:node";

@@ -5,6 +5,7 @@ description: Integrate Workers development into your existing GitHub Actions wor
 products:
   - workers
 ---
+
 import { DashButton } from "~/components";
 
 You can deploy Workers with [GitHub Actions](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler). Here is how you can set up your GitHub Actions workflow.
@@ -20,6 +21,7 @@ To find your Cloudflare account ID, refer to [Find account and zone IDs](/fundam
 ### API token
 
 To create an API token to authenticate Wrangler in your CI job:
+
 1. In the Cloudflare dashboard, go to the **Account API tokens** page.
 
    <DashButton url="/?to=/:account/api-tokens" />
@@ -44,10 +46,12 @@ To set up your CI/CD:
 
 :::caution
 
-Don't store the value of `CLOUDFLARE_API_TOKEN` in your repository, as it gives access to deploy Workers on your account. Instead, you should utilize your CI/CD provider's support for storing secrets.
+Do not store the value of `CLOUDFLARE_API_TOKEN` in your repository. It gives access to deploy Workers on your account. Instead, use your CI/CD provider's support for storing secrets.
 :::
 
-2. Create a workflow that will be responsible for deploying the Worker. This workflow should run `wrangler deploy`. Review an example [GitHub Actions](https://docs.github.com/en/actions/using-workflows/about-workflows) workflow in the follow section.
+2. Create a workflow that runs `wrangler deploy`. Review an example [GitHub Actions](https://docs.github.com/en/actions/using-workflows/about-workflows) workflow in the following section.
+
+If your repository does not have a Wrangler configuration file and uses [automatic project configuration](/workers/framework-guides/automatic-configuration/), run `wrangler deploy --yes` in CI. For Dockerfile-backed Containers, pass the Dockerfile or Containerfile target with `--experimental-auto-config-containers`, or run `wrangler setup --yes --experimental-auto-config-containers` before deploying. Bare Dockerfile detection is not used in CI.
 
 ### GitHub Actions
 

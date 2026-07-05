@@ -58,7 +58,9 @@ Learn more about supported frameworks on Workers.
 
 When you deploy your project, Cloudflare deploys both your Worker code and your static assets in a single operation. This deployment operates as a tightly integrated "unit" running across Cloudflare's network, combining static file hosting, custom logic, and global caching.
 
-The **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
+For projects with persistent configuration, the **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
+
+If you already have a standalone HTML file, Wrangler can deploy it without creating a Wrangler configuration file. Static directories and static Vite apps can use the experimental static assets auto-configuration flag. For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/#deploy-a-specific-target).
 
 <WranglerConfig>
 

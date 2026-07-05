@@ -5,9 +5,10 @@ description: Integrate Workers development into your existing GitLab Pipelines w
 products:
   - workers
 ---
+
 import { DashButton } from "~/components";
 
-You can deploy Workers with [GitLab CI/CD](https://docs.gitlab.com/ee/ci/pipelines/index.html). Here is how you can set up your Gitlab CI/CD pipeline.
+You can deploy Workers with [GitLab CI/CD](https://docs.gitlab.com/ee/ci/pipelines/index.html). Here is how you can set up your GitLab CI/CD pipeline.
 
 ## 1. Authentication
 
@@ -45,10 +46,12 @@ To set up your CI:
 
 :::caution
 
-Don't store the value of `CLOUDFLARE_API_TOKEN` in your repository, as it gives access to deploy Workers on your account. Instead, you should utilize your CI/CD provider's support for storing secrets.
+Do not store the value of `CLOUDFLARE_API_TOKEN` in your repository. It gives access to deploy Workers on your account. Instead, use your CI/CD provider's support for storing secrets.
 :::
 
-2. Create a workflow that will be responsible for deploying the Worker. This workflow should run `wrangler deploy`. Review an example [GitHub Actions](https://docs.github.com/en/actions/using-workflows/about-workflows) workflow in the following section.
+2. Create a workflow that runs `wrangler deploy`. Review an example GitLab pipeline in the following section.
+
+If your repository does not have a Wrangler configuration file and uses [automatic project configuration](/workers/framework-guides/automatic-configuration/), run `wrangler deploy --yes` in CI. For Dockerfile-backed Containers, pass the Dockerfile or Containerfile target with `--experimental-auto-config-containers`, or run `wrangler setup --yes --experimental-auto-config-containers` before deploying. Bare Dockerfile detection is not used in CI.
 
 ### GitLab Pipelines
 

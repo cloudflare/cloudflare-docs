@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to migrate your Vercel application to Cloudflare Workers.
 
@@ -18,6 +18,12 @@ You should already have an existing project deployed on Vercel that you would li
 ## Frameworks
 
 Some frameworks like Next.js, Astro with on demand rendering, and others have specific guides for migrating to Cloudflare Workers. Refer to our [framework guides](/workers/framework-guides/) for more information. If your framework has a **Deploy an existing project on Workers** guide, follow that guide for specific instructions. Otherwise, continue with the steps below.
+
+For supported frameworks and project types, Wrangler can [configure or deploy your project automatically](/workers/framework-guides/automatic-configuration/). From your project root, run:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+If Wrangler detects your project, confirm the generated settings. If Wrangler cannot detect your project or you need to adjust routing behavior, continue with the manual migration steps.
 
 ## Find your build command and build directory
 

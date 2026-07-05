@@ -10,52 +10,82 @@ products:
 
 import { PackageManagers, WranglerConfig } from "~/components";
 
-Wrangler can automatically detect your framework and configure your project for Cloudflare Workers. This allows you to deploy existing projects with a single command, without manually setting up configuration files or installing adapters.
+Wrangler can automatically detect your framework, project type, or deploy target and configure your project for Cloudflare Workers. You can deploy existing projects with a single command, without manually setting up configuration files or installing adapters.
 
 :::note
-Minimum required Wrangler version: **4.68.0**. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+Minimum required Wrangler version: **4.108.0**. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
 ## How it works
 
-When you run `wrangler deploy` or `wrangler setup` in a project directory without a Wrangler configuration file, Wrangler will:
+Automatic configuration can run when you run `wrangler deploy` or `wrangler setup` in a project directory without a Wrangler configuration file. It can also run when you deploy a specific target, such as `wrangler deploy server.js`, if Wrangler can identify that target.
 
-1. **Detect your framework** - Analyzes your project to identify the framework you're using
-2. **Prompt for confirmation** - Shows the detected settings and asks you to confirm before making changes
-3. **Install adapters** - Installs any required Cloudflare adapters for your framework
-4. **Generate configuration** - Creates a `wrangler.jsonc` file with appropriate settings
-5. **Update package.json** - Adds helpful scripts like `deploy`, `preview`, and `cf-typegen`
-6. **Configure git** - Adds Wrangler-specific entries to `.gitignore`
+For persistent configuration, Wrangler will:
 
-## Supported frameworks
+1. **Detect your framework**: Wrangler analyzes your project to identify the framework you are using.
+2. **Prompt for confirmation**: Wrangler shows the detected settings and asks you to confirm changes.
+3. **Install adapters**: Wrangler installs any required Cloudflare adapters for your framework.
+4. **Generate configuration**: Wrangler creates a `wrangler.jsonc` file with appropriate settings.
+5. **Update `package.json`**: Wrangler adds helpful scripts like `deploy`, `preview`, and `cf-typegen`.
+6. **Configure git**: Wrangler adds Wrangler-specific entries to `.gitignore`.
+
+Some explicit deploy targets use no-write mode. In no-write mode, Wrangler deploys the target without creating or modifying local project files.
+
+## Supported projects
+
+### Frameworks
 
 Automatic configuration supports the following frameworks:
 
-| Framework                                                                    | Adapter/Tool                   | Notes                                                                                                          |
+| Framework                                                                    | Adapter or tool                | Notes                                                                                                          |
 | ---------------------------------------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
 | [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `@opennextjs/cloudflare`       | Runs `@opennextjs/cloudflare migrate` automatically. [R2 caching](#nextjs-caching) is configured if available. |
 | [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically                                                                      |
 | [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically                                                                  |
-| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                                                                                |
-| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         |                                                                                                                |
-| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     |                                                                                                                |
-| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         |                                                                                                                |
-| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   |                                |                                                                                                                |
-| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     |                                                                                                                |
-| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         |                                                                                                                |
-| [Vike](/workers/framework-guides/web-apps/vike/)                             |                                |                                                                                                                |
-| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                                                                                |
+| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     | None                                                                                                           |
+| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         | None                                                                                                           |
+| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     | None                                                                                                           |
+| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         | None                                                                                                           |
+| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   | None                           | None                                                                                                           |
+| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     | None                                                                                                           |
+| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         | None                                                                                                           |
+| [Vike](/workers/framework-guides/web-apps/vike/)                             | None                           | None                                                                                                           |
+| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         | None                           | None                                                                                                           |
 | Static sites                                                                 | None                           | Any directory with an `index.html`                                                                             |
 
 Automatic configuration may also work with other projects, such as React or Vue SPAs. Try running `wrangler deploy` or `wrangler setup` to see if your project is detected.
 
+The Static sites row applies when the current project directory or detected output directory contains an `index.html` file. Explicit static directory targets use the static assets flag described in [Other project types](#other-project-types).
+
+### Other project types
+
+Automatic configuration also supports the following project types and deploy targets:
+
+| Project type                    | Configuration mode | Notes                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Express-style Node HTTP servers | Persistent         | Run `wrangler deploy`, `wrangler setup`, or pass a JavaScript or TypeScript target such as `server.js`. Wrangler detects an Express dependency, import, or `express()` call, then checks that the app listens for HTTP traffic or exports the app.                                                                               |
+| Single HTML files               | No-write           | Pass an `.html` file to `wrangler deploy`. Wrangler deploys the file as static assets. If the file is not named `index.html`, Wrangler also preserves the original filename.                                                                                                                                                     |
+| Static asset directories        | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must contain an `index.html` file. This path is experimental and only runs when you pass the flag.                                                                                                                                        |
+| Static Vite app directories     | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must include a `package.json` with a `vite` dependency and a `build` script. Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. This path is experimental and only runs when you pass the flag. |
+| Dockerfile-backed Containers    | Persistent         | Pass `Dockerfile` or `Containerfile` with `--experimental-auto-config-containers`, or run `wrangler setup --experimental-auto-config-containers`. Wrangler generates a singleton Containers Worker. Containers require Docker locally and a Workers Paid plan. This path is experimental and only runs when you pass the flag.   |
+
 ## Files created and modified
 
-When automatic configuration runs, the following files may be created or modified:
+For no-write deploys, Wrangler does not create or modify local project files.
+
+For persistent configuration, the following files may be created or modified:
+
+### `src/worker.js` or `src/worker.ts`
+
+For Express-style Node HTTP servers and Dockerfile-backed Containers, Wrangler generates a Worker entrypoint. This wrapper adapts the existing app to the Workers runtime.
+
+For Express apps, the generated Worker imports your server file and uses `cloudflare:node` to serve it. If Wrangler detects `express.static()`, static assets are not migrated automatically. Configure [Workers Static Assets](/workers/static-assets/) separately if your Express app serves static files. If Wrangler detects Node HTTP upgrade or WebSocket patterns, you may need to migrate those routes to Worker-native WebSocket handling.
+
+For Containers, the generated Worker imports `@cloudflare/containers`, defines a `Container` class, and routes requests to one container instance. The generated Wrangler configuration also includes the `containers`, `durable_objects`, and `migrations` fields required for the Container.
 
 ### `wrangler.jsonc`
 
-A new Wrangler configuration file is created with settings appropriate for your framework:
+A new Wrangler configuration file is created with settings appropriate for your framework or project type:
 
 <WranglerConfig>
 
@@ -78,11 +108,13 @@ A new Wrangler configuration file is created with settings appropriate for your 
 
 </WranglerConfig>
 
-The exact configuration varies based on your framework.
+The exact configuration varies based on your framework or project type.
+
+For Express-style Node HTTP servers, `wrangler.jsonc` sets `main` to the generated Worker wrapper and adds the `nodejs_compat` compatibility flag. For Containers, `wrangler.jsonc` includes the generated Container, Durable Object binding, and migration configuration.
 
 ### `package.json`
 
-New scripts are added to your `package.json`:
+New dependencies and scripts may be added to your `package.json`. For example, Dockerfile-backed Containers add `@cloudflare/containers`. For a framework project, scripts can look like:
 
 ```json
 {
@@ -118,19 +150,87 @@ _routes.json
 
 ### Deploy with automatic configuration
 
-To deploy an existing project, run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) in your project directory:
+To deploy an existing project, run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) in your project directory:
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-Wrangler will detect your framework, show the configuration it will apply, and prompt you to confirm before making changes and deploying.
+Wrangler will detect your framework or project type, show the configuration it will apply, and prompt you to confirm before making changes and deploying.
+
+### Deploy a specific target
+
+To deploy an explicit target, pass the target path to [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy):
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy server.js" />
+
+You can use explicit targets for Express-style Node HTTP servers, single HTML files, static asset directories, static Vite app directories, Dockerfiles, and Containerfiles.
+
+To deploy a standalone HTML file without creating a `wrangler.jsonc` file, pass the HTML file directly:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={"deploy index.html --name my-site --compatibility-date <YYYY-MM-DD>"}
+/>
+
+If you deploy a named HTML file, Wrangler serves it at `/` and at its original filename. For example, `wrangler deploy landing.html` serves the same file at `/` and `/landing.html`.
+
+To deploy an Express-style Node HTTP server, pass the server entrypoint directly:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={"deploy server.js --name express-app --compatibility-date <YYYY-MM-DD>"}
+/>
+
+Wrangler generates a Worker wrapper in `src/worker.js` or `src/worker.ts`. It uses Node.js compatibility and the detected HTTP port. If Wrangler cannot detect a port, it uses port `3000`.
+
+Wrangler refuses to overwrite an existing generated entrypoint, such as `src/worker.js` or `src/worker.ts`. Move or remove that file before trying again.
+
+For Dockerfile-backed Containers, pass the Containers auto-configuration flag with a `Dockerfile` or `Containerfile` target:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy Dockerfile --experimental-auto-config-containers"
+/>
+
+After Wrangler configures a Containers project, use `wrangler deploy` for future deploys. Do not continue passing `Dockerfile` or `Containerfile` as the deploy target.
+
+For explicit static directories or static Vite app directories, pass the static assets auto-configuration flag:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy ./site --experimental-auto-config-static-assets"
+/>
+
+For a static assets directory, Wrangler deploys the target directory without writing `wrangler.jsonc`. For a static Vite app directory, Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. If `dist/index.html` is missing after the build, check your build command or deploy the output directory explicitly with `--assets`.
+
+To deploy a static Vite app directory, pass the app directory with the same flag:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy ./app --experimental-auto-config-static-assets"
+/>
+
+When Wrangler deploys assets, it ignores `.wrangler/**`. If `WRANGLER_OUTPUT_FILE_PATH` points inside the assets directory, Wrangler warns and ignores that output file.
 
 ### Configure without deploying
 
-To configure your project without deploying, use [`wrangler setup`](/workers/wrangler/commands/general/#setup):
+To configure your project without deploying, use [`wrangler setup`](/workers/wrangler/commands/workers/#setup):
 
 <PackageManagers type="exec" pkg="wrangler" args="setup" />
 
 This is useful when you want to review the generated configuration before deploying.
+
+To configure a Dockerfile-backed Containers project without deploying, pass the Containers flag:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="setup --experimental-auto-config-containers"
+/>
 
 ### Preview changes with dry run
 
@@ -142,19 +242,62 @@ This outputs a summary of the configuration that would be generated.
 
 ## Non-interactive mode
 
-To skip the confirmation prompts, use the [`--yes` flag](/workers/wrangler/commands/general/#deploy):
+To skip the confirmation prompts, use the [`--yes` flag](/workers/wrangler/commands/workers/#deploy):
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy --yes" />
 
-This applies the configuration automatically using sensible defaults. This is useful in CI/CD environments or when you want to accept the detected settings without reviewing them.
+This applies the configuration automatically using detected defaults. This is useful in CI/CD environments or when you want to accept the detected settings without reviewing them.
+
+Dockerfile-backed Containers require an explicit opt-in for non-interactive configuration. Use one of the following commands:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy Dockerfile --experimental-auto-config-containers"
+/>
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="setup --yes --experimental-auto-config-containers"
+/>
+
+In CI, pass the Dockerfile or Containerfile target explicitly with `--experimental-auto-config-containers`, or use `wrangler setup --yes --experimental-auto-config-containers`. Bare Dockerfile detection is not used in non-interactive sessions.
+
+## Automation output
+
+If you write Wrangler output to a file, automatic configuration entries include adapter metadata. For more information about output files, refer to [System environment variables](/workers/wrangler/system-environment-variables/#supported-environment-variables).
+
+Automatic configuration output includes:
+
+| Field            | Description                                       |
+| ---------------- | ------------------------------------------------- |
+| `adapterId`      | The adapter Wrangler selected                     |
+| `projectKind`    | The detected project type                         |
+| `deployMode`     | `persistent` or `no-write`                        |
+| `sourceCategory` | The detected source category, such as `html-file` |
+
+Deploy output can also include:
+
+| Field                         | Description                             |
+| ----------------------------- | --------------------------------------- |
+| `auto_config_adapter_id`      | The selected auto-configuration adapter |
+| `auto_config_project_kind`    | The detected project type               |
+| `auto_config_deploy_mode`     | `persistent` or `no-write`              |
+| `auto_config_source_category` | The detected source category            |
+| `live_url`                    | The deployed Worker URL, when available |
+
+Container deploy output includes `containers_rollout` and `containers` fields. `containers_rollout` can be `gradual`, `immediate`, or `none`. Each `containers` entry describes a container application, including the app name, application ID, action, image, and image digest. The action can be `created`, `modified`, or `unchanged`. Wrangler reports `unchanged` when the local image matches the remote image and the push is skipped.
 
 ## Importing a repository from the dashboard
 
-When you import a GitHub or GitLab repository via the Cloudflare dashboard, autoconfig runs non-interactively. If your repository does not have a Wrangler configuration file, [Workers Builds](/workers/ci-cd/builds/) will create a pull request with the necessary configuration.
+When you import a GitHub or GitLab repository via the Cloudflare dashboard, automatic configuration runs non-interactively. If your repository does not have a Wrangler configuration file, [Workers Builds](/workers/ci-cd/builds/) will create a pull request with the necessary configuration.
+
+Experimental static asset directory and Dockerfile-backed Containers paths require explicit Wrangler flags, and are not used by default during dashboard import.
 
 The PR includes all the configuration changes described above. A preview deployment is generated so you can test the changes before merging. Once merged, your project is ready for deployment.
 
-For more details, refer to [Automatic pull requests](/workers/ci-cd/builds/automatic-prs/).
+For more information, refer to [Automatic pull requests](/workers/ci-cd/builds/automatic-prs/).
 
 ## Skipping automatic configuration
 
@@ -187,8 +330,40 @@ If your framework is not detected, ensure your `package.json` includes the frame
 
 If a Wrangler configuration file already exists, automatic configuration will not run. To reconfigure your project, delete the existing configuration file and run `wrangler deploy` or `wrangler setup` again.
 
+For configured Containers projects, run `wrangler deploy` to deploy the Worker and configured container together. Running `wrangler deploy Dockerfile` or `wrangler deploy Containerfile` treats the file as a Worker entrypoint and is not supported.
+
+### Generated file already exists
+
+Wrangler will not overwrite files it generates for adapter-based configuration. If you see an error such as `Refusing to overwrite generated file src/worker.js`, move or remove the existing file and try again.
+
+### Static app output missing
+
+For static Vite app directories, Wrangler expects the build command to create `dist/index.html`. If the file is missing after build, check your build command or deploy the output directory explicitly with `--assets`.
+
+### Dockerfile port detection
+
+For Dockerfile-backed Containers, Wrangler detects the Container port from your Dockerfile. If the Dockerfile has one `EXPOSE` value, Wrangler uses it. If the Dockerfile does not have exactly one `EXPOSE` value but `ENV PORT=<PORT>` is set, Wrangler uses that value. If there are multiple `EXPOSE` values and no `ENV PORT=<PORT>`, Wrangler uses the first `EXPOSE` value and warns you. If no port is detected, Wrangler uses port `80` and warns you. Update the generated Worker if your container listens on a different port.
+
+### Container readiness
+
+After Wrangler creates or modifies a container application, the application can take a few minutes to become ready. During provisioning, requests may return `503` or `500`. Wrangler prints a status command after deploy.
+
+To list container applications with health details, run:
+
+<PackageManagers type="exec" pkg="wrangler" args="containers list --json" />
+
+To inspect instance placement and status details, run:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={"containers instances <APP_ID> --json"}
+/>
+
+Use the application ID from `wrangler containers list --json`. If instances are stopped or unhealthy, non-JSON output suggests the JSON command for more details.
+
 ### Workspaces
 
-Support for monorepos and npm/yarn/pnpm workspaces is currently limited. Wrangler analyzes the project directory where you run the command, but does not detect dependencies installed at the workspace root. This can cause framework detection to fail if the framework is listed as a dependency in the workspace's root `package.json` rather than in the individual project's `package.json`.
+Support for monorepos and npm/yarn/pnpm workspaces is limited. Wrangler analyzes the project directory where you run the command, but does not detect dependencies installed at the workspace root. This can cause framework detection to fail if the framework is listed as a dependency in the root `package.json` for the workspace rather than in the individual project `package.json`.
 
 If you encounter issues, report them in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
