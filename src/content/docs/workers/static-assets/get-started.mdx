@@ -39,12 +39,16 @@ If you already have a standalone HTML file, Wrangler can deploy it directly. Pas
 	args={"deploy index.html --name my-site --compatibility-date <YYYY-MM-DD>"}
 />
 
-For an existing static directory or static Vite app directory, pass the directory with the experimental static assets auto-configuration flag:
+For an existing static directory, pass the directory directly:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy ./site" />
+
+For a static Vite app directory, pass the directory with `--experimental-auto-config-static-assets`:
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="deploy ./site --experimental-auto-config-static-assets"
+	args="deploy ./app --experimental-auto-config-static-assets"
 />
 
 For a static Vite app directory, Wrangler runs the build command and deploys `dist`. The build output must contain `dist/index.html`.

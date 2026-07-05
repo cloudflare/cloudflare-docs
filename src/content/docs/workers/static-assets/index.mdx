@@ -60,7 +60,7 @@ When you deploy your project, Cloudflare deploys both your Worker code and your 
 
 For projects with persistent configuration, the **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
 
-If you already have a standalone HTML file, Wrangler can deploy it without creating a Wrangler configuration file. Static directories and static Vite apps can use the experimental static assets auto-configuration flag. For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/#deploy-a-specific-target).
+If you already have a standalone HTML file or a static directory that contains `index.html`, Wrangler can deploy it without creating a Wrangler configuration file. Static Vite apps require `--experimental-auto-config-static-assets`. For more information, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/#deploy-a-specific-target).
 
 <WranglerConfig>
 

@@ -175,7 +175,8 @@ None of the options for this command are required. Also, many can be set in your
   - A Worker entrypoint is only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key, for example `main = "index.js"`.
   - To deploy a configured static site, pass an assets directory. This overrides the `assets` configuration in your Wrangler configuration file and is equivalent to the `--assets` option. This option works only in interactive mode.
   - To deploy an HTML file without creating a Wrangler configuration file, pass the `.html` file directly.
-  - To deploy an explicit static directory or static Vite app directory without creating a Wrangler configuration file, pass the directory with `--experimental-auto-config-static-assets`.
+  - To deploy an explicit static directory without creating a Wrangler configuration file, pass a directory that contains `index.html`.
+  - To deploy a static Vite app directory without creating a Wrangler configuration file, pass the directory with `--experimental-auto-config-static-assets`.
   - To configure and deploy a Dockerfile-backed Container project, pass `Dockerfile` or `Containerfile`.
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
@@ -196,7 +197,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
 - `--experimental-auto-config-static-assets` <Type text="boolean" /> <MetaInfo text="optional experimental" />
-  - Deploy an explicit static assets directory or static Vite app directory without creating a Wrangler configuration file. Requires `PATH` to be a directory.
+  - Deploy an explicit static Vite app directory without creating a Wrangler configuration file. Requires `PATH` to be a directory.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Folder of static assets for Workers Sites.
     :::caution

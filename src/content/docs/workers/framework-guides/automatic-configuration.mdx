@@ -55,7 +55,7 @@ Automatic configuration supports the following frameworks:
 
 Automatic configuration may also work with other projects, such as React or Vue SPAs. Try running `wrangler deploy` or `wrangler setup` to see if your project is detected.
 
-The Static sites row applies when the current project directory or detected output directory contains an `index.html` file. Explicit static directory targets use the static assets flag described in [Other project types](#other-project-types).
+The Static sites row applies when the current project directory, detected output directory, or explicit static directory target contains an `index.html` file. Static Vite app directory targets use `--experimental-auto-config-static-assets`.
 
 ### Other project types
 
@@ -65,7 +65,7 @@ Automatic configuration also supports the following project types and deploy tar
 | ------------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Express-style Node HTTP servers | Persistent         | Run `wrangler deploy`, `wrangler setup`, or pass a JavaScript or TypeScript target such as `server.js`. Wrangler detects an Express dependency, import, or `express()` call, then checks that the app listens for HTTP traffic or exports the app.                                                                               |
 | Single HTML files               | No-write           | Pass an `.html` file to `wrangler deploy`. Wrangler deploys the file as static assets. If the file is not named `index.html`, Wrangler also preserves the original filename.                                                                                                                                                     |
-| Static asset directories        | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must contain an `index.html` file. This path is experimental and only runs when you pass the flag.                                                                                                                                        |
+| Static asset directories        | No-write           | Pass a directory that contains an `index.html` file. Wrangler deploys the directory as static assets without writing `wrangler.jsonc`.                                                                                                                                                                                           |
 | Static Vite app directories     | No-write           | Pass a directory with `--experimental-auto-config-static-assets`. The target directory must include a `package.json` with a `vite` dependency and a `build` script. Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. This path is experimental and only runs when you pass the flag. |
 | Dockerfile-backed Containers    | Persistent         | Run `wrangler deploy Dockerfile`, `wrangler deploy Containerfile`, or `wrangler setup`. Wrangler uses a root Dockerfile as a fallback when no stronger project type is detected. Wrangler generates a singleton Containers Worker. Containers require Docker locally and a Workers Paid plan.                                    |
 
@@ -192,23 +192,21 @@ For Dockerfile-backed Containers, pass `Dockerfile` or `Containerfile` as the de
 
 After Wrangler configures a Containers project, use `wrangler deploy` for future deploys. Do not continue passing `Dockerfile` or `Containerfile` as the deploy target.
 
-For explicit static directories or static Vite app directories, pass the static assets auto-configuration flag:
+For explicit static directories, pass the directory directly:
 
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="deploy ./site --experimental-auto-config-static-assets"
-/>
+<PackageManagers type="exec" pkg="wrangler" args="deploy ./site" />
 
-For a static assets directory, Wrangler deploys the target directory without writing `wrangler.jsonc`. For a static Vite app directory, Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. If `dist/index.html` is missing after the build, check your build command or deploy the output directory explicitly with `--assets`.
+Wrangler deploys the target directory without writing `wrangler.jsonc`.
 
-To deploy a static Vite app directory, pass the app directory with the same flag:
+To deploy a static Vite app directory, pass the app directory with `--experimental-auto-config-static-assets`:
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
 	args="deploy ./app --experimental-auto-config-static-assets"
 />
+
+For a static Vite app directory, Wrangler runs the build command, verifies that `dist/index.html` exists, and deploys `dist`. If `dist/index.html` is missing after the build, check your build command or deploy the output directory explicitly with `--assets`.
 
 When Wrangler deploys assets, it ignores `.wrangler/**`. If `WRANGLER_OUTPUT_FILE_PATH` points inside the assets directory, Wrangler warns and ignores that output file.
 
@@ -275,7 +273,7 @@ Container deploy output includes `containers_rollout` and `containers` fields. `
 
 When you import a GitHub or GitLab repository via the Cloudflare dashboard, automatic configuration runs non-interactively. If your repository does not have a Wrangler configuration file, [Workers Builds](/workers/ci-cd/builds/) will create a pull request with the necessary configuration.
 
-Experimental static asset directory paths require explicit Wrangler flags. Dockerfile-backed Containers are not used by default during dashboard import.
+Experimental static app directory paths require explicit Wrangler flags. Dockerfile-backed Containers are not used by default during dashboard import.
 
 The PR includes all the configuration changes described above. A preview deployment is generated so you can test the changes before merging. Once merged, your project is ready for deployment.
 
