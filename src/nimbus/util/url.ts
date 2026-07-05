@@ -7,8 +7,8 @@ export function setSearchParams(
 ) {
   const next =
     params.size === 0
-      ? window.location.pathname
-      : `${window.location.pathname}?${params.toString()}`;
+      ? `${window.location.pathname}${window.location.hash}`
+      : `${window.location.pathname}?${params.toString()}${window.location.hash}`;
 
   if (opts.replace) {
     history.replaceState(null, "", next);

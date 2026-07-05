@@ -16,10 +16,18 @@ interface Props {
 }
 
 const { node, descriptions } = Astro.props;
+
+const internalLink = "/" + node.page.id + "/";
+const externalLink = node.page.data.external_link;
+const href =
+  externalLink &&
+  (externalLink.startsWith("/") || /^https?:\/\//i.test(externalLink))
+    ? externalLink
+    : internalLink;
 ---
 
 <li>
-  <a href={node.page.data.external_link ?? "/" + node.page.id + "/"}>
+  <a href={href}>
     {node.page.data.title}
   </a>
   {
