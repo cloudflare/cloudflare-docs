@@ -242,40 +242,13 @@ Dockerfile-backed Containers require an explicit target or `wrangler setup --yes
 
 In CI, pass the Dockerfile or Containerfile target explicitly, or use `wrangler setup --yes`. Bare Dockerfile detection is not used in non-interactive sessions.
 
-## Automation output
-
-If you write Wrangler output to a file, automatic configuration entries include adapter metadata. For more information about output files, refer to [System environment variables](/workers/wrangler/system-environment-variables/#supported-environment-variables).
-
-Automatic configuration output includes:
-
-| Field            | Description                                       |
-| ---------------- | ------------------------------------------------- |
-| `adapterId`      | The adapter Wrangler selected                     |
-| `projectKind`    | The detected project type                         |
-| `deployMode`     | `persistent` or `no-write`                        |
-| `sourceCategory` | The detected source category, such as `html-file` |
-
-Deploy output can also include:
-
-| Field                         | Description                             |
-| ----------------------------- | --------------------------------------- |
-| `auto_config_adapter_id`      | The selected auto-configuration adapter |
-| `auto_config_project_kind`    | The detected project type               |
-| `auto_config_deploy_mode`     | `persistent` or `no-write`              |
-| `auto_config_source_category` | The detected source category            |
-| `live_url`                    | The deployed Worker URL, when available |
-
-Container deploy output includes `containers_rollout` and `containers` fields. `containers_rollout` can be `gradual`, `immediate`, or `none`. Each `containers` entry describes a container application, including the app name, application ID, action, image, and image digest. The action can be `created`, `modified`, or `unchanged`. Wrangler reports `unchanged` when the local image matches the remote image and the push is skipped.
-
 ## Importing a repository from the dashboard
 
-When you import a GitHub or GitLab repository via the Cloudflare dashboard, automatic configuration runs non-interactively. If your repository does not have a Wrangler configuration file, [Workers Builds](/workers/ci-cd/builds/) will create a pull request with the necessary configuration.
-
-Experimental static app directory paths require explicit Wrangler flags. Dockerfile-backed Containers are not used by default during dashboard import.
+When you import a GitHub or GitLab repository via the Cloudflare dashboard, autoconfig runs non-interactively. If your repository does not have a Wrangler configuration file, [Workers Builds](/workers/ci-cd/builds/) will create a pull request with the necessary configuration.
 
 The PR includes all the configuration changes described above. A preview deployment is generated so you can test the changes before merging. Once merged, your project is ready for deployment.
 
-For more information, refer to [Automatic pull requests](/workers/ci-cd/builds/automatic-prs/).
+For more details, refer to [Automatic pull requests](/workers/ci-cd/builds/automatic-prs/).
 
 ## Skipping automatic configuration
 
