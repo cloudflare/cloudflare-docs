@@ -1,0 +1,38 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+description: Resolve common AI Search issues and errors.
+sidebar:
+  order: 9
+  group:
+    hideIndex: true
+products:
+  - ai-search
+---
+
+import { CardGrid, LinkCard } from "~/components";
+
+Use these references to troubleshoot AI Search request failures and indexing failures.
+
+<CardGrid>
+	<LinkCard
+		title="API error codes"
+		description="Look up errors returned immediately by the REST API, Workers binding, public endpoints, and MCP."
+		href="/ai-search/troubleshooting/api-error-codes/"
+	/>
+	<LinkCard
+		title="Processing error codes"
+		description="Look up errors stored on items after indexing, syncing, or crawling fails."
+		href="/ai-search/troubleshooting/processing-error-codes/"
+	/>
+</CardGrid>
+
+## Choose a reference
+
+| If you see this | Use this reference |
+| --------------- | ------------------ |
+| A request fails and returns `errors: [{ code, message }]` | [API error codes](/ai-search/troubleshooting/api-error-codes/) |
+| A Workers binding call throws `AiSearchError`, `AiSearchNotFoundError`, or `AiSearchInternalError` | [API error codes](/ai-search/troubleshooting/api-error-codes/) |
+| A public endpoint request fails before search runs | [API error codes](/ai-search/troubleshooting/api-error-codes/#public-endpoint-local-errors) |
+| An uploaded, synced, or crawled item has `status: "error"` | [Processing error codes](/ai-search/troubleshooting/processing-error-codes/) |
+| Instance stats show indexing errors | [Processing error codes](/ai-search/troubleshooting/processing-error-codes/) |
