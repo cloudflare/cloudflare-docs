@@ -16,9 +16,6 @@
 /cloudflare-one/traffic-policies/domain-categories/ /cloudflare-one/traffic-policies/reference/domain-categories/ 301
 /cloudflare-one/traffic-policies/expression-syntax/ /cloudflare-one/traffic-policies/reference/policy-expressions/ 301
 /cloudflare-one/traffic-policies/global-policies/ /cloudflare-one/traffic-policies/reference/global-policies/ 301
-/cloudflare-one/traffic-policies/tiered-policies/ /cloudflare-one/traffic-policies/reference/tiered-policies/ 301
-/cloudflare-one/traffic-policies/tiered-policies/organizations/ /cloudflare-one/traffic-policies/reference/tiered-policies/organizations/ 301
-/cloudflare-one/traffic-policies/tiered-policies/tenant-api/ /cloudflare-one/traffic-policies/reference/tiered-policies/tenant-api/ 301
 
 # Moved to tls-decryption/
 /cloudflare-one/traffic-policies/http-policies/tls-decryption/ /cloudflare-one/traffic-policies/tls-decryption/ 301

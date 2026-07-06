@@ -28,7 +28,7 @@ You can upload up to five custom root certificates. If your organization require
 :::caution
 Custom certificates are limited to use between your users and the Gateway proxy. Gateway connects to origin servers using publicly trusted certificates, similar to how a browser validates secure websites.
 
-If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/traffic-policies/policy-types/http-policies/#untrusted-certificates) set to _Pass through_.
+If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#untrusted-certificates) set to _Pass through_.
 :::
 
 ## Generate a custom root CA

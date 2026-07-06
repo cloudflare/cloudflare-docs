@@ -5,7 +5,7 @@ products:
   - cloudflare-one
 title: Tiered policies
 sidebar:
-  order: 8
+  order: 5
 ---
 
 :::note
@@ -16,12 +16,12 @@ Gateway tiered policies allow you to share and enforce Gateway policies across m
 
 There are two approaches for setting up tiered policies, depending on your deployment model and policy requirements:
 
-- **[Cloudflare Organizations](/cloudflare-one/traffic-policies/reference/tiered-policies/organizations/)** — Share DNS, network, HTTP, and resolver policies across accounts in a Cloudflare Organization using the dashboard.
-- **[Tenant API](/cloudflare-one/traffic-policies/reference/tiered-policies/tenant-api/)** — Manage DNS policies across parent and child accounts for Managed Service Provider (MSP) deployments.
+- **[Cloudflare Organizations](/cloudflare-one/traffic-policies/tiered-policies/organizations/)** — Share DNS, network, HTTP, and resolver policies across accounts in a Cloudflare Organization using the dashboard.
+- **[Tenant API](/cloudflare-one/traffic-policies/tiered-policies/tenant-api/)** — Manage DNS policies across parent and child accounts for Managed Service Provider (MSP) deployments.
 
 ## Organizations vs. Tenant API
 
-| Feature                    | [Cloudflare Organizations](/cloudflare-one/traffic-policies/reference/tiered-policies/organizations/) | [Tenant API](/cloudflare-one/traffic-policies/reference/tiered-policies/tenant-api/) |
+| Feature                    | [Cloudflare Organizations](/cloudflare-one/traffic-policies/tiered-policies/organizations/) | [Tenant API](/cloudflare-one/traffic-policies/tiered-policies/tenant-api/) |
 | -------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | **Supported policy types** | DNS, Network, HTTP, Resolver                                                                | DNS only                                                                         |
 | **Account model**          | Source / Recipient accounts                                                                 | Parent / Child accounts                                                          |

@@ -85,7 +85,7 @@ You can add a list of category IDs to the [EDNS (Extension Mechanisms for DNS)](
 }
 ```
 
-With the [Request Context Categories](/cloudflare-one/traffic-policies/policy-types/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 (`Blocked`), along with a field containing an array of the matched categories.
+With the [Request Context Categories](/cloudflare-one/traffic-policies/policy-types/dns-policies/selectors/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 (`Blocked`), along with a field containing an array of the matched categories.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

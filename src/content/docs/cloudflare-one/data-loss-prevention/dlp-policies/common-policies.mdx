@@ -16,7 +16,7 @@ tags:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-The following DLP policies are commonly used to secure sensitive data in uploaded and downloaded files. They are built as [Gateway HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/policy-types/http-policies/#dlp-profile) selector.
+The following DLP policies are commonly used to secure sensitive data in uploaded and downloaded files. They are built as [Gateway HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#dlp-profile) selector.
 
 Before using these policies, complete the [prerequisites for scanning HTTP traffic](/cloudflare-one/data-loss-prevention/dlp-policies/#prerequisites).
 
@@ -51,7 +51,7 @@ The following example blocks only contractors from uploading/downloading Financi
 
 ## Exclude Android applications
 
-Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway TLS decryption. These applications verify they are connecting directly to their own servers and will reject Gateway's inspection certificate. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) so that the app can continue to function on Android:
+Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway TLS decryption. These applications verify they are connecting directly to their own servers and will reject Gateway's inspection certificate. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) so that the app can continue to function on Android:
 
 1. Set up an [OS version device posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/) that checks for the Android operating system.
 

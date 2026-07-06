@@ -43,7 +43,7 @@ DLP Profiles may be used alongside other Cloudflare One rules in a [Gateway HTTP
 
 2. Select **Add a policy**.
 
-3. Build an [HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/policy-types/http-policies/#dlp-profile) selector. For example, the following policy blocks users from uploading sensitive data to any location other than an approved corporate application. It combines three conditions: the request content matches a DLP profile, the HTTP method is `POST`, and the destination is not an approved application:
+3. Build an [HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#dlp-profile) selector. For example, the following policy blocks users from uploading sensitive data to any location other than an approved corporate application. It combines three conditions: the request content matches a DLP profile, the HTTP method is `POST`, and the destination is not an approved application:
 
    | Selector    | Operator | Value                                                     | Logic | Action |
    | ----------- | -------- | --------------------------------------------------------- | ----- | ------ |

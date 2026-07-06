@@ -1,0 +1,165 @@
+---
+title: Network policy selectors
+pcx_content_type: reference
+description: Selectors available in Cloudflare Gateway network policies.
+products:
+  - cloudflare-one
+sidebar:
+  order: 4
+  label: Selectors
+---
+
+import { Render } from "~/components";
+
+Gateway matches network traffic against the following selectors, or criteria.
+
+## Access Infrastructure Target
+
+<Render
+	file="gateway/selectors/all-access-app-targets"
+	product="cloudflare-one"
+/>
+
+## Access Private App
+
+<Render
+	file="gateway/selectors/all-access-private-app-destinations"
+	product="cloudflare-one"
+/>
+
+## Application
+
+<Render
+	file="gateway/selectors/application-http"
+	product="cloudflare-one"
+	params={{ policyType: "network" }}
+/>
+
+## Content Categories
+
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.fqdn.content_category" }}
+/>
+
+## Destination Continent
+
+<Render
+	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
+	params={{ one: "net.dst" }}
+/>
+
+## Destination Country
+
+<Render
+	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
+	params={{ one: "net.dst" }}
+/>
+
+## Destination IP
+
+<Render
+	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.dst.ip" }}
+/>
+
+## Destination Port
+
+<Render file="gateway/selectors/destination-port" product="cloudflare-one" />
+
+## Detected Protocol
+
+The inferred network protocol based on Cloudflare's [protocol detection](/cloudflare-one/traffic-policies/policy-types/network-policies/protocol-detection/).
+
+| UI name           | API example                       |
+| ----------------- | --------------------------------- |
+| Detected Protocol | `net.protocol.detection == "ssh"` |
+
+## Device Posture
+
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
+
+## Protocol
+
+<Render file="gateway/selectors/protocol" product="cloudflare-one" />
+
+:::note
+To enable Gateway filtering on TCP and UDP, go to **Traffic policies** > **Traffic settings** > **Allow Secure Web Gateway to proxy traffic**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
+:::
+
+## Proxy Endpoint
+
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
+
+## Security Categories
+
+<Render
+	file="gateway/selectors/security-risks"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.fqdn.security_category" }}
+/>
+
+## SNI
+
+Server Name Indication (SNI) is the hostname a client sends during the TLS handshake, before encryption begins. Gateway reads the SNI to identify the destination of encrypted traffic. The SNI selector matches the exact hostname.
+
+<Render file="gateway/selectors/sni-443" product="cloudflare-one" />
+
+| UI name | API example                         |
+| ------- | ----------------------------------- |
+| SNI     | `net.sni.host == "www.example.com"` |
+
+## SNI Domain
+
+The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
+
+<Render file="gateway/selectors/sni-443" product="cloudflare-one" />
+
+| UI name    | API example                        |
+| ---------- | ---------------------------------- |
+| SNI Domain | `net.sni.domains == "example.com"` |
+
+## Source Continent
+
+The continent of the user making the request. <Render file="gateway/selectors/source-continent-http" product="cloudflare-one" params={{ one: "net.src" }} />
+
+## Source Country
+
+The country of the user making the request. <Render file="gateway/selectors/source-country-http" product="cloudflare-one" params={{ one: "net.src" }} />
+
+## Source Internal IP
+
+<Render
+	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
+	params={{ one: "network", two: "net.src.internal_src_ip" }}
+/>
+
+## Source IP
+
+<Render
+	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "net.src.ip" }}
+/>
+
+## Source Port
+
+<Render file="gateway/selectors/source-port" product="cloudflare-one" />
+
+## Users
+
+<Render file="gateway/selectors/users-http" product="cloudflare-one" />
+
+## Virtual Network
+
+<Render
+	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
+	params={{ one: "net.vnet_id" }}
+/>
+
