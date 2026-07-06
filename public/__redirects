@@ -18,7 +18,8 @@
 /cloudflare-one/traffic-policies/tiered-policies/tenant-api/ /cloudflare-one/traffic-policies/reference/tiered-policies/tenant-api/ 301
 
 # Moved to tls-decryption/
-/cloudflare-one/traffic-policies/http-policies/tls-decryption/ /cloudflare-one/traffic-policies/tls-decryption/tls-decryption/ 301
+/cloudflare-one/traffic-policies/http-policies/tls-decryption/ /cloudflare-one/traffic-policies/tls-decryption/ 301
+/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/ /cloudflare-one/traffic-policies/tls-decryption/ 301
 /cloudflare-one/traffic-policies/http-policies/http3/ /cloudflare-one/traffic-policies/tls-decryption/http3/ 301
 
 # Moved to get-started/
@@ -2783,7 +2784,6 @@
 /cloudflare-one/identity/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
-/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
 
 # Catch-all redirects (must come last)
 /cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
