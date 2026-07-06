@@ -434,6 +434,9 @@ export async function run({
 					"Conventions check could not complete — prior findings carried forward.",
 			};
 
+	// Clean up the reconciliation session — same pattern as the specialist DOs.
+	await session.delete().catch(() => {});
+
 	// ── 5. Persist findings to R2 ─────────────────────────────────────────────
 	const currentReviewKey = `${prDir}/review-${input.headSha}.json`;
 	await bucket.put(
