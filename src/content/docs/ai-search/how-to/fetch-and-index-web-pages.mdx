@@ -2,6 +2,7 @@
 pcx_content_type: how-to
 title: Fetch and index single web pages
 description: Use the Browser Run /content endpoint to fetch a single web page's rendered HTML, then upload it to an AI Search instance's built-in storage so AI Search indexes it for search.
+difficulty: Intermediate
 sidebar:
   order: 7
 products:
@@ -16,7 +17,7 @@ import {
 	LinkCard,
 } from "~/components";
 
-This guide builds a Worker that fetches a single web page's rendered HTML with the [Browser Run](/browser-run/) [`/content` endpoint](/browser-run/quick-actions/content-endpoint/) and uploads it to an [AI Search](/ai-search/) instance's [built-in storage](/ai-search/configuration/data-source/built-in-storage/) using the [Items API](/ai-search/api/items/workers-binding/). AI Search then indexes the page so it is searchable, the same as any other uploaded document.
+This guide builds a Worker that fetches a single web page's rendered HTML with the [Browser Run](/browser-run/) [`/content` endpoint](/browser-run/quick-actions/content-endpoint/) and uploads it to an [AI Search](/ai-search/) instance's [built-in storage](/ai-search/configuration/data-source/built-in-storage/) using the [Items API](/ai-search/api/items/workers-binding/). AI Search then indexes the page so it is searchable, the same as any other uploaded document. The Worker also exposes a `/search` endpoint that queries the indexed pages, so one service both indexes and searches.
 
 ## When to use this pattern
 
@@ -85,7 +86,7 @@ The browser binding's `quickAction` method requires a compatibility date of `202
 
 ## 3. Add the Worker code
 
-Update `src/index.ts`. This Worker reads a URL from the query string, fetches its rendered HTML with the Browser Run `/content` endpoint, and uploads that HTML to your instance. Replace `my-instance` with the name of your instance.
+Update `src/index.ts`. This Worker has two routes: a request with a `?url=` parameter fetches that page's rendered HTML and indexes it, and a request to `/search?q=` queries the indexed content. Replace `my-instance` with the name of your instance.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -109,9 +110,32 @@ function itemKey(pageUrl: URL): string {
 
 export default {
 	async fetch(request, env): Promise<Response> {
-		const target = new URL(request.url).searchParams.get("url");
+		const url = new URL(request.url);
+
+		// Search route: query the indexed content and return the matching chunks.
+		if (url.pathname === "/search") {
+			const query = url.searchParams.get("q");
+			if (!query) {
+				return new Response("Add a ?q= query parameter", { status: 400 });
+			}
+			const results = await env.AI_SEARCH.get(INSTANCE_ID).search({ query });
+			return Response.json({
+				query: results.search_query,
+				results: results.chunks.map((chunk) => ({
+					key: chunk.item.key,
+					score: chunk.score,
+					text: chunk.text,
+				})),
+			});
+		}
+
+		// Index route: fetch a URL's rendered HTML and index it.
+		const target = url.searchParams.get("url");
 		if (!target) {
-			return new Response("Add a ?url= parameter", { status: 400 });
+			return new Response(
+				"Add a ?url= parameter to index a page, or use /search?q= to search",
+				{ status: 400 },
+			);
 		}
 
 		const pageUrl = new URL(target);
@@ -179,7 +203,7 @@ This step is optional. Because this Worker controls the upload, you can enrich e
 First, define the custom metadata fields on your instance. If you are creating the instance now, pass them to `create`:
 
 ```sh
-npx wrangler ai-search create my-instance --custom-metadata title:text --custom-metadata section:text
+npx wrangler ai-search create my-instance --type builtin --custom-metadata title:text --custom-metadata section:text
 ```
 
 To add fields to an existing instance, use the dashboard under **Settings**, or the [`update()`](/ai-search/api/instances/workers-binding/#update) binding method. An instance supports up to five custom fields, and each field can be a `text`, `number`, `boolean`, or `datetime` type. Changing the schema re-indexes existing documents.
@@ -235,17 +259,42 @@ Once indexed, you can restrict queries to pages in a given section, for example.
 
 ## 5. Run and deploy
 
-Start a local development server, then trigger a fetch by passing a `url` query parameter. Because `remote = true` is set on the browser binding, `wrangler dev` runs the `/content` endpoint in remote mode:
+Start a local development server. Because `remote = true` is set on the browser binding, `wrangler dev` runs the `/content` endpoint in remote mode:
 
 ```sh
 npx wrangler dev
 ```
 
+Index a page by passing its URL:
+
 ```sh
 curl "http://localhost:8787/?url=https://example.com/"
 ```
 
-The response contains the item key and its status (`completed` once indexed). The page is now searchable through your instance.
+The response contains the item key and its status (`completed` once indexed):
+
+```json
+{ "key": "example-com.html", "status": "completed" }
+```
+
+Then query the indexed content through the same Worker's `/search` endpoint:
+
+```sh
+curl "http://localhost:8787/search?q=what+is+this+domain+for"
+```
+
+```json
+{
+	"query": "what is this domain for",
+	"results": [
+		{
+			"key": "example-com.html",
+			"score": 0.75,
+			"text": "# Example Domain\nThis domain is for use in documentation examples..."
+		}
+	]
+}
+```
 
 Log in with your Cloudflare account, then deploy your Worker to make it accessible on the Internet:
 

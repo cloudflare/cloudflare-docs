@@ -2,7 +2,7 @@
 title: Add search to your website
 pcx_content_type: tutorial
 sidebar:
-  order: 2
+  order: 3
 description: Create an AI Search instance that indexes your website, then add a search bar, chat bubble, and search modal to your React site with the UI snippet components.
 difficulty: Beginner
 products:
@@ -85,15 +85,15 @@ export default function App() {
 	return (
 		<div>
 			<search-bar-snippet
-				apiUrl="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+				api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
 				placeholder="Search..."
-				maxResults={50}
-				maxRenderResults={10}
+				max-results={50}
+				max-render-results={10}
 				show-url="true"
 				show-date="true"
 			/>
 			<chat-bubble-snippet
-				apiUrl="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+				api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
 				style={
 					{
 						"--search-snippet-primary-color": "#F6821F",
@@ -101,7 +101,7 @@ export default function App() {
 				}
 			/>
 			<search-modal-snippet
-				apiUrl="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+				api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
 				placeholder="Search documentation..."
 				shortcut="k"
 				show-url="true"
@@ -122,7 +122,7 @@ Create a declaration file such as `src/ai-search-snippet.d.ts`:
 import type { HTMLAttributes } from "react";
 
 // Register the snippet web components as valid JSX elements. The index
-// signature allows their custom attributes (such as apiUrl and placeholder).
+// signature allows their custom attributes (such as api-url and placeholder).
 type SnippetElement = HTMLAttributes<HTMLElement> & {
 	[attribute: string]: unknown;
 };

@@ -1,9 +1,10 @@
 ---
-title: Connect an MCP client to AI Search
+title: Connect your AI Search to an MCP client
 pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 4
 description: Expose your indexed content as a search tool for any MCP client or agent using the built-in MCP endpoint.
+difficulty: Beginner
 products:
   - ai-search
 ---
@@ -87,7 +88,7 @@ Add the MCP URL to your client as a remote MCP server. Many clients use an `mcpS
 }
 ```
 
-The exact configuration depends on your client, so refer to your MCP client's documentation for how to add a remote server. Once connected, the client can call the `search` tool to retrieve relevant content from your instance.
+The exact configuration depends on your client. Some clients require a transport field on the server entry, such as `"type": "http"` for a remote HTTP server, so refer to your MCP client's documentation for how to add a remote server. Once connected, the client can call the `search` tool to retrieve relevant content from your instance.
 
 To test the endpoint directly or build your own client, refer to [MCP](/ai-search/api/search/mcp/) for the request format.
 
