@@ -40,12 +40,12 @@ Enable Precursor for your zone:
 5. **Choose a mode:** To fully verify a user session, visitors may need to complete a lightweight Challenge to establish a valid session. Precursor provides two modes depending on whether you want to prioritize user experience or strict verification:
 
    - **Minimize Friction (default)**
-     Does not show a Challenge to the visitor. Instead, Precursor attempts to establish session state in the background.
+     Does not show an interstitial Challenge to the visitor. Instead, Precursor attempts to establish session state in the background.
      This provides a smoother user experience, but cannot guarantee that every session is fully verified.
 
    - **Maximize Security (recommended)**
-     Shows a lightweight Challenge to establish a valid session if one does not already exist.
-     This ensures every session is fully verified, but may introduce additional friction for users.
+     Shows a lightweight interstitial Challenge to establish a valid session if one does not already exist.
+     This ensures every session is verified before a user can proceed, but may introduce additional friction.
 
 <img
 	src="/images/precursor/precursor-rules.png"
@@ -72,7 +72,9 @@ Precursor supersedes JavaScript Detections (JSD):
 - introduces session-based state
 - enables dynamic runtime control
 
-## Relationship to Challenges
+If you enable Precursor, you should disable JavaScript Detections (JSD).
+
+## Relationship to Challenge Pages
 
 Precursor and Challenges serve different roles:
 
@@ -85,9 +87,9 @@ Precursor does not replace Challenges. Instead, it strengthens them by:
 - re-evaluating visitors after they have already passed a Challenge
 - identifying automation that emerges over time
 
-## Relationship to `cf_clearance`
+## Relationship to `cf_clearance` cookie
 
-Precursor is tightly integrated with `cf_clearance`. When running Precursor:
+Precursor is tightly integrated with [`cf_clearance`](/cloudflare-challenges/concepts/clearance/#cf_clearance-cookies). When running Precursor:
 
 - effective clearance may be reduced or invalidated
 - additional Challenges may be triggered
