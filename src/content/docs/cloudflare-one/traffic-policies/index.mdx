@@ -163,14 +163,14 @@ The connection method (on-ramp) you use determines which policy types Gateway ca
 | [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (WARP) | Yes | Yes | Yes | Roaming users on managed devices (laptops, phones) |
 | [DNS resolver](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) configuration | Yes | No | No | Unmanaged devices, entire networks, or initial rollout |
 | [Proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) (PAC file) | No | No | Yes (browser only) | Browser-level HTTP filtering without a device agent |
-| [Network tunnel](/cloudflare-one/networks/) (IPsec/GRE via Magic WAN) | Yes | Yes | Yes | Branch offices, data centers, and site-level connectivity |
+| [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) | Yes | Yes | Yes | Branch offices, data centers, and site-level connectivity |
 
 - The **Cloudflare One Client** provides the broadest coverage and is the recommended method for per-device deployments.
 - **DNS resolver** configuration is the easiest to deploy (change a DNS setting on your router or device) and provides immediate protection, but it only enforces DNS policies.
 - **Proxy endpoints** enable HTTP inspection through browser proxy configuration without installing an agent, but they are limited to browser traffic.
-- **Network tunnels** route all site traffic through Gateway and are best for protecting entire office locations or data centers.
+- **Cloudflare WAN** routes site traffic through Gateway and is best for protecting entire office locations or data centers.
 
-You can combine multiple on-ramps. For example, use the Cloudflare One Client for remote employees and network tunnels for branch offices.
+You can combine multiple connection methods. For example, use the Cloudflare One Client for remote employees and Cloudflare WAN for branch offices. For more information, refer to [Send traffic to Gateway](/cloudflare-one/traffic-policies/send-traffic-to-gateway/).
 
 ## How Gateway processes traffic
 
@@ -197,9 +197,8 @@ flowchart LR
 4. Gateway evaluates the request against your configured policies in [order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/): DNS policies first, then network policies, then HTTP policies.
 5. If policies allow the request, Gateway proxies it to the destination server and inspects the response on the return path.
 
-For details on how Gateway proxies traffic and establishes connections, refer to [Proxy](/cloudflare-one/traffic-policies/reference/proxy/).
+For details on how to connect devices, networks, and private resources to Gateway, refer to [Send traffic to Gateway](/cloudflare-one/traffic-policies/send-traffic-to-gateway/).
 
 ## Troubleshoot Cloudflare Gateway policies
 
 For help resolving common issues with Cloudflare Gateway policies, refer to [Troubleshooting](/cloudflare-one/traffic-policies/troubleshooting/).
-

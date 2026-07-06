@@ -93,7 +93,7 @@ When you create your first Mesh node, the setup wizard automatically provisions 
 | [Device enrollment policy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/)                                                  | Allows devices to enroll into your Cloudflare One account using email-based [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/). Only created if you do not already have an existing device enrollment policy in your account.                                                                                         |
 | [Device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/)                                          | Creates a profile configured with [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) in **Include mode**, so only Mesh traffic routes through Cloudflare. This prevents disrupting existing network connectivity on your server. Only created if you do not already have an active Mesh node (formerly WARP Connector) in your account. |
 | [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices) and [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) | Enables device-to-device connectivity for Mesh networking. |
-| [Gateway proxy](/cloudflare-one/traffic-policies/reference/proxy/) | Enables the TCP, UDP, and ICMP traffic proxy for Mesh communication.                                     |
+| [Gateway proxy](/cloudflare-one/traffic-policies/send-traffic-to-gateway/) | Enables the TCP, UDP, and ICMP traffic proxy for Mesh communication.                                     |
 
 ### Existing Cloudflare One accounts
 
@@ -104,7 +104,7 @@ If your account already has a Cloudflare One deployment, the setup wizard will n
 - [ ] **Mesh connectivity** — In your device profile settings, enable [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
 - [ ] **Unique device IPs** — Enable [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) so that each participant gets a routable Mesh IP.
 - [ ] **Client mode** — Mesh nodes must run in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/). DNS-only or proxy-only modes are not supported.
-- [ ] **Traffic proxying** — Enable the [Gateway proxy](/cloudflare-one/traffic-policies/reference/proxy/) for TCP, UDP, and ICMP so that Mesh traffic can flow between devices.
+- [ ] **Traffic proxying** — Enable the [Gateway proxy](/cloudflare-one/traffic-policies/send-traffic-to-gateway/) for TCP, UDP, and ICMP so that Mesh traffic can flow between devices.
 
 ## Troubleshooting
 
