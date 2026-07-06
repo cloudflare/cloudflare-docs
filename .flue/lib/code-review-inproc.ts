@@ -409,7 +409,9 @@ async function reviewSingleFile({
 	});
 	const timer = setTimeout(() => {
 		timedOut = true;
-		handle.abort();
+		// Guard against abort() throwing or returning a rejecting promise — an
+		// error here would be an unhandled rejection from the timer callback.
+		Promise.resolve(handle.abort()).catch(() => {});
 	}, fileTimeoutMs);
 
 	try {

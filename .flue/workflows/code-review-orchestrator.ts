@@ -2,7 +2,7 @@
  * Code review orchestrator — dispatch phase only
  *
  * Performs the limit check, posts the placeholder, decides the diff mode,
- * writes context to R2, and admits all four specialists fire-and-forget. It
+ * writes context to R2, and admits all three specialists fire-and-forget. It
  * does NOT wait for the specialists. The finalize-review workflow (admitted
  * by whichever specialist finishes last via the R2 rendezvous lock) handles
  * reconciliation, rendering, and posting.
@@ -199,7 +199,7 @@ export async function run({
 		);
 	}
 
-	// ── 4. Write context to R2 ─────────────────────────────────────────────────
+	// ── 3. Write context to R2 ─────────────────────────────────────────────────
 	// dispatchId = this run's id, scoping the rendezvous so concurrent
 	// dispatches on the same head SHA don't collide.
 
@@ -223,7 +223,7 @@ export async function run({
 		expectedStreams: [...EXPECTED_STREAMS],
 	});
 
-	// ── 3b. Write crash-protection placeholders for all four streams ──────────
+	// ── 4. Write crash-protection placeholders for all three streams ──────────
 	// Written BEFORE the specialists are admitted so a key always exists even
 	// if a specialist DO is evicted immediately after admission. Placeholders
 	// have final:false so tryClaimFinalize ignores them — finalize only runs

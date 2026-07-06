@@ -200,6 +200,9 @@ export async function tryClaimFinalize(
 	myStream: string,
 	allExpectedStreams: string[],
 ): Promise<boolean> {
+	// Only a recognised expected stream can trigger finalization.
+	if (!allExpectedStreams.includes(myStream)) return false;
+
 	// Fetch all sibling streams in parallel.
 	const siblingStreams = allExpectedStreams.filter((s) => s !== myStream);
 	const siblingChecks = await Promise.all(
@@ -248,10 +251,16 @@ export async function cleanupPending(
 ): Promise<void> {
 	const prefix = `${pendingPrefix(prNumber, headSha, dispatchId)}/`;
 	try {
-		const listed = await bucket.list({ prefix });
-		if (listed.objects.length > 0) {
-			await Promise.all(listed.objects.map((o) => bucket.delete(o.key)));
-		}
+		// Paginate through all keys under the prefix — R2 list responses are
+		// paginated and a single call may not return all objects.
+		let cursor: string | undefined;
+		do {
+			const listed = await bucket.list({ prefix, cursor });
+			if (listed.objects.length > 0) {
+				await Promise.all(listed.objects.map((o) => bucket.delete(o.key)));
+			}
+			cursor = listed.truncated ? listed.cursor : undefined;
+		} while (cursor);
 	} catch {
 		// Non-fatal — orphaned keys are tiny and will be overwritten on retry.
 	}

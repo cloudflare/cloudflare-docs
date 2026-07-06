@@ -58,19 +58,19 @@ export async function run({
 	env,
 	req,
 }: FlueContext): Promise<StyleGuideResult> {
-	const input: ReviewSpecialistPayload = parseReviewSpecialistPayload(
-		payload,
-		"style-guide-specialist",
-	);
 	const typedEnv = env as Record<string, unknown>;
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	const baseUrl = input.baseUrl ?? safeOrigin(req);
 
-	const diffDir = `diffs/pr-${input.number}/runs/${runId}`;
+	let input: ReviewSpecialistPayload | undefined;
+	let baseUrl = safeOrigin(req);
+	let diffDir = "";
 	let result: StyleGuideResult = degradedStyleResult();
 	let reviewOk = false;
 
 	try {
+		input = parseReviewSpecialistPayload(payload, "style-guide-specialist");
+		baseUrl = input.baseUrl ?? safeOrigin(req);
+		diffDir = `diffs/pr-${input.number}/runs/${runId}`;
 		const loader = typedEnv.LOADER as Parameters<
 			typeof getShellSandbox
 		>[0]["loader"];
@@ -155,9 +155,9 @@ export async function run({
 	} catch (err) {
 		const errMsg = err instanceof Error ? err.message : String(err);
 		console.log({
-			message: `Style-guide specialist error (degraded): PR #${input.number} — ${errMsg}`,
+			message: `Style-guide specialist error (degraded): PR #${input?.number ?? "unknown"} — ${errMsg}`,
 			event: "style_guide_specialist",
-			number: input.number,
+			number: input?.number,
 			error: errMsg,
 			runId,
 			action: "specialist_error_degraded",
@@ -179,11 +179,11 @@ export async function run({
 		bucket,
 		env: typedEnv,
 		baseUrl,
-		dispatchId: input.dispatchId ?? "",
-		prNumber: input.number,
-		headSha: input.headSha,
+		dispatchId: input?.dispatchId ?? "",
+		prNumber: input?.number ?? 0,
+		headSha: input?.headSha ?? "",
 		stream: "style",
-		expectedStreams: input.expectedStreams ?? [...EXPECTED_STREAMS],
+		expectedStreams: input?.expectedStreams ?? [...EXPECTED_STREAMS],
 		ok: reviewOk,
 		result,
 		runId,

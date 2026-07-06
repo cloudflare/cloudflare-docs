@@ -94,7 +94,8 @@ export function parseReviewSpecialistPayload(
 		typeof input.number !== "number" ||
 		typeof input.headSha !== "string" ||
 		!input.diffMode ||
-		!input.pr
+		typeof input.pr !== "object" ||
+		input.pr === null
 	) {
 		throw new Error(
 			`[flue] ${workflowName} requires payload { eventType: "pull_request", number, headSha, diffMode, pr }.`,
@@ -103,7 +104,7 @@ export function parseReviewSpecialistPayload(
 
 	// Validate ReviewSpecialistPrMeta fields so downstream property accesses
 	// don't crash on malformed payloads.
-	const pr = input.pr;
+	const pr = input.pr as ReviewSpecialistPrMeta;
 	if (
 		typeof pr.number !== "number" ||
 		typeof pr.title !== "string" ||
@@ -157,8 +158,10 @@ export function parseReviewSpecialistPayload(
 		dispatchId:
 			typeof input.dispatchId === "string" ? input.dispatchId : undefined,
 		baseUrl: normalizedBaseUrl,
-		expectedStreams: Array.isArray(input.expectedStreams)
-			? (input.expectedStreams as string[])
-			: undefined,
+		expectedStreams:
+			Array.isArray(input.expectedStreams) &&
+			input.expectedStreams.every((s) => typeof s === "string")
+				? (input.expectedStreams as string[])
+				: undefined,
 	};
 }

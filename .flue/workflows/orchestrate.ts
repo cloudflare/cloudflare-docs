@@ -15,7 +15,6 @@ import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import {
 	addReactionToComment,
 	getInstallationToken,
-	getPullRequest,
 	isCodeOwner,
 	verifyGitHubSignature,
 } from "../lib/github";
@@ -220,10 +219,17 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 
 		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
-		const prForCommand = await getPullRequest(token, number).catch(() => null);
+		// Read the PR author directly from the issue_comment webhook payload
+		// (body.issue.user.login) rather than making an extra getPullRequest API
+		// call that can fail and silently misroute Dependabot PRs.
+		const prAuthorFromPayload = (
+			(body.issue as Record<string, unknown> | undefined)?.user as
+				| Record<string, unknown>
+				| undefined
+		)?.login as string | undefined;
 		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url).origin;
-		const isDepBot = prForCommand?.user?.login === "dependabot[bot]";
+		const isDepBot = prAuthorFromPayload === "dependabot[bot]";
 
 		const orchestratorBody = isDepBot
 			? {
@@ -305,7 +311,22 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 
 		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-		await setReviewLimitIgnored(bucket, number, senderLogin as string);
+		try {
+			await setReviewLimitIgnored(bucket, number, senderLogin as string);
+		} catch (writeErr) {
+			console.log({
+				message: `Failed to persist ignore-review-limit flag for PR #${number}: ${writeErr instanceof Error ? writeErr.message : String(writeErr)}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: writeErr instanceof Error ? writeErr.message : String(writeErr),
+				action: "ignore_review_limit_write_failed",
+			});
+			return {
+				acted: false,
+				summary: "Failed to persist review limit flag — please try again.",
+			};
+		}
 
 		// Acknowledge with 👍
 		await addReactionToComment(token, commentId, "+1");
@@ -350,7 +371,23 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 
 		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-		await setAutoReviewDisabled(bucket, number, senderLogin as string);
+		try {
+			await setAutoReviewDisabled(bucket, number, senderLogin as string);
+		} catch (writeErr) {
+			console.log({
+				message: `Failed to persist disable-auto-review flag for PR #${number}: ${writeErr instanceof Error ? writeErr.message : String(writeErr)}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: writeErr instanceof Error ? writeErr.message : String(writeErr),
+				action: "disable_auto_review_write_failed",
+			});
+			return {
+				acted: false,
+				summary:
+					"Failed to persist auto-review disable flag — please try again.",
+			};
+		}
 
 		// Acknowledge with 👍
 		await addReactionToComment(token, commentId, "+1");

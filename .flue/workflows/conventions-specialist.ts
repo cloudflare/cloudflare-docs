@@ -79,18 +79,17 @@ export async function run({
 	env,
 	req,
 }: FlueContext): Promise<CodeReviewResult> {
-	const input: ReviewSpecialistPayload = parseReviewSpecialistPayload(
-		payload,
-		"conventions-specialist",
-	);
 	const typedEnv = env as Record<string, unknown>;
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	const baseUrl = input.baseUrl ?? safeOrigin(req);
 
+	let input: ReviewSpecialistPayload | undefined;
+	let baseUrl = safeOrigin(req);
 	let result: CodeReviewResult = degradedConventionsResult();
 	let reviewOk = false;
 
 	try {
+		input = parseReviewSpecialistPayload(payload, "conventions-specialist");
+		baseUrl = input.baseUrl ?? safeOrigin(req);
 		const loader = typedEnv.LOADER as Parameters<
 			typeof getShellSandbox
 		>[0]["loader"];
@@ -192,9 +191,9 @@ export async function run({
 	} catch (err) {
 		const errMsg = err instanceof Error ? err.message : String(err);
 		console.log({
-			message: `Conventions specialist error (degraded): PR #${input.number} — ${errMsg}`,
+			message: `Conventions specialist error (degraded): PR #${input?.number ?? "unknown"} — ${errMsg}`,
 			event: "conventions_specialist",
-			number: input.number,
+			number: input?.number,
 			error: errMsg,
 			runId,
 			action: "specialist_error_degraded",
@@ -207,11 +206,11 @@ export async function run({
 		bucket,
 		env: typedEnv,
 		baseUrl,
-		dispatchId: input.dispatchId ?? "",
-		prNumber: input.number,
-		headSha: input.headSha,
+		dispatchId: input?.dispatchId ?? "",
+		prNumber: input?.number ?? 0,
+		headSha: input?.headSha ?? "",
 		stream: "conventions",
-		expectedStreams: input.expectedStreams ?? [...EXPECTED_STREAMS],
+		expectedStreams: input?.expectedStreams ?? [...EXPECTED_STREAMS],
 		ok: reviewOk,
 		result,
 		runId,

@@ -39,7 +39,7 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
    - Posts a "review in progress" placeholder comment (comment mode only).
    - Decides the **diff mode**: `incremental` (from the last reviewed head SHA to the current head) when a prior review exists, else `full`.
    - Writes `context.json` to the **R2 rendezvous namespace** (`diffs/pr-<n>/pending/<headSha>/<dispatchId>/`) containing everything `finalize-review` needs (diffMode, humanComments, previousReviewedSha, reviewMode, etc.) so the orchestrator's DO is not needed again.
-    - Writes crash-protection **placeholder results** (`code.json`, `style.json`, `conventions.json` with `final:false`) so finalize can always trigger even if a specialist is hard-evicted.
+    - Writes crash-protection **placeholder results** (`code.json`, `style.json`, `conventions.json` with `final:false`) so each stream key always exists in R2. Placeholders do NOT trigger finalize — `tryClaimFinalize` requires every stream to be `final:true`. Their purpose is to ensure R2 reads in finalize never return null due to a specialist being evicted before it could write anything.
     - Admits all three specialists **fire-and-forget** and returns immediately.
 3. Each specialist runs in its **own DO** (own ~128 MB isolate):
    - Self-fetches its diff for the requested mode. Incremental is SHA-pinned via `comparePullRequestHeads`; if the base SHA is gone (force-push since the orchestrator decided), it self-heals to the full PR diff.

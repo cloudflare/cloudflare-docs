@@ -13,9 +13,12 @@ export async function withConcurrency<T>(
 ): Promise<T[]> {
 	const results: T[] = new Array(tasks.length);
 	let index = 0;
-	// Guard against non-positive limits — 0 or negative would spawn no workers
-	// and return an array of empty slots.
-	const effectiveLimit = Math.max(1, Math.floor(limit));
+	// Guard against non-positive or non-finite limits. Math.floor(NaN) === NaN
+	// and Math.max(1, NaN) === NaN, which would cause Array.from({ length: NaN })
+	// to throw a RangeError. Clamp to a safe positive integer.
+	const effectiveLimit = Number.isFinite(limit)
+		? Math.max(1, Math.floor(limit))
+		: 1;
 
 	async function worker() {
 		while (index < tasks.length) {

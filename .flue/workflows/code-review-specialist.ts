@@ -57,20 +57,20 @@ export async function run({
 	env,
 	req,
 }: FlueContext): Promise<CodeReviewResult> {
-	const input: ReviewSpecialistPayload = parseReviewSpecialistPayload(
-		payload,
-		"code-review-specialist",
-	);
 	const typedEnv = env as Record<string, unknown>;
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	// baseUrl: prefer the payload value set by the orchestrator (validated
-	// at admission time). Fall back to this request's origin.
-	const baseUrl = input.baseUrl ?? safeOrigin(req);
 
+	let input: ReviewSpecialistPayload | undefined;
+	// baseUrl is derived from input (or req fallback) once parsing succeeds.
+	let baseUrl = safeOrigin(req);
 	let result: CodeReviewResult = degradedCodeResult();
 	let reviewOk = false;
 
 	try {
+		// Parse inside the try so a malformed payload degrades gracefully instead
+		// of rejecting the workflow with an unhandled error.
+		input = parseReviewSpecialistPayload(payload, "code-review-specialist");
+		baseUrl = input.baseUrl ?? safeOrigin(req);
 		const loader = typedEnv.LOADER as Parameters<
 			typeof getShellSandbox
 		>[0]["loader"];
@@ -168,9 +168,9 @@ export async function run({
 	} catch (err) {
 		const errMsg = err instanceof Error ? err.message : String(err);
 		console.log({
-			message: `Code review specialist error (degraded): PR #${input.number} — ${errMsg}`,
+			message: `Code review specialist error (degraded): PR #${input?.number ?? "unknown"} — ${errMsg}`,
 			event: "code_review_specialist",
-			number: input.number,
+			number: input?.number,
 			error: errMsg,
 			runId,
 			action: "specialist_error_degraded",
@@ -183,11 +183,11 @@ export async function run({
 		bucket,
 		env: typedEnv,
 		baseUrl,
-		dispatchId: input.dispatchId ?? "",
-		prNumber: input.number,
-		headSha: input.headSha,
+		dispatchId: input?.dispatchId ?? "",
+		prNumber: input?.number ?? 0,
+		headSha: input?.headSha ?? "",
 		stream: "code",
-		expectedStreams: input.expectedStreams ?? [...EXPECTED_STREAMS],
+		expectedStreams: input?.expectedStreams ?? [...EXPECTED_STREAMS],
 		ok: reviewOk,
 		result,
 		runId,

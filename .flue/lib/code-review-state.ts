@@ -122,8 +122,13 @@ export async function markAutoReviewCompleted(
 		if (obj) {
 			try {
 				const data = (await obj.json()) as { count?: number; shas?: string[] };
-				count = data.count ?? 0;
-				shas = data.shas ?? [];
+				// Validate shape defensively — corrupt or migrated data should not
+				// produce wrong counts or crash .includes()/.push() calls.
+				count =
+					typeof data.count === "number" && Number.isFinite(data.count)
+						? data.count
+						: 0;
+				shas = Array.isArray(data.shas) ? (data.shas as string[]) : [];
 			} catch {
 				// Corrupt counter — start fresh.
 			}
@@ -197,8 +202,13 @@ export async function isAutoReviewDisabled(
 	const key = `diffs/pr-${prNumber}/auto-review-disabled.json`;
 	const obj = await bucket.get(key);
 	if (!obj) return false;
-	const data = (await obj.json()) as { disabled?: boolean };
-	return data.disabled === true;
+	try {
+		const data = (await obj.json()) as { disabled?: boolean };
+		return data.disabled === true;
+	} catch {
+		// Corrupt file — treat as not disabled.
+		return false;
+	}
 }
 
 /**

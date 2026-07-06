@@ -197,7 +197,7 @@ export async function run({
 	// the bot comment to avoid posting the same review twice for the same head.
 	// getIssueComments is only needed in comment mode; skip the GitHub round-trip
 	// entirely in log mode.
-	let botComment: import("../lib/github").GitHubIssueComment | null = null;
+	let botComment: GitHubIssueComment | null = null;
 	if (reviewMode === "comment") {
 		const allComments = await getIssueComments(token, input.number);
 		botComment =
@@ -293,18 +293,39 @@ export async function run({
 			};
 		}
 
-		const { data } = await session.skill("reconcile-code-review", {
-			model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
-			args: {
-				pullRequest: { number: input.number },
-				currentFindings,
-				reviewedFiles,
-				previousFindings,
-				humanComments: ctx.humanComments,
-				diffMode: effectiveDiffMode,
-			},
-			result: ReconcileResultSchema,
-		});
+		let data: ReconcileResult | undefined;
+		try {
+			({ data } = await session.skill("reconcile-code-review", {
+				model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+				args: {
+					pullRequest: { number: input.number },
+					currentFindings,
+					reviewedFiles,
+					previousFindings,
+					humanComments: ctx.humanComments,
+					diffMode: effectiveDiffMode,
+				},
+				result: ReconcileResultSchema,
+			}));
+		} catch (skillErr) {
+			// Reconciler threw — degrade to current findings rather than crashing
+			// finalize entirely.
+			console.log({
+				message: `Reconciliation error (${streamLabel}): PR #${input.number} — ${skillErr instanceof Error ? skillErr.message : String(skillErr)}`,
+				event: "finalize_review",
+				number: input.number,
+				stream: streamLabel,
+				error: skillErr instanceof Error ? skillErr.message : String(skillErr),
+				runId,
+				action: "reconciliation_error",
+			});
+			return {
+				active: currentFindings,
+				ignored_by_reviewer: [],
+				resolved: [],
+				summary: fallbackSummary,
+			};
+		}
 
 		const reconciled = data ?? {
 			active: currentFindings,

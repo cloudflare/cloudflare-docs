@@ -293,7 +293,9 @@ async function reviewSingleFile({
 	});
 	const timer = setTimeout(() => {
 		timedOut = true;
-		handle.abort();
+		// Guard against abort() throwing or returning a rejecting promise — an
+		// error here would be an unhandled rejection from the timer callback.
+		Promise.resolve(handle.abort()).catch(() => {});
 	}, fileTimeoutMs);
 
 	try {
@@ -319,7 +321,9 @@ async function reviewSingleFile({
 		// rethrow any other error unchanged. Either way the caller degrades this
 		// file to an empty result.
 		throw timedOut
-			? new Error(`Per-file review timed out after ${fileTimeoutMs}ms`)
+			? new Error(`Per-file review timed out after ${fileTimeoutMs}ms`, {
+					cause: err,
+				})
 			: err;
 	} finally {
 		// Clear the timeout (no-op if it already fired), then release this file's
