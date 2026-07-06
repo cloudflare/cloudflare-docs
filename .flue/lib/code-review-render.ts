@@ -3,9 +3,14 @@
  *
  * Builds the Markdown bodies for all GitHub comment states:
  *   - pending  — review in progress placeholder
- *   - complete — final review with findings table
+ *   - complete — final review with findings tables (4 sections)
  *   - failure  — transient error message
  *   - paused   — auto-review limit reached
+ *
+ * Section order in the rendered comment:
+ *   1. ### Code Review
+ *   2. ### Conventions
+ *   3. ### Style Guide Review
  *
  * Also exports ReconcileResultSchema / ReconcileResult, which are the model
  * output schema for the reconcile-code-review skill and the input type for
@@ -20,7 +25,7 @@ export const ReconcileResultSchema = v.object({
 	active: v.array(
 		v.object({
 			id: v.string(),
-			severity: v.picklist(["warning", "suggestion"]),
+			severity: v.picklist(["critical", "warning", "suggestion"]),
 			path: v.string(),
 			line: v.optional(v.number()),
 			rule: v.string(),
@@ -31,7 +36,7 @@ export const ReconcileResultSchema = v.object({
 	ignored_by_reviewer: v.array(
 		v.object({
 			id: v.string(),
-			severity: v.picklist(["warning", "suggestion"]),
+			severity: v.picklist(["critical", "warning", "suggestion"]),
 			path: v.string(),
 			line: v.optional(v.number()),
 			rule: v.string(),
@@ -46,10 +51,31 @@ export const ReconcileResultSchema = v.object({
 
 export type ReconcileResult = v.InferOutput<typeof ReconcileResultSchema>;
 
+/** All three reconciled review streams rendered into one comment. */
+export interface RenderReviewInput {
+	code: ReconcileResult;
+	style: ReconcileResult;
+	conventions: ReconcileResult;
+	/** True when the code review degraded (its findings may be incomplete). */
+	codeFailed?: boolean;
+	/** True when the style-guide review degraded (its findings may be incomplete). */
+	styleFailed?: boolean;
+	/** True when the conventions check degraded (its findings may be incomplete). */
+	conventionsFailed?: boolean;
+}
+
+const SECTION_FAILURE_NOTE =
+	"❌ This review could not complete this run; results may be incomplete. It will retry on the next push.";
+
 // ── Rendering helpers ─────────────────────────────────────────────────────────
 
-/** Shorten a file path for display: drop src/content/docs/ or src/content/ prefix. */
+/**
+ * Shorten a file path for display.
+ * The synthetic sentinel "pr" (used by the conventions specialist for PR-level
+ * findings) is rendered as the human-readable label "PR" instead of a code span.
+ */
 function formatFile(path: string, line?: number): string {
+	if (path === "pr") return "PR";
 	const short = path
 		.replace(/^src\/content\/docs\//, "")
 		.replace(/^src\/content\//, "");
@@ -133,6 +159,7 @@ export function renderFailureComment(headSha: string): string {
 		BOT_COMMENT_MARKER,
 		`<!-- reviewed-head-sha: ${headSha} -->`,
 		`<!-- updated-at: ${new Date().toISOString()} -->`,
+		`<!-- status: failure -->`,
 		"",
 		"## Review",
 		"",
@@ -140,34 +167,145 @@ export function renderFailureComment(headSha: string): string {
 	].join("\n");
 }
 
-/** Render the final review comment from reconciled findings. */
-export function renderComment(
+/** Active findings (ignored ones removed) split by severity, for one section. */
+function activeBySeverity(reconciled: ReconcileResult) {
+	// Match by stable id so two findings sharing path/line/rule are not both
+	// dropped when only one is acknowledged.
+	const ignoredIds = new Set(reconciled.ignored_by_reviewer.map((f) => f.id));
+	const active = reconciled.active.filter((f) => !ignoredIds.has(f.id));
+	return {
+		active,
+		critical: active.filter((f) => f.severity === "critical"),
+		warnings: active.filter((f) => f.severity === "warning"),
+		suggestions: active.filter((f) => f.severity === "suggestion"),
+	};
+}
+
+/** Render a `<details>` block with a severity table, when non-empty. */
+function renderSeverityTable(
+	lines: string[],
+	label: string,
+	findings: ReconcileResult["active"],
+): void {
+	if (findings.length === 0) return;
+	lines.push("");
+	lines.push("<details open>");
+	lines.push(`<summary><b>${label}</b> (${findings.length})</summary>`);
+	lines.push("<br/>");
+	lines.push("");
+	lines.push("| File | Issue |");
+	lines.push("|---|---|");
+	for (const f of findings) {
+		lines.push(renderFindingRow(f));
+	}
+	lines.push("");
+	lines.push("</details>");
+}
+
+/**
+ * Render one review section (### heading + status + severity tables).
+ * `includeCritical` controls whether a Critical table is rendered.
+ * Set false for style and conventions (warning/suggestion only by convention)
+ * but the caller still counts and surfaces criticals from those streams if
+ * the model strays outside the specified severities.
+ */
+function renderSection(
+	lines: string[],
+	heading: string,
+	noneMessage: string,
 	reconciled: ReconcileResult,
+	includeCritical: boolean,
+	failed: boolean,
+	note?: string,
+): void {
+	const { active, critical, warnings, suggestions } =
+		activeBySeverity(reconciled);
+
+	lines.push("");
+	lines.push(`### ${heading}`);
+
+	if (note) {
+		lines.push("");
+		lines.push(note);
+	}
+
+	// A degraded review must not claim "no issues" — surface the failure. Any
+	// findings carried forward from a prior review are still shown below it.
+	if (failed) {
+		lines.push("");
+		lines.push(SECTION_FAILURE_NOTE);
+	}
+
+	if (active.length === 0) {
+		if (!failed) {
+			lines.push("");
+			lines.push(`<sub>${noneMessage}</sub>`);
+		}
+		return;
+	}
+
+	if (includeCritical) {
+		renderSeverityTable(lines, "Critical", critical);
+	}
+	renderSeverityTable(lines, "Warnings", warnings);
+	renderSeverityTable(lines, "Suggestions", suggestions);
+}
+
+/** Render the final review comment from all four reconciled finding streams. */
+export function renderComment(
+	reviews: RenderReviewInput,
 	reviewedHeadSha: string,
 	forceFullReview?: boolean,
 ): string {
 	const shortSha = reviewedHeadSha.slice(0, 7);
 	const reviewedAt = new Date().toISOString();
-
-	// Exclude anything acknowledged by the reviewer from active sections.
-	const ignoredPaths = new Set(
-		reconciled.ignored_by_reviewer.map((f) => `${f.path}:${f.line}:${f.rule}`),
-	);
-	const activeFindings = reconciled.active.filter(
-		(f) => !ignoredPaths.has(`${f.path}:${f.line}:${f.rule}`),
-	);
-	const warnings = activeFindings.filter((f) => f.severity === "warning");
-	const suggestions = activeFindings.filter((f) => f.severity === "suggestion");
-	const totalActive = activeFindings.length;
 	const scope = forceFullReview ? "full PR diff" : `commit \`${shortSha}\``;
 
+	const code = activeBySeverity(reviews.code);
+	const style = activeBySeverity(reviews.style);
+	const conventions = activeBySeverity(reviews.conventions);
+
+	const criticalCount =
+		code.critical.length + conventions.critical.length + style.critical.length;
+	const warningCount =
+		code.warnings.length + conventions.warnings.length + style.warnings.length;
+	const suggestionCount =
+		code.suggestions.length +
+		conventions.suggestions.length +
+		style.suggestions.length;
+	const totalActive = criticalCount + warningCount + suggestionCount;
+	const ignoredCount =
+		reviews.code.ignored_by_reviewer.length +
+		reviews.conventions.ignored_by_reviewer.length +
+		reviews.style.ignored_by_reviewer.length;
+
+	const anyFailed = Boolean(
+		reviews.codeFailed || reviews.conventionsFailed || reviews.styleFailed,
+	);
+	const failureSuffix =
+		" ⚠️ Part of the review could not complete and will retry on the next push.";
+
 	let statusLine: string;
-	if (totalActive === 0 && reconciled.ignored_by_reviewer.length === 0) {
-		statusLine = `✅ No style-guide issues found in ${scope}.`;
-	} else if (warnings.length > 0) {
-		statusLine = `⚠️ ${warnings.length} warning${warnings.length === 1 ? "" : "s"}${suggestions.length > 0 ? ` and ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"}` : ""} found in ${scope}.`;
+	if (totalActive === 0 && ignoredCount === 0) {
+		statusLine = anyFailed
+			? `⚠️ Part of the review could not complete in ${scope} — it will retry on the next push.`
+			: `✅ No issues found in ${scope}.`;
+	} else if (totalActive === 0) {
+		statusLine =
+			`✅ No outstanding issues in ${scope}.` +
+			(anyFailed ? failureSuffix : "");
 	} else {
-		statusLine = `💡 ${suggestions.length} suggestion${suggestions.length === 1 ? "" : "s"} found in ${scope}.`;
+		const pieces: string[] = [];
+		if (criticalCount > 0) pieces.push(`🚨 ${criticalCount} critical`);
+		if (warningCount > 0)
+			pieces.push(`⚠️ ${warningCount} warning${warningCount === 1 ? "" : "s"}`);
+		if (suggestionCount > 0)
+			pieces.push(
+				`💡 ${suggestionCount} suggestion${suggestionCount === 1 ? "" : "s"}`,
+			);
+		statusLine =
+			`${pieces.join(", ")} found in ${scope}.` +
+			(anyFailed ? failureSuffix : "");
 	}
 
 	const lines: string[] = [
@@ -181,50 +319,68 @@ export function renderComment(
 		statusLine,
 	];
 
-	if (warnings.length > 0) {
-		lines.push("");
-		lines.push("<details open>");
-		lines.push(`<summary><b>Warnings</b> (${warnings.length})</summary>`);
-		lines.push("<br/>");
-		lines.push("");
-		lines.push("| File | Issue |");
-		lines.push("|---|---|");
-		for (const f of warnings) {
-			lines.push(renderFindingRow(f));
-		}
-		lines.push("");
-		lines.push("</details>");
-	}
+	// ── Section 1: Code Review ────────────────────────────────────────────────
+	renderSection(
+		lines,
+		"Code Review",
+		"No code review issues found.",
+		reviews.code,
+		true,
+		Boolean(reviews.codeFailed),
+		"_This code review is in beta and may not always be helpful — use your judgment._",
+	);
 
-	if (suggestions.length > 0) {
-		lines.push("");
-		lines.push("<details open>");
-		lines.push(`<summary><b>Suggestions</b> (${suggestions.length})</summary>`);
-		lines.push("<br/>");
-		lines.push("");
-		lines.push("| File | Issue |");
-		lines.push("|---|---|");
-		for (const f of suggestions) {
-			lines.push(renderFindingRow(f));
-		}
-		lines.push("");
-		lines.push("</details>");
-	}
+	// ── Section 2: Conventions ────────────────────────────────────────────────
+	renderSection(
+		lines,
+		"Conventions",
+		"No convention issues found.",
+		reviews.conventions,
+		false,
+		Boolean(reviews.conventionsFailed),
+	);
 
-	if (reconciled.ignored_by_reviewer.length > 0) {
+	// ── Section 3: Style Guide Review ────────────────────────────────────────
+	renderSection(
+		lines,
+		"Style Guide Review",
+		"No style-guide issues found.",
+		reviews.style,
+		false,
+		Boolean(reviews.styleFailed),
+	);
+
+	// ── Combined "acknowledged by author" block ───────────────────────────────
+	// Separator visually detaches this from the last review section so it reads
+	// as a top-level block rather than an appendix to Style Guide Review.
+	const ignored = [
+		...reviews.code.ignored_by_reviewer.map((f) => ({
+			f,
+			kind: "Code" as const,
+		})),
+		...reviews.conventions.ignored_by_reviewer.map((f) => ({
+			f,
+			kind: "Conventions" as const,
+		})),
+		...reviews.style.ignored_by_reviewer.map((f) => ({
+			f,
+			kind: "Style" as const,
+		})),
+	];
+	if (ignored.length > 0) {
+		lines.push("");
+		lines.push("---");
 		lines.push("");
 		lines.push("<details>");
-		lines.push(
-			`<summary>Acknowledged by author (${reconciled.ignored_by_reviewer.length})</summary>`,
-		);
+		lines.push(`<summary>Acknowledged by author (${ignored.length})</summary>`);
 		lines.push("<br/>");
 		lines.push("");
-		lines.push("| File | Issue | Note |");
-		lines.push("|---|---|---|");
-		for (const f of reconciled.ignored_by_reviewer) {
+		lines.push("| Review | File | Issue | Note |");
+		lines.push("|---|---|---|---|");
+		for (const { f, kind } of ignored) {
 			const file = formatFile(f.path, f.line);
 			lines.push(
-				`| ${file} | ${sanitizeTableCell(f.rule)} | ${sanitizeTableCell(f.reviewer_note)} |`,
+				`| ${kind} | ${file} | ${sanitizeTableCell(f.rule)} | ${sanitizeTableCell(f.reviewer_note)} |`,
 			);
 		}
 		lines.push("");
@@ -250,6 +406,9 @@ export function renderComment(
 	);
 	lines.push(
 		"| `/ignore-review-limit` | Permanently lifts the 2-review automatic limit for this PR. Future pushes will trigger reviews as normal. |",
+	);
+	lines.push(
+		"| `/disable-auto-review` | Stops automatic reviews from triggering on future pushes to this PR. Codeowners can still run `/review` or `/full-review` manually. |",
 	);
 	lines.push("");
 	lines.push("</details>");
