@@ -10,7 +10,7 @@ products:
 
 This page documents errors returned immediately by AI Search API and public endpoint requests. For exact REST paths, refer to the [AI Search API reference](/api/resources/ai_search/).
 
-For errors that appear after an item fails to index, refer to [Processing error codes](/ai-search/troubleshooting/processing-error-codes/).
+For errors that appear after an item fails to index, refer to [Indexing error codes](/ai-search/troubleshooting/indexing-error-codes/).
 
 ## How errors are returned
 
@@ -95,7 +95,7 @@ These errors can occur when you run instance search, cross-instance search, publ
 | 7069 | `monthly_query_quota_exceeded`               | 429         | The account reached the monthly query quota for its Workers plan. | Review [AI Search limits](/ai-search/platform/limits-pricing/#limits), wait for the quota to reset, or upgrade your [Workers plan](/workers/platform/pricing/). |
 | 7070 | `invalid_retrieval_type`                     | 400         | The requested retrieval type is not available for the instance. | Use a [search mode](/ai-search/concepts/search-modes/) supported by the instance index method. |
 | 7071 | `vectorize_authentication_failed`            | 401         | AI Search could not authenticate with Vectorize.               | Check the instance configuration and [service API token](/ai-search/configuration/indexing/service-api-token/). |
-| 7073 | `all_search_methods_failed`                  | 500         | All retrieval methods failed.                                  | Retry the request. Check [processing error codes](/ai-search/troubleshooting/processing-error-codes/) and instance configuration. |
+| 7073 | `all_search_methods_failed`                  | 500         | All retrieval methods failed.                                  | Retry the request. Check [indexing error codes](/ai-search/troubleshooting/indexing-error-codes/) and instance configuration. |
 | 7080 | `vectorize_filter_not_serializable`          | 400         | A filter cannot be sent to Vectorize.                          | Use JSON-serializable filter values.                                 |
 | 7089 | `image_query_requires_vector_index`          | 400         | An image query requires vector indexing.                       | Turn on [vector search](/ai-search/configuration/indexing/vector-search/) for the instance and reindex your content, or use an instance that already has vector search enabled. |
 
@@ -111,7 +111,7 @@ These errors can occur when AI Search retrieves context and generates a response
 | 7038 | `missing_user_query`                         | 400         | A chat completions request does not include a user query.  | Include at least one user message in the [messages format](/ai-search/api/search/rest-api/#search-and-chat). |
 | 7069 | `monthly_query_quota_exceeded`               | 429         | The account reached the monthly query quota for its Workers plan. | Review [AI Search limits](/ai-search/platform/limits-pricing/#limits), wait for the quota to reset, or upgrade your [Workers plan](/workers/platform/pricing/). |
 | 7070 | `invalid_retrieval_type`                     | 400         | The requested retrieval type is not available for the instance. | Use a [search mode](/ai-search/concepts/search-modes/) supported by the instance index method. |
-| 7073 | `all_search_methods_failed`                  | 500         | All retrieval methods failed.                              | Retry the request. Check [processing error codes](/ai-search/troubleshooting/processing-error-codes/) and instance configuration. |
+| 7073 | `all_search_methods_failed`                  | 500         | All retrieval methods failed.                              | Retry the request. Check [indexing error codes](/ai-search/troubleshooting/indexing-error-codes/) and instance configuration. |
 | 7089 | `image_query_requires_vector_index`          | 400         | An image query requires vector indexing.                   | Turn on [vector search](/ai-search/configuration/indexing/vector-search/) for the instance and reindex your content, or use an instance that already has vector search enabled. |
 
 ### Cross-instance search and chat
@@ -151,7 +151,7 @@ These errors can occur when you upload, list, read, download, delete, sync, filt
 | 7032 | `ai_search_is_paused`                                 | 400         | The instance is paused.                                        | Resume the instance before uploading items.                    |
 | 7041 | `item_not_found`                                      | 404         | The requested item does not exist.                             | Check the item ID.                                             |
 | 7042 | `item_key_already_exist`                              | 409         | An item with this key already exists.                          | Use a different filename or manage the existing item with the [Items API](/ai-search/api/items/workers-binding/). |
-| 7044 | `unable_to_sync_item`                                 | 503         | AI Search could not sync the item.                             | Retry the operation. Check [processing error codes](/ai-search/troubleshooting/processing-error-codes/) for details. |
+| 7044 | `unable_to_sync_item`                                 | 503         | AI Search could not sync the item.                             | Retry the operation. Check [indexing error codes](/ai-search/troubleshooting/indexing-error-codes/) for details. |
 | 7053 | `this_operation_requires_a_managed_instance`          | 400         | The operation only works on managed instances.                  | Use an instance with [built-in storage](/ai-search/configuration/data-source/built-in-storage/). |
 | 7054 | `file_exceeds_maximum_size`                           | 413         | The uploaded file is too large.                                | Reduce the file size before uploading. Review [file size limits](/ai-search/platform/limits-pricing/#limits). |
 | 7055 | `file_field_is_required`                              | 400         | The upload request is missing the `file` field.                 | Include a `file` field in the multipart form data.             |

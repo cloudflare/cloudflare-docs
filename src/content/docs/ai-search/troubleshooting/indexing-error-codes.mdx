@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Processing error codes
+title: Indexing error codes
 description: Resolve asynchronous indexing, sync, and crawl error codes.
 sidebar:
   order: 2
@@ -8,7 +8,7 @@ products:
   - ai-search
 ---
 
-Processing error codes appear after AI Search accepts an upload, sync, or crawl request, but cannot finish preparing an item for search.
+Indexing error codes appear after AI Search accepts an upload, sync, or crawl request, but cannot finish preparing an item for search.
 
 These errors are stored on items instead of returned as immediate API error responses. You can view them by listing items, getting item details, checking [item logs](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/logs/), or reviewing instance stats.
 
@@ -16,7 +16,7 @@ If an API request fails immediately, refer to [API error codes](/ai-search/troub
 
 ## How errors are returned
 
-Processing error codes are asynchronous: an upload, sync, or crawl request can succeed, then the item can later move to `status: "error"`.
+Indexing error codes are asynchronous: an upload, sync, or crawl request can succeed, then the item can later move to `status: "error"`.
 
 If an error includes extra detail after a colon, use the text before the colon as the error type.
 
@@ -133,8 +133,8 @@ These errors appear when AI Search stores vectors in [Vectorize](/vectorize/), u
 | `hybrid_search_is_full` | The hybrid search index is full. | Hybrid search has lower [AI Search limits](/ai-search/platform/limits-pricing/#limits). Reduce indexed content with path filtering or [contact support](/support/contacting-cloudflare-support/). |
 | `ai_search_is_full` | The AI Search instance is full. | Reduce indexed content, review [AI Search limits](/ai-search/platform/limits-pricing/#limits), or request a higher limit. |
 
-## Troubleshoot processing error codes
+## Troubleshoot indexing error codes
 
-Use [item logs](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/logs/) to identify the processing step that failed. Logs usually include a more specific error message.
+Use [item logs](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/logs/) to identify the indexing step that failed. Logs usually include a more specific error message.
 
 For transient service errors, sync the item again after a short delay. If an error persists, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the item ID, instance ID, error code, and request timestamp.
