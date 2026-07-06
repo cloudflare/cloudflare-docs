@@ -1,0 +1,262 @@
+---
+title: Agents SDK
+pcx_content_type: how-to
+sidebar:
+  order: 1
+description: Build a Cloudflare Agent that provisions an AI Search instance, indexes content, and searches it with a tool.
+products:
+  - ai-search
+---
+
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	LinkCard,
+} from "~/components";
+
+The [Cloudflare Agents SDK](/agents/) lets you build stateful AI agents that run on Workers. This guide builds a chat agent that provisions its own AI Search instance, indexes a document, and then searches that content with a tool before it answers.
+
+For the agent-side reference, refer to [AI Search as an agent tool](/agents/tools/ai-search/).
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create a Worker project
+
+Create a new Worker project using the `create-cloudflare` CLI (C3). [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+
+Create a new project named `ai-search-agent` by running:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"ai-search-agent"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+Go to your application directory:
+
+```sh
+cd ai-search-agent
+```
+
+## 2. Install the Agents SDK packages
+
+Install the Agents SDK, the AI SDK, and the Workers AI provider:
+
+<PackageManagers pkg="agents @cloudflare/ai-chat ai workers-ai-provider zod" />
+
+## 3. Bind your Worker to AI Search
+
+Replace your [Wrangler configuration file](/workers/wrangler/configuration/) with the following. This adds a [namespace binding](/ai-search/concepts/namespaces/) for AI Search, a Workers AI binding for response generation, and the Durable Object that stores chat history for the agent.
+
+<WranglerConfig>
+
+```toml
+name = "ai-search-agent"
+main = "src/server.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+remote = true
+
+[[durable_objects.bindings]]
+name = "SearchAgent"
+class_name = "SearchAgent"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SearchAgent"]
+```
+
+</WranglerConfig>
+
+The namespace binding (`ai_search_namespaces`), not the single-instance `ai_search` binding, is required because the agent calls `create()` at runtime. The `remote` option lets `wrangler dev` proxy requests to your deployed instance, since AI Search does not run locally. `AIChatAgent` persists messages to SQLite, so its class must be listed in `new_sqlite_classes`.
+
+## 4. Write the agent
+
+Create `src/server.ts`. The agent provisions an AI Search instance with [hybrid search](/ai-search/configuration/indexing/hybrid-search/) enabled the first time it runs, seeds it with a document, and exposes two tools: `search_knowledge_base` retrieves content, and `save_resolution` writes new content back.
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { routeAgentRequest } from "agents";
+import { createWorkersAI } from "workers-ai-provider";
+import { streamText, convertToModelMessages, tool, stepCountIs } from "ai";
+import { z } from "zod";
+
+const INSTANCE_ID = "knowledge-base";
+
+const SEED_DOC = `# Getting started
+AI Search indexes your content so an agent can retrieve it at query time.`;
+
+export class SearchAgent extends AIChatAgent {
+	private ready = false;
+
+	// Create the agent's instance with hybrid search enabled, then seed it so
+	// the first query has content. create() throws if the instance already
+	// exists, so the try/catch makes this idempotent.
+	private async ensureInstance() {
+		if (this.ready) return;
+		try {
+			// index_method with both vector and keyword enables hybrid search.
+			await this.env.AI_SEARCH.create({
+				id: INSTANCE_ID,
+				index_method: { vector: true, keyword: true },
+			});
+			// uploadAndPoll waits until the file is indexed and searchable.
+			await this.env.AI_SEARCH.get(INSTANCE_ID).items.uploadAndPoll(
+				"getting-started.md",
+				SEED_DOC,
+				{ timeoutMs: 120_000 },
+			);
+		} catch {
+			// Instance already exists.
+		}
+		this.ready = true;
+	}
+
+	async onChatMessage() {
+		await this.ensureInstance();
+
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+			system:
+				"You are a support assistant. Use search_knowledge_base to find " +
+				"relevant content before answering, and cite what you use.",
+			messages: await convertToModelMessages(this.messages),
+			tools: {
+				search_knowledge_base: tool({
+					description: "Search the knowledge base for relevant content.",
+					inputSchema: z.object({
+						query: z.string().describe("The user's question or search terms"),
+					}),
+					execute: async ({ query }) => {
+						const instance = this.env.AI_SEARCH.get(INSTANCE_ID);
+						return await instance.search({
+							query,
+							ai_search_options: { retrieval: { max_num_results: 5 } },
+						});
+					},
+				}),
+				save_resolution: tool({
+					description:
+						"Save a resolved answer to the knowledge base for reuse.",
+					inputSchema: z.object({
+						title: z.string().describe("Short descriptive title"),
+						content: z.string().describe("The resolution to save"),
+					}),
+					execute: async ({ title, content }) => {
+						const instance = this.env.AI_SEARCH.get(INSTANCE_ID);
+						const item = await instance.items.uploadAndPoll(
+							`${title}.md`,
+							content,
+						);
+						return { key: item.key, status: item.status };
+					},
+				}),
+			},
+			stopWhen: stepCountIs(5),
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env)) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+`this.env.AI_SEARCH.get(INSTANCE_ID)` is synchronous and resolves lazily. It does not create the instance, so `ensureInstance` creates it first. To search several instances in one call, use a namespace-level search with `ai_search_options.instance_ids`. Refer to [Namespaces](/ai-search/concepts/namespaces/).
+
+## 5. How the tools work
+
+The `search_knowledge_base` tool calls `search()` on the instance. Because the instance indexes both vectors and keywords, retrieval uses hybrid search by default.
+
+The `save_resolution` tool calls `items.uploadAndPoll()`, which uploads a document to built-in storage and waits until indexing completes, so the content is searchable on the next query. Uploading a file with the same name overwrites and re-indexes it.
+
+## 6. Run locally
+
+Generate types and start the development server:
+
+```sh
+npx wrangler types
+npm run dev
+```
+
+On the first message, the agent creates and seeds the instance, so the first response may take a few extra seconds while `uploadAndPoll` indexes the document.
+
+## 7. Deploy
+
+Log in with your Cloudflare account:
+
+```sh
+npx wrangler login
+```
+
+Deploy your Worker to make it accessible on the Internet:
+
+```sh
+npx wrangler deploy
+```
+
+## Next steps
+
+<LinkCard
+	title="Human-in-the-loop knowledge base updates"
+	href="/ai-search/how-to/human-in-the-loop-knowledge-base/"
+	description="Let the agent add to the knowledge base, with approval and rollback on each write."
+/>
+
+<LinkCard
+	title="AI Search as an agent tool"
+	href="/agents/tools/ai-search/"
+	description="The agent-side reference for retrieving content with AI Search."
+/>
+
+<LinkCard
+	title="Hybrid search"
+	href="/ai-search/configuration/indexing/hybrid-search/"
+	description="Combine vector and keyword search with configurable fusion."
+/>
+
+<LinkCard
+	title="Per-tenant search"
+	href="/ai-search/how-to/per-tenant-search/"
+	description="Give each tenant or agent its own isolated instance."
+/>
+
+<LinkCard
+	title="Instances Workers binding"
+	href="/ai-search/api/instances/workers-binding/"
+	description="Full reference for create, update, list, and delete."
+/>
