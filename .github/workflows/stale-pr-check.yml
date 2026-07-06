@@ -6,6 +6,12 @@ name: PR Staleness Check
 #                     24–48 hours depending on when the PR was last rebased vs. the job schedule.
 # **Who does it impact**: All contributors opening PRs against production.
 
+# NOTE: pull_request_target is used instead of pull_request so that fork PRs can
+# receive commit statuses (pull_request gives forks a read-only token). This is safe
+# here because the workflow never checks out or executes any code from the PR — it only
+# calls gh api. The danger with pull_request_target arises when you add
+# `actions/checkout` with `ref: github.event.pull_request.head.sha`, which would run
+# untrusted PR code with base-repo permissions. Do not add a checkout step here.
 on:
   pull_request_target:
     branches:
