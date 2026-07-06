@@ -1,0 +1,91 @@
+---
+import { AGENTS, type AgentId } from "./agents";
+import { Button } from "@/components/ui/button";
+
+interface Props {
+	/** Agent ids shown in the icon row. */
+	agentIds?: readonly AgentId[];
+	class?: string;
+	/** Optional native title tooltip. */
+	tooltip?: string;
+}
+
+const {
+	agentIds = ["claude", "cursor", "codex", "opencode"] as const,
+	class: className = "",
+	tooltip,
+} = Astro.props;
+
+const featuredAgents = AGENTS.filter((a) =>
+	(agentIds as readonly string[]).includes(a.id),
+);
+---
+
+<Button
+	class:list={["copy-prompt-btn group/copy cursor-copy", className]}
+	variant="secondary"
+	size="lg"
+	type="button"
+	data-tooltip={tooltip}
+>
+	<span class="inline-flex items-center gap-2.5 text-base font-medium">
+		<span
+			class="relative flex h-5 shrink-0 items-center justify-start gap-[3px]"
+			aria-hidden="true"
+		>
+			{
+				featuredAgents.map((agent) => (
+					<>
+						<img
+							src={`/icons/agents/${agent.id}/light.svg`}
+							alt=""
+							class="block h-5 w-5 dark:hidden"
+							loading="lazy"
+							decoding="async"
+						/>
+						<img
+							src={`/icons/agents/${agent.id}/dark.svg`}
+							alt=""
+							class="hidden h-5 w-5 dark:block"
+							loading="lazy"
+							decoding="async"
+						/>
+					</>
+				))
+			}
+		</span>
+		<span class="group-data-[copied=true]/copy:hidden">Copy prompt</span>
+		<span class="hidden group-data-[copied=true]/copy:inline">
+			Prompt copied!
+		</span>
+	</span>
+</Button>
+
+<script>
+	import { AGENT_SETUP_PROMPT } from "./agents";
+
+	function bindCopyPromptButtons() {
+		document
+			.querySelectorAll<HTMLButtonElement>(".copy-prompt-btn")
+			.forEach((btn) => {
+				if (btn.dataset.bound === "true") return;
+				btn.dataset.bound = "true";
+
+				const tooltip = btn.dataset.tooltip;
+				if (tooltip) btn.setAttribute("title", tooltip);
+
+				btn.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(AGENT_SETUP_PROMPT);
+					} catch {
+						return;
+					}
+					btn.dataset.copied = "true";
+					setTimeout(() => delete btn.dataset.copied, 1500);
+				});
+			});
+	}
+
+	bindCopyPromptButtons();
+	document.addEventListener("astro:page-load", bindCopyPromptButtons);
+</script>

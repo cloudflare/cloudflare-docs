@@ -1,0 +1,107 @@
+---
+title: Agents SDK adds background sub-agents and a unified turn entry point
+description: "Agents SDK v0.17.0 adds durable background sub-agent runs with live progress, a single runTurn entry point, and a large round of recovery and reliability fixes for production chat agents."
+products:
+  - agents
+  - workers
+date: 2026-06-26
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+The latest release of the [Agents SDK](https://github.com/cloudflare/agents) makes it easier to run long work in the background, drive turns through one entry point, and keep chat agents working through deploys, evictions, and reconnects.
+
+This release adds first-class detached (background) sub-agent runs with live progress and durable milestones, a single `runTurn` turn-admission entry point, and a large round of recovery and reliability fixes that continue converging `@cloudflare/think` and `@cloudflare/ai-chat` onto one model.
+
+## Background sub-agents with progress and milestones
+
+`runAgentTool` can now dispatch a sub-agent without blocking the calling turn. A detached run returns a handle immediately and is owned by a durable, eviction-surviving backbone instead of being abandoned when the dispatching turn ends.
+
+<TypeScriptExample>
+
+```ts
+class OrdersAgent extends Think {
+	async startImport(input) {
+		// Fire-and-forget, or wire a durable completion callback
+		// (by method name, like schedule()):
+		await this.runAgentTool(ImportAgent, {
+			input,
+			detached: { onFinish: "onImportDone", maxBudgetMs: 60 * 60 * 1000 },
+		});
+	}
+
+	// result.status: "completed" | "error" | "aborted" | "interrupted"
+	async onImportDone(run, result) {}
+}
+```
+
+</TypeScriptExample>
+
+Highlights:
+
+- **Durable, exactly-once-on-the-happy-path completion** via a warm fast path plus a self-scheduling reconcile backbone that survives eviction and deploys.
+- **Bounded.** An absolute `maxBudgetMs` ceiling (default 24h) and `cancelAgentTool(runId)` keep abandoned runs from holding a concurrency slot forever.
+- **`detached: { notify: true }`** lets a finished background run inject a message back into the chat so the model reacts to the result — no hand-wired `onFinish` needed.
+
+Sub-agents can also report mid-run progress that rides their own turn stream back to the parent's connected clients:
+
+<TypeScriptExample>
+
+```ts
+// Inside the child sub-agent:
+await this.reportProgress({
+	fraction: 0.6,
+	phase: "deploying",
+	message: "Generating menu page…",
+});
+```
+
+</TypeScriptExample>
+
+Progress surfaces on `AgentToolRunState.progress` via `useAgentToolEvents`, so a background-runs tray can render a live bar without drilling in, and the latest snapshot is persisted for inspection after eviction. Naming a `milestone` promotes a signal to a durable, replayable row, and `detached: { onMilestones }` can surface a milestone as a synthetic chat message (`"narrate"` for a cheap status line, or `"react"` to drive a model turn).
+
+## One entry point for turns: `runTurn`
+
+`@cloudflare/think` adds a public `runTurn(options)` facade that unifies turn admission behind a single `mode`:
+
+<TypeScriptExample>
+
+```ts
+await this.runTurn({ mode: "wait", messages }); // saveMessages / continueLastTurn
+await this.runTurn({ mode: "submit", messages }); // durable submitMessages
+await this.runTurn({ mode: "stream", messages }); // chat()
+```
+
+</TypeScriptExample>
+
+`stream` mode accepts array and function inputs to match `wait` mode, and all entry points now route through a shared internal admission path that throws a clear error on nested blocking admissions that previously could deadlock.
+
+## Recovery and reliability
+
+A large part of this release continues hardening recovery and converging `@cloudflare/think` and `@cloudflare/ai-chat` onto one model:
+
+- **Stream stall watchdog.** `AIChatAgent` can detect and recover from a hung model/transport stream via the opt-in `chatStreamStallTimeoutMs` watchdog. With `chatRecovery` enabled the stall routes into the same bounded-recovery machinery a deploy or eviction uses; otherwise it surfaces as a terminal stream error so the spinner clears.
+- **Interrupted tool-call repair.** `AIChatAgent` now repairs a transcript with a dead server-tool call before re-entering inference (parity with `@cloudflare/think`), so a recovered turn no longer fails with `AI_MissingToolResultsError`. An overridable `repairInterruptedToolPart(part)` hook lets apps customize the repaired shape.
+- **Stuck status after reconnect.** Fixed AI SDK `status` getting stuck when a reconnect races a turn that has been accepted but has not started streaming yet, so the UI now renders the in-flight turn instead of settling on `ready`.
+- **Live "recovering…" on connect.** `AIChatAgent` now replays the recovering status to a client that connects mid-recovery, so `useAgentChat`'s `isRecovering` reflects in-progress recovery immediately instead of appearing frozen.
+- **Terminal connection failures.** The client stops reconnecting on terminal WebSocket close events and exposes them via `connectionError` / `onConnectionError` on `AgentClient`, `useAgent`, and `useAgentChat`.
+- **Agent-tool child recovery.** A healthy long-running sub-agent run is no longer abandoned as `interrupted` after a deploy (both `@cloudflare/think` and `AIChatAgent`).
+- **Workflows from sub-agent facets.** Agent Workflows can now start from sub-agent facets, with callbacks and Workflow RPC routed back to the originating facet.
+- Plus forward-progress crediting convergence, broadcast-first give-up ordering, an event-driven auto-continuation barrier, and structured row-size compaction in `AIChatAgent`.
+
+## Other improvements
+
+- **Shared chat React core.** A new `agents/chat/react` entry exposes `useAgentChat`, transport helpers, and shared wire types, with `syncMessagesToServer` for server-authoritative transcript storage. `@cloudflare/think/react` and `@cloudflare/ai-chat/react` are now thin wrappers over it.
+- **Optional `ai` peer.** The root `agents` and `@cloudflare/codemode` runtimes no longer reference AI SDK types, so they bundle without `ai` / `zod` installed; AI-specific entry points still require the peer when imported. `just-bash` likewise moves to an optional peer used only by the skills bash runner.
+- **Code Mode.** The default `DynamicWorkerExecutor` timeout increases from 30s to 60s, executions now dispose the dynamically-loaded Worker and its RPC stub after each run (fixing a flaky isolate-shutdown assertion), connector imports are cleaned up, and the outer MCP tool-call context is passed to `openApiMcpServer` request callbacks.
+- **Voice.** Voice turns now support AI SDK `fullStream` responses (and warn when `textStream` is used).
+- **MCP.** `McpAgent` server-to-client requests can now be sent from callbacks that do not inherit the agent's async context, including callbacks reached through Worker Loader RPC.
+- **Experimental: server actions and channels.** This release lays groundwork for guarded server actions (`action()` / `getActions()` with a durable replay ledger and approvals) and a unified channels surface (`configureChannels()`, `deliverNotice()`). Both are experimental and their APIs may change, so we don't recommend depending on them yet.
+
+### Upgrade
+
+To update to the latest version:
+
+<PackageManagers pkg="agents@latest @cloudflare/think@latest @cloudflare/ai-chat@latest @cloudflare/codemode@latest @cloudflare/voice@latest" />
+
+Refer to the [Think documentation](/agents/harnesses/think/), [Code Mode documentation](/agents/tools/codemode/), and [Agents documentation](/agents/) for more information.

@@ -1,0 +1,8 @@
+---
+title: edgeResponseBytes and cacheResponseBytes discrepancy
+pcx_content_type: troubleshooting
+sidebar:
+  order: 11
+---
+
+In [HTTP request logs](/logs/logpush/logpush-job/datasets/zone/http_requests/), `cacheResponseBytes` reflects the uncompressed response size from cache or origin. `edgeResponseBytes` reflects the final compressed response size sent to the client. Because Cloudflare applies compression (gzip, Brotli) before delivering to the client, `edgeResponseBytes` is typically smaller than `cacheResponseBytes`.

@@ -1,0 +1,103 @@
+---
+/**
+ * DirectoryListing — lists child pages of the current page (or a given
+ * folder) from the docs collection.
+ *
+ * CF source: cloudflare-docs/src/components/DirectoryListing.astro
+ * Mapping notes: upstream derives the folder from `Astro.params.slug`;
+ * we derive it from `Astro.url.pathname` (same value in this app's
+ * [...slug] route). `sortBySidebarOrder` is inlined — upstream's helper
+ * also handles Starlight sidebar entries, which we don't have.
+ * `external_link` frontmatter isn't used by Queues content, so links
+ * always point at `/${page.id}/`.
+ */
+import { getCollection, type CollectionEntry } from "astro:content";
+import DirectoryListingItem from "./DirectoryListingItem.astro";
+
+interface PageNode {
+  page: CollectionEntry<"docs">;
+  children: PageNode[];
+}
+
+interface Props {
+  button?: boolean;
+  descriptions?: boolean;
+  folder?: string;
+  maxDepth?: number;
+  tag?: string;
+}
+
+const { button = false, descriptions = false, maxDepth = 1, tag } = Astro.props;
+
+// Strip leading/trailing slashes; default to the current page's path.
+const folder = (Astro.props.folder ?? Astro.url.pathname).replace(/^\/|\/$/g, "");
+
+const baseDepth = folder.split("/").length;
+
+const allPages = await getCollection("docs", (page) => {
+  const pageDepth = page.id.split("/").length;
+  return page.id.startsWith(`${folder}/`) && pageDepth <= baseDepth + maxDepth;
+});
+
+const collator = new Intl.Collator("en");
+allPages.sort((a, b) => {
+  const aOrder = a.data.sidebar?.order ?? Number.MAX_VALUE;
+  const bOrder = b.data.sidebar?.order ?? Number.MAX_VALUE;
+  if (aOrder !== bOrder) return aOrder - bOrder;
+  return collator.compare(a.data.title, b.data.title);
+});
+
+function getChildren(parentPath: string, depth: number) {
+  return allPages.filter((page) => {
+    const pageDepth = page.id.split("/").length;
+    return (
+      pageDepth === depth &&
+      page.id.startsWith(parentPath) &&
+      (tag ? page.data.tags?.includes(tag) : true)
+    );
+  });
+}
+
+function buildPageTree(parentPath: string, currentDepth: number): PageNode[] {
+  const children = getChildren(parentPath, currentDepth);
+  return children.map((page) => ({
+    page,
+    children:
+      currentDepth < baseDepth + maxDepth
+        ? buildPageTree(page.id, currentDepth + 1)
+        : [],
+  }));
+}
+
+const pageTree = buildPageTree(folder, baseDepth + 1);
+
+if (pageTree.length === 0) {
+  console.warn(
+    `[DirectoryListing] No child pages for "${folder}" — rendering empty. ` +
+      `Expected during the bounded port when the target product's docs aren't migrated yet.`,
+  );
+}
+---
+
+{
+  button ? (
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[...pageTree]
+        .sort((a, b) => a.page.data.title.localeCompare(b.page.data.title))
+        .map((node) => (
+          <a
+            class="flex items-center rounded-lg border border-border p-4 font-semibold text-foreground no-underline transition-colors hover:bg-muted"
+            href={"/" + node.page.id + "/"}
+          >
+            {node.page.data.title}
+          </a>
+        ))}
+    </div>
+  ) : (
+    <ul>
+      {pageTree.map((node) => (
+        <DirectoryListingItem node={node} descriptions={descriptions} />
+      ))}
+    </ul>
+  )
+}

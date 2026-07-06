@@ -3,7 +3,7 @@ params:
   - product
 ---
 
-import { GlossaryTooltip, TabItem, Tabs, Render } from "~/components";
+import { GlossaryTooltip, TabItem, Tabs, Render, DashButton } from "~/components";
 
 Updates will cause `cloudflared` to restart which will impact traffic currently being served. You can perform zero-downtime upgrades by using Cloudflare's [Load Balancer product](#update-with-cloudflare-load-balancer) or by using [multiple `cloudflared` instances](#update-with-multiple-cloudflared-instances).
 
@@ -92,9 +92,12 @@ sudo systemctl restart cloudflared.service
 
 **If you created a remotely-managed tunnel using the dashboard:**
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
-2. Select your tunnel and select **Edit**.
-3. Select **Docker** and copy the installation command shown in the dashboard. The copied command will contain your token.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select your tunnel to open its detail page.
+3. On the **Overview** tab, copy the Docker installation command. The copied command will contain your token.
 4. Paste this command into a terminal window.
 
 This command creates a new container from the latest `cloudflared` image. You can now delete the old container.

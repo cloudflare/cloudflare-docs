@@ -10,7 +10,7 @@ products:
   - cloudflare-one
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, DashButton } from "~/components";
 
 This guide covers how to use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to quickly publish and secure a private application. In the following example, we will add a new published application to an existing Cloudflare Tunnel, configure how `cloudflared` proxies traffic to the application, and secure the application with Cloudflare Access.
 
@@ -32,7 +32,10 @@ Create a `.tf` file and copy-paste the following example. Fill in your API token
 
 <Details header="Find the Tunnel ID">
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
 2. Select the tunnel name.
 3. Copy the **Tunnel ID**.
 
@@ -152,7 +155,13 @@ resource "cloudflare_access_policy" "example_policy" {
 
 <Render file="terraform/deploy-terraform" product="cloudflare-one" />
 
-Users can now access the private application by going to the public URL and authenticating with Cloudflare Access. You can view your new tunnel route in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Networks** > **Connectors**, and your Access application and policy under **Zero Trust** > **Access controls** > **Applications**. The new DNS record is shown in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+Users can now access the private application by going to the public URL and authenticating with Cloudflare Access.
+
+You can view your new tunnel in the Cloudflare dashboard under **Networking** > **Tunnels**.
+
+<DashButton url="/?to=/:account/tunnels" />
+
+Your Access application and policy are under **Zero Trust** > **Access controls** > **[Applications](https://dash.cloudflare.com/?to=/:account/one/access/apps)**.
 
 :::note
 

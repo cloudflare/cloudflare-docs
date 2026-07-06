@@ -1,0 +1,121 @@
+---
+import { Icon } from "astro-icon/components";
+import { Button } from "./ui/button";
+import { LinkButton } from "./ui/link-button";
+import { ThemeToggle } from "./ui/theme-toggle";
+import { SearchTrigger } from "./ui/search";
+import { config } from "virtual:nimbus/config";
+import { getSidebarSections } from "nimbus-docs";
+import logo from "~/assets/logo.svg";
+
+interface Props {
+  /** Astro collection id for the current page, forwarded from DocsLayout. */
+  collection?: string;
+  /** Astro entry id for the current page, forwarded from DocsLayout. */
+  entryId?: string;
+  /**
+   * Whether the page has a sidebar to open. When `false`, the mobile
+   * menu button is hidden — pages that opted out via `sidebar: false`
+   * shouldn't show a button that opens an empty dialog. Default `true`.
+   */
+  showSidebar?: boolean;
+}
+
+const { collection, entryId, showSidebar = true } = Astro.props;
+
+// Normalize trailing slash so isActive matches sidebar hrefs.
+const currentSlug = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+// Auto-derived section tabs — one per top-level docs sidebar group
+const sections = await getSidebarSections(currentSlug, { collection });
+
+// Standalone, non-docs destinations. Nimbus has no header-nav config and
+// `getSidebarSections` only surfaces docs sidebar *groups*, so site-level
+const siteLinks = [
+  { label: "Directory", href: "/directory/" },
+  { label: "API", href: "/api/" },
+  { label: "SDKs", href: "/fundamentals/api/reference/sdks/" },
+  { label: "Changelog", href: "/changelog/" },
+];
+
+const navLinks = [
+  ...sections,
+  ...siteLinks.map((link) => {
+    const base = link.href.replace(/\/$/, "");
+    return {
+      ...link,
+      isActive: currentSlug === base || currentSlug.startsWith(`${base}/`),
+    };
+  }),
+];
+---
+
+<header class="sticky top-0 z-30 border-b border-border bg-card/80 backdrop-blur-lg">
+  <div class="mx-auto flex items-center justify-between h-14 px-4 lg:px-6">
+    <div class="flex items-center gap-3">
+      <a href="/" class="group flex items-center gap-2">
+        <img src={logo.src} alt="" width="51" height="23" class="h-[20px] w-auto" />
+        <span class="font-semibold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
+          {config.title}
+        </span>
+      </a>
+
+      {navLinks.length > 0 && (
+        <nav aria-label="Sections" class="hidden md:flex items-center gap-1 ml-4 pl-4 border-l border-border h-6">
+          {navLinks.map((section) => (
+            <a
+              href={section.href}
+              aria-current={section.isActive ? "page" : undefined}
+              class:list={[
+                "px-2 py-1 rounded-md text-[0.8125rem] font-medium no-underline transition-colors",
+                section.isActive
+                  ? "text-foreground bg-accent"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent/60",
+              ]}
+            >
+              {section.label}
+            </a>
+          ))}
+        </nav>
+      )}
+    </div>
+
+    <div class="flex items-center gap-2">
+      {config.search !== false && <SearchTrigger />}
+      {config.github && (
+        <LinkButton
+          href={config.github}
+          variant="ghost"
+          shape="square"
+          aria-label="GitHub"
+          target="_blank"
+          rel="noopener"
+          class="hidden sm:flex text-muted-foreground"
+        >
+          <Icon name="ph:github-logo" class="h-4 w-4" />
+        </LinkButton>
+      )}
+      <ThemeToggle />
+      <div class="w-px h-4 bg-border mx-1.5 shrink-0 hidden md:block" role="separator"></div>
+      {/* CTA → dash. Uses the brand `primary` variant (#ff4801). */}
+      <LinkButton
+        href="https://dash.cloudflare.com/"
+        variant="primary"
+        class="hidden md:inline-flex"
+      >
+        Log in
+      </LinkButton>
+
+      {showSidebar && (
+        <Button
+          variant="ghost"
+          shape="square"
+          icon="ph:list"
+          aria-label="Open navigation"
+          data-menu-btn
+          class="lg:hidden text-muted-foreground"
+        />
+      )}
+    </div>
+  </div>
+</header>

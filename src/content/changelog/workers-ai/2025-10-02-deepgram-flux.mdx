@@ -31,19 +31,19 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
- 
+
 2. Deploy your worker
 ```bash
 npx wrangler deploy
 ```
- 
+
 3. Write a client script to connect to your worker and start sending random audio bytes to it
 ```js
 const ws = new WebSocket('wss://<your-worker-url.com>');
- 
+
 ws.onopen = () => {
   console.log('Connected to WebSocket');
- 
+
   // Generate and send random audio bytes
   // You can replace this part with a function
   // that reads from your mic or other audio source
@@ -51,21 +51,21 @@ ws.onopen = () => {
   ws.send(audioData);
   console.log('Audio data sent');
 };
- 
+
 ws.onmessage = (event) => {
   // Transcription will be received here
   // Add your custom logic to parse the data
   console.log('Received:', event.data);
 };
- 
+
 ws.onerror = (error) => {
   console.error('WebSocket error:', error);
 };
- 
+
 ws.onclose = () => {
   console.log('WebSocket closed');
 };
- 
+
 // Generate random audio data (1 second of noise at 44.1kHz, mono)
 function generateRandomAudio() {
   const sampleRate = 44100;
@@ -73,11 +73,11 @@ function generateRandomAudio() {
   const numSamples = sampleRate * duration;
   const buffer = new ArrayBuffer(numSamples * 2);
   const view = new Int16Array(buffer);
- 
+
   for (let i = 0; i < numSamples; i++) {
     view[i] = Math.floor(Math.random() * 65536 - 32768);
   }
- 
+
   return buffer;
 }
 ```

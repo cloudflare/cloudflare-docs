@@ -25,7 +25,13 @@ With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-sec
 - Review the available options and plan for how you will use [DNSSEC with Cloudflare as secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/).
 - Make sure you have completed the following tasks at your primary DNS provider and at Cloudflare.
 
-### At your primary DNS provider
+:::caution
+Cloudflare begins answering authoritatively for a secondary zone as soon as it is created, even before the first zone transfer (AXFR) completes. If you delegate to Cloudflare nameservers before the first successful transfer, resolvers may cache empty or negative responses (default minimum TTL: 1800 s).
+
+**Best practice:** Verify your zone transfer has completed successfully before updating NS delegation at your registrar. You can confirm by querying Cloudflare's assigned nameservers directly for expected records.
+:::
+
+## At your primary DNS provider
 
 Your primary DNS provider should allow traffic from the IP address and port specified in your [peer server configuration](#2-create-peer-server).
 

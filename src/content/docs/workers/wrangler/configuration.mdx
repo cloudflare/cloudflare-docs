@@ -173,7 +173,7 @@ The `main` key is optional for assets-only Workers.
   - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
 
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/configuration/previews).
+  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/versions-and-deployments/preview-urls/).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
@@ -576,7 +576,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -809,11 +809,11 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
   - The ID of the KV namespace.
 
 - `preview_id` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/development-testing/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
+  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/local-development/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -995,11 +995,11 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 - `preview_bucket_name` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/development-testing/#remote-bindings)).
+  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/local-development/#remote-bindings)).
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -1295,7 +1295,7 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
-    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, and Amazon ECR. For more information, refer to [Image Management](/containers/platform-details/image-management/).
+    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/platform-details/image-management/).
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
@@ -1881,7 +1881,12 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-  	- dist - index.js - wrangler.jsonc - .wrangler - deploy - config.json
+		- dist/
+			- index.js
+			- wrangler.jsonc
+		- .wrangler/
+			- deploy/
+				- config.json
   </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:

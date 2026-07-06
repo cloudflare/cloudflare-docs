@@ -1,0 +1,100 @@
+---
+/**
+ * GitHubCode — embed source pulled from the gh-code worker at build time.
+ *
+ * CF source: cloudflare-docs/src/components/GitHubCode.astro
+ *
+ * Mapping notes:
+ *   - Fetch + line/tag slicing logic is ported verbatim.
+ *   - Upstream renders through Starlight's <Code>; Nimbus uses ui/code/Code,
+ *     so a `title` in the `code` prop is translated to a `meta` string.
+ *   - The `useTypeScriptExample` path wraps a rendered ts <Code> in
+ *     cf/TypeScriptExample, which recovers the raw source from the rendered
+ *     block (its slot-based contract) rather than a `code` prop.
+ */
+import { z } from "astro/zod";
+import { Code } from "../ui/code";
+import TypeScriptExample from "./TypeScriptExample.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+  .object({
+    repo: z.string(),
+    commit: z.string(),
+    file: z.string(),
+    lang: z.string(),
+    lines: z
+      .string()
+      .transform((val) => val.split("-").map(Number))
+      .optional(),
+    tag: z.string().optional(),
+    useTypeScriptExample: z.boolean().default(false),
+    code: z.custom<Record<string, any>>().optional(),
+  })
+  .strict()
+  .refine((val) => !(val.lines && val.tag), {
+    message: "Lines and tag are mutually exclusive filters.",
+  })
+  .refine((val) => !val.useTypeScriptExample || val.lang === "ts", {
+    message: "useTypeScriptExample can only be used when 'lang' is set to 'ts'",
+  });
+
+const { repo, commit, file, lang, lines, tag, useTypeScriptExample, code } =
+  props.parse(Astro.props);
+
+const res = await fetch(
+  `https://gh-code.developers.cloudflare.com/${repo}/${commit}/${file}`,
+);
+
+if (!res.ok) {
+  throw new Error(`[GitHubCode] Received ${res.status} from Worker.`);
+}
+
+const content = await res.text();
+let contentLines = content.split("\n");
+
+if (lines) {
+  const [start, end] = lines;
+
+  if (contentLines.length < end - 1) {
+    throw new Error(
+      `[GitHubCode] End line requested is beyond content length (${contentLines.length}).`,
+    );
+  }
+
+  contentLines = contentLines.slice(start - 1, end);
+} else if (tag) {
+  const startTag = contentLines.findIndex((x) =>
+    x.includes(`<docs-tag name="${tag}">`),
+  );
+  const endTag = contentLines.findIndex((x) =>
+    x.includes(`</docs-tag name="${tag}">`),
+  );
+
+  if (startTag === -1 || endTag === -1) {
+    throw new Error(`[GitHubCode] Unable to find a region using tag "${tag}".`);
+  }
+
+  contentLines = contentLines.slice(startTag + 1, endTag);
+}
+
+contentLines = contentLines.filter(
+  (line) => !/<[/]?docs-tag name=".*">/.test(line),
+);
+
+const finalCode = contentLines.join("\n");
+
+const { title, ...restCode } = (code ?? {}) as Record<string, any>;
+const meta = title ? `title="${title}"` : undefined;
+---
+
+{
+  useTypeScriptExample ? (
+    <TypeScriptExample filename={title}>
+      <Code lang="ts" code={finalCode} meta={meta} />
+    </TypeScriptExample>
+  ) : (
+    <Code {...restCode} code={finalCode} lang={lang} meta={meta} />
+  )
+}

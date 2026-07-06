@@ -13,7 +13,7 @@ tags:
   - Private networks
 ---
 
-import { Render, Details, GlossaryTooltip } from "~/components";
+import { Render, Details, GlossaryTooltip, DashButton } from "~/components";
 
 <Render file="gateway/egress-selector-warp-version" product="cloudflare-one" />
 
@@ -59,7 +59,9 @@ Requires `cloudflared` version 2025.7.0 or later.
 
 To route a public hostname through Cloudflare Tunnel:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes** > **Hostname routes**.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
 
 2. Select **Create hostname route**.
 

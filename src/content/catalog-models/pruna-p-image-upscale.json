@@ -66,50 +66,50 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"disable_safety_checker": {
-					"default": false,
-					"description": "Disable safety checker for generated images.",
-					"type": "boolean"
-				},
-				"enhance_details": {
-					"default": false,
-					"description": "Enhance fine textures and small details.",
-					"type": "boolean"
-				},
-				"enhance_realism": {
-					"default": false,
-					"description": "Improve realism. Recommended for AI-generated images.",
-					"type": "boolean"
-				},
 				"image": {
 					"description": "Input image to upscale. A publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...).",
 					"type": "string"
 				},
+				"target": {
+					"description": "Target resolution in megapixels (1-128). Output is capped at 128 MP.",
+					"default": 4,
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 128
+				},
 				"output_format": {
-					"default": "jpg",
 					"description": "Format of the output image.",
+					"default": "jpg",
+					"type": "string",
 					"enum": [
 						"webp",
 						"jpg",
 						"png"
-					],
-					"type": "string"
+					]
 				},
 				"output_quality": {
-					"default": 80,
 					"description": "Quality when saving the output image (0-100). Not relevant for .png outputs.",
-					"maximum": 100,
+					"default": 80,
+					"type": "integer",
 					"minimum": 0,
-					"type": "integer"
+					"maximum": 100
 				},
-				"target": {
-					"default": 4,
-					"description": "Target resolution in megapixels (1-128). Output is capped at 128 MP.",
-					"maximum": 128,
-					"minimum": 1,
-					"type": "integer"
+				"enhance_details": {
+					"description": "Enhance fine textures and small details.",
+					"default": false,
+					"type": "boolean"
+				},
+				"enhance_realism": {
+					"description": "Improve realism. Recommended for AI-generated images.",
+					"default": false,
+					"type": "boolean"
+				},
+				"disable_safety_checker": {
+					"description": "Disable safety checker for generated images.",
+					"default": false,
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -121,22 +121,22 @@
 				"enhance_realism",
 				"disable_safety_checker"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
 				"image": {
 					"description": "Presigned URL for the upscaled image.",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

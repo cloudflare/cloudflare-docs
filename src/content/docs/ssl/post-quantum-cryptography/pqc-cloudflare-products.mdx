@@ -59,10 +59,10 @@ Most internal connections have been migrated to X25519MLKEM768. A long tail of s
 
 Outbound TLS 1.3 connections from Cloudflare's edge to customer origin servers.
 
-| Protection    | Status            |
-| ------------- | ----------------- |
-| Key agreement | ✅ X25519MLKEM768 |
-| Signatures    | Not yet           |
+| Protection    | Status                                                                                                                                                                                 |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Key agreement | ✅ X25519MLKEM768                                                                                                                                                                      |
+| Signatures    | ✅ ML-DSA via [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) and [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) |
 
 Reference: [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/).
 

@@ -59,6 +59,12 @@ Consider the following scenario:
 
 In this case, the Cache Response Rule takes precedence. Cloudflare caches the asset for `3600` seconds (1 hour) based on the `s-maxage` directive set by the Cache Response Rule, while visitors still receive the original `s-maxage=600` from the origin because `cloudflare_only` is enabled.
 
+## Difference from Workers and Transform Rules
+
+Workers and [Response Header Transform Rules](/rules/transform/response-header-modification/) execute after the caching decision has been made and cannot influence whether or how a response is cached. Only [Cache Response Rules](/cache/how-to/cache-response-rules/) can modify caching behavior based on origin response headers.
+
+If you need to override `Cache-Control` directives from the origin (for example, remove `private` or add `s-maxage`), use a [Cache Response Rule](/cache/how-to/cache-response-rules/) — not a Worker or Transform Rule.
+
 ## Notes
 
 - If you strip last modified then Smart Edge Revalidation will be turned off.

@@ -1,0 +1,23 @@
+---
+/**
+ * ComboboxGroupLabel — heading for a <ComboboxGroup>. Port of kumo's
+ * Combobox.GroupLabel.
+ */
+import { cn } from "@/lib/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  data-nb-combobox-group-label
+  class={cn(
+    "mx-1.5 px-2 py-1.5 text-xs font-semibold text-muted-foreground select-none",
+    className,
+  )}
+>
+  <slot />
+</div>

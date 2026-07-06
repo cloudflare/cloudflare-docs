@@ -132,39 +132,39 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"duration": {
-					"maximum": 15,
-					"minimum": 3,
-					"type": "integer"
-				},
 				"prompt": {
-					"maxLength": 2500,
+					"type": "string",
 					"minLength": 1,
-					"type": "string"
+					"maxLength": 2500
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"720P",
+						"1080P"
+					]
 				},
 				"ratio": {
+					"type": "string",
 					"enum": [
 						"16:9",
 						"9:16",
 						"1:1",
 						"4:3",
 						"3:4"
-					],
-					"type": "string"
+					]
 				},
-				"resolution": {
-					"enum": [
-						"720P",
-						"1080P"
-					],
-					"type": "string"
+				"duration": {
+					"type": "integer",
+					"minimum": 3,
+					"maximum": 15
 				},
 				"seed": {
-					"maximum": 2147483647,
+					"type": "integer",
 					"minimum": 0,
-					"type": "integer"
+					"maximum": 2147483647
 				},
 				"watermark": {
 					"type": "boolean"
@@ -173,21 +173,21 @@
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"video": {
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

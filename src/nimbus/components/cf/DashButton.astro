@@ -1,0 +1,44 @@
+---
+/**
+ * DashButton — "Go to <feature>" deep link into the Cloudflare dashboard.
+ * Validates the deeplink against CF's generated dash-routes data so docs
+ * can't link to dashboard pages that don't exist.
+ *
+ * CF source: cloudflare-docs/src/components/DashButton.astro
+ * Reads the shared route data in place via `~/content` (→ root src/content);
+ * Starlight LinkButton → our cf/LinkButton port.
+ */
+import CoreManuallyDefinedRoutes from "~/content/dash-routes/core-manually-defined.json";
+import CoreRoutes from "~/content/dash-routes/core.json";
+import ZeroTrustRoutes from "~/content/dash-routes/zero-trust.json";
+import LinkButton from "./LinkButton.astro";
+
+interface Props {
+	url: string;
+	zeroTrust?: boolean;
+	buttonName?: string;
+}
+
+const { url, zeroTrust = false, buttonName } = Astro.props;
+
+const routes = zeroTrust
+	? ZeroTrustRoutes
+	: [...CoreRoutes, ...CoreManuallyDefinedRoutes];
+
+const route = routes.find((route) => route.deeplink === url);
+
+if (!route) {
+	throw new Error(`[DashButton] No route found for ${url}`);
+}
+
+const name = buttonName ?? route.name;
+const baseUrl = zeroTrust
+	? "https://one.dash.cloudflare.com"
+	: "https://dash.cloudflare.com";
+
+const { href } = new URL(route.deeplink, baseUrl);
+---
+
+<LinkButton {href} target="_blank"
+	>Go to <strong>{name}</strong>&nbsp;&#8599;</LinkButton
+>

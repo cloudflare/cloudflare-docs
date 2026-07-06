@@ -1,0 +1,75 @@
+---
+/**
+ * TypeScriptExample — author one ```ts block, render synced JS + TS tabs.
+ * The JS variant is generated at build time, so the MDX stays single-source.
+ *
+ * CF source: cloudflare-docs/src/components/TypeScriptExample.astro
+ *
+ * Mapping notes:
+ *   - Upstream scrapes the raw code from Expressive Code's copy-button
+ *     `data-code` attribute. Nimbus renders fenced blocks with Shiki and
+ *     attaches copy buttons client-side, so the raw source is recovered
+ *     from the rendered `<pre><code>` text instead.
+ *   - With a `filename`, both tabs render through `<Code>` so the title
+ *     bar matches upstream; without one, the TS tab re-uses the
+ *     already-rendered slot HTML untouched.
+ *   - `playground` (CF's Expressive Code plugin meta) has no Nimbus
+ *     equivalent and is accepted-but-ignored.
+ */
+import { parse } from "node-html-parser";
+import { format } from "prettier";
+import tsBlankSpace from "ts-blank-space";
+import { Code } from "../ui/code";
+import { TabItem, Tabs } from "../ui/tabs";
+
+interface Props {
+  filename?: string;
+  omitTabs?: boolean;
+  playground?: boolean;
+}
+
+const { filename, omitTabs = false } = Astro.props;
+
+const slot = await Astro.slots.render("default");
+// `blockTextElements: {}` — by default node-html-parser keeps <pre> content
+// as an unparsed raw-text blob, which makes `pre code` unmatchable.
+const codeEl = parse(slot, { blockTextElements: {} }).querySelector("pre code");
+
+if (!codeEl) {
+  throw new Error(
+    `[TypeScriptExample] Expected a fenced \`\`\`ts code block as the only child (on "${Astro.url.pathname}").`,
+  );
+}
+
+// `.text` is node-html-parser's entity-decoded text content; Shiki keeps
+// the newlines between line spans, so this round-trips the original source.
+let raw = codeEl.text;
+
+// Upstream convention: `compatibilityDate: "$today"` becomes the build date.
+raw = raw.replaceAll(
+  /(?<=compatibilityDate:\s*)"\$today"/gi,
+  `"${new Date().toISOString().split("T")[0]}"`,
+);
+
+const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
+
+const Wrapper = omitTabs ? Fragment : Tabs;
+const wrapperProps = omitTabs ? {} : { syncKey: "workersExamples" };
+---
+
+<div>
+<Wrapper {...wrapperProps}>
+  <TabItem label="JavaScript">
+    <Code lang="js" code={js} meta={filename ? `title="${filename.replace(".ts", ".js")}"` : undefined} />
+  </TabItem>
+  <TabItem label="TypeScript">
+    {
+      filename ? (
+        <Code lang="ts" code={raw} meta={`title="${filename}"`} />
+      ) : (
+        <Fragment set:html={slot} />
+      )
+    }
+  </TabItem>
+</Wrapper>
+</div>

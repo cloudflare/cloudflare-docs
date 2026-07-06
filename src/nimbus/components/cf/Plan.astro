@@ -1,0 +1,55 @@
+---
+/**
+ * Plan — small inline badge showing a feature's CF plan availability.
+ * Renders to a single styled string (e.g. "Available on all plans",
+ * "Enterprise-only").
+ *
+ * CF source: cloudflare-docs/src/components/Plan.astro
+ *
+ * Two upstream input shapes:
+ *   1. `<Plan type="all" | "paid" | "pro" | ... />` — static taxonomy lookup
+ *      against the `mappings` table. Fully supported here.
+ *   2. `<Plan id="some-feature-id" />` — dynamic lookup via a yaml
+ *      `plans.yaml` indexed by `indexPlans()`. **Not supported yet** —
+ *      requires porting the CF plans data file + util. Until then, the
+ *      `id` branch falls through to a placeholder string so authors see
+ *      what's missing.
+ */
+import { z } from "astro/zod";
+
+const MAPPINGS = {
+  all: "Available on all plans",
+  paid: "Available on Paid plans",
+  pro: "Pro and above",
+  business: "Business and above",
+  enterprise: "Enterprise-only",
+  "add-on": "Add-on feature",
+  "ent-add-on": "Enterprise-only paid add-on",
+  "workers-all": "Available on Free and Paid plans",
+  "workers-paid": "Available on Workers Paid plan",
+} as const satisfies Record<string, string>;
+
+type PlanType = keyof typeof MAPPINGS;
+
+const props = z
+  .object({
+    type: z.enum(Object.keys(MAPPINGS) as [PlanType, ...PlanType[]]),
+  })
+  .or(z.object({ id: z.string() }));
+
+const input = props.parse(Astro.props);
+
+let availability: string;
+if ("type" in input) {
+  availability = MAPPINGS[input.type];
+} else {
+  // Pending: port `cloudflare-docs/src/content/plans/*.yaml` + the
+  // `indexPlans()` lookup util. Until then, surface a stub label so it's
+  // visible which Plan calls are still unresolved.
+  availability = `[Plan id="${input.id}" pending data port]`;
+}
+---
+
+<div class="font-semibold text-info">
+  {availability}
+</div>

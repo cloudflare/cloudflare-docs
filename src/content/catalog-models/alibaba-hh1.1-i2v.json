@@ -1,0 +1,120 @@
+{
+	"model_id": "alibaba/hh1.1-i2v",
+	"provider_id": "alibaba",
+	"name": "HappyHorse 1.1 I2V",
+	"description": "Alibaba's HappyHorse 1.1 image-to-video model. Animates a reference image with an optional text prompt, with smoother motion, natural skin textures, and improved close-up quality over 1.0. Supports 720P and 1080P output with durations from 3 to 15 seconds.",
+	"task": "Image-to-Video",
+	"tags": [
+		"Image-to-Video",
+		"Video Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Image-to-Video",
+			"description": "Animate a reference image with a short prompt",
+			"input": {
+				"image": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png",
+				"prompt": "A gentle camera push-in on the scene with soft ambient lighting"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/alibaba/hh1.1-i2v/simple-image-to-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/alibaba/hh1.1-i2v/simple-image-to-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1.1-i2v',\n  {\n    image:\n      'https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png',\n    prompt: 'A gentle camera push-in on the scene with soft ambient lighting',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1.1-i2v\",\n  \"input\": {\n    \"image\": \"https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/wpimhv/rap.png\",\n    \"prompt\": \"A gentle camera push-in on the scene with soft ambient lighting\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://modelstudio.console.alibabacloud.com/",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": null,
+	"metadata": {
+		"Input": "Image URL (no base64)",
+		"Max Duration": "15 seconds",
+		"Resolutions": "720P, 1080P"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-24 01:06:13",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				},
+				"prompt": {
+					"type": "string"
+				},
+				"negative_prompt": {
+					"type": "string"
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"720P",
+						"1080P"
+					]
+				},
+				"duration": {
+					"type": "integer",
+					"minimum": 3,
+					"maximum": 15
+				},
+				"seed": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 2147483647
+				},
+				"watermark": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

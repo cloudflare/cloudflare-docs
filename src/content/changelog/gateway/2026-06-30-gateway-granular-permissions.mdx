@@ -1,0 +1,44 @@
+---
+title: New permissions and roles for Gateway policies and lists
+description: New resource-scoped roles allow administrators to grant access to specific Gateway policy types and lists instead of granting full product-level access.
+products:
+  - gateway
+  - cloudflare-one
+  - fundamentals
+date: 2026-06-30
+---
+
+You can now assign granular, resource-scoped roles for [Cloudflare Gateway](/cloudflare-one/traffic-policies/) firewall policies and [Zero Trust lists](/cloudflare-one/reusable-components/lists/). Administrators can delegate access to specific policy types or list management without granting account-wide or product-wide control.
+
+### What is new
+
+When you [add a member](/fundamentals/manage-members/manage/) or create a [permission policy](/fundamentals/manage-members/policies/), the following resource-scoped roles are now available:
+
+| Role | Description |
+| --- | --- |
+| Zero Trust Gateway Firewall Policies Admin | Can view and edit all Gateway firewall policies, including DNS, HTTP, and Network policies. |
+| Zero Trust Gateway DNS Policies Admin | Can view and edit Gateway DNS policies. |
+| Zero Trust Gateway HTTP Policies Admin | Can view and edit Gateway HTTP policies. |
+| Zero Trust Gateway Network Policies Admin | Can view and edit Gateway Network policies. |
+| Zero Trust Gateway Egress Policies Admin | Can view and edit Gateway Egress policies. |
+| Zero Trust Gateway Resolver Policies Admin | Can view and edit Gateway Resolver policies. |
+| Zero Trust Gateway Policies Admin | Can view and edit all Gateway policies. |
+| Zero Trust Gateway Policies Read | Can view all Gateway policies. |
+| Zero Trust Gateway Read Only | Can view all Gateway resources. |
+| Zero Trust DNS Locations Admin | Can view and edit DNS locations. |
+| Zero Trust Proxy Endpoints Admin | Can view and edit Gateway Proxy Endpoints. |
+| Zero Trust Account Lists Admin | Can view and edit all Gateway and Access lists. |
+| Zero Trust Account Lists Read | Can view all Gateway and Access lists. |
+
+These roles allow you to:
+
+- Grant a network engineer write access to Network policies only, without exposing DNS or HTTP policy configuration.
+- Allow a security analyst to view all Gateway policies in read-only mode for auditing purposes.
+- Delegate list management to a team that maintains block and allow lists without giving them access to policy configuration.
+
+You can also now assign _Resource-scoped roles_. These roles are complementary to existing account-level roles, and allow you to grant access to a specific resource, like an individual Gateway policy or Cloudflare One list. **Existing account-level roles continue to work.** A member with the `Cloudflare Gateway` or `Cloudflare Zero Trust` role retains full access to all Gateway resources. This ensures backward compatibility for existing automation and API tokens.
+
+### Get started
+
+- Review the [resource-scoped roles](/fundamentals/manage-members/roles/#resource-scoped-roles) on the Cloudflare role reference.
+- Learn how to [create permission policies](/fundamentals/manage-members/policies/) that use these roles.

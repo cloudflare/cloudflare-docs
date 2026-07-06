@@ -18,7 +18,13 @@ Platform-specific guides:
 - [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios/)
 - [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android/)
 
-## Fetch HLS and Dash manifests
+## Use HLS and Dash manifests
+
+:::caution
+
+Manifests are dynamic assets that may be updated at any time. Do not cache, proxy, or store manifests; always read them directly from Stream. Outdated manifests may be missing features or refer to assets which have been moved.
+
+:::
 
 ### URL
 

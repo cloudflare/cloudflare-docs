@@ -44,7 +44,7 @@ The total time to index depends on the number and type of files. Factors that af
 
 If an instance receives no search request for 31 days, AI Search automatically pauses its scheduled sync jobs. This applies only to [external data sources](#external-data-sources) (website or R2), since [built-in storage](#built-in-storage) has no sync jobs. This avoids unnecessary requests to your data source to rescan and sync your instance when it is not being used.
 
-A paused instance stays fully searchable, but source changes are not picked up until you resume. To resume monitoring, use the **Resume indexing** control (see [Controls](#controls)). Searching alone does not resume syncing.
+A paused instance stays fully searchable, but source changes are not picked up while sync jobs are paused. After the instance receives search or chat traffic again, AI Search automatically resumes scheduled sync jobs during its activity checks. You can also resume manually with the **Resume indexing** control. Refer to [Controls](#controls).
 
 ## Best practices
 

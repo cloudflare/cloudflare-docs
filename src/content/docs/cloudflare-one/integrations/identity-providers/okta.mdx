@@ -183,7 +183,8 @@ To verify the integration, select **View Logs** in the Okta SCIM application.
 
 If you see the error `Failed to fetch user/group information from the identity`, double-check your Okta configuration:
 
-- If you have more than 100 Okta groups, ensure you include the API token.
+- If your Okta tenant has more than 100 groups, ensure you include an Okta API token in the identity provider configuration. Cloudflare uses the token to retrieve groups from Okta for policy evaluation.
+- If Okta returns more than 100 groups in a user's OIDC token, Okta may omit some group memberships from the token. This is an Okta token claim limitation, not a Cloudflare limit. If a required group is omitted, Cloudflare cannot evaluate policies that depend on that group. To avoid this, narrow the Okta groups claim filter so that only groups used in Cloudflare policies are included. For more information, refer to [Okta's group functions and dynamic allowlists documentation](https://support.okta.com/help/s/article/limitations-of-group-functions-dynamic-allowlists?language=en_US).
 - The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
 
 ### Access login fails due to Okta Enhanced Dynamic Zone

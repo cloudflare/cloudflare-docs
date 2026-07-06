@@ -90,18 +90,18 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 
 {/* prettier-ignore */}
 - <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable): Promise&lt;T&gt;</code>
-- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable, options?: RollbackOptions): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
 	RpcSerializable): Promise&lt;T&gt;</code>
 	- `name` - the name of the step, up to 256 characters.
 	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
 	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
-	RpcSerializable, options?: RollbackOptions): Promise&lt;T&gt;</code>
+	RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
 	- `name` - the name of the step, up to 256 characters.
 	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
 	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
-	- `options` (optional) - register rollback logic for the step. If the Workflow later fails, registered rollbacks run in reverse completion order.
+	- `rollbackOptions` (optional) - register rollback logic for the step. If the Workflow later fails, registered rollbacks run in reverse step-start order.
 
 :::note[Returning state]
 
@@ -214,21 +214,29 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 ## Rollback options
 
 ```ts
-type RollbackContext = {
+type WorkflowRollbackContext<T = unknown> = {
+	ctx: WorkflowStepContext;
 	error: Error;
-	output: unknown | undefined;
+	output: T | undefined;
 };
 
-type RollbackFn = (ctx: RollbackContext) => Promise<void>;
+type WorkflowRollbackHandler<T = unknown> = (
+	ctx: WorkflowRollbackContext<T>,
+) => Promise<void>;
 
-type RollbackOptions = {
-	rollback: RollbackFn;
-	rollbackConfig?: WorkflowStepConfig;
+type WorkflowStepRollbackConfig = Pick<
+	WorkflowStepConfig,
+	"retries" | "timeout"
+>;
+
+type WorkflowStepRollbackOptions<T = unknown> = {
+	rollback: WorkflowRollbackHandler<T>;
+	rollbackConfig?: WorkflowStepRollbackConfig;
 };
 ```
 
-- Pass this `RollbackOptions` object as the final argument to `step.do()` to register a compensating action for a successful step.
-- `rollback` receives the error that caused the Workflow to fail and the step output returned by the forward step.
+- Pass this `WorkflowStepRollbackOptions` object as the final argument to `step.do()` to register a compensating action for a successful step.
+- `rollback` receives the original step context, the error that caused the Workflow to fail, and the step output returned by the forward step.
 - `rollbackConfig` applies retry and timeout settings to the rollback handler itself.
 
 <TypeScriptExample>
@@ -243,9 +251,11 @@ export class BillingWorkflow extends WorkflowEntrypoint<Env> {
 				return { chargeId: charge.id };
 			},
 			{
-				rollback: async ({ output, error }) => {
+				rollback: async ({ ctx, output, error }) => {
 					const { chargeId } = output as { chargeId: string };
-					await refundCharge(chargeId, { reason: error.message });
+					await refundCharge(chargeId, {
+						reason: `${ctx.step.name}: ${error.message}`,
+					});
 				},
 				rollbackConfig: {
 					retries: {

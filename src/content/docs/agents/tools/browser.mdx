@@ -17,7 +17,7 @@ import {
 
 Agents can use [Browser Run](/browser-run/) to inspect and interact with web pages through the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/). <InlineBadge preset="beta" /> Browser tools are useful when an agent needs to understand rendered pages, capture screenshots, debug frontend behavior, or extract information that is only available after JavaScript runs.
 
-Instead of a fixed set of browser actions (click, screenshot, navigate), the model writes code that runs CDP commands against a live browser session through the `cdp` connector — accessing all domains, commands, events, and types in the protocol. Executions are recorded on a durable Code Mode runtime (abort-and-replay), so a run can pause for approval and resume with its browser session intact.
+Instead of a fixed set of browser actions (click, screenshot, navigate), the model writes code that runs CDP commands against a live browser session through the `cdp` connector — accessing all domains, commands, events, and types in the protocol. Executions use the [durable Code Mode runtime](/agents/tools/codemode/how-it-works/), so a run can pause for approval and resume with its browser session intact.
 
 Use browser tools when you want an agent to:
 
@@ -79,7 +79,7 @@ Browser tools must be created from inside a Durable Object (such as an Agent) �
 | `browser_links`    | List links on a page.                                                                                         |
 | `browser_scrape`   | Scrape specific elements by CSS selector.                                                                     |
 
-To discover protocol surface, the model calls `cdp.spec()` (the live, normalized CDP protocol description) or the runtime's built-in `codemode.search` / `codemode.describe`.
+To discover protocol surface, the model calls `cdp.spec()` (the live, normalized CDP protocol description) or the runtime's built-in [`codemode.search()` and `codemode.describe()`](/agents/tools/codemode/api-reference/#sandbox-codemode-api).
 
 ## Configuration
 

@@ -1,0 +1,61 @@
+---
+/**
+ * FullPageLines — right-side dashed gutter for the landing page.
+ *
+ * Two 1px vertical dashed rules bracket a dot-grid column on the RIGHT side of
+ * the content. The inner rule sits on the cards' right edge (the content
+ * column's edge); the outer rule sits at the container boundary, with the dot
+ * grid filling the padding gutter between the two rules. Desktop-only, purely
+ * decorative.
+ *
+ * Shares the blueprint treatment with /directory (BackgroundLines) and
+ * /changelog (ChangelogLayout): dashed rules use --nb-border; dots use
+ * --nb-grid-line.
+ */
+
+// 1px vertical dashed rule: 16px dash + 16px gap (32px period).
+const dashed =
+	"background-image:linear-gradient(to bottom,var(--nb-border) 50%,transparent 50%);background-size:1px 32px;background-repeat:repeat-y";
+
+// Matches the content container's horizontal padding in index.astro, so the
+// gutter tracks the cards' right edge responsively.
+const pad = "max(2rem, 4vw)";
+---
+
+<div
+	class="pointer-events-none absolute inset-0 z-0 hidden lg:block"
+	aria-hidden="true"
+>
+	{/* Centered box matching the content container (max-w-[1280px]). */}
+	<div
+		class="absolute inset-y-0 left-1/2 w-full max-w-[1280px] -translate-x-1/2"
+	>
+		{/* Dot-grid gutter — fills the right padding, between the two rules. */}
+		<div class="absolute inset-y-0 right-0" style={`width:${pad}`}>
+			<svg class="absolute inset-0 h-full w-full" aria-hidden="true">
+				<pattern
+					id="nb-fpl-dots"
+					x="0"
+					y="0"
+					width="12"
+					height="12"
+					patternUnits="userSpaceOnUse"
+				>
+					<circle cx="6" cy="6" r="0.75" fill="var(--nb-grid-line)"></circle>
+				</pattern>
+				<rect x="0" y="0" width="100%" height="100%" fill="url(#nb-fpl-dots)"></rect>
+			</svg>
+		</div>
+
+		{/* Inner dashed rule — sits on the cards' right edge. */}
+		<div
+			class="absolute inset-y-0 w-px translate-x-1/2"
+			style={`right:${pad};${dashed}`}
+		>
+		</div>
+
+		{/* Outer dashed rule — at the container boundary. */}
+		<div class="absolute inset-y-0 right-0 w-px translate-x-1/2" style={dashed}>
+		</div>
+	</div>
+</div>

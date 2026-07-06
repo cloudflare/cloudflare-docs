@@ -6,7 +6,6 @@ import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
 import Description from "~/components/Description.astro";
-import LastReviewed from "~/components/LastReviewed.astro";
 import ComponentUsage from "~/components/ComponentUsage.astro";
 import PageActions from "~/components/PageActions.astro";
 
@@ -14,7 +13,6 @@ import { getEntry } from "astro:content";
 
 const frontmatter = Astro.locals.starlightRoute.entry.data;
 
-const reviewed = frontmatter.reviewed;
 const summary = frontmatter.summary;
 const component = frontmatter.styleGuide?.component;
 
@@ -103,8 +101,6 @@ if (!hideBreadcrumbs) {
 </div>
 
 {!hideTitle && <Default />}
-
-{reviewed && <LastReviewed date={reviewed} />}
 
 {summary && <Description set:html={marked.parse(summary)} />}
 

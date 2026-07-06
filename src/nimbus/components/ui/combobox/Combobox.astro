@@ -1,0 +1,227 @@
+---
+/**
+ * Combobox — a typeahead/autocomplete: an editable input that filters a
+ * dropdown list as you type, with a clear button, an empty state, and a
+ * check on the selected row.
+ *
+ * Astro port of the kumo React Combobox (@cloudflare/kumo, built on Base UI). Same
+ * composition shape, driven by a vanilla controller (combobox.client.ts)
+ * instead of React, and styled with Nimbus tokens. Single-select.
+ *
+ *   import { Combobox, ComboboxOption, ComboboxGroup, ComboboxGroupLabel }
+ *     from "@/components/ui/combobox";
+ *
+ *   <Combobox label="Fruit" name="fruit" placeholder="Search…"
+ *             value="apple" displayValue="Apple">
+ *     <ComboboxOption value="apple">Apple</ComboboxOption>
+ *     <ComboboxGroup>
+ *       <ComboboxGroupLabel>Citrus</ComboboxGroupLabel>
+ *       <ComboboxOption value="orange">Orange</ComboboxOption>
+ *       <ComboboxOption value="lemon" disabled>Lemon</ComboboxOption>
+ *     </ComboboxGroup>
+ *   </Combobox>
+ *
+ * Behaviour: type to filter (case-insensitive substring on the option label),
+ * ↑/↓/Home/End/Enter/Esc, clear button, click-outside close (reverts the
+ * input to the selected label), above/below flip, optional hidden
+ * `<input name>` for form posts, and a bubbling `combobox:change` CustomEvent
+ * (`detail: { value, label }`).
+ *
+ * Accessible name: pass `label` (visible) or `aria-label` (hidden).
+ */
+import { cn } from "@/lib/cn";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends Omit<HTMLAttributes<"div">, "size"> {
+  /** Form field name — when set, a hidden input mirrors the selected value. */
+  name?: string;
+  /** Initially selected value (matches an option's `value`). */
+  value?: string;
+  /** Initial text shown in the input (the selected option's label). Avoids
+   *  the placeholder flash before the controller resolves the label. */
+  displayValue?: string;
+  /** Placeholder shown when the input is empty. */
+  placeholder?: string;
+  /** Visible label rendered above the input. */
+  label?: string;
+  /** Text shown when no option matches the filter. */
+  emptyText?: string;
+  /** Trigger size. Mirrors kumo's input sizes. @default "base" */
+  size?: "sm" | "base" | "lg";
+  disabled?: boolean;
+  /** When `false`, appends an "(optional)" hint to the label. */
+  required?: boolean;
+  /** Helper text below the input. */
+  description?: string;
+  /** Error message below the input (also flags the input). */
+  error?: string;
+}
+
+const {
+  name,
+  value,
+  displayValue,
+  placeholder = "Search…",
+  label,
+  emptyText = "No results found.",
+  size = "base",
+  disabled = false,
+  required,
+  description,
+  error,
+  class: className,
+  id: idProp,
+  "aria-label": ariaLabel,
+  ...attrs
+} = Astro.props;
+
+const id = idProp ?? `nb-combobox-${crypto.randomUUID().slice(0, 8)}`;
+const inputId = `${id}-input`;
+const labelId = `${id}-label`;
+const listId = `${id}-list`;
+const descId = description ? `${id}-desc` : undefined;
+const errId = error ? `${id}-err` : undefined;
+
+const sizeInput = {
+  sm: "h-8 pl-2.5 pr-10 text-[0.8125rem]",
+  base: "h-9 pl-3 pr-12 text-sm",
+  lg: "h-10 pl-3.5 pr-14 text-base",
+}[size];
+
+const icon = {
+  sm: { size: "h-3.5 w-3.5", clear: "right-7", caret: "right-1.5" },
+  base: { size: "h-4 w-4", clear: "right-8", caret: "right-2" },
+  lg: { size: "h-[1.125rem] w-[1.125rem]", clear: "right-9", caret: "right-3" },
+}[size];
+---
+
+<div
+  data-nb-combobox
+  data-value={value ?? ""}
+  class={cn("grid gap-1.5", className)}
+  {...attrs}
+>
+  {
+    label && (
+      <label
+        id={labelId}
+        for={inputId}
+        class="text-sm font-medium text-foreground select-none"
+      >
+        {label}
+        {required === false && (
+          <span class="ml-1 font-normal text-muted-foreground">(optional)</span>
+        )}
+      </label>
+    )
+  }
+
+  <div class="relative">
+    <input
+      id={inputId}
+      type="text"
+      role="combobox"
+      autocomplete="off"
+      aria-autocomplete="list"
+      aria-expanded="false"
+      aria-controls={listId}
+      aria-labelledby={label ? labelId : undefined}
+      aria-label={!label ? ariaLabel : undefined}
+      aria-describedby={[descId, errId].filter(Boolean).join(" ") || undefined}
+      data-nb-combobox-input
+      placeholder={placeholder}
+      value={displayValue}
+      disabled={disabled}
+      class={cn(
+        "w-full rounded-lg border border-border bg-background font-normal text-foreground",
+        "transition-colors hover:border-border-strong placeholder:text-muted-foreground",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        error && "border-danger focus-visible:ring-danger",
+        sizeInput,
+      )}
+    />
+
+    <button
+      type="button"
+      data-nb-combobox-clear
+      aria-label="Clear"
+      hidden
+      class={cn(
+        "absolute top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-sm bg-transparent p-0 text-muted-foreground hover:text-foreground",
+        icon.clear,
+      )}
+    >
+      <Icon name="ph:x" class={icon.size} />
+    </button>
+
+    <button
+      type="button"
+      data-nb-combobox-trigger
+      aria-label="Show options"
+      tabindex="-1"
+      class={cn(
+        "absolute top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center bg-transparent p-0 text-muted-foreground",
+        icon.caret,
+      )}
+    >
+      <Icon name="ph:caret-down" class={icon.size} />
+    </button>
+
+    <div
+      data-nb-combobox-popup
+      hidden
+      class={cn(
+        "absolute right-0 left-0 z-50 mt-1 flex max-h-72 flex-col overflow-hidden rounded-lg border border-border bg-card py-1.5 shadow-lg",
+        "data-[placement=top]:top-auto data-[placement=top]:bottom-full data-[placement=top]:mt-0 data-[placement=top]:mb-1",
+      )}
+    >
+      <div
+        id={listId}
+        role="listbox"
+        data-nb-combobox-list
+        aria-labelledby={label ? labelId : undefined}
+        class="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+      >
+        <slot />
+      </div>
+      <div
+        data-nb-combobox-empty
+        hidden
+        class="mx-1.5 px-4 py-2 text-sm leading-tight text-muted-foreground"
+      >
+        {emptyText}
+      </div>
+    </div>
+
+    {
+      name && (
+        <input
+          type="hidden"
+          data-nb-combobox-value-input
+          name={name}
+          value={value ?? ""}
+        />
+      )
+    }
+  </div>
+
+  {
+    error ? (
+      <span id={errId} class="text-sm text-danger">
+        {error}
+      </span>
+    ) : (
+      description && (
+        <span id={descId} class="text-sm leading-snug text-muted-foreground">
+          {description}
+        </span>
+      )
+    )
+  }
+</div>
+
+<script>
+  import "./combobox.client";
+</script>

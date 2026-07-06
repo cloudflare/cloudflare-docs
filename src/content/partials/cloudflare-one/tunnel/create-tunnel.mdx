@@ -3,20 +3,18 @@
 
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
+import { DashButton } from "~/components";
+
+1. Log in to the Cloudflare dashboard and go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
 
 2. Select **Create a tunnel**.
 
-3. Choose **Cloudflared** for the connector type and select **Next**.
+3. Enter a name for your tunnel. We suggest choosing a name that reflects the type of resources you want to connect through this tunnel (for example, `enterprise-VPC-01`).
 
-4. Enter a name for your tunnel. We suggest choosing a name that reflects the type of resources you want to connect through this tunnel (for example, `enterprise-VPC-01`).
+4. Select **Create Tunnel**.
 
-5. Select **Save tunnel**.
+5. Choose your operating system, then copy the installation command and run it in a terminal on your origin server.
 
-6. Next, you will need to install `cloudflared` and run it. To do so, check that the environment under **Choose an environment** reflects the operating system on your machine, then copy the command in the box below and paste it into a terminal window. Run the command.
-
-7. Once the command has finished running, your connector will appear in Cloudflare One.
-
-   ![Connector appearing in the UI after cloudflared has run](~/assets/images/cloudflare-one/connections/connect-apps/connector.png)
-
-8. Select **Next**.
+6. Wait for the tunnel to connect. Once the connection is established, select **Continue**.
