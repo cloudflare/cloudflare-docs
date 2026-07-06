@@ -26,7 +26,7 @@ The CIDR-encoded route endpoints are deprecated in favor of the standard, `route
 - Update a tunnel route: [`PATCH /accounts/{account_id}/teamnet/routes/{route_id}`](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/edit/)
 - Delete a tunnel route: [`DELETE /accounts/{account_id}/teamnet/routes/{route_id}`](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/delete/)
 
-### What is changing?
+### What is changing
 
 |                  | Deprecated (CIDR-encoded path)                                 | Replacement                                                            |
 | :--------------- | :------------------------------------------------------------- | :--------------------------------------------------------------------- |
@@ -40,7 +40,7 @@ The CIDR-encoded route endpoints are deprecated in favor of the standard, `route
 1. Capture each route's `route_id` by calling [List tunnel routes](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/list/), or read it from the response the first time you create a route with the replacement endpoint.
 2. Update any scripts, backend services, or CI/CD pipelines that call the CIDR-encoded endpoints directly.
 3. If you manage routes with the `cloudflared tunnel route ip add | delete` commands, upgrade `cloudflared` to the [latest version](https://github.com/cloudflare/cloudflared/releases).
-4. If you manage routes with Terraform, make sure you are on a current version of the [`cloudflare_zero_trust_tunnel_route`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_route) resource and the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+4. If you manage routes with Terraform, make sure you are on a current version of the [`cloudflare_zero_trust_tunnel_cloudflared_route`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_cloudflared_route) resource and the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 ```bash
 # Before: create a route by URL-encoding the CIDR into the path
@@ -78,10 +78,7 @@ This affects:
 
 ### Action required
 
-Fetch connection details from the tunnel-specific connections endpoint instead of parsing it off the list or get response:
-
-- Cloudflare Tunnel: [`GET /accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections`](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/connections/methods/get/)
-- Cloudflare Mesh: [`GET /accounts/{account_id}/warp_connector/{tunnel_id}/connections`](/api/resources/zero_trust/subresources/tunnels/subresources/warp_connector/subresources/connections/methods/get/)
+Fetch connection details from the tunnel-specific connections endpoint instead of parsing it off the list or get response. For Cloudflare Tunnel, call [`GET /accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections`](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/connections/methods/get/). For Cloudflare Mesh, call [`GET /accounts/{account_id}/warp_connector/{tunnel_id}/connections`](/api/resources/zero_trust/subresources/tunnels/subresources/warp_connector/subresources/connections/methods/get/).
 
 ```bash
 # Before: read connections off the tunnel object
