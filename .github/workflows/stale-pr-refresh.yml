@@ -72,7 +72,8 @@ jobs:
               "/repos/${REPO}/statuses/${PR_SHA}" \
               -f state="$STATE" \
               -f context="pr/staleness-check" \
-              -f description="$DESCRIPTION"
+              -f description="$DESCRIPTION" \
+              || { echo "  Failed to post status for PR #${PR_NUMBER} — continuing"; true; }
 
             echo "  Posted: $STATE — $DESCRIPTION"
           done
