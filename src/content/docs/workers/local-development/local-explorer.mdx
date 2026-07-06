@@ -47,6 +47,14 @@ Local Explorer supports the following binding types:
 
 For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [SQLite storage API](/durable-objects/api/sqlite-storage-api/), Local Explorer includes a SQL studio. This is the same experience available in the Cloudflare dashboard for deployed D1 databases. It provides both a visual table browser with inline editing and a SQL query editor where you can run arbitrary queries.
 
+## Observability
+
+Local Explorer includes an **Observability** section that automatically traces every Worker invocation.
+
+Every binding call (D1 queries, KV reads, R2 operations, Durable Object calls, `fetch()`) is captured as a span with timing, status, and error details. Use the **Traces** view to expand a waterfall of spans and see exactly where a request failed. Use the **Logs** view to filter and search captured `console.*` output by level instead of scrolling through terminal output.
+
+For debugging scenarios and examples, refer to [Local observability](/workers/local-development/local-observability/).
+
 ## API
 
 Local Explorer exposes an API at `/cdn-cgi/explorer/api` that provides programmatic access to the same operations available in the browser interface. The API serves an [OpenAPI specification](https://www.openapis.org/) that describes all available endpoints, parameters, and response formats.
@@ -59,7 +67,7 @@ curl http://localhost:8787/cdn-cgi/explorer/api
 
 ### Use with AI coding agents
 
-The OpenAPI spec at `/cdn-cgi/explorer/api` allows AI coding agents and other tools to discover and interact with your local bindings programmatically. An agent can fetch the spec, understand what resources are available, and make API calls to read or modify local data without requiring manual setup.
+The OpenAPI spec at `/cdn-cgi/explorer/api` allows AI coding agents and other tools to discover and interact with your local development environment programmatically. An agent can fetch the spec, understand what resources are available, and make API calls to read or modify local data, query [traces and logs](/workers/local-development/local-observability/), and debug your Worker without requiring manual setup.
 
 This can be useful as an alternative to the CLI when you want an agent to:
 
@@ -67,3 +75,4 @@ This can be useful as an alternative to the CLI when you want an agent to:
 - Inspect the state of a [Durable Object](/durable-objects/) during debugging
 - Trigger or retry a [Workflow](/workflows/) run with different input data
 - Upload test files to a local [R2](/r2/) bucket
+
