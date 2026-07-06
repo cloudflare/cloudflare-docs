@@ -2,8 +2,8 @@
  * Conventions specialist workflow
  *
  * A stateless specialist dispatched by the code-review orchestrator. It checks
- * the PR's title, description, and redirect checklist against the repository's
- * PR conventions using the conventions-check skill in a single holistic session.
+ * the PR's title, description, and scope against the repository's PR conventions
+ * using the conventions-check skill in a single session.
  *
  * Unlike the code/style specialists, this one does NOT review diffs — it
  * reviews only the PR metadata. It reads title and body from the specialist

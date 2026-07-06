@@ -80,16 +80,22 @@
 		},
 		{
 			// Two new specialist workflows added to the review pipeline:
-			// - ConventionsSpecialist: checks PR title, description, and redirect
-			//   checklist via a light AI session (conventions-check skill).
+			// - ConventionsSpecialist: checks PR title, description, and scope via a
+			//   light AI session (conventions-check skill).
 			// - RedirectSpecialist: pure TypeScript, no model; checks that renamed or
 			//   deleted docs pages have entries in public/__redirects.
-			// See workflows/conventions-specialist.ts and workflows/redirect-specialist.ts.
+			// See workflows/conventions-specialist.ts (RedirectSpecialist since removed).
 			"tag": "v7",
 			"new_sqlite_classes": [
 				"FlueConventionsSpecialistWorkflow",
 				"FlueRedirectSpecialistWorkflow",
 			],
+		},
+		{
+			// RedirectSpecialist removed from the review pipeline — the check added
+			// noise without enough signal. DO class deleted to clean up the registry.
+			"tag": "v8",
+			"deleted_classes": ["FlueRedirectSpecialistWorkflow"],
 		},
 	],
 	// Explicitly empty crons list so wrangler clears any previously registered

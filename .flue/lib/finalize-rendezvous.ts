@@ -8,7 +8,6 @@
  *     code.json           — written by the code-review specialist on completion
  *     style.json          — written by the style-guide specialist on completion
  *     conventions.json    — written by the conventions specialist on completion
- *     redirects.json      — written by the redirect specialist on completion
  *     finalize.lock       — atomic conditional-PUT claim; exactly one specialist wins
  *
  * dispatchId = the orchestrator's runId. It isolates same-head concurrent
@@ -29,12 +28,7 @@ import { getInternalHeaders } from "../lib/internal-auth";
  * Shared by the orchestrator and every specialist — avoids per-site constants
  * that can drift out of sync.
  */
-export const EXPECTED_STREAMS = [
-	"code",
-	"style",
-	"conventions",
-	"redirects",
-] as const;
+export const EXPECTED_STREAMS = ["code", "style", "conventions"] as const;
 
 // ── Key helpers ───────────────────────────────────────────────────────────────
 
@@ -285,14 +279,6 @@ export function degradedConventionsResult(): CodeReviewResult {
 	return {
 		findings: [],
 		summary: "Conventions check could not complete.",
-		reviewedFiles: [],
-	};
-}
-
-export function degradedRedirectsResult(): CodeReviewResult {
-	return {
-		findings: [],
-		summary: "Redirect check could not complete.",
 		reviewedFiles: [],
 	};
 }

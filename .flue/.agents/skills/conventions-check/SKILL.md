@@ -1,6 +1,6 @@
 ---
 name: conventions-check
-description: Review a pull request's title, description, and redirect checklist against the repository's PR conventions and the actual PR template.
+description: Review a pull request's title, description, and scope against the repository's PR conventions.
 ---
 
 You are checking a pull request for adherence to this repository's contribution conventions. Your job is to flag concrete violations — do not invent issues or second-guess the author's intent when the evidence is ambiguous.

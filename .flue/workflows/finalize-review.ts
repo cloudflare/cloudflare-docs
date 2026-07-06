@@ -2,24 +2,16 @@
  * Finalize-review workflow
  *
  * Admitted by whichever specialist wins the R2 finalize lock. It:
- *   1. Reads the dispatch context + all four stream results from R2.
+ *   1. Reads the dispatch context + all three stream results from R2.
  *   2. Head-guards: skips posting if the PR head has moved on.
  *   3. Idempotency-guards: skips if this headSha is already finalized.
  *   4. Reconciles code, style, and conventions findings against prior review +
  *      human comments via the LLM reconciler.
- *      Reconciles redirects deterministically (no model) — see below.
  *   5. Persists review-<headSha>.json.
  *   6. Renders and posts (or logs) the final review comment.
  *   7. Swaps 👀→👍 on any trigger comment.
  *   8. Marks the auto-review slot consumed (if applicable).
  *   9. Cleans up the pending/<headSha>/<dispatchId>/ namespace.
- *
- * Redirect reconciliation is deterministic (no model):
- *   - active    = current redirect findings (from the redirect specialist)
- *   - resolved  = IDs from previous redirect findings not in the current set
- *   - ignored   = [] (no model-driven ack; a redirect is suppressed by adding it)
- * This avoids hallucination risk for deterministic findings and keeps the
- * redirect specialist true to its "no model" design.
  *
  * POST /workflows/finalize-review  (internal — admitted by specialists)
  */
@@ -114,44 +106,31 @@ export async function run({
 	// (especially in local dev), so we carry the mode through context.json.
 	const reviewMode = ctx.reviewMode;
 
-	const [codePayload, stylePayload, conventionsPayload, redirectsPayload] =
-		await Promise.all([
-			readStreamResult<CodeReviewResult>(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"code",
-			),
-			readStreamResult<StyleGuideResult>(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"style",
-			),
-			readStreamResult<CodeReviewResult>(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"conventions",
-			),
-			readStreamResult<CodeReviewResult>(
-				bucket,
-				input.number,
-				input.headSha,
-				input.dispatchId,
-				"redirects",
-			),
-		]);
+	const [codePayload, stylePayload, conventionsPayload] = await Promise.all([
+		readStreamResult<CodeReviewResult>(
+			bucket,
+			input.number,
+			input.headSha,
+			input.dispatchId,
+			"code",
+		),
+		readStreamResult<StyleGuideResult>(
+			bucket,
+			input.number,
+			input.headSha,
+			input.dispatchId,
+			"style",
+		),
+		readStreamResult<CodeReviewResult>(
+			bucket,
+			input.number,
+			input.headSha,
+			input.dispatchId,
+			"conventions",
+		),
+	]);
 
-	if (
-		!codePayload ||
-		!stylePayload ||
-		!conventionsPayload ||
-		!redirectsPayload
-	) {
+	if (!codePayload || !stylePayload || !conventionsPayload) {
 		console.log({
 			message: `Finalize aborted: stream result(s) missing for PR #${input.number}`,
 			event: "finalize_review",
@@ -161,7 +140,6 @@ export async function run({
 			codePresent: !!codePayload,
 			stylePresent: !!stylePayload,
 			conventionsPresent: !!conventionsPayload,
-			redirectsPresent: !!redirectsPayload,
 			runId,
 			action: "stream_results_missing",
 		});
@@ -172,11 +150,9 @@ export async function run({
 	const codeOk = codePayload.ok;
 	const styleOk = stylePayload.ok;
 	const conventionsOk = conventionsPayload.ok;
-	const redirectsOk = redirectsPayload.ok;
 	const codeResult = codePayload.result;
 	const styleResult = stylePayload.result;
 	const conventionsResult = conventionsPayload.result;
-	const redirectsResult = redirectsPayload.result;
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
@@ -260,7 +236,6 @@ export async function run({
 	let previousCodeFindings: CodeReviewFinding[] = [];
 	let previousStyleFindings: StyleGuideFinding[] = [];
 	let previousConventionsFindings: CodeReviewFinding[] = [];
-	let previousRedirectsFindings: CodeReviewFinding[] = [];
 	if (previousReviewKey) {
 		try {
 			const obj = await bucket.get(previousReviewKey);
@@ -273,8 +248,6 @@ export async function run({
 					previousCodeFindings = (parsed.code ?? []) as CodeReviewFinding[];
 					previousStyleFindings = (parsed.style ?? []) as StyleGuideFinding[];
 					previousConventionsFindings = (parsed.conventions ??
-						[]) as CodeReviewFinding[];
-					previousRedirectsFindings = (parsed.redirects ??
 						[]) as CodeReviewFinding[];
 				}
 			}
@@ -356,43 +329,6 @@ export async function run({
 		return reconciled;
 	};
 
-	/**
-	 * Deterministic redirect reconciliation — no model.
-	 *
-	 * Redirect findings have stable hashed IDs (RD-XXXXXX) derived from the old
-	 * URL, so set arithmetic is exact. An author suppresses a redirect warning by
-	 * adding the redirect to public/__redirects; the next run won't emit the
-	 * finding and it self-resolves. No model-based ack path.
-	 */
-	const reconcileRedirects = (
-		currentFindings: CodeReviewFinding[],
-		previousFindings: CodeReviewFinding[],
-		degraded: boolean,
-	): ReconcileResult => {
-		if (degraded) {
-			return {
-				active: previousFindings,
-				ignored_by_reviewer: [],
-				resolved: [],
-				summary:
-					"Redirect check could not complete — prior findings carried forward.",
-			};
-		}
-		const currentIds = new Set(currentFindings.map((f) => f.id));
-		const resolved = previousFindings
-			.filter((f) => !currentIds.has(f.id))
-			.map((f) => f.id);
-		return {
-			active: currentFindings,
-			ignored_by_reviewer: [],
-			resolved,
-			summary:
-				currentFindings.length === 0
-					? "No missing redirect entries found."
-					: `${currentFindings.length} redirect entry gap${currentFindings.length === 1 ? "" : "s"} found.`,
-		};
-	};
-
 	// For degraded streams (specialist failed), carry previous findings forward
 	// as active rather than reconciling — an empty degraded result must not
 	// falsely resolve prior findings that the specialist never actually reviewed.
@@ -455,13 +391,6 @@ export async function run({
 					"Conventions check could not complete — prior findings carried forward.",
 			};
 
-	// Redirects reconcile deterministically — no model.
-	const reconciledRedirects = reconcileRedirects(
-		redirectsResult.findings,
-		previousRedirectsFindings,
-		!redirectsOk,
-	);
-
 	// ── 5. Persist findings to R2 ─────────────────────────────────────────────
 	const currentReviewKey = `${prDir}/review-${input.headSha}.json`;
 	await bucket.put(
@@ -470,12 +399,11 @@ export async function run({
 			code: reconciledCode.active,
 			style: reconciledStyle.active,
 			conventions: reconciledConventions.active,
-			redirects: reconciledRedirects.active,
 		}),
 	);
 
 	// ── 6. Render the comment ─────────────────────────────────────────────────
-	// Failure comment only when both code AND style failed. Conventions/redirect
+	// Failure comment only when both code AND style failed. Conventions
 	// failures alone still render the main review with degraded notices.
 	const bothFailed = !codeOk && !styleOk;
 	const commentBody = bothFailed
@@ -485,11 +413,9 @@ export async function run({
 					code: reconciledCode,
 					style: reconciledStyle,
 					conventions: reconciledConventions,
-					redirects: reconciledRedirects,
 					codeFailed: !codeOk,
 					styleFailed: !styleOk,
 					conventionsFailed: !conventionsOk,
-					redirectsFailed: !redirectsOk,
 				},
 				input.headSha,
 				ctx.forceFullReview,
@@ -499,18 +425,15 @@ export async function run({
 	const totalActive =
 		reconciledCode.active.length +
 		reconciledStyle.active.length +
-		reconciledConventions.active.length +
-		reconciledRedirects.active.length;
+		reconciledConventions.active.length;
 	const totalIgnored =
 		reconciledCode.ignored_by_reviewer.length +
 		reconciledStyle.ignored_by_reviewer.length +
-		reconciledConventions.ignored_by_reviewer.length +
-		reconciledRedirects.ignored_by_reviewer.length;
+		reconciledConventions.ignored_by_reviewer.length;
 	const totalResolved =
 		reconciledCode.resolved.length +
 		reconciledStyle.resolved.length +
-		reconciledConventions.resolved.length +
-		reconciledRedirects.resolved.length;
+		reconciledConventions.resolved.length;
 
 	if (reviewMode === "log") {
 		console.log({
@@ -573,8 +496,8 @@ export async function run({
 
 	// ── 8. Mark auto-review slot consumed ─────────────────────────────────────
 	// Only when both code and style specialists succeeded and this was an
-	// automatic (not codeowner-bypassed) run. Conventions/redirect failures do
-	// not block slot consumption — they carry less risk and may self-resolve.
+	// automatic (not codeowner-bypassed) run. Conventions failures do not block
+	// slot consumption — they carry less risk and may self-resolve.
 	if (!ctx.bypassReviewLimit && codeOk && styleOk) {
 		await markAutoReviewCompleted(bucket, input.number, input.headSha).catch(
 			() => {},

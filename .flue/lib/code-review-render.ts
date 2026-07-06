@@ -11,7 +11,6 @@
  *   1. ### Code Review
  *   2. ### Conventions
  *   3. ### Style Guide Review
- *   4. ### Redirects
  *
  * Also exports ReconcileResultSchema / ReconcileResult, which are the model
  * output schema for the reconcile-code-review skill and the input type for
@@ -52,20 +51,17 @@ export const ReconcileResultSchema = v.object({
 
 export type ReconcileResult = v.InferOutput<typeof ReconcileResultSchema>;
 
-/** All four reconciled review streams rendered into one comment. */
+/** All three reconciled review streams rendered into one comment. */
 export interface RenderReviewInput {
 	code: ReconcileResult;
 	style: ReconcileResult;
 	conventions: ReconcileResult;
-	redirects: ReconcileResult;
 	/** True when the code review degraded (its findings may be incomplete). */
 	codeFailed?: boolean;
 	/** True when the style-guide review degraded (its findings may be incomplete). */
 	styleFailed?: boolean;
 	/** True when the conventions check degraded (its findings may be incomplete). */
 	conventionsFailed?: boolean;
-	/** True when the redirect check degraded (its findings may be incomplete). */
-	redirectsFailed?: boolean;
 }
 
 const SECTION_FAILURE_NOTE =
@@ -208,7 +204,7 @@ function renderSeverityTable(
 /**
  * Render one review section (### heading + status + severity tables).
  * `includeCritical` is true for the code review, false for all others
- * (style, conventions, redirects never emit critical findings).
+ * (style and conventions never emit critical findings).
  */
 function renderSection(
 	lines: string[],
@@ -265,31 +261,22 @@ export function renderComment(
 	const code = activeBySeverity(reviews.code);
 	const style = activeBySeverity(reviews.style);
 	const conventions = activeBySeverity(reviews.conventions);
-	const redirects = activeBySeverity(reviews.redirects);
 
 	const criticalCount = code.critical.length;
 	const warningCount =
-		code.warnings.length +
-		conventions.warnings.length +
-		style.warnings.length +
-		redirects.warnings.length;
+		code.warnings.length + conventions.warnings.length + style.warnings.length;
 	const suggestionCount =
 		code.suggestions.length +
 		conventions.suggestions.length +
-		style.suggestions.length +
-		redirects.suggestions.length;
+		style.suggestions.length;
 	const totalActive = criticalCount + warningCount + suggestionCount;
 	const ignoredCount =
 		reviews.code.ignored_by_reviewer.length +
 		reviews.conventions.ignored_by_reviewer.length +
-		reviews.style.ignored_by_reviewer.length +
-		reviews.redirects.ignored_by_reviewer.length;
+		reviews.style.ignored_by_reviewer.length;
 
 	const anyFailed = Boolean(
-		reviews.codeFailed ||
-		reviews.conventionsFailed ||
-		reviews.styleFailed ||
-		reviews.redirectsFailed,
+		reviews.codeFailed || reviews.conventionsFailed || reviews.styleFailed,
 	);
 	const failureSuffix =
 		" ⚠️ Part of the review could not complete and will retry on the next push.";
@@ -360,16 +347,6 @@ export function renderComment(
 		Boolean(reviews.styleFailed),
 	);
 
-	// ── Section 4: Redirects ──────────────────────────────────────────────────
-	renderSection(
-		lines,
-		"Redirects",
-		"No missing redirect entries found.",
-		reviews.redirects,
-		false,
-		Boolean(reviews.redirectsFailed),
-	);
-
 	// ── Combined "acknowledged by author" block ───────────────────────────────
 	const ignored = [
 		...reviews.code.ignored_by_reviewer.map((f) => ({
@@ -383,10 +360,6 @@ export function renderComment(
 		...reviews.style.ignored_by_reviewer.map((f) => ({
 			f,
 			kind: "Style" as const,
-		})),
-		...reviews.redirects.ignored_by_reviewer.map((f) => ({
-			f,
-			kind: "Redirects" as const,
 		})),
 	];
 	if (ignored.length > 0) {

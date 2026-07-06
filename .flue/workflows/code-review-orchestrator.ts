@@ -7,7 +7,7 @@
  * by whichever specialist finishes last via the R2 rendezvous lock) handles
  * reconciliation, rendering, and posting.
  *
- * Specialist streams: code, style, conventions, redirects.
+ * Specialist streams: code, style, conventions.
  *
  * Behavior is controlled by the DOCS_FLUE_REVIEW_MODE env var:
  *   "log"     — (default) does not mutate GitHub (no comment posting).
@@ -47,7 +47,6 @@ import {
 	degradedCodeResult,
 	degradedStyleResult,
 	degradedConventionsResult,
-	degradedRedirectsResult,
 	tryClaimFinalize,
 } from "../lib/finalize-rendezvous";
 
@@ -252,21 +251,9 @@ export async function run({
 				final: false,
 			},
 		),
-		writeStreamResult(
-			bucket,
-			input.number,
-			currentHeadSha,
-			runId,
-			"redirects",
-			{
-				ok: false,
-				result: degradedRedirectsResult(),
-				final: false,
-			},
-		),
 	]);
 
-	// ── 4. Admit all four specialists fire-and-forget ──────────────────────────
+	// ── 4. Admit all three specialists fire-and-forget ─────────────────────────
 	const internalHeaders = getInternalHeaders(
 		typedEnv as Record<string, string>,
 	);
@@ -301,13 +288,11 @@ export async function run({
 		}
 	};
 
-	const [codeAdmit, styleAdmit, conventionsAdmit, redirectsAdmit] =
-		await Promise.all([
-			admitSpecialist("/workflows/code-review-specialist"),
-			admitSpecialist("/workflows/style-guide-specialist"),
-			admitSpecialist("/workflows/conventions-specialist"),
-			admitSpecialist("/workflows/redirect-specialist"),
-		]);
+	const [codeAdmit, styleAdmit, conventionsAdmit] = await Promise.all([
+		admitSpecialist("/workflows/code-review-specialist"),
+		admitSpecialist("/workflows/style-guide-specialist"),
+		admitSpecialist("/workflows/conventions-specialist"),
+	]);
 
 	console.log({
 		message: `Review dispatch: PR #${input.number} — specialists admitted (${diffMode.type} diff)`,
@@ -317,11 +302,9 @@ export async function run({
 		codeRunId: codeAdmit.ok ? codeAdmit.runId : null,
 		styleRunId: styleAdmit.ok ? styleAdmit.runId : null,
 		conventionsRunId: conventionsAdmit.ok ? conventionsAdmit.runId : null,
-		redirectsRunId: redirectsAdmit.ok ? redirectsAdmit.runId : null,
 		codeAdmitOk: codeAdmit.ok,
 		styleAdmitOk: styleAdmit.ok,
 		conventionsAdmitOk: conventionsAdmit.ok,
-		redirectsAdmitOk: redirectsAdmit.ok,
 		runId,
 		action: "specialists_dispatched",
 	});
@@ -353,12 +336,6 @@ export async function run({
 			stream: "conventions",
 			degraded: degradedConventionsResult,
 			label: "Conventions",
-		},
-		{
-			admit: redirectsAdmit,
-			stream: "redirects",
-			degraded: degradedRedirectsResult,
-			label: "Redirects",
 		},
 	];
 
@@ -394,7 +371,7 @@ export async function run({
 
 	// If any admit failed, try to claim the finalize lock. In the all-fail case
 	// all streams are final:true so the claim succeeds and finalize runs with
-	// four degraded results. In a partial-fail case, surviving specialists write
+	// three degraded results. In a partial-fail case, surviving specialists write
 	// final:true when they finish and the last one to do so claims the lock.
 	if (anyFailed) {
 		try {
@@ -439,14 +416,12 @@ export async function run({
 	}
 
 	return {
-		dispatched:
-			codeAdmit.ok || styleAdmit.ok || conventionsAdmit.ok || redirectsAdmit.ok,
+		dispatched: codeAdmit.ok || styleAdmit.ok || conventionsAdmit.ok,
 		headSha: currentHeadSha,
 		diffMode: diffMode.type,
 		codeAdmitOk: codeAdmit.ok,
 		styleAdmitOk: styleAdmit.ok,
 		conventionsAdmitOk: conventionsAdmit.ok,
-		redirectsAdmitOk: redirectsAdmit.ok,
 	};
 }
 
