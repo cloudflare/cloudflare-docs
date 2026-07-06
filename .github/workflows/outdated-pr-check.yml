@@ -1,4 +1,4 @@
-name: PR Staleness Check
+name: PR Outdated Check
 
 # **What it does**: Checks if a PR's branch is more than 24 hours out of date with production.
 # **Why we have it**: Prevents merging PRs whose base has drifted from production for too long.
@@ -26,8 +26,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-staleness:
-    name: Check staleness
+  check-outdated:
+    name: Check outdated
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -83,6 +83,6 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "/repos/${REPO}/statuses/${PR_SHA}" \
             -f state="$STATE" \
-            -f context="pr/staleness-check" \
+            -f context="pr/outdated-check" \
             -f description="$DESCRIPTION" \
             || echo "Failed to post status — skipping"
