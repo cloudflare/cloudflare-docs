@@ -38,6 +38,7 @@ The hosted UI supports two viewing modes, controlled by the `mode` parameter in 
 | Mode      | URL pattern                                              | Description                                                 |
 | --------- | -------------------------------------------------------- | ----------------------------------------------------------- |
 | Tab       | `https://live.browser.run/ui/view?mode=tab&wss=...`      | Standalone page view                                        |
+| Full      | `https://live.browser.run/ui/view?mode=full&wss=...`     | Multi-tab page view                                         |
 | Inspector | `https://live.browser.run/ui/view?mode=devtools&wss=...` | DevTools inspector panel (Elements, Console, Network, etc.) |
 
 ### Native Chrome DevTools (Chrome only)
@@ -129,3 +130,21 @@ If you have a running session and want to connect to it:
    ```
 
 3. Copy the `devtoolsFrontendUrl` and open it in your browser.
+
+## Get Live View URL via CDP
+
+When using Puppeteer, Playwright, or a direct WebSocket connection, you can retrieve a Live View URL programmatically using the `Cloudflare.getLiveView` CDP command:
+
+```js
+// Create a CDP session from your page
+const cdp = await page.createCDPSession();
+
+// Get the Live View URL
+const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
+	targetId: page.target()._targetId, // optional, defaults to the current page
+	mode: "tab", // Options: "devtools", "tab", or "full"
+	expiresInMs: 300000, // optional, default is 5 minutes (max 1 hour)
+});
+
+console.log(`Live View URL: ${devtoolsFrontendUrl}`);
+```

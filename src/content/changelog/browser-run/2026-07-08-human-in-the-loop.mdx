@@ -1,0 +1,64 @@
+---
+title: "Human in the Loop for Browser Run"
+description: Browser Run now supports structured handoff workflows that let automation scripts pause for human intervention and resume when complete.
+products:
+  - browser-run
+date: 2026-07-08
+---
+
+[Browser Run](/browser-run/) now supports structured handoff for [Human in the Loop](/browser-run/features/human-in-the-loop/) workflows. Your automation scripts can formally request human intervention, provide instructions, and automatically resume when the human completes their task.
+
+Using new CDP commands, your script can formally request human intervention with specific instructions, then wait for a completion event before continuing. This is useful for:
+
+- **Authentication flows**: Login pages with MFA, SSO, or CAPTCHA that cannot be bypassed programmatically
+- **Sensitive data entry**: Forms requiring credentials you do not want to pass to an automation script
+- **Complex interactions**: One-off tasks that are too difficult or not worth fully automating
+
+The following example demonstrates the structured handoff flow:
+
+```js
+import puppeteer from "puppeteer-core";
+
+const browser = await puppeteer.connect({
+	browserWSEndpoint: `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser`,
+	headers: { Authorization: `Bearer ${API_TOKEN}` },
+});
+
+const page = await browser.newPage();
+await page.goto("https://example.com/login");
+
+// Create a CDP session to send Browser Run commands
+const cdp = await page.createCDPSession();
+
+// Get Live View URL for the human operator (Cloudflare custom CDP extension)
+const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
+	mode: "tab",
+});
+
+// Set up completion listener before initiating handoff
+const handoffComplete = new Promise((resolve) => {
+	cdp.once("Cloudflare.handoffComplete", resolve);
+});
+
+// Request human intervention
+await cdp.send("Cloudflare.handoff", {
+	instructions: "Please log in with your credentials",
+	timeout: 600000, // 10 minutes
+});
+
+// Share the Live View URL with the human operator (for example, send it via Slack, email, or display it in a UI)
+console.log(`Human input needed. Open this URL: ${devtoolsFrontendUrl}`);
+
+// Wait for human to complete the task
+const result = await handoffComplete;
+
+if (result.success) {
+	console.log("Login successful, continuing automation...");
+} else {
+	console.error(`Human intervention failed: ${result.reason}`);
+}
+
+await browser.close();
+```
+
+Refer to the [Human in the Loop documentation](/browser-run/features/human-in-the-loop/) for the full API reference and best practices.
