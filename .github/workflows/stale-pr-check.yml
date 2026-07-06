@@ -7,7 +7,7 @@ name: PR Staleness Check
 # **Who does it impact**: All contributors opening PRs against production.
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - production
     types:
