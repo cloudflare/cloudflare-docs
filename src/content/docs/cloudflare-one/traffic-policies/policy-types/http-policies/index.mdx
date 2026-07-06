@@ -19,7 +19,7 @@ To use HTTP policies, install a [Cloudflare root certificate](/cloudflare-one/te
 
 HTTP policies allow you to filter all HTTP and HTTPS requests based on URLs, hostnames, HTTP methods, file types, and other request attributes. Unlike [network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/) which operate at Layer 4 (TCP/UDP), HTTP policies operate at Layer 7 and can inspect the full content of web traffic.
 
-By default, Gateway inspects HTTP traffic on port `80` and, with [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/) turned on, HTTPS traffic on port `443`. You can also configure Gateway to [inspect HTTP/HTTPS traffic on all ports](/cloudflare-one/traffic-policies/policy-types/network-policies/protocol-detection/#inspect-on-all-ports). Gateway supports HTTP/3 inspection with the [UDP proxy](/cloudflare-one/traffic-policies/tls-decryption/http3/) turned on.
+By default, Gateway inspects HTTP traffic on port `80` and, with [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/) turned on, HTTPS traffic on port `443`. You can also configure Gateway to [inspect HTTP/HTTPS traffic on all ports](/cloudflare-one/traffic-policies/policy-types/network-policies/protocol-detection/#inspect-on-all-ports). Gateway supports HTTP/3 inspection with the [UDP proxy](/cloudflare-one/traffic-policies/tls-decryption/http3/) turned on.
 
 An HTTP policy consists of an **Action** and a logical expression that determines the scope of the policy. To build an expression, choose a **Selector** and an **Operator**, then enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -238,11 +238,11 @@ API value: `off`
 
 When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 
-Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. However, you can still apply [network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/) to this traffic. For more information, refer to [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/).
+Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. However, you can still apply [network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/) to this traffic. For more information, refer to [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/).
 
 :::
 
-Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indication (SNI) in the TLS header. When accessing a Do Not Inspect site in the browser, your browser may display a **Your connection is not private** warning, which you can proceed through to connect. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/#inspection-limitations).
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indication (SNI) in the TLS header. When accessing a Do Not Inspect site in the browser, your browser may display a **Your connection is not private** warning, which you can proceed through to connect. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/traffic-policies/tls-decryption/#inspection-limitations).
 
 :::note
 All Do Not Inspect policies are evaluated before any Allow or Block policies, regardless of their position in the policy list. For more information, refer to [Order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#http-policies).

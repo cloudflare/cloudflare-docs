@@ -38,7 +38,7 @@ You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudfl
 
 #### Important considerations
 
-**TLS interception on all ports**: When you turn on this setting, Gateway will attempt to intercept TLS traffic on every port, not just port `443`. This means all applications using TLS on non-standard ports will have their traffic intercepted by the Gateway proxy. If you only want to turn on SNI detection for Network policy filtering without full TLS interception, you will need to create [Do Not Inspect policies](/cloudflare-one/traffic-policies/tls-decryption/tls-decryption/#do-not-inspect) for the specific applications or domains that use TLS on non-standard ports.
+**TLS interception on all ports**: When you turn on this setting, Gateway will attempt to intercept TLS traffic on every port, not just port `443`. This means all applications using TLS on non-standard ports will have their traffic intercepted by the Gateway proxy. If you only want to turn on SNI detection for Network policy filtering without full TLS interception, you will need to create [Do Not Inspect policies](/cloudflare-one/traffic-policies/tls-decryption/#do-not-inspect) for the specific applications or domains that use TLS on non-standard ports.
 
 :::caution[Non-HTTP protocols inside TLS bypass network policy filtering]
 Once a Network policy allows a TLS connection at Layer 4, Gateway decrypts the TLS traffic. However, Gateway cannot filter non-HTTP protocols inside the TLS connection. All non-HTTPS traffic inside TLS (such as SSH over TLS, database protocols, or custom protocols) is allowed by default with no further filtering applied. If your organization uses a default-block Network policy, Gateway will still allow all non-HTTPS TLS traffic through.
