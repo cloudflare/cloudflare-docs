@@ -334,7 +334,6 @@ export function renderComment(
 		reviews.conventions,
 		false,
 		Boolean(reviews.conventionsFailed),
-		"_Checks PR title, description, and redirect checklist._",
 	);
 
 	// ── Section 3: Style Guide Review ────────────────────────────────────────
