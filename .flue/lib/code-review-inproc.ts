@@ -70,9 +70,13 @@ export function parseAddedLines(patch: string): AddedLine[] {
 			raw.startsWith("+++ b/") ||
 			raw.startsWith("+++ a/") ||
 			raw.startsWith("+++ /dev/null") ||
+			raw.startsWith('+++ "b/') ||
+			raw.startsWith('+++ "a/') ||
 			raw.startsWith("--- b/") ||
 			raw.startsWith("--- a/") ||
-			raw.startsWith("--- /dev/null")
+			raw.startsWith("--- /dev/null") ||
+			raw.startsWith('--- "b/') ||
+			raw.startsWith('--- "a/')
 		)
 			continue;
 

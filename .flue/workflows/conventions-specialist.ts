@@ -146,6 +146,15 @@ export async function run({
 		const sessionKey = `conventions-specialist:${input.number}:${input.headSha}`;
 		const session = await harness.session(sessionKey);
 
+		// Compact file list for scope-accuracy check — paths, status, and change
+		// counts only; no patch content so the payload stays light.
+		const changedFiles = files.map((f) => ({
+			filename: f.filename,
+			status: f.status,
+			additions: f.additions,
+			deletions: f.deletions,
+		}));
+
 		const { data } = await session.skill("conventions-check", {
 			model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
 			args: {
@@ -153,6 +162,7 @@ export async function run({
 				description: input.pr.body,
 				prTemplate: prTemplate ?? "",
 				renamedDocFiles,
+				changedFiles,
 			},
 			result: ConventionsResultFromModelSchema,
 		});
