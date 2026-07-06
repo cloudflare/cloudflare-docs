@@ -225,6 +225,12 @@
   border-bottom: none;
 }
 
+.docs-content
+  :where(td:not([class]), th:not([class]))
+  :where(code:not([class])) {
+  overflow-wrap: normal;
+}
+
 .docs-content :where(a:not([class])) {
   color: var(--nb-link);
   text-decoration-line: underline;
