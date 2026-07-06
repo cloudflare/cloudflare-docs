@@ -72,6 +72,8 @@ Precursor supersedes JavaScript Detections (JSD):
 - introduces session-based state
 - enables dynamic runtime control
 
+If you enable Precursor, you should disable JavaScript Detections (JSD).
+
 ## Relationship to Challenge Pages
 
 Precursor and Challenges serve different roles:
@@ -87,7 +89,7 @@ Precursor does not replace Challenges. Instead, it strengthens them by:
 
 ## Relationship to `cf_clearance` cookie
 
-Precursor is tightly integrated with `cf_clearance`. When running Precursor:
+Precursor is tightly integrated with [`cf_clearance`](/cloudflare-challenges/concepts/clearance/#cf_clearance-cookies). When running Precursor:
 
 - effective clearance may be reduced or invalidated
 - additional Challenges may be triggered
