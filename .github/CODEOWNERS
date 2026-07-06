@@ -236,6 +236,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/network-flow/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
 /src/content/docs/cloudflare-wan/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/multi-cloud-networking/ @steve-cloudflare @jeffh-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/partials/networking-services/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
 
 # Migration guides
 
