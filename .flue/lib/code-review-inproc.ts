@@ -352,7 +352,7 @@ export async function runCodeReviewInProcess(
 				const errMsg = err instanceof Error ? err.message : String(err);
 				console.error({
 					message: `Code review file review failed (degraded): PR #${prNumber} — ${file.filename} — ${errMsg}`,
-					event: "code_review_orchestrator",
+					event: "code_review_specialist",
 					number: prNumber,
 					filename: file.filename,
 					runId,

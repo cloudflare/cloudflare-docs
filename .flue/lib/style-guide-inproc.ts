@@ -228,7 +228,7 @@ export async function runStyleGuideReviewInProcess(
 				const errMsg = err instanceof Error ? err.message : String(err);
 				console.error({
 					message: `Style-guide file review failed (degraded): PR #${prNumber} — ${filename} — ${errMsg}`,
-					event: "code_review_orchestrator",
+					event: "style_guide_specialist",
 					number: prNumber,
 					filename,
 					diffDir,

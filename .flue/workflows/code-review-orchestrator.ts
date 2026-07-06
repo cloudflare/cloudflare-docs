@@ -199,7 +199,7 @@ export async function run({
 		);
 	}
 
-	// ── 3. Write context to R2 ─────────────────────────────────────────────────
+	// ── 4. Write context to R2 ─────────────────────────────────────────────────
 	// dispatchId = this run's id, scoping the rendezvous so concurrent
 	// dispatches on the same head SHA don't collide.
 
@@ -223,7 +223,7 @@ export async function run({
 		expectedStreams: [...EXPECTED_STREAMS],
 	});
 
-	// ── 4. Write crash-protection placeholders for all three streams ──────────
+	// ── 5. Write crash-protection placeholders for all three streams ──────────
 	// Written BEFORE the specialists are admitted so a key always exists even
 	// if a specialist DO is evicted immediately after admission. Placeholders
 	// have final:false so tryClaimFinalize ignores them — finalize only runs
@@ -253,7 +253,7 @@ export async function run({
 		),
 	]);
 
-	// ── 4. Admit all three specialists fire-and-forget ─────────────────────────
+	// ── 6. Admit all three specialists fire-and-forget ─────────────────────────
 	const internalHeaders = getInternalHeaders(
 		typedEnv as Record<string, string>,
 	);
