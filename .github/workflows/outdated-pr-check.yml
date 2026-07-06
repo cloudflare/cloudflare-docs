@@ -36,9 +36,19 @@ jobs:
           # For pull_request events use the PR head SHA; for workflow_dispatch
           # github.sha is the SHA of the ref that was dispatched.
           PR_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          # Fork PRs have commits that live in a separate repo — the base repo's
+          # compare API cannot resolve them. The nightly refresh also skips fork PRs
+          # for the same reason. This is a known gap; fork contributors are expected
+          # to keep their branches current as a matter of course.
+          IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
         run: |
           set -euo pipefail
           REPO="${{ github.repository }}"
+
+          if [ "$IS_FORK" = "true" ]; then
+            echo "Fork PR — outdated check does not apply"
+            exit 0
+          fi
 
           COMPARE=$(gh api "/repos/${REPO}/compare/production...${PR_SHA}") || {
             echo "Compare API failed — skipping check"
