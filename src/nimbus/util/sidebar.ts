@@ -178,8 +178,7 @@ export const externalAppLinksTransform: SidebarTransform = ({ tree }) =>
   markExternalAppLinks(tree);
 
 /**
- * The transform used by the main docs route: Agent resources group +
- * external-app (`/api/`) re-marking, applied to the full tree.
+ * Main docs route: Agent resources group + external-app (`/api/`) re-marking.
  */
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
   const withAgentResources = await agentResourcesTransform(ctx);

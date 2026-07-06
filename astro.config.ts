@@ -107,6 +107,10 @@ const nimbus = isNimbus ? await import("./src/nimbus/astro-config.ts") : null;
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
+	prefetch: {
+		prefetchAll: true,
+		defaultStrategy: "hover",
+	},
 	// Separate cache dir so the two targets' content stores never collide.
 	...(isNimbus
 		? {

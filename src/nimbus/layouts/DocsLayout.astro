@@ -114,7 +114,7 @@ const showFeedback = feedback !== false && !isCustom;
 
     {isCustom ? (
       <Fragment>
-        <main id="main-content" transition:name="nb-content" class="flex-1">
+        <main id="main-content" class="flex-1">
           <slot />
         </main>
         <Footer class="mt-16" />
@@ -215,9 +215,7 @@ const showFeedback = feedback !== false && !isCustom;
               whose border runs the full page height alongside it. */}
           <div class="flex min-w-0 flex-1 flex-col">
             <div class="flex min-w-0 flex-1">
-          {/* Named view-transition group — only the content crossfades on nav.
-              Header / sidebar / TOC stay still via the root rule in globals.css. */}
-          <main id="main-content" transition:name="nb-content" class="flex-1 min-w-0">
+          <main id="main-content" class="flex-1 min-w-0">
             <div class={`mx-auto px-4 lg:px-6 pt-6 pb-12 ${wide ? "max-w-[1400px]" : "max-w-(--nb-content-max)"}`}>
               {versionStatus?.isDeprecated && (
                 <Banner
