@@ -8,7 +8,7 @@ name: Refresh PR Staleness Checks
 
 on:
   schedule:
-    - cron: "0 10 * * *" # 4am CDT (UTC-6); runs ~5am during CST (UTC-5)
+    - cron: "0 10 * * *" # 4am CST (UTC-6); runs ~5am during CDT (UTC-5)
   workflow_dispatch:
 
 jobs:
@@ -24,6 +24,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -euo pipefail
           REPO="${{ github.repository }}"
 
           # Get all open PRs targeting production
