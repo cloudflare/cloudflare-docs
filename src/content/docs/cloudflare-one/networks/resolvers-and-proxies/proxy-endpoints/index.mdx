@@ -87,7 +87,7 @@ Use source IP endpoints when:
 ## 1. Create a proxy endpoint
 
 :::caution
-All devices you add to the proxy endpoint can access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, [create a Network policy](/cloudflare-one/traffic-policies/network-policies/common-policies/#restrict-private-network-access-to-proxy-endpoint-users) that restricts proxy endpoint traffic from connecting to your internal resources.
+All devices you add to the proxy endpoint can access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, [create a Network policy](/cloudflare-one/traffic-policies/policy-types/network-policies/common-policies/#restrict-private-network-access-to-proxy-endpoint-users) that restricts proxy endpoint traffic from connecting to your internal resources.
 :::
 
 <Tabs syncKey="dashPlusAPI">
@@ -342,9 +342,9 @@ Safari relies on your operating system's proxy server settings. Configure the PA
 
 ## 4. Test your HTTP policy
 
-To test your configuration, create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block a test domain. When you visit the blocked domain in your browser, you should see the Gateway block page.
+To test your configuration, create an [HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/) to block a test domain. When you visit the blocked domain in your browser, you should see the Gateway block page.
 
-You can now use the Proxy Endpoint selector in [network](/cloudflare-one/traffic-policies/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/traffic-policies/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
+You can now use the Proxy Endpoint selector in [network](/cloudflare-one/traffic-policies/policy-types/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/traffic-policies/policy-types/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
 
 ## 5. (Optional) Configure firewall
 
@@ -504,7 +504,7 @@ Authorization endpoints do not support plaintext HTTP traffic unless the traffic
 
 #### Browser Isolation
 
-Gateway [HTTP Isolate policies](/cloudflare-one/traffic-policies/http-policies/#isolate) are not supported with authorization endpoints.
+Gateway [HTTP Isolate policies](/cloudflare-one/traffic-policies/policy-types/http-policies/#isolate) are not supported with authorization endpoints.
 
 #### Referer header traffic
 
@@ -520,8 +520,8 @@ This occurs because browsers do not tag HTTP sub-requests with the identity cook
 
 To filter this traffic, you have two options:
 
-- Set up an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block or allow all traffic matching the `auth-proxy-non-identity@<your-team-name>.cloudflareaccess.com` email address.
-- To restrict non-identity traffic to specific source IPs, create a [network policy](/cloudflare-one/traffic-policies/network-policies/) that matches both the source IP and the proxy endpoint.
+- Set up an [HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/) to block or allow all traffic matching the `auth-proxy-non-identity@<your-team-name>.cloudflareaccess.com` email address.
+- To restrict non-identity traffic to specific source IPs, create a [network policy](/cloudflare-one/traffic-policies/policy-types/network-policies/) that matches both the source IP and the proxy endpoint.
 
 ### Traffic limitations
 
@@ -532,8 +532,8 @@ Each type of proxy endpoint supports the following features:
 | **HTTP/HTTPS traffic**                                                              | ✅[^1]             | ✅[^2]                 |
 | **Non-HTTP TCP traffic**                                                            | ✅                 | —                      |
 | **UDP traffic**                                                                     | —                  | —                      |
-| **[HTTP3](/cloudflare-one/traffic-policies/http-policies/http3/)**                  | —                  | —                      |
-| **[Identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/)** | —                  | ✅                     |
+| **[HTTP3](/cloudflare-one/traffic-policies/tls-decryption/http3/)**                  | —                  | —                      |
+| **[Identity-based policies](/cloudflare-one/traffic-policies/reference/identity-selectors/)** | —                  | ✅                     |
 | **mTLS authentication**                                                             | —                  | —                      |
 | **[Happy Eyeballs](https://datatracker.ietf.org/doc/html/rfc6555)**                 | —                  | —                      |
 | **Browser HTTPS auto-upgrade**                                                      | —[^3]              | —[^3]                  |
@@ -550,4 +550,4 @@ All connections proxied through Cloudflare Gateway have a maximum guaranteed dur
 
 ### Gateway DNS and resolver policies
 
-Gateway [DNS](/cloudflare-one/traffic-policies/dns-policies/) and [resolver](/cloudflare-one/traffic-policies/resolver-policies/) policies will always apply to traffic proxied with PAC files, regardless of device configuration.
+Gateway [DNS](/cloudflare-one/traffic-policies/policy-types/dns-policies/) and [resolver](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) policies will always apply to traffic proxied with PAC files, regardless of device configuration.

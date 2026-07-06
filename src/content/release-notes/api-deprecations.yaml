@@ -55,7 +55,7 @@ entries:
 
       End of life date: July 15, 2026
 
-      The Gateway Audit SSH action for [network policies](/cloudflare-one/traffic-policies/network-policies/) is deprecated and will be fully removed on July 15, 2026. [SSH with Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) is the replacement for managing and auditing SSH access.
+      The Gateway Audit SSH action for [network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/) is deprecated and will be fully removed on July 15, 2026. [SSH with Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) is the replacement for managing and auditing SSH access.
 
       Creating new Gateway rules with `action: "audit_ssh"` via the dashboard was disabled in December 2024. Creating new rules via the API and Terraform was disabled on November 3, 2025. Editing existing rules via the dashboard, API, and Terraform was disabled on January 15, 2026. On July 15, 2026, all remaining Audit SSH rules will stop working.
 

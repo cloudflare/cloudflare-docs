@@ -27,7 +27,7 @@ And off-ramps:
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) off-ramp (using `cloudflared`)
 - Cloudflare IPsec off-ramp
 
-For traffic that egresses to the public Internet, [Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/) also provides post-quantum encryption as a Secure Web Gateway (SWG).
+For traffic that egresses to the public Internet, [Cloudflare Gateway](/cloudflare-one/traffic-policies/policy-types/http-policies/) also provides post-quantum encryption as a Secure Web Gateway (SWG).
 
 These on-ramps and off-ramps all use [hybrid post-quantum key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement).
 
@@ -109,7 +109,7 @@ The hybrid key agreement is negotiated using ML-KEM as an additional Key Exchang
 
 A [secure web gateway (SWG)](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) is used to secure access to third-party websites on the public Internet by intercepting and inspecting TLS traffic.
 
-[Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/) [supports post-quantum cryptography for HTTPS traffic](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support). As long as the third-party website that is being inspected supports post-quantum key agreement, Cloudflare's SWG also supports post-quantum key agreement.
+[Cloudflare Gateway](/cloudflare-one/traffic-policies/policy-types/http-policies/) [supports post-quantum cryptography for HTTPS traffic](/cloudflare-one/traffic-policies/tls-decryption/#post-quantum-support). As long as the third-party website that is being inspected supports post-quantum key agreement, Cloudflare's SWG also supports post-quantum key agreement.
 
 ![Diagram of how post-quantum cryptography works with Cloudflare's Secure Web Gateway](~/assets/images/ssl/pqc-secure-web-gateway.png).
 

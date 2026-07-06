@@ -659,7 +659,7 @@ When Gateway routing is turned on, calls to MCP servers protected by your MCP se
 
 When a user calls a tool through the portal, the portal proxies the request to the upstream MCP server. With Gateway routing turned on, this outbound request passes through Cloudflare Gateway before reaching the upstream server. Gateway inspects the traffic and applies any matching HTTP policies, including DLP scanning.
 
-Because portal traffic routes through Gateway, it also respects [Gateway egress policies](/cloudflare-one/traffic-policies/egress-policies/). This means outbound requests to upstream MCP servers will originate from your dedicated egress IPs or Gateway IP ranges rather than generic Cloudflare IPs. If your upstream MCP servers restrict inbound traffic by source IP (for example, to a VPN or corporate IP range), you can use egress policies to ensure portal traffic comes from a predictable set of IPs.
+Because portal traffic routes through Gateway, it also respects [Gateway egress policies](/cloudflare-one/traffic-policies/policy-types/egress-policies/). This means outbound requests to upstream MCP servers will originate from your dedicated egress IPs or Gateway IP ranges rather than generic Cloudflare IPs. If your upstream MCP servers restrict inbound traffic by source IP (for example, to a VPN or corporate IP range), you can use egress policies to ensure portal traffic comes from a predictable set of IPs.
 
 :::note
 Gateway routing only applies to real-time tool calls made by users through the portal. Background operations such as [admin credential synchronization](#synchronize-the-mcp-server) do not route through Gateway and will not use your egress policy IPs.
@@ -667,12 +667,12 @@ Gateway routing only applies to real-time tool calls made by users through the p
 
 ### TLS decryption
 
-DLP inspection requires Gateway to decrypt TLS traffic. For portal traffic, Gateway decrypts and inspects the payload automatically — you do not need to turn on the account-level [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) setting. Because the portal terminates the connection from the MCP client and re-originates the request through Gateway, Gateway decrypts portal traffic regardless of whether the global TLS decryption setting is on.
+DLP inspection requires Gateway to decrypt TLS traffic. For portal traffic, Gateway decrypts and inspects the payload automatically — you do not need to turn on the account-level [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/) setting. Because the portal terminates the connection from the MCP client and re-originates the request through Gateway, Gateway decrypts portal traffic regardless of whether the global TLS decryption setting is on.
 
-This automatic decryption applies only to traffic that flows through the portal. To inspect MCP traffic that does not pass through the portal — for example, an agent on a [device running the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) connecting directly to an upstream MCP server — you must turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) as you would for any other [HTTP policy](/cloudflare-one/traffic-policies/http-policies/).
+This automatic decryption applies only to traffic that flows through the portal. To inspect MCP traffic that does not pass through the portal — for example, an agent on a [device running the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) connecting directly to an upstream MCP server — you must turn on [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/) as you would for any other [HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/).
 
 :::note
-Portal traffic ignores the global TLS decryption setting, but it still respects [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) HTTP policies. If a Do Not Inspect policy matches portal traffic, Gateway does not decrypt it and DLP cannot scan it. Check that your Do Not Inspect policies do not unintentionally exempt your upstream MCP servers from inspection.
+Portal traffic ignores the global TLS decryption setting, but it still respects [Do Not Inspect](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) HTTP policies. If a Do Not Inspect policy matches portal traffic, Gateway does not decrypt it and DLP cannot scan it. Check that your Do Not Inspect policies do not unintentionally exempt your upstream MCP servers from inspection.
 :::
 
 ### Supported transports
