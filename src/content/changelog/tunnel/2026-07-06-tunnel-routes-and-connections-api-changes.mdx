@@ -8,7 +8,7 @@ products:
 date: 2026-07-06
 ---
 
-On **October 5, 2026**, two changes take effect across the [Zero Trust Networks API](/api/resources/zero_trust/subresources/networks/) and [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/): the CIDR-encoded route endpoints are removed, and tunnel list and get responses no longer include the `connections` field. If you manage private network routes or read tunnel connection details through the API, `cloudflared`, Terraform, or another integration, review the changes below and migrate before the removal date.
+On **October 5, 2026**, two changes take effect across the [Zero Trust Networks API](/api/resources/zero_trust/subresources/networks/) and [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/): the CIDR-encoded route endpoints are removed, and tunnel list and get responses no longer include the `connections` field. If you manage private network routes or read tunnel connection details through the API, `cloudflared`, Terraform, or another integration, review the changes in the following sections and migrate before the removal date.
 
 ## Route endpoints
 
@@ -95,7 +95,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNE
 
 Update any dashboards, monitoring scripts, or automation that parses `connections` from the tunnel list or get response. `cloudflared` and the Cloudflare Terraform provider do not read this field, so no changes are required on their side for this part of the update.
 
-## Why we're making these changes
+## Why we are making these changes
 
 - **Smaller, faster responses.** Cloudflare Tunnel and Cloudflare Mesh nodes with many connections no longer inflate every list and get call — connection detail is only fetched when you need it.
 - **A single way to identify a route.** Consolidating on `route_id` removes the need to URL-encode CIDR ranges into the path and matches how every other resource in the Zero Trust Networks API is addressed.
