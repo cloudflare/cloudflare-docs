@@ -34,6 +34,49 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
+      - name: Check PR is not outdated
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+          PR_SHA="${{ github.event.pull_request.head.sha }}"
+
+          COMPARE=$(gh api "/repos/${REPO}/compare/production...${PR_SHA}") || {
+            echo "Compare API failed — skipping check"
+            exit 0
+          }
+          BEHIND_BY=$(echo "$COMPARE" | jq -r '.behind_by')
+
+          if [ -z "$BEHIND_BY" ] || [ "$BEHIND_BY" = "null" ]; then
+            echo "Unexpected API response — skipping check"
+            exit 0
+          fi
+
+          if [ "$BEHIND_BY" = "0" ]; then
+            echo "Branch is up to date with production"
+            exit 0
+          fi
+
+          MERGE_BASE_DATE=$(echo "$COMPARE" | jq -r '.merge_base_commit.commit.committer.date')
+
+          if [ -z "$MERGE_BASE_DATE" ] || [ "$MERGE_BASE_DATE" = "null" ]; then
+            echo "Could not determine merge base date — skipping check"
+            exit 0
+          fi
+
+          MERGE_BASE_TS=$(date -d "$MERGE_BASE_DATE" +%s)
+          NOW=$(date +%s)
+          AGE=$((NOW - MERGE_BASE_TS))
+
+          if [ "$AGE" -gt 86400 ]; then
+            HOURS=$((AGE / 3600))
+            echo "Branch is ${HOURS}h out of date with production. Please rebase or merge."
+            exit 1
+          fi
+
+          echo "Branch is behind production but within the 24-hour grace period"
+
       - name: Check for CRLF line endings
         run: |
           if git grep -Il $'\r'; then
