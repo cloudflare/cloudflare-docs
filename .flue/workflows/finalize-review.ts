@@ -223,10 +223,14 @@ export async function run({
 		const alreadyFinalizedSha = extractReviewedHeadSha(
 			botComment?.body ?? null,
 		);
-		if (
-			alreadyFinalizedSha === input.headSha &&
-			!botComment?.body?.includes("<!-- status: pending -->")
-		) {
+		// Allow re-finalization when the existing comment is pending (in-progress
+		// placeholder) or a failure comment — both are retryable states. A failure
+		// comment sets <!-- status: failure --> so a subsequent /review for the
+		// same head SHA is not permanently blocked.
+		const isRetryableStatus =
+			botComment?.body?.includes("<!-- status: pending -->") ||
+			botComment?.body?.includes("<!-- status: failure -->");
+		if (alreadyFinalizedSha === input.headSha && !isRetryableStatus) {
 			console.log({
 				message: `Finalize skipped: PR #${input.number} headSha ${input.headSha.slice(0, 7)} already finalized`,
 				event: "finalize_review",

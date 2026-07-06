@@ -86,6 +86,9 @@ export async function run({
 	let baseUrl = safeOrigin(req);
 	let result: CodeReviewResult = degradedConventionsResult();
 	let reviewOk = false;
+	let session:
+		| Awaited<ReturnType<Awaited<ReturnType<FlueContext["init"]>>["session"]>>
+		| undefined;
 
 	try {
 		input = parseReviewSpecialistPayload(payload, "conventions-specialist");
@@ -144,7 +147,7 @@ export async function run({
 		}));
 		const harness = await init(agent);
 		const sessionKey = `conventions-specialist:${input.number}:${input.headSha}`;
-		const session = await harness.session(sessionKey);
+		session = await harness.session(sessionKey);
 
 		// Compact file list for scope-accuracy check — paths, status, and change
 		// counts only; no patch content so the payload stays light.
@@ -209,6 +212,11 @@ export async function run({
 			action: "specialist_error_degraded",
 		});
 		// result and reviewOk keep their degraded defaults.
+	} finally {
+		// Delete the session so its SQLite event-stream data is cleaned up.
+		// Without this the DO's SQLite WAL accumulates across runs, growing the
+		// state that must be loaded on each alarm restart.
+		await session?.delete().catch(() => {});
 	}
 
 	// ── Rendezvous: write final result, try to claim finalize lock ─────────────

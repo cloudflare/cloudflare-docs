@@ -159,6 +159,7 @@ export function renderFailureComment(headSha: string): string {
 		BOT_COMMENT_MARKER,
 		`<!-- reviewed-head-sha: ${headSha} -->`,
 		`<!-- updated-at: ${new Date().toISOString()} -->`,
+		`<!-- status: failure -->`,
 		"",
 		"## Review",
 		"",

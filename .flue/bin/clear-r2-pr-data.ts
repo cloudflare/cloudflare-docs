@@ -67,7 +67,7 @@ if (dbPaths.length === 0) {
 // Scope to PR-specific keys only: diffs/pr-* (review JSONs, pending rendezvous
 // namespaces, counters, ignore-limit flags). The broader 'diffs/%' pattern
 // would also delete any future non-PR keys stored under diffs/.
-const WHERE = "key LIKE 'diffs/pr-%' OR key LIKE 'inflight/pr-%'";
+const WHERE = "key LIKE 'diffs/pr-%'";
 
 let total = 0;
 for (const dbPath of dbPaths) {

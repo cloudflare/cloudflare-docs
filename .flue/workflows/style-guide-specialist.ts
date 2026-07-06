@@ -167,11 +167,16 @@ export async function run({
 		// Clean up the run-scoped staged diff so the specialist DO's SQLite does
 		// not grow with every run. Safe: the diff is run-scoped scratch, re-fetched
 		// each run; cross-run review state lives in R2 + the comment marker.
-		const workspace = getDefaultWorkspace();
-		await removeWorkspacePath(workspace, `/${diffDir}`, {
-			recursive: true,
-			force: true,
-		}).catch(() => {});
+		// Guard: diffDir is "" when parseReviewSpecialistPayload throws before
+		// assigning it — without this check the cleanup would rm -rf "/" on the
+		// DO's entire SQLite filesystem.
+		if (diffDir) {
+			const workspace = getDefaultWorkspace();
+			await removeWorkspacePath(workspace, `/${diffDir}`, {
+				recursive: true,
+				force: true,
+			}).catch(() => {});
+		}
 	}
 
 	// ── Rendezvous: write final result, try to claim finalize lock ─────────────
