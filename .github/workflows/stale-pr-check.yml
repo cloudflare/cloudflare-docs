@@ -1,7 +1,9 @@
 name: PR Staleness Check
 
 # **What it does**: Checks if a PR's branch is more than 24 hours out of date with production.
-# **Why we have it**: Prevents merging PRs whose base has drifted from production for more than a day.
+# **Why we have it**: Prevents merging PRs whose base has drifted from production for too long.
+#                     Combined with the daily refresh job, the effective enforcement window is
+#                     24–48 hours depending on when the PR was last rebased vs. the job schedule.
 # **Who does it impact**: All contributors opening PRs against production.
 
 on:

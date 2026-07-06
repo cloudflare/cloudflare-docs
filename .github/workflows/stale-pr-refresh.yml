@@ -1,12 +1,14 @@
 name: Refresh PR Staleness Checks
 
-# **What it does**: Refreshes the staleness status check for all open PRs once a day.
+# **What it does**: Refreshes the staleness status check for all open PRs once a day (~4am CT).
 # **Why we have it**: Catches PRs that become stale when production advances without any PR activity.
+#                     Because this runs once daily, the effective enforcement window is 24–48 hours
+#                     depending on when the PR was last rebased relative to the job's schedule.
 # **Who does it impact**: All contributors with open PRs against production.
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 10 * * *" # 4am CDT (UTC-6); runs ~5am during CST (UTC-5)
   workflow_dispatch:
 
 jobs:
