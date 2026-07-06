@@ -236,6 +236,7 @@ const nimbusDir = here(".");
 const rootAssets = here("../assets");
 const rootContent = here("../content");
 const rootUtil = here("../util");
+const rootComponents = here("../components");
 const componentsBarrelId = normalizeId(here("./components.ts"));
 
 function normalizeId(id: string) {
@@ -283,6 +284,11 @@ const aliasResolver = {
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
 						// Shared: the Zaraz `track()` shim is byte-identical to root and
 						{ find: /^~\/util\/zaraz$/, replacement: `${rootUtil}/zaraz` },
+						// Shared: the OneTrust cookie-consent component is portable
+						{
+							find: /^~\/components\/OneTrust\.astro$/,
+							replacement: `${rootComponents}/OneTrust.astro`,
+						},
 						{ find: /^~(\/.*)?$/, replacement: `${nimbusDir}$1` },
 						{ find: /^@(\/.*)?$/, replacement: `${nimbusDir}$1` },
 					],
@@ -308,6 +314,8 @@ const aliasResolver = {
 		else if (source === "~/content" || source.startsWith("~/content/"))
 			mapped = rootContent + source.slice("~/content".length);
 		else if (source === "~/util/zaraz") mapped = rootUtil + "/zaraz";
+		else if (source === "~/components/OneTrust.astro")
+			mapped = rootComponents + "/OneTrust.astro";
 		else if (source === "~" || source.startsWith("~/"))
 			mapped = nimbusDir + source.slice(1);
 		else if (source === "@" || source.startsWith("@/"))
