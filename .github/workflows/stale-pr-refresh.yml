@@ -16,8 +16,9 @@ jobs:
     name: Refresh staleness for all open PRs
     runs-on: ubuntu-latest
     permissions:
-      statuses: write
+      contents: read
       pull-requests: read
+      statuses: write
     steps:
       - name: Refresh staleness status for all open PRs
         env:

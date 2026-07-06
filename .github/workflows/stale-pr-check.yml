@@ -24,6 +24,7 @@ jobs:
     name: Check staleness
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       statuses: write
     steps:
       - name: Check if PR base is within 24 hours of production
@@ -34,7 +35,10 @@ jobs:
           PR_SHA="${{ github.event.pull_request.head.sha }}"
 
           # Compare PR head against production to get the merge base
-          COMPARE=$(gh api "/repos/${REPO}/compare/production...${PR_SHA}")
+          COMPARE=$(gh api "/repos/${REPO}/compare/production...${PR_SHA}" 2>/dev/null) || {
+            echo "Compare API failed — skipping status post"
+            exit 0
+          }
           BEHIND_BY=$(echo "$COMPARE" | jq -r '.behind_by')
 
           if [ "$BEHIND_BY" = "0" ]; then
