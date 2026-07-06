@@ -188,7 +188,7 @@ class Default(WorkerEntrypoint):
         try:
             return await fetch(new_request)
         except Exception as e:
-            return Response(str(e), status=500)
+            return Response.join({"error": str(e)}, status=500)
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
