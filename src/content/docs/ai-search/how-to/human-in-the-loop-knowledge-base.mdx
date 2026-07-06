@@ -2,7 +2,7 @@
 title: Human-in-the-loop knowledge base updates
 pcx_content_type: tutorial
 sidebar:
-  order: 2
+  order: 4
   label: Human-in-the-loop updates
 description: Build an agent that searches a knowledge base and proposes updates to it, with a human approving and able to roll back each write.
 difficulty: Intermediate
@@ -18,7 +18,7 @@ import {
 	LinkCard,
 } from "~/components";
 
-This tutorial builds an agent that searches a knowledge base and adds to it — with a human approving every write. Letting an agent modify your data is risky, so each save pauses for approval before it runs, and you can roll back a save that turned out wrong.
+This tutorial builds an agent that searches a knowledge base and adds to it, with a human approving every write. Letting an agent modify your data is risky, so each save pauses for approval before it runs, and you can roll back a save that turned out wrong.
 
 ## What you will build
 
@@ -64,9 +64,9 @@ Go to your application directory:
 cd kb-agent
 ```
 
-Install the dependencies:
+Install the dependencies. The `ai` and `zod` versions are pinned to the ranges the Agents SDK expects as peer dependencies:
 
-<PackageManagers pkg="@cloudflare/codemode @cloudflare/ai-chat agents ai workers-ai-provider zod" />
+<PackageManagers pkg="@cloudflare/codemode @cloudflare/ai-chat agents ai@6 workers-ai-provider zod@4" />
 
 ## 2. Configure Wrangler
 
@@ -240,7 +240,7 @@ export class Chat extends AIChatAgent<Env> {
 				{ timeoutMs: 120_000 },
 			);
 		} catch {
-			// Instance already exists — nothing to do.
+			// Instance already exists.
 		}
 		this.ready = true;
 	}
@@ -385,7 +385,7 @@ Your agent can now:
 <LinkCard
 	title="Create a durable Code Mode runtime"
 	href="/agents/tools/codemode/durable-runtime/"
-	description="The full runtime API — rejection, execution history, and reusable snippets."
+	description="The full runtime API: rejection, execution history, and reusable snippets."
 />
 
 <LinkCard
