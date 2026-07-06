@@ -350,6 +350,8 @@ export function renderComment(
 	);
 
 	// ── Combined "acknowledged by author" block ───────────────────────────────
+	// Separator visually detaches this from the last review section so it reads
+	// as a top-level block rather than an appendix to Style Guide Review.
 	const ignored = [
 		...reviews.code.ignored_by_reviewer.map((f) => ({
 			f,
@@ -365,6 +367,8 @@ export function renderComment(
 		})),
 	];
 	if (ignored.length > 0) {
+		lines.push("");
+		lines.push("---");
 		lines.push("");
 		lines.push("<details>");
 		lines.push(`<summary>Acknowledged by author (${ignored.length})</summary>`);
