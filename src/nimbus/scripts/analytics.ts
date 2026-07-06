@@ -2,6 +2,7 @@ import { registerLinks } from "./analytics/links";
 import { registerTabs } from "./analytics/tabs";
 import { registerDetails } from "./analytics/details";
 import { registerCopyButtons } from "./analytics/codeblocks";
+import { registerHeader } from "./analytics/header";
 
 /**
  * Nimbus analytics entry point — the counterpart to root
@@ -28,4 +29,5 @@ if (!window.__nbAnalyticsRegistered) {
 	registerTabs();
 	registerDetails();
 	registerCopyButtons();
+	registerHeader();
 }
