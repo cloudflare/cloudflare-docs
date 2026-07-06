@@ -18,7 +18,9 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # Use a hardcoded prefix rather than github.workflow to avoid colliding with
+  # the main CI workflow, which also uses name: CI.
+  group: outdated-pr-check-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:

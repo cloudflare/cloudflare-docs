@@ -34,12 +34,21 @@ jobs:
             --base production \
             --state open \
             --limit 500 \
-            --json number,headRefOid,headRefName)
+            --json number,headRefOid,headRefName,isCrossRepository)
 
           echo "$PRS" | jq -c '.[]' | while read -r PR; do
             PR_NUMBER=$(echo "$PR" | jq -r '.number')
             PR_SHA=$(echo "$PR" | jq -r '.headRefOid')
             PR_REF=$(echo "$PR" | jq -r '.headRefName')
+            IS_FORK=$(echo "$PR" | jq -r '.isCrossRepository')
+
+            # Fork PRs have their head branch in a different repo — workflow_dispatch
+            # can only target refs in the base repo. Skip them here; they are covered
+            # by the per-commit pull_request check when contributors push.
+            if [ "$IS_FORK" = "true" ]; then
+              echo "  Fork PR — skipping (covered by per-commit check)"
+              continue
+            fi
 
             echo "Checking PR #${PR_NUMBER} (${PR_SHA:0:7})"
 
