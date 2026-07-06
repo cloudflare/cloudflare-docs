@@ -80,28 +80,46 @@ const { autoPlay = true, loop = true } = Astro.props;
 			<div class="asnd-bracket asnd-fanin" aria-hidden="true">
 				<svg viewBox="0 0 120 26" preserveAspectRatio="none">
 					<line
+						class="asnd-trunk"
+						x1="60"
+						y1="13"
+						x2="60"
+						y2="26"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="a"
 						x1="20"
 						y1="0"
 						x2="20"
 						y2="13"
 						vector-effect="non-scaling-stroke"></line>
 					<line
+						data-tenant="a"
+						x1="20"
+						y1="13"
+						x2="60"
+						y2="13"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="b"
+						x1="60"
+						y1="0"
+						x2="60"
+						y2="13"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="c"
 						x1="100"
 						y1="0"
 						x2="100"
 						y2="13"
 						vector-effect="non-scaling-stroke"></line>
 					<line
-						x1="20"
+						data-tenant="c"
+						x1="60"
 						y1="13"
 						x2="100"
 						y2="13"
-						vector-effect="non-scaling-stroke"></line>
-					<line
-						x1="60"
-						y1="0"
-						x2="60"
-						y2="26"
 						vector-effect="non-scaling-stroke"></line>
 				</svg>
 			</div>
@@ -121,7 +139,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 			</a>
 
 			<!-- Line into the namespace scope -->
-			<div class="asnd-connector"></div>
+			<div class="asnd-connector asnd-trunk"></div>
 
 			<div class="asnd-group asnd-group-terminal">
 				<span class="asnd-group-label">namespace: tenants</span>
@@ -130,30 +148,42 @@ const { autoPlay = true, loop = true } = Astro.props;
 				<div class="asnd-bracket asnd-split" aria-hidden="true">
 					<svg viewBox="0 0 120 26" preserveAspectRatio="none">
 						<line
+							class="asnd-trunk"
 							x1="60"
 							y1="0"
 							x2="60"
 							y2="13"
 							vector-effect="non-scaling-stroke"></line>
 						<line
+							data-tenant="a"
 							x1="20"
 							y1="13"
-							x2="100"
+							x2="60"
 							y2="13"
 							vector-effect="non-scaling-stroke"></line>
 						<line
+							data-tenant="a"
 							x1="20"
 							y1="13"
 							x2="20"
 							y2="26"
 							vector-effect="non-scaling-stroke"></line>
 						<line
+							data-tenant="b"
 							x1="60"
 							y1="13"
 							x2="60"
 							y2="26"
 							vector-effect="non-scaling-stroke"></line>
 						<line
+							data-tenant="c"
+							x1="60"
+							y1="13"
+							x2="100"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							data-tenant="c"
 							x1="100"
 							y1="13"
 							x2="100"
@@ -477,6 +507,17 @@ const { autoPlay = true, loop = true } = Astro.props;
 		stroke-width: 2;
 		fill: none;
 		stroke-linecap: round;
+		transition: stroke 0.25s ease;
+	}
+
+	/* Light the active tenant's path: its stubs + the shared trunk light up
+	   with the tenant and instance cards, tracing request to instance. */
+	.asnd-bracket line.current {
+		stroke: var(--asnd-accent);
+	}
+
+	.asnd-connector.current {
+		background: var(--asnd-accent);
 	}
 
 	/* --- Tenant request caps (pills) --- */
@@ -666,8 +707,14 @@ const { autoPlay = true, loop = true } = Astro.props;
 			this.querySelectorAll(`[data-tenant="${tenant}"]`).forEach((el) =>
 				el.classList.add("current"),
 			);
-			// The Worker is the shared router — light it on every tenant's turn.
+			// The Worker is the shared router, so light it on every tenant's turn.
 			this.querySelector(".asnd-worker")?.classList.add("current");
+
+			// Light the shared trunk (the Worker connector and the centre of each
+			// fork) so the whole path from tenant to instance reads as one line.
+			this.querySelectorAll(".asnd-trunk").forEach((el) =>
+				el.classList.add("current"),
+			);
 
 			this.timer = window.setTimeout(() => this.cycle(index + 1), 1400);
 		}
