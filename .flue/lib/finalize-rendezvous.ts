@@ -201,7 +201,15 @@ export async function tryClaimFinalize(
 	allExpectedStreams: string[],
 ): Promise<boolean> {
 	// Only a recognised expected stream can trigger finalization.
-	if (!allExpectedStreams.includes(myStream)) return false;
+	if (!allExpectedStreams.includes(myStream)) {
+		console.log({
+			message: `tryClaimFinalize: stream "${myStream}" is not in expectedStreams [${allExpectedStreams.join(", ")}] — skipping`,
+			action: "finalize_stream_not_expected",
+			stream: myStream,
+			expectedStreams: allExpectedStreams,
+		});
+		return false;
+	}
 
 	// Fetch all sibling streams in parallel.
 	const siblingStreams = allExpectedStreams.filter((s) => s !== myStream);

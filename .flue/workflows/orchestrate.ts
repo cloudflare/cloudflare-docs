@@ -328,8 +328,21 @@ export async function run({ payload, env, req }: FlueContext) {
 			};
 		}
 
-		// Acknowledge with 👍
-		await addReactionToComment(token, commentId, "+1");
+		// Acknowledge with 👍 — non-fatal if the reaction fails; the flag is
+		// already persisted.
+		await addReactionToComment(token, commentId, "+1").catch((reactionErr) => {
+			console.log({
+				message: `ignore-review-limit: reaction failed for PR #${number} — flag was still set`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error:
+					reactionErr instanceof Error
+						? reactionErr.message
+						: String(reactionErr),
+				action: "ignore_review_limit_reaction_failed",
+			});
+		});
 
 		console.log({
 			message: `Review limit permanently ignored by ${senderLogin}: PR #${number}`,
@@ -389,8 +402,21 @@ export async function run({ payload, env, req }: FlueContext) {
 			};
 		}
 
-		// Acknowledge with 👍
-		await addReactionToComment(token, commentId, "+1");
+		// Acknowledge with 👍 — non-fatal if the reaction fails; the flag is
+		// already persisted.
+		await addReactionToComment(token, commentId, "+1").catch((reactionErr) => {
+			console.log({
+				message: `disable-auto-review: reaction failed for PR #${number} — flag was still set`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error:
+					reactionErr instanceof Error
+						? reactionErr.message
+						: String(reactionErr),
+				action: "disable_auto_review_reaction_failed",
+			});
+		});
 
 		console.log({
 			message: `Auto-review disabled by ${senderLogin}: PR #${number}`,

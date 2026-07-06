@@ -199,7 +199,25 @@ export async function run({
 	// entirely in log mode.
 	let botComment: GitHubIssueComment | null = null;
 	if (reviewMode === "comment") {
-		const allComments = await getIssueComments(token, input.number);
+		let allComments: Awaited<ReturnType<typeof getIssueComments>>;
+		try {
+			allComments = await getIssueComments(token, input.number);
+		} catch (commentsErr) {
+			// Treat a failed comment fetch as "not yet finalized" so finalize
+			// proceeds rather than crashing the workflow.
+			console.log({
+				message: `Finalize: failed to fetch comments for PR #${input.number} — treating as not finalized`,
+				event: "finalize_review",
+				number: input.number,
+				error:
+					commentsErr instanceof Error
+						? commentsErr.message
+						: String(commentsErr),
+				runId,
+				action: "comments_fetch_failed",
+			});
+			allComments = [];
+		}
 		botComment =
 			allComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ?? null;
 		const alreadyFinalizedSha = extractReviewedHeadSha(
@@ -521,12 +539,35 @@ export async function run({
 	// slot consumption — they carry less risk and may self-resolve.
 	if (!ctx.bypassReviewLimit && codeOk && styleOk) {
 		await markAutoReviewCompleted(bucket, input.number, input.headSha).catch(
-			() => {},
+			(slotErr) => {
+				console.log({
+					message: `Finalize: failed to mark auto-review slot for PR #${input.number} — slot may remain unconsumed`,
+					event: "finalize_review",
+					number: input.number,
+					error: slotErr instanceof Error ? slotErr.message : String(slotErr),
+					runId,
+					action: "mark_auto_review_failed",
+				});
+			},
 		);
 	}
 
 	// ── 9. Clean up the pending namespace ─────────────────────────────────────
-	await cleanupPending(bucket, input.number, input.headSha, input.dispatchId);
+	// Non-fatal: the review was already delivered. Log and return success anyway
+	// so finalize does not appear to retry against an already-finalized head.
+	try {
+		await cleanupPending(bucket, input.number, input.headSha, input.dispatchId);
+	} catch (cleanupErr) {
+		console.log({
+			message: `Finalize: pending namespace cleanup failed for PR #${input.number} — orphaned keys will be overwritten on retry`,
+			event: "finalize_review",
+			number: input.number,
+			error:
+				cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr),
+			runId,
+			action: "cleanup_failed",
+		});
+	}
 
 	return {
 		finalized: true,

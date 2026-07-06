@@ -108,12 +108,15 @@ export function parseReviewSpecialistPayload(
 	if (
 		typeof pr.number !== "number" ||
 		typeof pr.title !== "string" ||
+		typeof pr.body !== "string" ||
+		typeof pr.author !== "string" ||
 		typeof pr.base !== "string" ||
 		typeof pr.head !== "string" ||
-		!Array.isArray(pr.labels)
+		!Array.isArray(pr.labels) ||
+		!pr.labels.every((l) => typeof l === "string")
 	) {
 		throw new Error(
-			`[flue] ${workflowName}: malformed pr field — expected { number, title, base, head, labels[] }.`,
+			`[flue] ${workflowName}: malformed pr field — expected { number, title, body, author, base, head, labels: string[] }.`,
 		);
 	}
 

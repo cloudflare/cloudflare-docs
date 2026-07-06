@@ -203,8 +203,10 @@ function renderSeverityTable(
 
 /**
  * Render one review section (### heading + status + severity tables).
- * `includeCritical` is true for the code review, false for all others
- * (style and conventions never emit critical findings).
+ * `includeCritical` controls whether a Critical table is rendered.
+ * Set false for style and conventions (warning/suggestion only by convention)
+ * but the caller still counts and surfaces criticals from those streams if
+ * the model strays outside the specified severities.
  */
 function renderSection(
 	lines: string[],
@@ -262,7 +264,8 @@ export function renderComment(
 	const style = activeBySeverity(reviews.style);
 	const conventions = activeBySeverity(reviews.conventions);
 
-	const criticalCount = code.critical.length;
+	const criticalCount =
+		code.critical.length + conventions.critical.length + style.critical.length;
 	const warningCount =
 		code.warnings.length + conventions.warnings.length + style.warnings.length;
 	const suggestionCount =
