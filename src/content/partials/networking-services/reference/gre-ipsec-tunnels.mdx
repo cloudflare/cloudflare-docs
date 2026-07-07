@@ -258,7 +258,7 @@ If route-based VPNs are not an option and you must use policy-based VPNs, be awa
 - A policy must cover reply-style health checks — that is, they must match traffic selectors — otherwise, Cloudflare drops them, just like any other traffic from an IPsec tunnel that does not match a policy.
 - A single IPsec tunnel can only contain around 100 Child SAs. Therefore, there is effectively a limit on the number of different policies per tunnel.
 
-### Downgrade protection (beta) {#downgrade-protection}
+### Improved downgrade protection (beta) {#downgrade-protection}
 
 :::note[Beta]
 This feature is in beta. Contact your account team to turn on the `ipsec_downgrade_protection` flag for your account.
@@ -271,7 +271,7 @@ To address this, Cloudflare supports the [`IKE_SA_INIT_FULL_TRANSCRIPT_AUTH`](ht
 **How it works:**
 
 - When the feature flag is enabled, Cloudflare (acting as IKE responder) unconditionally includes an `IKE_SA_INIT_FULL_TRANSCRIPT_AUTH` notification in its `IKE_SA_INIT` response.
-- If the initiator also supports the extension, both sides use full transcript authentication, which prevents downgrade attacks.
+- If the initiator also supports the extension, both sides use full transcript authentication, which improves protection again downgrade attacks.
 - If the initiator does not support the extension, the handshake proceeds with standard IKEv2 authentication. Both parties must support the extension for downgrade protection to be effective.
 
 **Requirements:**
