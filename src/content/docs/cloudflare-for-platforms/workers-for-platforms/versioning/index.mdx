@@ -70,14 +70,18 @@ Creating a version does not change production traffic. Traffic changes only when
 
 ## What your platform needs to manage
 
-Your platform tracks the association between each user Worker and its version IDs. When a customer creates, tests, or rolls out a version, your platform uses those stored IDs to make deployment API calls and configure version routing in the dispatcher.
+Your customers interact with your platform — through your UI, CLI, or API — to upload new code, preview changes, choose rollout percentages, and trigger rollbacks. Behind the scenes, your platform translates each of those actions into Workers for Platforms API calls. Your customers do not interact with Cloudflare's API directly and do not need to know about version IDs, deployments, or routing headers.
 
-Your dispatcher is the trusted gateway for version routing headers:
+To support this, your platform is responsible for two things:
 
-- **For testing**, your dispatcher injects `Cloudflare-Workers-Version-Overrides` with the target version ID so test requests reach a specific version. Refer to [Versions](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/#send-test-requests-to-the-new-version).
-- **For version affinity during rollouts**, your dispatcher injects `Cloudflare-Workers-Version-Key` with a stable identifier so related requests stay on the same version. Refer to [Version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/).
+1. **Storing version IDs** — When a customer uploads new code, your platform [creates a version](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/) through the API and stores the returned version ID. Your platform uses that ID whenever it creates a deployment, sets up a test preview, or triggers a rollback for that Worker. The customer does not need to see or manage version IDs.
 
-External clients must not set these headers directly. Your dispatcher strips incoming version routing headers before forwarding requests to the user Worker.
+2. **Routing requests to a specific version** — To test a version or keep requests on the same version during a rollout, your platform sets a header on the request that tells Cloudflare which version to use. To prevent customers from having to manage this header themselves — and to prevent external clients from spoofing it — your dispatcher injects the header automatically before forwarding the request to the user Worker:
+
+   - **For testing**, your dispatcher injects `Cloudflare-Workers-Version-Overrides` with the target version ID so test requests reach a specific version. Refer to [Versions](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/#send-test-requests-to-the-new-version).
+   - **For version affinity during rollouts**, your dispatcher injects `Cloudflare-Workers-Version-Key` with a stable identifier so related requests stay on the same version. Refer to [Version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/).
+
+   External clients must not set these headers directly. Your dispatcher strips incoming version routing headers before forwarding requests to the user Worker.
 
 ## Related resources
 

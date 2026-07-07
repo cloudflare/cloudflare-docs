@@ -71,6 +71,8 @@ The `assets.config` object is optional. Use it to set asset routing behavior, su
 
 To make a version routable — for testing or production traffic — include it in the Worker's active deployment. To test the version without sending production traffic to it, add it at `0%`.
 
+Note: You can only add two versions to a deployment — one stable and one new.
+
 ```bash
 curl -X POST \
   "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/deployments" \
@@ -99,11 +101,13 @@ Once the version is in the deployment, your dispatcher can route test requests t
 
 ### What to set up on the user Worker
 
-Nothing. The user Worker does not need test-specific code. It handles `fetch()` the same way it would for production traffic. Your customer does not need to know about version IDs or override headers — your platform manages this entirely.
+The user Worker does not require any changes. It handles `fetch()` requests the same way regardless of whether the request is a test or production traffic. Your platform manages version routing entirely through the dispatcher — your customers do not need to add any test-specific code or know about version IDs or override headers.
 
 ### What to set up on your platform
 
 Your dispatcher is the trusted gateway for version testing. It owns the version routing header — external clients must not set it directly.
+
+Because your platform controls the dispatcher, the dispatcher is the right place to manage version routing headers. Your dispatcher strips version headers from incoming requests and only injects them when your platform's own logic determines a request should reach a specific version. This keeps version routing under your platform's control — your end customers never need to know about version IDs or routing headers, and external clients cannot spoof them.
 
 Your dispatcher handles each test request by:
 
@@ -113,7 +117,9 @@ Your dispatcher handles each test request by:
 
 3. **Validating the test request** — Check that test state exists, is not expired, the user is authorized, the version belongs to the Worker, and the version is in the active deployment. If validation fails, return an error and do not forward to user code.
 
-4. **Injecting the override and forwarding** — Set the header and dispatch:
+4. **Injecting the override and forwarding** — The `Cloudflare-Workers-Version-Overrides` header tells Cloudflare to route the request to a specific version instead of following the deployment percentages. The header uses [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries) format, where the key is the Worker name (the same name you pass to `env.DISPATCHER.get()`) and the value is the version ID as a quoted string.
+
+   Set the header on the request and dispatch it to the user Worker:
 
 ```js
 headers.set(
@@ -123,8 +129,6 @@ headers.set(
 
 return env.DISPATCHER.get(workerName).fetch(new Request(request, { headers }));
 ```
-
-The header is a Dictionary Structured Header. The key is the Worker name. The value is the version ID as a string.
 
 ### Example: dispatcher with version testing
 
