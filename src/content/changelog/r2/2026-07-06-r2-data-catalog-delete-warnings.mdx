@@ -3,7 +3,7 @@ title: R2 Data Catalog warns before you delete data manually
 description: The dashboard and Wrangler now warn you before manual delete operations that could corrupt an R2 Data Catalog.
 products:
   - r2
-date: 2026-07-06
+date: 2026-07-07
 ---
 
 [R2 Data Catalog](/r2/data-catalog/) is a managed [Apache Iceberg](https://iceberg.apache.org/) catalog built directly into your R2 bucket. Iceberg tracks your data through a tree of metadata files, so every insert, update, and delete must go through a catalog transaction. Manually adding, modifying, or deleting objects outside the catalog can leave pointers referencing files that no longer exist, corrupting the table into an inconsistent state that is difficult to recover from.
