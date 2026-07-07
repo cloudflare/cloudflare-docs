@@ -12,7 +12,6 @@ products:
 import {
 	PackageManagers,
 	TypeScriptExample,
-	WranglerConfig,
 } from "~/components";
 
 These examples show common patterns for integration testing Workers with `createTestHarness()`. The snippets use Vitest and Playwright, but `createTestHarness()` works with any Node.js test runner. For a complete runnable project that applies these examples, see the [`create-test-harness-example`](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/create-test-harness-example) fixture.
@@ -102,6 +101,77 @@ const server = createTestHarness({
 		},
 	],
 });
+```
+
+</TypeScriptExample>
+
+## Seed storage data
+
+If you need to seed data for a test, write the data directly to bindings with `worker.getEnv()`. The returned `env` object includes the vars, secrets, and bindings configured for that Worker.
+
+<TypeScriptExample>
+
+```ts
+type ApiEnv = {
+	DATABASE: D1Database;
+	REPORTS: R2Bucket;
+};
+
+const apiWorker = server.getWorker<ApiEnv>("api-worker");
+const apiEnv = await apiWorker.getEnv();
+
+await apiEnv.DATABASE.prepare(
+	"INSERT INTO daily_reports (date, user_ids) VALUES (?, ?)"
+)
+	.bind("2026-05-29", JSON.stringify(["123", "456"]))
+	.run();
+```
+
+</TypeScriptExample>
+
+## Prepare D1 before each test
+
+After local storage is reset, the D1 database is empty again. `worker.applyD1Migrations(bindingName)` applies the Worker's local migration files so the database schema is ready for the test.
+
+<TypeScriptExample>
+
+```ts
+const apiWorker = server.getWorker<ApiEnv>("api-worker");
+
+beforeEach(async () => {
+	await apiWorker.applyD1Migrations("DATABASE");
+});
+```
+
+</TypeScriptExample>
+
+## Mock bindings with test Workers
+
+You can mock a binding by routing it to a test Worker that runs inside the test harness using the `bindingOverrides` option. For example, you can mock a Browser Rendering binding so your Worker receives a predictable screenshot without starting a real browser during tests.
+
+Your test Worker can expose JSRPC methods that configure the binding behavior. Use `worker.getExport()` to access the test Worker's default export so you can interact with it directly from your test.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{
+			configPath: "./workers/web/wrangler.jsonc",
+			bindingOverrides: { BROWSER: "mock-browser" },
+		},
+		{ configPath: "./workers/mock-browser/wrangler.jsonc" },
+	],
+});
+
+const mockBrowser = await server
+	.getWorker<{}, typeof import("../workers/mock-browser")>("mock-browser")
+	.getExport();
+
+await mockBrowser.setScreenshot([137, 80, 78, 71]);
+
+const response = await server.fetch("/reports/2026-05-29.png");
+expect(response.headers.get("content-type")).toBe("image/png");
 ```
 
 </TypeScriptExample>
@@ -219,6 +289,48 @@ test("runs scheduled jobs and stores the result", async ({ expect }) => {
 		})
 	);
 });
+```
+
+</TypeScriptExample>
+
+## Control Workflow execution
+
+If your Worker starts a Workflow, you can introspect the Workflow instance using `worker.introspectWorkflow(bindingName)`.
+
+<TypeScriptExample>
+
+```ts
+const worker = server.getWorker<Env>("api-worker");
+await using workflow = await worker.introspectWorkflow("MY_WORKFLOW");
+
+await workflow.modifyAll(async (modifier) => {
+	await modifier.disableSleeps([{ name: "wait-for-approval" }]);
+});
+
+await worker.fetch("/start-workflow");
+
+const [instance] = await workflow.get();
+await instance.waitForStatus("complete");
+expect(await instance.getOutput()).toEqual({ approved: true });
+```
+
+</TypeScriptExample>
+
+If the test already knows the instance ID, you can also introspect that instance directly with `worker.introspectWorkflowInstance(bindingName, instanceId)`.
+
+<TypeScriptExample>
+
+```ts
+const instance = await worker.introspectWorkflowInstance(
+	"MY_WORKFLOW",
+	"instance-id"
+);
+
+await instance.modify(async (modifier) => {
+	await modifier.mockStepResult({ name: "load-user" }, { id: "123" });
+});
+
+await instance.waitForStatus("complete");
 ```
 
 </TypeScriptExample>

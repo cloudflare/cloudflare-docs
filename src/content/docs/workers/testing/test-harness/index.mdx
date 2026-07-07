@@ -26,6 +26,9 @@ import { LinkButton } from "~/components";
 - Starts one or more Workers from Wrangler configuration files.
 - Dispatches requests through configured Worker routes.
 - Calls a specific Worker's `fetch()` or `scheduled()` handler directly.
-- Overrides variables and secrets for tests.
 - Resets local storage between tests.
 - Captures runtime logs and prints debug output for failed tests.
+- Overrides variables, secrets, and configured bindings for tests.
+- Accesses a Worker's `env` object and default export from tests.
+- Applies local D1 migrations to prepare test databases.
+- Introspects Workflow instances created during tests.

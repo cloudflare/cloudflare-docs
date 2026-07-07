@@ -86,6 +86,8 @@ Configuration file inputs support these fields:
   - Test-only variables that override variables from the Wrangler configuration file.
 - `secrets` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
   - Test-only secrets that override values loaded from `.dev.vars` and `.env` files.
+- `bindingOverrides` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Test-only service binding overrides. Keys are binding names in this Worker's environment. Values are Worker names in this test harness.
 
 Each `WorkerInput` can also use `config` to provide an inline Wrangler configuration object:
 
@@ -136,6 +138,16 @@ const server = createTestHarness({
   - Dispatches a fetch event directly to this Worker.
 - `scheduled(options)` <Type text={'Promise<{ outcome: "ok" | "canceled" | "exception"; noRetry: boolean }>'} />
   - Dispatches a scheduled event directly to this Worker.
+- `getEnv()` <Type text="Promise<Env>" />
+  - Returns the full environment object configured on this Worker, including vars, secrets, and bindings.
+- `getExport()` <Type text={"Promise<Service<Module['default']>>"} />
+  - Returns the default Worker export, including RPC methods.
+- `applyD1Migrations(bindingName)` <Type text="Promise<void>" />
+  - Applies local D1 migration files that have not already run to a D1 binding on this Worker.
+- `introspectWorkflow(bindingName)` <Type text="Promise<WorkflowIntrospector>" />
+  - Creates an introspector for Workflow instances created after this method is called.
+- `introspectWorkflowInstance(bindingName, instanceId)` <Type text="Promise<WorkflowInstanceIntrospector>" />
+  - Creates an introspector for a specific Workflow instance.
 
 ### Usage
 
