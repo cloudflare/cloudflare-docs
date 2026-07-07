@@ -55,11 +55,11 @@ Local Explorer automatically captures traces and logs from every Worker invocati
 Local observability captures traces and logs from `wrangler dev` on your machine. For production Workers, see [Workers Logs](/workers/observability/logs/workers-logs/) and [Traces](/workers/observability/traces/).
 :::
 
-### Debug failed requests
+### View traces
 
 In Local Explorer's **Observability** section, each Worker invocation appears as a trace. Click any trace to expand a waterfall showing every binding operation (D1 queries, KV reads, R2 operations, Durable Object calls, `fetch()`) with timing, status, and error details.
 
-#### Debugging a failed request
+#### Example: Debug a failed request
 
 This Worker makes two D1 calls. The second references a table that doesn't exist:
 
