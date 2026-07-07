@@ -502,10 +502,6 @@ When using [authorization endpoints](#authorization-endpoint), be aware of the f
 
 Authorization endpoints do not support plaintext HTTP traffic unless the traffic is configured through an [Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) or bypassed with the PAC file.
 
-#### Browser Isolation
-
-Gateway [HTTP Isolate policies](/cloudflare-one/traffic-policies/http-policies/#isolate) are not supported with authorization endpoints.
-
 #### Referer header traffic
 
 Traffic with a referer HTTP header matching the domain of a recently logged in user from the same source IP will be allowed through and logged with the following non-identity email address:
