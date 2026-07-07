@@ -8,13 +8,41 @@ products:
   - fundamentals
 ---
 
-The following limitations apply during the public beta.
+:::note
 
-| Limitation              | Description                                                                                                                                                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Organization creation   | You must be a Super Administrator of an Enterprise account to create an Organization.                                                                                                       |
-| Adding accounts         | Once you've created an Organization, accounts of any plan type can be added. You must have Super Administrator access to the account, and it cannot already belong to another Organization. |
-| Account and zone limits | Each organization supports up to 500 accounts and 5,000 zones.                                                                                                                                |
-| Roles                   | Organization Super Administrator is the only role available during the beta. Additional roles will be available in a future release.                                                        |
-| Organization deletion   | To delete an Organization, use the [API](/api/resources/organizations/methods/delete). Dashboard support is not yet available.                                       |
-| Account removal         | Self-service account removal is not yet available. To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/).                      |
+Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
+
+:::
+
+The following limitations currently apply to Cloudflare Organizations.
+
+## Account and zone limits
+
+Each Organization supports a maximum of **500 accounts** and **5,000 zones**. This limit applies to both Enterprise and MSSP/Distributor Organizations. These limits may be adjusted as usage patterns are better understood during the beta.
+
+## Enterprise Organizations
+
+| Limitation | Description |
+| --- | --- |
+| Organization creation | You must be a Super Administrator of an Enterprise account to create an Organization. |
+| Adding accounts | You can add accounts of any plan type (Enterprise, PAYGO, or Free) to your Organization. You must have Super Administrator access to the account, and it cannot already belong to another Organization. |
+| Account creation | Self-serve account creation is not available. To add a new account, contact [Cloudflare Support](/support/contacting-cloudflare-support/) to create the account, then assign it to your Organization. |
+| Sub-Organizations | Not available. Enterprise Organizations use a flat, single-tier structure. Use tags to organize accounts by business unit, region, or environment. |
+| Moving accounts | Accounts cannot be moved between Organizations. |
+| Roles | Organization Super Administrator is the only role available. Additional roles (read-only, billing, audit log) will be available in a future release. |
+| Organization deletion | To delete an Organization, use the [API](/api/resources/organizations/methods/delete). Dashboard support is not yet available. |
+| Account removal | Self-service account removal is not yet available. To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
+
+## MSSP/Distributor Organizations
+
+| Limitation | Description |
+| --- | --- |
+| Organization creation | MSSP/Distributor Organizations are created by Cloudflare. Contact your account team to set up your Organization. |
+| Adding existing accounts | Assigning existing accounts is not available for MSSP/Distributor Organizations. Use account creation to add new accounts. |
+| Account creation | MSSP Organizations can self-serve create new customer accounts within their Organization. |
+| Sub-Organizations | Distributors can create child MSSP Organizations. MSSP Organizations cannot create their own child Organizations — the hierarchy is limited to two tiers: Distributor → MSSP Organizations. |
+| Moving accounts | Accounts can be moved between MSSP Organizations within the same Distributor Organization. |
+| Roles | Organization Super Administrator is the only role available. Additional roles (read-only, billing, audit log) will be available in a future release. |
+| Organization deletion | To delete an Organization, use the [API](/api/resources/organizations/methods/delete). Dashboard support is not yet available. |
+| Account removal | Self-service account removal is not yet available. To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
+| Organization type conversion | Organization type (Enterprise vs MSSP/Distributor) is set at creation and cannot be changed. To switch types, a new Organization must be created. |

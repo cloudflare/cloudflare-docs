@@ -1,0 +1,203 @@
+---
+pcx_content_type: how-to
+title: Organizations for Enterprise
+description: Set up and manage an Enterprise Organization to manage multiple Cloudflare accounts from a single dashboard.
+sidebar:
+  order: 2
+products:
+  - fundamentals
+---
+
+:::note
+
+Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
+
+:::
+
+Organizations provides a single-tier structure for Enterprise customers to manage multiple Cloudflare accounts from one unified dashboard.
+
+## Who is this for?
+
+Organizations is designed for **Enterprise customers of any size** who manage multiple Cloudflare accounts. Whether you have 5 accounts or 500, Organizations helps you manage them from one dashboard.
+
+Common use cases:
+- Multi-brand companies managing separate accounts per brand
+- Regional operations with accounts per geography
+- Business units or subsidiaries with independent accounts
+- Development workflows with separate accounts per environment
+- Growing companies consolidating account management
+
+Looking for MSSP or Distributor documentation? Refer to [Organizations for MSSP and Distributors](/fundamentals/organizations/for-mssp-distributors/).
+
+## Hierarchy structure
+
+Enterprise Organizations use a **single-tier structure**:
+
+```
+Organization
+├── Account 1
+│   ├── Zone A
+│   └── Zone B
+├── Account 2
+│   ├── Zone C
+│   └── Zone D
+└── Account 3
+    └── Zone E
+```
+
+**Key characteristics:**
+- One Organization contains multiple accounts
+- Each account can contain multiple zones
+- All accounts are at the same level (no sub-organizations)
+- Organization members have implicit access to all accounts
+- Maximum: **500 accounts** and **5,000 zones** per Organization
+
+## Example: Company A
+
+**Company A** is a SaaS company with 12 Cloudflare accounts:
+- 3 accounts for different product lines (Product Alpha, Product Beta, Product Gamma)
+- 3 environments per product (Development, Staging, Production)
+- Each account manages its own zones and configurations
+
+**Before Organizations:**
+- Security team manually copies WAF rules to all 12 accounts
+- Admins switch between accounts individually
+- No unified view of traffic or security events
+- Each new admin needs explicit access to all 12 accounts
+
+**With Organizations:**
+- Create one Organization containing all 12 accounts
+- Security team creates WAF rules once, shares to all production accounts
+- Admins see all accounts in one dashboard with the enhanced account switcher
+- View aggregate HTTP analytics across all accounts
+- New Organization members automatically get access to all 12 accounts
+- Use tags to organize accounts by product line and environment
+
+## Set up your Organization
+
+### Prerequisites
+
+Before you create an Organization:
+
+- Your account must have an Enterprise plan.
+- You must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled.
+- You must be a Super Administrator on the accounts you want to assign.
+- Each Organization supports a maximum of **500 accounts** and **5,000 zones**. Refer to [Limitations](/fundamentals/organizations/limitations/) for details.
+- You may only create a single Organization. You, or another member of your company, must not have already created an Organization.
+- Your accounts must not already belong to another Organization.
+
+### Create an Organization
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select **Organizations**.
+3. Select **Create organization**.
+4. Enter a name for the Organization.
+5. Select **Create**.
+
+The Organization overview page displays after creation.
+
+### Assign accounts
+
+After creating an Organization, you can assign existing accounts to manage them centrally. You can add accounts of any plan type (Enterprise, PAYGO, or Free) as long as you are a Super Administrator of the account.
+
+1. From the Organization overview, select **Assign an account**.
+2. Search for an account name. Only accounts where you are a Super Administrator will appear.
+3. Select the account.
+4. Select **Assign to organization**.
+
+The assigned account now appears on the Organization overview page. From here, you can view the account, copy its ID, or rename it.
+
+To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+## Manage members
+
+### Organization Super Administrator
+
+When you create an Organization, you become the Organization Super Administrator. This role provides implicit access to all accounts in your Organization and allows you to manage memberships at the Organization level.
+
+Implicit access means you do not need explicit membership on each account. When you access any account within your Organization, you automatically have Super Administrator permissions.
+
+:::note
+Any Organization Super Administrator can add or remove other Organization Super Administrators at any time.
+:::
+
+### Invite members
+
+You can invite additional members to your Organization. Invited members receive implicit Super Administrator access to all accounts in the Organization.
+
+1. From the Organization overview, select **Members**.
+2. Select **Invite member**.
+3. Enter the email address.
+4. Select **Send invitation**.
+
+The user receives an email invitation. After accepting, they have implicit access to all accounts in the Organization.
+
+:::note
+All Organization members must have 2FA or SSO enabled.
+:::
+
+## Share policies
+
+### WAF policy sharing
+Create WAF custom rulesets in one account and share them to other accounts within your Organization. Shared policies are read-only in receiving accounts.
+
+### Gateway policy sharing
+Share Zero Trust Gateway policies (DNS, Network, HTTP, Resolver) across accounts in your Organization.
+
+:::note
+Policy sharing requires the appropriate entitlements. Organizations does not grant access to WAF or Gateway features — your accounts must already have the required Enterprise WAF or Zero Trust Gateway SKUs.
+:::
+
+## View aggregate analytics
+
+You can view, filter, and download aggregate HTTP analytics across all accounts in your Organization:
+
+1. From the Organization overview, select **Analytics & Logs**.
+2. Use filters to narrow results by date range, account, domain, or other criteria.
+3. To export data, select **Download**.
+
+The data includes traffic for proxied hostnames and may be based on a sample. This data does not reflect billable usage.
+
+## Manage your Organization
+
+### Rename your Organization
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Next to **Organization name**, select **Rename**.
+3. Enter the new name.
+4. Select **Rename**.
+
+### Edit customer identification data
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Next to **Customer identification data**, select **Edit**.
+3. Update the information.
+4. Select **Save**.
+
+### Terraform
+
+You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
+
+## What you cannot do 
+
+### Create new accounts
+Enterprise Organizations cannot self-serve create new accounts. To add a new account, contact [Cloudflare Support](/support/contacting-cloudflare-support/) to create it, then assign it to your Organization.
+
+### Create sub-organizations
+Enterprise Organizations use a flat structure. You cannot create sub-organizations or nested containers. Use **tags** to organize accounts by business unit, region, or environment.
+
+### Move accounts
+Accounts cannot be moved between Enterprise Organizations.
+
+## Troubleshooting
+
+You may encounter the following errors during setup:
+
+| Error | Description |
+| --- | --- |
+| Organization management is only available on the Enterprise plan at this time. | You are not a member of any Enterprise accounts. |
+| You need a super admin role on an enterprise account to create an Organization. | You are not a Super Administrator of an Enterprise account. |
+| One or more of your enterprise accounts is already part of an Organization. | Your accounts are already in an Organization. Contact your company administrator. |
+| You have reached the maximum number of organizations. | You may not create another Organization because you already have one. |
+| An Organization has already been created for accounts associated with your company. Please contact your company administrator. | Every company is limited to one Organization. Contact your company's Cloudflare administrator to be invited to the existing Organization. |
+| You are not eligible to create an Organization because we think there's a problem. Please contact Cloudflare support and we will help you create it. | This is a rare error which may indicate an issue with the internal metadata for one or more of your accounts. Contact [Cloudflare Support](/support/contacting-cloudflare-support/) for assistance. |
