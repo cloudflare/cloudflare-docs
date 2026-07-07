@@ -52,6 +52,18 @@ const sidebarItems = await autogenSections();
 const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
 const serializeSitemapLastmod = createSitemapLastmodSerializer();
 
+// Mirrors production's sitemap `filter` (root astro.config.ts).
+function isExcludedFromSitemap(url: string): boolean {
+	if (url.includes("/style-guide/")) return true;
+	if (url.endsWith("/404/")) return true;
+
+	const pathname = new URL(url).pathname;
+	if (externalLinkPaths.has(pathname)) return true;
+	if (isDisallowedByRobots(pathname)) return true;
+
+	return false;
+}
+
 // Resolved against this file (src/nimbus/). `~` → src/nimbus, `~/assets` →
 // the shared root src/assets, partials → the shared root src/content/partials.
 const here = (p: string) =>
@@ -194,6 +206,16 @@ export const integrations = [
 		markdown: { hastPlugins },
 		incrementalBuilds: false,
 		validateMdx: false,
+		// Sitemap parity (T3): drop excluded URLs, stamp lastmod on the rest.
+		sitemap: {
+			serialize: async (item) =>
+				isExcludedFromSitemap(item.url)
+					? undefined
+					: serializeSitemapLastmod(
+							// nominal-only gap between nimbus-docs and @astrojs/sitemap types
+							item as Parameters<typeof serializeSitemapLastmod>[0],
+						),
+		},
 		partialResolver: (name: string, props: Record<string, unknown>) => {
 			if (name !== "Render" || !props.file) return null;
 			const path = props.product
