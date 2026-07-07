@@ -1,0 +1,20 @@
+---
+title: Self-serve registration of Cloudflare One Virtual Appliance in the dashboard
+description: Register a virtual appliance, generate its license key, and rotate the key directly from the Connectors page.
+date: 2026-07-06
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+You can now register a [Cloudflare One Virtual Appliance](/cloudflare-wan/configuration/appliance/) and generate its license key directly from the dashboard, without contacting your account team.
+
+![Registering a Cloudflare One Virtual Appliance and generating its authentication key from the Connectors page](~/assets/images/changelog/cloudflare-wan/2026-07-06-virtual-appliance-self-serve-ui.gif)
+
+- On the **Connectors** page, select **Add an appliance** and choose **Virtual appliance** to register a virtual appliance and generate its authentication key.
+- Use **Regenerate authentication key** from a virtual appliance connector's menu to rotate its key. The previous key is immediately and irrevocably revoked.
+- The authentication key is shown only once — copy and store it securely.
+
+This complements the existing [API and Terraform self-serve workflow](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key) for provisioning virtual appliances. Hardware appliances continue to use the existing account-team fulfillment workflow.
+
+For details, refer to [Configure a Cloudflare One Virtual Appliance](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/).

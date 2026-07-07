@@ -1,0 +1,24 @@
+---
+title: Simpler runtime types with @cloudflare/workers-types v5
+description: Ships only the latest runtime types and drops the dated entrypoints.
+products:
+  - workers
+date: 2026-07-03
+---
+
+import { PackageManagers } from "~/components";
+
+We have released version 5 of [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types). This release simplifies the package to expose only the latest runtime types.
+
+We still recommend that you generate types for your Worker using [`wrangler types`](/workers/wrangler/commands/general/#types), but if you want to use the package directly, you can install it with your package manager of choice:
+
+<PackageManagers type="add" pkg="@cloudflare/workers-types@latest" dev />
+
+The package now exposes two entrypoints:
+
+- `@cloudflare/workers-types` reflects the latest compatibility date, using the latest stable compatibility flags.
+- `@cloudflare/workers-types/experimental` reflects APIs behind experimental compatibility flags.
+
+The dated entrypoints, such as `@cloudflare/workers-types/2022-11-30` and `@cloudflare/workers-types/2023-03-01`, are removed. With runtime type generation in [Wrangler v4](/workers/wrangler/), you can generate these with the `wrangler types` command to create types locked to your Worker's compatibility date.
+
+For more information, refer to [TypeScript language support](/workers/languages/typescript/).

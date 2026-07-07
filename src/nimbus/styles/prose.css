@@ -143,7 +143,15 @@
 }
 
 .docs-content :where(pre:not([class])) {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--nb-border);
+  background-color: var(--nb-card);
+  overflow-x: auto;
   font-family: var(--nb-font-mono);
+  font-size: 0.875rem;
+  line-height: 1.625;
 }
 
 /* Shiki-rendered code blocks — wider vertical margin than base rhythm
@@ -215,6 +223,12 @@
 
 .docs-content :where(tbody:not([class]) tr:not([class]):last-child td:not([class])) {
   border-bottom: none;
+}
+
+.docs-content
+  :where(td:not([class]), th:not([class]))
+  :where(code:not([class])) {
+  overflow-wrap: normal;
 }
 
 .docs-content :where(a:not([class])) {

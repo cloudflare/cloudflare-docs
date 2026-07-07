@@ -5,16 +5,18 @@ head: []
 description: Revert to an older version of your Worker.
 products:
   - workers
+sidebar:
+  order: 5
 ---
 
 import { DashButton } from "~/components";
 
-You can roll back to a previously deployed [version](/workers/configuration/versions-and-deployments/#versions) of your Worker using [Wrangler](/workers/wrangler/commands/general/#rollback) or the Cloudflare dashboard. Rolling back to a previous version of your Worker will immediately create a new [deployment](/workers/configuration/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains.
+You can roll back to a previously deployed [version](/workers/versions-and-deployments/#versions) of your Worker using [Wrangler](/workers/wrangler/commands/general/#rollback) or the Cloudflare dashboard. Rolling back to a previous version of your Worker will immediately create a new [deployment](/workers/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains.
 
 You can roll back from any deployment, including:
 
 - A single-version deployment (rolling back replaces the current version with the selected version).
-- A [split deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) with two versions (rolling back replaces both versions with the selected version at 100% traffic).
+- A [split deployment](/workers/versions-and-deployments/gradual-deployments/) with two versions (rolling back replaces both versions with the selected version at 100% traffic).
 
 ## Via Wrangler
 
@@ -33,7 +35,7 @@ To roll back to a specified version of your Worker via the Cloudflare dashboard:
 
 ## Rolling back from a split deployment
 
-If you are using a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) with two versions splitting traffic, rolling back will:
+If you are using a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) with two versions splitting traffic, rolling back will:
 
 1. Replace the split deployment with a single-version deployment.
 2. Route 100% of traffic to the version you selected for rollback.

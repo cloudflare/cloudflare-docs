@@ -22,7 +22,7 @@ export const getStaticPaths = (async ({ paginate }) => {
     filter: (entry) => !entry.data.hidden,
   });
 
-  return paginate(visibleNotes, { pageSize: 20 });
+  return paginate(visibleNotes, { pageSize: 25 });
 }) satisfies GetStaticPaths;
 
 type Props = { page: Page<CollectionEntry<"changelog">> };
@@ -31,19 +31,7 @@ const { page } = Astro.props as Props;
 ---
 
 <ChangelogLayout
-  title="Changelog"
-  description="New features, improvements, and fixes."
-  head={[
-    {
-      tag: "link",
-      attrs: {
-        rel: "alternate",
-        type: "application/rss+xml",
-        title: "Changelog RSS",
-        href: "/changelog/rss/index.xml",
-      },
-    },
-  ]}
+  title="Changelogs"
 >
   <Header rssHref="/changelog/rss/index.xml" />
   <ChangelogFeed entries={page.data} />

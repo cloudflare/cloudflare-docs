@@ -13,12 +13,16 @@ interface Props extends HTMLAttributes<"div"> {
 }
 
 const { headings, class: className, ...attrs } = Astro.props;
+
+const items: TOCItem[] = [
+  { depth: 2, text: "Overview", slug: "_top" },
+  ...headings,
+];
 ---
 
-{headings.length > 0 && (
-  <div data-nb-toc class={cn("toc-container", className)} {...attrs}>
-    <h2 class="mb-2 text-sm font-semibold text-foreground">On this page</h2>
-    <nav aria-label="Table of contents" class="relative">
+<div data-nb-toc class={cn("toc-container", className)} {...attrs}>
+    <h2 id="nb-on-this-page" class="mb-2 text-sm font-semibold text-foreground">On this page</h2>
+    <nav aria-labelledby="nb-on-this-page" class="relative">
       <svg
         data-nb-toc-rail
         aria-hidden="true"
@@ -34,9 +38,9 @@ const { headings, class: className, ...attrs } = Astro.props;
       </svg>
 
       <ul class="flex list-none flex-col m-0 p-0">
-        {headings.map((h, i) => {
-          const prevDepth = i > 0 ? headings[i - 1].depth : h.depth;
-          const nextDepth = i < headings.length - 1 ? headings[i + 1].depth : h.depth;
+        {items.map((h, i) => {
+          const prevDepth = i > 0 ? items[i - 1].depth : h.depth;
+          const nextDepth = i < items.length - 1 ? items[i + 1].depth : h.depth;
           const indent = h.depth - 2;
           const goingDeeper = h.depth > prevDepth;
           const goingShallower = nextDepth < h.depth;
@@ -87,8 +91,7 @@ const { headings, class: className, ...attrs } = Astro.props;
         })}
       </ul>
     </nav>
-  </div>
-)}
+</div>
 
 <script>
   import "./toc.client";

@@ -14,7 +14,10 @@ Bindings let you control what a user Worker can access. When your platform uploa
 
 Use bindings when you want to:
 
-- Give each user Worker its own KV namespace, R2 bucket, D1 database, Analytics Engine dataset, or other resource.
+- Give each user Worker its own [KV](/kv/) namespace, [R2](/r2/) bucket, [D1](/d1/) database, [Durable Object](/durable-objects/) namespace, [Analytics Engine](/analytics/analytics-engine/) dataset, or other resource.
+- Process work asynchronously with [Queues](/queues/) and [Workflows](/workflows/).
+- Run [Containers](/containers/) that are bound as Durable Objects.
+- Connect to private networks with [VPC Services](/workers-vpc/configuration/vpc-services/), [VPC Networks](/workers-vpc/configuration/vpc-networks/), and [Hyperdrive](/hyperdrive/).
 - Expose custom platform capabilities, such as `sendEmail()`, `trackUsage()`, or `createCheckoutSession()`.
 - Restrict and control access before calls reach the underlying resource.
 - Scope access per tenant, project, plan, or request.
@@ -52,7 +55,7 @@ curl -X PUT \
   -F 'worker.js=@/path/to/worker.js'
 ```
 
-The user Worker accesses the binding through `env` like a regular Worker:
+The user Worker accesses the binding through the `env` argument like a regular Worker:
 
 ```js
 export default {
@@ -180,10 +183,10 @@ When you upload the user Worker, add a Service binding that points to the platfo
 				"BUCKET": "<R2 bucket for this site>",
 				"USAGE_COUNTER": "<usage counter for this site>",
 				"MAX_BYTES": 10737418240,
-				"CUSTOMER_ID": "<customer ID>"
-			}
-		}
-	]
+				"CUSTOMER_ID": "<customer ID>",
+			},
+		},
+	],
 }
 ```
 

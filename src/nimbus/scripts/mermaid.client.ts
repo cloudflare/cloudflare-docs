@@ -1,8 +1,7 @@
 // Renders `pre.mermaid` blocks: lazy-loads mermaid only on pages that have a
 // diagram, applies brand theme variables, and adds an expand-to-dialog modal
 // and annotation footer. Adapted from cloudflare-docs (src/scripts/mermaid.ts);
-// dark mode keys off `[data-mode="dark"]` and re-runs on `astro:page-load` for
-// the view-transitions ClientRouter.
+// dark mode keys off `[data-mode="dark"]`.
 
 let dialog: HTMLDialogElement | null = null;
 let themeObserver: MutationObserver | null = null;
@@ -299,5 +298,3 @@ function setup() {
 }
 
 setup();
-// Re-run after SPA navigations (view-transitions ClientRouter).
-document.addEventListener("astro:page-load", setup);

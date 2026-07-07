@@ -16,15 +16,23 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Pagination } from "@/components/ui/pagination";
 import { PageActions } from "@/components/ui/page-actions";
 import { Badge } from "@/components/ui/badge";
+import FeedbackPrompt from "@/components/react/FeedbackPrompt";
 import type { DocsPageProps } from "nimbus-docs/types";
 import { config } from "virtual:nimbus/config";
 import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
 import logo from "~/assets/logo.svg";
+import type { PageMeta } from "@/components/PageHead.astro";
 
-type Props = DocsPageProps & { audience?: "human"; wide?: boolean; hideTitle?: boolean };
+type Props = DocsPageProps & {
+  audience?: "human";
+  wide?: boolean;
+  hideTitle?: boolean;
+  meta?: PageMeta;
+  feedback?: boolean;
+};
 
-const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false } = Astro.props;
+const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true } = Astro.props;
 
 // `searchable` derives from `noindex` when omitted: a non-crawlable page is
 // by default not in the site search either. Explicit `searchable: true`
@@ -94,15 +102,19 @@ const hasToc = Astro.slots.has("toc");
 const hasPageTitle = Astro.slots.has("page-title");
 const hasContentFooter = Astro.slots.has("content-footer");
 const hasPagination = Astro.slots.has("pagination");
+
+// Feedback: rail copy on wide screens, content-column fallback otherwise.
+const hasTocAside = headings !== false;
+const showFeedback = feedback !== false && !isCustom;
 ---
 
-<BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId} footer={false}>
+<BaseLayout title={title} description={description} noindex={noindex || draft} markdownUrl={markdownUrl} socialImage={socialImage} lastUpdated={lastUpdated} head={head} collection={collection} entryId={entryId} footer={false} meta={meta}>
   <div class="flex flex-col min-h-screen">
     {hasHeader ? <slot name="header" /> : <Header collection={collection} entryId={entryId} showSidebar={showSidebar} />}
 
     {isCustom ? (
       <Fragment>
-        <main id="main-content" transition:name="nb-content" class="flex-1">
+        <main id="main-content" class="flex-1">
           <slot />
         </main>
         <Footer class="mt-16" />
@@ -203,9 +215,7 @@ const hasPagination = Astro.slots.has("pagination");
               whose border runs the full page height alongside it. */}
           <div class="flex min-w-0 flex-1 flex-col">
             <div class="flex min-w-0 flex-1">
-          {/* Named view-transition group — only the content fades+rises on nav.
-              Header / sidebar / TOC stay still via the root rule in globals.css. */}
-          <main id="main-content" transition:name="nb-content" class="flex-1 min-w-0">
+          <main id="main-content" class="flex-1 min-w-0">
             <div class={`mx-auto px-4 lg:px-6 pt-6 pb-12 ${wide ? "max-w-[1400px]" : "max-w-(--nb-content-max)"}`}>
               {versionStatus?.isDeprecated && (
                 <Banner
@@ -219,7 +229,7 @@ const hasPagination = Astro.slots.has("pagination");
               )}
               {banner && <Banner content={banner.content} type={banner.type} dismissible={banner.dismissible} />}
               <Breadcrumbs items={breadcrumbItems} class="pb-2" />
-              <div {...pagefindAttrs}>
+              <div id="_top" {...pagefindAttrs}>
                 {hasPageTitle ? (
                   <slot name="page-title" />
                 ) : hideTitle ? null : (
@@ -260,13 +270,23 @@ const hasPagination = Astro.slots.has("pagination");
                 )}
               </div>
               {hasPagination ? <slot name="pagination" /> : <Pagination prevNext={prevNext} />}
+              {showFeedback && (
+                <div class:list={["mt-10", hasTocAside && "xl:hidden"]}>
+                  <FeedbackPrompt client:idle id="feedback-form-content" />
+                </div>
+              )}
             </div>
           </main>
 
-          {headings !== false && (hasToc || headings.length > 0) && (
+          {headings !== false && (
             <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
               <div class="pt-6 pb-8 pl-8 pr-6">
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
+                {showFeedback && (
+                  <div class="mt-8 border-t border-border pt-6">
+                    <FeedbackPrompt client:only="react" id="feedback-form-toc" />
+                  </div>
+                )}
               </div>
             </aside>
           )}
@@ -287,8 +307,12 @@ const hasPagination = Astro.slots.has("pagination");
       class="group fixed inset-0 m-0 h-full w-full max-h-full max-w-full border-0 bg-transparent p-0 data-[state=open]:bg-black/40 data-[state=closing]:bg-black/40"
       aria-label="Site navigation"
     >
-      <div data-mobile-sidebar-panel class="h-full w-full -translate-x-full overflow-y-auto bg-background shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none">
-        <div class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-inherit px-4 py-3">
+  <div
+      data-mobile-sidebar-panel
+      class="h-full w-full -translate-x-full overflow-y-auto bg-background shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
+    >
+      <div
+        class="sticky top-0 z-[1] flex items-center justify-between border-b border-border bg-inherit px-4 py-3">
           <a href="/" class="group flex items-center gap-2 no-underline">
             <img src={logo.src} alt="" width="51" height="23" class="h-[20px] w-auto" />
             <span class="font-semibold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">

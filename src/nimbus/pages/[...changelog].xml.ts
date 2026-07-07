@@ -6,31 +6,19 @@
  *
  * CF source: cloudflare-docs/src/pages/[...changelog].xml.ts
  *
- * Faithful port with two adaptations to this app's conventions:
+ * Faithful port with one adaptation to this app's conventions:
  *   - Site origin comes from `virtual:nimbus/config` (`config.site`) — the
  *     same source the llms.txt routes use — rather than `context.site`.
- *   - Heading anchors use a local slugify matching `AnchorHeading.astro`
- *     instead of `github-slugger`, so no extra dependency is pulled in.
  */
 import rss from "@astrojs/rss";
 import { getCollection, getEntry } from "astro:content";
 import type { APIRoute } from "astro";
 import { marked, type Token } from "marked";
+import { slug } from "github-slugger";
 import { config } from "virtual:nimbus/config";
 import { entryToString } from "~/util/container";
 
 export const prerender = true;
-
-// Mirrors src/components/cf/AnchorHeading.astro so RSS anchors line up with
-// the ids rendered on the changelog page.
-function slugify(input: string): string {
-  return input
-    .trim()
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
-}
 
 export async function getStaticPaths() {
   const releaseNotes = await getCollection("docs", (entry) => {
@@ -103,7 +91,7 @@ export const GET: APIRoute = async (context) => {
         if (entry.link) {
           link = entry.link;
         } else {
-          const anchor = slugify(entry.title ?? entry.publish_date);
+          const anchor = slug(entry.title ?? entry.publish_date);
           link = product.data.link.concat(`#${anchor}`);
         }
 

@@ -22,3 +22,13 @@ description: Rules for fenced code blocks that are not component-specific.
 ## Output Blocks
 
 - If a command block is followed by output inline in the same block → **suggestion**: show output in a separate `txt` block immediately after the command block.
+
+---
+
+## Component Alternatives (MDX files only)
+
+These suggestions apply **only** when the file is under `src/content/docs/` or `src/content/partials/`. Use judgment — a bare fence inside a `:::note` showing a one-liner error message is fine.
+
+- If a raw ` ```ts `, ` ```tsx `, ` ```js `, or ` ```jsx ` fenced block appears in a docs/partials MDX file → **suggestion**: use `<TypeScriptExample>` instead; it auto-generates a JS tab from the TypeScript source.
+- If a raw ` ```toml ` or ` ```jsonc ` fenced block contains Wrangler configuration keys (`name`, `main`, `compatibility_date`) → **suggestion**: use `<WranglerConfig>` instead; it auto-converts between TOML and JSONC.
+- If a raw ` ```sh ` or ` ```bash ` block contains only package-manager install commands (`npm install`, `yarn add`, `pnpm add`, `bun add`) → **suggestion**: use `<PackageManagers>` instead.
