@@ -8,7 +8,7 @@ products:
   - browser-run
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, Details } from "~/components";
 
 The `/accessibilityTree` endpoint instructs the browser to navigate to a website and capture the page's accessibility tree after JavaScript execution. The accessibility tree includes accessibility-related information such as roles, names, values, states, and hierarchy.
 
@@ -145,9 +145,62 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 }'
 ```
 
+<Details header="Response example">
+
+```json
+{
+	"success": true,
+	"result": {
+		"accessibilityTree": {
+			"role": "RootWebArea",
+			"name": "Example Domain",
+			"children": [
+				{
+					"role": "generic",
+					"name": "",
+					"children": [
+						{
+							"role": "heading",
+							"name": "Example Domain",
+							"level": 1
+						},
+						{
+							"role": "paragraph",
+							"name": "",
+							"children": [
+								{
+									"role": "StaticText",
+									"name": "This domain is for use in documentation examples without needing permission. Avoid use in operations."
+								}
+							]
+						},
+						{
+							"role": "paragraph",
+							"name": "",
+							"children": [
+								{
+									"role": "link",
+									"name": "Learn more"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	},
+	"meta": {
+		"status": 200,
+		"title": "Example Domain"
+	}
+}
+```
+
+</Details>
+
 ### Capture a subtree
 
-Use `root` to return the accessibility tree for a specific part of the page. The `root` parameter accepts a CSS selector.
+Set `root` to a CSS selector string to return the accessibility tree for a specific part of the page.
 
 When `root` is set and `interestingOnly` is not provided, `interestingOnly` defaults to `false`. To filter a subtree to semantically meaningful nodes, set `interestingOnly` to `true` explicitly.
 
