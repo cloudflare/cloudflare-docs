@@ -85,10 +85,10 @@ const year = new Date().getFullYear();
 let isProduction = false;
 
 if (
-	import.meta.env.CF_PAGES_BRANCH === "production" ||
-	import.meta.env.GITHUB_REF_NAME === "production"
+  import.meta.env.CF_PAGES_BRANCH === "production" ||
+  import.meta.env.GITHUB_REF_NAME === "production"
 ) {
-	isProduction = true;
+  isProduction = true;
 }
 ---
 
