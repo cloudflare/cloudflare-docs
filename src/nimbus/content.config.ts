@@ -1,5 +1,6 @@
 import { defineCollection, reference, z } from "astro:content";
 import { glob } from "astro/loaders";
+import { skillsLoader } from "astro-skills";
 import { docsCollection, partialsCollection } from "nimbus-docs/content";
 import { warpReleasesSchema } from "~/schemas/warp-releases";
 import { compatibilityFlagsSchema } from "~/schemas/compatibility-flags";
@@ -237,6 +238,10 @@ export const collections = {
   // middlecache at build. Read by ProductAvailabilityText /
   // GranularControlApplicationsList.
   "product-availability": defineCollection(productAvailabilityCollectionConfig),
+  // Agent Skills Discovery — shared root `./skills` dir, served via astro-skills.
+  skills: defineCollection({
+    loader: skillsLoader({ base: "./skills" }),
+  }),
   "granular-control-applications": defineCollection(
     granularControlApplicationsCollectionConfig,
   ),
