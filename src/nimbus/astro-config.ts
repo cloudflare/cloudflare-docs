@@ -3,6 +3,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
 import icon from "astro-icon";
+import skills from "astro-skills";
 import nimbus, { defineConfig as defineNimbusConfig } from "nimbus-docs";
 import { hastPlugins } from "./plugins/satteri";
 import { createSitemapLastmodSerializer } from "../../sitemap.serializer";
@@ -201,6 +202,8 @@ export const markdown = {
 export const integrations = [
 	icon(),
 	react(),
+	// Injects /.well-known/agent-skills/* routes (index.json, SKILL.md, tarballs).
+	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
 		markdown: { hastPlugins },
