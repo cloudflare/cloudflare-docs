@@ -8,7 +8,9 @@ date: 2026-07-06
 
 [Browser Run](/browser-run/) now supports a standalone `/accessibilityTree` endpoint, giving agent and automation workflows direct access to the browser's accessibility tree for a rendered webpage.
 
-For AI agents, the accessibility tree provides a token-efficient alternative to screenshots and a more semantic alternative to raw HTML. Instead of asking a model to infer interactive controls from pixels, you can provide the browser's structured representation of the page: roles, names, values, states, and hierarchy. This helps AI agents identify available elements and determine which actions they can take.
+An accessibility tree is the browser's structured view of a rendered page: roles, names, states, values, and hierarchy. It is useful for accessibility tooling, but also for AI agents and automation workflows that need page structure without the noise of raw HTML or the cost of screenshots.
+
+For AI agents, this means less inference from pixels and less parsing HTML. You can provide the page structure directly, helping agents identify available elements and determine which actions they can take.
 
 Browser Run already supports accessibility trees through the [`/snapshot`](/browser-run/quick-actions/snapshot/) endpoint, which returns multiple page formats in one response. With the new `/accessibilityTree` endpoint, you can request the accessibility tree directly when you only need the semantic structure of a page.
 
