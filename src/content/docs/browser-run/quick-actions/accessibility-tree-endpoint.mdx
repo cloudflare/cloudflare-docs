@@ -1,0 +1,266 @@
+---
+pcx_content_type: how-to
+title: /accessibilityTree - Capture accessibility tree
+description: Capture the accessibility tree from a webpage after JavaScript execution using the Browser Run /accessibilityTree endpoint.
+sidebar:
+  order: 7
+products:
+  - browser-run
+---
+
+import { Tabs, TabItem, Render, Details } from "~/components";
+
+The `/accessibilityTree` endpoint instructs the browser to navigate to a website and capture the page's accessibility tree after JavaScript execution. The accessibility tree includes accessibility-related information such as roles, names, values, states, and hierarchy.
+
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/accessibilityTree
+```
+
+## Required fields
+
+You must provide either `url` or `html`:
+
+- `url` (string)
+- `html` (string)
+
+## Common use cases
+
+- Provide AI agents with a structured page representation for navigation and browser automation workflows
+- Check roles, accessible names, values, and states exposed to assistive technologies
+- Identify interactive elements, such as buttons, links, menus, and form fields, that an automation workflow can act on
+
+## Basic usage
+
+### Capture the accessibility tree from a URL
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
+
+Go to `https://example.com/` and return the page's accessibility tree.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/accessibilityTree' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/"
+}'
+```
+
+```json
+{
+	"success": true,
+	"result": {
+		"accessibilityTree": {
+			"role": "RootWebArea",
+			"name": "Example Domain",
+			"children": [
+				{
+					"role": "heading",
+					"name": "Example Domain",
+					"level": 1
+				},
+				{
+					"role": "StaticText",
+					"name": "This domain is for use in documentation examples without needing permission. Avoid use in operations."
+				},
+				{
+					"role": "link",
+					"name": "Learn more"
+				}
+			]
+		}
+	},
+	"meta": {
+		"status": 200,
+		"title": "Example Domain"
+	}
+}
+```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
+});
+
+const accessibilityTree = await client.browserRendering.accessibilityTree.create({
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://example.com/",
+});
+
+console.log(accessibilityTree.accessibilityTree);
+```
+
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("accessibilityTree", {
+			url: "https://example.com/",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+## Optional parameters
+
+The following optional parameters can be used in your `/accessibilityTree` request, in addition to the required `url` or `html` parameter.
+
+| Optional parameter | Type    | Description                                                                                                                                                                                                                                                |
+| ------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `interestingOnly`  | Boolean | When `true`, returns only semantically meaningful nodes. Defaults to `true`. If `root` is set and `interestingOnly` is omitted, defaults to `false`.                                                                                                       |
+| `root`             | String  | CSS selector that anchors the accessibility tree to a subtree. If the selector does not match an element, `accessibilityTree` returns `null`. To return only semantically meaningful nodes within the subtree, set `interestingOnly` to `true` explicitly. |
+
+## Advanced usage
+
+:::note[Looking for more parameters?]
+Visit the [Browser Run API reference](/api/resources/browser_rendering/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+:::
+
+{/* TODO: Replace the general API reference link with the direct /accessibilityTree API reference URL when it is live. */}
+
+### Include all nodes
+
+By default, `interestingOnly` is `true`, which filters the response to semantically meaningful nodes. Set `interestingOnly` to `false` to include every node in the accessibility tree, including generic and presentational nodes.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/accessibilityTree' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "interestingOnly": false
+}'
+```
+
+<Details header="Response example">
+
+```json
+{
+	"success": true,
+	"result": {
+		"accessibilityTree": {
+			"role": "RootWebArea",
+			"name": "Example Domain",
+			"children": [
+				{
+					"role": "generic",
+					"name": "",
+					"children": [
+						{
+							"role": "heading",
+							"name": "Example Domain",
+							"level": 1
+						},
+						{
+							"role": "paragraph",
+							"name": "",
+							"children": [
+								{
+									"role": "StaticText",
+									"name": "This domain is for use in documentation examples without needing permission. Avoid use in operations."
+								}
+							]
+						},
+						{
+							"role": "paragraph",
+							"name": "",
+							"children": [
+								{
+									"role": "link",
+									"name": "Learn more"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	},
+	"meta": {
+		"status": 200,
+		"title": "Example Domain"
+	}
+}
+```
+
+</Details>
+
+### Capture a subtree
+
+Set `root` to a CSS selector string to return the accessibility tree for a specific part of the page.
+
+When `root` is set and `interestingOnly` is not provided, `interestingOnly` defaults to `false`. To filter a subtree to semantically meaningful nodes, set `interestingOnly` to `true` explicitly.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/accessibilityTree' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "root": "h1",
+    "interestingOnly": true
+}'
+```
+
+```json
+{
+	"success": true,
+	"result": {
+		"accessibilityTree": {
+			"role": "heading",
+			"name": "Example Domain",
+			"level": 1
+		}
+	},
+	"meta": {
+		"status": 200,
+		"title": "Example Domain"
+	}
+}
+```
+
+### Handle a root selector with no match
+
+If `root` does not match any element on the page, the request returns HTTP `200` and `accessibilityTree` is `null`.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/accessibilityTree' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "root": "#does-not-exist"
+}'
+```
+
+```json
+{
+	"success": true,
+	"result": {
+		"accessibilityTree": null
+	},
+	"meta": {
+		"status": 200,
+		"title": "Example Domain"
+	}
+}
+```
+
+<Render file="javascript-heavy-pages" product="browser-run" />
+
+<Render file="setting-custom-user-agent" product="browser-run" />
+
+<Render file="faq" product="browser-run" />
