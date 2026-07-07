@@ -98,7 +98,9 @@ package.json @cloudflare/content-engineering
 /src/content/changelog/cloudflare-one/ @kennyj42 @asamborski @ranbel @cloudflare/pm-changelogs @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/cloudflare-one/remote-browser-isolation/ @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/cloudflare-one/remote-browser-isolation/ @asamborski @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/partials/cloudflare-one/troubleshooting/browser-isolation.mdx @asamborski @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/partials/cloudflare-one/access/self-hosted-app/browser-isolation-non-443.mdx @asamborski @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-one/data-loss-prevention/ @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-one/insights/dex/ @codyanthony850 @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
