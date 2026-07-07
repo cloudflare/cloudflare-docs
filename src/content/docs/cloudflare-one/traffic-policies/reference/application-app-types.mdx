@@ -85,7 +85,7 @@ To prevent this, Gateway only uses support hostnames in Allow policies — it wi
 
 ## Application controls
 
-When you use the [_Application_ selector](/cloudflare-one/traffic-policies/policy-types/http-policies/#granular-controls) in an HTTP policy with the _is_ operator, you can choose specific actions and operations to match application traffic. Supported applications and operations include:
+When you use the [_Application_ selector](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#granular-controls) in an HTTP policy with the _is_ operator, you can choose specific actions and operations to match application traffic. Supported applications and operations include:
 
 <GranularControlApplicationsList />
 
@@ -101,7 +101,7 @@ To ensure Gateway evaluates traffic with your desired precedence, order your mos
 
 ### Do Not Inspect applications
 
-Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) with the entire _Do Not Inspect_ app type selected.
+Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) with the entire _Do Not Inspect_ app type selected.
 
 When managing applications with the [Application Library](/cloudflare-one/team-and-resources/app-library/), Do Not Inspect applications will appear under the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**.
 
@@ -122,7 +122,7 @@ Applications can be incompatible with [TLS decryption](/cloudflare-one/traffic-p
 
 #### Microsoft 365 integration
 
-To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic not explicitly defined.
+To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic not explicitly defined.
 
 To turn on the Microsoft 365 integration:
 

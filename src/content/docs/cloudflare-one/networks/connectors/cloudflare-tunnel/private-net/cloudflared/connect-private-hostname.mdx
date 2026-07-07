@@ -127,7 +127,7 @@ You can create an [Access self-hosted application](/cloudflare-one/access-contro
 
 #### Option 2: Gateway firewall policies
 
-If you prefer to secure the application using a traditional firewall model, you can build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/policy-types/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/policy-types/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/policy-types/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/policy-types/dns-policies/#domain) from resolving.
+If you prefer to secure the application using a traditional firewall model, you can build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/policy-types/dns-policies/selectors/#host) or [Domain](/cloudflare-one/traffic-policies/policy-types/dns-policies/selectors/#domain) from resolving.
 
     <Details header="Example network policies">
     The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
@@ -150,7 +150,7 @@ If you prefer to secure the application using a traditional firewall model, you 
 
 <Render file="gateway/selectors/sni-443" product="cloudflare-one" />
 
-Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/policy-types/network-policies/#destination-ip) selector instead of SNI.
+Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-ip) selector instead of SNI.
 :::
 
 ### 4. Test the connection

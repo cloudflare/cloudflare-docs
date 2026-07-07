@@ -18,7 +18,7 @@ import {
 	Tabs,
 } from "~/components";
 
-Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) to inspect HTTPS traffic for malware and other security risks. TLS decryption is required for HTTP policies to inspect HTTPS traffic. Without it, information contained within HTTPS encryption, such as the full URL, headers, and request body, [will not be visible to Gateway](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect).
+Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) to inspect HTTPS traffic for malware and other security risks. TLS decryption is required for HTTP policies to inspect HTTPS traffic. Without it, information contained within HTTPS encryption, such as the full URL, headers, and request body, [will not be visible to Gateway](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect).
 
 When you turn on TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/).
 
@@ -64,10 +64,10 @@ Applications that use certificate pinning and mTLS authentication do not trust C
 If you try to perform TLS decryption on an application with an incompatible certificate configuration, the application may return an SSL or trust error and/or fail to load. To resolve this issue, you can:
 
 - Add a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to supported applications.
-- Create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) to exempt applications from inspection. The [Application selector](/cloudflare-one/traffic-policies/policy-types/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates. Note that if you create a Do Not Inspect policy for an application or website, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+- Create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) to exempt applications from inspection. The [Application selector](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#application) provides a list of trusted applications that are known to use embedded certificates. Note that if you create a Do Not Inspect policy for an application or website, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 - Configure a [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
 
-Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/traffic-policies/policy-types/http-policies/#untrusted-certificates) to _Pass through_.
+Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#untrusted-certificates) to _Pass through_.
 
 ### Google Chrome automatic HTTPS upgrades
 
@@ -91,7 +91,7 @@ To disable automatic HTTPS upgrades for a URL across your Zero Trust organizatio
 
 4. Select **Create policy**.
 
-The pass through policy will bypass insecure connection upgrades for any device connected to your Zero Trust organization. For more information, refer to [Untrusted certificates](/cloudflare-one/traffic-policies/policy-types/http-policies/#untrusted-certificates).
+The pass through policy will bypass insecure connection upgrades for any device connected to your Zero Trust organization. For more information, refer to [Untrusted certificates](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#untrusted-certificates).
 
 </TabItem> <TabItem label="Chrome browser flag">
 
@@ -105,13 +105,13 @@ Chrome Enterprise users can turn off automatic HTTPS upgrades for all URLs with 
 
 ### Mutual TLS (mTLS)
 
-In mutual TLS (mTLS), both the client and server present certificates to verify each other's identity. When Gateway decrypts TLS traffic, it terminates the connection from the client and creates a new connection to the origin server. Because Gateway cannot forward the client's certificate to the origin, the mTLS handshake fails. To prevent connection failures, create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) for this traffic.
+In mutual TLS (mTLS), both the client and server present certificates to verify each other's identity. When Gateway decrypts TLS traffic, it terminates the connection from the client and creates a new connection to the origin server. Because Gateway cannot forward the client's certificate to the origin, the mTLS handshake fails. To prevent connection failures, create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) for this traffic.
 
 ### ESNI and ECH
 
 Websites that adhere to [ESNI or Encrypted Client Hello (ECH) standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indication (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. Gateway relies on the SNI to match an HTTP request to a policy — if the SNI is encrypted, Gateway cannot determine which policy to apply. If the ECH fails, browsers will retry the TLS handshake using the unencrypted SNI from the initial request. To avoid this behavior, you can disable ECH in your users' browsers.
 
-You can still apply all [network policy filters](/cloudflare-one/traffic-policies/policy-types/network-policies/#selectors) except for SNI and SNI Domain. To restrict ESNI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
+You can still apply all [network policy filters](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/) except for SNI and SNI Domain. To restrict ESNI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
 
 ## Post-quantum support
 

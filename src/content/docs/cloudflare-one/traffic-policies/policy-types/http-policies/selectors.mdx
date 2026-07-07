@@ -1,0 +1,356 @@
+---
+title: HTTP policy selectors
+pcx_content_type: reference
+description: Selectors available in Cloudflare Gateway HTTP policies.
+products:
+  - cloudflare-one
+sidebar:
+  order: 4
+  label: Selectors
+---
+
+import { Details, Render } from "~/components";
+
+:::note
+Policies created using the URL selector are case-sensitive.
+:::
+
+Gateway matches HTTP traffic against the following selectors, or criteria:
+
+## Access Infrastructure Target
+
+<Render
+	file="gateway/selectors/all-access-app-targets"
+	product="cloudflare-one"
+/>
+
+## Access Private App
+
+<Render
+	file="gateway/selectors/all-access-private-app-destinations"
+	product="cloudflare-one"
+/>
+
+## Application Approval Status
+
+The review approval status of an application from [Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) or the [Application Library](/cloudflare-one/team-and-resources/app-library/). For more information, refer to [Review applications](/cloudflare-one/team-and-resources/app-library/#review-applications).
+
+| UI name            | API example                          |
+| ------------------ | ------------------------------------ |
+| Application Status | `any(app.statuses[*] == "approved")` |
+
+## Application
+
+<Render
+	file="gateway/selectors/application-http"
+	product="cloudflare-one"
+	params={{ policyType: "HTTP" }}
+/>
+
+:::caution[Multiple API selectors required for Terraform]
+When using Terraform to create a policy with the [Do Not Inspect](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
+:::
+
+### Granular controls
+
+When using the _is_ operator with the _Application_ selector, you can use Application Granular Controls to choose specific actions and operations to match application traffic. For example, you can block file uploads to ChatGPT without blocking all ChatGPT traffic:
+
+| Selector    | Operator | Value     | Controls | Action |
+| ----------- | -------- | --------- | -------- | ------ |
+| Application | is       | _ChatGPT_ | _Upload_ | Block  |
+
+You can match traffic based on **Application Controls**, which group multiple user actions together, or **Operations**, which allow for granular control of supported API-level actions for an application.
+
+For more information, refer to [Application Granular Controls](/cloudflare-one/traffic-policies/policy-types/http-policies/granular-controls/).
+
+## Body Phase
+
+The phase of an HTTP request. You can use this selector to specify whether to scan either the data sent in an HTTP request to your user's device or from your user's device to a destination. Policies without this selector will scan both the HTTP request and response bodies.
+
+| UI name    | API example                       |
+| ---------- | --------------------------------- |
+| Body Phase | `http.body_phase == \"download\"` |
+
+:::caution[Body phase mismatch]
+When combining this selector with the [Download and Upload File Types selectors](#download-and-upload-file-types), ensure you use the matching phase together. For example, use the `download` body phase with the Download File Types selector. If body phase and file type selector logic do not match, the policy may not filter traffic as intended.
+:::
+
+## Content Categories
+
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.request.uri.content_category" }}
+/>
+
+## Destination Continent
+
+:::note
+Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#gateway-with-warp-default).
+:::
+
+<Render
+	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
+	params={{ one: "http.dst_ip" }}
+/>
+
+## Destination Country
+
+:::note
+Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#gateway-with-warp-default).
+:::
+
+<Render
+	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
+	params={{ one: "http.dst_ip" }}
+/>
+
+## Destination IP
+
+:::note
+Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#gateway-with-warp-default).
+:::
+
+<Render
+	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.dst_ip" }}
+/>
+
+## Device Posture
+
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
+
+## Domain
+
+<Render
+	file="gateway/selectors/domain-http"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.request.domains" }}
+/>
+
+## Download and Upload File Size
+
+Use these selectors to limit the file size of upload or download transactions. File sizes are measured in mebibytes (MiB).
+
+| UI name                  | API example                     |
+| ------------------------ | ------------------------------- |
+| Download File Size (MiB) | `http.download.file.size >= 10` |
+
+| UI name                | API example                  |
+| ---------------------- | ---------------------------- |
+| Upload File Size (MiB) | `http.upload.file.size < 10` |
+
+## Download and Upload File Types
+
+:::caution[Deprecated selectors]
+The _Download File Types_ and _Upload File Types_ selectors supersede the _Download File Type_ and _Upload File Type_ selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
+:::
+
+These selectors will scan file signatures in the HTTP body. You can select from file categories or [specific file types](#supported-file-types), such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files.
+
+| UI name             | API example                                         |
+| ------------------- | --------------------------------------------------- |
+| Download File Types | `any(http.download.file.types[*] in {"docx" "7z"})` |
+
+| UI name           | API example                                        |
+| ----------------- | -------------------------------------------------- |
+| Upload File Types | `any(http.upload.file.types[*] in {"compressed"})` |
+
+### Supported file types
+
+Gateway supports the following file types for use with the _Download File Types_ and _Upload File Types_ selectors:
+
+<Details header="Compressed">
+
+- 7-Zip archive (`.7z`)
+- `bzip2` archive (`.bz2`)
+- GNU Gzip archive (`.gz`)
+- Microsoft Cabinet file (`.cab`)
+- Microsoft Compiled HTML Help file (`.chm`)
+- RAR archive (`.rar`)
+- `xz` archive (`.xz`)
+- ZIP archive (`.zip`)
+
+</Details>
+
+<Details header="Documents">
+
+- Microsoft Office/365 files
+  - Word document (`.doc`, `.docx`, `.docm`)
+  - Excel spreadsheet (`.xls`, `.xlsx`, `.xlsm`)
+  - PowerPoint presentation (`.ppt`, `.pptx`, `.pptm`)
+- PDF document (`.pdf`)
+
+</Details>
+
+<Details header="Executable">
+
+- Apple Software Package (`.pkg`)
+- Dynamic-link library (DLL) file (`.dll`)
+- Executable and Linkable Format (ELF) file (`.elf`)
+- Java archive (JAR) package (`.jar`)
+- Java class file (`.class`)
+- Mach object (Mach-O) file (`.macho`)
+- Microsoft Windows installer (`.msi`)
+- Microsoft Software Installer (`.msix`, `.appx`)
+- Microsoft Windows executable (`.exe`)
+
+</Details>
+
+<Details header="Image">
+
+- Adobe Photoshop document (`.psd`)
+- Bitmap image (`.bmp`)
+- GIF image (`.gif`)
+- Icon file (`.ico`)
+- JPEG image (`.jpg`, `.jpeg`)
+- PNG image (`.png`)
+- WebP image (`.webp`)
+
+</Details>
+
+<Details header="Other">
+
+- BitTorrent file (`.torrent`)
+
+</Details>
+
+<Details header="System">
+
+- Apple Disk Image (`.dmg`)
+
+</Details>
+
+<Details header="Unscannable">
+
+<Render file="gateway/policies/unscannable-files" product="cloudflare-one" />
+
+</Details>
+
+## Download and Upload Mime Type
+
+These selectors depend on the `Content-Type` header being present in the request (for uploads) or response (for downloads). The MIME type value must match the format used in the `Content-Type` header (for example, `image/png`, `application/pdf`).
+
+| UI name            | API example                         |
+| ------------------ | ----------------------------------- |
+| Download Mime Type | `http.download.mime == "image/png"` |
+
+| UI name          | API example                       |
+| ---------------- | --------------------------------- |
+| Upload Mime Type | `http.upload.mime == "image/png"` |
+
+## DLP Profile
+
+Use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to scan HTTP traffic for the presence of sensitive data such as personally identifiable information (PII) or source code. You must configure a [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/) before you can use this selector in a policy.
+
+| UI name     | API example                                                          |
+| ----------- | -------------------------------------------------------------------- |
+| DLP Profile | `any(dlp.profiles[*] in {\"a0cabf16-7491-4c9a-ac02-f64cabc66394\"})` |
+
+## Host
+
+<Render
+	file="gateway/selectors/host-http"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.request.host" }}
+/>
+
+## HTTP Method
+
+The HTTP request method used in the traffic.
+
+| UI name     | API example                    |
+| ----------- | ------------------------------ |
+| HTTP Method | `http.request.method == "GET"` |
+
+## HTTP Response
+
+The HTTP response status code received by the traffic.
+
+| UI name | API example                          |
+| ------- | ------------------------------------ |
+| URL     | `http.response.status_code == "200"` |
+
+## Proxy Endpoint
+
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
+
+## Security Risks
+
+<Render
+	file="gateway/selectors/security-risks"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.request.uri.security_category" }}
+/>
+
+## Source Continent
+
+The continent of the user making the request. <Render file="gateway/selectors/source-continent-http" product="cloudflare-one" params={{ one: "http.src_ip" }} />
+
+## Source Country
+
+The country of the user making the request. <Render file="gateway/selectors/source-country-http" product="cloudflare-one" params={{ one: "http.src_ip" }} />
+
+## Source Internal IP
+
+<Render
+	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
+	params={{ one: "HTTP", two: "http.conn.internal_src_ip" }}
+/>
+
+## Source IP
+
+<Render
+	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.src_ip" }}
+/>
+
+## URL
+
+<Render file="gateway/url-slash" product="cloudflare-one" />
+
+| UI name | API example                            |
+| ------- | -------------------------------------- |
+| URL     | `http.request.uri matches "/r/gaming"` |
+
+## URL Path
+
+The pathname of a webpage's URL.
+
+| UI name  | API example                             |
+| -------- | --------------------------------------- |
+| URL Path | `http.request.uri.path == \"/foo/bar\"` |
+
+## URL Path and Query
+
+The pathname and query of a webpage's URL.
+
+| UI name            | API example                                                     |
+| ------------------ | --------------------------------------------------------------- |
+| URL Path and Query | `http.request.uri.path_and_query == \"/foo/bar?ab%242=%2A342\"` |
+
+## URL Query
+
+The query of a webpage's URL.
+
+| UI name   | API example                                 |
+| --------- | ------------------------------------------- |
+| URL Query | `http.request.uri.query == "ab%242=%2A342"` |
+
+## Users
+
+<Render file="gateway/selectors/users-http" product="cloudflare-one" />
+
+## Virtual Network
+
+<Render
+	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
+	params={{ one: "http.conn.vnet_id" }}
+/>
+

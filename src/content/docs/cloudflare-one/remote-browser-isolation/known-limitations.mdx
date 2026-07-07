@@ -59,9 +59,9 @@ Browser Isolation is not supported in virtualized environments (VMs).
 
 Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
 
-- [Destination Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/http-policies/#destination-continent)
-- [Destination Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/http-policies/#destination-country)
-- [Destination IP](/cloudflare-one/traffic-policies/policy-types/http-policies/#destination-ip)
+- [Destination Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#destination-country)
+- [Destination IP](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#destination-ip)
 
 You cannot use these selectors to isolate traffic and isolation matches for these selectors will not appear in your Gateway logs. Additionally, you cannot apply other policies based on these selectors while in isolation. For example, if you have a Block policy that matches traffic based on destination IP, Gateway will not block the matching traffic if it is already isolated by an Isolate policy.
 
