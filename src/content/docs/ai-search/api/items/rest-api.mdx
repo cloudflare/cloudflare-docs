@@ -61,3 +61,10 @@ List all items in an instance:
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
+
+To find a single item by its exact object key, pass the `key` query parameter. Keys are unique per data source, so combine `key` with `source` to disambiguate across sources:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items?key=docs/readme.md" \
+  -H "Authorization: Bearer <API_TOKEN>"
+```

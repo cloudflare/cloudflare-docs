@@ -1,0 +1,18 @@
+---
+title: Filter AI Search items by key
+description: The list items endpoint now accepts a key query parameter to return the item matching an exact object key.
+products:
+  - ai-search
+date: 2026-07-07
+---
+
+The [AI Search](/ai-search/) list items endpoint now accepts a `key` query parameter so you can look up an item by its exact object key (the filename or path you uploaded), without paging through the full list. This mirrors the existing `item_id` filter.
+
+Keys are unique per data source, so combine `key` with `source` to disambiguate when the same key exists across multiple sources.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items?key=docs/readme.md" \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
+Learn more about [managing items](/ai-search/api/items/rest-api/).
