@@ -6,39 +6,37 @@ products:
 date: 2026-06-28
 ---
 
-import { Width } from "~/components";
-import { Image } from "astro:assets";
-import protectAllWorkers from "~/assets/images/changelog/workers/protect-all-workers.png";
-import protectOneWorker from "~/assets/images/changelog/workers/protect-one-worker.png";
-import makeWorkerPublic from "~/assets/images/changelog/workers/make-worker-public.png";
-import chooseWhoCanSignIn from "~/assets/images/changelog/workers/choose-who-can-sign-in.png";
-import accessPolicies from "~/assets/images/changelog/workers/access-policies.png";
+You now have two new ways to protect your Workers with Cloudflare Access.
 
-You now have two new ways to protect your Workers with Cloudflare Access. With these you can:
+**Protect an application across all its domains at once**
 
-- Set an Access policy on preview deployments only, or on both preview and production deployments.
-- Control who can sign in by Cloudflare account membership, email address, or email domain.
-<Width size="medium">
-<Image src={chooseWhoCanSignIn} alt="Access policy configuration for controlling who can sign in" />
-</Width>
+Until now, if a Worker was reachable on a route, a Custom Domain, and a `workers.dev` URL, you had to create a separate Access application for each one.
 
-**Protect a single Worker across all its domains at once**
+Now Access attaches the policy to the Worker itself, so every associated domain and preview URL stays protected even when routes or domains change.
 
-Until now, if a Worker was reachable on a route, a Custom Domain, and a `workers.dev` URL, you had to create a separate Access application for each one. Now you apply one Access policy to the Worker itself. You can choose to apply it to all preview URLs associated with the Worker, or to both previews and production.
-<Image src={protectOneWorker} alt="Access setting for protecting a single Worker" />
+![Access setting for protecting a single Worker](~/assets/images/changelog/workers/protect-one-worker.png)
 
 **Protect all new and existing Workers by default**
 
-Instead of configuring Access one Worker at a time, you can turn on account-wide protection and require sign-in for all Workers at once.
-<Image src={protectAllWorkers} alt="Account-wide Access setting that protects all Workers" />
+Make all Workers private by default, so every existing and newly created Worker requires sign-in before anyone can reach it.
 
-If you turn on account-wide protection but a specific Worker should remain publicly accessible, you can add a Worker-level bypass to exempt it.
-<Image src={makeWorkerPublic} alt="Make a Worker public when all Workers are protected" />
+![Account-wide Access setting that protects all Workers](~/assets/images/changelog/workers/protect-all-workers.png)
 
-**View all of your policies**
+If a specific Worker should remain publicly accessible, add a Worker-level bypass to exempt it.
+
+![Make a Worker public when all Workers are protected](~/assets/images/changelog/workers/make-worker-public.png)
+
+Whether you protect a single application or all Workers at once, you can choose whether to protect preview deployments only or both previews and production, and control who can sign in by Cloudflare account membership, email address, or email domain.
+
+For more advanced policy options, edit the policy in [Zero Trust](https://dash.cloudflare.com/?to=/:account/one/access/apps).
+
+![Access policy configuration for controlling who can sign in](~/assets/images/changelog/workers/choose-who-can-sign-in.png)
+
+**View all of your Worker Access policies**
 
 You can view and manage all of your Access policies in the **Access** tab of the Workers & Pages section in the dashboard.
-<Image src={accessPolicies} alt="Access tab showing all configured Access policies" />
+
+![Access tab showing all configured Access policies](~/assets/images/changelog/workers/access-policies.png)
 
 **API and programmatic access**
 
