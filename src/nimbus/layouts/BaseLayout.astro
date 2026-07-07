@@ -132,6 +132,9 @@ const llmsUrl = Astro.site
       import "../scripts/mobile-sidebar.client";
       import "../scripts/mermaid.client";
       import "../scripts/table-scroll.client";
+      // Custom Zaraz analytics event wiring (link/tab/details/copy/search).
+      // Registers delegated document listeners once; safe with view transitions.
+      import "../scripts/analytics";
 
       codeCopy();
     </script>

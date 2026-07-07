@@ -235,6 +235,7 @@ export const integrations = [
 const nimbusDir = here(".");
 const rootAssets = here("../assets");
 const rootContent = here("../content");
+const rootUtil = here("../util");
 const componentsBarrelId = normalizeId(here("./components.ts"));
 
 function normalizeId(id: string) {
@@ -280,6 +281,8 @@ const aliasResolver = {
 						},
 						{ find: /^~\/assets(\/.*)?$/, replacement: `${rootAssets}$1` },
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
+						// Shared: the Zaraz `track()` shim is byte-identical to root and
+						{ find: /^~\/util\/zaraz$/, replacement: `${rootUtil}/zaraz` },
 						{ find: /^~(\/.*)?$/, replacement: `${nimbusDir}$1` },
 						{ find: /^@(\/.*)?$/, replacement: `${nimbusDir}$1` },
 					],
@@ -304,6 +307,7 @@ const aliasResolver = {
 			mapped = rootAssets + source.slice("~/assets".length);
 		else if (source === "~/content" || source.startsWith("~/content/"))
 			mapped = rootContent + source.slice("~/content".length);
+		else if (source === "~/util/zaraz") mapped = rootUtil + "/zaraz";
 		else if (source === "~" || source.startsWith("~/"))
 			mapped = nimbusDir + source.slice(1);
 		else if (source === "@" || source.startsWith("@/"))
