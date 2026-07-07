@@ -10,10 +10,10 @@
  *     module's rail when that module has a `directory` entry, passed to
  *     `getSidebar`.
  */
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { getBreadcrumbs, getRouteNavigation } from "nimbus-docs";
 import type { SectionTitleResolver } from "nimbus-docs";
-import type { SidebarItem, SidebarTransform } from "nimbus-docs/types";
+import type { SidebarBadge, SidebarItem, SidebarTransform } from "nimbus-docs/types";
 
 export const sectionTitleResolver: SectionTitleResolver = async ({ sectionSlug, module }) => {
   if (sectionSlug === "learning-paths") {
@@ -177,10 +177,95 @@ function markExternalAppLinks(items: SidebarItem[]): SidebarItem[] {
 export const externalAppLinksTransform: SidebarTransform = ({ tree }) =>
   markExternalAppLinks(tree);
 
+// --- Badges -----------------------------------------------------------------
+// Parity with root `src/util/sidebar.ts`: map badge text → variant, and
+// auto-inject a "Beta" badge on products marked beta in product-availability.
+
 /**
- * Main docs route: Agent resources group + external-app (`/api/`) re-marking.
+ * Map a default-variant badge's text to its conventional variant
+ * (`Beta→caution`, `New→note`, `Deprecated`/`Legacy→danger`). Non-default
+ * variants and unmapped text pass through unchanged. Mirrors root's
+ * `inferBadgeVariant`.
+ */
+function inferBadgeVariant(badge: SidebarBadge): SidebarBadge {
+  const text = typeof badge === "string" ? badge : badge.text;
+  const variant = typeof badge === "string" ? "default" : (badge.variant ?? "default");
+  if (variant !== "default") return badge;
+  switch (text) {
+    case "Beta":
+      return { text, variant: "caution" };
+    case "New":
+      return { text, variant: "note" };
+    case "Deprecated":
+    case "Legacy":
+      return { text, variant: "danger" };
+    default:
+      return badge;
+  }
+}
+
+// External-app links carry a fixed badge by URL shape, mirroring root's
+// `getBadge`: the `/api` OpenAPI reference is "API", the MCP server repo is
+// "MCP". This badge takes precedence over authored/auto-Beta badges.
+function getExternalBadge(href: string): SidebarBadge | undefined {
+  if (href.startsWith("/api")) return { text: "API", variant: "note" };
+  if (href.includes("/mcp-server-cloudflare")) return { text: "MCP", variant: "note" };
+  return undefined;
+}
+
+// URL → "Beta" badge, from directory entries whose product-availability is
+// "beta". Built once per build (the collections don't change mid-build).
+let betaBadgeUrlsPromise: Promise<Map<string, SidebarBadge>> | undefined;
+function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
+  betaBadgeUrlsPromise ??= (async () => {
+    const [directory, productAvailability] = await Promise.all([
+      getCollection("directory"),
+      getCollection("product-availability"),
+    ]);
+    const map = new Map<string, SidebarBadge>();
+    for (const dirEntry of directory) {
+      const avail = productAvailability.find((e) => e.id === dirEntry.data.id);
+      if (avail?.data.availability?.toLowerCase() === "beta") {
+        map.set(dirEntry.data.entry.url, { text: "Beta", variant: "caution" });
+      }
+    }
+    return map;
+  })();
+  return betaBadgeUrlsPromise;
+}
+
+/**
+ * Walk the tree: remap an existing badge's variant, or inject the auto-Beta
+ * badge when a node has none and its URL is a beta product. A group keys off
+ * its landing (`indexHref`); links/externals off `href`.
+ */
+function applyBadges(
+  items: SidebarItem[],
+  betaUrls: Map<string, SidebarBadge>,
+): SidebarItem[] {
+  return items.map((item) => {
+    if (item.type === "group") {
+      const badge = item.badge
+        ? inferBadgeVariant(item.badge)
+        : item.indexHref
+          ? betaUrls.get(item.indexHref)
+          : undefined;
+      return { ...item, badge, children: applyBadges(item.children, betaUrls) };
+    }
+    const badge =
+      getExternalBadge(item.href) ??
+      (item.badge ? inferBadgeVariant(item.badge) : betaUrls.get(item.href));
+    return { ...item, badge };
+  });
+}
+
+/**
+ * Main docs route: Agent resources group + external-app (`/api/`) re-marking +
+ * badge variant mapping / auto-Beta injection.
  */
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
   const withAgentResources = await agentResourcesTransform(ctx);
-  return markExternalAppLinks(withAgentResources);
+  const withExternal = markExternalAppLinks(withAgentResources);
+  const betaUrls = await getBetaBadgeUrls();
+  return applyBadges(withExternal, betaUrls);
 };

@@ -18,6 +18,7 @@ import { PageActions } from "@/components/ui/page-actions";
 import { Badge } from "@/components/ui/badge";
 import FeedbackPrompt from "@/components/react/FeedbackPrompt";
 import type { DocsPageProps } from "nimbus-docs/types";
+import { marked } from "marked";
 import { config } from "virtual:nimbus/config";
 import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
@@ -28,11 +29,12 @@ type Props = DocsPageProps & {
   audience?: "human";
   wide?: boolean;
   hideTitle?: boolean;
+  summary?: string;
   meta?: PageMeta;
   feedback?: boolean;
 };
 
-const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true } = Astro.props;
+const { title, description, summary, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true } = Astro.props;
 
 // `searchable` derives from `noindex` when omitted: a non-crawlable page is
 // by default not in the site search either. Explicit `searchable: true`
@@ -238,6 +240,12 @@ const showFeedback = feedback !== false && !isCustom;
                       <h1 class="text-foreground mb-0 leading-tight" style={`font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)`}>{title}</h1>
                       {draft && <Badge text="Draft" variant="warning" size="medium" />}
                     </div>
+                    {summary && (
+                      <div
+                        class="mt-2 text-lg leading-relaxed text-muted-foreground"
+                        set:html={marked.parse(summary)}
+                      />
+                    )}
                     {/* `description` is meta-only (head tags via BaseLayout), matching
                         upstream cloudflare-docs which never renders it on the page. */}
                     <PageActions markdownUrl={markdownUrl} lastUpdated={lastUpdated} class="mt-3" />
