@@ -27,13 +27,13 @@ This tutorial creates an AI Search instance that indexes your website, then adds
 
 <Render file="prereqs" product="workers" />
 
-This tutorial adds search to an existing React app. If you are starting a new project, scaffold one first with the [React framework guide](/workers/framework-guides/web-apps/react/), then follow the steps below. The snippets are framework-agnostic web components, so the same approach works in other frameworks or plain HTML, as shown in [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/).
+This tutorial adds search to an existing React app. If you are starting a new project, scaffold one first with the [React framework guide](/workers/framework-guides/web-apps/react/), then follow the next steps. The snippets are framework-agnostic web components, so the same approach works in other frameworks or plain HTML, as shown in [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/).
 
 ## 1. Create an AI Search instance
 
 Create an instance with the [Wrangler CLI](/ai-search/wrangler-commands/). To index a website you own, connect it as a data source so AI Search crawls and indexes it automatically:
 
-```sh
+<PackageManagers type="exec" pkg="wrangler" args="ai-search create my-search --type web-crawler --source <YOUR_DOMAIN>" />
 npx wrangler ai-search create my-search --type web-crawler --source <YOUR_DOMAIN>
 ```
 
@@ -41,13 +41,13 @@ Replace `<YOUR_DOMAIN>` with a domain [onboarded to your Cloudflare account](/ai
 
 Check indexing progress:
 
-```sh
+<PackageManagers type="exec" pkg="wrangler" args="ai-search stats my-search" />
 npx wrangler ai-search stats my-search
 ```
 
 Once indexing completes, you can test a query from the command line:
 
-```sh
+<PackageManagers type="exec" pkg="wrangler" args="ai-search search my-search --query 'What is this site about?'" />
 npx wrangler ai-search search my-search --query "What is this site about?"
 ```
 
@@ -76,7 +76,7 @@ In your website's project, install the [AI Search UI snippet library](/ai-search
 
 ## 4. Add the search components
 
-Import the snippet library in one of your components and add the tags where you want search to appear. Importing the package once registers the components with the browser. The following example adds a search bar, a floating chat bubble, and a search modal that opens with `Cmd/Ctrl+K` to the app's root component. Replace `<INSTANCE_ID>` with your public endpoint ID from step 2.
+Import the snippet library in one of your components and add the tags where you want search to appear. Importing the package once registers the components with the browser. The following example adds a search bar, a floating chat bubble, and a search modal that opens with `Cmd/Ctrl+K` to the app's root component. Replace `<INSTANCE_ID>` with your public endpoint ID from step two.
 
 ```tsx title="src/App.tsx"
 import "@cloudflare/ai-search-snippet";
@@ -138,7 +138,7 @@ declare module "react" {
 }
 ```
 
-This types the tags loosely so any attribute is allowed. For stricter, per-component types, see the [React demo declarations](https://github.com/cloudflare/ai-search-snippet/blob/main/apps/demo-react/index.d.ts) in the snippet repository.
+This types the tags loosely so any attribute is allowed. For stricter, per-component types, refer to the [React demo declarations](https://github.com/cloudflare/ai-search-snippet/blob/main/apps/demo-react/index.d.ts) in the snippet repository.
 
 ## 5. Allow your local origin
 
@@ -162,7 +162,7 @@ Open your site in the browser (a Vite app runs on `http://localhost:5173`). Type
 
 ## 7. Go to production
 
-The snippets work anywhere your site is served. When you deploy your site to its production domain, return to **Settings** > **Public Endpoint** and add that origin to **Authorized hosts** (as in step 5), so the browser can reach the endpoint in production.
+The snippets work anywhere your site is served. When you deploy your site to its production domain, return to **Settings** > **Public Endpoint** and add that origin to **Authorized hosts** (as in step five), so the browser can reach the endpoint in production.
 
 ## Next steps
 
