@@ -62,7 +62,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/insta
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-To find a single item by its exact object key, pass the `key` query parameter. Keys are unique per data source, so combine `key` with `source` to disambiguate across sources:
+To find a single item by its exact object key, pass the `key` query parameter. Keys are unique per data source; if the same key exists in more than one source, add `source` to disambiguate:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items?key=docs/readme.md" \
