@@ -6,6 +6,7 @@
  * Rendered once in BaseLayout, so it appears on every page.
  */
 import { Icon } from "astro-icon/components";
+import OneTrust from "~/components/OneTrust.astro";
 
 interface Props {
   /** Extra classes on the <footer> — e.g. a top margin on pages without a
@@ -80,6 +81,15 @@ const legal: [string, string][] = Object.entries({
 });
 
 const year = new Date().getFullYear();
+
+let isProduction = false;
+
+if (
+  import.meta.env.CF_PAGES_BRANCH === "production" ||
+  import.meta.env.GITHUB_REF_NAME === "production"
+) {
+  isProduction = true;
+}
 ---
 
 <footer class:list={["border-t border-border", className]}>
@@ -121,6 +131,13 @@ const year = new Date().getFullYear();
               </a>
             </li>
           ))
+        }
+        {
+          isProduction && (
+            <li>
+              <OneTrust />
+            </li>
+          )
         }
       </ul>
     </div>
