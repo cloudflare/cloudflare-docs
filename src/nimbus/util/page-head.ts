@@ -45,21 +45,26 @@ const productGroupOgImages: Record<string, string> = {
   "application security": "/core-services-preview.png",
 };
 
-/** OG image path: prop > config > product-group card > opengraph.png >
- *  logo.png > shared card. */
+const CHANGELOG_OG_IMAGE = "/changelog-preview.png";
+
+/** OG image path: prop > changelog card > config > product-group card >
+ *  opengraph.png > logo.png > shared card. */
 export function resolveSocialImagePath({
   socialImage,
   configImage,
   productGroup,
+  isChangelog,
   exists,
 }: {
   socialImage?: string;
   configImage?: string;
   productGroup?: string;
+  isChangelog?: boolean;
   exists: (file: string) => boolean;
 }): string {
   return (
     socialImage ??
+    (isChangelog ? CHANGELOG_OG_IMAGE : undefined) ??
     configImage ??
     (productGroup ? productGroupOgImages[productGroup.toLowerCase()] : undefined) ??
     (exists("opengraph.png")
