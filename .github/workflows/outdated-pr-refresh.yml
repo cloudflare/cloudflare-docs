@@ -37,6 +37,7 @@ jobs:
 
           # Get all open PRs targeting production
           PRS=$(gh pr list \
+            --repo "$REPO" \
             --base production \
             --state open \
             --limit 500 \
