@@ -11,7 +11,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 
 <figure
 	class="ai-search-voice-diagram not-content"
-	aria-label="Voice pipeline: microphone audio is transcribed to text by speech-to-text, the transcript is passed to the agent's onTurn handler, where a model calls AI Search as a retrieval tool to fetch relevant content from your knowledge base and generates an answer, which is turned back into audio by text-to-speech and played through the speaker."
+	aria-label="Voice pipeline: microphone audio is transcribed to text by speech-to-text, the transcript is passed to the agent's onTurn handler on Cloudflare Agents, which can call AI Search as a retrieval tool to fetch relevant content from your knowledge base and then generates an answer, which is turned back into audio by text-to-speech and played through the speaker."
 >
 	<cfdocs-ai-search-voice-diagram
 		data-autoplay={String(autoPlay)}
@@ -69,8 +69,9 @@ const { autoPlay = true, loop = true } = Astro.props;
 
 			<div class="asvd-connector" data-step="3"></div>
 
-			<!-- onTurn(transcript): the agent handler you write -->
-			<div class="asvd-node asvd-node-code" data-step="4">
+			<!-- Cloudflare Agents: the onTurn handler runs a model that can call
+			     AI Search as one of its tools. -->
+			<div class="asvd-node asvd-node-agent" data-step="4">
 				<span class="asvd-node-head">Cloudflare Agents</span>
 				<span class="asvd-node-body">
 					<span class="asvd-node-icon" aria-hidden="true">
@@ -86,28 +87,26 @@ const { autoPlay = true, loop = true } = Astro.props;
 							<path d="M15 8l4 4-4 4"></path>
 						</svg>
 					</span>
-					<span class="asvd-node-title">onTurn(<wbr />transcript)</span>
+					<span class="asvd-node-title asvd-mono"
+						>onTurn(<wbr />transcript)</span
+					>
 				</span>
+				<div class="asvd-tools">
+					<span class="asvd-tools-label">tool</span>
+					<a class="asvd-tool" href="/ai-search/">
+						<span class="asvd-tool-icon" aria-hidden="true">
+							<AstroIcon name="ai-search" />
+						</span>
+						<span class="asvd-tool-title">AI Search</span>
+						<span class="asvd-tool-sub">retrieval</span>
+					</a>
+				</div>
 			</div>
 
 			<div class="asvd-connector" data-step="5"></div>
 
-			<!-- AI Search: the retrieval tool the agent's model calls -->
-			<a class="asvd-node asvd-node-search" data-step="6" href="/ai-search/">
-				<span class="asvd-node-head">AI Search</span>
-				<span class="asvd-node-body">
-					<span class="asvd-node-icon" aria-hidden="true">
-						<AstroIcon name="ai-search" />
-					</span>
-					<span class="asvd-node-title">AI Search</span>
-					<span class="asvd-node-sub">retrieval tool</span>
-				</span>
-			</a>
-
-			<div class="asvd-connector" data-step="7"></div>
-
 			<!-- Text-to-speech (Workers AI) -->
-			<a class="asvd-node" data-step="8" href="/workers-ai/">
+			<a class="asvd-node" data-step="6" href="/workers-ai/">
 				<span class="asvd-node-head">Workers AI</span>
 				<span class="asvd-node-body">
 					<span class="asvd-node-icon" aria-hidden="true">
@@ -130,10 +129,10 @@ const { autoPlay = true, loop = true } = Astro.props;
 				</span>
 			</a>
 
-			<div class="asvd-connector" data-step="9"></div>
+			<div class="asvd-connector" data-step="7"></div>
 
 			<!-- Speaker: the answer is played back -->
-			<div class="asvd-node asvd-node-endpoint" data-step="10">
+			<div class="asvd-node asvd-node-endpoint" data-step="8">
 				<span class="asvd-node-head">Browser</span>
 				<span class="asvd-node-body">
 					<span class="asvd-node-icon" aria-hidden="true">
@@ -266,12 +265,6 @@ const { autoPlay = true, loop = true } = Astro.props;
 		height: 100%;
 	}
 
-	/* The AI Search product icon is filled, unlike the stroked glyphs. */
-	.asvd-node-search .asvd-node-icon :global(svg),
-	.asvd-node-search .asvd-node-icon :global(svg path) {
-		fill: currentColor;
-	}
-
 	.asvd-node-title {
 		font-size: 0.8125rem;
 		font-weight: 600;
@@ -279,28 +272,87 @@ const { autoPlay = true, loop = true } = Astro.props;
 		color: var(--asvd-text);
 	}
 
-	.asvd-node-code .asvd-node-title {
+	.asvd-mono {
 		font-family:
 			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 		font-size: 0.75rem;
 	}
 
-	/* Right-aligned qualifier, like the "OPTIONAL" tags on the other diagrams. */
-	.asvd-node-sub {
-		margin-left: auto;
-		padding-left: 0.5rem;
-		font-size: 0.625rem;
-		line-height: 1.2;
+	/* --- AI Search as a tool the agent owns, nested in the Agents card --- */
+	.asvd-tools {
+		padding: 0.5rem 0.625rem 0.625rem;
+		border-top: 1px dashed var(--asvd-border);
+	}
+
+	.asvd-tools-label {
+		display: block;
+		margin-bottom: 0.35rem;
+		font-size: 0.5625rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 		color: var(--asvd-muted);
 	}
 
-	/* AI Search is the answer engine, so it carries a resting accent frame. */
-	.asvd-node-search {
+	.asvd-tool {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.4rem 0.5rem;
+		border: 1px solid
+			color-mix(in srgb, var(--asvd-accent) 40%, var(--asvd-border));
+		border-radius: 0.5rem;
+		background: var(--asvd-card);
+		color: inherit;
+		text-decoration: none;
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	.asvd-tool:hover {
 		border-color: color-mix(
 			in srgb,
-			var(--asvd-accent) 40%,
+			var(--asvd-accent) 60%,
 			var(--asvd-border)
 		);
+		box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+	}
+
+	.asvd-tool:focus-visible {
+		outline: 2px solid var(--asvd-accent);
+		outline-offset: 2px;
+	}
+
+	.asvd-tool-icon {
+		flex: none;
+		width: 1.1rem;
+		height: 1.1rem;
+		color: var(--asvd-muted);
+		transition: color 0.25s ease;
+	}
+
+	/* The AI Search product icon is filled, unlike the stroked glyphs. */
+	.asvd-tool-icon :global(svg),
+	.asvd-tool-icon :global(svg path) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		fill: currentColor;
+	}
+
+	.asvd-tool-title {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--asvd-text);
+	}
+
+	.asvd-tool-sub {
+		margin-left: auto;
+		font-size: 0.5625rem;
+		line-height: 1.2;
+		color: var(--asvd-muted);
 	}
 
 	a.asvd-node:hover {
@@ -353,8 +405,8 @@ const { autoPlay = true, loop = true } = Astro.props;
 	}
 
 	/* --- Active trace: the orange wire fills as the audio flows through, and
-	   the current stage's icon lights up. Cards stay neutral so the panel reads
-	   the same as the other AI Search diagrams. --- */
+	   the current stage's icon lights up. When the agent stage is active its
+	   AI Search tool lights up too, showing the model calling the tool. --- */
 	.asvd-connector.current {
 		background: var(--asvd-accent);
 	}
@@ -376,10 +428,20 @@ const { autoPlay = true, loop = true } = Astro.props;
 		color: var(--asvd-accent);
 	}
 
+	.asvd-node.current .asvd-tool {
+		border-color: var(--asvd-accent);
+	}
+
+	.asvd-node.current .asvd-tool-icon {
+		color: var(--asvd-accent);
+	}
+
 	/* --- Reduced motion: rest in the complete, neutral state --- */
 	@media (prefers-reduced-motion: reduce) {
 		.asvd-node,
 		.asvd-node-icon,
+		.asvd-tool,
+		.asvd-tool-icon,
 		.asvd-connector {
 			transition: none;
 		}
