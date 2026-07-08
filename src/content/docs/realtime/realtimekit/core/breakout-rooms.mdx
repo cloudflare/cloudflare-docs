@@ -13,7 +13,7 @@ import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelect
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 import { Render } from "~/components";
 
-<RTKSDKSelector />
+<RTKSDKSelector disabledPlatforms={["mobile-flutter"]} />
 
 <Render file="realtimekit/web/breakout-room-preface" product="realtime" />
 
