@@ -1,11 +1,11 @@
 ---
-title: Legacy Cloudflare Tunnel route and connections API endpoints retiring on October 5, 2026
+title: Zero Trust Networks route endpoints and Cloudflare Tunnel connections field retiring on October 5, 2026
 description: Two related changes take effect on October 5, 2026 - the CIDR-encoded route endpoints in the Zero Trust Networks API are removed, and the connections field is dropped from Cloudflare Tunnel and Cloudflare Mesh list and get responses. Update cloudflared, Terraform, and any API integrations before then.
 products:
   - tunnel
   - cloudflare-tunnel-sase
   - mesh
-date: 2026-07-07
+date: 2026-07-09
 ---
 
 On **October 5, 2026**, two changes take effect across the [Zero Trust Networks API](/api/resources/zero_trust/subresources/networks/) and [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/): the CIDR-encoded route endpoints are removed, and tunnel list and get responses no longer include the `connections` field. If you manage private network routes or read tunnel connection details through the API, `cloudflared`, Terraform, or another integration, review the changes in the following sections and migrate before the removal date.
