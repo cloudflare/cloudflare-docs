@@ -67,9 +67,7 @@ async function run(): Promise<void> {
 			});
 		}
 	} catch (error) {
-		if (error instanceof Error) {
-			core.setFailed(error.message);
-		}
+		core.setFailed(error instanceof Error ? error.message : String(error));
 		process.exit();
 	}
 }
