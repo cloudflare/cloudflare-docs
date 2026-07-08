@@ -23,6 +23,8 @@ To retry a single failed item, check [item logs](/api/resources/ai_search/subres
 
 If the instance is paused, resolve the underlying cause, then resume the instance.
 
+If a transient error persists after retrying, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the item ID, instance ID, error code, and request timestamp.
+
 ## Item-level errors
 
 These errors affect a single item. The item moves to `status: "error"` while the rest of the instance keeps indexing. Fix the item or retry it.
@@ -133,9 +135,3 @@ These errors pause the whole instance and stop all indexing until the underlying
 | `invalid_custom_header`             | Pauses the instance. A custom crawl header is invalid.                                                                                        | Remove or update the [extra header](/ai-search/configuration/data-source/website/#extra-headers), then resume the instance.                                                                             |
 | `ai_gateway_not_configured`         | Pauses the instance. The AI Gateway set on the instance was not found.                                                                        | Update the instance's [`ai_gateway_id`](/ai-search/api/instances/rest-api/) to an existing gateway in [AI Gateway](/ai-gateway/), then resume the instance.                                             |
 | `hybrid_search_is_full`             | Pauses the instance. The hybrid search index is full. Its file limit is lower than the standard instance limit, so it can be reached earlier. | [Request a higher limit](https://forms.gle/wnizxrEUW33Y15CT8) to resume the instance, or create another instance to index additional content. See [limits](/ai-search/platform/limits-pricing/#limits). |
-
-## Troubleshoot indexing error codes
-
-Use [item logs](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/logs/) to identify the indexing step that failed. Logs usually include a more specific error message.
-
-For transient service errors, sync the item again after a short delay. If an error persists, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the item ID, instance ID, error code, and request timestamp.

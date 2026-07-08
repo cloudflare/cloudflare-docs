@@ -218,8 +218,6 @@ These errors can occur when public search, public chat completions, Model Contex
 | 60016 | `method not allowed; this MCP endpoint only accepts POST`       | 405         | The MCP endpoint received a non-`POST` request.                                                     | Send [MCP](/ai-search/api/search/mcp/) requests with `POST`.                                                                                                                            |
 | 60100 | `internal error`                                                | 500         | The public endpoint returned an unexpected error.                                                   | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists.                    |
 
-Some MCP method errors are returned as JSON-RPC errors instead of the AI Search JSON error envelope.
-
 ## Troubleshoot API errors
 
 If an API request fails, check the `code` and `message` fields in the error response. For Workers binding calls, check the thrown error `name` and `message`.
