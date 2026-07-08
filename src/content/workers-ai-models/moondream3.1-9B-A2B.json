@@ -79,7 +79,7 @@
                     "type": "number",
                     "minimum": 0,
                     "maximum": 2,
-                    "default": 0.5,
+                    "default": 0.2,
                     "description": "Sampling temperature."
                 },
                 "top_p": {
@@ -92,8 +92,8 @@
                 "max_tokens": {
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": 2048,
-                    "default": 768,
+                    "maximum": 28672,
+                    "default": 8192,
                     "description": "Max tokens to generate for `query` and `caption`."
                 },
                 "max_objects": {
