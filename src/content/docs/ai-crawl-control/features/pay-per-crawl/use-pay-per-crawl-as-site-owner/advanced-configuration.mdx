@@ -73,7 +73,7 @@ Currently, the only possible value for the `protocol` indicator is `cloudflare`.
 - **`in-band`**: When the zone has dynamic pricing enabled.
 - **`bypass`**: When the request is not subject to payment (for example, not a bot).
 
-### Using Workers for dynamic pricing
+### Use Workers for dynamic pricing
 
 If you prefer to maintain your origin as is, you can use a Worker to include the `crawler-price` header in responses. From a Worker you can, for example, select the price based on the incoming request's properties (including information added by the Cloudflare global network) or the content itself.
 
