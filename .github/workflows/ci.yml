@@ -478,11 +478,6 @@ jobs:
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
           SHORT_SHA="${PR_HEAD_SHA:0:8}"
-          # NOTE: This slug normalization is copied verbatim from the publish-preview job above
-          # and intentionally left as-is. Edge cases (all-non-ASCII branch names producing an
-          # empty slug, or long names exceeding the 63-char DNS label limit) exist equally in
-          # the Starlight preview deploy and have not caused issues in practice. Fixing only the
-          # Nimbus copy would be inconsistent; address both together if it becomes a real problem.
           BRANCH_SLUG=$(echo "$PR_HEAD_REF" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
 
           echo "branch_slug=nimbus-${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
