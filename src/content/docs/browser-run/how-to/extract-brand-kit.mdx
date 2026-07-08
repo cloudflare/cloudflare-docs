@@ -103,9 +103,9 @@ The core of the extractor is a script that runs **inside the page** through `pag
 
 This script must be self-contained: it cannot reference anything from the Worker's scope. It does three things:
 
-- Reads `<meta>` tags for the name, description, and Open Graph image.
+- Reads `<meta>` tags for the name and description.
 - Walks the DOM once, sampling `background-color`, `color`, and `border-color` from every element. It skips greys and near-white/near-black colors (low saturation), weighs backgrounds and brand or call-to-action elements more heavily, then dedupes the top colors by color distance to produce a palette.
-- Reads the `font-family` from a heading, the body, and a code block, and picks a logo (inline SVG, `<img>`, or declared icon).
+- Reads the `font-family` from a heading, the body, and a code block, and picks a logo (inline SVG, `<img>`, declared icon, or Open Graph image, in that order).
 
 Create `src/extract.ts`:
 
@@ -130,7 +130,7 @@ export const BRAND_SCRIPT = `
 (() => {
   var origin = location.href;
   var abs = function (u) { try { return new URL(u, origin).href; } catch (e) { return u; } };
-  var meta = function (sel) { var m = document.querySelector(sel); return m && m.content ? m.content.trim() : null; };
+  var getMetaContent = function (sel) { var m = document.querySelector(sel); return m && m.content ? m.content.trim() : null; };
 
   function parseColor(str) {
     if (!str) return null;
@@ -176,7 +176,7 @@ export const BRAND_SCRIPT = `
   }
 
   // theme-color is an explicit brand signal — weigh it heavily.
-  var themeColor = meta('meta[name="theme-color"]');
+  var themeColor = getMetaContent('meta[name="theme-color"]');
   if (themeColor) { var d = document.createElement('div'); d.style.color = themeColor; document.body.appendChild(d); var tc = parseColor(getComputedStyle(d).color); d.remove(); if (tc) add(tc, 1000); }
 
   var all = document.querySelectorAll('body *');
@@ -225,7 +225,7 @@ export const BRAND_SCRIPT = `
   if (bodyFont && bodyFont.toLowerCase() !== (headingFont || '').toLowerCase()) fonts.push({ name: bodyFont, usage: 'body' });
   if (monoFont && monoFont.toLowerCase() !== (bodyFont || '').toLowerCase()) fonts.push({ name: monoFont, usage: 'mono' });
 
-  // ---- logo: inline SVG (as a data URI) → <img> logo → declared icon ----
+  // ---- logo: inline SVG (as a data URI) → <img> logo → declared icon → Open Graph image ----
   function serializeSvg(svg) {
     try {
       var clone = svg.cloneNode(true);
@@ -244,17 +244,25 @@ export const BRAND_SCRIPT = `
     var imgSels = ['[class*="logo" i] img', 'img[alt*="logo" i]', 'header a[href="/"] img', 'header img'];
     for (var i2 = 0; i2 < imgSels.length; i2++) {
       var img = document.querySelector(imgSels[i2]);
-      if (img) { var src = img.currentSrc || img.getAttribute('src'); if (src) return abs(src); }
+      // Guard against a full-width banner image matching a "logo" selector by
+      // rejecting anything outside a plausible logo size, the same way the
+      // SVG branch above does with getBoundingClientRect().
+      if (img && img.naturalWidth >= 16 && img.naturalWidth <= 640 && img.naturalHeight >= 8) {
+        var src = img.currentSrc || img.getAttribute('src');
+        if (src) return abs(src);
+      }
     }
     var icon = document.querySelector('link[rel="apple-touch-icon"], link[rel~="icon"]');
     if (icon && icon.href) return abs(icon.href);
+    var ogImage = getMetaContent('meta[property="og:image"]');
+    if (ogImage) return abs(ogImage);
     return '';
   }
 
-  var name = meta('meta[property="og:site_name"]') ||
+  var name = getMetaContent('meta[property="og:site_name"]') ||
     (document.title ? document.title.split(/[-|–—·•:]/)[0].trim() : '') ||
     location.hostname.replace(/^www\\./, '');
-  var description = meta('meta[name="description"]') || meta('meta[property="og:description"]') || '';
+  var description = getMetaContent('meta[name="description"]') || getMetaContent('meta[property="og:description"]') || '';
 
   return JSON.stringify({
     name: name,
@@ -292,7 +300,11 @@ interface Env {
 
 const CACHE_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
-// Normalize a URL into a stable cache key.
+// Normalize a URL into a stable cache key. This intentionally drops the
+// query string and hash, since most sites don't change their brand kit
+// (colors, fonts, logo) based on query parameters. If you're extracting
+// brand kits for sites that do (for example, a `?theme=dark` toggle),
+// include the relevant search params in the key below.
 const cacheKeyFor = (url: URL) => {
 	const path = url.pathname.replace(/\/+$/, "");
 	return `brand:${url.host.toLowerCase()}${path}`;
