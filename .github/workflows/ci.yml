@@ -230,8 +230,7 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=8192"
         run: |
           set -o pipefail
-          pnpm run prebuild
-          pnpm exec astro build 2>&1 | tee nimbus-build.log
+          pnpm run build 2>&1 | tee nimbus-build.log
           echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
       - name: Upload Nimbus build artifact
