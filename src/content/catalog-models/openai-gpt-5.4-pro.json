@@ -548,6 +548,407 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-5.4-pro\",\n  \"input\": \"Solve this problem step by step: A train leaves Chicago at 60mph heading east. Another train leaves New York at 80mph heading west. They are 900 miles apart. When do they meet?\",\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting the model use OpenAI's built-in web search tool to answer with current information",
+			"input": {
+				"input": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+				"max_output_tokens": 4096,
+				"tools": [
+					{
+						"type": "web_search_preview"
+					}
+				]
+			},
+			"output": {
+				"text": "For the week ending **June 22, 2026**, the most notable Cloudflare stories were:\n\n- **New browser alliance on privacy-preserving bot/human verification.** On **June 22**, Cloudflare announced it is working with **Mozilla, Google, Microsoft, and Shopify** on **Private Access Control Tokens (PACT)**, a proposed protocol meant to help sites verify legitimate human or authorized bot traffic **without CAPTCHAs or invasive tracking**. ([cloudflare.com](https://www.cloudflare.com/press/press-releases/2026/cloudflare-collaborates-with-leading-browsers-to-develop-a-privacy-first-protocol-for-the-global-internet/))\n\n- **Big partner push for AI and SASE adoption.** On **June 17**, Cloudflare launched its **Cloudflare One"
+			},
+			"raw_response": {
+				"id": "resp_0ad62158726c7fa3016a3998029abc819aabc9a8d39eae3a72",
+				"object": "response",
+				"created_at": 1782159362,
+				"model": "gpt-5.4-pro-2026-03-05",
+				"output": [
+					{
+						"id": "rs_0ad62158726c7fa3016a3998dd5c90819a83736698c095410d",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998dd62b0819ab557485c3277f580",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare news recency 7 days June 2026",
+								"Cloudflare this week site:cloudflare.com blog OR press release recency 7 days",
+								"Cloudflare Reuters June 2026",
+								"Cloudflare latest news June 2026"
+							],
+							"query": "Cloudflare news recency 7 days June 2026"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998de1bb0819a942e01e1e9fa58d0",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998de33cc819ab11e541628619b94",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare June 2026 outage June 22 2026 official",
+								"Cloudflare announcement June 2026 June 15 2026 site:blog.cloudflare.com OR site:cloudflare.com",
+								"Cloudflare Reuters June 15 2026..June 22 2026",
+								"site:cloudflare.com \"June\" \"2026\" Cloudflare press release"
+							],
+							"query": "Cloudflare June 2026 outage June 22 2026 official"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998df65f0819aa20b520652034c69",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998df7b98819a86a487a28d7fd3cc",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.cloudflare.com/press/press-releases/"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998dfa90c819a836f247c67e5f1b7",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998dfb810819a9931797a942ee918",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"\"Cloudflare Collaborates With Leading Browsers\"",
+								"\"Cloudflare Launches Design Partner Designation\"",
+								"\"Cloudflare 2026 Threat Intelligence Report\"",
+								"Cloudflare status June 22 2026 CDN cache incident"
+							],
+							"query": "\"Cloudflare Collaborates With Leading Browsers\""
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e1b194819a824b7ed467385fea",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e1cfbc819a8d33a271cbc2898e",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.cloudflarestatus.com/"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e1fc6c819ab06d733ddae8c30e",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e21b98819aad50a26b4c922760",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "find_in_page",
+							"pattern": "CDN/cache",
+							"url": "https://www.cloudflarestatus.com/"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e28d04819a94a8c1a2c9726a53",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e2b404819aa9f5d7c96c6aa591",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.cloudflarestatus.com/"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e2e630819aa25e9074fb99f3d1",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e2fe94819aa051a7db9e635295",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.cloudflare.com/press/press-releases/"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e3535c819a85a344270a0bdaea",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e36f7c819a80ed9a2ae7b16e15",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.cloudflare.com/press/press-releases/2026/cloudflare-launches-design-partner-designation-to-accelerate-secure-ai-and-seamless-sase-adoption/"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e3a858819a856425aa1fc654cb",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e59010819aa4050c2b7734aaeb",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"\"Private Access Control Tokens\" Cloudflare June 2026",
+								"\"Cloudflare\" PACT browsers Mozilla Google Microsoft Shopify June 2026",
+								"\"Cloudflare\" \"fiber cut\" June 22 2026 news",
+								"\"Cloudflare\" \"Workers AI\" degraded availability June 16 2026"
+							],
+							"query": "\"Private Access Control Tokens\" Cloudflare June 2026"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e7e38c819a911ec29ffc128fc0",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e80058819aac5da3e62ed962ef",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998e84eb4819a83b06d14f08eb7cc",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998e8688c819a871e458f42c996c8",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"\"Private Access Control Tokens\" Mozilla Google Microsoft Shopify",
+								"\"PACT\" browser privacy-preserving tokens Cloudflare Mozilla June 2026"
+							],
+							"query": "\"Private Access Control Tokens\" Mozilla Google Microsoft Shopify"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998eb36b4819ab02cd4e4c4b0c364",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998eb6acc819a9cff925c77f444c6",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.cloudflarestatus.com/"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998ed8604819aa708b5be71ab5bf5",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998edb710819abb2c8c7a832186f9",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Mozilla PACT Private Access Control Tokens June 2026",
+								"Google PACT Private Access Control Tokens Cloudflare June 2026",
+								"Microsoft Edge PACT Cloudflare June 2026"
+							],
+							"query": "Mozilla PACT Private Access Control Tokens June 2026"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998f1b558819aaafeb3e010263b3e",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0ad62158726c7fa3016a3998f1e058819a9c3fd284c5f176ac",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"\"Cloudflare\" outage June 22 2026 Reuters",
+								"\"Cloudflare\" outage June 22 2026 AP",
+								"\"Cloudflare\" outage June 22 2026 The Register",
+								"\"Cloudflare\" outage June 22 2026 major services down"
+							],
+							"query": "\"Cloudflare\" outage June 22 2026 Reuters"
+						}
+					},
+					{
+						"id": "rs_0ad62158726c7fa3016a3998f63bf8819ab22de68934a4aa7e",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "msg_0ad62158726c7fa3016a3998f64ed0819ab63d558adca5cb0c",
+						"type": "message",
+						"status": "incomplete",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"end_index": 612,
+										"start_index": 433,
+										"title": "www.cloudflare.com",
+										"url": "https://www.cloudflare.com/press/press-releases/2026/cloudflare-collaborates-with-leading-browsers-to-develop-a-privacy-first-protocol-for-the-global-internet/"
+									}
+								],
+								"logprobs": [],
+								"text": "For the week ending **June 22, 2026**, the most notable Cloudflare stories were:\n\n- **New browser alliance on privacy-preserving bot/human verification.** On **June 22**, Cloudflare announced it is working with **Mozilla, Google, Microsoft, and Shopify** on **Private Access Control Tokens (PACT)**, a proposed protocol meant to help sites verify legitimate human or authorized bot traffic **without CAPTCHAs or invasive tracking**. ([cloudflare.com](https://www.cloudflare.com/press/press-releases/2026/cloudflare-collaborates-with-leading-browsers-to-develop-a-privacy-first-protocol-for-the-global-internet/))\n\n- **Big partner push for AI and SASE adoption.** On **June 17**, Cloudflare launched its **Cloudflare One"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "incomplete",
+				"usage": {
+					"input_tokens": 69201,
+					"output_tokens": 4096,
+					"total_tokens": 73297,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 3954
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": null,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": {
+					"reason": "max_output_tokens"
+				},
+				"instructions": null,
+				"max_output_tokens": 4096,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"context": "current_turn",
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [
+					{
+						"type": "web_search_preview",
+						"search_content_types": [
+							"text"
+						],
+						"search_context_size": "medium",
+						"user_location": {
+							"type": "approximate",
+							"city": null,
+							"country": "US",
+							"region": null,
+							"timezone": null
+						}
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-pro',\n  {\n    input: 'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n    max_output_tokens: 4096,\n    tools: [{ type: 'web_search_preview' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-5.4-pro\",\n  \"input\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n  \"max_output_tokens\": 4096,\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
