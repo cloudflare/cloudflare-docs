@@ -8,14 +8,7 @@ date: 2026-07-08
 
 Platforms can now create temporary preview accounts directly through the Cloudflare REST API. This lets your platform deploy a live Worker before the user signs in to Cloudflare, then return a claim URL so they can keep the deployment.
 
-This is useful for platforms that create Workers on behalf of users, including:
-
-- AI app builders
-- Cloud development environments
-- Code sandboxes
-- Template marketplaces
-- Internal developer portals
-- Tutorial environments
+This is useful for platforms that create Workers on behalf of users, including vibe coding platforms, coding agents and anything that needs to let people easily deploy to Cloudflare, without requiring people to have an existing account or grant write access to their account.
 
 Your platform can keep users in your onboarding flow, deploy their generated Worker to a temporary account, and hand off ownership only when the user is ready to claim it.
 
