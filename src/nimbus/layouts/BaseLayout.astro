@@ -6,6 +6,7 @@ import "../styles/prose.css";
 import "../styles/markdown-pipeline.css";
 import "tippy.js/dist/tippy.css";
 import "../styles/tippy.css";
+import "../styles/footnotes.css";
 import { config } from "virtual:nimbus/config";
 import { getCollectionLlmsUrl, getVersionStatus } from "nimbus-docs";
 import AgentDirective from "@/components/AgentDirective.astro";
@@ -176,6 +177,8 @@ const llmsUrl = Astro.site
       import "../scripts/mermaid.client";
       import "../scripts/table-scroll.client";
       import "../scripts/image-zoom.client";
+      import "../scripts/footnotes.client";
+      import "../scripts/scroll-to-top.client";
       // Custom Zaraz analytics event wiring (link/tab/details/copy/search).
       // Registers delegated document listeners once; safe with view transitions.
       import "../scripts/analytics";

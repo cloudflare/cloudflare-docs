@@ -77,6 +77,8 @@ const nimbusConfig = defineNimbusConfig({
 	description: "Cloudflare's documentation.",
 	locale: "en",
 	github: "https://github.com/cloudflare/cloudflare-docs",
+	editPattern:
+		"https://github.com/cloudflare/cloudflare-docs/edit/production/{path}",
 	socialImageAlt: "Cloudflare documentation",
 	// Search is Algolia DocSearch (wired in E4); Pagefind off.
 	search: false,

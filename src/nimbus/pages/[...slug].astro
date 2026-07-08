@@ -66,7 +66,8 @@ const editUrl = await getEditUrl(entry);
 // Frontmatter wins; git is the fallback.
 const lastUpdated = entry.data.lastUpdated ?? await getLastUpdated(entry);
 const tocConfig = entry.data.tableOfContents;
-const toc = tocOn && tocConfig !== false ? getTOC(headings, tocConfig) : false;
+const tocHeadings = headings.filter((h) => h.slug !== "footnote-label");
+const toc = tocOn && tocConfig !== false ? getTOC(tocHeadings, tocConfig) : false;
 const markdownPath = `/${entry.id}/index.md`;
 const markdownUrl = Astro.site ? new URL(markdownPath, Astro.site).href : markdownPath;
 const socialImage = entry.data.socialImage ?? await getOgImage(entry);
@@ -128,6 +129,7 @@ const rssHref = entry.data.pcx_content_type === "changelog" && Astro.site
   wide={entry.data.wide}
   hideTitle={isSplash}
   feedback={entry.data.feedback}
+  styleGuide={entry.data.styleGuide}
   meta={{
     titleSuffix: productMetaTitle,
     canonical: entry.data.canonical,
