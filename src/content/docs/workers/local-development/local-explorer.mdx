@@ -52,22 +52,24 @@ For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [
 Local Explorer automatically captures traces and logs from every Worker invocation without modifying your code. View request waterfalls, binding operations, and console output directly in your browser during development.
 
 :::note
-Local observability captures traces and logs from `wrangler dev` on your machine. For production Workers, see [Workers Logs](/workers/observability/logs/workers-logs/) and [Traces](/workers/observability/traces/).
+Local observability captures traces and logs from `wrangler dev` on your machine. For production Workers, refer to [Workers Logs](/workers/observability/logs/workers-logs/) and [Traces](/workers/observability/traces/).
 :::
 
 ### View traces
 
-In Local Explorer's **Observability** section, each Worker invocation appears as a trace. Click any trace to expand a waterfall showing every binding operation (D1 queries, KV reads, R2 operations, Durable Object calls, `fetch()`) with timing, status, and error details.
+In Local Explorer's **Observability** section, each Worker invocation appears as a trace. Select any trace to expand a waterfall showing every binding operation (D1 queries, KV reads, R2 operations, Durable Object calls, `fetch()`) with timing, status, and error details.
 
 #### Example: Debug a failed request
 
-This Worker makes two D1 calls. The second references a table that doesn't exist:
+This Worker makes two D1 calls. The second references a table that does not exist:
 
-```javascript
+```typescript
 // In your Worker's fetch handler:
 if (pathname === "/api/todos" && method === "POST") {
   const body = (await request.json()) as { title?: string };
   const title = (body.title ?? "").trim();
+
+  type Todo = { id: number; title: string; completed: boolean; created_at: string };
 
   console.info("Creating todo", title);
 
@@ -81,9 +83,9 @@ if (pathname === "/api/todos" && method === "POST") {
   // Step 2: Log to audit table
   await env.DB.prepare(
     "INSERT INTO audit_log (action, todo_id) VALUES (?, ?)"
-  ).bind("created", todo!.id).run(); // ← fails here: table doesn't exist
+  ).bind("created", todo!.id).run(); // ← fails here: table does not exist
 
-  return json({ todo }, 201);
+  return Response.json({ todo }, { status: 201 });
 }
 ```
 
