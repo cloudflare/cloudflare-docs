@@ -314,6 +314,11 @@ const aliasResolver = {
 							find: /^~\/components\/OneTrust\.astro$/,
 							replacement: `${rootComponents}/OneTrust.astro`,
 						},
+						// Shared: generated WARP platform list
+						{
+							find: /^~\/util\/warp-platforms\.json$/,
+							replacement: `${rootUtil}/warp-platforms.json`,
+						},
 						{ find: /^~(\/.*)?$/, replacement: `${nimbusDir}$1` },
 						{ find: /^@(\/.*)?$/, replacement: `${nimbusDir}$1` },
 					],
