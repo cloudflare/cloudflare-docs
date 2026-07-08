@@ -47,6 +47,54 @@ Local Explorer supports the following binding types:
 
 For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [SQLite storage API](/durable-objects/api/sqlite-storage-api/), Local Explorer includes a SQL studio. This is the same experience available in the Cloudflare dashboard for deployed D1 databases. It provides both a visual table browser with inline editing and a SQL query editor where you can run arbitrary queries.
 
+## Observability
+
+Local Explorer automatically captures traces and logs from every Worker invocation without modifying your code. View request waterfalls, binding operations, and console output directly in your browser during development.
+
+:::note
+Local observability captures traces and logs from `wrangler dev` on your machine. For production Workers, see [Workers Logs](/workers/observability/logs/workers-logs/) and [Traces](/workers/observability/traces/).
+:::
+
+### View traces
+
+In Local Explorer's **Observability** section, each Worker invocation appears as a trace. Click any trace to expand a waterfall showing every binding operation (D1 queries, KV reads, R2 operations, Durable Object calls, `fetch()`) with timing, status, and error details.
+
+#### Example: Debug a failed request
+
+This Worker makes two D1 calls. The second references a table that doesn't exist:
+
+```javascript
+// In your Worker's fetch handler:
+if (pathname === "/api/todos" && method === "POST") {
+  const body = (await request.json()) as { title?: string };
+  const title = (body.title ?? "").trim();
+
+  console.info("Creating todo", title);
+
+  // Step 1: Insert the todo
+  const todo = await env.DB.prepare(
+    "INSERT INTO todos (title) VALUES (?) RETURNING id, title, completed, created_at"
+  )
+    .bind(title)
+    .first<Todo>();
+
+  // Step 2: Log to audit table
+  await env.DB.prepare(
+    "INSERT INTO audit_log (action, todo_id) VALUES (?, ?)"
+  ).bind("created", todo!.id).run(); // ← fails here: table doesn't exist
+
+  return json({ todo }, 201);
+}
+```
+
+The trace waterfall shows which D1 call succeeded and which failed. No `console.log()` or try/catch required.
+
+![Trace waterfall for POST /api/todos showing two D1 database spans: the first INSERT succeeded (green), the second INSERT failed with error "no such table: audit_log"](~/assets/images/workers/observability/local-trace-failed-request.png)
+
+### Search logs
+
+The **Logs** view captures all console output from your Worker. Filter by level (error, warn, info, log, debug) or search by text to find specific messages without scrolling through terminal output.
+
 ## API
 
 Local Explorer exposes an API at `/cdn-cgi/explorer/api` that provides programmatic access to the same operations available in the browser interface. The API serves an [OpenAPI specification](https://www.openapis.org/) that describes all available endpoints, parameters, and response formats.
@@ -59,7 +107,7 @@ curl http://localhost:8787/cdn-cgi/explorer/api
 
 ### Use with AI coding agents
 
-The OpenAPI spec at `/cdn-cgi/explorer/api` allows AI coding agents and other tools to discover and interact with your local bindings programmatically. An agent can fetch the spec, understand what resources are available, and make API calls to read or modify local data without requiring manual setup.
+The OpenAPI spec at `/cdn-cgi/explorer/api` allows AI coding agents and other tools to discover and interact with your local development environment programmatically. An agent can fetch the spec, understand what resources are available, and make API calls to read or modify local data, query traces and logs, and debug your Worker without requiring manual setup.
 
 This can be useful as an alternative to the CLI when you want an agent to:
 
@@ -67,3 +115,5 @@ This can be useful as an alternative to the CLI when you want an agent to:
 - Inspect the state of a [Durable Object](/durable-objects/) during debugging
 - Trigger or retry a [Workflow](/workflows/) run with different input data
 - Upload test files to a local [R2](/r2/) bucket
+- Find recent requests with errors and drill into failing spans
+
