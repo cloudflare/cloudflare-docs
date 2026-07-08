@@ -1,6 +1,6 @@
 name: Refresh PR Outdated Checks
 
-# **What it does**: Posts a pr/outdated-check commit status for every open PR once a day
+# **What it does**: Posts a Outdated PR Check commit status for every open PR once a day
 #                   (~4am CT), including fork PRs. Catches PRs that go stale when production
 #                   advances without any PR activity.
 # **Why we have it**: The per-commit check (outdated-pr-check.yml) only runs when a PR is
@@ -91,7 +91,7 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               "/repos/${REPO}/statuses/${PR_SHA}" \
               -f state="$STATE" \
-              -f context="pr/outdated-check" \
+              -f context="Outdated PR Check" \
               -f description="$DESCRIPTION" \
               || { echo "  Failed to post status for PR #${PR_NUMBER} — continuing"; true; }
 
