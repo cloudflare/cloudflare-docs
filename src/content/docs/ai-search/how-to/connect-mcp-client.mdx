@@ -31,7 +31,7 @@ Create an instance with the [Wrangler CLI](/ai-search/wrangler-commands/). This 
 npx wrangler ai-search create docs-search --type web-crawler --source developers.cloudflare.com
 ```
 
-Replace `developers.cloudflare.com` with a domain you have [onboarded to your Cloudflare account](/fundamentals/manage-domains/add-site/), since you can only crawl sites you own. To index content without crawling a site, run `npx wrangler ai-search create docs-search` and upload files to [built-in storage](/ai-search/configuration/data-source/built-in-storage/) instead.
+Replace `developers.cloudflare.com` with a domain you have [onboarded to your Cloudflare account](/fundamentals/manage-domains/add-site/), since you can only crawl sites you own. To index content without crawling a site, run `npx wrangler ai-search create docs-search --type builtin` and upload files to [built-in storage](/ai-search/configuration/data-source/built-in-storage/) instead.
 
 Check indexing progress:
 
