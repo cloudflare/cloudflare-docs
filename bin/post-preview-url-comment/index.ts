@@ -56,13 +56,6 @@ async function run(): Promise<void> {
 			commit: `https://${commitSha.slice(0, 8)}.preview.developers.cloudflare.com`,
 		};
 
-		const nimbusPreviewUrl = process.env.NIMBUS_BRANCH_SLUG
-			? {
-					branch: `https://${process.env.NIMBUS_BRANCH_SLUG}.preview.developers.cloudflare.com`,
-					commit: `https://nimbus-${commitSha.slice(0, 8)}.preview.developers.cloudflare.com`,
-				}
-			: null;
-
 		core.info(
 			`Commit URL: ${previewUrl.commit}\nBranch URL: ${previewUrl.branch}`,
 		);
@@ -116,12 +109,6 @@ async function run(): Promise<void> {
 			});
 
 		let comment = `**Preview URL:** ${previewUrl.commit}\n**Preview Branch URL:** ${previewUrl.branch}`;
-
-		if (nimbusPreviewUrl) {
-			comment = comment.concat(
-				`\n**Nimbus Preview URL:** ${nimbusPreviewUrl.commit}\n**Nimbus Preview Branch URL:** ${nimbusPreviewUrl.branch}`,
-			);
-		}
 		if (changedFiles.length !== 0) {
 			core.info(`Found ${changedFiles.length} after filtering paths`);
 

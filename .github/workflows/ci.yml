@@ -330,17 +330,6 @@ jobs:
           name: dist
           path: dist
 
-      - name: Build Nimbus (→ dist-nimbus)
-        id: nimbus-build
-        continue-on-error: true
-        env:
-          BUILD_TARGET: nimbus
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_OPTIONS: "--max-old-space-size=8192"
-        run: |
-          pnpm run prebuild
-          pnpm exec astro build
-
       - name: Deploy to Cloudflare Workers
         id: deploy
         env:
@@ -356,8 +345,72 @@ jobs:
           pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
           pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
 
+      - name: Post preview URL on PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
+        run: pnpm exec tsx bin/post-preview-url-comment/index.ts
+        continue-on-error: true
+
+  publish-nimbus-preview:
+    name: Deploy Nimbus Preview
+    needs: build
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: pnpm install --frozen-lockfile
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Restore Astro (Nimbus) assets from cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            .astro-cache-nimbus/assets
+          key: astro-nimbus-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-nimbus-assets-
+
+      - name: Build Nimbus (→ dist-nimbus)
+        id: nimbus-build
+        continue-on-error: true
+        env:
+          BUILD_TARGET: nimbus
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=8192"
+        run: |
+          pnpm run prebuild
+          pnpm exec astro build
+
       - name: Deploy Nimbus to Cloudflare Workers
-        id: nimbus-deploy
+        id: deploy
         if: steps.nimbus-build.outcome == 'success'
         continue-on-error: true
         env:
@@ -368,15 +421,17 @@ jobs:
           SHORT_SHA="${PR_HEAD_SHA:0:8}"
           BRANCH_SLUG=$(echo "$PR_HEAD_REF" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
 
-          echo "nimbus_branch_slug=nimbus-${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
+          echo "branch_slug=nimbus-${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
+          echo "short_sha=nimbus-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
 
           pnpm exec wrangler deploy --config wrangler.nimbus-preview.json --dispatch-namespace preview-deployments --name "nimbus-${SHORT_SHA}"
           pnpm exec wrangler deploy --config wrangler.nimbus-preview.json --dispatch-namespace preview-deployments --name "nimbus-${BRANCH_SLUG}"
 
-      - name: Post preview URL on PR
+      - name: Post Nimbus preview URL on PR
+        if: steps.deploy.outcome == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
-          NIMBUS_BRANCH_SLUG: ${{ steps.nimbus-deploy.outputs.nimbus_branch_slug }}
-        run: pnpm exec tsx bin/post-preview-url-comment/index.ts
+          SHORT_SHA: ${{ steps.deploy.outputs.short_sha }}
+        run: pnpm exec tsx bin/post-nimbus-preview-url-comment/index.ts
         continue-on-error: true
