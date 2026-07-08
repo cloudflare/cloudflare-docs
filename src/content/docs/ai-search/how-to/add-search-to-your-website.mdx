@@ -33,23 +33,25 @@ This tutorial adds search to an existing React app. If you are starting a new pr
 
 Create an instance with the [Wrangler CLI](/ai-search/wrangler-commands/). To index a website you own, connect it as a data source so AI Search crawls and indexes it automatically:
 
-<PackageManagers type="exec" pkg="wrangler" args="ai-search create my-search --type web-crawler --source <YOUR_DOMAIN>" />
-npx wrangler ai-search create my-search --type web-crawler --source <YOUR_DOMAIN>
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="ai-search create my-search --type web-crawler --source <YOUR_DOMAIN>"
+/>
 
 Replace `<YOUR_DOMAIN>` with a domain [onboarded to your Cloudflare account](/ai-search/configuration/data-source/website/). To create an instance without a data source and upload files yourself instead, run `npx wrangler ai-search create my-search` and add content from the [dashboard](/ai-search/get-started/dashboard/#upload-content).
 
 Check indexing progress:
 
 <PackageManagers type="exec" pkg="wrangler" args="ai-search stats my-search" />
-npx wrangler ai-search stats my-search
-```
 
 Once indexing completes, you can test a query from the command line:
 
-<PackageManagers type="exec" pkg="wrangler" args="ai-search search my-search --query 'What is this site about?'" />
-npx wrangler ai-search search my-search --query "What is this site about?"
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="ai-search search my-search --query 'What is this site about?'"
+/>
 
 ## 2. Enable the public endpoint
 
