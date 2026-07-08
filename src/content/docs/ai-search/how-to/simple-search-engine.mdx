@@ -1,23 +1,81 @@
 ---
-pcx_content_type: concept
+pcx_content_type: how-to
 title: Create a simple search engine
 description: Build a simple search engine using the AI Search Workers binding and the search method.
+difficulty: Beginner
 sidebar:
-  order: 5
+  order: 6
 products:
   - ai-search
 ---
 
-import { TypeScriptExample } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	LinkCard,
+} from "~/components";
 
-Use the `search()` method to implement a simple search engine. This example uses the [Workers binding](/ai-search/api/search/workers-binding/), but can be adapted to use the [REST API](/ai-search/api/search/rest-api/) instead.
+This guide builds a search engine that returns the file names matching a query, using the `search()` method on the [Workers binding](/ai-search/api/search/workers-binding/). You can adapt it to use the [REST API](/ai-search/api/search/rest-api/) instead.
 
-To replicate this example:
+For the best results with this pattern:
 
-- Disable query rewriting so that the original user query is matched directly
-- Configure your AI Search instance to have small chunk sizes (256 tokens is usually enough)
+- Disable query rewriting so the original user query is matched directly.
+- Configure your AI Search instance with small chunk sizes (256 tokens is usually enough).
 
-<TypeScriptExample>
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You also need an AI Search instance that already contains indexed content. To create one and add content, refer to [Get started](/ai-search/get-started/).
+
+## 1. Create a Worker project
+
+Create a new Worker project using the `create-cloudflare` CLI (C3). [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+
+Create a new project named `search-engine` by running:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"search-engine"} />
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+Go to your application directory:
+
+```sh
+cd search-engine
+```
+
+## 2. Bind your Worker to AI Search
+
+Add the following to your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+remote = true
+```
+
+</WranglerConfig>
+
+This binds the `default` [namespace](/ai-search/concepts/namespaces/) to `env.AI_SEARCH`. The `remote` option lets `wrangler dev` proxy requests to your deployed instance, since AI Search does not run locally.
+
+## 3. Add the search code
+
+Update `src/index.ts`. This Worker reads a query from the URL, searches your instance, and returns the file name of each matching chunk. Replace `my-instance` with the name of your instance.
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 export interface Env {
@@ -41,3 +99,32 @@ export default {
 ```
 
 </TypeScriptExample>
+
+## 4. Run and deploy
+
+Start a local development server, then query it at `/?query=your+search+terms`:
+
+```sh
+npx wrangler dev
+```
+
+Log in with your Cloudflare account, then deploy your Worker to make it accessible on the Internet:
+
+```sh
+npx wrangler login
+npx wrangler deploy
+```
+
+## Next steps
+
+<LinkCard
+	title="Search Workers binding"
+	href="/ai-search/api/search/workers-binding/"
+	description="Full reference for searching and chatting from a Worker."
+/>
+
+<LinkCard
+	title="Query rewriting"
+	href="/ai-search/configuration/retrieval/query-rewriting/"
+	description="Control whether AI Search rewrites the query before searching."
+/>
