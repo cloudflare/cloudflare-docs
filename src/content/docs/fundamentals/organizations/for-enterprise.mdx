@@ -27,7 +27,7 @@ Common use cases:
 - Development workflows with separate accounts per environment
 - Growing companies consolidating account management
 
-Looking for MSSP or Distributor documentation? Refer to [Organizations for MSSP and Distributors](/fundamentals/organizations/for-mssp-distributors/).
+Looking for MSSP (Managed Security Service Provider) or Distributor documentation? Refer to [Organizations for MSSP and Distributors](/fundamentals/organizations/for-mssp-distributors/).
 
 ## Hierarchy structure
 
@@ -49,7 +49,7 @@ Organization
 - One Organization contains multiple accounts
 - Each account can contain multiple zones
 - All accounts are at the same level (no sub-organizations)
-- Organization members have implicit access to all accounts
+- Organization members have [implicit access](#implicit-access) to all accounts
 - Maximum: **500 accounts** and **5,000 zones** per Organization
 
 ## Example: Company A
@@ -113,13 +113,26 @@ To remove an account from your Organization, contact [Cloudflare Support](/suppo
 
 ### Organization Super Administrator
 
-When you create an Organization, you become the Organization Super Administrator. This role provides implicit access to all accounts in your Organization and allows you to manage memberships at the Organization level.
+When you create an Organization, you become the Organization Super Administrator. This role provides [implicit access](#implicit-access) to all accounts in your Organization and allows you to manage memberships at the Organization level.
 
-Implicit access means you do not need explicit membership on each account. When you access any account within your Organization, you automatically have Super Administrator permissions.
+:::note
+Organization Super Administrator is the only Organization-level role available today. All Organization members have the same level of access. Additional roles (read-only, billing, audit log) will be available in a future release.
+:::
 
 :::note
 Any Organization Super Administrator can add or remove other Organization Super Administrators at any time.
 :::
+
+### Implicit access
+
+Organization members receive **implicit access** to all accounts in the Organization. Implicit access means:
+
+- You do not need explicit membership on each individual account.
+- When you navigate to any account within your Organization, you automatically have Super Administrator permissions on that account.
+- Implicit access is granted at the Organization level — you cannot grant implicit access to a subset of accounts.
+- Implicit access is equivalent to Super Administrator. There is no read-only implicit access today.
+
+Implicit access is separate from any existing per-account membership. If you were already an explicit member of an account before it was added to the Organization, that existing membership is unaffected.
 
 ### Invite members
 
@@ -132,17 +145,20 @@ You can invite additional members to your Organization. Invited members receive 
 
 The user receives an email invitation. After accepting, they have implicit access to all accounts in the Organization.
 
-:::note
-All Organization members must have 2FA or SSO enabled.
-:::
+### Member authentication requirements
+
+All Organization members must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled **before** they can accept an Organization invitation.
+
+- If a user does not have 2FA or SSO enabled, they will not be able to accept the invitation.
+- Ask the user to enable 2FA or SSO first, then resend the invitation.
+- For instructions on enabling 2FA, refer to [Set up 2FA](/fundamentals/user-profiles/2fa/).
+- For SSO configuration, refer to [Dashboard SSO](/fundamentals/manage-members/dashboard-sso/).
 
 ## Share policies
 
-### WAF policy sharing
-Create WAF custom rulesets in one account and share them to other accounts within your Organization. Shared policies are read-only in receiving accounts.
+Organizations allows you to share WAF custom rulesets and Zero Trust Gateway policies (DNS, Network, HTTP, Resolver) across accounts in your Organization. Shared policies are read-only in receiving accounts and automatically stay in sync when updated in the source account.
 
-### Gateway policy sharing
-Share Zero Trust Gateway policies (DNS, Network, HTTP, Resolver) across accounts in your Organization.
+For detailed instructions, refer to [Policy sharing](/fundamentals/organizations/policy-sharing/).
 
 :::note
 Policy sharing requires the appropriate entitlements. Organizations does not grant access to WAF or Gateway features — your accounts must already have the required Enterprise WAF or Zero Trust Gateway SKUs.
@@ -174,9 +190,17 @@ The data includes traffic for proxied hostnames and may be based on a sample. Th
 3. Update the information.
 4. Select **Save**.
 
+### API
+
+You can manage Organizations programmatically using the [Cloudflare Organizations API](/api/resources/organizations/). The API supports creating, updating, deleting Organizations, managing members, and assigning accounts.
+
 ### Terraform
 
 You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
+
+:::note
+The Terraform provider currently requires **API Keys** for authentication with Organization resources. API Token support is not yet fully available for all Organization operations.
+:::
 
 ## What you cannot do 
 
@@ -189,15 +213,4 @@ Enterprise Organizations use a flat structure. You cannot create sub-organizatio
 ### Move accounts
 Accounts cannot be moved between Enterprise Organizations.
 
-## Troubleshooting
-
-You may encounter the following errors during setup:
-
-| Error | Description |
-| --- | --- |
-| Organization management is only available on the Enterprise plan at this time. | You are not a member of any Enterprise accounts. |
-| You need a super admin role on an enterprise account to create an Organization. | You are not a Super Administrator of an Enterprise account. |
-| One or more of your enterprise accounts is already part of an Organization. | Your accounts are already in an Organization. Contact your company administrator. |
-| You have reached the maximum number of organizations. | You may not create another Organization because you already have one. |
-| An Organization has already been created for accounts associated with your company. Please contact your company administrator. | Every company is limited to one Organization. Contact your company's Cloudflare administrator to be invited to the existing Organization. |
-| You are not eligible to create an Organization because we think there's a problem. Please contact Cloudflare support and we will help you create it. | This is a rare error which may indicate an issue with the internal metadata for one or more of your accounts. Contact [Cloudflare Support](/support/contacting-cloudflare-support/) for assistance. |
+If you encounter errors during setup, refer to [Troubleshooting](/fundamentals/organizations/limitations/#troubleshooting).
