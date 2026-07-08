@@ -1,0 +1,25 @@
+---
+/**
+ * ComboboxGroup — groups related options with role="group" and a top divider
+ * between groups. Pair with <ComboboxGroupLabel>. Port of kumo's
+ * Combobox.Group.
+ */
+import { cn } from "@/lib/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  role="group"
+  data-nb-combobox-group
+  class={cn(
+    "mt-2 border-t border-border pt-2 first:mt-0 first:border-t-0 first:pt-0",
+    className,
+  )}
+>
+  <slot />
+</div>

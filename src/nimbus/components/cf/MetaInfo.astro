@@ -1,0 +1,15 @@
+---
+/**
+ * MetaInfo — small inline annotation next to a parameter or type
+ * (e.g. "optional", default values).
+ *
+ * CF source: cloudflare-docs/src/components/MetaInfo.astro — 1:1 port.
+ */
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<span class="align-middle text-xs text-muted-foreground">{text}</span>

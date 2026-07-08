@@ -1,0 +1,81 @@
+---
+// Shared by /404 and /[product]/404. Search hook opens the Nimbus dialog.
+---
+
+<div class="flex flex-col items-center justify-center gap-4 py-20 text-center md:py-28">
+  <h1
+    class="font-bold leading-none text-foreground text-[clamp(4rem,14vw,8rem)]"
+  >
+    404
+  </h1>
+  <p class="max-w-md text-lg text-muted-foreground">
+    Check the URL, try using our <button
+      id="404-search-link"
+      class="font-[inherit] cursor-pointer border-none bg-transparent p-0 text-blue-500 underline hover:no-underline dark:text-orange-500"
+      >search</button
+    > or try our LLM-friendly
+    <a href="/llms.txt"> llms.txt directory</a>.
+  </p>
+</div>
+
+<script>
+  type SearchDialogElement = HTMLDialogElement & {
+    __openSearchDialog?: () => void;
+  };
+
+  // Gates the Cmd+K override below so it goes inert after a soft-nav off the 404.
+  function on404Page(): boolean {
+    return document.getElementById("404-search-link") !== null;
+  }
+
+  // Read at call time, not module load — correct across soft-navs between 404s.
+  function currentQuery(): string {
+    return decodeURIComponent(
+      window.location.pathname.replaceAll("/", " ").replaceAll("-", " ").trim(),
+    );
+  }
+
+  function openSearchWithQuery(query: string): void {
+    const dialog = document.querySelector<SearchDialogElement>(
+      "[data-search-dialog][data-search-ready]",
+    );
+    if (!dialog?.__openSearchDialog) return;
+    // reset() clears the input synchronously, so set the query after opening.
+    dialog.__openSearchDialog();
+    const input = dialog.querySelector<HTMLInputElement>("[data-search-input]");
+    if (!input) return;
+    input.value = query;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+
+  function wire404(): void {
+    const button = document.getElementById("404-search-link");
+    if (button && !button.dataset.ready) {
+      button.dataset.ready = "true";
+      button.addEventListener("click", () => openSearchWithQuery(currentQuery()));
+    }
+  }
+
+  wire404();
+  document.addEventListener("astro:page-load", wire404);
+
+  // Capture-phase + stopPropagation to beat the global empty-open handler.
+  if (!document.documentElement.hasAttribute("data-404-search-key")) {
+    document.documentElement.setAttribute("data-404-search-key", "true");
+    document.addEventListener(
+      "keydown",
+      (keyboardEvent) => {
+        if (!on404Page()) return;
+        if (
+          (keyboardEvent.metaKey || keyboardEvent.ctrlKey) &&
+          keyboardEvent.key.toLowerCase() === "k"
+        ) {
+          keyboardEvent.preventDefault();
+          keyboardEvent.stopPropagation();
+          openSearchWithQuery(currentQuery());
+        }
+      },
+      { capture: true },
+    );
+  }
+</script>

@@ -1,0 +1,24 @@
+---
+interface Props {
+	id: string;
+	name: string;
+	imagePath: string;
+	componentName: string;
+}
+
+const { name, imagePath, componentName, id } = Astro.props;
+import UIComponent from "./RTKUIComponent.tsx";
+
+// Convert ~ alias to proper import path for Astro
+const resolvedImagePath = imagePath.startsWith("~/")
+	? imagePath.replace("~/", "/src/")
+	: imagePath;
+---
+
+<UIComponent
+	client:load
+	id={id}
+	name={name}
+	imagePath={resolvedImagePath}
+	componentName={componentName}
+/>

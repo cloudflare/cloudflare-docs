@@ -3,6 +3,61 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-15"
+    title: "Workers KV: Legacy Namespace Routes"
+    description: |-
+      Deprecation date: July 15, 2026
+
+      End of life date: October 15, 2026
+
+      The legacy Workers KV API routes under `/accounts/{account_id}/workers/namespaces/*` are deprecated in favor of the [Workers KV API](/api/resources/kv/) routes under `/accounts/{account_id}/storage/kv/namespaces/*`.
+
+      The legacy and replacement routes are interchangeable. They accept the same request parameters and return the same response payloads. To migrate, update the URL path from `/workers/namespaces/` to `/storage/kv/namespaces/`.
+
+      Deprecated APIs:
+
+      - `GET` and `POST /accounts/{account_id}/workers/namespaces` (list and create namespaces)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}` (get, rename, and remove a namespace)
+      - `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/keys` (list keys)
+      - `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/metadata/{key_name}` (read key metadata)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}/values/{key_name}` (read, write, and delete key-value pairs)
+
+      Replacements:
+
+      Update the URL path from `/workers/namespaces/` to `/storage/kv/namespaces/` in each endpoint.
+
+      - `GET` and `POST /accounts/{account_id}/storage/kv/namespaces` (list and create namespaces)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}` (get, rename, and remove a namespace)
+      - `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys` (list keys)
+      - `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/metadata/{key_name}` (read key metadata)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{key_name}` (read, write, and delete key-value pairs)
+
+      After October 15, 2026, requests to the legacy `/accounts/{account_id}/workers/namespaces/*` routes will no longer be supported. Update integrations to use the documented Workers KV API endpoints before that date to ensure uninterrupted service.
+
+  - publish_date: "2026-06-29"
+    title: "Legacy Registrar Domain Management API"
+    description: |-
+      Deprecation date: April 10, 2026
+
+      End of life date: September 27, 2026
+
+      The legacy Registrar domain management endpoints are deprecated and will reach their end of life on September 27, 2026. These endpoints have been replaced by the new [Registrar API](/api/resources/registrar/), which provides domain search, availability checking, and registration capabilities.
+
+      Deprecated APIs:
+
+      - `GET /accounts/{account_id}/registrar/domains` — List domains
+      - `GET /accounts/{account_id}/registrar/domains/{domain_name}` — Get domain
+      - `PUT /accounts/{account_id}/registrar/domains/{domain_name}` — Update domain
+
+      Replacement: [Registrar API](/api/resources/registrar/)
+
+      - [Search for available domains](/api/resources/registrar/methods/search/) — `GET /accounts/{account_id}/registrar/domain-search`
+      - [Check domain availability](/api/resources/registrar/methods/check/) — `POST /accounts/{account_id}/registrar/domain-check`
+      - [List registrations](/api/resources/registrar/subresources/registrations/methods/list/) — `GET /accounts/{account_id}/registrar/registrations`
+      - [Create registration](/api/resources/registrar/subresources/registrations/methods/create/) — `POST /accounts/{account_id}/registrar/registrations`
+
+      Customers and integrations using the legacy domain management endpoints must migrate to the new Registrar API before September 27, 2026 to ensure uninterrupted service. After this date, the legacy endpoints will no longer be available.
+
   - publish_date: "2026-06-16"
     title: "Zone Settings Batch API"
     description: |-

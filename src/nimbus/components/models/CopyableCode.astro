@@ -1,0 +1,75 @@
+---
+/**
+ * CopyableCode — copy affordance for the model ID: the id is shown as `<code>`
+ * inside the button, the label is a `title`/`aria-label` tooltip, and success
+ * is shown by swapping the copy icon for a checkmark.
+ */
+interface Props {
+	text: string;
+	label?: string;
+}
+
+const { text, label = "Copy" } = Astro.props;
+---
+
+<copyable-code data-text={text}>
+	<button
+		type="button"
+		title={label}
+		aria-label={label}
+		class="copy-button inline-flex cursor-pointer items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 transition-colors hover:border-border-strong hover:bg-accent"
+	>
+		<code class="border-0 bg-transparent p-0 font-mono text-[0.8125rem] text-muted-foreground">
+			{text}
+		</code>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="14"
+			height="14"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="copy-icon shrink-0 text-muted-foreground"
+		>
+			<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+			<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+		</svg>
+	</button>
+</copyable-code>
+
+<script>
+	class CopyableCode extends HTMLElement {
+		connectedCallback() {
+			const text = this.dataset.text ?? "";
+			const button = this.querySelector("button");
+			const icon = this.querySelector<SVGElement>(".copy-icon");
+
+			const copyPath = icon?.innerHTML;
+			const checkPath = '<polyline points="20 6 9 17 4 12"></polyline>';
+
+			button?.addEventListener("click", async () => {
+				try {
+					await navigator.clipboard.writeText(text);
+
+					if (icon && copyPath) {
+						icon.innerHTML = checkPath;
+						icon.style.color = "var(--nb-success)";
+						setTimeout(() => {
+							icon.innerHTML = copyPath;
+							icon.style.color = "";
+						}, 1500);
+					}
+				} catch {
+					// Ignore clipboard failures (denied/unavailable access)
+				}
+			});
+		}
+	}
+
+	if (!customElements.get("copyable-code")) {
+		customElements.define("copyable-code", CopyableCode);
+	}
+</script>

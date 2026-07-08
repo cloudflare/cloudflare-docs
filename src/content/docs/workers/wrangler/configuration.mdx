@@ -173,7 +173,7 @@ The `main` key is optional for assets-only Workers.
   - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
 
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/configuration/previews).
+  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/versions-and-deployments/preview-urls/).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
@@ -1295,7 +1295,7 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
-    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, and Amazon ECR. For more information, refer to [Image Management](/containers/platform-details/image-management/).
+    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/platform-details/image-management/).
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
@@ -1881,7 +1881,12 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-  	- dist - index.js - wrangler.jsonc - .wrangler - deploy - config.json
+		- dist/
+			- index.js
+			- wrangler.jsonc
+		- .wrangler/
+			- deploy/
+				- config.json
   </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:

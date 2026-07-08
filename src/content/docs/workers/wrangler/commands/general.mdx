@@ -46,6 +46,8 @@ wrangler login [OPTIONS]
   - Defaults to `localhost`. Sets the IP or hostname where Wrangler should listen for the OAuth callback.
 - `--callback-port` <Type text="string" /> <MetaInfo text="optional" />
   - Defaults to `8976`. Sets the port where Wrangler should listen for the OAuth callback.
+- `--use-keyring` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Stores the OAuth credentials in your operating system keychain instead of the default plaintext TOML file. Refer to [Storing OAuth credentials in the OS keychain](#storing-oauth-credentials-in-the-os-keychain) for details. Use `--no-use-keyring` to opt back out. The choice is persisted across Wrangler invocations.
 
 :::note
 
@@ -111,11 +113,66 @@ docker run -p 8976:9000 <your-image>
 npx wrangler login --callback-host=0.0.0.0 --callback-port=9000
 ```
 
+### Storing OAuth credentials in the OS keychain
+
+By default, Wrangler stores the OAuth access token and refresh token returned by `wrangler login` in a plaintext TOML file under the global Wrangler config directory (typically `~/.config/.wrangler/config/default.toml`). Pass `--use-keyring` to opt in to a more secure storage path that uses your operating system keychain:
+
+```sh
+npx wrangler login --use-keyring
+```
+
+When `--use-keyring` is enabled, Wrangler writes the credentials into an [AES-256-GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)-encrypted file (`default.enc`, alongside the legacy `default.toml` location) and stores the 32-byte encryption key in your OS keychain:
+
+- **macOS** uses the built-in [Keychain](https://support.apple.com/guide/keychain-access/welcome/mac) via `/usr/bin/security`.
+- **Linux** uses [libsecret](https://wiki.gnome.org/Projects/Libsecret) via the `secret-tool` CLI from the `libsecret-tools` package. Wrangler will print a per-distro install hint if `secret-tool` is not available.
+- **Windows** uses [Credential Manager](https://support.microsoft.com/en-us/windows/accessing-credential-manager-1b5c916a-6a16-889f-8581-fc16e8165ac0) via [`@napi-rs/keyring`](https://www.npmjs.com/package/@napi-rs/keyring), which Wrangler installs lazily the first time you opt in (≈1.9 MB one-time download). In non-interactive environments such as CI, install the binding ahead of time with `npm install -g @napi-rs/keyring@<version>` or stay on the default plaintext path.
+
+If a plaintext credentials file exists when you first opt in, Wrangler reads it, encrypts the contents into the new `.enc` file, and deletes the plaintext file.
+
+The choice is persisted across Wrangler invocations. To verify where credentials are currently stored, run `wrangler whoami`:
+
+```sh
+npx wrangler whoami
+```
+
+```sh output
+👋 You are logged in with an OAuth Token, associated with the email user@example.com.
+🔐 Credentials are stored in: Encrypted file (~/.config/.wrangler/config/default.enc) with key in macOS Keychain (service=wrangler, account=default)
+```
+
+#### Opting out
+
+To opt back out, pass `--no-use-keyring`:
+
+```sh
+npx wrangler login --no-use-keyring
+```
+
+Opt-out **deletes** the encrypted file and the keychain entry. Wrangler intentionally does not decrypt the existing credentials onto disk — writing plaintext during opt-out would defeat the at-rest protection you just chose to disable. The subsequent login flow writes fresh credentials into the plaintext TOML file.
+
+#### Per-process override
+
+The environment variable `CLOUDFLARE_AUTH_USE_KEYRING` overrides the persistent preference for a single invocation:
+
+```sh
+# Force the keychain backend for this command only
+CLOUDFLARE_AUTH_USE_KEYRING=true npx wrangler deploy
+
+# Force the plaintext file backend for this command only
+CLOUDFLARE_AUTH_USE_KEYRING=false npx wrangler deploy
+```
+
+When the environment variable is set to `true` and the keychain backend is unavailable (for example, `secret-tool` is missing on Linux), Wrangler exits with an error rather than silently falling back to the plaintext file. With only the persistent preference set, Wrangler falls back to the plaintext file and prints a one-time warning so a broken keychain never locks you out.
+
+#### Compatibility
+
+The `--use-keyring` opt-in does not change how API tokens are resolved: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_API_KEY`/`CLOUDFLARE_EMAIL` continue to take priority over any stored OAuth credentials, and the [Running Wrangler in CI/CD](/workers/ci-cd/) guidance still applies for non-interactive environments.
+
 ---
 
 ## `logout`
 
-Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token.
+Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token and delete the stored credentials. When [keychain storage](#storing-oauth-credentials-in-the-os-keychain) is active, both the encrypted credentials file and the keychain entry are removed.
 
 ```txt
 wrangler logout
@@ -135,6 +192,8 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 ---
 
 ## `auth`
+
+Manage authentication, including named [authentication profiles](/workers/wrangler/profiles/) for working across multiple accounts.
 
 ### `auth token`
 
@@ -169,6 +228,16 @@ When using `--json`, the output includes the token type:
 An error is returned if no authentication method is available, or if API key/email is configured without `--json`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
+
+<WranglerCommand command="auth create" headingLevel={3} />
+
+<WranglerCommand command="auth activate" headingLevel={3} />
+
+<WranglerCommand command="auth deactivate" headingLevel={3} />
+
+<WranglerCommand command="auth list" headingLevel={3} />
+
+<WranglerCommand command="auth delete" headingLevel={3} />
 
 ---
 

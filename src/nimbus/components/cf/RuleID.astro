@@ -1,0 +1,49 @@
+---
+/**
+ * RuleID — copy-to-clipboard pill showing the last 8 chars of a rule ID.
+ *
+ * CF source: cloudflare-docs/src/components/RuleID.astro
+ *
+ * Mapping notes:
+ *   - Upstream uses `~/util/tippy` for the "Copied!" tooltip; replaced with a
+ *     lightweight title-attribute swap to avoid the tippy dependency.
+ *   - CF Starlight CSS vars swapped for Nimbus design tokens.
+ */
+import { z } from "astro/zod";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+  .object({
+    id: z.string(),
+  })
+  .strict();
+
+const { id } = props.parse(Astro.props);
+---
+
+<rule-id id={id}>
+  <button
+    title="Copy rule ID"
+    aria-label="Copy rule ID"
+    class="inline-flex cursor-copy items-center rounded-md border border-border bg-muted px-1.5 py-0.5 transition-colors duration-150 hover:border-foreground/30 hover:bg-accent"
+  >
+    <span class="font-mono text-[0.8125rem] font-medium">{`...${id.slice(-8)}`}</span>
+  </button>
+</rule-id>
+
+<script>
+  class RuleID extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>("button");
+      button?.addEventListener("click", () => {
+        navigator.clipboard.writeText(this.id);
+        const prev = button.title;
+        button.title = "Copied!";
+        setTimeout(() => (button.title = prev), 1000);
+      });
+    }
+  }
+
+  customElements.define("rule-id", RuleID);
+</script>

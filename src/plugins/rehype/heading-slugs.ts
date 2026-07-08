@@ -3,7 +3,7 @@ import { visit } from "unist-util-visit";
 import GithubSlugger from "github-slugger";
 import { externalLinkArrow } from "./external-links";
 import type { Root } from "hast";
-import type { MdxTextExpression } from "mdast-util-mdx-expression";
+import type { MdxTextExpressionHast } from "mdast-util-mdx-expression";
 
 const slugs = new GithubSlugger();
 
@@ -19,7 +19,7 @@ export default function () {
 				if (!last) return;
 
 				if (last.type === "mdxTextExpression") {
-					const lastElement = last as MdxTextExpression;
+					const lastElement = last as MdxTextExpressionHast;
 					if (
 						lastElement.value.startsWith("/*") &&
 						lastElement.value.endsWith("*/")
@@ -27,7 +27,7 @@ export default function () {
 						const id = lastElement.value.slice(2, -2).trim();
 						element.properties.id = slugs.slug(id);
 
-						const text = element.children.at(-2) as MdxTextExpression;
+						const text = element.children.at(-2) as MdxTextExpressionHast;
 						text.value = text.value.trimEnd();
 						element.children.with(-2, text);
 					}

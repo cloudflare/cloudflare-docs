@@ -21,7 +21,7 @@ Cloudflare partners with [PlanetScale](https://planetscale.com/) to provide Plan
 
 Get the best of both products, build for Workers global distribution and optimize for regional data access. Get started by creating a PlanetScale database in the Cloudflare dashboard.
 
-<DashButton url="/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1"/>
+<DashButton url="/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1" />
 
 ## Workers + PlanetScale
 
@@ -42,6 +42,8 @@ Hyperdrive provides the connection glue between Workers and PlanetScale. It pool
 3. **Forward when needed with caching in-between.** If no local cached result exists, or if the query cannot be cached, Hyperdrive sends the query across Cloudflare's network to a location close to your PlanetScale database. Hyperdrive checks another cache in that location before it reaches the database; this cache is populated by multiple requests to your database to improve your cache hit ratios similar to tiered caching .
 
 4. **Query PlanetScale only when necessary.** If neither cache has the result, Hyperdrive sends the query to PlanetScale using an already available pool of database connections. Writes and other uncacheable queries go to PlanetScale so the database remains the source of truth. Multiple layers of caching reduce overall load on your database.
+
+Hyperdrive does not invalidate cached read results when your application writes to PlanetScale. If your application needs read-after-write consistency for authentication, sessions, permissions, or another critical path, use a separate cache-disabled Hyperdrive configuration for those reads. Refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for guidance.
 
 ## PlanetScale developer experience
 

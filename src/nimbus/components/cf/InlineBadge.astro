@@ -1,0 +1,50 @@
+---
+// CF's InlineBadge — a Badge with preset shorthands for product-status
+// labels (alpha/beta/deprecated/early-access/legacy). Ports CF's
+// `src/components/InlineBadge.astro`, swapping Starlight's Badge for
+// Nimbus's `ui/badge`. The variant names line up (success/caution/danger/
+// note), so the preset map carries over unchanged.
+import { Badge } from "@/components/ui/badge";
+import type { ComponentProps } from "astro/types";
+
+type BadgeProps = ComponentProps<typeof Badge>;
+
+interface Props extends Partial<BadgeProps> {
+  preset?: "alpha" | "beta" | "deprecated" | "early-access" | "legacy";
+}
+
+let { preset, text, variant, ...attrs } = Astro.props;
+
+if (!preset && !text) {
+  throw new Error(
+    `[InlineBadge] Expected 'preset' or 'text', got neither, on ${Astro.url.pathname}`,
+  );
+}
+
+if (preset) {
+  switch (preset) {
+    case "alpha":
+      text = "Alpha";
+      variant = "success";
+      break;
+    case "beta":
+      text = "Beta";
+      variant = "caution";
+      break;
+    case "deprecated":
+      text = "Deprecated";
+      variant = "danger";
+      break;
+    case "early-access":
+      text = "Early Access";
+      variant = "note";
+      break;
+    case "legacy":
+      text = "Legacy";
+      variant = "danger";
+      break;
+  }
+}
+---
+
+<Badge class="inline" text={text ?? ""} variant={variant} {...attrs} />

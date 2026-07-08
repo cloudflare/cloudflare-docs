@@ -1,0 +1,124 @@
+---
+pcx_content_type: how-to
+title: Go SDK
+description: Set up the Flagship OpenFeature provider to evaluate Flagship feature flags from Go server applications.
+sidebar:
+  order: 3
+products:
+  - flagship
+---
+
+The Go SDK provides an OpenFeature-compatible server provider for Go applications. It evaluates flags over HTTP and does not support the Cloudflare Workers binding.
+
+## Installation
+
+Install with `go get`:
+
+```sh
+go get github.com/cloudflare/flagship/sdks/go
+```
+
+## Setup
+
+Configure the provider with your Flagship app ID, Cloudflare account ID, and an API token with Flagship Evaluate permission.
+
+```go
+package main
+
+import (
+	"context"
+	"log"
+
+	flagship "github.com/cloudflare/flagship/sdks/go"
+	"github.com/open-feature/go-sdk/openfeature"
+)
+
+func main() {
+	ctx := context.Background()
+
+	provider, err := flagship.NewProvider(flagship.Options{
+		AppID:     "<APP_ID>",
+		AccountID: "<ACCOUNT_ID>",
+		AuthToken: "<API_TOKEN>",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := openfeature.SetProviderAndWait(provider); err != nil {
+		log.Fatal(err)
+	}
+	defer openfeature.Shutdown()
+
+	client := openfeature.NewDefaultClient()
+	evalCtx := openfeature.NewEvaluationContext("user-42", map[string]any{
+		"plan": "enterprise",
+	})
+
+	enabled, err := client.BooleanValue(ctx, "new-checkout", false, evalCtx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("new-checkout:", enabled)
+}
+```
+
+## Flag types
+
+The Go SDK supports all OpenFeature server-side flag types.
+
+```go
+enabled, _ := client.BooleanValue(ctx, "new-checkout", false, evalCtx)
+variant, _ := client.StringValue(ctx, "homepage-hero", "control", evalCtx)
+rate, _ := client.FloatValue(ctx, "sample-rate", 0.1, evalCtx)
+limit, _ := client.IntValue(ctx, "upload-limit", 10, evalCtx)
+config, _ := client.ObjectValue(ctx, "ui-config", map[string]any{"theme": "light"}, evalCtx)
+```
+
+Use the `*ValueDetails` methods when you need reason, variant, metadata, or error codes.
+
+## Response caching
+
+The provider can cache evaluations to avoid a network round-trip for repeated flag/context pairs. Caching is off by default and enabled by setting `CacheTTL`:
+
+```go
+provider, err := flagship.NewProvider(flagship.Options{
+	AppID:        "<APP_ID>",
+	AccountID:    "<ACCOUNT_ID>",
+	AuthToken:    "<API_TOKEN>",
+	CacheTTL:     30 * time.Second, // values may be up to this stale
+	CacheMaxSize: 1000,             // LRU-evicted beyond this many entries
+})
+```
+
+Each cache entry is keyed by flag key, flag type, and the full evaluation context, so distinct contexts never share a cached value. Cache hits resolve with `reason == openfeature.CachedReason`.
+
+Disabled flags, errors, and type mismatches are never cached. Because freshness is TTL-based, a flag change in Flagship takes effect after the entry expires.
+
+The cache is per-provider instance, guarded by a mutex for concurrent use, and cleared on `Shutdown`.
+
+## Configuration options
+
+| Option           | Description                                                                                               |
+| ---------------- | --------------------------------------------------------------------------------------------------------- |
+| `AppID`          | Flagship app ID.                                                                                          |
+| `AccountID`      | Required with `AppID`.                                                                                    |
+| `BaseURL`        | Base URL override. Defaults to `https://api.cloudflare.com`.                                              |
+| `AuthToken`      | Adds `Authorization: Bearer <token>` to each request.                                                     |
+| `Headers`        | Static headers. Explicit `Authorization` overrides `AuthToken`.                                           |
+| `HeadersFactory` | Dynamic per-request headers. Values override `Headers` and `AuthToken`.                                   |
+| `HTTPClient`     | Custom HTTP client.                                                                                       |
+| `Timeout`        | Per-attempt timeout. Defaults to 5 seconds.                                                               |
+| `Retries`        | Retry attempts on transient errors. Defaults to 1 and is capped at 10.                                    |
+| `DisableRetries` | Disables retries when set to `true`.                                                                      |
+| `RetryDelay`     | Delay between retries. Defaults to 1 second and is capped at 30 seconds.                                  |
+| `CacheTTL`       | Enables in-memory response caching when greater than 0. Cached values may be up to this duration stale.   |
+| `CacheMaxSize`   | Maximum number of cached entries. LRU-evicted beyond this limit. Defaults to 1000 when `CacheTTL` is set. |
+| `Logging`        | Enables debug and error logging. Off by default.                                                          |
+| `Logger`         | Optional `slog`-compatible logger. Uses the default `slog` logger when unset.                             |
+| `Hooks`          | Provider-level OpenFeature hooks.                                                                         |
+
+## Evaluation context
+
+Context attributes are sent as URL query parameters. Supported values are strings, numeric types, booleans, and `time.Time`. `nil` values are skipped. Maps, slices, structs, and other complex values return `INVALID_CONTEXT` through OpenFeature and do not trigger an HTTP request.

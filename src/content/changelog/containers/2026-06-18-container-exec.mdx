@@ -1,0 +1,47 @@
+---
+title: exec() is now available for Containers
+description: Control additional processes from the associated Durable Object.
+products:
+  - containers
+date: 2026-06-18
+---
+
+import { TypeScriptExample } from "~/components";
+
+`exec()` is now available for [Containers](/containers/). Use `this.ctx.container.exec()` to start processes inside a running Container, stream standard input and output, inspect exit codes, and signal each process.
+
+Call `exec()` from a class extending `Container`, or from another Durable Object through `this.ctx.container`. The associated Container must already be running.
+
+This example starts the Container when needed, then reads its Node.js version:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async readVersion() {
+		if (!this.ctx.container.running) {
+			await this.start();
+		}
+
+		const process = await this.ctx.container.exec(["node", "--version"]);
+		const output = await process.output();
+		const decoder = new TextDecoder();
+
+		return {
+			exitCode: output.exitCode,
+			stdout: decoder.decode(output.stdout),
+			stderr: decoder.decode(output.stderr),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+The command array starts an executable directly, without an implicit shell. Invoke a shell explicitly for pipes, redirects, or variable expansion.
+
+One RPC method can coordinate multiple `exec()` calls in one caller-to-Durable Object round trip. It can also pass byte-oriented `ReadableStream` input or return streamed output with flow control.
+
+For options and streaming examples, refer to [Execute commands](/containers/execute-commands/).

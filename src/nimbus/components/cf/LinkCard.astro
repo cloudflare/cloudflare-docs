@@ -1,0 +1,27 @@
+---
+/**
+ * LinkCard — full-card link with title and optional description.
+ *
+ * CF source: re-exported from `@astrojs/starlight/components` via their
+ * barrel. Queues usage: `<LinkCard title href description />`.
+ * Mapping notes: rendered with the Nimbus ui/card Card (same approach
+ * as LinkTitleCard) — stretched overlay link, title underlines on hover.
+ * Starlight's trailing arrow is dropped.
+ */
+import { Card } from "../ui/card";
+
+interface Props {
+  title: string;
+  href: string;
+  description?: string;
+}
+
+const { title, href, description } = Astro.props;
+---
+
+<div class="relative my-3 [&:hover_h3]:underline">
+  <Card {title} class="my-0">
+    {description && <Fragment set:html={description} />}
+  </Card>
+  <a {href} class="absolute inset-0" aria-label={title}></a>
+</div>

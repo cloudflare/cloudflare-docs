@@ -292,6 +292,12 @@ When `Enabled`, users can log out from your Zero Trust organization by selecting
 
 When `Enabled`, users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add or remove software from their device.
 
+:::note
+
+When a [client version assignment](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/client-version-assignments/) targets a device, the client suppresses local update notifications on that device. This prevents end users from seeing a dashboard-managed install and a local update prompt at the same time. To turn off client version assignments on a device, set [`allow_managed_deployments`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#allow_managed_deployments) to `false` in your MDM file.
+
+:::
+
 ### Auto connect
 
 <Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
