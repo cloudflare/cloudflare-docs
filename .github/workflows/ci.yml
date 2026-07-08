@@ -179,6 +179,9 @@ jobs:
     name: Nimbus Build
     needs: pre-build
     runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      succeeded: ${{ steps.build.outputs.succeeded }}
     permissions:
       contents: read
     steps:
@@ -220,6 +223,7 @@ jobs:
             astro-nimbus-assets-
 
       - name: Build Nimbus (→ dist-nimbus)
+        id: build
         env:
           BUILD_TARGET: nimbus
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -228,6 +232,7 @@ jobs:
           set -o pipefail
           pnpm run prebuild
           pnpm exec astro build 2>&1 | tee nimbus-build.log
+          echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
       - name: Upload Nimbus build artifact
         if: always()
@@ -425,7 +430,7 @@ jobs:
   publish-nimbus-preview:
     name: Deploy Nimbus Preview
     needs: nimbus-build
-    if: github.event.pull_request.head.repo.full_name == github.repository && needs.nimbus-build.result == 'success'
+    if: github.event.pull_request.head.repo.full_name == github.repository && needs.nimbus-build.outputs.succeeded == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
