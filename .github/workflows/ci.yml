@@ -175,6 +175,76 @@ jobs:
           name: link-validation-report
           path: .starlight-links-validator/errors.json
 
+  nimbus-build:
+    name: Nimbus Build
+    needs: pre-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: pnpm install --frozen-lockfile
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Restore Astro (Nimbus) assets from cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            .astro-cache-nimbus/assets
+          key: astro-nimbus-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-nimbus-assets-
+
+      - name: Build Nimbus (→ dist-nimbus)
+        env:
+          BUILD_TARGET: nimbus
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=8192"
+        run: |
+          set -o pipefail
+          pnpm run prebuild
+          pnpm exec astro build 2>&1 | tee nimbus-build.log
+
+      - name: Upload Nimbus build artifact
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: dist-nimbus
+          path: dist-nimbus
+          if-no-files-found: ignore
+
+      - name: Upload Nimbus build log
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: nimbus-build-log
+          path: nimbus-build.log
+          if-no-files-found: ignore
+
   post-build:
     name: Post Build
     needs: build
@@ -354,8 +424,8 @@ jobs:
 
   publish-nimbus-preview:
     name: Deploy Nimbus Preview
-    needs: build
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    needs: nimbus-build
+    if: github.event.pull_request.head.repo.full_name == github.repository && needs.nimbus-build.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -389,30 +459,14 @@ jobs:
         run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      - name: Restore Astro (Nimbus) assets from cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+      - name: Download Nimbus artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          path: |
-            .astro-cache-nimbus/assets
-          key: astro-nimbus-assets-${{ hashFiles('src/assets/**') }}
-          restore-keys: |
-            astro-nimbus-assets-
-
-      - name: Build Nimbus (→ dist-nimbus)
-        id: nimbus-build
-        continue-on-error: true
-        env:
-          BUILD_TARGET: nimbus
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_OPTIONS: "--max-old-space-size=8192"
-        run: |
-          pnpm run prebuild
-          pnpm exec astro build
+          name: dist-nimbus
+          path: dist-nimbus
 
       - name: Deploy Nimbus to Cloudflare Workers
         id: deploy
-        if: steps.nimbus-build.outcome == 'success'
-        continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -428,7 +482,6 @@ jobs:
           pnpm exec wrangler deploy --config wrangler.nimbus-preview.json --dispatch-namespace preview-deployments --name "nimbus-${BRANCH_SLUG}"
 
       - name: Post Nimbus preview URL on PR
-        if: steps.deploy.outcome == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
