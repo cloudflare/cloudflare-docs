@@ -34,6 +34,26 @@ entries:
 
       After October 15, 2026, requests to the legacy `/accounts/{account_id}/workers/namespaces/*` routes will no longer be supported. Update integrations to use the documented Workers KV API endpoints before that date to ensure uninterrupted service.
 
+  - publish_date: "2026-07-08"
+    title: "AMP/SXG API and Rules"
+    description: |-
+      Deprecation date: September 18, 2025
+
+      End of life date: June 23, 2026
+
+      The AMP/SXG features have reached end of life. There will be no replacement functionality. The zone settings API endpoints and sxg [Configuration Rule setting](https://developers.cloudflare.com/rules/configuration-rules/settings/) should no longer be used.
+
+      Deprecated APIs:
+
+      - `GET /zones/{zone_id}/amp/sxg`
+      - `PUT /zones/{zone_id}/amp/sxg`
+
+      Deprecated Configuration Rule setting:
+
+      - `sxg`
+
+      The Dashboard UI will no longer show references to AMP or the sxg setting. Users can remove the sxg parameter from their rulesets by using the [rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule/). Terraform deprecation will follow later, and users should remove references to the `sxg` parameter from their [terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset#sxg-1).
+
   - publish_date: "2026-06-29"
     title: "Legacy Registrar Domain Management API"
     description: |-
