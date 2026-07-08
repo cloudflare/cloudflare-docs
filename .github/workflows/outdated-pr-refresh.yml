@@ -73,7 +73,13 @@ jobs:
               if [ "$AGE" -gt 86400 ]; then
                 HOURS=$((AGE / 3600))
                 STATE="failure"
-                DESCRIPTION="Branch is ${HOURS}h out of date with production. Please rebase or merge."
+                if [ "$HOURS" -gt 36 ]; then
+                  DAYS=$((AGE / 86400))
+                  UNIT=$( [ "$DAYS" -eq 1 ] && echo "day" || echo "days" )
+                  DESCRIPTION="Branch is ${DAYS} ${UNIT} out of date with production. Please rebase or merge."
+                else
+                  DESCRIPTION="Branch is ${HOURS}h out of date with production. Please rebase or merge."
+                fi
               else
                 STATE="success"
                 DESCRIPTION="Branch is behind production but within the 24-hour grace period"
