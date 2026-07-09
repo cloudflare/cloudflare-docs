@@ -351,7 +351,7 @@ class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-Register handlers in `onStart()` so they are installed before stored MCP connections are restored and before the `initialize` handshake for new connections. The `serverId` argument identifies which server sent the request, so one agent can respond differently per server.
+Register handlers in `onStart()`. The advertised modes are persisted with each MCP server, so connections restored after hibernation advertise the same modes at the `initialize` handshake and the handlers reattach when `onStart()` runs. The `serverId` argument identifies which server sent the request, so one agent can respond differently per server.
 
 ### Elicitation modes
 

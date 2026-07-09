@@ -50,7 +50,7 @@ class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-Because `onStart()` runs before stored MCP connections are restored, configured handlers apply to connections restored after Durable Object hibernation. Agents without configured handlers advertise no elicitation capability, so servers use their non-elicitation fallbacks instead of sending requests the agent cannot answer.
+The advertised modes are persisted with each MCP server, so connections restored after Durable Object hibernation advertise the same modes and the handlers reattach when `onStart()` runs. Agents without configured handlers advertise no elicitation capability, so servers use their non-elicitation fallbacks instead of sending requests the agent cannot answer.
 
 An explicitly declared `client.capabilities.elicitation` on `addMcpServer` is honored, persisted with the server registration, and survives hibernation, so you can narrow the advertised modes when your agent should only receive specific ones.
 
