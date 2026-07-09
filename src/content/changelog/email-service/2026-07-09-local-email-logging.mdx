@@ -1,0 +1,16 @@
+---
+title: Local email logging now saved to .wrangler directory
+description: Email content sent during local development is now logged to the .wrangler/tmp/email directory in your project root for easier inspection.
+date: 2026-07-09
+---
+
+When [testing email sending locally](/email-service/local-development/sending/), email content (text and HTML) is now saved to `<project root>/.wrangler/tmp/email/<session-id>/` in addition to the system's temporary directory. This makes it easier to locate and inspect sent emails during development without searching through system temporary directories.
+
+The output when sending an email now shows both locations:
+
+```txt
+Text: /tmp/miniflare-.../files/email-text/<message-id>.txt
+Text (local): <project root>/.wrangler/tmp/email/<session-id>/email-text/<message-id>
+```
+
+This change improves the local development experience by providing a predicatble path for email logging, without breaking tools dependent on the original location.
