@@ -192,13 +192,22 @@ The data includes traffic for proxied hostnames and may be based on a sample. Th
 
 ### View audit logs
 
-Organization audit logs capture Organization-level activity such as member invitations, account assignments, policy sharing changes, and Organization setting updates.
+Organization audit logs capture user-initiated actions performed by Organization Super Administrators through Organization-level APIs and the dashboard. These logs are separate from account-level audit logs — actions performed within a specific account continue to appear in that account's audit logs.
+
+To view Organization audit logs in the dashboard:
 
 1. Go to **Organizations** > **Manage Organization**.
 2. Select **Audit Logs**.
-3. Review the log entries. Each entry includes the action taken, the user who performed it, and a timestamp.
 
-Organization audit logs are separate from [account-level audit logs](/fundamentals/setup/account/account-audit-logs/). Account-level audit logs capture activity within individual accounts, while Organization audit logs capture activity at the Organization level.
+You can also retrieve Organization audit logs via the API:
+
+```bash
+GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit
+```
+
+If you are viewing account-level audit logs and the account belongs to an Organization where you are an Organization Super Administrator, you can select **View Organization Audit Logs** to go to the parent Organization's audit logs.
+
+For more details on audit log structure, filtering, and retention, refer to [Audit Logs — Organization Activity Logs](/fundamentals/account/account-security/audit-logs/#organization-activity-logs).
 
 ### API
 
