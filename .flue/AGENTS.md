@@ -22,7 +22,7 @@ The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull
 | `code-review-orchestrator.ts`  | `FlueCodeReviewOrchestratorWorkflow` | **Dispatch-only**: limit check, placeholder, context → R2, admits all three specialists F&F.  |
 | `code-review-specialist.ts`    | `FlueCodeReviewSpecialistWorkflow`   | Generic code-review fan-out (its own isolate).                                                |
 | `style-guide-specialist.ts`    | `FlueStyleGuideSpecialistWorkflow`   | Style-guide fan-out (its own isolate).                                                        |
-| `conventions-specialist.ts`    | `FlueConventionsSpecialistWorkflow`  | PR-level conventions check (title, description, scope) via a light AI session.                |
+| `conventions-specialist.ts`    | `FlueConventionsSpecialistWorkflow`  | PR-level conventions check (title, description, scope) via a light AI session; findings use `CV-` ids. |
 | `finalize-review.ts`           | `FlueFinalizeReviewWorkflow`         | Reconciles, renders, and posts the review comment (admitted by the last specialist to finish). |
 | `dependabot-review.ts`         | `FlueDependabotReviewWorkflow`       | Separate review path for Dependabot PRs.                                                      |
 
@@ -49,7 +49,7 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 4. `finalize-review`:
     - Reads `context.json` + all three stream results from R2.
     - **Head-guards**: skips posting if the PR head has moved on (newer push already owns the comment).
-    - **Idempotency-guards** (comment mode only): skips if this headSha is already finalized.
+    - **Idempotency-guards** (comment mode only): skips if this headSha is already finalized, unless the existing comment is in a retryable state (`pending` placeholder or `failure`), which allows re-finalization.
     - **Reconciles** each stream separately against previous findings (from R2) and captured human comments. Degraded streams (`ok:false`) carry their previous findings forward as active rather than reconciling.
     - Persists `review-<headSha>.json` (`{ code, style, conventions }`) to R2, renders and posts (or logs) the comment, swaps 👀→👍 on trigger comments, and calls `markAutoReviewCompleted` if code and style both succeeded.
     - Cleans up the pending rendezvous namespace (`cleanupPending`).
@@ -66,7 +66,7 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 
 - **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […], conventions: […] }`; a legacy bare array means style-only), `auto-review-count.json`, `ignore-review-limit.json`, `auto-review-disabled.json`. The staged diff lives in the specialist DO's Workspace filesystem, not R2. The **rendezvous namespace** `diffs/pr-<n>/pending/<headSha>/<dispatchId>/` is short-lived (context.json, code.json, style.json, conventions.json, finalize.lock) and deleted by `finalize-review` on completion.
 - The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
-- `lib/code-review-render.ts` renders the single comment: a status line, then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables), `### Conventions`, `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
+- `lib/code-review-render.ts` renders the single comment under a `## Review` heading: a status line, then a collapsed "Fix in your agent" prompt block (only when there is at least one active finding), then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables), `### Conventions`, `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
 - **Models**: all model calls (reviews and reconciliation) use `cloudflare/@cf/moonshotai/kimi-k2.7-code`.
 - **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
 
@@ -83,6 +83,13 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 
 - Bindings: `AI` (Workers AI), `LOADER` (`worker_loaders`, backs the shell sandbox), `DOCS_FLUE_BUCKET` (R2). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`.
 - DO migrations: v1 initial classes; v2 Dependabot; v3 `Flue…`-prefix renames; v4 deleted the standalone style-guide workflow (its fan-out had moved in-process); v5 added the two specialist classes (the fan-outs split back into their own DOs for isolated memory budgets); v6 added `FlueFinalizeReviewWorkflow` (the new finalize-review workflow); v7 added `FlueConventionsSpecialistWorkflow` and `FlueRedirectSpecialistWorkflow`; v8 deleted `FlueRedirectSpecialistWorkflow` (redirect check removed from pipeline).
+
+### Roles, build config, and dev/deploy scripts
+
+- **Roles** (`roles/`): `cloudflare-docs-bot.md` holds the bot's identity and operating guidelines (stay scoped to cloudflare-docs, never leak internal info, be conservative and transparent). Flue auto-discovers the `roles/` directory at build time — it is not imported explicitly the way skills are.
+- **Build config** (`flue.config.ts`): a one-line `defineConfig({ target: "cloudflare" })`. This is the Flue CLI build entry (`flue build` / `flue dev`).
+- **Maintenance script** (`bin/clear-r2-pr-data.ts`): clears the `diffs/pr-<n>/` R2 state for a PR (or all PRs). Run against local dev state via the `flue:clear-r2-pr-data:local` script.
+- **Repo-root scripts** (`package.json` at the repository root, not `.flue/package.json`): `flue:dev` (local dev with an 8 GB heap), `flue:dev:wrangler` (build + `wrangler dev --remote`), `flue:build`, `flue:deploy` (build + `wrangler deploy` with `--secrets-file .env`), `flue:clear-r2-pr-data:local`, and `flue:reset:local` (wipe local Durable Object + R2 dev state). Use these to develop and deploy the worker; the `flue docs` CLI below is only for reading Flue documentation.
 
 ## Reading Flue documentation
 
