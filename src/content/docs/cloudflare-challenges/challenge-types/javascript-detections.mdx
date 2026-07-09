@@ -172,3 +172,12 @@ Enabling JavaScript Detections (JSD) will strip [ETags](/cache/reference/etag-he
 If the origin response includes a `Cache-Control: no-transform` directive, Cloudflare does not inject the JavaScript Detections script. The `cf.bot_management.js_detection.passed` field will show as `missing` for these requests.
 
 To use JavaScript Detections, remove the `no-transform` directive from `Cache-Control` response headers on pages where you want JavaScript Detections to run. For more information, refer to [Cache-Control directives](/cache/concepts/cache-control/#interaction-with-other-cloudflare-features).
+
+### If you block `/cdn-cgi/` paths
+
+:::caution
+
+Blocking requests to `/cdn-cgi/challenge-platform/` or `/cdn-cgi/rum` — via WAF custom rules, firewall rules, or origin-level configuration — will silently degrade JavaScript Detection accuracy. No error is surfaced to the visitor; the script simply fails to execute, and `cf.bot_management.js_detection.passed` will return `false` for all affected requests.
+
+Ensure these paths are reachable from the visitor's browser. If you have WAF rules that match broadly on `/cdn-cgi/` prefixes, add an exception for these two paths.
+:::
