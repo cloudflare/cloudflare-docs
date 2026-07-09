@@ -9,11 +9,11 @@ date: 2026-07-09
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-Agents connected to MCP servers with [`addMcpServer`](/agents/model-context-protocol/apis/client-api/) can now respond to [elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) requests, including url-mode elicitation, which the MCP specification uses to send sensitive URLs to the user.
+Agents connected to MCP servers with [`addMcpServer`](/agents/model-context-protocol/apis/client-api/) can now respond to [elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) requests, including url-mode elicitation, which the MCP specification uses to deliver sensitive URLs to the user.
 
 ## Why url-mode elicitation
 
-Some tool calls need the user to visit a URL, most commonly an OAuth authorization page. Before url-mode elicitation, servers had to put that URL into tool-result text, which lands it in the model's context. An authorization link in model context can be exfiltrated by prompt injection. With url mode, the server sends the URL through a dedicated request instead, and your agent delivers it to the user out-of-band (in a chat message or a UI notification, for example). The link never enters model context.
+Some tool calls require the user to visit a URL, most commonly an OAuth authorization page. Without url-mode elicitation, servers surface that URL in tool-result text, which places it in the model's context. These links grant access to whoever opens them, and anything in model context can be leaked through prompt injection. With url mode, the server sends the URL through a dedicated request and your agent delivers it to the user out-of-band, in a chat message or a UI notification, so the link never enters model context.
 
 ## How to use it
 
@@ -44,11 +44,11 @@ class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-Because it is a class method, the handler survives Durable Object hibernation and applies to connections restored from storage. There is no callback to re-register. Agents without an override keep the previous behavior: connections advertise form mode only, so servers fall back to their non-elicitation flows.
+Because it is a class method, the handler survives Durable Object hibernation and applies to connections restored from storage, with no callback to re-register after a wake-up. Agents without an override keep the previous behavior: connections advertise form mode only, so servers fall back to their non-elicitation flows.
 
-Explicitly declared `client.capabilities.elicitation` on `addMcpServer` is now honored instead of being overwritten. It is persisted with the server registration and survives hibernation, so you can narrow the advertised modes if you need to.
+An explicitly declared `client.capabilities.elicitation` on `addMcpServer` is now honored instead of being overwritten. The declaration is persisted with the server registration and survives hibernation, so you can narrow the advertised modes when your agent should only receive specific ones.
 
-See [Elicitation in the MCP client docs](/agents/model-context-protocol/apis/client-api/#elicitation) for the full guide, including a pattern for forwarding elicitation requests to a browser UI. The [`mcp-client`](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) and [`mcp-elicitation`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) examples implement both sides end to end.
+Refer to [Elicitation in the MCP client documentation](/agents/model-context-protocol/apis/client-api/#elicitation) for the full guide, including a pattern for forwarding elicitation requests to a browser UI. The [`mcp-client`](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) and [`mcp-elicitation`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) examples implement both sides end to end.
 
 ### Upgrade
 

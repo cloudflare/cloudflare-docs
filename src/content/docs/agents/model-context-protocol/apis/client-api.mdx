@@ -330,8 +330,8 @@ class MyAgent extends Agent<Env> {
 		serverId: string,
 	): Promise<ElicitResult> {
 		if (request.params.mode === "url") {
-			// Deliver the URL to the user out-of-band, for example in a chat
-			// message or a UI notification. It never enters model context.
+			// Deliver the URL to the user out-of-band (chat message, email,
+			// UI notification) so it never enters model context
 			await this.notifyUser(request.params.url, request.params.message);
 			return { action: "accept", content: {} };
 		}
@@ -434,7 +434,7 @@ class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-See the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for a complete browser UI implementing this pattern, and the [`mcp-elicitation` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) for a server that sends both elicitation modes. To send elicitation requests from your own MCP server, see [`elicitInput`](/agents/model-context-protocol/apis/agent-api/#elicitinputoptions-context).
+Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for a complete browser UI implementing this pattern, and the [`mcp-elicitation` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) for a server that sends both elicitation modes. To send elicitation requests from your own MCP server, refer to [`elicitInput`](/agents/model-context-protocol/apis/agent-api/#elicitinputoptions-context).
 
 ## Using MCP capabilities
 
