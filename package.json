@@ -189,5 +189,6 @@
 			"version": ">=24.0.0",
 			"onFail": "error"
 		}
-	}
+	},
+	"packageManager": "pnpm@10.33.2+sha1.0d3e2b51a2bdbb7895ddb8085a0c46db642752d7"
 }
