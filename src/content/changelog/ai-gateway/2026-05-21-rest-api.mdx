@@ -1,0 +1,32 @@
+---
+title: Call any AI model through AI Gateway's new REST API
+description: Call third-party and Workers AI models through one Cloudflare REST API, with AI Gateway features applied automatically.
+products:
+  - ai-gateway
+date: 2026-05-21
+---
+
+AI Gateway now uses the AI REST API on `api.cloudflare.com`. You can call any model — whether from OpenAI, Anthropic, Google, or hosted on Workers AI — through one unified API, using the same endpoints and authentication regardless of provider. Four endpoints are available:
+
+- `POST /ai/run` — universal endpoint for all models and modalities
+- `POST /ai/v1/chat/completions` — OpenAI SDK compatible
+- `POST /ai/v1/responses` — OpenAI Responses API compatible
+- `POST /ai/v1/messages` — Anthropic SDK compatible
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "openai/gpt-5.5",
+    "messages": [{"role": "user", "content": "What is Cloudflare?"}]
+  }'
+```
+
+All AI Gateway features — logging, caching, rate limiting, and guardrails — are applied automatically. Third-party models are billed through [Unified Billing](/ai-gateway/features/unified-billing/), so you do not need to manage separate provider API keys.
+
+Third-party model requests are routed through your account's default gateway, which is created automatically on first use. To route requests through a specific gateway, add the `cf-aig-gateway-id` header.
+
+If you are already calling Workers AI models through the existing REST API, that path (`/ai/run/@cf/{model}`) continues to work. To call Workers AI models through AI Gateway, use the `@cf/` model prefix (for example, `@cf/moonshotai/kimi-k2.6`) and include the `cf-aig-gateway-id` header to specify which gateway to route through.
+
+For more details and examples, refer to the [REST API documentation](/ai-gateway/usage/rest-api/).

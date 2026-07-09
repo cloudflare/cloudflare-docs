@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Redirects
 meta:
   title: Redirects | How we docs
+description: Manage URL redirects for documentation.
+products:
+  - style-guide
 ---
 
 import { Details, GitHubCode, GlossaryTooltip } from "~/components";
@@ -84,7 +87,7 @@ We trigger this check _after_ we build our site. What it does it then call [`val
 
 ### Potential redirects
 
-Contributors often struggle to know when they should add redirects. We try to help them by [adding a comment](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/potential-redirects-or-partials.yml) to any pull requests that modify or delete content file paths.
+Contributors often struggle to know when they should add redirects. We try to help them by [adding a comment](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/comment-changed-filenames.yml) to any pull requests that modify or delete content file paths.
 
 ![GitHub Actions redirect comment](~/assets/images/style-guide/how-we-docs/redirects-github.png)
 

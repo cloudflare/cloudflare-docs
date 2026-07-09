@@ -1,11 +1,14 @@
 ---
 pcx_content_type: navigation
 title: TypeScript
+description: Use TypeScript with fully typed APIs to build Cloudflare Workers.
 sidebar:
   order: 2
 head:
   - tag: title
     content: Write Cloudflare Workers in TypeScript
+products:
+  - workers
 ---
 
 import { TabItem, Tabs, PackageManagers, Render } from "~/components";
@@ -13,6 +16,12 @@ import { TabItem, Tabs, PackageManagers, Render } from "~/components";
 TypeScript is a first-class language on Cloudflare Workers. All APIs provided in Workers are fully typed, and type definitions are generated directly from [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
 
 We recommend you generate types for your Worker by running [`wrangler types`](/workers/wrangler/commands/general/#types). Cloudflare also publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`).
+
+:::note[Version 5 and later]
+
+`@cloudflare/workers-types` version 5 exposes only the latest runtime types. The dated entrypoints, such as `@cloudflare/workers-types/2022-11-30`, are removed. Import from `@cloudflare/workers-types` for the latest stable types, or from `@cloudflare/workers-types/experimental` for APIs behind experimental compatibility flags. To match types to a specific compatibility date and flags, run [`wrangler types`](/workers/wrangler/commands/general/#types).
+
+:::
 
 <h3 id="generate-types">
 	Generate types that match your Worker's configuration

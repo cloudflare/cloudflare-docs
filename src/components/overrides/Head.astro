@@ -2,6 +2,7 @@
 import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
+import "~/styles/tippy.css";
 
 import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
@@ -10,7 +11,6 @@ import type { CollectionEntry } from "astro:content";
 
 const DEFAULT_TITLE_DELIMITER = "|";
 const NOINDEX_PRODUCTS = ["email-security"];
-const CHATBOT_DEPRIORITIZE_PRODUCTS = ["firewall", "style-guide"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 
@@ -24,21 +24,17 @@ const shouldNoIndex =
 	frontmatter.noindex ||
 	frontmatter.external_link;
 
-const shouldChatbotDeprioritize =
-	CHATBOT_DEPRIORITIZE_PRODUCTS.includes(currentSection) ||
-	frontmatter.sidebar.group?.hideIndex ||
-	frontmatter.sidebar.hidden ||
-	frontmatter.chatbot_deprioritize;
+// URL path prefixes that are not backed by a `directory` collection entry.
+// For these sections, skip the `getEntry("directory", ...)` lookup to avoid
+// spurious "Entry directory → <section> was not found" warnings.
+//   - `changelog` resolves its product below from frontmatter.products[0].
+const SECTIONS_WITHOUT_DIRECTORY_ENTRY = ["changelog"];
 
 // if not a top-level page, add metadata values from src/content/directory/ entries
 if (currentSection) {
-	// For changelog pages there is no directory entry for "changelog" itself; skip
-	// the lookup to avoid spurious "Entry directory → changelog was not found" warnings.
-	// The actual product is resolved below from frontmatter.products[0].
-	let product =
-		currentSection !== "changelog"
-			? await getEntry("directory", currentSection)
-			: undefined;
+	let product = !SECTIONS_WITHOUT_DIRECTORY_ENTRY.includes(currentSection)
+		? await getEntry("directory", currentSection)
+		: undefined;
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
 		const originalEntry = Astro.locals.starlightRoute.originalEntry as
@@ -111,16 +107,6 @@ if (shouldNoIndex) {
 	metaTags.push({
 		name: "robots",
 		content: "noindex",
-	});
-}
-
-if (shouldChatbotDeprioritize) {
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_chatbot_deprioritize",
-			content: true,
-		},
 	});
 }
 
@@ -254,7 +240,21 @@ if (frontmatter.canonical) {
 	if (canonicalIdx !== -1) {
 		head[canonicalIdx].attrs!.href = canonicalHref;
 	} else {
-		head.push({ tag: "link", attrs: { rel: "canonical", href: canonicalHref } });
+		head.push({
+			tag: "link",
+			attrs: { rel: "canonical", href: canonicalHref },
+		});
+	}
+}
+
+// `@` in URL paths (e.g. AI model pages) must be encoded as `%40`.
+const canonicalIdx = head.findIndex(
+	({ tag, attrs }) => tag === "link" && attrs?.rel === "canonical",
+);
+if (canonicalIdx !== -1) {
+	const href = head[canonicalIdx].attrs!.href;
+	if (typeof href === "string") {
+		head[canonicalIdx].attrs!.href = href.replace(/@/g, "%40");
 	}
 }
 
@@ -264,10 +264,94 @@ metaTags.map((attrs) => {
 		attrs,
 	});
 });
+
+// --- Page-entity JSON-LD ---
+// Map pcx_content_type to schema.org @type.
+// changelog / changelog-entry → BlogPosting
+// navigation / overview / reference-architecture-diagram → WebPage
+// everything else (including unset) → TechArticle
+const _contentType = frontmatter.pcx_content_type ?? "";
+const _isChangelog =
+	_contentType === "changelog" ||
+	_contentType === "changelog-entry" ||
+	currentSection === "changelog";
+const _isWebPage =
+	_contentType === "navigation" ||
+	_contentType === "overview" ||
+	_contentType === "reference-architecture-diagram";
+const schemaType = _isChangelog
+	? "BlogPosting"
+	: _isWebPage
+		? "WebPage"
+		: "TechArticle";
+
+// Canonical URL for the page entity.
+const _canonicalUrl = (
+	frontmatter.canonical
+		? new URL(frontmatter.canonical, Astro.site).toString()
+		: new URL(Astro.url.pathname, Astro.site).toString()
+).replace(/@/g, "%40");
+
+// Prefer the enriched title already computed for the <title> tag.
+const _titleTag = head.find((x) => x.tag === "title");
+const _headline = _titleTag?.content ?? frontmatter.title;
+
+// dateModified: prefer git last-updated, fall back to manually reviewed date.
+const _modifiedDate = lastUpdated ?? frontmatter.reviewed;
+const _dateModified = _modifiedDate
+	? _modifiedDate.toISOString().slice(0, 10)
+	: undefined;
+
+// datePublished: changelog entries only, sourced from the entry's date field.
+const _changelogEntry = Astro.locals.starlightRoute.originalEntry as
+	| CollectionEntry<"changelog">
+	| undefined;
+const _datePublished =
+	_isChangelog && _changelogEntry?.data.date
+		? _changelogEntry.data.date.toISOString().slice(0, 10)
+		: undefined;
+
+const _jsonLd: Record<string, unknown> = {
+	"@context": "https://schema.org",
+	"@type": schemaType,
+	"@id": `${_canonicalUrl}#page`,
+	headline: _headline,
+	...(frontmatter.description ? { description: frontmatter.description } : {}),
+	url: _canonicalUrl,
+	inLanguage: "en",
+	image: ogImageUrl,
+	...(_dateModified ? { dateModified: _dateModified } : {}),
+	...(_datePublished ? { datePublished: _datePublished } : {}),
+	publisher: {
+		"@type": "Organization",
+		name: "Cloudflare",
+		url: "https://www.cloudflare.com/",
+	},
+	isPartOf: {
+		"@type": "WebSite",
+		"@id": "https://developers.cloudflare.com/#website",
+		name: "Cloudflare Docs",
+		url: "https://developers.cloudflare.com/",
+	},
+	...(frontmatter.tags?.length ? { keywords: frontmatter.tags } : {}),
+};
 ---
 
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
 <script src="src/scripts/explain-code.ts"></script>
+<script src="src/scripts/webmcp.ts"></script>
+{
+	!shouldNoIndex && (
+		<script
+			is:inline
+			type="application/ld+json"
+			set:html={
+				// Escape < to prevent </script> in user content from closing the tag.
+				JSON.stringify(_jsonLd).replace(/</g, "\\u003c")
+			}
+		/>
+	)
+}
 <Default><slot /></Default>

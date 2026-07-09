@@ -9,6 +9,8 @@ products:
 
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 Adding captions and subtitles to your video library.
 
 ## Add or modify a caption
@@ -20,8 +22,8 @@ To create or modify a caption on a video a [Cloudflare API Token](https://www.cl
 
 The `<LANGUAGE_TAG>` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers). For convenience, many common
 language codes are provided [at the bottom of this document](#most-common-language-codes).
-If the language you are adding is not included in the table, you can find the value
-through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes. To find the
+If the language you are adding is not included in the table, you can find the
+value through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes. To find the
 value to send, search for the language. Below is an example value from IANA when
 we look for the value to send for a Turkish subtitle:
 
@@ -79,11 +81,69 @@ The `<LANGUAGE_TAG>` must adhere to the BCP 47 format. The tag for English is `e
 You may specify a region in the tag, such as `en-GB`, which will render a label
 that shows `British English` for the caption.
 
+<Tabs>
+<TabItem label="REST API">
+
+    <Tabs>
+    	<TabItem label="cURL">
 ```bash
 curl -X POST \
 -H 'Authorization: Bearer <API_TOKEN>' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>/generate
 ```
+    	</TabItem>
+    	<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const caption = await client.stream.captions.language.create("<VIDEO_UID>", "en", {
+	account_id: '<ACCOUNT_ID>',
+});
+```
+    	</TabItem>
+    </Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const videoId = "<VIDEO_UID>";
+		const caption = await env.STREAM.video(videoId).captions.generate("en");
+		return new Response(JSON.stringify({ caption }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
 
 Example response:
 
@@ -119,12 +179,75 @@ change to `false` and the (auto-generated) portion of the label will be removed.
 
 To create or replace a caption file:
 
+<Tabs>
+<TabItem label="REST API">
+
+    <Tabs>
+    	<TabItem label="cURL">
 ```bash
 curl -X PUT \
  -H 'Authorization: Bearer <API_TOKEN>' \
  -F file=@/Users/mickie/Desktop/example_caption.vtt \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>
 ```
+    	</TabItem>
+    	<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const caption = await client.stream.captions.language.update("<VIDEO_UID>", "en", {
+	account_id: '<ACCOUNT_ID>',
+	file: '@/path/to/caption.vtt',
+});
+```
+    	</TabItem>
+    </Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const videoId = "<VIDEO_UID>";
+		const language = "en";
+		// Obtain a ReadableStream from a file upload, fetch, or other source
+		const captionStream: ReadableStream = request.body!;
+		const caption = await env.STREAM.video(videoId).captions.upload(language, captionStream);
+		return new Response(JSON.stringify({ caption }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+
+</Tabs>
 
 ### Example Response to Add or Modify a Caption
 
@@ -148,10 +271,69 @@ To view captions associated with a video.
 Note this results list will also include generated captions that are `inprogress`
 and `error` status:
 
+<Tabs>
+<TabItem label="REST API">
+
+    <Tabs>
+    	<TabItem label="cURL">
 ```bash
 curl -H 'Authorization: Bearer <API_TOKEN>' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions
 ```
+    	</TabItem>
+    	<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const captions = await client.stream.captions.get("<VIDEO_UID>", {
+	account_id: '<ACCOUNT_ID>',
+});
+```
+    	</TabItem>
+    </Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const videoId = "<VIDEO_UID>";
+		const captions = await env.STREAM.video(videoId).captions.list();
+		return new Response(JSON.stringify({ captions }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+
+</Tabs>
 
 ### Example response to get the captions associated with a video
 
@@ -205,11 +387,69 @@ a WebVTT caption response.
 
 To remove a caption associated with your video:
 
+<Tabs>
+<TabItem label="REST API">
+
+    <Tabs>
+    	<TabItem label="cURL">
 ```bash
 curl -X DELETE \
  -H 'Authorization: Bearer <API_TOKEN>' \
  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>
 ```
+    	</TabItem>
+    	<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+await client.stream.captions.language.delete("<VIDEO_UID>", "en", {
+	account_id: '<ACCOUNT_ID>',
+});
+```
+    	</TabItem>
+    </Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const videoId = "<VIDEO_UID>";
+		await env.STREAM.video(videoId).captions.delete("en");
+		return new Response(JSON.stringify({ success: true }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
 
 If there is an entry in `errors` response field, the caption has not been
 deleted.

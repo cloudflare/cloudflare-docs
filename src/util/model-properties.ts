@@ -7,6 +7,14 @@ type PropertyDef = {
 	category: PropertyCategory;
 };
 
+/** Minimal shape required for property-related utilities. */
+type WithProperties = {
+	properties: Array<{
+		property_id: string;
+		value: string | Array<Record<string, unknown>>;
+	}>;
+};
+
 /**
  * Boolean properties surfaced as badges and sidebar filters.
  *
@@ -22,6 +30,7 @@ export const CAPABILITY_PROPERTIES: Record<string, PropertyDef> = {
 	function_calling: { label: "Function calling", category: "model" },
 	reasoning: { label: "Reasoning", category: "model" },
 	vision: { label: "Vision", category: "model" },
+	zdr: { label: "Zero data retention", category: "model" },
 	// Platform properties
 	lora: { label: "LoRA", category: "platform" },
 	partner: { label: "Partner", category: "platform" },
@@ -49,15 +58,13 @@ export function hasProperty(properties: Property[], id: string): boolean {
 }
 
 /** Get all unique capability labels across a set of models. */
-export function getAllCapabilityLabels(
-	models: WorkersAIModelsSchema[],
-): string[] {
+export function getAllCapabilityLabels(models: WithProperties[]): string[] {
 	return [...new Set(models.flatMap((m) => getCapabilities(m.properties)))];
 }
 
 /** Get all unique labels for a given category across a set of models. */
 export function getLabelsByCategory(
-	models: WorkersAIModelsSchema[],
+	models: WithProperties[],
 	category: PropertyCategory,
 ): string[] {
 	const categoryProps = Object.entries(CAPABILITY_PROPERTIES)

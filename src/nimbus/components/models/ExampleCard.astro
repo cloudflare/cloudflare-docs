@@ -1,0 +1,215 @@
+---
+/**
+ * ExampleCard — renders one example: a code snippet block (single `<Code>` or
+ * `<Tabs>` of languages) plus its rendered output (text / media) and/or raw
+ * JSON response.
+ */
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+import OutputBody from "~/components/models/OutputBody.astro";
+import type { ModelExample, CodeSnippet } from "~/util/models";
+
+interface Props {
+	example: ModelExample;
+	fallbackSnippets?: CodeSnippet[];
+	layout?: "stack" | "side-by-side";
+}
+
+const { example, fallbackSnippets, layout = "side-by-side" } = Astro.props;
+
+const snippets = example.code_snippets ?? fallbackSnippets ?? [];
+const hasSnippets = snippets.length > 0;
+
+const output = example.output;
+
+// Text output (e.g. LLM responses): { text: "..." } or { response: "..." }.
+// Some examples provide streaming-style chunks as a string array.
+function toTextOutput(value: unknown): string | undefined {
+	if (typeof value === "string") return value;
+	if (Array.isArray(value)) {
+		return value.filter((v): v is string => typeof v === "string").join("");
+	}
+	return undefined;
+}
+
+const textOutput = toTextOutput(output?.text ?? output?.response);
+
+const rawImageUrl = output?.image ?? output?.image_url;
+const imageUrl = typeof rawImageUrl === "string" ? rawImageUrl : undefined;
+
+// Some models return an `images` array of URLs.
+const rawImages = output?.images;
+const imageUrls = Array.isArray(rawImages)
+	? rawImages.filter((v): v is string => typeof v === "string")
+	: [];
+
+const rawVideoUrl = output?.video ?? output?.video_url;
+const videoUrl = typeof rawVideoUrl === "string" ? rawVideoUrl : undefined;
+
+const rawAudioUrl = output?.audio ?? output?.audio_url;
+const audioUrl = typeof rawAudioUrl === "string" ? rawAudioUrl : undefined;
+
+const hasImage = !!imageUrl || imageUrls.length > 0;
+const hasVideo = !!videoUrl;
+const hasAudio = !!audioUrl;
+const hasText = !!textOutput;
+const hasMedia = hasImage || hasVideo || hasAudio;
+
+// The Output tab has renderable content if we detected any known shape above.
+const hasOutput = hasText || hasMedia;
+const hasRawResponse = !!example.raw_response;
+const hasResponse = hasOutput || hasRawResponse;
+
+const rawResponseJson = hasRawResponse
+	? JSON.stringify(example.raw_response, null, 2)
+	: "";
+
+// Only enable the side-by-side layout when a code block and renderable media
+// are both present — text-only or JSON-only responses stack better vertically.
+const sideBySide =
+	layout === "side-by-side" && hasSnippets && hasResponse && hasMedia;
+
+const languageMap: Record<string, string> = {
+	typescript: "ts",
+	javascript: "js",
+	python: "python",
+	curl: "bash",
+	bash: "bash",
+	shell: "bash",
+	cURL: "bash",
+};
+
+const displayNames: Record<string, string> = {
+	typescript: "TypeScript",
+	javascript: "JavaScript",
+	python: "Python",
+	curl: "cURL",
+	cURL: "cURL",
+	bash: "Bash",
+};
+
+// Returns a Shiki language id. Cast to `any` at call sites because Astro's
+// `Code` types `lang` as the literal `CodeLanguage` union, while these labels
+// are resolved dynamically from the catalog data.
+function getLang(label: string): any {
+	return languageMap[label] ?? languageMap[label.toLowerCase()] ?? "txt";
+}
+
+function getLabel(label: string): string {
+	return displayNames[label] ?? displayNames[label.toLowerCase()] ?? label;
+}
+---
+
+<div class:list={["example-card", { "side-by-side": sideBySide }]}>
+	{
+		hasSnippets && (
+			<div class="example-code">
+				{snippets.length === 1 ? (
+					<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
+				) : (
+					<Tabs>
+						{snippets.map((snippet) => (
+							<TabItem label={getLabel(snippet.label)}>
+								<Code code={snippet.code} lang={getLang(snippet.label)} />
+							</TabItem>
+						))}
+					</Tabs>
+				)}
+			</div>
+		)
+	}
+
+	{
+		hasResponse && (
+			<div class="example-response">
+				{hasOutput && hasRawResponse ? (
+					<Tabs>
+						<TabItem label="Output">
+							<OutputBody
+								alt={example.name}
+								textOutput={textOutput}
+								imageUrl={imageUrl}
+								imageUrls={imageUrls}
+								videoUrl={videoUrl}
+								audioUrl={audioUrl}
+							/>
+						</TabItem>
+						<TabItem label="Raw response">
+							<div class="example-raw-response">
+								<Code code={rawResponseJson} lang="json" />
+							</div>
+						</TabItem>
+					</Tabs>
+				) : hasOutput ? (
+					<OutputBody
+						alt={example.name}
+						textOutput={textOutput}
+						imageUrl={imageUrl}
+						imageUrls={imageUrls}
+						videoUrl={videoUrl}
+						audioUrl={audioUrl}
+					/>
+				) : (
+					<div class="example-raw-response">
+						<Code code={rawResponseJson} lang="json" />
+					</div>
+				)}
+			</div>
+		)
+	}
+
+	{
+		!hasResponse && !hasSnippets && example.input && (
+			<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+		)
+	}
+</div>
+
+<style>
+	.example-card {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.example-card.side-by-side {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(200px, 1fr);
+		gap: 1rem;
+		align-items: stretch;
+	}
+
+	@media (max-width: 768px) {
+		.example-card.side-by-side {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.example-code {
+		min-width: 0;
+		min-height: 0;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.example-response {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-top: 0;
+		min-width: 0;
+	}
+
+	.example-card.side-by-side .example-response {
+		position: sticky;
+		top: 5rem;
+		align-self: start;
+	}
+
+	/* Cap raw response JSON so the two tabs render at a similar size. */
+	.example-raw-response :global(pre) {
+		max-height: 32rem;
+		overflow: auto;
+	}
+</style>

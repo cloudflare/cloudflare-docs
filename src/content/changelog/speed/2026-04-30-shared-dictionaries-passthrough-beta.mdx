@@ -1,0 +1,42 @@
+---
+title: Shared dictionaries passthrough now in open beta
+description: Cloudflare now forwards Use-As-Dictionary, Available-Dictionary, and dcb/dcz content encodings end to end, and varies the cache on dictionary advertisement, so origins can serve delta-compressed responses through Cloudflare.
+products:
+  - speed
+date: 2026-04-30
+---
+
+import { CURL } from "~/components";
+
+[Shared dictionaries](/speed/optimization/content/shared-dictionaries/) ([RFC 9842](https://www.rfc-editor.org/rfc/rfc9842.html)) let an origin compress a response against a previous version of the same resource that the browser already has cached, so only the difference between versions travels over the wire. Shared dictionaries passthrough is now in open beta on all plans.
+
+## What changed
+
+In passthrough mode, Cloudflare:
+
+- Forwards the `Use-As-Dictionary` and `Available-Dictionary` headers between client and origin without modification.
+- Treats `dcb` (Dictionary-Compressed Brotli) and `dcz` (Dictionary-Compressed Zstandard) as valid `Content-Encoding` values end to end, without recompressing them.
+- Extends the cache key to vary on `Available-Dictionary` and `Accept-Encoding` so each delta-compressed variant is cached correctly.
+
+Your origin manages the dictionary lifecycle: deciding which assets are dictionaries, attaching `Use-As-Dictionary` headers, and producing deltas in response to `Available-Dictionary` requests. Cloudflare handles the transport and the cache.
+
+In internal testing on a 272 KB JavaScript bundle, the asset shrinks from 92.1 KB with Gzip to 2.6 KB with delta Zstandard against the previous version — a 97% reduction over standard compression — with download times improving by 81–89% versus Gzip.
+
+Shared dictionaries work with browsers that advertise `dcb` or `dcz` in `Accept-Encoding`. Today, this includes Chrome 130 or later and Edge 130 or later.
+
+## Get started
+
+Turn on passthrough for your zone with a single API call:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/zones/$ZONE_ID/settings/shared_dictionary_mode"
+	method="PATCH"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
+	json={{
+		value: "passthrough",
+	}}
+/>
+
+You can also turn it on under **Speed** > **Settings** > **Content Optimization** in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed/optimization). For full origin setup instructions and a working test recipe, refer to [Shared dictionaries](/speed/optimization/content/shared-dictionaries/), or try the live demo at [canicompress.com](https://canicompress.com/).

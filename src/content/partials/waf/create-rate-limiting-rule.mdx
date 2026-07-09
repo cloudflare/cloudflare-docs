@@ -1,0 +1,35 @@
+---
+params:
+  - ruleName
+  - expression
+  - expressionHelp
+  - threshold
+---
+
+import { Steps, DashButton } from "~/components";
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** and choose **Rate limiting rules**.
+
+3. Enter a name for the rule (for example, "{props.ruleName}").
+
+4. Under **When incoming requests match**, select **Edit expression** and enter: <code>{props.expression}</code>
+
+   {props.expressionHelp}
+
+5. Under **With the same characteristics**, verify that _IP_ is selected. On Free plans, this is preset to _IP_.
+
+6. Under **When rate exceeds**, enter _{props.threshold}_ for **Requests** and select a value for **Period**. On Free plans, select _10 seconds_. Pro and above plans offer additional periods. For available values by plan, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
+
+7. Under **Then take action**, select an action from the **Choose action** dropdown. On Free plans, select _Block_. On Pro and above, _Managed Challenge_ is recommended because it allows legitimate users who trigger the limit to pass by completing a challenge.
+
+8. Under **For duration**, select a duration for the action. On Free plans, select _10 seconds_. Pro and above plans offer longer durations. This is how long the action applies after the rate limit is triggered.
+
+9. Select **Deploy**.
+
+</Steps>

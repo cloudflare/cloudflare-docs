@@ -1,0 +1,19 @@
+---
+pcx_content_type: integration-guide
+description: Connect HPE Juniper SRX to Cloudflare WAN.
+products:
+  - cloudflare-wan
+title: HPE Juniper Networking SRX Series Firewalls
+tags:
+  - IPsec
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/juniper"
+  product="networking-services"
+  params={{
+    mssClampingUrl: "/cloudflare-wan/reference/mtu-mss/#mss-clamping",
+    configureTunnelEndpointsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+    configureStaticRoutesUrl: "/cloudflare-wan/configuration/how-to/configure-routes/"
+  }} />

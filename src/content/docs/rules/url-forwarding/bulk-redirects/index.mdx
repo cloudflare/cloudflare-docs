@@ -9,6 +9,8 @@ sidebar:
 head:
   - tag: title
     content: Bulk Redirects
+tags:
+  - Redirects
 ---
 
 import { Render } from "~/components";
@@ -22,6 +24,17 @@ Unlike dynamic URL redirects created in [Single Redirects](/rules/url-forwarding
 	product="rules"
 	params={{ suffix: "and customized redirect logic" }}
 />
+
+---
+
+## Bulk Redirects and the WAF
+
+Bulk Redirects run after the WAF in the request processing pipeline. This means that:
+
+- If a [WAF custom rule](/waf/custom-rules/) or [rate limiting rule](/waf/rate-limiting-rules/) blocks a request, the Bulk Redirect will not execute.
+- If a WAF rule logs or challenges a request that subsequently passes, the firewall event will still appear in [Security Events](/waf/analytics/security-events/) and [Logpush](/logs/) — even though the request is later redirected. This is expected behavior.
+
+For the complete request processing order, refer to [Rules execution order](/rules/url-forwarding/#execution-order).
 
 ---
 

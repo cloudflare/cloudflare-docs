@@ -1,10 +1,81 @@
 ---
 title: Dynamic Workers Starter
-description: A starter template for building with Dynamic Workers.
+description: A starter template for deploying a Worker that loads and runs Dynamic Workers.
 pcx_content_type: example
-external_link: https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers
 sidebar:
   order: 1
 products:
   - dynamic-workers
+tags:
+  - JavaScript
+  - TypeScript
 ---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+A [starter template](https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers) for deploying a Worker that loads and runs [Dynamic Workers](/dynamic-workers/).
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers)
+
+## What it does
+
+This template demonstrates how to use the [Worker Loader API](/workers/runtime-apis/bindings/worker-loader/) to execute code at runtime. The host Worker exposes an `/api/run` endpoint that accepts code from the frontend, loads it into a sandboxed Dynamic Worker, and returns the result.
+
+Use this pattern for AI agents that need to execute a snippet of code to complete an action.
+
+## Configuration
+
+Add a `worker_loaders` binding to your Wrangler file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [
+		{
+			"binding": "LOADER"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## Loading and executing a Dynamic Worker
+
+In this example:
+
+- `env.LOADER.load()` creates a one-off dynamic isolate
+- `globalOutbound: null` blocks all outbound network access from the Dynamic Worker
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const { code } = await request.json();
+
+		const worker = env.LOADER.load({
+			compatibilityDate: "2026-05-01",
+			mainModule: "worker.js",
+			modules: {
+				"worker.js": code,
+			},
+			// Block all outbound network access
+			globalOutbound: null,
+		});
+
+		const result = await worker.getEntrypoint().fetch(request);
+		return result;
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+## Running locally
+
+```sh
+npm install
+npm run dev
+```

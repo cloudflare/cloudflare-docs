@@ -135,8 +135,9 @@ If you are experiencing buffering, freezing, experiencing latency, or having oth
 
 #### Low-Latency HLS broadcast recommendations <Badge text="Beta" variant="caution" size="small" />
 
-- For lowest latency, use a GOP size (keyframe interval) of 1 or 2 seconds.
-- Broadcast to the RTMP endpoint if possible.
+- Turn off B Frames or set them to 0. B Frames are incompatible with LL-HLS and will result in jitter and sporadic buffering delays.
+- For lowest latency, use a GOP size (or "keyframe interval") of 2 - 4 seconds.
+- Broadcast to the RTMP endpoint if possible, SRT otherwise.
 - If using OBS, select the "ultra low" latency profile.
 
 ### Requirements

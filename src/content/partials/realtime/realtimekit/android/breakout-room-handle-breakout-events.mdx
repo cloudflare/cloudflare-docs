@@ -1,0 +1,24 @@
+---
+{}
+
+---
+```kotlin
+meeting.addConnectedMeetingsEventListener(object : RtkConnectedMeetingsEventListener {
+    // Triggered when a meeting switch is initiated — use this to show a loading UI
+    override fun onChangingMeeting(meetingId: String) {
+        println("Switching to breakout room or main meeting with id: $meetingId")
+        println("Show a custom UI to indicate that a meeting switch is happening")
+    }
+
+    // Triggered when the meeting switch is complete
+    override fun onMeetingChanged(error: MeetingError?) {
+        if (error != null) {
+            println("Failed to switch meeting: $error")
+        } else {
+            println("Switched to breakout room or main meeting successfully")
+        }
+    }
+
+    override fun onStateUpdate(meetings: List<RtkConnectedMeeting>, parentMeeting: RtkConnectedMeeting?) {}
+})
+```

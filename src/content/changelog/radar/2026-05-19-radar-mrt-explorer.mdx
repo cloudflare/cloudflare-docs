@@ -1,0 +1,33 @@
+---
+title: MRT Explorer on Cloudflare Radar
+description: New Multi-Threaded Routing Toolkit Explorer tool that parses MRT dump files entirely in the browser to inspect BGP messages, AS paths, community attributes, and more.
+products:
+  - radar
+date: 2026-05-19
+---
+
+[**Radar**](/radar/) now includes an [MRT Explorer](https://radar.cloudflare.com/routing/mrt-explorer) tool in the Routing section. Route collectors like RIPE RIS and RouteViews publish MRT (Multi-Threaded Routing Toolkit) dump files containing BGP announcements, withdrawals, and route attributes. The new tool parses these files entirely in the browser — nothing gets uploaded.
+
+## Loading a file
+
+Paste a URL to fetch an MRT file remotely, drag and drop one onto the page, or browse for a local file. Gzip and bzip2 compressed files are supported. A sample file is also available to get started right away.
+
+![Screenshot of the MRT Explorer file input form](~/assets/images/radar/mrt-explorer-form.png)
+
+## Inspecting events
+
+Once parsed, the tool lists every BGP event with its timestamp, prefix, AS path, OTC (Only to Customer), and community attributes.
+
+![Screenshot of the MRT Explorer event list](~/assets/images/radar/mrt-explorer-list.png)
+
+## Event details
+
+Clicking on the "View details" action opens a modal with additional properties and the full event JSON.
+
+![Screenshot of the MRT Explorer event details modal](~/assets/images/radar/mrt-explorer-details.png)
+
+## Shareable URLs
+
+When loading a file by URL, the query string captures the source so the link can be shared directly — the recipient's browser immediately fetches and parses the same file.
+
+Try the [MRT Explorer on Cloudflare Radar](https://radar.cloudflare.com/routing/mrt-explorer).

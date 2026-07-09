@@ -1,5 +1,6 @@
 ---
 import { Code, Tabs, TabItem } from "~/components";
+import OutputBody from "~/components/models/OutputBody.astro";
 import type { ModelExample, CodeSnippet } from "~/schemas/catalog-models";
 
 interface Props {
@@ -13,19 +14,54 @@ const { example, fallbackSnippets, layout = "side-by-side" } = Astro.props;
 const snippets = example.code_snippets ?? fallbackSnippets ?? [];
 const hasSnippets = snippets.length > 0;
 
-const rawImageUrl = example.output?.image ?? example.output?.image_url;
+const output = example.output;
+
+// Text output (e.g. LLM responses): { text: "..." } or { response: "..." }.
+// Some examples provide streaming-style chunks as a string array.
+function toTextOutput(value: unknown): string | undefined {
+	if (typeof value === "string") return value;
+	if (Array.isArray(value)) {
+		return value.filter((v): v is string => typeof v === "string").join("");
+	}
+	return undefined;
+}
+
+const textOutput = toTextOutput(output?.text ?? output?.response);
+
+const rawImageUrl = output?.image ?? output?.image_url;
 const imageUrl = typeof rawImageUrl === "string" ? rawImageUrl : undefined;
-const hasImage = !!imageUrl;
 
-const rawVideoUrl = example.output?.video ?? example.output?.video_url;
+// Some models return an `images` array of URLs.
+const rawImages = output?.images;
+const imageUrls = Array.isArray(rawImages)
+	? rawImages.filter((v): v is string => typeof v === "string")
+	: [];
+
+const rawVideoUrl = output?.video ?? output?.video_url;
 const videoUrl = typeof rawVideoUrl === "string" ? rawVideoUrl : undefined;
-const hasVideo = !!videoUrl;
 
-const rawAudioUrl = example.output?.audio ?? example.output?.audio_url;
+const rawAudioUrl = output?.audio ?? output?.audio_url;
 const audioUrl = typeof rawAudioUrl === "string" ? rawAudioUrl : undefined;
-const hasAudio = !!audioUrl;
 
+const hasImage = !!imageUrl || imageUrls.length > 0;
+const hasVideo = !!videoUrl;
+const hasAudio = !!audioUrl;
+const hasText = !!textOutput;
 const hasMedia = hasImage || hasVideo || hasAudio;
+
+// The Output tab has renderable content if we detected any known shape above.
+const hasOutput = hasText || hasMedia;
+const hasRawResponse = !!example.raw_response;
+const hasResponse = hasOutput || hasRawResponse;
+
+const rawResponseJson = hasRawResponse
+	? JSON.stringify(example.raw_response, null, 2)
+	: "";
+
+// Only enable the side-by-side layout when a code block and renderable media
+// are both present — text-only or JSON-only responses stack better vertically.
+const sideBySide =
+	layout === "side-by-side" && hasSnippets && hasResponse && hasMedia;
 
 const languageMap: Record<string, string> = {
 	typescript: "ts",
@@ -55,12 +91,7 @@ function getLabel(label: string): string {
 }
 ---
 
-<div
-	class:list={[
-		"example-card",
-		{ "side-by-side": layout === "side-by-side" && hasMedia && hasSnippets },
-	]}
->
+<div class:list={["example-card", { "side-by-side": sideBySide }]}>
 	{
 		hasSnippets && (
 			<div class="example-code">
@@ -80,64 +111,47 @@ function getLabel(label: string): string {
 	}
 
 	{
-		hasMedia && (
-			<div class="example-output">
-				<span class="example-output-label">
-					Response
-					<span class="example-status-badge">200</span>
-				</span>
-				{hasImage && (
-					<img src={imageUrl} alt={example.name} loading="lazy" />
-				)}
-				{hasVideo && (
-					<video src={videoUrl} controls preload="metadata">
-						<track kind="captions" />
-					</video>
-				)}
-				{hasAudio && (
-					<audio src={audioUrl} controls preload="metadata">
-						<track kind="captions" />
-					</audio>
+		hasResponse && (
+			<div class="example-response">
+				{hasOutput && hasRawResponse ? (
+					<Tabs>
+						<TabItem label="Output">
+							<OutputBody
+								alt={example.name}
+								textOutput={textOutput}
+								imageUrl={imageUrl}
+								imageUrls={imageUrls}
+								videoUrl={videoUrl}
+								audioUrl={audioUrl}
+							/>
+						</TabItem>
+						<TabItem label="Raw response">
+							<div class="example-raw-response">
+								<Code code={rawResponseJson} lang="json" />
+							</div>
+						</TabItem>
+					</Tabs>
+				) : hasOutput ? (
+					<OutputBody
+						alt={example.name}
+						textOutput={textOutput}
+						imageUrl={imageUrl}
+						imageUrls={imageUrls}
+						videoUrl={videoUrl}
+						audioUrl={audioUrl}
+					/>
+				) : (
+					<div class="example-raw-response">
+						<Code code={rawResponseJson} lang="json" />
+					</div>
 				)}
 			</div>
 		)
 	}
 
 	{
-		!hasMedia && !hasSnippets && example.output && (
-			<Tabs>
-				<TabItem label="Input">
-					<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
-				</TabItem>
-				<TabItem label="Output">
-					<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
-				</TabItem>
-			</Tabs>
-		)
-	}
-
-	{
-		!hasMedia && !hasSnippets && !example.output && example.input && (
+		!hasResponse && !hasSnippets && example.input && (
 			<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
-		)
-	}
-
-	{
-		!hasMedia && hasSnippets && example.output && (
-			<details class="example-io">
-				<summary>Input / Output JSON</summary>
-				<Tabs>
-					<TabItem label="Input">
-						<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
-					</TabItem>
-					<TabItem label="Output">
-						<Code
-							code={JSON.stringify(example.output, null, 4)}
-							lang="json"
-						/>
-					</TabItem>
-				</Tabs>
-			</details>
 		)
 	}
 </div>
@@ -206,53 +220,36 @@ function getLabel(label: string): string {
 		overflow: auto;
 	}
 
-	.example-output {
+	.example-response {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
 		margin-top: 0;
+		min-width: 0;
 	}
 
-	.example-card.side-by-side .example-output {
+	.example-card.side-by-side .example-response {
 		position: sticky;
 		top: 5rem;
 		align-self: start;
 	}
 
-	.example-output-label {
+	/* Cap raw response JSON to match the Output text panel height exactly.
+	   Expressive Code wraps the code block in a <figure> with its own margins
+	   and frame chrome; we zero those out and cap the outer figure so the
+	   two tabs render at the same overall size. */
+	.example-raw-response :global(.expressive-code) {
+		margin: 0;
+	}
+	.example-raw-response :global(.expressive-code figure) {
+		margin: 0;
+		max-height: 32rem;
 		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		height: 1.875rem; /* matches starlight tab bar height (~30px) */
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: var(--sl-color-gray-10);
-		border-bottom: 2px solid var(--sl-color-gray-5);
+		flex-direction: column;
 	}
-
-	.example-status-badge {
-		font-size: 0.75rem;
-		font-weight: 700;
-		font-family: var(--sl-font-mono);
-		color: var(--sl-color-green);
-		border: 1px solid var(--sl-color-green);
-		border-radius: 0.25rem;
-		padding: 0 0.3rem;
-		line-height: 1.4;
-	}
-
-	.example-output img,
-	.example-output video {
-		width: 100%;
-		border-radius: 0.5rem;
-		border: 1px solid var(--sl-color-gray-5);
-	}
-
-	.example-output audio {
-		width: 100%;
-	}
-
-	.example-io {
-		grid-column: 1 / -1;
+	.example-raw-response :global(.expressive-code pre) {
+		flex: 1;
+		min-height: 0;
+		overflow: auto;
 	}
 </style>

@@ -77,10 +77,10 @@ Use this query to find the busiest repos in one namespace over a time range. It 
 
 ```graphql
 query ArtifactsOperationsByRepo(
-	$accountTag: string!
+	$accountTag: String!
 	$datetimeStart: Time
 	$datetimeEnd: Time
-	$repositoryNamespace: string!
+	$repositoryNamespace: String!
 ) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
@@ -113,7 +113,7 @@ Use this query to rank repos by error volume. It helps you spot which repos fail
 
 ```graphql
 query ArtifactsErrorsByRepo(
-	$accountTag: string!
+	$accountTag: String!
 	$datetimeStart: Time
 	$datetimeEnd: Time
 ) {
@@ -145,7 +145,7 @@ Use this query to see which repos receive the most pushes in a time window. It i
 
 ```graphql
 query ArtifactsPushesByRepo(
-	$accountTag: string!
+	$accountTag: String!
 	$datetimeStart: Time
 	$datetimeEnd: Time
 ) {

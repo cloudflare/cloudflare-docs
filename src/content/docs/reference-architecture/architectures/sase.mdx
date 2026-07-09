@@ -175,7 +175,7 @@ Key capabilities:
 - Multiple hostnames can be defined per tunnel, with each hostname mapping to a single application (service address and port)
 - Support for HTTP/HTTPS protocols
 - Access to resources only requires a browser
-- When Cloudflare's device client is deployed on an user device, policies can leverage additional contextual signals (e.g. determining whether the device is managed or running the latest OS) in policy enforcement
+- When Cloudflare's device client is deployed on a user device, policies can leverage additional contextual signals (e.g. determining whether the device is managed or running the latest OS) in policy enforcement
 - For access to SSH/VNC services, Cloudflare renders an SSH/VNC terminal using webassembly in the browser
 
 Applications exposed this way receive all of the benefits of Cloudflare's leading DNS, CDN, and DDoS services as well as our web application firewall (WAF), API, and bot services, all without exposing application servers directly to the Internet.
@@ -305,9 +305,9 @@ The simplest and easiest way to on-ramp existing network locations to the Cloudf
 
 The WAN Connector can be deployed as either a hardware or virtual appliance, making it versatile for a variety of user network environments — on-premises, virtual, or public cloud. Management, configuration, observability, and software updates for WAN Connectors is centrally managed from Cloudflare via either the dashboard or the Cloudflare API. As of 2023, the WAN Connector is currently best-suited for connecting small and medium-sized networks to Cloudflare (for example, small offices and retail stores).
 
-In situations where deploying the Cloudflare One Appliance is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/cloudflare-wan/configuration/manually/third-party/) for up-to-date examples of validated IPsec devices.
+In situations where deploying the Cloudflare One Appliance is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/cloudflare-wan/configuration/third-party/) for up-to-date examples of validated IPsec devices.
 
-There may also be situations where network-layer encryption is not necessary — for example, when a site's WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/).
+There may also be situations where network-layer encryption is not necessary — for example, when a site's WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/).
 
 Organizations may also connect their network locations directly to the Cloudflare network via [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI). Cloudflare [supports a variety of options](/network-interconnect/) to connect your network to Cloudflare:
 
@@ -664,7 +664,7 @@ DLP policies can also be applied in the other direction, ensuring that company s
 
 ### Visibility across the deployment
 
-At this point in the SASE journey, users have re-architectured the IT network and security infrastructure to fully leverage all the capabilities of the Cloudflare One SASE platform. A critical element in long term deployment involves establishing complete visibility into the organization and the ability to diagnose and quickly resolve issues.
+At this point in the SASE journey, users have re-architected the IT network and security infrastructure to fully leverage all the capabilities of the Cloudflare One SASE platform. A critical element in long term deployment involves establishing complete visibility into the organization and the ability to diagnose and quickly resolve issues.
 
 For quick analysis, Cloudflare provides built-in dashboards and analytics that offers a daily overview of the deployment's operational status. As traffic flows through Cloudflare, the dashboard will alert internal users to the most frequently used SaaS applications, enabling quick actions if any unauthorized applications are accessed by external users. Moreover, all logging information from all Cloudflare One services is accessible and searchable from the administrator's dashboard. This makes it efficient to filter for specific blocked requests, with each log containing useful information such as the user's identity, device information, and the specific rule that triggered the block. This can be very handy in the early stages of deployment where rules can often need tweaking.
 

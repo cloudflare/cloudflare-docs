@@ -1,0 +1,40 @@
+---
+/**
+ * ComboboxOption — one filterable, selectable row. Port of kumo's
+ * Combobox.Item. The label text is both the display value and the string the
+ * typeahead filters on (the check indicator is excluded).
+ */
+import { cn } from "@/lib/cn";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  /** Value reported when this option is chosen. */
+  value: string;
+  disabled?: boolean;
+  class?: string;
+}
+
+const { value, disabled = false, class: className } = Astro.props;
+---
+
+<div
+  role="option"
+  data-nb-combobox-option
+  data-value={value}
+  aria-selected="false"
+  data-disabled={disabled ? "" : undefined}
+  class={cn(
+    "group mx-1.5 grid grid-cols-[1fr_1rem] items-center gap-2 rounded px-2 py-1.5 text-sm text-foreground outline-none select-none",
+    "cursor-pointer data-[highlighted]:bg-accent aria-selected:font-medium",
+    "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+    className,
+  )}
+>
+  <span data-nb-combobox-option-label class="col-start-1 min-w-0 truncate">
+    <slot />
+  </span>
+  <Icon
+    name="ph:check"
+    class="col-start-2 h-4 w-4 shrink-0 opacity-0 group-aria-selected:opacity-100"
+  />
+</div>

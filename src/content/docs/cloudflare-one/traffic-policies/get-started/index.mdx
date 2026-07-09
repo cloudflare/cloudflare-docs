@@ -1,6 +1,6 @@
 ---
 pcx_content_type: get-started
-description: Set up Get started for Gateway.
+description: Best practices for deploying Cloudflare Gateway traffic policies in phases.
 products:
   - cloudflare-one
 title: Get started
@@ -22,3 +22,54 @@ For each type of policy, we recommend the following workflow:
 2. Verify that Gateway is successfully proxying traffic from your devices.
 3. Set up basic security and compatibility policies (recommended for most use cases).
 4. Customize your configuration to the unique needs of your organization.
+
+## Recommended deployment phases
+
+Most organizations roll out Gateway in phases, starting with the lowest-effort, highest-impact policy type and adding deeper inspection over time.
+
+### Phase 1: DNS filtering
+
+DNS filtering requires the least deployment effort and provides immediate protection.
+
+- Point your network DNS to Gateway's resolver addresses, or deploy the Cloudflare One Client in DNS-only mode.
+- Block all [security threat categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories) (malware, phishing, command and control).
+- Block [content categories](/cloudflare-one/traffic-policies/domain-categories/#content-categories) that violate your acceptable use policy.
+- Review [DNS logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) to gain visibility into Internet usage across your organization.
+
+For setup instructions, refer to [Set up DNS filtering](/cloudflare-one/traffic-policies/get-started/dns/).
+
+### Phase 2: Network policies
+
+After DNS filtering is in place, add network-level controls for non-HTTP traffic.
+
+- Deploy the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enable the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for TCP.
+- Block traffic to high-risk IP ranges or restrict which ports and protocols users can access.
+- Use [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) to identify applications by traffic pattern rather than port number.
+- Enable network session logging for audit trails.
+
+For setup instructions, refer to [Set up network filtering](/cloudflare-one/traffic-policies/get-started/network/).
+
+### Phase 3: HTTP inspection
+
+HTTP inspection provides the deepest visibility and the most granular controls, but it requires additional setup.
+
+- Install the [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on user devices.
+- Enable [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to inspect HTTPS traffic.
+- Create [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies for applications that use certificate pinning.
+- Block risky file types, enable [anti-virus scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/), and configure [DLP profiles](/cloudflare-one/data-loss-prevention/) to detect sensitive data.
+- Use [Browser Isolation](/cloudflare-one/remote-browser-isolation/) to render high-risk sites in a remote browser.
+
+For setup instructions, refer to [Set up HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/).
+
+### Phase 4: Egress control and full integration
+
+With all policy layers active, extend Gateway to cover your full network and integrate with other Cloudflare One services.
+
+- Connect branch offices and data centers with [network tunnels](/cloudflare-one/networks/) (IPsec/GRE via Magic WAN).
+- Configure [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/) so third-party services can identify your organization's traffic.
+- Set up [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to route internal DNS queries to your private DNS servers.
+- Monitor SaaS application usage with [CASB](/cloudflare-one/cloud-and-saas-findings/).
+
+:::note
+You do not need to complete every phase. Choose the phases that match your organization's security requirements and deployment timeline.
+:::

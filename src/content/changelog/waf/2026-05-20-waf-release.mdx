@@ -1,0 +1,45 @@
+---
+title: "WAF Release - 2026-05-20"
+description: Cloudflare WAF managed rulesets 2026-05-20
+date: 2026-05-20
+---
+
+import { RuleID } from "~/components";
+
+**Key Findings**
+
+- Existing rule enhancements have been deployed to improve detection resilience against broad classes of web attacks and strengthen behavioral coverage.
+
+**Continuous Rule Improvements**
+
+We are continuously refining our managed rules to provide more resilient protection and deeper insights into attack patterns. To ensure an optimal security posture, we recommend consistently monitoring the Security Events dashboard and adjusting rule actions as these enhancements are deployed.
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="bcdcec3ea63a480896513dc39e9c068d" />
+			</td>
+			<td>N/A</td>
+			<td>Sitecore - Cache Poisoning - CVE:CVE-2025-53693 Beta</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>
+				This rule is merged into the original rule "Sitecore - Cache Poisoning - CVE:CVE-2025-53693" (ID:{" "}
+				<RuleID id="d1bd7563e6254db48ce703807c5b669c" />).
+			</td>
+		</tr>
+	</tbody>
+</table>

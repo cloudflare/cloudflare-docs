@@ -6,15 +6,13 @@ import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
 import Description from "~/components/Description.astro";
-import LastReviewed from "~/components/LastReviewed.astro";
-import CopyPageButton from "~/components/CopyPageButton.tsx";
 import ComponentUsage from "~/components/ComponentUsage.astro";
+import PageActions from "~/components/PageActions.astro";
 
 import { getEntry } from "astro:content";
 
 const frontmatter = Astro.locals.starlightRoute.entry.data;
 
-const reviewed = frontmatter.reviewed;
 const summary = frontmatter.summary;
 const component = frontmatter.styleGuide?.component;
 
@@ -24,6 +22,10 @@ const slug = Astro.locals.starlightRoute.id;
 // https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
 const hideTitle = Astro.locals.starlightRoute.hideTitle;
 const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
+
+const isSplash = frontmatter.template === "splash";
+const showPageActions =
+	!hideTitle && !isSplash && !Astro.url.pathname.startsWith("/support/");
 
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
@@ -96,31 +98,39 @@ if (!hideBreadcrumbs) {
 			</Breadcrumbs>
 		)
 	}
-
-	{
-		frontmatter.template !== "splash" && (
-			<CopyPageButton client:idle />
-		)
-	}
 </div>
 
 {!hideTitle && <Default />}
 
-{reviewed && <LastReviewed date={reviewed} />}
-
 {summary && <Description set:html={marked.parse(summary)} />}
 
 {
+	showPageActions && (
+		<div class="page-actions-wrapper">
+			<PageActions />
+		</div>
+	)
+}
+
+{
 	component && (
-			<div class="sl-markdown-content md-ignore">
-				<ComponentUsage component={component} />
-			</div>
+		<div class="sl-markdown-content md-ignore component-usage-wrapper">
+			<ComponentUsage component={component} />
+		</div>
 	)
 }
 
 <style>
 	:root {
 		--color-link-breadcrumbs: var(--sl-color-text-accent);
+	}
+
+	.page-actions-wrapper {
+		margin-top: 1rem;
+	}
+
+	.component-usage-wrapper {
+		margin-top: 3rem;
 	}
 
 	:global(.c-breadcrumbs) {
@@ -143,12 +153,15 @@ if (!hideBreadcrumbs) {
 	}
 </style>
 
-{ hideTitle && hideBreadcrumbs &&
-	<style>
-		main {
-			.content-panel:first-of-type {
-				display: none;
-			}
-		}
-	</style>
+{
+	hideTitle && hideBreadcrumbs && (
+		<style
+			is:global
+			set:html={`
+				main .content-panel:first-of-type {
+					display: none;
+				}
+			`}
+		/>
+	)
 }

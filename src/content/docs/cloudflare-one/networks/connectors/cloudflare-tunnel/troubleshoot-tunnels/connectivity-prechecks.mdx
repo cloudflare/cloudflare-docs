@@ -9,9 +9,23 @@ tags:
   - DNS
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Aside, Render, TabItem, Tabs } from "~/components";
 
 This guide helps you validate connectivity between your environment and [Cloudflare Tunnel endpoints](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) before deploying [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). You will run DNS and network checks from the same host machine that will run `cloudflared` to help you identify issues that may prevent `cloudflared` from connecting to Cloudflare Tunnel endpoints.
+
+<Aside
+	type="tip"
+	title="Automated pre-checks in cloudflared 2026.5.2 and later"
+>
+	Starting with `cloudflared` version `2026.5.2`, these checks run
+	**automatically** every time you start a tunnel — including DNS resolution,
+	UDP/TCP connectivity on port `7844`, and access to the management API. If you
+	have already installed `cloudflared`, run `cloudflared tunnel diag` to execute
+	the checks without starting a tunnel, and skip the manual steps in this guide.
+	The manual workflow below remains useful when you need to validate your
+	network **before** installing `cloudflared` — for example, when a SecOps team
+	wants to confirm firewall rules ahead of a deployment.
+</Aside>
 
 Running these checks before you install `cloudflared` sets your deployment up for success and narrows down the cause of any later connectivity issues.
 

@@ -11,7 +11,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Cozy Coffee Shop",
@@ -21,13 +20,27 @@
 				"aspect_ratio": "16:9"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window',\n    aspect_ratio: '16:9',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n    \"aspect_ratio\": \"16:9\"\n  }\n}'"
 				}
 			]
 		},
@@ -39,13 +52,27 @@
 				"aspect_ratio": "9:16"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/vintage-tokyo-poster.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/vintage-tokyo-poster.png"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene',\n    aspect_ratio: '9:16',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene',\n    aspect_ratio: '9:16',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\",\n    \"aspect_ratio\": \"9:16\"\n  }\n}'"
 				}
 			]
 		},
@@ -57,13 +84,27 @@
 				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/dewdrops-macro.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/dewdrops-macro.png"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet',\n    aspect_ratio: '1:1',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\",\n    \"aspect_ratio\": \"1:1\"\n  }\n}'"
 				}
 			]
 		},
@@ -75,13 +116,27 @@
 				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/pUAcLnl2KmpoChqQ7emXoyqpV3ZBUcV6tVyovozvl4N8waMLA/tmppjbe5cua.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/pixel-art-marketplace.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/pixel-art-marketplace.png"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof',\n    aspect_ratio: '1:1',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\",\n    \"aspect_ratio\": \"1:1\"\n  }\n}'"
 				}
 			]
 		},
@@ -95,30 +150,46 @@
 				"output_format": "png"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/Rh5vNXYjxVJeBqHfy1F11GQY7ppLFzIMeA1XOGFj9DvIErxsA/tmpm17f21_f.png"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/high-resolution-landscape.png"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/high-resolution-landscape.png"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana\",\n  \"input\": {\n    \"prompt\": \"A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake\",\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"4K\",\n    \"output_format\": \"png\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
 	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/ed879e99-71b5-4689-bed3-e7305e35a28a/this.png",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/nano-banana.png",
 	"metadata": {
 		"Output Format": "JPEG"
 	},
-	"created_at": "2026-04-08 21:58:29",
-	"default_example": null,
-	"code_snippets": [],
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-05-22 17:53:12",
 	"schema": {
-		"model_id": "google/nano-banana",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

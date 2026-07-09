@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+
+const skills = await getCollection("cloudflare-skills-manifest");
+
+// Sort alphabetically so the order is stable and deterministic
+skills.sort((a, b) => a.id.localeCompare(b.id));
+---
+
+<ul class="agent-simple-list">
+	{
+		skills.map((s) => (
+			<li class="agent-simple-item">
+				<span class="agent-simple-name">{s.data.name}</span>
+				<span class="agent-simple-desc">{s.data.description}</span>
+			</li>
+		))
+	}
+</ul>

@@ -15,7 +15,7 @@ To update the product ownership assignments, see the [`owners.ts`](/.github/acti
 ## Development
 
 ```sh
-$ npm install
-$ npm run build
+$ pnpm install
+$ pnpm run build
 #=> new "index.js" file
 ```

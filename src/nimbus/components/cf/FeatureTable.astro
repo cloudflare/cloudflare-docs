@@ -1,0 +1,87 @@
+---
+/**
+ * FeatureTable — plan-comparison table for a product, driven by plans data.
+ *
+ * CF source: cloudflare-docs/src/components/FeatureTable.astro
+ *
+ * Mapping notes:
+ *   - `~/util/plans` indexPlans is inlined (getEntry over the `plans`
+ *     collection + a small dot-path getter, replacing dot-prop).
+ *   - CF Starlight table CSS vars swapped for Nimbus design tokens.
+ */
+import { z } from "astro/zod";
+import { getEntry } from "astro:content";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+  .object({
+    id: z.string(),
+  })
+  .strict();
+
+const { id } = props.parse(Astro.props);
+
+function getByPath(obj: any, path: string) {
+  return path.split(".").reduce((acc, key) => (acc == null ? acc : acc[key]), obj);
+}
+
+const entry = await getEntry("plans", "index");
+if (!entry) {
+  throw new Error(`[FeatureTable] Failed to load plans JSON.`);
+}
+const plan = getByPath(entry.data, id) as any;
+if (!plan) {
+  throw new Error(`[FeatureTable] Failed to find ${id} in plans JSON.`);
+}
+
+const features: any[] = Object.values(plan.properties);
+
+const hasFree = features.some((x) => x.free);
+const hasPro = features.some((x) => x.pro);
+const hasBiz = features.some((x) => x.biz);
+const hasEnt = features.some((x) => x.ent);
+const hasEntPlus = features.some((x) => x.ent_plus);
+
+const markdown = (content: any) => {
+  if (typeof content !== "string") return content;
+  return marked.parse(content);
+};
+
+const th = "border-b border-border bg-muted px-4 py-3 text-[0.8125rem] font-semibold";
+---
+
+<table class="not-content w-full text-left text-foreground">
+  <thead>
+    <tr>
+      <th class={th}></th>
+      {hasFree && <th class={th}>Free</th>}
+      {hasPro && <th class={th}>Pro</th>}
+      {hasBiz && <th class={th}>Business</th>}
+      {hasEnt && <th class={th}>Enterprise</th>}
+      {hasEntPlus && <th class={th}>{plan.ent_plus}</th>}
+    </tr>
+  </thead>
+  <tbody>
+    {
+      features.map((feature, i) => {
+        const isLast = i === features.length - 1;
+        const cellBorder = isLast ? "" : "border-b border-border";
+        return (
+          <tr>
+            <th
+              class={`${cellBorder} px-4 py-3 text-[0.8125rem] font-semibold`}
+              set:html={markdown(feature.title)}
+            />
+            {hasFree && <td class={`${cellBorder} px-4 py-3`} set:html={markdown(feature.free)} />}
+            {hasPro && <td class={`${cellBorder} px-4 py-3`} set:html={markdown(feature.pro)} />}
+            {hasBiz && <td class={`${cellBorder} px-4 py-3`} set:html={markdown(feature.biz)} />}
+            {hasEnt && <td class={`${cellBorder} px-4 py-3`} set:html={markdown(feature.ent)} />}
+            {hasEntPlus && <td class={`${cellBorder} px-4 py-3`} set:html={markdown(feature.ent_plus)} />}
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>

@@ -1,0 +1,112 @@
+---
+/**
+ * WranglerCommand — full reference block for one wrangler command:
+ * heading, description, runnable command (per package manager), arg
+ * list, and collapsible global flags.
+ *
+ * CF source: cloudflare-docs/src/components/WranglerCommand.astro
+ * Mapping notes: command data comes from the `wrangler` package's
+ * `experimental_getWranglerCommands()` registry (same as upstream).
+ * AnchorHeading → plain heading with a slugified id; Starlight Badge →
+ * ui/badge; starlight-package-managers → our PackageManagers port.
+ * ExtraFlagDetails slot machinery dropped (unused by Queues content).
+ */
+import { marked } from "marked";
+import { experimental_getWranglerCommands } from "wrangler";
+import { Badge } from "../ui/badge";
+import { PackageManagers } from "../ui/package-managers";
+import Details from "./Details.astro";
+import WranglerArg from "./WranglerArg.astro";
+
+interface Props {
+  command: string;
+  headingLevel?: number;
+  description?: string;
+}
+
+const { command, headingLevel = 2 } = Astro.props;
+
+const commands = experimental_getWranglerCommands();
+const { registry, globalFlags } = commands;
+
+let node = registry.subtree;
+let definition;
+for (const segment of command.trim().split(/\s+/)) {
+  const next = node.get(segment);
+  if (!next) break;
+  if (next.subtree.size === 0 && next.definition?.type === "command") {
+    definition = next.definition;
+    break;
+  }
+  node = next.subtree;
+}
+
+if (!definition) {
+  throw new Error(`[WranglerCommand] Command "${command}" not found`);
+}
+
+if (definition.metadata.hidden) {
+  throw new Error(
+    `[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`,
+  );
+}
+
+const description = Astro.props.description ?? definition.metadata.description;
+const epilogue = definition.metadata.epilogue;
+const experimental = definition.metadata.status === "experimental";
+
+const positionals = definition.positionalArgs
+  ?.map((p: string) => `[${p.toUpperCase()}]`)
+  .join(" ");
+
+const positionalSet = new Set(definition.positionalArgs);
+
+const headingId = command.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+const Heading = `h${headingLevel}` as "h2";
+---
+
+<Heading id={headingId}><code>{command}</code></Heading>
+
+{
+  experimental && (
+    <>
+      <br />
+      <Badge text="Experimental" variant="warning" />
+    </>
+  )
+}
+<Fragment set:html={marked.parse(description)} />
+
+{epilogue && <Fragment set:html={marked.parse(epilogue)} />}
+
+<PackageManagers
+  pkg="wrangler"
+  type="exec"
+  args={positionals ? command.concat(` ${positionals}`) : command}
+  managers={["npm", "pnpm", "yarn"]}
+/>
+
+{
+  definition.args && (
+    <ul>
+      {Object.entries(definition.args)
+        .filter(([, value]: [string, any]) => !value.hidden)
+        .map(([key, value]: [string, any]) => (
+          <WranglerArg
+            key={key}
+            definition={{ ...value, positional: positionalSet.has(key) }}
+          />
+        ))}
+    </ul>
+  )
+}
+
+<Details header="Global flags">
+  <ul>
+    {
+      Object.entries(globalFlags).map(([key, value]) => (
+        <WranglerArg key={key} definition={value} />
+      ))
+    }
+  </ul>
+</Details>

@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Code block guidelines
+description: Write and format code blocks correctly.
+products:
+  - style-guide
 ---
 
 To create a code block:
@@ -68,38 +71,9 @@ index_name = "tutorial-index"
 
 To define the language of your code block, enter the name of the language after the first ` ``` ` fence.
 
-If there is no appropriate syntax language, use `txt` (for example, a fragment of an Apache configuration file).
+Language names must be lowercase. For example, use `javascript`, not `JavaScript`.
 
-Make sure you enter the language name in lower case, since other capitalizations of these names are not supported. For example, entering `JavaScript` would use the `txt` language as a fallback.
-
-Here is a list of supported languages:
-
-- `bash` (alias: `curl`) [Learn more about terminal commands](#terminal-commands)
-- `c`
-- `dart`
-- `diff`
-- `go`
-- `graphql`
-- `hcl` (alias: `tf`)
-- `html`
-- `ini`
-- `java`
-- `js` (alias: `javascript`)
-- `json` [Learn more about JSON code blocks](#json)
-- `kotlin`
-- `php`
-- `powershell` [Learn more about terminal commands](#terminal-commands)
-- `python` (alias: `py`)
-- `ruby` (alias: `rb`)
-- `rust` (alias: `rs`)
-- `sh` (alias: `shell`) [Learn more about terminal commands](#terminal-commands)
-- `sql`
-- `swift`
-- `toml`
-- `ts` (alias: `typescript`)
-- `txt` (aliases: `text`, `plaintext`, no language name)
-- `xml`
-- `yaml` (alias: `yml`)
+Use `txt` (aliases: `text`, `plaintext`) when there is no appropriate syntax language.
 
 ### Terminal commands
 
@@ -130,7 +104,7 @@ JSON fragments may appear with a red background in GitHub because they are not v
 
 You can add special formatting to code blocks, such as collapsed sections, line numbers, and highlighting. Here is a showcase of some of the functionality. You can find more options at [Expressive Code](https://expressive-code.com/), a project by Astro.
 
-````mdx live
+````mdx
 ```powershell title="Write string example"
 Write-Output "This one has a title"
 ```
@@ -213,7 +187,7 @@ Add `graphql-api-explorer` to the opening code fence to create a `graphql` code 
 This button only works if the person selecting it is logged in or has an API token saved.
 :::
 
-````mdx live
+````mdx
 ```graphql graphql-api-explorer title="A GraphQL query"
 query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
 	viewer {

@@ -39,6 +39,10 @@ Once the endpoint and virtual network (VNet) tunnel association is configured, C
 
 Refer to [Set up Private Network Load Balancing for Public traffic to Tunnel](/load-balancing/private-network/public-to-tunnel/) for a detailed guide.
 
+:::note
+If your application only needs TCP or UDP proxying (not load balancing), you can skip the Load Balancer and attach Spectrum directly to a virtual network. Refer to [Create a Spectrum application using a virtual network](/spectrum/get-started/#create-a-spectrum-application-using-a-virtual-network-origin).
+:::
+
 ### Cloudflare WAN
 
 Private Network Load Balancing supports off-ramping traffic for Cloudflare WAN (formerly Magic WAN) tunnels, such as GRE, IPSec or CNI tunnels. For more information refer to the [Set up Private Network Load Balancing with Cloudflare WAN](/load-balancing/private-network/cloudflare-wan/).

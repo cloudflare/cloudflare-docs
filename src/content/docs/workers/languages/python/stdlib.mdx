@@ -1,25 +1,22 @@
 ---
 pcx_content_type: reference
 title: Standard Library
+description: Python standard library availability and limitations in Cloudflare Workers.
 sidebar:
   order: 6
 head:
   - tag: title
     content: Standard Library provided to Python Workers
+products:
+  - workers
 ---
 
 Workers written in Python are executed by [Pyodide](https://pyodide.org/en/stable/index.html).
 
-Pyodide is a port of CPython to WebAssembly — for the most part it behaves identically to [CPython](https://github.com/python) (the reference implementation of Python — commonly referred to as just "Python"). The majority of the CPython test suite passes when run against Pyodide. For the most part, you shouldn't need to worry about differences in behavior.
+Pyodide is a port of CPython to WebAssembly — for the most part it behaves identically to [CPython](https://github.com/python) (the reference implementation of Python — commonly referred to as just "Python").
+The majority of the CPython test suite passes when run against Pyodide. For the most part, you shouldn't need to worry about differences in behavior.
 
 The full [Python Standard Library](https://docs.python.org/3/library/index.html) is available in Python Workers, with the following exceptions:
-
-## Modules with limited functionality
-
-- `decimal`: The decimal module has C (\_decimal) and Python (\_pydecimal) implementations
-  with the same functionality. Only the C implementation is available (compiled to WebAssembly)
-- `pydoc`: Help messages for Python builtins are not available
-- `webbrowser`: The original webbrowser module is not available.
 
 ## Excluded modules
 
@@ -48,9 +45,21 @@ The following modules can be imported, but are not functional due to the limitat
 
 - multiprocessing
 - threading
-- sockets
 
 The following are present but cannot be imported due to a dependency on the termios package which has been removed:
 
 - pty
 - tty
+
+## Modules with limited functionality
+
+- `decimal`: The decimal module has C (\_decimal) and Python (\_pydecimal) implementations
+  with the same functionality. Only the C implementation is available (compiled to WebAssembly)
+- `pydoc`: Help messages for Python builtins are not available
+- `webbrowser`: The original webbrowser module is not available.
+
+## In-memory filesystem
+
+Python Workers have access to an ephemeral, in-memory filesystem. You can read and write files using standard Python file I/O (for example, `open()`, `pathlib.Path`), but all data is **lost when the Worker isolate is destroyed**. The filesystem is not shared between different isolate instances.
+
+This can be useful for temporary file operations, but should not be relied upon for persistent storage. Use [KV](/kv/), [R2](/r2/), or [Durable Objects](/durable-objects/) for durable storage.

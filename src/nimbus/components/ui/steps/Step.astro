@@ -1,0 +1,26 @@
+---
+/**
+ * Step — a single step inside <Steps>. Alternative to authoring an
+ * <ol><li> directly.
+ *
+ *   <Steps>
+ *     <Step title="Install">Run <code>npm install</code>.</Step>
+ *     <Step title="Configure">Edit <code>config.json</code>.</Step>
+ *   </Steps>
+ */
+import { cn } from "@/lib/cn";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  title?: string;
+}
+
+const { title, class: className, ...attrs } = Astro.props;
+---
+
+<div data-step class={cn(className)} {...attrs}>
+  {title && <p class="m-0 font-semibold text-foreground">{title}</p>}
+  <div class="mt-1 text-sm leading-snug text-foreground [&_p:first-child]:mt-0 [&_p:last-child]:mb-0">
+    <slot />
+  </div>
+</div>

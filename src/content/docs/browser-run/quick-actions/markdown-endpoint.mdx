@@ -74,6 +74,22 @@ const markdown = await client.browserRendering.markdown.create({
 console.log(markdown);
 ```
 
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("markdown", {
+			url: "https://example.com",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
 </TabItem> </Tabs>
 
 ### Convert raw HTML to Markdown

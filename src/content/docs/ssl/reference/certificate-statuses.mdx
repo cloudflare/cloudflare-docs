@@ -9,6 +9,7 @@ description: Understand certificate statuses in Cloudflare SSL/TLS, including st
 ---
 
 Certificates statuses show which stage of the issuance process each certificate is in.
+
 ## New certificates
 
 When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare's global network:
@@ -68,6 +69,10 @@ For more details on certificate validation, refer to [Domain Control Validation]
 ### SSL for SaaS
 
 Monitor a certificate's status on the [**Custom Hostnames**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/custom-hostnames) page or by using the [Custom Hostname Details endpoint](/api/resources/custom_hostnames/methods/get/).
+
+The Custom Hostname Details endpoint returns separate status fields for hostname activation and certificate status. Use the top-level `status` field to monitor hostname activation. Use the nested `ssl.status` field to monitor certificate issuance and deployment.
+
+For production HTTPS, treat a custom hostname as ready when both status fields are `active` and the customer's DNS points to your Cloudflare for SaaS target.
 
 For more details on certificate validation, refer to [Issue and validate certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 

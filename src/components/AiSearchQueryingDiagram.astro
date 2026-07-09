@@ -1,0 +1,853 @@
+---
+import { Icon as AstroIcon } from "astro-icon/components";
+
+interface Props {
+	autoPlay?: boolean;
+	loop?: boolean;
+}
+
+const { autoPlay = true, loop = true } = Astro.props;
+---
+
+<figure
+	class="ai-search-querying-diagram not-content"
+	aria-label="AI Search querying pipeline: a user query is optionally rewritten by a Workers AI model, then runs two searches in parallel. For vector search, the query is embedded through AI Gateway and matched against stored Vectorize vectors; for keyword search, the query is tokenized and BM25-matched. When hybrid search is used, the two result sets are combined by fusion. Results are optionally reranked by a Workers AI cross-encoder, then the most relevant chunks and their source content are retrieved. The Search endpoint returns these chunks as its result; the Chat Completions endpoint instead passes them to an AI Gateway / Workers AI model that generates the response it returns. Each stage links to its documentation."
+>
+	<cfdocs-ai-search-querying-diagram
+		data-autoplay={String(autoPlay)}
+		data-loop={String(loop)}
+	>
+		<div class="asqd-track">
+			<!-- Start -->
+			<div class="asqd-cap asqd-start" data-step="0">
+				<span class="asqd-cap-icon" aria-hidden="true">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<circle cx="11" cy="11" r="7"></circle>
+						<path d="M21 21l-4.3-4.3"></path>
+					</svg>
+				</span>
+				<span>Your query</span>
+			</div>
+
+			<div class="asqd-connector" data-step="1"></div>
+
+			<!-- Query rewriting (optional) -->
+			<a
+				class="asqd-node asqd-optional"
+				data-step="4"
+				href="/ai-search/configuration/retrieval/query-rewriting/"
+			>
+				<span class="asqd-node-head">
+					AI Gateway / Workers AI
+					<span class="asqd-opt">Optional</span>
+				</span>
+				<span class="asqd-node-body">
+					<span class="asqd-icon" aria-hidden="true"
+						><AstroIcon name="ai-gateway" /></span
+					>
+					<span class="asqd-node-title">Query rewriting</span>
+				</span>
+			</a>
+
+			<!-- Line into the "hybrid search" scope -->
+			<div class="asqd-connector" data-step="5"></div>
+
+			<div class="asqd-group">
+				<span class="asqd-group-label">hybrid search</span>
+
+				<!-- Fan-out: the query forks to the two parallel searches, each
+				     with its own preprocessing (embedding vs tokenization). -->
+				<div class="asqd-bracket asqd-fanout" data-step="6" aria-hidden="true">
+					<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+						<line
+							x1="60"
+							y1="0"
+							x2="60"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="30"
+							y1="13"
+							x2="90"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="30"
+							y1="13"
+							x2="30"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="90"
+							y1="13"
+							x2="90"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+					</svg>
+				</div>
+
+				<!-- Two parallel searches, each with its own query preprocessing.
+				     Either search can be disabled. -->
+				<div class="asqd-lanes">
+					<!-- Vector lane: embed the query, then match stored vectors -->
+					<div class="asqd-lane asqd-optional">
+						<a
+							class="asqd-node"
+							data-step="7"
+							href="/ai-search/configuration/models/"
+						>
+							<span class="asqd-node-head">
+								AI Gateway / Workers AI
+								<span class="asqd-opt">Optional</span>
+							</span>
+							<span class="asqd-node-body">
+								<span class="asqd-icon" aria-hidden="true"
+									><AstroIcon name="ai-gateway" /></span
+								>
+								<span class="asqd-node-title">Query embedding</span>
+							</span>
+						</a>
+						<div class="asqd-connector" data-step="8"></div>
+						<a
+							class="asqd-node"
+							data-step="9"
+							href="/ai-search/configuration/indexing/vector-search/"
+						>
+							<span class="asqd-node-head">
+								AI Search · Vectorize
+								<span class="asqd-opt">Optional</span>
+							</span>
+							<span class="asqd-node-body">
+								<span class="asqd-icon" aria-hidden="true"
+									><AstroIcon name="ai-search" /></span
+								>
+								<span class="asqd-node-title">Vector retrieval</span>
+							</span>
+						</a>
+					</div>
+
+					<!-- Keyword lane: tokenize the query, then BM25 match -->
+					<div class="asqd-lane asqd-optional">
+						<a
+							class="asqd-node"
+							data-step="7"
+							href="/ai-search/configuration/indexing/keyword-search/"
+						>
+							<span class="asqd-node-head">
+								AI Search
+								<span class="asqd-opt">Optional</span>
+							</span>
+							<span class="asqd-node-body">
+								<span class="asqd-icon" aria-hidden="true"
+									><AstroIcon name="ai-search" /></span
+								>
+								<span class="asqd-node-title">Query tokenization</span>
+							</span>
+						</a>
+						<div class="asqd-connector" data-step="8"></div>
+						<a
+							class="asqd-node"
+							data-step="9"
+							href="/ai-search/configuration/indexing/keyword-search/"
+						>
+							<span class="asqd-node-head">
+								AI Search · BM25
+								<span class="asqd-opt">Optional</span>
+							</span>
+							<span class="asqd-node-body">
+								<span class="asqd-icon" aria-hidden="true"
+									><AstroIcon name="ai-search" /></span
+								>
+								<span class="asqd-node-title">Keyword retrieval</span>
+							</span>
+						</a>
+					</div>
+				</div>
+
+				<!-- Fan-in: the parallel results converge into fusion -->
+				<div class="asqd-bracket asqd-fanin" data-step="10" aria-hidden="true">
+					<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+						<line
+							x1="30"
+							y1="0"
+							x2="30"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="90"
+							y1="0"
+							x2="90"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="30"
+							y1="13"
+							x2="90"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="60"
+							y1="13"
+							x2="60"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+					</svg>
+				</div>
+
+				<!-- Fusion: combine the hybrid result sets (hybrid search only) -->
+				<a
+					class="asqd-node asqd-optional"
+					data-step="11"
+					href="/ai-search/configuration/indexing/hybrid-search/"
+				>
+					<span class="asqd-node-head">
+						AI Search
+						<span class="asqd-opt">Optional</span>
+					</span>
+					<span class="asqd-node-body">
+						<span class="asqd-icon" aria-hidden="true"
+							><AstroIcon name="ai-search" /></span
+						>
+						<span class="asqd-node-title">Fusion</span>
+					</span>
+				</a>
+
+				<div class="asqd-connector asqd-exit" data-step="12"></div>
+			</div>
+
+			<!-- Line out of the hybrid search scope -->
+			<div class="asqd-connector asqd-exit" data-step="12"></div>
+
+			<!-- Reranking (optional) -->
+			<a
+				class="asqd-node asqd-optional"
+				data-step="13"
+				href="/ai-search/configuration/retrieval/reranking/"
+			>
+				<span class="asqd-node-head">
+					AI Gateway / Workers AI
+					<span class="asqd-opt">Optional</span>
+				</span>
+				<span class="asqd-node-body">
+					<span class="asqd-icon" aria-hidden="true"
+						><AstroIcon name="ai-gateway" /></span
+					>
+					<span class="asqd-node-title">Reranking</span>
+				</span>
+			</a>
+
+			<div class="asqd-connector" data-step="14"></div>
+
+			<!-- Chunk content retrieval assembles the top chunks + source content -->
+			<a
+				class="asqd-node"
+				data-step="15"
+				href="/ai-search/api/search/rest-api/"
+			>
+				<span class="asqd-node-head">AI Search · R2</span>
+				<span class="asqd-node-body">
+					<span class="asqd-icon" aria-hidden="true"
+						><AstroIcon name="ai-search" /></span
+					>
+					<span class="asqd-node-title">Chunk content retrieval</span>
+				</span>
+			</a>
+
+			<div class="asqd-connector" data-step="16"></div>
+
+			<!-- Output pill: the Search endpoint returns the retrieved chunks -->
+			<a
+				class="asqd-cap asqd-end"
+				data-step="17"
+				href="/ai-search/api/search/workers-binding/#search"
+			>
+				<span class="asqd-cap-icon" aria-hidden="true">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<line x1="9" y1="6" x2="20" y2="6"></line>
+						<line x1="9" y1="12" x2="20" y2="12"></line>
+						<line x1="9" y1="18" x2="20" y2="18"></line>
+						<circle cx="4.5" cy="6" r="1.2"></circle>
+						<circle cx="4.5" cy="12" r="1.2"></circle>
+						<circle cx="4.5" cy="18" r="1.2"></circle>
+					</svg>
+				</span>
+				<span>Search result</span>
+			</a>
+
+			<!-- For the Chat Completions endpoint, the retrieved content continues
+			     on to response generation (dashed = this endpoint only). -->
+			<div class="asqd-connector asqd-connector-dashed" data-step="18"></div>
+
+			<a
+				class="asqd-node asqd-optional"
+				data-step="19"
+				href="/ai-search/configuration/retrieval/system-prompt/"
+			>
+				<span class="asqd-node-head">
+					AI Gateway / Workers AI
+					<span class="asqd-opt">Optional</span>
+				</span>
+				<span class="asqd-node-body">
+					<span class="asqd-icon" aria-hidden="true"
+						><AstroIcon name="ai-gateway" /></span
+					>
+					<span class="asqd-node-title">Response generation</span>
+				</span>
+			</a>
+
+			<div class="asqd-connector" data-step="20"></div>
+
+			<!-- Output pill: the Chat Completions endpoint returns the response -->
+			<a
+				class="asqd-cap asqd-end asqd-terminal"
+				data-step="21"
+				href="/ai-search/api/search/workers-binding/#chatcompletions"
+			>
+				<span class="asqd-cap-icon" aria-hidden="true">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path
+							d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+						></path>
+					</svg>
+				</span>
+				<span>Chat Completions result</span>
+			</a>
+		</div>
+	</cfdocs-ai-search-querying-diagram>
+</figure>
+
+<style>
+	.ai-search-querying-diagram {
+		/* Neutral, Kumo-style monochrome palette */
+		--asqd-panel: #fbfbfb;
+		--asqd-dot: rgb(0 0 0 / 8%);
+		--asqd-card: #ffffff;
+		--asqd-head: #f4f4f5;
+		--asqd-border: #e3e3e6;
+		--asqd-line: #c1c1c8;
+		--asqd-joint: #ffffff;
+		--asqd-text: #1a1a1c;
+		--asqd-muted: #8a8a90;
+		/* Accent — used sparingly to trace the active step */
+		--asqd-accent: #f6821f;
+		--asqd-accent-soft: rgb(246 130 31 / 14%);
+
+		margin: 1.5rem 0;
+		/* Respond to the diagram's own available width, not the viewport. */
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .ai-search-querying-diagram {
+		--asqd-panel: #121213;
+		--asqd-dot: rgb(255 255 255 / 9%);
+		--asqd-card: #1b1b1d;
+		--asqd-head: #242427;
+		--asqd-border: #38383c;
+		--asqd-line: #4d4d54;
+		--asqd-joint: #1b1b1d;
+		--asqd-text: #f3f3f5;
+		--asqd-muted: #9a9aa2;
+	}
+
+	cfdocs-ai-search-querying-diagram {
+		display: block;
+		width: 100%;
+		padding: 1.5rem 1rem;
+		border: 1px solid var(--asqd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--asqd-dot) 1px, transparent 1px),
+			var(--asqd-panel);
+		background-size: 16px 16px;
+	}
+
+	.asqd-track {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	/* --- Cards (clickable) --- */
+	.asqd-node {
+		position: relative;
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 300px;
+		background: var(--asqd-card);
+		border: 1px solid var(--asqd-border);
+		border-radius: 0.625rem;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		color: inherit;
+		text-decoration: none;
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease,
+			transform 0.15s ease;
+	}
+
+	/* Output port — every non-terminal box emits its line from a centred
+	   node on its bottom edge. Terminal boxes carry no port. */
+	.asqd-node::after,
+	.asqd-start::after,
+	.asqd-end::after {
+		content: "";
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--asqd-joint);
+		border: 2px solid var(--asqd-line);
+		box-sizing: border-box;
+		transform: translateX(-50%);
+		transition: border-color 0.25s ease;
+		z-index: 2;
+	}
+
+	.asqd-terminal::after {
+		display: none;
+	}
+
+	.asqd-node-head {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.25rem 0.625rem;
+		background: var(--asqd-head);
+		border-bottom: 1px solid var(--asqd-border);
+		border-radius: 0.5625rem 0.5625rem 0 0;
+		white-space: nowrap;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		letter-spacing: 0.01em;
+		color: var(--asqd-muted);
+	}
+
+	.asqd-node-body {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 0.625rem;
+	}
+
+	.asqd-node-title {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.2;
+		color: var(--asqd-text);
+	}
+
+	.asqd-node:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asqd-accent) 55%,
+			var(--asqd-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+		transform: translateY(-1px);
+	}
+
+	.asqd-node:focus-visible {
+		outline: 2px solid var(--asqd-accent);
+		outline-offset: 2px;
+	}
+
+	/* Icon chip — normalise every product glyph to currentColor */
+	.asqd-icon {
+		flex: none;
+		width: 1.25rem;
+		height: 1.25rem;
+		color: var(--asqd-muted);
+		transition: color 0.25s ease;
+	}
+
+	.asqd-icon :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.asqd-icon :global(svg path) {
+		fill: currentColor;
+	}
+
+	/* --- Parallel search lanes (two exact halves so each card centre lands on
+	   the fan stub at 25% / 75%). Each lane stacks its query-preprocessing step
+	   above its search step. Spacing via lane margins. --- */
+	.asqd-lanes {
+		display: grid;
+		/* minmax(0, 1fr) forces two *equal* columns. Plain 1fr is
+		   minmax(auto, 1fr), so a wide nowrap head would stretch its column
+		   and push the card centres off the 25% / 75% fan stubs. */
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0;
+		width: 100%;
+	}
+
+	.asqd-lane {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 0 0.5rem;
+	}
+
+	.asqd-lanes .asqd-node {
+		max-width: none;
+	}
+
+	/* --- Dashed scope boxes. Zero vertical padding so the entry/exit lines
+	   flow straight through the dashed border. --- */
+	.asqd-group {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		padding: 0 0.75rem;
+		border: 1px dashed var(--asqd-border);
+		border-radius: 0.75rem;
+	}
+
+	.asqd-group-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.1rem 0.5rem;
+		background: var(--asqd-panel);
+		border: 1px solid var(--asqd-border);
+		border-radius: 9999px;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: var(--asqd-muted);
+	}
+
+	.asqd-optional .asqd-node,
+	.asqd-node.asqd-optional {
+		border-style: dashed;
+	}
+
+	.asqd-opt {
+		margin-left: auto;
+		font-size: 0.5rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--asqd-muted);
+		border: 1px solid var(--asqd-border);
+		border-radius: 0.25rem;
+		padding: 0.03rem 0.22rem;
+	}
+
+	/* --- Connectors (vertical wires) --- */
+	.asqd-connector {
+		width: 2px;
+		height: 1.5rem;
+		margin: 0 auto;
+		background: var(--asqd-line);
+		transition: background-color 0.25s ease;
+	}
+
+	.asqd-connector.active {
+		background: var(--asqd-accent);
+	}
+
+	/* Dashed connector — marks the optional Chat-Completions-only tail. */
+	.asqd-connector-dashed {
+		width: 0;
+		background: none;
+		border-left: 2px dashed var(--asqd-line);
+		transition: border-color 0.25s ease;
+	}
+
+	.asqd-connector-dashed.active {
+		background: none;
+		border-left-color: var(--asqd-accent);
+	}
+
+	/* Shorter segments where the line crosses a scope box border. */
+	.asqd-exit {
+		height: 0.85rem;
+	}
+
+	/* --- Brackets (orthogonal SVG fan-out / fan-in) --- */
+	/* Full width so the vertical stubs line up with the node centres. */
+	.asqd-bracket {
+		width: 100%;
+	}
+
+	.asqd-bracket svg {
+		display: block;
+		width: 100%;
+		height: 1.5rem;
+	}
+
+	.asqd-bracket line {
+		stroke: var(--asqd-line);
+		stroke-width: 2;
+		fill: none;
+		stroke-linecap: round;
+		transition: stroke 0.25s ease;
+	}
+
+	.asqd-bracket.active line {
+		stroke: var(--asqd-accent);
+	}
+
+	/* --- Start cap --- */
+	.asqd-cap {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.3rem 0.8rem;
+		border-radius: 9999px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		white-space: nowrap;
+		transition:
+			box-shadow 0.25s ease,
+			border-color 0.25s ease;
+	}
+
+	.asqd-start,
+	.asqd-end {
+		background: var(--asqd-card);
+		border: 1px solid var(--asqd-border);
+		color: var(--asqd-text);
+	}
+
+	/* Clickable caps (the query input, the endpoint outputs) link to docs —
+	   give them the same hover/focus affordance as the node cards. */
+	a.asqd-cap {
+		text-decoration: none;
+		color: var(--asqd-text);
+	}
+
+	a.asqd-cap:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asqd-accent) 55%,
+			var(--asqd-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+	}
+
+	a.asqd-cap:focus-visible {
+		outline: 2px solid var(--asqd-accent);
+		outline-offset: 2px;
+	}
+
+	.asqd-cap-icon {
+		width: 0.875rem;
+		height: 0.875rem;
+	}
+
+	.asqd-cap-icon svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* --- Active / current animation states --- */
+	.asqd-node.current {
+		border-color: var(--asqd-accent);
+		box-shadow: 0 0 0 2px var(--asqd-accent-soft);
+		animation: asqd-pulse 1.2s ease-in-out infinite;
+	}
+
+	.asqd-node.current .asqd-icon {
+		color: var(--asqd-accent);
+	}
+
+	.asqd-node.active::after,
+	.asqd-node.current::after,
+	.asqd-start.active::after,
+	.asqd-end.active::after,
+	.asqd-end.current::after {
+		border-color: var(--asqd-accent);
+	}
+
+	.asqd-cap.current {
+		border-color: var(--asqd-accent);
+		box-shadow: 0 0 0 3px var(--asqd-accent-soft);
+	}
+
+	@keyframes asqd-pulse {
+		0%,
+		100% {
+			box-shadow: 0 0 0 2px var(--asqd-accent-soft);
+		}
+		50% {
+			box-shadow: 0 0 0 5px transparent;
+		}
+	}
+
+	/* --- Responsive: the fan-out branches ARE the diagram — they show that
+	   vector and keyword search run in parallel. Collapsing them into a single
+	   column would read as a sequential pipeline and lose that meaning. So on
+	   narrow screens we keep the two-column branches and the orthogonal forks
+	   (which scale to any width), and only tighten spacing + shrink the
+	   monospace heads so the cards fit side by side. --- */
+	@container (max-width: 560px) {
+		cfdocs-ai-search-querying-diagram {
+			padding: 1.25rem 0.6rem;
+		}
+
+		/* Only tighten the horizontal padding — using the shorthand would zero
+		   any vertical padding and let cards touch the dashed border. */
+		.asqd-group {
+			padding-inline: 0.4rem;
+		}
+
+		.asqd-lane {
+			margin: 0 0.25rem;
+		}
+
+		/* Keep the monospace scope heads on a single line (the eyebrow labels
+		   read as one phrase) and shrink them slightly so the longest nowrap
+		   head + badge fits the two-column cards down to the narrowest phones. */
+		.asqd-node-head {
+			padding: 0.25rem 0.4rem;
+			white-space: nowrap;
+			font-size: 0.5625rem;
+		}
+
+		.asqd-node-body {
+			gap: 0.375rem;
+			padding: 0.45rem 0.45rem;
+		}
+
+		.asqd-node-title {
+			font-size: 0.6875rem;
+		}
+
+		.asqd-opt {
+			font-size: 0.4375rem;
+			padding: 0.03rem 0.18rem;
+			letter-spacing: 0.03em;
+		}
+	}
+
+	/* --- Reduced motion: leave the complete, neutral diagram static --- */
+	@media (prefers-reduced-motion: reduce) {
+		.asqd-node,
+		.asqd-cap,
+		.asqd-icon,
+		.asqd-connector,
+		.asqd-node::after,
+		.asqd-bracket line {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	class AiSearchQueryingDiagramElement extends HTMLElement {
+		private loop = false;
+		private steps: Element[][] = [];
+		private timer: number | null = null;
+
+		connectedCallback() {
+			this.loop = this.dataset.loop === "true";
+			this.groupSteps();
+
+			const reduced = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+
+			// Only animate when asked to and motion is allowed. Otherwise the
+			// diagram simply rests in its complete, neutral state.
+			if (!reduced && this.dataset.autoplay === "true") {
+				this.timer = window.setTimeout(() => this.play(), 500);
+			}
+		}
+
+		disconnectedCallback() {
+			if (this.timer !== null) window.clearTimeout(this.timer);
+		}
+
+		/** Group every [data-step] element by its step number, in order. */
+		private groupSteps() {
+			const byStep = new Map<number, Element[]>();
+			this.querySelectorAll<HTMLElement>("[data-step]").forEach((el) => {
+				const step = Number(el.dataset.step);
+				if (Number.isNaN(step)) return;
+				const group = byStep.get(step) ?? [];
+				group.push(el);
+				byStep.set(step, group);
+			});
+			this.steps = [...byStep.keys()]
+				.sort((a, b) => a - b)
+				.map((key) => byStep.get(key)!);
+		}
+
+		private reset() {
+			this.steps
+				.flat()
+				.forEach((el) => el.classList.remove("active", "current"));
+		}
+
+		private play() {
+			this.reset();
+			this.advance(0);
+		}
+
+		private advance(index: number) {
+			if (index > 0) {
+				// The previous group is done processing — leave it solid.
+				this.steps[index - 1]?.forEach((el) => el.classList.remove("current"));
+			}
+
+			if (index >= this.steps.length) {
+				if (this.loop) {
+					this.timer = window.setTimeout(() => this.play(), 2200);
+				}
+				return;
+			}
+
+			this.steps[index].forEach((el) => {
+				el.classList.add("active");
+				// Connectors just light up; cards/caps pulse while "current".
+				if (!el.classList.contains("asqd-connector")) {
+					el.classList.add("current");
+				}
+			});
+
+			// Connectors are quick; cards linger so the pulse reads.
+			const isConnectorOnly = this.steps[index].every((el) =>
+				el.classList.contains("asqd-connector"),
+			);
+			const duration = isConnectorOnly ? 550 : 1100;
+			this.timer = window.setTimeout(() => this.advance(index + 1), duration);
+		}
+	}
+
+	customElements.define(
+		"cfdocs-ai-search-querying-diagram",
+		AiSearchQueryingDiagramElement,
+	);
+</script>

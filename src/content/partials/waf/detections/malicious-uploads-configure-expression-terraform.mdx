@@ -6,7 +6,7 @@ Use the `cloudflare_content_scanning_expression` resource to add a custom scan e
 
 ```terraform
 resource "cloudflare_content_scanning_expression" "my_custom_scan_expression" {
-  zone_id = <ZONE_ID>
+  zone_id = var.cloudflare_zone_id
   payload = "lookup_json_string(http.request.body.raw, \"file\")"
 }
 ```

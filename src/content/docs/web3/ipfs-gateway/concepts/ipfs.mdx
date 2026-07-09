@@ -6,37 +6,33 @@ products:
 title: Interplanetary File System (IPFS)
 sidebar:
   order: 1
-
 ---
 
-The Interplanetary File System (IPFS) is a distributed file storage protocol that allows computers all over the globe to store and serve files as part of a giant peer-to-peer network.
+The Interplanetary File System (IPFS) is a peer-to-peer file storage network. Instead of storing files on a single server (the way traditional web hosting works), IPFS distributes files across many computers around the world.
 
-Any computer, anywhere in the world, can download the IPFS software and start hosting and serving files.
+Any computer can join the IPFS network by installing the IPFS software and start hosting and serving files.
 
-If someone runs IPFS on their computer and uploads a file to the IPFS network, that file can be viewed and downloaded by anyone else in the world who is also running IPFS.
+If someone uploads a file to the IPFS network, anyone else running IPFS can view and download that file — no central server is involved.
 
 ## Content Identifiers
 
-Every file added to IPFS is given a unique address derived from a hash of the file's content. This address is called a Content Identifier (CID) and it combines the hash of the file and a unique identifier for the hash algorithm used into a single string.
+Every file added to IPFS is given a unique address derived from a hash of the file's content. This address is called a Content Identifier (CID). A CID contains two pieces of information: the hash of the file and an identifier for the hash algorithm used, combined into a single string.
 
-IPFS currently uses [SHA-256](https://en.wikipedia.org/wiki/SHA-2) by default, which produces a 256 bit (32 byte) output, and that output is encoded with [Base58](https://en.wikipedia.org/wiki/Base58). Base58 is a binary-to-text encoding scheme originally developed for Bitcoin and has the advantage that letters that might be mistaken for each other in certain fonts (like zero and the capital letter O) are not included.
+Because the CID is derived from the content itself, two identical files always produce the same CID, and any change to a file produces a different CID. This is what makes IPFS "content-addressed" — you look up files by what they contain, not by where they are stored.
 
-A CID will typically look something like `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`.
+IPFS uses [SHA-256](https://en.wikipedia.org/wiki/SHA-2) by default, and encodes the result with [Base58](https://en.wikipedia.org/wiki/Base58) — an encoding scheme that omits visually ambiguous characters (such as zero and the capital letter O) to reduce transcription errors.
 
-However, the same hash could be encoded with [Base32](https://en.wikipedia.org/wiki/Base32) or other supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3) and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_\(hash_function\)).
+A CID typically looks like: `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`
+
+IPFS also supports other encodings ([Base32](https://en.wikipedia.org/wiki/Base32)) and hash algorithms ([SHA-3](https://en.wikipedia.org/wiki/SHA-3), [BLAKE2](<https://en.wikipedia.org/wiki/BLAKE_(hash_function)>)).
 
 ## Uploading to IPFS
 
-IPFS is fundamentally a [Distributed Hash Table
-(DHT)](https://en.wikipedia.org/wiki/Distributed_hash_table) which maps from CIDs to people who have the content addressed by that CID. The hash
-table is distributed because no single node in the network holds the entire
-table. Instead, each node stores a subset of the hash table, as well as
-information about which nodes are storing other relevant sections.
+IPFS tracks which computers have which files using a [Distributed Hash Table (DHT)](https://en.wikipedia.org/wiki/Distributed_hash_table) — a lookup system that maps CIDs to the network addresses of computers hosting that content. No single computer holds the entire lookup table. Instead, each computer in the network stores a portion of it and knows where to find the rest.
 
-When someone talks about 'uploading' content to IPFS, what they really mean
-(usually) is that they are announcing to the network that they have some content by adding an entry to the DHT that maps from CID to their IP address. Somebody else who wants to download their data would look up the CID in the DHT, find the person's IP address, and download the data directly from them.
+"Uploading" content to IPFS does not mean sending your file to a central server. It means announcing to the network that you have the content by adding an entry to the DHT that maps your file's CID to your network address. When someone else wants to download that file, they look up the CID in the DHT, find your address, and download the data directly from you.
 
-The speed and reliability advantages of IPFS come from the fact that many people can upload the same data, and then downloads will be spread between all of them. If any one of them goes offline or decides to stop hosting the data, the others can pick up the slack.
+Because multiple computers can host the same file, downloads are spread across all of them. If any one host goes offline, the others continue to serve the content. This redundancy is what gives IPFS its speed and reliability advantages over single-server hosting.
 
 ## Directories
 
@@ -46,9 +42,9 @@ If that folder were uploaded with the command `ipfs add -r ./example`, both the 
 
 You could then access the file in two ways:
 
-* Requesting the file directly:<br />
+- Requesting the file directly:<br />
   `https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`
-* Requesting the file by name, from the directory:<br />
+- Requesting the file by name, from the directory:<br />
   `https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example_text.txt`
 
 While the CID of a file will only change if the file itself changes, the CID of a directory changes any time **any** of the files in it change, or if any files are added/removed.

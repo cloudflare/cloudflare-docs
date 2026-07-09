@@ -1,0 +1,13 @@
+---
+title: View the user agent of requests in AI Gateway logs
+description: AI Gateway logs now capture the user agent of the client that made each request.
+products:
+  - ai-gateway
+date: 2026-06-12
+---
+
+AI Gateway logs now capture the user agent of the client that made each request, making it easier to identify which SDK, library, or application sent the traffic flowing through your gateway. For example, you can tell apart requests coming from `openai-python` versus a custom application or a Cloudflare Worker.
+
+The user agent appears alongside the other details in each log entry, and you can filter logs by user agent (equals, does not equal, or contains) in the dashboard.
+
+For more information, refer to [Logging](/ai-gateway/observability/logging/).

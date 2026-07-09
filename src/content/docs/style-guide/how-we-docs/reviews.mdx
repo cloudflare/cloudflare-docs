@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Content reviews
 meta:
   title: Content reviews | How we docs
+description: Review and maintain documentation quality.
+products:
+  - style-guide
 ---
 
 import { GitHubCode } from "~/components";
@@ -22,14 +25,14 @@ For pull requests, we use a specific [GitHub action](https://github.com/cloudfla
 - [Label products](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/actions/label-products/): We add labels for the top-level product folder, which helps writers scan incoming pull requests and see which are relevant to them.
 - [Label size](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/actions/label-size/): We add labels for the size of the pull request, which helps writers see the relative size of the difference. It's not a perfect measure, but we use the lines changed to estimate the size of the pull request:
 
-	<GitHubCode
-		repo="cloudflare/cloudflare-docs"
-		file=".github/actions/label-size/index.ts"
-		commit="3dd03fdad79b2663631a6530794dfd1ad15bdc03"
-		lines="20-36"
-		lang="ts"
-		code={{ title: "label-size.ts" }}
-	/>
+  <GitHubCode
+  	repo="cloudflare/cloudflare-docs"
+  	file=".github/actions/label-size/index.ts"
+  	commit="3dd03fdad79b2663631a6530794dfd1ad15bdc03"
+  	lines="20-36"
+  	lang="ts"
+  	code={{ title: "label-size.ts" }}
+  />
 
 - [Assign codeowners](https://github.com/cloudflare/cloudflare-docs/tree/production/.github/actions/assign-pr): We use our [CODEOWNERS](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/CODEOWNERS) file to automatically assign people to pull requests based on the files changed. This assignment helps writers scan and filter to see which pull requests are relevant to them.
 
@@ -38,7 +41,6 @@ For pull requests, we use a specific [GitHub action](https://github.com/cloudfla
 For issues, we use a similar [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/issue-label-assign.yml) to add labels and assign codeowners.
 
 Our [script](https://github.com/cloudflare/cloudflare-docs/tree/production/.github/actions/issue-label-assign) treats issues because usually they contain links to our site instead of files within the repository. We grab the associated links in the issue description fields and then use those to assign writers (again based on `CODEOWNERS`) and add product labels.
-
 
 ## Streamline reviews
 
@@ -65,7 +67,7 @@ We have a specific part of [CI](https://github.com/cloudflare/cloudflare-docs/bl
 
 ### What changed?
 
-We use a [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/publish-preview.yml) to publish preview builds for every commit on a pull request (and [comment those links](https://github.com/cloudflare/cloudflare-docs/tree/production/bin/post-preview-url-comment) on the pull request). This action ensures that reviewers can see exactly what the site and content will look like when they're rendered (and not just look at the changed markdown in GitHub). 
+We use a [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/publish-preview.yml) to publish preview builds for every commit on a pull request (and [comment those links](https://github.com/cloudflare/cloudflare-docs/tree/production/bin/post-preview-url-comment) on the pull request). This action ensures that reviewers can see exactly what the site and content will look like when they're rendered (and not just look at the changed markdown in GitHub).
 
 We are in the process of migrating to [Workers Builds](/workers/ci-cd/builds/git-integration/github-integration/), which provides that functionality natively.
 
@@ -75,13 +77,11 @@ Based on feedback, we have also added a before/after table of links to help revi
 
 ### Is there anything else I need to check?
 
-Two difficult things to check are potential redirects and changes to [content snippets (partials)](/style-guide/components/render/) that are used on multiple pages.
+One difficult thing to check is potential redirects when a pull request renames or deletes content file paths.
 
-We have a [specific action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/potential-redirects-or-partials.yml) that posts a comment to help reviewers identify and then check these attributes.
+We have a [specific action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/comment-changed-filenames.yml) that posts a comment to help reviewers identify and then check these paths.
 
-![Potential redirects or partials comment](~/assets/images/style-guide/how-we-docs/potential-redirects-partials-comment.png)
-
-The partials part of the comment specifically [links to the usage for that partial](/style-guide/components/render/?partial=1.1.1.1/all-ipv4), which helps writers know the various pages where it appears.
+![GitHub Actions redirect comment](~/assets/images/style-guide/how-we-docs/redirects-github.png)
 
 ## Automate communication
 

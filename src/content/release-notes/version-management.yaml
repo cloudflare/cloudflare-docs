@@ -3,6 +3,11 @@ link: "/version-management/changelog/"
 productName: Version Management
 productLink: "/version-management/"
 entries:
+  - publish_date: "2026-04-27"
+    title: "Support for Cache Response Rules"
+    description: |-
+      - Version Management now supports versioning for [Cache Response Rules](/cache/how-to/cache-response-rules/).
+
   - publish_date: "2024-02-26"
     title: "Support for API Shield"
     description: |-

@@ -13,6 +13,10 @@ import { FeatureTable, Render, GlossaryTooltip } from "~/components";
 
 <Render file="partial-setup-definition" product="dns" />
 
+:::note[Availability]
+A CNAME setup (partial) is only available to customers on a Business or Enterprise plan. Partial setups are not supported on Cloudflare Registrar domains.
+:::
+
 Once you are on a CNAME setup (partial), the actual resolution of your records to Cloudflare depends on CNAME records [added at your authoritative DNS provider](/dns/zone-setups/partial-setup/setup/#3-add-dns-records). Check your authoritative DNS provider to know which records are pointing to `{your-hostname}.cdn.cloudflare.net`.
 
 ## How to

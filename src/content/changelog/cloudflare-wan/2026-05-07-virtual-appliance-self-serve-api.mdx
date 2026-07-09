@@ -1,0 +1,18 @@
+---
+title: Self-serve provisioning of Cloudflare One Virtual Appliance via API
+description: Create, rotate, and delete Cloudflare One Virtual Appliance instances and license keys directly through the API and Terraform.
+date: 2026-05-07
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+You can now create, rotate, and delete Cloudflare One Virtual Appliance instances and their license keys directly via the API and Terraform.
+
+- Create a virtual appliance and receive a license key: `POST /accounts/{account_id}/magic/connectors` with `device.provision_license: true`.
+- Rotate the license key for an existing virtual appliance: `PATCH /accounts/{account_id}/magic/connectors/{connector_id}` with `provision_license: true`. The previous key is immediately and irrevocably revoked.
+- Delete a virtual appliance to release the associated licensed device.
+
+The license key is returned in the response only once, at create or rotate time. Copy and store it securely.
+
+For details, refer to [Configure a Cloudflare One Virtual Appliance](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/).

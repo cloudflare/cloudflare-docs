@@ -6,13 +6,15 @@ sidebar:
 head: []
 description: Diagnose issues with Workers metrics, and review request data for a
   zone with Workers analytics.
+products:
+  - workers
 ---
 
 import { GlossaryTooltip, DashButton, Steps } from "~/components";
 
 There are two graphical sources of information about your Workers traffic at a given time: Workers metrics and zone-based Workers analytics.
 
-Workers metrics can help you diagnose issues and understand your Workers' workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, Workers metrics will show how much traffic your Worker is handling on a per-zone basis, and how many requests your site is getting.
+Workers metrics can help you diagnose issues and understand your Workers' workloads by showing the performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, Workers metrics will show how much traffic your Worker is handling on a per-zone basis, and how many requests your site is getting.
 
 Zone analytics show how much traffic all Workers assigned to a zone are handling.
 
@@ -76,6 +78,16 @@ The CPU Time per execution chart shows historical CPU time data broken down into
 
 The Duration per request chart shows historical [duration](/workers/platform/limits/#duration) per Worker invocation. The data is broken down into relevant quantiles, similar to the CPU time chart. Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). Understanding duration on your Worker is especially useful when you are intending to do a significant amount of computation on the Worker itself.
 
+### Memory usage
+
+The Memory usage chart shows how much V8 isolate memory your Worker uses at the time of each invocation, broken down into P50, P90, P99, and P999 percentiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). For more information, refer to [Interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
+
+Workers run in V8 [isolates](/workers/reference/how-workers-works/#isolates), each with a [128 MB memory limit](/workers/platform/limits/#memory). A single isolate can handle many concurrent requests and shares memory across them. The memory usage metric reflects how much of this shared memory is in use at the time of each invocation.
+
+Deployment markers on the chart let you correlate memory changes with specific code deployments, making it easier to identify whether a new version introduced a memory regression.
+
+If you see memory usage trending upward over time, this may indicate a memory leak. Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to take heap snapshots and identify specific objects causing high memory consumption.
+
 ### Invocation statuses
 
 To review invocation statuses:
@@ -91,7 +103,7 @@ To review invocation statuses:
 
 </Steps>
 
-Worker invocation statuses indicate whether a Worker executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/errors/#error-pages-generated-by-workers) being returned to the client.
+Worker invocation statuses indicate whether a Worker executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from [HTTP status codes](/support/troubleshooting/http-status-codes/). In some cases, a Worker invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/errors/#error-pages-generated-by-workers) being returned to the client.
 
 | Invocation status      | Definition                                                                   | Workers error code | GraphQL field          |
 | ---------------------- | ---------------------------------------------------------------------------- | ------------------ | ---------------------- |

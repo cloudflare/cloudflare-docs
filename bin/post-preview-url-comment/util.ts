@@ -11,7 +11,9 @@ export const filenameToPath = (filename: string) => {
 	const changelogIdx = segments.findIndex((s) => s === "changelog");
 
 	if (changelogIdx !== -1) {
-		segments.splice(changelogIdx + 1, 1);
+		// Remove the product subfolder and insert "post" so that
+		// changelog/waf/2025-01-15 becomes changelog/post/2025-01-15
+		segments.splice(changelogIdx + 1, 1, "post");
 	}
 
 	return segments

@@ -1,0 +1,82 @@
+---
+// Landing mega-nav: static section headings over the shared ui/sidebar
+// primitives (SidebarGroup + SidebarLink).
+import { SidebarGroup, SidebarLink } from "@/components/ui/sidebar";
+import { sidebarSections, type SidebarNode } from "./sidebar-data";
+import type { SidebarItem } from "nimbus-docs/types";
+
+interface Props {
+	currentPath: string;
+	class?: string;
+}
+
+const { currentPath, class: className = "" } = Astro.props;
+
+const normalize = (p: string) => (p.length > 1 ? p.replace(/\/$/, "") : p);
+const current = normalize(currentPath);
+const isActive = (href: string) => normalize(href) === current;
+
+function toItem(node: SidebarNode, order: number): SidebarItem {
+	if (node.type === "link") {
+		return {
+			type: "link",
+			label: node.label,
+			href: node.href,
+			isCurrent: isActive(node.href),
+			order,
+		};
+	}
+	return {
+		type: "group",
+		label: node.label,
+		collapsed: node.collapsed ?? true,
+		children: node.nodes.map(toItem),
+		order,
+	};
+}
+---
+
+<div data-nb-sidebar class:list={["flex flex-col gap-0.5", className]}>
+	{
+		sidebarSections.map((section, i) => (
+			<div data-nb-sidebar-group class:list={[i > 0 && "mt-3"]}>
+				<p
+					data-nb-sidebar-group-label
+					class="mb-1 px-3 text-[0.6875rem] font-medium tracking-[0.05em] text-foreground uppercase opacity-45"
+				>
+					{section.heading}
+				</p>
+				<ul class="flex list-none flex-col gap-0.5 p-0">
+					{section.nodes.map((node, idx) => (
+						<li>
+							{node.type === "link" ? (
+								<SidebarLink
+									label={node.label}
+									href={node.href}
+									isCurrent={isActive(node.href)}
+								/>
+							) : (
+								<SidebarGroup
+									label={node.label}
+									icon={node.icon}
+									items={node.nodes.map(toItem)}
+									collapsed={node.collapsed ?? true}
+								/>
+							)}
+						</li>
+					))}
+				</ul>
+			</div>
+		))
+	}
+</div>
+
+<script>
+	import "@/components/ui/sidebar/sidebar.client";
+</script>
+
+<style is:global>
+	[data-nb-sidebar-hidden] {
+		display: none;
+	}
+</style>

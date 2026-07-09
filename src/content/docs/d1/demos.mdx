@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { ExternalResources, GlossaryTooltip, ResourcesBySelector } from "~/components"
+import { GlossaryTooltip, ResourcesBySelector } from "~/components";
 
 Learn how you can use D1 within your existing application and architecture.
 
@@ -24,14 +24,15 @@ To simulate how read replication can improve a worst case latency scenario, sele
 You can find this in the **Database location hint** dropdown.
 :::
 
-## Demos
-
-Explore the following <GlossaryTooltip term="demo application">demo applications</GlossaryTooltip> for D1.
-
-<ExternalResources type="apps" products={["D1"]} />
-
 ## Reference architectures
 
 Explore the following <GlossaryTooltip term="reference architecture">reference architectures</GlossaryTooltip> that use D1:
 
-<ResourcesBySelector types={["reference-architecture","design-guide","reference-architecture-diagram"]} products={["d1"]} />
+<ResourcesBySelector
+	types={[
+		"reference-architecture",
+		"design-guide",
+		"reference-architecture-diagram",
+	]}
+	products={["d1"]}
+/>

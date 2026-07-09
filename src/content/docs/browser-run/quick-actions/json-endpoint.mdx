@@ -5,7 +5,7 @@ description: Extract structured JSON data from webpages using AI with the Browse
 tags:
   - JSON
 sidebar:
-  order: 8
+  order: 9
 products:
   - browser-run
 ---
@@ -46,7 +46,7 @@ And at least one of:
 - Normalize article metadata (title, author, publish date, canonical URL)
 - Convert unstructured pages into typed JSON for downstream pipelines
 
-## Basic Usage
+## Basic usage
 
 ### With a Prompt and JSON schema
 
@@ -55,15 +55,15 @@ And at least one of:
 This example captures webpage data by providing both a prompt and a JSON schema. The prompt guides the extraction process, while the JSON schema defines the expected structure of the output.
 
 ```bash
-curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
-  --header 'authorization: Bearer CF_API_TOKEN' \
-  --header 'content-type: application/json' \
-  --data '{
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+  -H 'authorization: Bearer <apiToken>' \
+  -H 'content-type: application/json' \
+  -d '{
   "url": "https://developers.cloudflare.com/",
   "prompt": "Get me the list of AI products",
   "response_format": {
     "type": "json_schema",
-    "schema": {
+    "json_schema": {
         "type": "object",
         "properties": {
           "products": {
@@ -119,23 +119,103 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
+</TabItem> <TabItem label="TypeScript SDK">
+
+Below is an example using the TypeScript SDK:
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
+});
+
+const json = await client.browserRendering.json.create({
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://developers.cloudflare.com/",
+	prompt: "Get me the list of AI products",
+	response_format: {
+		type: "json_schema",
+		json_schema: {
+			type: "object",
+			properties: {
+				products: {
+					type: "array",
+					items: {
+						type: "object",
+						properties: {
+							name: {
+								type: "string",
+							},
+							link: {
+								type: "string",
+							},
+						},
+						required: ["name"],
+					},
+				},
+			},
+		},
+	},
+});
+console.log(json);
+```
+
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("json", {
+			url: "https://developers.cloudflare.com/",
+			prompt: "Get me the list of AI products",
+			response_format: {
+				type: "json_schema",
+				json_schema: {
+					type: "object",
+					properties: {
+						products: {
+							type: "array",
+							items: {
+								type: "object",
+								properties: {
+									name: { type: "string" },
+									link: { type: "string" },
+								},
+								required: ["name"],
+							},
+						},
+					},
+				},
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
 ### With only a prompt
 
 In this example, only a prompt is provided. The endpoint will use the prompt to extract the data, but the response will not be structured according to a JSON schema.
 This is useful for simple extractions where you do not need a specific format.
 
 ```bash
-curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
-  --header 'authorization: Bearer CF_API_TOKEN' \
-  --header 'content-type: application/json' \
-  --data '{
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+  -H 'authorization: Bearer <apiToken>' \
+  -H 'content-type: application/json' \
+  -d '{
     "url": "https://developers.cloudflare.com/",
     "prompt": "get me the list of AI products"
   }'
 ```
 
 ```json output
-
+{
 	"success": true,
 	"result": {
 		"AI Products": [
@@ -154,33 +234,36 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 In this case, you supply a JSON schema via the `response_format` parameter. The schema defines the structure of the extracted data.
 
 ```bash
-curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
-  --header 'authorization: Bearer CF_API_TOKEN' \
-  --header 'content-type: application/json' \
-  --data '"response_format": {
-    "type": "json_schema",
-    "schema": {
-        "type": "object",
-        "properties": {
-          "products": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "link": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "name"
-              ]
-            }
-          }
-        }
-      }
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+  -H 'authorization: Bearer <apiToken>' \
+  -H 'content-type: application/json' \
+  -d '{
+	"url": "https://developers.cloudflare.com/",
+	"response_format": {
+		"type": "json_schema",
+		"json_schema": {
+			"type": "object",
+			"properties": {
+			"products": {
+				"type": "array",
+				"items": {
+				"type": "object",
+				"properties": {
+					"name": {
+					"type": "string"
+					},
+					"link": {
+					"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				]
+				}
+			}
+			}
+		}
+    }
   }'
 ```
 
@@ -254,51 +337,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
-</TabItem> <TabItem label="TypeScript SDK">
-
-Below is an example using the TypeScript SDK:
-
-```typescript
-import Cloudflare from "cloudflare";
-
-const client = new Cloudflare({
-	apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
-});
-
-const json = await client.browserRendering.json.create({
-	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
-	url: "https://developers.cloudflare.com/",
-	prompt: "Get me the list of AI products",
-	response_format: {
-		type: "json_schema",
-		schema: {
-			type: "object",
-			properties: {
-				products: {
-					type: "array",
-					items: {
-						type: "object",
-						properties: {
-							name: {
-								type: "string",
-							},
-							link: {
-								type: "string",
-							},
-						},
-						required: ["name"],
-					},
-				},
-			},
-		},
-	},
-});
-console.log(json);
-```
-
-</TabItem> </Tabs>
-
-## Advanced Usage
+## Advanced usage
 
 :::note[Looking for more parameters?]
 Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/json/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
@@ -314,16 +353,15 @@ Browser Run can use a custom model for which you supply credentials. List the mo
 This example uses the `custom_ai` parameter to instruct Browser Run to use a Anthropic's Claude Sonnet 4 model. The prompt asks the model to extract the main `<h1>` and `<h2>` headings from the target URL and return them in a structured JSON object.
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json \
-  --header 'authorization: Bearer CF_API_TOKEN' \
-  --header 'content-type: application/json' \
-  --data '{
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+  -H 'authorization: Bearer <apiToken>' \
+  -H 'content-type: application/json' \
+  -d '{
   "url": "http://demoto.xyz/headings",
   "prompt": "Get the heading from the page in the form of an object like h1, h2. If there are many headings of the same kind then grab the first one.",
   "response_format": {
     "type": "json_schema",
-    "schema": {
+    "json_schema": {
       "type": "object",
       "properties": {
         "h1": {
@@ -344,7 +382,7 @@ curl --request POST \
       "authorization": "Bearer <ANTHROPIC_API_KEY>"
     }
   ]
-}
+}'
 ```
 
 ```json output

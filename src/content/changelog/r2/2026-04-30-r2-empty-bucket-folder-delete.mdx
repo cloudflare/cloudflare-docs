@@ -1,0 +1,25 @@
+---
+title: Empty buckets and delete folders from the R2 dashboard
+description: You can now empty an entire bucket or delete folders directly from the R2 dashboard.
+products:
+  - r2
+date: 2026-04-30
+---
+
+You can now empty an entire [R2](/r2/) bucket or delete folders directly from the dashboard. Emptying a bucket is required before you can delete it. Previously, this required scripting or configuring [lifecycle rules](/r2/buckets/object-lifecycles/). Now, the dashboard can handle it in a single action.
+
+#### Empty a bucket
+
+Go to your bucket's **Settings** tab and select **Empty** under the **Empty Bucket** section. This deletes all objects in the bucket while preserving the bucket and its configuration. For large buckets, the operation runs in the background and the dashboard displays progress.
+
+Emptying a bucket is also a prerequisite for deleting it. The dashboard now guides you through both steps in one place.
+
+![Empty Bucket and Delete Bucket sections in the R2 dashboard Settings tab](~/assets/images/r2/empty-bucket-changelog.png)
+
+#### Delete folders
+
+R2 uses a flat object structure. The dashboard groups objects that share a common prefix into folders when the **View prefixes as directories** checkbox is selected. Deleting a folder removes every object under that prefix.
+
+From the **Objects** tab, you can select one or more folders and delete them alongside individual objects.
+
+For step-by-step instructions, refer to [Delete buckets](/r2/buckets/delete-buckets/) and [Delete objects](/r2/objects/delete-objects/).

@@ -25,7 +25,7 @@ To see if a response came from the cache, check the `cf-aig-cache-status` header
 Consider these behaviors when using similarity caching:
 
 - **Volatile Cache**: If two similar requests hit at the same time, the first might not cache in time for the second to use it, resulting in a `MISS`.
-- **30-Day Cache**: Cached responses last 30 days, then expire automatically. No custom durations for now.
+- **Configurable duration**: Cached responses expire based on the instance's `cache_ttl` setting. The default is 48 hours.
 - **Data Dependency**: Cached responses are tied to specific document chunks. If those chunks change or get deleted, the cache clears to keep answers fresh.
 
 ## How similarity matching works
@@ -49,6 +49,36 @@ The similarity threshold decides how close two prompts need to be to reuse a cac
 | Strong    | `close_enough` (default) | High semantic similarity    | "What's the weather like today?" matches with "How's the weather today?"        |
 | Broad     | `flexible_friend`        | Moderate match, more hits   | "What's the weather like today?" matches with "Tell me today's weather"         |
 | Loose     | `anything_goes`          | Low similarity, max reuse   | "What's the weather like today?" matches with "Give me the forecast"            |
+
+## Set cache duration
+
+Set `cache_ttl` when creating or updating an instance to control how long the instance retains cached responses. Allowed values are:
+
+| Duration   | API value |
+| ---------- | --------- |
+| 10 minutes | `600`     |
+| 30 minutes | `1800`    |
+| 1 hour     | `3600`    |
+| 2 hours    | `7200`    |
+| 6 hours    | `21600`   |
+| 12 hours   | `43200`   |
+| 24 hours   | `86400`   |
+| 48 hours   | `172800`  |
+| 72 hours   | `259200`  |
+| 6 days     | `518400`  |
+
+## Purge cached responses
+
+To clear all cached responses for an instance immediately, use the purge cache operation:
+
+```sh
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_NAME/purge_cache" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Purging the cache rotates the instance's internal cache key, so new queries do not reuse previous cached responses.
+
+You can also purge cached responses from the instance settings page in the Cloudflare dashboard.
 
 ## Per-request cache override
 

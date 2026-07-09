@@ -1,12 +1,15 @@
 ---
 pcx_content_type: get-started
 title: Build using UI Kit
+description: Get started with the RealtimeKit UI Kit to add a prebuilt meeting experience to your application.
 sidebar:
   order: 5
   label: Getting Started
+products:
+  - realtime
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, Details } from "~/components";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 The default RealtimeKit Meeting UI component gives you a complete meeting experience out of the box, with all the essential features built in. Drop it into your app and you are ready to go.
@@ -276,7 +279,6 @@ Call `RealtimeKitUIBuilder.dispose()` when you no longer need the meeting UI.
 ## Initialize the SDK
 
 Use the `useRealtimeKitClient` hook from the core React Native package to create a meeting instance:
-
 Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ```typescript

@@ -84,7 +84,7 @@ Both Cloudflare Mesh and [Cloudflare Tunnel](/cloudflare-one/networks/connectors
 | **Connector**         | `warp-cli`                                          | `cloudflared`                                             |
 | **Protocols**         | TCP, UDP, ICMP                                      | HTTP/S, TCP, SSH, RDP, SMB (proxied over WebSocket)       |
 
-Use Mesh when devices need to reach each other by private IP. Use Tunnel when you want to publish services by hostname or proxy traffic to specific IP ranges through `cloudflared`.
+Use Mesh when devices need to reach each other by private IP, or when your workload requires stable, long-lived TCP connections (SAP, database replication, ERP systems, RDP sessions). Mesh operates at L3/L4 and preserves connections end-to-end, making it the recommended software on-ramp for any traffic sensitive to connection interruptions. Use Tunnel when you want to publish services by hostname or proxy traffic to specific IP ranges through `cloudflared`.
 
 <Details header="Coming from another mesh networking product?">
 
@@ -115,3 +115,4 @@ Key differences:
 3. [**Add routes**](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) (optional) — Make subnets behind a Mesh node reachable from any device.
 4. [**Enable high availability**](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) (optional) — Run multiple replicas of a node for failover.
 5. [**Connect from Workers**](/workers-vpc/examples/connect-to-cloudflare-mesh/) (optional) — Use VPC Network bindings to reach private services from Cloudflare Workers.
+6. [**Delegate access**](/cloudflare-one/networks/connectors/granular-permissions/) (optional) — Scope member permissions to specific Mesh nodes instead of granting account-wide control.

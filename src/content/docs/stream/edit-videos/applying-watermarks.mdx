@@ -9,6 +9,8 @@ products:
 
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 You can add watermarks to videos uploaded using the Stream API.
 
 To add watermarks to your videos, first create a watermark profile. A watermark profile describes the image you would like to be used as a watermark and the position of that image. Once you have a watermark profile, you can use it as an option when uploading videos.
@@ -19,20 +21,145 @@ Watermark profile has many customizable options. However, the default parameters
 
 ### Step 1: Create a profile
 
+<Tabs>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -X POST -H 'Authorization: Bearer <API_TOKEN>' \
 -F file=@/Users/rchen/cloudflare.png \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const watermark = await client.stream.watermarks.create({
+	account_id: '<ACCOUNT_ID>',
+	file: '@/path/to/image.png',
+	name: 'marketing videos',
+});
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const response = await fetch("https://example.com/cloudflare.png");
+		const readableStream = response.body!;
+		const watermark = await env.STREAM.watermarks.generate(readableStream, {
+			name: "marketing videos",
+		});
+		return new Response(JSON.stringify({ watermark }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
 
 ### Step 2: Specify the profile UID at upload
 
+<Tabs>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 tus-upload --chunk-size 5242880 \
 --header Authentication 'Bearer <API_TOKEN>' \
 --metadata watermark <WATERMARK_UID> \
 /Users/rchen/cat.mp4 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const video = await client.stream.copy.create({
+	account_id: '<ACCOUNT_ID>',
+	url: 'https://example.com/video.mp4',
+	watermark: { uid: '<WATERMARK_UID>' },
+});
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const video = await env.STREAM.upload(
+			"https://example.com/video.mp4",
+			{ watermarkId: "<WATERMARK_UID>" },
+		);
+		return new Response(JSON.stringify({ video }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
 
 ### Step 3: Done
 
@@ -84,6 +211,11 @@ To create, list, delete, or get information about the profile, you will need you
 
 To upload the image directly, please send a POST request using `multipart/form-data` as the content-type and specify the file under the `file` key. All other fields are optional.
 
+<Tabs>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -F file=@{path-to-image-locally} \
@@ -94,11 +226,124 @@ curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -F position=upperRight \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const watermark = await client.stream.watermarks.create({
+	account_id: '<ACCOUNT_ID>',
+	file: '@/path/to/image.png',
+	name: 'marketing videos',
+	opacity: 1.0,
+	padding: 0.05,
+	scale: 0.15,
+	position: 'upperRight',
+});
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const response = await fetch("https://example.com/cloudflare.png");
+		const readableStream = response.body!;
+		const watermark = await env.STREAM.watermarks.generate(readableStream, {
+			name: "marketing videos",
+			opacity: 1.0,
+			padding: 0.05,
+			scale: 0.15,
+			position: "upperRight",
+		});
+		return new Response(JSON.stringify({ watermark }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
 
 ### Use Case 2: Pass a URL to an image
 
 To specify a URL for upload, please send a POST request using `application/json` as the content-type and specify the file location using the `url` key. All other fields are optional.
 
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const watermark = await env.STREAM.watermarks.generate(
+			"https://example.com/logo.png",
+			{
+				name: "marketing videos",
+				opacity: 1.0,
+				padding: 0.05,
+				scale: 0.15,
+				position: "upperRight",
+			},
+		);
+		return new Response(JSON.stringify({ watermark }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -H 'Content-Type: application/json' \
@@ -112,6 +357,33 @@ curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 }' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+// The TypeScript SDK does not support URL-based watermark creation.
+// Use the file-based approach instead:
+const watermark = await client.stream.watermarks.create({
+	account_id: '<ACCOUNT_ID>',
+	file: '@/path/to/image.png',
+	name: 'marketing videos',
+	opacity: 1.0,
+	padding: 0.05,
+	scale: 0.15,
+	position: 'upperRight',
+});
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+</Tabs>
 
 #### Example response to creating a watermark profile
 
@@ -148,6 +420,47 @@ Unfortunately, Stream does not currently support specifying watermark profile at
 
 ### Upload video with a link
 
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const video = await env.STREAM.upload(
+			"https://example.com/video.mp4",
+			{ watermarkId: "<WATERMARK_UID>" },
+		);
+		return new Response(JSON.stringify({ video }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -H 'Content-Type: application/json' \
@@ -159,6 +472,27 @@ curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 }' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const video = await client.stream.copy.create({
+	account_id: '<ACCOUNT_ID>',
+	url: 'https://example.com/video.mp4',
+	watermark: { uid: '<WATERMARK_UID>' },
+});
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+</Tabs>
 
 #### Example response to upload video with a link
 
@@ -202,6 +536,47 @@ tus-upload --chunk-size 5242880 \
 
 The video uploaded with the generated unique one-time URL will be watermarked with the profile specified.
 
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const directUpload = await env.STREAM.createDirectUpload({
+			maxDurationSeconds: 3600,
+			watermark: { id: "<WATERMARK_UID>" },
+		});
+		return new Response(JSON.stringify({ directUpload }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -H 'Content-Type: application/json' \
@@ -213,6 +588,27 @@ curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 }' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const directUpload = await client.stream.directUpload.create({
+	account_id: '<ACCOUNT_ID>',
+	maxDurationSeconds: 3600,
+	watermark: { uid: '<WATERMARK_UID>' },
+});
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+</Tabs>
 
 #### Example response to direct user uploads
 
@@ -249,10 +645,68 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload
 
 To view a watermark profile that you created:
 
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const watermark = await env.STREAM.watermarks.get("<WATERMARK_UID>");
+		return new Response(JSON.stringify({ watermark }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -H "Authorization: Bearer <API_TOKEN>" \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/<WATERMARK_UID>
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const watermark = await client.stream.watermarks.get(
+	'<WATERMARK_UID>',
+	{ account_id: '<ACCOUNT_ID>' },
+);
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+</Tabs>
 
 ### Example response to get a watermark profile
 
@@ -281,10 +735,67 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/<WA
 
 To list watermark profiles that you created:
 
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const watermarks = await env.STREAM.watermarks.list();
+		return new Response(JSON.stringify({ watermarks }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -H "Authorization: Bearer <API_TOKEN>" \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+const watermarks = await client.stream.watermarks.list({
+	account_id: '<ACCOUNT_ID>',
+});
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+</Tabs>
 
 ### Example response to list watermark profiles
 
@@ -328,10 +839,68 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/
 
 To delete a watermark profile that you created:
 
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		await env.STREAM.watermarks.delete("<WATERMARK_UID>");
+		return new Response(JSON.stringify({ success: true }));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+<TabItem label="REST API">
+
+	<Tabs>
+		<TabItem label="cURL">
 ```bash
 curl -X DELETE -H 'Authorization: Bearer <API_TOKEN>' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/<WATERMARK_UID>
 ```
+		</TabItem>
+		<TabItem label="TypeScript">
+```ts
+const client = new Cloudflare({
+	apiEmail: process.env['CLOUDFLARE_EMAIL'],
+	apiKey: process.env['CLOUDFLARE_API_KEY'],
+});
+
+await client.stream.watermarks.delete(
+	'<WATERMARK_UID>',
+	{ account_id: '<ACCOUNT_ID>' },
+);
+```
+		</TabItem>
+	</Tabs>
+
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+</Tabs>
 
 If the operation was successful, it will return a success response:
 

@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: Environment variables
 head: []
 description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
+products:
+  - workers
 ---
 
 import { Render, TabItem, Tabs, TypeScriptExample, WranglerConfig, DashButton } from "~/components";
@@ -43,6 +45,17 @@ export default {
 		return new Response(`API host: ${env.API_HOST}`);
 	},
 } satisfies ExportedHandler<Env>;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Environment variables are accessed via attribute access on self.env
+        return Response(f"API host: {self.env.API_HOST}")
 ```
 
 </TabItem> </Tabs>

@@ -5,31 +5,29 @@
 
 import { Render } from "~/components"
 
-<Render file="access/self-hosted-app/create-app" product="cloudflare-one" />
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
-6. Select **Add public hostname**.
+2. Select **Create new application**.
 
-7. <Render file="access/self-hosted-app/choose-domain" product="cloudflare-one" />
+3. Select **Self-hosted and private**.
 
-8. (Optional) Configure **Browser rendering settings**:
-		- [Automatic `cloudflared` authentication](/cloudflare-one/access-controls/applications/non-http/cloudflared-authentication/automatic-cloudflared-authentication/)
-		- [Browser rendering for SSH, VNC, or RDP](/cloudflare-one/access-controls/applications/non-http/browser-rendering/)
+4. Select **Add public hostname**.
 
-9. <Render file="access/add-access-policies" product="cloudflare-one" />
+5. <Render file="access/self-hosted-app/choose-domain" product="cloudflare-one" />
 
-10. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "public" }}/>
+6. <Render file="access/add-access-policies" product="cloudflare-one" />
 
-11. Select **Next**.
+7. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "public" }}/>
 
-12. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
+8. <Render file="access/configure-independent-mfa" product="cloudflare-one" />
 
-13. <Render file="access/configure-independent-mfa" product="cloudflare-one" />
+9. <Render file="access/session-duration" product="cloudflare-one" />
 
-14. <Render file="access/access-block-page" product="cloudflare-one" />
+10. (Optional) Go to the **Additional settings** tab to customize the application experience:
 
-15. Select **Next**.
+	- **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/).
+	- <Render file="access/access-block-page" product="cloudflare-one" />
+	<Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
 
-16. <Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
-
-17. Select **Save**.
+11. Select **Create**.
 

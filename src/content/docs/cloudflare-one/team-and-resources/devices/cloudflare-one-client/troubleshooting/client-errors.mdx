@@ -105,6 +105,10 @@ Below is a non-exhaustive list of third-party software that are known to cause `
   1. Stop/quit all VMs.
   2. Connect the Cloudflare One Client.
   3. Start the VMs again.
+- **Apple Container**: [Apple Container](https://github.com/apple/container) will also bind `mDNSResponder` to port `53` if started before the Cloudflare One Client (or while the Client is stopped).
+  1. On macOS, run this in the terminal to temporarily stop the container system: `container system stop`
+  2. Cloudflare One Client DNS mode should now start with no errors.
+  3. You can then restart the container system (`container system start`) and pass explicit DNS flags when running containers.
 
 </Details>
 

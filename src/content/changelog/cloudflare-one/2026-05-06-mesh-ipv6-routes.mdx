@@ -1,0 +1,11 @@
+---
+title: IPv6 CIDR routes for Cloudflare Mesh
+description: Cloudflare Mesh nodes now support advertising IPv6 CIDR routes in addition to IPv4.
+date: 2026-05-06
+---
+
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) nodes now support IPv6 CIDR routes. You can advertise both IPv4 and IPv6 subnets through your Mesh nodes, making IPv6-only or dual-stack private networks reachable from any enrolled device.
+
+![IPv6 CIDR routes on a Mesh node in the Cloudflare dashboard](~/assets/images/cloudflare-one/connections/mesh-ipv6-routes.png)
+
+To add an IPv6 route, follow the same steps as [adding an IPv4 route](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#add-a-route) — enter the IPv6 CIDR (for example, `fd00::/64`) when configuring the route in the [dashboard](https://dash.cloudflare.com/?to=/:account/mesh) or via the API.

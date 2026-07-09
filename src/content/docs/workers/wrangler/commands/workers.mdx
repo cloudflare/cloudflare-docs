@@ -4,6 +4,8 @@ title: Workers
 description: Wrangler commands for creating, developing, deploying, and managing Workers.
 sidebar:
   order: 1
+products:
+  - workers
 ---
 
 import {
@@ -119,6 +121,10 @@ None of the options for this command are required. Many of these options can be 
   - Specify directory to use for local persistence.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Develop against remote resources and data stored on Cloudflare's network.
+- `--tunnel` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Expose your local dev server over a Cloudflare Tunnel. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/).
+- `--tunnel-name` <Type text="string" /> <MetaInfo text="optional" />
+  - Use an existing named Cloudflare Tunnel. Combine with `--tunnel` to open it automatically at startup.
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*` or `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
 - `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />
@@ -132,11 +138,15 @@ None of the options for this command are required. Many of these options can be 
 - `--local` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Run in local mode. In this mode:
     - the Worker code is running locally on your machine
-    - all [remote bindings](/workers/development-testing/#remote-bindings) are disabled, which behaves exactly as if they were configured with `remote: false`.
+    - all [remote bindings](/workers/local-development/#remote-bindings) are disabled, which behaves exactly as if they were configured with `remote: false`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
-`wrangler dev` is a way to [locally test](/workers/development-testing/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+
+:::note
+`wrangler dev` runs the local `workerd` runtime with `TZ=UTC` to match the production Cloudflare runtime. `Date` and `Intl` APIs inside your Worker observe UTC during local development, regardless of your machine's timezone.
+:::
 
 ---
 
@@ -145,6 +155,8 @@ None of the options for this command are required. Many of these options can be 
 Deploy your Worker to Cloudflare.
 
 When you run `wrangler deploy` in a project directory without a Wrangler configuration file, Wrangler will [automatically detect your framework](/workers/framework-guides/automatic-configuration/) and configure your project for Cloudflare Workers. This command will prompt you to confirm the detected settings before applying changes. Confirm that you would like to proceed, and your project will be configured and deployed.
+
+To deploy from an AI agent or another environment before Cloudflare authentication is available, use `wrangler deploy --temporary`. This flow requires Wrangler 4.102.0 or later. Wrangler creates or reuses a temporary preview account, deploys to that account, and prints a claim URL. For more information, refer to [Claim deployments](/workers/platform/claim-deployments/).
 
 To configure your project without deploying, use [`wrangler setup`](#setup) instead.
 
@@ -238,6 +250,8 @@ None of the options for this command are required. Also, many can be set in your
   - A descriptive message for this Worker version and deployment. Matches the behavior of `wrangler versions upload --message`. The message is also applied to the deployment.
 - `--yes` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip confirmation prompts and run [automatic project configuration](/workers/framework-guides/automatic-configuration/) non-interactively using detected settings. Only applicable when no Wrangler configuration file exists in your project.
+- `--temporary` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Deploy with a temporary preview account when no Cloudflare credentials are available. Requires Wrangler 4.102.0 or later. Wrangler prints a claim URL that lets you claim the deployment within 60 minutes. This is intended for AI agents and other first-time deployment flows. If Wrangler can already use OAuth, `CLOUDFLARE_API_TOKEN`, or a global API key, this flag returns an error. For more information, refer to [Claim deployments](/workers/platform/claim-deployments/).
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -274,7 +288,7 @@ This command configures your project for Cloudflare Workers without deploying. I
 
 Manage the secret variables for a Worker.
 
-This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](#versions-secret-put) commands.
+This action creates a new [version](/workers/versions-and-deployments/#versions) of the Worker and [deploys](/workers/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](#versions-secret-put) commands.
 
 <WranglerCommand command="secret put" headingLevel={3} />
 
@@ -317,14 +331,23 @@ npx wrangler secret list
 
 ---
 
-<WranglerCommand command="secret bulk" headingLevel={3} />
+<WranglerCommand
+	command="secret bulk"
+	headingLevel={3}
+	description="Create, update, or delete multiple secrets for a Worker in a single request, with up to 100 secrets per command."
+/>
 
-The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
+:::note
+Deleting secrets by setting a key to `null` requires wrangler version 4.97.0 or later and JSON format. Deletion is not supported with `.env` files.
+:::
+
+The following is an example of creating, updating, and deleting secrets from a JSON file redirected to `stdin`. Set a key to `null` to delete it.
 
 ```json
 {
 	"secret-name-1": "secret-value-1",
-	"secret-name-2": "secret-value-2"
+	"secret-name-2": "secret-value-2",
+	"secret-name-3": null
 }
 ```
 
@@ -333,15 +356,14 @@ npx wrangler secret bulk < secrets.json
 ```
 
 ```sh output
-🌀 Creating the secrets for the Worker "script-name"
+🌀 Processing the secrets for the Worker "script-name"
 ✨ Successfully created secret for key: secret-name-1
-...
-🚨 Error uploading secret for key: secret-name-1
 ✨ Successfully created secret for key: secret-name-2
+💥 Successfully deleted secret for key: secret-name-3
 
-Finished processing secrets JSON file:
-✨ 1 secrets successfully uploaded
-🚨 1 secrets failed to upload
+Finished processing secrets file:
+✨ 2 secrets successfully created
+💥 1 secrets successfully deleted
 ```
 
 ---
@@ -369,13 +391,13 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 
 <WranglerCommand
 	command="versions upload"
-	description="Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
+	description="Upload a new [version](/workers/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
 	headingLevel={3}
 />
 
 <WranglerCommand
 	command="versions deploy"
-	description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
+	description="Deploy a previously created [version](/workers/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
 	headingLevel={3}
 />
 
@@ -416,7 +438,7 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 
 ## `deployments`
 
-[Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
+[Deployments](/workers/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.

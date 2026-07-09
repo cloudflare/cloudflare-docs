@@ -1,11 +1,14 @@
 ---
 title: Events & schemas
+description: Reference of available event sources and their schemas for Queues event subscriptions.
 pcx_content_type: reference
 sidebar:
   order: 2
 head:
   - tag: title
     content: Events & schemas
+products:
+  - queues
 ---
 
 import { Render } from "~/components";
@@ -17,6 +20,10 @@ This page provides a comprehensive reference of available event sources and thei
 ### Access
 
 <Render file="event-subscriptions/access-events" product="queues" />
+
+### Artifacts
+
+<Render file="event-subscriptions/artifacts-events" product="queues" />
 
 ### R2
 
@@ -50,12 +57,12 @@ This page provides a comprehensive reference of available event sources and thei
 
 All events include these common fields:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `type` | string | The event type identifier |
-| `source` | object | Contains source-specific information like IDs and names |
-| `metadata.accountId` | string | Your Cloudflare account ID |
-| `metadata.eventSubscriptionId` | string | The subscription that triggered this event |
-| `metadata.eventSchemaVersion` | number | The version of the event schema |
-| `metadata.eventTimestamp` | string | The ISO 8601 timestamp when the event occurred |
-| `payload` | object | The event-specific data containing details about what happened |
+| Field                          | Type   | Description                                                    |
+| ------------------------------ | ------ | -------------------------------------------------------------- |
+| `type`                         | string | The event type identifier                                      |
+| `source`                       | object | Contains source-specific information like IDs and names        |
+| `metadata.accountId`           | string | Your Cloudflare account ID                                     |
+| `metadata.eventSubscriptionId` | string | The subscription that triggered this event                     |
+| `metadata.eventSchemaVersion`  | number | The version of the event schema                                |
+| `metadata.eventTimestamp`      | string | The ISO 8601 timestamp when the event occurred                 |
+| `payload`                      | object | The event-specific data containing details about what happened |

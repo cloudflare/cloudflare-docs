@@ -4,6 +4,8 @@ title: Prompt caching
 sidebar:
   order: 3
 description: Use prefix caching and the x-session-affinity header to reduce latency and inference costs on Workers AI.
+products:
+  - workers-ai
 ---
 
 Prompt caching (also called prefix caching) is a performance optimization that allows Workers AI to respond faster to requests with prompts that share common inputs. It reduces Time to First Token (TTFT) and increases Tokens Per Second (TPS) throughput by reusing previously computed input tensors instead of reprocessing them from scratch.

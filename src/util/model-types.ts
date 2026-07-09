@@ -3,7 +3,49 @@
  * These don't depend on Astro and can be used in React components.
  */
 
-import type { CodeSnippet, ModelExample } from "~/schemas/catalog-models";
+import type {
+	CatalogBanner,
+	CodeSnippet,
+	ModelExample,
+} from "~/schemas/catalog-models";
+
+/**
+ * Slimmed model type for the catalog index pages.
+ * Only includes the fields needed to render model cards and run filters.
+ * schema, apiModes, codeSnippets, examples, metadata, etc. are stripped
+ * to avoid serializing megabytes of JSON Schema data into the page HTML.
+ */
+export interface ModelCardData {
+	name: string;
+	modelId: string;
+	slug: string;
+	displayName: string;
+	description: string;
+	task: {
+		id: string;
+		name: string;
+		description: string;
+	};
+	tags: string[];
+	contextLength?: number;
+	maxOutputTokens?: number;
+	supportsAsync: boolean;
+	id: string;
+	source: number;
+	created_at?: string;
+	properties: Array<{
+		property_id: string;
+		value: string | Array<Record<string, unknown>>;
+	}>;
+	dataSource: "catalog" | "legacy";
+	hosting: "proxied" | "hosted";
+	/**
+	 * Optional supplementary note about ZDR support (plan requirements,
+	 * conditions, etc.). Rendered as a `title` tooltip on the ZDR badge
+	 * when present. Null/undefined leaves the badge without a tooltip.
+	 */
+	zdrComment?: string | null;
+}
 
 /**
  * Represents a distinct API mode for a model (e.g., sync, streaming, batch).
@@ -52,9 +94,6 @@ export interface ResolvedModel {
 	maxOutputTokens?: number;
 	supportsAsync: boolean;
 
-	// Pricing
-	pricing?: Record<string, number>;
-
 	// Enhanced fields (catalog only)
 	codeSnippets?: CodeSnippet[];
 	examples?: ModelExample[];
@@ -88,4 +127,31 @@ export interface ResolvedModel {
 	// hosted models run on Cloudflare infrastructure.
 	// Currently inferred from data source; will eventually come from the Deus CMS.
 	hosting: "proxied" | "hosted";
+
+	/**
+	 * Optional supplementary note about ZDR support (plan requirements,
+	 * conditions, etc.). Surfaced from `zdr_comment` on the catalog row;
+	 * legacy Workers AI models never set it. Rendered as a `title`
+	 * tooltip on the ZDR badge in `ModelBadges`.
+	 */
+	zdrComment?: string | null;
+
+	/**
+	 * In-page notice surfaced from the catalog `banner` field. Rendered as
+	 * a Starlight `Aside` directly under the description on the model
+	 * detail page. Legacy Workers AI models never set this — only catalog
+	 * rows carry it, and most carry `null`.
+	 */
+	banner?: CatalogBanner | null;
+
+	/**
+	 * Request-format identifiers the model accepts at the API layer (e.g.
+	 * "chat-completions", "responses", "anthropic-messages"). Surfaced
+	 * from the catalog `request_formats` array. Rendered as a "Request
+	 * formats" row in the Model Info table when non-empty. Distinct from
+	 * `apiModes`, which describes sync/streaming/batch variants derived
+	 * from the JSON Schema; `requestFormats` is the upstream's own
+	 * declaration of accepted request shapes.
+	 */
+	requestFormats?: string[] | null;
 }

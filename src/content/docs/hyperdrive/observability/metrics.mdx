@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
-description: Inspect query volume, latency, and cache hit ratios for your Hyperdrive configurations.
+description: Inspect query volume, latency, cache hit ratios, and connection pool sizes for your Hyperdrive configurations.
 sidebar:
   order: 20
 products:
@@ -10,11 +10,15 @@ products:
 
 import { DashButton } from "~/components";
 
-Hyperdrive exposes analytics that allow you to inspect query volume, query latency, and cache hit ratios for each Hyperdrive configuration in your account.
+Hyperdrive exposes analytics that allow you to inspect query volume, query latency, cache hit ratios, and connection pool metrics for each Hyperdrive configuration in your account.
 
 ## Metrics
 
-Hyperdrive currently exports the below metrics as part of the `hyperdriveQueriesAdaptiveGroups` GraphQL dataset:
+Hyperdrive currently exports metrics via the `hyperdriveQueriesAdaptiveGroups` and `hyperdrivePoolSizesAdaptiveGroups` GraphQL datasets.
+
+### Query metrics
+
+The `hyperdriveQueriesAdaptiveGroups` dataset contains the following metrics:
 
 | Metric             | GraphQL Field Name  | Description                                                                                                                                                                                                       |
 | ------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,6 +31,21 @@ Hyperdrive currently exports the below metrics as part of the `hyperdriveQueries
 | Event Status       | `eventStatus`       | Whether a query responded successfully (`complete`) or failed (`error`).                                                                                                                                          |
 
 The `volatile` cache status indicates the query contains a PostgreSQL function categorized as `STABLE` or `VOLATILE` (for example, `NOW()`, `RANDOM()`). Refer to [Query caching](/hyperdrive/concepts/query-caching/) for details on which functions affect cacheability.
+
+### Pool size metrics
+
+The `hyperdrivePoolSizesAdaptiveGroups` dataset contains the following connection pool metrics:
+
+| Metric                 | GraphQL Field Name      | Description                                                               |
+| ---------------------- | ----------------------- | ------------------------------------------------------------------------- |
+| Avg. open connections  | `avg.currentPoolSize`   | Average number of connections currently open in the pool.                 |
+| Avg. available slots   | `avg.availablePoolSlots`| Average number of pool connections available for checkout.                |
+| Avg. waiting clients   | `avg.waitingClients`    | Average number of clients waiting for a connection from the pool.         |
+| Pool size maximum      | `max.maxPoolSize`       | Configured maximum size of the connection pool.                           |
+| Peak open connections  | `max.currentPoolSize`   | Peak number of connections open in the pool.                              |
+| Peak waiting clients   | `max.waitingClients`    | Peak number of clients waiting for a connection from the pool.            |
+
+Connection contention appears as a spike in waiting clients, or when open connections consistently approach the pool size maximum. If your open connections regularly approach this limit, consider [increasing your Hyperdrive connection limit](/hyperdrive/platform/limits/#request-a-limit-increase).
 
 Metrics can be queried (and are retained) for the past 31 days.
 
@@ -43,11 +62,13 @@ Per-database analytics for Hyperdrive are available in the Cloudflare dashboard.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
+The dashboard includes a **Pool connections** chart, which displays waiting connections, open connections, and the pool size maximum. You can use the location selector to filter by specific Cloudflare locations.
+
 ## Query via the GraphQL API
 
 You can programmatically query analytics for your Hyperdrive configurations via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
-Hyperdrive's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID. Hyperdrive exposes the `hyperdriveQueriesAdaptiveGroups` dataset.
+Hyperdrive's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID. Hyperdrive exposes the `hyperdriveQueriesAdaptiveGroups` and `hyperdrivePoolSizesAdaptiveGroups` datasets.
 
 ## Write GraphQL queries
 
@@ -134,6 +155,44 @@ query HyperdriveQueryAndResultBytesForSuccessfulQueries(
 				sum {
 					queryBytes
 					resultBytes
+				}
+			}
+		}
+	}
+}
+```
+
+### Get the pool size metrics for your Hyperdrive config
+
+```graphql graphql-api-explorer
+query HyperdrivePoolSizes(
+	$accountTag: string!
+	$configId: string!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			hyperdrivePoolSizesAdaptiveGroups(
+				limit: 10000
+				filter: {
+					configId: $configId
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+			) {
+				avg {
+					currentPoolSize
+					availablePoolSlots
+					waitingClients
+				}
+				max {
+					maxPoolSize
+					currentPoolSize
+					waitingClients
+				}
+				dimensions {
+					coloCode
 				}
 			}
 		}

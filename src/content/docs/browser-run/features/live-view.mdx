@@ -25,6 +25,10 @@ In the Cloudflare dashboard, go to the **Browser Run** page and select the **Liv
 
 <DashButton url="/?to=/:account/workers/browser-run" />
 
+:::note
+Sessions created from the dashboard default to a five-minute inactivity timeout (`keep_alive`), compared to the one-minute default when creating sessions through the API. You can adjust the timeout up to 10 minutes — in the dashboard, use the timeout field when creating a session, or in the API and Workers Bindings, use the [`keep_alive` option](/browser-run/puppeteer/#keep-alive).
+:::
+
 ### Hosted UI (any browser)
 
 When you create a session or list targets through the [CDP](/browser-run/cdp/) endpoints, the API response includes a `devtoolsFrontendUrl` for each target (tab). Open this URL in any browser to load the DevTools UI hosted at `live.browser.run`, which streams the remote session to your browser.

@@ -6,6 +6,9 @@ title: Get started
 description: Connect your network privately to Cloudflare
 sidebar:
   order: 2
+tags:
+  - AWS
+  - GCP
 ---
 
 import { Render, DashButton } from "~/components"
@@ -74,7 +77,7 @@ Consider the following service levels when planning your deployment:
   - CNI is currently offered at no charge and without a formal [Service Level Agreement (SLA)](https://www.cloudflare.com/service-specific-terms-network-services/#cf-network-interconnect-terms).
   - Cloudflare will work to restore CNI service in the event of a Cloudflare issue. In some Cloudflare data centers the recovery time could be several days. Therefore, we always recommend backup connectivity to a different device or via an Internet tunnel.
 - **Observability**: There is no visibility of the interconnect config/status within the Cloudflare dashboard.
-- **Availability**: While network-resilient locations are designed to maintain connectivity during maintenance, single-homed locations can experience full service disruption.
+- **Availability**: Locations that support device-level diversity can maintain connectivity during maintenance when your connections terminate on separate devices. Single-device deployments will experience full service disruption during maintenance.
 - **Backup Connectivity**: You are required to maintain alternative Internet connectivity as a backup for all CNI implementations.
 - **Capacity planning**: You are responsible for capacity planning across your available links to Cloudflare, based on the topology and size of those links.
 
@@ -82,7 +85,7 @@ Consider the following service levels when planning your deployment:
 
 ### Available locations
 
-Direct connections are available at any Cloudflare data center where you are also located. Make sure to check whether the location of interest has the right dataplane version and diversity requirements for your use case. Refer to [available locations](/network-interconnect/static/cni-locations-31-mar-2026.pdf) (PDF) for details.
+Direct connections are available at any Cloudflare data center where you are also located. Make sure to check whether the location of interest has the right dataplane version and diversity requirements for your use case. Refer to [available locations](/network-interconnect/static/cni-locations-05-may-2026.pdf) (PDF) for details.
 
 ### Connectivity partners
 
@@ -99,7 +102,7 @@ The process of provisioning a CNI typically takes two to four weeks, depending o
 	- For a **Partner Interconnect**, you will use the provided details to order a virtual circuit from the partner's portal.
 4. **Configure network**: Both Cloudflare and your network team will configure the respective network devices according to the approved document.
 5. **Test and verify**: Once the connection is physically established, teams will perform basic connectivity tests (for example, ping) and, if applicable, verify that the BGP session can be established.
-6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and/or [Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
+6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and/or [Cloudflare WAN](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels).
 7. **Activate services**: Configure your Cloudflare products (for example, Magic Transit) to route traffic over the new CNI. The Implementation Manager will verify end-to-end traffic flow before marking the deployment as complete.
 8. [Add maintenance notifications](/network-interconnect/monitoring-and-alerts/#enable-cloudflare-status-maintenance-notification).
 
@@ -135,7 +138,7 @@ To connect to AWS Direct Connect:
 3. AWS will provide you a Letter of Authorization (LOA) and a VLAN ID that you need to send to your account team.
 4. Your account team will continue the process of provisioning your Cloud Interconnect with the AWS documents you have provided. Overall, this process should take around four weeks to finish.
 
-#### Google Cloud interconnect (beta)
+#### Google Cloud Interconnect
 
 1. In the Cloudflare dashboard, go to **Interconnects**.
 
@@ -160,7 +163,7 @@ You can now select **View interconnects** for a list of all interconnects on you
 After you have configured your Google Cloud Interconnect, you will need to add routes to use the interconnect:
 
 - To create routes in the Cloudflare Virtual Network routing table to direct traffic towards GCP:
-		- Add [static routes](/cloudflare-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Cloudflare WAN routing table with [legacy bidirectional tunnel health checks](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
+		- Add [static routes](/cloudflare-wan/configuration/how-to/configure-routes/#configure-static-routes) to your Cloudflare WAN routing table with [legacy bidirectional tunnel health checks](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
 		- Note that routes advertised by BGP from GCP Cloud Router will be ignored.
 - To create routes in GCP routing table to direct traffic towards Cloudflare, you must use the GCP Cloud Router:
 		- Add [custom learned routes to Cloud Router](https://cloud.google.com/network-connectivity/docs/router/how-to/configure-custom-learned-routes).

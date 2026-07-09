@@ -7,6 +7,8 @@ head:
   - tag: title
     content: Learn the basics of Python Workers
 description: Learn the basics of Python Workers
+products:
+  - workers
 ---
 
 import { WranglerConfig } from "~/components";
@@ -46,7 +48,8 @@ from hello import hello
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        name = (await request.json()).name
+        body = await request.json()
+        name = body["name"]
         return Response(hello(name))
 ```
 
@@ -69,11 +72,24 @@ curl --header "Content-Type: application/json" \
 Hello, Python!
 ```
 
+## Return JSON responses
+
+To return JSON from a Python Worker, use `Response.json()`:
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        data = {"message": "Hello", "status": "ok"}
+        return Response.json(data)
+```
+
 ## The `env` Attribute
 
 The `env` attribute on the `WorkerEntrypoint` can be used to access
 [environment variables](/workers/configuration/environment-variables/),
-[secrets](/workers/configuration/secrets/),and
+[secrets](/workers/configuration/secrets/), and
 [bindings](/workers/runtime-apis/bindings/).
 
 For example, let us try setting and using an environment variable in a Python Worker. First, add the environment variable to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
@@ -134,23 +150,23 @@ reload your Worker.
 
 ## Types and Autocompletion
 
-When developing Python Workers, you can take advantage of type hints and autocompletion
+The `workers-runtime-sdk` package provides the runtime SDK for Python Workers.
+This package is automatically installed and included in your worker when you use `pywrangler`,
+but you can also install it manually to take advantage of type hints and autocompletion
 in your IDE.
 
-To enable them, install the `workers-runtime-sdk` package in your `pyproject.toml` file.
+To enable them, add the `workers-runtime-sdk` package to your `pyproject.toml` file.
 
 ```toml
-[dependency-groups]
-dev = [
-    "workers-py",
-    "workers-runtime-sdk"
+dependencies = [
+  "workers-runtime-sdk"
 ]
 ```
 
 Additionally, you can generate types based on your Worker configuration using `uv run pywrangler types`
 
-This includes Env types based on your bindings, module rules, and runtime types based on the compatibility_date
-and compatibility_flags in your config file.
+This includes `Env` types based on your bindings, module rules, and runtime types based on the `compatibility_date`
+and `compatibility_flags` in your config file. See
 
 ## Upgrading `pywrangler`
 

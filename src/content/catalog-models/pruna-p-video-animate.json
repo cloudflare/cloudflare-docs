@@ -1,0 +1,159 @@
+{
+	"model_id": "pruna/p-video-animate",
+	"provider_id": "pruna",
+	"name": "P-Video-Animate",
+	"description": "Pruna's P-Video-Animate takes a source video and a subject reference image, then animates the referenced subject using the motion and audio from the source video.",
+	"task": "Image-to-Video",
+	"tags": [
+		"Video Generation",
+		"Motion Transfer",
+		"Animation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Motion Transfer",
+			"description": "Animate a reference subject using the motion from a source video.",
+			"input": {
+				"video": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4",
+				"image": "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg",
+				"resolution": "720p",
+				"target_fps": "original"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/pruna/p-video-animate/motion-transfer.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/pruna/p-video-animate/motion-transfer.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pruna/p-video-animate',\n  {\n    video: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4',\n    image: 'https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg',\n    resolution: '720p',\n    target_fps: 'original',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pruna/p-video-animate\",\n  \"input\": {\n    \"video\": \"https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4\",\n    \"image\": \"https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg\",\n    \"resolution\": \"720p\",\n    \"target_fps\": \"original\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.api.pruna.ai/guides/quickstart",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Resolutions": "720p, 1080p",
+		"Input Modalities": "Video + Image"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-18 15:53:19",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI.",
+					"type": "string"
+				},
+				"image": {
+					"description": "Reference image of the subject to animate. HTTP(S) URL or data URI.",
+					"type": "string"
+				},
+				"turbo": {
+					"description": "Turbo mode: faster generation for slightly lower quality.",
+					"default": false,
+					"type": "boolean"
+				},
+				"resolution": {
+					"description": "Target resolution.",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"720p",
+						"1080p"
+					]
+				},
+				"save_audio": {
+					"description": "Save the video with audio.",
+					"default": true,
+					"type": "boolean"
+				},
+				"ignore_audio": {
+					"description": "Ignore source audio during generation.",
+					"default": false,
+					"type": "boolean"
+				},
+				"target_fps": {
+					"description": "Target FPS for the working video.",
+					"default": "original",
+					"type": "string",
+					"enum": [
+						"24",
+						"48",
+						"original"
+					]
+				},
+				"instruction_prompt": {
+					"description": "Further instruction on how the reference subject should be animated.",
+					"default": "",
+					"type": "string"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"disable_safety_checker": {
+					"description": "Disable safety checker for generated videos.",
+					"default": false,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"video",
+				"image",
+				"turbo",
+				"resolution",
+				"save_audio",
+				"ignore_audio",
+				"target_fps",
+				"instruction_prompt",
+				"disable_safety_checker"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "Presigned URL for the animated video.",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

@@ -22,6 +22,10 @@ Cloudflare has upgraded all rate limiting rules to the [new version of rate limi
 
 :::
 
+:::note[Were you blocked from accessing a website?]
+If you are a visitor who received an error while trying to access a website, please refer to the [error 1015 documentation](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1015).
+:::
+
 Request rates are calculated locally for individual Cloudflare data centers. The most common uses for Rate Limiting are:
 
 - Protect against [DDoS attacks](https://www.cloudflare.com/learning/ddos/glossary/denial-of-service/)
@@ -249,7 +253,7 @@ To configure a plain text or JSON response:
 
 ### Using a custom HTML page or a redirect
 
-If you wish to display a custom HTML page, configure an custom page for `HTTP 429` errors (`Too many requests`) in the dashboard. Cloudflare will display this page when you select _Default Cloudflare Rate Limiting Page_ in **Response type** (the default value for the field).
+If you wish to display a custom HTML page, configure a custom page for `HTTP 429` errors (`Too many requests`) in the dashboard. Cloudflare will display this page when you select _Default Cloudflare Rate Limiting Page_ in **Response type** (the default value for the field).
 
 You can use the following method to redirect a rate-limited client to a specific URL:
 

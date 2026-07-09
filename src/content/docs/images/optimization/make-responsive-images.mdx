@@ -1,34 +1,82 @@
 ---
 pcx_content_type: reference
 title: Make responsive images
-description: Learn how to serve responsive images using HTML srcset and width=auto for optimal display on various devices. Ideal for high-DPI and fluid layouts.
+description: Automatically resize images for optimal display on every device.
 sidebar:
   order: 7
 products:
   - images
 ---
 
-You can serve responsive images in two different ways:
+import dpr1Img from "~/assets/images/images/examples/dpr-1.jpg";
+import dpr2Img from "~/assets/images/images/examples/dpr-2.jpg";
 
-- Use the HTML `srcset` feature to allow browsers to choose the most optimal image. This is the most reliable solution to serve responsive images.
-- Use the `width=auto` option to serve the most optimal image based on the available browser and device information. This is a server-side solution that is supported only by Chromium-based browsers.
+Responsive design scales media elements to fit the screen they are displayed on.
 
-## Transform with HTML `srcset`
+Without it, images can overflow their container and break the layout on small screens, look blurry on high-density displays, and waste bandwidth by forcing every device to download the same oversized file.
 
-The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) allows browsers to automatically choose an image that is best suited for user’s screen resolution.
+You can use Images to automatically resize images for optimal display on every device. Cloudflare supports two ways to serve responsive images on request:
 
-`srcset` requires providing multiple resized versions of every image, and with Cloudflare’s image transformations this is an easy task to accomplish.
+| Approach                                     | How it works                                                                                                      | Best for                                                                   |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [HTML `srcset`](#using-the-srcset-attribute) | List multiple sizes in markup and let the browser pick the best match based on viewport size and display density. | Full control over which sizes are available. Works in all browsers.        |
+| [`width=auto`](#using-widthauto)             | Cloudflare automatically selects the best width from a single URL — no markup changes required.                   | Simplest implementation, especially when you don't have control over HTML. |
 
-There are two different scenarios where it is useful to use `srcset`:
+## Optimize for high-DPI displays
 
-- Images with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
-- Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for hero images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
+A screen displays images using physical pixels (the individual dots that you see), while the browser uses CSS pixels (an abstract unit used for layout).
 
-### `srcset` for high-DPI displays
+On a standard display, these map 1:1. On high-density displays (for example, Retina, 4K), each CSS pixel is rendered using multiple physical pixels — for example, 4 physical pixels on a 2x display, 9 on a 3x display.
 
-For high-DPI display you need two versions of every image. One for `1x` density, suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops), and one for `2x` high-density displays used by almost all mobile phones, high-end laptops, and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while the jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
+This ratio — the device pixel ratio (DPR) — determines how sharp an image will appear. When you serve a 960px image on a 2x display, the browser stretches it across 1920 physical pixels, making it appear blurry.
 
-Assuming you have an image `product.jpg` in the `assets` folder and you want to display it at a size of `960px`, the code is as follows:
+To keep images sharp, you can provide a separate, higher-resolution version for high-DPI screens using the [`dpr`](/images/optimization/features/#dpr) parameter:
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+	<tr style="border:none; background:none">
+		<td style="width:50%; border:none; vertical-align:bottom">
+			<img
+				src={dpr1Img.src}
+				alt="dpr=1 output"
+				style="width:100%; height:auto"
+			/>
+		</td>
+		<td style="width:50%; border:none; vertical-align:bottom">
+			<img
+				src={dpr2Img.src}
+				alt="dpr=2 output"
+				style="width:100%; height:auto"
+			/>
+		</td>
+	</tr>
+	<tr style="border:none; background:none">
+		<td style="border:none;">
+			<code>width=300,height=200,dpr=1</code>
+		</td>
+		<td style="border:none;">
+			<code>width=300,height=200,dpr=2</code>
+		</td>
+	</tr>
+</table>
+
+## Use the `srcset` attribute
+
+When you embed an image using an `<img>` element, you can use its [`srcset`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#srcset) attribute to give the browser a list of the same image at different sizes.
+
+The browser evaluates screen size, pixel density, and network conditions, then selects the single best match.
+
+The snippet below shows how `srcset` can be used within an `<img>` tag to serve one of two possible sizes, depending on the user's device pixel ratio:
+
+```html
+<img
+	src="portrait-800w.jpg"
+	srcset="
+		portrait-1600.jpg 2x,
+	"
+/>
+```
+
+Instead of pre-generating each size, use Images to point every `srcset` entry at the same source image with a different `width` parameter and pixel density descriptor (for example, `2x`). Once the browser selects the right width for the user's device pixel ratio, Cloudflare dynamically generates the resized version on request:
 
 ```html
 <img
@@ -37,17 +85,13 @@ Assuming you have an image `product.jpg` in the `assets` folder and you want to 
 />
 ```
 
-In the URL path used in this example, the `src` attribute is for images with the usual "1x" density. `/cdn-cgi/image/` is a special path for resizing images. This is followed by `width=960` which resizes the image to have a width of 960 pixels. `/assets/product.jpg` is a URL to the source image on the server.
+In the example above, the `src` attribute contains the image for 1x displays (for example, HD/1080p monitors). The `srcset` attribute adds a larger, high-DPI image for 2x displays (for example, most mobile devices, 4K desktop displays). Use high-resolution source images, as scaling a low-resolution image increases file size without improving quality.
 
-The `srcset` attribute adds another, high-DPI image. The browser will automatically select between the images in the `src` and `srcset`. In this case, specifying `width=1920` (two times 960 pixels) and adding `2x` at the end, informs the browser that this is a double-density image. It will be displayed at the same size as a 960 pixel image, but with double the number of pixels which will make it look twice as sharp on high-DPI displays.
+### Create responsive layouts
 
-Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you should use with `srcset` must be high resolution, so that they are only scaled down for `1x` displays, and displayed as-is or also scaled down for `2x` displays.
+Pixel density descriptors are used when the image has a fixed CSS size (e.g. a 960px product photo) and the viewport width doesn't matter. Here, you know exactly how many CSS pixels the image will be, and you want to provide higher-resolution versions for high-DPI screens.
 
-### `srcset` for responsive images
-
-When you want to display an image that takes a certain percentage of the window or screen width, the image should have dimensions that are appropriate for a visitor’s screen size. Screen sizes vary a lot, typically from 320 pixels to 3840 pixels, so there is not a single image size that fits all cases. With `<img srcset>` you can offer the browser several possible sizes and let it choose the most appropriate size automatically.
-
-By default, the browser assumes the image will be stretched to the full width of the screen, and will pick a size that is closest to a visitor’s screen size. In the `src` attribute the browser will pick any size that is a good fallback for older browsers that do not understand `srcset`.
+However, if the image scales with the viewport — that is, its CSS size changes based on the screen width (for example, `width: 100%`, `width: 50vw`) — then use the width descriptor (`w`) instead to provide a range of widths:
 
 ```html
 <img
@@ -63,22 +107,18 @@ By default, the browser assumes the image will be stretched to the full width of
 />
 ```
 
-In the previous case, the number followed by `x` described _screen_ density. In this case the number followed by `w` describes the _image_ size. There is no need to specify screen density here (`2x`, etc.), because the browser automatically takes it into account and picks a higher-resolution image when necessary.
+The `w` values tell the browser the pixel width of each option. The browser factors in both viewport width and display density to choose the best match.
 
-If the image is not displayed at full width of the screen (or browser window), you have two options:
+#### Use the `sizes` attribute
 
-- If the image is displayed at full width of a fixed-width column, use the first technique that uses one specific image size.
-- If it takes a specific percentage of the screen, or stretches to full width only sometimes (using CSS media queries), then add the `sizes` attribute as described below.
-
-#### The `sizes` attribute
-
-If the image takes 50% of the screen (or window) width:
+By default, the browser assumes the image fills the full viewport. If the image only occupies part of the screen, then you can use `sizes` to tell the browser how wide it actually is:
 
 ```html
-<img style="width: 50vw" srcset="<SAME_AS_BEFORE>" sizes="50vw" />
+<!-- Image fills 50% of the viewport -->
+<img style="width: 50vw" srcset="..." sizes="50vw" />
 ```
 
-The `vw` unit is a percentage of the viewport (screen or window) width. If the image can have a different size depending on media queries or other CSS properties, such as `max-width`, then specify all the conditions in the `sizes` attribute:
+If the image can have a different size depending on media queries or other CSS properties (for example, `max-width`), then specify all the conditions in the `sizes` attribute:
 
 ```html
 <img
@@ -93,54 +133,80 @@ The `vw` unit is a percentage of the viewport (screen or window) width. If the i
 />
 ```
 
-In this example, `sizes` says that for screens smaller than 640 pixels the image is displayed at full viewport width; on all larger screens the image stays at 640px. Note that one of the options in `srcset` is 1280 pixels, because an image displayed at 640 CSS pixels may need twice as many image pixels on a high-dpi (`2x`) display.
+In the example above:
 
-## WebP images
+- If the screen size is below 640px, then the image fills the entire viewport.
+- If the screen size is above 640px, then the image scales with the viewport and caps at 640px.
+- On a 2x display above 640px, the browser needs 1280 physical pixels to fill the 640px layout width, so it selects the 1280w entry.
 
-`srcset` is useful for pixel-based formats such as PNG, JPEG, and WebP. It is unnecessary for vector-based SVG images.
+## Use `width=auto`
 
-HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) that can optionally request an image in the WebP format, but you do not need it. Cloudflare can serve WebP images automatically whenever you use `/cdn-cgi/image/format=auto` URLs in `src` or `srcset`.
+With `srcset`, you control exactly which sizes are available, which requires updating your HTML for every image.
 
-If you want to use WebP images, but do not need resizing, you have two options:
+On the other hand, `width=auto` takes a different approach, where Cloudflare determines the right width for each request from a single URL:
 
-- You can enable the automatic [WebP conversion in Polish](/images/polish/activate-polish/). This will convert all images on the site.
-- Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.
-
-## Transform with `width` parameter
-
-When setting up a [transformation URL](/images/optimization/features/#width), you can apply the `width=auto` option to serve the most optimal image based on the available information about the user's browser and device.
-
-This method can serve multiple sizes from a single URL. Currently, images will be served in one of four sizes:
-
-- 1200 (large desktop/monitor)
-- 960 (desktop)
-- 768 (tablet)
-- 320 (mobile)
-
-Each width is counted as a separate transformation. For example, if you use `width=auto` and the image is delivered with a width of 320px to one user and 960px to another user, then this counts as two unique transformations.
-
-By default, this feature uses information from the user agent, which detects the platform type (for example, iOS or Android) and browser.
-
-### Client hints
-
-For more accurate results, you can use client hints to send the user's browser information as request headers.
-
-This method currently works only on Chromium-based browsers such as Chrome, Edge, and Opera.
-
-You can enable client hints via HTML by adding the following tag in the `<head>` tag of your page before any other elements:
-
-```txt
-<meta http-equiv="Delegate-CH" content="sec-ch-dpr https://example.com; sec-ch-viewport-width https://example.com"/>
+```html
+/cdn-cgi/image/width=auto/assets/hero.jpg
 ```
 
-Replace `https://example.com` with your Cloudflare zone where transformations are enabled.
+This is especially useful when optimizing remote images with [transformation flows](/images/optimization/transformations/flows/), where you can apply `width=auto` across your entire zone without modifying any markup.
 
-Alternatively, you can enable client hints via HTTP by adding the following headers to your HTML page's response:
+When a request includes `width=auto`, Cloudflare determines the width based on screen size using client hints, if sent, or user-agent detection as a fallback.
+
+### Client hints (preferred)
+
+Browsers that support client hints (Chrome, Edge, Opera) send the viewport width in a request header. Then, Cloudflare reads this value and selects the right image size.
+
+Rather than generating a unique image for every possible viewport width, Cloudflare snaps to the smallest breakpoint that is equal to or greater than the detected screen width.
+
+The default breakpoints for client hints are: `320`, `768`, `960`, and `1200` pixels.
+
+The following table shows the widths that Cloudflare will pick based on the default breakpoints. If the detected viewport width exceeds the largest breakpoint, the image is served at that largest breakpoint.
+
+| Detected viewport width | Served image width |
+| ---------- | ------------- |
+| 280px          | 320px         |
+| 500px          | 768px         |
+| 960px          | 960px         |
+| 1500px          | 1200px        |
+
+You can override the default breakpoints using the [`wbreakpoints`](/images/optimization/features/#width) sub-parameter, which accepts positive integers separated by semicolons.
+
+#### Enabling client hints
+
+Client hints give Cloudflare the most accurate information, but require opt-in from your site. Without them, `width=auto` falls back to user-agent detection.
+
+You can enable client hints using one of the following methods:
+
+**HTML `<meta>` tag**
+
+Add the following in the `<head>` of your page before any other elements:
+
+```html
+<meta
+	http-equiv="Delegate-CH"
+	content="sec-ch-dpr {ZONE}; sec-ch-viewport-width {ZONE}"
+/>
+```
+
+**HTTP response headers**
+
+Add these headers to your HTML response:
 
 ```txt
 critical-ch: sec-ch-viewport-width, sec-ch-dpr
-
-permissions-policy: ch-dpr=("https://example.com"), ch-viewport-width=("https://example.com")
+permissions-policy: ch-dpr=("{ZONE}"), ch-viewport-width=("{ZONE}")
 ```
 
-Replace `https://example.com` with your Cloudflare zone where transformations are enabled.
+### User-agent detection (fallback)
+
+When client hints are not available, Cloudflare classifies the device as mobile or desktop based on the user-agent string and selects the corresponding size.
+
+The default sizes for user-agent detection are:
+
+| Device type                                  | Default size |
+| -------------------------------------------- | ------------ |
+| Mobile (`iPhone` or `Android` in user-agent) | 768px        |
+| Desktop (all other user-agents)              | 1200px       |
+
+You can override the default sizes using the [`wmobile` and `wdesktop`](/images/optimization/features/#width) sub-parameters, which accept positive integers.

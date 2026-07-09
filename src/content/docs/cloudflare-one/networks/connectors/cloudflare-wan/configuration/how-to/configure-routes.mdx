@@ -1,0 +1,34 @@
+---
+title: Configure routes
+pcx_content_type: how-to
+products:
+  - cloudflare-one
+sidebar:
+  order: 2
+description: Cloudflare WAN uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. If you are connected through CNI with Dataplane v2, you also have access to BGP peering (beta). Learn how to configure routing.
+
+---
+
+import { Render } from "~/components"
+
+<Render
+	file="routing/configure-routes"
+	product="networking-services"
+	params={{
+		magicWord: "CF1 Cloudflare WAN",
+		trafficSteeringPage: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/",
+		productName: "Cloudflare WAN",
+		tunnelEndpoints: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+		routePrioritization: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#route-prioritization",
+		chooseWeights: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#set-priority-and-weights-for-static-routes",
+		publicAsnMT: " ",
+		productGatewayOrEgress: "Cloudflare WAN with Gateway",
+		cfTunnelURL: "/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-tunnel/",
+		sitesURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/sites/",
+		addTunnelsURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+		unifiedRoutingModeURL: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta",
+		arrReferenceURL: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta",
+		virtualNetworkName: "Cloudflare Virtual Network",
+		routingTableName: "Cloudflare Virtual Network routing table"
+	}}
+/>

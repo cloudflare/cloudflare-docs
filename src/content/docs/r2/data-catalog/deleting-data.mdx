@@ -2,26 +2,31 @@
 pcx_content_type: concept
 title: Deleting data
 description: How to properly delete data from R2 Data Catalog
+products:
+  - r2
 sidebar:
   order: 5
 ---
 
-import { FileTree } from "~/components"
-import { Tabs, TabItem } from "~/components"
+import { FileTree } from "~/components";
+import { Tabs, TabItem } from "~/components";
 import { InlineBadge } from "~/components";
 
 Deleting data from R2 Data Catalog or any Apache Iceberg catalog requires that operations are done in a transaction through the catalog itself. Manually deleting metadata or data files directly can lead to data catalog corruption.
 
 ## Automatic table maintenance
+
 R2 Data Catalog can automatically manage table maintenance operations such as snapshot expiration and compaction. These continuous operations help keep latency and storage costs down.
- - **Snapshot expiration**: Automatically removes old snapshots. This reduces metadata overhead. Data files are not removed until orphan file removal is run.
- - **Compaction**: Merges small data files into larger ones. This optimizes read performance and reduces the number of files read during queries.
 
- Without enabling automatic maintenance, you need to manually handle these operations.
+- **Snapshot expiration**: Automatically removes old snapshots and the respective unreferenced data files. This reduces both metadata overhead and storage costs.
+- **Compaction**: Merges small data files into larger ones. This optimizes read performance and reduces the number of files read during queries.
 
- Learn more in the [table maintenance](/r2/data-catalog/table-maintenance/) documentation.
+Without enabling automatic maintenance, you need to manually handle these operations.
+
+Learn more in the [table maintenance](/r2/data-catalog/table-maintenance/) documentation.
 
 ## Examples of enabling automatic table maintenance in R2 Data Catalog
+
 ```bash
 # Enable automatic snapshot expiration for entire catalog
 npx wrangler r2 bucket catalog snapshot-expiration enable my-bucket \
@@ -32,13 +37,16 @@ npx wrangler r2 bucket catalog snapshot-expiration enable my-bucket \
 npx wrangler r2 bucket catalog compaction enable my-bucket \
 	--target-size 256
 ```
+
 Refer to additional examples in the [manage catalogs](/r2/data-catalog/manage-catalogs/) documentation.
 
 ## Manually deleting and removing data
+
 You need to manually delete data for:
- - Complying with data retention policies such as GDPR or CCPA.
- - Selective based deletes using conditional logic.
- - Removing stale or unreferenced files that R2 Data Catalog does not manage.
+
+- Complying with data retention policies such as GDPR or CCPA.
+- Selective based deletes using conditional logic.
+- Removing stale or unreferenced files that R2 Data Catalog does not manage.
 
 The following are basic examples using PySpark but similar operations can be performed using other Iceberg-compatible engines. To configure PySpark, refer to our [example](/r2/data-catalog/config-examples/spark-python/) or the official [PySpark documentation](https://spark.apache.org/docs/latest/api/python/getting_started/index.html).
 
@@ -60,7 +68,9 @@ spark.sql("""
     WHERE date_partition < '2024-01-01'
 """)
 ```
+
 ### Dropping tables and namespaces
+
 ```py
 # Removes table from catalog but keeps data files in R2 storage
 spark.sql("DROP TABLE r2dc.namespace.table_name")
@@ -86,6 +96,7 @@ spark.sql("DROP NAMESPACE r2dc.namespace_name CASCADE")
 :::
 
 ### Manual maintenance operations
+
 ```py
 # Remove old metadata and data files marked for deletion
 # The following retains the last 5 snapshots and deletes files older than Nov 28, 2024
@@ -117,12 +128,12 @@ spark.sql("""
 
 Apache Iceberg uses a layered metadata structure to manage table data efficiently. Here are the key components and file structure:
 
-  - **metadata.json**: Top-level JSON file pointing to the current snapshot
-  - **snapshot-***: Immutable table state for a given point in time
-  - **manifest-list-*.avro**: An Avro file listing all manifest files for a given snapshot
-  - **manifest-file-*.avro**: An Avro file tracking data files and their statistics
-  - **data-*.parquet**: Parquet files containing actual table data
-  - **Note**: Unchanged manifest files are reused across snapshots
+- **metadata.json**: Top-level JSON file pointing to the current snapshot
+- **snapshot-\***: Immutable table state for a given point in time
+- **manifest-list-\*.avro**: An Avro file listing all manifest files for a given snapshot
+- **manifest-file-\*.avro**: An Avro file tracking data files and their statistics
+- **data-\*.parquet**: Parquet files containing actual table data
+- **Note**: Unchanged manifest files are reused across snapshots
 
 :::caution
 Manually modifying or deleting any of these files directly can lead to data catalog corruption.
@@ -159,39 +170,40 @@ Manually modifying or deleting any of these files directly can lead to data cata
 
 Apache Iceberg supports two deletion modes: **Copy-on-Write (COW)** and **Merge-on-Read (MOR)**. Both create a new snapshot and mark old files for cleanup, but handle the deletion differently:
 
-| Aspect | Copy-on-Write (COW) | Merge-on-Read (MOR) |
-|--------|---------------------|---------------------|
-| **How deletes work** | Rewrites data files without deleted rows | Creates delete files marking rows to skip |
-| **Query performance** | Fast (no merge needed) | Slower (requires read-time merge) |
-| **Write performance** | Slower (rewrites data files) | Fast (only writes delete markers) |
-| **Storage impact** | Creates new data files immediately | Accumulates delete files over time |
-| **Maintenance needs** | Snapshot expiration | Snapshot expiration + compaction (`rewrite_data_files`) |
-| **Best for** | Read-heavy workloads | Write-heavy workloads with frequent small mutations |
+| Aspect                | Copy-on-Write (COW)                      | Merge-on-Read (MOR)                                     |
+| --------------------- | ---------------------------------------- | ------------------------------------------------------- |
+| **How deletes work**  | Rewrites data files without deleted rows | Creates delete files marking rows to skip               |
+| **Query performance** | Fast (no merge needed)                   | Slower (requires read-time merge)                       |
+| **Write performance** | Slower (rewrites data files)             | Fast (only writes delete markers)                       |
+| **Storage impact**    | Creates new data files immediately       | Accumulates delete files over time                      |
+| **Maintenance needs** | Snapshot expiration                      | Snapshot expiration + compaction (`rewrite_data_files`) |
+| **Best for**          | Read-heavy workloads                     | Write-heavy workloads with frequent small mutations     |
 
 :::note[Important for all deletion modes]
+
 - Deleted data is **not immediately removed** from R2 - files are marked for cleanup
 - Enable [snapshot expiration](/r2/data-catalog/table-maintenance) in R2 Data Catalog to automatically clean up old snapshots and files
-:::
+  :::
 
 ### Common deletion operations
 
 These operations work the same way for both COW and MOR tables:
 
-| Operation | What it does | Data deleted? | Reversible? |
-|-----------|-------------|---------------|-------------|
-| `DELETE FROM` | Removes rows matching condition | No (marked for cleanup) | Via time travel[^1] |
-| `DROP TABLE` | Removes table from catalog | No | Yes (if data files exist) |
-| `DROP TABLE ... PURGE` | Removes table and deletes data | **Yes** | **No** |
-| `expire_snapshots` | Cleans up old snapshots/files | **Yes** | **No** |
-| `remove_orphan_files` | Removes unreferenced files | **Yes** | **No** |
+| Operation              | What it does                    | Data deleted?           | Reversible?               |
+| ---------------------- | ------------------------------- | ----------------------- | ------------------------- |
+| `DELETE FROM`          | Removes rows matching condition | No (marked for cleanup) | Via time travel[^1]       |
+| `DROP TABLE`           | Removes table from catalog      | No                      | Yes (if data files exist) |
+| `DROP TABLE ... PURGE` | Removes table and deletes data  | **Yes**                 | **No**                    |
+| `expire_snapshots`     | Cleans up old snapshots/files   | **Yes**                 | **No**                    |
+| `remove_orphan_files`  | Removes unreferenced files      | **Yes**                 | **No**                    |
 
 ### MOR-specific operations
 
 For Merge-on-Read tables, you may need to manually apply deletes for performance:
 
-| Operation | What it does | When to use |
-|-----------|-------------|-------------|
-| `rewrite_data_files` (compaction)| Applies deletes and consolidates files | When query performance degrades due to many delete files |
+| Operation                         | What it does                           | When to use                                              |
+| --------------------------------- | -------------------------------------- | -------------------------------------------------------- |
+| `rewrite_data_files` (compaction) | Applies deletes and consolidates files | When query performance degrades due to many delete files |
 
 :::note
 R2 Data Catalog can automate [rewriting data files](/r2/data-catalog/table-maintenance/) for you.
@@ -205,4 +217,3 @@ R2 Data Catalog can automate [rewriting data files](/r2/data-catalog/table-maint
 - [Apache Iceberg Maintenance](https://iceberg.apache.org/docs/latest/maintenance/) - Official Iceberg documentation on table maintenance
 
 [^1]: Time travel available until `expire_snapshots` is called
-

@@ -15,6 +15,23 @@ export default () => {
 				height: 2rem !important;
 			}
 
+			/* Hide the "Copied!" feedback tooltip — we use a checkmark icon instead */
+			.expressive-code .copy .feedback {
+				display: none !important;
+			}
+
+			/*
+				When the feedback element is present (i.e. after a successful copy),
+				swap the copy icon for a checkmark. The feedback element stays in the
+				DOM for ~2.5s, so the checkmark is visible for the same duration.
+			*/
+			.expressive-code .copy:has(.feedback) button::after {
+				mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' fill='black'%3E%3Cpath d='M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E") !important;
+				-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' fill='black'%3E%3Cpath d='M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E") !important;
+			}
+
+
+
 			.expressive-code .explain {
 				display: flex;
 				gap: 0.25rem;
@@ -117,56 +134,39 @@ export default () => {
 				outline-offset: 2px;
 			}
 
-			.expressive-code .explain-tooltip {
-				pointer-events: none;
-				user-select: none;
-				-webkit-user-select: none;
-				position: absolute;
-				bottom: calc(100% + 0.25rem);
-				left: 50%;
-				transform: translateX(-50%);
-				z-index: 100;
-				padding: 2px 7px;
-				line-height: 1;
-				border-radius: 0.2rem;
-				opacity: 0;
-				transition-property: opacity, transform;
-				transition-duration: 0.2s;
-				transition-timing-function: ease-in-out;
-				font-size: 0.7rem;
-				line-height: 1.65;
-				white-space: nowrap;
-			}
-
-			@media (prefers-color-scheme: light) {
-				.expressive-code .explain-tooltip {
-					color: #4e4e4e;
-					background-color: #e4e4e4;
-					border: 1px solid #c4c4c4;
-				}
-			}
-
-			@media (prefers-color-scheme: dark) {
-				.expressive-code .explain-tooltip {
-					color: #e6e6e6;
-					background-color: #282828;
-					border: 1px solid #4e4f4f;
-				}
-			}
-
-			.expressive-code .explain button:hover .explain-tooltip {
-				opacity: 1;
-			}
+	
 		`,
 		hooks: {
 			postprocessRenderedBlock: async (context) => {
-				const lineCount = context.codeBlock.code.split("\n").length;
-
-				if (lineCount < 10) return;
-
 				const blockAst = /** @type {import("hast").Element} */ (
 					context.renderData.blockAst
 				);
+
+				// Add a custom tooltip span to the copy button and remove the
+				// native title attribute so the browser tooltip doesn't double up.
+				const copyDiv = blockAst.children.find(
+					(n) =>
+						n.type === "element" &&
+						/** @type {import("hast").Element} */ (n).properties?.className
+							?.toString()
+							.includes("copy"),
+				);
+				if (copyDiv?.type === "element") {
+					const copyButton = /** @type {import("hast").Element} */ (
+						copyDiv
+					).children?.find(
+						(n) =>
+							n.type === "element" &&
+							/** @type {import("hast").Element} */ (n).tagName === "button",
+					);
+					if (copyButton?.type === "element") {
+						delete copyButton.properties.title;
+					}
+				}
+
+				const lineCount = context.codeBlock.code.split("\n").length;
+
+				if (lineCount < 10) return;
 
 				// Expressive Code frames plugin is required for explain button to work correctly. Ignore if it's not present.
 				if (
@@ -236,14 +236,6 @@ export default () => {
 									children: [],
 								},
 							],
-						},
-						{
-							type: "element",
-							tagName: "span",
-							properties: {
-								className: ["explain-tooltip"],
-							},
-							children: [{ type: "text", value: "Explain Code" }],
 						},
 					],
 				};

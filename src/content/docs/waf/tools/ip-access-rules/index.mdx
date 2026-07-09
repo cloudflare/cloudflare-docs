@@ -40,6 +40,8 @@ Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead
 - For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/#ip-lists) in the custom rule expression. Refer to [Allow traffic from IP addresses in allowlist only](/waf/custom-rules/use-cases/allow-traffic-from-ips-in-allowlist/) for an example.
 - For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression. Refer to [Block traffic from specific countries](/waf/custom-rules/use-cases/block-traffic-from-specific-countries/) for an example.
 
+When upgrading to custom rules, consider replacing the _Allow_ action supported by IP Access rules with the [_Skip_ action](/waf/custom-rules/skip/). Note that the _Skip_ action does not bypass all of Cloudflare's app security features.
+
 ---
 
 ## Availability

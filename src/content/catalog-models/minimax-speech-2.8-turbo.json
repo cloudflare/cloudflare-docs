@@ -1,7 +1,7 @@
 {
 	"model_id": "minimax/speech-2.8-turbo",
 	"provider_id": "minimax",
-	"name": "Speech 2.8 Turbo",
+	"name": "MiniMax Speech 2.8 Turbo",
 	"description": "MiniMax Speech 2.8 Turbo turns text into natural, expressive speech with voice cloning, emotion control, and 40+ language support at faster speeds.",
 	"task": "Text-to-Speech",
 	"tags": [
@@ -14,22 +14,40 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Speech",
 			"description": "Generate speech with default settings",
 			"input": {
-				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do."
+				"format": "mp3",
+				"pitch": 0,
+				"speed": 1,
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
+				"voice_id": "English_expressive_narrator",
+				"volume": 1
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/VjjCREkQrDaKOt9F2NGnj5ICeCsWBChFD6yMIQQbSRe0lyZWA/tmpm3zbb48d.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/simple-speech.mp3"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/simple-speech.mp3"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    format: 'mp3',\n    pitch: 0,\n    speed: 1,\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-turbo\",\n  \"input\": {\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 1,\n    \"text\": \"Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		},
@@ -37,18 +55,35 @@
 			"name": "Fast Narration",
 			"description": "Speed up narration for quick playback",
 			"input": {
+				"format": "mp3",
+				"pitch": 0,
+				"speed": 1.5,
 				"text": "This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.",
 				"voice_id": "English_expressive_narrator",
-				"speed": 1.5
+				"volume": 1
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/9sWXqj2VFfRme0WKjRe8CfdGbIH6mCMjN1IGLgJ65mTdXKnZB/tmpt9wdutnv.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/fast-narration.mp3"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/fast-narration.mp3"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    text: 'This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.',\n    voice_id: 'English_expressive_narrator',\n    speed: 1.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    format: 'mp3',\n    pitch: 0,\n    speed: 1.5,\n    text: 'This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.',\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-turbo\",\n  \"input\": {\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 1.5,\n    \"text\": \"This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		},
@@ -56,19 +91,36 @@
 			"name": "Calm Tone",
 			"description": "Calm and steady speech for meditation or relaxation",
 			"input": {
+				"emotion": "calm",
+				"format": "mp3",
+				"pitch": 0,
+				"speed": 0.8,
 				"text": "Take a deep breath in. Hold it for a moment. Now slowly exhale. Let your shoulders relax and release any tension.",
 				"voice_id": "English_expressive_narrator",
-				"speed": 0.8,
-				"emotion": "calm"
+				"volume": 1
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/yMUetohifePFOJPYyk012d4NfS1r1OKdE65nsXhY7chnXKnZB/tmpvygtmdnp.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/calm-tone.mp3"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/calm-tone.mp3"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    text: 'Take a deep breath in. Hold it for a moment. Now slowly exhale. Let your shoulders relax and release any tension.',\n    voice_id: 'English_expressive_narrator',\n    speed: 0.8,\n    emotion: 'calm',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    emotion: 'calm',\n    format: 'mp3',\n    pitch: 0,\n    speed: 0.8,\n    text: 'Take a deep breath in. Hold it for a moment. Now slowly exhale. Let your shoulders relax and release any tension.',\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-turbo\",\n  \"input\": {\n    \"emotion\": \"calm\",\n    \"format\": \"mp3\",\n    \"pitch\": 0,\n    \"speed\": 0.8,\n    \"text\": \"Take a deep breath in. Hold it for a moment. Now slowly exhale. Let your shoulders relax and release any tension.\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		},
@@ -76,37 +128,56 @@
 			"name": "Adjusted Pitch",
 			"description": "Lower the pitch for a deeper voice",
 			"input": {
+				"format": "mp3",
+				"pitch": -6,
+				"speed": 1,
 				"text": "Good evening. Tonight we explore the mysteries of the deep ocean and the creatures that live in total darkness.",
 				"voice_id": "English_expressive_narrator",
-				"pitch": -6
+				"volume": 1
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/mEcwNukfVjVkSqtPvra1NKZPZDOzZLqCXQ5RtHBVhr4EHSNLA/tmp6mt2rbo0.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/adjusted-pitch.mp3"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
+				"result": {
+					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-turbo/adjusted-pitch.mp3"
+				},
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    text: 'Good evening. Tonight we explore the mysteries of the deep ocean and the creatures that live in total darkness.',\n    voice_id: 'English_expressive_narrator',\n    pitch: -6,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-turbo',\n  {\n    format: 'mp3',\n    pitch: -6,\n    speed: 1,\n    text: 'Good evening. Tonight we explore the mysteries of the deep ocean and the creatures that live in total darkness.',\n    voice_id: 'English_expressive_narrator',\n    volume: 1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/speech-2.8-turbo\",\n  \"input\": {\n    \"format\": \"mp3\",\n    \"pitch\": -6,\n    \"speed\": 1,\n    \"text\": \"Good evening. Tonight we explore the mysteries of the deep ocean and the creatures that live in total darkness.\",\n    \"voice_id\": \"English_expressive_narrator\",\n    \"volume\": 1\n  }\n}'"
 				}
 			]
 		}
 	],
-	"supports_async": false,
-	"external_info": "https://www.minimaxi.com/",
-	"terms": "https://www.minimaxi.com/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_cover_image/fb264179-a754-44b2-b870-6e93571b0124/replicate-prediction-8p9jqdyjpnrm.jpg",
-	"metadata": {
-		"Languages": "40+",
-		"Voice Cloning": "Yes",
-		"Emotion Control": "Yes"
-	},
-	"created_at": "2026-04-13 16:46:36",
 	"default_example": null,
 	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://www.minimaxi.com/",
+	"terms": "https://www.minimaxi.com/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/speech-2.8-turbo.png",
+	"metadata": {
+		"Emotion Control": "Yes",
+		"Languages": "40+",
+		"Voice Cloning": "Yes"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-05-22 17:53:21",
 	"schema": {
-		"model_id": "minimax/speech-2.8-turbo",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
