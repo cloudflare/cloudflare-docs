@@ -330,8 +330,8 @@ class MyAgent extends Agent<Env> {
 		serverId: string,
 	): Promise<ElicitResult> {
 		if (request.params.mode === "url") {
-			// Deliver the URL to the user out-of-band (a DM, an email, a UI
-			// notification) — it never enters model context.
+			// Deliver the URL to the user out-of-band, for example in a chat
+			// message or a UI notification. It never enters model context.
 			await this.notifyUser(request.params.url, request.params.message);
 			return { action: "accept", content: {} };
 		}
@@ -356,9 +356,9 @@ Servers only send elicitation modes your client advertised during the `initializ
 
 **Form mode** asks the user for structured data. The request carries a `requestedSchema` describing the fields, and an accepting response returns matching `content`.
 
-**URL mode** asks the user to visit a URL — for example an authorization or checkout page. The MCP specification requires servers to use url mode for sensitive URLs so that they stay out of the model's context instead of appearing in tool-result text. Your handler delivers the URL to the user and returns `{ action: "accept" }` once it has done so.
+**URL mode** asks the user to visit a URL, for example an authorization or checkout page. The MCP specification requires servers to use url mode for sensitive URLs so that they stay out of the model's context instead of appearing in tool-result text. Your handler delivers the URL to the user and returns `{ action: "accept" }` once it has done so.
 
-To narrow the advertised modes, declare them explicitly when adding the server — an explicit declaration always wins and is persisted with the server options:
+To narrow the advertised modes, declare them explicitly when adding the server. An explicit declaration always wins and is persisted with the server options:
 
 <TypeScriptExample>
 
