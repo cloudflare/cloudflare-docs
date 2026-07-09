@@ -3,6 +3,57 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-15"
+    title: "Workers KV: Legacy Namespace Routes"
+    description: |-
+      Deprecation date: July 15, 2026
+
+      End of life date: October 15, 2026
+
+      The legacy Workers KV API routes under `/accounts/{account_id}/workers/namespaces/*` are deprecated in favor of the [Workers KV API](/api/resources/kv/) routes under `/accounts/{account_id}/storage/kv/namespaces/*`.
+
+      The legacy and replacement routes are interchangeable. They accept the same request parameters and return the same response payloads. To migrate, update the URL path from `/workers/namespaces/` to `/storage/kv/namespaces/`.
+
+      Deprecated APIs:
+
+      - `GET` and `POST /accounts/{account_id}/workers/namespaces` (list and create namespaces)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}` (get, rename, and remove a namespace)
+      - `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/keys` (list keys)
+      - `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/metadata/{key_name}` (read key metadata)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}/values/{key_name}` (read, write, and delete key-value pairs)
+
+      Replacements:
+
+      Update the URL path from `/workers/namespaces/` to `/storage/kv/namespaces/` in each endpoint.
+
+      - `GET` and `POST /accounts/{account_id}/storage/kv/namespaces` (list and create namespaces)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}` (get, rename, and remove a namespace)
+      - `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys` (list keys)
+      - `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/metadata/{key_name}` (read key metadata)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{key_name}` (read, write, and delete key-value pairs)
+
+      After October 15, 2026, requests to the legacy `/accounts/{account_id}/workers/namespaces/*` routes will no longer be supported. Update integrations to use the documented Workers KV API endpoints before that date to ensure uninterrupted service.
+
+  - publish_date: "2026-07-08"
+    title: "AMP/SXG API and Rules"
+    description: |-
+      Deprecation date: September 18, 2025
+
+      End of life date: June 23, 2026
+
+      The AMP/SXG features have reached end of life. There will be no replacement functionality. The zone settings API endpoints and sxg [Configuration Rule setting](https://developers.cloudflare.com/rules/configuration-rules/settings/) should no longer be used.
+
+      Deprecated APIs:
+
+      - `GET /zones/{zone_id}/amp/sxg`
+      - `PUT /zones/{zone_id}/amp/sxg`
+
+      Deprecated Configuration Rule setting:
+
+      - `sxg`
+
+      The Dashboard UI will no longer show references to AMP or the sxg setting. Users can remove the sxg parameter from their rulesets by using the [rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule/). Terraform deprecation will follow later, and users should remove references to the `sxg` parameter from their [terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset#sxg-1).
+
   - publish_date: "2026-06-29"
     title: "Legacy Registrar Domain Management API"
     description: |-
