@@ -204,34 +204,57 @@ Replace `src/client.tsx` with a React component that uses the [`useVoiceAgent`](
 import { useVoiceAgent } from "@cloudflare/voice/react";
 
 function App() {
+	// useVoiceAgent connects to your agent over WebSocket, captures the
+	// microphone, plays the spoken response, and exposes the live call state.
+	// `agent` matches your Durable Object class name.
 	const {
+		// Pipeline state: "idle" | "listening" | "thinking" | "speaking".
 		status,
+		// Finalized conversation turns (your speech and the agent's replies).
 		transcript,
+		// Live partial transcription of what you are currently saying.
 		interimTranscript,
+		// Whether the WebSocket connection to the agent is open.
+		connected,
 		startCall,
 		endCall,
 		toggleMute,
 		isMuted,
 	} = useVoiceAgent({ agent: "TalkToDocs" });
 
+	const inCall = status !== "idle";
+
 	return (
 		<div>
 			<h1>Talk to your knowledge base</h1>
+
+			{/* Shows "thinking" while the agent searches the KB and generates a reply. */}
 			<p>Status: {status}</p>
 
-			<button onClick={status === "idle" ? startCall : endCall}>
-				{status === "idle" ? "Start call" : "End call"}
+			{/* Toggle the call. Disabled until the agent connection is open. */}
+			<button
+				onClick={inCall ? endCall : startCall}
+				disabled={!connected && !inCall}
+			>
+				{!connected ? "Connecting…" : inCall ? "End call" : "Start call"}
 			</button>
-			{status !== "idle" && (
+
+			{/* Mute only applies once a call is active. */}
+			{inCall && (
 				<button onClick={toggleMute}>{isMuted ? "Unmute" : "Mute"}</button>
 			)}
 
+			{/* Lightweight loading state while the agent works on a reply. */}
+			{status === "thinking" && <p>Thinking…</p>}
+
+			{/* Live partial transcript, updated as you speak. */}
 			{interimTranscript && (
 				<p>
 					<em>{interimTranscript}</em>
 				</p>
 			)}
 
+			{/* Finalized turns from both you and the agent. */}
 			{transcript.map((message, index) => (
 				<p key={index}>
 					<strong>{message.role}:</strong> {message.text}
