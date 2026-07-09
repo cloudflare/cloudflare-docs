@@ -125,6 +125,102 @@ To create a Logpush job:
 4. In the datasets section, select the [Audit Logs v2 dataset](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/). Audit Logs v2 is an account-based dataset.
 5. Once you are done configuring your logpush job, select **Submit**.
 
+## Resource History
+
+Resource History shows what changed on every configuration modification captured in Audit Logs. For any audit log entry, you can see the sequence of previous changes to the same resource and view a side-by-side diff of what was modified.
+
+Resource History is available in the Cloudflare dashboard and via the Audit Logs API. It uses the audit log entries you already have. There is no additional configuration, no backend recapture, and no changes to how audit logs are generated.
+
+### What Resource History gives you
+
+- **Change history for any resource.** Given any audit log entry, retrieve every other audit log entry for the same resource, ordered chronologically.
+- **Field-level before and after.** Compare any two entries in a resource's history to see exactly which fields changed.
+
+### Using Resource History in the dashboard
+
+1. Go to **Manage Account** > **Audit Logs**.
+2. Open any audit log entry.
+3. Select **Change History** to see the full history for the resource that entry describes.
+4. In the history view, select any two entries to see a side-by-side diff of the fields that changed between them.
+
+When Resource History cannot identify the underlying resource (for example, for certain system-initiated events), the dashboard shows an empty state indicating that change history is not available for that entry.
+
+For a small subset of events, the dashboard may show approximate results (changes to other resources of the same product and type). When this happens, the view displays a warning banner.
+
+### Using Resource History via the API
+
+You can retrieve the change history for any audit log entry using the History endpoint. The endpoint accepts the ID of a source audit log entry and returns every other audit log entry for the same resource, ordered chronologically.
+
+For account-scoped audit logs, use:
+
+```bash
+GET https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/audit/{audit_log_id}/history
+```
+
+For organization-scoped audit logs, use:
+
+```bash
+GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit/{audit_log_id}/history
+```
+
+:::note[Required API token permissions]
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Account Settings Read`
+- `Account Settings Write`
+  :::
+
+<APIRequest
+	method="GET"
+	path="/accounts/{account_id}/logs/audit/{audit_log_id}/history"
+/>
+
+```json title="Example response"
+{
+	"result": [
+		{
+			"id": "abc123",
+			"action": {
+				"type": "update",
+				"time": "2026-06-15T14:38:16Z",
+				"result": "success"
+			},
+			"actor": {
+				"email": "user@example.com",
+				"type": "user"
+			},
+			"resource": {
+				"id": "dns-record-123",
+				"product": "dns_records",
+				"type": "record"
+			},
+			"raw": {
+				"uri": "/zones/xyz/dns_records/dns-record-123",
+				"method": "PATCH"
+			}
+		}
+	],
+	"result_info": {
+		"cursor": "next-page-cursor",
+		"history_status": "available"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+Each entry in `result` has the same shape as an entry returned by the Audit Logs list endpoint. Results are paginated using the `cursor` value in `result_info`.
+
+To improve performance on large accounts, pass the source entry's `action.time` value as the `action_time` query parameter. This narrows the history query around the source entry and returns faster than an unconstrained query.
+
+The `result_info.history_status` field indicates whether change history was available:
+
+- `available`: Change history was returned in `result`.
+- `unavailable`: The source audit log entry does not carry enough information to identify the underlying resource, so change history cannot be returned. This can happen for certain system-initiated events.
+
+Resource History reflects the audit log entries currently retained by Audit Logs v2 (refer to [Retention](#retention)). Entries older than the retention window are not returned. Resource History is a query-time capability and is not exposed as additional fields in the `audit_logs_v2` Logpush dataset.
+
 ## Audit Log structure
 
 Cloudflare's audit logs offer a detailed view of activity across your environment by capturing both the source of actions and the context in which they occur. These logs are categorized by who initiated the action (user or system) and whether the activity occurred within a specific account or spanned multiple accounts under the same user profile. This structure enables flexible filtering, investigation, and compliance monitoring.
