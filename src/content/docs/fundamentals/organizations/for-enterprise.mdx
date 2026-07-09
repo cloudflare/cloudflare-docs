@@ -80,7 +80,7 @@ Organization
 Before you create an Organization:
 
 - Your account must have an Enterprise plan.
-- You must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled.
+- Any user who will be an Organization member must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on their Cloudflare user account.
 - You must be a Super Administrator on the accounts you want to assign.
 - Each Organization supports a maximum of **500 accounts** and **5,000 zones**. Refer to [Limitations](/fundamentals/organizations/limitations/) for details.
 - You may only create a single Organization. You, or another member of your company, must not have already created an Organization.
@@ -147,7 +147,7 @@ The user receives an email invitation. After accepting, they have implicit acces
 
 ### Member authentication requirements
 
-All Organization members must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled **before** they can accept an Organization invitation.
+All users who will be Organization members must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on their Cloudflare user account **before** they can accept an Organization invitation. This is a per-user requirement, not an account-level setting.
 
 - If a user does not have 2FA or SSO enabled, they will not be able to accept the invitation.
 - Ask the user to enable 2FA or SSO first, then resend the invitation.
