@@ -9,7 +9,7 @@ hidden: false
 
 import { LinkCard } from "~/components";
 
-You can now enable automatic compaction for [Apache Iceberg](https://iceberg.apache.org/) tables in [R2 Data Catalog](/r2/data-catalog/) to improve query performance.
+You can now enable automatic compaction for [Apache Iceberg](https://iceberg.apache.org/) tables in [R2 Data Catalog](/r2-data-catalog/) to improve query performance.
 
 Compaction is the process of taking a group of small files and combining them into fewer larger files. This is an important maintenance operation as it helps ensure that query performance remains consistent by reducing the number of files that needs to be scanned.
 
@@ -23,4 +23,4 @@ Or with [Wrangler](/workers/wrangler/), run:
 npx wrangler r2 bucket catalog compaction enable <BUCKET_NAME>  --target-size 128 --token <API_TOKEN>
 ```
 
-To get started with compaction, check out [manage catalogs](/r2/data-catalog/manage-catalogs/). For best practices and limitations, refer to [about compaction](/r2/data-catalog/table-maintenance/).
+To get started with compaction, check out [manage catalogs](/r2-data-catalog/manage-catalogs/). For best practices and limitations, refer to [about compaction](/r2-data-catalog/table-maintenance/).

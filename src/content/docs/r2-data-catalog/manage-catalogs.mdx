@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Manage catalogs
 description: Understand how to manage Iceberg REST catalogs associated with R2 buckets
 products:
-  - r2
+  - r2-data-catalog
 sidebar:
   order: 3
 ---
@@ -23,8 +23,8 @@ import {
 
 Learn how to:
 
-- Enable and disable [R2 Data Catalog](/r2/data-catalog/) on your buckets.
-- Enable and disable [table maintenance](/r2/data-catalog/table-maintenance/) features like compaction and snapshot expiration.
+- Enable and disable [R2 Data Catalog](/r2-data-catalog/) on your buckets.
+- Enable and disable [table maintenance](/r2-data-catalog/table-maintenance/) features like compaction and snapshot expiration.
 - Authenticate Iceberg engines using API tokens.
 
 ## Enable R2 Data Catalog on a bucket
@@ -40,7 +40,7 @@ Enabling the catalog on a bucket turns on the REST catalog interface and provide
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select **Create catalog**.
 3. Enter an R2 bucket name. You can select an existing bucket or enter a new bucket name to create one. If creating a new bucket, optionally select a location hint.
-4. Select **Next** to configure table maintenance. Optionally enable [compaction](/r2/data-catalog/table-maintenance/) and [snapshot expiration](/r2/data-catalog/table-maintenance/) during setup.
+4. Select **Next** to configure table maintenance. Optionally enable [compaction](/r2-data-catalog/table-maintenance/) and [snapshot expiration](/r2-data-catalog/table-maintenance/) during setup.
 5. Review your configuration and select **Create catalog**.
 6. Once created, the catalog detail page displays your **Catalog URI** and **Warehouse name**.
 </Steps>
@@ -86,7 +86,7 @@ npx wrangler r2 bucket catalog disable <BUCKET_NAME>
 
 ## Enable compaction
 
-Compaction improves query performance by combining the many small files created during data ingestion into fewer, larger files according to the set `target file size`. For more information about compaction and why it is valuable, refer to [About compaction](/r2/data-catalog/table-maintenance/).
+Compaction improves query performance by combining the many small files created during data ingestion into fewer, larger files according to the set `target file size`. For more information about compaction and why it is valuable, refer to [About compaction](/r2-data-catalog/table-maintenance/).
 :::note[API token permission requirements]
 Table maintenance operations such as compaction and snapshot expiration require a Cloudflare API token with both R2 storage and R2 Data Catalog read/write permissions to act as a service credential.
 
@@ -353,12 +353,12 @@ npx wrangler r2 bucket catalog local-uploads enable <R2_Data_Catalog_BUCKET_NAME
 
 <LinkCard
 	title="Get started"
-	href="/r2/data-catalog/get-started/"
+	href="/r2-data-catalog/get-started/"
 	description="Learn how to enable the R2 Data Catalog on your bucket, load sample data, and run your first query."
 />
 
 <LinkCard
 	title="Connect to Iceberg engines"
-	href="/r2/data-catalog/config-examples/"
+	href="/r2-data-catalog/config-examples/"
 	description="Find detailed setup instructions for Apache Spark and other common query engines."
 />

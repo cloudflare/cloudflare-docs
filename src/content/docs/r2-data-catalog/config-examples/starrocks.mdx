@@ -4,7 +4,7 @@ description: Connect StarRocks to R2 Data Catalog to query and modify Iceberg ta
 pcx_content_type: example
 reviewed: 2025-07-31
 products:
-  - r2
+  - r2-data-catalog
 ---
 
 Below is an example of using [StarRocks](https://docs.starrocks.io/docs/data_source/catalog/iceberg/iceberg_catalog/#rest) to connect, query, modify data from R2 Data Catalog (read-write).
@@ -12,7 +12,7 @@ Below is an example of using [StarRocks](https://docs.starrocks.io/docs/data_sou
 ## Prerequisites
 
 - Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
-- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2/data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
+- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2-data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
 - [Create an R2 API token](/r2/api/tokens/) with both [R2 and data catalog permissions](/r2/api/tokens/#permissions).
 - A running [StarRocks](https://www.starrocks.io/) frontend instance. You can use the [all-in-one](https://docs.starrocks.io/docs/quick_start/shared-nothing/#launch-starrocks) docker setup.
 

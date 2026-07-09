@@ -4,7 +4,7 @@ description: Connect Trino to R2 Data Catalog using the Iceberg REST catalog con
 pcx_content_type: example
 reviewed: 2025-09-05
 products:
-  - r2
+  - r2-data-catalog
 ---
 
 import { Steps } from "~/components";
@@ -14,7 +14,7 @@ Below is an example of using [Trino](https://trino.io/) to connect to R2 Data Ca
 ## Prerequisites
 
 - Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
-- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2/data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
+- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2-data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
 - [Create an R2 API token, key, and secret](/r2/api/tokens/) with both [R2 and data catalog permissions](/r2/api/tokens/#permissions).
 - Install [Docker](https://docs.docker.com/get-docker/) to run the Trino container.
 

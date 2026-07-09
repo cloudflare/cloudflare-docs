@@ -4,7 +4,7 @@ description: Connect DuckDB to R2 Data Catalog to query and manage Iceberg table
 pcx_content_type: example
 reviewed: 2025-05-27
 products:
-  - r2
+  - r2-data-catalog
 ---
 
 Below is an example of using [DuckDB](https://duckdb.org/) to connect to R2 Data Catalog. For more information on connecting to R2 Data Catalog with DuckDB, refer to [DuckDB documentation](https://duckdb.org/docs/stable/core_extensions/iceberg/iceberg_rest_catalogs#r2-catalog).
@@ -12,7 +12,7 @@ Below is an example of using [DuckDB](https://duckdb.org/) to connect to R2 Data
 ## Prerequisites
 
 - Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
-- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2/data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
+- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2-data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
 - [Create an R2 API token](/r2/api/tokens/) with both [R2 and data catalog permissions](/r2/api/tokens/#permissions).
 - Install [DuckDB](https://duckdb.org/docs/installation/).
   - Note: [DuckDB 1.4.0](https://github.com/duckdb/duckdb/releases/tag/v1.4.0) or greater is required to attach and write to [Iceberg REST Catalogs](https://duckdb.org/docs/stable/core_extensions/iceberg/iceberg_rest_catalogs).

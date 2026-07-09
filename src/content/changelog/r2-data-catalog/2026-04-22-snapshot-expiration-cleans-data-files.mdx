@@ -6,7 +6,7 @@ products:
 date: 2026-04-22
 ---
 
-[R2 Data Catalog](/r2/data-catalog/), a managed [Apache Iceberg](https://iceberg.apache.org/) catalog built into R2, now removes unreferenced data files during automatic snapshot expiration. This improvement reduces storage costs and eliminates the need to run manual maintenance jobs to reclaim space from deleted data.
+[R2 Data Catalog](/r2-data-catalog/), a managed [Apache Iceberg](https://iceberg.apache.org/) catalog built into R2, now removes unreferenced data files during automatic snapshot expiration. This improvement reduces storage costs and eliminates the need to run manual maintenance jobs to reclaim space from deleted data.
 
 Previously, snapshot expiration only cleaned up Iceberg metadata files such as manifests and manifest lists. Data files that were no longer referenced by active snapshots remained in R2 storage until you manually ran `remove_orphan_files` or `expire_snapshots` through an engine like Spark. This required extra operational overhead and left stale data files consuming storage.
 
@@ -19,4 +19,4 @@ npx wrangler r2 bucket catalog snapshot-expiration enable my-bucket \
   --retain-last 10
 ```
 
-To learn more about snapshot expiration and other automatic maintenance operations, refer to the [table maintenance documentation](/r2/data-catalog/table-maintenance/).
+To learn more about snapshot expiration and other automatic maintenance operations, refer to the [table maintenance documentation](/r2-data-catalog/table-maintenance/).

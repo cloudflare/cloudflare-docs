@@ -240,7 +240,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/sandbox/ @cloudflare/product-owners @cloudflare/ai-agents
 /src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/product-owners
 /src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/product-owners
-/src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/product-owners
+/src/content/docs/r2-data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/product-owners
+/src/content/changelog/r2-data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/product-owners
 /src/content/docs/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/product-owners
 /src/content/directory/flagship.yaml @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/product-owners
 /src/assets/images/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/product-owners

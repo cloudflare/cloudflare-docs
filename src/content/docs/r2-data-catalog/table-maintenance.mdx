@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Table maintenance
 description: Learn how R2 Data Catalog automates table maintenance
 products:
-  - r2
+  - r2-data-catalog
 sidebar:
   order: 4
 ---
@@ -33,7 +33,7 @@ Every write operation in [Apache Iceberg](https://iceberg.apache.org/), no matte
 
 ## R2 Data Catalog automatic compaction
 
-R2 Data Catalog can now [manage compaction](/r2/data-catalog/manage-catalogs/) for Apache Iceberg tables stored in R2. When enabled, compaction runs automatically and combines new files that have not been compacted yet.
+R2 Data Catalog can now [manage compaction](/r2-data-catalog/manage-catalogs/) for Apache Iceberg tables stored in R2. When enabled, compaction runs automatically and combines new files that have not been compacted yet.
 
 Compacted files are prefixed with `compacted-` in the `/data/` directory of a respective table.
 
@@ -56,7 +56,7 @@ npx wrangler r2 bucket catalog compaction disable my-bucket
 npx wrangler r2 bucket catalog compaction disable my-bucket my-namespace my-table
 ```
 
-For more details on managing compaction, refer to [Manage catalogs](/r2/data-catalog/manage-catalogs/).
+For more details on managing compaction, refer to [Manage catalogs](/r2-data-catalog/manage-catalogs/).
 
 ### Choose the right target file size
 

@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Deleting data
 description: How to properly delete data from R2 Data Catalog
 products:
-  - r2
+  - r2-data-catalog
 sidebar:
   order: 5
 ---
@@ -23,7 +23,7 @@ R2 Data Catalog can automatically manage table maintenance operations such as sn
 
 Without enabling automatic maintenance, you need to manually handle these operations.
 
-Learn more in the [table maintenance](/r2/data-catalog/table-maintenance/) documentation.
+Learn more in the [table maintenance](/r2-data-catalog/table-maintenance/) documentation.
 
 ## Examples of enabling automatic table maintenance in R2 Data Catalog
 
@@ -38,7 +38,7 @@ npx wrangler r2 bucket catalog compaction enable my-bucket \
 	--target-size 256
 ```
 
-Refer to additional examples in the [manage catalogs](/r2/data-catalog/manage-catalogs/) documentation.
+Refer to additional examples in the [manage catalogs](/r2-data-catalog/manage-catalogs/) documentation.
 
 ## Manually deleting and removing data
 
@@ -48,7 +48,7 @@ You need to manually delete data for:
 - Selective based deletes using conditional logic.
 - Removing stale or unreferenced files that R2 Data Catalog does not manage.
 
-The following are basic examples using PySpark but similar operations can be performed using other Iceberg-compatible engines. To configure PySpark, refer to our [example](/r2/data-catalog/config-examples/spark-python/) or the official [PySpark documentation](https://spark.apache.org/docs/latest/api/python/getting_started/index.html).
+The following are basic examples using PySpark but similar operations can be performed using other Iceberg-compatible engines. To configure PySpark, refer to our [example](/r2-data-catalog/config-examples/spark-python/) or the official [PySpark documentation](https://spark.apache.org/docs/latest/api/python/getting_started/index.html).
 
 ### Deleting rows from a table
 
@@ -182,7 +182,7 @@ Apache Iceberg supports two deletion modes: **Copy-on-Write (COW)** and **Merge-
 :::note[Important for all deletion modes]
 
 - Deleted data is **not immediately removed** from R2 - files are marked for cleanup
-- Enable [snapshot expiration](/r2/data-catalog/table-maintenance) in R2 Data Catalog to automatically clean up old snapshots and files
+- Enable [snapshot expiration](/r2-data-catalog/table-maintenance/) in R2 Data Catalog to automatically clean up old snapshots and files
   :::
 
 ### Common deletion operations
@@ -206,13 +206,13 @@ For Merge-on-Read tables, you may need to manually apply deletes for performance
 | `rewrite_data_files` (compaction) | Applies deletes and consolidates files | When query performance degrades due to many delete files |
 
 :::note
-R2 Data Catalog can automate [rewriting data files](/r2/data-catalog/table-maintenance/) for you.
+R2 Data Catalog can automate [rewriting data files](/r2-data-catalog/table-maintenance/) for you.
 :::
 
 ## Related resources
 
-- [Table maintenance](/r2/data-catalog/table-maintenance) - Learn about automatic maintenance operations
-- [R2 Data Catalog](/r2/data-catalog/) - Overview and getting started guide
+- [Table maintenance](/r2-data-catalog/table-maintenance/) - Learn about automatic maintenance operations
+- [R2 Data Catalog](/r2-data-catalog/) - Overview and getting started guide
 - [Query data](/r2-sql/query-data) - Query tables with R2 SQL
 - [Apache Iceberg Maintenance](https://iceberg.apache.org/docs/latest/maintenance/) - Official Iceberg documentation on table maintenance
 

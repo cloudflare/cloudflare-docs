@@ -4,7 +4,7 @@ description: Build a Scala Spark application that connects to R2 Data Catalog fo
 pcx_content_type: example
 reviewed: 2025-04-09
 products:
-  - r2
+  - r2-data-catalog
 ---
 
 import { FileTree } from "~/components";
@@ -14,7 +14,7 @@ Below is an example of how you can build an [Apache Spark](https://spark.apache.
 ## Prerequisites
 
 - Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
-- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2/data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
+- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2-data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
 - [Create an R2 API token](/r2/api/tokens/) with both [R2 and data catalog permissions](/r2/api/tokens/#permissions).
 - Install Java 17, Spark 3.5.3, and SBT 1.10.11
   - Note: The specific versions of tools are critical for getting things to work in this example.

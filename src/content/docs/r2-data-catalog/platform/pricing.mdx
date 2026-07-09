@@ -5,13 +5,13 @@ description: R2 Data Catalog pricing for catalog operations, compaction, and inc
 sidebar:
   order: 1
 products:
-  - r2
+  - r2-data-catalog
 ---
 
 R2 Data Catalog charges based on two dimensions in addition to standard [R2 storage and operations](/r2/pricing/):
 
 1. **Catalog operations**: Metadata operations such as creating tables, reading table metadata, and updating table properties.
-2. **Compaction data processed**: The volume of data processed and objects compacted when [automatic table compaction](/r2/data-catalog/table-maintenance/) is turned on.
+2. **Compaction data processed**: The volume of data processed and objects compacted when [automatic table compaction](/r2-data-catalog/table-maintenance/) is turned on.
 
 All included usage is on a monthly basis.
 
@@ -35,7 +35,7 @@ Catalog operations are metadata requests made to the Iceberg REST catalog, such 
 
 ### Compaction
 
-When you turn on [automatic compaction](/r2/data-catalog/table-maintenance/), R2 Data Catalog periodically rewrites small data files into larger, optimized files. This improves query performance and reduces the number of files in your table. Compaction is billed on two sub-dimensions:
+When you turn on [automatic compaction](/r2-data-catalog/table-maintenance/), R2 Data Catalog periodically rewrites small data files into larger, optimized files. This improves query performance and reduces the number of files in your table. Compaction is billed on two sub-dimensions:
 
 - **Data processed**: The total bytes read and rewritten during compaction.
 - **Objects processed**: The number of data files compacted.
@@ -48,7 +48,7 @@ Current compaction pricing is based on binpacking, the simplest form of compacti
 
 ### Snapshot Expiration
 
-When you turn on [automatic snapshot expiration](/r2/data-catalog/table-maintenance/#why-do-i-need-snapshot-expiration), R2 Data Catalog automatically deletes old snapshots and their associated data files after a specified retention period. Snapshot expiration is free of charge and does not incur any additional costs outside of the standard R2 storage and data catalog operations charges.
+When you turn on [automatic snapshot expiration](/r2-data-catalog/table-maintenance/#why-do-i-need-snapshot-expiration), R2 Data Catalog automatically deletes old snapshots and their associated data files after a specified retention period. Snapshot expiration is free of charge and does not incur any additional costs outside of the standard R2 storage and data catalog operations charges.
 
 ## Billing examples
 
