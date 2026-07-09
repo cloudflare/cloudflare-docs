@@ -418,7 +418,7 @@ switch (result.action) {
 </TypeScriptExample>
 
 :::note[MCP client support]
-Elicitation requires MCP client support. Not all MCP clients implement the elicitation capability. Check the client documentation for compatibility.
+Elicitation requires MCP client support. Not all MCP clients implement the elicitation capability. Check the client documentation for compatibility. Agents acting as MCP clients can respond to elicitation (including url mode) by overriding [`onElicitRequest`](/agents/model-context-protocol/apis/client-api/#elicitation).
 :::
 
 For more human-in-the-loop patterns including workflow-based approval, refer to [Human-in-the-loop patterns](/agents/concepts/agentic-patterns/human-in-the-loop/).

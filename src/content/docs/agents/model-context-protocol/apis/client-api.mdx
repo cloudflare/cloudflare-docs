@@ -314,6 +314,128 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
+## Elicitation
+
+MCP servers can request input from your agent during a tool call using [elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation). To respond, override `onElicitRequest` on your agent:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import type { ElicitRequest, ElicitResult } from "agents/mcp";
+
+class MyAgent extends Agent<Env> {
+	async onElicitRequest(
+		request: ElicitRequest,
+		serverId: string,
+	): Promise<ElicitResult> {
+		if (request.params.mode === "url") {
+			// Deliver the URL to the user out-of-band (a DM, an email, a UI
+			// notification) — it never enters model context.
+			await this.notifyUser(request.params.url, request.params.message);
+			return { action: "accept", content: {} };
+		}
+
+		// Form mode: collect the fields described by requestedSchema,
+		// or decline if your surface cannot prompt the user.
+		return { action: "decline", content: {} };
+	}
+}
+```
+
+</TypeScriptExample>
+
+Because `onElicitRequest` is a class method, it survives Durable Object hibernation and applies to connections restored from storage. The `serverId` argument identifies which server sent the request, so one agent can respond differently per server. Without an override, elicitation requests are rejected with an error.
+
+### Elicitation modes
+
+Servers only send elicitation modes your client advertised during the `initialize` handshake. The Agents SDK advertises modes based on what your agent can actually handle:
+
+- **With an `onElicitRequest` override**, connections advertise both **form** and **url** mode.
+- **Without one**, connections advertise form mode only, matching previous behavior.
+
+**Form mode** asks the user for structured data. The request carries a `requestedSchema` describing the fields, and an accepting response returns matching `content`.
+
+**URL mode** asks the user to visit a URL — for example an authorization or checkout page. The MCP specification requires servers to use url mode for sensitive URLs so that they stay out of the model's context instead of appearing in tool-result text. Your handler delivers the URL to the user and returns `{ action: "accept" }` once it has done so.
+
+To narrow the advertised modes, declare them explicitly when adding the server — an explicit declaration always wins and is persisted with the server options:
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("portal", "https://portal.example.com/mcp", {
+	client: {
+		capabilities: {
+			// Form mode only, even though onElicitRequest is overridden
+			elicitation: { form: {} },
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+### Forwarding elicitation to a UI
+
+`onElicitRequest` returns a promise, but the answer usually comes from a human. A common pattern is to broadcast the request to connected clients and resolve the promise when one of them responds:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+import type { ElicitRequest, ElicitResult } from "agents/mcp";
+
+class MyAgent extends Agent<Env> {
+	private pendingElicitations = new Map<
+		string,
+		(result: ElicitResult) => void
+	>();
+
+	async onElicitRequest(
+		request: ElicitRequest,
+		serverId: string,
+	): Promise<ElicitResult> {
+		const id = crypto.randomUUID();
+
+		const result = new Promise<ElicitResult>((resolve) => {
+			this.pendingElicitations.set(id, resolve);
+			// Do not hold the tool call open forever if nobody answers
+			setTimeout(() => {
+				if (this.pendingElicitations.delete(id)) {
+					resolve({ action: "cancel", content: {} });
+				}
+			}, 300_000);
+		});
+
+		// The UI renders a form from request.params.requestedSchema
+		// (or a link for url mode) and calls respondToElicitation
+		this.broadcast(
+			JSON.stringify({
+				type: "mcp-elicitation",
+				id,
+				serverId,
+				params: request.params,
+			}),
+		);
+
+		return result;
+	}
+
+	@callable()
+	respondToElicitation(id: string, result: ElicitResult) {
+		const resolve = this.pendingElicitations.get(id);
+		if (resolve) {
+			this.pendingElicitations.delete(id);
+			resolve(result);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+See the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for a complete browser UI implementing this pattern, and the [`mcp-elicitation` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) for a server that sends both elicitation modes. To send elicitation requests from your own MCP server, see [`elicitInput`](/agents/model-context-protocol/apis/agent-api/#elicitinputoptions-context).
+
 ## Using MCP capabilities
 
 Once connected, access the server's capabilities:
