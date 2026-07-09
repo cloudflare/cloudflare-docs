@@ -17,12 +17,13 @@ head:
 
 import { DashButton, Steps } from "~/components";
 
-Turnstile Spin is a setup flow for Cloudflare Turnstile. It creates the widget for you, then hands your AI coding agent the materials (sitekey, secret, and a curated prompt) to embed the widget on the right forms and wire canonical server-side siteverify into your existing backend. Spin runs two ways:
+Turnstile Spin is a setup flow for Cloudflare Turnstile. It creates the widget for you, then hands your AI coding agent the materials (sitekey, secret, and a curated prompt) to embed the widget on the right forms and wire canonical server-side siteverify into your existing backend. Spin runs three ways:
 
 - **From the Cloudflare dashboard.** Enter your domains, select **Set up**, and Spin creates the widget server-side. You receive the sitekey, the secret, and a prompt for your AI coding agent.
+- **From the Wrangler CLI.** Run `wrangler turnstile widget create` to create the widget from your terminal. Wrangler prints the sitekey and secret; you wire the widget and siteverify by hand.
 - **From your AI coding agent.** Paste a single prompt into Claude Code, Cursor, Codex, OpenCode, or GitHub Copilot Chat. The agent uses the inlined Spin skill to create the widget, embed it, and wire siteverify in your codebase.
 
-Both paths produce the same widget. The only difference is where the create call runs. Neither path deploys infrastructure on your behalf — Spin uses Turnstile's canonical siteverify endpoint, called from the backend you already have.
+All three paths produce the same widget. The only difference is where the create call runs. None of them deploy infrastructure on your behalf — Spin uses Turnstile's canonical siteverify endpoint, called from the backend you already have.
 
 ## Set up from the dashboard
 
@@ -48,9 +49,34 @@ Both paths produce the same widget. The only difference is where the create call
 
 If Spin fails before it finishes, the dialog shows the error and offers a fallback prompt your AI coding agent can use to drive the same setup from your editor. Select **Try again** to retry from the same dialog.
 
-## Set up from the command line
+## Set up from the Wrangler CLI
 
-If you do not see the **Set up with Spin** button in your dashboard, or you prefer to drive setup from your editor, paste this prompt into your AI coding agent:
+If you prefer to drive setup from your terminal without an AI coding agent, use [Wrangler](/workers/wrangler/):
+
+```sh title="Create a widget from Wrangler"
+npx wrangler turnstile widget create "myproject" \
+	--domain example.com \
+	--domain localhost \
+	--domain 127.0.0.1 \
+	--mode managed
+```
+
+Wrangler prints the sitekey and the secret. Copy the sitekey into your widget HTML, store the secret as `TURNSTILE_SECRET` in your backend's env, and wire the canonical siteverify call as described in [Wire up the frontend](#wire-up-the-frontend).
+
+Additional widget commands:
+
+| Command                                                   | Purpose                                                              |
+| --------------------------------------------------------- | -------------------------------------------------------------------- |
+| `wrangler turnstile widget list`                          | List every Turnstile widget on your account.                         |
+| `wrangler turnstile widget get <sitekey>`                 | Fetch a widget's configuration, including its secret.                |
+| `wrangler turnstile widget update <sitekey> --domain <d>` | Update the domains, mode, or name of a widget.                       |
+| `wrangler turnstile widget delete <sitekey>`              | Delete a widget. Pass `-y` to skip the confirmation prompt.          |
+
+All commands accept `--json` for machine-readable output. `--domain` accepts comma-separated values (`--domain a.com,b.com`) or repeated flags (`--domain a.com --domain b.com`). Requires Wrangler 4.109 or later.
+
+## Set up from an AI coding agent
+
+If you do not see the **Set up with Spin** button in your dashboard, or you want your agent to embed the widget and wire siteverify into your codebase in the same pass, paste this prompt into your AI coding agent:
 
 <Steps>
 
@@ -119,7 +145,7 @@ If anything fails, the agent reports which step and what it tried. Most failures
 
 ## Wire up the frontend
 
-Whichever setup path you use, Spin gives you a sitekey and a secret. The dashboard hands you a prompt for your AI coding agent. The command-line setup edits files directly via the agent.
+Whichever setup path you use, Spin gives you a sitekey and a secret. The dashboard hands you a prompt for your AI coding agent. The Wrangler CLI prints them for you to wire by hand. The AI-agent setup edits your files directly.
 
 If you set up from the dashboard and want to wire it by hand, the minimal pattern is:
 
@@ -179,7 +205,7 @@ The sitekey does not change. Your existing widget keeps working throughout. The 
 
 ## Migrate from reCAPTCHA or hCaptcha
 
-Use the command-line setup for migrations. The agent detects reCAPTCHA or hCaptcha in your codebase and proposes a substitution. The substitution rules are:
+Use the AI-agent setup for migrations. The agent detects reCAPTCHA or hCaptcha in your codebase and proposes a substitution. The substitution rules are:
 
 - Replace script tags with `https://challenges.cloudflare.com/turnstile/v0/api.js` (`async defer`).
 - Replace `class="g-recaptcha"` or `class="h-captcha"` divs with `class="cf-turnstile"`. Update `data-sitekey` to the new Turnstile site key.
@@ -213,7 +239,7 @@ Spin-tagged widgets emit an account-level marker so Cloudflare can measure activ
 
 | `data-action` value | Set by                                                                                |
 | ------------------- | ------------------------------------------------------------------------------------- |
-| `turnstile-spin-v2` | Current Spin flow (dashboard **Set up with Spin** + command-line skill, all variants) |
+| `turnstile-spin-v2` | Current Spin flow (dashboard **Set up with Spin** + Wrangler CLI + AI-agent skill, all variants) |
 | `turnstile-spin-v1` | Legacy V1 agent flow. Preserved if encountered on an existing widget; not used for new setups. |
 
 Spin applies the marker automatically. If you customize the widget snippet by hand, you do not need to add the marker yourself.
