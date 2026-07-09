@@ -345,7 +345,7 @@ class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-Because `onElicitRequest` is a class method, it survives Durable Object hibernation and applies to connections restored from storage. The `serverId` argument identifies which server sent the request, so one agent can respond differently per server. Without an override, elicitation requests are rejected with an error.
+Because `onElicitRequest` is a class method, it survives Durable Object hibernation and applies to connections restored from storage. The `serverId` argument identifies which server sent the request, so one agent can respond differently per server.
 
 ### Elicitation modes
 
@@ -367,7 +367,7 @@ async onElicitRequest(request: ElicitRequest): Promise<ElicitResult> {
 
 **URL mode** asks the user to visit a URL, for example an authorization or checkout page. The MCP specification requires servers to use url mode for sensitive URLs so that they stay out of the model's context instead of appearing in tool-result text. Your handler delivers the URL to the user and returns `{ action: "accept" }` once it has done so.
 
-Servers only send elicitation modes your client advertised during the `initialize` handshake. Connections with an `onElicitRequest` override advertise both modes. Connections without one advertise form mode only and reject any elicitation request that arrives, so overriding `onElicitRequest` is required to handle either mode.
+Servers only send elicitation modes your client advertised during the `initialize` handshake. Connections with an `onElicitRequest` override advertise both modes. Connections without one advertise no elicitation capability, so servers use their non-elicitation fallbacks instead. Overriding `onElicitRequest` is how an agent opts into elicitation.
 
 To narrow the advertised modes, declare them explicitly when adding the server. An explicit declaration always wins and is persisted with the server options:
 

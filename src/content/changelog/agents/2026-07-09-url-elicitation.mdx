@@ -44,9 +44,9 @@ class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-Because it is a class method, the handler survives Durable Object hibernation and applies to connections restored from storage, with no callback to re-register after a wake-up. Agents without an override keep the previous behavior: connections advertise form mode only, so servers fall back to their non-elicitation flows.
+Because it is a class method, the handler survives Durable Object hibernation and applies to connections restored from storage, with no callback to re-register after a wake-up. Agents without an override advertise no elicitation capability, so servers use their non-elicitation fallbacks instead of sending requests the agent cannot answer.
 
-An explicitly declared `client.capabilities.elicitation` on `addMcpServer` is now honored instead of being overwritten. The declaration is persisted with the server registration and survives hibernation, so you can narrow the advertised modes when your agent should only receive specific ones.
+An explicitly declared `client.capabilities.elicitation` on `addMcpServer` is honored, persisted with the server registration, and survives hibernation, so you can narrow the advertised modes when your agent should only receive specific ones.
 
 Refer to [Elicitation in the MCP client documentation](/agents/model-context-protocol/apis/client-api/#elicitation) for the full guide, including a pattern for forwarding elicitation requests to a browser UI. The [`mcp-client`](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) and [`mcp-elicitation`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) examples implement both sides end to end.
 
