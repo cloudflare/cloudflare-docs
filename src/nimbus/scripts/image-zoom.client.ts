@@ -56,7 +56,8 @@ function onZoomClosed() {
 }
 
 function initImageZoom(root: HTMLElement): () => void {
-  const img = root as HTMLImageElement;
+  if (!(root instanceof HTMLImageElement)) return () => {};
+  const img = root;
   if (img.closest("a") || img.alt === "" || "nbNoZoom" in img.dataset) {
     return () => {};
   }
