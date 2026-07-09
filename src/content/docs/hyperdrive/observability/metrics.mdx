@@ -45,21 +45,13 @@ The `hyperdrivePoolSizesAdaptiveGroups` dataset contains the following connectio
 | Peak open connections | `max.currentPoolSize`    | Peak number of connections open in the pool.                      |
 | Peak waiting clients  | `max.waitingClients`     | Peak number of clients waiting for a connection from the pool.    |
 
-#### How Hyperdrive distributes your connection pool
+Hyperdrive distributes your connection pool across multiple machines within each Cloudflare location. Pool size metrics report aggregate values across all pool shards for a given configuration. The dashboard and GraphQL API both reflect the total connection usage for each location.
 
-Hyperdrive shards your connection pool across five machines within each Cloudflare location. Your configured maximum is divided evenly across these machines. For example, a connection limit of 100 gives each machine a maximum of 20 connections (100 / 5).
-
-Each machine starts with an empty pool and reuses open connections. Hyperdrive opens few connections to your origin database, and each pool grows only as concurrent demand requires it.
-
-Pool size metrics currently report per-machine values for each location. They are not aggregated into a single total across all machines and locations. As a result, `max.currentPoolSize` plateaus at the per-machine slice (for example, 20) rather than your full configured maximum (for example, 100), even when the pool is operating normally.
+Connection contention appears as a sustained spike in waiting clients, or when open connections consistently approach the pool size maximum. If your open connections regularly approach this limit, consider [increasing your Hyperdrive connection limit](/hyperdrive/platform/limits/#request-a-limit-increase).
 
 :::note
-A spike in waiting clients does not mean clients are stuck waiting. The `waitingClients` metric is a point-in-time count of clients waiting for a connection at the moment each value is recorded. It does not measure how long a client waited, which is typically a few milliseconds.
+The `waitingClients` metric is a point-in-time count, not a duration. A brief wait (typically a few milliseconds) registers as a spike but does not indicate that clients are stuck.
 :::
-
-Connection contention appears as a sustained spike in waiting clients, or when per-machine open connections consistently approach the per-machine slice of your pool size maximum. If your open connections regularly approach this limit, consider [increasing your Hyperdrive connection limit](/hyperdrive/platform/limits/#request-a-limit-increase).
-
-To estimate your total connection usage across a configuration, sum the per-location values returned by the [GraphQL Analytics API](#query-via-the-graphql-api).
 
 Metrics can be queried (and are retained) for the past 31 days.
 
@@ -78,15 +70,13 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 The dashboard includes a **Pool connections** chart, which displays waiting connections, open connections, and the pool size maximum. You can use the location selector to filter by specific Cloudflare locations.
 
-The values shown are per-machine and are not aggregated across all machines in a location. Refer to [How Hyperdrive distributes your connection pool](#how-hyperdrive-distributes-your-connection-pool) to interpret these values.
-
 ## Query via the GraphQL API
 
 You can programmatically query analytics for your Hyperdrive configurations via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
 Hyperdrive's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID. Hyperdrive exposes the `hyperdriveQueriesAdaptiveGroups` and `hyperdrivePoolSizesAdaptiveGroups` datasets.
 
-The `hyperdrivePoolSizesAdaptiveGroups` dataset reports per-machine values grouped by the `coloCode` dimension, rather than a single aggregated total. To approximate your total connection usage across all locations, sum the values across each `coloCode` group. This remains an estimate, because each value reflects a single machine rather than a location's full pool. Refer to [How Hyperdrive distributes your connection pool](#how-hyperdrive-distributes-your-connection-pool) for details.
+The `hyperdrivePoolSizesAdaptiveGroups` dataset supports `coloCode` and `poolShardId` as dimensions. By default, metrics are aggregated across all pool shards. To break down usage by location, group by `coloCode`. To inspect individual pool shards, group by `poolShardId`.
 
 ## Write GraphQL queries
 
@@ -211,6 +201,7 @@ query HyperdrivePoolSizes(
 				}
 				dimensions {
 					coloCode
+					poolShardId
 				}
 			}
 		}
