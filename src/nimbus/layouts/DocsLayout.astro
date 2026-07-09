@@ -14,10 +14,13 @@ import { Sidebar, SidebarFilter, SidebarProductNav } from "@/components/ui/sideb
 import { TOC } from "@/components/ui/toc";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Pagination } from "@/components/ui/pagination";
-import { PageActions } from "@/components/ui/page-actions";
+import { PageActions, PageActionLinks } from "@/components/ui/page-actions";
 import { Badge } from "@/components/ui/badge";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import ComponentUsage from "@/components/cf/ComponentUsage.astro";
 import FeedbackPrompt from "@/components/react/FeedbackPrompt";
 import type { DocsPageProps } from "nimbus-docs/types";
+import { marked } from "marked";
 import { config } from "virtual:nimbus/config";
 import { getVersionStatus, getVersionAlternates, getSectionTitle } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
@@ -28,11 +31,13 @@ type Props = DocsPageProps & {
   audience?: "human";
   wide?: boolean;
   hideTitle?: boolean;
+  summary?: string;
   meta?: PageMeta;
   feedback?: boolean;
+  styleGuide?: { component: string };
 };
 
-const { title, description, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true } = Astro.props;
+const { title, description, summary, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true, styleGuide } = Astro.props;
 
 // `searchable` derives from `noindex` when omitted: a non-crawlable page is
 // by default not in the site search either. Explicit `searchable: true`
@@ -101,6 +106,7 @@ const hasSidebar = Astro.slots.has("sidebar");
 const hasToc = Astro.slots.has("toc");
 const hasPageTitle = Astro.slots.has("page-title");
 const hasContentFooter = Astro.slots.has("content-footer");
+const showActions = !Astro.url.pathname.startsWith("/support/");
 const hasPagination = Astro.slots.has("pagination");
 
 // Feedback: rail copy on wide screens, content-column fallback otherwise.
@@ -238,6 +244,12 @@ const showFeedback = feedback !== false && !isCustom;
                       <h1 class="text-foreground mb-0 leading-tight" style={`font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)`}>{title}</h1>
                       {draft && <Badge text="Draft" variant="warning" size="medium" />}
                     </div>
+                    {summary && (
+                      <div
+                        class="mt-2 text-lg leading-relaxed text-muted-foreground"
+                        set:html={marked.parse(summary)}
+                      />
+                    )}
                     {/* `description` is meta-only (head tags via BaseLayout), matching
                         upstream cloudflare-docs which never renders it on the page. */}
                     <PageActions markdownUrl={markdownUrl} lastUpdated={lastUpdated} class="mt-3" />
@@ -255,24 +267,21 @@ const showFeedback = feedback !== false && !isCustom;
                     {!markdownUrl && audience !== "human" && <div class="mb-4" />}
                   </Fragment>
                 )}
+                {styleGuide?.component && (
+                  <div class="docs-content max-w-none mt-12">
+                    <ComponentUsage component={styleGuide.component} />
+                  </div>
+                )}
                 <article class="docs-content max-w-none">
                   <slot />
                 </article>
-                {hasContentFooter ? (
-                  <slot name="content-footer" />
-                ) : editUrl && (
-                  <div class="mt-8 mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                    <a href={editUrl} class="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors no-underline" target="_blank" rel="noopener">
-                      <Icon name="ph:pencil-simple" class="w-3.5 h-3.5" />
-                      Edit this page
-                    </a>
-                  </div>
-                )}
+                {hasContentFooter && <slot name="content-footer" />}
               </div>
               {hasPagination ? <slot name="pagination" /> : <Pagination prevNext={prevNext} />}
-              {showFeedback && (
-                <div class:list={["mt-10", hasTocAside && "xl:hidden"]}>
-                  <FeedbackPrompt client:idle id="feedback-form-content" />
+              {(showFeedback || showActions) && (
+                <div class:list={["mt-10 flex flex-col gap-5", hasTocAside && "xl:hidden"]}>
+                  {showFeedback && <FeedbackPrompt client:idle id="feedback-form-content" />}
+                  {showActions && <PageActionLinks editUrl={editUrl} />}
                 </div>
               )}
             </div>
@@ -282,9 +291,10 @@ const showFeedback = feedback !== false && !isCustom;
             <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
               <div class="pt-6 pb-8 pl-8 pr-6">
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
-                {showFeedback && (
-                  <div class="mt-8 border-t border-border pt-6">
-                    <FeedbackPrompt client:only="react" id="feedback-form-toc" />
+                {(showFeedback || showActions) && (
+                  <div class="mt-8 border-t border-border pt-6 flex flex-col gap-5">
+                    {showFeedback && <FeedbackPrompt client:only="react" id="feedback-form-toc" />}
+                    {showActions && <PageActionLinks editUrl={editUrl} />}
                   </div>
                 )}
               </div>
@@ -325,7 +335,8 @@ const showFeedback = feedback !== false && !isCustom;
         </div>
         <div data-mobile-sidebar-slot></div>
       </div>
-    </dialog>
+      </dialog>
   )}
 
+  <ScrollToTop />
 </BaseLayout>

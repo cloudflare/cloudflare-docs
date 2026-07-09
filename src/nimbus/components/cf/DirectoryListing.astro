@@ -73,9 +73,8 @@ function buildPageTree(parentPath: string, currentDepth: number): PageNode[] {
 const pageTree = buildPageTree(folder, baseDepth + 1);
 
 if (pageTree.length === 0) {
-  console.warn(
-    `[DirectoryListing] No child pages for "${folder}" — rendering empty. ` +
-      `Expected during the bounded port when the target product's docs aren't migrated yet.`,
+  throw new Error(
+    `[DirectoryListing] Bad folder parameter (determined by current folder OR the "folder" input) of "${folder}". Check to make sure "${folder}" exists and has child pages.`,
   );
 }
 ---

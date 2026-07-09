@@ -4,6 +4,9 @@ import "@fontsource-variable/jetbrains-mono";
 import "../styles/globals.css";
 import "../styles/prose.css";
 import "../styles/markdown-pipeline.css";
+import "tippy.js/dist/tippy.css";
+import "../styles/tippy.css";
+import "../styles/footnotes.css";
 import { config } from "virtual:nimbus/config";
 import { getCollectionLlmsUrl, getVersionStatus } from "nimbus-docs";
 import AgentDirective from "@/components/AgentDirective.astro";
@@ -65,35 +68,76 @@ const llmsUrl = Astro.site
     <script is:inline>
       (() => {
         const KEY = "ui-mode";
+        // Starlight (the production build) persists theme under this key, with
+        // values "light" | "dark" | "auto". We migrate/dual-read it so a
+        // returning visitor's saved theme survives cutover with no flash, and
+        // the toggle dual-writes it so a rollback to Starlight keeps the
+        // choice. See T9 in the parity audit.
+        const LEGACY_KEY = "starlight-theme";
         const media = window.matchMedia("(prefers-color-scheme: dark)");
+        const isPref = (v) => v === "light" || v === "dark" || v === "auto";
 
-        const readPref = () => {
+        const readKey = (k) => {
           try {
-            const v = localStorage.getItem(KEY);
-            return v === "dark" || v === "light" ? v : null;
+            const v = localStorage.getItem(k);
+            return isPref(v) ? v : null;
           } catch {
             return null;
           }
         };
 
-        const resolveMode = () => readPref() ?? (media.matches ? "dark" : "light");
+        // One-time migration: if we have no preference of our own but Starlight
+        // left one, adopt it so it persists into our key. Runs once — after the
+        // first write, our key wins and this no-ops.
+        const migrate = () => {
+          try {
+            if (readKey(KEY)) return;
+            const legacy = readKey(LEGACY_KEY);
+            if (legacy) localStorage.setItem(KEY, legacy);
+          } catch {
+            /* ignore storage errors (private mode / restricted contexts) */
+          }
+        };
+
+        // Preference is light | dark | auto. Pure read: our key wins, else a
+        // Starlight value (dual-read, in case the migration write was blocked),
+        // else "auto". "auto" is never coerced to light/dark — it round-trips.
+        const readPref = () => readKey(KEY) ?? readKey(LEGACY_KEY) ?? "auto";
+
+        const resolveMode = (pref) =>
+          pref === "light" || pref === "dark"
+            ? pref
+            : media.matches
+              ? "dark"
+              : "light";
 
         const applyTheme = () => {
           const root = document.documentElement;
-          const mode = resolveMode();
+          const pref = readPref();
+          const mode = resolveMode(pref);
+          // Nimbus keys dark styling off [data-mode="dark"]; also mirror the
+          // resolved value onto [data-theme] so ported CSS still keyed on
+          // Starlight's attribute (e.g. the cf/*Diagram components) keeps
+          // working under the shim rather than silently rendering light.
           if (mode === "dark") root.setAttribute("data-mode", "dark");
           else root.removeAttribute("data-mode");
+          root.setAttribute("data-theme", mode);
           root.style.colorScheme = mode;
-          document.querySelectorAll("[data-nb-theme-toggle]").forEach((b) => {
-            b.setAttribute("data-nb-state", mode);
-          });
+          // Drive the toggle icon from the root attribute (set here, pre-paint)
+          // so it never flashes the SSR default before the toggle script loads.
+          root.setAttribute("data-nb-pref", pref); // selected preference
+          root.setAttribute("data-nb-state", mode); // resolved (light/dark)
         };
 
+        migrate();
         applyTheme();
         document.addEventListener("astro:after-swap", applyTheme);
+        // Live OS changes only move the page when the user is following the
+        // system (auto). An explicit light/dark choice is left untouched.
         media.addEventListener("change", () => {
-          if (!readPref()) applyTheme();
+          if (readPref() === "auto") applyTheme();
         });
+        // Cross-tab sync within Nimbus (our own key).
         window.addEventListener("storage", (e) => {
           if (e.key === KEY) applyTheme();
         });
@@ -132,6 +176,9 @@ const llmsUrl = Astro.site
       import "../scripts/mobile-sidebar.client";
       import "../scripts/mermaid.client";
       import "../scripts/table-scroll.client";
+      import "../scripts/image-zoom.client";
+      import "../scripts/footnotes.client";
+      import "../scripts/scroll-to-top.client";
       // Custom Zaraz analytics event wiring (link/tab/details/copy/search).
       // Registers delegated document listeners once; safe with view transitions.
       import "../scripts/analytics";
