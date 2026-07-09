@@ -1,0 +1,68 @@
+{
+	"model_id": "elevenlabs/eleven-flash-v2-5",
+	"provider_id": "elevenlabs",
+	"name": "Eleven Flash v2.5",
+	"description": "ElevenLabs' low-latency Flash v2.5 text-to-speech model for fast multilingual speech generation.",
+	"task": "Text-to-Speech",
+	"tags": [
+		"Text-to-Speech",
+		"Audio Generation",
+		"Low Latency",
+		"Multilingual"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": null,
+	"examples": [
+		{
+			"name": "AI Gateway Assistant",
+			"description": "Generate low-latency speech for an AI Gateway support assistant",
+			"input": {
+				"text": "Thanks for contacting Cloudflare AI Gateway support. I can help you compare providers, review request logs, or troubleshoot model routing.",
+				"voice_id": "JBFqnCBsd6RMkjVDRZzb",
+				"output_format": "mp3_44100_128"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-flash-v2-5/ai-gateway-assistant.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-flash-v2-5/ai-gateway-assistant.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'elevenlabs/eleven-flash-v2-5',\n  {\n    text: 'Thanks for contacting Cloudflare AI Gateway support. I can help you compare providers, review request logs, or troubleshoot model routing.',\n    voice_id: 'JBFqnCBsd6RMkjVDRZzb',\n    output_format: 'mp3_44100_128',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"elevenlabs/eleven-flash-v2-5\",\n  \"input\": {\n    \"text\": \"Thanks for contacting Cloudflare AI Gateway support. I can help you compare providers, review request logs, or troubleshoot model routing.\",\n    \"voice_id\": \"JBFqnCBsd6RMkjVDRZzb\",\n    \"output_format\": \"mp3_44100_128\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://elevenlabs.io/docs/api-reference/text-to-speech/convert",
+	"terms": "https://elevenlabs.io/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Latency": "Optimized for fast generation",
+		"Output Formats": "MP3, WAV, PCM, Opus, u-law, A-law",
+		"Voices": "Supports ElevenLabs voice IDs"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-07-09 02:31:08",
+	"schema": null
+}
