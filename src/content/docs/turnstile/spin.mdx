@@ -23,7 +23,7 @@ Turnstile Spin is a setup flow for Cloudflare Turnstile. It creates the widget f
 - **From the Wrangler CLI.** Run `wrangler turnstile widget create` to create the widget from your terminal. Wrangler prints the sitekey and secret; you wire the widget and siteverify by hand.
 - **From your AI coding agent.** Paste a single prompt into Claude Code, Cursor, Codex, OpenCode, or GitHub Copilot Chat. The agent uses the inlined Spin skill to create the widget, embed it, and wire siteverify in your codebase.
 
-All three paths produce the same widget. The only difference is where the create call runs. None of them deploy infrastructure on your behalf — Spin uses Turnstile's canonical siteverify endpoint, called from the backend you already have.
+All three paths produce the same widget. The only difference is where the create call runs. None of them deploy infrastructure on your behalf. Spin uses Turnstile's canonical siteverify endpoint, called from the backend you already have.
 
 ## Set up from the dashboard
 
@@ -35,7 +35,7 @@ All three paths produce the same widget. The only difference is where the create
 
 2. Select **Set up with Spin** in the page header.
 
-3. Enter the domains your Turnstile widget should accept tokens from. The first chip is pre-filled from your account's first active Cloudflare zone. Add more domains, or remove the pre-filled one and type any domain (Turnstile does not require a Cloudflare-managed zone).
+3. Enter the domains your Turnstile widget should accept tokens from. The first chip is pre-filled from your account's first active Cloudflare zone. Add more domains, or remove the pre-filled one and type any domain (Turnstile does not require a Cloudflare-managed zone). `localhost` and `127.0.0.1` are added automatically for local development.
 
 4. Select **Set up**. Spin creates the widget and returns to a success card.
 
@@ -65,12 +65,12 @@ Wrangler prints the sitekey and the secret. Copy the sitekey into your widget HT
 
 Additional widget commands:
 
-| Command                                                   | Purpose                                                              |
-| --------------------------------------------------------- | -------------------------------------------------------------------- |
-| `wrangler turnstile widget list`                          | List every Turnstile widget on your account.                         |
-| `wrangler turnstile widget get <sitekey>`                 | Fetch a widget's configuration, including its secret.                |
-| `wrangler turnstile widget update <sitekey> --domain <d>` | Update the domains, mode, or name of a widget.                       |
-| `wrangler turnstile widget delete <sitekey>`              | Delete a widget. Pass `-y` to skip the confirmation prompt.          |
+| Command                                                   | Purpose                                                     |
+| --------------------------------------------------------- | ----------------------------------------------------------- |
+| `wrangler turnstile widget list`                          | List every Turnstile widget on your account.                |
+| `wrangler turnstile widget get <sitekey>`                 | Fetch a widget's configuration, including its secret.       |
+| `wrangler turnstile widget update <sitekey> --domain <d>` | Update the domains, mode, or name of a widget.              |
+| `wrangler turnstile widget delete <sitekey>`              | Delete a widget. Pass `-y` to skip the confirmation prompt. |
 
 All commands accept `--json` for machine-readable output. `--domain` accepts comma-separated values (`--domain a.com,b.com`) or repeated flags (`--domain a.com --domain b.com`).
 
@@ -126,20 +126,20 @@ Then prompt your agent: `Use the turnstile-spin skill to add Turnstile to this p
 
 The agent does not run silently. It detects what it can, asks only when it has to, and confirms before every irreversible step. The flow is a twelve-step wizard with several confirmation points.
 
-| Step | What happens                                                              | Confirms with you?               |
-| ---- | ------------------------------------------------------------------------- | -------------------------------- |
-| 1    | Acknowledge (agent restates what it is about to do)                       | Yes                              |
-| 2    | CLI check (wrangler if present; otherwise falls through to curl)          | No                               |
-| 3    | Authentication (`Account.Turnstile:Edit` token)                           | If a token is needed             |
-| 4    | Account selection (if you have more than one)                             | If more than one                 |
-| 5    | Domain                                                                    | Yes                              |
-| 6    | Codebase scan (frontend framework + backend handler + existing CAPTCHA)   | No                               |
-| 7    | Insertion plan                                                            | Yes                              |
-| 8    | Widget creation (calls the Cloudflare API to create the widget)           | No (after step 7 confirms scope) |
-| 9    | Embed the widget + add canonical siteverify in your existing backend      | Yes                              |
-| 10   | Validate (dummy-token siteverify + widget hostname check)                 | No                               |
-| 11   | Persist the skill locally (so the agent can re-run on follow-up tasks)    | Yes                              |
-| 12   | Final report                                                              | No                               |
+| Step | What happens                                                            | Confirms with you?               |
+| ---- | ----------------------------------------------------------------------- | -------------------------------- |
+| 1    | Acknowledge (agent restates what it is about to do)                     | Yes                              |
+| 2    | CLI check (wrangler if present; otherwise falls through to curl)        | No                               |
+| 3    | Authentication (`Account.Turnstile:Edit` token)                         | If a token is needed             |
+| 4    | Account selection (if you have more than one)                           | If more than one                 |
+| 5    | Domain                                                                  | Yes                              |
+| 6    | Codebase scan (frontend framework + backend handler + existing CAPTCHA) | No                               |
+| 7    | Insertion plan                                                          | Yes                              |
+| 8    | Widget creation (calls the Cloudflare API to create the widget)         | No (after step 7 confirms scope) |
+| 9    | Embed the widget + add canonical siteverify in your existing backend    | Yes                              |
+| 10   | Validate (dummy-token siteverify + widget hostname check)               | No                               |
+| 11   | Persist the skill locally (so the agent can re-run on follow-up tasks)  | Yes                              |
+| 12   | Final report                                                            | No                               |
 
 If anything fails, the agent reports which step and what it tried. Most failures are recoverable by adjusting one input (token scope, domain list, insertion file) and asking the agent to resume.
 
@@ -189,7 +189,7 @@ if (!success) {
 // existing handler logic runs here, unchanged
 ```
 
-Equivalent calls in other backend languages (Ruby, Python, Go, PHP) are in the per-framework references shipped with the skill. The canonical fetch idiom works inside a Cloudflare Worker the same way it does in Node — no special binding required. The `data-action="turnstile-spin-v2"` attribute is the telemetry marker; refer to [Telemetry marker](#telemetry-marker) for the marker convention.
+Equivalent calls in other backend languages (Ruby, Python, Go, PHP) are in the per-framework references shipped with the skill. The canonical fetch idiom works inside a Cloudflare Worker the same way it does in Node; no special binding is required. The `data-action="turnstile-spin-v2"` attribute is the telemetry marker; refer to [Telemetry marker](#telemetry-marker) for the marker convention.
 
 ## Recover an existing widget
 
@@ -201,7 +201,7 @@ If you do not see the **Fix with Spin** banner in your dashboard, drive the same
 I already have a Turnstile widget. The site key is <SITEKEY>. Use the turnstile-spin skill to wire siteverify against the existing widget: fetch the secret via the Cloudflare API (don't rotate), embed the widget on the right forms, and add canonical server-side siteverify to my existing backend.
 ```
 
-The sitekey does not change. Your existing widget keeps working throughout. The dashboard's `Deployment` column flips from `Manual` to `Spin` once the first request carrying `data-action="turnstile-spin-v2"` lands.
+The sitekey does not change. Your existing widget keeps working throughout.
 
 ## Migrate from reCAPTCHA or hCaptcha
 
@@ -226,23 +226,23 @@ For Cloudflare Workers backends, the agent writes the canonical fetch call direc
 
 ### Widget configuration
 
-| Field      | Type   | Purpose                                                         |
-| ---------- | ------ | --------------------------------------------------------------- |
-| `sitekey`  | string | Public identifier. Embedded in the widget HTML on every page.   |
-| `secret`   | string | Server-only. Stored as `TURNSTILE_SECRET` in your backend env.  |
-| `domains`  | array  | The hostnames Turnstile accepts tokens from for this widget.    |
-| `mode`     | string | `managed` (default), `non-interactive`, or `invisible`.         |
+| Field     | Type   | Purpose                                                        |
+| --------- | ------ | -------------------------------------------------------------- |
+| `sitekey` | string | Public identifier. Embedded in the widget HTML on every page.  |
+| `secret`  | string | Server-only. Stored as `TURNSTILE_SECRET` in your backend env. |
+| `domains` | array  | The hostnames Turnstile accepts tokens from for this widget.   |
+| `mode`    | string | `managed` (default), `non-interactive`, or `invisible`.        |
 
 ### Telemetry marker
 
 Spin-tagged widgets emit an account-level marker so Cloudflare can measure activation rates and time-to-first-siteverify for Spin-flowed widgets compared to manual ones. The marker is account-level and aggregate. No PII, no per-user tracking. Refer to the [Turnstile privacy addendum](https://www.cloudflare.com/turnstile-privacy-policy/).
 
-| `data-action` value | Set by                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------- |
+| `data-action` value | Set by                                                                                           |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
 | `turnstile-spin-v2` | Current Spin flow (dashboard **Set up with Spin** + Wrangler CLI + AI-agent skill, all variants) |
-| `turnstile-spin-v1` | Legacy V1 agent flow. Preserved if encountered on an existing widget; not used for new setups. |
+| `turnstile-spin-v1` | Legacy V1 agent flow. Preserved if encountered on an existing widget; not used for new setups.   |
 
-Spin applies the marker automatically. If you customize the widget snippet by hand, you do not need to add the marker yourself.
+Spin applies the marker automatically. If you edit the widget snippet by hand and remove the attribute, the integration still works; only the analytics segmentation is lost.
 
 ### Related
 
