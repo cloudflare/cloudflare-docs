@@ -396,7 +396,7 @@ await this.addMcpServer("portal", "https://portal.example.com/mcp", {
 
 ### Forwarding elicitation to a UI
 
-Elicitation handlers return a promise, but the answer usually comes from a human. A common pattern is to broadcast the request to connected clients and resolve the promise when one of them responds — the same function can serve both modes:
+Elicitation handlers return a promise, but the answer usually comes from a human. A common pattern is to broadcast the request to connected clients and resolve the promise when one of them responds. The same function can serve both modes:
 
 <TypeScriptExample>
 
