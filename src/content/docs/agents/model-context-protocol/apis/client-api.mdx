@@ -349,14 +349,25 @@ Because `onElicitRequest` is a class method, it survives Durable Object hibernat
 
 ### Elicitation modes
 
-Servers only send elicitation modes your client advertised during the `initialize` handshake. The Agents SDK advertises modes based on what your agent can actually handle:
+Elicitation requests arrive in one of two modes, and the same `onElicitRequest` override handles both:
 
-- **With an `onElicitRequest` override**, connections advertise both **form** and **url** mode.
-- **Without one**, connections advertise form mode only, matching previous behavior.
+**Form mode** asks the user for structured data. The request carries a `requestedSchema` describing the fields, and an accepting response returns matching `content`:
 
-**Form mode** asks the user for structured data. The request carries a `requestedSchema` describing the fields, and an accepting response returns matching `content`.
+<TypeScriptExample>
+
+```ts
+async onElicitRequest(request: ElicitRequest): Promise<ElicitResult> {
+	// Collect values matching request.params.requestedSchema from the user,
+	// then accept with the collected fields
+	return { action: "accept", content: { amount: 5 } };
+}
+```
+
+</TypeScriptExample>
 
 **URL mode** asks the user to visit a URL, for example an authorization or checkout page. The MCP specification requires servers to use url mode for sensitive URLs so that they stay out of the model's context instead of appearing in tool-result text. Your handler delivers the URL to the user and returns `{ action: "accept" }` once it has done so.
+
+Servers only send elicitation modes your client advertised during the `initialize` handshake. Connections with an `onElicitRequest` override advertise both modes. Connections without one advertise form mode only and reject any elicitation request that arrives, so overriding `onElicitRequest` is required to handle either mode.
 
 To narrow the advertised modes, declare them explicitly when adding the server. An explicit declaration always wins and is persisted with the server options:
 
