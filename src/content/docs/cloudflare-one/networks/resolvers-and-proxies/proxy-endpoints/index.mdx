@@ -314,7 +314,7 @@ Each account has a maximum number of proxy endpoints:
 
 ### 3a. Install Cloudflare certificate
 
-You must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. For [authorization endpoints](#authorization-endpoint), Gateway always performs TLS inspection to read the authorization cookie, so the certificate is required for the endpoint to function. For [source IP endpoints](#source-ip-endpoint), the certificate is required to apply Gateway HTTP policies such as blocking specific domains or displaying the Gateway block page.
+You must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. Authorization endpoints use the certificate to inspect TLS traffic and read the authorization cookie. Source IP endpoints use the certificate to apply Gateway HTTP policies such as blocking specific domains or displaying the Gateway block page.
 
 ### 3b. Configure browser to use PAC file
 
