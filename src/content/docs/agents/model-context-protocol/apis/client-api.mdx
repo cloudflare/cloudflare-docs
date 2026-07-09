@@ -316,7 +316,7 @@ export class MyAgent extends Agent {
 
 ## Elicitation
 
-MCP servers can request input from your agent during a tool call using [elicitation](https://modelcontextprotocol.io/specification/latest/client/elicitation). To respond, override `onElicitRequest` on your agent:
+MCP servers can request input from your agent during a tool call using [elicitation](https://modelcontextprotocol.io/specification/latest/client/elicitation). To respond, register an elicitation handler with `this.mcp.configureElicitationHandler()` in `onStart()`:
 
 <TypeScriptExample>
 
@@ -325,49 +325,57 @@ import { Agent } from "agents";
 import type { ElicitRequest, ElicitResult } from "agents/mcp";
 
 class MyAgent extends Agent<Env> {
-	async onElicitRequest(
-		request: ElicitRequest,
-		serverId: string,
-	): Promise<ElicitResult> {
-		if (request.params.mode === "url") {
-			// Deliver the URL to the user out-of-band (chat message, email,
-			// UI notification) so it never enters model context
-			await this.notifyUser(request.params.url, request.params.message);
-			return { action: "accept", content: {} };
-		}
-
-		// Form mode: collect the fields described by requestedSchema,
-		// or decline if your surface cannot prompt the user.
-		return { action: "decline", content: {} };
+	onStart() {
+		this.mcp.configureElicitationHandler({
+			url: async (
+				request: ElicitRequest,
+				serverId: string,
+			): Promise<ElicitResult> => {
+				// Deliver the URL to the user out-of-band (chat message, email,
+				// UI notification) so it never enters model context
+				await this.notifyUser(request.params.url, request.params.message);
+				return { action: "accept", content: {} };
+			},
+			form: async (
+				request: ElicitRequest,
+				serverId: string,
+			): Promise<ElicitResult> => {
+				// Collect the fields described by request.params.requestedSchema,
+				// or decline if your surface cannot prompt the user
+				return { action: "decline", content: {} };
+			},
+		});
 	}
 }
 ```
 
 </TypeScriptExample>
 
-Because `onElicitRequest` is a class method, it survives Durable Object hibernation and applies to connections restored from storage. The `serverId` argument identifies which server sent the request, so one agent can respond differently per server.
+Register handlers in `onStart()` so they are installed before stored MCP connections are restored and before the `initialize` handshake for new connections. The `serverId` argument identifies which server sent the request, so one agent can respond differently per server.
 
 ### Elicitation modes
 
-Elicitation requests arrive in one of two modes, and the same `onElicitRequest` override handles both:
+Elicitation requests arrive in one of two modes, each with its own handler:
 
-**Form mode** asks the user for structured data. The request carries a `requestedSchema` describing the fields, and an accepting response returns matching `content`:
+**Form mode** (the `form` handler) asks the user for structured data. The request carries a `requestedSchema` describing the fields, and an accepting response returns matching `content`:
 
 <TypeScriptExample>
 
 ```ts
-async onElicitRequest(request: ElicitRequest): Promise<ElicitResult> {
-	// Collect values matching request.params.requestedSchema from the user,
-	// then accept with the collected fields
-	return { action: "accept", content: { amount: 5 } };
-}
+this.mcp.configureElicitationHandler({
+	form: async (request) => {
+		// Collect values matching request.params.requestedSchema from the user,
+		// then accept with the collected fields
+		return { action: "accept", content: { amount: 5 } };
+	},
+});
 ```
 
 </TypeScriptExample>
 
-**URL mode** asks the user to visit a URL, for example an authorization or checkout page. The MCP specification requires servers to use url mode for sensitive URLs so that they stay out of the model's context instead of appearing in tool-result text. Your handler delivers the URL to the user and returns `{ action: "accept" }` once it has done so.
+**URL mode** (the `url` handler) asks the user to visit a URL, for example an authorization or checkout page. The MCP specification requires servers to use url mode for sensitive URLs so that they stay out of the model's context instead of appearing in tool-result text. Your handler delivers the URL to the user and returns `{ action: "accept" }` once it has done so.
 
-Servers only send elicitation modes your client advertised during the `initialize` handshake. Connections with an `onElicitRequest` override advertise both modes. Connections without one advertise no elicitation capability, so servers use their non-elicitation fallbacks instead. Overriding `onElicitRequest` is how an agent opts into elicitation.
+Servers only send elicitation modes your client advertised during the `initialize` handshake, and connections advertise exactly the modes with configured handlers: configure `form` only and servers will not send url-mode requests, and the other way around. Connections without any handlers advertise no elicitation capability, so servers use their non-elicitation fallbacks instead. Configuring handlers is how an agent opts into elicitation.
 
 To narrow the advertised modes, declare them explicitly when adding the server. An explicit declaration always wins and is persisted with the server options:
 
@@ -377,7 +385,7 @@ To narrow the advertised modes, declare them explicitly when adding the server. 
 await this.addMcpServer("portal", "https://portal.example.com/mcp", {
 	client: {
 		capabilities: {
-			// Form mode only, even though onElicitRequest is overridden
+			// Form mode only, regardless of which handlers are configured
 			elicitation: { form: {} },
 		},
 	},
@@ -388,7 +396,7 @@ await this.addMcpServer("portal", "https://portal.example.com/mcp", {
 
 ### Forwarding elicitation to a UI
 
-`onElicitRequest` returns a promise, but the answer usually comes from a human. A common pattern is to broadcast the request to connected clients and resolve the promise when one of them responds:
+Elicitation handlers return a promise, but the answer usually comes from a human. A common pattern is to broadcast the request to connected clients and resolve the promise when one of them responds — the same function can serve both modes:
 
 <TypeScriptExample>
 
@@ -402,34 +410,38 @@ class MyAgent extends Agent<Env> {
 		(result: ElicitResult) => void
 	>();
 
-	async onElicitRequest(
-		request: ElicitRequest,
-		serverId: string,
-	): Promise<ElicitResult> {
-		const id = crypto.randomUUID();
+	onStart() {
+		const forwardToBrowser = (request: ElicitRequest, serverId: string) => {
+			const id = crypto.randomUUID();
 
-		const result = new Promise<ElicitResult>((resolve) => {
-			this.pendingElicitations.set(id, resolve);
-			// Do not hold the tool call open forever if nobody answers
-			setTimeout(() => {
-				if (this.pendingElicitations.delete(id)) {
-					resolve({ action: "cancel", content: {} });
-				}
-			}, 300_000);
+			const result = new Promise<ElicitResult>((resolve) => {
+				this.pendingElicitations.set(id, resolve);
+				// Do not hold the tool call open forever if nobody answers
+				setTimeout(() => {
+					if (this.pendingElicitations.delete(id)) {
+						resolve({ action: "cancel", content: {} });
+					}
+				}, 300_000);
+			});
+
+			// The UI renders a form from request.params.requestedSchema
+			// (or a link for url mode) and calls respondToElicitation
+			this.broadcast(
+				JSON.stringify({
+					type: "mcp-elicitation",
+					id,
+					serverId,
+					params: request.params,
+				}),
+			);
+
+			return result;
+		};
+
+		this.mcp.configureElicitationHandler({
+			form: forwardToBrowser,
+			url: forwardToBrowser,
 		});
-
-		// The UI renders a form from request.params.requestedSchema
-		// (or a link for url mode) and calls respondToElicitation
-		this.broadcast(
-			JSON.stringify({
-				type: "mcp-elicitation",
-				id,
-				serverId,
-				params: request.params,
-			}),
-		);
-
-		return result;
 	}
 
 	@callable()
