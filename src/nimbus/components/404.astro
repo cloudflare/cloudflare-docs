@@ -19,6 +19,8 @@
 </div>
 
 <script>
+  import { openGlobalSearch } from "../../util/search";
+
   // Gates the Cmd+K override so it goes inert after a soft-nav off the 404.
   function on404Page(): boolean {
     return document.getElementById("404-search-link") !== null;
@@ -31,27 +33,11 @@
     );
   }
 
-  // Open DocSearch prefilled, mirroring prod's `openGlobalSearch`.
-  function openSearchWithQuery(query: string): void {
-    const button = document.querySelector<HTMLButtonElement>(
-      "#docsearch .DocSearch-Button, .DocSearch-Button",
-    );
-    if (!button) return;
-    button.click();
-    window.setTimeout(() => {
-      const input = document.querySelector<HTMLInputElement>(".DocSearch-Input");
-      if (!input) return;
-      input.value = query;
-      input.focus();
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-    }, 100);
-  }
-
   function wire404(): void {
     const button = document.getElementById("404-search-link");
     if (button && !button.dataset.ready) {
       button.dataset.ready = "true";
-      button.addEventListener("click", () => openSearchWithQuery(currentQuery()));
+      button.addEventListener("click", () => openGlobalSearch(currentQuery()));
     }
   }
 
@@ -72,7 +58,7 @@
         ) {
           keyboardEvent.preventDefault();
           keyboardEvent.stopPropagation();
-          openSearchWithQuery(currentQuery());
+          openGlobalSearch(currentQuery());
         }
       },
       { capture: true },

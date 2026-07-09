@@ -7,7 +7,7 @@
 import "@docsearch/css/dist/modal.css";
 ---
 
-<nb-docsearch id="docsearch" transition:persist="docsearch">
+<cfdocs-docsearch id="docsearch" transition:persist="docsearch">
   <button type="button" class="DocSearch DocSearch-Button" aria-label="Search">
     <span class="DocSearch-Button-Container">
       <svg
@@ -29,7 +29,7 @@ import "@docsearch/css/dist/modal.css";
     </span>
     <span class="DocSearch-Button-Keys"></span>
   </button>
-</nb-docsearch>
+</cfdocs-docsearch>
 
 <style is:global>
   /* Modal theming — DocSearch vars remapped to Nimbus tokens (which already
@@ -177,12 +177,13 @@ import "@docsearch/css/dist/modal.css";
   import docsearch from "@docsearch/js";
   import { docSearchOptions, getIndexName } from "./docsearch-config";
 
-  class NimbusDocSearch extends HTMLElement {
+  class DocSearchElement extends HTMLElement {
     connectedCallback() {
-      // Persisted element: mount once for the app's lifetime.
+      // Persisted element: mount once for the app's lifetime. Mark mounted only
+      // after mount() succeeds so a throw here retries on the next connect.
       if (this.dataset.mounted) return;
-      this.dataset.mounted = "true";
       this.mount();
+      this.dataset.mounted = "true";
 
       // Prod re-picks the index on every (full) page load. Under view
       // transitions this instance persists, so refresh the index when the
@@ -210,7 +211,7 @@ import "@docsearch/css/dist/modal.css";
     }
   }
 
-  if (!customElements.get("nb-docsearch")) {
-    customElements.define("nb-docsearch", NimbusDocSearch);
+  if (!customElements.get("cfdocs-docsearch")) {
+    customElements.define("cfdocs-docsearch", DocSearchElement);
   }
 </script>
