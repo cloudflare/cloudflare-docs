@@ -11,7 +11,6 @@ import { config } from "virtual:nimbus/config";
 import { getCollectionLlmsUrl, getVersionStatus } from "nimbus-docs";
 import AgentDirective from "@/components/AgentDirective.astro";
 import Footer from "@/components/Footer.astro";
-import { SearchDialog } from "@/components/ui/search";
 import PageHead from "@/components/PageHead.astro";
 import type { PageMeta } from "@/components/PageHead.astro";
 import type { BasePageProps } from "nimbus-docs/types";
@@ -169,7 +168,6 @@ const llmsUrl = Astro.site
     {markdownUrl && !isHiddenVersion && <AgentDirective llmsUrl={llmsUrl} />}
     <slot />
     {footer !== false && <Footer />}
-    {config.search !== false && <SearchDialog />}
 
     <script>
       import { codeCopy } from "nimbus-docs/client";
