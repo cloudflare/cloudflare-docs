@@ -1,0 +1,10 @@
+---
+title: Bot Management cookie causes cache bypass in O2O setups
+pcx_content_type: troubleshooting
+sidebar:
+  order: 10
+---
+
+In [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setups — where a SaaS provider uses [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) and their customer also has their own Cloudflare zone — the `__cf_bm` Bot Management cookie returned from the origin-facing Cloudflare zone can cause the eyeball-facing zone to bypass cache. This occurs because the `Set-Cookie` header in the response triggers Cloudflare's default behavior of not caching responses with `Set-Cookie`.
+
+If you are seeing unexpectedly low cache hit rates in an O2O setup with Bot Management enabled, this may be the cause.

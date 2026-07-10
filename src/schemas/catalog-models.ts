@@ -30,6 +30,40 @@ export const defaultExampleSchema = z.object({
 	code_snippets: codeSnippetSchema.array().optional(),
 });
 
+// In-page notice surfaced on the model detail page. Distinct from the
+// page-frontmatter `banner` in `src/schemas/base.ts` — the catalog API ships
+// this richer shape (title/text/severity/dismissible/link) and we render it
+// as a Starlight `Aside` directly under the model description. `severity` is
+// left as `z.string()` because the upstream enum is not yet locked down
+// (observed today: "warning", "info"); the renderer falls back to a neutral
+// note style for any unrecognised value. `dismissible` is preserved through
+// the schema for round-trip fidelity with the upstream API but is not yet
+// honored at render time — the docs site renders banners statically and
+// never hides them. Adding client-side dismissal is a follow-up.
+//
+// `link.url` is validated via Zod 4's `z.httpUrl()`, which rejects any
+// well-formed URL whose scheme is not `http`/`https` (case-insensitive,
+// per RFC 3986) and also rejects bareword hostnames / IP literals such as
+// `localhost` and `127.0.0.1`. Without this guard a compromised or
+// malformed catalog row could inject `javascript:` (or other unsafe
+// scheme) hrefs into the rendered <a>; `target="_blank" rel="noopener
+// noreferrer"` does not block non-http(s) schemes from executing. The
+// protocol enforcement lives at the schema layer so a bad URL fails the
+// content-collection load loudly rather than silently shipping an unsafe
+// link.
+export const catalogBannerSchema = z.object({
+	title: z.string().optional(),
+	text: z.string(),
+	severity: z.string(),
+	dismissible: z.boolean().optional(),
+	link: z
+		.object({
+			url: z.httpUrl(),
+			label: z.string(),
+		})
+		.optional(),
+});
+
 export const catalogModelsSchema = z.object({
 	// Identification
 	model_id: z.string(), // "@cf/meta/llama-3.1-70b-instruct"
@@ -52,6 +86,17 @@ export const catalogModelsSchema = z.object({
 	// note such as plan requirements when the upstream provider needs one.
 	zdr: z.boolean().optional(),
 	zdr_comment: z.string().nullable().optional(),
+
+	// In-page notice (rendered as a Starlight `Aside` on the model detail
+	// page). Null/missing on most models; populated when upstream needs to
+	// surface availability constraints, deprecation warnings, etc.
+	banner: catalogBannerSchema.nullable().optional(),
+
+	// Request-format identifiers the model accepts at the API layer (e.g.
+	// "chat-completions", "responses", "anthropic-messages"). Rendered as a
+	// "Request formats" row in the Model Info table. Null/missing when the
+	// model has only one canonical request shape.
+	request_formats: z.string().array().nullable().optional(),
 
 	// Examples
 	examples: modelExampleSchema.array(),
@@ -82,3 +127,4 @@ export const catalogModelsSchema = z.object({
 export type CatalogModelsSchema = z.infer<typeof catalogModelsSchema>;
 export type CodeSnippet = z.infer<typeof codeSnippetSchema>;
 export type ModelExample = z.infer<typeof modelExampleSchema>;
+export type CatalogBanner = z.infer<typeof catalogBannerSchema>;

@@ -1,0 +1,11 @@
+---
+/**
+ * Flex — column-on-mobile, row-on-desktop flex container.
+ *
+ * CF source: cloudflare-docs/src/components/Flex.astro (ported verbatim).
+ */
+---
+
+<div class="flex flex-col justify-between gap-x-2 md:flex-row [&_p]:mt-0!">
+  <slot />
+</div>

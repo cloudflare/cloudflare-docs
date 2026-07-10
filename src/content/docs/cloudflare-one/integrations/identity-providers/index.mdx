@@ -13,7 +13,9 @@ import { Render } from "~/components";
 
 Cloudflare One integrates with your organization's identity provider to apply Cloudflare One and Secure Web Gateway policies. If you work with partners, contractors, or other organizations, you can integrate multiple identity providers simultaneously.
 
-As an alternative to configuring an identity provider, Cloudflare One can send a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/) to approved email addresses. No configuration needed — simply add a user's email address to an [Access policy](/cloudflare-one/access-controls/policies/) and to the group that allows your team to reach the application. You can simultaneously configure an OTP and an identity provider to allow users to use their own authentication method.
+When you create a new Zero Trust organization, Cloudflare automatically configures the [Cloudflare identity provider](/cloudflare-one/integrations/identity-providers/cloudflare/) as your default login method. Your users can authenticate with their existing Cloudflare account credentials without any additional setup, and you can add more identity providers at any time.
+
+You can also send a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/) to approved email addresses. No configuration needed — simply add a user's email address to an [Access policy](/cloudflare-one/access-controls/policies/) and to the group that allows your team to reach the application. You can configure OTP and an identity provider at the same time to let users choose their own authentication method.
 
 Adding an identity provider as a login method requires configuration both in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Integrations** > **Identity providers** and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
 

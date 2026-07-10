@@ -1,0 +1,22 @@
+---
+{}
+
+---
+```swift
+let connectedMeetings = meeting.connectedMeetings
+
+// Check if breakout rooms are active
+let areBreakoutRoomsActive = connectedMeetings.isActive
+
+// Check permissions on the local participant
+let permissions = meeting.self.permissions.connectedMeetings
+
+// Check if the current participant has permission to create/alter breakout rooms
+let hasPermissionToAlterBreakoutRooms = permissions.canAlterConnectedMeetings
+
+// Check if the current participant has permission to switch between breakout rooms
+let hasPermissionToSwitchConnectedMeetings = permissions.canSwitchConnectedMeetings
+
+// Check if the current participant has permission to switch back to the parent meeting
+let hasPermissionToSwitchToParentMeeting = permissions.canSwitchToParentMeeting
+```

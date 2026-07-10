@@ -27,6 +27,7 @@ Fit is performed after setting the [`width`](#width) and [`height`](#height) dim
 | `aspect-crop` | Crop to match the target aspect ratio, but never upscales | No | No |
 | `pad` | Fit within the target area, adding space for remaining area | Yes | Yes |
 | `squeeze` | Scale to exact dimensions, distorting if needed | No | Yes |
+| `scale-up` | Upscales while showing the entire image, but never downscales | Yes | Yes |
 
 <Tabs>
   <TabItem label="URL format">
@@ -83,12 +84,14 @@ Resizes the image to be as large as possible within the target `width` and `heig
 
 When the original image is larger than the target area, it downscales to fit the target area (like `scale-down`).
 
-When smaller, it upscales instead, which may reduce image quality. To avoid upscaling, use `scale-down`.
+When smaller, it upscales instead (like `scale-up`). Works with the [`upscale`](#upscale) parameter to control the algorithm for enlarging an image. To avoid upscaling, use `scale-down`.
 
 #### `cover`
 Fills the entire target area, shrinking or enlarging the image if needed. The output area always matches the requested `width` and `height` dimensions exactly.
 
 When the original and target aspect ratios differ, the image is resized to cover the full target area and any overflow is cropped. Use the [`gravity`](#gravity) parameter to control which part of the image is preserved during cropping.
+
+Works with the [`upscale`](#upscale) parameter to control the algorithm for enlarging an image.
 
 In the example below, the 1080×720 image is first resized to 750×500 (matching the requested height) to fit the target area, then cropped from the left and right edges to its final 500x500 dimensions.
 
@@ -249,3 +252,10 @@ When the original and target aspect ratios differ, the image will be distorted t
     </td>
   </tr>
 </table>
+
+#### `scale-up`
+Resizes the image to fit within the specified dimensions while preserving its original aspect ratio, but never downscales the image. This is the inverse of `scale-down`.
+
+When the original image is larger than the target area, it is returned at its original dimensions.
+
+When the original image is smaller than the target area, it is enlarged to fit within the target dimensions. Use the [`upscale`](#upscale) parameter to control the algorithm used for upscaling images — set `upscale=generate` for AI-powered upscaling or `upscale=interpolate` (default) for bicubic interpolation.

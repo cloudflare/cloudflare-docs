@@ -94,6 +94,25 @@ Network analytics data for Spectrum does not reflect the outcomes of IP Access r
 
 Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Argo Smart Routing is available for TCP and UDP (beta) applications.
 
+## Virtual network origin
+
+Spectrum applications can route `origin_direct` traffic to a private origin through a Cloudflare Tunnel [virtual network](/cloudflare-one/networks/virtual-networks/). Set `virtual_network_id` on the application to the ID of the virtual network that the origin IP is routable within. Traffic to the application is delivered through the connector associated with that virtual network — typically a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or a [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) connection.
+
+To create the virtual network and attach a route covering your origin IP, refer to [Manage virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) and [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
+
+The following restrictions apply when `virtual_network_id` is set:
+
+- Application type must be TCP or UDP. HTTP/HTTPS applications do not support virtual network origins.
+- The origin must be specified with `origin_direct`. Hostname origins (`origin_dns`) are not supported.
+- `origin_direct` must contain exactly one address. Multiple addresses are not supported.
+- The origin port must be a single port. Port ranges are not supported.
+- The origin IP must be routable within the specified virtual network. The virtual network must already have a route covering the IP.
+- [Proxy Protocol](/spectrum/how-to/enable-proxy-protocol/) is not supported. `proxy_protocol` must be set to `off`.
+
+For the validation error codes returned when these constraints are violated, refer to [Error codes](/spectrum/reference/error-codes/).
+
+Spectrum virtual network origins are for TCP and UDP traffic only. For HTTP/HTTPS traffic to private origins, use [Application Services for Private Origins](/dns/private-origins/), which provides WAF, CDN caching, and the full Cloudflare proxy stack.
+
 ## Edge TLS Termination
 
 If you enable **Edge TLS Termination** for a Spectrum application, Cloudflare will encrypt traffic for the application at the Edge. The Edge TLS Termination toggle applies only to TCP applications.

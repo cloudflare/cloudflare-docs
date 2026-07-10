@@ -1,0 +1,148 @@
+{
+	"model_id": "alibaba/hh1.1-r2v",
+	"provider_id": "alibaba",
+	"name": "HappyHorse 1.1 R2V",
+	"description": "Alibaba's HappyHorse 1.1 reference-to-video model. Takes 1-9 reference images (characters and scenes) and a prompt that choreographs them into a single video, keeping each subject's identity consistent. Supports 720P and 1080P output with durations from 3 to 15 seconds.",
+	"task": "Image-to-Video",
+	"tags": [
+		"Image-to-Video",
+		"Reference-to-Video",
+		"Video Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Multi-Image Reference",
+			"description": "Compose three distinct references (person, scene, person) into one shot at 1080P",
+			"input": {
+				"prompt": "The person in image 1 walks through the futuristic city in image 2 and meets the person in image 3.",
+				"images": [
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/portrait-photo-0.jpeg",
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/futuristic-city.png",
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/high-resolution-portrait.jpg"
+				],
+				"duration": 8,
+				"ratio": "16:9",
+				"resolution": "1080P"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/alibaba/hh1.1-r2v/multi-image-reference.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/alibaba/hh1.1-r2v/multi-image-reference.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1.1-r2v',\n  {\n    prompt:\n      'The person in image 1 walks through the futuristic city in image 2 and meets the person in image 3.',\n    images: [\n      'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/portrait-photo-0.jpeg',\n      'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/futuristic-city.png',\n      'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/high-resolution-portrait.jpg',\n    ],\n    duration: 8,\n    ratio: '16:9',\n    resolution: '1080P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1.1-r2v\",\n  \"input\": {\n    \"prompt\": \"The person in image 1 walks through the futuristic city in image 2 and meets the person in image 3.\",\n    \"images\": [\n      \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/portrait-photo-0.jpeg\",\n      \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/futuristic-city.png\",\n      \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/high-resolution-portrait.jpg\"\n    ],\n    \"duration\": 8,\n    \"ratio\": \"16:9\",\n    \"resolution\": \"1080P\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://modelstudio.console.alibabacloud.com/",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": null,
+	"metadata": {
+		"Aspect Ratios": "16:9, 9:16, 3:4, 4:3, 1:1, 21:9, 9:21, 5:4, 4:5",
+		"Input": "1-9 reference image URLs (no base64)",
+		"Max Duration": "15 seconds",
+		"Resolutions": "720P, 1080P"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-24 01:07:11",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 2500
+				},
+				"images": {
+					"minItems": 1,
+					"maxItems": 9,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"720P",
+						"1080P"
+					]
+				},
+				"ratio": {
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"3:4",
+						"4:3",
+						"1:1",
+						"21:9",
+						"9:21",
+						"5:4",
+						"4:5"
+					]
+				},
+				"duration": {
+					"type": "integer",
+					"minimum": 3,
+					"maximum": 15
+				},
+				"seed": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 2147483647
+				},
+				"watermark": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"images"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

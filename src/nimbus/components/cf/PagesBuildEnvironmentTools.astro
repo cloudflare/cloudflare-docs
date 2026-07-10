@@ -1,0 +1,41 @@
+---
+/**
+ * PagesBuildEnvironmentTools — per-version build tool support table.
+ *
+ * CF source: cloudflare-docs/src/components/PagesBuildEnvironmentTools.astro
+ * Mapping notes: Starlight Tabs/TabItem → ui/tabs.
+ */
+import { getCollection } from "astro:content";
+import { Tabs, TabItem } from "../ui/tabs";
+
+const versions = await getCollection("pages-build-environment");
+---
+
+<Tabs>
+  {
+    versions.reverse().map((version) => (
+      <TabItem label={version.id}>
+        <table>
+          <thead>
+            <th>Tool</th>
+            <th>Default version</th>
+            <th>Supported versions</th>
+            <th>Environment variable</th>
+          </thead>
+          <tbody>
+            {version.data.tools.map((tool) => (
+              <tr>
+                <td>
+                  <strong>{tool.name}</strong>
+                </td>
+                <td>{tool.default}</td>
+                <td>{tool.supported}</td>
+                <td>{tool.environment_variable && <code>{tool.environment_variable}</code>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </TabItem>
+    ))
+  }
+</Tabs>

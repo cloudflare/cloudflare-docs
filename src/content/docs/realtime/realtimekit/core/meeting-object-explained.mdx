@@ -1784,51 +1784,60 @@ await meeting.polls.vote(pollId, optionIndex); // Retrieve pollId from meeting.p
 
 <RTKCodeSnippet id="web-react">
 
-The [`meeting.plugins`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPlugins) manages meeting plugins (collaborative apps).
+The [`meeting.plugins`](/realtime/realtimekit/core/plugins/) manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
 
 ```javascript
 // Get all available plugins
-const plugins = meeting.plugins.all;
+const allPlugins = meeting.plugins.all.toArray();
 
-// Activate a plugin
-await meeting.plugins.activate(pluginId);
+// Get active plugins
+const activePlugins = meeting.plugins.active.toArray();
 
-// Deactivate a plugin
-await meeting.plugins.deactivate();
+// Activate a plugin for all participants
+await meeting.plugins.all.get(pluginId).activate();
+
+// Deactivate a plugin for all participants
+await meeting.plugins.all.get(pluginId).deactivate();
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-web-components">
 
-The [`meeting.plugins`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPlugins) manages meeting plugins (collaborative apps).
+The [`meeting.plugins`](/realtime/realtimekit/core/plugins/) manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
 
 ```javascript
 // Get all available plugins
-const plugins = meeting.plugins.all;
+const allPlugins = meeting.plugins.all.toArray();
 
-// Activate a plugin
-await meeting.plugins.activate(pluginId);
+// Get active plugins
+const activePlugins = meeting.plugins.active.toArray();
 
-// Deactivate a plugin
-await meeting.plugins.deactivate();
+// Activate a plugin for all participants
+await meeting.plugins.all.get(pluginId).activate();
+
+// Deactivate a plugin for all participants
+await meeting.plugins.all.get(pluginId).deactivate();
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
 
-The [`meeting.plugins`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPlugins) manages meeting plugins (collaborative apps).
+The [`meeting.plugins`](/realtime/realtimekit/core/plugins/) manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
 
 ```javascript
 // Get all available plugins
-const plugins = meeting.plugins.all;
+const allPlugins = meeting.plugins.all.toArray();
 
-// Activate a plugin
-await meeting.plugins.activate(pluginId);
+// Get active plugins
+const activePlugins = meeting.plugins.active.toArray();
 
-// Deactivate a plugin
-await meeting.plugins.deactivate();
+// Activate a plugin for all participants
+await meeting.plugins.all.get(pluginId).activate();
+
+// Deactivate a plugin for all participants
+await meeting.plugins.all.get(pluginId).deactivate();
 ```
 
 </RTKCodeSnippet>

@@ -1,0 +1,60 @@
+---
+/**
+ * BackgroundLines — decorative blueprint backdrop modelled on cloudflare.com
+ * and the "big move" blog. A centered content-width inner frame is flanked by
+ * dashed vertical rules; a wider outer frame carries a dot-grid and its own
+ * dashed rules. The inner frame paints a solid background so the dots show
+ * only in the side gutters between the two frames. Desktop-only, purely
+ * decorative, animation-free.
+ *
+ * Tokens: dashed rules use --nb-border; dots use --nb-grid-line.
+ */
+interface Props {
+  /** Inner (content) frame width in px — match the content max-width. */
+  inner?: number;
+  /** Outer frame width in px — defines the dot-grid gutters. */
+  outer?: number;
+}
+
+const { inner = 1120, outer = 1360 } = Astro.props;
+
+// 1px vertical dashed rule: 16px dash + 16px gap (32px period).
+const dashed =
+  "background-image:linear-gradient(to bottom,var(--nb-border) 50%,transparent 50%);background-size:1px 32px;background-repeat:repeat-y";
+---
+
+<div
+  class="pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden md:block"
+  aria-hidden="true"
+>
+  {/* Outer frame — dot grid across its width + dashed edges. */}
+  <div
+    class="absolute top-0 left-1/2 h-full -translate-x-1/2"
+    style={`width:${outer}px`}
+  >
+    <svg class="absolute inset-0 h-full w-full" aria-hidden="true">
+      <pattern
+        id="nb-bg-dots"
+        x="0"
+        y="0"
+        width="12"
+        height="12"
+        patternUnits="userSpaceOnUse"
+      >
+        <circle cx="6" cy="6" r="0.75" fill="var(--nb-grid-line)"></circle>
+      </pattern>
+      <rect x="0" y="0" width="100%" height="100%" fill="url(#nb-bg-dots)"></rect>
+    </svg>
+    <div class="absolute top-0 left-0 h-full w-px" style={dashed}></div>
+    <div class="absolute top-0 right-0 h-full w-px" style={dashed}></div>
+  </div>
+
+  {/* Inner frame — solid fill masks dots in the content column + dashed edges. */}
+  <div
+    class="absolute top-0 left-1/2 h-full -translate-x-1/2 bg-background"
+    style={`width:${inner}px`}
+  >
+    <div class="absolute top-0 left-0 h-full w-px" style={dashed}></div>
+    <div class="absolute top-0 right-0 h-full w-px" style={dashed}></div>
+  </div>
+</div>

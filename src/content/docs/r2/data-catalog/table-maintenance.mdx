@@ -127,7 +127,6 @@ These are generic recommendations, make sure to consider:
 
 ## Current limitations
 
-- During open beta, compaction will compact up to 2 GB worth of files once per hour for each table.
 - Only data files stored in parquet format are currently supported with compaction.
 - Files that were not previously referenced by a snapshot will not be cleaned up (orphaned files).
 - Minimum target file size for compaction is 64 MB and maximum is 512 MB.

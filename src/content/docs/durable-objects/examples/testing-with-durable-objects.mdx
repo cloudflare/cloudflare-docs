@@ -62,6 +62,19 @@ export class Counter extends DurableObject<Env> {
 		});
 	}
 
+	// In-memory only. This field lives on the instance and is not persisted
+	// to storage, so it is reset whenever the Durable Object is evicted and
+	// reconstructed.
+	cachedHits = 0;
+
+	recordHit(): number {
+		return ++this.cachedHits;
+	}
+
+	getHits(): number {
+		return this.cachedHits;
+	}
+
 	async increment(name: string = "default"): Promise<number> {
 		this.ctx.storage.sql.exec(
 			`INSERT INTO counters (name, value) VALUES (?, 1)
@@ -329,7 +342,7 @@ describe("Direct Durable Object access", () => {
 
 		// List all IDs in the namespace
 		const ids = await listDurableObjectIds(env.COUNTER);
-		expect(ids.length).toBe(2);
+		expect(ids.length).toBeGreaterThanOrEqual(2);
 		expect(ids.some((id) => id.equals(id1))).toBe(true);
 		expect(ids.some((id) => id.equals(id2))).toBe(true);
 	});
@@ -443,6 +456,171 @@ export class Counter extends DurableObject {
 }
 ```
 </TypeScriptExample>
+
+### Testing eviction
+
+Use `evictDurableObject()` to evict a Durable Object instance during tests. Eviction tears down the instance to reset its in-memory state. This lets you test how your Durable Object recovers state from storage after being evicted.
+
+By default, hibernatable WebSockets are hibernated rather than closed, and eviction waits up to 30 seconds for in-flight requests to drain before tearing down the instance.
+
+The following test sets both in-memory state (`cachedHits`) and durable storage (the counter value), evicts the Durable Object, and verifies that the in-memory state is wiped while the stored count survives:
+
+<TypeScriptExample filename="test/eviction.test.ts">
+```ts
+import { env } from "cloudflare:workers";
+import { evictDurableObject } from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+
+describe("Durable Object eviction", () => {
+	it("wipes in-memory state but preserves storage across eviction", async () => {
+		const id = env.COUNTER.idFromName("evict-test");
+		const stub = env.COUNTER.get(id);
+
+		// Persist a value to SQLite storage
+		await stub.increment();
+		await stub.increment();
+		expect(await stub.getCount()).toBe(2);
+
+		// Set in-memory only state, which is not persisted to storage
+		await stub.recordHit();
+		await stub.recordHit();
+		expect(await stub.getHits()).toBe(2);
+
+		// Evict the Durable Object. The in-memory instance is torn down,
+		// but durable storage is preserved.
+		await evictDurableObject(stub);
+
+		// In-memory state is wiped: the reconstructed instance starts fresh
+		expect(await stub.getHits()).toBe(0);
+
+		// Durable storage survives: the persisted count is read back
+		expect(await stub.getCount()).toBe(2);
+	});
+});
+```
+</TypeScriptExample>
+
+#### Testing WebSocket behavior across eviction
+
+You can control what happens to hibernatable WebSockets when a Durable Object is evicted by passing the `options` parameter:
+
+- `{ webSockets: "hibernate" }` (the default) hibernates WebSockets so they can resume after eviction.
+- `{ webSockets: "close" }` closes WebSockets during eviction.
+
+The following example uses a Durable Object that accepts WebSocket connections with the [hibernatable WebSockets API](/durable-objects/best-practices/websockets/):
+
+<TypeScriptExample filename="src/websocket-server.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class WebSocketServer extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const [client, server] = Object.values(new WebSocketPair());
+
+		// Accept the WebSocket as hibernatable so it can survive eviction
+		this.ctx.acceptWebSocket(server);
+
+		return new Response(null, { status: 101, webSocket: client });
+	}
+
+	webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		// Echo the received message back to the client
+		ws.send(message);
+	}
+
+	webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+		// Handle WebSocket close events
+	}
+}
+```
+</TypeScriptExample>
+
+Add a binding and migration for the Durable Object in your Wrangler configuration, alongside the existing `COUNTER` binding:
+
+<WranglerConfig>
+```jsonc
+{
+  "durable_objects": {
+    "bindings": [
+      { "name": "WEBSOCKET_SERVER", "class_name": "WebSocketServer" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v2", "new_sqlite_classes": ["WebSocketServer"] }
+  ]
+}
+```
+</WranglerConfig>
+
+With the default options, hibernatable WebSockets remain open across eviction, so messages still round-trip afterwards. Passing `{ webSockets: "close" }` closes them instead:
+
+<TypeScriptExample filename="test/eviction-websockets.test.ts">
+```ts
+import { env } from "cloudflare:workers";
+import { evictDurableObject } from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+
+describe("WebSocket eviction behavior", () => {
+	it("hibernates WebSockets across eviction by default", async () => {
+		const id = env.WEBSOCKET_SERVER.idFromName("ws-test");
+		const stub = env.WEBSOCKET_SERVER.get(id);
+
+		const response = await stub.fetch("https://example.com", {
+			headers: { Upgrade: "websocket" },
+		});
+		const socket = response.webSocket;
+		if (!socket) throw new Error("Expected WebSocket response");
+		socket.accept();
+
+		// Hibernatable WebSockets are hibernated, not closed
+		await evictDurableObject(stub);
+
+		// Messages still round-trip after eviction wakes the Durable Object
+		const message = new Promise<string>((resolve) => {
+			socket.addEventListener("message", (event) => {
+				resolve(event.data as string);
+			});
+		});
+		socket.send("after-eviction");
+		expect(await message).toBe("after-eviction");
+		socket.close(1000, "done");
+	});
+
+	it("closes WebSockets when requested", async () => {
+		const id = env.WEBSOCKET_SERVER.idFromName("ws-close-test");
+		const stub = env.WEBSOCKET_SERVER.get(id);
+
+		const response = await stub.fetch("https://example.com", {
+			headers: { Upgrade: "websocket" },
+		});
+		const socket = response.webSocket;
+		if (!socket) throw new Error("Expected WebSocket response");
+		socket.accept();
+
+		const closed = new Promise<CloseEvent>((resolve) => {
+			socket.addEventListener("close", (event) => resolve(event));
+		});
+
+		// Close WebSockets instead of hibernating them
+		await evictDurableObject(stub, { webSockets: "close" });
+		expect(await closed).toBeDefined();
+	});
+});
+```
+</TypeScriptExample>
+
+To evict all currently-running Durable Objects at once (for example, to reset state between tests without deleting persisted data), use `evictAllDurableObjects()`:
+
+```ts
+import { evictAllDurableObjects } from "cloudflare:test";
+import { afterEach } from "vitest";
+
+afterEach(async () => {
+	await evictAllDurableObjects();
+});
+```
+
+For more details on the eviction helpers, including the `DurableObjectEvictionOptions` interface, refer to the [Test APIs reference](/workers/testing/vitest-integration/test-apis/#durable-objects).
 
 ## Running tests
 

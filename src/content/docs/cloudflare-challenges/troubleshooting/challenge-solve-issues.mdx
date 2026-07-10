@@ -31,6 +31,12 @@ If the issue persists, try switching to a different network or device to rule ou
 Ensure your browser is updated to the latest version to maintain compatibility.
 :::
 
+## 401 response on a Private Access Token request
+
+When a Challenge Page loads, the browser may request a [Private Access Token (PAT)](/cloudflare-challenges/reference/private-access-tokens/) from a `/cdn-cgi/challenge-platform/.../pat/...` endpoint. On devices, browsers, or networks that cannot issue a token, this request returns an HTTP `401`.
+
+This response is **expected** and does not mean the visitor was blocked or that the widget failed. Cloudflare falls back to a standard challenge and the visitor proceeds as normal. A `401` on this request — for example, one seen in browser developer tools or a HAR capture — is not, on its own, a sign of a misconfiguration, a false positive, or a block. For more details, refer to [Private Access Tokens](/cloudflare-challenges/reference/private-access-tokens/).
+
 ## Troubleshooting
 
 Follow the steps below to ensure that your environment is properly configured.

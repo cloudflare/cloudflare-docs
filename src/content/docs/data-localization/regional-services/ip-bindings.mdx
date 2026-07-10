@@ -1,0 +1,225 @@
+---
+title: Regionalized IP Bindings
+pcx_content_type: how-to
+description: Bind a BYOIP prefix to a region so traffic to those IP addresses is processed in-region.
+products:
+  - data-localization
+sidebar:
+  order: 4
+---
+
+import { CURL, Details } from "~/components";
+
+:::note
+
+Regionalized IP Bindings requires the Regional Services and Regional Services for BYOIP entitlements. Contact your account team to enable them.
+
+:::
+
+Regionalized IP Bindings let you regionalize traffic at the IP layer for prefixes you bring to Cloudflare through [Bring Your Own IP (BYOIP)](/byoip/). You bind a CIDR from one of your prefixes to a region, and Cloudflare processes traffic destined for those IP addresses only within the data centers in that region.
+
+This complements the other ways to use [Regional Services](/data-localization/regional-services/): where [Regional Hostnames](/data-localization/regional-services/regional-hostnames/) regionalize traffic by hostname, Regionalized IP Bindings regionalize traffic by IP prefix — ideal for address-map deployments and any service you address by IP rather than hostname. Because bindings are managed entirely through the API, you can regionalize broad configurations yourself once your entitlements are enabled, without per-zone setup from your account team.
+
+## How it works
+
+A prefix binding maps a CIDR (within a BYOIP prefix you own) to a [region key](#list-available-regions) (for example, `us` or `eu`). After Cloudflare provisions the binding, traffic to addresses in that CIDR terminates TLS and is processed only inside the configured region, following the same in-region processing model described in [Regional Services](/data-localization/regional-services/).
+
+Bindings are managed through the Data Localization Suite API under `/accounts/{account_id}/dls/`.
+
+## Prerequisites
+
+Before you create a binding, make sure that:
+
+- Your account has both the **Regional Services** and **Regional Services for BYOIP** entitlements enabled. Contact your account team to enable them.
+- You have [onboarded a BYOIP prefix](/byoip/) to Cloudflare and know its prefix ID.
+- The region you want to use exists for your account. Refer to [List available regions](#list-available-regions).
+- Your [API token](/fundamentals/api/get-started/create-token/) has the required permissions. Refer to [Required API token permissions](#required-api-token-permissions).
+
+## Required API token permissions
+
+These endpoints are authorized at the account level. The permissions you need depend on the operation:
+
+| Operation                                          | Required token permissions                    |
+| -------------------------------------------------- | --------------------------------------------- |
+| List regions, get a region, list or get bindings   | **DLS: Read**                                 |
+| Create, update, or delete a prefix binding         | **DLS: Write** _and_ **IP Prefixes: Write**   |
+
+Write operations require **IP Prefixes: Write** in addition to **DLS: Write** because the binding is created against a BYOIP prefix that you own in [Addressing](/byoip/) — Cloudflare verifies that you have permission to modify that prefix. A token with only **DLS: Write** can read regions and bindings but will be rejected when it tries to create or change a binding.
+
+The **Super Administrator** and **Administrator** roles include all of these permissions. A custom role works as long as it includes the permission groups above.
+
+## List available regions
+
+Each binding references a region by its `region_key` (for example, `us` or `eu`). List the regions available to your account to find a valid key.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/dls/regions"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+```json title="Response"
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+			"name": "Europe",
+			"region_key": "eu",
+			"created_on": "2026-01-13T23:59:45.276558Z",
+			"modified_on": "2026-01-13T23:59:45.276558Z",
+			"version": 1,
+			"version_created_on": "2026-01-13T23:59:45.276558Z"
+		}
+	],
+	"result_info": {
+		"count": 1,
+		"per_page": 25,
+		"cursor": ""
+	}
+}
+```
+
+Use the `type` query parameter (`managed` or `custom`) to filter the results by [region type](/data-localization/region-support/#region-types). Results are paginated — pass the `cursor` value from a response to fetch the next page.
+
+<Details header="Get a single region">
+
+Retrieve a region by its `region_key` or ID.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/dls/regions/eu"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+</Details>
+
+## Create a prefix binding
+
+Bind a CIDR from one of your BYOIP prefixes to a region. The `cidr` must fall within the prefix identified by `prefix_id`.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/dls/regional_services/prefix_bindings"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		prefix_id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		cidr: "203.0.113.0/24",
+		region_key: "eu",
+	}}
+/>
+
+```json title="Response"
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": "f0e1d2c3-b4a5-6789-0abc-def123456789",
+		"prefix_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"cidr": "203.0.113.0/24",
+		"region_key": "eu"
+	}
+}
+```
+
+:::note
+
+After you create or change a binding, it can take a few hours for the change to propagate across Cloudflare's network before traffic is regionalized at the edge.
+
+Connectivity to these addresses is not interrupted while the binding propagates — existing traffic continues to be served. However, a binding must finish propagating and become **active** before you can add its addresses to an [address map](/byoip/address-maps/) (including creating a new address map that contains them). Until the binding is active, those operations are rejected.
+
+For this reason, create the binding **first** and allow it to finish propagating before you configure address maps for the affected addresses.
+
+:::
+
+## List prefix bindings
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/dls/regional_services/prefix_bindings"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+```json title="Response"
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"id": "f0e1d2c3-b4a5-6789-0abc-def123456789",
+			"prefix_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+			"cidr": "203.0.113.0/24",
+			"region_key": "eu"
+		}
+	],
+	"result_info": {
+		"count": 1,
+		"per_page": 25,
+		"cursor": ""
+	}
+}
+```
+
+<Details header="Get a single binding">
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/dls/regional_services/prefix_bindings/{binding_id}"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+</Details>
+
+## Update the region for a binding
+
+Change the region a binding points to. Only the `region_key` can be updated. To change the CIDR, delete the binding and create a new one.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/dls/regional_services/prefix_bindings/{binding_id}"
+	method="PATCH"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{ region_key: "us" }}
+/>
+
+```json title="Response"
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": "f0e1d2c3-b4a5-6789-0abc-def123456789",
+		"prefix_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"cidr": "203.0.113.0/24",
+		"region_key": "us"
+	}
+}
+```
+
+## Delete a binding
+
+Remove a binding to stop regionalizing traffic for its CIDR.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/dls/regional_services/prefix_bindings/{binding_id}"
+	method="DELETE"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+```json title="Response"
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": null
+}
+```
+
+## Related resources
+
+- [Regional Services](/data-localization/regional-services/) — overview and in-region processing model.
+- [Available regions and product support](/data-localization/region-support/) — the full list of regions and their definitions.
+- [Bring Your Own IP (BYOIP)](/byoip/) — onboard your own IP prefixes to Cloudflare.

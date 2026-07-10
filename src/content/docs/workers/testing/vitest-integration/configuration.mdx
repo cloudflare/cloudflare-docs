@@ -65,8 +65,7 @@ Exported from `@cloudflare/vitest-pool-workers/config`. Creates a Pages ASSETS b
 
 ```ts
 import path from "node:path";
-import { buildPagesASSETSBinding } from "@cloudflare/vitest-pool-workers/config";
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { buildPagesASSETSBinding, cloudflareTest } from "@cloudflare/vitest-pool-workers";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -92,8 +91,7 @@ Exported from `@cloudflare/vitest-pool-workers/config`. Reads all [D1 migrations
 
 ```ts
 import path from "node:path";
-import { readD1Migrations } from "@cloudflare/vitest-pool-workers/config";
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest, readD1Migrations } from "@cloudflare/vitest-pool-workers";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({

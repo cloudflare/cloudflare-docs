@@ -1,0 +1,55 @@
+---
+/**
+ * WranglerArg — one flag/positional row in a wrangler command's arg list.
+ *
+ * CF source: cloudflare-docs/src/components/WranglerArg.astro
+ * Mapping notes: extra-flag-details slot machinery dropped — it's only
+ * fed by upstream's ExtraFlagDetails wrapper, which Queues content
+ * never uses.
+ */
+import { marked } from "marked";
+import Type from "./Type.astro";
+import MetaInfo from "./MetaInfo.astro";
+
+interface Props {
+  key: string;
+  definition: any;
+}
+
+const { key, definition } = Astro.props;
+
+const type = definition.type ?? definition.choices;
+const description = definition.description ?? definition.describe;
+
+// Descriptions may contain <angle-bracket> placeholders; escape them so
+// marked doesn't treat them as HTML.
+const sanitizedDescription = description
+  ? description.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  : "";
+
+const required = definition.demandOption;
+const defaultValue = definition.default;
+const alias = definition.alias;
+
+const name = definition.positional ? `[${key.toUpperCase()}]` : `--${key}`;
+
+const typeText = Array.isArray(type)
+  ? type.map((t) => `"${t}"`).join(" | ")
+  : type;
+
+let aliasText;
+if (alias) {
+  aliasText = Array.isArray(alias)
+    ? `aliases: --${alias.join(", --")}`
+    : `alias: --${alias}`;
+}
+---
+
+<li>
+  <code>{name}</code>
+  <Type text={typeText} />{" "}
+  {aliasText && <MetaInfo text={aliasText} />}
+  {required && <MetaInfo text="required" />}
+  {defaultValue !== undefined && <MetaInfo text={`default: ${defaultValue}`} />}
+  <Fragment set:html={marked.parse(sanitizedDescription)} />
+</li>

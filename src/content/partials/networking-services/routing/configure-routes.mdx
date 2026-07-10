@@ -34,6 +34,10 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 )
 }
 
+<Aside type="note" title="One page for all your routes">
+The dashboard **Routes** page shows the routes for all of your connectors — including Cloudflare Tunnel and Cloudflare Mesh — in a single table, not just {props.productName} static routes. The following steps cover {props.productName} static routes. Routes for other connector types appear in the same table and can be filtered by type.
+</Aside>
+
 ## Configure static routes
 
 { props.magicWord !== "Magic Transit" && (
@@ -83,7 +87,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 		<Markdown
 			text={`
-			2. From the **Routes** tab, select **Create static route** to add a new route.
+			2. From the **Routes** tab, select **Create route**, then choose **WAN** as the route type.
 			`}
 			inline={false}
 		/>

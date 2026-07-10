@@ -16,6 +16,8 @@ Cloudflare Access can use Cloudflare itself as an identity provider, allowing yo
 
 When a user authenticates through the Cloudflare identity provider, Access verifies their Cloudflare account membership and grants or denies access based on your policy configuration.
 
+For newly created Zero Trust organizations, Cloudflare adds this identity provider automatically as the default login method, with **Restrict to account members** enabled. You do not need to set it up manually. The following steps describe how to add or reconfigure it.
+
 ## Set up Cloudflare as an identity provider
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
@@ -49,6 +51,8 @@ Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subr
 | Option | Description | Default |
 | --- | --- | --- |
 | **Restrict to account members** | When enabled, only users who are members of your Cloudflare account can authenticate. When disabled, any Cloudflare user can authenticate (subject to your Access policies). | Disabled |
+
+The **Default** column reflects the value when you add this identity provider manually. When Cloudflare configures it automatically for a new organization, **Restrict to account members** is enabled.
 
 ## Use Cloudflare account membership in policies
 

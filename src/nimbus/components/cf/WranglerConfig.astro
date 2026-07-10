@@ -1,0 +1,86 @@
+---
+/**
+ * WranglerConfig — author one wrangler config block (TOML or JSONC),
+ * render synced wrangler.jsonc + wrangler.toml tabs. The other format is
+ * generated at build time, so the MDX stays single-source.
+ *
+ * CF source: cloudflare-docs/src/components/WranglerConfig.astro
+ * Mapping notes: same Expressive-Code → Shiki adaptation as
+ * TypeScriptExample — raw code and language come from the rendered
+ * `<pre>` instead of the copy button's `data-code` attribute.
+ */
+import TOML from "@iarna/toml";
+import { parse as jsoncParse } from "jsonc-parser";
+import { parse } from "node-html-parser";
+import { Code } from "../ui/code";
+import { TabItem, Tabs } from "../ui/tabs";
+
+interface Props {
+  removeSchema?: boolean;
+}
+
+const { removeSchema = false } = Astro.props;
+
+const slot = await Astro.slots.render("default");
+// `blockTextElements: {}` — by default node-html-parser keeps <pre> content
+// as an unparsed raw-text blob, which makes `pre code` unmatchable.
+const html = parse(slot, { blockTextElements: {} });
+const codeEl = html.querySelector("pre code");
+
+if (!codeEl) {
+  throw new Error(
+    `[WranglerConfig] Expected a fenced toml/jsonc code block as the only child (on "${Astro.url.pathname}").`,
+  );
+}
+
+let code = codeEl.text;
+
+const hadTodayMagicString = /\$today/i.test(code);
+code = code.replaceAll(/\$today/gi, new Date().toISOString().split("T")[0]!);
+
+const language = html.querySelector("[data-language]")?.attributes["data-language"];
+
+if (!language) {
+  throw new Error(`[WranglerConfig] Unable to find data-language.`);
+}
+
+/**
+ * When the author used `$today` for `compatibility_date`, inject a helpful
+ * comment above that line so readers know they should keep it current.
+ */
+function injectCompatDateComment(src: string, commentPrefix: string): string {
+  return src.replace(
+    /^(\s*)(.*compatibility_date.*)/m,
+    `$1${commentPrefix} Set this to today's date\n$1$2`,
+  );
+}
+
+let toml: string;
+let json: string;
+
+if (language === "toml") {
+  toml = code;
+  const parsedToml = TOML.parse(code);
+  const jsonObj = removeSchema
+    ? parsedToml
+    : { $schema: "./node_modules/wrangler/config-schema.json", ...parsedToml };
+  json = JSON.stringify(jsonObj, null, 2);
+} else {
+  json = code;
+  toml = TOML.stringify(jsoncParse(code));
+}
+
+if (hadTodayMagicString) {
+  toml = injectCompatDateComment(toml, "#");
+  json = injectCompatDateComment(json, "//");
+}
+---
+
+<Tabs syncKey="wranglerConfig">
+  <TabItem label="wrangler.jsonc">
+    <Code lang="jsonc" code={json} />
+  </TabItem>
+  <TabItem label="wrangler.toml">
+    <Code lang="toml" code={toml} />
+  </TabItem>
+</Tabs>

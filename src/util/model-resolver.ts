@@ -117,6 +117,8 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 		dataSource: "catalog",
 		hosting: "proxied",
 		zdrComment: model.zdr_comment ?? null,
+		banner: model.banner ?? null,
+		requestFormats: model.request_formats ?? null,
 	};
 }
 

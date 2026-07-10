@@ -1,0 +1,29 @@
+---
+title: Manage Artifacts from the Cloudflare dashboard
+description: Create and manage Artifacts namespaces, repos, files, forks, and repo tokens from the Cloudflare dashboard.
+products:
+  - artifacts
+date: 2026-06-17T12:00:00Z
+---
+
+You can now configure [Artifacts](/artifacts/concepts/how-artifacts-works/) namespaces, repos, and tokens directly from the Cloudflare dashboard.
+
+Artifacts is Git-compatible storage that lets you store repos on Cloudflare and interact with them using standard Git workflows.
+
+You can view and create [namespaces](/artifacts/concepts/namespaces/#use-namespaces-as-containers), which are top-level containers for repos:
+
+![Artifacts namespaces dashboard showing namespace search and create namespace controls](~/assets/images/changelog/artifacts/dashboard-namespaces.png)
+
+You can view, create, fork, and search repos within a namespace:
+
+![Artifacts repositories dashboard showing repo source, access, and created columns](~/assets/images/changelog/artifacts/dashboard-repositories.png)
+
+You can open a repo to view its files and copy its Git remote URL.
+
+![Artifacts repository overview showing files, commits, token management, and quick actions](~/assets/images/changelog/artifacts/dashboard-repo-overview.png)
+
+You can also provision tokens directly from the dashboard to scope Git access to a single repo, with read tokens for clone, fetch, and pull workflows, or write tokens when a client needs to push changes.
+
+To get started, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select **Storage & databases** > **Artifacts**.
+
+If you are enrolled in the Artifacts beta, you can use the dashboard to set up Artifacts. If you would like to join the beta, complete the [request form](https://forms.gle/DwBoPRa3CWQ8ajFp7).

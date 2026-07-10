@@ -11,6 +11,7 @@
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import { createAgent } from "@flue/runtime";
+import spamSkill from "../.agents/skills/spam-and-off-topic-filter/SKILL.md" with { type: "skill" };
 import {
 	getDefaultWorkspace,
 	getShellSandbox,
@@ -35,35 +36,15 @@ export const route: WorkflowRouteHandler = async (_c, next) => next();
 export async function run({ id: runId, init, payload, env }: FlueContext) {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, unknown>;
-	const bucket = typedEnv.DOCS_FLUE_BUCKET as R2Bucket;
 	const loader = typedEnv.LOADER as Parameters<
 		typeof getShellSandbox
 	>[0]["loader"];
 	const workspace = getDefaultWorkspace();
 
-	// Write skill from R2 into workspace at request time
-	const skillObj = await bucket.get(
-		".agents/skills/spam-and-off-topic-filter/SKILL.md",
-	);
-	if (!skillObj) {
-		throw new Error(
-			"Missing .agents/skills/spam-and-off-topic-filter/SKILL.md in DOCS_FLUE_BUCKET. " +
-				"For local dev, run `pnpm run flue:sync-agents:local` before invoking the workflow.",
-		);
-	}
-	if (skillObj) {
-		await workspace.mkdir("/.agents/skills/spam-and-off-topic-filter", {
-			recursive: true,
-		});
-		await workspace.writeFile(
-			"/.agents/skills/spam-and-off-topic-filter/SKILL.md",
-			await skillObj.text(),
-		);
-	}
-
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+		skills: [spamSkill],
 	}));
 	const harness = await init(agent);
 	const session = await harness.session(

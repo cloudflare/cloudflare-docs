@@ -13,7 +13,7 @@ Your job is to classify each finding into one of three buckets:
 
 ## Inputs
 
-`args.currentFindings` — array of findings from the current specialist run. Each has: `id`, `severity`, `path`, `line` (optional), `rule`, `evidence`, `suggestion`.
+`args.currentFindings` — array of findings from the current specialist run. Each has: `id`, `severity` (`critical`, `warning`, or `suggestion`), `path`, `line` (optional), `rule`, `evidence`, `suggestion`. Preserve each finding's `severity` exactly as given — never change it.
 
 `args.reviewedFiles` — array of file paths the specialist actually reviewed in this run (e.g. `["src/content/docs/sandbox/concepts/preview-urls.mdx", ...]`). A file in this list was examined even if no findings were reported for it.
 

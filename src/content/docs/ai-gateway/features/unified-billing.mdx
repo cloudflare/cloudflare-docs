@@ -17,6 +17,10 @@ Unified Billing allows users to connect to various AI providers (such as OpenAI,
 
 A 5% fee is applied to all credits purchased through Unified Billing. For example, a $100 credit purchase will result in a $105 charge. Inference pricing from providers is passed through with no markup — you pay the same per-token rates as you would directly with the provider.
 
+:::caution
+In rare instances, your credit balance may go negative. If this happens, Cloudflare will charge the payment method on file for the outstanding amount. Charges occur at the beginning of each month for the previous month.
+:::
+
 ## Pre-requisites
 
 - Ensure your Cloudflare account has [sufficient credits loaded](#load-credits).
@@ -114,12 +118,7 @@ The HTTP API supports the following providers:
 
 ### Spend limits
 
-You can set spend limits at two levels:
-
-- **Account-level** — Set a spend limit on your loaded credits on this page to cap total Unified Billing spend across all gateways.
-- **Per-gateway** — Set [granular spend limit rules](/ai-gateway/features/spend-limits/) on individual gateways, scoped by model, provider, or custom metadata dimensions like user or team.
-
-Both limits are enforced independently. Whichever one is reached first will block requests.
+Set [spend limit rules](/ai-gateway/features/spend-limits/) on individual gateways to cap spend, scoped by model, provider, or custom metadata dimensions like user or team.
 
 ### Zero Data Retention (ZDR)
 

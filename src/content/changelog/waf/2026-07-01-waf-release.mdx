@@ -1,0 +1,55 @@
+---
+title: "WAF Release - 2026-07-01"
+description: Cloudflare WAF managed rulesets 2026-07-01
+date: 2026-07-01
+---
+
+import { RuleID } from "~/components";
+
+This release adds targeted coverage for a path traversal flaw in Fortinet FortiSandbox (CVE-2026-39813) and transitions the Anomaly:Header:User-Agent - Fake Bing or MSN Bot rule action from Block to Disabled.
+
+**Key Findings**
+
+- CVE-2026-39813: A path traversal vulnerability in Fortinet FortiSandbox allows remote, unauthenticated attackers to read arbitrary files from the underlying filesystem due to insufficient validation of user-supplied input paths.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="32075e19b1494117ac5915e8d84c92c9" />
+			</td>
+			<td>N/A</td>
+			<td>Fortinet FortiSandbox - Path Traversal - CVE:CVE-2026-39813</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="ae20608d93b94e97988db1bbc12cf9c8" />
+			</td>
+			<td>N/A</td>
+			<td>Anomaly:Header:User-Agent - Fake Bing or MSN Bot</td>
+			<td>Enabled</td>
+			<td>Disabled</td>
+			<td>
+				We are changing the action for this rule from BLOCK to Disabled
+			</td>
+		</tr>
+	</tbody>
+</table>

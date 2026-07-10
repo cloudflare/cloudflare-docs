@@ -21,7 +21,7 @@ Each recipient account gets a read-only IdP connection that routes authenticatio
 Setting up IdP federation is a two-step process:
 
 1. **Create a federation grant.** A grant permits an IdP to be shared across accounts. Creating a grant also provisions a hidden bridge application in the source account.
-2. **Share the grant.** Distribute the grant to other accounts in your organization. Each recipient account is automatically provisioned with a read-only IdP connection that points to the bridge.
+2. **Share the grant.** Distribute the grant to specific accounts or to your entire organization. Each recipient account is automatically provisioned with a read-only IdP connection that points to the bridge.
 
 When a user in a recipient account authenticates, the request is routed through the bridge to the source IdP. The source IdP handles authentication, and the resulting identity claims are passed back to the recipient account's Access policies.
 
@@ -47,12 +47,12 @@ The IdP is shared to the selected accounts automatically. Each recipient account
 
 </TabItem> <TabItem label="API">
 
-Sharing an IdP via the API is a two-step process: create a federation grant, then share it with recipient accounts.
+Sharing an IdP via the API is a two-step process: create a federation grant, then share it with specific accounts or your entire organization.
 
 #### 1. Create a federation grant
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/idp_federation_grants"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/idp_federation_grants"
 	method="POST"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
@@ -63,22 +63,29 @@ Sharing an IdP via the API is a two-step process: create a federation grant, the
 The response includes the grant `id`, which you will use in the next step. To list all federation grants in your account:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/idp_federation_grants"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/idp_federation_grants"
 	method="GET"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 />
 
-#### 2. Share the grant with recipient accounts
+#### 2. Share the grant
 
-Share the grant with one or more recipient accounts.
+You can share the grant with specific accounts or with your entire Cloudflare organization. In the `recipients` array, target each recipient with one of the following fields:
+
+- `recipient_account_id`: Shares the IdP with a single account. Repeat the field for each account you want to add.
+- `organization_id`: Shares the IdP with every account in your Cloudflare organization.
+
+Specify only one of these fields per recipient. If you provide neither, the grant is shared with your entire organization by default.
+
+To share the grant with one or more specific accounts:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/shares"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/shares"
 	method="POST"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
 		name: "Identity provider: OpenID Connect",
-		recipients: [{ account_id: "<RECIPIENT_ACCOUNT_ID>" }],
+		recipients: [{ recipient_account_id: "<RECIPIENT_ACCOUNT_ID>" }],
 		resources: [
 			{
 				resource_account_id: "<SOURCE_ACCOUNT_ID>",
@@ -90,7 +97,27 @@ Share the grant with one or more recipient accounts.
 	}}
 />
 
-Each recipient account will be automatically provisioned with a read-only IdP connection that points to the bridge.
+To share the grant with every account in your organization, replace the `recipients` array with your organization ID:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/shares"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "Identity provider: OpenID Connect",
+		recipients: [{ organization_id: "<ORGANIZATION_ID>" }],
+		resources: [
+			{
+				resource_account_id: "<SOURCE_ACCOUNT_ID>",
+				resource_id: "<GRANT_ID>",
+				resource_type: "idp-federation-grant",
+				meta: {},
+			},
+		],
+	}}
+/>
+
+Each recipient account is automatically provisioned with a read-only IdP connection that points to the bridge. When you share with an organization, every account in the organization receives the connection.
 
 </TabItem></Tabs>
 
@@ -118,7 +145,7 @@ Unfederating an IdP via the API is a two-step process. Deleting the grant stops 
 #### 1. Delete the federation grant
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/idp_federation_grants/{grant_id}"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/idp_federation_grants/$GRANT_ID"
 	method="DELETE"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 />
@@ -126,7 +153,7 @@ Unfederating an IdP via the API is a two-step process. Deleting the grant stops 
 #### 2. (Optional) Delete the share
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/shares/{share_id}"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/shares/$SHARE_ID"
 	method="DELETE"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 />

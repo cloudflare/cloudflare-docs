@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkBreakoutRoomsToggle
+description: API reference for RtkBreakoutRoomsToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Control bar button that opens and closes the `RtkBreakoutRoomsManager`. Automatically hides if the local participant has neither `canAlterConnectedMeetings` nor `canSwitchConnectedMeetings` permission.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkBreakoutRoomsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkBreakoutRoomsToggle meeting={meeting} />;
+}
+```
+
+### With Size
+
+```tsx
+import { RtkBreakoutRoomsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkBreakoutRoomsToggle meeting={meeting} size="md" />;
+}
+```

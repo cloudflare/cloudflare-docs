@@ -107,7 +107,7 @@ jobs:
           PATCH="${{ steps.meta.outputs.patch_path }}"
 
           # File extensions prettier is allowed to format.
-          ALLOWED_EXT='\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$'
+          ALLOWED_EXT='\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|astro)$'
 
           # Paths the bot must NEVER modify regardless of extension. The
           # blocklist is the security boundary; the allowlist is a sanity
@@ -277,7 +277,7 @@ jobs:
           # Re-validate the staged diff against the same path rules. This
           # guards against any drift between artifact contents and what
           # actually applied (renames, partial application, etc.).
-          ALLOWED_EXT='\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|md|astro)$'
+          ALLOWED_EXT='\.(js|jsx|ts|tsx|mjs|css|json|yaml|yml|astro)$'
           BLOCKED='^(\.github/|package\.json$|package-lock\.json$|pnpm-lock\.yaml$|\.npmrc$|patches/|\.husky/)'
           staged=$(git diff --staged --name-only)
           fail=0

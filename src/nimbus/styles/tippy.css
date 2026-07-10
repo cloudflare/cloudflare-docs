@@ -1,0 +1,65 @@
+/* Nimbus-tokenized Tippy surface. Must load globally: tippy content
+ * portals to document.body, out of reach of scoped styles. */
+.tippy-box {
+	background-color: var(--nb-card) !important;
+	color: var(--nb-foreground) !important;
+	border: 1px solid var(--nb-border) !important;
+	border-radius: 6px !important;
+	font-size: 0.8125rem !important;
+	line-height: 1.4 !important;
+	box-shadow:
+		0 4px 6px -1px rgb(0 0 0 / 0.1),
+		0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+}
+
+[data-mode="dark"] .tippy-box {
+	border-color: var(--nb-border-strong) !important;
+}
+
+[data-mode="dark"] .tippy-box[data-placement^="top"] > .tippy-arrow::before {
+	filter: drop-shadow(0 1px 0 var(--nb-border-strong));
+}
+
+[data-mode="dark"] .tippy-box[data-placement^="bottom"] > .tippy-arrow::before {
+	filter: drop-shadow(0 -1px 0 var(--nb-border-strong));
+}
+
+[data-mode="dark"] .tippy-box[data-placement^="left"] > .tippy-arrow::before {
+	filter: drop-shadow(1px 0 0 var(--nb-border-strong));
+}
+
+[data-mode="dark"] .tippy-box[data-placement^="right"] > .tippy-arrow::before {
+	filter: drop-shadow(-1px 0 0 var(--nb-border-strong));
+}
+
+.tippy-box .tippy-content {
+	padding: 6px 10px !important;
+}
+
+.tippy-box .tippy-content a {
+	color: var(--nb-link);
+}
+
+.tippy-box .tippy-arrow {
+	color: var(--nb-card);
+}
+
+.tippy-box[data-placement^="top"] > .tippy-arrow::before {
+	border-top-color: var(--nb-card);
+	filter: drop-shadow(0 1px 0 var(--nb-border));
+}
+
+.tippy-box[data-placement^="bottom"] > .tippy-arrow::before {
+	border-bottom-color: var(--nb-card);
+	filter: drop-shadow(0 -1px 0 var(--nb-border));
+}
+
+.tippy-box[data-placement^="left"] > .tippy-arrow::before {
+	border-left-color: var(--nb-card);
+	filter: drop-shadow(1px 0 0 var(--nb-border));
+}
+
+.tippy-box[data-placement^="right"] > .tippy-arrow::before {
+	border-right-color: var(--nb-card);
+	filter: drop-shadow(-1px 0 0 var(--nb-border));
+}

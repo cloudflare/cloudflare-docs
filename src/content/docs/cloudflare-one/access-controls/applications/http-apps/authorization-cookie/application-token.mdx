@@ -72,7 +72,13 @@ The payload contains the actual claim and user information to pass to the applic
 
 #### Custom SAML attributes and OIDC claims
 
-Access allows you to add custom SAML attributes and OIDC claims to your JWT for enhanced verification, if supported by your identity provider. This is configured when you setup your [SAML](/cloudflare-one/integrations/identity-providers/generic-saml/) or [OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) provider.
+Access allows you to add custom SAML attributes and OIDC claims to your JWT for enhanced verification, if supported by your identity provider. This is configured when you setup your [SAML](/cloudflare-one/integrations/identity-providers/generic-saml/) or [OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) provider. Identity provider groups are only included in the token when you explicitly configure `groups` as a custom SAML attribute or OIDC claim. Access does not add them automatically.
+
+:::caution[Custom claims may be trimmed to fit cookie size limits]
+Custom SAML attributes and OIDC claims are included in the token's `custom` claim on a best-effort basis. To keep the token within browser cookie size limits, Access trims custom attributes and claims when the serialized `custom` claim exceeds roughly 1 KB (1,000 bytes), dropping configured values from the end of the list first. Groups are usually the largest contributor to this size, so a user who belongs to many groups can receive a token without their `groups` claim while other users on the same application keep it.
+
+Do not rely on custom claims in the JWT for authorization decisions when they may grow large. To retrieve the user's full identity, including all groups, call the `/cdn-cgi/access/get-identity` endpoint described below.
+:::
 
 #### User identity
 

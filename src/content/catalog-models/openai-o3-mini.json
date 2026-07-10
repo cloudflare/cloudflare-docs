@@ -7822,181 +7822,97 @@
 		"responses",
 		"chat-completions"
 	],
+	"banner": null,
 	"created_at": "2026-05-22 17:53:41",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
-			"properties": {
-				"audio": {
-					"additionalProperties": false,
+			"oneOf": [
+				{
+					"type": "object",
 					"properties": {
-						"format": {
-							"enum": [
-								"wav",
-								"mp3",
-								"flac",
-								"opus",
-								"pcm16"
-							],
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
 							"type": "string"
 						},
-						"voice": {
-							"enum": [
-								"alloy",
-								"ash",
-								"ballad",
-								"coral",
-								"echo",
-								"sage",
-								"shimmer",
-								"verse"
-							],
-							"type": "string"
-						}
-					},
-					"type": "object"
-				},
-				"frequency_penalty": {
-					"maximum": 2,
-					"minimum": -2,
-					"type": "number"
-				},
-				"max_completion_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"max_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"messages": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"content": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									},
-									{
-										"items": {},
-										"type": "array"
-									}
-								]
-							},
-							"role": {
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								],
-								"type": "string"
-							}
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
 						},
-						"required": [
-							"role",
-							"content"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"modalities": {
-					"items": {
-						"enum": [
-							"text",
-							"audio"
-						],
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"presence_penalty": {
-					"maximum": 2,
-					"minimum": -2,
-					"type": "number"
-				},
-				"response_format": {},
-				"stream": {
-					"type": "boolean"
-				},
-				"stream_options": {
-					"additionalProperties": false,
-					"properties": {
-						"include_usage": {
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
 							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high"
+									]
+								}
+							},
+							"additionalProperties": {}
 						}
 					},
-					"type": "object"
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
 				},
-				"temperature": {
-					"maximum": 2,
-					"minimum": 0,
-					"type": "number"
-				},
-				"tool_choice": {},
-				"tools": {
-					"items": {},
-					"type": "array"
-				},
-				"top_p": {
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
-				}
-			},
-			"required": [
-				"messages"
-			],
-			"type": "object"
-		},
-		"output": {
-			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
-			"properties": {
-				"choices": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"finish_reason": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									}
-								]
-							},
-							"index": {
-								"type": "number"
-							},
-							"message": {
-								"additionalProperties": {},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
 								"properties": {
-									"audio": {
-										"additionalProperties": {},
-										"properties": {
-											"data": {
-												"type": "string"
-											},
-											"expires_at": {
-												"type": "number"
-											},
-											"id": {
-												"type": "string"
-											},
-											"transcript": {
-												"type": "string"
-											}
-										},
-										"type": "object"
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
 									},
 									"content": {
 										"anyOf": [
@@ -8005,17 +7921,259 @@
 											},
 											{
 												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
 											}
 										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
 									},
-									"role": {
-										"type": "string"
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"anyOf": [
+													{
+														"type": "string"
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
 									},
-									"tool_calls": {
+									"finish_reason": {
 										"anyOf": [
 											{
-												"items": {},
-												"type": "array"
+												"type": "string"
 											},
 											{
 												"type": "null"
@@ -8024,61 +8182,45 @@
 									}
 								},
 								"required": [
-									"role"
+									"index",
+									"message",
+									"finish_reason"
 								],
-								"type": "object"
+								"additionalProperties": {}
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"created": {
-					"type": "number"
-				},
-				"id": {
-					"type": "string"
-				},
-				"model": {
-					"type": "string"
-				},
-				"object": {
-					"type": "string"
-				},
-				"usage": {
-					"additionalProperties": {},
-					"properties": {
-						"completion_tokens": {
-							"type": "number"
-						},
-						"prompt_tokens": {
-							"type": "number"
-						},
-						"total_tokens": {
-							"type": "number"
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
 						}
 					},
 					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
 					],
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Chat Completions"
 				}
-			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
-			"type": "object"
+			]
 		}
 	}
 }
