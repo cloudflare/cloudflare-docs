@@ -62,6 +62,16 @@ They are most likely coming from an automated testing tool making erroneous requ
 
 We do not support custom integrations directly with the endpoint: all requests should originate from our beacon JavaScript.
 
+## Why am I seeing syntax errors from the beacon script in Internet Explorer?
+
+Internet Explorer 11 was the final version and it was declared completely end-of-life (EOL) in 2022.
+
+Our beacon script targets more modern syntax which Internet Explorer doesn't support. This will cause a non-user-visible error when the script attempts to execute—the only functional impact is that beacons are not collected from these old browsers.
+
+If these errors cause noise in your reporting, you can prevent the script from loading in Internet Explorer by adding `type="module"` to the `<script>` tag.
+
+Cloudflare adds `type="module"` automatically for customers using automatically-injection and our dashboard provides includes this attribute in the instructions for customers using the manual embed approach.
+
 ---
 
 ## Setup
