@@ -90,7 +90,7 @@ Yes. Instead of embedding the script using a tag manager as shown here:
 
 ```html
 <script
-	defer
+	type="module"
 	src="https://static.cloudflareinsights.com/beacon.min.js"
 	data-cf-beacon='{"token": "$SITE_TOKEN"}'
 ></script>
@@ -100,7 +100,7 @@ Add the following script:
 
 ```html
 <script
-	defer
+	type="module"
 	src="https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN"
 ></script>
 ```
