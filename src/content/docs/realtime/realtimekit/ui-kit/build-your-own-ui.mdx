@@ -48,6 +48,169 @@ Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components 
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id={["web-web-components", "web-react", "web-angular"]}>
+
+## Build a chat panel
+
+The UI Kit includes a full chat panel and lower-level chat components. Use the full panel when you want RealtimeKit to manage chat behavior for you.
+
+Use lower-level components when you need to control the layout around message lists, pinned messages, or the composer.
+
+<RTKCodeSnippet id="web-web-components">
+
+Use `rtk-chat` to render the full chat panel. It includes public chat, private chat, paginated messages, pinned messages, file uploads, image uploads, edit actions, delete actions, and emoji input.
+
+```html
+<rtk-ui-provider id="rtk-ui-provider">
+	<rtk-chat-toggle></rtk-chat-toggle>
+	<rtk-chat style="height: 480px;"></rtk-chat>
+</rtk-ui-provider>
+```
+
+To set chat UI overrides, assign the `overrides` property on `rtk-ui-provider` or `rtk-meeting`.
+
+```js
+const provider = document.querySelector("rtk-ui-provider");
+
+provider.overrides = {
+	disableEmojiPicker: true,
+	disablePrivateChat: true,
+};
+```
+
+The `disableEmojiPicker` override hides the emoji picker button. The `disablePrivateChat` override hides private chat even when the preset allows it.
+
+To control private chat for all participants, prefer preset permissions.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use `RtkChat` to render the full chat panel. It includes public chat, private chat, paginated messages, pinned messages, file uploads, image uploads, edit actions, delete actions, and emoji input.
+
+```tsx
+import {
+	RtkChat,
+	RtkChatToggle,
+	RtkUiProvider,
+} from "@cloudflare/realtimekit-react-ui";
+
+function ChatPanel({ meeting }) {
+	return (
+		<RtkUiProvider
+			meeting={meeting}
+			overrides={{
+				disableEmojiPicker: true,
+				disablePrivateChat: true,
+			}}
+		>
+			<RtkChatToggle />
+			<RtkChat style={{ height: "480px" }} />
+		</RtkUiProvider>
+	);
+}
+```
+
+The `disableEmojiPicker` override hides the emoji picker button. The `disablePrivateChat` override hides private chat even when the preset allows it.
+
+To control private chat for all participants, prefer preset permissions.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+Use `rtk-chat` to render the full chat panel. It includes public chat, private chat, paginated messages, pinned messages, file uploads, image uploads, edit actions, delete actions, and emoji input.
+
+```html
+<rtk-ui-provider [meeting]="meeting" [overrides]="chatOverrides">
+	<rtk-chat-toggle></rtk-chat-toggle>
+	<rtk-chat style="height: 480px;"></rtk-chat>
+</rtk-ui-provider>
+```
+
+```ts
+chatOverrides = {
+	disableEmojiPicker: true,
+	disablePrivateChat: true,
+};
+```
+
+The `disableEmojiPicker` override hides the emoji picker button. The `disablePrivateChat` override hides private chat even when the preset allows it.
+
+To control private chat for all participants, prefer preset permissions.
+
+</RTKCodeSnippet>
+
+### Compose chat components
+
+If you need more layout control, compose the lower-level chat components. `RtkChatMessagesUiPaginated` loads public messages when `privateChatRecipient` is empty and private messages when you pass a participant.
+
+<RTKCodeSnippet id="web-react">
+
+```tsx
+import {
+	RtkChatComposerView,
+	RtkChatMessagesUiPaginated,
+	RtkChatSelector,
+	RtkPinnedMessageSelector,
+} from "@cloudflare/realtimekit-react-ui";
+import { useState } from "react";
+
+function CustomChat({ meeting }) {
+	const [privateChatRecipient, setPrivateChatRecipient] = useState(null);
+	const canSendPublicText =
+		meeting.self.permissions.chatPublic.canSend &&
+		meeting.self.permissions.chatPublic.text;
+	const canSendPublicFiles =
+		meeting.self.permissions.chatPublic.canSend &&
+		meeting.self.permissions.chatPublic.files;
+	const canPrivateMessage =
+		meeting.self.permissions.chatPrivate?.canSend ||
+		meeting.self.permissions.chatPrivate?.canReceive;
+	const canSendPrivateText =
+		canPrivateMessage && meeting.self.permissions.chatPrivate?.text;
+	const canSendPrivateFiles =
+		canPrivateMessage && meeting.self.permissions.chatPrivate?.files;
+
+	return (
+		<div style={{ height: "480px" }}>
+			<RtkChatSelector
+				meeting={meeting}
+				onRtkChatSelectorChange={(event) => {
+					setPrivateChatRecipient(event.detail.selectedUser ?? null);
+				}}
+			/>
+			<RtkPinnedMessageSelector meeting={meeting} />
+			<RtkChatMessagesUiPaginated
+				meeting={meeting}
+				privateChatRecipient={privateChatRecipient}
+			/>
+			<RtkChatComposerView
+				canSendTextMessage={
+					privateChatRecipient ? canSendPrivateText : canSendPublicText
+				}
+				canSendFiles={
+					privateChatRecipient ? canSendPrivateFiles : canSendPublicFiles
+				}
+				inputTextPlaceholder="Enter a message"
+				onNewMessage={(event) =>
+					meeting.chat.sendMessage(
+						event.detail,
+						privateChatRecipient ? [privateChatRecipient.id] : [],
+					)
+				}
+			/>
+		</div>
+	);
+}
+```
+
+Refer to the [`RtkChat`](/realtime/realtimekit/ui-kit/api-reference/react/RtkChat/), [`RtkChatSelector`](/realtime/realtimekit/ui-kit/api-reference/react/RtkChatSelector/), [`RtkPinnedMessageSelector`](/realtime/realtimekit/ui-kit/api-reference/react/RtkPinnedMessageSelector/), [`RtkChatMessagesUiPaginated`](/realtime/realtimekit/ui-kit/api-reference/react/RtkChatMessagesUiPaginated/), and [`RtkChatComposerView`](/realtime/realtimekit/ui-kit/api-reference/react/RtkChatComposerView/) API references for component props.
+
+</RTKCodeSnippet>
+
+</RTKCodeSnippet>
+
 <RTKCodeSnippet id="mobile-ios">
 The iOS SDK uses a **delegation pattern** for custom UIs. Instead of wrapping child views in a provider, you conform to `RtkUIFlowCoordinatorDelegate` and return your own view controllers for each screen in the meeting flow.
 
@@ -121,7 +284,7 @@ Use `useContext(RtkUIContext)` to read `storeStates.meeting` and determine which
 
 </RTKCodeSnippet>
 
-## Example code
+## Custom Meeting UI Example
 
 <RTKCodeSnippet id="web-web-components">
 ```html
@@ -433,13 +596,13 @@ It is advised to always use `RtkUiProvider` to render a custom UI. Without `RtkU
 `RtkUiProvider` helps you go from
 
 ```jsx
-<RtkHeader meeting={meeting} />
+<RtkHeader meeting={meeting} />;
 ```
 
 to just
 
 ```jsx
-<RtkHeader />
+<RtkHeader />;
 ```
 
 It is recommended to use either `RtkMeeting` or `RtkUiProvider` to render a meeting. Using both will result in unexpected behavior.

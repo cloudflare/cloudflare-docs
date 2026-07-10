@@ -19,11 +19,12 @@ This guide explains how to send and receive chat messages in a meeting using Clo
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-There are three types of messages that can be sent in chat:
+There are four types of messages that can be sent in chat:
 
 - Text messages
 - Images
 - Files
+- Custom messages
 
 The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
 
@@ -31,21 +32,26 @@ The meeting chat object is stored in `meeting.chat`, which has methods for sendi
 console.log("Chat object:", meeting.chat);
 ```
 
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+Use `fetchPublicMessages()`, `fetchPrivateMessages()`, or `fetchPinnedMessages()` to load paginated chat messages.
 
 ```js
-console.log("All chat messages:", meeting.chat.messages);
+const messages = await this.meeting.chat.fetchPublicMessages({
+	timestamp,
+	limit: size,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
 
-There are three types of messages that can be sent in chat:
+There are four types of messages that can be sent in chat:
 
 - Text messages
 - Images
 - Files
+- Custom messages
 
 The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
 
@@ -53,10 +59,14 @@ The meeting chat object is stored in `meeting.chat`, which has methods for sendi
 meeting.chat;
 ```
 
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+Use `fetchPublicMessages()`, `fetchPrivateMessages()`, or `fetchPinnedMessages()` to load paginated chat messages.
 
-```jsx
-meeting.chat.messages;
+```js
+const messages = await this.meeting.chat.fetchPublicMessages({
+	timestamp,
+	limit: size,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
@@ -129,11 +139,12 @@ meeting.chat.messages;
 
 <RTKCodeSnippet id="mobile-react-native">
 
-There are three types of messages that can be sent in chat:
+There are four types of messages that can be sent in chat:
 
 - Text messages
 - Images
 - Files
+- Custom messages
 
 The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
 
@@ -141,7 +152,7 @@ The meeting chat object is stored in `meeting.chat`, which has methods for sendi
 meeting.chat;
 ```
 
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+The `meeting.chat.messages` array contains recent messages and live updates. This array is deprecated for loading chat history. Use `fetchPublicMessages()`, `fetchPrivateMessages()`, or `fetchPinnedMessages()` instead.
 
 ```jsx
 meeting.chat.messages;
@@ -149,7 +160,7 @@ meeting.chat.messages;
 
 </RTKCodeSnippet>
 
-### Message Type
+### Message type
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -161,6 +172,7 @@ interface BaseMessage<T extends MessageType> {
 	userId: string;
 	displayName: string;
 	time: Date;
+	timeMs?: number;
 	id: string;
 	isEdited?: boolean;
 	read?: boolean;
@@ -183,7 +195,30 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 	link: string;
 }
 
-type Message = TextMessage | ImageMessage | FileMessage;
+interface CustomMessage extends BaseMessage<MessageType.custom> {
+	message?: string;
+	html?: string;
+	files?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+	images?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+	videos?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+}
+
+type Message = TextMessage | ImageMessage | FileMessage | CustomMessage;
 ```
 
 </RTKCodeSnippet>
@@ -198,6 +233,7 @@ interface BaseMessage<T extends MessageType> {
 	userId: string;
 	displayName: string;
 	time: Date;
+	timeMs?: number;
 	id: string;
 	isEdited?: boolean;
 	read?: boolean;
@@ -220,7 +256,30 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 	link: string;
 }
 
-type Message = TextMessage | ImageMessage | FileMessage;
+interface CustomMessage extends BaseMessage<MessageType.custom> {
+	message?: string;
+	html?: string;
+	files?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+	images?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+	videos?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+}
+
+type Message = TextMessage | ImageMessage | FileMessage | CustomMessage;
 ```
 
 </RTKCodeSnippet>
@@ -342,6 +401,7 @@ interface BaseMessage<T extends MessageType> {
 	userId: string;
 	displayName: string;
 	time: Date;
+	timeMs?: number;
 	id: string;
 	isEdited?: boolean;
 	read?: boolean;
@@ -364,14 +424,37 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 	link: string;
 }
 
-type Message = TextMessage | ImageMessage | FileMessage;
+interface CustomMessage extends BaseMessage<MessageType.custom> {
+	message?: string;
+	html?: string;
+	files?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+	images?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+	videos?: Array<{
+		link: string;
+		type?: string;
+		name?: string;
+		size?: number;
+	}>;
+}
+
+type Message = TextMessage | ImageMessage | FileMessage | CustomMessage;
 ```
 
 </RTKCodeSnippet>
 
-## Sending a Chat Message
+## Send a chat message
 
-### Send a Text Message
+### Send a text message
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -451,7 +534,7 @@ await meeting.chat.sendTextMessage(message);
 
 </RTKCodeSnippet>
 
-### Send an Image
+### Send an image
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -568,7 +651,7 @@ async function onSendImage() {
 
 </RTKCodeSnippet>
 
-### Send a File
+### Send a file
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -679,7 +762,7 @@ async function onSendFile() {
 
 </RTKCodeSnippet>
 
-### Send Any Message Type
+### Send any message type
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -699,7 +782,7 @@ async function sendMessage(
 Here is how you would use the `sendMessage()` method to send a text message:
 
 ```js
-const message = "Is this just fantasy?";
+const message = "Thanks for joining.";
 await meeting.chat.sendMessage({ type: "text", message });
 ```
 
@@ -723,7 +806,7 @@ async function sendMessage(
 Here is how you would use the `sendMessage()` method to send a text message:
 
 ```jsx
-const message = "Is this just fantasy?";
+const message = "Thanks for joining.";
 await meeting.chat.sendMessage({ type: "text", message });
 ```
 
@@ -747,13 +830,98 @@ async function sendMessage(
 Here is how you would use the `sendMessage()` method to send a text message:
 
 ```jsx
-const message = "Is this just fantasy?";
+const message = "Thanks for joining.";
 await meeting.chat.sendMessage({ type: "text", message });
 ```
 
 </RTKCodeSnippet>
 
-## Receiving Chat Messages
+### Send a custom message
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Use `meeting.chat.sendCustomMessage()` to send structured chat content. Custom messages can include text, HTML, files, images, or videos.
+
+```js
+await meeting.chat.sendCustomMessage({
+	type: "custom",
+	message: "Agenda for today",
+	html: "<strong>Agenda for today</strong>",
+	files: ["https://example.com/agenda.pdf"],
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use `meeting.chat.sendCustomMessage()` to send structured chat content. Custom messages can include text, HTML, files, images, or videos.
+
+```jsx
+await meeting.chat.sendCustomMessage({
+	type: "custom",
+	message: "Agenda for today",
+	html: "<strong>Agenda for today</strong>",
+	files: ["https://example.com/agenda.pdf"],
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Use `meeting.chat.sendCustomMessage()` to send structured chat content. Custom messages can include text, HTML, files, images, or videos.
+
+```jsx
+await meeting.chat.sendCustomMessage({
+	type: "custom",
+	message: "Agenda for today",
+	html: "<strong>Agenda for today</strong>",
+	files: ["https://example.com/agenda.pdf"],
+});
+```
+
+</RTKCodeSnippet>
+
+### Send a private message
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Pass peer IDs as the second argument to send a private message. The message is visible only to the selected peers and the sender.
+
+```js
+const peerIds = ["peer-id-1", "peer-id-2"];
+
+await meeting.chat.sendTextMessage("Hello", peerIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Pass peer IDs as the second argument to send a private message. The message is visible only to the selected peers and the sender.
+
+```jsx
+const peerIds = ["peer-id-1", "peer-id-2"];
+
+await meeting.chat.sendTextMessage("Hello", peerIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Pass peer IDs as the second argument to send a private message. The message is visible only to the selected peers and the sender.
+
+```jsx
+const peerIds = ["peer-id-1", "peer-id-2"];
+
+await meeting.chat.sendTextMessage("Hello", peerIds);
+```
+
+</RTKCodeSnippet>
+
+## Receive chat messages
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -766,7 +934,7 @@ meeting.chat.on("chatUpdate", ({ message, messages }) => {
 });
 ```
 
-Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
+Here, `message` is of type `Message`, as defined in the introduction. `messages` contains the current in-memory chat messages.
 
 When a chat message is received, the `meeting.chat.messages` list is also updated.
 
@@ -800,7 +968,7 @@ meeting.chat.on("chatUpdate", ({ message, messages }) => {
 });
 ```
 
-Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
+Here, `message` is of type `Message`, as defined in the introduction. `messages` contains the current in-memory chat messages.
 
 When a chat message is received, the `meeting.chat.messages` list is also updated.
 
@@ -927,7 +1095,7 @@ meeting.chat.on("chatUpdate", ({ message, messages }) => {
 });
 ```
 
-Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
+Here, `message` is of type `Message`, as defined in the introduction. `messages` contains the current in-memory chat messages.
 
 When a chat message is received, the `meeting.chat.messages` list is also updated.
 
@@ -941,9 +1109,9 @@ meeting.chat.on("chatUpdate", () => {
 
 </RTKCodeSnippet>
 
-## Editing Chat Messages
+## Edit chat messages
 
-### Edit a Text Message
+### Edit a text message
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -992,7 +1160,7 @@ await meeting.chat.editTextMessage(messageId, newMessage);
 
 </RTKCodeSnippet>
 
-### Edit an Image
+### Edit an image
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -1075,7 +1243,7 @@ async function onEditImage() {
 
 </RTKCodeSnippet>
 
-### Edit a File
+### Edit a file
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -1152,7 +1320,7 @@ async function onEditFile() {
 
 </RTKCodeSnippet>
 
-### Edit Any Message Type
+### Edit any message type
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
@@ -1174,7 +1342,7 @@ Here is how you would use the `editMessage()` method to edit a text message:
 
 ```js
 const messageId = "...";
-const message = "Is this just fantasy?";
+const message = "Thanks for joining.";
 await meeting.chat.editMessage(messageId, { type: "text", message });
 ```
 
@@ -1200,7 +1368,7 @@ Here is how you would use the `editMessage()` method to edit a text message:
 
 ```jsx
 const messageId = "...";
-const message = "Is this just fantasy?";
+const message = "Thanks for joining.";
 await meeting.chat.editMessage(messageId, { type: "text", message });
 ```
 
@@ -1226,104 +1394,156 @@ Here is how you would use the `editMessage()` method to edit a text message:
 
 ```jsx
 const messageId = "...";
-const message = "Is this just fantasy?";
+const message = "Thanks for joining.";
 await meeting.chat.editMessage(messageId, { type: "text", message });
 ```
 
 </RTKCodeSnippet>
 
-## Other Chat Functions
+## Fetch chat messages
 
-### Get Messages by a User
+### Fetch public messages
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
+Use `fetchPublicMessages()` to load public chat history with pagination. Pass a timestamp in milliseconds, a limit, and a direction.
 
 ```js
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
+const messages = await meeting.chat.fetchPublicMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
 
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
+Use `fetchPublicMessages()` to load public chat history with pagination. Pass a timestamp in milliseconds, a limit, and a direction.
 
 ```jsx
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
+const messages = await meeting.chat.fetchPublicMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-react-native">
 
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
+Use `fetchPublicMessages()` to load public chat history with pagination. Pass a timestamp in milliseconds, a limit, and a direction.
 
 ```jsx
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
+const messages = await meeting.chat.fetchPublicMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
 
-### Get Messages of a Particular Type
+### Fetch private messages
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
+Use `fetchPrivateMessages()` to load messages between the current user and another participant. Pass the participant user ID with pagination options.
 
 ```js
-const imageMessages = meeting.chat.getMessagesByType("image");
+const messages = await meeting.chat.fetchPrivateMessages({
+	userId: "participant-user-id",
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
 
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
+Use `fetchPrivateMessages()` to load messages between the current user and another participant. Pass the participant user ID with pagination options.
 
 ```jsx
-const imageMessages = meeting.chat.getMessagesByType("image");
+const messages = await meeting.chat.fetchPrivateMessages({
+	userId: "participant-user-id",
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-react-native">
 
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
+Use `fetchPrivateMessages()` to load messages between the current user and another participant. Pass the participant user ID with pagination options.
 
 ```jsx
-const imageMessages = meeting.chat.getMessagesByType("image");
+const messages = await meeting.chat.fetchPrivateMessages({
+	userId: "participant-user-id",
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 </RTKCodeSnippet>
 
-### Pinning a Chat Message
+### Fetch pinned messages
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
+Use `fetchPinnedMessages()` to load pinned chat messages with pagination.
+
+```js
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use `fetchPinnedMessages()` to load pinned chat messages with pagination.
+
+```jsx
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Use `fetchPinnedMessages()` to load pinned chat messages with pagination.
+
+```jsx
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+## Manage chat messages
+
+### Pin a chat message
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+You can pin any text, image, file, or custom message. The message object includes `pinned: true` after the pin state changes.
 
 To pin a message:
 
@@ -1333,21 +1553,21 @@ const { id } = meeting.chat.messages[0];
 await meeting.chat.pin(id);
 ```
 
-Once you pin a message, it will be added to `meeting.chat.pinned`.
+To retrieve pinned messages, use `fetchPinnedMessages()`.
 
 ```js
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
 
 ```js
 // Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
+const { id } = pinnedMessages[0];
 await meeting.chat.unpin(id);
 ```
 
@@ -1367,7 +1587,7 @@ meeting.chat.on("unpinMessage", ({ message }) => {
 
 <RTKCodeSnippet id="web-react">
 
-You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
+You can pin any text, image, file, or custom message. The message object includes `pinned: true` after the pin state changes.
 
 To pin a message:
 
@@ -1377,21 +1597,21 @@ const { id } = meeting.chat.messages[0];
 await meeting.chat.pin(id);
 ```
 
-Once you pin a message, it will be added to `meeting.chat.pinned`.
+To retrieve pinned messages, use `fetchPinnedMessages()`.
 
 ```jsx
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
 
 ```jsx
 // Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
+const { id } = pinnedMessages[0];
 await meeting.chat.unpin(id);
 ```
 
@@ -1411,7 +1631,7 @@ meeting.chat.on("unpinMessage", ({ message }) => {
 
 <RTKCodeSnippet id="mobile-react-native">
 
-You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
+You can pin any text, image, file, or custom message. The message object includes `pinned: true` after the pin state changes.
 
 To pin a message:
 
@@ -1421,21 +1641,21 @@ const { id } = meeting.chat.messages[0];
 await meeting.chat.pin(id);
 ```
 
-Once you pin a message, it will be added to `meeting.chat.pinned`.
+To retrieve pinned messages, use `fetchPinnedMessages()`.
 
 ```jsx
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 50,
+	direction: "before",
+});
 ```
 
 You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
 
 ```jsx
 // Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
+const { id } = pinnedMessages[0];
 await meeting.chat.unpin(id);
 ```
 
@@ -1453,7 +1673,7 @@ meeting.chat.on("unpinMessage", ({ message }) => {
 
 </RTKCodeSnippet>
 
-### Deleting a Chat Message
+### Delete a chat message
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
