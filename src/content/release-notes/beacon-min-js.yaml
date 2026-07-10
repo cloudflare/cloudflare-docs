@@ -3,7 +3,7 @@ link: "/web-analytics/changelog/"
 productName: beacon.min.js
 productLink: "/web-analytics/"
 entries:
-  - publish_date: "2026-07-10"
+  - publish_date: "2026-07-13"
     description: The beacon script is now injected with `type="module"` to intentionally exclude long EOL'd (End-of-Life'd) browsers like Internet Explorer from loading the script, given they don't support it anyway.
 
   - publish_date: "2026-06-16"
