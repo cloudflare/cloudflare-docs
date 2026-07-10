@@ -17,7 +17,7 @@ Some tool calls require the user to visit a URL, most commonly an OAuth authoriz
 
 ## How to use it
 
-Register elicitation handlers in `onStart()` with `this.mcp.configureElicitationHandler({ form, url })`. Connections advertise exactly the modes with configured handlers to servers at the `initialize` handshake.
+Register elicitation handlers in `onStart()` with `this.mcp.configureElicitationHandlers({ form, url })`. Connections advertise exactly the modes with configured handlers to servers at the `initialize` handshake.
 
 <TypeScriptExample>
 
@@ -27,7 +27,7 @@ import type { ElicitRequest, ElicitResult } from "agents/mcp";
 
 class MyAgent extends Agent<Env> {
 	onStart() {
-		this.mcp.configureElicitationHandler({
+		this.mcp.configureElicitationHandlers({
 			url: async (
 				request: ElicitRequest,
 				serverId: string,

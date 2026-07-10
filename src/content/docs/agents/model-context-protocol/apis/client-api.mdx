@@ -316,7 +316,7 @@ export class MyAgent extends Agent {
 
 ## Elicitation
 
-MCP servers can request input from your agent during a tool call using [elicitation](https://modelcontextprotocol.io/specification/latest/client/elicitation). To respond, register an elicitation handler with `this.mcp.configureElicitationHandler()` in `onStart()`:
+MCP servers can request input from your agent during a tool call using [elicitation](https://modelcontextprotocol.io/specification/latest/client/elicitation). To respond, register an elicitation handler with `this.mcp.configureElicitationHandlers()` in `onStart()`:
 
 <TypeScriptExample>
 
@@ -326,7 +326,7 @@ import type { ElicitRequest, ElicitResult } from "agents/mcp";
 
 class MyAgent extends Agent<Env> {
 	onStart() {
-		this.mcp.configureElicitationHandler({
+		this.mcp.configureElicitationHandlers({
 			url: async (
 				request: ElicitRequest,
 				serverId: string,
@@ -362,7 +362,7 @@ Elicitation requests arrive in one of two modes, each with its own handler:
 <TypeScriptExample>
 
 ```ts
-this.mcp.configureElicitationHandler({
+this.mcp.configureElicitationHandlers({
 	form: async (request) => {
 		// Collect values matching request.params.requestedSchema from the user,
 		// then accept with the collected fields
@@ -438,7 +438,7 @@ class MyAgent extends Agent<Env> {
 			return result;
 		};
 
-		this.mcp.configureElicitationHandler({
+		this.mcp.configureElicitationHandlers({
 			form: forwardToBrowser,
 			url: forwardToBrowser,
 		});
