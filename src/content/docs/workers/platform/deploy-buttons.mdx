@@ -89,6 +89,10 @@ Cloudflare will read the Wrangler configuration file of your source repo to dete
 COOKIE_SIGNING_KEY=my-secret # comment
 ```
 
+:::caution
+Every uncommented entry in your `.dev.vars.example` (or `.env.example`) is presented to the user as a required secret during deployment and stored on the deployed Worker. Treat this file as your project's setup prompt, not a local development scratchpad: only include the secrets a first deployment genuinely needs, comment out optional integrations users can add later, and never include local-only values (such as auth-bypass flags or `localhost` URLs) that would be unsafe in production.
+:::
+
 [Secrets Store](/secrets-store/) secrets can be configured in the Wrangler configuration file as normal:
 
 <WranglerConfig>
