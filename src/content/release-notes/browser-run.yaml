@@ -3,6 +3,10 @@ link: "/browser-run/changelog/"
 productName: Browser Run
 productLink: "/browser-run/"
 entries:
+  - publish_date: "2026-07-10"
+    title: "Structured handoff for Human in the Loop"
+    description: |-
+      * [Human in the Loop](/browser-run/features/human-in-the-loop/) now supports structured handoff using Cloudflare-specific CDP commands. Your script calls `Cloudflare.handoff` with instructions for the human operator and waits for a `Cloudflare.handoffComplete` event, replacing the need to manually poll for completion. Refer to the [Human in the Loop documentation](/browser-run/features/human-in-the-loop/) for examples and best practices.
   - publish_date: "2026-07-07"
     title: "New endpoint: /accessibilityTree"
     description: |-

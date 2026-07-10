@@ -11,13 +11,20 @@ products:
 
 Some browser automation workflows require manual intervention. A login page may need multi-factor authentication, a form may require sensitive credentials you do not want to pass to an automation script, or a task may be too complex to fully automate. Human in the Loop lets a human step into a live browser session through [Live View](/browser-run/features/live-view/) to handle what automation cannot, then hand control back to the script.
 
+## Use cases
+
+- **Authentication flows**: Login pages with MFA, SSO, or CAPTCHA that cannot be bypassed programmatically
+- **Sensitive data entry**: Forms requiring credentials or personal information you do not want to pass to an automation script
+- **Complex interactions**: One-off tasks that are too difficult or not worth fully automating, such as configuring a dashboard or approving a workflow
+- **Verification steps**: Confirming an order, reviewing generated content, or approving an action before the script proceeds
+
 ## How it works
 
 Human in the Loop works with any [Browser Session](/browser-run/#integration-methods) and provides two approaches for human intervention:
 
 ### Structured handoff (recommended)
 
-Using the Chrome DevTools Protocol (CDP) extensions, your script can formally request human intervention and wait for completion:
+Your script uses Cloudflare CDP commands to formally request human intervention and wait for completion:
 
 1. Your automation script encounters a scenario requiring human input.
 2. The script calls `Cloudflare.handoff` with instructions for the human operator.
@@ -30,14 +37,74 @@ Using the Chrome DevTools Protocol (CDP) extensions, your script can formally re
 
 For simpler use cases, you can manually manage the handoff:
 
-1. Your automation script navigates to a page that needs human input.
+1. Your automation script goes to a page that needs human input.
 2. The script retrieves the [Live View](/browser-run/features/live-view/) URL from the session's target list and shares it with a human operator.
 3. The human operator opens the Live View URL and completes the required action.
 4. The automation script detects completion by polling for page elements or waiting for navigation events.
 
-## Example: structured handoff with CDP
+## Cloudflare CDP commands
 
-This example demonstrates the structured handoff flow using the Cloudflare extensions to CDP. The script formally requests human intervention and is notified when complete:
+Browser Run extends the standard [Chrome DevTools Protocol (CDP)](https://chromedevtools.github.io/devtools-protocol/) with Cloudflare-specific commands under the `Cloudflare.*` namespace. These commands are only available when connected to a Browser Run session and provide capabilities that do not exist in the standard CDP specification, such as requesting human intervention, generating [Live View](/browser-run/features/live-view/) URLs, and tracking handoff state.
+
+You send these commands through a CDP session the same way you would send any standard CDP command. For full parameter and return type details, refer to the [protocol reference](/api/resources/browser_rendering/subresources/devtools/subresources/browser/methods/protocol/).
+
+### `Cloudflare.handoff`
+
+Requests human intervention for a specific page target. Returns a `handoffId` to track the session. You can optionally specify a `targetId` to target a specific page. If omitted, the target is automatically resolved from the CDP session.
+
+```js
+const { handoffId } = await cdp.send("Cloudflare.handoff", {
+	targetId: page.target()._targetId, // optional, defaults to current page
+	instructions: "Please log in",
+	timeout: 1800000, // optional, 30 minutes
+});
+```
+
+### `Cloudflare.handoffComplete` event
+
+Emitted when human intervention completes or times out. Listen for this event to know when to resume automation.
+
+```js
+cdp.once("Cloudflare.handoffComplete", (result) => {
+	if (result.success) {
+		console.log("Handoff completed successfully");
+	} else {
+		console.log(`Handoff failed: ${result.reason}`);
+	}
+});
+```
+
+### `Cloudflare.getHandoffState`
+
+Checks if a handoff is currently active for a target.
+
+```js
+const state = await cdp.send("Cloudflare.getHandoffState", {
+	targetId, // optional, defaults to current page
+});
+if (state.active) {
+	console.log(
+		`Handoff ${state.handoffId} has been active for ${state.durationMs}ms`,
+	);
+}
+```
+
+### `Cloudflare.getLiveView`
+
+Gets a [Live View](/browser-run/features/live-view/) URL for the browser session. Used in conjunction with handoff to provide human access.
+
+```js
+const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
+	targetId, // optional, defaults to current page
+	mode: "tab",
+	expiresInMs: 600000, // 10 minutes
+});
+console.log(`Live View URL: ${devtoolsFrontendUrl}`);
+```
+
+## Example: structured handoff
+
+This example demonstrates the structured handoff flow. The script requests human intervention using the Cloudflare CDP commands and waits for a completion event before resuming:
 
 ```js
 import puppeteer from "puppeteer-core";
@@ -47,10 +114,10 @@ const API_TOKEN = "<your-api-token>";
 
 // Connect to Browser Run
 const browser = await puppeteer.connect({
-	browserWSEndpoint: `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser`,
+	browserWSEndpoint: `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser?keep_alive=600000`,
 	headers: { Authorization: `Bearer ${API_TOKEN}` },
 });
-// Remember that if using a Cloudflare worker, you can simply do await puppeteer.launch(ENV.BROWSER)
+// If using a Cloudflare Worker, you can use: await puppeteer.launch(env.MYBROWSER)
 
 const page = await browser.newPage();
 await page.goto("https://github.com/login");
@@ -96,9 +163,9 @@ if (result.success) {
 await browser.close();
 ```
 
-## Example: manual detection approach
+## Example: manual detection
 
-This example uses the traditional approach of sharing a Live View URL and polling for completion:
+This example uses the manual approach of sharing a Live View URL and polling for completion:
 
 ```js
 import puppeteer from "puppeteer-core";
@@ -108,7 +175,7 @@ const API_TOKEN = "<your-api-token>";
 
 // Connect to Browser Run
 const browser = await puppeteer.connect({
-	browserWSEndpoint: `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser`,
+	browserWSEndpoint: `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser?keep_alive=600000`,
 	headers: { Authorization: `Bearer ${API_TOKEN}` },
 });
 
@@ -143,71 +210,6 @@ await browser.close();
 ```
 
 The Live View URL is valid for five minutes by default but can be extended for up to 1 hour using the `expiresInMs` parameter. If the URL expires before the human operator opens it, send the CDP `Cloudflare.getLiveView` command again to get a fresh URL.
-
-## CDP commands for structured handoff
-
-Browser Run extends the Chrome DevTools Protocol with Cloudflare-specific commands for managing human intervention. For full parameter and return type details, refer to the [Browser Rendering protocol reference](/api/resources/browser_rendering/subresources/devtools/subresources/browser/methods/protocol/).
-
-### `Cloudflare.handoff`
-
-Requests human intervention for a specific page target. Returns a `handoffId` to track the session. You can optionally specify a `targetId` to target a specific page. If omitted, the target is automatically resolved from the CDP session.
-
-```js
-const { handoffId } = await cdp.send("Cloudflare.handoff", {
-	targetId: page.target()._targetId, // optional, defaults to current page
-	instructions: "Please log in",
-	timeout: 1800000, // optional, 30 minutes
-});
-```
-
-### `Cloudflare.handoffComplete` event
-
-Emitted when human intervention completes or times out. Listen for this event to know when to resume automation.
-
-```js
-cdp.once("Cloudflare.handoffComplete", (result) => {
-	if (result.success) {
-		console.log("Handoff completed successfully");
-	} else {
-		console.log(`Handoff failed: ${result.reason}`);
-	}
-});
-```
-
-### `Cloudflare.getHandoffState`
-
-Checks if a handoff is currently active for a target.
-
-```js
-const state = await cdp.send("Cloudflare.getHandoffState", {
-	targetId, // optional, defaults to current page
-});
-if (state.active) {
-	console.log(
-		`Handoff ${state.handoffId} has been active for ${state.durationMs}ms`,
-	);
-}
-```
-
-### `Cloudflare.getLiveView`
-
-Gets a Live View URL for the browser session. Used in conjunction with handoff to provide human access.
-
-```js
-const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
-	targetId, // optional, defaults to current page
-	mode: "tab",
-	expiresInMs: 600000, // 10 minutes
-});
-console.log(`Live View URL: ${devtoolsFrontendUrl}`);
-```
-
-## Use cases
-
-- **Authentication flows**: Login pages with MFA, SSO, or CAPTCHA that cannot be bypassed programmatically
-- **Sensitive data entry**: Forms requiring credentials or personal information you do not want to pass to an automation script
-- **Complex interactions**: One-off tasks that are too difficult or not worth fully automating, such as configuring a dashboard or approving a workflow
-- **Verification steps**: Confirming an order, reviewing generated content, or approving an action before the script proceeds
 
 ## Best practices
 
