@@ -59,7 +59,7 @@ Within your Worker code, use `env.IMAGES.input()` to build an object that can ma
 
 Responses from the Images binding are not automatically cached. Every uncached call performs a full decode and re-encode of the source image, which adds unnecessary latency to every request.
 
-We strongly recommend enabling [Workers Cache](/workers/cache/) so that repeat requests are served from cache without re-running your Worker or re-transforming the image. Add the following to your Wrangler configuration file:
+We strongly recommend enabling [Workers Cache](/workers/runtime-apis/cache/) so that repeat requests are served from cache without re-running your Worker or re-transforming the image. Add the following to your Wrangler configuration file:
 
 <WranglerConfig>
 

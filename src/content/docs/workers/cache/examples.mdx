@@ -10,7 +10,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Workers Caching is **a cache that is itself a Worker primitive**. It sits in front of every Worker entrypoint — the default export and every named [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) — and it also sits in front of `fetch()` calls between entrypoints in the same Worker via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/). That second fact is the one that makes the rest of this page possible.
 
-When one entrypoint invokes another's `fetch()` via `ctx.exports`, the cache evaluates that call the same way it would evaluate a request from a browser. A hit returns the cached response without the callee running. A miss runs the callee and stores the response under its own cache key, keyed by the callee's entrypoint, path, query string, and [`ctx.props`](/workers/cache/cache-keys/#multi-tenant-safety-with-ctxprops). The caller still runs on every request — but anything the caller hands off to the callee is cacheable independently.
+When one entrypoint invokes another's `fetch()` via `ctx.exports`, the cache evaluates that call the same way it would evaluate a request from a browser. A hit returns the cached response without the callee running. A miss runs the callee and stores the response under its own cache key, keyed by the callee's entrypoint, path, query string, and [`ctx.props`](/workers/runtime-apis/cache/cache-keys/#multi-tenant-safety-with-ctxprops). The caller still runs on every request — but anything the caller hands off to the callee is cacheable independently.
 
 :::note
 Only `fetch()` invocations go through the cache. Calling a custom RPC method on an entrypoint (for example `ctx.exports.Backend.getUser(id)`) bypasses the cache entirely. To cache a piece of work, expose it as a `fetch` handler.
@@ -47,7 +47,7 @@ Two facts shape every pattern below. They follow directly from "the cache is in 
 
 :::caution[Do not use `Cache-Control: no-store` to keep the gateway running]
 
-It might seem simpler to leave caching on for the gateway and return `Cache-Control: no-store` from it on every request. Do not do this. With caching enabled, each request to the gateway still consults the lower and upper [cache tiers](/workers/cache/#tiered-cache) before your Worker runs — so every request pays the tiered-cache round trip only to produce an uncacheable response. That adds significant latency for no benefit. Disabling caching on the entrypoint in `exports` makes requests skip the cache lookup entirely and go straight to your gateway logic.
+It might seem simpler to leave caching on for the gateway and return `Cache-Control: no-store` from it on every request. Do not do this. With caching enabled, each request to the gateway still consults the lower and upper [cache tiers](/workers/runtime-apis/cache/#tiered-cache) before your Worker runs — so every request pays the tiered-cache round trip only to produce an uncacheable response. That adds significant latency for no benefit. Disabling caching on the entrypoint in `exports` makes requests skip the cache lookup entirely and go straight to your gateway logic.
 
 :::
 
@@ -220,13 +220,13 @@ async function loadUserData(userId: string): Promise<unknown> {
 
 </TypeScriptExample>
 
-For more on cache isolation between callers, refer to [Multi-tenant safety with `ctx.props`](/workers/cache/cache-keys/#multi-tenant-safety-with-ctxprops).
+For more on cache isolation between callers, refer to [Multi-tenant safety with `ctx.props`](/workers/runtime-apis/cache/cache-keys/#multi-tenant-safety-with-ctxprops).
 
 The shape of this example — the outer entrypoint shapes a value (the user's identity) into the cache key by passing it through `ctx.props` — is the same shape the next example uses to influence a different part of the key.
 
 ## Normalize `Accept-Encoding` for `Vary`
 
-[`Vary`](/workers/cache/#content-negotiation-with-vary) lets a single URL cache multiple representations — for example, a Brotli-encoded and gzip-encoded variant of the same asset. Cloudflare keys variants on the **verbatim value** of each `Vary`-listed request header, so two requests with semantically equivalent but textually different `Accept-Encoding` headers produce two separate variants.
+[`Vary`](/workers/runtime-apis/cache/#content-negotiation-with-vary) lets a single URL cache multiple representations — for example, a Brotli-encoded and gzip-encoded variant of the same asset. Cloudflare keys variants on the **verbatim value** of each `Vary`-listed request header, so two requests with semantically equivalent but textually different `Accept-Encoding` headers produce two separate variants.
 
 For requests routed through Cloudflare's front line, this matters even more: the `Accept-Encoding` request header your Worker sees has typically been rewritten by Cloudflare to a canonical value (such as `gzip, br`) for cache efficiency. The original value is preserved at [`request.cf.clientAcceptEncoding`](/workers/runtime-apis/request/#incomingrequestcfproperties), but if your Worker varies on `Accept-Encoding` without restoring the eyeball's value first, every cached variant ends up keyed on the rewritten string — so the cache returns a Brotli variant to clients that only accept gzip, or the other way around.
 
@@ -316,10 +316,10 @@ async function loadGzip(
 Things to notice:
 
 - **The gateway runs on every request, but it is small.** It only restores one header and calls `ctx.exports`. The expensive work — picking the encoding, loading the asset — runs only on cache misses.
-- **Variants share a single purge identity.** Purging by tag or path prefix invalidates every variant of a URL together, so all variants must use the same [`Cache-Tag`](/workers/cache/configuration/#cache-tag) values. Refer to the notes in [Content negotiation with `Vary`](/workers/cache/#content-negotiation-with-vary).
+- **Variants share a single purge identity.** Purging by tag or path prefix invalidates every variant of a URL together, so all variants must use the same [`Cache-Tag`](/workers/runtime-apis/cache/configuration/#cache-tag) values. Refer to the notes in [Content negotiation with `Vary`](/workers/runtime-apis/cache/#content-negotiation-with-vary).
 - **The same pattern applies to other normalizable headers.** If you want to vary on `Accept-Language` and you receive a long, complex value from browsers, normalize it in the gateway (for example, fold it down to the primary language tag) before forwarding. This keeps the cache fan-out bounded.
 
-If you do not need per-encoding variants — for example, if your Worker always returns Brotli when the client accepts it and otherwise falls back to gzip — you do not need `Vary` at all. Pick a canonical encoding inside the cached entrypoint based on the restored `Accept-Encoding`, and let the cache store a single variant. Refer to [`Accept-Encoding` and `Content-Encoding`](/workers/cache/configuration/#accept-encoding-and-content-encoding) for that variant of the pattern.
+If you do not need per-encoding variants — for example, if your Worker always returns Brotli when the client accepts it and otherwise falls back to gzip — you do not need `Vary` at all. Pick a canonical encoding inside the cached entrypoint based on the restored `Accept-Encoding`, and let the cache store a single variant. Refer to [`Accept-Encoding` and `Content-Encoding`](/workers/runtime-apis/cache/configuration/#accept-encoding-and-content-encoding) for that variant of the pattern.
 
 So far the inner entrypoint has been a function of the request. The next example puts a stateful component — a Durable Object — behind the same cache stage, with the same shape.
 
@@ -459,7 +459,7 @@ export default {
 Why this works:
 
 - **Reads pay nothing on a cache hit.** Workers Caching sits in front of `CachedLeaderboard`, so a hit returns the cached body without invoking the wrapper, without invoking the Durable Object, and without doing the expensive aggregation. The default entrypoint still runs to dispatch the request, but it is a thin router.
-- **Writes invalidate the cache immediately.** The POST handler updates the Durable Object and then calls `ctx.exports.CachedLeaderboard.invalidate()`, which runs [`purge({ tags: ["leaderboard"] })`](/workers/cache/purge/#purge-by-tag) _inside_ `CachedLeaderboard`. This matters because [purges are scoped to the entrypoint that calls them](/workers/cache/purge/#purge-modes) — the gateway's cache is disabled, so a purge issued from the gateway would not touch the entries `CachedLeaderboard` stored. The very next GET misses the cache, reruns the wrapper, and stores a fresh response.
+- **Writes invalidate the cache immediately.** The POST handler updates the Durable Object and then calls `ctx.exports.CachedLeaderboard.invalidate()`, which runs [`purge({ tags: ["leaderboard"] })`](/workers/runtime-apis/cache/purge/#purge-by-tag) _inside_ `CachedLeaderboard`. This matters because [purges are scoped to the entrypoint that calls them](/workers/runtime-apis/cache/purge/#purge-modes) — the gateway's cache is disabled, so a purge issued from the gateway would not touch the entries `CachedLeaderboard` stored. The very next GET misses the cache, reruns the wrapper, and stores a fresh response.
 - **The cached entrypoint owns the cache contract.** All cache-control headers are set in `CachedLeaderboard`, including the `Cache-Tag`, and `CachedLeaderboard` also exposes the `invalidate()` method that purges them. The Durable Object stays unaware of caching.
 
 If you have many independent Durable Object instances — for example, one per tenant — pass the tenant identifier via `ctx.props` when invoking the cached entrypoint, the same way [Per-user authenticated responses](#per-user-authenticated-responses) does. Each tenant gets its own cache entry, and a purge on one tenant does not invalidate any other.
@@ -542,7 +542,7 @@ export default {
 
 What is happening here:
 
-- **The cache layer is yours.** The origin's `Cache-Control` is replaced before the response reaches Workers Caching, so the TTL, freshness directives, and `Cache-Tag` namespace are all controlled by your code. You decide when the cache holds onto a response, and you decide when to purge it via [`ctx.cache.purge()`](/workers/cache/purge/).
+- **The cache layer is yours.** The origin's `Cache-Control` is replaced before the response reaches Workers Caching, so the TTL, freshness directives, and `Cache-Tag` namespace are all controlled by your code. You decide when the cache holds onto a response, and you decide when to purge it via [`ctx.cache.purge()`](/workers/runtime-apis/cache/purge/).
 - **The origin's own caching model is untouched.** Your Worker is the only thing that sees the rewritten `Cache-Control`. The origin still serves its other clients with whatever caching contract it published — you have not changed its behaviour or its security model, you have only added a layer in front of it for your application.
 - **Cache hits never touch the origin.** Workers Caching sits in front of `CachedOrigin`, so a hit returns the stored response without invoking `fetch` against the upstream. This is what cuts the origin request volume and the latency of every cached call.
 
@@ -550,7 +550,7 @@ A few common extensions to this pattern:
 
 - **Per-resource TTLs.** If different paths on the upstream should have different freshness, branch on `url.pathname` inside `CachedOrigin` and set a different `max-age` (and a different `Cache-Tag`) for each. The cache key already includes the path and query string, so each resource gets its own entry.
 - **Per-user caching.** If your application authenticates the caller and the upstream returns user-specific data, authenticate in the outer entrypoint and pass the user identifier via `ctx.props` to `CachedOrigin` — the same shape as [Per-user authenticated responses](#per-user-authenticated-responses). Each user gets their own cache entry, and one user can never receive another user's cached response.
-- **Stale-while-revalidate.** If the origin is slow or flaky, set `Cache-Control: public, max-age=60, stale-while-revalidate=600` on the cached response. Most requests return the cached body immediately, and Workers Caching refreshes the origin in the background. Refer to [Use `stale-while-revalidate` for low-latency refreshes](/workers/cache/configuration/#use-stale-while-revalidate-for-low-latency-refreshes).
+- **Stale-while-revalidate.** If the origin is slow or flaky, set `Cache-Control: public, max-age=60, stale-while-revalidate=600` on the cached response. Most requests return the cached body immediately, and Workers Caching refreshes the origin in the background. Refer to [Use `stale-while-revalidate` for low-latency refreshes](/workers/runtime-apis/cache/configuration/#use-stale-while-revalidate-for-low-latency-refreshes).
 - **Targeted invalidation.** Tag responses with `Cache-Tag` values that reflect your application's data model (for example, `Cache-Tag: origin:example, product:42`). When you know the upstream has changed — a webhook fires, an admin action runs — call `ctx.cache.purge({ tags: ["product:42"] })` and the next request repopulates the cache.
 
 This is the same building block as every other example on this page. The only difference is that the "expensive work" the cached entrypoint does on a miss is a `fetch` to somebody else's server. The control over how long that response lives, how it is keyed, and when it is invalidated stays entirely in your Worker.

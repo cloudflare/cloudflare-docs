@@ -14,7 +14,7 @@ This is **your Worker's cache** — configured through your Worker's code and Wr
 
 - The `cache.enabled` flag in your Wrangler configuration, which turns caching on or off. You can override it [per entrypoint](#per-entrypoint-caching) and control [cross-version behavior](#cross-version-caching).
 - The `Cache-Control` (and `cdn-cache-control`, `cloudflare-cdn-cache-control`) headers your Worker sets on its responses, per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111).
-- The optional `Cache-Tag` response header for bulk purging, and [`ctx.cache.purge()`](/workers/cache/purge/) for programmatic invalidation.
+- The optional `Cache-Tag` response header for bulk purging, and [`ctx.cache.purge()`](/workers/runtime-apis/cache/purge/) for programmatic invalidation.
 
 That is the entire configuration surface.
 
@@ -64,7 +64,7 @@ To turn caching off, set `cache.enabled` to `false` (or remove the `cache` block
 
 </WranglerConfig>
 
-Disabling caching does not purge previously cached responses — it only stops Cloudflare from consulting or populating the cache on subsequent requests. If you re-enable caching later, any entries that are still within their TTL become usable again. If you need cached responses to stop being served immediately, [purge the cache](/workers/cache/purge/) after disabling.
+Disabling caching does not purge previously cached responses — it only stops Cloudflare from consulting or populating the cache on subsequent requests. If you re-enable caching later, any entries that are still within their TTL become usable again. If you need cached responses to stop being served immediately, [purge the cache](/workers/runtime-apis/cache/purge/) after disabling.
 
 ## Per-entrypoint caching
 
@@ -99,12 +99,12 @@ Each entry is `{ "type": "worker", "cache": { "enabled": <boolean> } }`. A per-e
 
 This lets you **opt specific entrypoints in and out** without changing your Worker code:
 
-- **Opt an entrypoint out** to keep it running on every request — the natural fit for a gateway or router entrypoint that authenticates, normalizes, or dispatches, and should never itself be served from cache. This is the recommended way to build the [gateway pattern](/workers/cache/examples/): disable caching on the gateway entrypoint and enable it on the inner entrypoint the gateway calls through `ctx.exports`.
+- **Opt an entrypoint out** to keep it running on every request — the natural fit for a gateway or router entrypoint that authenticates, normalizes, or dispatches, and should never itself be served from cache. This is the recommended way to build the [gateway pattern](/workers/runtime-apis/cache/examples/): disable caching on the gateway entrypoint and enable it on the inner entrypoint the gateway calls through `ctx.exports`.
 - **Opt an entrypoint in** to cache only the specific entrypoints that return reusable responses, leaving the rest of the Worker uncached.
 
 :::caution[For lowest latency, disable cache for an entrypoint instead of returning `Cache-Control: no-store` for all responses]
 
-Do not enable caching on a gateway entrypoint and then return `Cache-Control: no-store` on every response to keep it running. With caching enabled, each request to that entrypoint still consults the lower and upper cache tiers first — incurring the [tiered-cache](/workers/cache/#tiered-cache) round trip — only to run the Worker and discard an uncacheable response. That adds latency for no benefit. Disable caching on the entrypoint in the `exports` map instead, so requests skip the cache lookup and go straight to your gateway logic.
+Do not enable caching on a gateway entrypoint and then return `Cache-Control: no-store` on every response to keep it running. With caching enabled, each request to that entrypoint still consults the lower and upper cache tiers first — incurring the [tiered-cache](/workers/runtime-apis/cache/#tiered-cache) round trip — only to run the Worker and discard an uncacheable response. That adds latency for no benefit. Disable caching on the entrypoint in the `exports` map instead, so requests skip the cache lookup and go straight to your gateway logic.
 
 :::
 
@@ -144,7 +144,7 @@ If you want to maximize cache hit rate and are willing to accept slower rollouts
 
 </WranglerConfig>
 
-Advanced users who deploy frequently and whose responses do not change between most deployments should consider enabling `cross_version_cache` — it avoids throwing away a warm cache on every deploy. The cost is that a deployment no longer invalidates the cache: after a change that alters response content, older cached responses continue to be served until they expire or you [purge](/workers/cache/purge/) them, and during a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) both versions share one cache. When you need a deployment to take effect immediately with `cross_version_cache` enabled, purge the cache after deploying, or tag responses by version — see [Invalidating cache across deployments](/workers/cache/cache-keys/#invalidating-cache-across-deployments).
+Advanced users who deploy frequently and whose responses do not change between most deployments should consider enabling `cross_version_cache` — it avoids throwing away a warm cache on every deploy. The cost is that a deployment no longer invalidates the cache: after a change that alters response content, older cached responses continue to be served until they expire or you [purge](/workers/runtime-apis/cache/purge/) them, and during a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) both versions share one cache. When you need a deployment to take effect immediately with `cross_version_cache` enabled, purge the cache after deploying, or tag responses by version — see [Invalidating cache across deployments](/workers/runtime-apis/cache/cache-keys/#invalidating-cache-across-deployments).
 
 `cross_version_cache` only has an effect when caching is enabled. It applies to every entrypoint whose cache is on.
 
@@ -349,7 +349,7 @@ export default {
 
 Cloudflare treats `cf.cacheControl` as a trusted `Cache-Control` directive for caching the callee's response on that call. The value is a standard `Cache-Control` string and follows the [same directive semantics](/cache/concepts/cache-control/) described throughout this page — `max-age`, `stale-while-revalidate`, `no-store`, and so on. This lets a calling entrypoint decide how a cached entrypoint's responses are cached without modifying that entrypoint's code.
 
-Like [custom cache keys](/workers/cache/cache-keys/#custom-cache-keys), `cf.cacheControl` is honored only for calls that stay within your account. Cloudflare drops the `cf` object whenever a request crosses an account boundary, so a caller in one account cannot change how a Worker in another account caches its responses. The directive also has no effect on eyeball requests, because the `cf` object on an inbound request is populated by Cloudflare rather than by the client.
+Like [custom cache keys](/workers/runtime-apis/cache/cache-keys/#custom-cache-keys), `cf.cacheControl` is honored only for calls that stay within your account. Cloudflare drops the `cf` object whenever a request crosses an account boundary, so a caller in one account cannot change how a Worker in another account caches its responses. The directive also has no effect on eyeball requests, because the `cf` object on an inbound request is populated by Cloudflare rather than by the client.
 
 ## Response headers
 
@@ -431,14 +431,14 @@ If your Worker returns a `206` response of its own — for example, because you 
 
 ### `Vary`
 
-When your Worker returns a `Vary` response header, Cloudflare stores a separate cached variant per distinct combination of the listed request header values, and only returns a variant whose stored values match the incoming request. This implements [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-vary) and the cache-key calculation in [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html#name-calculating-cache-keys-with). For an introduction with example code, refer to [Content negotiation with `Vary`](/workers/cache/#content-negotiation-with-vary).
+When your Worker returns a `Vary` response header, Cloudflare stores a separate cached variant per distinct combination of the listed request header values, and only returns a variant whose stored values match the incoming request. This implements [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-vary) and the cache-key calculation in [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html#name-calculating-cache-keys-with). For an introduction with example code, refer to [Content negotiation with `Vary`](/workers/runtime-apis/cache/#content-negotiation-with-vary).
 
 How `Vary` is processed for Workers Caching:
 
 - **All header names are honored.** Any header name your Worker lists in `Vary` participates in the variant key. There is no allowlist.
 - **Values are compared verbatim.** Cloudflare does not normalize the listed request headers before keying. `Accept-Encoding: gzip, br` and `Accept-Encoding: br, gzip` produce two separate variants even though they are semantically identical. If you need to fold equivalent values onto the same variant, normalize the headers your Worker sees in a gateway Worker before passing the request on, or canonicalize them inside the Worker that sets `Vary`.
 - **`Vary: *` disables caching.** A wildcard variance cannot be satisfied deterministically from request headers, so the response is treated as uncacheable and `Cf-Cache-Status` is `BYPASS`.
-- **Variants share a single purge identity.** [Purging](/workers/cache/purge/) by tag or path prefix invalidates every variant of a URL together. All variants must therefore use the same `Cache-Tag` values — assigning different tags to different variants results in inconsistent purges.
+- **Variants share a single purge identity.** [Purging](/workers/runtime-apis/cache/purge/) by tag or path prefix invalidates every variant of a URL together. All variants must therefore use the same `Cache-Tag` values — assigning different tags to different variants results in inconsistent purges.
 - **Image transformation features take precedence.** Responses produced by Polish or Image Resizing already generate their own variants, and `Vary` on those responses is ignored.
 
 ### `Accept-Encoding` and `Content-Encoding`

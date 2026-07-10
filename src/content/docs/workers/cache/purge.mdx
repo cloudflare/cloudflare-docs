@@ -204,7 +204,7 @@ For limits on the number, length, and character set of tags, refer to [Cache tag
 
 ### Version-specific purging
 
-By default, Workers Caching [partitions the cache by Worker version](/workers/cache/cache-keys/#invalidating-cache-across-deployments), so each deployment already starts from a cold cache and version-specific purging is unnecessary. This section applies only when you have enabled [`cache.cross_version_cache`](/workers/cache/configuration/#cross-version-caching) to share cached responses across versions. In that case, a response written by version A may still be served after version B is deployed, and you may want to purge the entries a specific version wrote — for example, after a rollback. To do that, tag each response with the version that produced it and purge that tag later.
+By default, Workers Caching [partitions the cache by Worker version](/workers/runtime-apis/cache/cache-keys/#invalidating-cache-across-deployments), so each deployment already starts from a cold cache and version-specific purging is unnecessary. This section applies only when you have enabled [`cache.cross_version_cache`](/workers/runtime-apis/cache/configuration/#cross-version-caching) to share cached responses across versions. In that case, a response written by version A may still be served after version B is deployed, and you may want to purge the entries a specific version wrote — for example, after a rollback. To do that, tag each response with the version that produced it and purge that tag later.
 
 Add the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to your Wrangler configuration:
 

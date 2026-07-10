@@ -20,18 +20,18 @@ Workers Caching keys responses by:
 
 - The **target entrypoint** — which specific [named entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) of the Worker received the request. A `default` export and an exported class are different entrypoints and do not share a cache even if they produce identical responses.
 - The **path and query string** of the request URL. Query parameter order matters — `?a=1&b=2` and `?b=2&a=1` are different cache keys. Trailing slashes matter too.
-- The **Worker version**, by default. Each deployed version has its own cache, so a new deployment does not serve responses written by a previous version. You can turn this off with [`cache.cross_version_cache`](/workers/cache/configuration/#cross-version-caching) to share cached responses across versions. See [Invalidating cache across deployments](#invalidating-cache-across-deployments).
+- The **Worker version**, by default. Each deployed version has its own cache, so a new deployment does not serve responses written by a previous version. You can turn this off with [`cache.cross_version_cache`](/workers/runtime-apis/cache/configuration/#cross-version-caching) to share cached responses across versions. See [Invalidating cache across deployments](#invalidating-cache-across-deployments).
 - The invocation's [`ctx.props`](/workers/runtime-apis/bindings/service-bindings/rpc/#ctxprops), when the Worker is invoked through a service binding or RPC. See [Multi-tenant safety with `ctx.props`](#multi-tenant-safety-with-ctxprops).
 
 As anti-cache-poisoning measures, the key also includes:
 
 - The `x-http-method-override`, `x-http-method`, and `x-method-override` request headers.
 - The `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless its value is `http` or `https`), `x-original-url`, `x-rewrite-url`, and `forwarded` request headers.
-- The value of the `Cloudflare-Workers-Version-Key` request header. This header is not set by Cloudflare automatically — it is only meaningful if a caller (for example, an upstream Worker or proxy) chooses to include it to explicitly partition the cache further. This is independent of the automatic per-version keying described above, which is controlled by [`cache.cross_version_cache`](/workers/cache/configuration/#cross-version-caching).
+- The value of the `Cloudflare-Workers-Version-Key` request header. This header is not set by Cloudflare automatically — it is only meaningful if a caller (for example, an upstream Worker or proxy) chooses to include it to explicitly partition the cache further. This is independent of the automatic per-version keying described above, which is controlled by [`cache.cross_version_cache`](/workers/runtime-apis/cache/configuration/#cross-version-caching).
 
 These three bullets are not something you should normally need to reason about. Some frameworks interpret the method-override and URL-rewrite headers as overriding the effective method or URL of a request, which can lead to [cache poisoning](https://portswigger.net/research/practical-web-cache-poisoning) if two requests differ only in those headers but produce materially different responses. Including them in the cache key ensures a poisoned entry only affects requests that carry the same poisoned header.
 
-Requests that differ only in request headers that are not part of the cache key (for example, `User-Agent`, `Accept-Language`, `Cookie`, or `Authorization`) return the same cached response. This is usually what you want — you do not want every user agent string or language preference producing a separate cache entry. If you do need content negotiation, set [`Vary`](/workers/cache/configuration/#vary) on the response, or handle it inside your Worker and produce a canonical response per URL.
+Requests that differ only in request headers that are not part of the cache key (for example, `User-Agent`, `Accept-Language`, `Cookie`, or `Authorization`) return the same cached response. This is usually what you want — you do not want every user agent string or language preference producing a separate cache entry. If you do need content negotiation, set [`Vary`](/workers/runtime-apis/cache/configuration/#vary) on the response, or handle it inside your Worker and produce a canonical response per URL.
 
 Notably, the cache key does **not** include:
 
@@ -68,7 +68,7 @@ This is the default because it is the simplest behavior to reason about. The tra
 
 ### Share the cache across versions
 
-If you deploy frequently and your responses rarely change between deployments, throwing away a warm cache on every deploy is wasteful. Set [`cache.cross_version_cache`](/workers/cache/configuration/#cross-version-caching) to `true` to drop the version from the cache key and share cached responses across versions. A response written by version A is then still served after version B is deployed, as long as its TTL has not expired.
+If you deploy frequently and your responses rarely change between deployments, throwing away a warm cache on every deploy is wasteful. Set [`cache.cross_version_cache`](/workers/runtime-apis/cache/configuration/#cross-version-caching) to `true` to drop the version from the cache key and share cached responses across versions. A response written by version A is then still served after version B is deployed, as long as its TTL has not expired.
 
 This maximizes cache hit rate at the expense of slower rollouts: because a deployment no longer invalidates the cache, a change that alters response content will not take effect for already-cached entries until they expire or you purge them. When you have `cross_version_cache` enabled and need a deployment to take effect immediately, use one of the two tools below.
 
@@ -76,13 +76,13 @@ This maximizes cache hit rate at the expense of slower rollouts: because a deplo
 
 If you want fine-grained control, tag each cached response with the Worker version that produced it. Later, purging that version tag removes every entry that version wrote, without affecting cached responses from other versions.
 
-This uses the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to read the current version ID at request time, and prepends it as a `Cache-Tag` value. See [Version-specific purging](/workers/cache/purge/#version-specific-purging) for the full pattern with code.
+This uses the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to read the current version ID at request time, and prepends it as a `Cache-Tag` value. See [Version-specific purging](/workers/runtime-apis/cache/purge/#version-specific-purging) for the full pattern with code.
 
 This is the best option if you have enabled `cross_version_cache` and might need to roll back a specific version without blowing away cached content from working versions.
 
 ### Purge everything after deploy
 
-The simpler approach: after each deploy, hit a small Worker endpoint from your CI that calls [`ctx.cache.purge({ purgeEverything: true })`](/workers/cache/purge/#purge-everything). The next request after the purge re-populates the cache from whichever Worker version is live at that moment.
+The simpler approach: after each deploy, hit a small Worker endpoint from your CI that calls [`ctx.cache.purge({ purgeEverything: true })`](/workers/runtime-apis/cache/purge/#purge-everything). The next request after the purge re-populates the cache from whichever Worker version is live at that moment.
 
 This is coarser but requires zero in-Worker logic. Use it if you have enabled `cross_version_cache` but still want specific deployments to invalidate the cache. With the default per-version cache, deployments already start from a cold cache, so this is unnecessary.
 
@@ -167,7 +167,7 @@ At launch, two signals give you visibility into cache behavior:
 
 2. **Cache hits in the [Workers observability dashboard](/workers/observability/).** Each invocation surfaces whether it was served from cache, so you can filter and aggregate cache-hit behavior across your Worker's traffic.
 
-Cloudflare does not currently expose the cache key composition itself. If two requests you expected to share a cached response do not, you have to reason about what part of the key differed from the components listed in [What goes into the cache key](#what-goes-into-the-cache-key). For a walkthrough of common caching problems and how to diagnose them, refer to [Debugging](/workers/cache/debugging/).
+Cloudflare does not currently expose the cache key composition itself. If two requests you expected to share a cached response do not, you have to reason about what part of the key differed from the components listed in [What goes into the cache key](#what-goes-into-the-cache-key). For a walkthrough of common caching problems and how to diagnose them, refer to [Debugging](/workers/runtime-apis/cache/debugging/).
 
 ## Custom cache keys
 
@@ -220,7 +220,7 @@ A custom cache key **replaces the path and query string** in the cache key. Ever
 
 Set `cf.cacheKey` to an empty string, or omit it, to fall back to the default URL-derived key.
 
-In this pattern the default entrypoint is a gateway that should run on every request, so disable caching on it and leave it on for `Backend` (see [Per-entrypoint caching](/workers/cache/configuration/#per-entrypoint-caching)):
+In this pattern the default entrypoint is a gateway that should run on every request, so disable caching on it and leave it on for `Backend` (see [Per-entrypoint caching](/workers/runtime-apis/cache/configuration/#per-entrypoint-caching)):
 
 <WranglerConfig>
 

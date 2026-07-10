@@ -25,7 +25,7 @@ A Worker is a zoneless entity — a Worker can be bound to any number of [zones]
 
 - **No zone configuration for caching applies to Workers Caching.** [Cache Rules](/cache/how-to/cache-rules/), [Cache Response Rules](/cache/how-to/cache-response-rules/), Page Rules, cache level settings, the zone's default cached-file-extensions list, and every other zone-level cache control have no effect on a Worker's cache.
 - **Your Worker is in full control.** You set `Cache-Control` headers on your responses, and Cloudflare honors them per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111). That is the entire configuration surface.
-- **The cache is shared across every way the Worker can be invoked.** A Worker bound to `api.example.com`, `api.example.net`, and invoked over a service binding serves the same cached responses to all three — the cache is keyed by the request path, entrypoint, `ctx.props`, and (by default) the Worker version, not by hostname. See [Cache keys](/workers/cache/cache-keys/).
+- **The cache is shared across every way the Worker can be invoked.** A Worker bound to `api.example.com`, `api.example.net`, and invoked over a service binding serves the same cached responses to all three — the cache is keyed by the request path, entrypoint, `ctx.props`, and (by default) the Worker version, not by hostname. See [Cache keys](/workers/runtime-apis/cache/cache-keys/).
 
 ### The Worker is the configuration surface
 
@@ -203,7 +203,7 @@ The second request receives the cached response. The `timestamp` and `random` va
 ## What gets cached
 
 - HTTP invocations of the Worker's [`fetch`](/workers/runtime-apis/fetch/) handler are eligible for caching, including eyeball requests, service binding `fetch()` calls, and loopback `fetch()` calls via `ctx.exports`.
-- Only `GET` and `HEAD` requests are cached. Other methods always invoke your Worker. `GET` and `HEAD` for the same URL share a single cache entry — see [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key).
+- Only `GET` and `HEAD` requests are cached. Other methods always invoke your Worker. `GET` and `HEAD` for the same URL share a single cache entry — see [Cache keys](/workers/runtime-apis/cache/cache-keys/#what-goes-into-the-cache-key).
 - **Only `fetch()` invocations go through the cache.** Custom [RPC methods](/workers/runtime-apis/rpc/) on a `WorkerEntrypoint` (for example `ctx.exports.Backend.getUser(id)`) bypass the cache entirely and always run the callee. To cache a piece of work, expose it as a `fetch` handler on its own entrypoint.
 - **WebSocket upgrade requests bypass the cache.** A `GET` request carrying `Upgrade: websocket` always invokes your Worker.
 - Other invocation types — [`scheduled`](/workers/configuration/cron-triggers/) (Cron Triggers), [`queue`](/queues/configuration/javascript-apis/#consumer) consumers, [Workflows](/workflows/), [Tail Workers](/workers/observability/logs/tail-workers/), [Durable Object](/durable-objects/) invocations, [Email Workers](/email-service/api/route-emails/email-handler/) — always run without cache involvement.
@@ -250,7 +250,7 @@ export default {
 Notes:
 
 - `Vary: *` disables caching for the response. A wildcard variance cannot be satisfied deterministically from request headers, so Cloudflare does not store the response.
-- Variants share a single cache entry for purge purposes — [purging](/workers/cache/purge/) a tag or path prefix that matches any variant invalidates all variants of that URL. All variants of a URL must therefore use the same `Cache-Tag` values.
+- Variants share a single cache entry for purge purposes — [purging](/workers/runtime-apis/cache/purge/) a tag or path prefix that matches any variant invalidates all variants of that URL. All variants of a URL must therefore use the same `Cache-Tag` values.
 - `Vary` is not compatible with image-transformation features that already produce their own variants (Polish, Image Resizing). Responses rewritten by those features ignore `Vary`.
 - Variants are stored per exact request-header value. Clients that send semantically equivalent but textually different values — for example `Accept-Encoding: gzip, br` and `Accept-Encoding: br, gzip` — produce separate variants. Shape the headers your Worker sees (for example, by normalizing them in a gateway Worker before passing the request on) if you need to reduce variant fan-out.
 
@@ -270,9 +270,9 @@ flowchart LR
     WorkerB --> CacheB
 ```
 
-The cache key for service binding calls includes the caller's [`ctx.props`](/workers/runtime-apis/bindings/service-bindings/rpc/#ctxprops), so different callers with different authorization context are cached separately. For details, refer to [Cache keys](/workers/cache/cache-keys/).
+The cache key for service binding calls includes the caller's [`ctx.props`](/workers/runtime-apis/bindings/service-bindings/rpc/#ctxprops), so different callers with different authorization context are cached separately. For details, refer to [Cache keys](/workers/runtime-apis/cache/cache-keys/).
 
-For same-account calls, the calling Worker can also tailor the callee's caching for an individual request by setting [`cf.cacheKey`](/workers/cache/cache-keys/#custom-cache-keys) to override the cache key or [`cf.cacheControl`](/workers/cache/configuration/#override-cache-control-from-the-calling-worker) to supply a `Cache-Control` directive.
+For same-account calls, the calling Worker can also tailor the callee's caching for an individual request by setting [`cf.cacheKey`](/workers/runtime-apis/cache/cache-keys/#custom-cache-keys) to override the cache key or [`cf.cacheControl`](/workers/runtime-apis/cache/configuration/#override-cache-control-from-the-calling-worker) to supply a `Cache-Control` directive.
 
 ## Cache Durable Object responses
 
@@ -280,7 +280,7 @@ For same-account calls, the calling Worker can also tailor the callee's caching 
 
 The wrapper entrypoint forwards the request into the Durable Object and sets `Cache-Control` on the response it returns. Because Workers Caching sits in front of the entrypoint, subsequent requests are served from cache without re-entering the Durable Object.
 
-The default entrypoint here is a gateway that should run on every request, so disable caching on it and enable it on `CachedCounter` (see [Per-entrypoint caching](/workers/cache/configuration/#per-entrypoint-caching)):
+The default entrypoint here is a gateway that should run on every request, so disable caching on it and enable it on `CachedCounter` (see [Per-entrypoint caching](/workers/runtime-apis/cache/configuration/#per-entrypoint-caching)):
 
 <WranglerConfig>
 
@@ -340,7 +340,7 @@ export default {
 
 </TypeScriptExample>
 
-For more patterns that combine a gateway entrypoint with cached inner entrypoints, refer to [Examples](/workers/cache/examples/).
+For more patterns that combine a gateway entrypoint with cached inner entrypoints, refer to [Examples](/workers/runtime-apis/cache/examples/).
 
 ## Smart placement and the cache
 
@@ -405,7 +405,7 @@ export default {
 
 </TypeScriptExample>
 
-You can also [import `cache` from `cloudflare:workers`](/workers/cache/purge/#two-ways-to-call-purge) and call `cache.purge({...})` when you do not have `ctx` in scope — for example, from a utility module. For all purge modes and patterns, refer to [Purging the cache](/workers/cache/purge/).
+You can also [import `cache` from `cloudflare:workers`](/workers/runtime-apis/cache/purge/#two-ways-to-call-purge) and call `cache.purge({...})` when you do not have `ctx` in scope — for example, from a utility module. For all purge modes and patterns, refer to [Purging the cache](/workers/runtime-apis/cache/purge/).
 
 ## Pricing
 

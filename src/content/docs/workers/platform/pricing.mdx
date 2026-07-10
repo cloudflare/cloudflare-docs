@@ -41,7 +41,7 @@ WebSocket messages routed through a Worker do not count as requests.
 
 <sup>3</sup> Requests to static assets are free and unlimited.
 
-<sup>4</sup> When [Workers Caching](/workers/cache/) is enabled, requests served
+<sup>4</sup> When [Workers Caching](/workers/runtime-apis/cache/) is enabled, requests served
 from the Worker's cache are billed at the same per-request rate as requests that
 invoke the Worker. This includes requests to [static
 assets](/workers/static-assets/billing-and-limitations/) and [worker-to-worker
@@ -107,7 +107,7 @@ A high traffic Worker that serves 100 million requests per month, and uses an av
 
 #### Example 5: Worker with caching
 
-The same Worker as Example 4, but with [Workers Caching](/workers/cache/) enabled and an 80% cache hit rate. 80 million requests are served from cache and 20 million invoke the Worker. Cache hits count as requests but do not consume CPU time.
+The same Worker as Example 4, but with [Workers Caching](/workers/runtime-apis/cache/) enabled and an 80% cache hit rate. 80 million requests are served from cache and 20 million invoke the Worker. Cache hits count as requests but do not consume CPU time.
 
 |                  | Monthly Costs | Formula                                                                                                   |
 | ---------------- | ------------- | --------------------------------------------------------------------------------------------------------- |
@@ -116,7 +116,7 @@ The same Worker as Example 4, but with [Workers Caching](/workers/cache/) enable
 | **CPU time**     | $2.20         | ((7 ms of CPU time per request \* 20,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 \* $0.02 |
 | **Total**        | $34.20        |                                                                                                           |
 
-For details on what is cached and how to enable caching, refer to [Cache](/workers/cache/).
+For details on what is cached and how to enable caching, refer to [Cache](/workers/runtime-apis/cache/).
 
 :::note[Custom limits]
 
