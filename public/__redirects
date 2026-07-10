@@ -1970,7 +1970,6 @@
 /turnstile/reference/client-side-errors/ /turnstile/troubleshooting/client-side-errors/ 301
 /turnstile/reference/feedback-reports/ /turnstile/troubleshooting/feedback-reports/ 301
 /turnstile/reference/rotate-secret-key/ /turnstile/troubleshooting/rotate-secret-key/ 301
-/turnstile/spin/index.md /turnstile/spin/prompt.md 301
 /turnstile/reference/testing/ /turnstile/troubleshooting/testing/ 301
 /turnstile/reference/use-cases/ /turnstile/tutorials/ 301
 /turnstile/reference/use-cases/login-pages/ /turnstile/tutorials/login-pages/ 301
