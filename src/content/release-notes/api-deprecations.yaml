@@ -3,6 +3,35 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-20"
+    title: "Account Roles API"
+    description: |-
+      Deprecation date: July 20, 2026
+
+      The [Account Roles API](/api/resources/accounts/subresources/roles/) is deprecated in favor of the [Permission Groups API](/api/resources/iam/subresources/permission_groups/). The Permission Groups API is the supported way to enumerate the roles that can be granted to account members.
+
+      Deprecated APIs:
+
+      - `GET /accounts/{account_id}/roles` — List roles
+      - `GET /accounts/{account_id}/roles/{role_id}` — Role details
+
+      Replacements:
+
+      - `GET /accounts/{account_id}/iam/permission_groups` — List account permission groups
+      - `GET /accounts/{account_id}/iam/permission_groups/{permission_group_id}` — Permission group details
+
+      The response schema differs from the legacy Roles response:
+
+      - The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with read/write flags.
+      - The `PermissionGroup` response replaces those with a `meta` object containing `label` and `scopes`. Individual permissions are not returned as part of the permission group.
+      - The `id` value is stable across both APIs. Integrations that key on `id` will not need to remap identifiers; integrations that parse the per-resource read/write flags inside the `permissions` object, or match roles by human-readable `name`, must be updated.
+
+      Additional notes:
+
+      - Both endpoints use the standard Cloudflare response envelope, so pagination and error-handling do not change.
+      - The Permission Groups endpoints accept API Token (Bearer) authentication in addition to API Key + Email. The legacy Roles endpoints accept only API Key + Email.
+      - The Permission Groups API is available on all accounts and does not require enrollment in Domain-Scoped Roles or any other beta program.
+
   - publish_date: "2026-07-15"
     title: "Workers KV: Legacy Namespace Routes"
     description: |-
