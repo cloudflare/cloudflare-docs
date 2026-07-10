@@ -109,6 +109,7 @@ export const catalogModelsSchema = z.object({
 			input: z.record(z.string(), z.unknown()).optional(),
 			output: z.record(z.string(), z.unknown()).optional(),
 		})
+		.nullable()
 		.optional(),
 
 	// Metadata & Links
