@@ -1,0 +1,123 @@
+---
+title: Authentication
+description: How to authenticate API and Terraform requests for Internal DNS using zone-scoped tokens.
+products:
+  - dns
+pcx_content_type: reference
+sidebar:
+  order: 11
+  label: Authentication
+tags:
+  - Private networks
+---
+
+Internal DNS uses the same authentication model as the rest of Cloudflare DNS. There is no separate role or special permission group for internal zones. You use standard DNS permissions and scope your API tokens to the specific zones you want to manage.
+
+## How it works
+
+- **No dedicated internal-dns role.** You do not need to request or assign a special role to use Internal DNS.
+- **Standard DNS permissions.** The permissions you already use for public DNS zones work for internal zones too.
+- **Zone-scoped tokens (recommended).** For the strongest security, create API tokens that are scoped to specific internal zones rather than all zones in your account.
+
+## Required permissions
+
+The minimum permissions depend on what you are doing. Most operators need these three zone-level permissions:
+
+| Permission | Purpose |
+|------------|---------|
+| **Zone > Zone > Edit** | Create and delete internal zones |
+| **Zone > DNS > Edit** | Add, edit, and delete DNS records |
+| **Zone > DNS Settings > Edit** | Configure reference zones and internal DNS settings |
+
+If you are managing DNS views, you also need:
+
+| Permission | Purpose |
+|------------|---------|
+| **Account > DNS Views > Edit** | Create and manage DNS views |
+
+## Create a zone-scoped token
+
+1. Go to **My Profile** > **API Tokens** in the Cloudflare dashboard.
+2. Select **Create Token**.
+3. Use the **Custom token** template.
+4. Under **Permissions**, add the zone-level permissions you need (refer to the Required permissions table).
+5. Under **Zone Resources**, select **Include** > **Specific zones**.
+6. Select the internal zones this token should access.
+7. Create the token and save it somewhere secure.
+
+### Important: zone creation vs zone management
+
+- **To create an internal zone**, you need a token with **Zone > Zone > Edit** scoped to **All zones** or at the account level. A zone-scoped token cannot create a zone because the zone does not exist yet to be scoped to.
+- **To manage records in an existing internal zone**, use a zone-scoped token limited to that specific zone.
+- **Best practice:** Create one account-level token for provisioning new zones, and use zone-scoped tokens for day-to-day record management.
+
+### What to know about zone scoping
+
+- **Internal zones show up in the zone picker.** When creating a token, the zone dropdown lists both public and internal zones. Internal zones are labeled `[Internal zone]` so you can tell them apart.
+- **New zones need manual updates.** If you create a new internal zone later, your existing token will not automatically include it. You must edit the token and add the new zone. This is a temporary limitation. We are working with the IAM team on attribute-based permissions that will let you scope tokens to "all internal zones" automatically.
+- **Public zones are separate.** A token scoped to internal zones cannot manage public zones, and vice versa. If you need to manage both, scope the token to include both zone types or create separate tokens.
+
+## Permission examples by task
+
+| Task | Minimum permissions |
+|------|---------------------|
+| Create an internal zone | Zone > Zone > Edit |
+| Add or edit DNS records | Zone > DNS > Edit |
+| Set a reference zone | Zone > DNS Settings > Edit |
+| Create a DNS view | Account > DNS Views > Edit |
+| Set up Gateway resolver policies | Zero Trust > Gateway > Edit |
+| View analytics | Zone > Analytics > Read |
+
+## Terraform and API usage
+
+### API
+
+Pass your token in the `Authorization` header:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "account": {"id": "<ACCOUNT_ID>"},
+    "name": "corp.local",
+    "type": "internal"
+  }'
+```
+
+If your token is scoped to specific zones, this call will fail because `corp.local` does not exist yet. Use an account-level or "All zones" token for zone creation. After the zone is created, switch to a zone-scoped token for record management.
+
+### Terraform
+
+Set the token in your provider block:
+
+```hcl
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
+```
+
+If your token is scoped to specific zones, make sure those zones are already created (either in the same Terraform configuration or manually) and included in the token scope. If Terraform tries to manage a zone that is not in the token scope, you will get a 403 error.
+
+## Common issues
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `403 Forbidden` when creating a zone | Token is scoped to existing zones only and does not have account-level zone creation permission | Either scope the token to "All zones" temporarily for creation, or use an account-level token |
+| `403 Forbidden` when adding records | Token does not include the specific internal zone | Edit the token and add the zone |
+| `403 Forbidden` when creating a view | Token is missing Account > DNS Views > Edit | Add the permission |
+| Zone not visible in token picker | Zone was created after the token was created | Edit the token and refresh the zone list |
+
+## Attribute-based permissions
+
+Today, tokens can only be scoped to specific zone IDs. We are working with the IAM team on attribute-based permissions that will let you scope tokens to all zones matching a criteria. For example, you could create a token that applies to all zones where `type = internal` or where `name ends_with ".local"`.
+
+This will remove the need to manually update tokens when you create new internal zones. The IAM team has this on their roadmap, but there is no committed delivery date yet. Until it ships, document your token-to-zone mappings and update tokens as part of your zone provisioning workflow.
+
+## Related resources
+
+- [Create an API token](/fundamentals/api/get-started/create-token/)
+- [API token permissions](/fundamentals/api/reference/permissions/)
+- [Get started with Internal DNS](/dns/internal-dns/get-started/)
+- [Terraform for Internal DNS](/dns/internal-dns/terraform/)

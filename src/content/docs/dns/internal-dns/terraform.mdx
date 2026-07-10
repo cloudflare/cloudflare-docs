@@ -1,0 +1,234 @@
+---
+title: Terraform
+description: Manage Internal DNS zones, records, and views with the Cloudflare Terraform provider.
+products:
+  - dns
+pcx_content_type: how-to
+sidebar:
+  order: 12
+  label: Terraform
+tags:
+  - Private networks
+---
+
+import { Example } from "~/components";
+
+You can manage all Internal DNS resources with the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). The provider uses the same APIs as the dashboard and the Cloudflare API. If you have already used Terraform to manage public DNS zones, the patterns are identical. The only difference is setting `type = "internal"` on the zone resource.
+
+## Before you begin
+
+- Install the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) (`~> 4.0` or later).
+- Create an [API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+  - **Account** > **DNS Views** > **Edit**
+  - **Zone** > **DNS** > **Edit**
+  - **Zone** > **DNS Settings** > **Edit**
+  - **Zone** > **Zone** > **Edit**
+- **Scope your token to specific zones.** When creating the token, select the internal zones this token should manage. Using "All zones" works but grants broader access than needed. If you create new internal zones later, you will need to update the token scope.
+
+## Provider setup
+
+```hcl
+terraform {
+  required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
+  }
+}
+
+variable "cloudflare_api_token" {
+  description = "API token scoped to the zones this configuration manages"
+  type        = string
+  sensitive   = true
+}
+
+variable "account_id" {
+  description = "Your Cloudflare account ID"
+  type        = string
+}
+
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
+```
+
+## Create an internal zone
+
+```hcl
+resource "cloudflare_zone" "corp_internal" {
+  account_id = var.account_id
+  name       = "corp.local"
+  type       = "internal"
+}
+```
+
+Internal zones do not get assigned Cloudflare nameservers and are only resolvable through [Cloudflare Gateway](/cloudflare-one/traffic-policies/resolver-policies/).
+
+## Add DNS records
+
+Manage internal DNS records the same way you manage public records. Proxy status does not apply to internal records.
+
+```hcl
+resource "cloudflare_record" "db_server" {
+  zone_id = cloudflare_zone.corp_internal.id
+  name    = "db"
+  type    = "A"
+  value   = "192.0.2.10"
+  ttl     = 300
+}
+
+resource "cloudflare_record" "app_server" {
+  zone_id = cloudflare_zone.corp_internal.id
+  name    = "app"
+  type    = "A"
+  value   = "192.0.2.20"
+  ttl     = 300
+}
+```
+
+## Create a DNS view and link zones
+
+DNS views are account-level resources that group internal zones together. Gateway resolver policies reference views to decide which zones to query.
+
+```hcl
+resource "cloudflare_dns_zone_settings" "engineering" {
+  account_id = var.account_id
+  name       = "Engineering"
+
+  internal_dns = {
+    zones = [
+      cloudflare_zone.corp_internal.id
+    ]
+  }
+}
+```
+
+## Set up a Gateway resolver policy
+
+Use the Zero Trust Gateway rules resources to route queries to your internal DNS view.
+
+```hcl
+resource "cloudflare_zero_trust_gateway_policy" "internal_dns_east" {
+  account_id  = var.account_id
+  name        = "Route East Coast to internal DNS"
+  description = "Send queries from East Coast offices to internal DNS view"
+  precedence  = 100
+  action      = "resolve"
+  enabled     = true
+
+  filters = ["dns"]
+
+  traffic = <<-EOT
+    net.dst.ip in {203.0.113.0/24}
+  EOT
+
+  rule_settings {
+    block_page_enabled = false
+    resolve_dns_internally {
+      view_id  = cloudflare_dns_zone_settings.engineering.id
+      fallback = "none"
+    }
+  }
+}
+```
+
+## Complete example
+
+Here is a minimal but complete configuration for a single internal zone with two records, one view, and one resolver policy.
+
+```hcl
+terraform {
+  required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
+  }
+}
+
+variable "cloudflare_api_token" {
+  type      = string
+  sensitive = true
+}
+
+variable "account_id" {
+  type = string
+}
+
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
+
+# 1. Create the internal zone
+resource "cloudflare_zone" "internal" {
+  account_id = var.account_id
+  name       = "internal.example.com"
+  type       = "internal"
+}
+
+# 2. Add records
+resource "cloudflare_record" "jenkins" {
+  zone_id = cloudflare_zone.internal.id
+  name    = "jenkins"
+  type    = "A"
+  value   = "10.0.1.5"
+  ttl     = 300
+}
+
+resource "cloudflare_record" "gitlab" {
+  zone_id = cloudflare_zone.internal.id
+  name    = "gitlab"
+  type    = "A"
+  value   = "10.0.1.6"
+  ttl     = 300
+}
+
+# 3. Create a view and link the zone
+resource "cloudflare_dns_zone_settings" "engineering" {
+  account_id = var.account_id
+  name       = "Engineering"
+
+  internal_dns = {
+    zones = [cloudflare_zone.internal.id]
+  }
+}
+
+# 4. Route engineering subnet to the view
+resource "cloudflare_zero_trust_gateway_policy" "engineering_dns" {
+  account_id = var.account_id
+  name       = "Engineering internal DNS"
+  precedence = 100
+  action     = "resolve"
+  enabled    = true
+
+  filters = ["dns"]
+
+  traffic = <<-EOT
+    net.dst.ip in {10.0.0.0/16}
+  EOT
+
+  rule_settings {
+    block_page_enabled = false
+    resolve_dns_internally {
+      view_id  = cloudflare_dns_zone_settings.engineering.id
+      fallback = "public_dns"
+    }
+  }
+}
+```
+
+## Tips
+
+- **Token scope and new zones.** If you add a new internal zone and your Terraform token was scoped to specific zones, you must update the token to include the new zone before Terraform can manage it.
+- **Zone names can overlap with public zones.** An internal zone can have the same name as a public zone in the same account. This is useful for split-horizon DNS.
+- **Internal zones do not use nameservers.** Do not look for Cloudflare nameservers on internal zones. Resolution happens exclusively through Gateway resolver policies.
+- **Bulk imports.** If you are migrating from another DNS provider, you can use a BIND zone file with the [cloudflare_record import block](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record#import) or the dashboard [import tool](/dns/manage-dns-records/how-to/import-and-export/).
+
+## Related resources
+
+- [Manage internal zones](/dns/internal-dns/internal-zones/setup/)
+- [Manage DNS views](/dns/internal-dns/dns-views/)
+- [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/)
+- [Authentication for Internal DNS](/dns/internal-dns/authentication/)
+- [Cloudflare Terraform provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)

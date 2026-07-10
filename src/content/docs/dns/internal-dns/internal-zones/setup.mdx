@@ -35,7 +35,13 @@ When setting up internal zones, observe the following conditions:
 
 ## Other API actions
 
-The API endpoints to manage internal zones are the same as for managing public zones. The main difference is that the zone type must be set to `internal`. Refer to the API documentation below for details:
+The API endpoints to manage internal zones are the same as for managing public zones. The main difference is that the zone type must be set to `internal`.
+
+:::note
+When creating API tokens for Internal DNS, we recommend scoping them to specific internal zones rather than using "All zones". This follows the principle of least privilege. If you create new internal zones later, you will need to update the token scope to include them.
+:::
+
+Refer to the following API documentation for details:
 
 - [Update an internal zone](/api/resources/zones/methods/edit/) (`PATCH`)
 - [Get internal zone details](/api/resources/zones/methods/get/) (`GET`)
