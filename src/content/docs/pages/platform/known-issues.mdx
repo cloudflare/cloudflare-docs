@@ -130,3 +130,33 @@ Note that this will not delete the active production deployment if one exists.
 [Cloudflare Load Balancing](/load-balancing/) will not work without the host header set. To use a Pages project as target, make sure to select **Add host header** when [creating a pool](/load-balancing/pools/create-pool/#create-a-pool), and set both the host header value and the endpoint address to your `pages.dev` domain.
 
 Refer to [Use Cloudflare Pages as origin](/load-balancing/pools/cloudflare-pages-origin/) for a complete tutorial.
+
+
+### PowerShell (Windows)
+
+If you are on Windows, you can use this PowerShell alternative (no `jq` required):
+
+```powershell
+$prod_id = ""
+while ($true) {
+    $json = npx wrangler pages deployment list --project-name <PROJECT_NAME> --json 2>$null
+    $ids = ($json | ConvertFrom-Json) | Select-Object -ExpandProperty id
+    $to_delete = $ids | Where-Object { $_ -ne $prod_id }
+    if (-not $to_delete) {
+        Write-Host "Done. Production: $prod_id"
+        break
+    }
+    Write-Host "Deleting $(@($to_delete).Count) deployments..."
+    foreach ($id in $to_delete) {
+        $output = npx wrangler pages deployment delete $id --project-name <PROJECT_NAME> --force 2>&1
+        if ($output -notmatch "Successfully deleted") {
+            if ($output -match "active production deployment") {
+                $prod_id = $id
+            }
+        }
+    }
+}
+```
+
+Replace `<PROJECT_NAME>` with your Pages project name. Keep `$prod_id` empty on the first loop so the active production deployment is detected and preserved.
+
