@@ -3,6 +3,15 @@ link: "/realtime/changelog/"
 productName: Realtime
 productLink: "/realtime/"
 entries:
+  - publish_date: "2026-08-05"
+    title: DataChannels reliability and ordering (ordered, maxRetransmits, maxPacketLifeTime)
+    description: |-
+      DataChannels now accept reliability settings on both publisher (`location: "local"`) and subscriber (`location: "remote"`) channels, so unreliable and unordered delivery is honored end to end.
+
+      - `ordered` (default `true`) controls in-order delivery and head-of-line blocking.
+      - `maxRetransmits` or `maxPacketLifeTime` enable partial reliability; set `maxRetransmits: 0` for fully unreliable delivery.
+      - Set the same fields on local and remote `/datachannels/new` calls, and mirror them on `createDataChannel()` for negotiated channels.
+      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Connection API](/realtime/sfu/https-api/)
   - publish_date: "2026-07-23"
     title: DataChannels return-to-publisher (canReply)
     description: |-

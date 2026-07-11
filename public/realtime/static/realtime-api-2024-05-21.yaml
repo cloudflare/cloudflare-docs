@@ -679,6 +679,14 @@ paths:
                   datachannels:
                     - location: local
                       dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+              local_datachannels_unreliable:
+                description: Share an unreliable unordered data channel for high-frequency state
+                value:
+                  datachannels:
+                    - location: local
+                      dataChannelName: player-state
+                      ordered: false
+                      maxRetransmits: 0
               remote_datachannels:
                 description: Consume a remote data channel
                 value:
@@ -695,6 +703,15 @@ paths:
                       canReply: true
                       sessionId: "2a45361d5fd7cc14eface0587c276c94"
                       dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+              remote_datachannels_unreliable:
+                description: Consume a remote unreliable unordered data channel
+                value:
+                  datachannels:
+                    - location: remote
+                      sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                      dataChannelName: player-state
+                      ordered: false
+                      maxRetransmits: 0
       security:
         - secret: []
       parameters:
@@ -1235,6 +1252,27 @@ components:
         dataChannelName:
           type: string
           description: Given name for the data channel
+        ordered:
+          type: boolean
+          default: true
+          description: >
+            When true (default), messages are delivered in send order. When false, messages may
+            arrive out of order and do not block later messages. Set on both local (publisher)
+            and remote (subscriber) DataChannels, and mirror the value on createDataChannel().
+        maxRetransmits:
+          type: integer
+          minimum: 0
+          description: >
+            Maximum number of retransmissions per message. 0 means no retransmits (unreliable).
+            Omit for unlimited retransmits (reliable). Mutually exclusive with maxPacketLifeTime.
+            Set on both local and remote DataChannels, and mirror the value on createDataChannel().
+        maxPacketLifeTime:
+          type: integer
+          minimum: 0
+          description: >
+            Maximum time in milliseconds the stack may spend trying to transmit a message.
+            Omit for unlimited lifetime (reliable). Mutually exclusive with maxRetransmits.
+            Set on both local and remote DataChannels, and mirror the value on createDataChannel().
         waitForAck:
           type: boolean
           default: false
