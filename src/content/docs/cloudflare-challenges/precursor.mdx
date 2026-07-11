@@ -55,9 +55,9 @@ Enable Precursor for your zone:
 
 For most customers, selecting a mode is the only configuration required.
 
-### Precursor rules (optional)
+### Precursor Rules (optional)
 
-Precursor runs across your zone by default. Rules do not enable or disable Precursor — they determine which mode applies to each request.
+Precursor runs across your zone by default. Precursor Rules do not enable or disable Precursor — they determine which mode applies to each request.
 
 For example:
 
@@ -66,7 +66,7 @@ For example:
 
 ### Use Precursor with APIs
 
-If your zone serves both browser pages and API endpoints, use rules to scope where strict enforcement applies.
+If your zone serves both browser pages and API endpoints, use Precursor Rules to scope where strict enforcement applies.
 
 When Precursor is set to **Maximize Security**, requests must present a valid `cf_clearance` cookie. This can affect:
 
@@ -75,8 +75,8 @@ When Precursor is set to **Maximize Security**, requests must present a valid `c
 
 For mixed HTML/API traffic, use one of these patterns:
 
-- Start with **Minimize Friction** globally, then apply **Maximize Security** only to sensitive pages or paths.
-- Start with **Maximize Security** globally, then add **Minimize Friction** rules for API hostnames or API paths.
+- Start with **Minimize Friction** globally, then apply **Maximize Security** only to sensitive pages or paths with Precursor Rules.
+- Start with **Maximize Security** globally, then add **Minimize Friction** Precursor Rules for API hostnames or API paths.
 
 For browser XHR/fetch requests that must access endpoints under **Maximize Security**, ensure cookies are included:
 
