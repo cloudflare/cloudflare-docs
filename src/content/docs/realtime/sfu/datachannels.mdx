@@ -27,6 +27,64 @@ DataChannels on Cloudflare Realtime can scale up to many subscribers per publish
 3. Create a DataChannel by calling /datachannels/new with the location set to "remote" and the sessionId set to the sessionId of the publisher.
 4. Use the DataChannel to send data from the publisher to the subscribers.
 
+### Message reliability and ordering
+
+By default, DataChannels are reliable and ordered: every message is delivered, and messages arrive in the order they were sent. For latency-sensitive data such as game state or live sensor updates, you can opt into partial reliability or unordered delivery.
+
+Set these optional fields when you create a DataChannel with the [HTTPS API](/realtime/sfu/https-api/), on the publisher (`location: "local"`) and on each subscriber (`location: "remote"`):
+
+- `ordered` (boolean, default `true`) — when `false`, messages may arrive out of order and do not block later messages.
+- `maxRetransmits` (integer) — maximum retransmissions per message. Use `0` for no retransmits (unreliable). Omit for unlimited retransmits.
+- `maxPacketLifeTime` (integer) — maximum time in milliseconds the stack may spend trying to send a message. Omit for unlimited lifetime.
+
+`maxRetransmits` and `maxPacketLifeTime` are mutually exclusive; do not set both on the same channel.
+
+Because Realtime DataChannels use negotiated IDs, also pass the same options to `createDataChannel()` on the publisher and on each subscriber. The browser does not learn reliability from an in-band OPEN message.
+
+Create an unreliable, unordered publisher channel:
+
+```json
+{
+	"dataChannels": [
+		{
+			"location": "local",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
+}
+```
+
+Then create the matching remote channel on the subscriber with the same reliability fields:
+
+```json
+{
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "<publisherSessionId>",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
+}
+```
+
+On both the publisher and the subscriber, mirror those options when creating the negotiated DataChannel:
+
+```ts
+const dc = pc.createDataChannel("player-state", {
+	negotiated: true,
+	id: resp.dataChannels[0].id,
+	ordered: false,
+	maxRetransmits: 0,
+});
+```
+
+For partial reliability, set a small `maxRetransmits` value (for example `2`) or a `maxPacketLifeTime` in milliseconds (for example `100`) instead of `0` / unlimited.
+
 ### Subscriber acknowledgment gate (waitForAck)
 
 By default, a subscriber starts receiving messages as soon as it pulls a remote DataChannel. To avoid losing the first messages before your subscriber is ready to handle them, you can opt in to an acknowledgment gate for each subscriber.
@@ -55,7 +113,7 @@ Create a remote DataChannel with the gate enabled by calling `POST /apps/{appId}
 Then, on the subscriber, send the acknowledgment once the DataChannel is open:
 
 ```ts
-const resp = await fetch(
+const response = await fetch(
 	`${API_BASE}/sessions/${subscriberId}/datachannels/new`,
 	{
 		method: "POST",
@@ -71,11 +129,21 @@ const resp = await fetch(
 			],
 		}),
 	},
-).then((r) => r.json());
+);
+
+if (!response.ok) {
+	throw new Error(`Failed to create DataChannel: ${response.status}`);
+}
+
+const resp = await response.json();
+const channelId = resp.dataChannels?.[0]?.id;
+if (channelId === undefined) {
+	throw new Error("DataChannel response did not include an id");
+}
 
 const dc = pc.createDataChannel("my-channel-subscribed", {
 	negotiated: true,
-	id: resp.dataChannels[0].id,
+	id: channelId,
 });
 
 await waitForOpen(dc);
