@@ -25,6 +25,16 @@ Log Explorer provides access to Cloudflare logs with all the context available w
 
 Contract customers can choose to store their logs in Log Explorer for up to two years, at an additional cost of $0.10 per GB per month. Customers interested in this feature can contact their account team to have it added to their contract.
 
+## Prerequisites
+
+Log Explorer displays data from [Logpush](/logs/) jobs. Before querying a dataset, you must configure a Logpush job for that dataset and set the destination to Log Explorer.
+
+:::caution
+If no Logpush job exists for a dataset, that dataset will contain no data in Log Explorer. No error or warning is shown — the dataset simply appears empty.
+:::
+
+Refer to [Manage datasets](/log-explorer/manage-datasets/) for instructions on enabling datasets and configuring Logpush jobs for Log Explorer.
+
 ## Permissions
 
 Access to Log Explorer features is controlled through specific permissions. Each permission grants users the ability to perform certain actions, such as querying logs, managing datasets, or creating dashboards. 
