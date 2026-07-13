@@ -59,3 +59,7 @@ For more information on the configuration settings of out-of-state TCP rules, re
 ## Setup
 
 <Render file="advanced-ddos/tcp-setup" product="ddos-protection" />
+
+:::note
+Advanced TCP Protection (`flowtrackd`) operates at the network layer (L4) and mitigates TCP-based volumetric attacks only. It cannot detect or mitigate application-layer (L7) attacks such as HTTP floods. For L7 DDoS protection, refer to the [HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/).
+:::
