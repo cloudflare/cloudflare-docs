@@ -122,7 +122,7 @@ This can affect you if you use Domain or Host egress selectors, your users are l
 
 ### DNS Override policies bypass host selectors
 
-If a domain matches a [DNS Override policy](/cloudflare-one/traffic-policies/policy-types/dns-policies/#override), Gateway will not apply the initial resolved IP mapping for that domain. This means host-based egress selectors (Application, Content Categories, Domain, and Host) will not evaluate against traffic to the overridden domain. Traffic to these domains will use the default Cloudflare egress method.
+If a domain matches a [DNS Override policy](/cloudflare-one/traffic-policies/policy-types/dns-policies/actions/#override), Gateway will not apply the initial resolved IP mapping for that domain. This means host-based egress selectors (Application, Content Categories, Domain, and Host) will not evaluate against traffic to the overridden domain. Traffic to these domains will use the default Cloudflare egress method.
 
 ### HTTPS DNS records not supported
 

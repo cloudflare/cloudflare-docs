@@ -97,7 +97,7 @@ In the diagram above:
 Tiered policies with Organizations have the following limitations:
 
 - [Egress policies](/cloudflare-one/traffic-policies/policy-types/egress-policies/) cannot be shared between accounts.
-- Source accounts cannot share policies that use [device posture](/cloudflare-one/reusable-components/posture-checks/) selectors, the [Detected protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/#detected-protocol) selector, or the [Quarantine](/cloudflare-one/traffic-policies/policy-types/http-policies/#quarantine) action. Source and recipient accounts can still create and apply policies with these selectors and actions separately from the Organization share.
+- Source accounts cannot share policies that use [device posture](/cloudflare-one/reusable-components/posture-checks/) selectors, the [Detected protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#detected-protocol) selector, or the [Quarantine](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#quarantine) action. Source and recipient accounts can still create and apply policies with these selectors and actions separately from the Organization share.
 - Policies can only be shared within an Organization. Sharing to sub-organizations is not supported.
 
 :::caution

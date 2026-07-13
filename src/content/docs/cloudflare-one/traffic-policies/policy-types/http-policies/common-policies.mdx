@@ -17,7 +17,7 @@ tags:
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
-The following policies are commonly used to secure HTTP traffic. HTTP policies are evaluated in order from top to bottom, and the first matching policy applies — except for [Do Not Inspect](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) policies, which are always evaluated first.
+The following policies are commonly used to secure HTTP traffic. HTTP policies are evaluated in order from top to bottom, and the first matching policy applies — except for [Do Not Inspect](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) policies, which are always evaluated first.
 
 For a baseline set of recommended policies, refer to [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/build-http-policies/recommended-http-policies/).
 
@@ -300,7 +300,7 @@ When accessing origin servers with certificates not signed by a public certifica
 
 <Render file="gateway/policies/block-file-types" product="cloudflare-one" />
 
-For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/traffic-policies/policy-types/http-policies/#download-and-upload-file-types).
+For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#download-and-upload-file-types).
 
 ## Isolate or block shadow IT applications
 

@@ -1,0 +1,223 @@
+---
+title: Network policy actions
+pcx_content_type: reference
+description: Actions available in Cloudflare Gateway network policies.
+products:
+  - cloudflare-one
+sidebar:
+  order: 3
+  label: Actions
+---
+
+import { Details, Render, Badge } from "~/components";
+
+Like actions in DNS and HTTP policies, actions in network policies define which decision you want to apply to a given set of elements. You can assign one action per policy.
+
+## Allow
+
+API value: `allow`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Access Infrastructure Target](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#access-infrastructure-target)
+- [Access Private App](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#access-private-app)
+- [Application](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#application)
+- [Content Categories](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#content-categories)
+- [Destination Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-country)
+- [Destination IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-ip)
+- [Destination Port](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-port)
+- [Detected Protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#detected-protocol)
+- [Protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#protocol)
+- [Proxy Endpoint](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [SNI](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni)
+- [SNI Domain](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni-domain)
+- [Source Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-continent)
+- [Source Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-country)
+- [Source Internal IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-internal-ip)
+- [Source IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-ip)
+- [Source Port](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-port)
+- [Virtual Network](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Email](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Emails](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group IDs](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Names](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Name](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#device-posture)
+
+</Details>
+
+Policies with Allow actions allow network traffic to reach certain IPs or ports. In a default-block configuration, Allow policies define the exceptions — traffic that does not match an Allow policy will be blocked by a lower-priority catch-all Block policy. For example, the following configuration allows specific users to reach a given IP address:
+
+| Selector       | Operator | Value           | Logic | Action |
+| -------------- | -------- | --------------- | ----- | ------ |
+| Destination IP | in       | `92.100.02.102` | And   | Allow  |
+| Email          | in       | `*@example.com` |       |        |
+
+## Audit SSH <Badge text="Deprecated" variant="caution"/>
+
+API value: `audit_ssh`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#application)
+- [Destination Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-country)
+- [Destination IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-ip)
+- [Source Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-continent)
+- [Source Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-country)
+- [Source Internal IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-internal-ip)
+- [Source IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-ip)
+- [Source Port](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-port)
+- [Virtual Network](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Email](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Emails](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group IDs](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Names](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Name](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#device-posture)
+
+</Details>
+
+:::caution
+Gateway no longer supports the Audit SSH action for new policies. To log your SSH traffic, Cloudflare recommends deploying [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) for your SSH server and configuring [SSH command logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs).
+:::
+
+Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:
+
+| Selector       | Operator | Value          | Action    |
+| -------------- | -------- | -------------- | --------- |
+| Destination IP | in       | `203.0.113.83` | Audit SSH |
+
+Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-port), are not supported.
+
+For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/traffic-policies/policy-types/network-policies/ssh-logging/).
+
+## Block
+
+API value: `block`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Access Infrastructure Target](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#access-infrastructure-target)
+- [Access Private App](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#access-private-app)
+- [Application](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#application)
+- [Content Categories](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#content-categories)
+- [Destination Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-country)
+- [Destination IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-ip)
+- [Destination Port](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-port)
+- [Detected Protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#detected-protocol)
+- [Protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#protocol)
+- [Proxy Endpoint](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [SNI](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni)
+- [SNI Domain](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni-domain)
+- [Source Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-continent)
+- [Source Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-country)
+- [Source Internal IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-internal-ip)
+- [Source IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-ip)
+- [Source Port](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-port)
+- [Virtual Network](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Email](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Emails](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group IDs](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Names](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Name](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#device-posture)
+
+</Details>
+
+Policies with Block actions block network traffic from reaching certain IPs or ports. For example, the following configuration blocks all traffic directed to port 443:
+
+| Selector         | Operator | Value | Action |
+| ---------------- | -------- | ----- | ------ |
+| Destination Port | in       | `443` | Block  |
+
+### Cloudflare One Client block notifications
+
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display block notification for Cloudflare One Client**" }}
+/>
+
+## Network Override
+
+API value: `l4_override`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Destination Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-country)
+- [Destination IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-ip)
+- [Destination Port](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-port)
+- [Protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#protocol)
+- [SNI](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni)
+- [SNI Domain](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni-domain)
+- [Source Continent IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-continent)
+- [Source Country IP Geolocation](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-country)
+- [Source Internal IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-internal-ip)
+- [Source IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-ip)
+- [Source Port](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#source-port)
+- [Virtual Network](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Email](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Emails](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group IDs](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Group Names](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+- [User Name](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#device-posture)
+
+</Details>
+
+Policies with Network Override actions override traffic directed to or coming from certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user's identity:
+
+| Selector       | Operator | Value           | Logic | Action           |
+| -------------- | -------- | --------------- | ----- | ---------------- |
+| Destination IP | in       | `95.92.143.151` | And   | Network Override |
+| User Email     | in       | `*@example.com` | And   |                  |
+| Override IP    |          | `10.0.0.1`      |       |                  |
+
+:::caution
+If the override destination IP is unreachable, Gateway still rewrites the destination but does not log the connection. The traffic fails silently with no log entry. Verify that your override IP is reachable before deploying this policy.
+:::
+
+Gateway will only log successful override connections in your [network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network-logs).
+
