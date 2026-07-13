@@ -36,12 +36,12 @@ Cloudflare provides two main patterns for human-in-the-loop:
 | Pattern               | Best for                                     | Key API             |
 | --------------------- | -------------------------------------------- | ------------------- |
 | **Workflow approval** | Multi-step processes, durable approval gates | `waitForApproval()` |
-| **MCP elicitation**   | MCP servers requesting structured user input | `elicitInput()`     |
+| **MCP elicitation**   | User input or out-of-band MCP interactions   | `elicitInput()`     |
 
 Decision guide:
 
 - Use **Workflow approval** when you need durable, multi-step processes with approval gates that can wait hours, days, or weeks
-- Use **MCP elicitation** when building MCP servers that need to request additional structured input from users during tool execution
+- Use **MCP elicitation** when an MCP server needs structured, non-sensitive input through form mode or an out-of-band interaction through URL mode
 
 ## Workflow-based approval
 
@@ -333,9 +333,9 @@ class ExpenseAgent extends Agent<Env, ExpenseState> {
 
 ## MCP elicitation
 
-When building MCP servers with `McpAgent`, you can request additional user input during tool execution using **elicitation**. The MCP client renders a form based on your JSON Schema and returns the user's response.
+When building MCP servers with `McpAgent`, you can request user interaction during tool execution using **elicitation**. Form mode collects structured, non-sensitive input through the MCP client. URL mode asks the user to open an out-of-band flow, such as third-party authorization or payment.
 
-### Basic pattern
+### Form mode pattern
 
 <TypeScriptExample>
 
@@ -411,15 +411,17 @@ export class CounterMCP extends McpAgent<Env, State, {}> {
 
 </TypeScriptExample>
 
+For URL mode and complete server-side requirements, refer to [McpAgent elicitation](/agents/model-context-protocol/apis/agent-api/#elicitation). Agents acting as MCP clients can handle both modes with [`configureElicitationHandlers()`](/agents/model-context-protocol/apis/client-api/#configureelicitationhandlers).
+
 ## Elicitation vs workflow approval
 
-| Aspect       | MCP Elicitation               | Workflow Approval             |
-| ------------ | ----------------------------- | ----------------------------- |
-| **Context**  | MCP server tool execution     | Multi-step workflow processes |
-| **Duration** | Immediate (within tool call)  | Can wait hours/days/weeks     |
-| **UI**       | JSON Schema-based form        | Custom UI via agent state     |
-| **State**    | MCP session state             | Durable workflow state        |
-| **Use case** | Interactive input during tool | Approval gates in pipelines   |
+| Aspect       | MCP elicitation                                   | Workflow approval             |
+| ------------ | ------------------------------------------------- | ----------------------------- |
+| **Context**  | MCP server tool execution                         | Multi-step workflow processes |
+| **Duration** | Form input is immediate; URL flows may be async   | Can wait hours/days/weeks     |
+| **UI**       | JSON Schema form or URL consent prompt            | Custom UI via agent state     |
+| **State**    | MCP session state                                 | Durable workflow state        |
+| **Use case** | Interactive input or out-of-band MCP interactions | Approval gates in pipelines   |
 
 ## Building approval UIs
 
