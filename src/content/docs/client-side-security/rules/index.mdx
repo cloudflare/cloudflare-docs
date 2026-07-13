@@ -52,6 +52,14 @@ For details on the CSP directives Cloudflare creates for each type of rule actio
 | **Violations**     | Reported to Cloudflare without blocking | Logged by Cloudflare after blocking    |
 | **Use case**       | Validate a rule before enforcing it     | Enforce a positive security model      |
 
+## Use cases
+
+### Block third-party tracking pixels
+
+Content security rules can block third-party tracking pixels and analytics tags — such as Facebook Pixel or Google Tags — from loading on your pages. Create an allow rule that explicitly permits only the script sources your application requires. Any script not in your allowlist, including third-party tracking pixels, will be blocked and logged as a rule violation.
+
+Before switching a rule to the _Allow_ action, use the _Log_ action to validate that your allowlist does not inadvertently block essential application resources.
+
 ## Next steps
 
 Refer to the following pages for instructions on creating a content security rule:
