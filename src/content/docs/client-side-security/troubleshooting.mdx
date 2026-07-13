@@ -69,6 +69,12 @@ These extensions commonly block requests to such domains, often by redirecting t
 
 Because only visitors with these extensions installed trigger this behavior, the violation reports are sparse compared to your site's overall traffic volume.
 
+## I want to block third-party tracking pixels or analytics tags
+
+Content security rules can block third-party tracking pixels and analytics tags — such as Facebook Pixel or Google Tags — from loading on your pages. Create an allow rule that explicitly permits only the script sources your application requires. Any script not in your allowlist, including third-party tracking pixels, will be blocked and logged as a rule violation.
+
+Before switching a rule to the _Allow_ action, use the _Log_ action to validate that your allowlist does not inadvertently block essential application resources. Refer to [Content security rules](/client-side-security/rules/) for instructions.
+
 ## I get scoped alerts for hostnames I do not manage on a SaaS root zone
 
 If you operate an [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) root zone with custom hostnames, and you configured a [scoped alert](/client-side-security/alerts/#scoped-alerts) with a content security rule that uses the `'self'` keyword, you will receive alerts for resources detected across all custom hostnames served under your root zone, not only on your own application surfaces.
