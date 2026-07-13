@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
-Human-in-the-loop (HITL) patterns allow agents to pause execution and wait for human approval, confirmation, or input before proceeding. This is essential for compliance, safety, and oversight in agentic systems.
+Human-in-the-loop (HITL) patterns add approval or input at different layers of an Agent. You can respond to an MCP server request, hold application work in a durable Workflow, or approve a connector call before model-generated code invokes a tool.
 
 ## Why human-in-the-loop?
 
@@ -25,17 +25,17 @@ Common uses include financial approvals, content moderation, bulk data operation
 
 ## Choosing a pattern
 
-Choose the pattern based on where execution runs and how long approval may take:
+Choose the pattern based on who introduces the pause and where it occurs:
 
-| Pattern                | Best for                                               | Duration                          | Key API                         |
-| ---------------------- | ------------------------------------------------------ | --------------------------------- | ------------------------------- |
-| **Workflow approval**  | Multi-step processes and durable approval gates        | Hours, days, or weeks             | `waitForApproval()`             |
-| **Code Mode approval** | Side-effecting connector calls in model-generated code | Survives requests and hibernation | `requiresApproval`, `approve()` |
-| **MCP elicitation**    | Form input or out-of-band interactions for MCP servers | Form input or async URL flow      | `elicitInput()`                 |
+| Pattern                | Approval layer                             | Initiated by                | Typical wait            | Key API                                     |
+| ---------------------- | ------------------------------------------ | --------------------------- | ----------------------- | ------------------------------------------- |
+| **MCP elicitation**    | MCP request handled by your Agent client   | MCP server developer        | Minutes                 | `configureElicitationHandlers()`            |
+| **Workflow approval**  | Durable application task or tool operation | Agent application developer | Months or years         | `waitForApproval()`                         |
+| **Code Mode approval** | Connector call in model-generated code     | Code Mode Agent developer   | Until configured expiry | `requiresApproval`, `approve()`, `reject()` |
 
 ## Workflow-based approval
 
-For durable, multi-step processes, use [Cloudflare Workflows](/workflows/) with the `waitForApproval()` method. The workflow pauses until a human approves or rejects.
+Use [Cloudflare Workflows](/workflows/) when your application needs to hold a task or tool operation for as long as approval requires. `waitForApproval()` creates a durable gate backed by Cloudflare Workflows, so the wait can continue for months or longer without keeping an Agent running.
 
 ### Basic pattern
 
@@ -323,85 +323,43 @@ class ExpenseAgent extends Agent<Env, ExpenseState> {
 
 ## Durable Code Mode approvals
 
-Use the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) when model-generated code may call connectors with side effects. Mark a connector method with `requiresApproval: true`. The runtime records the pending action and pauses before the method executes.
+Use the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) for coding agents and other Agents that use the Code Mode pattern. Mark a connector method with `requiresApproval: true` to pause model-generated code before it invokes the underlying tool.
 
-Your application can show the pending method and arguments to a user, then call `runtime.approve({ executionId })` or `runtime.reject({ executionId, seq })`. Approval starts another pass with the same source code and execution ID. Previously completed calls replay from the durable log, the approved action executes, and the code continues. Pending approvals and execution history survive request completion and Durable Object hibernation.
+Your application can show the pending method and arguments to a user, then call `runtime.approve({ executionId })` or `runtime.reject({ executionId, seq })`. Approval starts another pass with the same source code and execution ID. Previously completed calls replay from the durable log, the approved connector call executes, and the generated code continues. Pending approvals and execution history survive request completion and Durable Object hibernation.
 
 For the execution and replay model, refer to [Approvals through abort and replay](/agents/tools/codemode/how-it-works/#approvals-through-abort-and-replay).
 
 ## MCP elicitation
 
-When building MCP servers with `McpAgent`, you can request user interaction during tool execution using **elicitation**. Form mode collects structured, non-sensitive input through the MCP client. URL mode asks the user to open an out-of-band flow, such as third-party authorization or payment.
+MCP elicitation lets an MCP server developer decide that a tool call needs more information or an out-of-band interaction. Your Agent acts as the MCP client: it presents the request to the user and returns their response. These interactions typically complete within minutes.
 
-### Form mode pattern
+Form mode collects structured, non-sensitive input. URL mode asks the user to open an out-of-band flow, such as third-party authorization or payment.
+
+Configure the user-facing handlers in `onStart()`:
 
 <TypeScriptExample>
 
 ```ts
-import { McpAgent } from "agents/mcp";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
+import { Agent } from "agents";
+import type { ElicitRequest, ElicitResult } from "agents/mcp";
 
-type State = { counter: number };
+export class MyAgent extends Agent<Env> {
+	onStart() {
+		this.mcp.configureElicitationHandlers({
+			form: (request, serverId) =>
+				this.forwardElicitationToUser(request, serverId),
+			url: (request, serverId) =>
+				this.forwardElicitationToUser(request, serverId),
+		});
+	}
 
-export class CounterMCP extends McpAgent<Env, State, {}> {
-	server = new McpServer({
-		name: "counter-server",
-		version: "1.0.0",
-	});
-
-	initialState: State = { counter: 0 };
-
-	async init() {
-		this.server.tool(
-			"increase-counter",
-			"Increase the counter by a user-specified amount",
-			{ confirm: z.boolean().describe("Do you want to increase the counter?") },
-			async ({ confirm }, extra) => {
-				if (!confirm) {
-					return { content: [{ type: "text", text: "Cancelled." }] };
-				}
-
-				// Request additional input from the user
-				const userInput = await this.server.server.elicitInput(
-					{
-						message: "By how much do you want to increase the counter?",
-						requestedSchema: {
-							type: "object",
-							properties: {
-								amount: {
-									type: "number",
-									title: "Amount",
-									description: "The amount to increase the counter by",
-								},
-							},
-							required: ["amount"],
-						},
-					},
-					{ relatedRequestId: extra.requestId },
-				);
-
-				// Check if user accepted or cancelled
-				if (userInput.action !== "accept" || !userInput.content) {
-					return { content: [{ type: "text", text: "Cancelled." }] };
-				}
-
-				// Use the input
-				const amount = Number(userInput.content.amount);
-				this.setState({
-					...this.state,
-					counter: this.state.counter + amount,
-				});
-
-				return {
-					content: [
-						{
-							type: "text",
-							text: `Counter increased by ${amount}, now at ${this.state.counter}`,
-						},
-					],
-				};
-			},
+	private forwardElicitationToUser(
+		request: ElicitRequest,
+		serverId: string,
+	): Promise<ElicitResult> {
+		// Present the request in your UI and resolve after the user responds.
+		throw new Error(
+			`Implement elicitation for ${serverId}: ${request.params.message}`,
 		);
 	}
 }
@@ -409,9 +367,9 @@ export class CounterMCP extends McpAgent<Env, State, {}> {
 
 </TypeScriptExample>
 
-For URL mode and complete server-side requirements, refer to [McpAgent elicitation](/agents/model-context-protocol/apis/agent-api/#elicitation). Agents acting as MCP clients can handle both modes with [`configureElicitationHandlers()`](/agents/model-context-protocol/apis/client-api/#configureelicitationhandlers).
+For the complete form, URL, and browser forwarding patterns, refer to [MCP client elicitation](/agents/model-context-protocol/apis/client-api/#elicitation). For the server-side request API, refer to [McpAgent elicitation](/agents/model-context-protocol/apis/agent-api/#elicitation).
 
-## Building approval UIs
+## Build Workflow approval UIs
 
 ### Pending approvals list
 
@@ -457,7 +415,7 @@ function PendingApprovals() {
 }
 ```
 
-## Multi-approver patterns
+## Add multiple Workflow approvers
 
 For sensitive operations requiring multiple approvers:
 
