@@ -146,7 +146,7 @@ flowchart TB
 
 ### Prerequisites
 
-- Cloudflare Zero Trust account with [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/)
+- Cloudflare Zero Trust account with [dedicated egress IPs](/cloudflare-one/traffic-policies/policy-types/egress-policies/dedicated-egress-ips/)
 - S3 bucket to be protected by Cloudflare Zero Trust
 
 ### 1. Set up a bucket policy to restrict access to a specific IP address
@@ -193,7 +193,7 @@ A bucket website endpoint will be available at `http://<your-S3-bucket02>.s3-web
 ### 3. Setup a dedicated egress IP policy
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Egress policies**. Select **Add a policy**.
-2. Create a policy that specifies which proxied traffic Gateway should assign a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to. For more information, refer to [Egress policies](/cloudflare-one/traffic-policies/egress-policies/).
+2. Create a policy that specifies which proxied traffic Gateway should assign a [dedicated egress IP](/cloudflare-one/traffic-policies/policy-types/egress-policies/dedicated-egress-ips/) to. For more information, refer to [Egress policies](/cloudflare-one/traffic-policies/policy-types/egress-policies/).
 3. In **Select an egress IP**, choose _Use dedicated Cloudflare egress IPs_. Select the dedicated egress IP defined in your bucket policy.
 4. Select **Create policy**.
 

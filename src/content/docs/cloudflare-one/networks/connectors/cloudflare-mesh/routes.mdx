@@ -191,7 +191,7 @@ For production site-to-site deployments, consider enabling [high availability](/
 
 ## DNS filtering
 
-To filter DNS queries from the subnet using [Cloudflare Gateway](/cloudflare-one/traffic-policies/dns-policies/):
+To filter DNS queries from the subnet using [Cloudflare Gateway](/cloudflare-one/traffic-policies/policy-types/dns-policies/):
 
 1. **Configure DNS on your router**: Point your router's DNS to the Gateway resolver IPs:
    - `172.64.36.1`
@@ -205,7 +205,7 @@ To filter DNS queries from the subnet using [Cloudflare Gateway](/cloudflare-one
    - The subnet's internal DNS resolver IP
    - Gateway initial resolved IP range: `100.80.0.0/16` (IPv4) and `2606:4700:0cf1:4000::/64` (IPv6)
 
-Gateway logs DNS queries with the private source IP of the originating device. You can use this to create [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) for internal DNS records.
+Gateway logs DNS queries with the private source IP of the originating device. You can use this to create [resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) for internal DNS records.
 
 ## Hostname routes
 
@@ -285,10 +285,10 @@ If the node cannot resolve the hostname on its own, the simplest option is to ad
 
 #### Split DNS: DNS and application traffic use different connectors
 
-You only need a Gateway [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) when the DNS query must be sent to a **different** connector than the application traffic — for example, the internal DNS server sits behind one Mesh node or Cloudflare Tunnel, while the application is reached through another. In that case:
+You only need a Gateway [resolver policy](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) when the DNS query must be sent to a **different** connector than the application traffic — for example, the internal DNS server sits behind one Mesh node or Cloudflare Tunnel, while the application is reached through another. In that case:
 
 1. Add a [CIDR route](#add-a-route) for the DNS server's IP so Gateway can reach it through the connector where the DNS server lives (a Mesh node or a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)).
-2. Create a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) that sends DNS queries for the hostname (or its domain) to that internal DNS server.
+2. Create a [resolver policy](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) that sends DNS queries for the hostname (or its domain) to that internal DNS server.
 
 :::note[Where to run the DNS server]
 
@@ -303,7 +303,7 @@ For a **public** hostname, the Mesh node handles resolution: Gateway sends the D
 
 ### Secure hostname traffic
 
-After adding a hostname route, secure it with either an [Access self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) or [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/). For details and examples, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#3-recommended-filter-network-traffic-with-gateway).
+After adding a hostname route, secure it with either an [Access self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) or [Gateway network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/). For details and examples, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#3-recommended-filter-network-traffic-with-gateway).
 
 ### Limitations
 

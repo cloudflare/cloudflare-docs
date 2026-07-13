@@ -53,7 +53,7 @@ Gateway supports several policy types because network traffic can be inspected a
 
 <Details header="Packet filtering">
 
-**[Packet filtering](/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/)** inspects raw network packets and blocks traffic based on properties like source IP address or protocol. It does not need to know who the user is or what session they belong to.
+**[Packet filtering](/cloudflare-one/traffic-policies/policy-types/packet-filtering/network-firewall-overview/)** inspects raw network packets and blocks traffic based on properties like source IP address or protocol. It does not need to know who the user is or what session they belong to.
 
 Use packet filtering to drop unwanted traffic before it reaches any other policy.
 
@@ -61,7 +61,7 @@ Use packet filtering to drop unwanted traffic before it reaches any other policy
 
 <Details header="DNS policies">
 
-**[DNS policies](/cloudflare-one/traffic-policies/dns-policies/)** check every DNS query your users make. When a query matches a policy rule, Gateway can block the domain from resolving — the site never loads because the domain name is never translated to an IP address.
+**[DNS policies](/cloudflare-one/traffic-policies/policy-types/dns-policies/)** check every DNS query your users make. When a query matches a policy rule, Gateway can block the domain from resolving — the site never loads because the domain name is never translated to an IP address.
 
 DNS policies act at the earliest stage of a connection, before any content is fetched. This makes them the fastest policy type to deploy and the broadest in scope. For more information on [DNS filtering](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/), refer to the Cloudflare Learning Center.
 
@@ -71,7 +71,7 @@ Use DNS policies to block malicious domains, restrict content categories, or pre
 
 <Details header="Network policies">
 
-**[Network policies](/cloudflare-one/traffic-policies/network-policies/)** inspect individual TCP, UDP, and Generic Routing Encapsulation (GRE) packets. They can match on IP addresses, ports, protocols, and the server name sent at the start of an encrypted connection (Server Name Indication, or SNI).
+**[Network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/)** inspect individual TCP, UDP, and Generic Routing Encapsulation (GRE) packets. They can match on IP addresses, ports, protocols, and the server name sent at the start of an encrypted connection (Server Name Indication, or SNI).
 
 Use network policies to block access to specific ports or non-HTTP services such as SSH and RDP.
 
@@ -79,15 +79,15 @@ Use network policies to block access to specific ports or non-HTTP services such
 
 <Details header="HTTP policies">
 
-**[HTTP policies](/cloudflare-one/traffic-policies/http-policies/)** inspect the full content of web requests — including URLs, headers, and uploaded or downloaded files. Gateway decrypts HTTPS traffic so it can examine what DNS and network policies cannot see. This requires installing a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on user devices.
+**[HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/)** inspect the full content of web requests — including URLs, headers, and uploaded or downloaded files. Gateway decrypts HTTPS traffic so it can examine what DNS and network policies cannot see. This requires installing a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on user devices.
 
-Use HTTP policies to block specific URLs, scan file uploads for sensitive data, block malware in downloads, [quarantine suspicious files](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) for sandbox analysis, and control which accounts users can sign in to. For example, allow your company Google Workspace account but block personal Gmail.
+Use HTTP policies to block specific URLs, scan file uploads for sensitive data, block malware in downloads, [quarantine suspicious files](/cloudflare-one/traffic-policies/policy-types/http-policies/file-sandboxing/) for sandbox analysis, and control which accounts users can sign in to. For example, allow your company Google Workspace account but block personal Gmail.
 
 </Details>
 
 <Details header="Egress policies">
 
-**[Egress policies](/cloudflare-one/traffic-policies/egress-policies/)** control how traffic leaves your network by assigning fixed IP addresses that belong to your organization. Third-party services can recognize these IPs as yours.
+**[Egress policies](/cloudflare-one/traffic-policies/policy-types/egress-policies/)** control how traffic leaves your network by assigning fixed IP addresses that belong to your organization. Third-party services can recognize these IPs as yours.
 
 Use egress policies to connect to partners or services that only allow traffic from a known list of IP addresses.
 
@@ -95,7 +95,7 @@ Use egress policies to connect to partners or services that only allow traffic f
 
 <Details header="Resolver policies">
 
-**[Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/)** send DNS queries to specific DNS servers instead of the default Cloudflare resolver.
+**[Resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/)** send DNS queries to specific DNS servers instead of the default Cloudflare resolver.
 
 Use resolver policies to resolve private hostnames on your internal network, route queries to your own DNS servers for compliance, or reach internal resources while connected through Cloudflare One.
 

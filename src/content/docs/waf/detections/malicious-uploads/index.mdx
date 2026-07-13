@@ -24,7 +24,7 @@ This feature is available to customers on an Enterprise plan with a paid add-on.
 
 Once you turn on this detection, Cloudflare inspects all incoming traffic and identifies <GlossaryTooltip term="content object" link="#what-is-a-content-object">content objects</GlossaryTooltip> automatically.
 
-When Cloudflare detects one or more content objects in a request, it sends them to an antivirus (AV) scanner for analysis. The AV scanner is the same one used in [Cloudflare Zero Trust](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/).
+When Cloudflare detects one or more content objects in a request, it sends them to an antivirus (AV) scanner for analysis. The AV scanner is the same one used in [Cloudflare Zero Trust](/cloudflare-one/traffic-policies/policy-types/http-policies/antivirus-scanning/).
 
 Based on the scan results, the detection populates [fields](#content-scanning-fields) you can reference in rule expressions. For example, you can create a rule to block requests with malicious files, or a more specific rule that also matches on file size, file type, or URI path.
 

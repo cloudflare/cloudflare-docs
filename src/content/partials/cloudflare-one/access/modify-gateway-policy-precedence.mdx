@@ -4,11 +4,11 @@ params:
   - protocol
 ---
 
-By default, Cloudflare will evaluate Access application policies after evaluating all [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/). To evaluate Access applications before or after specific Gateway policies:
+By default, Cloudflare will evaluate Access application policies after evaluating all [Gateway network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/). To evaluate Access applications before or after specific Gateway policies:
 
 <ol>
 <li>
-In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**. In **Network**, [create a Network policy](/cloudflare-one/traffic-policies/network-policies/) with the following configuration:
+In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**. In **Network**, [create a Network policy](/cloudflare-one/traffic-policies/policy-types/network-policies/) with the following configuration:
 
     | Selector                     | Operator | Value     | Action |
     | ---------------------------- | -------- | --------- | ------ |

@@ -188,7 +188,7 @@ function FindProxyForURL(url, host) {
 When using PAC files for public Internet browsing (not just internal services), you may need to bypass the proxy for certain domains to prevent website functionality issues. The following are common scenarios where your proxy may interfere with traffic.
 
 :::note[Optional rules]
-These bypass rules are optional and depend on your organization's security requirements. Evaluate each bypass rule against your security policies before implementation. You can also use [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to selectively filter traffic from these domains while still routing them through the proxy.
+These bypass rules are optional and depend on your organization's security requirements. Evaluate each bypass rule against your security policies before implementation. You can also use [HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/) to selectively filter traffic from these domains while still routing them through the proxy.
 :::
 
 ### Font and static asset providers
@@ -235,7 +235,7 @@ if (
 }
 ```
 
-[Do Not Inspect (DNI) policies](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) will not prevent certificate pinning errors on these connections — bypassing certificate-pinned apps in the PAC file is required.
+[Do Not Inspect (DNI) policies](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) will not prevent certificate pinning errors on these connections — bypassing certificate-pinned apps in the PAC file is required.
 
 ## Test PAC files
 

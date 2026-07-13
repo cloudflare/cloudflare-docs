@@ -634,7 +634,7 @@ resource "cloudflare_zero_trust_access_policy" "isolate_contractor_access" {
 
 </TabItem> </Tabs>
 
-To restrict what users can do inside the isolated session, create a companion [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/) that matches traffic to the application domain. Set the action to **Isolate** and disable interactive controls in the [policy settings](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings).
+To restrict what users can do inside the isolated session, create a companion [Gateway HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/) that matches traffic to the application domain. Set the action to **Isolate** and disable interactive controls in the [policy settings](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings).
 
 <Details header="Example Gateway HTTP policy">
 
