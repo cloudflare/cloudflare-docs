@@ -41,7 +41,7 @@ Leave `flatten_cname` on (`flatten_cname: true`, the default) for normal IP-base
 | Load balancer hostname                                                     | Not the zone apex. `CNAME` records at a zone apex are not permitted, so the load balancer falls back to flattening at the apex.                       |
 | The selected endpoint                                                      | Steering selected this specific endpoint. Setting `flatten_cname: false` on endpoint A has no effect when steering picks endpoint B in the same pool. |
 
-If the selected endpoint has `flatten_cname: false` but any of the conditions above is not met, the load balancer flattens the CNAME and returns `A`/`AAAA` records as if the toggle were on.
+If the selected endpoint has `flatten_cname: false` but any of the conditions in the preceding table is not met, the load balancer flattens the CNAME and returns `A`/`AAAA` records as if the toggle were on.
 
 ## Configure CNAME flattening
 
