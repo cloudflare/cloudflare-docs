@@ -133,7 +133,7 @@ By default, TLS decryption can use both TLS version 1.2 and 1.3. However, some e
 
 When FIPS compliance is enabled, Gateway will only choose [FIPS-compliant cipher suites](#cipher-suites) when connecting to the origin. If the origin does not support FIPS-compliant ciphers, the request will fail.
 
-FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/traffic-policies/policy-types/http-policies/http3/). To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/policy-types/http-policies/http3/#enable-http3-inspection).
+FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/traffic-policies/tls-decryption/http3/). To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/tls-decryption/http3/#enable-http3-inspection).
 
 ## FedRAMP compliance
 

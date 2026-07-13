@@ -460,7 +460,7 @@ set interfaces ge-0/0/1 unit 0 family inet filter input CF_WAN_FBF_ALL
 Commit changes, then test traffic from a host on the 192.168.125.0/24 subnet to ensure it is forwarded through the Cloudflare WAN IPsec Tunnels.
 
 :::note
-If you have Cloudflare One configured to perform [HTTPS traffic inspection](/cloudflare-one/traffic-policies/policy-types/http-policies/tls-decryption/), ensure that you [install the Root CA certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) prior to testing connectivity to any HTTPS-based sites, otherwise you will receive untrusted certificate warning messages.
+If you have Cloudflare One configured to perform [HTTPS traffic inspection](/cloudflare-one/traffic-policies/tls-decryption/), ensure that you [install the Root CA certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) prior to testing connectivity to any HTTPS-based sites, otherwise you will receive untrusted certificate warning messages.
 :::
 
 ## Troubleshooting

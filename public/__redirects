@@ -3001,6 +3001,9 @@
 # Traffic policies: group policy types under policy-types/
 /cloudflare-one/traffic-policies/dns-policies/* /cloudflare-one/traffic-policies/policy-types/dns-policies/:splat 301
 /cloudflare-one/traffic-policies/network-policies/* /cloudflare-one/traffic-policies/policy-types/network-policies/:splat 301
+# Traffic policies: TLS decryption elevated to its own section
+/cloudflare-one/traffic-policies/http-policies/tls-decryption/* /cloudflare-one/traffic-policies/tls-decryption/:splat 301
+/cloudflare-one/traffic-policies/http-policies/http3/* /cloudflare-one/traffic-policies/tls-decryption/http3/:splat 301
 /cloudflare-one/traffic-policies/http-policies/* /cloudflare-one/traffic-policies/policy-types/http-policies/:splat 301
 /cloudflare-one/traffic-policies/egress-policies/* /cloudflare-one/traffic-policies/policy-types/egress-policies/:splat 301
 /cloudflare-one/traffic-policies/packet-filtering/* /cloudflare-one/traffic-policies/policy-types/packet-filtering/:splat 301

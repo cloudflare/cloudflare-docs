@@ -76,7 +76,7 @@ For example, if you use a third-party Secure Web Gateway to block `example.com`,
 
 ### Bypass TLS decryption
 
-[TLS decryption](/cloudflare-one/traffic-policies/policy-types/http-policies/tls-decryption/) allows Gateway to inspect the contents of HTTPS traffic by decrypting it, applying policies, and re-encrypting it. If TLS decryption is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. Some sites are incompatible with this process (for example, sites that use certificate pinning). To connect to those sites, add a Do Not Inspect HTTP policy for the application or domain.
+[TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/) allows Gateway to inspect the contents of HTTPS traffic by decrypting it, applying policies, and re-encrypting it. If TLS decryption is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. Some sites are incompatible with this process (for example, sites that use certificate pinning). To connect to those sites, add a Do Not Inspect HTTP policy for the application or domain.
 
 | Selector | Operator | Value        | Action         |
 | -------- | -------- | ------------ | -------------- |

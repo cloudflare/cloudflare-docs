@@ -24,7 +24,7 @@ To scan AI prompts and responses without Gateway HTTP filtering, you can also en
 
 - Set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/). This routes your users' web traffic through Cloudflare Gateway so it can be inspected.
   - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP traffic.
-- Turn on [TLS decryption](/cloudflare-one/traffic-policies/policy-types/http-policies/tls-decryption/#turn-on-tls-decryption). Because most web traffic is encrypted with HTTPS, Gateway must decrypt it before DLP can scan the request body for sensitive data.
+- Turn on [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/#turn-on-tls-decryption). Because most web traffic is encrypted with HTTPS, Gateway must decrypt it before DLP can scan the request body for sensitive data.
 
 ## 1. Configure a DLP profile
 

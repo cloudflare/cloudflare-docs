@@ -44,7 +44,7 @@ By default, TCP connection attempts will timeout after 30 seconds and idle conne
 
 The UDP proxy forwards UDP traffic such as VoIP, [internal DNS requests](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/private-dns/), and thick client applications.
 
-HTTP/3 uses the QUIC protocol over UDP. To inspect HTTP/3 traffic, turn on both TLS decryption and the UDP proxy. Gateway will then intercept the HTTP/3 connection and connect to the origin server over HTTP/2. Otherwise, HTTP/3 traffic will bypass inspection. For more information on browser-specific behavior, refer to [HTTP/3 inspection](/cloudflare-one/traffic-policies/policy-types/http-policies/http3/).
+HTTP/3 uses the QUIC protocol over UDP. To inspect HTTP/3 traffic, turn on both TLS decryption and the UDP proxy. Gateway will then intercept the HTTP/3 connection and connect to the origin server over HTTP/2. Otherwise, HTTP/3 traffic will bypass inspection. For more information on browser-specific behavior, refer to [HTTP/3 inspection](/cloudflare-one/traffic-policies/tls-decryption/http3/).
 
 ### ICMP (Internet Control Message Protocol)
 
