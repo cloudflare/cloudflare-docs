@@ -1,6 +1,6 @@
 ---
 title: Claim deployments (temporary accounts)
-description: Deploy Workers from AI agents with wrangler deploy --temporary or the REST API, then claim the deployment and temporary preview account.
+description: Deploy Workers before authentication, then claim the temporary account to keep its deployments and resources.
 pcx_content_type: how-to
 sidebar:
   order: 5.5
@@ -8,36 +8,43 @@ products:
   - workers
 ---
 
-import { LinkCard, PackageManagers, Steps } from "~/components";
+import {
+	LinkCard,
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+} from "~/components";
+
+Temporary preview accounts let you deploy and test [Workers](/workers/) before you authenticate with Cloudflare. You can then claim the account to keep its deployments and supported resources.
+
+[Cloudflare Drop](https://www.cloudflare.com/drop/) demonstrates this preview-and-claim lifecycle for static sites. Platforms can use the REST API to offer a similar experience for generated applications. For design context, refer to [Temporary Cloudflare Accounts for AI agents](https://blog.cloudflare.com/temporary-accounts/).
 
 ![Diagram showing an AI agent deploying, verifying, and redeploying a Worker to a temporary account, then claiming it after authentication and moving it to a permanent account](~/assets/images/workers/claim-deployments-flow.png)
 
-Use claim deployments when an AI agent or platform needs to deploy a Worker without an existing Cloudflare account, and without needing to first log in and authorize the [Wrangler CLI](/workers/wrangler/).
+## Choose an integration
 
-`wrangler deploy --temporary` creates or reuses a temporary preview account, deploys your Worker to a `workers.dev` URL, and prints a claim URL. Claim the temporary preview account within 60 minutes to keep the deployment and the Cloudflare resources created for it.
+Choose an integration based on who controls account provisioning:
 
-Platforms can also create temporary preview accounts directly through the Cloudflare REST API at `api.cloudflare.com`.
+| Integration                                                       | Use when                                                 | Provisioning behavior                                           |
+| ----------------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------- |
+| [Wrangler](/workers/wrangler/) with `wrangler deploy --temporary` | An AI agent or tool runs Wrangler                        | Wrangler creates or reuses the account and prints the claim URL |
+| REST API at `api.cloudflare.com/client/v4/provisioning/previews`  | Your platform backend controls the deployment experience | Your backend receives temporary credentials and the claim URL   |
 
-## Use cases
+For production and continuous integration and continuous deployment (CI/CD), use a permanent Cloudflare account. Authenticate with [`wrangler login`](/workers/wrangler/commands/general/#login) or a [Cloudflare API token](/fundamentals/api/get-started/create-token/).
 
-- AI-generated deployments
-- Background agent sessions
-- Prototyping new ideas quickly on a fresh Cloudflare account
-- First-time Workers evaluations
+## Deploy with Wrangler
 
-For production and continuous integration and continuous deployment (CI/CD), use a permanent Cloudflare account with [`wrangler login`](/workers/wrangler/commands/general/#login) or a [Cloudflare API token](/fundamentals/api/get-started/create-token/). Do not use `--temporary` when the [Wrangler CLI](/workers/wrangler/) is already authenticated.
+Use Wrangler when an AI agent or tool runs deployment commands. Wrangler manages the proof-of-work challenge, credentials, and claim URL.
 
-## Get started
-
-Use the following flow to let an AI agent discover and use temporary deploys. This flow requires [Wrangler](/workers/wrangler/) 4.102.0 or later. The agent starts with the normal deploy command. If no Cloudflare credentials are available, the [Wrangler CLI](/workers/wrangler/) tells it to rerun with `--temporary`.
+Wrangler 4.102.0 or later is required for the automatic unauthenticated discovery hint used in this flow.
 
 <Steps>
 
-1. Install or update the [Wrangler CLI](/workers/wrangler/) to version 4.102.0 or later.
+1. Install or update Wrangler to version 4.102.0 or later.
 
    For installation instructions, refer to [Install and update](/workers/wrangler/install-and-update/).
 
-2. Give your AI agent a deploy prompt.
+2. Give your AI agent a deployment prompt.
 
    For example:
 
@@ -45,70 +52,51 @@ Use the following flow to let an AI agent discover and use temporary deploys. Th
    Make a very simple Hello World Cloudflare Worker in TypeScript and deploy it using the Wrangler CLI. Do not ask me questions.
    ```
 
-3. The agent will run the deploy.
+3. Let the agent run `wrangler deploy`.
 
-   If the [Wrangler CLI](/workers/wrangler/) has no credentials, it prints output similar to the following:
+   In an unauthenticated, non-interactive session, Wrangler prints output similar to the following:
 
-   ```txt
+   ```txt output
    To continue without logging in, rerun this command with `--temporary`.
    Wrangler will use a temporary account and print a claim URL.
    ```
 
-   This output lets the agent discover the `--temporary` flag without you explicitly telling it to use the flag.
+   This output lets the agent discover `--temporary` without extra instructions.
 
-4. The agent will rerun the deploy with `--temporary`:
+4. Rerun the deployment with `--temporary`.
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy --temporary" />
 
-   The CLI prints output similar to the following:
+   Wrangler prints output similar to the following:
 
-   ```txt
+   ```txt output
    Continuing means you accept Cloudflare's Terms of Service (https://www.cloudflare.com/terms/) and Privacy Policy (https://www.cloudflare.com/privacypolicy/).
 
    Temporary account ready:
      Account:        example-name (created)
      Claim within:   60 minutes
-     Claim URL:      https://dash.cloudflare.com/claim-preview?claimToken=<TOKEN>
+     Claim URL:      https://dash.cloudflare.com/claim-preview?claimToken=<CLAIM_TOKEN>
 
    Uploaded example-worker
    Deployed example-worker triggers
      https://example-worker.example-name.workers.dev
    ```
 
-5. The agent can redeploy before you claim the temporary preview account.
+5. (Optional) Redeploy changes before claiming the account.
 
-   The [Wrangler CLI](/workers/wrangler/) caches the temporary preview account and reuses it while both the account and claim URL are valid. The output shows whether the account was created or reused. The CLI clears the cached temporary preview account when you run `wrangler login` or `wrangler logout`.
+   Wrangler caches and reuses the account while its credentials and claim URL remain valid. The output identifies whether Wrangler created or reused the account.
 
-   You can keep deploying changes with `wrangler deploy --temporary` while the temporary preview account remains active. If you do not claim the temporary preview account within 60 minutes, Cloudflare deletes it and its deployments.
+   Wrangler clears the cached account when you run `wrangler login` or `wrangler logout`.
+
+   Wrangler stores these temporary values in the user's global configuration directory. Do not share this directory between users.
 
 </Steps>
 
-## Claim the deployment
+## Integrate with the REST API
 
-To keep the deployment, open the claim URL within 60 minutes. Sign in to Cloudflare or create an account, then follow the dashboard prompts to claim the temporary preview account.
+Use the REST API when your platform backend controls deployments. The backend provisions an account before the user authenticates, then deploys supported resources.
 
-After you claim the temporary preview account, the Worker and Cloudflare resources created in that account remain available to you. To continue using the [Wrangler CLI](/workers/wrangler/) with the claimed account, run [`wrangler login`](/workers/wrangler/commands/general/#login), then deploy without `--temporary`.
-
-## Supported products and limits
-
-Temporary preview accounts currently support the following Cloudflare products and limits only. Cloudflare will add support for more products over time.
-
-| Supported product or resource                    | Temporary preview account limit                               |
-| ------------------------------------------------ | ------------------------------------------------------------- |
-| [Workers](/workers/)                             | Deployments on `workers.dev`                                  |
-| [Workers Static Assets](/workers/static-assets/) | Up to 1,000 files, with each asset up to 5 MiB                |
-| [Workers KV](/kv/)                               | Commands that use temporary credentials                       |
-| [D1](/d1/)                                       | One database, with up to 100 MB per database and 100 MB total |
-| [Durable Objects](/durable-objects/)             | Commands that use temporary credentials                       |
-| [Hyperdrive](/hyperdrive/)                       | Up to two database configurations and 10 connections          |
-| [Queues](/queues/)                               | Up to 10 queues                                               |
-| [SSL/TLS certificates](/ssl/)                    | Commands that use temporary credentials                       |
-
-## Use the REST API directly
-
-Use the REST API flow when your platform controls the deployment experience and needs to provision a temporary preview account before the user authenticates with Cloudflare.
-
-Make the provisioning calls from your backend. The response includes a short-lived `account.apiToken`, so do not expose the full response to browsers, client-side logs, or analytics.
+Make all provisioning and deployment calls from your backend. The provisioning response contains sensitive credentials and a claim URL.
 
 ```mermaid
 sequenceDiagram
@@ -125,13 +113,15 @@ sequenceDiagram
     Platform->>Cloudflare API: POST /client/v4/provisioning/previews
     Cloudflare API-->>Platform: account.id, account.apiToken, claim.url
     Platform->>Cloudflare API: Deploy with Authorization: Bearer account.apiToken
+    Platform->>Cloudflare API: GET /accounts/{account.id}/workers/subdomain
+    Cloudflare API-->>Platform: workers.dev subdomain
     Platform-->>User: Show deployment URL and claim.url
     User->>Dashboard: Open claim.url and claim account
 ```
 
-### Step 1: Request a challenge
+### Request a challenge
 
-Request a proof-of-work challenge before you create the temporary preview account:
+Request a proof-of-work challenge before creating the temporary account:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/provisioning/previews/challenge" \
@@ -156,11 +146,11 @@ The response includes the challenge token, seed, and difficulty parameters:
 }
 ```
 
-### Step 2: Solve the proof of work
+### Solve the proof of work
 
-Solve the challenge by computing a sequential SHA-256 checkpoint chain.
+Solve the challenge by computing a sequential SHA-256 checkpoint chain:
 
-Use this algorithm:
+<Steps>
 
 1. Decode `seed` as Base64URL. It must decode to 32 bytes.
 2. Compute `checkpoint[0] = SHA-256(seed)`.
@@ -168,18 +158,34 @@ Use this algorithm:
 4. Concatenate all `k + 1` checkpoints. Each checkpoint is 32 bytes.
 5. Encode the concatenated bytes with standard Base64. Send that value as `solution.checkpoints`.
 
-Wrangler rejects challenges when `k` or `g` is not a positive integer, when the decoded seed is not 32 bytes, or when `k * g` is greater than `64,000,000`. Use comparable bounds in your integration.
+</Steps>
 
-The following Node.js example returns the object required by the create request:
+Wrangler rejects challenges when `k` or `g` is not a positive integer. It also rejects a seed that does not decode to 32 bytes, or when `k * g` exceeds `64,000,000`.
 
-```js
+Use comparable bounds in your integration. The following Node.js example returns the object required by the create request:
+
+<TypeScriptExample filename="solve-preview-challenge.ts">
+
+```ts
 import { createHash } from "node:crypto";
 
-function sha256(value) {
+type PreviewChallenge = {
+	challengeToken: string;
+	seed: string;
+	k: number;
+	g: number;
+};
+
+function sha256(value: Uint8Array): Buffer {
 	return createHash("sha256").update(value).digest();
 }
 
-export function solvePreviewChallenge({ challengeToken, seed, k, g }) {
+export function solvePreviewChallenge({
+	challengeToken,
+	seed,
+	k,
+	g,
+}: PreviewChallenge) {
 	const seedBytes = Buffer.from(seed, "base64url");
 	if (seedBytes.length !== 32) {
 		throw new Error("seed must decode to 32 bytes");
@@ -194,7 +200,7 @@ export function solvePreviewChallenge({ challengeToken, seed, k, g }) {
 		throw new Error("k * g must not exceed 64,000,000");
 	}
 
-	const checkpoints = [];
+	const checkpoints: Buffer[] = [];
 	let hash = sha256(seedBytes);
 
 	checkpoints.push(hash);
@@ -216,9 +222,15 @@ export function solvePreviewChallenge({ challengeToken, seed, k, g }) {
 }
 ```
 
-### Step 3: Create a temporary preview account, deploy, and show the claim URL
+</TypeScriptExample>
 
-Before you create the account, require the user to accept Cloudflare's [Terms of Service](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/). Then send the proof-of-work solution with the required terms fields:
+:::caution[Production execution]
+This synchronous Node.js solver is CPU-intensive and blocks the event loop. Run it outside the main request thread, such as in a worker thread or background job.
+:::
+
+### Create a temporary account
+
+Require the user to accept Cloudflare's [Terms of Service](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/). Then send the proof-of-work solution with the required terms fields:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/provisioning/previews" \
@@ -235,7 +247,7 @@ curl "https://api.cloudflare.com/client/v4/provisioning/previews" \
   }'
 ```
 
-The response includes the temporary account credentials and claim URL:
+The response includes temporary credentials and a claim URL:
 
 ```json
 {
@@ -260,23 +272,11 @@ The response includes the temporary account credentials and claim URL:
 }
 ```
 
-Request a new challenge and account if either `account.expiresAt` or `claim.expiresAt` expires.
+Before using the response, confirm that `success` is `true` and that the required account and claim fields are present.
 
-#### Deploy with Wrangler
+### Deploy supported resources
 
-If your platform runs Wrangler for the user, pass the temporary account credentials to the Wrangler process. Set `CLOUDFLARE_ACCOUNT_ID` to `account.id` and `CLOUDFLARE_API_TOKEN` to `account.apiToken`:
-
-```bash
-CLOUDFLARE_ACCOUNT_ID="<TEMPORARY_ACCOUNT_ID>" \
-CLOUDFLARE_API_TOKEN="<TEMPORARY_ACCOUNT_API_TOKEN>" \
-npx wrangler deploy
-```
-
-Use the same environment variables for other supported Wrangler commands that create or deploy resources in the temporary account. Keep the temporary token in the execution environment, and do not write it to browser responses, client-side logs, or analytics.
-
-#### Deploy with the Cloudflare API
-
-You can also call supported Workers endpoints in the Cloudflare API directly. For example, you can upload and immediately deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
+Use `account.id` and `account.apiToken` with supported Cloudflare API endpoints. For example, upload and deploy a Worker with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/):
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$SCRIPT_NAME" \
@@ -286,20 +286,61 @@ curl "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/worke
   -F 'worker.mjs=@worker.mjs;type=application/javascript+module'
 ```
 
-To deploy static assets, bindings, versions, or other supported resources, use the same Cloudflare API calls that you use with a permanent account. Replace the account ID and API token with the temporary values returned by the provisioning response.
+Use temporary values only with supported resource operations. An operation available to permanent accounts is not automatically available to temporary accounts.
 
-Show `claim.url` to the user with the deployment URL. The claim URL lets the user sign in to Cloudflare or create an account, then claim the temporary preview account and its resources.
+To retrieve the account subdomain, call the [Get Subdomain endpoint](/api/operations/worker-subdomain-get-subdomain/) with the temporary credentials:
 
-After the user claims the account, continue future deployments through your normal authenticated Cloudflare account flow. Do not rely on the temporary account API token after it expires.
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
 
-## Limits
+For a script available on `workers.dev`, combine `result.subdomain` with the script name to create the deployment URL: `https://<SCRIPT_NAME>.<SUBDOMAIN>.workers.dev`.
 
-- Temporary preview accounts expire after 60 minutes if they are not claimed.
-- Before Cloudflare creates a temporary preview account, Cloudflare requires a proof-of-work check. The [Wrangler CLI](/workers/wrangler/) handles this automatically. REST API integrations must solve and return the challenge.
-- Cloudflare limits how quickly you can create temporary preview accounts. If the [Wrangler CLI](/workers/wrangler/) cannot create an account because too many temporary preview accounts were requested too quickly, wait before retrying or authenticate the CLI with a permanent Cloudflare account.
-- `--temporary` is only for unauthenticated use. If the [Wrangler CLI](/workers/wrangler/) can already use OAuth, `CLOUDFLARE_API_TOKEN`, or a global API key, `--temporary` returns an error.
-- `--temporary` is not a global flag. It is available only on commands that can use the short-lived temporary preview account token.
-- Claim URLs grant ownership of the temporary preview account. Temporary account API tokens grant access to deploy supported resources. Treat both as sensitive.
+Provide the deployment URL and `claim.url` to the intended user.
+
+## Claim the account
+
+The intended user must open the claim URL within 60 minutes. They sign in to Cloudflare or create an account, then follow the dashboard prompts.
+
+If they do not claim the account, Cloudflare deletes it and its resources. If `account.expiresAt` or `claim.expiresAt` passes before the claim, request a new challenge and account.
+
+After the claim, the Worker and supported resources remain in the claimed account.
+
+To continue with Wrangler, run [`wrangler login`](/workers/wrangler/commands/general/#login), then deploy without `--temporary`. Claiming does not grant the platform permanent access to the account. For later deployments, connect the claimed account through your normal authenticated flow, such as a [Cloudflare OAuth client](/fundamentals/oauth/create-an-oauth-client/).
+
+## Supported resources
+
+Temporary accounts support the following resources and limits. Support varies by operation, and temporary tokens do not grant every permanent-account API permission.
+
+| Supported product or resource                                        | Temporary preview account limit                               |
+| -------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [Workers](/workers/)                                                 | Deployments on `workers.dev`                                  |
+| [Workers Static Assets](/workers/static-assets/)                     | Up to 1,000 files, with each asset up to 5 MiB                |
+| [Workers KV](/kv/)                                                   | Commands that use temporary credentials                       |
+| [D1](/d1/)                                                           | One database, with up to 100 MB per database and 100 MB total |
+| [Durable Objects](/durable-objects/)                                 | Commands that use temporary credentials                       |
+| [Hyperdrive](/hyperdrive/)                                           | Up to two database configurations and 10 connections          |
+| [Queues](/queues/)                                                   | Up to 10 queues                                               |
+| [mTLS and CA certificates](/workers/wrangler/commands/certificates/) | `wrangler cert` upload, list, and delete operations           |
+
+## Security and limits
+
+### Protect temporary values
+
+`account.apiToken` grants access to supported resources, while `claim.url` grants account ownership. Store both only in backend storage or server-side session storage scoped to the intended user.
+
+Never expose `account.apiToken` in browser responses or client-side code. Deliver `claim.url` only to the intended user.
+
+Exclude both values from logs, analytics, and support telemetry. Delete stored copies when they are no longer needed and no later than either returned expiration time.
+
+### Limits
+
+- Cloudflare requires a proof-of-work check before creating an account. Wrangler handles the check, while REST integrations must return a solution.
+- Cloudflare rate limits temporary account creation. Wait before retrying, or authenticate with a permanent account.
+- `--temporary` supports unauthenticated use only. Existing OAuth, API token, or global API key credentials cause an error.
+- `--temporary` is not a global flag. Only commands that support temporary credentials include it.
+- Temporary accounts are unavailable when the Cloudflare API compliance region is not set to `public`.
 - Cloudflare applies additional abuse prevention checks to temporary preview accounts.
 
 ## Related resources
