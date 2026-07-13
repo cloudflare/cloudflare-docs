@@ -99,7 +99,7 @@ const showFeedback = feedback !== false && !isCustom;
       <div class="flex-1 mx-auto w-full flex flex-col">
         <div class="flex flex-1">
           {showSidebar && (
-            <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
+            <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 max-h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
               {hasSidebar ? (
                 <div data-sidebar-home class="flex-1">
                   <div data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8">
@@ -222,7 +222,7 @@ const showFeedback = feedback !== false && !isCustom;
                     )}
                     {/* `description` is meta-only (head tags via BaseLayout), matching
                         upstream cloudflare-docs which never renders it on the page. */}
-                    <PageActions markdownUrl={markdownUrl} lastUpdated={lastUpdated} class="mt-3" />
+                    <PageActions lastUpdated={lastUpdated} class="mt-3" />
                     {(markdownUrl || audience === "human") && (
                       audience === "human" ? (
                         <div class="mt-3 mb-6 flex items-center gap-3" role="none">
@@ -258,7 +258,7 @@ const showFeedback = feedback !== false && !isCustom;
           </main>
 
           {headings !== false && (
-            <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
+            <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
               <div class="pt-6 pb-8 pl-8 pr-6">
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
                 {(showFeedback || showActions) && (
@@ -271,7 +271,7 @@ const showFeedback = feedback !== false && !isCustom;
             </aside>
           )}
             </div>
-            <Footer class="mt-16" />
+            <Footer class:list={["mt-16", headings !== false && "xl:mr-(--nb-toc-width)"]} envelope="docs" wide={wide} />
           </div>
         </div>
       </div>
