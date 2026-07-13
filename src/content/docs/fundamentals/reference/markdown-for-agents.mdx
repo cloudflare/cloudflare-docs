@@ -86,7 +86,8 @@ Because the body is replaced with converted Markdown, the following changes are 
 
 - `Content-Type` is set to `text/markdown; charset=utf-8`.
 - `Vary` includes `Accept` (any `Vary` dimensions your origin already declared are preserved) so that caches store separate variants for Markdown and HTML.
-- Headers that describe the original body are removed, because they no longer match the converted response: `Content-Length`, `Content-Encoding`, `Content-Range`, `Transfer-Encoding`, `ETag`, and `Last-Modified`. `ETag` and `Last-Modified` are dropped because conditional requests (`If-None-Match`, `If-Modified-Since`) cannot be honored for converted responses.
+- `Content-Length` is recalculated to match the size of the Markdown response.
+- Headers that describe the original body are removed, because they no longer match the converted response: `Content-Encoding`, `Content-Range`, `Transfer-Encoding`, `ETag`, and `Last-Modified`. `ETag` and `Last-Modified` are dropped because conditional requests (`If-None-Match`, `If-Modified-Since`) cannot be honored for converted responses.
 
 Markdown for Agents also adds the token count headers described below.
 
