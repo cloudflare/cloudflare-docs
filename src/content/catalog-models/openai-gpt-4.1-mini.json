@@ -7151,6 +7151,159 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-4.1-mini\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting the model use OpenAI's built-in web search tool to answer with current information",
+			"input": {
+				"input": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+				"max_output_tokens": 4096,
+				"tools": [
+					{
+						"type": "web_search_preview"
+					}
+				]
+			},
+			"output": {
+				"text": "Here are the top news stories about Cloudflare from June 15 to June 22, 2026:\n\n- **Cloudflare Launches Partner Program for SASE and AI Security Deployment**: On June 17, 2026, Cloudflare introduced the Cloudflare One Design Partner Designation, a channel program providing select global partners with technical resources and financial support to deploy its Secure Access Service Edge (SASE) platform. The initial partners include Arctiq, Consortium, CMT, Presidio, and The Missing Link. Additionally, Cloudflare unveiled the Cloudflare One Stack, a library of AI tools designed to assist security teams in evaluating, deploying, and managing the Cloudflare One platform. ([streetinsider.com](https://www.streetinsider.com/Corporate%2BNews/Cloudflare%2Blaunches%2Bpartner%2Bprogram%2Bfor%2BSASE%2Band%2BAI%2Bsecurity%2Bdeployment/26657730.html?utm_source=openai))\n\n- **Cloudflare Expands AI Security with Ping Identity Partnership at the Edge**: On June 17, 2026, Cloudflare announced a partnership with Ping Identity to enhance AI security by extending enterprise-scale identity enforcement to the edge. This collaboration focuses on real-time authorization, monitoring, and policy enforcement for AI agents running on Cloudflare\u2019s global network, expanding Zero Trust controls to AI-powered edge workloads outside traditional cloud environments. ([simplywall.st](https://simplywall.st/stocks/us/software/nyse-net/cloudflare/news/cloudflare-net-expands-ai-security-with-ping-identity-partne?utm_source=openai))\n\n- **Cloudflare Network Disruption Triggers Widespread Internet Outages**: On June 22, 2026, a significant global network disruption at Cloudflare caused widespread outages for millions of internet users, affecting major platforms like X, Reddit, and Zoom. The incident began around 10 a.m. EST, with users reporting persistent API authorization errors and dashboard issues. Cloudflare identified the technical issue and implemented a fix across the network. ([harianbasis.co](https://www.harianbasis.co/en/cloudflare-network-disruption-internet-outage?utm_source=openai)) "
+			},
+			"raw_response": {
+				"id": "resp_0cab0a66e314d8de016a398f5f89108199976c9781f9d62782",
+				"object": "response",
+				"created_at": 1782157151,
+				"model": "gpt-4.1-mini-2025-04-14",
+				"output": [
+					{
+						"id": "ws_0cab0a66e314d8de016a398f607314819994386a4692610288",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare news April 2024"
+							],
+							"query": "Cloudflare news April 2024"
+						}
+					},
+					{
+						"id": "msg_0cab0a66e314d8de016a398f6195c08199b60676eda470d4ad",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"end_index": 862,
+										"start_index": 671,
+										"title": "Cloudflare launches partner program for SASE and AI security deployment",
+										"url": "https://www.streetinsider.com/Corporate%2BNews/Cloudflare%2Blaunches%2Bpartner%2Bprogram%2Bfor%2BSASE%2Band%2BAI%2Bsecurity%2Bdeployment/26657730.html?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1510,
+										"start_index": 1347,
+										"title": "Cloudflare (NET) Expands AI Security With Ping Identity Partnership At The Edge - Simply Wall St News",
+										"url": "https://simplywall.st/stocks/us/software/nyse-net/cloudflare/news/cloudflare-net-expands-ai-security-with-ping-identity-partne?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 2083,
+										"start_index": 1970,
+										"title": "Cloudflare Network Disruption Triggers Widespread Internet Outages",
+										"url": "https://www.harianbasis.co/en/cloudflare-network-disruption-internet-outage?utm_source=openai"
+									}
+								],
+								"logprobs": [],
+								"text": "Here are the top news stories about Cloudflare from June 15 to June 22, 2026:\n\n- **Cloudflare Launches Partner Program for SASE and AI Security Deployment**: On June 17, 2026, Cloudflare introduced the Cloudflare One Design Partner Designation, a channel program providing select global partners with technical resources and financial support to deploy its Secure Access Service Edge (SASE) platform. The initial partners include Arctiq, Consortium, CMT, Presidio, and The Missing Link. Additionally, Cloudflare unveiled the Cloudflare One Stack, a library of AI tools designed to assist security teams in evaluating, deploying, and managing the Cloudflare One platform. ([streetinsider.com](https://www.streetinsider.com/Corporate%2BNews/Cloudflare%2Blaunches%2Bpartner%2Bprogram%2Bfor%2BSASE%2Band%2BAI%2Bsecurity%2Bdeployment/26657730.html?utm_source=openai))\n\n- **Cloudflare Expands AI Security with Ping Identity Partnership at the Edge**: On June 17, 2026, Cloudflare announced a partnership with Ping Identity to enhance AI security by extending enterprise-scale identity enforcement to the edge. This collaboration focuses on real-time authorization, monitoring, and policy enforcement for AI agents running on Cloudflare\u2019s global network, expanding Zero Trust controls to AI-powered edge workloads outside traditional cloud environments. ([simplywall.st](https://simplywall.st/stocks/us/software/nyse-net/cloudflare/news/cloudflare-net-expands-ai-security-with-ping-identity-partne?utm_source=openai))\n\n- **Cloudflare Network Disruption Triggers Widespread Internet Outages**: On June 22, 2026, a significant global network disruption at Cloudflare caused widespread outages for millions of internet users, affecting major platforms like X, Reddit, and Zoom. The incident began around 10 a.m. EST, with users reporting persistent API authorization errors and dashboard issues. Cloudflare identified the technical issue and implemented a fix across the network. ([harianbasis.co](https://www.harianbasis.co/en/cloudflare-network-disruption-internet-outage?utm_source=openai)) "
+							}
+						],
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 320,
+					"output_tokens": 477,
+					"total_tokens": 797,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1782157156,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 4096,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"context": null,
+					"effort": null,
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [
+					{
+						"type": "web_search_preview",
+						"search_content_types": [
+							"text"
+						],
+						"search_context_size": "medium",
+						"user_location": {
+							"type": "approximate",
+							"city": null,
+							"country": "US",
+							"region": null,
+							"timezone": null
+						}
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1-mini',\n  {\n    input: 'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n    max_output_tokens: 4096,\n    tools: [{ type: 'web_search_preview' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-4.1-mini\",\n  \"input\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n  \"max_output_tokens\": 4096,\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
