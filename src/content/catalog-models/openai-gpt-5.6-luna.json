@@ -1,0 +1,404 @@
+{
+	"model_id": "openai/gpt-5.6-luna",
+	"provider_id": "openai",
+	"name": "GPT-5.6 Luna",
+	"description": "GPT-5.6 Luna is an OpenAI GPT-5.6 model optimized for cost-sensitive workloads, using the Responses API for efficient text generation.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multimodal",
+		"Responses API"
+	],
+	"context_length": 1050000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Rate Limiting Summary",
+			"description": "Basic Responses API request for a concise summary task",
+			"input": {
+				"input": "Summarize the benefits of API rate limiting in three bullets.",
+				"max_output_tokens": 256
+			},
+			"output": {
+				"text": "- **Protects system stability:** Prevents overload, reduces outages, and ensures predictable performance during traffic spikes.\n- **Ensures fair access:** Stops individual users or applications from consuming disproportionate resources.\n- **Improves security and cost control:** Helps mitigate abuse, brute-force attacks, and unexpected infrastructure usage."
+			},
+			"raw_response": {
+				"id": "resp_0e481f0cb46bf357016a4fe99bd5fc8194b6ce2049aa65ab08",
+				"object": "response",
+				"created_at": 1783622043,
+				"status": "completed",
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1783622044,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 256,
+				"max_tool_calls": null,
+				"model": "gpt-5.6-luna",
+				"moderation": null,
+				"output": [
+					{
+						"id": "msg_0e481f0cb46bf357016a4fe99c2e288194a6fd0ce3f5f88786",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "- **Protects system stability:** Prevents overload, reduces outages, and ensures predictable performance during traffic spikes.\n- **Ensures fair access:** Stops individual users or applications from consuming disproportionate resources.\n- **Improves security and cost control:** Helps mitigate abuse, brute-force attacks, and unexpected infrastructure usage."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "medium",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 19,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cached_tokens": 0
+					},
+					"output_tokens": 66,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 85
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.6-luna',\n  {\n    input: 'Summarize the benefits of API rate limiting in three bullets.',\n    max_output_tokens: 256,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-5.6-luna\",\n  \"input\": \"Summarize the benefits of API rate limiting in three bullets.\",\n  \"max_output_tokens\": 256\n}'"
+				}
+			]
+		},
+		{
+			"name": "Pull Request Description",
+			"description": "Using instructions for a cost-sensitive drafting task",
+			"input": {
+				"input": "Write a brief pull request description for a bug fix that prevents duplicate webhook deliveries.",
+				"instructions": "Keep it under 100 words.",
+				"max_output_tokens": 256
+			},
+			"output": {
+				"text": "## Summary\nPrevents duplicate webhook deliveries by ensuring each event is processed only once, even when retries or concurrent requests occur.\n\n## Changes\n- Added idempotency checks for webhook events.\n- Prevented duplicate delivery attempts.\n- Added regression tests covering retries and concurrent processing.\n\n## Testing\nAll existing and new tests pass."
+			},
+			"raw_response": {
+				"id": "resp_0bed05adeda548a1016a4fe99d1e408194bb0375bad96ab71a",
+				"object": "response",
+				"created_at": 1783622045,
+				"status": "completed",
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1783622046,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": "Keep it under 100 words.",
+				"max_output_tokens": 256,
+				"max_tool_calls": null,
+				"model": "gpt-5.6-luna",
+				"moderation": null,
+				"output": [
+					{
+						"id": "msg_0bed05adeda548a1016a4fe99daa748194992854423ba08e72",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "## Summary\nPrevents duplicate webhook deliveries by ensuring each event is processed only once, even when retries or concurrent requests occur.\n\n## Changes\n- Added idempotency checks for webhook events.\n- Prevented duplicate delivery attempts.\n- Added regression tests covering retries and concurrent processing.\n\n## Testing\nAll existing and new tests pass."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "medium",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 33,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cached_tokens": 0
+					},
+					"output_tokens": 69,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 102
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.6-luna',\n  {\n    input:\n      'Write a brief pull request description for a bug fix that prevents duplicate webhook deliveries.',\n    instructions: 'Keep it under 100 words.',\n    max_output_tokens: 256,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-5.6-luna\",\n  \"input\": \"Write a brief pull request description for a bug fix that prevents duplicate webhook deliveries.\",\n  \"instructions\": \"Keep it under 100 words.\",\n  \"max_output_tokens\": 256\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.6-luna.png",
+	"metadata": {
+		"API": "Responses",
+		"Architecture": "Transformer"
+	},
+	"request_formats": [
+		"responses"
+	],
+	"banner": null,
+	"created_at": "2026-07-10 02:51:21",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {}
+						}
+					]
+				},
+				"instructions": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_output_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"reasoning": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"type": "string",
+							"enum": [
+								"none",
+								"low",
+								"medium",
+								"high"
+							]
+						}
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"input"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"output": {
+					"type": "array",
+					"items": {}
+				},
+				"output_text": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"failed",
+						"incomplete"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"output"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

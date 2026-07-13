@@ -123,8 +123,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @hannes-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
 /src/content/docs/dns/internal-dns/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @esomoza-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
 /src/content/docs/dns/private-origins/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @esomoza-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
-/src/content/docs/fundamentals/ @jhutchings1 @cloudflare/product-owners
-/src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
+/src/content/docs/fundamentals/ @jhutchings1 @cloudflare/product-owners @KaydeeDee
+/src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners @KaydeeDee
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
@@ -182,10 +182,10 @@ package.json @cloudflare/content-engineering
 /public/realtime/ @cloudflare/product-owners @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
 /src/content/docs/stream/ @tsmith512 @dcpena @cloudflare/product-owners @renandincer @third774
 /src/content/release-notes/stream.yaml @tsmith512 @dcpena @cloudflare/product-owners
-/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton
-/src/content/docs/dynamic-workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads
-/src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @vy-ton
-/src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @vy-ton
+/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1
+/src/content/docs/dynamic-workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1
+/src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @vy-ton @cloudflare/workers-runtime-1
+/src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @vy-ton @cloudflare/workers-runtime-1
 /src/content/release-notes/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/deploy-config @cloudflare/product-owners @irvinebroque @mikenomitch @MattieTK
 /src/content/docs/zaraz/ @dcpena @kathayl @jonnyparris @simonabadoiu @cloudflare/product-owners
 /src/content/release-notes/zaraz.yaml @jonnyparris @simonabadoiu @cloudflare/product-owners

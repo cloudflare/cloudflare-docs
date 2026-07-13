@@ -64,6 +64,23 @@ describe("resolveSocialImagePath", () => {
       resolveSocialImagePath({ productGroup: "not a group", exists: none }),
     ).toBe("/cf-twitter-card.png");
   });
+
+  test("changelog card beats config/product-group/files, loses to explicit prop", () => {
+    expect(
+      resolveSocialImagePath({
+        isChangelog: true,
+        configImage: "/cfg.png",
+        productGroup: "developer platform",
+        exists: existing("opengraph.png"),
+      }),
+    ).toBe("/changelog-preview.png");
+    expect(
+      resolveSocialImagePath({ socialImage: "/page.png", isChangelog: true, exists: none }),
+    ).toBe("/page.png");
+    expect(resolveSocialImagePath({ isChangelog: false, exists: none })).toBe(
+      "/cf-twitter-card.png",
+    );
+  });
 });
 
 describe("inferContentType", () => {

@@ -30,7 +30,7 @@ As long as there is enough allocated memory, Cloudflare does not clear items fro
 
 ## Does the DNS Firewall cache SERVFAIL?
 
-Yes. `SERVFAIL` is treated like any other negative answer for caching purposes. The default TTL is 30 seconds. You can use the [API](/api/resources/dns_firewall/methods/edit/) to set a different `negative_cache_ttl`.
+Yes. `SERVFAIL` is treated like any other negative answer for caching purposes. The default TTL is 30 seconds. You can set a different negative cache TTL on your cluster in the Cloudflare dashboard, or via the [API](/api/resources/dns_firewall/methods/edit/) (`negative_cache_ttl` parameter).
 
 ## Does DNS Firewall support EDNS Client Subnet (ECS)?
 
@@ -49,11 +49,11 @@ EDNS limits the effectiveness of the DNS cache.
 
 :::
 
-Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](/api/resources/dns_firewall/methods/edit/), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
+Some resolvers might not be sending any EDNS data. When you enable ECS fallback on your cluster in the Cloudflare dashboard — or set the `ecs_fallback` parameter to `true` via the [API](/api/resources/dns_firewall/methods/edit/) — DNS Firewall will forward the IP subnet of the resolver instead, only if there is no EDNS data present in the incoming DNS query.
 
 ## Does DNS Firewall cache negative answers?
 
-Yes. The default TTL is 30 seconds. You can set `negative_cache_ttl` via the [API](/api/resources/dns_firewall/methods/edit/). This will affect the TTL of responses with status `REFUSED`, `NXDOMAIN`, or `SERVFAIL`.
+Yes. The default TTL is 30 seconds. You can configure the negative cache TTL on your cluster in the Cloudflare dashboard, or via the [API](/api/resources/dns_firewall/methods/edit/) (`negative_cache_ttl` parameter). This will affect the TTL of responses with status `REFUSED`, `NXDOMAIN`, or `SERVFAIL`.
 
 ## How can I set PTR records for nameserver hostnames?
 
