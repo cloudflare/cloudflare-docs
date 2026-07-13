@@ -321,14 +321,6 @@ class ExpenseAgent extends Agent<Env, ExpenseState> {
 
 </WranglerConfig>
 
-## Durable Code Mode approvals
-
-Use the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) for coding agents and other Agents that use the Code Mode pattern. Mark a connector method with `requiresApproval: true` to pause model-generated code before it invokes the underlying tool.
-
-Your application can show the pending method and arguments to a user, then call `runtime.approve({ executionId })` or `runtime.reject({ executionId, seq })`. Approval starts another pass with the same source code and execution ID. Previously completed calls replay from the durable log, the approved connector call executes, and the generated code continues. Pending approvals and execution history survive request completion and Durable Object hibernation.
-
-For the execution and replay model, refer to [Approvals through abort and replay](/agents/tools/codemode/how-it-works/#approvals-through-abort-and-replay).
-
 ## MCP elicitation
 
 MCP elicitation lets an MCP server developer decide that a tool call needs more information or an out-of-band interaction. Your Agent acts as the MCP client: it presents the request to the user and returns their response. These interactions typically complete within minutes.
@@ -368,6 +360,105 @@ export class MyAgent extends Agent<Env> {
 </TypeScriptExample>
 
 For the complete form, URL, and browser forwarding patterns, refer to [MCP client elicitation](/agents/model-context-protocol/apis/client-api/#elicitation). For the server-side request API, refer to [McpAgent elicitation](/agents/model-context-protocol/apis/agent-api/#elicitation).
+
+## Durable Code Mode approvals
+
+Use the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) for coding agents and other Agents that use the Code Mode pattern. Mark a connector method with `requiresApproval: true` to pause model-generated code before it invokes the underlying tool.
+
+The following example marks a GitHub MCP tool as approval-gated, adds the connector to a durable runtime, and exposes methods that a UI can use to inspect, approve, or reject the pending action:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import {
+	createCodemodeRuntime,
+	DynamicWorkerExecutor,
+	McpConnector,
+	type CodemodeRuntimeHandle,
+	type ConnectorTool,
+	type McpConnectionLike,
+	type PendingAction,
+} from "@cloudflare/codemode";
+import { callable } from "agents";
+import { convertToModelMessages, stepCountIs, streamText } from "ai";
+import { model } from "./model";
+
+class GitHubConnector extends McpConnector<Env> {
+	constructor(
+		ctx: DurableObjectState,
+		env: Env,
+		private connection: McpConnectionLike,
+	) {
+		super(ctx, env);
+	}
+
+	override name() {
+		return "github";
+	}
+
+	protected override createConnection() {
+		return this.connection;
+	}
+
+	protected override tool(name: string, tool: ConnectorTool): ConnectorTool {
+		if (name === "create_issue") {
+			return { ...tool, requiresApproval: true };
+		}
+		return tool;
+	}
+}
+
+export class CodingAgent extends AIChatAgent<Env> {
+	private runtime(): CodemodeRuntimeHandle {
+		const server = this.mcp
+			.listServers()
+			.find((item) => item.name === "GitHub");
+		if (!server) throw new Error("GitHub MCP server is not registered.");
+
+		const connection = this.mcp.mcpConnections[server.id];
+		if (!connection) throw new Error("GitHub MCP connection is unavailable.");
+
+		return createCodemodeRuntime({
+			ctx: this.ctx,
+			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
+			connectors: [new GitHubConnector(this.ctx, this.env, connection)],
+		});
+	}
+
+	async onChatMessage() {
+		const result = streamText({
+			model,
+			messages: await convertToModelMessages(this.messages),
+			tools: { codemode: this.runtime().tool() },
+			stopWhen: stepCountIs(10),
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+
+	@callable()
+	async pendingApprovals(): Promise<PendingAction[]> {
+		return this.runtime().pending();
+	}
+
+	@callable()
+	async approveExecution(executionId: string) {
+		return this.runtime().approve({ executionId });
+	}
+
+	@callable()
+	async rejectExecution(executionId: string, seq: number): Promise<boolean> {
+		return this.runtime().reject({ executionId, seq });
+	}
+}
+```
+
+</TypeScriptExample>
+
+When generated code calls `github.create_issue()`, the runtime records the pending method and arguments, then pauses before the MCP tool executes. Approval starts another pass with the same source code and execution ID. Previously completed calls replay from the durable log, the approved call executes, and the generated code continues.
+
+Pending approvals and execution history survive request completion and Durable Object hibernation. For the execution and replay model, refer to [Approvals through abort and replay](/agents/tools/codemode/how-it-works/#approvals-through-abort-and-replay).
 
 ## Build Workflow approval UIs
 
@@ -486,19 +577,19 @@ class MultiApprovalAgent extends Agent<Env, State> {
 />
 
 <LinkCard
+	title="MCP clients"
+	href="/agents/model-context-protocol/apis/client-api/"
+	description="Handle elicitation requests in an Agent acting as an MCP client."
+/>
+
+<LinkCard
 	title="MCP servers"
 	href="/agents/model-context-protocol/apis/agent-api/"
-	description="Build MCP agents with elicitation."
+	description="Request form or URL elicitation from an MCP server."
 />
 
 <LinkCard
-	title="Email notifications"
-	href="/email-service/api/send-emails/workers-api/"
-	description="Send notifications for pending approvals."
-/>
-
-<LinkCard
-	title="Schedule tasks"
-	href="/agents/runtime/execution/schedule-tasks/"
-	description="Implement approval timeouts with schedules."
+	title="Durable Code Mode runtime"
+	href="/agents/tools/codemode/durable-runtime/"
+	description="Pause model-generated code for approval before connector calls."
 />
