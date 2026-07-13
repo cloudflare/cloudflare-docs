@@ -197,10 +197,19 @@ Review the documentation on [events and parameters](/workflows/build/events-and-
 ## WorkflowStepConfig
 
 ```ts
+export type WorkflowDynamicDelayContext = {
+	ctx: WorkflowStepContext;
+	error: Error;
+};
+
+export type WorkflowDelayFunction = (
+	input: WorkflowDynamicDelayContext,
+) => string | number | Promise<string | number>;
+
 export type WorkflowStepConfig = {
 	retries?: {
 		limit: number;
-		delay: string | number;
+		delay: string | number | WorkflowDelayFunction;
 		backoff?: WorkflowBackoff;
 	};
 	timeout?: string | number;
@@ -208,6 +217,7 @@ export type WorkflowStepConfig = {
 ```
 
 - A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
+- Set `retries.delay` to a fixed duration, or pass a `WorkflowDelayFunction` to calculate the next retry delay from the current step context and thrown error.
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 

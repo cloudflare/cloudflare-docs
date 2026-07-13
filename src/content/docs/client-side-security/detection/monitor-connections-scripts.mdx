@@ -72,6 +72,10 @@ To review the resources detected by Cloudflare:
 
 The All Reported Connections and All Reported Scripts dashboards show all the detected resources including infrequent or inactive ones, reported in the last 30 days. After 30 days without any report, Cloudflare will delete information about a previously reported resource, and it will no longer appear in any of the dashboards.
 
+:::note
+Scripts blocked by a [content security rule](/client-side-security/rules/) continue to appear in your monitored scripts list for as long as the browser keeps loading them. A blocked script is only removed after it has not been detected for 30 consecutive days.
+:::
+
 <Steps>
 	1. Go to the client-side resources page:
 
