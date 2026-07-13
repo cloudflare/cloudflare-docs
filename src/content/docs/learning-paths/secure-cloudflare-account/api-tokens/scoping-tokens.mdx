@@ -1,15 +1,14 @@
 ---
 title: Designing least-privilege tokens
+description: Learn how to scope API tokens to the minimum permissions needed, reducing the blast radius of a leaked credential.
 pcx_content_type: learning-unit
 sidebar:
   order: 3
 ---
 
-## Why this matters
-
 A token with more permissions than it needs is a liability. If a deployment pipeline's token also has DNS edit permissions, a compromised pipeline can modify your DNS records. Scope determines what an attacker can do with a stolen token.
 
-## Our recommendation
+## Recommendations
 
 Design each token to have exactly the permissions the workflow using it requires, and nothing more. Before creating a token, write down the specific API operations the workflow needs to perform. If you are not sure, start with less and expand as needed.
 

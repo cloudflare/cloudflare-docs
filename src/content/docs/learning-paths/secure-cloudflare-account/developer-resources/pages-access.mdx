@@ -1,15 +1,14 @@
 ---
 title: Pages deployment access controls
+description: Control who can trigger Cloudflare Pages deployments and restrict access to preview URLs and deploy hooks.
 pcx_content_type: learning-unit
 sidebar:
   order: 4
 ---
 
-## Why this matters
-
 Cloudflare Pages connects your code repository to Cloudflare's infrastructure. Every push to your repository can trigger a deployment. Without intentional access controls, a contributor with repository write access has indirect deployment access, deploy hooks can be discovered and triggered by unintended parties, and preview deployments can expose pre-production code publicly.
 
-## Our recommendation
+## Recommendations
 
 Treat Pages deployment access as part of your overall permission model. Decide explicitly who and what can trigger deployments, and configure branch controls to match how your team works.
 

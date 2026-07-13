@@ -1,15 +1,14 @@
 ---
 title: Tokens in CI/CD pipelines
+description: Secure Cloudflare API tokens in CI/CD pipelines by using platform secrets, scoping per pipeline, and rotating on a schedule.
 pcx_content_type: learning-unit
 sidebar:
   order: 4
 ---
 
-## Why this matters
-
 CI/CD pipelines are a common source of leaked credentials. Tokens get hardcoded in configuration files, committed to version control, printed in build logs, or inherited by forks of a repository. A leaked CI token can give an attacker the ability to deploy arbitrary code to your Workers, modify DNS records, or alter firewall rules, depending on what the token was scoped to.
 
-## Our recommendation
+## Recommendations
 
 Never hardcode a Cloudflare API token in your codebase. Always use your CI platform's native secrets management to store and inject tokens as environment variables.
 

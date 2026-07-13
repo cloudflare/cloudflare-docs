@@ -1,15 +1,14 @@
 ---
 title: Workers bindings and environment isolation
+description: Apply least-privilege bindings and separate production from staging environments to keep Workers from accessing resources they should not.
 pcx_content_type: learning-unit
 sidebar:
   order: 2
 ---
 
-## Why this matters
-
 A Worker only has access to the resources you explicitly bind to it. This is the security model: bindings are capabilities you grant deliberately. The underlying credential for each bound resource is never exposed to your Worker's code and cannot be leaked through it.
 
-## Our recommendation
+## Recommendations
 
 Apply least-privilege to every binding. Before adding one, confirm the Worker actually needs access to that resource. Separate bindings by environment — production Workers should not share bindings with preview or staging environments.
 

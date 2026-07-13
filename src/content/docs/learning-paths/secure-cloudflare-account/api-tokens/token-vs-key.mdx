@@ -1,17 +1,16 @@
 ---
 title: API tokens vs. global API keys
+description: Understand why scoped API tokens are more secure than global API keys and how to migrate your team off global keys.
 pcx_content_type: learning-unit
 sidebar:
   order: 2
 ---
 
-## Why this matters
-
 Cloudflare's legacy global API key grants full access to your entire account, covering every zone, every product, and every setting, with no way to restrict what it can do or which IP addresses can use it. There is no expiry. There is no per-key audit trail. If it leaks, the attacker has everything.
 
 API tokens were introduced to replace this. They are scoped, auditable, and can be configured to expire.
 
-## Our recommendation
+## Recommendations
 
 Use API tokens for everything. There is no use case where a global API key is the better choice for new integrations. If you currently use global API keys in any scripts or tools, treat migrating to tokens as a security debt item, not an optional improvement.
 

@@ -1,5 +1,6 @@
 ---
 title: Initial account security
+description: Configure authentication, super admin access, and account owner credentials before onboarding team members.
 pcx_content_type: learning-unit
 sidebar:
   order: 3
@@ -25,7 +26,7 @@ Super admin is the highest-privilege role in a Cloudflare account. It cannot be 
 
 1. **Ensure at least two people hold the super admin role.** If a single super admin loses access, account recovery becomes difficult. If you are not using SCIM, maintain a minimum of two super admins at all times.
 2. **If you use SCIM**, your IdP manages member provisioning and deprovisioning automatically, including super admin assignment. Privileged identity management (PIM) features built into enterprise IdPs — such as Microsoft Entra PIM or Okta Access Requests — allow users to request elevated permissions on demand rather than holding them permanently. This is the recommended approach for Enterprise customers.
-3. **Save your API key before configuring SSO or SCIM.** Store it in a password manager or secrets vault accessible to your security team. If your SSO or SCIM integration has a misconfiguration and locks you out of the dashboard, the API key lets you recover access programmatically.
+3. **Save a Cloudflare API token (either Account or user-scoped) with the `SSO Connector Edit` permission before configuring SSO or SCIM.** Store it in a password manager or secrets vault accessible to your security team. If your SSO or SCIM integration has a misconfiguration and locks you out of the dashboard, the API token lets you recover access programmatically.
 
 
 ### Account owner email

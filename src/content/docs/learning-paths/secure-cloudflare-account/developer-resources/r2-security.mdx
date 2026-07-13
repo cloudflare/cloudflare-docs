@@ -1,15 +1,14 @@
 ---
 title: Securing R2 object storage
+description: Keep R2 buckets private by default and control public access using custom domains, signed URLs, and CORS policies.
 pcx_content_type: learning-unit
 sidebar:
   order: 5
 ---
 
-## Why this matters
-
 R2 buckets are private by default, but it is easy to accidentally make one public. A misconfigured public bucket can expose data to the entire internet. Even when public access is intentional, it needs to be controlled.
 
-## Our recommendation
+## Recommendations
 
 Keep buckets private unless you have a specific reason to expose them. When you do need public access, put Cloudflare Access or WAF Token Authentication in front of it — do not rely on obscurity.
 

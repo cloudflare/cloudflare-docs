@@ -1,15 +1,14 @@
 ---
 title: DNS security
+description: Enable DNSSEC and audit DNS records for dangling entries to prevent cache poisoning and subdomain takeover attacks.
 pcx_content_type: learning-unit
 sidebar:
   order: 3
 ---
 
-## Why this matters
+DNS is the phonebook of the Internet. Attackers who can tamper with your DNS records can redirect your users, intercept traffic, and issue fraudulent TLS certificates. Two of the most common DNS-based attacks, DNS cache poisoning and subdomain takeover, are preventable with straightforward configuration.
 
-DNS is the phonebook of the internet. Attackers who can tamper with your DNS records can redirect your users, intercept traffic, and issue fraudulent TLS certificates. Two of the most common DNS-based attacks, DNS cache poisoning and subdomain takeover, are preventable with straightforward configuration.
-
-## Our recommendation
+## Recommendations
 
 Enable DNSSEC for every zone you control and review your DNS records for dangling entries that could be taken over by a third party.
 

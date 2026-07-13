@@ -1,11 +1,10 @@
 ---
 title: Securing KV, D1, and Durable Objects
+description: Apply least-privilege access patterns to KV namespaces, D1 databases, and Durable Objects to keep storage resources tightly scoped.
 pcx_content_type: learning-unit
 sidebar:
   order: 6
 ---
-
-## Why this matters
 
 KV namespaces, D1 databases, and Durable Objects are all private by design — they have no external HTTP endpoints and are not reachable without a Workers binding. The security model is simpler than R2, but there are still practices worth following to keep access tight.
 

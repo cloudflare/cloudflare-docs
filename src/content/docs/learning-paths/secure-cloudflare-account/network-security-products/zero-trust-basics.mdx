@@ -1,15 +1,14 @@
 ---
 title: Zero Trust Access for internal tools
+description: Replace VPN access with Cloudflare Access to protect internal tools using per-application, per-user policies enforced through your identity provider.
 pcx_content_type: learning-unit
 sidebar:
   order: 2
 ---
 
-## Why this matters
-
 VPNs give everyone on the network access to everything on the network. A compromised device or a leaked VPN credential can expose your entire internal infrastructure. Zero Trust Access inverts this: access to each internal application is granted explicitly, per user, per application, based on identity and policy.
 
-## Our recommendation
+## Recommendations
 
 Start with one internal application. Pick the highest-risk internal tool your team uses, such as an admin panel, an internal API, or a deployment dashboard, and put Cloudflare Access in front of it. The initial setup takes less than an hour.
 
@@ -26,7 +25,7 @@ Multiple IdPs and OTP can be configured simultaneously, allowing users to select
 
 ### Connect your application with Cloudflare Tunnel
 
-For self-hosted applications, Cloudflare Tunnel (`cloudflared`) is how your origin connects to Cloudflare's network without opening inbound firewall ports. The `cloudflared` daemon runs in your infrastructure and creates outbound-only connections to Cloudflare's edge. You can configure your firewall to block all inbound traffic and allow only these outbound connections, so your origin is never directly reachable from the internet.
+For self-hosted applications, Cloudflare Tunnel (`cloudflared`) is how your origin connects to Cloudflare's network without opening inbound firewall ports. The `cloudflared` daemon runs in your infrastructure and creates outbound-only connections to Cloudflare's edge. You can configure your firewall to block all inbound traffic and allow only these outbound connections, so your origin is never directly reachable from the Internet.
 
 The flow when a user requests access to a protected application:
 
@@ -49,4 +48,4 @@ For non-self-hosted applications, Access can add an authentication layer in fron
 - [Get started with Zero Trust](/cloudflare-one/setup/)
 - [Connect to Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Configure an identity provider](/cloudflare-one/integrations/identity-providers/)
-- [Replace your VPN learning path](/learning-paths/replace-vpn/) — a full walkthrough for teams migrating from VPN
+- [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/) — a full walkthrough for teams migrating from VPN
