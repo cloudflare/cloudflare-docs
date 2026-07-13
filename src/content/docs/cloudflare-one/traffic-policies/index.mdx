@@ -112,7 +112,7 @@ When users connect through the [Cloudflare One Client](/cloudflare-one/team-and-
 
 These signals can be combined with traffic selectors to create context-aware policies. For example, you can create an HTTP policy that allows access to a sensitive SaaS application only when the user belongs to a specific group **and** the device has disk encryption turned on.
 
-For details on building policies with identity selectors, refer to [Identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/).
+For details on building policies with identity selectors, refer to [Identity-based policies](/cloudflare-one/traffic-policies/reference/identity-selectors/).
 
 :::note
 When creating or editing policies, it may take up to 60 seconds for that policy to be updated across all of Cloudflare's data centers.
@@ -130,7 +130,7 @@ Before you create Cloudflare Gateway traffic policies, you need connect the devi
 
 1. Connect the devices or networks you want to protect.
 2. Verify that Gateway is receiving traffic from your devices.
-3. Set up recommended security policies — for example, block all [security threat categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories) with a DNS policy.
+3. Set up recommended security policies — for example, block all [security threat categories](/cloudflare-one/traffic-policies/reference/domain-categories/#security-categories) with a DNS policy.
 4. Add policies specific to your organization's needs.
 
 For example, if your goal is to prevent employees from accessing known malware domains, you would start by enrolling devices with the Cloudflare One Client (step 1), confirm DNS queries appear in your Gateway logs (step 2), then create a DNS policy that blocks all security-risk categories (step 3).
@@ -193,7 +193,7 @@ flowchart LR
 1. The user's device sends a request (DNS query, TCP connection, or HTTP request).
 2. The request reaches Cloudflare through an **on-ramp** — the Cloudflare One Client, a DNS resolver configuration, a proxy endpoint, or a network tunnel.
 3. Cloudflare processes the request at the **nearest edge location**, not a centralized data center. This keeps latency low regardless of where the user connects from.
-4. Gateway evaluates the request against your configured policies in [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/): DNS policies first, then network policies, then HTTP policies.
+4. Gateway evaluates the request against your configured policies in [order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/): DNS policies first, then network policies, then HTTP policies.
 5. If policies allow the request, Gateway proxies it to the destination server and inspects the response on the return path.
 
 For details on how Gateway proxies traffic and establishes connections, refer to [Proxy](/cloudflare-one/traffic-policies/proxy/).

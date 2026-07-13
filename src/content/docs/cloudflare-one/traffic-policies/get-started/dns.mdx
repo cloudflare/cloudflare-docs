@@ -77,7 +77,7 @@ A DNS policy has two parts: a **traffic condition** that defines which queries t
 2. In the **DNS** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, use the condition builder to define which DNS queries this policy applies to. Select a selector (such as **Security Categories**), an operator (such as **in**), and one or more values.
-5. Choose an **Action** to take when traffic matches the condition. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories):
+5. Choose an **Action** to take when traffic matches the condition. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/traffic-policies/reference/domain-categories/#security-categories):
    <Render
    	file="gateway/policies/block-security-categories"
    	product="cloudflare-one"
@@ -95,7 +95,7 @@ A DNS policy has two parts: a **traffic condition** that defines which queries t
    | Account | Zero Trust | Edit       |
 
 2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/account/find-account-and-zone-ids/) and API token.
-3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, the following request creates a policy that blocks all default [security categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories). The numeric IDs in the `traffic` field (such as `68`, `178`, `80`) correspond to Cloudflare's predefined security threat categories — refer to [domain categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories) for the full mapping. The `precedence` field controls evaluation order when multiple policies match (`0` means this policy is evaluated first).
+3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, the following request creates a policy that blocks all default [security categories](/cloudflare-one/traffic-policies/reference/domain-categories/#security-categories). The numeric IDs in the `traffic` field (such as `68`, `178`, `80`) correspond to Cloudflare's predefined security threat categories — refer to [domain categories](/cloudflare-one/traffic-policies/reference/domain-categories/#security-categories) for the full mapping. The `precedence` field controls evaluation order when multiple policies match (`0` means this policy is evaluated first).
 
    <APIRequest
    	path="/accounts/{account_id}/gateway/rules"

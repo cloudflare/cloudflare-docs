@@ -146,7 +146,7 @@ Block content categories which go against your organization's acceptable use pol
 
 Certain client applications, such as Zoom or Apple services, rely on certificate pinning. These applications verify they are connecting directly to their own servers and will reject Gateway's TLS inspection certificate. To avoid connection errors, you must add a Do Not Inspect HTTP policy for these applications.
 
-Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies), regardless of their position in the policy list. Cloudflare recommends moving your Do Not Inspect policies to the top of the list to reduce confusion.
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#http-policies), regardless of their position in the policy list. Cloudflare recommends moving your Do Not Inspect policies to the top of the list to reduce confusion.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

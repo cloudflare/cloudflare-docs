@@ -88,7 +88,7 @@ API value: `allow`
 
 </Details>
 
-Policies with Allow actions explicitly permit DNS queries to resolve. Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence), which means that if an Allow policy matches a query at a higher precedence than a Block policy, the query will be allowed to resolve. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
+Policies with Allow actions explicitly permit DNS queries to resolve. Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#order-of-precedence), which means that if an Allow policy matches a query at a higher precedence than a Block policy, the query will be allowed to resolve. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
 
 | Selector           | Operator | Value       | Action |
 | ------------------ | -------- | ----------- | ------ |
@@ -302,7 +302,7 @@ Each selector is evaluated during a specific phase of the DNS resolution process
 - **During DNS resolution** — Gateway inspects information discovered while resolving the query (for example, the authoritative nameserver IP).
 - **After DNS resolution** — Gateway inspects the DNS answer (for example, the resolved IP or CNAME record) after resolution completes.
 
-The Override action cannot be used with selectors evaluated during or after DNS resolution, because the override must be applied before the answer is returned. For more information on how evaluation phase interacts with precedence, refer to [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/#dns-policies).
+The Override action cannot be used with selectors evaluated during or after DNS resolution, because the override must be applied before the answer is returned. For more information on how evaluation phase interacts with precedence, refer to [order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#dns-policies).
 
 ### Application
 
@@ -445,7 +445,7 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 ### Request Context Categories
 
-Use this selector to match a dynamic list of [category IDs](/cloudflare-one/traffic-policies/domain-categories/#category-and-subcategory-ids) sent in the [EDNS (Extension Mechanisms for DNS)](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. EDNS allows extra metadata to be attached to a DNS query beyond the standard fields. Gateway reads category IDs from the EDNS OPT code `65050`.
+Use this selector to match a dynamic list of [category IDs](/cloudflare-one/traffic-policies/reference/domain-categories/#category-and-subcategory-ids) sent in the [EDNS (Extension Mechanisms for DNS)](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. EDNS allows extra metadata to be attached to a DNS query beyond the standard fields. Gateway reads category IDs from the EDNS OPT code `65050`.
 
 | UI name                    | API example                                 | Evaluation phase      |
 | -------------------------- | ------------------------------------------- | --------------------- |

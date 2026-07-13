@@ -3006,3 +3006,11 @@
 /cloudflare-one/traffic-policies/packet-filtering/* /cloudflare-one/traffic-policies/policy-types/packet-filtering/:splat 301
 /cloudflare-one/traffic-policies/resolver-policies/* /cloudflare-one/traffic-policies/policy-types/resolver-policies/:splat 301
 /cloudflare-one/traffic-policies/enable-ids/* /cloudflare-one/traffic-policies/policy-types/packet-filtering/ids/:splat 301
+
+# Traffic policies: group reference pages under reference/
+/cloudflare-one/traffic-policies/application-app-types/* /cloudflare-one/traffic-policies/reference/application-app-types/:splat 301
+/cloudflare-one/traffic-policies/domain-categories/* /cloudflare-one/traffic-policies/reference/domain-categories/:splat 301
+/cloudflare-one/traffic-policies/global-policies/* /cloudflare-one/traffic-policies/reference/global-policies/:splat 301
+/cloudflare-one/traffic-policies/identity-selectors/* /cloudflare-one/traffic-policies/reference/identity-selectors/:splat 301
+/cloudflare-one/traffic-policies/order-of-enforcement/* /cloudflare-one/traffic-policies/reference/order-of-enforcement/:splat 301
+/cloudflare-one/traffic-policies/expression-syntax/* /cloudflare-one/traffic-policies/reference/policy-expressions/:splat 301

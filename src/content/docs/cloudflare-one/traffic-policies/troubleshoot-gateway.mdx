@@ -58,7 +58,7 @@ A common point of confusion is how Gateway evaluates its different policy types 
 
 You have a high-precedence Allow or Do Not Scan policy for a specific application (such as Allow finance.example.com), but Gateway still block traffic with a low-precedence Block policy (such as Block All High-Risk Sites).
 
-The most important concept is [Gateway policy precedence](/cloudflare-one/traffic-policies/order-of-enforcement/), which Gateway enforces based on the policy's order number. A lower order number in the list means a higher precedence. Gateway stops processing further policies when it encounters the first rule that matches.
+The most important concept is [Gateway policy precedence](/cloudflare-one/traffic-policies/reference/order-of-enforcement/), which Gateway enforces based on the policy's order number. A lower order number in the list means a higher precedence. Gateway stops processing further policies when it encounters the first rule that matches.
 
 To resolve Gateway policy precedence issues:
 
