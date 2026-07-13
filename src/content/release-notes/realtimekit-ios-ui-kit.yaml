@@ -3,7 +3,7 @@ link: "/realtime/realtimekit/release-notes/ios-ui-kit/"
 productName: RealtimeKit iOS UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
-  - publish_date: "2026-06-24"
+  - publish_date: "2026-06-30"
     title: RealtimeKit iOS UI Kit 2.0.0
     description: |-
       **Breaking changes**

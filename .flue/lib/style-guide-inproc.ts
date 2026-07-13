@@ -204,7 +204,7 @@ export async function runStyleGuideReviewInProcess(
 
 				const result = await reviewSingleFile({
 					harness,
-					sessionName: `sg:${index}`,
+					sessionName: `${runId}:sg:${index}`,
 					pullRequest,
 					diffDir,
 					filename,
@@ -271,7 +271,7 @@ async function reviewSingleFile({
 	filename: string;
 	fileTimeoutMs: number;
 }): Promise<StyleGuideResult> {
-	const session = await harness.session(sessionName);
+	const session = await harness.sessions.create(sessionName);
 
 	// Bound the per-file session so one wedged file cannot hold a concurrency
 	// slot for the orchestrator's whole poll. On timeout we ABORT the operation
