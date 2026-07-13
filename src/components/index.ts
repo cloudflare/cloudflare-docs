@@ -9,6 +9,7 @@ export { default as AiSearchIndexingDiagram } from "./AiSearchIndexingDiagram.as
 export { default as AiSearchNamespacesDiagram } from "./AiSearchNamespacesDiagram.astro";
 export { default as AiSearchOverviewDiagram } from "./AiSearchOverviewDiagram.astro";
 export { default as AiSearchQueryingDiagram } from "./AiSearchQueryingDiagram.astro";
+export { default as AiSearchVoiceDiagram } from "./AiSearchVoiceDiagram.astro";
 export { default as AnimatedWorkflowDiagram } from "./AnimatedWorkflowDiagram.astro";
 export { default as AgentsPlatformDiagram } from "./AgentsPlatformDiagram.astro";
 export { default as APIRequest } from "./APIRequest.astro";
