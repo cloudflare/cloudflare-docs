@@ -318,7 +318,7 @@ export class MyAgent extends Agent {
 
 Once connected, access the server's capabilities:
 
-### Getting available tools
+### Get available tools
 
 <TypeScriptExample>
 
@@ -329,7 +329,7 @@ const state = this.getMcpServers();
 for (const tool of state.tools) {
 	console.log(`Tool: ${tool.name}`);
 	console.log(`  From server: ${tool.serverId}`);
-	console.log(`  Title: ${tool.title ?? tool.name}`);
+	console.log(`  Title: ${tool.title ?? tool.annotations?.title ?? tool.name}`);
 	console.log(`  Description: ${tool.description}`);
 }
 ```
@@ -599,8 +599,10 @@ Use the server ID to inspect an individual connection:
 const state = this.getMcpServers();
 const server = state.servers[serverId];
 
-console.log(`${server.name}: ${server.state}`);
-// state: "ready" | "authenticating" | "connecting" | "connected" | "discovering" | "failed"
+if (server) {
+	console.log(`${server.name}: ${server.state}`);
+	// state: "ready" | "authenticating" | "connecting" | "connected" | "discovering" | "failed"
+}
 ```
 
 </TypeScriptExample>
@@ -867,6 +869,8 @@ export class MyAgent extends Agent {
 
 Configure handlers for server-initiated `elicitation/create` requests. Add a handler for each elicitation mode your Agent supports.
 
+<TypeScriptExample>
+
 ```ts
 this.mcp.configureElicitationHandlers(handlers?: {
   form?: (
@@ -879,6 +883,8 @@ this.mcp.configureElicitationHandlers(handlers?: {
   ) => Promise<ElicitResult>;
 }): void
 ```
+
+</TypeScriptExample>
 
 #### Parameters
 
