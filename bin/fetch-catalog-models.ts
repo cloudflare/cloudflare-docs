@@ -63,7 +63,7 @@ interface CatalogModel {
 	default_example?: {
 		input?: Record<string, unknown>;
 		output?: Record<string, unknown>;
-	};
+	} | null;
 	code_snippets?: Array<{
 		label: string;
 		code: string;
@@ -71,7 +71,7 @@ interface CatalogModel {
 	schema?: {
 		input?: Record<string, unknown>;
 		output?: Record<string, unknown>;
-	};
+	} | null;
 	metadata: Record<string, unknown>;
 	external_info: string | null;
 	terms: string | null;
@@ -97,17 +97,138 @@ interface CatalogListResponse {
 	errors?: Array<{ message: string }>;
 }
 
-interface CatalogDetailResponse {
-	success: boolean;
-	result: CatalogModel;
-	errors?: Array<{ message: string }>;
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return value !== null && typeof value === "object" && !Array.isArray(value);
 }
+
+function isCatalogModel(value: unknown): value is CatalogModel {
+	if (value === null || typeof value !== "object" || Array.isArray(value)) {
+		return false;
+	}
+
+	const fields = value as Record<string, unknown>;
+	const nullableString = (field: unknown) =>
+		field === null || typeof field === "string";
+	const nullableNumber = (field: unknown) =>
+		field === null || (typeof field === "number" && Number.isFinite(field));
+	const optionalString = (field: unknown) =>
+		field === undefined || typeof field === "string";
+	const optionalBoolean = (field: unknown) =>
+		field === undefined || typeof field === "boolean";
+	const optionalRecord = (field: unknown) =>
+		field === undefined || isRecord(field);
+	const codeSnippets = (field: unknown) =>
+		field === undefined ||
+		(Array.isArray(field) &&
+			field.every(
+				(snippet) =>
+					isRecord(snippet) &&
+					typeof snippet.label === "string" &&
+					typeof snippet.code === "string",
+			));
+	const schema = (field: unknown) =>
+		field === undefined ||
+		field === null ||
+		(isRecord(field) &&
+			optionalRecord(field.input) &&
+			optionalRecord(field.output));
+	const defaultExample = (field: unknown) =>
+		field === undefined ||
+		field === null ||
+		(isRecord(field) &&
+			optionalRecord(field.input) &&
+			optionalRecord(field.output));
+	const banner = (field: unknown) =>
+		field === undefined ||
+		field === null ||
+		(isRecord(field) &&
+			typeof field.text === "string" &&
+			typeof field.severity === "string" &&
+			optionalString(field.title) &&
+			optionalBoolean(field.dismissible) &&
+			(field.link === undefined ||
+				(isRecord(field.link) &&
+					typeof field.link.url === "string" &&
+					typeof field.link.label === "string")));
+	const examples =
+		Array.isArray(fields.examples) &&
+		fields.examples.every(
+			(example) =>
+				isRecord(example) &&
+				typeof example.name === "string" &&
+				optionalString(example.description) &&
+				isRecord(example.input) &&
+				isRecord(example.output),
+		);
+
+	return (
+		typeof fields.model_id === "string" &&
+		nullableString(fields.provider_id) &&
+		typeof fields.name === "string" &&
+		typeof fields.description === "string" &&
+		typeof fields.task === "string" &&
+		Array.isArray(fields.tags) &&
+		fields.tags.every((tag) => typeof tag === "string") &&
+		nullableNumber(fields.context_length) &&
+		nullableNumber(fields.max_output_tokens) &&
+		typeof fields.supports_async === "boolean" &&
+		examples &&
+		optionalBoolean(fields.zdr) &&
+		(fields.zdr_comment === undefined || nullableString(fields.zdr_comment)) &&
+		banner(fields.banner) &&
+		(fields.request_formats === undefined ||
+			fields.request_formats === null ||
+			(Array.isArray(fields.request_formats) &&
+				fields.request_formats.every(
+					(format) => typeof format === "string",
+				))) &&
+		defaultExample(fields.default_example) &&
+		codeSnippets(fields.code_snippets) &&
+		schema(fields.schema) &&
+		isRecord(fields.metadata) &&
+		nullableString(fields.external_info) &&
+		nullableString(fields.terms) &&
+		nullableString(fields.cover_image_url) &&
+		nullableString(fields.schema_version) &&
+		optionalBoolean(fields.private) &&
+		optionalString(fields.created_at) &&
+		optionalString(fields.updated_at) &&
+		optionalRecord(fields.pricing)
+	);
+}
+
+function getCatalogErrorDetails(value: unknown): string | undefined {
+	if (!Array.isArray(value)) return undefined;
+	return value
+		.flatMap((error) => {
+			if (error === null || typeof error !== "object") return [];
+			const message = (error as Record<string, unknown>).message;
+			return typeof message === "string" ? [message] : [];
+		})
+		.map((message) => message.replace(/\s+/g, " ").trim())
+		.filter(Boolean)
+		.join("; ")
+		.slice(0, 500);
+}
+
+type ModelDetailResult =
+	| { readonly _tag: "ok"; readonly model: CatalogModel }
+	| { readonly _tag: "err"; readonly summary: string };
+
+type CatalogFetchResult = {
+	readonly models: Array<CatalogModel>;
+	readonly failures: ReadonlyArray<{
+		readonly modelId: string;
+		readonly summary: string;
+	}>;
+};
 
 const OUTPUT_DIR = path.join(process.cwd(), "src/content/catalog-models");
 const API_BASE_URL =
 	process.env.CF_API_BASE_URL || "https://api.cloudflare.com";
 const PER_PAGE = 100;
 const CONCURRENCY = 5;
+const DETAIL_TIMEOUT_MS = 30_000;
 
 function getPlannedDeprecationDate(model: CatalogModel): string | undefined {
 	const metadata = model.metadata as Record<string, unknown> | undefined;
@@ -242,30 +363,57 @@ async function fetchModelDetail(
 	accountId: string,
 	token: string,
 	modelId: string,
-): Promise<CatalogModel | null> {
+): Promise<ModelDetailResult> {
 	const encoded = encodeURIComponent(modelId);
 	const url = `${API_BASE_URL}/client/v4/accounts/${accountId}/ai/catalog/models/${encoded}`;
 
-	const response = await fetch(url, {
-		headers: getApiHeaders(token),
-	});
+	let failureKind = "network error";
+	try {
+		const response = await fetch(url, {
+			headers: getApiHeaders(token),
+			signal: AbortSignal.timeout(DETAIL_TIMEOUT_MS),
+		});
+		if (!response.ok) {
+			return {
+				_tag: "err",
+				summary: `HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ""}`,
+			};
+		}
 
-	if (!response.ok) {
-		console.error(`  Failed to fetch ${modelId}: ${response.status}`);
-		return null;
+		failureKind = "invalid response body";
+		const raw: unknown = await response.json();
+		if (raw === null || typeof raw !== "object" || Array.isArray(raw)) {
+			return {
+				_tag: "err",
+				summary: "invalid detail response",
+			};
+		}
+		const data = raw as Record<string, unknown>;
+		if (data.success === false) {
+			const errorDetails = getCatalogErrorDetails(data.errors);
+			return {
+				_tag: "err",
+				summary: `API returned success=false${errorDetails ? `: ${errorDetails}` : ""}`,
+			};
+		}
+		if (data.success !== true || !isCatalogModel(data.result)) {
+			return {
+				_tag: "err",
+				summary: "invalid detail response",
+			};
+		}
+
+		return { _tag: "ok", model: data.result };
+	} catch (cause: unknown) {
+		const failure =
+			cause instanceof DOMException && cause.name === "TimeoutError"
+				? `request timed out after ${DETAIL_TIMEOUT_MS / 1_000}s`
+				: failureKind;
+		return { _tag: "err", summary: failure };
 	}
-
-	const data = (await response.json()) as CatalogDetailResponse;
-
-	if (!data.success) {
-		console.error(`  Error fetching ${modelId}:`, data.errors);
-		return null;
-	}
-
-	return data.result;
 }
 
-async function fetchFromApi(): Promise<CatalogModel[]> {
+async function fetchFromApi(): Promise<CatalogFetchResult> {
 	const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
 	const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
 
@@ -290,7 +438,10 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 
 	// Pass 2: fetch full details for each model
 	const models: CatalogModel[] = [];
-	const failed: string[] = [];
+	const failures: Array<{
+		readonly modelId: string;
+		readonly summary: string;
+	}> = [];
 
 	for (let i = 0; i < modelIds.length; i += CONCURRENCY) {
 		const batch = modelIds.slice(i, i + CONCURRENCY);
@@ -300,10 +451,10 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 
 		for (let j = 0; j < results.length; j++) {
 			const result = results[j];
-			if (result) {
-				models.push(result);
+			if (result._tag === "ok") {
+				models.push(result.model);
 			} else {
-				failed.push(batch[j]);
+				failures.push({ modelId: batch[j], summary: result.summary });
 			}
 		}
 
@@ -313,14 +464,7 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 
 	console.log();
 
-	if (failed.length > 0) {
-		console.log(`  Failed: ${failed.length} models`);
-		for (const id of failed) {
-			console.log(`    - ${id}`);
-		}
-	}
-
-	return models;
+	return { models, failures };
 }
 
 /**
@@ -436,6 +580,7 @@ function writeModels(models: CatalogModel[]): void {
 		// Drop the `pricing` field — it's returned by the catalog API but is
 		// not consumed by the docs site and isn't declared in the schema.
 		delete model.pricing;
+		if (model.schema === null) delete model.schema;
 
 		// Strip credentials from any pre-signed URLs in the response.
 		const redacted = redactCredentialUrls(model);
@@ -470,7 +615,29 @@ async function main() {
 	if (args.file) {
 		models = await loadFromFile(args.file);
 	} else {
-		models = await fetchFromApi();
+		const result = await fetchFromApi();
+		if (result.failures.length > 0) {
+			console.error(
+				[
+					`Catalog sync aborted: failed to fetch ${result.failures.length} of ${result.models.length + result.failures.length} model details.`,
+					...result.failures.map(
+						({ modelId, summary }) => `- ${modelId}: ${summary}`,
+					),
+					"Existing catalog was not modified.",
+				].join("\n"),
+			);
+			process.exitCode = 1;
+			return;
+		}
+		models = result.models;
+	}
+
+	if (models.length === 0) {
+		console.error(
+			"Catalog sync aborted: catalog contained no models.\nExisting catalog was not modified.",
+		);
+		process.exitCode = 1;
+		return;
 	}
 
 	writeModels(models);

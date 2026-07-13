@@ -1,0 +1,146 @@
+name: Sync AI model catalog
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-ai-model-catalog
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Generate App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_ID }}
+          private-key: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_PRIVATE_KEY }}
+
+      - name: Check out production
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+          ref: production
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up Node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Fetch catalog models
+        shell: bash
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.AI_MODEL_CATALOG_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.AI_MODEL_CATALOG_API_TOKEN }}
+        run: |
+          set -o pipefail
+          log="$RUNNER_TEMP/catalog-sync.log"
+          if ! pnpm exec tsx bin/fetch-catalog-models.ts 2>&1 | tee "$log"; then
+            echo "::error title=AI model catalog sync failed::See the job summary for model fetch failures."
+            {
+              echo "## AI model catalog sync failed"
+              echo
+              echo '```text'
+              tail -n 100 "$log"
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - name: Validate catalog content
+        run: pnpm run sync
+
+      - name: Detect catalog changes
+        id: changes
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain -- src/content/catalog-models)" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Close obsolete pull request
+        if: steps.changes.outputs.changed == 'false'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH: ci/sync-ai-model-catalog
+        run: |
+          set -euo pipefail
+          existing=$(gh pr list \
+            --base production \
+            --head "$BRANCH" \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+          if [[ -n "$existing" ]]; then
+            gh pr close "$existing" --delete-branch
+          fi
+
+      - name: Commit and push catalog
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          BRANCH: ci/sync-ai-model-catalog
+        run: |
+          set -euo pipefail
+          git config user.name "cloudflare-docs-bot[bot]"
+          git config user.email "cloudflare-docs-bot[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH:refs/remotes/origin/$BRANCH" || true
+          git switch -C "$BRANCH"
+          git add src/content/catalog-models
+          git commit --no-verify -m "chore(ai-gateway): sync model catalog"
+          git push --force-with-lease origin "HEAD:$BRANCH"
+
+      - name: Create pull request
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH: ci/sync-ai-model-catalog
+        run: |
+          set -euo pipefail
+          existing=$(gh pr list \
+            --base production \
+            --head "$BRANCH" \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+          if [[ -n "$existing" ]]; then
+            echo "Updated existing PR #$existing"
+            exit 0
+          fi
+
+          body="$RUNNER_TEMP/model-catalog-pr.md"
+          printf '%s\n' \
+            '### Summary' \
+            '' \
+            'Synchronizes the AI model catalog with the Unified Catalog API.' \
+            '' \
+            'This pull request is refreshed automatically by the daily catalog sync workflow.' \
+            '' \
+            '### Documentation checklist' \
+            '' \
+            '- [ ] The change adheres to the [documentation style guide](https://developers.cloudflare.com/style-guide/).' \
+            > "$body"
+          gh pr create \
+            --base production \
+            --head "$BRANCH" \
+            --title "[AI Gateway] Sync model catalog" \
+            --body-file "$body"
