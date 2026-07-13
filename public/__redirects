@@ -3017,3 +3017,6 @@
 /cloudflare-one/traffic-policies/identity-selectors/* /cloudflare-one/traffic-policies/reference/identity-selectors/:splat 301
 /cloudflare-one/traffic-policies/order-of-enforcement/* /cloudflare-one/traffic-policies/reference/order-of-enforcement/:splat 301
 /cloudflare-one/traffic-policies/expression-syntax/* /cloudflare-one/traffic-policies/reference/policy-expressions/:splat 301
+
+# Traffic policies: Proxy page reworked into Send traffic to Gateway
+/cloudflare-one/traffic-policies/proxy/* /cloudflare-one/traffic-policies/send-traffic-to-gateway/:splat 301

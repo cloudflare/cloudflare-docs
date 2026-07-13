@@ -1,34 +1,42 @@
 ---
 pcx_content_type: concept
-description: How Proxy works in Gateway.
+description: Choose how devices, networks, and private resources send traffic to Cloudflare Gateway for inspection and filtering.
 products:
   - cloudflare-one
-title: Proxy
+title: Send traffic to Gateway
 sidebar:
-  order: 12
+  order: 1
 tags:
   - TCP
   - UDP
   - ICMP
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Details } from "~/components";
 
-You can forward [HTTP](/cloudflare-one/traffic-policies/get-started/http/) and [network](/cloudflare-one/traffic-policies/get-started/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, Generic Routing Encapsulation (GRE) tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
+Cloudflare Gateway can inspect traffic after it reaches Cloudflare. The connection method you choose determines which traffic Gateway receives and which policy types Gateway can enforce.
 
-The Gateway proxy is required for filtering HTTP and network traffic via the Cloudflare One Client in Traffic and DNS mode. To proxy HTTP traffic without deploying the Cloudflare One Client, you can configure [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) on your devices.
+You can send traffic to Gateway from individual devices, DNS resolvers, browsers, offices, data centers, and private networks. You can also combine methods. For example, use the Cloudflare One Client for roaming users and Cloudflare WAN for branch offices.
 
-## Proxy algorithm
+## Choose a connection method
 
-Gateway uses the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/html/rfc6555), which tries IPv4 and IPv6 connections with a staggered fallback and uses whichever address family responds first, to proxy traffic in the following order:
+The following table summarizes the main ways to send traffic to Gateway:
 
-1. The user's browser initiates the TCP handshake by sending Gateway a TCP SYN segment.
-2. Gateway sends a SYN segment to the origin server.
-3. If the origin server sends a SYN-ACK segment back, Gateway establishes separate TCP connections between the user and Gateway and between Gateway and the origin server.
-4. Gateway inspects and filters traffic received from the user.
-5. If the traffic passes inspection, Gateway proxies traffic bidirectionally between the user and the origin server.
+| Connection method | Traffic sent to Gateway | Best for | Next step |
+| --- | --- | --- | --- |
+| [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) | Device DNS, network, and HTTP traffic | Managed laptops, phones, and desktops | [Set up the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/) |
+| [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) | DNS queries | Networks, unmanaged devices, or DNS-only filtering | [Add a DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) |
+| [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) | Browser HTTP and HTTPS traffic | Browser-level filtering without a device client | [Create a proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#1-create-a-proxy-endpoint) |
+| [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) | Site traffic through GRE, IPsec, CNI, or the Cloudflare One Appliance | Offices, data centers, and private networks | [Choose a Cloudflare WAN on-ramp](/cloudflare-one/networks/connectors/cloudflare-wan/on-ramps/) |
+| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) | Private IP traffic between Mesh participants | Device-to-device, site-to-site, and mesh connectivity | [Create a Mesh node](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) |
 
-<Render file="gateway/tcp-flowchart" product="cloudflare-one" />
+## Connect private resources
+
+Gateway can also inspect traffic that is directed to private resources connected to Cloudflare. Use the method that matches how users and services need to reach those resources:
+
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connects specific private applications, hostnames, or IP routes to Cloudflare with `cloudflared`.
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) connects devices, servers, and subnets through Mesh IPs.
+- [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) connects sites and networks with Cloudflare WAN on-ramps.
 
 ## Supported protocols
 
@@ -54,7 +62,7 @@ The ICMP proxy allows ICMP traffic to reach your private network through Gateway
 Gateway cannot log or filter ICMP traffic.
 :::
 
-#### Allow ICMP traffic through `cloudflared`
+<Details header="Allow ICMP traffic through cloudflared">
 
 To use the ICMP proxy with Cloudflare Tunnel, you may need to configure the `cloudflared` host to allow ICMP traffic through `cloudflared`.
 
@@ -117,6 +125,8 @@ In your environment, modify the `ping_group_range` parameter to include the Grou
 By default the [`cloudflared` Docker container](https://github.com/cloudflare/cloudflared/blob/master/Dockerfile#L29C6-L29C13) executes as a user called `nonroot` inside of the container. `nonroot` is a specific user that exists in the [base image](https://github.com/GoogleContainerTools/distroless/blob/859eeea1f9b3b7d59bdcd7e24a977f721e4a406c/base/base.bzl#L8) we use, and its Group ID is hardcoded to 65532.
 
 </TabItem> </Tabs>
+
+</Details>
 
 ## Turn on the Gateway proxy
 
