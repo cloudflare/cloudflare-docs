@@ -35,7 +35,7 @@ console.log("Chat object:", meeting.chat);
 Use `fetchPublicMessages()`, `fetchPrivateMessages()`, or `fetchPinnedMessages()` to load paginated chat messages.
 
 ```js
-const messages = await this.meeting.chat.fetchPublicMessages({
+const messages = await meeting.chat.fetchPublicMessages({
 	timestamp,
 	limit: size,
 	direction: "before",
@@ -62,7 +62,7 @@ meeting.chat;
 Use `fetchPublicMessages()`, `fetchPrivateMessages()`, or `fetchPinnedMessages()` to load paginated chat messages.
 
 ```js
-const messages = await this.meeting.chat.fetchPublicMessages({
+const messages = await meeting.chat.fetchPublicMessages({
 	timestamp,
 	limit: size,
 	direction: "before",
@@ -847,7 +847,7 @@ await meeting.chat.sendCustomMessage({
 	type: "custom",
 	message: "Agenda for today",
 	html: "<strong>Agenda for today</strong>",
-	files: ["https://example.com/agenda.pdf"],
+	files: [{ link: "https://example.com/agenda.pdf" }],
 });
 ```
 
@@ -862,7 +862,7 @@ await meeting.chat.sendCustomMessage({
 	type: "custom",
 	message: "Agenda for today",
 	html: "<strong>Agenda for today</strong>",
-	files: ["https://example.com/agenda.pdf"],
+	files: [{ link: "https://example.com/agenda.pdf" }],
 });
 ```
 
@@ -877,7 +877,7 @@ await meeting.chat.sendCustomMessage({
 	type: "custom",
 	message: "Agenda for today",
 	html: "<strong>Agenda for today</strong>",
-	files: ["https://example.com/agenda.pdf"],
+	files: [{ link: "https://example.com/agenda.pdf" }],
 });
 ```
 
