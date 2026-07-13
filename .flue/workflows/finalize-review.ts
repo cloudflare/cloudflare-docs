@@ -465,6 +465,7 @@ export async function run({
 				},
 				input.headSha,
 				ctx.forceFullReview,
+				input.number,
 			);
 
 	// ── 7. Log or post ────────────────────────────────────────────────────────

@@ -280,6 +280,66 @@ body {
 	overflow: hidden;
 }
 
+/* ---- Theme toggle icon (T9) ----
+   Which icon shows is driven by the root `data-nb-pref` attribute, set by
+   BaseLayout's pre-paint inline script, so the correct icon paints immediately
+   (no flash before the toggle script hydrates). Falls back to the system icon
+   when the attribute is missing (e.g. JS disabled). */
+.nb-theme-ico {
+	display: none;
+}
+:root[data-nb-pref="light"] .nb-theme-ico-light,
+:root[data-nb-pref="dark"] .nb-theme-ico-dark,
+:root[data-nb-pref="auto"] .nb-theme-ico-auto,
+:root:not([data-nb-pref]) .nb-theme-ico-auto {
+	display: block;
+}
+
+/* ---- Image zoom (T8) ---- */
+.medium-zoom-overlay {
+	z-index: 200;
+}
+.medium-zoom-image--opened {
+	z-index: 201;
+}
+/* Not `none`: medium-zoom keys off transitionend, which `none` never emits. */
+@media (prefers-reduced-motion: reduce) {
+	html .medium-zoom-image,
+	html .medium-zoom-image--opened,
+	html .medium-zoom-overlay {
+		transition-duration: 1ms !important;
+	}
+}
+
+.nb-zoom-close {
+	position: fixed;
+	inset: 20px 20px auto auto;
+	z-index: 202;
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	padding: 10px;
+	border: 2px solid var(--nb-border-strong);
+	border-radius: 50%;
+	background-color: var(--nb-card);
+	color: var(--nb-foreground);
+	cursor: zoom-out;
+	opacity: 0;
+}
+.nb-zoom-close svg {
+	width: 100%;
+	height: 100%;
+}
+.nb-zoom-close--open {
+	opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+	.nb-zoom-close {
+		transition: opacity 300ms;
+	}
+}
+
 /* ---- Scrollbar ----
    Standard props for Firefox + recent Chromium; WebKit pseudo-elements
    below give Safari finer control (rounded thumb, exact width). */

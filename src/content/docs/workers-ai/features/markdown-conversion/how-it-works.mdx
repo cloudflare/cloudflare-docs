@@ -34,6 +34,8 @@ more details.
 
 Images take a bit more work to prepare for conversion.
 
+For animated GIF files, only the first frame is extracted and analyzed. The remaining frames are discarded.
+
 As a first step, we detect what type the image is. If it is an SVG (Scalable Vector Graphics) file, we need to convert it into a raster format so that using the necessary Workers AI models does not fail. In this case, SVGs are converted into PNGs internally.
 
 Afterwards:

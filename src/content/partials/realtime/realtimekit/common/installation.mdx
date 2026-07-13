@@ -183,35 +183,28 @@ Add the following entries to the `Info.plist` file. This gives your app permissi
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-react-native">
-	<Tabs syncKey="rn-package-manager">
-	<TabItem label="React Native">
+
+**Minimum requirements:** React Native 0.84 or above, React 19 or above.
+
+  <Tabs syncKey="rn-package-manager">
+  <TabItem label="React Native">
 
 Install the dependencies:
 
 ```bash
-npm install @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc @cloudflare/realtimekit-react-native-ui @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg
+npm install @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc @cloudflare/realtimekit-react-native-ui @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg@^15.13.0 react-native-safe-area-context@^5.0.0
 ```
-
-Install `react-native-safe-area-context` based on your React Native version:
-
-- React Native 0.64 - 0.74: `npm install react-native-safe-area-context@^4.0.0`
-- React Native >= 0.74: `npm install react-native-safe-area-context@^5.0.0`
-
-Refer to the [react-native-svg installation guide](https://github.com/software-mansion/react-native-svg) for setup.
 
   </TabItem>
-	<TabItem label="Expo">
+  <TabItem label="Expo">
+
+**Minimum Expo version:** 56 or above.
 
 Install the dependencies:
 
 ```bash
-npx expo install @cloudflare/realtimekit-react-native-ui @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg
+npx expo install @cloudflare/realtimekit-react-native-ui @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg@^15.13.0 react-native-safe-area-context@^5.0.0
 ```
-
-Install `react-native-safe-area-context` based on your React Native version:
-
-- React Native 0.64 - 0.74: `npm install react-native-safe-area-context@^4.0.0`
-- React Native >= 0.74: `npm install react-native-safe-area-context@^5.0.0`
 
 Install Expo config plugins:
 
@@ -249,11 +242,10 @@ The following instructions are for release builds. Debug builds should work with
 Edit your `android/gradle.properties` and add the following lines:
 
 ```txt
-newArchEnabled=false
 android.useFullClasspathForDexingTransform=true
 ```
 
-**Note:** Starting from version `>=0.2.0`, add a required `blob_provider_authority` string resource in the `strings.xml` file:
+Add a required `blob_provider_authority` string resource in the `strings.xml` file:
 
 ```xml
 <resources>
@@ -281,15 +273,33 @@ buildTypes {
 }
 ```
 
+#### Background audio and video (Android)
+
+The SDK includes an Android foreground service that keeps audio and video running when the app moves to the background. The service starts automatically when a participant joins a meeting and stops when they leave.
+
+By default the service is enabled with generic notification text. To customize the notification or disable the service, pass `keepAliveService` to the `useRealtimeKitClient` hook before calling `initMeeting`:
+
+```tsx
+const [meeting, initMeeting] = useRealtimeKitClient({
+  keepAliveService: {
+    enabled: true,                        // set to false to disable entirely
+    title: "Team call",                   // notification title
+    text: "Tap to return to your meeting", // notification body
+  },
+});
+```
+
+On Android 13 and above, the SDK automatically requests the `POST_NOTIFICATIONS` permission so the notification appears in the shade. No additional setup is required.
+
   </TabItem>
   <TabItem label="iOS">
 
-**Note:** The minimum supported iOS version is **14.0**.
+**Minimum supported iOS version: 15.1.**
 
-Open your `Podfile` and set the platform to iOS 14:
+Open your `Podfile` and set the platform to iOS 15.1:
 
 ```txt
-platform :ios, '14.0'
+platform :ios, '15.1'
 ```
 
 Add the following permission entries to your `Info.plist` file:
@@ -303,6 +313,16 @@ Add the following permission entries to your `Info.plist` file:
 <string>Access photos to share images during meetings.</string>
 <key>UIViewControllerBasedStatusBarAppearance</key>
 <false/>
+```
+
+#### Screen sharing (iOS)
+
+iOS screen sharing requires a Broadcast Upload Extension and additional native setup. Refer to the [Screen Share Setup (iOS)](/realtime/realtimekit/core/local-participant/#screen-share-setup-ios) guide for full instructions.
+
+Once native setup is complete, pass `iOSScreenshareEnabled={true}` to `RtkMeeting` to enable the screen share button in the UI:
+
+```tsx
+<RtkMeeting meeting={meeting} iOSScreenshareEnabled={true} />
 ```
 
   </TabItem>
