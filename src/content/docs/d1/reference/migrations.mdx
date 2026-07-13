@@ -86,11 +86,13 @@ The pattern is a standard glob — `*` matches one path segment, `**` matches an
 
 `wrangler d1 migrations create` only writes top-level files inside `migrations_dir`, so if your `migrations_pattern` only matches nested files (as with the Drizzle layout), generate new migrations using your ORM's command (for example, `drizzle-kit generate`) instead.
 
-## Adopt migrations on an existing database
+## Add migrations to an existing database
 
-If your D1 database already has tables and you want to start using the migration system, create a baseline migration that captures your current schema.
+If your D1 database already has tables and you want to start using the migration system, we suggest creating a baseline migration that captures your current schema.
 
-This is useful when you work on a team and a new developer needs to set up a local database from scratch, when you use CI/CD that creates fresh test databases, or when you want a complete schema history in your git repository. If you are a solo developer with one database and do not plan to recreate it, you can skip this step.
+A baseline migration records your existing schema as the first entry in your migration history, so every future migration builds on a known starting point. This lets anyone recreate the database from scratch — for example, when a new developer sets up a local database, when CI/CD spins up fresh test databases, or when you want a complete schema history in your git repository.
+
+The baseline is a suggestion, not a requirement. Migrations are useful even if you work solo, so that you can roll your schema forward and back over time. You only need a baseline if you want to reproduce the database from your migration files. If you never recreate the database and only ever apply new migrations to it, you can skip this step and start with your next migration.
 
 <Steps>
 
