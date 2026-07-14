@@ -270,11 +270,33 @@ export async function updateIssueComment(
 	}
 }
 
+/**
+ * Result of a `base...head` three-dot compare.
+ *
+ * `status` reflects how head relates to base (GitHub's comparison status):
+ *   - "ahead"     — head is a strict forward extension of base (normal push).
+ *                   `files` is exactly the new commits' diff.
+ *   - "identical" — head === base (no new commits).
+ *   - "behind"    — base is ahead of head.
+ *   - "diverged"  — base is NOT an ancestor of head (rebase / force-push).
+ *
+ * When status is "diverged" the merge-base regresses to where the branch
+ * originally forked, so `files` includes every upstream commit absorbed by the
+ * rebase — files that are not part of the PR. Callers must not trust `files`
+ * for an incremental review unless status is "ahead" or "identical".
+ */
+export interface CompareResult {
+	files: PullRequestFile[];
+	status: "ahead" | "behind" | "identical" | "diverged";
+	aheadBy: number;
+	behindBy: number;
+}
+
 export async function comparePullRequestHeads(
 	token: string,
 	base: string,
 	head: string,
-): Promise<{ files: PullRequestFile[] } | null> {
+): Promise<CompareResult | null> {
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/compare/${base}...${head}`,
 		{ headers: apiHeaders(token) },
@@ -285,8 +307,26 @@ export async function comparePullRequestHeads(
 			`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
 		);
 	}
-	const data = (await res.json()) as { files?: PullRequestFile[] };
-	return { files: data.files ?? [] };
+	const data = (await res.json()) as {
+		files?: PullRequestFile[];
+		status?: string;
+		ahead_by?: number;
+		behind_by?: number;
+	};
+	// Normalize the status; anything unexpected is treated as "diverged" so the
+	// caller self-heals to the full diff rather than trusting a partial list.
+	const status =
+		data.status === "ahead" ||
+		data.status === "behind" ||
+		data.status === "identical"
+			? data.status
+			: "diverged";
+	return {
+		files: data.files ?? [],
+		status,
+		aheadBy: data.ahead_by ?? 0,
+		behindBy: data.behind_by ?? 0,
+	};
 }
 
 export async function addReactionToComment(
