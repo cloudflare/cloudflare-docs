@@ -48,11 +48,22 @@ Lines starting with a `#` will be treated as comments.
 
 A `_redirects` file is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.
 
+A redirect is counted as **dynamic** if its `source` contains a [splat (`*`)](#splats) or a [placeholder (`:name`)](#placeholders). Any other redirect is **static**.
+
 In your `_redirects` file:
 
 - The order of your redirects matter. If there are multiple redirects for the same `source` path, the top-most redirect is applied.
-- Static redirects should appear before dynamic redirects.
+- Static redirects must appear before any dynamic redirect. Redirects are counted as static only until the first dynamic redirect is reached. After that point, every remaining redirect — including exact-path ones that would otherwise be static — counts towards the 100 dynamic redirect limit.
+- At runtime, static redirects are matched before dynamic redirects, regardless of their position in the file.
 - Redirects are always followed, regardless of whether or not an asset matches the incoming request.
+
+:::caution[Redirect ordering affects how limits are counted]
+
+Because redirects stop being counted as static after the first dynamic redirect, placing dynamic redirects early in the file reduces how many static redirects you can define. If the number of dynamic redirects exceeds 100, the rest of the file is skipped and those redirects are silently dropped from the deployment — including any catch-all redirect at the end of the file.
+
+To use the full 2,000 static redirect limit, define all static redirects before your first dynamic redirect.
+
+:::
 
 A complete example with multiple redirects may look like the following:
 
