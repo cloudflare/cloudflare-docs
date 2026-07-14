@@ -362,3 +362,9 @@ The identifier of the virtual network the device was connected to, if any.
 Type: `string`
 
 The name of the virtual network the device was connected to, if any.
+
+## Warnings
+
+Type: `array[string]`
+
+Warnings generated during request processing.

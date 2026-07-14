@@ -1,0 +1,27 @@
+---
+title: Send npm package dependency metadata with Worker uploads
+description: Wrangler now collects npm dependency information at deploy time and includes it in upload metadata for supply chain visibility.
+products:
+  - workers
+date: 2026-07-09
+---
+
+import { WranglerConfig } from "~/components";
+
+Wrangler now collects npm package dependency information from your project's `package.json` during [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) and [`wrangler versions upload`](/workers/wrangler/commands/general/#upload), and includes it in the upload metadata sent to the Cloudflare API. This data, each dependency's name, declared version range, and exact installed version, enables dependency analytics and future supply chain security features such as vulnerability alerting.
+
+To opt out, set [`dependencies_instrumentation.enabled`](/workers/wrangler/configuration/#top-level-only-keys) to `false` in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"dependencies_instrumentation": {
+		"enabled": false
+	}
+}
+```
+
+</WranglerConfig>
+
+For more details, refer to [Wrangler configuration](/workers/wrangler/configuration/#top-level-only-keys).

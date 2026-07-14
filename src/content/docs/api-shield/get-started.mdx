@@ -56,7 +56,7 @@ Cloudflare automatically discovers API endpoints by inspecting your traffic. Add
 Endpoint Management tracks request counts, error rates, and latency for each saved endpoint.
 
 :::note
-Schema validation, schema learning, JWT validation, Sequence Analytics, sequence mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management.
+Schema validation, schema learning, JWT validation rules, sequence mitigation rules, and rate limit recommendations use operations in the `full` state. Sequence Analytics runs on operations in the `full` or `candidate` state that API Shield can match at the edge. For more information, refer to [Operation states](/security/web-assets/manage-operations/#operation-states).
 :::
 
 You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-from-api-discovery), [Schema validation](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-manually) by method, path, and host.

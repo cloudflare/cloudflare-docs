@@ -3,52 +3,88 @@ pcx_content_type: how-to
 products:
   - cloudflare-wan
 title: Configure Virtual Appliance
-description: Learn how to configure Cloudflare One Virtual Appliance on VMWare ESXi or Proxmox Virtual Environment
+description: Learn how to configure Cloudflare One Virtual Appliance on VMware ESXi or Proxmox Virtual Environment
 sidebar:
   order: 4
 ---
 
-import { Render, Aside } from "~/components";
+import { Render, Aside, Tabs, TabItem, Steps } from "~/components";
 
-<Aside type="note" title="Self-serve provisioning via API">
+## Register a virtual appliance and generate a license key
 
-You can create, rotate, and delete Cloudflare One Virtual Appliance instances directly via the API or Terraform. Each request returns a license key that you use to activate the deployed VM.
+You can register a Cloudflare One Virtual Appliance instance and generate its license key yourself, from either the dashboard or the API — no account team involvement required. Each create or rotate request returns a license key that you use to activate the deployed VM.
 
-- Create a virtual appliance: `POST /accounts/{account_id}/magic/connectors` with `device.provision_license: true`. The response includes `result.license_key` — copy and store it securely, as it is shown only once.
-- Rotate the license key: `PATCH /accounts/{account_id}/magic/connectors/{connector_id}` with `provision_license: true`. The previous key is immediately and irrevocably revoked.
-- Delete a virtual appliance: deletes the associated licensed device in the same operation.
+<Aside type="caution">
+
+The license key is shown only once, at create or rotate time. Copy and store it securely — it cannot be recovered afterwards, but it can be rotated.
 
 </Aside>
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. Go to the **Connectors** page.
+2. Select **Add an appliance**.
+3. Choose **Virtual appliance** as the connector type.
+
+   Unlike a hardware appliance — which requires the serial number printed on the physical device, obtained through your account team — a virtual appliance only needs a name, since Cloudflare generates the license key for you.
+
+4. In **Name**, enter a descriptive name for your virtual appliance.
+5. Select **Generate authentication key**.
+6. Copy the authentication key shown in the dialog. Use it as the license key when you [configure your virtual machine](#configure-a-virtual-machine).
+
+</Steps>
+
+To rotate the key for an existing virtual appliance:
+
+<Steps>
+
+1. Go to the **Connectors** page.
+2. Find the connector in the table, select the three dots next to it, then select **Regenerate authentication key**.
+3. Confirm the action. The existing key is immediately and irrevocably revoked, and a new key is generated and shown in the dialog.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+- Create a virtual appliance: `POST /accounts/{account_id}/magic/connectors` with `device.provision_license: true`. The response includes `result.license_key`.
+- Rotate the license key: `PATCH /accounts/{account_id}/magic/connectors/{connector_id}` with `provision_license: true`. The previous key is immediately and irrevocably revoked.
+- Delete a virtual appliance: deletes the associated licensed device in the same operation.
+
+This is also available via Terraform.
+
+</TabItem> </Tabs>
+
 <Render file="mconn/configure-connectors"
-	product="networking-services"
-	params={{
-	magicWord: "virtual",
-	productName: "Cloudflare One Appliance",
-	productNameVirtual: "Cloudflare One Virtual Appliance",
-	maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
-	dashName: "Cloudflare WAN",
-	wan: "needs to correspond to the virtual network interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
-	lan: "needs to correspond to the virtual LAN interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
-	noConnectorShows: "For a Virtual Appliance to appear you need to: <br /><ul><li><strong>VMWare:</strong> Have already obtained your OVA package and license keys if you are installing on VMWare.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul>\nFor details, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.\n",
-	networkSegmentationURL: "/cloudflare-wan/configuration/appliance/network-options/network-segmentation/",
-	dhcpServerURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/",
+  product="networking-services"
+  params={{
+  magicWord: "virtual",
+  productName: "Cloudflare One Appliance",
+  productNameVirtual: "Cloudflare One Virtual Appliance",
+  maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
+  dashName: "Cloudflare WAN",
+  wan: "needs to correspond to the virtual network interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
+  lan: "needs to correspond to the virtual LAN interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
+  noConnectorShows: "For a Virtual Appliance to appear you need to: <br /><ul><li><strong>VMware:</strong> Have already obtained your OVA package and license keys if you are installing on VMware.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul>\nFor details, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.\n",
+  networkSegmentationURL: "/cloudflare-wan/configuration/appliance/network-options/network-segmentation/",
+  dhcpServerURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/",
   dhcpRelayURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-relay/",
   reserveIpAddressesURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-static-address-reservation/",
-	shippedLanguage: "Cloudflare One Virtual Appliance is deactivated after you install it",
-	hardSoftConn: "You need to install two Virtual Appliances before you can set up a site in high availability.",
-	hcConfigsURL: "/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations",
-	ipsecTunnelsRefURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
-	trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
-	vlanIdURL: "/cloudflare-wan/configuration/appliance/reference/#vlan-id",
-	healthCheckFrequencyURL: "/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/",
-	routedSubnetsURL: "/cloudflare-wan/configuration/appliance/network-options/routed-subnets/",
-	interruptWindowURL: "/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/",
-	tunnelHealthChecksURL: "/cloudflare-wan/reference/tunnel-health-checks/",
-	wanSettingsURL: "/cloudflare-wan/configuration/appliance/reference/#wan-settings",
-	sitesURL: "/cloudflare-wan/configuration/common-settings/sites/",
-	networkOptionsURL: "/cloudflare-wan/configuration/appliance/network-options/",
+  shippedLanguage: "Cloudflare One Virtual Appliance is deactivated after you install it",
+  hardSoftConn: "You need to install two Virtual Appliances before you can set up a site in high availability.",
+  hcConfigsURL: "/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations",
+  ipsecTunnelsRefURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
+  trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
+  vlanIdURL: "/cloudflare-wan/configuration/appliance/reference/#vlan-id",
+  healthCheckFrequencyURL: "/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/",
+  routedSubnetsURL: "/cloudflare-wan/configuration/appliance/network-options/routed-subnets/",
+  interruptWindowURL: "/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/",
+  tunnelHealthChecksURL: "/cloudflare-wan/reference/tunnel-health-checks/",
+  wanSettingsURL: "/cloudflare-wan/configuration/appliance/reference/#wan-settings",
+  sitesURL: "/cloudflare-wan/configuration/common-settings/sites/",
+  networkOptionsURL: "/cloudflare-wan/configuration/appliance/network-options/",
   maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
   referenceInformationURL: "/cloudflare-wan/configuration/appliance/reference/",
   troubleshootingURL: "/cloudflare-wan/configuration/appliance/troubleshooting/"
-	}} />
+  }} />

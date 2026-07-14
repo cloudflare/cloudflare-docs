@@ -1,5 +1,6 @@
 # build output
 dist/
+dist-nimbus/
 distmd/
 distllms/
 
@@ -8,10 +9,13 @@ distllms/
 
 # Astro build cache
 .astro-cache/
+.astro-cache-nimbus/
 
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
 !.agents/skills/
+!.agents/commands/
+!.agents/agents/
 !.flue/.agents/
 !.flue/.agents/**
 
@@ -51,15 +55,6 @@ pnpm-debug.log*
 
 tools/relevant_changed_files.txt
 
-# Configuration of AI tools we don't directly support in this repo (generated via rulesync)
-.rulesync/
-.claude/
-CLAUDE.md
-.cursor/
-.github/prompts/
-.github/agents/
-/agents/
-
 # certain versions of opencode mistakenly commit package-lock.json
 .opencode/package-lock.json
 
@@ -71,4 +66,6 @@ CLAUDE.md
 .flue/.flue-vite/
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
-.flue/pnpm-lock.yaml
+
+# nimbus-docs generated lint report (.nimbus/routes.json is a committed manifest)
+.nimbus/lint.json

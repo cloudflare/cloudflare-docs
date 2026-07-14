@@ -1,0 +1,32 @@
+---
+/**
+ * LinkTitleCard — card with icon, title, and slotted body; the whole
+ * card links to `href`. Used in CF landing-page "More resources"
+ * sections, often in a 2x2 grid.
+ *
+ * CF source: cloudflare-docs/src/components/LinkTitleCard.astro
+ *
+ * Mapping notes:
+ *   - Rendered with the Nimbus ui/card Card instead of CF's bordered
+ *     card with the 4-color `:nth-child` accent cycle.
+ *   - Card doesn't take an href, so a stretched overlay link covers the
+ *     card; the title underlines on hover.
+ *   - Starlight Icon → astro-icon (icon name passed straight through).
+ */
+import { Card } from "../ui/card";
+
+interface Props {
+  icon?: string;
+  title: string;
+  href: string;
+}
+
+const { icon, title, href } = Astro.props;
+---
+
+<div class="relative [&:hover_h3]:underline">
+  <Card {title} {icon} class="my-0 h-full">
+    <slot />
+  </Card>
+  <a href={href} class="absolute inset-0" aria-label={title}></a>
+</div>

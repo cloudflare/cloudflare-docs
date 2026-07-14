@@ -1,0 +1,23 @@
+---
+/**
+ * PageShell — the shared landing-page container: the centered 1120px envelope
+ * with the standard responsive gutters and bottom padding, sitting above the
+ * BackgroundLines backdrop (relative + z-10). Pair with PageHeader, which owns
+ * the top padding; pages without a PageHeader pass their own top padding via
+ * `class` (e.g. `pt-14`).
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pb-24",
+    className,
+  ]}
+>
+  <slot />
+</div>

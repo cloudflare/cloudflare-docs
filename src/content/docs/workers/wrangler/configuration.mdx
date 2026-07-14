@@ -139,6 +139,10 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
+- `dependencies_instrumentation` <Type text="object" /> <MetaInfo text="optional" />
+  - Configures npm package dependency instrumentation when deploying or uploading a Worker version. Defaults to enabled.
+  - `enabled` <Type text="boolean" /> — Whether Wrangler should collect and send npm package dependency metadata (package names and versions). Defaults to `true`.
+
 - `site` <Type text="object" /> <MetaInfo text="optional deprecated" />
   - See the [Workers Sites](#workers-sites) section below for more information. Cloudflare Pages and Workers Assets is preferred over this approach.
   - This is not supported by the [Cloudflare Vite plugin](/workers/vite-plugin/).
@@ -173,7 +177,7 @@ The `main` key is optional for assets-only Workers.
   - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
 
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/configuration/previews).
+  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/versions-and-deployments/preview-urls/).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
@@ -569,9 +573,14 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
   - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files (for example, if you have a mono-repo setup, and want to use a single D1 instance across your apps/packages).
   - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/d1/#d1-migrations-create) and [D1 migrations](/d1/reference/migrations/).
 
+- `migrations_pattern` <Type text="string" /> <MetaInfo text="optional" />
+  - A glob pattern (relative to your Wrangler config file) used to discover migration files. Defaults to `migrations/*.sql`.
+  - Use this to opt in to nested layouts produced by ORMs like Drizzle (for example, `migrations/*/migration.sql`).
+  - When `migrations_pattern` is set, `migrations_dir` must also be set, and `migrations_pattern` must start with whatever `migrations_dir` is set to. Each migration is recorded in the migrations table as a path relative to `migrations_dir`.
+
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -727,10 +736,10 @@ Example:
   - The binding name.
 
 - `destination_address` <Type text="string" /> <MetaInfo text="optional" />
-  - The [chosen email address](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
+  - The [chosen email address](/email-service/configuration/send-bindings/#binding-types) you send emails to.
 
 - `allowed_destination_addresses` <Type text="string[]" /> <MetaInfo text="optional" />
-  - The [allowlist of email addresses](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
+  - The [allowlist of email addresses](/email-service/configuration/send-bindings/#binding-types) you send emails to.
 
 <Render file="types-bindings" product="email-routing" />
 
@@ -804,11 +813,11 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
   - The ID of the KV namespace.
 
 - `preview_id` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/development-testing/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
+  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/local-development/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -990,11 +999,11 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 - `preview_bucket_name` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/development-testing/#remote-bindings)).
+  - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/local-development/#remote-bindings)).
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/development-testing/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development](/workers/local-development/) for more details.
 
 :::
 
@@ -1290,7 +1299,7 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
-    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, and Amazon ECR. For more information, refer to [Image Management](/containers/platform-details/image-management/).
+    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/platform-details/image-management/).
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
@@ -1568,7 +1577,6 @@ You can configure various aspects of local development, such as the local protoc
 
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
   - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
-    Example:
 
 - `generate_types` <Type text="boolean" /> <MetaInfo text="optional" />
   - Generate types from your Worker configuration. Defaults to `false`.
@@ -1877,7 +1885,12 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-  	- dist - index.js - wrangler.jsonc - .wrangler - deploy - config.json
+		- dist/
+			- index.js
+			- wrangler.jsonc
+		- .wrangler/
+			- deploy/
+				- config.json
   </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:

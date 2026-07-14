@@ -3,6 +3,48 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-06-24"
+    title: RealtimeKit Android Core 3.0.0
+    description: |-
+      **Breaking changes**
+
+      - Plugins are no longer provided by the server. They must now be declared upfront on the client side by passing a `plugins` list to `RtkMeetingInfo`. Any plugin not declared at initialization will not be available in the meeting.
+        ```kotlin
+        val meetingInfo = RtkMeetingInfo(
+          authToken = authToken,
+          plugins = listOf(
+            RtkClientPluginConfig(
+              id = "whiteboard", // Must match the plugin ID used on Web for sync to work
+              name = "Whiteboard",
+              icon = "https://example.com/logo.png",
+              url = "https://example.com",
+              permissions = RtkClientPluginPermissions(canActivate = true, canDeactivate = true),
+            )
+          ),
+        )
+        ```
+      - Several internal properties have been removed from `RtkPlugin`: `baseURL`, `config`, `description`, `isPrivate`, and `staggered`. Use the new `icon` and `permissions` properties instead.
+      - The two-argument `subscribe(key, (key, value) → Unit)` and `unsubscribe(key, (key, value) → Unit)` overloads on `RtkStore` have been removed. Use the single-argument callback variants introduced in 2.1.0.
+
+      **Features**
+
+      - **AI Transcription** — A new `RtkAi` class (exposed as `client.ai`) provides access to real-time transcripts. Implement `RtkAiEventListener` and register it with `addAiEventListener()` to receive `onTranscript(data: RtkTranscriptionData)` callbacks. A `transcriptionEnabled` permission is available on `MiscellaneousPermissions`.
+      - **Connected Meetings (Breakout Rooms)** — A new `RtkConnectedMeetings` class (exposed as `client.connectedMeetings`) enables breakout room workflows. Register an `RtkConnectedMeetingsEventListener` to handle room transitions and state updates. See the [Breakout Rooms](/realtime/realtimekit/core/breakout-rooms/) documentation for a full guide.
+      - **Chat: Edit and Delete** — Messages can now be edited and deleted. New methods on `RtkChat`: `editTextMessage()`, `editImageMessage()`, `editFileMessage()`, and `deleteMessage()`. `RtkChatEventListener` gains `onMessageEdited()` and `onMessageDeleted()` callbacks. `ChatMessage` now includes an `isEdited` flag.
+      - **Chat: Fetch and Pagination** — New methods on `RtkChat` — `fetchPublicMessages()`, `fetchPrivateMessages()`, `fetchPinnedMessages()`, and `getMessages()` — allow fetching historical messages with cursor-based pagination via `FetchMessagesResult(messages, hasMore)`.
+      - **Client-Declared Plugins** — Plugins are now configured entirely on the client via `RtkClientPluginConfig` and `RtkClientPluginPermissions`. `RtkPlugin` exposes the new `icon` and `permissions` properties accordingly.
+      - **Targeted Broadcast Messages** — `RtkParticipants.broadcastMessage()` now accepts an optional `targetParticipantIds: List<String>` parameter to send a message to a specific subset of participants.
+      - **Nullable Store Values** — `RtkStore.set()` now accepts a nullable `value: Any?`, allowing keys to be cleared by setting them to `null`.
+      - **Logging Control** — `RealtimeKitClient` gains `enableLogging(enabled: Boolean)` and `enableLogging(enabled: Boolean, minSeverity: LogSeverity)` to control SDK log output at runtime.
+      - **Result\<S, F\> Utility Type** — A new `sealed class Result<S, F>` with `Success` and `Failure` variants is used consistently across new async APIs.
+
+      **Fixes**
+
+      - Improved reconnection handling to ensure media recovers gracefully in more scenarios
+      - Improved simulcast tiers to broadcast at a wider range of qualities on higher tiers
+      - Fixed some races in media handling causing mute/unmute operations to rarely result in a crash
+      - Optimized API calls in the room join flow to speed up first join durations
+      - Fixed file and image uploads in chat failing under some conditions
   - publish_date: "2026-05-08"
     title: RealtimeKit Android Core 2.1.0
     description: |-

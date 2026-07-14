@@ -47,6 +47,17 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Environment variables are accessed via attribute access on self.env
+        return Response(f"API host: {self.env.API_HOST}")
+```
+
 </TabItem> </Tabs>
 
 ### Import `env` for global access

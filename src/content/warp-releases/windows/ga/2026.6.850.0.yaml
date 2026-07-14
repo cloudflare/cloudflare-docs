@@ -1,0 +1,7 @@
+releaseNotes: |-
+  This hotfix addresses a Windows authentication issue in the embedded WebView2 browser. Single sign-on could fail to use the Windows primary account, causing users to be prompted for an interactive sign-in. The embedded authentication browser now allows SSO providers to use the OS primary account when available.
+version: 2026.6.850.0
+releaseDate: 2026-07-07T18:35:35.920Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2026.6.850.0
+packageSize: 59027456
+platformName: Windows

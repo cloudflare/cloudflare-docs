@@ -172,6 +172,36 @@ The package includes TypeScript types and works with React, Next.js, and other R
 </TabItem>
 </Tabs>
 
+## Configure a component
+
+Each component accepts attributes that control its behavior. Common attributes include:
+
+| Attribute       | Description                                                      |
+| --------------- | ---------------------------------------------------------------- |
+| `api-url`       | Required. Your instance's public endpoint URL.                   |
+| `placeholder`   | Placeholder text for the input.                                  |
+| `max-results`   | Maximum number of results to request.                            |
+| `theme`         | `light`, `dark`, or `auto` (default) to follow the system theme. |
+| `hide-branding` | Hide the Cloudflare branding.                                    |
+| `translations`  | Override the user-facing strings to localize the component.      |
+
+The chat components (`<chat-bubble-snippet>` and `<chat-page-snippet>`) also accept `chat-query-rewrite` to rewrite follow-up messages into standalone queries.
+
+For the complete list of attributes and a live editor that generates the HTML, React, or Vue code for you, use the [snippet playground](https://search.ai.cloudflare.com/).
+
+## Customize the appearance
+
+Style the components with CSS custom properties, all prefixed with `--search-snippet-`. Set them on the component or a parent element:
+
+```css
+search-bar-snippet {
+	--search-snippet-primary-color: #f6821f;
+	--search-snippet-border-radius: 12px;
+}
+```
+
+The [playground](https://search.ai.cloudflare.com/) lists every available variable and previews your changes live.
+
 ## Configure CORS for local testing
 
 When testing locally (for example, `http://localhost:3000`), you need to allow your local origin in the public endpoint settings.

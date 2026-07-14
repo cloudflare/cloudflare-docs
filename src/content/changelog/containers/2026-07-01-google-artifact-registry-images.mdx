@@ -1,0 +1,31 @@
+---
+title: Use Google Artifact Registry images with Containers
+description: Use private Google Artifact Registry images
+products:
+  - containers
+date: 2026-07-01
+---
+
+import { WranglerConfig } from "~/components";
+
+Containers now support [Google Artifact Registry](https://cloud.google.com/artifact-registry) images. After you configure credentials, you can use a fully qualified Google Artifact Registry image reference in your [Wrangler configuration](/workers/wrangler/configuration/#containers) instead of first pushing the image to Cloudflare Registry.
+
+Provide the service account email with `--gar-email` and pipe the service account JSON key through `stdin`:
+
+```bash
+cat <PATH_TO_KEY> | npx wrangler containers registries configure <REGION>-docker.pkg.dev --gar-email=<SERVICE_ACCOUNT_EMAIL> --secret-name=<SECRET_NAME>
+```
+
+<WranglerConfig>
+
+```toml
+# Example: us-central1-docker.pkg.dev/my-project/my-repo/my-image:latest
+[[containers]]
+image = "<REGION>-docker.pkg.dev/<PROJECT_ID>/<REPOSITORY>/<IMAGE>:<TAG>"
+```
+
+</WranglerConfig>
+
+Only `*-docker.pkg.dev` hosts are supported. To configure credentials, refer to [Use private Google Artifact Registry images](/containers/platform-details/image-management/#use-private-google-artifact-registry-images).
+
+For more information, refer to [Image management](/containers/platform-details/image-management/).

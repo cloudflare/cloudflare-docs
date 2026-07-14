@@ -28,7 +28,7 @@ The **Crawlers** tab displays a table of AI crawlers that are requesting access 
 | Column                | Details                                                                                                                                                                                    |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Crawler               | The name of the AI crawler and the operator that owns it.                                                                                                                                  |
-| Category              | The category of the AI crawler. Refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#categories).                                                                          |
+| Category              | The category of the AI crawler. Refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#legacy-categories).                                                                          |
 | Requests              | The total number of allowed and unsuccessful requests, with trend chart. Unsuccessful requests may come from any rule or response error, not just the block action in AI Crawl Control.    |
 | Robots.txt violations | The number of times the AI crawler has violated your <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip> file.                                                               |
 | Action                | The action you wish to take for the AI crawler. Refer to [Take action for each AI crawler](/ai-crawl-control/features/manage-ai-crawlers/#take-action-for-each-ai-crawler).                |
@@ -95,7 +95,7 @@ For each AI crawler, you can take one of three actions: allow, charge, or block.
 - **Implementation:** From the **Actions** column, select **Allow**.
   Note that you can still choose to [Enforce `robots.txt`](/ai-crawl-control/features/manage-ai-crawlers/#take-action-for-each-ai-crawler).
 
-For more details on how this rule interacts with other Cloudflare settings, refer to [How it works](/bots/concepts/bot/#how-it-works).
+For more details on how Cloudflare classifies AI bot traffic, refer to [AI bots](/bots/concepts/bot/#ai-bots).
 
 </Example>
 
