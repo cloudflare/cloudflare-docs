@@ -61,6 +61,12 @@ Compound expressions allow you to generate sophisticated, highly targeted rules.
 
 This limit applies whether you use the visual [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) to define your expression, or write the expression manually in the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
 
+## Maximum regular expressions per rule
+
+Each rule can contain a maximum of 64 regular expressions in its expression. This limit applies across all rule types that use the [Rules language](/ruleset-engine/rules-language/).
+
+Rules that exceed this limit cannot be created or updated. Existing rules above this limit continue to work but cannot be modified until the expression is simplified.
+
 ## Additional features
 
 You can also use the following Rules language features in your expressions:

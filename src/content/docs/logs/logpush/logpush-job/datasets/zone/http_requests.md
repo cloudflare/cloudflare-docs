@@ -69,6 +69,12 @@ Type: `string`
 
 Cache status. <br />Possible values are <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> \| <em>dynamic</em> \| <em>stream_hit</em> \| <em>deferred</em> <br />"dynamic" means that a request is not eligible for cache. This can mean, for example that it was blocked by the firewall. Refer to [Cloudflare cache responses](/cache/concepts/cache-responses/) for more details.
 
+## CacheLockWaitedMs
+
+Type: `int`
+
+Maximum time spent waiting on a cache lock across all cache tiers, in milliseconds.
+
 ## CacheReserveUsed
 
 Type: `bool`

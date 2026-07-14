@@ -19,7 +19,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-**Start from CLI**: Scaffold a full-stack app with [React Router v7](https://reactrouter.com/) and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
+**Start from CLI**: Scaffold a full-stack app with [React Router v8](https://reactrouter.com/) and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
 
 <PackageManagers
 	type="create"
@@ -27,7 +27,7 @@ import {
 	args="my-react-router-app --framework=react-router"
 />
 
-**Or just deploy**: Create a full-stack app using React Router v7, with CI/CD and previews all set up for you.
+**Or just deploy**: Create a full-stack app using React Router v8, with CI/CD and previews all set up for you.
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
 
@@ -56,7 +56,7 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 
 ## What is React Router?
 
-[React Router v7](https://reactrouter.com/) is a full-stack React framework for building web applications.
+[React Router v8](https://reactrouter.com/) is a full-stack React framework for building web applications.
 It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide a first-class experience for developing, building and deploying your apps on Cloudflare.
 
 ## Creating a full-stack React Router app
@@ -90,10 +90,9 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
         	- wrangler.jsonc
         </FileTree>
 
-        `react-router.config.ts` is your [React Router config file](https://reactrouter.com/explanation/special-files#react-routerconfigts).
+        `react-router.config.ts` is your [React Router config file](https://reactrouter.com/api/framework-conventions/react-router.config.ts).
         In this file:
         	- `ssr` is set to `true`, meaning that your application will use server-side rendering.
-        	- `future.v8_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 
         `vite.config.ts` is your [Vite config file](https://vite.dev/config/).

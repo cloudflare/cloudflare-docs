@@ -1,5 +1,5 @@
 /**
- * GitHub API-backed Flue tools for the Dependabot review agent.
+ * GitHub API-backed Flue tools for the Dependabot and code-review agents.
  *
  * These tools expose repo access to the model as structured tool calls,
  * using a GitHub App installation token from trusted workflow code.
@@ -89,22 +89,29 @@ export function makeGetPrFilesTool(
 
 // ── Tool: read_repo_file ──────────────────────────────────────────────────────
 
-export function makeReadRepoFileTool(token: string): ToolDefinition {
+export function makeReadRepoFileTool(
+	token: string,
+	defaultRef: string = DEFAULT_REF,
+): ToolDefinition {
 	return {
 		name: "read_repo_file",
-		description: `Read any text file from the cloudflare/cloudflare-docs repo. Use for package.json, tsconfig, source files, etc. The default ref is "${DEFAULT_REF}".`,
+		description: `Read any text file from the cloudflare/cloudflare-docs repo. Use for package.json, tsconfig, source files, etc. The default ref is "${defaultRef}".`,
 		parameters: Type.Object({
 			path: Type.String({
 				description:
 					"File path relative to repo root, e.g. 'package.json' or 'src/util/algolia.ts'",
 			}),
 			ref: Type.Optional(
-				Type.String({ description: `Git ref. Defaults to "${DEFAULT_REF}".` }),
+				Type.String({ description: `Git ref. Defaults to "${defaultRef}".` }),
 			),
 		}),
-		async execute({ path, ref = DEFAULT_REF }: { path: string; ref?: string }) {
+		async execute(args) {
+			const path = String(args.path ?? "");
+			const ref = String(args.ref ?? defaultRef);
+			// Encode each path segment but preserve the slashes the contents API needs.
+			const encodedPath = path.split("/").map(encodeURIComponent).join("/");
 			const res = await fetch(
-				`https://api.github.com/repos/${REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`,
+				`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
 				{ headers: apiHeaders(token) },
 			);
 			if (res.status === 404) return `File not found: ${path}`;
@@ -114,7 +121,11 @@ export function makeReadRepoFileTool(token: string): ToolDefinition {
 				);
 			const data = (await res.json()) as Record<string, unknown>;
 			if (data.encoding === "base64" && typeof data.content === "string") {
-				const text = atob((data.content as string).replace(/\n/g, ""));
+				// Decode as UTF-8 via TextDecoder — atob() alone produces Latin-1
+				// mojibake for non-ASCII content (em dashes, smart quotes, CJK, etc.).
+				const binary = atob((data.content as string).replace(/\n/g, ""));
+				const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+				const text = new TextDecoder().decode(bytes);
 				// Cap at 32 KB to avoid bloating context
 				if (text.length > 32768) {
 					return (
@@ -137,7 +148,7 @@ export function makeReadRepoFileTool(token: string): ToolDefinition {
 export function makeSearchRepoTool(token: string): ToolDefinition {
 	return {
 		name: "search_repo",
-		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippets. Use to find import sites, usages, and configuration for a package. Limited to 20 results. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
+		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippets. Use to find import sites, usages, and callers. Limited to 20 results. Note: code search indexes the default branch, so results may not reflect changes on the PR branch — use read_repo_file for exact current content. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
 		parameters: Type.Object({
 			query: Type.String({
 				description:
@@ -150,7 +161,9 @@ export function makeSearchRepoTool(token: string): ToolDefinition {
 				}),
 			),
 		}),
-		async execute({ query, path }: { query: string; path?: string }) {
+		async execute(args) {
+			const query = String(args.query ?? "");
+			const path = typeof args.path === "string" ? args.path : undefined;
 			const q = `${query} repo:${REPO}${path ? ` path:${path}` : ""}`;
 			const res = await fetch(
 				`https://api.github.com/search/code?q=${encodeURIComponent(q)}&per_page=20`,
@@ -206,13 +219,10 @@ export function makeGetNpmPackageInfoTool(): ToolDefinition {
 				}),
 			),
 		}),
-		async execute({
-			packageName,
-			version,
-		}: {
-			packageName: string;
-			version?: string;
-		}) {
+		async execute(args) {
+			const packageName = String(args.packageName ?? "");
+			const version =
+				typeof args.version === "string" ? args.version : undefined;
 			const encoded = encodeURIComponent(packageName);
 			const url = version
 				? `https://registry.npmjs.org/${encoded}/${encodeURIComponent(version)}`
@@ -254,7 +264,8 @@ export function makeTraceDependencyTool(token: string): ToolDefinition {
 					"npm package name, e.g. 'algoliasearch' or '@astrojs/react'",
 			}),
 		}),
-		async execute({ packageName }: { packageName: string }) {
+		async execute(args) {
+			const packageName = String(args.packageName ?? "");
 			// 1. Check package.json for direct dep
 			const pkgRes = await fetch(
 				`https://api.github.com/repos/${REPO}/contents/package.json?ref=${DEFAULT_REF}`,
@@ -338,4 +349,18 @@ export function makeDependabotReviewTools(
 		makeTraceDependencyTool(token),
 		makeGetNpmPackageInfoTool(),
 	];
+}
+
+// ── Factory: code-review tools ────────────────────────────────────────────────
+//
+// Tools for the generic code-review specialist. `read_repo_file` defaults to
+// the PR head SHA so the agent reads post-change file content for full context
+// (the diff patch alone is staged in the workspace). `search_repo` indexes the
+// default branch only, so it is best-effort for finding usages/callers.
+
+export function makeCodeReviewTools(
+	token: string,
+	headSha: string,
+): ToolDefinition[] {
+	return [makeReadRepoFileTool(token, headSha), makeSearchRepoTool(token)];
 }

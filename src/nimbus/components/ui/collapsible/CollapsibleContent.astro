@@ -1,0 +1,22 @@
+---
+/**
+ * CollapsibleContent — the panel that animates open/closed.
+ * Uses `grid-template-rows: 0fr → 1fr` for smooth height transition.
+ */
+import { cn } from "@/lib/cn";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {}
+
+const { class: className, ...attrs } = Astro.props;
+---
+
+<div
+  data-nb-collapsible-content
+  class={cn(className)}
+  {...attrs}
+>
+  <div>
+    <slot />
+  </div>
+</div>

@@ -18,30 +18,33 @@ This page summarizes supported features, limitations, and best practices.
 
 ## Quick reference
 
-| Feature                                                 | Supported | Notes                                                                        |
-| :------------------------------------------------------ | :-------- | :--------------------------------------------------------------------------- |
-| SELECT, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT        | Yes       |                                                                              |
-| Column aliases (`AS`)                                   | Yes       |                                                                              |
-| Expressions (CASE, CAST, LIKE, BETWEEN, IN, arithmetic) | Yes       | Full expression support                                                      |
-| EXPLAIN                                                 | Yes       | Returns execution plan as text or JSON                                       |
-| 173 scalar functions                                    | Yes       | Math, string, datetime, regex, crypto, array, map, struct, JSON              |
-| 33 aggregate functions                                  | Yes       | Basic, approximate, statistical, bitwise, boolean, positional                |
-| Approximate aggregates                                  | Yes       | `approx_distinct`, `approx_median`, `approx_percentile_cont`, `approx_top_k` |
-| Struct / Array / Map column types                       | Yes       | Bracket notation, `get_field()`, array functions, map functions           |
-| CTEs (`WITH ... AS`)                                    | Yes       | Can reference different tables and include JOINs                             |
-| JOINs (INNER, LEFT, RIGHT, FULL OUTER, CROSS)           | Yes       | All standard join types                                                      |
-| Implicit joins (comma FROM)                              | Yes       |                                                                              |
-| Subqueries (`IN`, `NOT IN`)                              | Yes       | `NOT IN` not supported on nullable columns — use `NOT EXISTS` instead        |
-| Subqueries (`EXISTS`, `NOT EXISTS`)                      | Yes       | semi-join and anti-join patterns                                             |
-| Scalar subqueries                                        | Yes       | In SELECT, WHERE, HAVING                                                     |
-| Derived tables (FROM subqueries)                         | Yes       | Can be nested and joined. `LATERAL` derived tables not supported.            |
-| Self-joins                                               | Yes       | Same table with different aliases                                            |
-| Window functions (`OVER`)                               | No        |                                                                              |
-| `SELECT DISTINCT`                                       | Yes       |                                                                              |
-| `OFFSET`                                                | No        |                                                                              |
-| `UNION` / `INTERSECT` / `EXCEPT`                        | Yes       | `UNION ALL` also supported                                                   |
-| `INSERT` / `UPDATE` / `DELETE`                          | No        | Read-only                                                                    |
-| `CREATE` / `DROP` / `ALTER`                             | No        | Read-only                                                                    |
+| Feature                                                      | Supported | Notes                                                                        |
+| :----------------------------------------------------------- | :-------- | :--------------------------------------------------------------------------- |
+| SELECT, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT             | Yes       |                                                                              |
+| Column aliases (`AS`)                                        | Yes       |                                                                              |
+| Expressions (CASE, CAST, LIKE, BETWEEN, IN, arithmetic)      | Yes       | Full expression support                                                      |
+| EXPLAIN                                                      | Yes       | Returns execution plan as text or JSON                                       |
+| Scalar functions                                             | Yes       | Math, string, datetime, regex, crypto, array, map, struct, JSON              |
+| Aggregate functions                                          | Yes       | Basic, approximate, statistical, bitwise, boolean, positional                |
+| Approximate aggregates                                       | Yes       | `approx_distinct`, `approx_median`, `approx_percentile_cont`, `approx_top_k` |
+| Struct / Array / Map column types                            | Yes       | Bracket notation, `get_field()`, array functions, map functions              |
+| CTEs (`WITH ... AS`)                                         | Yes       | Can reference different tables and include JOINs                             |
+| JOINs (INNER, LEFT, RIGHT, FULL OUTER, CROSS)                | Yes       | All standard join types                                                      |
+| Implicit joins (comma FROM)                                  | Yes       |                                                                              |
+| Subqueries (`IN`, `NOT IN`)                                  | Yes       | `NOT IN` not supported on nullable columns — use `NOT EXISTS` instead        |
+| Subqueries (`EXISTS`, `NOT EXISTS`)                          | Yes       | semi-join and anti-join patterns                                             |
+| Scalar subqueries                                            | Yes       | In SELECT, WHERE, HAVING                                                     |
+| Derived tables (FROM subqueries)                             | Yes       | Can be nested and joined. `LATERAL` derived tables not supported.            |
+| Self-joins                                                   | Yes       | Same table with different aliases                                            |
+| Window functions (`OVER`)                                    | Yes       | Inline `OVER (...)` only — named `WINDOW` clause not supported               |
+| `QUALIFY`                                                    | Yes       | Filter on a window function result                                           |
+| `SELECT DISTINCT` / `DISTINCT ON`                            | Yes       |                                                                              |
+| `func(DISTINCT ...)`                                         | Yes       | `COUNT`, `SUM`, `AVG`, and other aggregates                                  |
+| Set operations (`UNION`, `UNION ALL`, `INTERSECT`, `EXCEPT`) | Yes       |                                                                              |
+| `GROUPING SETS` / `ROLLUP` / `CUBE`                          | Yes       |                                                                              |
+| `OFFSET`                                                     | No        |                                                                              |
+| `INSERT` / `UPDATE` / `DELETE`                               | No        | Read-only                                                                    |
+| `CREATE` / `DROP` / `ALTER`                                  | No        | Read-only                                                                    |
 
 For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 
@@ -49,42 +52,41 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 
 ## Unsupported SQL features
 
-| Feature                                                                       | Error                                                    |
-| :---------------------------------------------------------------------------- | :------------------------------------------------------- |
-| `OFFSET`                                                                      | `unsupported feature: OFFSET clause is not supported`    |
-| Window functions (`OVER`)                                                     | `unsupported feature: window functions (OVER clause)`    |
-| `INSERT` / `UPDATE` / `DELETE`                                                | `only read-only queries are allowed`                     |
-| `CREATE` / `DROP` / `ALTER`                                                   | `only read-only queries are allowed`                     |
-| `UNNEST` / `PIVOT` / `UNPIVOT`                                                | Not supported                                            |
-| Wildcard modifiers (`ILIKE`, `EXCLUDE`, `EXCEPT`, `REPLACE`, `RENAME` on `*`) | Not supported                                            |
-| Nested (parenthesized) joins                                                  | Not supported                                            |
-| `LATERAL` derived tables                                                      | Not supported                                            |
-| `LATERAL VIEW` / `QUALIFY`                                                    | Not supported                                            |
+| Feature                                                                       | Error                                                 |
+| :---------------------------------------------------------------------------- | :---------------------------------------------------- |
+| `OFFSET`                                                                      | `unsupported feature: OFFSET clause is not supported` |
+| Named `WINDOW` clause                                                         | `unsupported feature: WINDOW clause is not supported` |
+| `INSERT` / `UPDATE` / `DELETE`                                                | `only read-only queries are allowed`                  |
+| `CREATE` / `DROP` / `ALTER`                                                   | `only read-only queries are allowed`                  |
+| `UNNEST` / `PIVOT` / `UNPIVOT`                                                | Not supported                                         |
+| Wildcard modifiers (`ILIKE`, `EXCLUDE`, `EXCEPT`, `REPLACE`, `RENAME` on `*`) | Not supported                                         |
+| Nested (parenthesized) joins                                                  | Not supported                                         |
+| `LATERAL` derived tables / `LATERAL VIEW`                                     | Not supported                                         |
+| `PERCENTILE_DISC`                                                             | Not supported — use `PERCENTILE_CONT`                 |
 
 ---
 
 ## Unsupported expression patterns
 
-| Pattern                                                 | Alternative                                                                                       |
-| :------------------------------------------------------ | :------------------------------------------------------------------------------------------------ |
-| `func(DISTINCT ...)` on any aggregate                   | Use `approx_distinct` for counting                                                                |
-| `PERCENTILE_CONT` / `PERCENTILE_DISC`                   | Use [`approx_percentile_cont`](/r2-sql/sql-reference/aggregate-functions/#approx_percentile_cont) |
-| `MEDIAN`                                                | Use [`approx_median`](/r2-sql/sql-reference/aggregate-functions/#approx_median)                   |
-| `ARRAY_AGG`                                             | No alternative (unsupported for memory safety)                                                    |
-| `STRING_AGG`                                            | No alternative (unsupported for memory safety)                                                    |
-| `NOT IN` subquery on nullable columns                   | Use `NOT EXISTS` with a correlated subquery instead                                               |
+| Pattern                               | Alternative                                         |
+| :------------------------------------ | :-------------------------------------------------- |
+| `NOT IN` subquery on nullable columns | Use `NOT EXISTS` with a correlated subquery instead |
+
+Exact aggregates such as `COUNT(DISTINCT ...)`, `MEDIAN`, `PERCENTILE_CONT`, `ARRAY_AGG`, and `STRING_AGG` are supported. On large datasets, prefer the approximate alternatives (`approx_distinct`, `approx_median`, `approx_percentile_cont`) for lower memory and compute. Refer to [Aggregate functions](/r2-sql/sql-reference/aggregate-functions/).
 
 ---
 
 ## Runtime constraints
 
-| Constraint                           | Details                                                                                               |
-| :----------------------------------- | :---------------------------------------------------------------------------------------------------- |
-| Multi-table queries                  | JOINs, subqueries (IN, EXISTS, scalar, derived tables), and multi-table CTEs are supported. Performance depends on intermediate result size; use WHERE filters to manage join selectivity. |
-| Partitioned and unpartitioned tables  | Both partitioned and unpartitioned Iceberg tables are supported.                                       |
-| Parquet format only                  | No CSV, JSON, or other formats.                                                                       |
-| Read-only                            | R2 SQL is a query engine, not a database. No writes.                                                  |
-| `now()` / `current_time()` precision | Quantized to 10ms boundaries and forced to UTC.                                                       |
+| Constraint                           | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Resource-intensive queries           | During open beta, queries that require high memory or compute may time out. This includes multi-way joins (three or more large tables), `COUNT(DISTINCT)` and other `func(DISTINCT ...)` across joins or high-cardinality columns, `ARRAY_AGG` / `STRING_AGG`, set operations that deduplicate large inputs, window functions over large partitions, and large sorts or high-cardinality `GROUP BY`. Add `WHERE` filters and `LIMIT`, and prefer `approx_*` aggregates to reduce the chance of a timeout. |
+| Budget-gated functions               | `MEDIAN`, `PERCENTILE_CONT`, `ARRAY_AGG`, `STRING_AGG`, `NTH_VALUE` used as an aggregate, any aggregate with `DISTINCT`, and window functions (including those used through `QUALIFY`) are budget-gated up front. R2 SQL estimates the memory required before running the query and rejects it with a `400` error if too much data would be scanned. Add a `GROUP BY` or `WHERE` filters to reduce the rows processed.                                                                                    |
+| Multi-table queries                  | JOINs, subqueries (IN, EXISTS, scalar, derived tables), and multi-table CTEs are supported. Performance depends on intermediate result size; use WHERE filters to manage join selectivity.                                                                                                                                                                                                                                                                                                                |
+| Partitioned and unpartitioned tables | Both partitioned and unpartitioned Iceberg tables are supported.                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Parquet format only                  | No CSV, JSON, or other formats.                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Read-only                            | R2 SQL is a query engine, not a database. No writes.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `now()` / `current_time()` precision | Quantized to 10ms boundaries and forced to UTC.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ---
 

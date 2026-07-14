@@ -25,6 +25,24 @@ This security model is commonly known as Object Capabilities, or Capability-Base
 
 [Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes are not directly exposed over RPC.
 
+### Arrow functions
+
+Arrow function expressions are not exposed over RPC because they are defined on class instances, not on the class prototype. They [should not be used as class methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#cannot_be_used_as_methods) of `WorkerEntrypoint` classes.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export default class extends WorkerEntrypoint {
+  // add() is exposed over RPC.
+  add(a, b) {
+    return a + b;
+  }
+
+  // subtract() is NOT exposed over RPC.
+  subtract = (a, b) => a - b;
+}
+```
+
 ### Class instance properties
 
 When you send an instance of an application-defined class, the recipient can only access methods and properties declared on the class, not properties of the instance. For example:

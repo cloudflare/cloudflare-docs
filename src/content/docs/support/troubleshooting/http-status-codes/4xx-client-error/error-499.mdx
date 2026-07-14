@@ -36,3 +36,7 @@ Depending on the client-side timeout settings, the following scenarios can occur
 - **Shorter client timeout (less than 38 seconds)**: If the client has a shorter timeout, it will abandon the connection before Cloudflare completes processing, and a `499` response code will be logged.
 - **Successful connection (more than 38 seconds)**: If the client has a longer timeout and the TCP connection is successfully established, the HTTP transaction proceeds normally, and Cloudflare returns a standard status code (`HTTP 200`).
 - **Handshake failure**: If the client has a longer timeout but Cloudflare cannot establish the TCP handshake with the origin server, Cloudflare will return an `HTTP 522` status code.
+
+### Diagnose with Origin Analytics
+
+Use [Origin Analytics](/speed/origin-analytics/) to check whether slow origin response times are causing clients to close connections prematurely. If P95 origin response times are high, identify the slow endpoints in the **Top endpoints** table and optimize them to reduce `499` errors.

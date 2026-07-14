@@ -23,15 +23,18 @@ R2 SQL is Cloudflare's serverless, distributed, analytics query engine for query
 ## Query syntax
 
 ```sql
-SELECT column_list | expression | aggregation_function
+SELECT [DISTINCT] column_list | expression | aggregate_function | window_function
 FROM namespace_name.table_name
 [JOIN namespace_name.table_name ON condition]
 [WHERE conditions]
 [GROUP BY column_list]
 [HAVING conditions]
+[QUALIFY window_condition]
 [ORDER BY expression [ASC | DESC]]
 [LIMIT number]
 ```
+
+Two or more queries can be combined with [set operations](#set-operations) (`UNION`, `UNION ALL`, `INTERSECT`, `EXCEPT`).
 
 ---
 
@@ -87,20 +90,6 @@ SELECT [DISTINCT] column_specification [, column_specification, ...]
 - **Column alias**: `column_name AS alias`
 - **Expressions**: arithmetic, function calls, CASE expressions, and casts
 
-### Select distinct
-
-Use `DISTINCT` to eliminate duplicate rows from the result set:
-
-```sql
-SELECT DISTINCT region, department
-FROM my_namespace.sales_data
-WHERE total_amount > 1000
-ORDER BY region, department
-LIMIT 100
-```
-
-For large datasets where approximate results are acceptable, `approx_distinct()` is a faster alternative for counting unique values.
-
 ### Examples
 
 ```sql
@@ -108,6 +97,22 @@ SELECT * FROM my_namespace.sales_data LIMIT 10
 SELECT customer_id, region, total_amount FROM my_namespace.sales_data LIMIT 10
 SELECT region, total_amount * 1.1 AS total_with_tax FROM my_namespace.sales_data LIMIT 10
 ```
+
+### DISTINCT
+
+`SELECT DISTINCT` returns unique rows. `DISTINCT ON (...)` returns the first row for each combination of the listed expressions, using the `ORDER BY` clause to determine which row is kept.
+
+```sql
+-- Unique combinations
+SELECT DISTINCT region, department FROM my_namespace.sales_data
+
+-- First row per region by amount
+SELECT DISTINCT ON (region) region, customer_id, total_amount
+FROM my_namespace.sales_data
+ORDER BY region, total_amount DESC
+```
+
+For counting unique values on large datasets, `approx_distinct()` is a faster alternative.
 
 ---
 
@@ -208,14 +213,14 @@ R2 SQL supports joining multiple Iceberg tables in a single query. All join type
 
 ### Supported join types
 
-| Join type        | Syntax                              | Description                                                        |
-| :--------------- | :---------------------------------- | :----------------------------------------------------------------- |
-| Inner join       | `INNER JOIN ... ON`                 | Returns rows that match in both tables                             |
-| Left outer join  | `LEFT JOIN ... ON`                  | Returns all rows from the left table, NULLs for non-matching right |
-| Right outer join | `RIGHT JOIN ... ON`                 | Returns all rows from the right table, NULLs for non-matching left |
-| Full outer join  | `FULL OUTER JOIN ... ON`            | Returns all rows from both tables, NULLs where no match            |
-| Cross join       | `CROSS JOIN`                        | Cartesian product of both tables                                   |
-| Implicit join    | `FROM t1, t2 WHERE t1.id = t2.id`  | Comma-separated tables with join condition in `WHERE`              |
+| Join type        | Syntax                            | Description                                                        |
+| :--------------- | :-------------------------------- | :----------------------------------------------------------------- |
+| Inner join       | `INNER JOIN ... ON`               | Returns rows that match in both tables                             |
+| Left outer join  | `LEFT JOIN ... ON`                | Returns all rows from the left table, NULLs for non-matching right |
+| Right outer join | `RIGHT JOIN ... ON`               | Returns all rows from the right table, NULLs for non-matching left |
+| Full outer join  | `FULL OUTER JOIN ... ON`          | Returns all rows from both tables, NULLs where no match            |
+| Cross join       | `CROSS JOIN`                      | Cartesian product of both tables                                   |
+| Implicit join    | `FROM t1, t2 WHERE t1.id = t2.id` | Comma-separated tables with join condition in `WHERE`              |
 
 ### Syntax
 
@@ -278,6 +283,7 @@ SELECT * FROM (t1 JOIN t2 ON t1.id = t2.id) JOIN t3 ON t2.id = t3.id
 -- Supported
 SELECT * FROM t1 JOIN t2 ON t1.id = t2.id JOIN t3 ON t2.id = t3.id
 ```
+
 :::
 
 ### Best practices for joins
@@ -360,7 +366,7 @@ LIMIT 10
 ```
 
 :::caution
-`NOT IN` subqueries are not supported on nullable columns. If the subquery column can contain `NULL` values, use `NOT EXISTS` instead. `SELECT DISTINCT` is also not supported inside subqueries — omit the `DISTINCT` keyword or use `NOT EXISTS`.
+`NOT IN` subqueries are not supported on nullable columns. If the subquery column can contain `NULL` values, use `NOT EXISTS` instead.
 
 ```sql
 -- Instead of NOT IN on a nullable column:
@@ -372,6 +378,7 @@ WHERE NOT EXISTS (
 )
 LIMIT 20
 ```
+
 :::
 
 ### `EXISTS` / `NOT EXISTS` subqueries
@@ -518,6 +525,31 @@ FROM my_namespace.sales_data
 GROUP BY department, category
 ```
 
+### GROUPING SETS, ROLLUP, and CUBE
+
+These extensions compute multiple groupings, including subtotals and grand totals, in a single query.
+
+- **`GROUPING SETS`**: Computes exactly the groupings you list. `()` produces the grand total.
+- **`ROLLUP`**: Computes hierarchical subtotals from left to right. `ROLLUP(a, b)` groups by `(a, b)`, `(a)`, and `()`.
+- **`CUBE`**: Computes every combination of the listed columns. `CUBE(a, b)` groups by `(a, b)`, `(a)`, `(b)`, and `()`.
+
+```sql
+-- Subtotals per department plus a grand total
+SELECT department, SUM(total_amount) AS total
+FROM my_namespace.sales_data
+GROUP BY ROLLUP(department)
+
+-- Every combination of department and category
+SELECT department, category, SUM(total_amount) AS total
+FROM my_namespace.sales_data
+GROUP BY CUBE(department, category)
+
+-- Explicit groupings
+SELECT department, category, SUM(total_amount) AS total
+FROM my_namespace.sales_data
+GROUP BY GROUPING SETS ((department, category), (department), ())
+```
+
 ---
 
 ## HAVING clause
@@ -595,6 +627,60 @@ SELECT * FROM my_namespace.sales_data LIMIT 100
 
 ---
 
+## Window functions
+
+Window functions compute a value across a set of rows related to the current row without collapsing them into a single output row. The window is defined inline with an `OVER (...)` clause containing an optional `PARTITION BY`, `ORDER BY`, and frame specification.
+
+### Syntax
+
+```sql
+function(args) OVER (
+    [PARTITION BY expression [, ...]]
+    [ORDER BY expression [ASC | DESC] [, ...]]
+    [frame_specification]
+)
+```
+
+### Supported functions
+
+| Category  | Functions                                                                  |
+| :-------- | :------------------------------------------------------------------------- |
+| Ranking   | `ROW_NUMBER`, `RANK`, `DENSE_RANK`, `PERCENT_RANK`, `CUME_DIST`, `NTILE`   |
+| Offset    | `LAG`, `LEAD`, `FIRST_VALUE`, `LAST_VALUE`, `NTH_VALUE`                    |
+| Aggregate | `SUM`, `AVG`, `COUNT`, `MIN`, `MAX`, and other aggregates used with `OVER` |
+
+### Examples
+
+```sql
+-- Rank rows within each partition
+SELECT customer_id, region,
+       ROW_NUMBER() OVER (PARTITION BY region ORDER BY total_amount DESC) AS rank_in_region,
+       LAG(total_amount) OVER (PARTITION BY region ORDER BY total_amount DESC) AS prev_amount
+FROM my_namespace.sales_data
+
+-- Running total with an explicit frame
+SELECT customer_id, total_amount,
+       SUM(total_amount) OVER (ORDER BY total_amount ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS running_total
+FROM my_namespace.sales_data
+```
+
+:::note
+The named `WINDOW` clause is not supported. Inline the `OVER (...)` specification at each call site instead of defining `WINDOW w AS (...)`.
+:::
+
+### QUALIFY
+
+`QUALIFY` filters rows based on the result of a window function, similar to how `HAVING` filters grouped rows.
+
+```sql
+-- Keep only the top 3 customers by amount in each region
+SELECT customer_id, region, total_amount
+FROM my_namespace.sales_data
+QUALIFY ROW_NUMBER() OVER (PARTITION BY region ORDER BY total_amount DESC) <= 3
+```
+
+---
+
 ## Set operations
 
 Set operations combine the results of two or more `SELECT` statements.
@@ -609,12 +695,12 @@ SELECT ... FROM table2
 
 ### Supported operations
 
-| Operation     | Description                                                      |
-| :------------ | :--------------------------------------------------------------- |
-| `UNION`       | Returns all rows from both queries, removing duplicates          |
-| `UNION ALL`   | Returns all rows from both queries, including duplicates         |
-| `INTERSECT`   | Returns only rows that appear in both query results              |
-| `EXCEPT`      | Returns rows from the first query that do not appear in the second |
+| Operation   | Description                                                        |
+| :---------- | :----------------------------------------------------------------- |
+| `UNION`     | Returns all rows from both queries, removing duplicates            |
+| `UNION ALL` | Returns all rows from both queries, including duplicates           |
+| `INTERSECT` | Returns only rows that appear in both query results                |
+| `EXCEPT`    | Returns rows from the first query that do not appear in the second |
 
 ### Examples
 
@@ -650,6 +736,10 @@ SELECT zone_id FROM my_namespace.firewall_events
 - All queries in a set operation must return the same number of columns.
 - Corresponding columns must have compatible data types.
 - Column names in the result are taken from the first query.
+
+:::note
+A `LIMIT` placed directly before a set operator is not valid. Wrap each query in a subquery if you need to limit its rows, or apply a single `LIMIT` to the combined result.
+:::
 
 ---
 

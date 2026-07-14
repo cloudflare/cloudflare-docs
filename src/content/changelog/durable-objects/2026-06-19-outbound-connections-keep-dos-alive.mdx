@@ -1,0 +1,28 @@
+---
+title: Outbound connections keep Durable Objects alive
+description: Active outbound TCP sockets and outbound WebSocket connections now prevent a Durable Object from being evicted while the connection is open.
+products:
+  - durable-objects
+date: 2026-06-19
+---
+
+Durable Objects now remain alive for the duration of active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-sockets/) or an outbound WebSocket. Previously, a Durable Object would be evicted after 70-140 seconds of no incoming traffic, even if the object had an open outbound connection, which is a common pattern when streaming responses from a large language model (LLM) over TCP or an outbound WebSocket.
+
+With this change, each active outbound connection prevents eviction. Once all outbound connections close, the standard 70-140 second inactivity window applies before the Durable Object is evicted.
+
+### Before: streaming connections were cut off by eviction
+
+![Timeline showing a Durable Object evicted 70-140 seconds after the last incoming request, cutting off an in-flight LLM stream while the outbound connection is still open](~/assets/images/durable-objects/outbound-connection-before.svg)
+
+### After: active outbound connections keep the Durable Object alive
+
+![Timeline showing the same outbound stream completing because the active connection keeps the Durable Object alive, with the inactivity window starting only after the connection closes](~/assets/images/durable-objects/outbound-connection-after.svg)
+
+If you are [building agents on Cloudflare](/agents/), this is especially relevant. An agent that streams tokens from an LLM while [calling models](/agents/concepts/calling-llms/), or that performs [long-running tasks](/agents/concepts/agentic-patterns/long-running-agents/) over an outbound connection, now stays alive for the duration of that connection instead of being evicted mid-stream.
+
+**Limits:**
+
+- Each outbound connection keeps the Durable Object alive for a maximum of **15 minutes**. After 15 minutes, the connection stops preventing eviction (the connection itself continues operating), and the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/) resume.
+- The Durable Object's existing [per-account instance limits](/durable-objects/platform/limits/) still apply.
+
+For more information, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).

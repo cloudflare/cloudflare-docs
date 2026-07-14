@@ -17,7 +17,7 @@ The **Linked App Token** policy selector allows an Access policy on one applicat
 Linked App Token supports two flows:
 
 - [**Self-hosted to self-hosted**](#self-hosted-to-self-hosted) — A self-hosted application forwards its Access JWT to another self-hosted application. This is the simplest setup and requires no additional OAuth configuration.
-- [**SaaS to self-hosted**](#saas-to-self-hosted) — An Access for SaaS application (such as an [MCP server using OAuth](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/#access-for-saas-application)) sends its OAuth access token to a self-hosted application.
+- [**SaaS to self-hosted**](#saas-to-self-hosted) — An Access for SaaS application (such as an [MCP server using OAuth](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/#saas-managed-third-party-mcp-server)) sends its OAuth access token to a self-hosted application.
 
 ## Self-hosted to self-hosted
 
@@ -64,7 +64,7 @@ When Access receives the request to Application B, it will:
 
 1. Extract the token from the `Cf-Access-Token` header.
 2. Validate that the token was issued for Application A (matching the `app_uid` in the Linked App Token rule).
-3. If valid, allow the request. The user's identity from the token is propagated to the upstream headers and audit log.
+3. If valid, Access issues a new `Cf-Access-Jwt-Assertion` scoped to Application B's AUD tag, forwards it to Application B's origin, and attributes the request to the original user in the audit log.
 
 ## SaaS to self-hosted
 

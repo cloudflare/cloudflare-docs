@@ -1,0 +1,103 @@
+---
+/**
+ * Pagination — page-number strip for the paginated changelog views.
+ * CF source: cloudflare-docs/src/components/changelog/Pagination.astro
+ * Restyled with Nimbus theme tokens (neutral active state) so it auto-flips
+ * in dark mode — no bespoke CSS.
+ */
+import { cn } from "@/lib/cn";
+
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  /** Base URL for this paginated route, e.g. "/changelog/" or
+   *  "/changelog/product/workflows/". Must end with a trailing slash.
+   *  Page 1 = baseUrl, page N = baseUrl + N + "/". */
+  baseUrl: string;
+}
+
+const { currentPage, lastPage, baseUrl } = Astro.props;
+
+function pageUrl(n: number): string {
+  return n === 1 ? baseUrl : `${baseUrl}${n}/`;
+}
+
+/**
+ * Always shows: first, last, current, one before current, one after current.
+ * Gaps between non-adjacent numbers become null (rendered as "…").
+ */
+function buildPageItems(current: number, last: number): (number | null)[] {
+  if (last <= 1) return [];
+
+  const visible = new Set<number>();
+  visible.add(1);
+  visible.add(last);
+  visible.add(current);
+  if (current - 1 >= 1) visible.add(current - 1);
+  if (current + 1 <= last) visible.add(current + 1);
+
+  const sorted = [...visible].sort((a, b) => a - b);
+
+  const items: (number | null)[] = [];
+  for (let i = 0; i < sorted.length; i++) {
+    if (i > 0 && sorted[i] - sorted[i - 1] > 1) {
+      items.push(null); // ellipsis gap
+    }
+    items.push(sorted[i]);
+  }
+  return items;
+}
+
+const items = buildPageItems(currentPage, lastPage);
+const prevUrl = currentPage > 1 ? pageUrl(currentPage - 1) : null;
+const nextUrl = currentPage < lastPage ? pageUrl(currentPage + 1) : null;
+
+const btn =
+  "flex h-9 min-w-9 items-center justify-center rounded px-3 text-sm font-medium";
+const link = cn(btn, "no-underline hover:bg-accent");
+const disabled = cn(btn, "opacity-40");
+const active = cn(btn, "bg-foreground font-bold text-background");
+---
+
+{
+  lastPage > 1 && (
+    <nav
+      class="mt-8 flex flex-wrap items-center justify-between gap-y-2"
+      aria-label="Pagination"
+    >
+      {prevUrl ? (
+        <a href={prevUrl} class={link}>
+          ← Prev
+        </a>
+      ) : (
+        <span class={disabled}>← Prev</span>
+      )}
+
+      <div class="flex items-center gap-1 max-sm:order-first max-sm:w-full max-sm:justify-center">
+        {items.map((item) =>
+          item === null ? (
+            <span class="flex h-9 items-center justify-center px-2 text-sm text-muted-foreground">
+              …
+            </span>
+          ) : item === currentPage ? (
+            <span class={active} aria-current="page">
+              {item}
+            </span>
+          ) : (
+            <a href={pageUrl(item)} class={link}>
+              {item}
+            </a>
+          ),
+        )}
+      </div>
+
+      {nextUrl ? (
+        <a href={nextUrl} class={link}>
+          Next →
+        </a>
+      ) : (
+        <span class={disabled}>Next →</span>
+      )}
+    </nav>
+  )
+}

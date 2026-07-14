@@ -32,6 +32,8 @@ Before making requests, you need two things:
 Run the following command to make your first request through AI Gateway. This example calls a Workers AI model, which requires the `@cf/` model prefix and the `cf-aig-gateway-id` header.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN,
+# and `wrangler whoami` to replace $CLOUDFLARE_ACCOUNT_ID.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "cf-aig-gateway-id: default" \
@@ -74,6 +76,8 @@ Authenticate with your upstream AI provider using one of the following options:
 Call any model — whether hosted on Cloudflare or by a third-party provider — through the same Cloudflare API. No provider SDKs or API keys needed — authentication and billing are handled through your Cloudflare account. Three endpoints are available: `/ai/run` for all modalities, `/ai/v1/chat/completions` for OpenAI SDK compatibility, and `/ai/v1/responses` for agentic workflows.
 
 ```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

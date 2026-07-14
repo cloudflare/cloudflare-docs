@@ -113,3 +113,39 @@ export function detectApiModes(schema: {
 	// Only return modes if we found meaningful splits
 	return modes.length > 1 ? modes : undefined;
 }
+
+/** One labelled branch of a top-level `oneOf`/`anyOf` schema. */
+export type SchemaVariant = {
+	title: string;
+	schema: Record<string, unknown>;
+};
+
+/**
+ * Detect a root-level `oneOf`/`anyOf` whose branches are meant to be shown as
+ * a labelled variant selector (e.g. a model's accepted request formats —
+ * "Chat Completions" vs "Responses"). Returns one entry per branch when there
+ * are at least two and at least one carries a real `title`; otherwise null, so
+ * the caller renders the schema as a single tree.
+ *
+ * This is the presentational counterpart to `detectApiModes`: that splits a
+ * schema into Workers AI API modes (sync/batch/streaming); this surfaces
+ * request-format branches the generator labels with a `title`.
+ */
+export function getTopLevelVariants(
+	schemaObj: Record<string, unknown>,
+): SchemaVariant[] | null {
+	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
+		| Record<string, unknown>[]
+		| undefined;
+	if (!variants || variants.length < 2) return null;
+
+	// Check if all variants have titles
+	const titled = variants.map((v, i) => ({
+		title: (v.title as string) || `Option ${i + 1}`,
+		schema: v,
+	}));
+
+	// Only use tabs if at least one variant has a real title
+	const hasRealTitle = variants.some((v) => v.title);
+	return hasRealTitle ? titled : null;
+}

@@ -1,0 +1,15 @@
+---
+// Renders one randomly-selected example prompt as a plain-text code block.
+// "Random" is resolved at build time (SSG) — each build picks a different
+// prompt, which is good enough for "feels fresh" without client-side JS.
+//
+// Use from MDX:
+//   <RandomPrompt />
+import { Code } from "~/components";
+import { SHARED_PROMPTS } from "./prompts";
+
+const prompt =
+	SHARED_PROMPTS[Math.floor(Math.random() * SHARED_PROMPTS.length)];
+---
+
+<Code code={prompt} lang="txt" />

@@ -1,0 +1,21 @@
+---
+/**
+ * Type — inline type-annotation badge for API reference prose
+ * (e.g. `Promise<QueueSendResult>` next to a method signature).
+ *
+ * CF source: cloudflare-docs/src/components/Type.astro
+ * Mapping notes: upstream styles with `--sl-color-gray-6` / table-fill
+ * vars; swapped for Nimbus muted tokens.
+ */
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<code
+  class="inline-flex items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-[0.75em] leading-none font-bold"
+>
+  {text}
+</code>

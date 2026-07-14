@@ -1,0 +1,35 @@
+---
+{}
+
+---
+```kotlin
+meeting.connectedMeetings.getConnectedMeetings { result ->
+    result.onSuccess { breakoutRoomsInfo ->
+        println("Parent Meeting: ${breakoutRoomsInfo.parentMeeting}")
+        println("Breakout Rooms: ${breakoutRoomsInfo.meetings}")
+    }.onFailure { error ->
+        println("Failed to fetch breakout rooms: ${error.value.message}")
+    }
+}
+```
+
+`breakoutRoomsInfo` is an object containing the list of breakout rooms and their participants, along with details of the parent meeting.
+
+This data can be used to display the list of breakout rooms and participants in the UI. This API refetches the list of breakout rooms and participants, and can therefore be considered the source of truth. It is advised to call this API to get the latest state if a lot of changes are in progress.
+
+You can also listen to the `onStateUpdate` event to receive real-time updates to the list of breakout rooms and participants.
+
+```kotlin
+meeting.addConnectedMeetingsEventListener(object : RtkConnectedMeetingsEventListener {
+    override fun onStateUpdate(meetings: List<RtkConnectedMeeting>, parentMeeting: RtkConnectedMeeting?) {
+        println("State updated. Meetings: $meetings, Parent: $parentMeeting")
+
+        // Alternatively, access state directly from the connectedMeetings object
+        println("Meetings List: ${meeting.connectedMeetings.meetings}")
+        println("Parent Meeting: ${meeting.connectedMeetings.parentMeeting}")
+    }
+
+    override fun onChangingMeeting(meetingId: String) {}
+    override fun onMeetingChanged(error: MeetingError?) {}
+})
+```

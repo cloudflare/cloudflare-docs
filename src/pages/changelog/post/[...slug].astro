@@ -28,7 +28,6 @@ const props = {
 		description: note.data.description,
 		template: "splash",
 		noindex: note.data.hidden,
-		chatbot_deprioritize: true,
 		pcx_content_type: "changelog-entry",
 		products: note.data.products.map((a: { id: string }) => a.id),
 		lastUpdated: note.data.date,

@@ -1,0 +1,31 @@
+---
+{}
+
+---
+```swift
+// Retrieve list of breakout rooms & participants
+meeting.connectedMeetings.getConnectedMeetings { result in
+    switch result {
+    case .success(let breakoutRoomsInfo):
+        /*
+         * You can retrieve meetingIds and participantIds from breakoutRoomsInfo.
+         * Based on where the participant currently is, decide the fromMeetingId and toMeetingId.
+         */
+
+        // Move participants to a breakout room
+        meeting.connectedMeetings.moveParticipants(
+            sourceMeetingId: "SOURCE_MEETING_ID",
+            destinationMeetingId: "TARGET_MEETING_ID",
+            participantIds: ["PARTICIPANT_ID_1", "PARTICIPANT_ID_2"]
+        ) { error in
+            if let error = error {
+                print("Failed to move participants: \(error)")
+            } else {
+                print("Participants moved successfully")
+            }
+        }
+    case .failure(let error):
+        print("Failed to fetch breakout rooms: \(error.value.message)")
+    }
+}
+```

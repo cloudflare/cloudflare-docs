@@ -14,7 +14,7 @@ import {} from "~/components";
     - **Client secret**: Enter your Okta client secret.
     - **Okta account URL**: Enter your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/), for example `https://my-company.okta.com`.
 
-14. (Optional) Create an Okta API token and enter it in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Integrations** > **Identity providers** (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
+14. (Optional) Create an Okta API token and enter it in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Integrations** > **Identity providers** (the token can be read-only). Use an API token if your Okta tenant has more than 100 groups. Without this token, Cloudflare may not be able to retrieve all Okta groups for policy evaluation.
 
 15. (Optional) To configure [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims):
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.

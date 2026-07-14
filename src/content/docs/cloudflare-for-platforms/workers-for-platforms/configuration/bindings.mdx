@@ -13,11 +13,13 @@ import { Aside } from "@astrojs/starlight/components";
 
 When you deploy User Workers through Workers for Platforms, you can attach [bindings](/workers/runtime-apis/bindings/) to give them access to resources like [KV namespaces](/kv/), [D1 databases](/d1/), [R2 buckets](/r2/), and more. This enables your end customers to build more powerful applications without you having to build the infrastructure components yourself.
 
-With bindings, each of your users can have their own:
-- [KV namespace](/kv/) that they can use to store and retrieve data
-- [R2 bucket](/r2/) that they can use to store files and assets
-- [Analytics Engine](/analytics/analytics-engine/) dataset that they can use to collect observability data
-- [Durable Objects](/durable-objects/) class that they can use for stateful coordination
+With bindings, each User Worker can extend functionality to:
+
+- **Store data** with [KV](/kv/), [R2](/r2/), [D1](/d1/), or [Durable Objects](/durable-objects/)
+- **Process work asynchronously** with [Queues](/queues/) and [Workflows](/workflows/)
+- **Run containers** with [Containers](/containers/) (bound as a [Durable Object](/durable-objects/))
+- **Connect to private networks** with [VPC Services](/workers-vpc/configuration/vpc-services/), [VPC Networks](/workers-vpc/configuration/vpc-networks/), and [Hyperdrive](/hyperdrive/)
+- **Collect metrics** with [Analytics Engine](/analytics/analytics-engine/)
 
 #### Resource isolation
 
@@ -58,7 +60,7 @@ curl -X PUT \
   }' \
   -F 'worker.js=@/path/to/worker.js'
 ```
-Now, the User Worker has can access the `USER_KV` binding through the `env` argument using `env.USER_DATA.get()`, `env.USER_DATA.put()`, and other KV methods.
+Now, the User Worker can access the `USER_KV` binding through the `env` argument using `env.USER_KV.get()`, `env.USER_KV.put()`, and other KV methods.
 
 Note: If you plan to add new bindings to the Worker, use the `keep_bindings` parameter to ensure existing bindings are preserved while adding new ones.
 

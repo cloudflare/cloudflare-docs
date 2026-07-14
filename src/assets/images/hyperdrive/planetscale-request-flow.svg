@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 240" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .region { font-size: 13px; font-weight: 600; fill: #555; }
+    .machine-label { font-size: 13px; font-weight: 600; fill: #555; }
+    .box { fill: #f8f9fa; stroke: #d0d5dd; stroke-width: 1.5; rx: 8; }
+    .inner-box { fill: #fff; stroke: #d0d5dd; stroke-width: 1.5; rx: 6; }
+    .box-hl { fill: #fff3e6; stroke: #f6821f; stroke-width: 1.5; rx: 8; }
+    .cache-callout { fill: none; stroke: #3b82f6; stroke-width: 1.5; stroke-dasharray: 4 4; rx: 8; }
+    .cache-callout-label { font-size: 11px; font-weight: 600; fill: #1d4ed8; }
+    .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+    .sub-label { font-size: 12px; font-weight: 600; fill: #555; }
+    .arrow { stroke: #d0d5dd; stroke-width: 1.5; stroke-dasharray: 6 6; fill: none; marker-end: url(#arrowhead); }
+    .arrow-small { stroke: #d0d5dd; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+    .workers-icon { fill: #f6821f; }
+    .database-icon { stroke: #f6821f; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .planetscale-logo { fill: #1a1a1a; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d0d5dd" />
+    </marker>
+  </defs>
+
+  <rect width="1280" height="240" fill="#fff" />
+
+  <text class="region" x="90" y="72" text-anchor="middle">London</text>
+  <text class="machine-label" x="395" y="48" text-anchor="middle">same machine by the user</text>
+  <text class="machine-label" x="875" y="48" text-anchor="middle">same machine by the database</text>
+  <text class="region" x="1180" y="72" text-anchor="middle">us-east-1</text>
+
+  <rect class="box" x="20" y="85" width="140" height="90" />
+  <text class="label" x="90" y="135" text-anchor="middle">User</text>
+
+  <line class="arrow" x1="170" y1="130" x2="200" y2="130" />
+
+  <rect class="box-hl" x="210" y="70" width="370" height="120" />
+
+  <rect class="inner-box" x="225" y="105" width="95" height="50" />
+  <text class="label" x="272.5" y="123" text-anchor="middle">Worker</text>
+  <g class="workers-icon" transform="translate(262 127) scale(0.45)">
+    <path d="m18.63 37.418-9.645-12.9 9.592-12.533-1.852-2.527L5.917 23.595l-.015 1.808 10.86 14.542z" />
+    <path d="M21.997 6.503h-3.712l13.387 18.3-13.072 17.7h3.735L35.4 24.81z" />
+    <path d="M29.175 6.503h-3.758l13.598 18.082-13.598 17.918h3.765l12.908-17.01v-1.808z" />
+  </g>
+  <line class="arrow" x1="323" y1="130" x2="342" y2="130" />
+  <rect class="cache-callout" x="338" y="88" width="228" height="73" />
+  <text class="cache-callout-label" x="452" y="101" text-anchor="middle">Hyperdrive</text>
+
+  <rect class="inner-box" x="345" y="105" width="95" height="50" />
+  <text class="label" x="392.5" y="127" text-anchor="middle">Connection</text>
+  <text class="label" x="392.5" y="142" text-anchor="middle">Setup</text>
+
+  <rect class="inner-box" x="465" y="105" width="95" height="50" />
+  <text class="label" x="512.5" y="135" text-anchor="middle">Cache</text>
+
+  <line class="arrow" x1="590" y1="130" x2="720" y2="130" />
+
+  <rect class="box-hl" x="730" y="70" width="290" height="120" />
+  <rect class="cache-callout" x="750" y="88" width="250" height="73" />
+  <text class="cache-callout-label" x="875" y="101" text-anchor="middle">Hyperdrive</text>
+  <rect class="inner-box" x="760" y="105" width="95" height="50" />
+  <text class="label" x="807.5" y="135" text-anchor="middle">Cache</text>
+
+  <rect class="inner-box" x="895" y="105" width="95" height="50" />
+  <text class="label" x="942.5" y="127" text-anchor="middle">Connection</text>
+  <text class="label" x="942.5" y="142" text-anchor="middle">Pool</text>
+
+  <line class="arrow" x1="1028" y1="130" x2="1102" y2="130" />
+
+  <rect class="box" x="1110" y="85" width="140" height="90" />
+  <text class="label" x="1180" y="112" text-anchor="middle">PlanetScale</text>
+  <text class="sub-label" x="1180" y="127" text-anchor="middle">Database</text>
+  <g class="planetscale-logo" transform="translate(1152 140) scale(0.062)">
+    <path d="M0 227C.0000106726 101.631 101.631 -.0000106726 227 0C319.178 .00000805848 398.524 54.9423 434.076 133.865L133.865 434.076C120.983 428.273 108.739 421.302 97.2684 413.3L283.568 227H227L66.4868 387.513C25.4079 346.434 -.00000548004 289.684 0 227Z" />
+    <path d="M454 227.078L227.078 454C352.385 453.958 453.958 352.385 454 227.078Z" />
+  </g>
+  <path class="database-icon" d="M1190 145c0 4 26 4 26 0m-26 0c0-4 26-4 26 0m-26 0v20c0 4 26 4 26 0v-20m-26 10c0 4 26 4 26 0" />
+</svg>

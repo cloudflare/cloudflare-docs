@@ -1,7 +1,7 @@
 ---
 title: Aggregate functions
 pcx_content_type: reference
-description: Reference for all 33 aggregate functions supported in R2 SQL, organized by category.
+description: Reference for the aggregate functions supported in R2 SQL, organized by category.
 products:
   - r2-sql
 tags:
@@ -12,8 +12,10 @@ sidebar:
 
 Aggregate functions collapse multiple rows into a single result. They are used with `GROUP BY` to compute summaries per group, or without `GROUP BY` to compute a single result across all rows.
 
+Most aggregates accept a `DISTINCT` modifier, for example `COUNT(DISTINCT customer_id)` or `SUM(DISTINCT total_amount)`.
+
 :::note
-The following aggregates are not supported: `PERCENTILE_CONT`, `MEDIAN`, `ARRAY_AGG`, `STRING_AGG`, and any `func(DISTINCT ...)`. Use the approximate alternatives where available.
+On large datasets, prefer the [approximate aggregates](#approximate-aggregates) (`approx_distinct`, `approx_median`, `approx_percentile_cont`) over their exact counterparts for lower memory and compute.
 :::
 
 ---
@@ -87,6 +89,33 @@ SELECT department, MAX(total_amount) AS max_amount
 FROM my_namespace.sales_data
 GROUP BY department
 ```
+
+### MEDIAN
+
+Returns the exact median value. For large datasets, use [`approx_median`](#approx_median) instead.
+
+```sql
+SELECT MEDIAN(total_amount) AS median_amount
+FROM my_namespace.sales_data
+
+SELECT department, MEDIAN(total_amount) AS median_amount
+FROM my_namespace.sales_data
+GROUP BY department
+```
+
+### PERCENTILE_CONT
+
+Returns the exact value at a given percentile using `WITHIN GROUP (ORDER BY ...)`. The percentile parameter must be between `0.0` and `1.0` inclusive. For large datasets, use [`approx_percentile_cont`](#approx_percentile_cont) instead.
+
+```sql
+SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY total_amount) AS median,
+       PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY total_amount) AS p95
+FROM my_namespace.sales_data
+```
+
+:::note
+`PERCENTILE_DISC` is not supported. Use `PERCENTILE_CONT` or [`approx_percentile_cont`](#approx_percentile_cont).
+:::
 
 ---
 
@@ -411,5 +440,31 @@ SELECT department,
        last_value(customer_id ORDER BY total_amount ASC) AS highest_spender
 FROM my_namespace.sales_data
 WHERE total_amount IS NOT NULL
+GROUP BY department
+```
+
+---
+
+## Collection aggregates
+
+These aggregates accumulate all input values into a single result. Because they hold every value in memory, use a `WHERE` filter or `GROUP BY` to keep group sizes bounded on large datasets.
+
+### array_agg
+
+Collects values from a group into an array.
+
+```sql
+SELECT department, array_agg(customer_id) AS customers
+FROM my_namespace.sales_data
+GROUP BY department
+```
+
+### string_agg
+
+Concatenates values from a group into a single string, separated by the given delimiter.
+
+```sql
+SELECT department, string_agg(customer_id, ', ') AS customer_list
+FROM my_namespace.sales_data
 GROUP BY department
 ```

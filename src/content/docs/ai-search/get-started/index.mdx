@@ -13,30 +13,36 @@ products:
   - ai-search
 ---
 
-import { DashButton, CardGrid, LinkCard } from "~/components";
+import { CardGrid, LinkCard } from "~/components";
 
 AI Search is a managed search service. Connect a website, an R2 bucket, or upload your own documents, and AI Search indexes your content for natural language queries.
-
-## Prerequisites
-
-If you plan to use an R2 bucket as your data source, you must have an active [R2 subscription](/r2/get-started/) before creating your AI Search instance. If you plan to use a website or upload files directly, no additional setup is required.
 
 ## Choose your setup method
 
 <CardGrid>
+	<LinkCard
+		title="Workers API"
+		description="Create, populate, and query an AI Search instance from a Cloudflare Worker."
+		href="/ai-search/get-started/workers/"
+	/>
+	<LinkCard
+		title="CLI"
+		description="Create and manage AI Search instances from the command line."
+		href="/ai-search/get-started/wrangler/"
+	/>
 	<LinkCard
 		title="Dashboard"
 		description="Create and configure AI Search using the Cloudflare dashboard."
 		href="/ai-search/get-started/dashboard/"
 	/>
 	<LinkCard
-		title="API"
-		description="Create AI Search instances programmatically using the REST API."
-		href="/ai-search/get-started/api/"
+		title="Python SDK"
+		description="Create, populate, and query an AI Search instance from Python."
+		href="/ai-search/get-started/python/"
 	/>
 	<LinkCard
-		title="Wrangler commands"
-		description="Create and manage AI Search instances from the command line."
-		href="/ai-search/get-started/wrangler/"
+		title="REST API"
+		description="Create AI Search instances programmatically using the REST API."
+		href="/ai-search/get-started/api/"
 	/>
 </CardGrid>

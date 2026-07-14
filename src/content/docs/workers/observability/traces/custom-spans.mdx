@@ -1,0 +1,224 @@
+---
+pcx_content_type: concept
+title: Custom spans
+sidebar:
+  order: 2
+  badge:
+    text: Beta
+description: Create custom spans to trace your own application logic alongside Cloudflare's automatic instrumentation.
+---
+
+import { TypeScriptExample, WranglerConfig, Render } from "~/components";
+
+Cloudflare Workers [automatically instruments](/workers/observability/traces/spans-and-attributes/) platform operations like fetch calls, KV reads, and D1 queries. Custom spans let you extend this visibility into your own application logic, so you can trace custom code paths alongside the built-in instrumentation.
+
+The custom spans API is available in two ways — both provide the same `enterSpan()` method and behave identically:
+
+- **`import { tracing } from "cloudflare:workers"`** — works anywhere in your codebase, including utility functions, libraries, and modules that do not have access to the handler context.
+- **`ctx.tracing`** — available on the [`ExecutionContext`](/workers/runtime-apis/context/) passed to your handler, convenient when you are already working within a handler.
+
+## Enable tracing
+
+Custom spans require tracing to be enabled on your Worker. If you have not already done so, set `observability.traces.enabled` to `true` in your [Wrangler configuration file](/workers/wrangler/configuration/#observability):
+
+<WranglerConfig>
+
+```toml
+[observability.traces]
+enabled = true
+```
+
+</WranglerConfig>
+
+<Render file="tracing-beta-config-note" product="workers" />
+
+## Create a custom span
+
+Use `tracing.enterSpan()` to wrap a section of code in a named span. The span automatically becomes a child of whichever span is currently active, and ends when the callback returns or its returned promise settles.
+
+The following example uses both access methods — the `cloudflare:workers` import and `ctx.tracing` — to show that they are interchangeable:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { tracing } from "cloudflare:workers";
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    // Using the import
+    return tracing.enterSpan("handleRequest", async (span) => {
+      span.setAttribute("url.path", new URL(request.url).pathname);
+
+      const user = await ctx.tracing.enterSpan("auth", async () => {
+        // Using ctx.tracing
+        return authenticate(request, env);
+      });
+
+      return buildResponse(user);
+    });
+  },
+};
+```
+
+</TypeScriptExample>
+
+## API reference
+
+### `tracing.enterSpan(name, callback, ...args)`
+
+Creates a new span and runs `callback` inside it. The span is automatically ended when the callback returns (synchronous or asynchronous) or throws.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | The name of the span. This appears in trace visualizations. |
+| `callback` | `(span: Span, ...args: A) => T` | The function to execute within the span. Receives the `Span` object as its first argument, followed by any additional arguments passed to `enterSpan`. |
+| `...args` | `A` | Optional additional arguments forwarded to the callback after the `span` parameter. |
+
+**Returns:** The return value of `callback`.
+
+**Behavior:**
+
+- The new span is a child of whichever span is currently active on the async context. If no span is active, it becomes a child of the request's root span.
+- Nested `enterSpan` calls and runtime-created spans (such as `fetch` or KV operations) that run inside the callback automatically become children of this span.
+- The span ends when the callback returns synchronously, throws synchronously, or when its returned promise fulfills or rejects.
+
+```ts
+// Synchronous callback — span ends when the function returns
+const result = tracing.enterSpan("parse", (span) => {
+  span.setAttribute("format", "json");
+  return JSON.parse(body);
+});
+
+// Async callback — span ends when the promise settles
+const data = await tracing.enterSpan("fetchData", async (span) => {
+  const res = await fetch("https://api.example.com/data");
+  span.setAttribute("http.response.status_code", res.status);
+  return res.json();
+});
+
+// Forwarding arguments
+const doubled = tracing.enterSpan("compute", (span, x) => x * 2, 21);
+```
+
+### `Span`
+
+The `Span` object is passed into the `enterSpan` callback. It provides methods to annotate the span with metadata.
+
+#### `span.setAttribute(key, value)`
+
+Sets an attribute on the span.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `key` | `string` | The attribute name. |
+| `value` | `string \| number \| boolean \| undefined` | The attribute value. Passing `undefined` is a no-op. |
+
+Attributes appear alongside the span in your traces and OpenTelemetry exports.
+
+```ts
+span.setAttribute("user.plan", "enterprise");
+span.setAttribute("item.count", 42);
+span.setAttribute("cache.hit", true);
+```
+
+#### `span.isTraced`
+
+A `readonly boolean` indicating whether this invocation is being traced. When the request is not sampled (based on your [`head_sampling_rate`](/workers/observability/traces/#sampling)), `isTraced` is `false` and `enterSpan` still runs the callback but does not record any telemetry.
+
+You can use this to skip expensive attribute computation when the request is not being traced:
+
+```ts
+tracing.enterSpan("process", (span) => {
+  if (span.isTraced) {
+    span.setAttribute("request.body.preview", JSON.stringify(body).slice(0, 200));
+  }
+  return processBody(body);
+});
+```
+
+## Nested spans
+
+Spans nest automatically based on the JavaScript async context. Any `enterSpan` call or platform operation (like `fetch`, `env.MY_KV.get()`, and so on) that runs inside a callback becomes a child of the enclosing span.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { tracing } from "cloudflare:workers";
+
+async function handleOrder(env: Env, orderId: string) {
+  return tracing.enterSpan("handleOrder", async (span) => {
+    span.setAttribute("order.id", orderId);
+
+    // This KV read is automatically a child of "handleOrder"
+    const order = await env.ORDERS_KV.get(orderId, "json");
+
+    // This nested span is also a child of "handleOrder"
+    const total = tracing.enterSpan("calculateTotal", (innerSpan) => {
+      innerSpan.setAttribute("item.count", order.items.length);
+      return order.items.reduce((sum: number, item: any) => sum + item.price, 0);
+    });
+
+    // This fetch is a child of "handleOrder"
+    await fetch("https://api.example.com/notify", {
+      method: "POST",
+      body: JSON.stringify({ orderId, total }),
+    });
+
+    return new Response(JSON.stringify({ orderId, total }));
+  });
+}
+```
+
+</TypeScriptExample>
+
+![Trace waterfall showing custom spans nested alongside automatic KV and fetch instrumentation](~/assets/images/workers-observability/wobs_custom_spans_screenshot.png)
+
+## Logging within spans
+
+`console.log()` and other console methods emit log events that are automatically attributed to the currently active span. This means log output from inside an `enterSpan` callback is associated with that span in your traces and OpenTelemetry exports.
+
+```ts
+tracing.enterSpan("processPayment", async (span) => {
+  console.log("Starting payment processing"); // attributed to "processPayment"
+  const result = await chargeCard(token, amount);
+  console.log("Payment complete", result.id); // also attributed to "processPayment"
+});
+```
+
+## TypeScript types
+
+The full type declarations for the custom spans API:
+
+```ts
+declare module "cloudflare:workers" {
+  namespace tracing {
+    function enterSpan<T, A extends unknown[]>(
+      name: string,
+      callback: (span: Span, ...args: A) => T,
+      ...args: A
+    ): T;
+  }
+
+  class Span {
+    readonly isTraced: boolean;
+    setAttribute(
+      key: string,
+      value: string | number | boolean | undefined,
+    ): void;
+  }
+}
+```
+
+The same API is available on the handler context as `ctx.tracing`, with the same types.
+
+## Limitations
+
+- **No manual span lifetime management.** Spans are always scoped to the `enterSpan` callback. You cannot start a span and end it later.
+- **No manual parent-child wiring.** Parent-child relationships are determined by the JavaScript async context automatically.
+- **No `setAttributes` (bulk set) yet.** Use individual `setAttribute` calls. Bulk setting is planned for a future release.
+- **No `spanContext()` (trace/span IDs) yet.** Access to trace and span identifiers for manual propagation across boundaries is planned for a future release.
+- **No `setOutcome` yet.** Setting span outcome status is planned for a future release.
+
+For other tracing limitations, refer to the [known limitations](/workers/observability/traces/known-limitations/) page.

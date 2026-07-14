@@ -12,7 +12,7 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 	PackageManagers,
-	LinkCard,
+	Render,
 } from "~/components";
 
 Build AI agents that persist, think, and act. Agents run on Cloudflare's global network, maintain state across requests, and connect to clients in real-time via WebSockets.
@@ -150,6 +150,13 @@ Update `wrangler.jsonc` to register the agent:
 
 </WranglerConfig>
 
+**Key points:**
+
+- `name` in bindings becomes the property on `env` (for example, `env.CounterAgent`)
+- `class_name` must exactly match your exported class name
+- `new_sqlite_classes` enables SQLite storage for state persistence
+- `nodejs_compat` flag is required for the agents package
+
 ## Connect from React
 
 Replace `src/client.tsx`:
@@ -193,30 +200,7 @@ Key points:
 - `onStateUpdate` fires whenever the agent's state changes
 - `agent.stub.methodName()` calls methods marked with `@callable()` on your agent
 
-## What just happened?
-
-When you clicked the button:
-
-1. **Client** called `agent.stub.increment()` over WebSocket
-2. **Agent** ran `increment()`, updated state with `setState()`
-3. **State** persisted to SQLite automatically
-4. **Broadcast** sent to all connected clients
-5. **React** updated via `onStateUpdate`
-
-```mermaid
-flowchart LR
-    A["Browser<br/>(React)"] <-->|WebSocket| B["Agent<br/>(Counter)"]
-    B --> C["SQLite<br/>(State)"]
-```
-
-### Key concepts
-
-| Concept              | What it means                                                                                         |
-| -------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Agent instance**   | Each unique name gets its own agent. `CounterAgent:user-123` is separate from `CounterAgent:user-456` |
-| **Persistent state** | State survives restarts, deploys, and hibernation. It is stored in SQLite                             |
-| **Real-time sync**   | All clients connected to the same agent receive state updates instantly                               |
-| **Hibernation**      | When no clients are connected, the agent hibernates (no cost). It wakes on the next request           |
+<Render file="what-just-happened" product="agents" />
 
 ## Connect from vanilla JavaScript
 
@@ -250,117 +234,8 @@ npm run deploy
 
 Your agent is now live on Cloudflare's global network, running close to your users.
 
-## Troubleshooting
+<Render file="common-integration-patterns" product="agents" />
 
-### "Agent not found" or 404 errors
+<Render file="troubleshooting" product="agents" />
 
-Make sure:
-
-1. Agent class is exported from your server file
-2. `wrangler.jsonc` has the binding and migration
-3. Agent name in client matches the class name (case-insensitive)
-
-### State not syncing
-
-Check that:
-
-1. You are calling `this.setState()`, not mutating `this.state` directly
-2. The `onStateUpdate` callback is wired up in your client
-3. WebSocket connection is established (check browser dev tools)
-
-### "Method X is not callable" errors
-
-Make sure your methods are decorated with `@callable()`:
-
-<TypeScriptExample>
-
-```ts
-import { Agent, callable } from "agents";
-
-export class MyAgent extends Agent {
-	@callable()
-	increment() {
-		// ...
-	}
-}
-```
-
-</TypeScriptExample>
-
-### Type errors with `agent.stub`
-
-Add the agent and state type parameters:
-
-<TypeScriptExample>
-
-```ts
-import { useAgent } from "agents/react";
-import type { CounterAgent, CounterState } from "./server";
-
-// Pass the agent and state types to useAgent
-const agent = useAgent<CounterAgent, CounterState>({
-	agent: "CounterAgent",
-	onStateUpdate: (state) => setCount(state.count),
-});
-
-// Now agent.stub is fully typed
-agent.stub.increment();
-```
-
-</TypeScriptExample>
-
-### `SyntaxError: Invalid or unexpected token` with `@callable()`
-
-If your dev server fails with `SyntaxError: Invalid or unexpected token`, set `"target": "ES2021"` in your `tsconfig.json`. This ensures that Vite's esbuild transpiler downlevels TC39 decorators instead of passing them through as native syntax.
-
-```json
-{
-	"compilerOptions": {
-		"target": "ES2021"
-	}
-}
-```
-
-:::caution
-Do not set `"experimentalDecorators": true` in your `tsconfig.json`. The Agents SDK uses [TC39 standard decorators](https://github.com/tc39/proposal-decorators), not TypeScript legacy decorators. Enabling `experimentalDecorators` applies an incompatible transform that silently breaks `@callable()` at runtime.
-:::
-
-## Next steps
-
-Now that you have a working agent, explore these topics:
-
-### Common patterns
-
-| Learn how to             | Refer to                                                  |
-| ------------------------ | --------------------------------------------------------- |
-| Add AI/LLM capabilities  | [Using AI models](/agents/runtime/operations/using-ai-models/) |
-| Expose tools via MCP     | [MCP servers](/agents/model-context-protocol/apis/agent-api/)       |
-| Run background tasks     | [Schedule tasks](/agents/runtime/execution/schedule-tasks/)   |
-| Handle emails            | [Email routing](/agents/communication-channels/email/)             |
-| Use Cloudflare Workflows | [Run Workflows](/agents/runtime/execution/run-workflows/)     |
-
-### Explore more
-
-<LinkCard
-	title="State management"
-	href="/agents/runtime/lifecycle/state/"
-	description="Deep dive into setState(), initialState, and onStateChanged()."
-/>
-
-<LinkCard
-	title="Client SDK"
-	href="/agents/communication-channels/chat/client-sdk/"
-	description="Full useAgent and AgentClient API reference."
-/>
-
-<LinkCard
-	title="Callable methods"
-	href="/agents/runtime/lifecycle/callable-methods/"
-	description="Expose methods to clients with @callable()."
-/>
-
-<LinkCard
-	title="Schedule tasks"
-	href="/agents/runtime/execution/schedule-tasks/"
-	description="Run tasks on a delay, schedule, or cron."
-/>
+<Render file="next-steps" product="agents" />

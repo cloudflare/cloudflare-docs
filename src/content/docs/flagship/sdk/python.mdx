@@ -1,0 +1,112 @@
+---
+pcx_content_type: how-to
+title: Python SDK
+description: Set up the FlagshipServerProvider to evaluate Flagship feature flags from Python server applications using OpenFeature.
+sidebar:
+  order: 3
+products:
+  - flagship
+---
+
+The Python SDK provides an OpenFeature-compatible `FlagshipServerProvider` for server-side Python applications. It evaluates flags over HTTP and does not support the Cloudflare Workers binding.
+
+## Installation
+
+Install with `uv` or `pip`:
+
+```sh
+uv add cloudflare-flagship
+```
+
+```sh
+pip install cloudflare-flagship
+```
+
+## Setup
+
+Configure the provider with your Flagship app ID, Cloudflare account ID, and an API token with Flagship Evaluate permission.
+
+```python
+from openfeature import api
+from openfeature.evaluation_context import EvaluationContext
+from flagship import FlagshipServerProvider
+
+api.set_provider(
+    FlagshipServerProvider(
+        app_id="<APP_ID>",
+        account_id="<ACCOUNT_ID>",
+        auth_token="<API_TOKEN>",
+    )
+)
+
+client = api.get_client()
+enabled = client.get_boolean_value(
+    "new-checkout",
+    False,
+    EvaluationContext(targeting_key="user-42", attributes={"plan": "enterprise"}),
+)
+```
+
+## Flag types
+
+The Python SDK supports all OpenFeature flag types. Python's OpenFeature SDK separates numeric values into integer and float methods.
+
+```python
+enabled = client.get_boolean_value("new-checkout", False, context)
+variant = client.get_string_value("homepage-hero", "control", context)
+limit = client.get_integer_value("upload-limit", 10, context)
+rate = client.get_float_value("sample-rate", 0.1, context)
+config = client.get_object_value("ui-config", {"theme": "light"}, context)
+```
+
+Use the `*_details` methods when you need the resolved value, reason, variant, or error code.
+
+## Configuration options
+
+| Option            | Type                           | Default | Description                                                 |
+| ----------------- | ------------------------------ | ------- | ----------------------------------------------------------- |
+| `app_id`          | `str`                          | None    | Flagship app ID.                                            |
+| `account_id`      | `str`                          | None    | Required with `app_id`.                                     |
+| `auth_token`      | `str`                          | None    | Bearer token added to every request.                        |
+| `headers_factory` | `Callable[[], dict[str, str]]` | None    | Dynamic per-request headers.                                |
+| `timeout`         | `float`                        | `5.0`   | Request timeout in seconds.                                 |
+| `retries`         | `int`                          | `1`     | Retry attempts on transient errors, capped at `10`.         |
+| `retry_delay`     | `float`                        | `1.0`   | Delay between retries in seconds, capped at `30.0`.         |
+| `logging`         | `bool`                         | `False` | Enable SDK-level debug output through the SDK logger.       |
+| `cache_ttl`       | `float`                        | None    | Cache TTL in seconds. Enables caching when set.             |
+| `cache_max_size`  | `int`                          | `1000`  | Maximum cached entries before least-recently-used eviction. |
+
+## Response caching
+
+Server-side response caching is off by default. Enable it with `cache_ttl` when you want repeated evaluations for the same flag, type, and evaluation context to reuse a recent result.
+
+```python
+FlagshipServerProvider(
+    app_id="<APP_ID>",
+    account_id="<ACCOUNT_ID>",
+    auth_token="<API_TOKEN>",
+    cache_ttl=30.0,
+    cache_max_size=1000,
+)
+```
+
+Cached values may be stale until the TTL expires. Keep the TTL short for flags that you expect to change during active rollouts. The provider does not cache disabled flags or errors.
+
+## Evaluation context
+
+Context attributes are sent as URL query parameters. Supported values are strings, integers, floats, booleans, and `datetime` values. Dictionaries, lists, tuples, and other complex values raise `InvalidContextError`.
+
+## Async evaluation
+
+The async API mirrors the sync API:
+
+```python
+enabled = await client.get_boolean_value_async("new-checkout", False, context)
+details = await client.get_boolean_details_async("new-checkout", False, context)
+```
+
+When shutting down in an async context, use `shutdown_async()`:
+
+```python
+await api.shutdown_async()
+```

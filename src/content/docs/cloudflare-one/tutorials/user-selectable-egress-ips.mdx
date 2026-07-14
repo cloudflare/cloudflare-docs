@@ -14,7 +14,7 @@ tags:
   - Private networks
 ---
 
-import { Details, TabItem, Tabs, APIRequest } from "~/components";
+import { Details, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 :::note
 
@@ -43,7 +43,10 @@ First, create [virtual networks](/cloudflare-one/networks/connectors/cloudflare-
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
 2. In **Virtual networks**, select **Create virtual network**.
 3. Name your virtual network. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
 4. Select **Save**.
@@ -77,16 +80,16 @@ After creating your virtual networks, route your private network CIDRs over each
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
-2. Select your tunnel routing `10.0.0.0/8`, then select **Configure**.
-3. Go to **Private Networks**. Select the `10.0.0.0/8` route.
-4. In **Additional settings**, choose your first virtual network. For example, `vnet-AMER`.
-5. Select **Save private network**.
-6. To route `10.0.0.0/8` over another virtual network, select **Add a private network**.
-7. In **CIDR**, enter `10.0.0.0/8`. In **Additional settings**, choose your second virtual network. For example, `vnet-EMEA`.
-8. Select **Save private network**.
-9. Repeat Steps 6-8 for each virtual network you created.
-10. Return to **Networks** > **Tunnels**. Repeat Steps 2-9 for each private network tunnel route.
+1. Go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. Select **Create route**, then choose **Tunnel CIDR**.
+3. Select the tunnel that routes `10.0.0.0/8` and enter `10.0.0.0/8` as the network.
+4. Under **Virtual network**, choose your first virtual network. For example, `vnet-AMER`.
+5. Select **Create route**.
+6. To route `10.0.0.0/8` over another virtual network, repeat Steps 2-5 using a different virtual network (for example, `vnet-EMEA`).
+7. Repeat for each virtual network you created and for each private network tunnel route.
 
 </TabItem>
 
@@ -137,7 +140,7 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Egress policies**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Egress policies**.
 
 2. Select **Add a policy**.
 

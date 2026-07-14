@@ -1,0 +1,215 @@
+---
+title: Build a search and execute MCP server
+description: Create Code Mode search and execute MCP tools from an OpenAPI document while keeping credentials in the host Worker.
+pcx_content_type: how-to
+sidebar:
+  order: 15
+tags:
+  - AI
+  - MCP
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Use `openApiMcpServer()` to publish a large OpenAPI service through two Model Context Protocol (MCP) tools:
+
+- `search` runs model-written code against the OpenAPI document.
+- `execute` adds a host-provided `codemode.request()` function.
+
+The OpenAPI document stays outside the model context unless search code returns part of it. Authentication remains in the host Worker.
+
+:::caution
+Code Mode is experimental and may have breaking changes. Use caution in production.
+:::
+
+## Prerequisites
+
+You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side method for authenticating API requests.
+
+## Publish the service
+
+<Steps>
+
+1. Install Code Mode and the MCP dependencies:
+
+   <PackageManagers pkg="@cloudflare/codemode agents @modelcontextprotocol/sdk zod" />
+
+2. Add a Worker Loader binding and the `nodejs_compat` compatibility flag:
+
+   <WranglerConfig>
+
+   ```toml
+   name = "openapi-codemode-mcp"
+   main = "src/server.ts"
+   compatibility_date = "$today"
+   compatibility_flags = ["nodejs_compat"]
+
+   [[worker_loaders]]
+   binding = "LOADER"
+   ```
+
+   </WranglerConfig>
+
+3. Load the OpenAPI document on the host. Create the MCP server with an authenticated `request` function:
+
+   <TypeScriptExample filename="src/server.ts">
+
+   ```ts
+   import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+   import { openApiMcpServer } from "@cloudflare/codemode/mcp";
+   import { createMcpHandler } from "agents/mcp";
+
+   const SPEC_URL = "https://api.example.com/openapi.json";
+   const API_ORIGIN = "https://api.example.com";
+
+   let specCache: Record<string, unknown> | undefined;
+
+   async function loadSpec(): Promise<Record<string, unknown>> {
+   	if (specCache) return specCache;
+
+   	const response = await fetch(SPEC_URL);
+   	if (!response.ok) {
+   		throw new Error(`OpenAPI request failed: ${response.status}`);
+   	}
+
+   	specCache = (await response.json()) as Record<string, unknown>;
+   	return specCache;
+   }
+
+   export default {
+   	async fetch(request, env, ctx): Promise<Response> {
+   		const authorization = request.headers.get("Authorization");
+   		if (!authorization?.startsWith("Bearer ")) {
+   			return new Response("Bearer token required", { status: 401 });
+   		}
+
+   		const server = openApiMcpServer({
+   			spec: await loadSpec(),
+   			executor: new DynamicWorkerExecutor({ loader: env.LOADER }),
+   			name: "example-api",
+   			version: "1.0.0",
+   			request: async (options) => {
+   				if (!options.path.startsWith("/")) {
+   					throw new Error("API path must start with a slash");
+   				}
+
+   				const url = new URL(`${API_ORIGIN}${options.path}`);
+   				for (const [key, value] of Object.entries(options.query ?? {})) {
+   					if (value !== undefined) {
+   						url.searchParams.set(key, String(value));
+   					}
+   				}
+
+   				const headers: Record<string, string> = { Authorization: authorization };
+   				if (options.contentType) {
+   					headers["Content-Type"] = options.contentType;
+   				} else if (options.body !== undefined) {
+   					headers["Content-Type"] = "application/json";
+   				}
+
+   				const response = await fetch(url, {
+   					method: options.method,
+   					headers,
+   					body:
+   						options.body === undefined
+   							? undefined
+   							: options.rawBody
+   								? (options.body as string)
+   								: JSON.stringify(options.body),
+   				});
+
+   				if (response.status === 204) return null;
+
+   				const responseType = response.headers.get("Content-Type") ?? "";
+   				const result = responseType.includes("application/json")
+   					? await response.json()
+   					: await response.text();
+
+   				if (!response.ok) {
+   					throw new Error(`API request failed: ${response.status}`);
+   				}
+   				return result;
+   			},
+   		});
+
+   		return createMcpHandler(server, { route: "/mcp" })(
+   			request,
+   			env,
+   			ctx,
+   		);
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+4. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+5. In an MCP client, connect to `https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/mcp`. Include the bearer token required by your Worker.
+
+6. List the MCP tools. Verify that the server exposes `search` and `execute`.
+
+</Steps>
+
+## Search the OpenAPI document
+
+Call `search` before `execute`. Search code can inspect the document without making API requests:
+
+```js
+async () => {
+	const spec = await codemode.spec();
+	return Object.entries(spec.paths)
+		.filter(([path]) => path.includes("/orders"))
+		.map(([path, operations]) => ({
+			path,
+			methods: Object.keys(operations),
+		}));
+};
+```
+
+Local OpenAPI `$ref` values resolve inside the sandbox when code calls `codemode.spec()`. External references remain unresolved.
+
+## Call the API
+
+The `execute` tool includes the same `codemode.spec()` method and the host-provided `codemode.request()` method:
+
+```js
+async () => {
+	const response = await codemode.request({
+		method: "GET",
+		path: "/orders",
+		query: { status: "processing", limit: 20 },
+	});
+
+	return response.items.map(({ id, status }) => ({ id, status }));
+};
+```
+
+The host callback receives `method`, `path`, optional `query`, optional `body`, optional `contentType`, and optional `rawBody` fields. For exact types, refer to the [`openApiMcpServer()` API](/agents/tools/codemode/api-reference/#openapimcpserver).
+
+The `search` and `execute` tools use fixed example snippets. An optional `description` is appended to the `execute` tool description. This function does not use the `{{types}}` or `{{example}}` placeholders supported by [`codeMcpServer()`](/agents/model-context-protocol/guides/build-codemode-mcp-server/).
+
+## Protect the API
+
+The example reads the bearer token before creating the MCP server. Its request callback adds that token to outbound requests. The token never enters the sandbox.
+
+`openApiMcpServer()` does not provide durable approval for each request inside `execute`. Enforce authorization and any required per-operation approval in the host callback before applying side effects. Validate paths instead of accepting arbitrary origins.
+
+Do not include secrets in the OpenAPI document or API results. Both are available to model-written code.
+
+`DynamicWorkerExecutor` blocks direct external `fetch()` and `connect()` calls by default. Generated code reaches the service only through the host request callback.
+
+## Limit results
+
+Have model-written code select, map, aggregate, or paginate data before returning. The publisher limits final MCP responses to approximately 6,000 estimated tokens and marks truncated responses with `--- TRUNCATED ---`.
+
+Truncation does not reduce API work already performed. Return focused identifiers, status fields, counts, and errors that support the model's next decision.
