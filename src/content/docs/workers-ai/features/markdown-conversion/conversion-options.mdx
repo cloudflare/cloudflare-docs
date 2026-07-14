@@ -14,6 +14,20 @@ Options are organized by file type and are all optional.
 
 ## Available options
 
+### Output
+
+```typescript
+{
+  output?: {
+    format?: 'markdown' | 'text';
+  }
+}
+```
+
+- `format`: controls the format of the converted content. Defaults to `markdown`. Set to `text` to receive plain text with Markdown syntax removed.
+
+When `format` is `text`, the `format` field of the [`ConversionResult`](/workers-ai/features/markdown-conversion/usage/binding/#conversionresult-definition) is also set to `text`.
+
 ### Images
 
 ```typescript

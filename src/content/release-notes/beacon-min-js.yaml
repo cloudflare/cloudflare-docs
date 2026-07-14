@@ -3,6 +3,9 @@ link: "/web-analytics/changelog/"
 productName: beacon.min.js
 productLink: "/web-analytics/"
 entries:
+  - publish_date: "2026-07-13"
+    description: The beacon script is now injected with `type="module"` to intentionally exclude long EOL'd (End-of-Life'd) browsers like Internet Explorer from loading the script, given they don't support it anyway. [See FAQ entry for more information](/web-analytics/faq/#why-am-i-seeing-syntax-errors-from-the-beacon-script-in-internet-explorer).
+
   - publish_date: "2026-06-16"
     description: Updated Google's web-vitals library to version 5.3.0 and updated the JavaScript build output target to ES2015.
 

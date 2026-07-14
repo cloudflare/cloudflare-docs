@@ -9,7 +9,7 @@
  */
 import { getSidebar } from "nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
-import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
+import { docsSidebarTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import ModelCatalog from "~/components/models/ModelCatalog.astro";
 import { getResolvedModels, toModelCardData } from "~/util/models";
 
@@ -18,7 +18,7 @@ export const prerender = true;
 const models = (await getResolvedModels()).map(toModelCardData);
 
 const sectionSlug = "/ai/models/";
-const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
+const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: docsSidebarTransform });
 const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
