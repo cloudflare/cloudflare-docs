@@ -6,8 +6,7 @@
 // those (and any other component-rendered tables) inside `.docs-content`.
 //
 // Idempotent: skips tables already inside `.table-scroll`, and only touches
-// unclassed tables (the `table:not([class])` prose convention). Re-runs on
-// `astro:page-load` for the view-transitions ClientRouter.
+// unclassed tables (the `table:not([class])` prose convention).
 
 function wrapDocsTables() {
   const tables = document.querySelectorAll<HTMLTableElement>(
@@ -29,4 +28,3 @@ function wrapDocsTables() {
 }
 
 wrapDocsTables();
-document.addEventListener("astro:page-load", wrapDocsTables);

@@ -386,16 +386,16 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
     {
     	// top-level default migrations
     	"migrations": [
-    		{ "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] }
+    		{ "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] },
     	],
     	"env": {
     		"staging": {
     			// migration override for staging
     			"migrations": [
-    				{ "tag": "v1-staging", "new_sqlite_classes": ["MyDurableObject"] }
-    			]
-    		}
-    	}
+    				{ "tag": "v1-staging", "new_sqlite_classes": ["MyDurableObject"] },
+    			],
+    		},
+    	},
     }
     ```
   - If a migration is only specified at the top-level, but not at the environment-level, the environment will inherit the top-level migration.
@@ -424,5 +424,5 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
 You cannot enable a SQLite storage backend on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
 
 :::caution[Important]
-Durable Object migrations are atomic operations and cannot be gradually deployed. To provide early feedback to developers, new Worker versions with new migrations cannot be uploaded. Refer to [Gradual deployments for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) for more information.
+Durable Object migrations are atomic operations and cannot be gradually deployed. To provide early feedback to developers, new Worker versions with new migrations cannot be uploaded. Refer to [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/) for more information.
 :::

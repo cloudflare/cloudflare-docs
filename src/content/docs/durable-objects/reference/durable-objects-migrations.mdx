@@ -463,7 +463,7 @@ The top-level "Safe to remove from `exports`" line in the reconciliation output 
 
 If `exports` is only declared at the top level, named environments inherit the same value. Each environment maintains its own provisioned namespaces, so tombstones apply only within the environment they are declared in.
 
-[Preview deployments](/workers/configuration/previews/) and [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/) follow the same rules. Cross-dispatch-namespace transfers are not supported — the source and target Workers in a `transferred` / `expecting-transfer` pair must both live in the same dispatch-namespace context (or both be outside any dispatch namespace).
+[Preview deployments](/workers/versions-and-deployments/preview-urls/) and [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/) follow the same rules. Cross-dispatch-namespace transfers are not supported — the source and target Workers in a `transferred` / `expecting-transfer` pair must both live in the same dispatch-namespace context (or both be outside any dispatch namespace).
 
 ## `exports` configuration reference
 
@@ -535,9 +535,9 @@ The blocking error `tombstone_delete_class_still_in_code` (specific to `deleted`
 ## Constraints and limitations
 
 - **`exports` and `migrations` are mutually exclusive.** A Worker configuration that contains both fields is rejected at validation. Once a Worker has been deployed with `exports`, subsequent deploys must continue to use `exports` (or neither, which reconciles against an empty config and is usually a mistake).
-- **`wrangler versions upload` does not apply lifecycle changes.** Just like the legacy `migrations` array, Durable Object lifecycle changes can only be applied via `wrangler deploy`. If your Wrangler configuration contains `exports` entries, `wrangler versions upload` fails fast with an actionable error. Refer to [Versions and Deployments — Durable Object migrations](/workers/configuration/versions-and-deployments/#durable-object-migrations).
-- **Gradual deployments are not supported with `exports`.** Lifecycle changes are atomic at the Cloudflare control plane and cannot be rolled out gradually. Refer to [Gradual deployments — Migrations](/workers/configuration/versions-and-deployments/gradual-deployments/#migrations).
-- **Rollbacks cannot cross a lifecycle change.** You cannot roll back to a version deployed before an `exports`-driven lifecycle change. Refer to [Rollbacks — Bindings](/workers/configuration/versions-and-deployments/rollbacks/#bindings).
+- **`wrangler versions upload` does not apply lifecycle changes.** Just like the legacy `migrations` array, Durable Object lifecycle changes can only be applied via `wrangler deploy`. If your Wrangler configuration contains `exports` entries, `wrangler versions upload` fails fast with an actionable error. Refer to [Deployment management - Durable Object migrations](/workers/versions-and-deployments/deployment-management/#durable-object-migrations).
+- **Gradual deployments are not supported with `exports`.** Lifecycle changes are atomic at the Cloudflare control plane and cannot be rolled out gradually. Refer to [Gradual deployments with Durable Objects - Durable Object class lifecycle changes](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/#durable-object-class-lifecycle-changes).
+- **Rollbacks cannot cross a lifecycle change.** You cannot roll back to a version deployed before an `exports`-driven lifecycle change. Refer to [Rollbacks - Bindings](/workers/versions-and-deployments/rollbacks/#bindings).
 - **Storage backends are immutable once provisioned.** You cannot change a namespace's `storage` value in place; delete and re-provision instead.
 
 ## Migrate from the legacy `migrations` flow

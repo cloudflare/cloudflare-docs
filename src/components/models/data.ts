@@ -24,6 +24,7 @@ import meta from "../../assets/images/workers-ai/meta.svg";
 import microsoft from "../../assets/images/workers-ai/microsoft.svg";
 import minimax from "../../assets/images/workers-ai/minimax.svg";
 import mistralai from "../../assets/images/workers-ai/mistralai.svg";
+import moondream from "../../assets/images/workers-ai/moondream.svg";
 import moonshotai from "../../assets/images/workers-ai/moonshotai.svg";
 import myshell from "../../assets/images/workers-ai/myshell.svg";
 import nvidia from "../../assets/images/workers-ai/nvidia.svg";
@@ -160,6 +161,10 @@ export const authorData: Record<string, { name: string; logo: string }> = {
 	mistralai: {
 		name: "MistralAI",
 		logo: mistralai.src,
+	},
+	moondream: {
+		name: "Moondream",
+		logo: moondream.src,
 	},
 	moonshotai: {
 		name: "Moonshot AI",

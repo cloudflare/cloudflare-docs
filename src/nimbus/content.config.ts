@@ -1,5 +1,6 @@
 import { defineCollection, reference, z } from "astro:content";
 import { glob } from "astro/loaders";
+import { skillsLoader } from "astro-skills";
 import { docsCollection, partialsCollection } from "nimbus-docs/content";
 import { warpReleasesSchema } from "~/schemas/warp-releases";
 import { compatibilityFlagsSchema } from "~/schemas/compatibility-flags";
@@ -40,6 +41,9 @@ export const collections = {
         // Opt a page into the wide content column (forwarded to DocsLayout by
         // `[...slug].astro`). Used by the model catalog content pages.
         wide: z.boolean().optional(),
+
+        // Show the "Was this helpful?" widget (forwarded to DocsLayout).
+        feedback: z.boolean().default(true),
 
         // --- CF frontmatter passthrough ---------------------
         // Schema is intentionally permissive — the framework doesn't act
@@ -234,6 +238,10 @@ export const collections = {
   // middlecache at build. Read by ProductAvailabilityText /
   // GranularControlApplicationsList.
   "product-availability": defineCollection(productAvailabilityCollectionConfig),
+  // Agent Skills Discovery — shared root `./skills` dir, served via astro-skills.
+  skills: defineCollection({
+    loader: skillsLoader({ base: "./skills" }),
+  }),
   "granular-control-applications": defineCollection(
     granularControlApplicationsCollectionConfig,
   ),

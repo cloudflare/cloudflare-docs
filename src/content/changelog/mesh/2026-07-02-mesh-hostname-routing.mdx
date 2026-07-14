@@ -1,0 +1,23 @@
+---
+title: Hostname routing for Cloudflare Mesh
+description: Route traffic to a Cloudflare Mesh node by hostname instead of IP.
+date: 2026-07-02
+products:
+  - mesh
+  - cloudflare-one
+---
+
+import { DashButton, MeshHostnameRoutingDiagram } from "~/components";
+
+You can now add [hostname routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes) to a Cloudflare Mesh node, in addition to CIDR routes.
+
+<MeshHostnameRoutingDiagram />
+
+Instead of managing IP ranges, you can attract traffic for a hostname to a Mesh node:
+
+- **Private hostname** (for example, `wiki.internal.local`) — reach an internal application by name, which is useful when it has an unknown or ephemeral IP. On Mesh you do not need to run a DNS server; a local hosts-file entry on the node is enough, or you can use a Gateway resolver policy for split DNS.
+- **Public hostname** (for example, `www.example.com`) — route that hostname's traffic through the node and egress via the node's public IP.
+
+<DashButton url="/?to=/:account/mesh" />
+
+For setup steps, prerequisites, and DNS options, refer to [Hostname routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes).

@@ -32,6 +32,7 @@ import {
 	type StyleGuideResult,
 } from "./style-guide-results";
 import type { getPullRequestFiles } from "./github";
+import { withConcurrency } from "./inproc-utils";
 
 /** PR metadata passed to the style-guide skill as `args.pullRequest`. */
 export interface StyleGuidePullRequest {
@@ -45,7 +46,19 @@ export interface StyleGuidePullRequest {
 export const STYLE_GUIDE_REVIEWABLE_PATH_RE =
 	/^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
 export const STYLE_GUIDE_MAX_FILES = 20;
+// Default concurrency, overridable via the STYLE_GUIDE_CONCURRENCY env var (see
+// style-guide-specialist.ts). Lower it locally where every Durable Object shares
+// one process.
 export const STYLE_GUIDE_CONCURRENCY = 5;
+
+/**
+ * Default per-file hard timeout, overridable via STYLE_GUIDE_FILE_TIMEOUT_MS.
+ * Single-wedged-file protection: on timeout the file's operation is aborted and
+ * its session deleted (see reviewSingleFile), so one slow file cannot hold a
+ * concurrency slot for the orchestrator's whole 20-minute poll. 10 min covers a
+ * complex file while staying under the poll, which remains the overall bound.
+ */
+export const STYLE_GUIDE_FILE_TIMEOUT_MS = 10 * 60 * 1000;
 
 type PullRequestFiles = Awaited<ReturnType<typeof getPullRequestFiles>>;
 
@@ -66,31 +79,6 @@ export function selectStyleGuideFiles(
 		)
 		.sort((a, b) => b.additions - a.additions)
 		.slice(0, STYLE_GUIDE_MAX_FILES);
-}
-
-/**
- * Run up to `limit` async tasks concurrently and return results in input order.
- * Tasks are expected not to reject — wrap per-task error handling at the call
- * site so one failure cannot abort the pool.
- */
-export async function withConcurrency<T>(
-	tasks: Array<() => Promise<T>>,
-	limit: number,
-): Promise<T[]> {
-	const results: T[] = new Array(tasks.length);
-	let index = 0;
-
-	async function worker() {
-		while (index < tasks.length) {
-			const current = index++;
-			results[current] = await tasks[current]();
-		}
-	}
-
-	await Promise.all(
-		Array.from({ length: Math.min(limit, tasks.length) }, () => worker()),
-	);
-	return results;
 }
 
 /**
@@ -149,6 +137,8 @@ export interface RunStyleGuideReviewInProcessOptions {
 	files: PullRequestFiles;
 	runId: string;
 	concurrency?: number;
+	/** Per-file hard timeout in ms. Defaults to STYLE_GUIDE_FILE_TIMEOUT_MS. */
+	fileTimeoutMs?: number;
 }
 
 /**
@@ -171,6 +161,7 @@ export async function runStyleGuideReviewInProcess(
 		diffDir,
 		runId,
 		concurrency = STYLE_GUIDE_CONCURRENCY,
+		fileTimeoutMs = STYLE_GUIDE_FILE_TIMEOUT_MS,
 	} = options;
 
 	// The per-file review list is the orchestrator's selection (additions > 0,
@@ -184,15 +175,12 @@ export async function runStyleGuideReviewInProcess(
 		};
 	}
 
-	// ── Init a separate named harness over the shared workspace. The
-	//    orchestrator owns the default harness for reconciliation, so this
-	//    fan-out uses a distinct name to satisfy the once-per-name rule.
-	//    The skill is registered here; its reference rules ship as packaged
-	//    resources read via the `read` tool. ────────────────────────────────
+	// ── Init a named harness over the specialist's workspace. The skill is
+	//    registered here; its reference rules ship as packaged resources read
+	//    via the `read` tool. ──────────────────────────────────────────────
 	const agent = createAgent(() => ({
 		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
-		compaction: { reserveTokens: 64_000 },
 		skills: [styleGuideSkill],
 	}));
 	const harness = await init(agent, { name: "style-guide" });
@@ -202,18 +190,45 @@ export async function runStyleGuideReviewInProcess(
 	const tasks = reviewFilenames.map(
 		(filename, index) => async (): Promise<StyleGuideResult> => {
 			try {
-				return await reviewSingleFile({
+				const total = reviewFilenames.length;
+				console.log({
+					message: `Style-guide review: reviewing file (${index + 1}/${total}) — ${filename}`,
+					event: "style_guide_specialist",
+					number: prNumber,
+					filename,
+					fileIndex: index + 1,
+					totalFiles: total,
+					runId,
+					action: "file_start",
+				});
+
+				const result = await reviewSingleFile({
 					harness,
-					sessionName: `sg:${index}`,
+					sessionName: `${runId}:sg:${index}`,
 					pullRequest,
 					diffDir,
 					filename,
+					fileTimeoutMs,
 				});
+
+				console.log({
+					message: `Style-guide review: done reviewing file (${index + 1}/${total}) — ${filename} — ${result.findings.length} finding(s)`,
+					event: "style_guide_specialist",
+					number: prNumber,
+					filename,
+					findings: result.findings.length,
+					fileIndex: index + 1,
+					totalFiles: total,
+					runId,
+					action: "file_complete",
+				});
+
+				return result;
 			} catch (err) {
 				const errMsg = err instanceof Error ? err.message : String(err);
 				console.error({
 					message: `Style-guide file review failed (degraded): PR #${prNumber} — ${filename} — ${errMsg}`,
-					event: "code_review_orchestrator",
+					event: "style_guide_specialist",
 					number: prNumber,
 					filename,
 					diffDir,
@@ -247,18 +262,28 @@ async function reviewSingleFile({
 	pullRequest,
 	diffDir,
 	filename,
+	fileTimeoutMs,
 }: {
 	harness: Awaited<ReturnType<FlueContext["init"]>>;
 	sessionName: string;
 	pullRequest: StyleGuidePullRequest;
 	diffDir: string;
 	filename: string;
+	fileTimeoutMs: number;
 }): Promise<StyleGuideResult> {
-	const session = await harness.session(sessionName);
+	const session = await harness.sessions.create(sessionName);
 
+	// Bound the per-file session so one wedged file cannot hold a concurrency
+	// slot for the orchestrator's whole poll. On timeout we ABORT the operation
+	// (not just race it) — otherwise the model loop keeps running and the
+	// session.delete() below would reject ("rejects while an operation is
+	// active"), leaking the session and its work. Aborting settles the operation
+	// so delete() succeeds and the slot is freed.
+	//
 	// Structured result mode: flue injects finish/give_up tools and loops until
 	// the model calls finish — reliable across models that don't self-terminate.
-	const skillResult = await session.skill("style-guide-review", {
+	let timedOut = false;
+	const handle = session.skill("style-guide-review", {
 		result: StyleGuideResultFromModelSchema,
 		args: {
 			pullRequest,
@@ -266,20 +291,46 @@ async function reviewSingleFile({
 			filename,
 		},
 	});
+	const timer = setTimeout(() => {
+		timedOut = true;
+		// Guard against abort() throwing or returning a rejecting promise — an
+		// error here would be an unhandled rejection from the timer callback.
+		Promise.resolve(handle.abort()).catch(() => {});
+	}, fileTimeoutMs);
 
-	const rawData = skillResult.data;
-	if (!rawData) {
+	try {
+		const skillResult = await handle;
+
+		const rawData = skillResult.data;
+		if (!rawData) {
+			return {
+				findings: [],
+				summary: "Style-guide review produced no result.",
+				reviewedFiles: [filename],
+			};
+		}
+
+		const findings = await assignFindingIds(rawData.findings);
 		return {
-			findings: [],
-			summary: "Style-guide review produced no result.",
+			findings,
+			summary: rawData.summary,
 			reviewedFiles: [filename],
 		};
+	} catch (err) {
+		// Normalize the abort into a clear timeout message for the degraded log;
+		// rethrow any other error unchanged. Either way the caller degrades this
+		// file to an empty result.
+		throw timedOut
+			? new Error(`Per-file review timed out after ${fileTimeoutMs}ms`, {
+					cause: err,
+				})
+			: err;
+	} finally {
+		// Clear the timeout (no-op if it already fired), then release this file's
+		// session immediately so its accumulated context is not retained for the
+		// whole run. The operation has settled (completed or aborted) by here, so
+		// delete() succeeds, keeping peak heap bounded to ~concurrency sessions.
+		clearTimeout(timer);
+		await session.delete().catch(() => {});
 	}
-
-	const findings = await assignFindingIds(rawData.findings);
-	return {
-		findings,
-		summary: rawData.summary,
-		reviewedFiles: [filename],
-	};
 }

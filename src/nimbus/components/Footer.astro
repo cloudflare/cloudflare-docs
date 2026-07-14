@@ -6,14 +6,28 @@
  * Rendered once in BaseLayout, so it appears on every page.
  */
 import { Icon } from "astro-icon/components";
+import OneTrust from "~/components/OneTrust.astro";
 
 interface Props {
   /** Extra classes on the <footer> — e.g. a top margin on pages without a
    *  decorative backdrop, where the footer isn't meant to sit flush. */
   class?: string;
+  /** Horizontal envelope for the inner container. "landing" (default) matches
+   *  the PageShell 1120px envelope; "docs" matches the DocsLayout content column
+   *  (same max-width, centering and padding) so the footer lines up with the
+   *  page content. The caller reserves the TOC gutter so centering matches. */
+  envelope?: "landing" | "docs";
+  /** Docs-envelope only: mirror the content wrapper's `wide` max-width so the
+   *  footer stays aligned on wide pages. */
+  wide?: boolean;
 }
 
-const { class: className } = Astro.props;
+const { class: className, envelope = "landing", wide = false } = Astro.props;
+
+const innerClass =
+  envelope === "docs"
+    ? `mx-auto w-full px-4 lg:px-6 py-12 ${wide ? "max-w-[1400px]" : "max-w-(--nb-content-max)"}`
+    : "mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] py-12";
 
 type FooterLink = { text: string; href: string; icon?: string };
 
@@ -80,12 +94,21 @@ const legal: [string, string][] = Object.entries({
 });
 
 const year = new Date().getFullYear();
+
+let isProduction = false;
+
+if (
+  import.meta.env.CF_PAGES_BRANCH === "production" ||
+  import.meta.env.GITHUB_REF_NAME === "production"
+) {
+  isProduction = true;
+}
 ---
 
-<footer class:list={["border-t border-border", className]}>
-  {/* Inner container matches the PageShell content envelope so footer edges
-      line up with page content instead of running full-bleed. */}
-  <div class="mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] py-12">
+<footer class:list={[className]}>
+  {/* Inner container matches the page's content envelope so footer edges line
+      up with page content instead of running full-bleed. */}
+  <div class={innerClass}>
     <div class="grid grid-cols-2 gap-8 lg:grid-cols-5">
       {
         groups.map(([title, items]) => (
@@ -121,6 +144,13 @@ const year = new Date().getFullYear();
               </a>
             </li>
           ))
+        }
+        {
+          isProduction && (
+            <li>
+              <OneTrust />
+            </li>
+          )
         }
       </ul>
     </div>

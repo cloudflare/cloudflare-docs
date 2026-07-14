@@ -21,6 +21,27 @@ The legacy AutoRAG API endpoints under `/autorag/rags/` have been replaced by ne
 
 The new API also includes endpoints for [instance management](/ai-search/api/instances/rest-api/), [items](/ai-search/api/items/rest-api/), and [namespace-level search](/ai-search/api/search/rest-api/#cross-instance-search-and-chat) that are not available in the legacy API. For the legacy endpoints, refer to the [AutoRAG API reference](/api/resources/autorag/).
 
+## API token permissions
+
+The legacy AutoRAG endpoints used the **AutoRAG** API token permission. The new AI Search endpoints require the **AI Search** permission instead, so update the permissions on the token you use to call the API. We recommend using [account API tokens](/fundamentals/api/get-started/account-owned-tokens/), which are owned by the account rather than a single user, and adding the **AI Search** permission found under **AI & Machine Learning** > **AI Search**.
+
+### Create a new token
+
+1. In the Cloudflare dashboard, go to **Manage Account** > **API Tokens**.
+2. Select **Create Token**, then start a custom token.
+3. Enter a name for the token.
+4. Add a permission policy and select **AI & Machine Learning** > **AI Search**, then choose the access level you need. AI Search offers **Read**, **Run**, and **Edit** access.
+5. (Optional) Set client IP address filtering and a token expiration.
+6. Create the token and copy its value.
+
+### Edit an existing token
+
+1. In the Cloudflare dashboard, go to **Manage Account** > **API Tokens**.
+2. Select the token you want to update.
+3. Add or update a permission policy to include **AI & Machine Learning** > **AI Search** with the access level you need, then save.
+
+For the full token creation flow, refer to [Create API token](/fundamentals/api/get-started/create-token/).
+
 ## Chat completions
 
 How to migrate from the AutoRAG `/ai-search` endpoint to the new `/chat/completions` endpoint:

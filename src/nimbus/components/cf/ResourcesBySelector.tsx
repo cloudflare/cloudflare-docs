@@ -254,7 +254,7 @@ export default function ResourcesBySelector({
 				);
 			}
 
-			setSearchParams(params);
+			setSearchParams(params, { replace: true });
 		}
 	}, [leftFilters, filterPlacement]);
 
@@ -328,7 +328,7 @@ export default function ResourcesBySelector({
 	return (
 		<div className={filterPlacement === "left" ? "md:grid md:grid-cols-[208px_1fr] md:gap-10" : ""}>
 			{filterPlacement === "left" && filters && (
-				<aside className="mb-8 md:mb-0 md:sticky md:top-20 md:self-start">
+				<aside className="hidden md:block">
 					{/* Search */}
 					<div className="relative mb-6">
 						<IconSearch className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -360,8 +360,8 @@ export default function ResourcesBySelector({
 						)}
 					</div>
 
-					{/* Facets — visible on every breakpoint (matches the directory rail);
-					     on mobile the rail stacks above results. */}
+					{/* Facets — the whole rail is hidden on mobile (`hidden md:block`
+					     on the <aside>); shown from md upward alongside results. */}
 					<div className="flex flex-col gap-7">
 						{Object.entries(facets).map(([filterField, values]) => (
 							<fieldset key={filterField} className="m-0 min-w-0 border-0 p-0">

@@ -3,6 +3,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
 import icon from "astro-icon";
+import skills from "astro-skills";
 import nimbus, { defineConfig as defineNimbusConfig } from "nimbus-docs";
 import { hastPlugins } from "./plugins/satteri";
 import { createSitemapLastmodSerializer } from "../../sitemap.serializer";
@@ -52,6 +53,18 @@ const sidebarItems = await autogenSections();
 const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
 const serializeSitemapLastmod = createSitemapLastmodSerializer();
 
+// Mirrors production's sitemap `filter` (root astro.config.ts).
+function isExcludedFromSitemap(url: string): boolean {
+	if (url.includes("/style-guide/")) return true;
+	if (url.endsWith("/404/")) return true;
+
+	const pathname = new URL(url).pathname;
+	if (externalLinkPaths.has(pathname)) return true;
+	if (isDisallowedByRobots(pathname)) return true;
+
+	return false;
+}
+
 // Resolved against this file (src/nimbus/). `~` → src/nimbus, `~/assets` →
 // the shared root src/assets, partials → the shared root src/content/partials.
 const here = (p: string) =>
@@ -64,12 +77,16 @@ const nimbusConfig = defineNimbusConfig({
 	description: "Cloudflare's documentation.",
 	locale: "en",
 	github: "https://github.com/cloudflare/cloudflare-docs",
+	editPattern:
+		"https://github.com/cloudflare/cloudflare-docs/edit/production/{path}",
 	socialImageAlt: "Cloudflare documentation",
-	// Search is Algolia DocSearch (wired in E4); Pagefind off.
-	search: false,
+	// "custom" renders the search UI slot but skips the built-in Pagefind index;
+	// Nimbus mounts Algolia DocSearch instead (see ui/search/DocSearch.astro).
+	search: { provider: "custom" },
 	sidebar: {
 		items: sidebarItems,
 		overviewLabel: "Overview",
+		indexDisplay: "overview-leaf",
 		scope: "section",
 		isolate: { boundaries: ["learning-paths/*"] },
 		defaultCollapsed: true,
@@ -189,11 +206,23 @@ export const markdown = {
 export const integrations = [
 	icon(),
 	react(),
+	// Injects /.well-known/agent-skills/* routes (index.json, SKILL.md, tarballs).
+	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
 		markdown: { hastPlugins },
 		incrementalBuilds: false,
 		validateMdx: false,
+		// Sitemap parity (T3): drop excluded URLs, stamp lastmod on the rest.
+		sitemap: {
+			serialize: async (item) =>
+				isExcludedFromSitemap(item.url)
+					? undefined
+					: serializeSitemapLastmod(
+							// nominal-only gap between nimbus-docs and @astrojs/sitemap types
+							item as Parameters<typeof serializeSitemapLastmod>[0],
+						),
+		},
 		partialResolver: (name: string, props: Record<string, unknown>) => {
 			if (name !== "Render" || !props.file) return null;
 			const path = props.product
@@ -235,6 +264,8 @@ export const integrations = [
 const nimbusDir = here(".");
 const rootAssets = here("../assets");
 const rootContent = here("../content");
+const rootUtil = here("../util");
+const rootComponents = here("../components");
 const componentsBarrelId = normalizeId(here("./components.ts"));
 
 function normalizeId(id: string) {
@@ -280,6 +311,18 @@ const aliasResolver = {
 						},
 						{ find: /^~\/assets(\/.*)?$/, replacement: `${rootAssets}$1` },
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
+						// Shared: the Zaraz `track()` shim is byte-identical to root and
+						{ find: /^~\/util\/zaraz$/, replacement: `${rootUtil}/zaraz` },
+						// Shared: the OneTrust cookie-consent component is portable
+						{
+							find: /^~\/components\/OneTrust\.astro$/,
+							replacement: `${rootComponents}/OneTrust.astro`,
+						},
+						// Shared: generated WARP platform list
+						{
+							find: /^~\/util\/warp-platforms\.json$/,
+							replacement: `${rootUtil}/warp-platforms.json`,
+						},
 						{ find: /^~(\/.*)?$/, replacement: `${nimbusDir}$1` },
 						{ find: /^@(\/.*)?$/, replacement: `${nimbusDir}$1` },
 					],
@@ -304,6 +347,9 @@ const aliasResolver = {
 			mapped = rootAssets + source.slice("~/assets".length);
 		else if (source === "~/content" || source.startsWith("~/content/"))
 			mapped = rootContent + source.slice("~/content".length);
+		else if (source === "~/util/zaraz") mapped = rootUtil + "/zaraz";
+		else if (source === "~/components/OneTrust.astro")
+			mapped = rootComponents + "/OneTrust.astro";
 		else if (source === "~" || source.startsWith("~/"))
 			mapped = nimbusDir + source.slice(1);
 		else if (source === "@" || source.startsWith("@/"))

@@ -8,8 +8,9 @@
  * we derive it from `Astro.url.pathname` (same value in this app's
  * [...slug] route). `sortBySidebarOrder` is inlined — upstream's helper
  * also handles Starlight sidebar entries, which we don't have.
- * `external_link` frontmatter isn't used by Queues content, so links
- * always point at `/${page.id}/`.
+ * Links honor `external_link` frontmatter (falling back to `/${page.id}/`),
+ * matching upstream — some listed pages (e.g. Workers bindings like AI/KV)
+ * are `external_link` stubs that must link straight to their target.
  */
 import { getCollection, type CollectionEntry } from "astro:content";
 import DirectoryListingItem from "./DirectoryListingItem.astro";
@@ -72,9 +73,8 @@ function buildPageTree(parentPath: string, currentDepth: number): PageNode[] {
 const pageTree = buildPageTree(folder, baseDepth + 1);
 
 if (pageTree.length === 0) {
-  console.warn(
-    `[DirectoryListing] No child pages for "${folder}" — rendering empty. ` +
-      `Expected during the bounded port when the target product's docs aren't migrated yet.`,
+  throw new Error(
+    `[DirectoryListing] Bad folder parameter (determined by current folder OR the "folder" input) of "${folder}". Check to make sure "${folder}" exists and has child pages.`,
   );
 }
 ---
@@ -87,7 +87,7 @@ if (pageTree.length === 0) {
         .map((node) => (
           <a
             class="flex items-center rounded-lg border border-border p-4 font-semibold text-foreground no-underline transition-colors hover:bg-muted"
-            href={"/" + node.page.id + "/"}
+            href={node.page.data.external_link ?? "/" + node.page.id + "/"}
           >
             {node.page.data.title}
           </a>

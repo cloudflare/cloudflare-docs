@@ -128,6 +128,7 @@ const socialImagePath = resolveSocialImagePath({
   socialImage,
   configImage: config.socialImage,
   productGroup: derivedProductGroup,
+  isChangelog: collection === "changelog",
   exists: inPublic,
 });
 const ogImage = site ? new URL(socialImagePath, site).href : socialImagePath;
