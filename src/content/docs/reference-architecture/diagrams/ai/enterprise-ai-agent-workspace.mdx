@@ -21,7 +21,7 @@ Unlike an [enterprise vibe coding platform](/reference-architecture/diagrams/ai/
 
 ## Core architecture
 
-![Enterprise AI agent workspace architecture showing multiple ways to invoke work, verified access, a stateful agent workspace built on Workers, Durable Objects, Dynamic Workers, and Sandbox containers, curated organizational knowledge, secure access to models and tools, and durable outputs.](~/assets/images/reference-architecture/enterprise-ai-agent-workspace/top-level.svg)
+![Enterprise AI agent workspace architecture showing multiple ways to invoke work, verified access, a stateful agent workspace built on Workers, Durable Objects, Dynamic Workers, and Sandbox containers, curated organizational knowledge, secure access to AI model providers through AI Gateway and to internal and SaaS MCP servers through MCP server portals, and durable outputs.](~/assets/images/reference-architecture/enterprise-ai-agent-workspace/top-level.svg)
 
 1. **Invoke work:** An employee starts or resumes work from the web application, enterprise chat, or email. Webhooks and schedules can also start work without an open browser session. [Cloudflare Access](/cloudflare-one/access-controls/) authenticates browser sessions, and each asynchronous channel validates its signature, token, or sender before a request is accepted.
 2. **Reach the agent workspace:** Workers route the request to the workspace agent. The agent restores conversation history, tasks, files, permissions, and queued events from durable state, draws on curated organization knowledge, then runs bounded code in Dynamic Workers or a Sandbox container when a task needs more than model inference.
