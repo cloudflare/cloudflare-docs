@@ -165,6 +165,8 @@ Organizations allows you to share WAF custom rulesets and Zero Trust Gateway pol
 
 For Distributor Organizations, policies can be shared across MSSP Organization boundaries within the same Distributor Organization.
 
+Organizations also supports [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/), which lets you configure a single identity provider (such as Okta or Entra ID) in one account and share it across all accounts in your Organization. Shared IdP connections are read-only in recipient accounts and are automatically managed as accounts join or leave your Organization.
+
 For detailed instructions, refer to [Policy sharing](/fundamentals/organizations/policy-sharing/).
 
 :::note
@@ -235,5 +237,5 @@ If you encounter errors during setup or management, refer to [Troubleshooting](/
 ### Assign existing accounts
 MSSP/Distributor Organizations cannot assign existing accounts. Use account creation to add new accounts to your Organization.
 
-### Create nested sub-organizations
-MSSP Organizations cannot create their own child Organizations. The hierarchy is limited to two tiers: Distributor → MSSP Organizations.
+### Nested sub-organizations
+MSSP/Distributor Organizations support up to 5 levels of nested sub-organizations.
