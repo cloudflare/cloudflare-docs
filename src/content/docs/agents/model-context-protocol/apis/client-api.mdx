@@ -869,9 +869,7 @@ export class MyAgent extends Agent {
 
 Configure handlers for server-initiated `elicitation/create` requests. Add a handler for each elicitation mode your Agent supports.
 
-<TypeScriptExample>
-
-```ts
+```txt
 this.mcp.configureElicitationHandlers(handlers?: {
   form?: (
     request: ElicitRequest,
@@ -883,8 +881,6 @@ this.mcp.configureElicitationHandlers(handlers?: {
   ) => Promise<ElicitResult>;
 }): void
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
