@@ -70,6 +70,54 @@ function apiHeaders(token: string): Record<string, string> {
 	};
 }
 
+/**
+ * Parse the `rel="next"` URL out of a GitHub `Link` response header.
+ * Returns null when there is no next page.
+ */
+function parseNextLink(link: string | null): string | null {
+	if (!link) return null;
+	for (const part of link.split(",")) {
+		const match = part.match(/<([^>]+)>\s*;\s*rel="next"/);
+		if (match) return match[1];
+	}
+	return null;
+}
+
+/**
+ * Encode a git ref (branch, tag, or SHA) for use in a URL path segment while
+ * preserving the `/` separators branch names can contain (e.g. `feature/foo`).
+ * SHAs contain no special characters, so this is a no-op for them.
+ */
+function encodeRef(ref: string): string {
+	return ref.split("/").map(encodeURIComponent).join("/");
+}
+
+/**
+ * Fetch every page of a GitHub list endpoint whose response body is a JSON
+ * array, following `Link: rel="next"` pagination. `firstUrl` should already
+ * include `per_page=100`. `context` is used only for error messages.
+ */
+async function fetchAllPages<T>(
+	token: string,
+	firstUrl: string,
+	context: string,
+): Promise<T[]> {
+	const items: T[] = [];
+	let url: string | null = firstUrl;
+	while (url) {
+		const res: Response = await fetch(url, { headers: apiHeaders(token) });
+		if (!res.ok) {
+			throw new Error(
+				`Failed to ${context} (HTTP ${res.status}): ${await res.text()}`,
+			);
+		}
+		const page = (await res.json()) as T[];
+		items.push(...page);
+		url = parseNextLink(res.headers.get("Link"));
+	}
+	return items;
+}
+
 export async function closeIssue(
 	token: string,
 	issueNumber: number,
@@ -187,18 +235,14 @@ export async function getPullRequestFiles(
 	token: string,
 	pullNumber: number,
 ): Promise<PullRequestFile[]> {
-	const res = await fetch(
+	// Paginate: the PR files endpoint returns at most 100 files per page. A PR
+	// with more than 100 changed files would otherwise be silently truncated,
+	// which breaks the net-diff containment check in fetchFilesForDiffMode.
+	return fetchAllPages<PullRequestFile>(
+		token,
 		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/files?per_page=100`,
-		{
-			headers: apiHeaders(token),
-		},
+		`get PR files for ${pullNumber}`,
 	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to get PR files for ${pullNumber} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
-	return (await res.json()) as PullRequestFile[];
 }
 
 export async function addLabels(
@@ -297,35 +341,63 @@ export async function comparePullRequestHeads(
 	base: string,
 	head: string,
 ): Promise<CompareResult | null> {
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/compare/${base}...${head}`,
-		{ headers: apiHeaders(token) },
-	);
-	if (res.status === 404) return null;
-	if (!res.ok) {
-		throw new Error(
-			`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
-		);
+	// Paginate the compare endpoint's file list, following Link headers. The
+	// comparison metadata (status/ahead_by/behind_by) is identical on every
+	// page, so it is captured from the first page only; `files` is accumulated
+	// across pages. Refs are encoded (preserving `/`) so branch names with
+	// special characters produce a well-formed URL. Note: GitHub caps the
+	// compare files list at 300 — for a delta larger than that the list is
+	// truncated, but fetchFilesForDiffMode's containment check errs toward the
+	// safe full-diff fallback in that case.
+	let url: string | null =
+		`https://api.github.com/repos/${REPO}/compare/${encodeRef(base)}...${encodeRef(head)}?per_page=100`;
+	// Accumulate by filename: the compare endpoint paginates primarily over
+	// commits, so the same file can appear on multiple pages. Deduping by
+	// filename (last write wins) yields one entry per changed file regardless
+	// of how GitHub slices the pages.
+	const filesByName = new Map<string, PullRequestFile>();
+	let status: CompareResult["status"] | undefined;
+	let aheadBy = 0;
+	let behindBy = 0;
+
+	while (url) {
+		const res: Response = await fetch(url, { headers: apiHeaders(token) });
+		if (res.status === 404) return null;
+		if (!res.ok) {
+			throw new Error(
+				`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
+			);
+		}
+		const data = (await res.json()) as {
+			files?: PullRequestFile[];
+			status?: string;
+			ahead_by?: number;
+			behind_by?: number;
+		};
+		if (status === undefined) {
+			// Normalize the status; anything unexpected is treated as "diverged" so
+			// the caller self-heals to the full diff rather than trusting a partial
+			// list.
+			status =
+				data.status === "ahead" ||
+				data.status === "behind" ||
+				data.status === "identical"
+					? data.status
+					: "diverged";
+			aheadBy = data.ahead_by ?? 0;
+			behindBy = data.behind_by ?? 0;
+		}
+		for (const file of data.files ?? []) {
+			filesByName.set(file.filename, file);
+		}
+		url = parseNextLink(res.headers.get("Link"));
 	}
-	const data = (await res.json()) as {
-		files?: PullRequestFile[];
-		status?: string;
-		ahead_by?: number;
-		behind_by?: number;
-	};
-	// Normalize the status; anything unexpected is treated as "diverged" so the
-	// caller self-heals to the full diff rather than trusting a partial list.
-	const status =
-		data.status === "ahead" ||
-		data.status === "behind" ||
-		data.status === "identical"
-			? data.status
-			: "diverged";
+
 	return {
-		files: data.files ?? [],
-		status,
-		aheadBy: data.ahead_by ?? 0,
-		behindBy: data.behind_by ?? 0,
+		files: [...filesByName.values()],
+		status: status ?? "diverged",
+		aheadBy,
+		behindBy,
 	};
 }
 
