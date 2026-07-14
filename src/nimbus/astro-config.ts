@@ -86,6 +86,7 @@ const nimbusConfig = defineNimbusConfig({
 	sidebar: {
 		items: sidebarItems,
 		overviewLabel: "Overview",
+		indexDisplay: "overview-leaf",
 		scope: "section",
 		isolate: { boundaries: ["learning-paths/*"] },
 		defaultCollapsed: true,

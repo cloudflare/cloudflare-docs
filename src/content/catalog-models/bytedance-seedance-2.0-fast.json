@@ -123,7 +123,7 @@
 					"type": "string"
 				},
 				"reference_images": {
-					"description": "Reference images (1-4, HTTP(S) URLs or base64 data URIs) to guide video generation for characters, avatars, clothing, or environments. Cannot be used with 1080p resolution or first/last frame images.",
+					"description": "Reference images (1-4, HTTP(S) URLs or base64 data URIs) to guide video generation for characters, avatars, clothing, or environments. Cannot be used with first/last frame images.",
 					"maxItems": 4,
 					"type": "array",
 					"items": {
