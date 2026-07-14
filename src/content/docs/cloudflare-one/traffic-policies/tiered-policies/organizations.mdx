@@ -14,7 +14,7 @@ sidebar:
 Only available on Enterprise plans.
 :::
 
-Gateway supports using [Cloudflare Organizations](/fundamentals/organizations/) to share configurations between and apply specific policies to accounts within an Organization. Tiered Gateway policies with Organizations support [DNS](/cloudflare-one/traffic-policies/dns-policies/), [network](/cloudflare-one/traffic-policies/network-policies/), [HTTP](/cloudflare-one/traffic-policies/http-policies/), and [resolver](/cloudflare-one/traffic-policies/resolver-policies/) policies.
+Gateway supports using [Cloudflare Organizations](/fundamentals/organizations/) to share configurations between and apply specific policies to accounts within an Organization. Tiered Gateway policies with Organizations support [DNS](/cloudflare-one/traffic-policies/policy-types/dns-policies/), [network](/cloudflare-one/traffic-policies/policy-types/network-policies/), [HTTP](/cloudflare-one/traffic-policies/policy-types/http-policies/), and [resolver](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) policies.
 
 For a DNS-only deployment using the Tenant API, refer to [Tenant API](/cloudflare-one/traffic-policies/tiered-policies/tenant-api/).
 
@@ -96,8 +96,8 @@ In the diagram above:
 
 Tiered policies with Organizations have the following limitations:
 
-- [Egress policies](/cloudflare-one/traffic-policies/egress-policies/) cannot be shared between accounts.
-- Source accounts cannot share policies that use [device posture](/cloudflare-one/reusable-components/posture-checks/) selectors, the [Detected protocol](/cloudflare-one/traffic-policies/network-policies/#detected-protocol) selector, or the [Quarantine](/cloudflare-one/traffic-policies/http-policies/#quarantine) action. Source and recipient accounts can still create and apply policies with these selectors and actions separately from the Organization share.
+- [Egress policies](/cloudflare-one/traffic-policies/policy-types/egress-policies/) cannot be shared between accounts.
+- Source accounts cannot share policies that use [device posture](/cloudflare-one/reusable-components/posture-checks/) selectors, the [Detected protocol](/cloudflare-one/traffic-policies/policy-types/network-policies/#detected-protocol) selector, or the [Quarantine](/cloudflare-one/traffic-policies/policy-types/http-policies/#quarantine) action. Source and recipient accounts can still create and apply policies with these selectors and actions separately from the Organization share.
 - Policies can only be shared within an Organization. Sharing to sub-organizations is not supported.
 
 :::caution
@@ -160,7 +160,7 @@ Changes made to shared policies will apply to all recipient accounts. Deleting a
 
 ## Manage Gateway settings
 
-You can share certain Gateway settings - the Gateway block page and extended email address matching - from your source account to recipient accounts in your Cloudflare Organization. Other Gateway settings configured in a source account, such as [AV scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/) and [file sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/), will not affect recipient account configurations.
+You can share certain Gateway settings - the Gateway block page and extended email address matching - from your source account to recipient accounts in your Cloudflare Organization. Other Gateway settings configured in a source account, such as [AV scanning](/cloudflare-one/traffic-policies/policy-types/http-policies/antivirus-scanning/) and [file sandboxing](/cloudflare-one/traffic-policies/policy-types/http-policies/file-sandboxing/), will not affect recipient account configurations.
 
 ### Share Gateway block page
 
@@ -177,7 +177,7 @@ To modify share recipients or unshare the setting, select the three-dot menu and
 
 ### Share extended email address matching
 
-To share your [extended email address matching](/cloudflare-one/traffic-policies/identity-selectors/#extended-email-addresses) settings from a source account to a recipient account:
+To share your [extended email address matching](/cloudflare-one/traffic-policies/reference/identity-selectors/#extended-email-addresses) settings from a source account to a recipient account:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings**.
 2. In **Firewall** > **Matched extended email address**, select the three-dot menu and choose **Share**.

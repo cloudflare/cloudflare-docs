@@ -16,7 +16,7 @@ tags:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-The following DLP policies are commonly used to secure sensitive data in uploaded and downloaded files. They are built as [Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) selector.
+The following DLP policies are commonly used to secure sensitive data in uploaded and downloaded files. They are built as [Gateway HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/policy-types/http-policies/#dlp-profile) selector.
 
 Before using these policies, complete the [prerequisites for scanning HTTP traffic](/cloudflare-one/data-loss-prevention/dlp-policies/#prerequisites).
 
@@ -39,7 +39,7 @@ For more information on what file formats DLP can scan, refer to [Supported file
 
 ## Block uploads/downloads for specific users
 
-You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/traffic-policies/identity-selectors/) to your policies. These selectors match against user attributes from your configured identity provider.
+You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/traffic-policies/reference/identity-selectors/) to your policies. These selectors match against user attributes from your configured identity provider.
 
 The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps. Users who are not in the _Contractors_ group are not affected by this policy.
 
@@ -51,7 +51,7 @@ The following example blocks only contractors from uploading/downloading Financi
 
 ## Exclude Android applications
 
-Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway TLS decryption. These applications verify they are connecting directly to their own servers and will reject Gateway's inspection certificate. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) so that the app can continue to function on Android:
+Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway TLS decryption. These applications verify they are connecting directly to their own servers and will reject Gateway's inspection certificate. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/#do-not-inspect) so that the app can continue to function on Android:
 
 1. Set up an [OS version device posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/) that checks for the Android operating system.
 

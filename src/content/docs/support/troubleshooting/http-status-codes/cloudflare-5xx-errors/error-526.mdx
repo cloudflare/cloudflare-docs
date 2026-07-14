@@ -52,7 +52,7 @@ When using [Cloudflare Gateway](/cloudflare-one/traffic-policies/), an HTTP Erro
 
 - **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
   - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
-  - Do not support [FIPS-compliant ciphers](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/traffic-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/traffic-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
   - Redirect all HTTPS requests to HTTP.
 
 ### Error 526 in the Workers context

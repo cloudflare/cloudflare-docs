@@ -14,7 +14,7 @@ import { GlossaryTooltip } from "~/components";
 
 When the Cloudflare One Client (formerly WARP) is deployed on a device, Cloudflare will process all DNS queries and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS queries or network traffic from the Cloudflare One Client. For example, you may need to resolve an internal hostname with a private DNS resolver instead of Cloudflare's [public DNS resolver](/1.1.1.1/).
 
-Cloudflare recommends Enterprise users configure [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to resolve traffic with custom resolvers. The Cloudflare One Client will send private DNS queries to Gateway, then Gateway will send the queries to custom resolvers based on matching policies.
+Cloudflare recommends Enterprise users configure [Gateway resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) to resolve traffic with custom resolvers. The Cloudflare One Client will send private DNS queries to Gateway, then Gateway will send the queries to custom resolvers based on matching policies.
 
 Additionally, there are three options you can configure to exclude traffic from the Cloudflare One Client:
 
@@ -85,7 +85,7 @@ flowchart TD
 
 - [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/)
 - [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/)
-- [Gateway Resolver Policies](/cloudflare-one/traffic-policies/resolver-policies/)
+- [Gateway Resolver Policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/)
 
 #### Resolvers (where queries are resolved)
 
