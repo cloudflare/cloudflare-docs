@@ -390,13 +390,10 @@ The following table summarizes supported capabilities and limits. Temporary cred
 
 ### Protect temporary values
 
-`account.apiToken` authorizes supported resource operations. Never expose it in browser responses or client-side code.
-
-Treat `claim.url` like a bearer credential. Anyone with the URL can claim ownership of the temporary account.
-
-Store both values only in backend storage or server-side session storage scoped to the intended user. Deliver `claim.url` only to that user.
-
-Exclude both values from logs, analytics, and support telemetry. Delete stored copies when they are no longer needed and no later than either returned expiration time.
+- `account.apiToken` authorizes supported resource operations. Never expose it in browser responses or client-side code.
+- Treat `claim.url` like a bearer credential. Anyone with the URL can claim ownership of the temporary account.
+- Store both values only in backend storage or server-side session storage scoped to the intended user. Deliver `claim.url` only to that user.
+- Exclude both values from logs, analytics, and support telemetry. Delete stored copies when they are no longer needed and no later than either returned expiration time.
 
 ### Limits
 
@@ -425,10 +422,4 @@ Exclude both values from logs, analytics, and support telemetry. Delete stored c
 	title="Deploy an existing project"
 	href="/workers/framework-guides/automatic-configuration/"
 	description="Learn how the Wrangler CLI automatically detects and configures projects for Workers."
-/>
-
-<LinkCard
-	title="Workers Script Upload API"
-	href="/api/resources/workers/subresources/scripts/methods/update/"
-	description="Upload and immediately deploy Workers through the REST API."
 />
