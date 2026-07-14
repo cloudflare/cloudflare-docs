@@ -102,25 +102,40 @@ Use the REST API when your platform backend controls deployments. The backend pr
 
 Make all provisioning and deployment calls from your backend. The provisioning response contains sensitive credentials and a claim URL.
 
+The following diagram shows how the platform keeps temporary credentials in its backend while the user previews and claims the deployment:
+
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant Platform
-    participant User
-    participant Cloudflare API
-    participant Dashboard
-    Platform->>User: Show Cloudflare Terms of Service and Privacy Policy
-    User-->>Platform: Accept both policies
-    Platform->>Cloudflare API: POST /client/v4/provisioning/previews/challenge
-    Cloudflare API-->>Platform: challengeToken, seed, k, g
-    Platform->>Platform: Solve SHA-256 checkpoint challenge
-    Platform->>Cloudflare API: POST /client/v4/provisioning/previews
-    Cloudflare API-->>Platform: account.id, account.apiToken, claim.url
-    Platform->>Cloudflare API: Deploy with Authorization: Bearer account.apiToken
-    Platform->>Cloudflare API: GET /accounts/{account.id}/workers/subdomain
-    Cloudflare API-->>Platform: workers.dev subdomain
-    Platform-->>User: Show deployment URL and claim.url
-    User->>Dashboard: Open claim.url and claim account
+flowchart LR
+    accTitle: Platform preview and claim architecture
+    accDescr: A user accepts Cloudflare's policies and requests a preview in the platform UI. The trusted platform backend creates a temporary account, keeps account.apiToken private, deploys the Worker, and returns only the preview and claim URLs to the UI. The claim URL is a bearer credential shown only to the intended user. The user claims the account in the Cloudflare dashboard. Future platform deployments require a separate OAuth flow.
+
+    USER((User))
+
+    subgraph PLATFORM["Platform"]
+        direction TB
+        UI["Platform UI<br/>No temporary API token"]
+        BACKEND["Trusted platform backend<br/>Stores account.apiToken"]
+        UI -->|"2. Request preview"| BACKEND
+        BACKEND -->|"10. Preview URL and bearer claim URL only"| UI
+    end
+
+    subgraph CLOUDFLARE["Cloudflare"]
+        direction TB
+        API["Cloudflare API"]
+        DASHBOARD["Cloudflare dashboard<br/>Claims the account"]
+    end
+
+    USER -->|"1. Accept policies and generate application"| UI
+    BACKEND -->|"3. Request challenge"| API
+    API -->|"4. Challenge parameters"| BACKEND
+    BACKEND -->|"5. Solve challenge locally"| BACKEND
+    BACKEND -->|"6. Create temporary account with solution"| API
+    API -->|"7. Account ID, API token, and claim URL"| BACKEND
+    BACKEND -->|"8. Deploy Worker and request subdomain"| API
+    API -->|"9. workers.dev subdomain"| BACKEND
+    UI -->|"11. Show live preview and intended-user-only claim link"| USER
+    USER -->|"12. Sign in and complete claim"| DASHBOARD
+    DASHBOARD -.->|"Optional after claim"| OAUTH["Separate OAuth flow<br/>for future platform deployments"]
 ```
 
 ### Request a challenge
