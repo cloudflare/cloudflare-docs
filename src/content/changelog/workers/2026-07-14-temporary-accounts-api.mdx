@@ -8,15 +8,15 @@ date: 2026-07-14
 
 Platforms can now create temporary preview accounts through the Cloudflare REST API. This lets your platform deploy a live Worker before the user signs in to Cloudflare.
 
-The API returns a claim URL that lets the user make the temporary account and its resources permanent.
-
-[Cloudflare Drop](https://www.cloudflare.com/drop/) demonstrates this preview-and-claim pattern for static sites. Someone can upload a site, test and share it for one hour, then sign in or create an account only when they want to keep it.
-
 With the Temporary Accounts API, coding agents, AI app builders, and other platforms can build a similar flow for generated Workers and supported resources.
 
 Your platform can keep users in its onboarding flow while they generate, deploy, and test an application. Users do not need an existing Cloudflare account, and your platform does not need write access to one.
 
 ![Diagram showing an AI agent deploying, verifying, and redeploying a Worker in a temporary account, then a user authenticating and claiming the account to keep its resources](~/assets/images/workers/claim-deployments-flow.png)
+
+The API returns a claim URL that lets the user make the temporary account and its resources permanent.
+
+[Cloudflare Drop](https://www.cloudflare.com/drop/) demonstrates this preview-and-claim pattern for static sites. Someone can upload a site, test and share it for one hour, then sign in or create an account only when they want to keep it.
 
 This API expands the flow first introduced with [`wrangler deploy --temporary`](/changelog/post/2026-06-19-temporary-accounts-for-agents/). Your backend now controls the provisioning and deployment experience directly:
 
@@ -45,11 +45,5 @@ curl "https://api.cloudflare.com/client/v4/provisioning/previews" \
     }
   }'
 ```
-
-The response includes `account.id`, `account.apiToken`, and `claim.url`. Treat `account.apiToken` as a secret, and use it only from your platform backend with supported Workers API endpoints.
-Treat `claim.url` like a bearer credential. Anyone with the URL can claim ownership of the temporary account.
-Send the URL only to the intended user. Exclude it from logs and analytics.
-The user must complete the claim within 60 minutes. Otherwise, Cloudflare deletes the account and its resources.
-After the claim, the user can continue deployments through their authenticated Cloudflare account.
 
 For the complete API flow, proof-of-work requirements, supported products, and limits, refer to [Claim deployments (temporary accounts)](/workers/platform/claim-deployments/#integrate-with-the-rest-api). For the background and design goals behind this flow, refer to [Temporary Cloudflare Accounts for AI agents](https://blog.cloudflare.com/temporary-accounts/).
