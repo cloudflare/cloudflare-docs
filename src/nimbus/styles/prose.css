@@ -221,6 +221,11 @@
   white-space: nowrap;
 }
 
+.docs-content
+  :where(tbody:not([class]):has(tr:nth-child(5)) tr:nth-child(even) td:not([class])) {
+  background: var(--nb-accent);
+}
+
 .docs-content :where(tbody:not([class]) tr:not([class]):last-child td:not([class])) {
   border-bottom: none;
 }
@@ -229,6 +234,11 @@
   :where(td:not([class]), th:not([class]))
   :where(code:not([class])) {
   overflow-wrap: normal;
+}
+
+/* Inline bold — 600 matches the heading weights */
+.docs-content :where(strong:not([class]), b:not([class])) {
+  font-weight: 600;
 }
 
 .docs-content :where(a:not([class])) {
