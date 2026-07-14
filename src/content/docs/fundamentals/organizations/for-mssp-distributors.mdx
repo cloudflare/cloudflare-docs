@@ -32,24 +32,28 @@ MSSP/Distributor Organizations use a **multi-tier structure**:
 ```
 Distributor Organization
 ├── MSSP Organization A
-│   ├── Customer Account 1
-│   │   ├── Zone A
-│   │   └── Zone B
-│   └── Customer Account 2
-│       └── Zone C
+│   ├── Sub-Organization A1
+│   │   ├── Customer Account 1
+│   │   │   ├── Zone A
+│   │   │   └── Zone B
+│   │   └── Customer Account 2
+│   │       └── Zone C
+│   └── Customer Account 3
+│       └── Zone D
 ├── MSSP Organization B
-│   ├── Customer Account 3
-│   │   └── Zone D
-│   └── Customer Account 4
-│       ├── Zone E
+│   ├── Customer Account 4
+│   │   └── Zone E
+│   └── Customer Account 5
 │       └── Zone F
 └── MSSP Organization C
-    └── Customer Account 5
-        └── Zone G
+    └── Sub-Organization C1
+        └── Customer Account 6
+            └── Zone G
 ```
 
 **Key characteristics:**
 - Distributors create and manage child MSSP Organizations
+- MSSP Organizations can create up to 5 levels of nested sub-organizations
 - Each MSSP Organization manages its own customer accounts
 - MSSP Organization members have [implicit access](#implicit-access) to their customer accounts
 - Accounts can be moved between MSSP Organizations
@@ -236,6 +240,3 @@ If you encounter errors during setup or management, refer to [Troubleshooting](/
 
 ### Assign existing accounts
 MSSP/Distributor Organizations cannot assign existing accounts. Use account creation to add new accounts to your Organization.
-
-### Nested sub-organizations
-MSSP/Distributor Organizations support up to 5 levels of nested sub-organizations.
