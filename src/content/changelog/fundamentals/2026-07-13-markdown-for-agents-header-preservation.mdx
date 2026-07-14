@@ -1,0 +1,18 @@
+---
+title: Origin Content Signals for Markdown for Agents
+description: Converted responses now preserve security and cache headers, and respect your origin's content-signal.
+products:
+  - fundamentals
+date: 2026-07-13
+---
+
+[Markdown for Agents](/fundamentals/reference/markdown-for-agents/) now preserves security- and cache-relevant response headers from your origin when converting HTML to Markdown:
+
+- Markdown for Agents preserves security headers such as `Strict-Transport-Security` (HSTS), `Content-Security-Policy` (CSP), `X-Frame-Options`, `Set-Cookie`, and CORS headers (for example, `Access-Control-Allow-Origin`) on the converted response.
+- Caching headers (`Cache-Control`, `Expires`, `Age`) continue to pass through.
+
+Your origin's [Content Signals](https://contentsignals.org/) policy is now authoritative. If your origin sets a `content-signal` header, Markdown for Agents preserves it. When the origin does not send one, Cloudflare adds the default `Content-Signal: ai-train=yes, search=yes, ai-input=yes`.
+
+This release also fixes relative link resolution for directory-style base URLs (those ending in a trailing slash). Previously, relative links such as `../page/` could resolve one path segment too high and return a `404`. Links are now resolved correctly per [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-5.2.3).
+
+Refer to our [developer documentation](/fundamentals/reference/markdown-for-agents/) for more details.
