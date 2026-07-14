@@ -3,7 +3,7 @@ title: Platforms can now create Temporary Accounts via the Cloudflare API
 description: AI agents and platforms can create temporary preview accounts through the Cloudflare REST API and let users claim deployed Workers later.
 products:
   - workers
-date: 2026-07-13
+date: 2026-07-14
 ---
 
 Platforms can now create temporary preview accounts through the Cloudflare REST API. This lets your platform deploy a live Worker before the user signs in to Cloudflare.
@@ -46,14 +46,10 @@ curl "https://api.cloudflare.com/client/v4/provisioning/previews" \
   }'
 ```
 
-The response includes `account.id`, `account.apiToken`, and `claim.url`. Keep `account.apiToken` on your server and use it with supported Workers API endpoints.
-
+The response includes `account.id`, `account.apiToken`, and `claim.url`. Treat `account.apiToken` as a secret, and use it only from your platform backend with supported Workers API endpoints.
 Treat `claim.url` like a bearer credential. Anyone with the URL can claim ownership of the temporary account.
-
 Send the URL only to the intended user. Exclude it from logs and analytics.
-
 The user must complete the claim within 60 minutes. Otherwise, Cloudflare deletes the account and its resources.
-
 After the claim, the user can continue deployments through their authenticated Cloudflare account.
 
 For the complete API flow, proof-of-work requirements, supported products, and limits, refer to [Claim deployments (temporary accounts)](/workers/platform/claim-deployments/#integrate-with-the-rest-api). For the background and design goals behind this flow, refer to [Temporary Cloudflare Accounts for AI agents](https://blog.cloudflare.com/temporary-accounts/).
