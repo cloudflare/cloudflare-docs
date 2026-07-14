@@ -21,7 +21,7 @@ To understand the protocol itself, refer to [Privacy Pass Protocol](/privacy-pas
 
 ## Get a real token with the demo tool
 
-The quickest way to see what an issuer-signed token looks like is with Cloudflare's [Privacy Pass Demo Tool](https://privacy-pass-demo.pvc-eng.workers.dev/). Pointed at an issuer, it runs the full issuance flow in your browser and returns a verified token.
+The quickest way to see what an issuer-signed token looks like is with Cloudflare's [Privacy Pass Demo Tool](https://privacypass-demo.cloudflare.app/). Pointed at an issuer, it runs the full issuance flow in your browser and returns a verified token.
 
 ### Prerequisites
 
@@ -29,7 +29,7 @@ The quickest way to see what an issuer-signed token looks like is with Cloudflar
 
 ### How to get a token
 
-1. Open the [Privacy Pass demo tool](https://privacy-pass-demo.pvc-eng.workers.dev/).
+1. Open the [Privacy Pass demo tool](https://privacypass-demo.cloudflare.app/).
 2. In **Fetch from issuer URL**, paste the demo issuer directory URL and submit. The tool displays the issuer directory—a list of `token-keys` with token type `2` (Blind RSA)—and automatically fills in the fields for the steps below.
 3. In **Create challenge**, submit the prefilled form. The tool builds a `WWW-Authenticate` token challenge from the issuer's key.
 4. In **Send Token Request**, submit the prefilled form. The tool blinds the request, sends it to the issuer, unblinds the response, and verifies the result.

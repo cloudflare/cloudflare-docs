@@ -125,7 +125,7 @@ Two signals confirm issuance and redemption are working end to end:
 - The directory endpoint returns the issuer's `token-keys`.
 - A redeemed token verifies against the issuer's public key, and the Origin returns `200 OK`.
 
-To check that the directory endpoint is reachable, you can use the [Privacy Pass demo tool](https://privacy-pass-demo.pvc-eng.workers.dev/) to fetch the issuer's directory.
+To check that the directory endpoint is reachable, you can use the [Privacy Pass demo tool](https://privacypass-demo.cloudflare.app/) to fetch the issuer's directory.
 
 :::note
 Against a production issuer, use the demo tool only as a directory reachability check or to validate a production token against a production public key. It cannot complete a token request because production issuers accept requests only from an authenticated Attester (unlike the open demo issuer in [Getting started](/privacy-pass/getting-started/)).
