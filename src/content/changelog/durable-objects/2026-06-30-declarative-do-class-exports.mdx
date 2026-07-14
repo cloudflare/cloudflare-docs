@@ -9,17 +9,31 @@ date: 2026-07-04
 
 A new declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field in your Wrangler configuration file replaces the imperative [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array for managing Durable Object class lifecycle. Instead of writing an ordered list of migration steps with unique tags, you declare each Durable Object class your Worker exports and Cloudflare compares that against what's already deployed to determine what Durable Object state needs to be created, renamed, or deleted.
 
-```jsonc title="wrangler.jsonc"
+With legacy migrations, renaming `ChatRoom` to `Room` requires retaining both tagged steps:
+
+```jsonc title="Before — legacy migrations"
+{
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["ChatRoom"] },
+		{
+			"tag": "v2",
+			"renamed_classes": [{ "from": "ChatRoom", "to": "Room" }],
+		},
+	],
+}
+```
+
+With `exports`, you instead declare `Room` as the current class and mark `ChatRoom` as renamed:
+
+```jsonc title="After — declarative exports"
 {
 	"exports": {
-		"MyDurableObject": { "type": "durable-object", "storage": "sqlite" },
-		"OldClass": { "type": "durable-object", "state": "deleted" },
-		"OldName": {
+		"ChatRoom": {
 			"type": "durable-object",
 			"state": "renamed",
-			"renamed_to": "NewName",
+			"renamed_to": "Room",
 		},
-		"NewName": { "type": "durable-object", "storage": "sqlite" },
+		"Room": { "type": "durable-object", "storage": "sqlite" },
 	},
 }
 ```
@@ -29,7 +43,7 @@ Each entry is keyed by class name. The `state` field carries the lifecycle (`cre
 Key improvements over the legacy `migrations` array:
 
 - **No migration tags.** The current `exports` map is the source of truth — there is no historical chain of `v1`, `v2`, `v3` entries to maintain.
-- **Structured reconciliation output.** Every `wrangler deploy` prints the actions Cloudflare applied (created, deleted, renamed, transferred), plus advisory `info` notices and a `removable_entries` list of stale tombstones that are safe to delete from your config.
+- **Structured deployment output.** Wrangler reports when it creates, updates, deletes, renames, or transfers Durable Object classes. It also identifies stale configuration entries that are safe to remove. Deployments with no changes or notices do not print this output.
 - **Zero-downtime rename and transfer patterns are first-class.** Tombstones may coexist with the source class still in code, enabling a [three-deploy rename](/durable-objects/reference/durable-objects-migrations/#avoid-downtime-during-a-rename) and a [four-deploy cross-Worker transfer](/durable-objects/reference/durable-objects-migrations/#transfer-a-durable-object-class-between-workers) without runtime errors during the rollout window.
 - **Cross-Worker safety.** When you delete or rename a class, Cloudflare lists every other Worker in your account whose bindings still reference the namespace, so you can redeploy them before the change goes live.
 

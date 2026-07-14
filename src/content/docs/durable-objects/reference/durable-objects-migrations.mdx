@@ -41,7 +41,7 @@ When you deploy a Worker that declares `exports`, Cloudflare compares three sour
 2. **Your `exports` configuration** — what you have declared about each class.
 3. **Provisioned state** — the Durable Object namespaces that already exist for this Worker.
 
-The deploy succeeds when all three agree. Any disagreement (a class in code that has no entry, an entry for a class that no longer exists in code, a provisioned namespace with no matching entry) is surfaced as a structured error or, where the intent is unambiguous, an action that Cloudflare applies for you.
+A class that appears only in your code is ignored until you declare it in `exports`; Cloudflare does not provision a namespace implicitly. Other disagreements, such as a live entry whose class is missing from code or a provisioned namespace with no matching entry, are surfaced as structured errors or, where the intent is unambiguous, actions that Cloudflare applies for you.
 
 A minimal `exports` block declares each Durable Object class as a live entry:
 
@@ -393,7 +393,9 @@ Storage type is immutable once a namespace exists. Cloudflare rejects an `export
 
 ## Reading the reconciliation output
 
-After every deploy, `wrangler deploy` prints a `Durable Object exports reconciliation` block summarising the actions Cloudflare applied and any advisory information. A typical output looks like:
+When a deployment applies a Durable Object class lifecycle change, `wrangler deploy` prints a `Durable Object exports reconciliation` block. The block also appears when reconciliation produces warnings, info notices, or removable entries. Wrangler omits the block when nothing changed and there are no notices.
+
+A typical output looks like:
 
 ```txt
 Durable Object exports reconciliation:
@@ -470,7 +472,7 @@ If `exports` is only declared at the top level, named environments inherit the s
 The `exports` field is a map keyed by Durable Object class name. Each value is an object whose fields depend on `state`:
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
-  - The kind of export. Currently always `"durable-object"`.
+  - For Durable Object class entries, set this to `"durable-object"`.
 
 - `state` <Type text="string" /> <MetaInfo text="optional" />
   - The lifecycle state. One of `"created"` (the default, omit to use), `"deleted"`, `"renamed"`, `"transferred"`, or `"expecting-transfer"`.
@@ -503,7 +505,7 @@ When a deploy fails reconciliation, Cloudflare returns one error per class along
 
 | Scenario                                          | Meaning                                                                                                                                                            | How to fix                                                                                                                                   |
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `provisioned_class_missing_from_config`           | A namespace exists for a class but `exports` has no entry for it.                                                                                                  | Add a live entry (`state: "created"`) to keep the namespace, or add a tombstone (`deleted`, `renamed`, or `transferred`) to retire it.       |
+| `provisioned_class_missing_from_config`           | A namespace exists for a class that the Worker code still exports, but `exports` has no entry for it.                                                               | Add a live entry (`state: "created"`) to keep the namespace, or add a tombstone (`deleted`, `renamed`, or `transferred`) to retire it.       |
 | `config_export_not_in_code`                       | A live entry declares a class that the Worker code does not export.                                                                                                | Add the class to your code, or replace the entry with a tombstone.                                                                           |
 | `config_references_nonexistent_class`             | A live entry declares a class that is neither in code nor provisioned.                                                                                             | Remove the entry, or add the class to your Worker code.                                                                                      |
 | `orphaned_provisioned_namespace`                  | A namespace exists for a class that is neither in code nor declared.                                                                                               | Add a tombstone for the class, or add the class back to code and `exports`.                                                                  |
@@ -543,6 +545,8 @@ The blocking error `tombstone_delete_class_still_in_code` (specific to `deleted`
 ## Migrate from the legacy `migrations` flow
 
 Existing Workers using the [`migrations` array](/durable-objects/reference/durable-object-class-migrations-legacy/) can move to `exports` without any data migration. The provisioned namespaces remain in place; only the configuration shape changes.
+
+To determine a class's existing storage backend, trace it to the migration that originally created it. Classes introduced through `new_sqlite_classes` use `sqlite`, while classes introduced through `new_classes` use `legacy-kv`.
 
 <Steps>
 1. Identify the live Durable Object classes your Worker exports today. Each class with an active namespace becomes a live `exports` entry.

@@ -384,18 +384,18 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
     - Example Wrangler file:
     ```jsonc title="wrangler.jsonc"
     {
-    	// top-level default migrations
-    	"migrations": [
-    		{ "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] },
-    	],
-    	"env": {
-    		"staging": {
-    			// migration override for staging
-    			"migrations": [
-    				{ "tag": "v1-staging", "new_sqlite_classes": ["MyDurableObject"] },
-    			],
-    		},
-    	},
+      // top-level default migrations
+      "migrations": [
+        { "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] },
+      ],
+      "env": {
+        "staging": {
+          // migration override for staging
+          "migrations": [
+            { "tag": "v1-staging", "new_sqlite_classes": ["MyDurableObject"] },
+          ],
+        },
+      },
     }
     ```
   - If a migration is only specified at the top-level, but not at the environment-level, the environment will inherit the top-level migration.

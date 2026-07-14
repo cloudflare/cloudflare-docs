@@ -679,7 +679,7 @@ The `exports` field declares the Durable Object classes this Worker exports and 
 Each entry in `exports` is keyed by Durable Object class name. The fields on each entry are:
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
-  - The kind of export. Currently always `"durable-object"`.
+  - For Durable Object class entries, set this to `"durable-object"`.
 
 - `state` <Type text="string" /> <MetaInfo text="optional" />
   - The lifecycle state. One of `"created"` (the default — a live class), `"deleted"`, `"renamed"`, `"transferred"`, or `"expecting-transfer"`.
@@ -1918,24 +1918,26 @@ A common example of using a redirected configuration is where a custom build too
 - First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
   <WranglerConfig>
-    	```jsonc
-    	{
-    		"$schema": "./node_modules/wrangler/config-schema.json",
-    		"name": "my-worker",
-    		"main": "src/index.ts",
-    		"vars": {
-    			"MY_VARIABLE": "production variable",
-    		},
-    		"env": {
-    			"staging": {
-    				"vars": {
-    					"MY_VARIABLE": "staging variable",
-    				},
-    			},
-    		},
-    	}
-    	```
-    </WranglerConfig>
+
+  ```jsonc
+  {
+  	"$schema": "./node_modules/wrangler/config-schema.json",
+  	"name": "my-worker",
+  	"main": "src/index.ts",
+  	"vars": {
+  		"MY_VARIABLE": "production variable",
+  	},
+  	"env": {
+  		"staging": {
+  			"vars": {
+  				"MY_VARIABLE": "staging variable",
+  			},
+  		},
+  	},
+  }
+  ```
+
+  </WranglerConfig>
 
   This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
 
@@ -1949,13 +1951,13 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-  		- dist/
-  			- index.js
-  			- wrangler.jsonc
-  		- .wrangler/
-  			- deploy/
-  				- config.json
-    </FileTree>
+		- dist/
+			- index.js
+			- wrangler.jsonc
+		- .wrangler/
+			- deploy/
+				- config.json
+  </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:
 
