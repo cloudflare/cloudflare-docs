@@ -385,12 +385,15 @@ import { convertToModelMessages, stepCountIs, streamText } from "ai";
 import { model } from "./model";
 
 class GitHubConnector extends McpConnector<Env> {
+	private connection: McpConnectionLike;
+
 	constructor(
 		ctx: DurableObjectState,
 		env: Env,
-		private connection: McpConnectionLike,
+		connection: McpConnectionLike,
 	) {
 		super(ctx, env);
+		this.connection = connection;
 	}
 
 	override name() {
