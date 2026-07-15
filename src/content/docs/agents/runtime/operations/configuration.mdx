@@ -781,7 +781,7 @@ To explicitly separate:
 
 ## Agent class lifecycle
 
-Each Agent maps to a Durable Object class. You manage the lifecycle of those classes (create, rename, delete, transfer) through the [`exports`](/durable-objects/reference/durable-objects-migrations/) field of your Wrangler configuration file.
+Each Agent maps to a Durable Object class. You manage the lifecycle of those classes (create, rename, delete, transfer) through the [`exports`](/durable-objects/reference/durable-objects-migrations/) field of your Wrangler configuration file. To retire a class, replace its live entry with a **tombstone** — a marker that keeps the class name in `exports` while telling Cloudflare to delete, rename, or transfer the underlying namespace.
 
 ### Adding a new agent
 

@@ -10,12 +10,11 @@ products:
 
 import {
 	Render,
-	GlossaryTooltip,
 	WranglerConfig,
 	Steps,
-	Details,
 	Type,
 	MetaInfo,
+	TypeScriptExample,
 } from "~/components";
 
 The `exports` field in your [Wrangler configuration file](/workers/wrangler/configuration/) is the declarative way to manage [Durable Object class](/durable-objects/) lifecycle. You declare each Durable Object class your Worker exports — along with whether it is live, deleted, renamed, or transferred — and Cloudflare reconciles your declaration against the namespaces that have already been provisioned for your Worker.
@@ -68,7 +67,7 @@ A minimal `exports` block declares each Durable Object class as a live entry:
 
 </WranglerConfig>
 
-To declare a destructive operation — deleting, renaming, or transferring a class — you change the entry's `state` to a tombstone variant. The class name remains the same; the value tells Cloudflare what to do with the existing namespace.
+To declare a destructive operation — deleting, renaming, or transferring a class — you change the entry's `state` to a **tombstone**: a marker that keeps the class name in your `exports` map while telling Cloudflare to retire the underlying namespace. The class name remains the same; the `state` value tells Cloudflare what to do with the existing namespace.
 
 | Operation                              | `state`                  | Required fields            |
 | -------------------------------------- | ------------------------ | -------------------------- |
@@ -89,13 +88,15 @@ To define a new Durable Object class, add an entry to `exports` keyed by the cla
 <Steps>
 1. Add the class to your Worker code and export it:
 
-    ```ts title="src/index.ts"
+    <TypeScriptExample filename="src/index.ts">
+    ```ts
     import { DurableObject } from "cloudflare:workers";
 
     export class MyDurableObject extends DurableObject {
       // ...
     }
     ```
+    </TypeScriptExample>
 
 2. Add a binding for the class (if your Worker needs to access it through `env`) and declare the class in `exports`:
 
@@ -177,7 +178,7 @@ A `deleted` tombstone has two preconditions enforced at deploy time:
 - The class must not be present in your Worker code. Cloudflare will not delete a namespace whose class is still being shipped, because runtime bindings would resolve to a deleted namespace.
 - No other Worker in your account may bind to the namespace. If another Worker still binds to the class, the deploy is rejected with `tombstone_delete_blocked_by_external_bindings` and the list of referencing scripts is returned. Redeploy those Workers without the binding first, then re-run your deploy.
 
-Once the namespace has been deleted, the tombstone becomes stale. Cloudflare reports this in the [reconciliation output](#reading-the-reconciliation-output) and lists the entry in `removable_entries` so you can safely remove it from `exports`.
+Once the namespace has been deleted, the tombstone becomes stale. Cloudflare reports this in the [reconciliation output](#reading-the-reconciliation-output) and lists the entry under **Safe to remove from `exports`**, so you can delete it.
 
 ## Rename a Durable Object class
 
@@ -215,7 +216,8 @@ A Durable Object class rename involves two updates that are not perfectly atomic
 <Steps>
 1. **Alias the new name to the old class.** Add the new class name to your code as the canonical class, and re-export it under the old name so existing instances keep resolving:
 
-    ```ts title="src/index.ts"
+    <TypeScriptExample filename="src/index.ts">
+    ```ts
     import { DurableObject } from "cloudflare:workers";
 
     export class NewName extends DurableObject {
@@ -223,6 +225,7 @@ A Durable Object class rename involves two updates that are not perfectly atomic
     }
     export { NewName as OldName };
     ```
+    </TypeScriptExample>
 
     Leave `exports` unchanged. Deploy.
 
@@ -250,15 +253,17 @@ A Durable Object class rename involves two updates that are not perfectly atomic
 
 3. **Remove the alias.** Once the previous deploy has fully rolled out, remove the `OldName` alias from your code:
 
-    ```ts title="src/index.ts"
+    <TypeScriptExample filename="src/index.ts">
+    ```ts
     import { DurableObject } from "cloudflare:workers";
 
     export class NewName extends DurableObject {
       // ...
     }
     ```
+    </TypeScriptExample>
 
-    Leave `exports` unchanged. Deploy. The `OldName` tombstone is now stale and Cloudflare lists it in `removable_entries` — you can delete the entry from `exports` in your next config edit.
+    Leave `exports` unchanged. Deploy. The `OldName` tombstone is now stale and Cloudflare lists it under **Safe to remove from `exports`** — you can delete the entry from `exports` in your next config edit.
 
 </Steps>
 
@@ -368,7 +373,7 @@ The recommended sequence is four deploys:
 
 </Steps>
 
-After the handoff has rolled out everywhere, you can remove `MyDO` from the source Worker's code and delete the `transferred` tombstone from the source's `exports` map. While other Workers in the account still bind to `MyDO` on the source, the reconciliation output lists them in `referencing_scripts`; redeploy each of them with bindings re-pointed at the target before removing the source tombstone.
+After the handoff has rolled out everywhere, you can remove `MyDO` from the source Worker's code and delete the `transferred` tombstone from the source's `exports` map. While other Workers in the account still bind to `MyDO` on the source, the reconciliation output lists them as **referenced by** on the info notice; redeploy each of them with bindings re-pointed at the target before removing the source tombstone.
 
 ### Cancel a pending transfer
 
@@ -378,7 +383,7 @@ A pending transfer persists until the source Worker commits with a `transferred`
 
 - Both Workers must live in the same Cloudflare account.
 - Cross-[dispatch-namespace](/cloudflare-for-platforms/workers-for-platforms/) transfers are not supported. The source and target Workers must both be in the same dispatch-namespace context (or both be outside any dispatch namespace).
-- A target Worker can hold only one pending phase-1 hint per class at a time. To redirect a pending transfer to a different source, cancel the current pending transfer first.
+- A target Worker can hold only one pending transfer per class at a time. To redirect it to a different source, cancel the existing transfer first.
 
 ## Storage backends
 
@@ -418,7 +423,7 @@ The block has four sections:
 - **Info** (dimmed) reports non-blocking notices: stale tombstones that no longer apply, and tombstones applied while the source class is still in code (the supported pattern for zero-downtime rollouts).
 - **Safe to remove from `exports`** lists tombstone entries that are stale and have no other Workers in the account binding to the source class. You can delete these entries from your `exports` map on your next config edit.
 
-Info entries can include a `referencing_scripts` list — other Workers in the account whose bindings still resolve to the affected namespace. Redeploy those Workers with bindings re-pointed at the new class name before removing the tombstone, or you will orphan their bindings.
+Info entries can include a **referenced by** list — other Workers in the account whose bindings still resolve to the affected namespace. Redeploy those Workers with bindings re-pointed at the new class name before removing the tombstone, or you will orphan their bindings.
 
 If the deploy fails, the output shows a structured error per class:
 
@@ -436,9 +441,9 @@ A tombstone becomes **stale** when applying it produces no state change — for 
 
 Cloudflare emits a `stale_tombstone` info notice on every deploy where a tombstone is stale, until you remove the entry from `exports`. The notice is intentionally repeated so you do not forget to clean up.
 
-For renamed and transferred tombstones, Cloudflare also enumerates other Workers in your account whose `durable_objects.bindings` entries still reference the source class name. These appear as `referencing_scripts` on the info notice. While `referencing_scripts` is non-empty, removing the tombstone could orphan those bindings — redeploy the referencing Workers with bindings re-pointed at the new class first.
+For renamed and transferred tombstones, Cloudflare also enumerates other Workers in your account whose `durable_objects.bindings` entries still reference the source class name. These appear as **referenced by** on the info notice. While that list is non-empty, removing the tombstone could orphan those bindings — redeploy the referencing Workers with bindings re-pointed at the new class first.
 
-The top-level "Safe to remove from `exports`" line in the reconciliation output names every stale tombstone whose `referencing_scripts` is empty. Use that list as the authoritative "you can delete these now" hint.
+The top-level **Safe to remove from `exports`** line in the reconciliation output names every stale tombstone whose **referenced by** list is empty. Use that list as the authoritative "you can delete these now" hint.
 
 ## Environments, dispatch namespaces, and previews
 
@@ -501,7 +506,7 @@ The following table lists the allowed and forbidden fields for each `state`:
 
 ## Error reference
 
-When a deploy fails reconciliation, Cloudflare returns one error per class along with a structured `scenario` tag, a human-readable message, and where applicable a `suggestion` and `referencing_scripts` list:
+When a deploy fails reconciliation, Cloudflare returns one error per class along with a structured `scenario` tag, a human-readable message, and where applicable a **Suggestion** and **Referencing scripts** list:
 
 | Scenario                                          | Meaning                                                                                                                                                            | How to fix                                                                                                                                   |
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |

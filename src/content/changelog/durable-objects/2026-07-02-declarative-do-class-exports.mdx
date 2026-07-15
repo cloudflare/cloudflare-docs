@@ -4,13 +4,16 @@ description: A new declarative `exports` field in your Wrangler configuration re
 products:
   - durable-objects
   - workers
-date: 2026-07-04
+date: 2026-07-02
 ---
+
+import { WranglerConfig } from "~/components";
 
 A new declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field in your Wrangler configuration file replaces the imperative [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array for managing Durable Object class lifecycle. Instead of writing an ordered list of migration steps with unique tags, you declare each Durable Object class your Worker exports and Cloudflare compares that against what's already deployed to determine what Durable Object state needs to be created, renamed, or deleted.
 
 With legacy migrations, renaming `ChatRoom` to `Room` requires retaining both tagged steps:
 
+<WranglerConfig>
 ```jsonc title="Before — legacy migrations"
 {
 	"migrations": [
@@ -22,9 +25,11 @@ With legacy migrations, renaming `ChatRoom` to `Room` requires retaining both ta
 	],
 }
 ```
+</WranglerConfig>
 
 With `exports`, you instead declare `Room` as the current class and mark `ChatRoom` as renamed:
 
+<WranglerConfig>
 ```jsonc title="After — declarative exports"
 {
 	"exports": {
@@ -37,8 +42,9 @@ With `exports`, you instead declare `Room` as the current class and mark `ChatRo
 	},
 }
 ```
+</WranglerConfig>
 
-Each entry is keyed by class name. The `state` field carries the lifecycle (`created` by default — a live class — plus tombstone states `deleted`, `renamed`, and `transferred`, and the `expecting-transfer` receiving state for cross-Worker transfers).
+Each entry is keyed by class name. The `state` field carries the lifecycle: `created` (the default) marks a live class, while the tombstone states `deleted`, `renamed`, and `transferred` retire a class without removing its entry. The `expecting-transfer` state marks the receiving side of a cross-Worker transfer.
 
 Key improvements over the legacy `migrations` array:
 

@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Durable Object class migrations (legacy)
 description: Use the legacy Wrangler `migrations` array to create, rename, delete, or transfer Durable Object classes.
+noindex: true
 sidebar:
   order: 20
 products:
@@ -421,7 +422,7 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
 `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks in the surrounding inline array are acceptable.
 :::
 
-You cannot enable a SQLite storage backend on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
+You cannot enable a SQLite storage backend on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. There is no automatic migration of deployed classes from the key-value storage backend to the SQLite storage backend.
 
 :::caution[Important]
 Durable Object migrations are atomic operations and cannot be gradually deployed. To provide early feedback to developers, new Worker versions with new migrations cannot be uploaded. Refer to [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/) for more information.
