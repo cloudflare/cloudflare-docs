@@ -18,6 +18,8 @@ Organizations allows you to create security policies in one account and share th
 
 Policy sharing works the same way for both [Enterprise](/fundamentals/organizations/for-enterprise/) and [MSSP/Distributor](/fundamentals/organizations/for-mssp-distributors/) Organizations.
 
+In addition to WAF and Gateway policies, Organizations supports [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/), which lets you configure a single identity provider (such as Okta or Entra ID) in one account and share it across all accounts in your Organization. Shared IdP connections are read-only in recipient accounts and are automatically provisioned or removed as accounts join or leave the Organization.
+
 ## Prerequisites
 
 Policy sharing requires the appropriate product entitlements on the accounts involved. Organizations does not grant access to WAF or Gateway features — your accounts must already have the required SKUs.
