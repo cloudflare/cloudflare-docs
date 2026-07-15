@@ -243,7 +243,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
-	if (frontmatter.sidebar.group?.badge) {
+	if (frontmatter.sidebar.group?.badge !== undefined) {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
 	} else {
 		const availabilityBadge = betaBadgeUrls.get(index.href);
@@ -323,7 +323,7 @@ async function handleLink(link: Link): Promise<Link> {
 		link.order = 0;
 	}
 
-	if (link.badge) {
+	if (link.badge !== undefined) {
 		link.badge = inferBadgeVariant(link.badge);
 	} else {
 		const availabilityBadge = betaBadgeUrls.get(link.href);
