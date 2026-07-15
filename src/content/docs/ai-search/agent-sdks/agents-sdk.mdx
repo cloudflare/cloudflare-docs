@@ -18,7 +18,7 @@ import {
 
 The [Cloudflare Agents SDK](/agents/) lets you build stateful AI agents that run on Workers. This guide builds a chat agent that provisions its own AI Search instance, indexes a document, and then searches that content with a tool before it answers.
 
-For the agent-side reference, refer to [AI Search as an agent tool](/agents/tools/ai-search/).
+This guide uses the recommended agent pattern, exposing AI Search's `search()` to the model as a tool. For more on this pattern, refer to [AI Search as an agent tool](/agents/tools/ai-search/).
 
 ## Prerequisites
 
@@ -109,7 +109,10 @@ const INSTANCE_ID = "knowledge-base";
 const SEED_DOC = `# Getting started
 AI Search indexes your content so an agent can retrieve it at query time.`;
 
+// AIChatAgent stores the conversation history and calls onChatMessage() once
+// for each user message.
 export class SearchAgent extends AIChatAgent {
+	// Guard so the one-time instance setup runs only once per running agent.
 	private ready = false;
 
 	// Create the agent's instance with hybrid search enabled, then seed it so
@@ -123,28 +126,41 @@ export class SearchAgent extends AIChatAgent {
 				id: INSTANCE_ID,
 				index_method: { vector: true, keyword: true },
 			});
-			// uploadAndPoll waits until the file is indexed and searchable.
-			await this.env.AI_SEARCH.get(INSTANCE_ID).items.uploadAndPoll(
+			// upload() queues the file; indexing runs in the background. Poll the
+			// item status until it is searchable so the first query has content.
+			const instance = this.env.AI_SEARCH.get(INSTANCE_ID);
+			const { id } = await instance.items.upload(
 				"getting-started.md",
 				SEED_DOC,
-				{ timeoutMs: 120_000 },
 			);
+			let info = await instance.items.get(id).info();
+			while (info.status === "queued" || info.status === "running") {
+				await new Promise((resolve) => setTimeout(resolve, 2_000));
+				info = await instance.items.get(id).info();
+			}
 		} catch {
 			// Instance already exists.
 		}
 		this.ready = true;
 	}
 
+	// Runs on every chat message: make sure the instance exists, then stream a
+	// tool-using response.
 	async onChatMessage() {
 		await this.ensureInstance();
 
+		// The agent exposes AI Search's search() as a tool instead of using AI
+		// Search's own chat model, so this model must support function calling to
+		// decide when to search and drive the tool calls.
 		const workersai = createWorkersAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+			model: workersai("@cf/zai-org/glm-5.2"),
 			system:
 				"You are a support assistant. Use search_knowledge_base to find " +
 				"relevant content before answering, and cite what you use.",
+			// this.messages is the stored chat history; convert it to the format
+			// the model expects.
 			messages: await convertToModelMessages(this.messages),
 			tools: {
 				search_knowledge_base: tool({
@@ -152,6 +168,8 @@ export class SearchAgent extends AIChatAgent {
 					inputSchema: z.object({
 						query: z.string().describe("The user's question or search terms"),
 					}),
+					// Hybrid search runs by default because the instance indexes
+					// both vectors and keywords.
 					execute: async ({ query }) => {
 						const instance = this.env.AI_SEARCH.get(INSTANCE_ID);
 						return await instance.search({
@@ -167,25 +185,27 @@ export class SearchAgent extends AIChatAgent {
 						title: z.string().describe("Short descriptive title"),
 						content: z.string().describe("The resolution to save"),
 					}),
+					// upload() returns as soon as the file is queued; indexing then
+					// finishes in the background.
 					execute: async ({ title, content }) => {
 						const instance = this.env.AI_SEARCH.get(INSTANCE_ID);
-						const item = await instance.items.uploadAndPoll(
-							`${title}.md`,
-							content,
-						);
+						const item = await instance.items.upload(`${title}.md`, content);
 						return { key: item.key, status: item.status };
 					},
 				}),
 			},
+			// Cap the tool-call loop so the agent cannot run tools indefinitely.
 			stopWhen: stepCountIs(5),
 		});
 
+		// Stream the reply, including any tool activity, back to the client.
 		return result.toUIMessageStreamResponse();
 	}
 }
 
 export default {
 	async fetch(request: Request, env: Env) {
+		// Route the request to the matching agent instance, keyed by the URL.
 		return (
 			(await routeAgentRequest(request, env)) ||
 			new Response("Not found", { status: 404 })
@@ -198,13 +218,15 @@ export default {
 
 `this.env.AI_SEARCH.get(INSTANCE_ID)` is synchronous and resolves lazily. It does not create the instance, so `ensureInstance` creates it first. To search several instances in one call, use a namespace-level search with `ai_search_options.instance_ids`. Refer to [Namespaces](/ai-search/concepts/namespaces/).
 
+This example uses `@cf/zai-org/glm-5.2`: streaming agents need a model that emits structured tool calls, or the tool never runs and the agent cannot search. Choose a Workers AI model that supports [function calling](/workers-ai/features/function-calling/).
+
 ## 5. How the tools work
 
 The `search_knowledge_base` tool calls `search()` on the instance. Because the instance indexes both vectors and keywords, retrieval uses hybrid search by default.
 
-The `save_resolution` tool calls `items.uploadAndPoll()`, which uploads a document to built-in storage and waits until indexing completes, so the content is searchable on the next query. Uploading a file with the same name overwrites and re-indexes it.
+The `save_resolution` tool calls `items.upload()`, which uploads a document to built-in storage and queues it for indexing. The call returns quickly, and the content becomes searchable once background indexing finishes. Uploading a file with the same name overwrites and re-indexes it.
 
-## 6. Run locally
+## 6. Test it locally
 
 Generate types and start the development server:
 
@@ -213,7 +235,14 @@ npx wrangler types
 npm run dev
 ```
 
-On the first message, the agent creates and seeds the instance, so the first response may take a few extra seconds while `uploadAndPoll` indexes the document.
+`AIChatAgent` speaks its chat protocol over a WebSocket, so drive it from a chat client rather than a plain `curl` request. The quickest way is to point a UI built with the Agents SDK [`useAgentChat`](/agents/communication-channels/chat/chat-agents/) hook at your local server.
+
+Send a message such as `How do I get started?`. On the first message, the agent creates and seeds the instance, so the first response can take a minute or two while the seed document indexes.
+
+You know the integration works when:
+
+- The `wrangler dev` logs show a request to `/agents/search-agent/<name>`, followed by the `search_knowledge_base` tool running before the reply.
+- The agent's answer is grounded in the seeded content and cites it, rather than answering generically.
 
 ## 7. Deploy
 

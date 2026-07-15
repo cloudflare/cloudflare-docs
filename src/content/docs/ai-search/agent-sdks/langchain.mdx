@@ -67,8 +67,11 @@ API_TOKEN = os.environ["CLOUDFLARE_API_TOKEN"]
 NAMESPACE = "default"
 INSTANCE_ID = "knowledge-base"
 
+# The SDK authenticates with this token; the account ID is passed on each call.
 client = Cloudflare(api_token=API_TOKEN)
 
+# create() fails if the instance already exists, so check for it with read()
+# first and only create it when read() raises NotFoundError.
 try:
     client.aisearch.namespaces.instances.read(
         INSTANCE_ID, account_id=ACCOUNT_ID, name=NAMESPACE
@@ -79,6 +82,7 @@ except NotFoundError:
         name=NAMESPACE,
         account_id=ACCOUNT_ID,
         id=INSTANCE_ID,
+        # Index both vectors and keywords to enable hybrid search.
         index_method={"vector": True, "keyword": True},
     )
     print(f"Created instance '{INSTANCE_ID}'.")
@@ -96,11 +100,13 @@ item = client.aisearch.namespaces.instances.items.upload(
     account_id=ACCOUNT_ID,
     name=NAMESPACE,
     file={
+        # (filename, file bytes, content type)
         "file": (
             "workers-ai.md",
             b"To configure Workers AI, add an [ai] binding and call env.AI.run().",
             "text/markdown",
         ),
+        # Block until indexing finishes so the file is searchable right away.
         "wait_for_completion": True,
     },
 )
@@ -122,13 +128,15 @@ retriever = CloudflareAISearchRetriever(
     api_token=API_TOKEN,
     instance_name=INSTANCE_ID,
     namespace=NAMESPACE,
-    retrieval_type="hybrid",
-    k=5,
+    retrieval_type="hybrid",  # query both the vector and keyword indexes
+    k=5,  # maximum number of results to return (capped at 50)
 )
 
+# invoke() runs a search and returns standard LangChain Documents.
 docs = retriever.invoke("How do I configure Workers AI?")
 
 for doc in docs:
+    # Each document carries its relevance score and source filename in metadata.
     print(doc.metadata["score"], doc.metadata["filename"])
     print(doc.page_content)
 ```
@@ -142,6 +150,8 @@ Wrap the retriever with `create_retriever_tool` to give an agent the ability to 
 ```python title="main.py"
 from langchain_core.tools import create_retriever_tool
 
+# create_retriever_tool wraps the retriever as a standard LangChain tool. The
+# name and description are what the agent's model sees when deciding to call it.
 search_tool = create_retriever_tool(
     retriever,
     name="cloudflare_ai_search",
@@ -155,7 +165,9 @@ print(search_tool.invoke({"query": "How do I configure Workers AI?"}))
 
 ## 7. Build a RAG chain
 
-To answer questions from the retrieved content, combine the retriever with a model. This example uses `ChatCloudflareWorkersAI`, which is included in the same package and reads a Workers AI token from `CF_AI_API_TOKEN`.
+To answer questions from the retrieved content, combine the retriever with a model. This example uses `ChatCloudflareWorkersAI`, which is included in the same package. Pass your account ID and token the same way you did for the retriever.
+
+Because this step calls [Workers AI](/workers-ai/) to generate the answer, the token you pass here also needs the **Workers AI** permission. Add it to the token you already created, or pass a separate token.
 
 ```python title="main.py"
 from langchain_cloudflare import ChatCloudflareWorkersAI
@@ -163,7 +175,11 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 
-llm = ChatCloudflareWorkersAI(model="@cf/meta/llama-3.3-70b-instruct-fp8-fast")
+llm = ChatCloudflareWorkersAI(
+    account_id=ACCOUNT_ID,
+    api_token=API_TOKEN,
+    model="@cf/zai-org/glm-5.2",
+)
 
 prompt = ChatPromptTemplate.from_template(
     "Answer the question using only the context below.\n\n"
@@ -172,10 +188,13 @@ prompt = ChatPromptTemplate.from_template(
 )
 
 
+# Join the retrieved documents into a single context string for the prompt.
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
 
+# LCEL chain: retrieve context and pass the question through, fill the prompt,
+# call the model, then parse the response down to a plain string.
 chain = (
     {"context": retriever | format_docs, "question": RunnablePassthrough()}
     | prompt
@@ -191,16 +210,20 @@ print(chain.invoke("How do I configure Workers AI?"))
 Inside a [Python Worker](/workers/languages/python/), pass a Worker binding instead of REST credentials. The binding path is asynchronous, so use `ainvoke`.
 
 ```python
+from workers import WorkerEntrypoint, Response
 from langchain_cloudflare import CloudflareAISearchRetriever
 
 
-async def on_fetch(request, env):
-    retriever = CloudflareAISearchRetriever(binding=env.MY_SEARCH)
-    docs = await retriever.ainvoke("How do I configure Workers AI?")
-    return Response.json({"matches": [doc.page_content for doc in docs]})
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Pass a Worker binding instead of REST credentials.
+        retriever = CloudflareAISearchRetriever(binding=self.env.MY_SEARCH)
+        # The binding path is asynchronous, so use ainvoke.
+        docs = await retriever.ainvoke("How do I configure Workers AI?")
+        return Response.json({"matches": [doc.page_content for doc in docs]})
 ```
 
-`env.MY_SEARCH` is a dedicated `ai_search` binding, not the Workers AI binding (`env.AI`). For a [namespace binding](/ai-search/concepts/namespaces/), pass `env.<NAMESPACE>.get("my-instance")`.
+`self.env.MY_SEARCH` is a dedicated `ai_search` binding, not the Workers AI binding (`self.env.AI`). For a [namespace binding](/ai-search/concepts/namespaces/), pass `self.env.<NAMESPACE>.get("my-instance")`.
 
 ## Next steps
 

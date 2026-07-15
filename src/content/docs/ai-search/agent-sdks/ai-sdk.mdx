@@ -114,23 +114,26 @@ async function ensureInstance(env: Env) {
 export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
+		// createAISearchNamespace adapts the binding to the AI SDK provider API.
 		const aiSearch = createAISearchNamespace({ binding: env.AI_SEARCH });
 
 		// Visit /setup once to create the instance and index a document.
 		if (url.pathname === "/setup") {
 			await ensureInstance(env);
 
-			// uploadAndPoll uploads to built-in storage and waits until the file
-			// is indexed. A new instance's first index can take longer than the
-			// 30-second default, so raise the timeout.
-			const item = await aiSearch
-				.get(INSTANCE_NAME)
-				.items.uploadAndPoll("caching.md", SAMPLE_DOC, {
-					timeoutMs: 120_000,
-					pollIntervalMs: 2_000,
-				});
+			const instance = aiSearch.get(INSTANCE_NAME);
 
-			return Response.json({ key: item.key, status: item.status });
+			// upload() queues the file and returns immediately. Indexing runs in
+			// the background, so poll the item's status until it is searchable.
+			const { id, key } = await instance.items.upload("caching.md", SAMPLE_DOC);
+
+			let info = await instance.items.get(id).info();
+			while (info.status === "queued" || info.status === "running") {
+				await new Promise((resolve) => setTimeout(resolve, 2_000));
+				info = await instance.items.get(id).info();
+			}
+
+			return Response.json({ key, status: info.status });
 		}
 
 		// Query the instance (see the next step).
@@ -154,15 +157,19 @@ Replace the query placeholder in your `fetch` handler with the following:
 ```ts
 const query = url.searchParams.get("q") ?? "How does caching work?";
 
+// chat() returns an AI SDK model that retrieves matching chunks and generates
+// a grounded answer in one call, so there is no separate search step.
 const { text, sources } = await generateText({
 	model: aiSearch.get(INSTANCE_NAME).chat({
 		ai_search_options: {
+			// "hybrid" ranks results from both the vector and keyword indexes.
 			retrieval: { retrieval_type: "hybrid", max_num_results: 5 },
 		},
 	}),
 	messages: [{ role: "user", content: query }],
 });
 
+// `sources` holds the retrieved chunks, so you can cite them alongside `text`.
 return Response.json({ text, sources });
 ```
 
@@ -177,11 +184,13 @@ For longer responses, use `streamText` instead of `generateText`. The stream sen
 <TypeScriptExample>
 
 ```ts
+// streamText returns right away; tokens stream in as they are generated.
 const result = streamText({
 	model: aiSearch.get(INSTANCE_NAME).chat(),
 	messages: [{ role: "user", content: query }],
 });
 
+// The retrieved chunks are sent first, then the generated text streams in.
 return result.toTextStreamResponse();
 ```
 
@@ -190,6 +199,8 @@ return result.toTextStreamResponse();
 ## 7. Search as a tool
 
 To let a model decide when to search — for example, in an agent loop — expose `instance.search()` as an AI SDK [tool](https://sdk.vercel.ai/docs/foundations/tools). The AI Search chat model does not call tools itself, so use a tool-capable model such as a [Workers AI](/workers-ai/) model for this pattern.
+
+When building an agent, prefer this tool-based pattern over passing `chat()` as the model: a tool-calling model decides when to retrieve and can combine search with other tools. For a complete agent, see the [Agents SDK guide](/ai-search/agent-sdks/agents-sdk/), and for the agent-side reference, refer to [AI Search as an agent tool](/agents/tools/ai-search/).
 
 Install the Workers AI provider and Zod:
 
@@ -216,10 +227,12 @@ import { generateText, tool, stepCountIs } from "ai";
 import { z } from "zod";
 
 const instance = aiSearch.get(INSTANCE_NAME);
+// The tool-caller must support function calling; the AI Search chat model does
+// not call tools itself.
 const workersai = createWorkersAI({ binding: env.AI });
 
 const { text } = await generateText({
-	model: workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+	model: workersai("@cf/zai-org/glm-5.2"),
 	messages: [{ role: "user", content: query }],
 	tools: {
 		search_knowledge_base: tool({
@@ -227,6 +240,7 @@ const { text } = await generateText({
 			inputSchema: z.object({
 				query: z.string().describe("The search query"),
 			}),
+			// The model decides when to call this; it searches the instance.
 			execute: async ({ query }) =>
 				instance.search({
 					query,
@@ -234,13 +248,16 @@ const { text } = await generateText({
 				}),
 		}),
 	},
+	// Cap the tool-call loop so the model cannot invoke tools indefinitely.
 	stopWhen: stepCountIs(5),
 });
 ```
 
 </TypeScriptExample>
 
-## 8. Develop locally and deploy
+## 8. Test it locally
+
+Before you deploy, confirm the whole flow works against your instance with `wrangler dev`, which proxies the remote AI Search binding.
 
 Start a local development server:
 
@@ -248,7 +265,36 @@ Start a local development server:
 npx wrangler dev
 ```
 
-Visit `/setup` once (usually at `localhost:8787/setup`) to create the instance and index the document, then query it at `/?q=your+search+terms`.
+First, index the sample document by visiting `/setup`:
+
+```sh
+curl http://localhost:8787/setup
+```
+
+The first `/setup` can take a minute or two while the document indexes. When it finishes, you get back the item key and a `completed` status:
+
+```json
+{ "key": "caching.md", "status": "completed" }
+```
+
+Then query the instance:
+
+```sh
+curl "http://localhost:8787/?q=How+does+caching+work%3F"
+```
+
+A working integration returns generated `text` grounded in your document, along with a `sources` array referencing the file it retrieved (fields trimmed):
+
+```json
+{
+	"text": "Cloudflare caches static assets at the edge...",
+	"sources": [{ "sourceType": "url", "url": "caching.md" }]
+}
+```
+
+If `sources` comes back empty, the document has not finished indexing yet. Run `/setup` again, then retry the query.
+
+## 9. Deploy
 
 Log in with your Cloudflare account:
 
