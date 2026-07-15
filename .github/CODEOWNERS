@@ -280,8 +280,10 @@ package.json @cloudflare/content-engineering
 
 # Privacy
 
-/src/content/docs/key-transparency/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/privacy-gateway/ @cloudflare/product-owners
+/src/content/docs/key-transparency/ @mgalicer @lschull @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/privacy-gateway/ @mgalicer @lschull @cloudflare/product-owners 
+/src/content/docs/privacy-proxy/ @mgalicer @lschull @cloudflare/product-owners
+/src/content/docs/privacy-pass/ @mgalicer @lschull @cloudflare/product-owners
 
 # Radar
 
