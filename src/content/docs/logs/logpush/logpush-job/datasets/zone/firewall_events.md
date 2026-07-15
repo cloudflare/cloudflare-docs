@@ -37,7 +37,7 @@ List of unsafe topic categories detected in the request by AI Security.
 
 Type: `string`
 
-The code of the first-class action the Cloudflare Firewall took on this request. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionclose</em> \| <em>challengesolved</em> \| <em>challengebypassed</em> \| <em>jschallengesolved</em> \| <em>jschallengebypassed</em> \| <em>bypass</em> \| <em>managedchallenge</em> \| <em>managedchallengenoninteractivesolved</em> \| <em>managedchallengeinteractivesolved</em> \| <em>managedchallengebypassed</em>.
+The code of the first-class action the Cloudflare Firewall took on this request. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionclose</em> \| <em>challengesolved</em> \| <em>challengebypassed</em> \| <em>jschallengesolved</em> \| <em>jschallengebypassed</em> \| <em>bypass</em> \| <em>managedchallenge</em> \| <em>managedchallengenoninteractivesolved</em> \| <em>managedchallengeinteractivesolved</em> \| <em>managedchallengebypassed</em> \| <em>precursorinterstitialpageissued</em> \| <em>precursorinterstitialpagebypassed</em> \| <em>precursorinterstitialpagesolved</em>.
 
 ## ClientASN
 
