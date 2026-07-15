@@ -54,6 +54,12 @@ Follow this guide to get started with Internal DNS.
 </ Example>
 </ Details>
 
+:::note[About authentication]
+Internal DNS uses the same authentication model as the rest of Cloudflare DNS. There is no separate role or special permission group for internal zones. You use standard DNS permissions scoped to the specific zones you want to manage.
+
+One important distinction: a zone-scoped token cannot create a zone because the zone does not exist yet to be scoped to. To create an internal zone via API, you need a token with **Zone > Zone > Edit** scoped to **All zones** or at the account level. After the zone exists, switch to a zone-scoped token for managing records and settings.
+:::
+
 ## 1. Set up your internal DNS zone
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
