@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="A loader Worker creates three Dynamic Workers. Each Dynamic Worker connects to its own tenant database through its own Hyperdrive configuration.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="A loader Worker creates three Dynamic Workers. Each Dynamic Worker connects to its tenant database through Hyperdrive.">
 	<defs>
 		<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
 			<path d="M0 0 L10 5 L0 10 z" fill="#595959" />
