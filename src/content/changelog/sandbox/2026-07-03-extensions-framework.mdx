@@ -1,44 +1,57 @@
 ---
-title: Sandbox SDK extensions framework
-description: Attach opt-in capabilities to your Sandbox subclass with the new extension framework. The code interpreter and Git client are now shipped as extensions.
+title: Build reusable Sandbox capabilities with extensions
+description: Package Sandbox workflows and specialized runtimes into reusable, opt-in APIs with the new extensions framework.
 products:
   - sandbox
 date: 2026-07-03
 ---
 
-The Sandbox SDK now has an **extension framework** that lets you attach opt-in capabilities to your `Sandbox` subclass instead of relying on features baked into the core SDK or container image. Extensions come in two flavors: SDK-only extensions that orchestrate existing container APIs from the Durable Object side, and sidecar extensions that ship a bundled runtime provisioned inside the container on first use.
+import { PackageManagers, TypeScriptExample } from "~/components";
 
-The framework also delivers on our previously announced [plan to move non-core features into helpers](/changelog/2026-06-09-deprecating-sandbox-sdk-features/). Two Cloudflare-authored extensions ship alongside the framework:
+Sandbox extensions let you turn repeated workflows into reusable, typed APIs. Instead of coordinating commands, files, and processes throughout your Worker, you can group that logic into a named capability and attach it to your `Sandbox` class.
 
-- **`@cloudflare/sandbox/interpreter`** — the Python and JavaScript code interpreter, now provisioned as a sidecar the first time you use it.
-- **`@cloudflare/sandbox/git`** — the Git client, driving `exec()` from the Durable Object side.
+For example, you can build extensions that:
 
-Attach them to your `Sandbox` subclass:
+- Prepare a repository and run project-specific checks.
+- Install tools and configure a development environment.
+- Run a language server, code interpreter, or other long-running service inside the container.
 
-```ts
+Your Worker calls each extension through its own namespace, such as `sandbox.git.checkout()` or `sandbox.interpreter.runCode()`. This keeps application code focused on what the sandbox should do, rather than each command required to do it. You can also reuse the extension across Sandbox applications.
+
+The framework supports lightweight extensions that coordinate existing Sandbox APIs. It also supports sidecar extensions with a dedicated process inside the container. Sidecars start when first used and do not require an exposed port or separate service.
+
+The code interpreter and Git client are the first Cloudflare-provided extensions. Attach only the capabilities your application needs:
+
+<TypeScriptExample>
+```
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withInterpreter } from "@cloudflare/sandbox/interpreter";
 import { withGit } from "@cloudflare/sandbox/git";
 
 export class Sandbox extends BaseSandbox<Env> {
-	interpreter = withInterpreter(this);
-	git = withGit(this);
+  interpreter = withInterpreter(this);
+  git = withGit(this);
 }
 ```
+</TypeScriptExample>
 
-And call them from a Worker as a nested namespace on the sandbox stub:
+You can then call each capability from your Worker:
 
-```ts
+<TypeScriptExample>
+```
+const context = await sandbox.interpreter.createCodeContext({
+  language: "python",
+});
 await sandbox.interpreter.runCode('print("hello")', { context });
+
 await sandbox.git.checkout("https://github.com/owner/repo.git", { depth: 1 });
 ```
+</TypeScriptExample>
 
-The extension framework, `withInterpreter()`, and `withGit()` are currently available in the [`@cloudflare/sandbox@next`](https://www.npmjs.com/package/@cloudflare/sandbox/v/next) prerelease of the SDK. Install it explicitly to try it today:
+The extension framework, `withInterpreter()`, and `withGit()` are available in the [`@cloudflare/sandbox@next`](https://www.npmjs.com/package/@cloudflare/sandbox/v/next) prerelease. Install this version explicitly:
 
-```sh
-npm install @cloudflare/sandbox@next
-```
+<PackageManagers pkg="@cloudflare/sandbox@next" />
 
-The `next` channel will become the default `latest` release in a future version. Note that on `next`, `sandbox.gitCheckout()` and the interpreter methods (`createCodeContext`, `runCode`, `runCodeStream`, `listCodeContexts`, `deleteCodeContext`) no longer exist on the base `Sandbox` class — attach the extension and, optionally, add a delegate method to preserve the previous flat API.
+The `next` channel will become the default `latest` release in a future version. In `next`, the Git and interpreter methods no longer exist directly on the base `Sandbox` class. Attach their extensions to use these capabilities.
 
-For the full authoring guide, examples, and migration notes, refer to the new [Extensions concept page](/sandbox/concepts/extensions/).
+For extension types, authoring examples, and migration guidance, refer to [Extensions](/sandbox/concepts/extensions/).

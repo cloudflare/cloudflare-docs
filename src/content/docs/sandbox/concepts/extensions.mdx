@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample, PackageManagers } from "~/components";
 
-The extension framework lets you attach opt-in capabilities to your `Sandbox` subclass instead of relying on features baked into the core SDK or container image. Extensions are how larger, optional features (such as the code interpreter and Git client) now ship in the Sandbox SDK.
+Extensions let you package Sandbox workflows into reusable, typed APIs. Attach an extension to your `Sandbox` class, then call it from your Worker through a named namespace such as `sandbox.git` or `sandbox.interpreter`.
 
 :::caution[Available in the `next` release only]
 The extension framework, the `withInterpreter()` extension, and the `withGit()` extension are only available in the [`@cloudflare/sandbox@next`](https://www.npmjs.com/package/@cloudflare/sandbox/v/next) prerelease of the SDK. Install it explicitly:
@@ -20,20 +20,26 @@ The extension framework, the `withInterpreter()` extension, and the `withGit()` 
 The `next` channel will become the default `latest` release in a future version. Until then, code samples on this page will not work against the current stable release.
 :::
 
-## What extensions are for
+## Why use extensions
 
-The base `Sandbox` class exposes a small, general-purpose surface: commands, files, processes, ports, and sessions. Extensions layer higher-level capabilities on top of that surface without bloating it:
+The base `Sandbox` class provides commands, files, processes, ports, and sessions. These APIs are useful building blocks, but an application often repeats the same sequence of operations.
 
-- **Keep the core lean.** You only pay for what you opt into. Extensions that are not attached are not shipped, provisioned, or executed.
-- **Isolate feature runtimes.** An extension can ship its own long-running process inside the container (a sidecar) without polluting the base container image, and without exposing extra ports.
-- **Encapsulate cross-layer logic.** An extension can drive existing container APIs from the Durable Object side, own its own container-side runtime, or do both.
-- **Provide a stable authoring pattern.** Every extension follows the same `SandboxExtension` + `withX(this)` shape, so features written by Cloudflare and features you write yourself look identical to a caller.
+An extension turns that sequence into one reusable capability. For example, an extension can:
 
-The code interpreter and Git client are the first two Cloudflare-authored extensions. Both were previously methods on the base `Sandbox` class and are now opt-in extensions instead.
+- Prepare a repository, install dependencies, and run project checks.
+- Configure a development environment for an AI agent.
+- Add a code interpreter or language server to a sandbox.
+- Provide a typed API for an internal command-line tool.
 
-## How extensions work
+Your application calls a high-level method such as `sandbox.project.validate()` instead of coordinating every command and file operation itself. This makes the workflow easier to reuse, test, and maintain.
 
-Every extension is a subclass of `SandboxExtension` from `@cloudflare/sandbox/extensions`, attached to a `Sandbox` subclass via a `withX(this)` factory:
+Extensions also keep optional features separate from the base SDK. Attach only the capabilities your application uses. If a capability needs a long-running process inside the container, its extension can provide and manage that process without exposing another network service.
+
+The code interpreter and Git client are the first two Cloudflare-provided extensions. You can use them directly or follow the same pattern to build an extension for your own workflow.
+
+## Attach an extension
+
+Each extension provides a `withX(this)` factory. Add the factory to your `Sandbox` subclass as a class field:
 
 <TypeScriptExample>
 ```
@@ -65,20 +71,27 @@ await sandbox.git.checkout("https://github.com/owner/repo.git", { depth: 1 });
 ```
 </TypeScriptExample>
 
-Under the hood, the SDK routes `sandbox.<extension>.<method>(...)` calls across the Worker to Durable Object boundary and dispatches them to the matching `SandboxExtension` instance. You can still add flatter delegate methods on your `Sandbox` subclass if you want to keep an existing API shape (`sandbox.runCode(...)`), but they are optional.
+The field name becomes the namespace that your Worker uses. In this example, the fields expose `sandbox.interpreter` and `sandbox.git`.
 
-Extension methods called from a Worker must return serializable data. You cannot hand back class instances that only make sense inside the Durable Object.
+The SDK routes calls such as `sandbox.<extension>.<method>(...)` to the matching extension on the Sandbox Durable Object. Extension methods must return serializable data because their results cross the Worker to Durable Object boundary.
 
-### Two flavors: SDK-only and sidecar
+You can add delegate methods if you prefer a flatter API. For example, a `runCode()` method on your `Sandbox` subclass can delegate to `this.interpreter.runCode()`.
 
-Extensions come in two flavors, depending on whether they need their own container-side runtime:
+## Choose an extension type
 
-- **SDK-only extensions** orchestrate existing container APIs (`commands`, `files`, `processes`, and so on) from the Durable Object side. Nothing extra runs inside the container. The Git extension works this way, because `git` is just shell commands: the extension calls `exec()` with the right arguments and parses the output.
-- **Sidecar extensions** ship a bundled runtime that runs as a supervised process inside the container. The SDK talks to it over a private channel, with no extra network ports and no HTTP. The code interpreter works this way, because its Python and JavaScript executors need a long-running process pool inside the container.
+Choose an extension type based on where its work runs.
 
-Sidecars are provisioned lazily the first time you call the extension, cached across sandboxes, and restarted automatically if they crash. You never manage the lifecycle yourself.
+### SDK-only extensions
 
-As a rule of thumb: if existing container APIs are enough to implement your feature, use an SDK-only extension. Reach for a sidecar only when you need a long-running process inside the container.
+Use an SDK-only extension when existing Sandbox APIs can perform the work. The extension coordinates commands, files, processes, or other APIs from the Durable Object. It does not add another process to the container.
+
+The Git extension uses this model. It runs Git commands through the Sandbox command API and returns structured results.
+
+### Sidecar extensions
+
+Use a sidecar extension when the capability needs a dedicated process inside the container. The extension bundles that process and communicates with it through a private channel. You do not need to expose a port or deploy another service.
+
+The code interpreter uses this model because its Python and JavaScript executors need a long-running process pool. The container provisions the sidecar when you first call it. The Sandbox SDK manages its lifecycle and restarts it after a failure.
 
 ## Author an extension
 
@@ -197,11 +210,13 @@ class Interpreter extends SandboxExtension {
 ```
 </TypeScriptExample>
 
-## Practical examples
+## Use Cloudflare-provided extensions
 
-### Code interpreter (sidecar extension)
+Cloudflare provides extensions for code interpretation and Git workflows. Attach either extension when your application needs that capability.
 
-The Python/JavaScript interpreter ships as `@cloudflare/sandbox/interpreter`. Its container-side runtime (the process pool and language executors) runs as a sidecar that is provisioned the first time you use it, so you only pay for it when you opt in.
+### Run Python and JavaScript
+
+Use `@cloudflare/sandbox/interpreter` when your application needs to run generated code, analyze data, or preserve variables between executions. The extension provides Python and JavaScript execution contexts with structured results.
 
 <TypeScriptExample>
 ```
@@ -233,9 +248,9 @@ const result = await sandbox.interpreter.runCode('print("hello")', {
 
 Python execution still requires the `-python` container image variant. `runCode()` resolves to an `ExecutionResult` (a plain, serializable object) so it can safely cross the Worker to Durable Object boundary.
 
-### Git client (SDK-only extension)
+### Work with Git repositories
 
-Git ships as `@cloudflare/sandbox/git`. Because `git` is just shell commands, no sidecar is needed: the extension calls `exec()` with the right arguments and parses the results.
+Use `@cloudflare/sandbox/git` when your application needs to clone a repository, change branches, or inspect branch information. The extension runs Git commands and returns structured results.
 
 <TypeScriptExample>
 ```
