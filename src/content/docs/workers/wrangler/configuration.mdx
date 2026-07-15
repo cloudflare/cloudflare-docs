@@ -134,7 +134,7 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
   - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
 - `addresses` <Type text="string[]" /> <MetaInfo text="optional" />
-  - A list of inbound email addresses that [Email Routing](/email-service/configuration/email-routing-addresses/#configure-rules-with-wrangler) routes to this Worker. Each entry is either a literal recipient address (for example, `support@example.com`) or a `*@domain` catch-all (for example, `*@example.com`). When you run `wrangler deploy`, each entry creates an Email Routing rule that routes mail to this Worker.
+  - A list of inbound email addresses that [Email Routing](/email-service/configuration/email-routing-addresses/#configure-rules-with-wrangler) routes to this Worker. Each entry is either a literal recipient address (for example, `support@example.com`) or a `*@domain` catch-all (for example, `*@example.com`). When you run `wrangler deploy`, Wrangler reconciles the Worker's managed Email Routing rules with this list.
 
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
