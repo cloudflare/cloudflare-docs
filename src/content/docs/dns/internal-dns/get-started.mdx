@@ -172,3 +172,9 @@ Use the rule settings object to define `resolve_dns_internally`, specifying `vie
 </TabItem> </Tabs>
 
 Once you add the Gateway resolver policy, it will be listed in the respective internal view under **Resolver policies referencing this view**.
+
+## Manage with Terraform
+
+You can also manage Internal DNS resources with the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). The patterns are identical to public DNS zones — the only difference is setting `type = "internal"` on the `cloudflare_zone` resource.
+
+Use a zone-scoped API token for day-to-day management and an account-level token for creating new zones. If your token is scoped to specific zones, remember to update it when you add new internal zones. For a complete working example, refer to the [Terraform provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
