@@ -55,7 +55,6 @@ If you are managing DNS views, you also need:
 
 - **Internal zones show up in the zone picker.** When creating a token, the zone dropdown lists both public and internal zones. Internal zones are labeled `[Internal zone]` so you can tell them apart.
 - **New zones need manual updates.** If you create a new internal zone later, your existing token will not automatically include it. You must edit the token and add the new zone. This is a temporary limitation. We are working with the IAM team on attribute-based permissions that will let you scope tokens to "all internal zones" automatically.
-- **Public zones are separate.** A token scoped to internal zones cannot manage public zones, and vice versa. If you need to manage both, scope the token to include both zone types or create separate tokens.
 
 ## Permission examples by task
 
