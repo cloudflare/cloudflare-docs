@@ -70,13 +70,17 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 		],
 	},
 
-	// Required: Enable SQLite storage for agents
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["MyAgent", "ChatAgent"],
+  // Provision storage for each agent class
+	"exports": {
+		"MyAgent": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+		"ChatAgent": {
+			"type": "durable-object",
+			"storage": "sqlite",
+		},
+	},
 
 	// AI binding (optional, for Workers AI)
 	"ai": {
@@ -160,31 +164,31 @@ When `name` and `class_name` differ, follow the pattern shown below:
 This is useful when you want environment variable-style naming (`COUNTER_DO`) but more descriptive class names (`CounterAgent`).
 :::
 
-#### `migrations`
+#### `exports`
 
-Migrations tell Cloudflare how to set up storage for your Durable Objects:
+The `exports` field declares each Agent class your Worker exports and the storage backend Cloudflare should use for it:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["MyAgent"],
+	"exports": {
+		"MyAgent": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 
 </WranglerConfig>
 
-| Field                | Description                                                  |
-| -------------------- | ------------------------------------------------------------ |
-| `tag`                | Version identifier (for example, "v1", "v2"). Must be unique |
-| `new_sqlite_classes` | Agent classes that use SQLite storage (state persistence)    |
-| `deleted_classes`    | Classes being removed                                        |
-| `renamed_classes`    | Classes being renamed                                        |
+| Field     | Description                                                       |
+| --------- | ----------------------------------------------------------------- |
+| `type`    | The kind of export. Always `"durable-object"` for an Agent.       |
+| `storage` | The storage backend. Use `"sqlite"` for new Agents (recommended). |
+
+For details on renaming, deleting, or transferring Agent classes, refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Existing Workers using the legacy `migrations` array continue to work — refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 
 #### `assets`
 
@@ -633,7 +637,7 @@ This:
 
 1. Bundles your code
 2. Uploads to Cloudflare
-3. Applies migrations
+3. Provisions the Agent's Durable Object namespace storage
 4. Makes it live on `*.workers.dev`
 
 ### Custom domain
@@ -709,7 +713,9 @@ Define environments in the Wrangler configuration file:
 	"durable_objects": {
 		"bindings": [{ "name": "MyAgent", "class_name": "MyAgent" }],
 	},
-	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["MyAgent"] }],
+	"exports": {
+		"MyAgent": { "type": "durable-object", "storage": "sqlite" },
+	},
 
 	// Environment overrides
 	"env": {
@@ -773,28 +779,21 @@ To explicitly separate:
 
 </WranglerConfig>
 
-## Migrations
+## Agent class lifecycle
 
-Migrations manage Durable Object storage schema changes.
+Each Agent maps to a Durable Object class. You manage the lifecycle of those classes (create, rename, delete, transfer) through the [`exports`](/durable-objects/reference/durable-objects-migrations/) field of your Wrangler configuration file.
 
 ### Adding a new agent
 
-Add to `new_sqlite_classes` in a new migration:
+Declare the new class in the `exports`:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["ExistingAgent"],
-		},
-		{
-			"tag": "v2",
-			"new_sqlite_classes": ["NewAgent"],
-		},
-	],
+	"exports": {
+		"NewAgent": { "type": "durable-object", "storage": "sqlite" },
+	},
 }
 ```
 
@@ -802,27 +801,20 @@ Add to `new_sqlite_classes` in a new migration:
 
 ### Renaming an agent class
 
-Use `renamed_classes`:
+Replace the entry for the old name with a `renamed` tombstone and add a live entry for the new name:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["OldName"],
+	"exports": {
+		"OldName": {
+			"type": "durable-object",
+			"state": "renamed",
+			"renamed_to": "NewName",
 		},
-		{
-			"tag": "v2",
-			"renamed_classes": [
-				{
-					"from": "OldName",
-					"to": "NewName",
-				},
-			],
-		},
-	],
+		"NewName": { "type": "durable-object", "storage": "sqlite" },
+	},
 }
 ```
 
@@ -830,28 +822,22 @@ Use `renamed_classes`:
 
 Also update:
 
-1. The class name in code
-2. The `class_name` in bindings
-3. Export statements
+1. The class name in code.
+2. The `class_name` in bindings.
+3. Export statements.
 
 ### Deleting an agent class
 
-Use `deleted_classes`:
+Replace the entry with a `deleted` tombstone:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["AgentToDelete", "AgentToKeep"],
-		},
-		{
-			"tag": "v2",
-			"deleted_classes": ["AgentToDelete"],
-		},
-	],
+	"exports": {
+		"AgentToKeep": { "type": "durable-object", "storage": "sqlite" },
+		"AgentToDelete": { "type": "durable-object", "state": "deleted" },
+	},
 }
 ```
 
@@ -863,29 +849,28 @@ This permanently deletes all data for that class.
 
 :::
 
-### Migration best practices
+### Class lifecycle best practices
 
-1. **Never modify existing migrations** - Always add new ones.
-2. **Use sequential tags** - v1, v2, v3 (or use dates: 2025-01-15).
-3. **Test locally first** - Migrations run on deploy.
-4. **Back up production data** - Before renaming or deleting.
+1. **Keep `exports` in sync with your code.** Every Agent class your Worker exports needs an entry.
+2. **Use tombstones, not silent removal.** When retiring a class, leave a `deleted` / `renamed` / `transferred` tombstone in `exports` so Cloudflare reconciles the change explicitly.
+3. **Test locally first.** Lifecycle changes apply on `wrangler deploy`.
+4. **Back up production data** before renaming or deleting.
+
+Existing Workers using the legacy `migrations` array continue to work — refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/) for the legacy reference, or [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow) to move to `exports`.
 
 ## Troubleshooting
 
 ### No such Durable Object class
 
-The class is not in migrations:
+The class is missing from `exports`. Declare the class and its storage:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["MissingClassName"],
-		},
-	],
+	"exports": {
+		"MissingClassName": { "type": "durable-object", "storage": "sqlite" },
+	},
 }
 ```
 
@@ -908,9 +893,9 @@ cat .env
 # Should show: MY_SECRET=value
 ```
 
-### Migration tag conflict
+### Migration tag conflict (legacy `migrations` only)
 
-Migration tags must be unique. If you see conflicts:
+If your Worker uses the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array, each entry must have a unique `tag`:
 
 <WranglerConfig>
 
@@ -939,6 +924,8 @@ Migration tags must be unique. If you see conflicts:
 ```
 
 </WranglerConfig>
+
+Consider converting to the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field.
 
 ## Next steps
 
