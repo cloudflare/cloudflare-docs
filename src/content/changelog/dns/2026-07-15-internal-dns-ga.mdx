@@ -17,10 +17,13 @@ date: 2026-07-15
 Setting up Internal DNS takes three steps: create a zone, create a view, and define a resolver policy.
 
 ```json
-POST /accounts/{account_id}/internal_dns/internal_zones
+POST /zones
 {
+  "account": {
+    "id": "<ACCOUNT_ID>"
+  },
   "name": "corp.internal",
-  "description": "Corporate internal hostnames"
+  "type": "internal"
 }
 ```
 
