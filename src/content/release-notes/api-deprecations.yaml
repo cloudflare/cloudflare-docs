@@ -22,14 +22,14 @@ entries:
 
       The response schema differs from the legacy Roles response:
 
-      - The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with read/write flags.
+      - The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with edit/read flags.
       - The `PermissionGroup` response replaces those with a `meta` object containing `label` and `scopes`. Individual permissions are not returned as part of the permission group.
-      - The `id` value is stable across both APIs. Integrations that key on `id` will not need to remap identifiers; integrations that parse the per-resource read/write flags inside the `permissions` object, or match roles by human-readable `name`, must be updated.
 
       Additional notes:
 
+      - Integrations migrating to the Permission Groups API must obtain Permission Group IDs from that API and use them in the Account Members API policies request shape. Integrations that persist legacy Role IDs will need to remap their assignments.
       - Both endpoints use the standard Cloudflare response envelope, so pagination and error-handling do not change.
-      - The Permission Groups endpoints accept API Token (Bearer) authentication in addition to API Key + Email. The legacy Roles endpoints accept only API Key + Email.
+      - The new API supports the [API Token](/fundamentals/api/get-started/create-token/) authorization scheme. The legacy Email + API Key authorization is provided for backwards compatibility.
 
   - publish_date: "2026-07-15"
     title: "Workers KV: Legacy Namespace Routes"

@@ -14,9 +14,9 @@ Review the [Permission Groups API](/api/resources/iam/subresources/permission_gr
 
 Highlights
 
-- The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with read/write flags.
+- Integrations migrating to the Permission Groups API must obtain Permission Group IDs from that API and use them in the Account Members API policies request shape. Integrations that persist legacy Role IDs will need to remap their assignments.
+- The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with edit/read flags.
 - The `PermissionGroup` response replaces those with a `meta` object containing `label` and `scopes`. Individual permissions are not returned as part of the permission group.
-- The new API now supports the [API Token](/fundamentals/api/get-started/create-token/) authorization scheme. The legacy Email + API Key authorization is provided for backwards compatibility.
-- The `id` value is stable across both APIs. Integrations that key on `id` will not need to remap identifiers; integrations that parse the per-resource read/write flags inside the `permissions` object, or match roles by human-readable `name`, must be updated.
+- The new API supports the [API Token](/fundamentals/api/get-started/create-token/) authorization scheme. The legacy Email + API Key authorization is provided for backwards compatibility.
 
 For more information, refer to [API deprecations](/fundamentals/api/reference/deprecations/).
