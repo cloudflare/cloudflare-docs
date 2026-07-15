@@ -1,0 +1,25 @@
+src/content/docs/agent-memory/api/http-api.mdx
+  513bb307537ae930 47,71,100,241-243,269,302-311,334,367-369
+src/content/docs/agent-memory/api/workers-api.mdx
+  513bb307537ae930 93-94,150-156
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "bd394341c1622024769cbc1413b32dfca05bd4a4",
+  "prompts": {
+    "513bb307537ae930": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_20adb18d2ffe55WXub9MsRQgim",
+        "model": "openai/gpt-5.5"
+      },
+      "human_author": "Phillip Jones",
+      "messages": [],
+      "total_additions": 30,
+      "total_deletions": 23,
+      "accepted_lines": 30,
+      "overriden_lines": 0
+    }
+  }
+}
