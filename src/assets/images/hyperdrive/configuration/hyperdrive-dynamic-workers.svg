@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="A loader Worker creates three Dynamic Workers. Each Dynamic Worker connects to its own tenant database through its own Hyperdrive configuration.">
+	<defs>
+		<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+			<path d="M0 0 L10 5 L0 10 z" fill="#595959" />
+		</marker>
+	</defs>
+
+	<!-- Connectors: loader Worker branches to each Dynamic Worker -->
+	<g stroke="#595959" stroke-width="1.5" fill="none">
+		<line x1="400" y1="87" x2="400" y2="120" />
+		<line x1="160" y1="120" x2="640" y2="120" />
+		<line x1="160" y1="120" x2="160" y2="151" marker-end="url(#arrow)" />
+		<line x1="400" y1="120" x2="400" y2="151" marker-end="url(#arrow)" />
+		<line x1="640" y1="120" x2="640" y2="151" marker-end="url(#arrow)" />
+
+		<!-- Each Dynamic Worker connects through Hyperdrive -->
+		<line x1="160" y1="207" x2="160" y2="271" marker-end="url(#arrow)" />
+		<line x1="400" y1="207" x2="400" y2="271" marker-end="url(#arrow)" />
+		<line x1="640" y1="207" x2="640" y2="271" marker-end="url(#arrow)" />
+
+		<!-- Each Hyperdrive reaches its own tenant database -->
+		<line x1="160" y1="327" x2="160" y2="391" marker-end="url(#arrow)" />
+		<line x1="400" y1="327" x2="400" y2="391" marker-end="url(#arrow)" />
+		<line x1="640" y1="327" x2="640" y2="391" marker-end="url(#arrow)" />
+	</g>
+
+	<!-- Loader Worker -->
+	<g>
+		<rect x="320" y="33" width="160" height="54" rx="8" fill="#fbe8d3" stroke="#f6821f" stroke-width="1.5" />
+		<text x="400" y="65" text-anchor="middle" font-size="15" font-weight="600" fill="#1d1d1d">Loader Worker</text>
+	</g>
+
+	<!-- Dynamic Workers -->
+	<g fill="#fbe8d3" stroke="#f6821f" stroke-width="1.5">
+		<rect x="80" y="153" width="160" height="54" rx="8" />
+		<rect x="320" y="153" width="160" height="54" rx="8" />
+		<rect x="560" y="153" width="160" height="54" rx="8" />
+	</g>
+	<g text-anchor="middle" font-size="14" fill="#1d1d1d">
+		<text x="160" y="185">Dynamic Worker A</text>
+		<text x="400" y="185">Dynamic Worker B</text>
+		<text x="640" y="185">Dynamic Worker C</text>
+	</g>
+
+	<!-- Hyperdrive -->
+	<g fill="#c5ebf5" stroke="#0055dc" stroke-width="1.5">
+		<rect x="80" y="273" width="160" height="54" rx="8" />
+		<rect x="320" y="273" width="160" height="54" rx="8" />
+		<rect x="560" y="273" width="160" height="54" rx="8" />
+	</g>
+	<g text-anchor="middle" font-size="14" fill="#1d1d1d">
+		<text x="160" y="305">Hyperdrive</text>
+		<text x="400" y="305">Hyperdrive</text>
+		<text x="640" y="305">Hyperdrive</text>
+	</g>
+
+	<!-- Tenant databases -->
+	<g fill="#ededed" stroke="#595959" stroke-width="1.5">
+		<rect x="80" y="393" width="160" height="54" rx="8" />
+		<rect x="320" y="393" width="160" height="54" rx="8" />
+		<rect x="560" y="393" width="160" height="54" rx="8" />
+	</g>
+	<g text-anchor="middle" font-size="14" fill="#1d1d1d">
+		<text x="160" y="425">Tenant database A</text>
+		<text x="400" y="425">Tenant database B</text>
+		<text x="640" y="425">Tenant database C</text>
+	</g>
+</svg>
