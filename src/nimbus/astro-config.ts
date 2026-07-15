@@ -80,11 +80,13 @@ const nimbusConfig = defineNimbusConfig({
 	editPattern:
 		"https://github.com/cloudflare/cloudflare-docs/edit/production/{path}",
 	socialImageAlt: "Cloudflare documentation",
-	// Search is Algolia DocSearch (wired in E4); Pagefind off.
-	search: false,
+	// "custom" renders the search UI slot but skips the built-in Pagefind index;
+	// Nimbus mounts Algolia DocSearch instead (see ui/search/DocSearch.astro).
+	search: { provider: "custom" },
 	sidebar: {
 		items: sidebarItems,
 		overviewLabel: "Overview",
+		indexDisplay: "overview-leaf",
 		scope: "section",
 		isolate: { boundaries: ["learning-paths/*"] },
 		defaultCollapsed: true,

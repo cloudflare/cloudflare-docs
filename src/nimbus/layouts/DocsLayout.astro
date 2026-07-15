@@ -37,12 +37,8 @@ type Props = DocsPageProps & {
   styleGuide?: { component: string };
 };
 
-const { title, description, summary, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], searchable, noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true, styleGuide } = Astro.props;
+const { title, description, summary, sidebar, headings, breadcrumbs, prevNext, mode = "doc", banner, head = [], noindex, markdownUrl, socialImage, lastUpdated, editUrl, draft, audience, collection, entryId, wide = false, hideTitle = false, meta, feedback = true, styleGuide } = Astro.props;
 
-// `searchable` derives from `noindex` when omitted: a non-crawlable page is
-// by default not in the site search either. Explicit `searchable: true`
-// overrides for the edge case of "no search engines, yes internal search."
-const effectiveSearchable = searchable ?? !noindex;
 const isCustom = mode === "custom";
 
 // `sidebar: false` / `tableOfContents: false` in frontmatter come through
@@ -50,38 +46,12 @@ const isCustom = mode === "custom";
 // per-column suppression — rail, mobile dialog, header menu button.
 const showSidebar = sidebar !== false;
 
-// Versioning P3: per-page status drives Pagefind faceting, deprecation
-// banner, and the data-pagefind-ignore exclusion for hidden versions.
+// Per-page status drives the deprecation banner and version alternates below.
 const versionStatus = collection ? await getVersionStatus(collection) : null;
 const versionAlternates = collection && entryId
   ? await getVersionAlternates(collection, entryId)
   : null;
 const currentSiblingUrl = versionAlternates?.canonical?.url ?? null;
-
-// Page-body attribute resolution:
-//   - If the user opted out via `searchable: false` (or `noindex: true`
-//     with no explicit override) → ignore.
-//   - If the page is in a hidden version → ignore unconditionally
-//     (hidden takes precedence; you can't index hidden content even
-//     if the page frontmatter says searchable=true).
-//   - Otherwise → mark as a Pagefind body, plus emit per-version and
-//     per-status filters so the search UI can scope by them.
-const pagefindAttrs: Record<string, string> = {};
-if (!effectiveSearchable || versionStatus?.isHidden) {
-  pagefindAttrs["data-pagefind-ignore"] = "";
-} else {
-  pagefindAttrs["data-pagefind-body"] = "";
-  if (versionStatus) {
-    pagefindAttrs["data-pagefind-filter"] = `version:${versionStatus.version}`;
-    if (versionStatus.isDeprecated) {
-      // Pagefind supports multiple filter attributes on the same element
-      // via `data-pagefind-filter` repeated as a comma-separated list in
-      // the value. The status filter pairs with the version filter so a
-      // search UI can offer "exclude deprecated" as a default toggle.
-      pagefindAttrs["data-pagefind-filter"] += `, status:deprecated`;
-    }
-  }
-}
 
 // Sidebar header above the filter — an "all products" button plus the
 // current product title. The rail title can diverge from the breadcrumb
@@ -129,7 +99,7 @@ const showFeedback = feedback !== false && !isCustom;
       <div class="flex-1 mx-auto w-full flex flex-col">
         <div class="flex flex-1">
           {showSidebar && (
-            <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
+            <aside id="desktop-sidebar" data-nb-desktop-sidebar class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 max-h-[calc(100vh-3.5rem)] flex-col overflow-y-auto relative">
               {hasSidebar ? (
                 <div data-sidebar-home class="flex-1">
                   <div data-shared-sidebar-nav class="flex-1 pb-12 max-lg:pb-8">
@@ -235,7 +205,7 @@ const showFeedback = feedback !== false && !isCustom;
               )}
               {banner && <Banner content={banner.content} type={banner.type} dismissible={banner.dismissible} />}
               <Breadcrumbs items={breadcrumbItems} class="pb-2" />
-              <div id="_top" {...pagefindAttrs}>
+              <div id="_top">
                 {hasPageTitle ? (
                   <slot name="page-title" />
                 ) : hideTitle ? null : (
@@ -252,7 +222,7 @@ const showFeedback = feedback !== false && !isCustom;
                     )}
                     {/* `description` is meta-only (head tags via BaseLayout), matching
                         upstream cloudflare-docs which never renders it on the page. */}
-                    <PageActions markdownUrl={markdownUrl} lastUpdated={lastUpdated} class="mt-3" />
+                    <PageActions lastUpdated={lastUpdated} class="mt-3" />
                     {(markdownUrl || audience === "human") && (
                       audience === "human" ? (
                         <div class="mt-3 mb-6 flex items-center gap-3" role="none">
@@ -288,7 +258,7 @@ const showFeedback = feedback !== false && !isCustom;
           </main>
 
           {headings !== false && (
-            <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
+            <aside data-nb-toc-scroll-host class="hidden xl:block w-(--nb-toc-width) shrink-0 sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
               <div class="pt-6 pb-8 pl-8 pr-6">
                 {hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
                 {(showFeedback || showActions) && (
@@ -301,7 +271,7 @@ const showFeedback = feedback !== false && !isCustom;
             </aside>
           )}
             </div>
-            <Footer class="mt-16" />
+            <Footer class:list={["mt-16", headings !== false && "xl:mr-(--nb-toc-width)"]} envelope="docs" wide={wide} />
           </div>
         </div>
       </div>

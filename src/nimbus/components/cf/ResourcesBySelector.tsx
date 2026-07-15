@@ -328,7 +328,7 @@ export default function ResourcesBySelector({
 	return (
 		<div className={filterPlacement === "left" ? "md:grid md:grid-cols-[208px_1fr] md:gap-10" : ""}>
 			{filterPlacement === "left" && filters && (
-				<aside className="hidden md:block md:sticky md:top-20 md:self-start">
+				<aside className="hidden md:block">
 					{/* Search */}
 					<div className="relative mb-6">
 						<IconSearch className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
