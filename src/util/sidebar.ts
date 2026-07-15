@@ -32,6 +32,9 @@ for (const dirEntry of directory) {
 	}
 }
 
+// URLs that have gone GA but still have "beta" in external availability data
+const suppressAutoBadge = new Set(["/dns/internal-dns/"]);
+
 export async function getSidebar(context: AstroGlobal) {
 	const pathname = context.url.pathname;
 	const segments = pathname.split("/").filter(Boolean);
@@ -247,7 +250,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
 	} else {
 		const availabilityBadge = betaBadgeUrls.get(index.href);
-		if (availabilityBadge) {
+		if (availabilityBadge && !suppressAutoBadge.has(index.href)) {
 			group.badge = availabilityBadge;
 		}
 	}
