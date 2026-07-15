@@ -133,11 +133,12 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 - `keep_vars` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
-- `migrations` <Type text="object[]" /> <MetaInfo text="optional" />
-  - When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/).
-
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
+
+- `dependencies_instrumentation` <Type text="object" /> <MetaInfo text="optional" />
+  - Configures npm package dependency instrumentation when deploying or uploading a Worker version. Defaults to enabled.
+  - `enabled` <Type text="boolean" /> — Whether Wrangler should collect and send npm package dependency metadata (package names and versions). Defaults to `true`.
 
 - `site` <Type text="object" /> <MetaInfo text="optional deprecated" />
   - See the [Workers Sites](#workers-sites) section below for more information. Cloudflare Pages and Workers Assets is preferred over this approach.
@@ -173,7 +174,7 @@ The `main` key is optional for assets-only Workers.
   - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
 
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/configuration/previews).
+  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/versions-and-deployments/preview-urls/).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
@@ -237,8 +238,11 @@ The `main` key is optional for assets-only Workers.
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
+* `exports` <Type text="object"/> <MetaInfo text="optional"/>
+  - Declares the Durable Object classes this Worker exports and their lifecycle state (`created`, `deleted`, `renamed`, `transferred`, `expecting-transfer`). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Mutually exclusive with `migrations`.
+
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
-  - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#migration-wrangler-configuration).
+  - Legacy imperative configuration that maps a Durable Object from a class name to a runtime state. For new Workers, prefer [`exports`](/durable-objects/reference/durable-objects-migrations/). Refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 
 * `placement` <Type text="object"/> <MetaInfo text="optional"/>
   - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/placement/).
@@ -668,21 +672,87 @@ Example:
 
 </WranglerConfig>
 
+#### Exports
+
+The `exports` field declares the Durable Object classes this Worker exports and their lifecycle state. Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/).
+
+Each entry in `exports` is keyed by Durable Object class name. The fields on each entry are:
+
+- `type` <Type text="string" /> <MetaInfo text="required" />
+  - For Durable Object class entries, set this to `"durable-object"`.
+
+- `state` <Type text="string" /> <MetaInfo text="optional" />
+  - The lifecycle state. One of `"created"` (the default — a live class), `"deleted"`, `"renamed"`, `"transferred"`, or `"expecting-transfer"`.
+
+- `storage` <Type text="string" /> <MetaInfo text="conditional" />
+  - Required when `state` is `"created"` or `"expecting-transfer"`. One of `"sqlite"` (recommended; required for new namespaces) or `"legacy-kv"` (only for existing key-value-backed namespaces).
+
+- `renamed_to` <Type text="string" /> <MetaInfo text="conditional" />
+  - Required when `state` is `"renamed"`. The destination class name, which must also appear as a live entry in the same `exports` map.
+
+- `transferred_to` <Type text="string" /> <MetaInfo text="conditional" />
+  - Required when `state` is `"transferred"`. The name of the target Worker that will receive the namespace.
+
+- `transfer_from` <Type text="string" /> <MetaInfo text="conditional" />
+  - Required when `state` is `"expecting-transfer"`. The name of the source Worker the namespace is being transferred from.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"exports": {
+		"MyDurableObject": {
+			"type": "durable-object",
+			"storage": "sqlite",
+		},
+		"OldClass": {
+			"type": "durable-object",
+			"state": "deleted",
+		},
+		"OldName": {
+			"type": "durable-object",
+			"state": "renamed",
+			"renamed_to": "NewName",
+		},
+		"NewName": {
+			"type": "durable-object",
+			"storage": "sqlite",
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/).
+:::note
+
+`migrations` is the legacy imperative configuration for managing Durable Object class lifecycle. For new Workers, prefer the declarative [`exports`](#exports) field. `migrations` and `exports` are mutually exclusive.
+
+:::
+
+When making changes to your Durable Object classes on a Worker that uses the legacy `migrations` array, you must perform a migration. Refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 
 - `tag` <Type text="string" /> <MetaInfo text="required" />
   - A unique identifier for this migration.
 
 - `new_sqlite_classes` <Type text="string[]" /> <MetaInfo text="optional" />
-  - The new Durable Objects being defined.
+  - New Durable Object classes being defined with the SQLite storage backend.
+
+- `new_classes` <Type text="string[]" /> <MetaInfo text="optional" />
+  - New Durable Object classes being defined with the legacy key-value storage backend.
 
 - `renamed_classes` <Type text="{from: string, to: string}[]" /> <MetaInfo text="optional" />
-  - The Durable Objects being renamed.
+  - The Durable Object classes being renamed.
 
 - `deleted_classes` <Type text="string[]" /> <MetaInfo text="optional" />
-  - The Durable Objects being removed.
+  - The Durable Object classes being removed.
+
+- `transferred_classes` <Type text="{from: string, from_script: string, to: string}[]" /> <MetaInfo text="optional" />
+  - The Durable Object classes being transferred from another Worker.
 
 Example:
 
@@ -1295,7 +1365,7 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
-    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, and Amazon ECR. For more information, refer to [Image Management](/containers/platform-details/image-management/).
+    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/platform-details/image-management/).
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
@@ -1881,7 +1951,12 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-  	- dist - index.js - wrangler.jsonc - .wrangler - deploy - config.json
+		- dist/
+			- index.js
+			- wrangler.jsonc
+		- .wrangler/
+			- deploy/
+				- config.json
   </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:

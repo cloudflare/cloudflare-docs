@@ -10,7 +10,7 @@ products:
 
 import { Tabs, TabItem, Steps } from "~/components";
 
-[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) reads its endpoint and credentials from environment variables. This configuration sends requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/), authenticated with your Cloudflare gateway token. The Anthropic endpoint exposes the same `/v1/messages` API that Claude Code expects. With [Unified Billing](/ai-gateway/features/unified-billing/), Cloudflare pays the provider and bills you, so you do not need an Anthropic API key.
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) reads its endpoint and credentials from environment variables. This configuration sends requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/), authenticated with your Cloudflare gateway token. The Anthropic endpoint exposes the same `/v1/messages` API that Claude Code expects. When AI Gateway supplies the Anthropic credentials for you — using either an Anthropic API key you [store as a provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) or [Unified Billing](/ai-gateway/features/unified-billing/) credits — the `ANTHROPIC_API_KEY` that Claude Code requires can be any placeholder value.
 
 ## Prerequisites
 
@@ -19,12 +19,12 @@ Before you start, you need:
 - An [authenticated gateway](/ai-gateway/configuration/authentication/) and its [gateway token](/ai-gateway/configuration/authentication/#setting-up-authenticated-gateway-using-the-dashboard). The gateway token must have `Run` permissions.
 - Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 - Credentials for the provider you route to:
-  - **Anthropic**: [Unified Billing](/ai-gateway/features/unified-billing/) credits loaded on your Cloudflare account. No Anthropic API key is required.
+  - **Anthropic**: Either [Unified Billing](/ai-gateway/features/unified-billing/) credits loaded on your Cloudflare account (Cloudflare bills you), or your own Anthropic API key (Anthropic bills you). You can provide your own key either by storing it in AI Gateway as a [provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) or by passing it directly in `ANTHROPIC_API_KEY`.
   - **Amazon Bedrock** or **Google Vertex AI**: your provider credentials stored in AI Gateway as a [provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/).
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup) installed and updated to the latest version.
 
 :::note
-The `cf-aig-authorization` header is what authenticates your request to AI Gateway. For the Anthropic flow, `ANTHROPIC_API_KEY` is set to the same gateway token only because Claude Code requires the variable to be set — it is not an Anthropic API key. With [Unified Billing](/ai-gateway/features/unified-billing/), Cloudflare bills you for model usage, and AI Gateway provides observability, caching, and rate limiting for the traffic. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
+The `cf-aig-authorization` header is what authenticates your request to AI Gateway. When AI Gateway already holds the Anthropic credentials — through [Unified Billing](/ai-gateway/features/unified-billing/) or a [stored provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) — the `ANTHROPIC_API_KEY` value is ignored. Claude Code still requires the variable to be set, so you can set it to any value (this example reuses the gateway token). Otherwise, set `ANTHROPIC_API_KEY` to your own Anthropic API key and AI Gateway forwards it to Anthropic. AI Gateway provides observability, caching, and rate limiting for the traffic either way. For details on where Claude Code reads credentials from, refer to [Anthropic's authentication documentation](https://docs.anthropic.com/en/docs/claude-code/iam#credential-management).
 :::
 
 <Steps>

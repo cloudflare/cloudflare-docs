@@ -1,0 +1,30 @@
+---
+/**
+ * DateRail — the date marker on the timeline. Renders the full date
+ * ("Jun 12, 2026"); positioning is handled by the parent .nb-cl-entry
+ * (see ChangelogFeed). The year is inline so the feed needs no year dividers.
+ *
+ * Design: Nimbus changelog feature (registry/features/changelog.md, 5b).
+ */
+interface Props {
+  date: Date;
+}
+
+const { date } = Astro.props;
+const iso = date.toISOString().slice(0, 10);
+const label = date.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+---
+
+<div class="contents">
+  <time
+    datetime={iso}
+    class="mb-2 block font-mono text-[0.8125rem] leading-[1.1] font-medium tabular-nums whitespace-nowrap text-muted-foreground lg:absolute lg:top-[var(--node-y)] lg:right-[calc(100%+1.75rem)] lg:mb-0 lg:w-[var(--date-w)] lg:-translate-y-1/2 lg:text-right"
+    >{label}</time
+  >
+  <span class="nb-cl-dot" aria-hidden="true"></span>
+</div>

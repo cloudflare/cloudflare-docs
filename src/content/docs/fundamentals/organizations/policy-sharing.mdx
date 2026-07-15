@@ -1,0 +1,102 @@
+---
+pcx_content_type: how-to
+title: Policy sharing
+description: Share WAF and Gateway policies across accounts in your Cloudflare Organization.
+sidebar:
+  order: 5
+products:
+  - fundamentals
+---
+
+:::note
+
+Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
+
+:::
+
+Organizations allows you to create security policies in one account and share them across other accounts in your Organization. This ensures consistent security posture across all accounts without manually duplicating configurations.
+
+Policy sharing works the same way for both [Enterprise](/fundamentals/organizations/for-enterprise/) and [MSSP/Distributor](/fundamentals/organizations/for-mssp-distributors/) Organizations.
+
+In addition to WAF and Gateway policies, Organizations supports [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/), which lets you configure a single identity provider (such as Okta or Entra ID) in one account and share it across all accounts in your Organization. Shared IdP connections are read-only in recipient accounts and are automatically provisioned or removed as accounts join or leave the Organization.
+
+## Prerequisites
+
+Policy sharing requires the appropriate product entitlements on the accounts involved. Organizations does not grant access to WAF or Gateway features — your accounts must already have the required SKUs.
+
+- **WAF policy sharing** requires Enterprise WAF entitlements on both the source and destination accounts.
+- **Gateway policy sharing** requires Zero Trust Gateway entitlements on both the source and destination accounts.
+
+## WAF policy sharing
+
+Create WAF custom rulesets in one account and share them to other accounts within your Organization.
+
+### How it works
+
+1. Create a WAF custom ruleset in a **source account** — this is the account where you author and manage the rules.
+2. Share the ruleset to one or more **destination accounts** within your Organization.
+3. The shared ruleset appears in the destination accounts as a **read-only** policy.
+4. Changes made to the ruleset in the source account automatically propagate to all destination accounts.
+
+### Key behaviors
+
+- **Read-only in destination accounts**: Shared WAF policies cannot be edited in the receiving accounts. To modify the rules, update them in the source account.
+- **Source account owns the policy**: If the source account is removed from the Organization, the shared policy is removed from all destination accounts.
+- **No cross-Organization sharing**: Policies can only be shared within a single Organization. You cannot share policies between different Organizations.
+- **Multiple rulesets**: You can share multiple WAF custom rulesets from the same or different source accounts.
+
+### Share a WAF custom ruleset
+
+1. In the source account, go to **Security** > **WAF** > **Custom rules**.
+2. Create or select a custom ruleset.
+3. Select **Share to Organization**.
+4. Choose the destination accounts.
+5. Select **Share**.
+
+The shared ruleset now appears in the destination accounts under their WAF custom rules.
+
+## Gateway policy sharing
+
+Share Zero Trust Gateway policies across accounts in your Organization. Gateway policy sharing supports the following policy types:
+
+- **DNS policies** — Filter and block DNS queries.
+- **Network policies** — Control network-level traffic.
+- **HTTP policies** — Inspect and filter HTTP traffic.
+- **Resolver policies** — Customize DNS resolution behavior.
+
+### How it works
+
+1. Create a Gateway policy in a **source account**.
+2. Share the policy to one or more **destination accounts** within your Organization.
+3. The shared policy appears in the destination accounts as a **read-only** policy.
+4. Changes made to the policy in the source account automatically propagate to all destination accounts.
+
+### Key behaviors
+
+- **Read-only in destination accounts**: Shared Gateway policies cannot be edited in the receiving accounts. To modify the policy, update it in the source account.
+- **Source account owns the policy**: If the source account is removed from the Organization, the shared policy is removed from all destination accounts.
+- **All Gateway policy types supported**: DNS, Network, HTTP, and Resolver policies can all be shared.
+- **Zero Trust seat requirements**: Destination accounts must have their own Zero Trust seats and Gateway entitlements.
+
+## Manage shared policies
+
+### View shared policies
+
+From the Organization overview, you can see which policies are shared and to which accounts. Shared policies are marked with a sharing indicator in the destination account's policy list.
+
+### Remove a shared policy
+
+To stop sharing a policy with a destination account:
+
+1. In the source account, go to the shared policy.
+2. Select **Manage sharing**.
+3. Remove the destination account from the sharing list.
+
+The policy is immediately removed from the destination account.
+
+### Best practices
+
+- **Centralize policy authoring**: Designate one or two accounts as your policy source accounts. This simplifies management and ensures consistency.
+- **Use descriptive names**: Name shared policies clearly (for example, "Org-Wide OWASP Rules" or "Global DNS Block List") so destination account admins understand what the policy does.
+- **Test before sharing**: Validate policies in the source account before sharing to all destination accounts to avoid unintended blocks or rule conflicts.
+- **Monitor shared policy coverage**: Regularly review which accounts have shared policies applied to ensure no accounts are missing critical security rules.

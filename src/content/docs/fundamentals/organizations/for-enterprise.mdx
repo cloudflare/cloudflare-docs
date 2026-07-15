@@ -1,0 +1,237 @@
+---
+pcx_content_type: how-to
+title: Organizations for Enterprise
+description: Set up and manage an Enterprise Organization to manage multiple Cloudflare accounts from a single dashboard.
+sidebar:
+  order: 2
+products:
+  - fundamentals
+---
+
+:::note
+
+Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
+
+:::
+
+Organizations provides a single-tier structure for Enterprise customers to manage multiple Cloudflare accounts from one unified dashboard.
+
+## Who is this for?
+
+Organizations is designed for **Enterprise customers of any size** who manage multiple Cloudflare accounts. Whether you have 5 accounts or 500, Organizations helps you manage them from one dashboard.
+
+Common use cases:
+- Multi-brand companies managing separate accounts per brand
+- Regional operations with accounts per geography
+- Business units or subsidiaries with independent accounts
+- Development workflows with separate accounts per environment
+- Growing companies consolidating account management
+
+Looking for MSSP (Managed Security Service Provider) or Distributor documentation? Refer to [Organizations for MSSP and Distributors](/fundamentals/organizations/for-mssp-distributors/).
+
+## Hierarchy structure
+
+Enterprise Organizations use a **single-tier structure**:
+
+```
+Organization
+├── Account 1
+│   ├── Zone A
+│   └── Zone B
+├── Account 2
+│   ├── Zone C
+│   └── Zone D
+└── Account 3
+    └── Zone E
+```
+
+**Key characteristics:**
+- One Organization contains multiple accounts
+- Each account can contain multiple zones
+- All accounts are at the same level (no sub-organizations)
+- Organization members have [implicit access](#implicit-access) to all accounts
+- Maximum: **500 accounts** and **5,000 zones** per Organization
+
+## Example: Company A
+
+**Company A** is a SaaS company with 12 Cloudflare accounts:
+- 3 accounts for different product lines (Product Alpha, Product Beta, Product Gamma)
+- 3 environments per product (Development, Staging, Production)
+- Each account manages its own zones and configurations
+
+**Before Organizations:**
+- Security team manually copies WAF rules to all 12 accounts
+- Admins switch between accounts individually
+- No unified view of traffic or security events
+- Each new admin needs explicit access to all 12 accounts
+
+**With Organizations:**
+- Create one Organization containing all 12 accounts
+- Security team creates WAF rules once, shares to all production accounts
+- Admins see all accounts in one dashboard with the enhanced account switcher
+- View aggregate HTTP analytics across all accounts
+- New Organization members automatically get access to all 12 accounts
+- Use tags to organize accounts by product line and environment
+
+## Set up your Organization
+
+### Prerequisites
+
+Before you create an Organization:
+
+- Your user must have Super Admin role access to an account with an Enterprise plan.
+- You (the Organization creator) must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on your Cloudflare user account. This is a per-user requirement — 2FA/SSO is not an account-level setting.
+- You must be a Super Administrator on the accounts you want to assign. You can add accounts of any plan type (Enterprise, PAYGO, or Free).
+- Each Organization supports a maximum of **500 accounts** and **5,000 zones**. Refer to [Limitations](/fundamentals/organizations/limitations/) for details.
+- You may only create a single Organization. You, or another member of your company, must not have already created an Organization.
+- Your accounts must not already belong to another Organization.
+
+### Create an Organization
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select **Organizations**.
+3. Select **Create organization**.
+4. Enter a name for the Organization.
+5. Select **Create**.
+
+The Organization overview page displays after creation.
+
+### Assign accounts
+
+After creating an Organization, you can assign existing accounts to manage them centrally. You can add accounts of any plan type (Enterprise, PAYGO, or Free) as long as you are a Super Administrator of the account.
+
+1. From the Organization overview, select **Assign an account**.
+2. Search for an account name. Only accounts where you are a Super Administrator will appear.
+3. Select the account.
+4. Select **Assign to organization**.
+
+The assigned account now appears on the Organization overview page. From here, you can view the account, copy its ID, or rename it.
+
+To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+## Manage members
+
+### Organization Super Administrator
+
+When you create an Organization, you become the Organization Super Administrator. This role provides [implicit access](#implicit-access) to all accounts in your Organization and allows you to manage memberships at the Organization level.
+
+:::note
+Organization Super Administrator is the only Organization-level role available today. All Organization members have the same level of access. Additional roles (read-only, billing, audit log) will be available in a future release.
+:::
+
+:::note
+Any Organization Super Administrator can add or remove other Organization Super Administrators at any time.
+:::
+
+### Implicit access
+
+Organization members receive **implicit access** to all accounts in the Organization. Implicit access means:
+
+- You do not need explicit membership on each individual account.
+- When you go to any account within your Organization, you automatically have Super Administrator permissions on that account.
+- Implicit access is granted at the Organization level — you cannot grant implicit access to a subset of accounts.
+- Implicit access is equivalent to Super Administrator. There is no read-only implicit access today.
+
+Implicit access is separate from any existing per-account membership. If you were already an explicit member of an account before it was added to the Organization, that existing membership is unaffected.
+
+### Invite members
+
+You can invite additional members to your Organization. Invited members receive implicit Super Administrator access to all accounts in the Organization.
+
+1. From the Organization overview, select **Members**.
+2. Select **Invite member**.
+3. Enter the email address.
+4. Select **Send invitation**.
+
+The user receives an email invitation. After accepting, they have implicit access to all accounts in the Organization.
+
+### Member authentication requirements
+
+All users who will be Organization members must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on their Cloudflare user account **before** they can accept an Organization invitation. This is a per-user requirement, not an account-level setting.
+
+- If a user does not have 2FA or SSO enabled, they will not be able to accept the invitation.
+- Ask the user to enable 2FA or SSO first, then resend the invitation.
+- For instructions on enabling 2FA, refer to [Set up 2FA](/fundamentals/user-profiles/2fa/).
+- For SSO configuration, refer to [Dashboard SSO](/fundamentals/manage-members/dashboard-sso/).
+
+## Share policies
+
+Organizations allows you to share WAF custom rulesets and Zero Trust Gateway policies (DNS, Network, HTTP, Resolver) across accounts in your Organization. Shared policies are read-only in receiving accounts and automatically stay in sync when updated in the source account.
+
+Organizations also supports [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/), which lets you configure a single identity provider (such as Okta or Entra ID) in one account and share it across all accounts in your Organization. Shared IdP connections are read-only in recipient accounts and are automatically provisioned or removed as accounts join or leave the Organization.
+
+For detailed instructions, refer to [Policy sharing](/fundamentals/organizations/policy-sharing/).
+
+:::note
+Policy sharing requires the appropriate entitlements. Organizations does not grant access to WAF or Gateway features — your accounts must already have the required Enterprise WAF or Zero Trust Gateway SKUs.
+:::
+
+## View aggregate analytics
+
+You can view, filter, and download aggregate HTTP analytics across all accounts in your Organization:
+
+1. From the Organization overview, select **Analytics & Logs**.
+2. Use filters to narrow results by date range, account, domain, or other criteria.
+3. To export data, select **Download**.
+
+The data includes traffic for proxied hostnames and may be based on a sample. This data does not reflect billable usage.
+
+## Manage your Organization
+
+### Rename your Organization
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Next to **Organization name**, select **Rename**.
+3. Enter the new name.
+4. Select **Rename**.
+
+### Edit customer identification data
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Next to **Customer identification data**, select **Edit**.
+3. Update the information.
+4. Select **Save**.
+
+### View audit logs
+
+Organization audit logs capture user-initiated actions performed by Organization Super Administrators through Organization-level APIs and the dashboard. These logs are separate from account-level audit logs — actions performed within a specific account continue to appear in that account's audit logs.
+
+To view Organization audit logs in the dashboard:
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Select **Audit Logs**.
+
+You can also retrieve Organization audit logs via the API:
+
+```bash
+GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit
+```
+
+If you are viewing account-level audit logs and the account belongs to an Organization where you are an Organization Super Administrator, you can select **View Organization Audit Logs** to go to the parent Organization's audit logs.
+
+For more details on audit log structure, filtering, and retention, refer to [Audit Logs — Organization Activity Logs](/fundamentals/account/account-security/audit-logs/#organization-activity-logs).
+
+### API
+
+You can manage Organizations programmatically using the [Cloudflare Organizations API](/api/resources/organizations/). The API supports creating, updating, deleting Organizations, managing members, and assigning accounts.
+
+### Terraform
+
+You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
+
+:::note
+The Terraform provider currently requires **API Keys** for authentication with Organization resources. API Token support is not yet fully available for all Organization operations.
+:::
+
+## What you cannot do 
+
+### Create new accounts
+Enterprise Organizations cannot self-serve create new accounts. To add a new account, contact [Cloudflare Support](/support/contacting-cloudflare-support/) to create it, then assign it to your Organization.
+
+### Create sub-organizations
+Enterprise Organizations use a flat structure. You cannot create sub-organizations or nested containers. Use **tags** to organize accounts by business unit, region, or environment.
+
+### Move accounts
+Accounts cannot be moved between Enterprise Organizations.
+
+If you encounter errors during setup, refer to [Troubleshooting](/fundamentals/organizations/limitations/#troubleshooting).

@@ -1,0 +1,23 @@
+---
+title: Deprecate legacy Workers KV namespace API routes
+description: The legacy Workers KV API routes under /accounts/{account_id}/workers/namespaces/* are deprecated. Migrate to /accounts/{account_id}/storage/kv/namespaces/* before October 15, 2026.
+products:
+  - kv
+date: 2026-07-15
+---
+
+The legacy Workers KV API routes under `/accounts/{account_id}/workers/namespaces/*` are deprecated as of July 15, 2026, and will stop working on October 15, 2026. Migrate to the documented [Workers KV API](/api/resources/kv/) routes under `/accounts/{account_id}/storage/kv/namespaces/*` before that date.
+
+The legacy and replacement routes are interchangeable. They accept the same request parameters and return the same response payloads. To migrate, update the URL path from `/workers/namespaces/` to `/storage/kv/namespaces/`.
+
+## What you need to do
+
+Update any integration that calls a route under `/accounts/{account_id}/workers/namespaces/` to use the equivalent route under `/accounts/{account_id}/storage/kv/namespaces/`. The migration is a direct URL path substitution — request parameters and response payloads are identical:
+
+- `GET` and `POST /accounts/{account_id}/workers/namespaces` → `GET` and `POST /accounts/{account_id}/storage/kv/namespaces`
+- `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}` → `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}`
+- `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/keys` → `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys`
+- `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/metadata/{key_name}` → `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/metadata/{key_name}`
+- `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}/values/{key_name}` → `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{key_name}`
+
+For more information about the deprecation timeline, refer to [API deprecations](/fundamentals/api/reference/deprecations/).

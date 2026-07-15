@@ -129,17 +129,17 @@ const result = await env.AI.toMarkdown({
 - `name` <Type text="string" />
   - Name of the converted document. Matches the input name.
 
-- `format` <Type text="'markdown' | 'error'" />
-  - The format of this `ConversionResult` object
+- `format` <Type text="'markdown' | 'text' | 'error'" />
+  - The format of this `ConversionResult` object. Equals `text` when you set the [`output.format`](/workers-ai/features/markdown-conversion/conversion-options/#output) option to `text`.
 
 - `mimetype` <Type text="string" />
   - The detected [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of the document.
 
 - `tokens` <Type text="number" />
-  - The estimated number of tokens of the converted document. Only present if `format` is equal to `markdown`.
+  - The estimated number of tokens of the converted document. Not present if `format` is equal to `error`.
 
 - `data` <Type text="string" />
-  - The content of the converted document in Markdown format. Only present if `format` is equal to `markdown`.
+  - The content of the converted document. Not present if `format` is equal to `error`.
 
 - `error` <Type text="string" />
   - The error message explaining why this conversion failed. Only present if `format` is equal to `error`.

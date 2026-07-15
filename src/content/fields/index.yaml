@@ -538,7 +538,7 @@ entries:
     keywords: [request, bots, client, visitor]
     summary: Provides the type and purpose of a verified bot.
     description: |-
-      For more details, refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#categories).
+      For more details, refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#legacy-categories).
 
   - name: cf.bot_management.score
     data_type: Number
@@ -635,7 +635,7 @@ entries:
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor, agent, web bot auth]
     plan_info_label: Enterprise add-on
-    summary: Indicates whether or not the request originated from a known [signed agent](/bots/concepts/bot/signed-agents/).
+    summary: Indicates whether or not the request originated from a known agent that self-identifies with Web Bot Auth, now classified as a [verified bot or agent](/bots/concepts/bot/verified-bots/) labeled as intermediary.
     description: |-
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 

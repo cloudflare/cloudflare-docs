@@ -18,12 +18,16 @@ No provider SDKs or API keys are needed. Authentication and billing are handled 
 
 Four endpoints are available, each suited to different use cases:
 
-| Endpoint                       | Format                         | Use case                                         |
-| ------------------------------ | ------------------------------ | ------------------------------------------------ |
-| `POST /ai/run`                 | Envelope with `model`, `input` | All models and modalities (LLM, image, TTS, ASR) |
-| `POST /ai/v1/chat/completions` | OpenAI chat completions        | LLMs — OpenAI SDK compatible                     |
-| `POST /ai/v1/responses`        | OpenAI Responses API           | Agentic workflows — OpenAI SDK compatible        |
-| `POST /ai/v1/messages`         | Anthropic Messages API         | LLMs — Anthropic SDK compatible                  |
+| Endpoint                       | Format                         | Use case                                         | Third-Party Models | Workers AI Models (`@cf/`) |
+| ------------------------------ | ------------------------------ | ------------------------------------------------ | ------------------ | -------------------------- |
+| `POST /ai/run`                 | Envelope with `model`, `input` | All models and modalities (LLM, image, TTS, ASR) | ✅ Yes             | ✅ Yes                     |
+| `POST /ai/v1/chat/completions` | OpenAI chat completions        | LLMs — OpenAI SDK compatible                     | ✅ Yes             | ✅ Yes                     |
+| `POST /ai/v1/responses`        | OpenAI Responses API           | Agentic workflows — OpenAI SDK compatible        | ✅ Yes             | ✅ Model dependent         |
+| `POST /ai/v1/messages`         | Anthropic Messages API         | LLMs — Anthropic SDK compatible                  | ✅ Yes             | ❌ No                      |
+
+:::note
+The `/ai/v1/messages` endpoint strictly uses Anthropic's API schema and supports routing to Anthropic and other third-party models. Workers AI models (`@cf/`) do not support this schema. Use `/ai/run` or `/ai/v1/chat/completions` for Workers AI models, or `/ai/v1/responses` only for Workers AI models that support the Responses API, such as GPT-OSS.
+:::
 
 ## Authentication
 

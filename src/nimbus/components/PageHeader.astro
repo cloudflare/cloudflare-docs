@@ -1,0 +1,40 @@
+---
+/**
+ * PageHeader — the shared centered title + tagline block for landing-style
+ * pages (Directory, Agent Setup, Changelog feed, Plans, Sponsorships, Videos,
+ * Glossary, Resources). Owns the top padding so those pages line up.
+ *
+ * - `tagline` prop for plain-text taglines; or a `tagline` slot for rich
+ *   taglines (links, etc. — e.g. Plans).
+ * - default slot renders under the tagline for page-specific bits (e.g. the
+ *   Glossary "Beta" badge).
+ *
+ * Name follows shadcn's own site (PageHeader / PageHeaderHeading /
+ * PageHeaderDescription), collapsed into one Astro component. Docs and
+ * changelog-post pages use their own left-aligned title and don't use this.
+ */
+interface Props {
+  title: string;
+  tagline?: string;
+  class?: string;
+}
+
+const { title, tagline, class: className } = Astro.props;
+const hasTagline = Boolean(tagline) || Astro.slots.has("tagline");
+---
+
+<header class:list={["mx-auto max-w-2xl pt-14 text-center", className]}>
+  <h1
+    class="text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance text-foreground"
+  >
+    {title}
+  </h1>
+  {
+    hasTagline && (
+      <p class="mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
+        {tagline || <slot name="tagline" />}
+      </p>
+    )
+  }
+  <slot />
+</header>

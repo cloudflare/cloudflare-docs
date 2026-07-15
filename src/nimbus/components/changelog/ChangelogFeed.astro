@@ -1,0 +1,135 @@
+---
+/**
+ * ChangelogFeed — the reverse-chronological timeline. Renders every (already
+ * paginated) entry on one continuous rail. Each entry's date carries its year,
+ * so there are no year dividers.
+ *
+ * The rail co-opts the page's decorative LEFT margin rule (drawn by
+ * ChangelogLayout) as its spine: nodes + a solid spine overlay sit on the
+ * column's left edge (left:0), exactly where the backdrop's dashed rule runs —
+ * so there is one continuous left line, dashed above the feed and solid through
+ * it. The date lives in the cleared left margin (right-aligned against the node)
+ * on wide screens, and stacks above the title where the margin is too tight.
+ *
+ * Design: Nimbus changelog feature (registry/features/changelog.md, 5d).
+ */
+import type { CollectionEntry } from "astro:content";
+import ChangelogEntry from "./ChangelogEntry.astro";
+
+interface Props {
+  entries: CollectionEntry<"changelog">[];
+}
+
+const { entries } = Astro.props;
+
+const sorted = [...entries].sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const lastIndex = sorted.length - 1;
+---
+
+<div class="nb-cl-feed">
+  {
+    sorted.length === 0 && (
+      <p class="pl-[var(--body-x)] pb-8 text-[0.9375rem] text-pretty text-muted-foreground max-sm:pl-0">
+        No entries yet.
+      </p>
+    )
+  }
+  {
+    sorted.map((entry, i) => (
+      <ChangelogEntry entry={entry} railEnd={i === lastIndex} />
+    ))
+  }
+</div>
+
+<style>
+  /* Geometry tokens drive the spine, node, and date in lockstep.
+       --body-x   content indent from the spine (the column's left edge)
+       --date-w   width of the right-aligned gutter date (≥lg)
+       --node-y   y of the node + gutter date = the title's first-line center */
+  .nb-cl-feed {
+    --body-x: 3.5rem;
+    --date-w: 5.5rem;
+    --node-y: 0.9rem;
+    position: relative;
+  }
+  @media (min-width: 1024px) {
+    .nb-cl-feed {
+      --body-x: 4rem;
+    }
+  }
+
+
+  /* Solid spine segment — overlays the dashed backdrop rule in the feed region,
+     running node-center to node-center so the left line reads continuous + solid. */
+  :global(.nb-cl-entry)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: var(--node-y);
+    bottom: calc(-1 * var(--node-y));
+    width: 1px;
+    transform: translateX(-50%);
+    background: var(--nb-border-strong);
+    display: none;
+  }
+  /* Last visible entry: no next node to reach — run to the bottom of the entry
+     and fade out, a soft close for the end of the timeline. */
+  :global(.nb-cl-entry[data-rail-end])::before {
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      var(--nb-border-strong) 0,
+      var(--nb-border-strong) calc(100% - 3rem),
+      transparent 100%
+    );
+  }
+  @media (min-width: 768px) {
+    :global(.nb-cl-entry)::before {
+      display: block;
+    }
+  }
+
+  /* The date + rail wrapper styling live in Tailwind (DateRail); the date
+     positions against .nb-cl-entry using --node-y / --date-w defined above. */
+
+  /* Node — a small rounded square (CornerMarks look) dead-center on the spine.
+     Fills on entry hover. */
+  :global(.nb-cl-dot) {
+    position: absolute;
+    left: 0;
+    top: var(--node-y);
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    background: var(--nb-background);
+    border: 1.5px solid var(--nb-border-strong);
+    box-sizing: border-box;
+    display: none;
+    transition-property: border-color, background-color;
+    transition-duration: 160ms;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @media (min-width: 768px) {
+    :global(.nb-cl-dot) {
+      display: block;
+    }
+  }
+  :global(.nb-cl-entry:has(.nb-cl-title-link:hover)) :global(.nb-cl-dot) {
+    border-color: var(--nb-foreground);
+    background-color: var(--nb-foreground);
+  }
+
+  /* Entry title styling + hover underline live in Tailwind (ChangelogEntry,
+     via group-hover). The .nb-cl-title-link class remains as the dot's :has()
+     hover hook below. */
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.nb-cl-dot) {
+      transition: none;
+    }
+  }
+</style>

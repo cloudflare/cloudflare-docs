@@ -1,0 +1,29 @@
+---
+/**
+ * /workers-ai/models/<short-slug>/ — a single Cloudflare-hosted model page.
+ *
+ * Rest param for route-shape consistency, though legacy short slugs are
+ * single-segment. Bound to `getLegacyModels` with the short slug
+ * `model.name.split('/').at(-1)`.
+ */
+import type { GetStaticPaths } from "astro";
+import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
+import { getLegacyModels } from "~/util/models";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const models = await getLegacyModels();
+  return models.map((model) => ({
+    params: { name: model.name.split("/").at(-1)! },
+    props: { model, slug: model.name.split("/").at(-1)! },
+  }));
+}) satisfies GetStaticPaths;
+
+const { model, slug } = Astro.props as {
+  model: Awaited<ReturnType<typeof getLegacyModels>>[number];
+  slug: string;
+};
+---
+
+<ModelDetailPage model={model} basePath="/workers-ai/models" slug={slug} />

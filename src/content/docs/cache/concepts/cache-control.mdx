@@ -86,6 +86,7 @@ Revalidation determines how the cache should behave when a resource expires, and
 * `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
 * `stale-while-revalidate=<seconds>` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/cache/how-to/always-online/) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Workers documentation for Cache API](/workers/runtime-apis/cache/#methods).
 
+
 :::note
 `stale-while-revalidate` is now fully asynchronous. The first request after expiry triggers revalidation in the background and immediately receives stale content with an UPDATING status instead of blocking. All requests during revalidation are served stale with an UPDATING status until the origin responds, after which they receive a HIT.
 
@@ -93,6 +94,10 @@ For more details, refer to [Revalidation](/cache/concepts/revalidation/#asynchro
 :::
 
 * `stale-if-error=<seconds>` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. To avoid this behavior, include `stale-if-error=0` directive with the object returned from the origin. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Workers documentation for Cache API](/workers/runtime-apis/cache/#methods).
+
+:::note[Error status codes]
+The `stale-if-error` directive triggers when your origin returns a `5xx` status code (`500`, `502`, `503`, `504`). Other responses such as `404` are not considered errors for this purpose — the origin response replaces the stale cached content. There is currently no way to customize which status codes trigger `stale-if-error`.
+:::
 
 The `stale-if-error` directive is ignored if [Always Online](/cache/how-to/always-online/) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
 
@@ -130,6 +135,10 @@ If you enable Origin Cache Control, Cloudflare will aim to strictly adhere to [R
 ## Origin Cache Control behavior
 
 The following section covers the directives and behavioral conditions associated with enabling or disabling Origin Cache Control.
+
+:::caution[Integer values required]
+The `max-age`, `s-maxage`, and `stale-while-revalidate` directives require integer values per RFC 9111. Floating-point values (for example, `max-age=2.5`) are not valid and will be ignored, potentially causing cache bypass. Ensure your origin returns integer TTL values.
+:::
 
 ### Directives
 

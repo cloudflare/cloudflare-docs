@@ -3,6 +3,14 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-07-08"
+    title: GIF and BMP image support
+    description: |-
+      AI Search now indexes `.gif` and `.bmp` image files. They are converted to searchable text with Workers AI [Markdown conversion](/workers-ai/features/markdown-conversion/) during sync, with no configuration changes. Refer to [supported file types](/ai-search/configuration/data-source/#supported-file-types) for the full list.
+  - publish_date: "2026-07-08"
+    title: Filter list items by exact object key
+    description: |-
+      The [list items endpoint](/ai-search/api/items/rest-api/) now accepts a `key` query parameter to return the item matching an exact object key. Keys are unique per data source, so combine `key` with `source` to disambiguate when the same key exists across multiple sources.
   - publish_date: "2026-06-24"
     title: Configurable similarity cache duration and on-demand purge
     description: |-

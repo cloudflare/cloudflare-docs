@@ -1,0 +1,5 @@
+---
+{}
+---
+
+The PIV key authenticator is only available for infrastructure applications. If PIV key is the only allowed MFA method in your organization's global settings, users who access non-infrastructure applications will not see any available MFA method and will be unable to log in. Ensure your global settings include at least one other authenticator type (for example, TOTP, security keys, or biometrics), or configure non-infrastructure applications with custom MFA settings. Conversely, if MFA is globally required and PIV key is not one of the allowed authenticators, users will be blocked from accessing infrastructure applications that require MFA. In this case, either add PIV key to your global MFA settings or disable MFA per application or policy to allow access.
