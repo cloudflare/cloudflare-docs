@@ -156,13 +156,17 @@ addresses = ["support@example.com", "*@example.com"]
 
 Each entry is either a literal recipient address (for example, `support@example.com`), which creates a routing rule for that address, or a `*@domain` catch-all (for example, `*@example.com`), which configures the [catch-all rule](#catch-all-rule) for that domain. Every entry uses the _Send to a Worker_ action to route mail to the Worker you are deploying.
 
-The `addresses` field is top-level only: it applies to every [environment](/workers/wrangler/environments/) of the Worker and cannot be set under `env`.
+The `addresses` field is top-level only and applies to every [environment](/workers/wrangler/environments/) of the Worker. Wrangler ignores `addresses` values under `env`.
 
-When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Wrangler reconciles the Email Routing rules for the addresses you listed: it adds rules for new entries, updates the rules it manages, and removes rules it previously created that are no longer listed. Wrangler prints the planned changes and asks you to confirm before applying a destructive change, such as deleting a rule or taking over a rule that is managed elsewhere. To validate your configuration without deploying, run `wrangler deploy --dry-run`.
+If you omit `addresses`, Wrangler does not change Email Routing rules. If you set `addresses` to an empty array, Wrangler removes every Email Routing rule managed by this Worker.
+
+When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Wrangler reconciles the Email Routing rules for the addresses you listed. It adds rules for new entries, updates the rules it manages, and removes managed rules that are no longer listed. Wrangler prints the planned changes and asks you to confirm before applying a destructive change, such as deleting or taking over a rule. In non-interactive environments, Wrangler does not apply destructive changes and exits with an error after deploying the Worker.
+
+To validate your local configuration without deploying or checking remote rules, run `wrangler deploy --dry-run`.
 
 :::note
 
-Rules created from `addresses` are managed by your Wrangler configuration file. If you change one of these rules in the dashboard, a later `wrangler deploy` can overwrite your change to match the configuration file.
+Rules created from `addresses` are managed by your Wrangler configuration file. The dashboard warns you before an edit detaches a managed rule. On the next deploy, Wrangler reports a takeover conflict and asks for confirmation before restoring the configured rule.
 :::
 
 ## Next steps
