@@ -348,7 +348,7 @@ async function handleLink(link: Link): Promise<Link> {
 	return link;
 }
 
-function inferBadgeVariant(badge: Badge) {
+function inferBadgeVariant(badge: Badge | null) {
 	if (!badge) return undefined;
 
 	if (badge.variant === "default") {
