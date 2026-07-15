@@ -72,5 +72,5 @@ When using Wrangler in interactive mode, you can select from up to 100 recent ve
 
 You cannot roll back to a previous version of your Worker if the [Cloudflare Developer Platform resources](/workers/runtime-apis/bindings/) (such as [KV](/kv/) and [D1](/d1/)) have been deleted or modified between the version selected to roll back to and the version in the active deployment. Specifically, rollbacks will not be allowed if:
 
-- A [Durable Object migration](/durable-objects/reference/durable-objects-migrations/) has occurred between the version in the active deployment and the version selected to roll back to.
+- A Durable Object class lifecycle change (via [`exports`](/durable-objects/reference/durable-objects-migrations/) or the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array) has occurred between the version in the active deployment and the version selected to roll back to.
 - If the target deployment has a [binding](/workers/runtime-apis/bindings/) to an R2 bucket, KV namespace, or queue that no longer exists.
