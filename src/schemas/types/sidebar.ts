@@ -37,8 +37,11 @@ const badgeSchema = badgeBaseSchema.extend({
 
 const BadgeConfigSchema = () =>
 	z
-		.union([z.string(), badgeSchema])
+		.union([z.string(), badgeSchema, z.null()])
 		.transform((badge) => {
+			if (badge === null) {
+				return null;
+			}
 			if (typeof badge === "string") {
 				return { variant: "default" as const, text: badge };
 			}
