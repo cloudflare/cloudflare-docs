@@ -42,7 +42,7 @@ function firstSegment(path: string): string | undefined {
   return path.replace(/^\/+|\/+$/g, "").split("/")[0] || undefined;
 }
 
-// Mirrors nimbus-docs' internal `nodeHref`.
+// Resolve a sidebar node to its href (internal links only).
 function nodeHref(node: SidebarItem): string | undefined {
   if (node.type === "link") return node.href;
   if (node.type === "external") return undefined;
@@ -89,6 +89,11 @@ export function getCfRouteNavigation(
 }
 
 const EXTERNAL_LINK_ARROW = " \u2197";
+
+// Append the external-link arrow, unless already present.
+function appendExternalArrow(label: string): string {
+  return label.endsWith(EXTERNAL_LINK_ARROW) ? label : label + EXTERNAL_LINK_ARROW;
+}
 
 // `docs-for-agents` is itself the agent-facing surface, so it gets no group.
 const NO_LLM_RESOURCES = new Set(["docs-for-agents"]);
@@ -139,17 +144,8 @@ function isExternalAppHref(href: string): boolean {
   );
 }
 
-/**
- * Re-mark sidebar leaves that point at a separate same-origin app (the
- * `/api/` reference) as **external** — new tab + `↗` arrow — matching
- * Starlight, which gives every `external_link` the external treatment.
- *
- * nimbus-docs classifies a *relative* `external_link` (`/api/`) as an
- * internal cross-section redirect (same tab, no arrow). That's correct for
- * in-docs redirects, but wrong for `/api/`, which is a separate application,
- * not another docs page. This transform restores the Starlight affordance
- * for those leaves only, leaving genuine in-docs redirects untouched.
- */
+// Mark leaves pointing at a separate same-origin app (`/api/`) as external:
+// new tab + `↗` arrow. In-docs redirects are left as same-tab links.
 function markExternalAppLinks(items: SidebarItem[]): SidebarItem[] {
   return items.map((item) => {
     if (item.type === "group") {
@@ -158,9 +154,7 @@ function markExternalAppLinks(items: SidebarItem[]): SidebarItem[] {
     if (item.type === "link" && isExternalAppHref(item.href)) {
       return {
         type: "external",
-        label: item.label.endsWith(EXTERNAL_LINK_ARROW)
-          ? item.label
-          : item.label + EXTERNAL_LINK_ARROW,
+        label: appendExternalArrow(item.label),
         href: item.href,
         badge: item.badge,
         order: item.order,
@@ -170,23 +164,33 @@ function markExternalAppLinks(items: SidebarItem[]): SidebarItem[] {
   });
 }
 
-/**
- * Standalone transform for routes that don't append the Agent resources
- * group — just the external-app (`/api/`) re-marking.
- */
+// Append the external-link arrow to internal cross-section redirects
+// (relative `external_link` → same-tab `type: "link"` flagged `_neverActive`).
+function markInternalRedirects(items: SidebarItem[]): SidebarItem[] {
+  return items.map((item) => {
+    if (item.type === "group") {
+      return { ...item, children: markInternalRedirects(item.children) };
+    }
+    if (item.type === "link" && item._neverActive) {
+      return {
+        ...item,
+        label: appendExternalArrow(item.label),
+      };
+    }
+    return item;
+  });
+}
+
+// External-app (`/api/`) re-marking + internal-redirect arrows, without the
+// Agent resources group. The "Overview" convention is applied by nimbus-docs
+// via `sidebar.indexDisplay: "overview-leaf"`.
 export const externalAppLinksTransform: SidebarTransform = ({ tree }) =>
-  markExternalAppLinks(tree);
+  markInternalRedirects(markExternalAppLinks(tree));
 
 // --- Badges -----------------------------------------------------------------
-// Parity with root `src/util/sidebar.ts`: map badge text → variant, and
-// auto-inject a "Beta" badge on products marked beta in product-availability.
 
-/**
- * Map a default-variant badge's text to its conventional variant
- * (`Beta→caution`, `New→note`, `Deprecated`/`Legacy→danger`). Non-default
- * variants and unmapped text pass through unchanged. Mirrors root's
- * `inferBadgeVariant`.
- */
+// Map a default-variant badge's text to its variant; non-default variants and
+// unmapped text pass through unchanged.
 function inferBadgeVariant(badge: SidebarBadge): SidebarBadge {
   const text = typeof badge === "string" ? badge : badge.text;
   const variant = typeof badge === "string" ? "default" : (badge.variant ?? "default");
@@ -204,9 +208,8 @@ function inferBadgeVariant(badge: SidebarBadge): SidebarBadge {
   }
 }
 
-// External-app links carry a fixed badge by URL shape, mirroring root's
-// `getBadge`: the `/api` OpenAPI reference is "API", the MCP server repo is
-// "MCP". This badge takes precedence over authored/auto-Beta badges.
+// Fixed badge for external-app links by URL shape (`/api` → "API", MCP server
+// repo → "MCP"). Takes precedence over authored/auto-Beta badges.
 function getExternalBadge(href: string): SidebarBadge | undefined {
   if (href.startsWith("/api")) return { text: "API", variant: "note" };
   if (href.includes("/mcp-server-cloudflare")) return { text: "MCP", variant: "note" };
@@ -259,13 +262,14 @@ function applyBadges(
   });
 }
 
-/**
- * Main docs route: Agent resources group + external-app (`/api/`) re-marking +
- * badge variant mapping / auto-Beta injection.
- */
+// Agent resources + external-app re-marking + badges. The "Overview" convention
+// (leaf lift + section-root pinning) is applied downstream by nimbus-docs via
+// `sidebar.indexDisplay: "overview-leaf"`, which runs after this transform — so
+// `applyBadges` still keys group badges off `indexHref` before it is cleared.
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
   const withAgentResources = await agentResourcesTransform(ctx);
   const withExternal = markExternalAppLinks(withAgentResources);
+  const withRedirects = markInternalRedirects(withExternal);
   const betaUrls = await getBetaBadgeUrls();
-  return applyBadges(withExternal, betaUrls);
+  return applyBadges(withRedirects, betaUrls);
 };
