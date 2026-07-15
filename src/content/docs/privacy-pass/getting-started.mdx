@@ -30,7 +30,7 @@ The quickest way to see what an issuer-signed token looks like is with Cloudflar
 ### How to get a token
 
 1. Open the [Privacy Pass demo tool](https://privacypass-demo.cloudflare.app/).
-2. In **Fetch from issuer URL**, paste the demo issuer directory URL and submit. The tool displays the issuer directory—a list of `token-keys` with token type `2` (Blind RSA)—and automatically fills in the fields for the steps below.
+2. In **Fetch from issuer URL**, paste the demo issuer directory URL and submit. The tool displays the issuer directory—a list of `token-keys` with token type `2` (Blind RSA)—and automatically fills in the fields for the following steps.
 3. In **Create challenge**, submit the prefilled form. The tool builds a `WWW-Authenticate` token challenge from the issuer's key.
 4. In **Send Token Request**, submit the prefilled form. The tool blinds the request, sends it to the issuer, unblinds the response, and verifies the result.
 
@@ -98,7 +98,7 @@ Public-Verifiable tokens
 
 ### How the example maps to the four roles
 
-The example creates an Issuer, a Client, and an Origin in a single process (the Issuer key pair is generated up front in `setup()` with `Issuer.generateKey`), then runs them through the protocol. The code annotations below sit at the point in the flow where each step happens:
+The example creates an Issuer, a Client, and an Origin in a single process (the Issuer key pair is generated up front in `setup()` with `Issuer.generateKey`), then runs them through the protocol. The code annotations in the diagram sit at the point in the flow where each step happens:
 
 ```txt
 // +--------+            +--------+         +----------+ +--------+
