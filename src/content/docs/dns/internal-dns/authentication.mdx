@@ -111,7 +111,7 @@ If your token is scoped to specific zones, make sure those zones are already cre
 
 ## Attribute-based permissions
 
-Today, tokens can only be scoped to specific zone IDs. We are working with the IAM team on attribute-based permissions that will let you scope tokens to all zones matching a criteria. For example, you could create a token that applies to all zones where `type = internal` or where `name ends_with ".local"`.
+Today, tokens can only be scoped to specific zone IDs. Once we support attribute-based permissions you can scope tokens to all zones matching a criteria. For example, you can create a token that applies to all zones where `type = internal` or where `name ends_with ".local"`.
 
 This will remove the need to manually update tokens when you create new internal zones. The IAM team has this on their roadmap, but there is no committed delivery date yet. Until it ships, document your token-to-zone mappings and update tokens as part of your zone provisioning workflow.
 
