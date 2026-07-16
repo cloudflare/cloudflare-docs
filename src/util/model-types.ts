@@ -133,4 +133,27 @@ export interface ResolvedModel {
 	// "API Schemas (Raw)" download links. The URL base for these files is
 	// /ai/models/{modelId stripped of leading @}/.
 	schemaFiles?: string[];
+
+	/**
+	 * Optional supplementary note about ZDR support (plan requirements,
+	 * conditions, etc.). Surfaced from `zdr_comment` on the catalog row;
+	 * legacy Workers AI models never set it. Rendered as a `title`
+	 * tooltip on the ZDR badge in `ModelBadges`.
+	 */
+	zdrComment?: string | null;
+
+	/**
+	 * In-page notice surfaced from the catalog `banner` field. Rendered as
+	 * a Starlight `Aside` directly under the description on the model
+	 * detail page. Legacy Workers AI models never set this — only catalog
+	 * rows carry it, and most carry `null`.
+	 */
+	banner?: CatalogBanner | null;
+
+	/**
+	 * Request-format identifiers the model accepts at the API layer (e.g.
+	 * "chat-completions", "responses", "anthropic-messages"). Surfaced
+	 * from the catalog `request_formats` array.
+	 */
+	requestFormats?: string[] | null;
 }

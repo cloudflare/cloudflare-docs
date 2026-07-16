@@ -12,7 +12,6 @@ import { granularControlApplicationsCollectionConfig } from "./content/collectio
 import { middlecacheLoader } from "./util/custom-loaders";
 
 import {
-	appsSchema,
 	aiModelCardSchema,
 	changelogSchema,
 	baseSchema,
@@ -22,7 +21,6 @@ import {
 	compatibilityFlagsSchema,
 	glossarySchema,
 	learningPathsSchema,
-	videosSchema,
 	warpReleasesSchema,
 	releaseNotesSchema,
 	fieldsSchema,
