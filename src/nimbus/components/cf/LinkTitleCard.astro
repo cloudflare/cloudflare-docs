@@ -1,19 +1,6 @@
 ---
-/**
- * LinkTitleCard — card with icon, title, and slotted body; the whole
- * card links to `href`. Used in CF landing-page "More resources"
- * sections, often in a 2x2 grid.
- *
- * CF source: cloudflare-docs/src/components/LinkTitleCard.astro
- *
- * Mapping notes:
- *   - Rendered with the Nimbus ui/card Card instead of CF's bordered
- *     card with the 4-color `:nth-child` accent cycle.
- *   - Card doesn't take an href, so a stretched overlay link covers the
- *     card; the title underlines on hover.
- *   - Starlight Icon → astro-icon (icon name passed straight through).
- */
-import { Card } from "../ui/card";
+import { Icon } from "astro-icon/components";
+import CornerMarks from "../CornerMarks.astro";
 
 interface Props {
   icon?: string;
@@ -24,9 +11,31 @@ interface Props {
 const { icon, title, href } = Astro.props;
 ---
 
-<div class="relative [&:hover_h3]:underline">
-  <Card {title} {icon} class="my-0 h-full">
+<div
+  class="group/pc relative my-0! flex flex-col overflow-visible border border-border bg-background p-6 transition-colors duration-200 hover:bg-muted/30 motion-reduce:transition-none"
+>
+  <CornerMarks />
+  {
+    icon && (
+      <span class="relative flex size-11 items-center justify-center rounded-md border border-border bg-muted text-muted-foreground transition-[background-color,border-color,color] duration-200 group-hover/pc:border-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] group-hover/pc:bg-[color-mix(in_srgb,var(--color-primary)_5%,transparent)] group-hover/pc:text-[var(--color-primary)] group-has-[:focus-visible]/pc:border-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] group-has-[:focus-visible]/pc:bg-[color-mix(in_srgb,var(--color-primary)_5%,transparent)] group-has-[:focus-visible]/pc:text-[var(--color-primary)] motion-reduce:transition-none">
+        <Icon name={icon} size="24px" aria-hidden="true" />
+      </span>
+    )
+  }
+  <p
+    class:list={[
+      "mb-0 text-base font-medium leading-snug text-foreground md:text-lg",
+      icon ? "mt-4" : "mt-0",
+    ]}
+  >
+    {title}
+  </p>
+  <div class="mt-2 text-sm leading-relaxed text-muted-foreground [&>p]:my-0">
     <slot />
-  </Card>
-  <a href={href} class="absolute inset-0" aria-label={title}></a>
+  </div>
+  {/* Stretched overlay makes the whole card clickable; keep body text non-interactive. */}
+  <a
+    href={href}
+    class="absolute inset-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
+    aria-label={title}></a>
 </div>
