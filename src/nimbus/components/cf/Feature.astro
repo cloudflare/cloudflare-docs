@@ -37,7 +37,10 @@ const title = cta ?? `Use ${header}`;
   >
     <slot />
   </div>
-  <span class="mt-2 inline-block text-sm font-medium text-[var(--color-primary)]">
+  <span
+    class="mt-2 inline-block text-sm font-medium text-[var(--color-primary)]"
+    aria-hidden="true"
+  >
     {title}
   </span>
 </div>

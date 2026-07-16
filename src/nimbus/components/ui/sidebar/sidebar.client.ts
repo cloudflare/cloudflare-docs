@@ -201,17 +201,21 @@ function initPersistence(root: HTMLElement): (() => void) | null {
     ) {
       return;
     }
-    const desktopInput = document.querySelector<HTMLInputElement>(
-      "[data-nb-sidebar-persist] ~ * [data-nb-sidebar-filter-input], [data-nb-desktop-sidebar] [data-nb-sidebar-filter-input]",
+    // Prefer the on-screen filter (mobile drawer when open, else desktop).
+    // getClientRects is empty for display:none (closed dialog / hidden aside).
+    const inputs = Array.from(
+      document.querySelectorAll<HTMLInputElement>(
+        "[data-nb-sidebar-filter-input]",
+      ),
     );
-    if (!desktopInput) return;
+    const target =
+      inputs.find((el) => el.getClientRects().length > 0) ?? inputs[0];
+    if (!target) return;
     e.preventDefault();
-    // Stop the event before it reaches DocSearch's window-level keydown
-    // listener (bubble phase), which would otherwise open the global search
-    // modal on "/". A document-level bubble listener runs before window's, so
-    // stopPropagation here keeps "/" scoped to focusing the sidebar filter.
+    // Reaches document before window (bubble), so this preempts DocSearch's
+    // window-level "/" handler and keeps "/" scoped to the filter.
     e.stopPropagation();
-    desktopInput.focus();
+    target.focus();
   });
 })();
 

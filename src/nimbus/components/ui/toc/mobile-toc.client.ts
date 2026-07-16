@@ -36,13 +36,13 @@ function initMobileToc(root: HTMLElement): () => void {
   );
   if (!select) return () => {};
 
-  // Real heading slugs, in document order, excluding the synthetic "_top".
-  const slugs = Array.from(select.options)
+  // Paired so slug/element indices stay aligned; `inBand` indexes into this.
+  type Heading = { slug: string; el: HTMLElement };
+  const headings: Heading[] = Array.from(select.options)
     .map((o) => o.value)
-    .filter((v) => v !== "_top");
-  const headingEls = slugs
-    .map((s) => document.getElementById(s))
-    .filter((el): el is HTMLElement => el !== null);
+    .filter((v) => v !== "_top")
+    .map((slug) => ({ slug, el: document.getElementById(slug) }))
+    .filter((h): h is Heading => h.el !== null);
 
   const controller = new AbortController();
 
@@ -78,7 +78,7 @@ function initMobileToc(root: HTMLElement): () => void {
     { signal: controller.signal },
   );
 
-  if (headingEls.length === 0) {
+  if (headings.length === 0) {
     return () => {
       controller.abort();
       clearTimeout(suppressTimer);
@@ -94,7 +94,7 @@ function initMobileToc(root: HTMLElement): () => void {
 
     if (inBand.size > 0) {
       // Topmost in-band heading (smallest document-order index).
-      setActive(slugs[Math.min(...inBand)]);
+      setActive(headings[Math.min(...inBand)].slug);
       return;
     }
 
@@ -102,19 +102,19 @@ function initMobileToc(root: HTMLElement): () => void {
     // the boundary headings sit relative to the band; otherwise keep the
     // current value (we're mid-section between two headings).
     const bandTop = window.innerHeight * BAND_TOP;
-    const firstTop = headingEls[0].getBoundingClientRect().top;
-    const lastTop = headingEls[headingEls.length - 1].getBoundingClientRect().top;
+    const firstTop = headings[0].el.getBoundingClientRect().top;
+    const lastTop = headings[headings.length - 1].el.getBoundingClientRect().top;
     if (firstTop > bandTop) {
       setActive("_top");
     } else if (lastTop < bandTop) {
-      setActive(slugs[headingEls.length - 1]);
+      setActive(headings[headings.length - 1].slug);
     }
   }
 
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
-        const i = headingEls.indexOf(entry.target as HTMLElement);
+        const i = headings.findIndex((h) => h.el === entry.target);
         if (i === -1) continue;
         if (entry.isIntersecting) inBand.add(i);
         else inBand.delete(i);
@@ -124,7 +124,8 @@ function initMobileToc(root: HTMLElement): () => void {
     { rootMargin: ROOT_MARGIN, threshold: 0 },
   );
 
-  for (const el of headingEls) observer.observe(el);
+  for (const { el } of headings) observer.observe(el);
+  resolve(); // initial sync before the observer's first async callback
 
   return () => {
     controller.abort();

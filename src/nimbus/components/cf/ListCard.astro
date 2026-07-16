@@ -80,4 +80,8 @@ interface Props {
   :global([dir="rtl"]) .link-list :global(a::after) {
     transform: matrix(-1, 0, 0, 1, 0, 0);
   }
+
+  :global([dir="rtl"]) .link-list :global(a:hover::after) {
+    transform: matrix(-1, 0, 0, 1, 0, 0) translateX(2px);
+  }
 </style>
