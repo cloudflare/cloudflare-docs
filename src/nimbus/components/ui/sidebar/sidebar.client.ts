@@ -206,6 +206,11 @@ function initPersistence(root: HTMLElement): (() => void) | null {
     );
     if (!desktopInput) return;
     e.preventDefault();
+    // Stop the event before it reaches DocSearch's window-level keydown
+    // listener (bubble phase), which would otherwise open the global search
+    // modal on "/". A document-level bubble listener runs before window's, so
+    // stopPropagation here keeps "/" scoped to focusing the sidebar filter.
+    e.stopPropagation();
     desktopInput.focus();
   });
 })();

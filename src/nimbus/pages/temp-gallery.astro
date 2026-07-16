@@ -1,0 +1,317 @@
+---
+/**
+ * TEMPORARY component gallery for the design refresh visual pass.
+ *
+ * Renders the recently-refreshed reference components alongside the
+ * refresh-candidate components identified for the next pass, so they can be
+ * eyeballed side-by-side in light/dark.
+ *
+ * Route: /temp-gallery/  (nimbus target only)
+ * Run:   BUILD_TARGET=nimbus pnpm run dev
+ *
+ * DELETE THIS FILE before merging — it is not real content.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Header from "~/components/Header.astro";
+import PageShell from "~/components/PageShell.astro";
+
+// Reference — already refreshed (the target design)
+import RelatedProduct from "~/components/cf/RelatedProduct.astro";
+import LinkTitleCard from "~/components/cf/LinkTitleCard.astro";
+
+// Refresh candidates
+import { LinkButton } from "~/components/ui/link-button";
+import LinkCard from "~/components/cf/LinkCard.astro";
+import ListCard from "~/components/cf/ListCard.astro";
+import Feature from "~/components/cf/Feature.astro";
+import Details from "~/components/cf/Details.astro";
+import { Card } from "~/components/ui/card";
+import { CardGrid } from "~/components/ui/card-grid";
+import FourCardGrid from "~/components/cf/FourCardGrid.astro";
+
+// Misc smaller candidates
+import RSSButton from "~/components/cf/RSSButton.astro";
+import Plan from "~/components/cf/Plan.astro";
+
+// API & reference helpers
+import APIRequest from "~/components/cf/APIRequest.astro";
+import CURL from "~/components/cf/CURL.astro";
+import WranglerCommand from "~/components/cf/WranglerCommand.astro";
+import Type from "~/components/cf/Type.astro";
+import MetaInfo from "~/components/cf/MetaInfo.astro";
+import RuleID from "~/components/cf/RuleID.astro";
+
+// Inline & layout helpers
+import InlineBadge from "~/components/cf/InlineBadge.astro";
+import Description from "~/components/cf/Description.astro";
+import Width from "~/components/cf/Width.astro";
+import Flex from "~/components/cf/Flex.astro";
+import Markdown from "~/components/cf/Markdown.astro";
+import GlossaryTooltip from "~/components/cf/GlossaryTooltip.astro";
+
+// Containers & data-driven
+import Example from "~/components/cf/Example.astro";
+import FeatureTable from "~/components/cf/FeatureTable.astro";
+import DirectoryListing from "~/components/cf/DirectoryListing.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Component gallery (temp)"
+  description="Temporary visual-pass gallery for the design refresh."
+  noindex={true}
+>
+  <div class="flex min-h-screen flex-col">
+    <Header showSidebar={false} />
+    <main id="main-content" class="flex-1">
+      <PageShell class="pt-14">
+        <div class="docs-content prose max-w-none">
+          <h1>Component gallery <span class="text-muted-foreground">(temp)</span></h1>
+          <p class="text-muted-foreground">
+            Scratch page for the design refresh visual pass. Reference (refreshed)
+            components first, then the candidates for the next pass. Delete
+            <code>src/nimbus/pages/temp-gallery.astro</code> when done.
+          </p>
+
+          {/* ---------------------------------------------------------------- */}
+          <h2>Reference — already refreshed</h2>
+
+          <h3>RelatedProduct</h3>
+          <RelatedProduct header="Workers" href="/workers/" product="workers">
+            Build serverless applications and deploy instantly across the globe.
+          </RelatedProduct>
+          <RelatedProduct header="R2" href="/r2/" product="r2" accent="#f6821f">
+            Object storage with zero egress fees. Store any amount of data.
+          </RelatedProduct>
+          <RelatedProduct header="KV" href="/kv/" product="kv">
+            Global, low-latency key-value data storage.
+          </RelatedProduct>
+
+          <h3>LinkTitleCard</h3>
+          <CardGrid>
+            <LinkTitleCard title="Get started" href="/workers/get-started/" icon="ph:rocket-launch">
+              Deploy your first Worker in minutes.
+            </LinkTitleCard>
+            <LinkTitleCard title="Reference architecture" href="/reference-architecture/" icon="ph:blueprint">
+              Explore end-to-end designs built on Cloudflare.
+            </LinkTitleCard>
+            <LinkTitleCard title="No icon variant" href="#">
+              Card without an icon to check the spacing fallback.
+            </LinkTitleCard>
+          </CardGrid>
+
+          {/* ---------------------------------------------------------------- */}
+          <h2>Refresh candidates</h2>
+
+          <h3>LinkButton</h3>
+          <p>
+            Unified on <code>ui/link-button/LinkButton.astro</code> (token-driven,
+            focusable). The old <code>cf/LinkButton.astro</code> was removed and
+            <code>DashButton</code> now uses this component.
+          </p>
+          <div class="flex flex-wrap items-center gap-3 not-prose">
+            <LinkButton href="#" variant="primary">Primary</LinkButton>
+            <LinkButton href="#" variant="secondary">Secondary</LinkButton>
+            <LinkButton href="#" variant="minimal">Minimal</LinkButton>
+            <LinkButton href="#" variant="primary" icon>With icon</LinkButton>
+          </div>
+
+          <h3>LinkCard</h3>
+          <CardGrid>
+            <LinkCard
+              title="Bindings"
+              href="/workers/runtime-apis/bindings/"
+              description="Connect your Worker to Cloudflare resources like KV, R2, and D1."
+            />
+            <LinkCard
+              title="Wrangler"
+              href="/workers/wrangler/"
+              description="The CLI for building and deploying Workers."
+            />
+          </CardGrid>
+
+          <h3>ListCard</h3>
+          <ListCard title="Popular guides" icon="ph:list-bullets">
+            <ul>
+              <li><a href="#">Deploy a static site</a></li>
+              <li><a href="#">Connect a custom domain</a></li>
+              <li><a href="#">Configure environment variables</a></li>
+              <li><a href="#">Set up preview deployments</a></li>
+            </ul>
+          </ListCard>
+
+          <h3>Feature</h3>
+          <Feature header="Web assets" href="#">
+            Serve and secure the static and dynamic assets that make up your site.
+          </Feature>
+          <Feature header="Security rules" href="#" cta="Configure security rules">
+            Write custom rules to filter, challenge, or block requests.
+          </Feature>
+          <Feature header="Alerts" href="#">
+            Get notified when something important happens on your account.
+          </Feature>
+
+          <h3>Details</h3>
+          <Details header="What is a Worker?">
+            <p>A Worker is a serverless function that runs on Cloudflare's network.</p>
+          </Details>
+          <Details header="Open by default" open={true}>
+            <p>This one starts expanded so you can see the open state.</p>
+          </Details>
+
+          <h3>ui/card Card (foundational primitive)</h3>
+          <CardGrid>
+            <Card title="With icon" icon="ph:lightning">
+              The base Card primitive that backs LinkCard and ListCard.
+            </Card>
+            <Card title="Without icon">
+              Rounded corners + drop shadow — the old card language.
+            </Card>
+          </CardGrid>
+
+          <h3>FourCardGrid</h3>
+          <FourCardGrid>
+            <Card title="One" icon="ph:number-one">First</Card>
+            <Card title="Two" icon="ph:number-two">Second</Card>
+            <Card title="Three" icon="ph:number-three">Third</Card>
+            <Card title="Four" icon="ph:number-four">Fourth</Card>
+          </FourCardGrid>
+
+          {/* ---------------------------------------------------------------- */}
+          <h2>Smaller candidates</h2>
+
+          <h3>RSSButton</h3>
+          <p>Inline changelog CTA (no button chrome / hover / focus today):</p>
+          <RSSButton href="#" />
+
+          <h3>Plan</h3>
+          <Plan type="all" />
+          <Plan type="pro" />
+          <Plan type="enterprise" />
+
+          {/* ---------------------------------------------------------------- */}
+          <h2>API &amp; reference helpers</h2>
+
+          <h3>APIRequest</h3>
+          <APIRequest
+            path="/zones/{zone_id}/api_gateway/settings/schema_validation"
+            method="PUT"
+            json={{
+              validation_default_mitigation_action: "block",
+            }}
+            code={{
+              mark: [5, "block"],
+            }}
+            roles="Domain"
+          />
+          <APIRequest
+            path="/zones/{zone_id}/page_shield/scripts"
+            method="GET"
+            parameters={{
+              direction: "asc",
+            }}
+          />
+
+          <h3>CURL</h3>
+          <CURL
+            url="https://httpbin.org/anything"
+            method="POST"
+            json={{
+              key: "va'l'ue",
+            }}
+            query={{
+              foo: "bar",
+              bar: ["baz", "qux"],
+            }}
+            code={{
+              mark: "value",
+            }}
+          />
+
+          <h3>WranglerCommand</h3>
+          <WranglerCommand command="deploy" />
+
+          <h3>Type &amp; MetaInfo</h3>
+          <ul>
+            <li>
+              <code>name</code> <Type text="string" />
+              <ul>
+                <li>The name of your service.</li>
+              </ul>
+            </li>
+            <li>
+              <code>local</code> <Type text="boolean" />{" "}
+              <MetaInfo text="(default: true) optional" />
+              <ul>
+                <li>If the service should run locally or not.</li>
+              </ul>
+            </li>
+            <li>
+              <code>result</code> <Type text="Promise<T | string | ArrayBuffer>" />
+            </li>
+          </ul>
+
+          <h3>RuleID</h3>
+          <p>Rule ID: <RuleID id="abcdefghijklmnopqrstuvwxyz" /></p>
+
+          {/* ---------------------------------------------------------------- */}
+          <h2>Inline &amp; layout helpers</h2>
+
+          <h3>InlineBadge</h3>
+          <ul>
+            <li>Alpha <InlineBadge preset="alpha" /></li>
+            <li>Beta <InlineBadge preset="beta" /></li>
+            <li>Deprecated <InlineBadge preset="deprecated" /></li>
+            <li>Early Access <InlineBadge preset="early-access" /></li>
+            <li>Legacy <InlineBadge preset="legacy" /></li>
+            <li>Default <InlineBadge text="Default" /></li>
+          </ul>
+
+          <h3>Description</h3>
+          <Description>
+            A styled subtitle/lede paragraph used immediately after the page H1.
+          </Description>
+
+          <h3>Width</h3>
+          <Width size="large">This content will take up 75% of the container width</Width>
+          <Width size="medium">This content will take up 50% of the container width</Width>
+          <Width size="small">This content will take up 25% of the container width</Width>
+          <Width size="small" center>
+            This content will take up 25% of the container width and be centered
+          </Width>
+
+          <h3>Flex</h3>
+          <Flex>
+            <div>First column — collapses to a row from the md breakpoint up.</div>
+            <div>Second column — sits alongside the first on wider screens.</div>
+          </Flex>
+
+          <h3>Markdown</h3>
+          <Markdown text="**foo** <br/> [bar](/style-guide/components/markdown/)" />
+
+          <h3>GlossaryTooltip</h3>
+          <p>
+            <GlossaryTooltip term="example">Hover over me!</GlossaryTooltip>
+          </p>
+
+          {/* ---------------------------------------------------------------- */}
+          <h2>Containers &amp; data-driven</h2>
+
+          <h3>Example</h3>
+          <Example>Hello, world!</Example>
+          <Example title="Hello world">Hello, world!</Example>
+
+          <h3>FeatureTable</h3>
+          <FeatureTable id="analytics.logpush" />
+
+          <h3>DirectoryListing</h3>
+          <p><strong>Default (list)</strong></p>
+          <DirectoryListing folder="workers/wrangler" />
+          <p><strong>Button</strong></p>
+          <DirectoryListing folder="workers/wrangler" button />
+        </div>
+      </PageShell>
+    </main>
+  </div>
+</BaseLayout>

@@ -35,7 +35,7 @@ const currentPath = Astro.url.pathname;
           class="hidden lg:flex w-(--nb-sidebar-width) shrink-0 border-r border-border sticky top-14 h-[calc(100vh-3.5rem)] flex-col overflow-y-auto"
         >
           <nav class="flex-1 px-4 pt-5 pb-12" aria-label="Documentation">
-            <SidebarFilter placeholder="Search products..." />
+            <SidebarFilter placeholder="Filter sidebar" />
             <Sidebar currentPath={currentPath} />
           </nav>
           <div
@@ -93,7 +93,7 @@ const currentPath = Astro.url.pathname;
         </button>
       </div>
       <nav class="px-4 pt-5 pb-8" aria-label="Documentation">
-        <SidebarFilter placeholder="Search products..." />
+        <SidebarFilter placeholder="Filter..." />
         <Sidebar currentPath={currentPath} />
       </nav>
     </div>
