@@ -193,11 +193,11 @@ Yes. If your webpage or PDF requires a font that is not pre-installed, you can l
 
 ## Session management
 
-### Should I open a new browser for every task, or reuse a session and open tabs?
+### Should I open a new browser for every task, or reuse a session and open tabs
 
 For most workloads, reuse an existing browser session and open a new tab instead of launching a fresh browser for each task. Browser Run counts browser instances against your [concurrent browsers](/browser-run/limits/#workers-paid) and [new browser instance rate](/browser-run/limits/#workers-paid) limits, but tabs inside an existing session do not count against either limit. Reusing a session also avoids the cold-start cost of launching a new browser.
 
-A single browser can run many tabs, but all tabs share the same browser process and memory. Heavy pages (for example, pages with large JavaScript bundles, media, or complex DOMs) consume more memory per tab, so opening too many tabs in the same browser can cause it to crash. Test your workload to find a safe number of tabs per browser. For lightweight pages, tens of tabs may be fine; for heavy pages, only a few.
+A single browser can run many tabs, but all tabs share the same browser process and memory. Heavy pages (for example, pages with large JavaScript bundles, media, or complex DOMs) consume more memory per tab, so opening too many tabs in the same browser can cause it to crash. Test your workload to find a safe number of tabs per browser. For lightweight pages, tens of tabs may be fine. For heavy pages, only a few.
 
 If you reuse a session but still need isolation between tasks, use an incognito browser context. Incognito contexts isolate cookies, local storage, and cache from each other and from the default context, so you can run separate tasks in tabs within the same browser without data leaking between them.
 
