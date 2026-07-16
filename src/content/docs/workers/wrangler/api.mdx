@@ -144,6 +144,8 @@ const server = createTestHarness({
   - Returns the default Worker export, including RPC methods.
 - `applyD1Migrations(bindingName)` <Type text="Promise<void>" />
   - Applies local D1 migration files that have not already run to a D1 binding on this Worker.
+- `getDurableObjectStorage(classNameOrBindingName, options)` <Type text="Promise<DurableObjectStorageHandle>" />
+  - Returns SQL storage access for a Durable Object instance.
 - `introspectWorkflow(bindingName)` <Type text="Promise<WorkflowIntrospector>" />
   - Creates an introspector for Workflow instances created after this method is called.
 - `introspectWorkflowInstance(bindingName, instanceId)` <Type text="Promise<WorkflowInstanceIntrospector>" />

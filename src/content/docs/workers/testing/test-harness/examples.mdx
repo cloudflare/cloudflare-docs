@@ -129,6 +129,37 @@ await apiEnv.DATABASE.prepare(
 
 </TypeScriptExample>
 
+## Access Durable Object storage
+
+Use `worker.getDurableObjectStorage()` to access a SQLite-backed Durable Object instance. Pass its binding name or exported class name, then select the instance by its name or ID.
+
+The returned handle runs SQL inside the Durable Object. Use it to seed storage before a request or inspect storage after a request.
+
+<TypeScriptExample>
+
+```ts
+const worker = server.getWorker<CounterEnv>();
+const storage = await worker.getDurableObjectStorage("COUNTER", {
+	name: "user-123",
+});
+
+await storage.exec(
+	"INSERT INTO counters (id, value) VALUES (?, ?)",
+	"user-123",
+	0
+);
+
+await worker.fetch("/counter/user-123");
+
+const rows = await storage.exec<{ value: number }>(
+	"SELECT value FROM counters WHERE id = ?",
+	"user-123"
+);
+expect(rows).toEqual([{ value: 1 }]);
+```
+
+</TypeScriptExample>
+
 ## Prepare D1 before each test
 
 After local storage is reset, the D1 database is empty again. `worker.applyD1Migrations(bindingName)` applies the Worker's local migration files so the database schema is ready for the test.
