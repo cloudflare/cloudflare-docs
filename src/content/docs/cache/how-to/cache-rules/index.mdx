@@ -30,6 +30,19 @@ The following table describes Cache Rules availability per plan.
 
 <FeatureTable id="cache.cache_rules" />
 
+## Cache Rules and cache keys
+
+When a Cache Rule sets a [custom cache key](/cache/how-to/cache-keys/), the resulting cache entry is indexed by that key rather than the request URL alone. This means that [single-file purge via the dashboard](/cache/how-to/purge-cache/purge-by-single-file/) will not invalidate the cached resource because the dashboard only accepts URLs, not the headers or cookies that are part of the custom cache key.
+
+To purge resources cached with a custom cache key, you have the following options:
+
+- Use the API to [purge by URL](/api/resources/cache/methods/purge/#purge-cached-content-by-url), including all headers, cookies, and query strings that are part of your custom cache key. If any header or cookie is missing from the purge request, it is treated as an empty value in the cache key.
+- [Purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), which purges all resources under a URL path and is not affected by custom cache keys.
+- [Purge by tag](/cache/how-to/purge-cache/purge-by-tags/), which is not affected by custom cache keys.
+- [Purge everything](/cache/how-to/purge-cache/purge-everything/), which clears all cached resources for the zone.
+
+For more information, refer to the [cache keys](/cache/how-to/cache-keys/) and [purge cache key resources](/cache/how-to/purge-cache/purge-cache-key/) documentation.
+
 <Render
 	file="troubleshoot-rules-with-trace"
 	product="rules"
