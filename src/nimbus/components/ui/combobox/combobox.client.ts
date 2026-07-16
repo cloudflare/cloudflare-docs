@@ -210,11 +210,13 @@ function initCombobox(root: HTMLElement): () => void {
 		switch (e.key) {
 			case "ArrowDown":
 				e.preventDefault();
-				open ? move(1) : openPopup(true);
+				if (open) move(1);
+				else openPopup(true);
 				break;
 			case "ArrowUp":
 				e.preventDefault();
-				open ? move(-1) : openPopup(true);
+				if (open) move(-1);
+				else openPopup(true);
 				break;
 			case "Enter":
 				if (open && activeEl) {

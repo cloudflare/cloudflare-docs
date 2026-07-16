@@ -87,7 +87,7 @@ const inputId = id ?? `cb-${Math.random().toString(36).slice(2, 10)}`;
 {
 	indeterminate && (
 		<script is:inline define:vars={{ inputId }}>
-			var el = document.getElementById(inputId); if (el) el.indeterminate =
+			const el = document.getElementById(inputId); if (el) el.indeterminate =
 			true;
 		</script>
 	)

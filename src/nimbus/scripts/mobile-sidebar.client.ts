@@ -52,7 +52,8 @@ function initMobileSidebar(): () => void {
 		).__nbDisclosure;
 		if (disclosure) {
 			if (disclosure.isOpen() !== open) {
-				open ? disclosure.open() : disclosure.close();
+				if (open) disclosure.open();
+				else disclosure.close();
 			}
 			return;
 		}
