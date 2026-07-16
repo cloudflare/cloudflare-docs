@@ -110,7 +110,15 @@
 }
 
 .docs-content :where(h1:not([class]), h2:not([class]), h3:not([class]), h4:not([class])) {
-  scroll-margin-top: 5rem;
+  /* Below xl the sticky mobile TOC sits under the sticky header, so headings
+     need extra clearance when jumped to. At xl+ only the header is sticky. */
+  scroll-margin-top: 7.5rem;
+}
+
+@media (min-width: 80rem) {
+  .docs-content :where(h1:not([class]), h2:not([class]), h3:not([class]), h4:not([class])) {
+    scroll-margin-top: 5rem;
+  }
 }
 
 .docs-content :where(code:not([class])):not(:where(pre *)) {

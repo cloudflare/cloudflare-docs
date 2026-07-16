@@ -11,7 +11,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { Banner } from "@/components/ui/banner";
 import { Sidebar, SidebarFilter, SidebarProductNav } from "@/components/ui/sidebar";
-import { TOC } from "@/components/ui/toc";
+import { TOC, MobileTOC } from "@/components/ui/toc";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Pagination } from "@/components/ui/pagination";
 import { PageActions, PageActionLinks } from "@/components/ui/page-actions";
@@ -223,6 +223,11 @@ const showFeedback = feedback !== false && !isCustom;
                     {/* `description` is meta-only (head tags via BaseLayout), matching
                         upstream cloudflare-docs which never renders it on the page. */}
                     <PageActions lastUpdated={lastUpdated} class="mt-3" />
+                    {headings !== false && headings.length > 0 && (
+                      <div class="xl:hidden sticky top-14 z-20 -mx-4 lg:-mx-6 mt-3 border-y border-border bg-background/95 px-4 lg:px-6 py-2 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+                        <MobileTOC headings={headings} />
+                      </div>
+                    )}
                     {(markdownUrl || audience === "human") && (
                       audience === "human" ? (
                         <div class="mt-3 mb-6 flex items-center gap-3" role="none">

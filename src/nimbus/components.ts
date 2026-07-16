@@ -24,7 +24,7 @@ export { default as Feature } from "./components/cf/Feature.astro";
 export { default as Glossary } from "./components/cf/Glossary.astro";
 export { default as GlossaryTooltip } from "./components/cf/GlossaryTooltip.astro";
 export { default as LinkCard } from "./components/cf/LinkCard.astro";
-export { default as LinkTitleCard } from "./components/cf/LinkTitleCard.astro";
+export { default as LinkTitleCard } from "./components/cf/LinkCard.astro";
 export { default as ListTutorials } from "./components/cf/ListTutorials.astro";
 export { default as Plan } from "./components/cf/Plan.astro";
 export { default as ProductReleaseNotes } from "./components/cf/ProductReleaseNotes.astro";
