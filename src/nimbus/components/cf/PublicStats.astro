@@ -10,13 +10,18 @@
 import { z } from "astro/zod";
 
 const mappings = {
-  data_center_cities: "over 330 cities",
-  total_bandwidth: "over 405 Tbps network capacity",
-  network_peers: "over 13,000 network peers",
+	data_center_cities: "over 330 cities",
+	total_bandwidth: "over 405 Tbps network capacity",
+	network_peers: "over 13,000 network peers",
 } as const satisfies Record<string, string>;
 
 const props = z.object({
-  id: z.enum(Object.keys(mappings) as [keyof typeof mappings, ...(keyof typeof mappings)[]]),
+	id: z.enum(
+		Object.keys(mappings) as [
+			keyof typeof mappings,
+			...(keyof typeof mappings)[],
+		],
+	),
 });
 
 const { id } = props.parse(Astro.props);

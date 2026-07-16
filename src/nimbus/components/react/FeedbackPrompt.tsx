@@ -42,7 +42,7 @@ function Buttons({
 					setTitle("What did you like?");
 					setOption("yes");
 				}}
-				className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-background px-3 text-[13px] font-medium text-foreground shadow-none transition-colors duration-150 hover:bg-accent hover:text-foreground"
+				className="border-border bg-background text-foreground hover:bg-accent hover:text-foreground inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-[13px] font-medium shadow-none transition-colors duration-150"
 			>
 				<MdOutlineThumbUp size={18} className="opacity-70" />
 				<span>Yes</span>
@@ -52,7 +52,7 @@ function Buttons({
 					setTitle("What went wrong?");
 					setOption("no");
 				}}
-				className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-background px-3 text-[13px] font-medium text-foreground shadow-none transition-colors duration-150 hover:bg-accent hover:text-foreground"
+				className="border-border bg-background text-foreground hover:bg-accent hover:text-foreground inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-[13px] font-medium shadow-none transition-colors duration-150"
 			>
 				<MdOutlineThumbDown size={18} className="opacity-70" />
 				<span>No</span>
@@ -106,7 +106,7 @@ function Form({
 					{questions[option].map(([label, value]) => (
 						<label
 							key={value}
-							className="relative flex cursor-pointer items-center gap-2.5 rounded-lg border border-border px-2.5 py-2 text-[13px] text-foreground transition-colors duration-150 select-none hover:bg-accent has-[:checked]:border-primary has-[:focus-visible]:border-primary has-[:focus-visible]:outline-none"
+							className="border-border text-foreground hover:bg-accent has-[:checked]:border-primary has-[:focus-visible]:border-primary relative flex cursor-pointer items-center gap-2.5 rounded-lg border px-2.5 py-2 text-[13px] transition-colors duration-150 select-none has-[:focus-visible]:outline-none"
 						>
 							<input
 								type="radio"
@@ -115,8 +115,8 @@ function Form({
 								onChange={() => setSelectedReason(true)}
 								className="peer absolute top-0 left-0 h-full w-full cursor-pointer opacity-0"
 							/>
-							<span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-border transition-all duration-150 peer-checked:border-primary peer-focus-visible:border-primary">
-								<span className="h-2 w-2 scale-0 rounded-full bg-primary transition-transform duration-150 [label:has(:checked)_&]:scale-100 [label:has(:focus-visible)_&]:scale-100" />
+							<span className="border-border peer-checked:border-primary peer-focus-visible:border-primary inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-150">
+								<span className="bg-primary h-2 w-2 scale-0 rounded-full transition-transform duration-150 [label:has(:checked)_&]:scale-100 [label:has(:focus-visible)_&]:scale-100" />
 							</span>
 							<span className="leading-tight">{label}</span>
 						</label>
@@ -127,7 +127,7 @@ function Form({
 				name="info"
 				rows={2}
 				placeholder="Tell us more about your experience."
-				className="mt-1 w-full resize-none rounded-lg border border-border bg-background px-3 py-2 text-[13px] text-foreground transition-colors duration-150 outline-none placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+				className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-primary mt-1 w-full resize-none rounded-lg border px-3 py-2 text-[13px] transition-colors duration-150 outline-none focus:outline-none"
 			/>
 			<Turnstile
 				siteKey="0x4AAAAAAA645TGhxiBMQ7Gu"
@@ -137,7 +137,7 @@ function Form({
 			<button
 				type="submit"
 				disabled={!selectedReason || !passedTurnstile}
-				className="mt-1 inline-flex h-8 w-max cursor-pointer items-center justify-center rounded-lg border-0 bg-primary px-4 text-[13px] font-medium text-primary-foreground shadow-none transition-colors duration-150 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+				className="bg-primary text-primary-foreground mt-1 inline-flex h-8 w-max cursor-pointer items-center justify-center rounded-lg border-0 px-4 text-[13px] font-medium shadow-none transition-colors duration-150 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
 			>
 				Submit
 			</button>
@@ -147,7 +147,7 @@ function Form({
 
 function SuccessState() {
 	return (
-		<div className="mt-3 flex items-center gap-2 rounded-lg border border-success/20 bg-success/10 px-3 py-2.5 text-[13px] text-success">
+		<div className="border-success/20 bg-success/10 text-success mt-3 flex items-center gap-2 rounded-lg border px-3 py-2.5 text-[13px]">
 			<MdCheckCircleOutline size={16} />
 			<span>Thank you for your feedback!</span>
 		</div>
@@ -167,7 +167,7 @@ export default function FeedbackPrompt({
 	return (
 		<div id={id}>
 			{!submitted && (
-				<p className="m-0 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase">
+				<p className="text-muted-foreground m-0 text-[11px] font-semibold tracking-widest uppercase">
 					{title}
 				</p>
 			)}

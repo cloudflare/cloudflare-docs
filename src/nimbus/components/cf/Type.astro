@@ -8,14 +8,14 @@
  * vars; swapped for Nimbus muted tokens.
  */
 interface Props {
-  text: string;
+	text: string;
 }
 
 const { text } = Astro.props;
 ---
 
 <code
-  class="inline-flex items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-[0.75em] leading-none font-bold"
+	class="border-border bg-muted inline-flex items-center rounded-md border px-1.5 py-0.5 text-[0.75em] leading-none font-bold"
 >
-  {text}
+	{text}
 </code>

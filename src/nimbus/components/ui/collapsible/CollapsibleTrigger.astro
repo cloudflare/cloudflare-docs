@@ -12,10 +12,10 @@ const { class: className, type, ...attrs } = Astro.props;
 ---
 
 <button
-  type={type ?? "button"}
-  data-nb-collapsible-trigger
-  class={cn(className)}
-  {...attrs}
+	type={type ?? "button"}
+	data-nb-collapsible-trigger
+	class={cn(className)}
+	{...attrs}
 >
-  <slot />
+	<slot />
 </button>

@@ -13,21 +13,26 @@
 import { cn } from "@/lib/cn";
 
 interface Props {
-  title?: string;
+	title?: string;
 }
 
 const { title = "" } = Astro.props;
 ---
 
-<article class="my-4 rounded-lg bg-card p-5 shadow-sm ring ring-border">
-  {
-    title && (
-      <h3 class="m-0 mb-1.5 text-base font-semibold leading-snug text-foreground">
-        {title}
-      </h3>
-    )
-  }
-  <div class={cn("text-sm leading-normal text-muted-foreground", !title && "example--no-title")}>
-    <slot />
-  </div>
+<article class="bg-card ring-border my-4 rounded-lg p-5 shadow-sm ring">
+	{
+		title && (
+			<h3 class="text-foreground m-0 mb-1.5 text-base leading-snug font-semibold">
+				{title}
+			</h3>
+		)
+	}
+	<div
+		class={cn(
+			"text-sm leading-normal text-muted-foreground",
+			!title && "example--no-title",
+		)}
+	>
+		<slot />
+	</div>
 </article>

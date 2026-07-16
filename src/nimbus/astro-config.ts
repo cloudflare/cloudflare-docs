@@ -46,7 +46,7 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 		}
 	}
 
-  return paths;
+	return paths;
 }
 
 const sidebarItems = await autogenSections();
@@ -332,7 +332,13 @@ const aliasResolver = {
 	},
 	// Defense-in-depth fallback for any context the alias array doesn't cover.
 	async resolveId(
-		this: { resolve: (s: string, i?: string, o?: object) => Promise<{ id: string } | null> },
+		this: {
+			resolve: (
+				s: string,
+				i?: string,
+				o?: object,
+			) => Promise<{ id: string } | null>;
+		},
 		source: string,
 		importer: string | undefined,
 		options: object,
@@ -355,7 +361,10 @@ const aliasResolver = {
 		else if (source === "@" || source.startsWith("@/"))
 			mapped = nimbusDir + source.slice(1);
 		if (mapped === null) return null;
-		const resolved = await this.resolve(mapped, importer, { ...options, skipSelf: true });
+		const resolved = await this.resolve(mapped, importer, {
+			...options,
+			skipSelf: true,
+		});
 		return resolved ?? { id: mapped };
 	},
 };

@@ -12,25 +12,20 @@ import type { HTMLAttributes } from "astro/types";
 import TabsList from "./TabsList.astro";
 
 interface Props extends HTMLAttributes<"div"> {
-  /** Sync tab selection across instances with the same key via localStorage */
-  syncKey?: string;
+	/** Sync tab selection across instances with the same key via localStorage */
+	syncKey?: string;
 }
 
 const { syncKey, class: className, ...attrs } = Astro.props;
 ---
 
-<div
-  data-nb-tabs
-  data-nb-sync-key={syncKey}
-  class={cn(className)}
-  {...attrs}
->
-  <TabsList />
-  <div class="mt-3">
-    <slot />
-  </div>
+<div data-nb-tabs data-nb-sync-key={syncKey} class={cn(className)} {...attrs}>
+	<TabsList />
+	<div class="mt-3">
+		<slot />
+	</div>
 </div>
 
 <script>
-  import "./tabs.client";
+	import "./tabs.client";
 </script>

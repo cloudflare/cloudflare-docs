@@ -16,21 +16,21 @@ import tableScroll from "./table-scroll";
 import type { HastPluginDefinition } from "./types";
 
 export {
-  mermaid,
-  headingSlugs,
-  autolinkHeadings,
-  shiftHeadings,
-  emptyTableHeaders,
-  tableScroll,
+	mermaid,
+	headingSlugs,
+	autolinkHeadings,
+	shiftHeadings,
+	emptyTableHeaders,
+	tableScroll,
 };
 
 export const hastPlugins: HastPluginDefinition[] = [
-  mermaid,
-  externalLinks(),
-  headingSlugs,
-  autolinkHeadings,
-  titleFigure(),
-  shiftHeadings,
-  emptyTableHeaders,
-  tableScroll,
+	mermaid,
+	externalLinks(),
+	headingSlugs,
+	autolinkHeadings,
+	titleFigure(),
+	shiftHeadings,
+	emptyTableHeaders,
+	tableScroll,
 ] as unknown as HastPluginDefinition[];

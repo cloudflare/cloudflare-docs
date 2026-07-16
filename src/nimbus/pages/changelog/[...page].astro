@@ -18,11 +18,11 @@ import { getChangelogs } from "~/util/changelog";
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const visibleNotes = await getChangelogs({
-    filter: (entry) => !entry.data.hidden,
-  });
+	const visibleNotes = await getChangelogs({
+		filter: (entry) => !entry.data.hidden,
+	});
 
-  return paginate(visibleNotes, { pageSize: 25 });
+	return paginate(visibleNotes, { pageSize: 25 });
 }) satisfies GetStaticPaths;
 
 type Props = { page: Page<CollectionEntry<"changelog">> };
@@ -30,14 +30,12 @@ type Props = { page: Page<CollectionEntry<"changelog">> };
 const { page } = Astro.props as Props;
 ---
 
-<ChangelogLayout
-  title="Changelogs"
->
-  <Header rssHref="/changelog/rss/index.xml" />
-  <ChangelogFeed entries={page.data} />
-  <Pagination
-    currentPage={page.currentPage}
-    lastPage={page.lastPage}
-    baseUrl="/changelog/"
-  />
+<ChangelogLayout title="Changelogs">
+	<Header rssHref="/changelog/rss/index.xml" />
+	<ChangelogFeed entries={page.data} />
+	<Pagination
+		currentPage={page.currentPage}
+		lastPage={page.lastPage}
+		baseUrl="/changelog/"
+	/>
 </ChangelogLayout>
