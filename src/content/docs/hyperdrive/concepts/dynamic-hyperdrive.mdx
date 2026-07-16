@@ -41,7 +41,8 @@ Your loader Worker needs a Worker Loader binding to create Dynamic Workers. Conf
 
 ```jsonc
 {
-	"worker_loaders": [{ "binding": "LOADER" }]
+	"worker_loaders": [{ "binding": "LOADER" }],
+	"hyperdrive": [{"binding": "HYPERDRIVE"}]
 }
 ```
 
@@ -274,7 +275,7 @@ Do not use the real database hostname in the placeholder connection string, whic
 For PostgreSQL drivers, the placeholder must be a valid PostgreSQL connection string. Follow this structure:
 
 ```txt
-postgresql://<USER>:<PASSWORD>@<PLACEHOLDER_HOST>:<PORT>/<DATABASE_NAME>?sslmode=require
+postgresql://<USERNAME>:<PASSWORD>@<PLACEHOLDER_HOST>:<PORT>/<DATABASE_NAME>?sslmode=require
 ```
 
 For example:
