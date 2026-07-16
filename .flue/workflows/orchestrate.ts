@@ -135,6 +135,9 @@ export async function run({ payload, env, req }: FlueContext) {
 		isOnPullRequest && trimmedComment === "/ignore-review-limit";
 	const isDisableAutoReviewCommand =
 		isOnPullRequest && trimmedComment === "/disable-auto-review";
+	const isRebaseCommand = isOnPullRequest && trimmedComment === "/rebase";
+	const isRebaseWithConflictsCommand =
+		isOnPullRequest && trimmedComment === "/rebaseWithConflicts";
 
 	if (
 		!req ||
@@ -144,7 +147,9 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isFullReviewCommand &&
 			!isReviewCommand &&
 			!isIgnoreReviewLimitCommand &&
-			!isDisableAutoReviewCommand)
+			!isDisableAutoReviewCommand &&
+			!isRebaseCommand &&
+			!isRebaseWithConflictsCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -430,6 +435,78 @@ export async function run({ payload, env, req }: FlueContext) {
 			acted: true,
 			summary: `Auto-review disabled by @${senderLogin}. Push-triggered reviews will no longer run. Codeowners can still use /review or /full-review.`,
 		};
+	}
+
+	// ── 5c. Handle /rebase and /rebaseWithConflicts commands ─────────────────────
+	if (isRebaseCommand || isRebaseWithConflictsCommand) {
+		const commandName = isRebaseCommand ? "rebase" : "rebaseWithConflicts";
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `${commandName} command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: `${commandName}_ignored_not_codeowner`,
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: `/workflows/rebase`,
+				headers: internalHeaders,
+				body: {
+					prNumber: number,
+					mode: isRebaseCommand ? "rebase" : "rebaseWithConflicts",
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+					senderLogin,
+				},
+			});
+			console.log({
+				message: `${commandName} admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: `${commandName}_admitted`,
+			});
+			return {
+				acted: true,
+				summary: `${commandName} triggered by @${senderLogin}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `${commandName} dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: `${commandName}_dispatch_failed`,
+			});
+			return {
+				acted: false,
+				summary: `${commandName} dispatch failed: ${errMsg}`,
+			};
+		}
 	}
 
 	const baseUrl = new URL(req.url).origin;

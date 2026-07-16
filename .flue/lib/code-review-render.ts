@@ -17,7 +17,12 @@
  * the render functions.
  */
 import * as v from "valibot";
-import { BOT_COMMENT_MARKER } from "./code-review-state";
+import { BOT_COMMENT_MARKER, type RebaseStatus } from "./code-review-state";
+import {
+	postComment,
+	updateIssueComment,
+	type GitHubIssueComment,
+} from "./github";
 
 // ── Reconcile result schema (model output) ────────────────────────────────────
 
@@ -537,6 +542,12 @@ export function renderComment(
 	lines.push(
 		"| `/disable-auto-review` | Stops automatic reviews from triggering on future pushes to this PR. Codeowners can still run `/review` or `/full-review` manually. |",
 	);
+	lines.push(
+		"| `/rebase` | Rebases the PR branch against `production`. Stops if there are conflicts and reports which files conflict. |",
+	);
+	lines.push(
+		"| `/rebaseWithConflicts` | Rebases against `production` and attempts to resolve conflicts automatically using AI. Stops with an explanation if confidence is not high enough. |",
+	);
 	lines.push("");
 	lines.push("</details>");
 
@@ -578,4 +589,152 @@ export function renderReviewLimitComment(existingBody?: string): string {
 	}
 
 	return lines.join("\n");
+}
+
+// ── Shared comment upsert ─────────────────────────────────────────────────────
+
+/**
+ * Create or update the singleton bot comment on a PR.
+ * If existingBotComment is null a new comment is posted; otherwise the
+ * existing comment is updated in place. All callers should go through this
+ * helper so the create-if-absent logic lives in one place.
+ */
+export async function postOrUpdateComment(
+	token: string,
+	prNumber: number,
+	existingBotComment: GitHubIssueComment | null,
+	body: string,
+): Promise<void> {
+	if (existingBotComment) {
+		await updateIssueComment(token, existingBotComment.id, body);
+	} else {
+		await postComment(token, prNumber, body);
+	}
+}
+
+// ── Rebase status rendering ───────────────────────────────────────────────────
+
+/**
+ * Build the one-line rebase status text for a given status value.
+ * detail carries context-specific text (e.g. conflict info, base branch name).
+ */
+function rebaseStatusLine(
+	status: RebaseStatus,
+	detail: string | undefined,
+	senderLogin: string | undefined,
+): string {
+	const by = senderLogin ? ` (triggered by @${senderLogin})` : "";
+	switch (status) {
+		case "in-progress":
+			return `⏳ **Rebase:** Rebasing against \`production\`${by}…`;
+		case "complete":
+			return `✅ **Rebase:** Rebased against \`production\` — full review triggered.`;
+		case "halted-conflict":
+			return [
+				`⚠️ **Rebase:** Rebase halted — conflicts detected. Resolve manually or use \`/rebaseWithConflicts\`.`,
+				...(detail ? ["", `> ${detail}`] : []),
+			].join("\n");
+		case "halted-wrong-base":
+			return `⚠️ **Rebase:** Rebase skipped — this PR targets \`${detail ?? "a non-production branch"}\`, not \`production\`. Rebase is only supported for PRs targeting \`production\`.`;
+		case "halted-fork":
+			return `⚠️ **Rebase:** Rebase skipped — cannot push to fork branches. The PR author must rebase locally.`;
+		case "halted-confidence":
+			return [
+				`⚠️ **Rebase:** AI conflict resolution stopped — confidence not high enough to auto-resolve.`,
+				...(detail ? ["", `> ${detail}`] : []),
+			].join("\n");
+		case "failed":
+			return `❌ **Rebase:** Failed unexpectedly. ${detail ?? "Check the worker logs."}`;
+	}
+}
+
+const REBASE_STATUS_MARKER_RE = /^<!-- rebase-status: [^\s]+ -->\n?/m;
+// Matches the status line we produce: starts with one of our emoji prefix chars
+// and contains **Rebase:**, plus any trailing > blockquote lines.
+const REBASE_STATUS_LINE_RE = /^[⏳✅⚠️❌].+\*\*Rebase:\*\*[^\n]*(\n>[^\n]*)*/m;
+
+/**
+ * Strip any existing rebase status block from a comment body so we can
+ * replace it with an updated one.
+ */
+function stripRebaseBlock(body: string): string {
+	let result = body.replace(REBASE_STATUS_MARKER_RE, "");
+	result = result.replace(REBASE_STATUS_LINE_RE, "");
+	// Collapse triple-or-more blank lines left by the removal.
+	result = result.replace(/\n{3,}/g, "\n\n");
+	return result;
+}
+
+/**
+ * Inject or replace the rebase status block at the top of the review comment
+ * body (just below `## Review`). All existing review content is preserved.
+ *
+ * When existingBody is null (no prior bot comment) a minimal fresh comment is
+ * created containing only the rebase status — the review sections will be
+ * populated when the next review runs.
+ */
+export function renderRebaseStatusUpdate(
+	status: RebaseStatus,
+	detail: string | undefined,
+	senderLogin: string | undefined,
+	existingBody: string | null,
+): string {
+	const statusLine = rebaseStatusLine(status, detail, senderLogin);
+	const statusMarker = `<!-- rebase-status: ${status} -->`;
+
+	if (!existingBody) {
+		return [
+			BOT_COMMENT_MARKER,
+			`<!-- updated-at: ${new Date().toISOString()} -->`,
+			statusMarker,
+			"",
+			"## Review",
+			"",
+			statusLine,
+		].join("\n");
+	}
+
+	// Strip any previous rebase block so we can inject the new one cleanly.
+	const stripped = stripRebaseBlock(existingBody);
+
+	// Find the `## Review` heading and inject immediately after it.
+	const reviewHeadingRe = /^## Review\s*$/m;
+	const match = reviewHeadingRe.exec(stripped);
+
+	let updatedBody: string;
+	if (match) {
+		const headingEnd = match.index + match[0].length;
+		const before = stripped.slice(0, headingEnd);
+		const after = stripped.slice(headingEnd);
+
+		// Insert the rebase-status HTML marker alongside the other <!-- ... --> lines
+		// that live above ## Review.
+		const beforeWithMarker = before.replace(
+			/^((?:<!-- [^\n]+ -->\n)*)## Review/m,
+			`$1${statusMarker}\n## Review`,
+		);
+
+		updatedBody = `${beforeWithMarker}\n\n${statusLine}${after}`;
+	} else {
+		// Defensive fallback: no ## Review heading — build a fresh wrapper.
+		updatedBody = [
+			BOT_COMMENT_MARKER,
+			`<!-- updated-at: ${new Date().toISOString()} -->`,
+			statusMarker,
+			"",
+			"## Review",
+			"",
+			statusLine,
+			"",
+			"---",
+			"",
+			stripped,
+		].join("\n");
+	}
+
+	// Always refresh the updated-at timestamp.
+	return updatedBody.replace(
+		/<!-- updated-at: [^\n]+ -->/,
+		`<!-- updated-at: ${new Date().toISOString()} -->`,
+	);
 }

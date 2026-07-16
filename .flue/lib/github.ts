@@ -506,6 +506,289 @@ export async function isCodeOwner(
 	return false;
 }
 
+// ── Rebase / Git Data API ─────────────────────────────────────────────────────
+
+export interface UpdateBranchResult {
+	ok: boolean;
+	/** Present when ok=false (conflict or other API error message). */
+	message?: string;
+}
+
+/**
+ * Update a pull request's branch against its base using the GitHub API.
+ * Pass update_method "rebase" to attempt a rebase rather than a merge commit.
+ * Returns { ok: false, message } on 422 (conflict) instead of throwing, so
+ * callers can inspect the failure without a try/catch.
+ */
+export async function updatePullRequestBranch(
+	token: string,
+	pullNumber: number,
+	updateMethod: "merge" | "rebase",
+): Promise<UpdateBranchResult> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/update-branch`,
+		{
+			method: "PUT",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ update_method: updateMethod }),
+		},
+	);
+	if (res.ok) return { ok: true };
+	const text = await res.text();
+	let message = text;
+	try {
+		const json = JSON.parse(text) as { message?: string };
+		if (json.message) message = json.message;
+	} catch {
+		// leave message as raw text
+	}
+	if (res.status === 422) return { ok: false, message };
+	throw new Error(
+		`Failed to update branch for PR #${pullNumber} (HTTP ${res.status}): ${message}`,
+	);
+}
+
+export interface GitRef {
+	sha: string;
+	ref: string;
+}
+
+export async function getRef(token: string, branch: string): Promise<GitRef> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/git/refs/heads/${branch}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get ref heads/${branch} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { object: { sha: string }; ref: string };
+	return { sha: data.object.sha, ref: data.ref };
+}
+
+export interface GitCommit {
+	sha: string;
+	treeSha: string;
+	parentShas: string[];
+	message: string;
+}
+
+export async function getGitCommit(
+	token: string,
+	sha: string,
+): Promise<GitCommit> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/git/commits/${sha}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get commit ${sha} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as {
+		sha: string;
+		tree: { sha: string };
+		parents: { sha: string }[];
+		message: string;
+	};
+	return {
+		sha: data.sha,
+		treeSha: data.tree.sha,
+		parentShas: data.parents.map((p) => p.sha),
+		message: data.message,
+	};
+}
+
+export interface GitTreeEntry {
+	path: string;
+	mode: string;
+	type: string;
+	sha: string | null;
+	size?: number;
+}
+
+export async function getTree(
+	token: string,
+	treeSha: string,
+): Promise<GitTreeEntry[]> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/git/trees/${treeSha}?recursive=1`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get tree ${treeSha} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { tree: GitTreeEntry[] };
+	return data.tree;
+}
+
+/**
+ * Fetch the decoded text content of a git blob by its SHA.
+ * Returns null if the blob is not base64-encoded text.
+ */
+export async function getGitBlob(
+	token: string,
+	blobSha: string,
+): Promise<string | null> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/git/blobs/${blobSha}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get blob ${blobSha} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { encoding?: string; content?: string };
+	if (data.encoding !== "base64" || typeof data.content !== "string")
+		return null;
+	const binary = atob(data.content.replace(/\n/g, ""));
+	const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+	return new TextDecoder().decode(bytes);
+}
+
+/**
+ * Create a new git blob from text content.
+ * Returns the new blob SHA.
+ */
+export async function createBlob(
+	token: string,
+	content: string,
+): Promise<string> {
+	const res = await fetch(`https://api.github.com/repos/${REPO}/git/blobs`, {
+		method: "POST",
+		headers: apiHeaders(token),
+		body: JSON.stringify({ content, encoding: "utf-8" }),
+	});
+	if (!res.ok) {
+		throw new Error(
+			`Failed to create blob (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { sha: string };
+	return data.sha;
+}
+
+export interface TreeUpdate {
+	path: string;
+	/** "100644" for regular file */
+	mode: "100644" | "100755" | "040000" | "160000" | "120000";
+	type: "blob" | "tree" | "commit";
+	/** The blob SHA, or null to delete the file */
+	sha: string | null;
+}
+
+/**
+ * Create a new git tree by applying updates on top of a base tree.
+ * Pass sha=null in a TreeUpdate to delete that path.
+ * Returns the new tree SHA.
+ */
+export async function createTree(
+	token: string,
+	baseTreeSha: string,
+	updates: TreeUpdate[],
+): Promise<string> {
+	const res = await fetch(`https://api.github.com/repos/${REPO}/git/trees`, {
+		method: "POST",
+		headers: apiHeaders(token),
+		body: JSON.stringify({ base_tree: baseTreeSha, tree: updates }),
+	});
+	if (!res.ok) {
+		throw new Error(
+			`Failed to create tree (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { sha: string };
+	return data.sha;
+}
+
+/**
+ * Create a new git commit.
+ * Returns the new commit SHA.
+ */
+export async function createGitCommit(
+	token: string,
+	message: string,
+	treeSha: string,
+	parentShas: string[],
+): Promise<string> {
+	const res = await fetch(`https://api.github.com/repos/${REPO}/git/commits`, {
+		method: "POST",
+		headers: apiHeaders(token),
+		body: JSON.stringify({ message, tree: treeSha, parents: parentShas }),
+	});
+	if (!res.ok) {
+		throw new Error(
+			`Failed to create commit (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { sha: string };
+	return data.sha;
+}
+
+/**
+ * Force-update a branch ref to point to a new commit SHA.
+ */
+export async function updateRef(
+	token: string,
+	branch: string,
+	sha: string,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/git/refs/heads/${branch}`,
+		{
+			method: "PATCH",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ sha, force: true }),
+		},
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to update ref heads/${branch} to ${sha} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+}
+
+/**
+ * Get the commits between a base and head ref (non-inclusive of base).
+ * Used to find the commits on a PR branch since its merge base.
+ */
+export interface CompareCommit {
+	sha: string;
+	message: string;
+}
+
+export async function compareCommits(
+	token: string,
+	base: string,
+	head: string,
+): Promise<{ mergeBaseSha: string; commits: CompareCommit[] }> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/compare/${encodeURIComponent(base)}...${encodeURIComponent(head)}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as {
+		merge_base_commit: { sha: string };
+		commits: { sha: string; commit: { message: string } }[];
+	};
+	return {
+		mergeBaseSha: data.merge_base_commit.sha,
+		commits: data.commits.map((c) => ({
+			sha: c.sha,
+			message: c.commit.message,
+		})),
+	};
+}
+
 export async function verifyGitHubSignature(
 	body: string,
 	signature: string,
