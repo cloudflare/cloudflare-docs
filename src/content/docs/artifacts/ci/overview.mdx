@@ -1,0 +1,68 @@
+---
+title: Understanding Cloudflare CI
+description: Run your CI for an Artifact using Workflows
+pcx_content_type: concept
+sidebar:
+  order: 3
+products:
+  - artifacts
+---
+
+import { Badge } from "~/components";
+
+Cloudflare CI is a [continuous integration](/workers/ci-cd/) (CI) pipeline that allows you to automate your builds and tests using [Cloudflare Workflows](/workflows/).
+
+Here are the pieces you will need:
+
+## CI Workflows
+
+A CI Workflow is a Cloudflare Workflow type that runs a series of steps as defined in a `cloudflare.ci.ts` file, such as `build`, `lint`, and `deploy`.
+
+A CI Workflow is defined by the `CIWorkflow` class. The class includes the `pipeline` method (which will orchestrate your CI job) and the steps themselves.
+
+The `pipeline` method includes:
+
+- `event`: the event passed to the Workflow, including an optional `payload` containing data such as the trigger (for example, `artifact push` or the branch name)
+- `step`: the `WorkflowStep` type that provides the step methods for your Workflow
+
+For CI Workflows, set your `event` to `WorkflowEvent<CiParams>` to accept the CI parameters, which may include the trigger or branch as data. Set your `step` to `CiRunnerStep` so that you have access to the following CI-specific step types.
+
+## Dependency caching
+
+Most projects use libraries or tools that are not stored directly in the repository, such as `react` or `vitest`. The first CI step usually downloads and installs those dependencies by running, for example, `pnpm install`. To make your CI runs more efficient, you can cache the dependencies and only re-run the install if they change.
+
+Cache your dependencies with `step.cache()`. This method extends the standard [Workflow step API](/workflows/build/workers-api/#workflowstep) and stores a saved copy of your installed dependencies for reuse. You can reuse the cached dependencies in your `runner()` steps as follows.
+
+## Runners
+
+A runner is a type of step, also extended from the Workflows step API, which executes commands in a sandbox environment. You can pass any command in your project's package manager (for example, `pnpm run build` if you are using `pnpm`), and the runner will automatically execute it on your behalf.
+
+Each `step.runner()` takes:
+
+- `name`: The name of the step, describing the action it performs (for example, `build`)
+- `exec`: The command to run for that step (for example, `pnpm run build`)
+- `capture`: An optional boolean which captures the output of the step in `step.output()` (`true` by default)
+
+If you want to define your runner so that it will run the `exec` command with your cached dependencies available, create a new object on your `install` step (which should be your first step, as discussed in [Dependency Caching](/artifacts/ci/overview/#dependency-caching)).
+
+You can define the object using `step.cache(...).runner("install",...)`, that is, `const deps = step.cache(...).runner("install",...)`. Then call your steps on that object, for example, `deps.runner()`.
+
+This is useful if, for example, your CI steps will require access to `vitest`, installed by `pnpm install`.
+
+## Triggering a CI run <Badge text="Beta" size="large" />
+
+Register the CI Workflow as a `ci` trigger in your Worker configuration, pointing to your `cloudflare.ci.ts` file and the `CIWorkflow` class. The trigger runs the `pipeline` method whenever a matching event, such as an Artifact `push`, occurs.
+
+```jsonc
+{
+	"triggers": [
+		{
+			"type": "ci",
+			"config": "cloudflare.ci.ts",
+			"className": "CIWorkflow",
+		},
+	],
+}
+```
+
+Once you have configured your Worker with a `ci` trigger, CI will automatically run on any `push` action from your repo. To trigger manually, run `cf ci`.

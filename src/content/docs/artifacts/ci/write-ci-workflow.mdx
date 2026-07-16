@@ -1,0 +1,104 @@
+---
+title: Write your CI Workflow
+description: Run your CI for an Artifact using Workflows
+pcx_content_type: how-to
+sidebar:
+  order: 3
+products:
+  - artifacts
+---
+
+import { Badge } from "~/components";
+
+This guide demonstrates how to set up a CI Workflow which orchestrates `build`, `check`, and `format` steps on `push`.
+
+To understand the components of a CI Workflow, refer to [Understanding Cloudflare CI](/artifacts/ci/overview/).
+
+## Write your CI Workflow
+
+1. Create a file called `cloudflare.ci.ts` in your Artifact repository.
+
+2. Define your [Workflow entrypoint](/workflows/build/workers-api/#workflowentrypoint) as a class that extends (inherits from) the `CIWorkflow` class. Implement [the `pipeline` method](/artifacts/ci/write-ci-workflow/) to specify the event and step types.
+
+   Extending `CIWorkflow` is how your Workflow gains access to the extended Workflow steps, `step.cache()` and `step.runner()`.
+
+   ```ts
+   export class CI extends CIWorkflow {
+     protected async pipeline(
+       event: WorkflowEvent<CiParams>,
+       step: CiRunnerStep
+     ): {...}
+   }
+   ```
+
+3. Optionally set up [dependency caching](/artifacts/ci/overview#dependency-caching) in the Workflow entrypoint. If you would like to run your CI step commands with the cached dependencies available, configure your runner to access dependencies via `step.cache(...).runner("install",...)`. Otherwise, skip to the next step.
+
+   Pass your lockfile, which is the file that records the exact versions of your dependencies, to `step.cache()` so the cache updates only when those versions change.
+
+   Then define the install `runner` step:
+
+   ```ts
+   const deps = await step
+   	.cache(["pnpm-lock.yaml"])
+   	.runner("install", { exec: "pnpm install --frozen-lockfile" });
+   ```
+
+   :::note
+   Your lockfile is defined according to the package or frameowrk you are using. To find your lockile, look at the root directory of your project. Some examples include:
+   - npm: `package-lock.json`
+   - yarn: `yarn.lock`
+   - pnpm: `pnpm-lock.yaml`
+
+   The `--frozen-lockfile` flag installs the exact versions from the lockfile and fails if the lockfile is out of date.
+   :::
+
+4. Define each step in your pipeline as a `deps.runner()` call. If you are not using dependency caching, you can define your steps with `step.runner()` alone.
+
+   Wrap the steps in `Promise.all()` to run them in parallel and wait for all of them to finish before the pipeline continues:
+
+   ```ts
+   await Promise.all([
+   	deps.runner("build", { exec: "pnpm run 'build'", capture: false }),
+   	deps.runner("check", { exec: "pnpm run 'check'", capture: false }),
+   	deps.runner("format", { exec: "pnpm run 'format'", capture: false }),
+   ]);
+   ```
+
+   Putting it together, a full CI Workflow with `build`, `check`, and `format` steps before a `deploy` could look like this:
+
+   ```ts
+   export class CI extends CIWorkflow {
+   	protected async pipeline(
+   		event: WorkflowEvent<CiParams>,
+   		step: CiRunnerStep,
+   	): Promise<void> {
+   		const p = event.payload;
+   		const deps = await step
+   			.cache(["pnpm-lock.yaml"])
+   			.runner("install", { exec: "pnpm install --frozen-lockfile" });
+
+   		await Promise.all([
+   			deps.runner("build", { exec: "pnpm run 'build'", capture: false }),
+   			deps.runner("check", { exec: "pnpm run 'check'", capture: false }),
+   			deps.runner("format", { exec: "pnpm run 'format'", capture: false }),
+   		]);
+
+   		await deps.runner("deploy", { exec: "pnpm run deploy", capture: false });
+   	}
+   }
+   ```
+
+	5. Register the Workflow as a `ci` trigger in your Worker configuration, pointing to your `cloudflare.ci.ts` file and the `CIWorkflow` class. The trigger runs the `pipeline` method whenever a matching event, such as an Artifact `push`, occurs.
+
+	```jsonc
+	{
+		"triggers": [
+			{
+				"type": "ci",
+				"config": "cloudflare.ci.ts",
+				"className": "CIWorkflow",
+			},
+		],
+	}
+	```
+	Your CI will trigger automatically on `artifact push`. To trigger manually, run `cf ci` in your project directory.
