@@ -121,7 +121,7 @@
 	--nb-card-foreground: var(--nb-foreground);
 
 	--nb-muted: oklch(0.264 0 0);
-	--nb-muted-foreground: oklch(0.556 0 0);
+	--nb-muted-foreground: oklch(0.708 0 0);
 
 	--nb-accent: oklch(0.269 0 0);
 	--nb-accent-foreground: var(--nb-foreground);

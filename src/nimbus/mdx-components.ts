@@ -22,7 +22,6 @@ import Feature from "./components/cf/Feature.astro";
 import Glossary from "./components/cf/Glossary.astro";
 import GlossaryTooltip from "./components/cf/GlossaryTooltip.astro";
 import LinkCard from "./components/cf/LinkCard.astro";
-import LinkTitleCard from "./components/cf/LinkTitleCard.astro";
 import ListTutorials from "./components/cf/ListTutorials.astro";
 import Plan from "./components/cf/Plan.astro";
 import ProductReleaseNotes from "./components/cf/ProductReleaseNotes.astro";
@@ -73,7 +72,7 @@ export const components = {
   InlineBadge,
   LinkButton,
   LinkCard,
-  LinkTitleCard,
+  LinkTitleCard: LinkCard,
   ListTutorials,
   Markdown,
   MetaInfo,
