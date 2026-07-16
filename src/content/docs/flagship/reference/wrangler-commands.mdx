@@ -447,6 +447,14 @@ wrangler flagship flags rules update <APP_ID> premium-banner \
 	--clear-conditions
 ```
 
+<Aside type="caution">
+
+A rule with no conditions matches every evaluation context. Flagship requires unconditional rules to come after all rules that have conditions. If the rule you are clearing is not the last rule in the set, the API will reject the update with `Rules with empty conditions must come after rules with conditions`.
+
+Use `rules reorder` first to move the rule to the last position, then clear its conditions. If you want to serve a single variation to everyone and discard all other rules, use `--clear-rules` on `flags set` instead.
+
+</Aside>
+
 Remove a rollout from a rule:
 
 ```sh
@@ -466,6 +474,12 @@ wrangler flagship flags rules delete <APP_ID> premium-banner --priority 2
 After deleting a rule, Wrangler renumbers the remaining rules so priorities stay contiguous.
 
 ## Run releases and kill switches
+
+<Aside type="note">
+
+After you change a flag, it can take up to 30 seconds for the updated value to reflect globally. During this propagation window, some evaluations may still return the previous flag value.
+
+</Aside>
 
 ### Enable and disable
 
