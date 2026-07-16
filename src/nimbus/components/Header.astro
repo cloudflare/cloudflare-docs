@@ -21,7 +21,7 @@ interface Props {
 	showSidebar?: boolean;
 }
 
-const { collection, entryId, showSidebar = true } = Astro.props;
+const { collection, showSidebar = true } = Astro.props;
 
 // Normalize trailing slash so isActive matches sidebar hrefs.
 const currentSlug = Astro.url.pathname.replace(/\/$/, "") || "/";

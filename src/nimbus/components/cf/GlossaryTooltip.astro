@@ -1,4 +1,8 @@
 ---
+/* The term span is deliberately focusable (tabindex=0) so keyboard users can
+   trigger the Tippy definition tooltip on focus, not just hover. Suppressing
+   no-noninteractive-tabindex is intentional here. */
+/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */
 // Dashed-underlined term; reveals its glossary definition via Tippy.
 import { getCollection } from "astro:content";
 import { marked } from "marked";

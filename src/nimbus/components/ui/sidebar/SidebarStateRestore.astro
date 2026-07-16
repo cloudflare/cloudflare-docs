@@ -66,6 +66,8 @@
 				const ar = active.getBoundingClientRect();
 				sidebar.scrollTop += ar.top - sr.top - sr.height / 2 + ar.height / 2;
 			}
-		} catch (_) {}
+		} catch {
+			// Never let state restore break navigation.
+		}
 	})();
 </script>

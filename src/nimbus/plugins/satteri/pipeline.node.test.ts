@@ -15,10 +15,6 @@ function render(
 	}).html;
 }
 
-function anchor(id: string) {
-	return `<a class="anchor-link" href="#${id}">`;
-}
-
 function fragment(html: string) {
 	const el = document.createElement("div");
 	el.innerHTML = html;

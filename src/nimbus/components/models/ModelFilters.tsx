@@ -349,7 +349,6 @@ export default function ModelFilters({
 		setCount(
 			relayout({ search: nextSearch, selected: nextSelected, sortOrder }),
 		);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Reflow + URL sync on every change after init.
@@ -364,7 +363,6 @@ export default function ModelFilters({
 		for (const key of facetKeys)
 			for (const v of selected[key] ?? []) params.append(key, v);
 		setSearchParams(params);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, selected, sortOrder]);
 
 	// Below `lg` the grid is 1 column, so corner marks must be recomputed on
@@ -377,7 +375,6 @@ export default function ModelFilters({
 		};
 		mq.addEventListener("change", onChange);
 		return () => mq.removeEventListener("change", onChange);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, selected, sortOrder]);
 
 	const hasActiveFilters = facetKeys.some(

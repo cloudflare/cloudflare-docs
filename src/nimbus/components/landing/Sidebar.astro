@@ -47,7 +47,7 @@ function toItem(node: SidebarNode, order: number): SidebarItem {
 					{section.heading}
 				</p>
 				<ul class="flex list-none flex-col gap-0.5 p-0">
-					{section.nodes.map((node, idx) => (
+					{section.nodes.map((node) => (
 						<li>
 							{node.type === "link" ? (
 								<SidebarLink

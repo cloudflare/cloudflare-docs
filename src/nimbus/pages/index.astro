@@ -116,7 +116,9 @@ const currentPath = Astro.url.pathname;
 				let id = hash.slice(1);
 				try {
 					id = decodeURIComponent(id);
-				} catch {}
+				} catch {
+					// Keep raw id if it isn't valid percent-encoding.
+				}
 				target = document.getElementById(id);
 				if (!target) {
 					try {

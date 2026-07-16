@@ -169,7 +169,9 @@ function initPersistence(root: HTMLElement): (() => void) | null {
 		if (root.closest("[data-mobile-sidebar]")) return;
 		try {
 			sessionStorage.setItem(STORAGE_KEY, JSON.stringify(readState()));
-		} catch {}
+		} catch {
+			// Ignore storage errors (private mode / quota).
+		}
 	}
 
 	// Observe state changes on each group's trigger.
