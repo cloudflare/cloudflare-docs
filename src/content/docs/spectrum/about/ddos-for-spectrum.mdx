@@ -5,7 +5,6 @@ description: Layer 3 and 4 DDoS protection for TCP and UDP Spectrum applications
 products:
   - spectrum
 weight: 0
-
 ---
 
 Spectrum provides DDoS Protection at layers 3-4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), that is against TCP and UDP based DDoS attacks.
@@ -21,3 +20,19 @@ L3/4 DDoS attacks should be detected and mitigated by the [Network-layer DDoS At
 For protecting HTTP/S applications against L7 DDoS attacks and to benefit from caching and additional features, onboard your application to Cloudflare’s Web Application Firewall/Content Delivery Network service, which works in tandem with Cloudflare Spectrum.
 
 Refer to [Cloudflare DDoS Protection](/ddos-protection/) to learn more.
+
+---
+
+## Mitigation reasons
+
+The **Mitigation reason** field shown in the **DDoS managed rules** tab of [Network Analytics](/analytics/network-analytics/) (**Networking** > **Insights** > **Network Analytics** in the dashboard) will contain more information on why a given packet was dropped by the Spectrum system.
+
+The mitigation reasons are the following:
+
+| Reason                 | Description                                                                                                          |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **Blocked**            | Packet dropped because it matched a DDoS protection rule.                                                            |
+| **Rate limited**       | Packet dropped because it exceeded rate limits.                                                                      |
+| **Connection limited** | Packet dropped because it exceeded connection limits.                                                                |
+| **Unexpected**         | Packet dropped because it was not expected given the current state of the connection it was associated with.         |
+| **Not found**          | Packet dropped because it does not match any configured Spectrum application on the destination IP address and port. |
