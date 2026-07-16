@@ -20,30 +20,30 @@ import { render, type CollectionEntry } from "astro:content";
 import { components } from "~/mdx-components";
 
 export async function entryToString(
-  entry: CollectionEntry<"docs" | "changelog">,
-  locals: App.Locals,
+	entry: CollectionEntry<"docs" | "changelog">,
+	locals: App.Locals,
 ) {
-  if (entry.rendered?.html) {
-    return entry.rendered.html;
-  }
+	if (entry.rendered?.html) {
+		return entry.rendered.html;
+	}
 
-  const container = await experimental_AstroContainer.create({});
-  container.addServerRenderer({ name: "astro:jsx", renderer: mdxRenderer });
-  container.addServerRenderer({
-    name: "@astrojs/react",
-    renderer: reactRenderer,
-  });
+	const container = await experimental_AstroContainer.create({});
+	container.addServerRenderer({ name: "astro:jsx", renderer: mdxRenderer });
+	container.addServerRenderer({
+		name: "@astrojs/react",
+		renderer: reactRenderer,
+	});
 
-  const { Content } = await render(entry);
+	const { Content } = await render(entry);
 
-  // Pass the global MDX component registry so entries that use components
-  // without an explicit import (e.g. <Aside>) resolve, matching how the
-  // docs pipeline renders `<Content components={components} />`.
-  const html = await container.renderToString(Content, {
-    props: { components },
-    params: { slug: entry.id },
-    locals,
-  });
+	// Pass the global MDX component registry so entries that use components
+	// without an explicit import (e.g. <Aside>) resolve, matching how the
+	// docs pipeline renders `<Content components={components} />`.
+	const html = await container.renderToString(Content, {
+		props: { components },
+		params: { slug: entry.id },
+		locals,
+	});
 
-  return html;
+	return html;
 }

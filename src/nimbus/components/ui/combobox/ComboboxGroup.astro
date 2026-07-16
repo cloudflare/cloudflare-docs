@@ -7,19 +7,19 @@
 import { cn } from "@/lib/cn";
 
 interface Props {
-  class?: string;
+	class?: string;
 }
 
 const { class: className } = Astro.props;
 ---
 
 <div
-  role="group"
-  data-nb-combobox-group
-  class={cn(
-    "mt-2 border-t border-border pt-2 first:mt-0 first:border-t-0 first:pt-0",
-    className,
-  )}
+	role="group"
+	data-nb-combobox-group
+	class={cn(
+		"mt-2 border-t border-border pt-2 first:mt-0 first:border-t-0 first:pt-0",
+		className,
+	)}
 >
-  <slot />
+	<slot />
 </div>

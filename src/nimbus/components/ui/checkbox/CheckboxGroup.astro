@@ -16,44 +16,48 @@
 import { cn } from "@/lib/cn";
 
 interface Props {
-  /** Visible group label. */
-  legend?: string;
-  /** Override the legend's classes (otherwise a medium foreground label). */
-  legendClass?: string;
-  /** Visually hide the legend (still announced to assistive tech). */
-  srOnlyLegend?: boolean;
-  /** Helper text shown beneath the group. */
-  description?: string;
-  /** Error message shown beneath the group. */
-  error?: string;
-  class?: string;
+	/** Visible group label. */
+	legend?: string;
+	/** Override the legend's classes (otherwise a medium foreground label). */
+	legendClass?: string;
+	/** Visually hide the legend (still announced to assistive tech). */
+	srOnlyLegend?: boolean;
+	/** Helper text shown beneath the group. */
+	description?: string;
+	/** Error message shown beneath the group. */
+	error?: string;
+	class?: string;
 }
 
 const {
-  legend,
-  legendClass,
-  srOnlyLegend = false,
-  description,
-  error,
-  class: className,
+	legend,
+	legendClass,
+	srOnlyLegend = false,
+	description,
+	error,
+	class: className,
 } = Astro.props;
 ---
 
 <fieldset class={cn("m-0 flex min-w-0 flex-col gap-3 border-0 p-0", className)}>
-  {
-    legend && (
-      <legend
-        class={cn(
-          "float-none mb-1 p-0 text-sm font-medium text-foreground",
-          srOnlyLegend && "sr-only",
-          legendClass,
-        )}
-      >
-        {legend}
-      </legend>
-    )
-  }
-  <div class="flex flex-col gap-2"><slot /></div>
-  {error && <p class="m-0 text-sm text-danger">{error}</p>}
-  {description && <p class="m-0 text-sm text-muted-foreground">{description}</p>}
+	{
+		legend && (
+			<legend
+				class={cn(
+					"text-foreground float-none mb-1 p-0 text-sm font-medium",
+					srOnlyLegend && "sr-only",
+					legendClass,
+				)}
+			>
+				{legend}
+			</legend>
+		)
+	}
+	<div class="flex flex-col gap-2"><slot /></div>
+	{error && <p class="text-danger m-0 text-sm">{error}</p>}
+	{
+		description && (
+			<p class="text-muted-foreground m-0 text-sm">{description}</p>
+		)
+	}
 </fieldset>

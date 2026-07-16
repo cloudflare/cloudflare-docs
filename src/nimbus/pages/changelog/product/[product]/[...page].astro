@@ -17,24 +17,24 @@ import { getChangelogs } from "~/util/changelog";
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const allNotes = await getChangelogs({
-    filter: (entry) => !entry.data.hidden,
-  });
+	const allNotes = await getChangelogs({
+		filter: (entry) => !entry.data.hidden,
+	});
 
-  const productIds = [
-    ...new Set(allNotes.flatMap((note) => note.data.products.map((p) => p.id))),
-  ];
+	const productIds = [
+		...new Set(allNotes.flatMap((note) => note.data.products.map((p) => p.id))),
+	];
 
-  return productIds.flatMap((productId) => {
-    const notes = allNotes.filter((note) =>
-      note.data.products.some((p) => p.id === productId),
-    );
+	return productIds.flatMap((productId) => {
+		const notes = allNotes.filter((note) =>
+			note.data.products.some((p) => p.id === productId),
+		);
 
-    return paginate(notes, {
-      params: { product: productId },
-      pageSize: 25,
-    });
-  });
+		return paginate(notes, {
+			params: { product: productId },
+			pageSize: 25,
+		});
+	});
 }) satisfies GetStaticPaths;
 
 type Props = { page: Page<CollectionEntry<"changelog">> };
@@ -46,14 +46,12 @@ const productEntry = await getEntry("directory", productId);
 const productTitle = productEntry?.data.entry.title ?? productId;
 ---
 
-<ChangelogLayout
-  title={`${productTitle} Changelog`}
->
-  <Header />
-  <ChangelogFeed entries={page.data} />
-  <Pagination
-    currentPage={page.currentPage}
-    lastPage={page.lastPage}
-    baseUrl={`/changelog/product/${productId}/`}
-  />
+<ChangelogLayout title={`${productTitle} Changelog`}>
+	<Header />
+	<ChangelogFeed entries={page.data} />
+	<Pagination
+		currentPage={page.currentPage}
+		lastPage={page.lastPage}
+		baseUrl={`/changelog/product/${productId}/`}
+	/>
 </ChangelogLayout>

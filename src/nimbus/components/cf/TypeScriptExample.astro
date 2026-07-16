@@ -28,10 +28,10 @@ import { LinkButton } from "../ui/link-button";
 import { TabItem, Tabs } from "../ui/tabs";
 
 interface Props {
-  filename?: string;
-  omitTabs?: boolean;
-  playground?: boolean;
-  code?: ComponentProps<typeof Code>;
+	filename?: string;
+	omitTabs?: boolean;
+	playground?: boolean;
+	code?: ComponentProps<typeof Code>;
 }
 
 const { filename, omitTabs = false, playground = false, code } = Astro.props;
@@ -42,9 +42,9 @@ const slot = await Astro.slots.render("default");
 const codeEl = parse(slot, { blockTextElements: {} }).querySelector("pre code");
 
 if (!codeEl) {
-  throw new Error(
-    `[TypeScriptExample] Expected a fenced \`\`\`ts code block as the only child (on "${Astro.url.pathname}").`,
-  );
+	throw new Error(
+		`[TypeScriptExample] Expected a fenced \`\`\`ts code block as the only child (on "${Astro.url.pathname}").`,
+	);
 }
 
 // `.text` is node-html-parser's entity-decoded text content; Shiki keeps
@@ -53,8 +53,8 @@ let raw = codeEl.text;
 
 // Upstream convention: `compatibilityDate: "$today"` becomes the build date.
 raw = raw.replaceAll(
-  /(?<=compatibilityDate:\s*)"\$today"/gi,
-  `"${new Date().toISOString().split("T")[0]}"`,
+	/(?<=compatibilityDate:\s*)"\$today"/gi,
+	`"${new Date().toISOString().split("T")[0]}"`,
 );
 
 const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
@@ -63,23 +63,23 @@ const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
 // into the playground fragment, matching upstream's workers-playground plugin.
 let playgroundHref: string | undefined;
 if (playground) {
-  const worker = new FormData();
-  worker.set(
-    "index.js",
-    new Blob([js], { type: "application/javascript+module" }),
-    "index.js",
-  );
-  worker.set(
-    "metadata",
-    new Blob([JSON.stringify({ main_module: "index.js" })], {
-      type: "application/json",
-    }),
-  );
-  const serialised = new Response(worker);
-  const encoded = lzstring.compressToEncodedURIComponent(
-    `${serialised.headers.get("content-type")}:${await serialised.text()}`,
-  );
-  playgroundHref = `https://workers.cloudflare.com/playground#${encoded}`;
+	const worker = new FormData();
+	worker.set(
+		"index.js",
+		new Blob([js], { type: "application/javascript+module" }),
+		"index.js",
+	);
+	worker.set(
+		"metadata",
+		new Blob([JSON.stringify({ main_module: "index.js" })], {
+			type: "application/json",
+		}),
+	);
+	const serialised = new Response(worker);
+	const encoded = lzstring.compressToEncodedURIComponent(
+		`${serialised.headers.get("content-type")}:${await serialised.text()}`,
+	);
+	playgroundHref = `https://workers.cloudflare.com/playground#${encoded}`;
 }
 
 const Wrapper = omitTabs ? Fragment : Tabs;
@@ -87,27 +87,39 @@ const wrapperProps = omitTabs ? {} : { syncKey: "workersExamples" };
 ---
 
 <div>
-<Wrapper {...wrapperProps}>
-  <TabItem label="JavaScript">
-    <Code {...code} lang="js" code={js} meta={filename ? `title="${filename.replace(".ts", ".js")}"` : undefined} />
-    {
-      playgroundHref && (
-        <div class="flex justify-end pt-3">
-          <LinkButton href={playgroundHref} variant="primary" target="_blank" rel="noopener">
-            Run Worker in Playground
-          </LinkButton>
-        </div>
-      )
-    }
-  </TabItem>
-  <TabItem label="TypeScript">
-    {
-      filename ? (
-        <Code {...code} lang="ts" code={raw} meta={`title="${filename}"`} />
-      ) : (
-        <Fragment set:html={slot} />
-      )
-    }
-  </TabItem>
-</Wrapper>
+	<Wrapper {...wrapperProps}>
+		<TabItem label="JavaScript">
+			<Code
+				{...code}
+				lang="js"
+				code={js}
+				meta={filename
+					? `title="${filename.replace(".ts", ".js")}"`
+					: undefined}
+			/>
+			{
+				playgroundHref && (
+					<div class="flex justify-end pt-3">
+						<LinkButton
+							href={playgroundHref}
+							variant="primary"
+							target="_blank"
+							rel="noopener"
+						>
+							Run Worker in Playground
+						</LinkButton>
+					</div>
+				)
+			}
+		</TabItem>
+		<TabItem label="TypeScript">
+			{
+				filename ? (
+					<Code {...code} lang="ts" code={raw} meta={`title="${filename}"`} />
+				) : (
+					<Fragment set:html={slot} />
+				)
+			}
+		</TabItem>
+	</Wrapper>
 </div>

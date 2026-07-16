@@ -7,17 +7,17 @@
  * `class` (e.g. `pt-14`).
  */
 interface Props {
-  class?: string;
+	class?: string;
 }
 
 const { class: className } = Astro.props;
 ---
 
 <div
-  class:list={[
-    "relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pb-24",
-    className,
-  ]}
+	class:list={[
+		"relative z-10 mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] pb-24",
+		className,
+	]}
 >
-  <slot />
+	<slot />
 </div>

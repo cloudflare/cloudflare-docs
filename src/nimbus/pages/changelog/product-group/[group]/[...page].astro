@@ -18,25 +18,25 @@ import { directoryByGroup } from "~/util/directory";
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const allNotes = await getChangelogs({
-    filter: (entry) => !entry.data.hidden,
-  });
+	const allNotes = await getChangelogs({
+		filter: (entry) => !entry.data.hidden,
+	});
 
-  return directoryByGroup.flatMap(([groupName, groupProducts]) => {
-    const groupProductIds = groupProducts.map((p) => p.id);
-    const notes = allNotes.filter((note) =>
-      note.data.products.some((p) => groupProductIds.includes(p.id)),
-    );
-    const slug = groupName.replaceAll(" ", "-").toLowerCase();
+	return directoryByGroup.flatMap(([groupName, groupProducts]) => {
+		const groupProductIds = groupProducts.map((p) => p.id);
+		const notes = allNotes.filter((note) =>
+			note.data.products.some((p) => groupProductIds.includes(p.id)),
+		);
+		const slug = groupName.replaceAll(" ", "-").toLowerCase();
 
-    if (notes.length === 0) return [];
+		if (notes.length === 0) return [];
 
-    return paginate(notes, {
-      params: { group: slug },
-      props: { groupName },
-      pageSize: 25,
-    });
-  });
+		return paginate(notes, {
+			params: { group: slug },
+			props: { groupName },
+			pageSize: 25,
+		});
+	});
 }) satisfies GetStaticPaths;
 
 type Props = { page: Page<CollectionEntry<"changelog">>; groupName: string };
@@ -44,14 +44,12 @@ type Props = { page: Page<CollectionEntry<"changelog">>; groupName: string };
 const { page, groupName } = Astro.props as Props;
 ---
 
-<ChangelogLayout
-  title={`${groupName} Changelog`}
->
-  <Header rssHref="/changelog/rss/index.xml" />
-  <ChangelogFeed entries={page.data} />
-  <Pagination
-    currentPage={page.currentPage}
-    lastPage={page.lastPage}
-    baseUrl={`/changelog/product-group/${Astro.params.group}/`}
-  />
+<ChangelogLayout title={`${groupName} Changelog`}>
+	<Header rssHref="/changelog/rss/index.xml" />
+	<ChangelogFeed entries={page.data} />
+	<Pagination
+		currentPage={page.currentPage}
+		lastPage={page.lastPage}
+		baseUrl={`/changelog/product-group/${Astro.params.group}/`}
+	/>
 </ChangelogLayout>

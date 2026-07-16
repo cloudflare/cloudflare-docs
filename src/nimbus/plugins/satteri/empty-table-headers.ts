@@ -7,15 +7,15 @@
 import type { HastPluginDefinition } from "./types";
 
 export default function emptyTableHeaders(): HastPluginDefinition {
-  return {
-    name: "cf-empty-table-headers",
-    element: {
-      filter: ["thead"],
-      visit(node, ctx) {
-        if (ctx.textContent(node).trim() === "") {
-          ctx.removeNode(node);
-        }
-      },
-    },
-  };
+	return {
+		name: "cf-empty-table-headers",
+		element: {
+			filter: ["thead"],
+			visit(node, ctx) {
+				if (ctx.textContent(node).trim() === "") {
+					ctx.removeNode(node);
+				}
+			},
+		},
+	};
 }

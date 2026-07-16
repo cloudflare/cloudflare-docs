@@ -11,12 +11,8 @@ interface Props extends HTMLAttributes<"div"> {}
 const { class: className, ...attrs } = Astro.props;
 ---
 
-<div
-  data-nb-collapsible-content
-  class={cn(className)}
-  {...attrs}
->
-  <div>
-    <slot />
-  </div>
+<div data-nb-collapsible-content class={cn(className)} {...attrs}>
+	<div>
+		<slot />
+	</div>
 </div>

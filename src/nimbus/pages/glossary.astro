@@ -18,18 +18,18 @@ export const prerender = true;
 ---
 
 <SplashLayout title="Glossary">
-  <div class="relative">
-    <BackgroundLines inner={1120} outer={1360} />
-    <PageShell>
-      <PageHeader title="Glossary">
-        <div class="mt-4 flex items-center justify-center gap-2">
-          <Badge text="Beta" variant="caution" size="medium" />
-        </div>
-      </PageHeader>
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader title="Glossary">
+				<div class="mt-4 flex items-center justify-center gap-2">
+					<Badge text="Beta" variant="caution" size="medium" />
+				</div>
+			</PageHeader>
 
-      <section class="mt-12 pt-10" aria-label="Glossary terms">
-        <GlossaryComponent />
-      </section>
-    </PageShell>
-  </div>
+			<section class="mt-12 pt-10" aria-label="Glossary terms">
+				<GlossaryComponent />
+			</section>
+		</PageShell>
+	</div>
 </SplashLayout>
