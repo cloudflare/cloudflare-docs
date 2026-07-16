@@ -11,7 +11,7 @@ products:
 
 Gradual deployments allow developers to deploy their code via staged rollouts. For example, you can specify percentage-based rollouts with soak time at each step (i.e. progress the rollout by 10%, wait for five minutes, and then progress another 10%) to deploy safely in case you need to pause or rollback.
 
-You can configure gradual deployments at the Worker, project, or repository level through either a Cloudflare-managed plan or a Bring Your Own [Workflow](/workflows) (BYO-W) plan. 
+You can configure gradual deployments at the Worker, project, or repository level through either a Cloudflare-managed plan or a Bring Your Own [Workflow](/workflows) (BYO-W) plan. Once gradual deployments are configured, every deployment will automatically follow your defined rollout plan.
 
 Cloudflare-managed plans are presets which include percentage-based rollouts, soak times, and threshold error rates for common use cases, i.e.
 
