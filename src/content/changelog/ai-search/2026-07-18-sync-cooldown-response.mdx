@@ -1,0 +1,20 @@
+---
+title: AI Search sync cooldowns return a retryable client error
+description: Repeated sync requests during the cooldown period now return HTTP 429 instead of a server error.
+products:
+  - ai-search
+date: 2026-07-18
+publish_future_dated_entry: true
+---
+
+When you request a new [AI Search](/ai-search/) sync job shortly after another job starts, the API now returns an HTTP `429` response instead of a server error. This response indicates that the instance is in its sync cooldown period and that you can retry the request later.
+
+```json
+{
+	"success": false,
+	"errors": [{ "code": 7020, "message": "sync_in_cooldown" }],
+	"result": {}
+}
+```
+
+For more information about creating and monitoring sync jobs, refer to the [AI Search Wrangler commands documentation](/ai-search/wrangler-commands/).
