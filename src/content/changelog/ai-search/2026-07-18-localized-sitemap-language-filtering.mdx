@@ -1,0 +1,14 @@
+---
+title: Localized sitemap language filters now match indexed content
+description: AI Search now adds sitemap hreflang values to indexed chunk metadata so language filters return localized website pages.
+products:
+  - ai-search
+date: 2026-07-18
+publish_future_dated_entry: true
+---
+
+[AI Search](/ai-search/) now carries each localized sitemap page's self-referencing `hreflang` value into its indexed `language` metadata. Retrieval filters on `language` can now match localized website content in both vector and keyword search.
+
+If a page also defines a configured `language` field in its HTML custom metadata, the HTML value continues to take precedence. The next source sync reindexes localized pages to apply the metadata fix.
+
+For more information, refer to [website data sources](/ai-search/configuration/data-source/website/) and [metadata filtering](/ai-search/configuration/retrieval/filtering/).
