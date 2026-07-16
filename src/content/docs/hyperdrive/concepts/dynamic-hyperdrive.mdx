@@ -12,13 +12,13 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 ## Overview
 
-Hyperdrive lets you connect to external databases from Dynamic Workers(/dynamic-workers/). 
+Hyperdrive lets you connect to external databases from [Dynamic Workers](/dynamic-workers/). 
 
 In this model, a [loader Worker](/dynamic-workers/getting-started/#configure-worker-loader) creates each Dynamic Worker and controls its outbound network access by providing the database connection details for that Dynamic Worker. Each Dynamic Worker can then connect to the provided database through Hyperdrive.
 
 When a Dynamic Worker connects to a database, Cloudflare creates a Hyperdrive configuration for that database at runtime using the database connection details. Hyperdrive reuses that per-database configuration for connection pooling and query caching across Dynamic Worker requests that connect to the same database.
 
-This means you do not need to pre-provision a separate Hyperdrive configuration for every database that your Dynamic Workers use. Instead, Dynamic Workers can connect to specific databases provided by the loader Worker, while Hyperdrive manages the runtime configuration, pooling, and caching for each database.
+This means you do not need to pre-provision a separate Hyperdrive configuration for every database that your Dynamic Workers use. Instead, Dynamic Workers can connect to specific databases provided by the loader Worker, while Hyperdrive manages the configuration at runtime, pooling, and caching for each database.
 
 ![A loader Worker creates each Dynamic Worker, and each Dynamic Worker connects to its tenant database through Hyperdrive.](~/assets/images/hyperdrive/configuration/hyperdrive-dynamic-workers.svg)
 
