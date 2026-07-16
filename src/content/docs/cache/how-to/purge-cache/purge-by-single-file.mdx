@@ -26,6 +26,12 @@ A single-file purge performed through your Cloudflare dashboard does not clear o
   - `X-Rewrite-URL`
   - `Forwarded`
 
+:::caution[Custom cache keys from Cache Rules]
+If you use [Cache Rules](/cache/how-to/cache-rules/) to set a [custom cache key](/cache/how-to/cache-keys/), single-file purge via the dashboard will not invalidate the cached resource because the dashboard only accepts URLs, not the headers or cookies that are part of the custom cache key.
+
+You can purge these resources using the API by calling [purge files by URL](/api/resources/cache/methods/purge/#purge-cached-content-by-url) and including all headers and cookies that are part of your custom cache key. If any header or cookie is missing from the purge request, it is treated as an empty value in the cache key. Alternatively, use [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), [purge by tag](/cache/how-to/purge-cache/purge-by-tags/), or [purge everything](/cache/how-to/purge-cache/purge-everything/).
+:::
+
 You can purge objects with these characteristics using an API call to ([purge files by URL](/api/resources/cache/methods/purge/)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
 :::caution
