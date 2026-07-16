@@ -48,7 +48,7 @@ The **Total storage** chart shows the maximum SQLite storage used by a Durable O
 
 The chart appears only for [SQLite-backed Durable Object namespaces](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class). It does not appear for namespaces that use the legacy key-value storage backend.
 
-When you filter by Durable Object ID or name, the chart displays a notice that total storage is unavailable for an individual object.
+Viewing storage for individual Durable Objects by ID or name is not supported.
 
 The chart queries the `durableObjectsSqlStorageGroups` GraphQL dataset for the selected namespace ID. It plots `max.storedBytes`, in bytes, grouped by `dimensions.datetimeHour`.
 
