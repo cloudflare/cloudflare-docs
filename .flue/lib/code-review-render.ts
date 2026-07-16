@@ -649,9 +649,11 @@ function rebaseStatusLine(
 }
 
 const REBASE_STATUS_MARKER_RE = /^<!-- rebase-status: [^\s]+ -->\n?/m;
-// Matches the status line we produce: starts with one of our emoji prefix chars
-// and contains **Rebase:**, plus any trailing > blockquote lines.
-const REBASE_STATUS_LINE_RE = /^[⏳✅⚠️❌].+\*\*Rebase:\*\*[^\n]*(\n>[^\n]*)*/m;
+// Matches the status line we produce: starts with one of our known emoji
+// prefixes and contains **Rebase:**, plus any trailing > blockquote lines.
+// Avoids a character class with multi-codepoint emoji (no-misleading-character-class).
+const REBASE_STATUS_LINE_RE =
+	/^(?:⏳|✅|⚠️|❌).+\*\*Rebase:\*\*[^\n]*(\n>[^\n]*)*/m;
 
 /**
  * Strip any existing rebase status block from a comment body so we can
