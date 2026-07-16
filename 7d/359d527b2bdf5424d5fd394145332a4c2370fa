@@ -1,0 +1,19 @@
+src/content/changelog/ai-search/2026-07-18-sync-cooldown-response.mdx
+  s_f5d74931f4e243::t_cb042f8bacb053 1-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7d359d527b2bdf5424d5fd394145332a4c2370fa",
+  "prompts": {},
+  "sessions": {
+    "s_f5d74931f4e243": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_094ac5e90ffeb59OpL7ASWSZKm",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Nelson Duarte <nduarte@cloudflare.com>"
+    }
+  }
+}
